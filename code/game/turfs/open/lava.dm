@@ -421,7 +421,7 @@
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \
 			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, held together only by strands of purple fungus!"))
 
-	// If all of your limbs are plasma then congrats: you are plasma man. Unfortunately by this point you are probably also: husk
+	// If all of your limbs are plasma then congrats: you are plasma man
 	if(length(immune_parts) || length(transform_parts))
 		return
 	burn_human.ignite_mob()
