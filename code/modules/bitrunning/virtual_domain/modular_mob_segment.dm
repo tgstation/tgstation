@@ -80,15 +80,15 @@
 /datum/modular_mob_segment/syndicate_team
 	pick_random_of = 3
 	mobs = list(
-		/mob/living/basic/syndicate/ranged,
-		/mob/living/basic/syndicate/melee,
+		/mob/living/basic/trooper/syndicate/ranged,
+		/mob/living/basic/trooper/syndicate/melee,
 	)
 
 /datum/modular_mob_segment/syndicate_elite
 	pick_random_of = 3
 	mobs = list(
-		/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
-		/mob/living/basic/syndicate/ranged/space/stormtrooper,
+		/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
+		/mob/living/basic/trooper/syndicate/ranged/space/stormtrooper,
 	)
 
 /datum/modular_mob_segment/bears
