@@ -1,7 +1,7 @@
 /// Attempts to spawn a crate twice based on the list of available locations
 /obj/machinery/quantum_server/proc/attempt_spawn_cache(list/possible_turfs)
 	if(!length(possible_turfs))
-		return
+		return TRUE
 
 	shuffle_inplace(possible_turfs)
 	var/turf/chosen_turf = validate_turf(pick(possible_turfs))
@@ -10,10 +10,10 @@
 		possible_turfs.Remove(chosen_turf)
 		chosen_turf = validate_turf(pick(possible_turfs))
 		if(isnull(chosen_turf))
-			return
+			CRASH("vdom: after two attemps, could not find a valid turf for cache")
 
-	var/obj/structure/closet/crate/secure/bitrunning/encrypted/cache = new(chosen_turf)
-	return cache
+	new /obj/structure/closet/crate/secure/bitrunning/encrypted(chosen_turf)
+	return TRUE
 
 /// Generates a new avatar for the bitrunner.
 /obj/machinery/quantum_server/proc/generate_avatar(obj/structure/hololadder/wayout, datum/outfit/netsuit)

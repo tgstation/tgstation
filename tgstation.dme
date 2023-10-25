@@ -3291,6 +3291,7 @@
 #include "code\modules\bitrunning\components\glitch.dm"
 #include "code\modules\bitrunning\components\netpod_healing.dm"
 #include "code\modules\bitrunning\components\service_style.dm"
+#include "code\modules\bitrunning\components\virtual_elite_mob.dm"
 #include "code\modules\bitrunning\objects\byteforge.dm"
 #include "code\modules\bitrunning\objects\clothing.dm"
 #include "code\modules\bitrunning\objects\disks.dm"

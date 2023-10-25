@@ -106,7 +106,7 @@
 		CRASH("Failed to find send turfs on generated domain.")
 
 	if(!attempt_spawn_cache(cache_turfs))
-		CRASH("Failed to spawn a cache on generated domain.")
+		return FALSE
 
 	return TRUE
 
