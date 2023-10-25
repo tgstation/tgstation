@@ -14,8 +14,7 @@ SUBSYSTEM_DEF(queuelinks)
 /// queues with a size of 0 wait never pop until something is added with an actual queue_max
 /datum/controller/subsystem/queuelinks/proc/add_to_queue(atom/what, id, queue_max = 0)
 	if(!isatom(what))
-		stack_trace("Attempted to add a non-atom to queue; [what]!")
-		return
+		CRASH("Attempted to add a non-atom to queue; [what]!")
 	if(isnull(id))
 		return
 
@@ -32,7 +31,7 @@ SUBSYSTEM_DEF(queuelinks)
 /datum/queue_link
 	/// atoms in our queue
 	var/list/partners = list()
-	/// how much length until we pop, only incrementable
+	/// how much length until we pop, only incrementable, 0 means the queue will not pop until a maximum is set
 	var/queue_max = 0
 	/// id
 	var/id
@@ -48,9 +47,8 @@ SUBSYSTEM_DEF(queuelinks)
 		return
 	partners += what
 
-	if(max != 0 && max != queue_max)
+	if(queue_max != 0 && max != queue_max)
 		CRASH("Tried to change queue size to [max] from [queue_max]!")
-		return
 	else if(!queue_max)
 		queue_max = max	
 	
