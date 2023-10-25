@@ -1,5 +1,5 @@
 import { StatelessComponent } from 'inferno';
-import { Box, Collapsible, Icon, Stack, Tooltip } from '../../components';
+import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk, ServerData } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
@@ -50,6 +50,13 @@ const QuirkList = (props: {
     // Stack is not used here for a variety of IE flex bugs
     <Box className="PreferencesMenu__Quirks__QuirkList">
       {props.quirks.map(([quirkKey, quirk]) => {
+        const [customization_expanded, toggle_customization] =
+          useLocalState<boolean>(
+            props.context,
+            quirk.name + ' customization',
+            false
+          );
+
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
         const child = (
@@ -119,28 +126,43 @@ const QuirkList = (props: {
                     }}>
                     {quirk.description}
                     {!!quirk.customizable && (
-                      <Stack.Item
-                        onClick={(e: Event) => {
+                      <Button
+                        disabled={!props.selected}
+                        selected={customization_expanded}
+                        icon="cog"
+                        tooltip={
+                          !props.selected
+                            ? 'You must take this quirk before you can customize it!'
+                            : 'This quirk is customizable! Click this button to open a customization menu!'
+                        }
+                        onClick={(e) => {
                           e.stopPropagation();
+
+                          toggle_customization(!customization_expanded);
                         }}
                         style={{
                           'float': 'right',
-                        }}>
-                        <Collapsible
-                          disabled={!props.selected}
-                          tooltip={
-                            !props.selected
-                              ? 'You must take this quirk before you can customize it!'
-                              : 'This quirk is customizable! Click this button to open a customization menu!'
-                          }
-                          style={{
-                            'float': 'right',
+                        }}
+                      />
+                    )}
+                    {customization_expanded &&
+                      props.selected &&
+                      Object.entries(quirk.customization_options).length >
+                        0 && (
+                        <Stack.Item
+                          grow={false}
+                          basis="auto"
+                          onClick={(e) => {
+                            e.stopPropagation();
                           }}>
-                          {props.selected &&
-                            Object.entries(quirk.customization_options).length >
-                              0 && (
+                          <Popper
+                            options={{
+                              placement: 'bottom-end',
+                            }}
+                            popperContent={
                               <Stack.Item
-                                onClick={(e: Event) => {
+                                maxWidth="50%"
+                                onClick={(e) => {
                                   e.stopPropagation();
                                 }}>
                                 <PreferenceList
@@ -160,10 +182,11 @@ const QuirkList = (props: {
                                   )}
                                 />
                               </Stack.Item>
-                            )}
-                        </Collapsible>
-                      </Stack.Item>
-                    )}
+                            }>
+                            <Stack.Item>a</Stack.Item>
+                          </Popper>
+                        </Stack.Item>
+                      )}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
