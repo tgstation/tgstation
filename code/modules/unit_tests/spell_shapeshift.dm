@@ -111,10 +111,8 @@
 /datum/unit_test/shapeshift_health
 
 /datum/unit_test/shapeshift_health/Run()
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
-
 	for(var/spell_type in subtypesof(/datum/action/cooldown/spell/shapeshift))
-		dummy.revive(full_heal_flags = HEAL_ADMIN)
+		var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 		var/datum/action/cooldown/spell/shapeshift/shift_spell = new spell_type(dummy)
 		shift_spell.Grant(dummy)
 		shift_spell.shapeshift_type = shift_spell.possible_shapes[1]
