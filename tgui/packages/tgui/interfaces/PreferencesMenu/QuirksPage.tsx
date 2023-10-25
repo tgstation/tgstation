@@ -1,5 +1,5 @@
 import { StatelessComponent } from 'inferno';
-import { Box, Button, Icon, Stack, Tooltip } from '../../components';
+import { Box, Collapsible, Icon, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk, ServerData } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
@@ -39,7 +39,6 @@ const QuirkList = (props: {
     }
   ][];
   onClick: (quirkName: string, quirk: Quirk) => void;
-  onCustomizeClick: (e: Event, quirkName: string, quirk: Quirk) => void;
   selected: boolean;
   serverData: ServerData;
   randomBodyEnabled: boolean;
@@ -120,39 +119,50 @@ const QuirkList = (props: {
                     }}>
                     {quirk.description}
                     {!!quirk.customizable && (
-                      <Button
-                        disabled={!props.selected}
-                        icon="cog"
-                        tooltip={
-                          !props.selected
-                            ? 'You must take this quirk before you can customize it!'
-                            : 'This quirk is customizable! Click this button to open a customization menu!'
-                        }
+                      <Stack.Item
                         onClick={(e: Event) => {
-                          props.onCustomizeClick(e, quirkKey, quirk);
+                          e.stopPropagation();
                         }}
                         style={{
                           'float': 'right',
-                        }}
-                      />
-                    )}
-                    {Object.entries(quirk.customization_options).length > 0 && (
-                      <PreferenceList
-                        act={act}
-                        preferences={getCorrespondingPreferences(
-                          quirk.customization_options,
-                          data.character_preferences.all_preferences
-                        )}
-                        randomizations={getRandomization(
-                          getCorrespondingPreferences(
-                            quirk.customization_options,
-                            data.character_preferences.all_preferences
-                          ),
-                          props.serverData,
-                          props.randomBodyEnabled,
-                          props.context
-                        )}
-                      />
+                        }}>
+                        <Collapsible
+                          disabled={!props.selected}
+                          tooltip={
+                            !props.selected
+                              ? 'You must take this quirk before you can customize it!'
+                              : 'This quirk is customizable! Click this button to open a customization menu!'
+                          }
+                          style={{
+                            'float': 'right',
+                          }}>
+                          {props.selected &&
+                            Object.entries(quirk.customization_options).length >
+                              0 && (
+                              <Stack.Item
+                                onClick={(e: Event) => {
+                                  e.stopPropagation();
+                                }}>
+                                <PreferenceList
+                                  act={act}
+                                  preferences={getCorrespondingPreferences(
+                                    quirk.customization_options,
+                                    data.character_preferences.all_preferences
+                                  )}
+                                  randomizations={getRandomization(
+                                    getCorrespondingPreferences(
+                                      quirk.customization_options,
+                                      data.character_preferences.all_preferences
+                                    ),
+                                    props.serverData,
+                                    props.randomBodyEnabled,
+                                    props.context
+                                  )}
+                                />
+                              </Stack.Item>
+                            )}
+                        </Collapsible>
+                      </Stack.Item>
                     )}
                   </Stack.Item>
                 </Stack>
@@ -313,11 +323,6 @@ export const QuirksPage = (props, context) => {
 
                       act('give_quirk', { quirk: quirk.name });
                     }}
-                    onCustomizeClick={(e: Event, quirkName, quirk) => {
-                      e.stopPropagation();
-
-                      act('customize_quirk', { quirk: quirk.name });
-                    }}
                     quirks={quirks
                       .filter(([quirkName, _]) => {
                         return selectedQuirks.indexOf(quirkName) === -1;
@@ -374,13 +379,6 @@ export const QuirksPage = (props, context) => {
                       );
 
                       act('remove_quirk', { quirk: quirk.name });
-                    }}
-                    onCustomizeClick={(e: Event, quirkName, quirk) => {
-                      e.stopPropagation();
-
-                      quirk.customization_expanded = true;
-
-                      act('customize_quirk', { quirk: quirk.name });
                     }}
                     quirks={quirks
                       .filter(([quirkName, _]) => {
