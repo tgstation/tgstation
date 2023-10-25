@@ -10,6 +10,7 @@
 	)
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
+		TRAIT_NO_JUMPSUIT,
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
