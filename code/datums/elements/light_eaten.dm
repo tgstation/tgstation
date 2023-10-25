@@ -23,6 +23,7 @@
 			target.set_light_power(0)
 			target.set_light_range(0)
 			target.set_light_on(FALSE)
+			target.update_icon()
 
 /datum/element/light_eaten/Detach(datum/source)
 	UnregisterSignal(source, list(
