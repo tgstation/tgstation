@@ -90,7 +90,7 @@
 /mob/living/basic/frog/frog_suicide/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/explode_on_attack, mob_type_dont_bomb = typecacheof(list(/mob/living/basic/frog, /mob/living/basic/leaper)))
-	AddElement(/datum/element/temporary_atom, life_time = existence_period)
+	addtimer(CALLBACK(src, PROC_REF(death)), existence_period)
 
 /datum/ai_controller/basic_controller/frog
 	blackboard = list(

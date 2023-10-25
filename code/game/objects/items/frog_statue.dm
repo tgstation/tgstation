@@ -1,6 +1,7 @@
 #define STATUE_FILTER "statue_filter"
 #define FILTER_COLOR "#34b347"
 #define RECALL_DURATION 3 SECONDS
+#define MINIMUM_COLOR_VALUE 60
 
 /obj/item/frog_statue
 	name = "frog statue"
@@ -33,16 +34,27 @@
 	recall_frog(user)
 	return TRUE
 
+/obj/item/frog_statue/examine(mob/user)
+	. = ..()
+	if(!IS_WIZARD(user))
+		return
+	if(isnull(contained_frog))
+		. += span_notice("There are currently no frogs linked to this statue!")
+	else
+		. += span_notice("Using it will [contained_frog in src ? "release" : "recall"] the beast!")
+
+///resummon the frog into its home
 /obj/item/frog_statue/proc/recall_frog(mob/user)
 	playsound(src, 'sound/items/frog_statue_release.ogg', 20)
 	user.Beam(contained_frog, icon_state = "lichbeam", time = RECALL_DURATION)
 	animate(contained_frog, transform = matrix().Scale(0.3, 0.3), time = RECALL_DURATION)
 	addtimer(CALLBACK(contained_frog, TYPE_PROC_REF(/atom/movable, forceMove), src), RECALL_DURATION)
 
+///release the frog to wreak havoc
 /obj/item/frog_statue/proc/release_frog(mob/user)
 	var/list/possible_turfs = list()
 	for(var/turf/possible_turf in oview(2, user))
-		if(possible_turf.is_blocked_turf())
+		if(possible_turf.is_blocked_turf() || isopenspaceturf(possible_turf))
 			continue
 		possible_turfs += possible_turf
 	playsound(src, 'sound/items/frog_statue_release.ogg', 50, TRUE)
@@ -50,14 +62,16 @@
 	user.Beam(final_turf, icon_state = "lichbeam", time = RECALL_DURATION)
 	contained_frog.forceMove(final_turf)
 	animate(contained_frog, transform = matrix(), time = RECALL_DURATION)
+	REMOVE_TRAIT(contained_frog, TRAIT_AI_PAUSED, MAGIC_TRAIT)
 
-
+///set this frog as our inhabitor
 /obj/item/frog_statue/proc/set_new_frog(mob/living/frog)
 	frog.transform = frog.transform.Scale(0.3, 0.3)
 	contained_frog = frog
 	animate_filter()
 	RegisterSignal(frog, COMSIG_QDELETING, PROC_REF(render_obsolete))
 
+/// we have lost our frog, let out a scream!
 /obj/item/frog_statue/proc/render_obsolete(datum/source)
 	SIGNAL_HANDLER
 
@@ -70,6 +84,7 @@
 	if(arrived != contained_frog)
 		return
 	animate_filter()
+	ADD_TRAIT(contained_frog, TRAIT_AI_PAUSED, MAGIC_TRAIT)
 	if(contained_frog.health < contained_frog.maxHealth)
 		START_PROCESSING(SSobj, src)
 
@@ -97,7 +112,7 @@
 
 /obj/item/frog_contract
 	name = "frog contract"
-	desc = "Become a friend of the frogs!"
+	desc = "Create a pact with an elder frog! This great beast will be your mount, protector, but most importantly your friend."
 	icon = 'icons/obj/scrolls.dmi'
 	icon_state = "scroll"
 
@@ -108,19 +123,39 @@
 	create_frog(user)
 	return TRUE
 
+///customize our own frog and trap it into the statue
 /obj/item/frog_contract/proc/create_frog(mob/user)
-	var/selected_name =  sanitize_name(tgui_input_text(user, "Choose your frog's name!", "Name pet toad", "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
-	var/toad_color  = input(user, "Select your frog's color!" , "Pet toad color") as color|null
-	var/obj/item/frog_statue/statue = new(get_turf(user))
-	user.put_in_hands(statue)
+	var/obj/item/frog_statue/statue = new(null)
 	var/mob/living/basic/leaper/new_frog = new(statue)
 	statue.set_new_frog(new_frog)
 	new_frog.befriend(user)
-	if(toad_color)
-		new_frog.set_color_overlay(toad_color)
-	if(selected_name)
-		new_frog.name = selected_name
-	qdel(src)
+	ADD_TRAIT(new_frog, TRAIT_AI_PAUSED, MAGIC_TRAIT)
+	select_frog_name(user, new_frog)
+	select_frog_color(user, new_frog)
+	user.put_in_hands(statue)
+
+
+
+/obj/item/frog_contract/proc/select_frog_name(mob/user, mob/new_frog)
+	var/frog_name = sanitize_name(tgui_input_text(user, "Choose your frog's name!", "Name pet toad", "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
+	if(!frog_name)
+		to_chat(user, span_warning("Please enter a valid name."))
+		select_frog_name(user, new_frog)
+		return
+	new_frog.name = frog_name
+
+/obj/item/frog_contract/proc/select_frog_color(mob/user, mob/living/basic/leaper/new_frog)
+	var/frog_color  = input(user, "Select your frog's color!" , "Pet toad color", COLOR_GREEN) as color|null
+	if(isnull(frog_color))
+		to_chat(user, span_warning("Please choose a valid color."))
+		select_frog_color(user, new_frog)
+		return
+	var/temp_hsv = RGBtoHSV(frog_color)
+	if(ReadHSV(temp_hsv)[3] < MINIMUM_COLOR_VALUE)
+		to_chat(user, span_danger("This color is too dark!"))
+		select_frog_color(user, new_frog)
+		return
+	new_frog.set_color_overlay(frog_color)
 
 
 #undef STATUE_FILTER

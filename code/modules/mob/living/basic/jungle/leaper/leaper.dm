@@ -19,7 +19,6 @@
 	faction = list(FACTION_JUNGLE)
 	obj_damage = 30
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
@@ -41,8 +40,8 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/leaper_ability/blood_rain,
-		/datum/pet_command/leaper_ability/summon_toad,
+		/datum/pet_command/untargetted_ability/blood_rain,
+		/datum/pet_command/untargetted_ability/summon_toad,
 		/datum/pet_command/point_targetting/attack,
 		/datum/pet_command/point_targetting/use_ability/flop,
 		/datum/pet_command/point_targetting/use_ability/bubble,

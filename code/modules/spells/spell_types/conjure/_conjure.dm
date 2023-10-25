@@ -78,11 +78,10 @@
 	return TRUE
 
 /datum/action/cooldown/spell/conjure/limit_summons/post_summon(atom/summoned_object, atom/cast_on)
-	var/mob/living/created_copy = summoned_object
-	RegisterSignals(created_copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(delete_copy))
+	RegisterSignals(summoned_object, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(delete_copy))
 	number_of_summons++
 
-/datum/action/cooldown/spell/conjure/limit_summons/proc/delete_copy(mob/source)
+/datum/action/cooldown/spell/conjure/limit_summons/proc/delete_copy(datum/source)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))

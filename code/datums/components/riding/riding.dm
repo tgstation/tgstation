@@ -35,7 +35,7 @@
 	/// We don't need roads where we're going if this is TRUE, allow normal movement in space tiles
 	var/override_allow_spacemove = FALSE
 	/// can anyone other than the rider unbuckle the rider?
-	var/can_force_unbuckle = FALSE
+	var/can_force_unbuckle = TRUE
 
 	/**
 	 * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
@@ -67,7 +67,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(vehicle_moved))
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(vehicle_bump))
 	RegisterSignal(parent, COMSIG_BUCKLED_CAN_Z_MOVE, PROC_REF(riding_can_z_move))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(force_unbuckle))
+	if(!can_force_unbuckle)
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(force_unbuckle))
 /**
  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
  *
@@ -299,6 +300,6 @@
 /datum/component/riding/proc/force_unbuckle(atom/movable/source, mob/living/living_hitter)
 	SIGNAL_HANDLER
 
-	if(can_force_unbuckle || (living_hitter in source.buckled_mobs))
+	if((living_hitter in source.buckled_mobs))
 		return
 	return COMPONENT_CANCEL_ATTACK_CHAIN

@@ -36,4 +36,5 @@
 
 	if(destroy_on_explode && owner)
 		qdel(owner)
+	return COMPONENT_HOSTILE_NO_ATTACK
 

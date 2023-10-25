@@ -508,12 +508,13 @@
 
 /datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed)
 	SIGNAL_HANDLER
-	var/mob/living/basic/basic_parent = parent
 	if(!isclosedturf(pointed))
 		return
+	var/mob/living/basic/basic_parent = parent
 	if(!basic_parent.CanReach(pointed))
 		return
 	basic_parent.melee_attack(pointed)
+
 
 /datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
 	. = ..()

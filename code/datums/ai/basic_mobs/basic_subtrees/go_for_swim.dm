@@ -13,19 +13,19 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/turf/our_turf = get_turf(living_pawn)
 
-	///we have been taken out of water!
+	// we have been taken out of water!
 	controller.set_blackboard_key(BB_CURRENTLY_SWIMMING, iswaterturf(our_turf))
 
 	if(controller.blackboard[BB_KEY_SWIM_TIME] < world.time)
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/swim_alternate, BB_SWIM_ALTERNATE_TURF, /turf/open)
 		return
 
-	///have some fun in the water
+	// have some fun in the water
 	if(controller.blackboard[BB_CURRENTLY_SWIMMING] && SPT_PROB(5, seconds_per_tick))
 		controller.queue_behavior(/datum/ai_behavior/perform_emote, "splashes water all around!")
-		return
 
 
+///find land if its time to get out of water, otherwise find water
 /datum/ai_behavior/find_and_set/swim_alternate
 
 /datum/ai_behavior/find_and_set/swim_alternate/search_tactic(datum/ai_controller/controller, locate_path, search_range)
@@ -35,14 +35,11 @@
 	var/look_for_land = controller.blackboard[BB_CURRENTLY_SWIMMING]
 	var/list/possible_turfs = list()
 	for(var/turf/possible_turf in oview(search_range, living_pawn))
-		if(isclosedturf(possible_turf) || isspaceturf(possible_turf))
+		if(isclosedturf(possible_turf) || isspaceturf(possible_turf) || isopenspaceturf(possible_turf))
 			continue
 		if(possible_turf.is_blocked_turf())
 			continue
-		if(look_for_land)
-			if(iswaterturf(possible_turf))
-				continue
-		else if(!iswaterturf(possible_turf))
+		if(look_for_land == iswaterturf(possible_turf))
 			continue
 		possible_turfs += possible_turf
 
