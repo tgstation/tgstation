@@ -2296,12 +2296,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
-/mob/living/simple_animal/hostile/skeleton{
+/mob/living/basic/skeleton{
 	desc = "Oh shit!";
 	dir = 1;
 	faction = list("sewer");
-	name = "sewer skeleton";
-	wander = 0
+	name = "sewer skeleton"
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin/caves/mountain)
@@ -3526,14 +3525,13 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "yj" = (
-/mob/living/simple_animal/hostile/skeleton/ice{
+/mob/living/basic/skeleton/ice{
 	desc = "A reanimated skeleton covered in thick sheet of natural ice. It is obvious to tell that they look really slow.";
 	maxHealth = 20;
 	melee_damage_lower = 5;
 	melee_damage_upper = 5;
 	name = "frozen skeleton";
-	speed = 7;
-	wander = 0
+	speed = 7
 	},
 /turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
@@ -3586,7 +3584,7 @@
 /obj/item/shovel{
 	desc = "A large tool for digging and moving snow.";
 	force = 10;
-	name = "eskimo shovel"
+	name = "settler's shovel"
 	},
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
@@ -3866,14 +3864,13 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "BR" = (
-/mob/living/simple_animal/hostile/skeleton/ice{
+/mob/living/basic/skeleton/ice{
 	desc = "A reanimated skeleton covered in thick sheet of natural ice. It is obvious to tell that they look really slow.";
 	maxHealth = 20;
 	melee_damage_lower = 5;
 	melee_damage_upper = 5;
 	name = "frozen skeleton";
-	speed = 7;
-	wander = 0
+	speed = 7
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
