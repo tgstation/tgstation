@@ -6464,7 +6464,7 @@
 /area/station/maintenance/starboard/central)
 "drc" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "maintenance access"
+	name = "Engineering Maintenance"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "ceprivacy";
@@ -14400,7 +14400,7 @@
 /area/ocean)
 "hwT" = (
 /obj/machinery/door/airlock/vault{
-	name = "secret vault"
+	name = "Secure Vault"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
@@ -33618,6 +33618,12 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"qWb" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance Garden"
+	},
+/turf/open/floor/grass,
+/area/station/maintenance/starboard/upper)
 "qWf" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -40911,7 +40917,7 @@
 /area/station/commons/dorms)
 "uGD" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "maintenance garden"
+	name = "Forbidden Garden"
 	},
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/upper)
@@ -82666,7 +82672,7 @@ fjQ
 kZY
 mFh
 fgS
-uGD
+qWb
 nDB
 nDB
 uGD
