@@ -35,7 +35,7 @@
 	else
 		desired_mob = new new_type(src.loc)
 
-	if(isnull(desired_mob) || !ismob(desired_mob))
+	if(!ismob(desired_mob))
 		to_chat(usr, "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder.")
 		qdel(desired_mob)
 		return
