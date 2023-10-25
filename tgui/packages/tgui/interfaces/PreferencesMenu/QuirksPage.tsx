@@ -59,6 +59,12 @@ const QuirkList = (props: {
 
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
+        const hasExpandableCustomization =
+          quirk.customizable &&
+          props.selected &&
+          customization_expanded &&
+          Object.entries(quirk.customization_options).length > 0;
+
         const child = (
           <Box
             className={className}
@@ -145,48 +151,6 @@ const QuirkList = (props: {
                         }}
                       />
                     )}
-                    {customization_expanded &&
-                      props.selected &&
-                      Object.entries(quirk.customization_options).length >
-                        0 && (
-                        <Stack.Item
-                          grow={false}
-                          basis="auto"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}>
-                          <Popper
-                            options={{
-                              placement: 'bottom-end',
-                            }}
-                            popperContent={
-                              <Stack.Item
-                                maxWidth="50%"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                }}>
-                                <PreferenceList
-                                  act={act}
-                                  preferences={getCorrespondingPreferences(
-                                    quirk.customization_options,
-                                    data.character_preferences.all_preferences
-                                  )}
-                                  randomizations={getRandomization(
-                                    getCorrespondingPreferences(
-                                      quirk.customization_options,
-                                      data.character_preferences.all_preferences
-                                    ),
-                                    props.serverData,
-                                    props.randomBodyEnabled,
-                                    props.context
-                                  )}
-                                />
-                              </Stack.Item>
-                            }>
-                            <Stack.Item>a</Stack.Item>
-                          </Popper>
-                        </Stack.Item>
-                      )}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -197,7 +161,44 @@ const QuirkList = (props: {
         if (quirk.failTooltip) {
           return <Tooltip content={quirk.failTooltip}>{child}</Tooltip>;
         } else {
-          return child;
+          if (hasExpandableCustomization) {
+            return (
+              <Popper
+                options={{
+                  placement: 'bottom-end',
+                }}
+                popperContent={
+                  <Stack
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                    maxWidth="300px">
+                    <Stack.Item>
+                      <PreferenceList
+                        act={act}
+                        preferences={getCorrespondingPreferences(
+                          quirk.customization_options,
+                          data.character_preferences.all_preferences
+                        )}
+                        randomizations={getRandomization(
+                          getCorrespondingPreferences(
+                            quirk.customization_options,
+                            data.character_preferences.all_preferences
+                          ),
+                          props.serverData,
+                          props.randomBodyEnabled,
+                          props.context
+                        )}
+                      />
+                    </Stack.Item>
+                  </Stack>
+                }>
+                {child}
+              </Popper>
+            );
+          } else {
+            return child;
+          }
         }
       })}
     </Box>
