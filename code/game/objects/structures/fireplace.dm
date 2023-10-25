@@ -167,7 +167,7 @@
 	fuel_added = 0
 	update_appearance()
 	adjust_light()
-	particles = new /particles/smoke/burning()
+	particles = new /particles/smoke/burning/fireplace()
 
 /obj/structure/fireplace/proc/put_out()
 	STOP_PROCESSING(SSobj, src)
