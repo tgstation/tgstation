@@ -1,0 +1,6 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - qol: "fixed some bad door perms (one v all)"
+  - qol: "fixed tiles in science being marked as AIRLESS tiles instead of... well, not."
+  - qol: "some lights replaced in maints with maints varients. offsets should be getting adjusted so they look less like shit."
