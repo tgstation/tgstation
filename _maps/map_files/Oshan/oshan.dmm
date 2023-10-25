@@ -940,9 +940,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/science/genetics)
 "azK" = (
-/obj/machinery/mecha_part_fabricator{
-	dir = 4
-	},
+/obj/machinery/mecha_part_fabricator,
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/noslip{
 	icon_state = "textured_white";
