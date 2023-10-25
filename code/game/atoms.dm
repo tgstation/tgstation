@@ -1607,6 +1607,11 @@
 		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
 	return act_result
 
+/atom/proc/ranged_item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+	return is_right_clicking \
+		? tool.ranged_interact_with_atom_secondary(src, user) \
+		: tool.ranged_interact_with_atom(src, user)
+
 /atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
 	//Only one recipe? use the first
 	if(processing_recipes.len == 1)
@@ -1672,6 +1677,12 @@
 
 /obj/item/proc/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
 	return interact_with_atom(interacting_with, user)
+
+/obj/item/proc/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
+	return NONE
+
+/obj/item/proc/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+	return ranged_interact_with_atom(interacting_with, user)
 
 //! Tool-specific behavior procs.
 ///

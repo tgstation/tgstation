@@ -45,30 +45,26 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
-/obj/item/card/emagfake/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if (!proximity_flag)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user)
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	return TOOL_ACT_SKIP_TO_ATTACK
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
 	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/airlock/tram)) //list of all typepaths that require a specialized emag to hack.
 
-/obj/item/card/emag/attack()
-	return
+/obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!can_emag(interacting_with, user))
+		return TOOL_ACT_SIGNAL_BLOCKING
+	log_combat(user, interacting_with, "attempted to emag")
+	interacting_with.emag_act(user, src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	var/atom/A = target
-	if(!proximity && prox_check)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(!can_emag(target, user))
-		return
-	log_combat(user, A, "attempted to emag")
-	A.emag_act(user, src)
+/obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!prox_check)
+		return NONE
+
+	return interact_with_atom(interacting_with, user)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)

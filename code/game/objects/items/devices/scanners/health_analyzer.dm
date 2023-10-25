@@ -54,9 +54,15 @@
 		if(SCANMODE_WOUND)
 			to_chat(user, span_notice("You switch the health analyzer to report extra info on wounds."))
 
-/obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
+/obj/item/healthanalyzer/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
 	if(!user.can_read(src) || user.is_blind())
-		return
+		return TOOL_ACT_SIGNAL_BLOCKING
+
+	var/mob/living/M = interacting_with
+
+	. = TOOL_ACT_TOOLTYPE_SUCCESS
 
 	flick("[icon_state]-scan", src) //makes it so that it plays the scan animation upon scanning, including clumsy scanning
 
@@ -86,12 +92,14 @@
 
 	add_fingerprint(user)
 
-/obj/item/healthanalyzer/attack_secondary(mob/living/victim, mob/living/user, params)
+/obj/item/healthanalyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
 	if(!user.can_read(src) || user.is_blind())
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return TOOL_ACT_SIGNAL_BLOCKING
 
 	chemscan(user, victim)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/healthanalyzer/add_item_context(
 	obj/item/source,
