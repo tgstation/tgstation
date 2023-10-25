@@ -71,35 +71,9 @@
 	if(isplasmaman(breather))
 		breather.set_timed_status_effect(10 SECONDS * REM * seconds_per_tick, /datum/status_effect/hypernob_protection)
 
-/datum/reagent/nitrium_high_metabolization
-	name = "Nitrosyl plasmide"
-	description = "A highly reactive byproduct that stops you from sleeping, while dealing increasing toxin damage over time."
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
-	color = "E1A116"
-	taste_description = "sourness"
-	ph = 1.8
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	addiction_types = list(/datum/addiction/stimulants = 14)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/breather)
-	. = ..()
-	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/breather)
-	. = ..()
-	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
-	. = ..()
-	var/need_mob_update
-	need_mob_update = breather.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	if(need_mob_update)
-		return UPDATE_MOB_HEALTH
-
-/datum/reagent/nitrium_low_metabolization
+/datum/reagent/nitrium
 	name = "Nitrium"
-	description = "A highly reactive gas that makes you feel faster."
+	description = "A highly reactive gas that makes you feel faster and prevents sleep."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
@@ -107,13 +81,22 @@
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/nitrium_low_metabolization/on_mob_metabolize(mob/living/breather)
+/datum/reagent/nitrium/on_mob_metabolize(mob/living/breather)
 	. = ..()
 	breather.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
+	ADD_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
 
-/datum/reagent/nitrium_low_metabolization/on_mob_end_metabolize(mob/living/breather)
+/datum/reagent/nitrium/on_mob_end_metabolize(mob/living/breather)
 	. = ..()
 	breather.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
+	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
+
+/datum/reagent/nitrium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
+	need_mob_update = breather.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/pluoxium
 	name = "Pluoxium"
