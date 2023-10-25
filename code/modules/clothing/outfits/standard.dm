@@ -113,14 +113,16 @@
 	r_hand = /obj/item/gun/energy/recharge/ebow
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-/datum/outfit/heretic
+/datum/outfit/heretic_hallucination
 	name = "Heretic Hallucination"
 
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
-	neck = /obj/item/clothing/neck/eldritch_amulet
+	neck = /obj/item/clothing/neck/heretic_focus
+	r_hand = /obj/item/melee/touch_attack/mansus_fist
+	l_hand = /obj/item/melee/sickly_blade
 
 /datum/outfit/rev_cutout
 	name = "Revolutionary Cutout"

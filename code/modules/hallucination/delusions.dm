@@ -239,7 +239,16 @@
 	affects_others = TRUE
 	random_hallucination_weight = 0
 
+// Hallucination used by heretic paintings
 /datum/hallucination/delusion/preset/heretic
-	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic))
-	delusion_name = "heretic"
-	duration = -1
+	random_hallucination_weight = 0
+	dynamic_icon = TRUE
+	delusion_name = "Heretic"
+	affects_others = TRUE
+	affects_us = FALSE
+	duration = 600 SECONDS
+
+/datum/hallucination/delusion/preset/heretic/make_delusion_image(mob/over_who)
+	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination, /mob/living/carbon/human))
+
+	return ..()
