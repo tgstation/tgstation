@@ -24,6 +24,7 @@
 	src.crit_refund = crit_refund
 
 /datum/component/recharging_attacks/Destroy()
+	UnregisterSignal(recharged_action, COMSIG_QDELETING)
 	recharged_action = null
 	return ..()
 
@@ -62,5 +63,4 @@
 
 /datum/component/recharging_attacks/proc/on_action_qdel()
 	SIGNAL_HANDLER
-	UnregisterSignal(recharged_action, COMSIG_QDELETING)
 	qdel(src)
