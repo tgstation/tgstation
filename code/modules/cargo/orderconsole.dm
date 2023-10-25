@@ -405,14 +405,17 @@
 					new_atom.throw_at(picked_point, distance + 4, 2)
 
 				if(prob(25))
+					var/obj/structure/closet/crate/mail/economy/new_create
+					var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
+					var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 					if(!SSeconomy.mail_crate)
-						create_mail()
+						new_create = new /obj/structure/closet/crate/mail/economy(spawning_turf)
+						SSeconomy.mail_crate = new_create
 					if(SSeconomy.mail_crate)
-						var/obj/effect/oshan_launch_point/cargo/picked_point = pick(GLOB.cargo_launch_points)
-						var/turf/open/spawning_turf = get_edge_target_turf(picked_point, picked_point.map_edge_direction)
 						SSeconomy.mail_crate.forceMove(spawning_turf)
+						new_create = SSeconomy.mail_crate
 						var/distance = get_dist(spawning_turf, picked_point)
-						SSeconomy.mail_crate.throw_at(picked_point, distance + 4, 2)
+						new_create.throw_at(picked_point, distance + 4, 2)
 						SSeconomy.mail_crate = null
 
 				currently_sending = FALSE
@@ -514,21 +517,3 @@
 
 	var/datum/signal/status_signal = new(list("command" = command))
 	frequency.post_signal(src, status_signal)
-
-/obj/machinery/computer/cargo/proc/create_mail()
-	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
-	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked)
-		return
-
-	//spawn crate
-	var/list/empty_turfs = list()
-	for(var/place as anything in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
-		for(var/turf/open/floor/shuttle_floor in shuttle_area)
-			if(shuttle_floor.is_blocked_turf())
-				continue
-			empty_turfs += shuttle_floor
-
-	var/obj/structure/closet/crate/mail/economy/new_create = new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
-
-	SSeconomy.mail_crate = new_create
