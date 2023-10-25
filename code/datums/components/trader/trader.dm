@@ -55,18 +55,25 @@
 	///Contains information of a specific trader
 	var/datum/trader_data/trader_data
 
-/datum/component/trader/Initialize(trader_data_path)
+/*
+Can accept both a type path, and an instance of a datum. Type path has priority.
+*/
+/datum/component/trader/Initialize(trader_data_path = null, trader_data = null)
 	. = ..()
-	if (!isliving(parent))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	if (!trader_data_path)
+
+	if(ispath(trader_data_path, /datum/trader_data))
+		trader_data = new trader_data_path
+	if(isnull(trader_data))
 		CRASH("Initialised trader component with no trader data.")
 
-	trader_data = new trader_data_path
+	src.trader_data = trader_data
+
 	var/mob/living/trader = parent
-	trader.ai_controller.set_blackboard_key(BB_SHOP_SPOT_TYPE, trader_data.shop_spot_type)
-	trader.ai_controller.set_blackboard_key(BB_SHOP_SIGN_TYPE, trader_data.sign_type)
-	trader.ai_controller.set_blackboard_key(BB_SHOP_SOUND, trader_data.sell_sound)
+	trader.ai_controller.set_blackboard_key(BB_SHOP_SPOT_TYPE, src.trader_data.shop_spot_type)
+	trader.ai_controller.set_blackboard_key(BB_SHOP_SIGN_TYPE, src.trader_data.sign_type)
+	trader.ai_controller.set_blackboard_key(BB_SHOP_SOUND, src.trader_data.sell_sound)
 
 	radial_icons_cache = list(
 		TRADER_RADIAL_BUY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy"),

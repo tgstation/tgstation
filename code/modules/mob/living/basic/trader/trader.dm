@@ -43,10 +43,12 @@
 /mob/living/basic/trader/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, species_path = species_path, mob_spawn_path = spawner_path, r_hand = held_weapon_visual)
-	AddComponent(/datum/component/trader, trader_data_path)
+
+	var/datum/trader_data/trader_data = new trader_data_path
+	AddComponent(/datum/component/trader, trader_data = trader_data)
 	AddComponent(/datum/component/ranged_attacks, casing_type = ranged_attack_casing, projectile_sound = ranged_attack_sound, cooldown_time = 3 SECONDS)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/ai_swap_combat_mode, BB_BASIC_MOB_CURRENT_TARGET, "Thief!", "A discount I call death.")
+	AddElement(/datum/element/ai_swap_combat_mode, BB_BASIC_MOB_CURRENT_TARGET, trader_data.say_phrases[TRADER_BATTLE_START_PHRASE], trader_data.say_phrases[TRADER_BATTLE_END_PHRASE])
 	if(LAZYLEN(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)

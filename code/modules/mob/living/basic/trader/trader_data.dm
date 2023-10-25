@@ -59,6 +59,12 @@
 		TRADER_NOT_SELLING_ANYTHING = list(
 			"I'm currently selling nothing at the moment.",
 		),
+		TRADER_BATTLE_START_PHRASE = list(
+			"Thief!",
+		),
+		TRADER_BATTLE_END_PHRASE = list(
+			"That is a discount I call death.",
+		),
 	)
 
 /**
@@ -134,5 +140,11 @@
 		),
 		TRADER_NOT_SELLING_ANYTHING = list(
 			"I'm currently selling nothing at the moment.",
+		),
+		TRADER_BATTLE_START_PHRASE = list(
+			"The ride ends for you!",
+		),
+		TRADER_BATTLE_END_PHRASE = list(
+			"Mr. Bones never misses!",
 		),
 	)
