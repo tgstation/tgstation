@@ -185,7 +185,7 @@
 		return
 	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
 	// intended for people who have like three mislabeled magazines
-	. += span_notice("\The [top_round] is ready in [src].")
+	. += span_notice("The [top_round] is ready in [src].")
 
 
 /obj/item/ammo_box/update_desc(updates)
