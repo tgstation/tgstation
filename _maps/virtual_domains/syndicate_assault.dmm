@@ -41,7 +41,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "bh" = (
@@ -230,7 +230,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ip" = (
-/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "iB" = (
@@ -268,7 +268,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged/smg/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ja" = (
@@ -287,7 +287,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "jA" = (
 /obj/structure/cable,
-/mob/living/basic/syndicate/melee/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/melee/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "jJ" = (
@@ -406,7 +406,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "oZ" = (
-/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "pl" = (
@@ -629,7 +629,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "yD" = (
-/mob/living/basic/syndicate/ranged/smg/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "yJ" = (
@@ -680,7 +680,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged/smg/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Bm" = (
@@ -723,7 +723,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "CK" = (
-/mob/living/basic/syndicate/ranged/smg/pilot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/mob/living/basic/trooper/syndicate/ranged/smg/pilot,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "CR" = (
@@ -773,7 +776,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "EX" = (
-/mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Fp" = (
@@ -1062,7 +1065,7 @@
 /turf/closed/mineral/random,
 /area/space)
 "QX" = (
-/mob/living/basic/syndicate/ranged/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Ra" = (

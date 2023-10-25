@@ -276,20 +276,26 @@
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
-	var/list/viewers = list()
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 
-		viewers += ghost // This mob will see the alert
-
 		if(flashwindow)
 			window_flash(ghost.client)
 
+		if(ghost_sound)
+			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
+
 		if(isnull(source))
+			to_chat(ghost, span_ghostalert(message))
 			continue
+
+		var/custom_link = enter_link ? " [enter_link]" : ""
+		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+
+		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
 
 		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
 			category = "[REF(source)]_notify_action",
@@ -300,14 +306,6 @@
 		toast.desc = "Click to [action]."
 		toast.name = header
 		toast.target = source
-
-	var/orbit_link
-	if(source && action == NOTIFY_ORBIT)
-		orbit_link = " <a href='?src=[REF(usr)];follow=[REF(source)]'>(Orbit)</a>"
-
-	var/text = "[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"
-
-	minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)

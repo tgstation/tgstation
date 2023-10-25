@@ -968,3 +968,81 @@
       their own announcements. Boo!
   san7890:
   - qol: Adminwho messages are now in an examine block for heightened clarity.
+2023-10-24:
+  DrDiasyl:
+  - qol: The Command intercom now has a High-Volume setting like command headsets
+  - qol: A memo telling frequencies of station radio channels are now present near
+      the Command intercom and T-Comms room
+  - image: Station, Command, and Prison intercoms have received new sprites
+  - spellcheck: Station and Command intercom descriptions have been changed to tell
+      about their functionality
+  Fikou:
+  - bugfix: surgical trays no longer animate when opened
+  Ghommie:
+  - bugfix: The polymorphic belt shouldn't work on animated objects. Logically wouldn't
+      have DNA.
+  Jacquerel:
+  - bugfix: Food created by mixing chemicals once again has a reagent purity based
+      on the component chemicals.
+  SyncIt21:
+  - bugfix: plastic sheet produces 4 tiles via the tiles option without using the
+      crafting menu
+  cnleth:
+  - bugfix: Replaced error spaghetti in thunderdome kitchen with regular cooked spaghetti
+  exdal:
+  - bugfix: hallucination announcements use new announcement style
+  jlsnow301:
+  - bugfix: Entering a virtual domain should no longer give you a message that it
+      doesn't forbid items
+2023-10-25:
+  CoiledLamb:
+  - image: resprites air alarms
+  DrDiasyl:
+  - rscadd: New automatic weapon for the crew - Disabler SMG. Capable of rapidly firing
+      weak disabler beams.
+  - image: Muzzle flashes got a new sprite, each direction included!
+  - image: Temperature Gun "BAKE" beams are now lava colored
+  Hatterhat:
+  - qol: Universal scanners are now capable of recognizing the account owners and
+      assigned profit splits on barcodes. Cargo technicians are asked to do their
+      due diligence when matters call for it.
+  - rscadd: Anomaly-locked MODsuit modules can now be varedited to have unremovable
+      cores, or can be spawned with this functionality by using the /prebuilt/locked
+      subtype.
+  Jacquerel:
+  - bugfix: You will no longer be asked to construct meteor shields on stations which
+      cannot be hit by meteors.
+  Melbert:
+  - refactor: Refactored zombies to use the regenerator component. Now they'll have
+      a slight glow/animation when the regeneration actually kicks in.
+  - qol: Monkey cubes have a slight animation associated now.
+  - bugfix: Cooking Deserts 101 grants all intended recipes
+  OrionTheFox:
+  - qol: Railings now have Examine hints for how to deconstruct them
+  - bugfix: '[Tramstation] fixed a missing Scrubber in the Civilian Radiation Shelter'
+  Rhials:
+  - bugfix: The Infected Domain should no longer fill up with smelly, poisonous gas
+      over time.
+  TheBoondock:
+  - qol: improves blackout drunk character gameplay
+  - bugfix: fixed improper prob() placement that caused blackout character to be forced
+      sleep
+  - sound: added hiccup sound
+  jlsnow301:
+  - bugfix: Ghost alerts have been tuned down a bit.
+  lizardqueenlexi:
+  - refactor: Hostile skeleton NPCs now use the basic mob framework. They're a little
+      smarter, and they also have a slightly improved set of attack effects and sounds.
+      They love to drink milk, but will be harmed greatly if any heartless spaceman
+      tricks them into drinking soymilk instead. Please report any bugs.
+  - refactor: Hostile Nanotrasen mobs now use the basic mob framework. This should
+      make them a little smarter and more dangerous. Please report any bugs.
+  - bugfix: Russian mobs will now actually use those knives they're holding.
+  - refactor: Juggernaut constructs now use the basic mob framework. Please report
+      any bugs.
+  mc-oofert:
+  - bugfix: you may not enter knock path caretakers last refuge with the nuke disk
+  - bugfix: you can no longer cuff knock heretics in refuge
+  necromanceranne:
+  - bugfix: The nanites inside of thermal pistols are once again angry, and aggressively
+      want to burn/puncture people.

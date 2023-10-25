@@ -44,7 +44,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
 "bA" = (
-/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
 "bG" = (
@@ -65,7 +65,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/kitchen)
 "bR" = (
-/mob/living/basic/syndicate/ranged/shotgun/space,
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
 /obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = 3;
 	pixel_y = 10
@@ -1972,7 +1972,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "JM" = (
-/mob/living/basic/syndicate/ranged/shotgun/space,
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Kc" = (
@@ -2132,7 +2132,7 @@
 "LW" = (
 /obj/effect/turf_decal/loading_area/red,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/basic/syndicate/ranged/smg/space,
+/mob/living/basic/trooper/syndicate/ranged/smg/space,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -2612,7 +2612,7 @@
 /area/ruin/space/has_grav/waystation/dorms)
 "UC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/basic/syndicate/ranged/smg/space,
+/mob/living/basic/trooper/syndicate/ranged/smg/space,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)

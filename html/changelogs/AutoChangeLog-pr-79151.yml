@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "The polymorphic belt shouldn't work on animated objects. Logically wouldn't have DNA."
