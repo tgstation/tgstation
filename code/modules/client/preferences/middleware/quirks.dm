@@ -3,7 +3,6 @@
 	var/tainted = FALSE
 
 	action_delegations = list(
-		"customize_quirk" = PROC_REF(customize_quirk),
 		"give_quirk" = PROC_REF(give_quirk),
 		"remove_quirk" = PROC_REF(remove_quirk),
 	)
@@ -54,9 +53,6 @@
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)
 	tainted = TRUE
-
-/datum/preference_middleware/quirks/proc/customize_quirk(list/params, mob/user)
-	return // TODO EXPAND LATER
 
 /datum/preference_middleware/quirks/proc/give_quirk(list/params, mob/user)
 	var/quirk_name = params["quirk"]

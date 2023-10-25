@@ -137,9 +137,9 @@ const QuirkList = (props: {
                         selected={customization_expanded}
                         icon="cog"
                         tooltip={
-                          !props.selected
-                            ? 'You must take this quirk before you can customize it!'
-                            : 'This quirk is customizable! Click this button to open a customization menu!'
+                          props.selected
+                            ? 'This quirk is customizable! Click this button to open a customization menu!'
+                            : 'You must take this quirk before you can customize it!'
                         }
                         onClick={(e) => {
                           e.stopPropagation();

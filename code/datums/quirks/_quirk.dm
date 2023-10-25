@@ -33,7 +33,7 @@
 	/// The base weight for the each quirk's mail goodies list to be selected is 5
 	/// then the item selected is determined by pick(selected_quirk.mail_goodies)
 	var/mail_goodies = list()
-	/// Is this quirk customizable? If true, a button will appear within the quirk's description box in the quirks page, and apon clicking it,
+	/// Is this quirk customizable? If true, a button will appear within the quirk's description box in the quirks page, and upon clicking it,
 	/// will open a customization menu for the quirk.
 	var/customizable = FALSE
 

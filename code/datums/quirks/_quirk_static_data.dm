@@ -21,12 +21,15 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 
 	return all_pregen_data
 
+/// A singleton datum representing static data and procs used by quirks.
 /datum/quirk_static_data
+	/// Abstract in OOP terms. If this is our type, we will not be instantiated.
 	var/abstract_type = /datum/quirk_static_data
 
+	/// The typepath of the quirk we will be associated with in the global list. This is what we represent.
 	var/datum/quirk/associated_typepath
 
-	/// A lazylist of preference datum typepaths.
+	/// A lazylist of preference datum typepaths. Any character pref put in here will be rendered in the quirks page under a dropdown.
 	var/list/datum/preference/customization_options
 
 /datum/quirk_static_data/New()
@@ -36,6 +39,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 		if (isnull(associated_typepath))
 			stack_trace("associated_typepath null - please set it! occured on: [src.type]")
 
+/// Returns a list of savefile_keys derived from the preference typepaths in [customization_options]. Used in quirks middleware to supply the preferences to render.
 /datum/quirk_static_data/proc/get_customization_data()
 	RETURN_TYPE(/list)
 
@@ -52,7 +56,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 	return customization_data
 
 /datum/quirk_static_data/Destroy(force, ...)
-	var/error_message = "[src], a singleton wound static data instance, was destroyed! This should not happen!"
+	var/error_message = "[src], a singleton quirk static data instance, was destroyed! This should not happen!"
 	if (force)
 		error_message += " NOTE: This Destroy() was called with force == TRUE. This instance will be deleted and replaced with a new one."
 	stack_trace(error_message)
