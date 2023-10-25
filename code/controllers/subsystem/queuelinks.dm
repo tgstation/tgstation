@@ -48,7 +48,11 @@ SUBSYSTEM_DEF(queuelinks)
 		return
 	partners += what
 
-	queue_max = (max >= queue_max ? max : queue_max)
+	if(max != 0 && max != queue_max)
+		CRASH("Tried to change queue size to [max] from [queue_max]!")
+		return
+	else if(!queue_max)
+		queue_max = max	
 	
 	if(!queue_max || length(partners) < queue_max)
 		return
