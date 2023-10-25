@@ -8981,7 +8981,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/purple/warning,
-/turf/open/floor/iron/dark/textured_edge/airless{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
 /area/station/science/lobby)
@@ -13672,7 +13672,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/line,
 /obj/structure/cable,
-/turf/open/floor/iron/dark/textured_edge/airless{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
 /area/station/science/lobby)
@@ -13735,9 +13735,7 @@
 	},
 /obj/effect/turf_decal/trimline/purple/warning,
 /obj/structure/cable,
-/turf/open/floor/iron/dark/textured_edge/airless{
-	dir = 1
-	},
+/turf/open/floor/iron/dark/textured_edge,
 /area/station/science/lobby)
 "hcI" = (
 /obj/machinery/light/directional/south,
@@ -31701,7 +31699,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/purple/line,
-/turf/open/floor/iron/dark/textured_edge/airless{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
 /area/station/science/lobby)
@@ -45082,7 +45080,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/purple/line,
-/turf/open/floor/iron/dark/textured_edge/airless{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
 /area/station/science/lobby)
