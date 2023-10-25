@@ -132,7 +132,7 @@
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
 
 /// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered.
-#define PREFERENCE_NON_APPLICABLE "non_applicable"
+#define PREFERENCE_CATEGORY_NON_APPLICABLE "non_applicable"
 
 // Playtime is tracked in minutes
 /// The time needed to unlock hardcore random mode in preferences
