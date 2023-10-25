@@ -1549,31 +1549,35 @@
 	return
 
 /**
- *Tool behavior procedure. Redirects to tool-specific procs by default.
+ * ## Item interaction
  *
- * You can override it to catch all tool interactions, for use in complex deconstruction procs.
+ * Handles non-combat iteractions of a tool on this atom,
+ * such as using a tool on a wall to deconstruct it,
+ * or scanning someone with a health analyzer
  *
- * Must return  parent proc ..() in the end if overridden
+ * This can be overridden to add custom item interactions to this atom
  */
-/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	var/act_result
-	var/signal_result
+/atom/proc/item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+	SHOULD_CALL_PARENT(TRUE)
 
 	var/is_left_clicking = !is_right_clicking
 
-	if(is_left_clicking) // Left click first for sensibility
-		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes)
-		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
-			return TOOL_ACT_SIGNAL_BLOCKING
-		if(processing_recipes.len)
-			process_recipes(user, tool, processing_recipes)
-		if(QDELETED(tool))
-			return TRUE
-	else
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, tool)
-		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
-			return TOOL_ACT_SIGNAL_BLOCKING
+	var/interact_return = is_left_clicking ? tool.interact_with_atom(src, user) : tool.interact_with_atom_secondary(src, user)
+	if(interact_return)
+		return interact_return
+
+	var/list/processing_recipes = list()
+	var/signal_result = is_left_clicking \
+		? SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes) \
+		: SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, tool)
+	if(signal_result)
+		return signal_result
+	if(length(processing_recipes))
+		process_recipes(user, tool, processing_recipes)
+	if(QDELETED(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS // Safe-ish to assume that if we deleted our item something succeeded
+
+	var/act_result = NONE // or FALSE, or null, as some things may return
 
 	switch(tool_type)
 		if(TOOL_CROWBAR)
@@ -1590,18 +1594,18 @@
 			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_secondary(user, tool)
 		if(TOOL_ANALYZER)
 			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_secondary(user, tool)
+
 	if(!act_result)
-		return
+		return NONE
 
 	// A tooltype_act has completed successfully
 	if(is_left_clicking)
 		log_tool("[key_name(user)] used [tool] on [src] at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_type), src)
+		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_type), src)
 	else
 		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
+		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
+	return act_result
 
 /atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
 	//Only one recipe? use the first
@@ -1662,6 +1666,12 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
 	if(user.mind)
 		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+
+/obj/item/proc/interact_with_atom(atom/interacting_with, mob/living/user)
+	return NONE
+
+/obj/item/proc/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+	return interact_with_atom(interacting_with, user)
 
 //! Tool-specific behavior procs.
 ///

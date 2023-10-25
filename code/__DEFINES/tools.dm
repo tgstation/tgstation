@@ -27,10 +27,15 @@
 
 // tool_act chain flags
 
-/// When a tooltype_act proc is successful
-#define TOOL_ACT_TOOLTYPE_SUCCESS (1<<0)
-/// When [COMSIG_ATOM_TOOL_ACT] blocks the act
+
+/// Return whena tooltype_act proc is successful.
+/// This cancels the rest of the chain entirely and indicates success.
+#define TOOL_ACT_TOOLTYPE_SUCCESS (1<<0) // Same as TRUE, as most tool implementations return TRUE on success.
+/// When [COMSIG_ATOM_TOOL_ACT] blocks the act.
+/// This cancels the rest of the chain entirely, but does not necessarily indicate success nor failure.
 #define TOOL_ACT_SIGNAL_BLOCKING (1<<1)
+/// Return to skip the rest of the interaction chain, going straight to the attack chain.
+#define TOOL_ACT_SKIP_TO_ATTACK (1<<2)
 
 /// When [TOOL_ACT_TOOLTYPE_SUCCESS] or [TOOL_ACT_SIGNAL_BLOCKING] are set
 #define TOOL_ACT_MELEE_CHAIN_BLOCKING (TOOL_ACT_TOOLTYPE_SUCCESS | TOOL_ACT_SIGNAL_BLOCKING)
