@@ -133,6 +133,7 @@
 	select_frog_name(user, new_frog)
 	select_frog_color(user, new_frog)
 	user.put_in_hands(statue)
+	qdel(src)
 
 
 
