@@ -8,7 +8,7 @@
 	var/check_every = 20 SECONDS
 	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
-	var/list/valid_emotes = list(/datum/emote/living/carbon/blink, /datum/emote/living/carbon/blink_r)
+	var/list/valid_emotes = list(/datum/emote/living/carbon/blink, /datum/emote/living/carbon/blink/blink_r)
 
 /datum/component/manual_blinking/Initialize()
 	if(!iscarbon(parent))
