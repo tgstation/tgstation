@@ -360,6 +360,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	custom_materials = null
+	start_on = TRUE
 
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
