@@ -43,7 +43,6 @@ Difficulty: Extremely Hard
 	death_message = "falls to the ground, decaying into plasma particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	stat_attack = HARD_CRIT // so it doesn't attack the corpses in its arena
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state
@@ -94,6 +93,9 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	if(client)
+		return
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD) //don't go out of our way to fire our disintegrating attacks at corpses
 		return
 
 	var/easy_attack = prob(80 - enraged * 40)
