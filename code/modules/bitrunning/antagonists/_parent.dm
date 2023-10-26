@@ -70,7 +70,7 @@
 		"Run integrity check and purge for digital disorder."
 	)
 	explanation_text = pick(explanation_texts)
-	..()
+	return ..()
 
 /datum/objective/bitrunning_glitch_fluff/check_completion()
 	var/list/alive = GLOB.alive_player_list.Copy()

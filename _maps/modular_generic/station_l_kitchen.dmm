@@ -434,6 +434,10 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/virtual_domain)
+"D" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "E" = (
 /obj/machinery/deepfryer,
 /obj/effect/turf_decal/tile/neutral{
@@ -770,7 +774,7 @@ a
 a
 a
 a
-a
+D
 "}
 (2,1,1) = {"
 a

@@ -52,9 +52,9 @@
 /mob/living/basic/netguardian/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ranged_attacks, \
-	casing_type = /obj/item/ammo_casing/c46x30mm, \
-	projectile_sound = 'sound/weapons/gun/smg/shot.ogg', \
-	burst_shots = 6 \
+		casing_type = /obj/item/ammo_casing/c46x30mm, \
+		projectile_sound = 'sound/weapons/gun/smg/shot.ogg', \
+		burst_shots = 6 \
 	)
 
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/rockets = new(src)

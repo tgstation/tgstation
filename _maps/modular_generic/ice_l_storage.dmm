@@ -45,6 +45,10 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plastic,
 /area/virtual_domain)
+"j" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "k" = (
 /turf/open/floor/plating,
 /area/virtual_domain)
@@ -320,7 +324,7 @@ a
 a
 a
 a
-a
+j
 "}
 (2,1,1) = {"
 a
