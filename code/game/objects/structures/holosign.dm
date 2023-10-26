@@ -153,12 +153,7 @@
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
 	max_integrity = 1
-	var/force_allaccess = FALSE
 	var/buzzcd = 0
-
-/obj/structure/holosign/barrier/medical/examine(mob/user)
-	. = ..()
-	. += span_notice("The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.")
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -190,10 +185,6 @@
 
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
 	if(!user.combat_mode && CanPass(user, get_dir(src, user)))
-		force_allaccess = !force_allaccess
-		to_chat(user, span_warning("You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.")) //warning spans because you can make the station sick!
-	else
-		return ..()
 
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
