@@ -294,6 +294,9 @@
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_CUFF_PREVENT
 
+/datum/status_effect/caretaker_refuge/proc/prevent_cuff(datum/source, mob/attemptee)
+	SIGNAL_HANDLER
+	return COMSIG_CARBON_CUFF_PREVENT
 
 // Path Of Moon status effect which hides the identity of the heretic
 /datum/status_effect/moon_grasp_hide
@@ -315,7 +318,3 @@
 	name = "Blessing of The Moon"
 	desc = "The Moon clouds their vision, as the sun always has yours."
 	icon_state = "moon_hide"
-
-/datum/status_effect/caretaker_refuge/proc/prevent_cuff(datum/source, mob/attemptee)
-	SIGNAL_HANDLER
-	return COMSIG_CARBON_CUFF_PREVENT
