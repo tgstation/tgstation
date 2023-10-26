@@ -45920,7 +45920,6 @@
 	name = "Private Study";
 	req_access = list("library")
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "xcq" = (
