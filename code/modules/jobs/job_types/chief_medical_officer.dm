@@ -57,7 +57,6 @@
 	id_trim = /datum/id_trim/job/chief_medical_officer
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)

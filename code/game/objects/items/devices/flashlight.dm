@@ -293,21 +293,29 @@
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!proximity_flag)
-		if(holo_cooldown > world.time)
-			to_chat(user, span_warning("[src] is not ready yet!"))
-			return
-		var/T = get_turf(target)
-		if(locate(/mob/living) in T)
-			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
-			holo_cooldown = world.time + 10 SECONDS
-			return
+	if(proximity_flag)
+		return
+
+	if(holo_cooldown > world.time)
+		to_chat(user, span_warning("[src] is not ready yet!"))
+		return
+
+	var/target_turf = get_turf(target)
+	var/mob/living/living_target = locate(/mob/living) in target_turf
+
+	if(!living_target || (living_target == user))
+		return
+
+	to_chat(living_target, span_boldnotice("[user] is offering medical assistance; please halt your actions."))
+	new /obj/effect/temp_visual/medical_holosign(target_turf, user) //produce a holographic glow
+	holo_cooldown = world.time + 10 SECONDS
 
 // see: [/datum/wound/burn/flesh/proc/uv()]
 /obj/item/flashlight/pen/paramedic
 	name = "paramedic penlight"
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
 	icon_state = "penlight_surgical"
+	light_color = LIGHT_COLOR_PURPLE
 	/// Our current UV cooldown
 	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
