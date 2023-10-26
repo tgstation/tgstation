@@ -1,3 +1,5 @@
+#define INVISIBILITY_NONE 0
+
 #define SEE_INVISIBLE_MINIMUM 5
 
 #define INVISIBILITY_LIGHTING 20
@@ -57,3 +59,19 @@
 /// Bitfield of sight flags that show THINGS but no lighting
 /// Since lighting is an underlay on turfs, this is everything but that
 #define SEE_AVOID_TURF_BLACKNESS (SEE_MOBS|SEE_OBJS)
+
+//------------------------
+// INVISIBILITY PRIORITIES
+
+#define INVISIBILITY_PRIORITY_ADMIN 100
+#define INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY 1
+#define INVISIBILITY_PRIORITY_NONE 0
+
+//------------------------
+// INVISIBILITY SOURCE IDS
+// Though don't feel the need to add one here if you have a simple effect that
+// gets added and/or removed in only one place near eachother in the code.
+
+#define INVISIBILITY_SOURCE_INVISIMIN "invisimin"
+#define INVISIBILITY_SOURCE_STEALTHMODE "stealthmode"
+

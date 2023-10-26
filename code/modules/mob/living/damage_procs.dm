@@ -250,7 +250,7 @@
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/can_adjust_tox_loss(amount, forced, required_biotype)
+/mob/living/proc/can_adjust_tox_loss(amount, forced, required_biotype = ALL)
 	if(!forced && ((status_flags & GODMODE) || !(mob_biotypes & required_biotype)))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_TOX_DAMAGE, TOX, amount, forced) & COMPONENT_IGNORE_CHANGE)
@@ -316,7 +316,7 @@
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/can_adjust_clone_loss(amount, forced, required_biotype)
+/mob/living/proc/can_adjust_clone_loss(amount, forced, required_biotype = ALL)
 	if(!forced && (!(mob_biotypes & required_biotype) || status_flags & GODMODE || HAS_TRAIT(src, TRAIT_NOCLONELOSS)))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_CLONE_DAMAGE, CLONE, amount, forced) & COMPONENT_IGNORE_CHANGE)
@@ -359,7 +359,7 @@
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/can_adjust_stamina_loss(amount, forced, required_biotype)
+/mob/living/proc/can_adjust_stamina_loss(amount, forced, required_biotype = ALL)
 	if(!forced && (!(mob_biotypes & required_biotype) || status_flags & GODMODE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, STAMINA, amount, forced) & COMPONENT_IGNORE_CHANGE)
