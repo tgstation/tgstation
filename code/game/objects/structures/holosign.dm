@@ -156,9 +156,7 @@
 	var/buzzcd = 0
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(force_allaccess)
-		return TRUE
+
 	if(istype(mover, /obj/vehicle/ridden))
 		for(var/M in mover.buckled_mobs)
 			if(ishuman(M))
