@@ -31,7 +31,6 @@
 		/obj/item/reagent_containers/cup/beaker/eldritch,
 		/obj/item/stack/sheet/glass, // Glass is often used by moon heretics
 	))
-	RegisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 
 
@@ -54,18 +53,12 @@
 	charge_recovery = charge_recovery, show_charge_as_alpha = show_charge_as_alpha, shield_icon = heretic_shield_icon)
 
 
-/obj/item/storage/belt/unfathomable_curio/proc/on_examine(atom/source, mob/living/carbon/human/user, list/examine_list)
-	SIGNAL_HANDLER
-
+/obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	if(IS_HERETIC(user))
 		return
 
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 160)
 	user.adjust_temp_blindness(5 SECONDS)
-	examine_list += span_danger("The [source] it. It looked.")
+	. += span_notice(" It. It looked. IT WRAPS ITSELF AROUND ME.")
 
-
-/obj/item/storage/belt/unfathomable_curio/Destroy()
-	UnregisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	return ..()
 

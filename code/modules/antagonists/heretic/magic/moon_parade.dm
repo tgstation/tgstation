@@ -40,11 +40,11 @@
 	soundloop = new(src,  TRUE)
 	. = ..()
 
-/obj/projectile/moon_parade/on_hit(atom/hit, blocked=0, pierce_hit)
+/obj/projectile/moon_parade/on_hit(atom/target, blocked=0, pierce_hit)
 	. = ..()
-	if(isliving(hit) && isliving(firer))
+	if(isliving(target) && isliving(firer))
 		var/mob/living/caster = firer
-		var/mob/living/victim = hit
+		var/mob/living/victim = target
 		if(caster == victim)
 			return PROJECTILE_PIERCE_PHASE
 
@@ -66,7 +66,8 @@
 		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
 		//Lowers sanity
 		victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
-	return PROJECTILE_PIERCE_PHASE
+	else
+		return PROJECTILE_PIERCE_PHASE
 
 
 /obj/projectile/moon_parade/Destroy(atom/hit)

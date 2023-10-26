@@ -246,8 +246,9 @@
 	delusion_name = "Heretic"
 	affects_others = TRUE
 	affects_us = FALSE
-	duration = 600 SECONDS
+	duration = 300 SECONDS
 
 /datum/hallucination/delusion/preset/heretic/make_delusion_image(mob/over_who)
-	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination, /datum/species/human))
+	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination))
+
 	return ..()

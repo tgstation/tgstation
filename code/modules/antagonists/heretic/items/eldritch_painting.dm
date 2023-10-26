@@ -7,7 +7,7 @@
 
 /obj/structure/sign/poster/eldritch_painting
 	poster_item_name = "The sister and He Who Wept"
-	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its seditious themes are likely to demoralise Nanotrasen employees."
+	poster_item_desc = "A painting with a pretty lady and...Him...He weeps, and I will see him once more."
 	poster_item_icon_state = "rolled_traitor"
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
@@ -25,7 +25,6 @@
 
 /obj/structure/sign/poster/eldritch_painting/on_placed_poster(mob/user)
 	base_painting = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
-	RegisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	return ..()
 
 /obj/structure/sign/poster/eldritch_painting/attackby(obj/item/I, mob/user, params)
@@ -35,8 +34,6 @@
 
 /obj/structure/sign/poster/eldritch_painting/attack_hand(mob/living/user, list/modifiers)
 	var/rips = 0
-	if(.)
-		return
 	if(ruined)
 		return
 	// Has the user already ripped up this painting once?
@@ -50,18 +47,16 @@
 		tear_poster(user)
 		QDEL_NULL(base_painting)
 
-/obj/structure/sign/poster/eldritch_painting/proc/on_examine(datum/source, mob/living/examiner)
-	SIGNAL_HANDLER
-	if(IS_HERETIC(examiner))
-		examiner.remove_status_effect(/datum/hallucination)
-		to_chat(examiner, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
+/obj/structure/sign/poster/eldritch_painting/examine(mob/living/carbon/user)
+	if(IS_HERETIC(user))
+		user.remove_status_effect(/datum/hallucination)
+		to_chat(user, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
 	else
-		examiner.remove_status_effect(/datum/hallucination/delusion/preset/heretic)
-		to_chat(examiner, span_notice("Respite, for now...."))
+		user.remove_status_effect(/datum/hallucination/delusion/preset/heretic)
+		to_chat(user, span_notice("Respite, for now...."))
 
 /obj/structure/sign/poster/eldritch_painting/Destroy()
 	QDEL_NULL(base_painting)
-	UnregisterSignal(COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	return ..()
 
 /*
@@ -101,13 +96,12 @@
 
 
 /datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
-	var/chance_to_cause_hallucination = 1
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
-	if(SPT_PROB(0.5 * chance_to_cause_hallucination, seconds_per_tick))
+	if(owner.has_status_effect(/datum/hallucination/delusion/preset/heretic))
+		return
+	if(times_fired>600)
 		owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	else
-		chance_to_cause_hallucination +=0.2
 
 /datum/brain_trauma/severe/weeping/on_gain()
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
