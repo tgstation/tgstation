@@ -71,7 +71,7 @@ export const MatMarket = (props, context) => {
                 Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
               </Stack.Item>
               <Stack.Item width="232px">
-                Current Order Amount: <b>{formatMoney(orderBalance)}</b> cr.
+                Current Order Cost: <b>{formatMoney(orderBalance)}</b> cr.
               </Stack.Item>
               <Stack.Item>
                 <Button
