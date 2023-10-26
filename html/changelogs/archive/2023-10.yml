@@ -233,3 +233,27 @@
   - qol: moved APC, fixed wires.
   dwasint:
   - rscadd: votable story tellers
+2023-10-26:
+  Dexee:
+  - qol: even more doors audited and names fixed.
+  - rscadd: Custodial Closet/Janitor now on NAVIGATE VERB
+  - qol: 'moved the prisoner spawners to the brig bridge next to the hole so they
+      can throw themselves in. (note: if an AI main is reading this, no, you are not
+      allowed to release the prisoners under Law 1 unless the HOS/Captain gives you
+      specific position. This is to help the prisoners that start on Oshan don''t
+      just fucking die)'
+  - qol: 'There are now patient rooms. Yay.
+
+      Tram:'
+  - rscadd: a single missing disposal pipe in front of det's office so now trash doesn't
+      come flying out of the floor.
+  DexeeXI:
+  - qol: fixed some bad door perms (one v all)
+  - qol: fixed tiles in science being marked as AIRLESS tiles instead of... well,
+      not.
+  - qol: some lights replaced in maints with maints varients. offsets should be getting
+      adjusted so they look less like shit.
+  MomoBerri:
+  - bugfix: sprite ffix
+  scriptis:
+  - rscadd: don't blink. don't blink not even for a second
