@@ -111,7 +111,7 @@
 	..()
 
 // Gives human targets Midas Blight.
-/obj/projectile/magic/midas_round/on_hit(atom/target)
+/obj/projectile/magic/midas_round/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/my_guy = target

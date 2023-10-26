@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 	name = "Fish Scanning Experiment 1"
 	description = "An experiment requiring different fish species to be scanned to unlock the 'Beach' setting for the fishing portal generator."
 	performance_hint = "Scan fish. Examine scanner to review progress. Unlock new fishing portals."
-	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner, /obj/item/fishing_rod/tech)
+	allowed_experimentors = list(/obj/item/experi_scanner, /obj/machinery/destructive_scanner, /obj/item/fishing_rod/tech, /obj/item/fish_analyzer)
 	traits = EXPERIMENT_TRAIT_TYPECACHE
 	points_reward = list(TECHWEB_POINT_TYPE_GENERIC = 750)
 	required_atoms = list(/obj/item/fish = 4)

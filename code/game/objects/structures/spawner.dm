@@ -8,11 +8,12 @@
 	anchored = TRUE
 	density = TRUE
 
+	faction = list(FACTION_HOSTILE)
+
 	var/max_mobs = 5
 	var/spawn_time = 30 SECONDS
 	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_text = "emerges from"
-	var/faction = list(FACTION_HOSTILE)
 	var/spawner_type = /datum/component/spawner
 	/// Is this spawner taggable with something?
 	var/scanner_taggable = FALSE
@@ -76,7 +77,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
-	mob_types = list(/mob/living/basic/syndicate/ranged)
+	mob_types = list(/mob/living/basic/trooper/syndicate/ranged)
 	faction = list(ROLE_SYNDICATE)
 	mob_gps_id = "SYN" // syndicate
 	spawner_gps_id = "Hostile Warp Beacon"
@@ -89,7 +90,7 @@
 	max_integrity = 150
 	max_mobs = 15
 	spawn_time = 15 SECONDS
-	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
+	mob_types = list(/mob/living/basic/skeleton)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_SKELETON)
 	mob_gps_id = "SKL" // skeletons

@@ -59,7 +59,7 @@ export const PrimaryObjectiveMenu = (
                 key={prim_obj.id}
                 name={prim_obj['task_name']}
                 description={prim_obj['task_text']}
-                reputation={{
+                dangerLevel={{
                   minutesLessThan: 0,
                   title: 'none',
                   gradient:

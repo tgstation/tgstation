@@ -72,7 +72,8 @@
 	if(!istype(C))
 		return
 
-	SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user)
+	if(SEND_SIGNAL(C, COMSIG_CARBON_CUFF_ATTEMPTED, user) & COMSIG_CARBON_CUFF_PREVENT)
+		return
 
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
 		to_chat(user, span_warning("Uh... how do those things work?!"))

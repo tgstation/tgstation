@@ -29,7 +29,7 @@
 	desc = "A hook."
 	projectile_type = /obj/projectile/hook
 	caliber = CALIBER_HOOK
-	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 
 /obj/projectile/hook
 	name = "hook"
@@ -50,7 +50,7 @@
 	..()
 	//TODO: root the firer until the chain returns
 
-/obj/projectile/hook/on_hit(atom/target)
+/obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(ismovable(target))
 		var/atom/movable/A = target

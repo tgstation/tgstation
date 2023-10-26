@@ -11,8 +11,14 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+#define isimage(thing) (istype(thing, /image))
+
 GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom
-#define isappearance(thing) (!istype(thing, /image) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+#define isappearance(thing) (!isimage(thing) && !ispath(thing) && istype(GLOB.magic_appearance_detecting_image, thing))
+
+// The filters list has the same ref type id as a filter, but isnt one and also isnt a list, so we have to check if the thing has Cut() instead
+GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
+#define isfilter(thing) (!hascall(thing, "Cut") && TYPEID(thing) == GLOB.refid_filter)
 
 #define isgenerator(A) (istype(A, /generator))
 
@@ -141,6 +147,10 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define iscow(A) (istype(A, /mob/living/basic/cow))
 
+#define isgorilla(A) (istype(A, /mob/living/basic/gorilla))
+
+#define is_simian(A) (isgorilla(A) || ismonkey(A))
+
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 
@@ -165,7 +175,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
-#define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
+#define isdrone(A) (istype(A, /mob/living/basic/drone))
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
 
@@ -226,7 +236,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
-#define istramwall(A) (istype(A, /obj/structure/window/reinforced/tram/front))
+#define istramwall(A) (istype(A, /obj/structure/tram))
 
 #define isvendor(A) (istype(A, /obj/machinery/vending))
 

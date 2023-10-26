@@ -38,9 +38,9 @@
 /mob/living/basic/faithless/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	AddElement(/datum/element/door_pryer)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddElement(/datum/element/mob_grabber, steal_from_others = FALSE)
-	AddComponent(/datum/component/pry_open_door)
 
 /mob/living/basic/faithless/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -55,7 +55,8 @@
 
 /datum/ai_controller/basic_controller/faithless
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/faithless(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 
@@ -69,6 +70,3 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
 		/datum/ai_planning_subtree/random_speech/faithless,
 	)
-
-/datum/targetting_datum/basic/faithless
-	stat_attack = UNCONSCIOUS

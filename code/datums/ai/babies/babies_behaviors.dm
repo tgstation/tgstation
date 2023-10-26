@@ -32,7 +32,7 @@
 				partner = other
 
 		//shyness check. we're not shy in front of things that share a faction with us.
-		else if(isliving(other) && !pawn_mob.faction_check_mob(other))
+		else if(isliving(other) && !pawn_mob.faction_check_atom(other))
 			finish_action(controller, FALSE)
 			return
 

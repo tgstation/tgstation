@@ -12,16 +12,14 @@
 	maxHealth = 150
 	faction = list(FACTION_MINING, FACTION_NEUTRAL)
 	health = 150
-	move_resist = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_VERY_STRONG
 	melee_damage_lower = 8
 	melee_damage_upper = 8
-	pass_flags_self = LETPASSTHROW
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	death_sound = 'sound/voice/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/support
 	speed = 5
-
 	pixel_x = -16
 	base_pixel_x = -16
 	pixel_y = -16
@@ -49,6 +47,10 @@
 
 /mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+	)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(attack_intruder)))
 	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
 	jump.Grant(src)
@@ -153,6 +155,9 @@
 
 /mob/living/basic/mining/mook/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
+
+	if(.)
+		return TRUE
 
 	if(!istype(mover, /mob/living/basic/mining/mook))
 		return FALSE
