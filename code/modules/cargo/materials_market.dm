@@ -309,6 +309,7 @@
 			var/datum/supply_order/current_order = find_order(living_user, is_ordering_private)
 			if(!isnull(current_order))
 				SSshuttle.shopping_list -= current_order
+				qdel(current_order)
 
 /obj/item/stock_block
 	name = "stock block"
