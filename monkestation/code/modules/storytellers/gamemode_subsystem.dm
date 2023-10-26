@@ -234,7 +234,7 @@ SUBSYSTEM_DEF(gamemode)
 	return (get_antag_cap() > total_valid_antags)
 
 /// Gets candidates for antagonist roles.
-/datum/controller/subsystem/gamemode/proc/get_candidates(be_special, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, midround_antag_pref, no_antags = TRUE, list/restricted_roles)
+/datum/controller/subsystem/gamemode/proc/get_candidates(be_special, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles)
 	var/list/candidates = list()
 	var/list/candidate_candidates = list() //lol
 
@@ -246,7 +246,7 @@ SUBSYSTEM_DEF(gamemode)
 		else if (observers && isobserver(player))
 			candidate_candidates += player
 		else if (living_players && isliving(player))
-			if(!ishuman(player))
+			if(!ishuman(player) || !isAI(player))
 				continue
 			if(!(player.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
 				continue
@@ -260,6 +260,9 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))
 				continue
+			if(length(required_roles) && !(candidate.mind.assigned_role.title in required_roles))
+				continue
+
 		if(be_special)
 			if(!(candidate.client.prefs) || !(be_special in candidate.client.prefs.be_special))
 				continue
