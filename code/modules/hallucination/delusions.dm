@@ -56,7 +56,7 @@
 	return ..()
 
 /datum/hallucination/delusion/start()
-	if(!hallucinator.client || !delusion_icon_file)
+	if(!hallucinator.client)
 		return FALSE
 
 	feedback_details += "Delusion: [delusion_name]"
@@ -249,6 +249,7 @@
 	duration = 300 SECONDS
 
 /datum/hallucination/delusion/preset/heretic/make_delusion_image(mob/over_who)
-	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination))
+	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination, r_hand = NO_REPLACE))
 
 	return ..()
+

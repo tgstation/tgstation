@@ -120,7 +120,6 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	neck = /obj/item/clothing/neck/heretic_focus
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
-	l_hand = /obj/item/melee/sickly_blade
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
