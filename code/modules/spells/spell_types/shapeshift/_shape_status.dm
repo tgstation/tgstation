@@ -76,20 +76,27 @@
 	UnregisterSignal(owner, list(COMSIG_LIVING_PRE_WABBAJACKED, COMSIG_LIVING_DEATH))
 	UnregisterSignal(caster_mob, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 
-	caster_mob.forceMove(owner.loc)
 	REMOVE_TRAIT(caster_mob, TRAIT_NO_TRANSFORM, REF(src))
 	caster_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
-	owner.mind?.transfer_to(caster_mob)
+
+	var/atom/former_loc = owner.loc
+	owner.moveToNullspace()
+	caster_mob.forceMove(former_loc) // This is to avoid crushing our former cockroach body
 
 	if(kill_caster_after)
 		caster_mob.death()
 
 	after_unchange()
-	caster_mob = null
+
+	// We're about to remove the status effect and clear owner so we need to cache this
+	var/mob/living/former_body = owner
+
+	// Do this late as it will destroy the status effect we are in and null a bunch of values we are trying to use
+	owner.mind?.transfer_to(caster_mob)
 
 	// Destroy the owner after all's said and done, this will also destroy our status effect (src)
 	// retore_caster() should never reach this point while either the owner or the effect is being qdeleted
-	qdel(owner)
+	qdel(former_body)
 
 /// Effects done after the casting mob has reverted to their human form.
 /datum/status_effect/shapechange_mob/proc/after_unchange()
@@ -154,9 +161,9 @@
 		source_spell.Grant(owner)
 
 		if(source_spell.convert_damage)
-			var/damage_to_apply = owner.maxHealth * ((caster_mob.maxHealth - caster_mob.health) / caster_mob.maxHealth)
+			var/damage_to_apply = owner.maxHealth * (caster_mob.get_total_damage() / caster_mob.maxHealth)
 
-			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)
+			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 			owner.blood_volume = caster_mob.blood_volume
 
 	for(var/datum/action/bodybound_action as anything in caster_mob.actions)
@@ -186,11 +193,9 @@
 	if(QDELETED(source_spell) || !source_spell.convert_damage)
 		return
 
-	if(caster_mob.stat != DEAD)
-		caster_mob.revive(HEAL_DAMAGE)
-
-		var/damage_to_apply = caster_mob.maxHealth * ((owner.maxHealth - owner.health) / owner.maxHealth)
-		caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)
+	caster_mob.fully_heal(HEAL_DAMAGE) // Remove all of our damage before setting our health to a proportion of the former transformed mob's health
+	var/damage_to_apply = caster_mob.maxHealth * (owner.get_total_damage() / owner.maxHealth)
+	caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 
 	caster_mob.blood_volume = owner.blood_volume
 
