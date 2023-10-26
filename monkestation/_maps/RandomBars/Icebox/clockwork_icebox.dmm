@@ -648,6 +648,10 @@
 "IC" = (
 /turf/closed/wall/mineral/bronze,
 /area/station/commons/lounge)
+"IQ" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
 "IT" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/disposalpipe/segment{
@@ -1110,7 +1114,7 @@ dJ
 uw
 Ag
 PC
-zS
+IQ
 EK
 "}
 (15,1,1) = {"
