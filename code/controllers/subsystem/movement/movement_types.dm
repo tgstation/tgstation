@@ -101,6 +101,8 @@
 	controller.queue_loop(src)
 
 /datum/move_loop/process()
+	if (QDELETED(src))
+		return PROCESS_KILL
 	var/old_delay = delay //The signal can sometimes change delay
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
