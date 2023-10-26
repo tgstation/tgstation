@@ -249,7 +249,7 @@
 
 /**
  * ### Spider Tank
- * A subtype of the giant spider which is similar on every single way,
+ * A subtype of the giant spider, specialized in taking damage.
  * This spider is only slightly slower than a human.
  */
 /mob/living/basic/spider/giant/tank
@@ -299,7 +299,7 @@
 
 /**
  * ### Spider Breacher
- * A subtype of the giant spider which is similar on every single way,
+ * A subtype of the giant spider, specialized in breaching and invasion.
  * This spider is only slightly slower than a human.
  */
 /mob/living/basic/spider/giant/breacher
