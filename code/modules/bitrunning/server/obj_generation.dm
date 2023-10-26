@@ -32,9 +32,9 @@
 
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
 
-	var/obj/item/clothing/under = avatar.w_uniform
+	var/obj/item/clothing/under/jumpsuit = avatar.w_uniform
 	if(istype(under))
-		under.set_armor(/datum/armor/clothing_under)
+		jumpsuit.set_armor(/datum/armor/clothing_under)
 
 	var/obj/item/clothing/head/hat = avatar.get_clothing_on_part(HEAD)
 	if(istype(hat))
