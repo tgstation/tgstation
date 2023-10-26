@@ -50,7 +50,7 @@
 	notify_ghosts("[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].\n", \
 		action = NOTIFY_ORBIT, \
 		enter_link = "<a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
-		notify_flags = (NOTIFY_CATEGORY_DEFAULT | GHOST_NOTIFY_MAKE_ANNOUNCEMENT), \
+		notify_flags = NOTIFY_CATEGORY_DEFAULT, \
 		header = "Volunteers requested", \
 		ignore_key = ignore_key, \
 		source = parent \

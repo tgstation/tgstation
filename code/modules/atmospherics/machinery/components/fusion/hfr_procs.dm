@@ -424,7 +424,7 @@
 		action = NOTIFY_ORBIT,
 		ghost_sound = 'sound/machines/warning-buzzer.ogg',
 		notify_volume = 75,
-		notify_flags = (NOTIFY_CATEGORY_DEFAULT | GHOST_NOTIFY_MAKE_ANNOUNCEMENT),
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)

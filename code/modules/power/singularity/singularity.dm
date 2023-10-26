@@ -80,7 +80,7 @@
 			ghost_notification_message,
 			source = src,
 			action = NOTIFY_ORBIT,
-			notify_flags = (NOTIFY_CATEGORY_NOFLASH | GHOST_NOTIFY_MAKE_ANNOUNCEMENT),
+			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
 			header = ghost_notification_message,
 			notify_volume = 75
