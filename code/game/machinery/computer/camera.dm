@@ -50,6 +50,8 @@
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(isnull(user.client)) //uncliented mobs should not interact (namely, monkeys)
+		return
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
