@@ -39,6 +39,7 @@
 /obj/structure/spider/eggcluster/abnormal
 	name = "abnormal egg cluster"
 	color = rgb(0, 148, 211)
+
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
 	color = rgb(148, 0, 211)
