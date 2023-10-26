@@ -1046,3 +1046,19 @@
   necromanceranne:
   - bugfix: The nanites inside of thermal pistols are once again angry, and aggressively
       want to burn/puncture people.
+2023-10-26:
+  Cruix:
+  - bugfix: fixed hair gradients not applying correctly to huge afros
+  - bugfix: fixed hair gradients not applying properly on dismembered heads.
+  Xackii:
+  - bugfix: Fixed gorilla attack cooldown. Now attacking speed to mobs is the same
+      as attacking speed to objects.
+  carlarctg:
+  - refactor: Adds charges to omens and omen smiting rather than only being permanent
+      or one-use. Mirrors now grant seven bad luckers.
+  - qol: Reduces omen bad luck if nobody's nearby to witness the funny. (Ghosts are
+      included in the check!)
+  - bugfix: Fixed an issue where a monkey check in doorcrushing was never actually
+      able to pass. Also they screech now.
+  timothymtorres:
+  - qol: Add smoke particles to burning fireplace
