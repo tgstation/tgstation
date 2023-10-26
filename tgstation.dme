@@ -3325,7 +3325,6 @@
 #include "code\modules\bitrunning\virtual_domain\domains\colossus.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\hierophant.dm"
-#include "code\modules\bitrunning\virtual_domain\domains\legion.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\modular_test.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pipedream.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pirates.dm"

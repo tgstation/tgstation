@@ -38,6 +38,11 @@
 /// from /obj/machinery/quantum_server/scrub_vdom()
 #define COMSIG_BITRUNNER_DOMAIN_SCRUBBED "bitrunner_domain_scrubbed"
 
+/// from /obj/machienry/quantum_server/station_spawn()
+#define COMSIG_BITRUNNER_STATION_SPAWN "bitrunner_station_spawn"
+
+// Ladder
 /// from /obj/structure/hololadder/disconnect()
 #define COMSIG_BITRUNNER_LADDER_SEVER "bitrunner_ladder_sever"
+
 

@@ -6,9 +6,10 @@
 /mob/living/basic/netguardian
 	name = "netguardian prime"
 	desc = "The last line of defense against organic intrusion. It doesn't appear happy to see you."
-	icon_state = "old"
-	icon_living = "old"
-	icon_dead = "old_dead"
+	icon = 'icons/mob/nonhuman-player/netguardian.dmi'
+	icon_state = "netguardian"
+	icon_living = "netguardian"
+	icon_dead = "netguardian_dead"
 
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -53,7 +54,7 @@
 	AddComponent(/datum/component/ranged_attacks, \
 	casing_type = /obj/item/ammo_casing/c46x30mm, \
 	projectile_sound = 'sound/weapons/gun/smg/shot.ogg', \
-	burst_shots = 7 \
+	burst_shots = 6 \
 	)
 
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/rockets = new(src)
@@ -85,9 +86,9 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_wounded_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/targeted_mob_ability/fire_rockets,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 	)
 

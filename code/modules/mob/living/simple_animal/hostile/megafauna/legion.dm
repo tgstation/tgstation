@@ -62,8 +62,6 @@
 							   /datum/action/innate/megafauna_attack/create_turrets)
 	var/size = LEGION_LARGE
 	var/charging = FALSE
-	/// Loot to drop when the last legion dies
-	var/legion_loot = /obj/item/storm_staff
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
 	. = ..()
@@ -237,7 +235,7 @@
 			last_legion = FALSE
 			break
 	if(last_legion)
-		loot = list(legion_loot)
+		loot = list(/obj/item/storm_staff)
 		elimination = FALSE
 	else if(prob(20)) //20% chance for sick lootz.
 		loot = list(/obj/structure/closet/crate/necropolis/tendril)

@@ -7,7 +7,6 @@
 		return COMPONENT_INCOMPATIBLE
 
 	forge_ref = WEAKREF(forge)
-	forge.setup_particles(angry = TRUE)
 
 	var/mob/living/owner = parent
 	server.spawned_threat_refs.Remove(WEAKREF(owner))

@@ -11,16 +11,18 @@
 		return ELEMENT_INCOMPATIBLE
 
 	var/atom/thing = target
+	var/base_icon
+	var/dimensions = get_icon_dimensions(thing.icon)
+	if(!length(dimensions))
+		return ELEMENT_INCOMPATIBLE
 
-	var/base_icon = 'icons/effects/bitrunning.dmi'
-
-	if(isliving(thing))
-		var/mob/living/creature = thing
-		switch(creature.mob_size)
-			if(MOB_SIZE_LARGE)
-				base_icon = 'icons/effects/bitrunning_48.dmi'
-			if(MOB_SIZE_HUGE)
-				base_icon = 'icons/effects/bitrunning_64.dmi'
+	switch(dimensions[1])
+		if(32)
+			base_icon = 'icons/effects/bitrunning.dmi'
+		if(48)
+			base_icon = 'icons/effects/bitrunning_48.dmi'
+		if(64)
+			base_icon = 'icons/effects/bitrunning_64.dmi'
 
 	redshift = mutable_appearance('icons/effects/bitrunning.dmi', "redshift")
 	redshift.blend_mode = BLEND_MULTIPLY
