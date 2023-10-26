@@ -65,6 +65,7 @@
 
 /mob/living/basic/netguardian/death(gibbed)
 	do_sparks(number = 3, cardinal_only = TRUE, source = src)
+	playsound(src, 'sound/mecha/weapdestr.ogg', 100)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian
@@ -97,9 +98,9 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/simple_find_wounded_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/targeted_mob_ability/fire_rockets,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/netguardian,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 	)
 
