@@ -88,12 +88,12 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/imports/specialops]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
-	spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+	spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
+	spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
 	if(prob(75))
-		spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+		spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
 	if(prob(50))
-		spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+		spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
 
 /datum/shuttle_loan_situation/lots_of_bees
 	sender = "CentCom Janitorial Division"
@@ -180,11 +180,11 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/basic/syndicate/russian)
-	spawn_list.Add(/mob/living/basic/syndicate/russian/ranged) //drops a mateba
+	spawn_list.Add(/mob/living/basic/trooper/russian)
+	spawn_list.Add(/mob/living/basic/trooper/russian/ranged) //drops a mateba
 	spawn_list.Add(/mob/living/basic/bear/russian)
 	if(prob(75))
-		spawn_list.Add(/mob/living/basic/syndicate/russian)
+		spawn_list.Add(/mob/living/basic/trooper/russian)
 	if(prob(50))
 		spawn_list.Add(/mob/living/basic/bear/russian)
 

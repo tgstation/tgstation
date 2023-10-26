@@ -1,17 +1,30 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
+type Data = {
+  tankContents: Reagent[];
+  tankCurrentVolume: number;
+  tankMaxVolume: number;
+  active: BooleanLike;
+  setting: number;
+  maxSetting: number;
+};
+
+type Reagent = {
+  name: string;
+  volume: number;
+};
+
 export const SmokeMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const {
-    TankContents,
-    isTankLoaded,
-    TankCurrentVolume,
-    TankMaxVolume,
+    tankContents,
+    tankCurrentVolume,
+    tankMaxVolume,
     active,
     setting,
-    screen,
     maxSetting = [],
   } = data;
   return (
@@ -28,12 +41,12 @@ export const SmokeMachine = (props, context) => {
             />
           }>
           <ProgressBar
-            value={TankCurrentVolume / TankMaxVolume}
+            value={tankCurrentVolume / tankMaxVolume}
             ranges={{
               bad: [-Infinity, 0.3],
             }}>
-            <AnimatedNumber initial={0} value={TankCurrentVolume || 0} />
-            {' / ' + TankMaxVolume}
+            <AnimatedNumber initial={0} value={tankCurrentVolume || 0} />
+            {' / ' + tankMaxVolume}
           </ProgressBar>
           <Box mt={1}>
             <LabeledList>
@@ -57,7 +70,7 @@ export const SmokeMachine = (props, context) => {
           buttons={
             <Button icon="trash" content="Purge" onClick={() => act('purge')} />
           }>
-          {TankContents.map((chemical) => (
+          {tankContents.map((chemical) => (
             <Box key={chemical.name} color="label">
               <AnimatedNumber initial={0} value={chemical.volume} /> units of{' '}
               {chemical.name}

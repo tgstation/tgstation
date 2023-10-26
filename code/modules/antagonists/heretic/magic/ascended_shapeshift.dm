@@ -4,6 +4,7 @@
 	desc = "A spell that allows you to take on the form of another eldritch creature, gaining their abilities. \
 		You can change your choice at any time, and if your form dies, you dont die."
 	cooldown_time = 20 SECONDS
+	convert_damage = FALSE
 	die_with_shapeshifted_form = FALSE
 	possible_shapes = list(
 		/mob/living/basic/heretic_summon/ash_spirit,

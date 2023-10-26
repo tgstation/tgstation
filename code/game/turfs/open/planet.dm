@@ -80,6 +80,9 @@
 /turf/open/misc/grass/burnt_states()
 	return list("jungle_damaged")
 
+/turf/open/misc/grass/jungle/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/closed/mineral/random/jungle
 	baseturfs = /turf/open/misc/dirt/dark/jungle
 
