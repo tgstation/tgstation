@@ -50,7 +50,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/pet_bonus, "sticks its tongue out contentedly!")
-	AddElement(/datum/element/basic_eating, 5, 0, null, edibles)
+	AddElement(/datum/element/basic_eating, heal_amt = 5, food_types = edibles)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, edibles)
 
 /datum/ai_controller/basic_controller/lizard

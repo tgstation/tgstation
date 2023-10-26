@@ -275,7 +275,9 @@
 		qdel(src)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
-	if(current_controller == OWNER)
+	if(current_controller == OWNER && stranger_backseat)//we should only start transitioning after the other personality has entered
+		owner.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
+		owner.clear_fullscreen("fade_to_black", animated = 4 SECONDS)
 		switch_personalities()
 	if(owner.stat == DEAD)
 		if(current_controller != OWNER)
@@ -285,6 +287,18 @@
 	if(duration_in_seconds <= 0)
 		qdel(src)
 		return
+	else if(duration_in_seconds <= 50)
+		to_chat(owner, span_warning("You have 50 seconds left before sobering up!"))
+	if(prob(10) && !HAS_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER))
+		ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
+		owner.balloon_alert(owner, "dexterity reduced temporarily!")
+		//We then send a callback to automatically re-add the trait
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT), 10 SECONDS)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "dexterity regained!"), 10 SECONDS)
+	if(prob(15))
+		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
+		owner.emote("hiccup")
+	owner.adjustStaminaLoss(-5) //too drunk to feel anything
 	duration_in_seconds -= seconds_per_tick
 
 /mob/living/split_personality/blackout
