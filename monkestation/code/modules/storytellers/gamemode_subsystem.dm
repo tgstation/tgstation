@@ -246,7 +246,7 @@ SUBSYSTEM_DEF(gamemode)
 		else if (observers && isobserver(player))
 			candidate_candidates += player
 		else if (living_players && isliving(player))
-			if(!ishuman(player) || !isAI(player))
+			if(!ishuman(player) && !isAI(player))
 				continue
 			if(!(player.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
 				continue
