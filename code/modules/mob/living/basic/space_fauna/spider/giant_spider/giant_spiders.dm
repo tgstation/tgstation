@@ -304,7 +304,7 @@
  */
 /mob/living/basic/spider/giant/breacher
 	name = "breacher spider"
-	desc = "Furry and light brown with a white dark brown highlights, it makes you shudder to look at it. This one has bright red eyes."
+	desc = "Furry and light brown with dark brown and red highlights, it makes you shudder to look at it. This one has bright red eyes."
 	icon_state = "breacher"
 	icon_living = "breacher"
 	icon_dead = "breacher_dead"
