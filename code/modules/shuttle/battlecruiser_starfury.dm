@@ -173,13 +173,13 @@
 					source = our_candidate,
 					action = NOTIFY_ORBIT,
 					header = "Something's Interesting!"
-					)
+				)
 			else
 				notify_ghosts(
 					"The battlecruiser has an object of interest: [spawner]!",
 					source = spawner,
 					action = NOTIFY_ORBIT,
 					header="Something's Interesting!"
-					)
+				)
 
 	priority_announce("Unidentified armed ship detected near the station.")
