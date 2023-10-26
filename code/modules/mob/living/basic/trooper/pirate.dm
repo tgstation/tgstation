@@ -36,7 +36,7 @@
 	)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee
 	r_hand = /obj/item/melee/energy/sword/pirate
-	plunder_amount = 50 //they hit hard so they steal more
+	plunder_credits = 50 //they hit hard so they steal more
 
 /mob/living/basic/trooper/pirate/melee/space
 	name = "Space Pirate Swashbuckler"
