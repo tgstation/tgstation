@@ -140,7 +140,6 @@
 /obj/effect/mob_spawn/ghost_role/spider/abnormal
 	name = "abnormal egg cluster"
 	color = rgb(0, 148, 211)
-	you_are_text = "You are an enriched spider."
 	cluster_type = /obj/structure/spider/eggcluster/abnormal
 	potentialspawns = list(
 		/mob/living/basic/spider/growing/spiderling/tank,
