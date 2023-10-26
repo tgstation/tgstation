@@ -43,6 +43,7 @@ Difficulty: Extremely Hard
 	death_message = "falls to the ground, decaying into plasma particles."
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
+	stat_attack = HARD_CRIT // so it doesn't attack the corpses in its arena
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state
