@@ -353,14 +353,12 @@
 		"outfits" = list()
 	)
 
-	for(var/path as anything in outfit_list)
-		var/datum/outfit/outfit = path
-
+	for(var/datum/outfit/outfit as anything in outfit_list)
 		var/outfit_name = initial(outfit.name)
 		if(findtext(outfit_name, "(") != 0 || findtext(outfit_name, "-") != 0) // No special variants please
 			continue
 
-		collection["outfits"] += list(list("path" = path, "name" = outfit_name))
+		collection["outfits"] += list(list("path" = outfit, "name" = outfit_name))
 
 	return list(collection)
 
