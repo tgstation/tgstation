@@ -5,6 +5,15 @@ import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 import { formatMoney } from '../format';
 
+type Material = {
+  name: string;
+  quantity: number;
+  trend: string;
+  price: number;
+  color: string;
+  requested: number;
+};
+
 type Data = {
   orderingPrive: BooleanLike; // you will need to import this
   canOrderCargo: BooleanLike;
@@ -12,15 +21,6 @@ type Data = {
   orderBalance: number;
   materials: Material[];
   catastrophe: BooleanLike;
-};
-
-type Material = {
-  name: string;
-  quantity: number;
-  id: string; // correct this if its a number
-  trend: string;
-  price: number;
-  color: string;
 };
 
 export const MatMarket = (props, context) => {
@@ -35,7 +35,7 @@ export const MatMarket = (props, context) => {
     catastrophe,
   } = data; // better to destructure here (style nit)
   return (
-    <Window width={700} height={400}>
+    <Window width={980} height={630}>
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
@@ -66,19 +66,27 @@ export const MatMarket = (props, context) => {
           All new purchases will <b>include the cost of the shipped crate</b>,
           which may be recycled afterwards.
           <Section>
-            Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
-            Current Order Amount: <b>{formatMoney(orderBalance)}</b> cr.
-            <Button
-              icon="times"
-              color="transparent"
-              content="Clear"
-              ml={20}
-              onClick={() => act('clear')}
-            />
+            <Stack>
+              <Stack.Item width="232px">
+                Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
+              </Stack.Item>
+              <Stack.Item width="232px">
+                Current Order Amount: <b>{formatMoney(orderBalance)}</b> cr.
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="times"
+                  color="transparent"
+                  content="Clear"
+                  ml={66}
+                  onClick={() => act('clear')}
+                />
+              </Stack.Item>
+            </Stack>
           </Section>
         </Section>
-        {materials.map((material) => (
-          <Section key={material.id}>
+        {materials.map((material, i) => (
+          <Section key={i}>
             <Stack fill>
               <Stack.Item width="75%">
                 <Stack>
@@ -94,7 +102,7 @@ export const MatMarket = (props, context) => {
                     Trading at <b>{material.price}</b> cr.
                   </Stack.Item>
 
-                  <Stack.Item width="33%">
+                  <Stack.Item width="33%" ml={2}>
                     <b>{material.quantity}</b> sheets of <b>{material.name}</b>{' '}
                     trading.
                   </Stack.Item>
@@ -116,59 +124,62 @@ export const MatMarket = (props, context) => {
                 <Button
                   disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 1}
+                  content="Buy 1"
                   onClick={() =>
                     act('buy', {
                       quantity: 1,
                       material: material.name,
                     })
-                  }>
-                  Buy 1
-                </Button>
+                  }
+                />
                 <Button
                   disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 5}
+                  content="5"
                   onClick={() =>
                     act('buy', {
                       quantity: 5,
                       material: material.name,
                     })
-                  }>
-                  5
-                </Button>
+                  }
+                />
                 <Button
                   disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 10}
+                  content="10"
                   onClick={() =>
                     act('buy', {
                       quantity: 10,
                       material: material.name,
                     })
-                  }>
-                  10
-                </Button>
+                  }
+                />
                 <Button
                   disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 25}
+                  content="25"
                   onClick={() =>
                     act('buy', {
                       quantity: 25,
                       material: material.name,
                     })
-                  }>
-                  25
-                </Button>
+                  }
+                />
                 <Button
                   disabled={catastrophe === 1 || material.price <= 0}
                   tooltip={material.price * 50}
+                  content="50"
                   onClick={() =>
                     act('buy', {
                       quantity: 50,
                       material: material.name,
                     })
-                  }>
-                  50
-                </Button>
+                  }
+                />
               </Stack.Item>
+              {material.requested > 0 && (
+                <Stack.Item ml={2}>x {material.requested}</Stack.Item>
+              )}
             </Stack>
           </Section>
         ))}
@@ -178,7 +189,6 @@ export const MatMarket = (props, context) => {
 };
 
 const MarketCrashModal = (props, context) => {
-  const { act, data } = useBackend(context);
   return (
     <Modal textAlign="center" mr={1.5}>
       ATTENTION! THE MARKET HAS CRASHED

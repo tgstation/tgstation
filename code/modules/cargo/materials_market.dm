@@ -1,3 +1,6 @@
+/// The maximum number of stacks you can place in 1 order
+#define MAX_STACK_LIMIT 10
+
 /obj/machinery/materials_market
 	name = "galactic materials market"
 	desc = "This machine allows the user to buy and sell sheets of minerals \
@@ -34,9 +37,9 @@
 	return ..()
 
 /obj/machinery/materials_market/wrench_act(mob/living/user, obj/item/tool)
-	..()
-	default_unfasten_wrench(user, tool, time = 1.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ..()
+	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/materials_market/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -101,29 +104,9 @@
 		ui.open()
 
 /obj/machinery/materials_market/ui_data(mob/user)
-	var/data = list()
-	var/material_data
-	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
-		var/trend_string = ""
-		if(SSstock_market.materials_trends[traded_mat] == 0)
-			trend_string = "neutral"
-		else if(SSstock_market.materials_trends[traded_mat] == 1)
-			trend_string = "up"
-		else if(SSstock_market.materials_trends[traded_mat] == -1)
-			trend_string = "down"
-		var/color_string = ""
-		if (initial(traded_mat.greyscale_colors))
-			color_string = splicetext(initial(traded_mat.greyscale_colors), 7, length(initial(traded_mat.greyscale_colors)), "") //slice it to a standard 6 char hex
-		else if(initial(traded_mat.color))
-			color_string = initial(traded_mat.color)
-		material_data += list(list(
-			"name" = initial(traded_mat.name),
-			"price" = SSstock_market.materials_prices[traded_mat],
-			"quantity" = SSstock_market.materials_quantity[traded_mat],
-			"trend" = trend_string,
-			"color" = color_string,
-			))
+	. = list()
 
+	//can this player use cargo budget
 	var/can_buy_via_budget = FALSE
 	var/obj/item/card/id/used_id_card
 	if(isliving(user))
@@ -132,10 +115,55 @@
 		if(!isnull(used_id_card))
 			can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
+	//if no cargo access then force private purchase
 	var/is_ordering_private = ordering_private
-	if(!can_buy_via_budget) //no cargo access then force private purchase
+	if(!can_buy_via_budget)
 		is_ordering_private = TRUE
 
+	//find current order based on ordering mode & player
+	var/datum/supply_order/current_order = find_order(user, is_ordering_private)
+
+	var/material_data
+	var/trend_string = ""
+	var/color_string = ""
+	var/sheet_to_buy
+	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
+		//convert trend into text
+		switch(SSstock_market.materials_trends[traded_mat])
+			if(0)
+				trend_string = "neutral"
+			if(1)
+				trend_string = "up"
+			else
+				trend_string = "down"
+
+		//get mat color
+		var/initial_colors = initial(traded_mat.greyscale_colors)
+		if(initial_colors)
+			color_string = splicetext(initial_colors, 7, length(initial_colors), "") //slice it to a standard 6 char hex
+		else
+			initial_colors = initial(traded_mat.color)
+			if(initial_colors)
+				color_string = initial_colors
+			else
+				color_string = COLOR_CYAN
+
+		//get sheet type from material
+		sheet_to_buy = initial(traded_mat.sheet_type)
+		if(!sheet_to_buy)
+			CRASH("Material with no sheet type being sold on materials market!")
+
+		//send data
+		material_data += list(list(
+			"name" = initial(traded_mat.name),
+			"price" = SSstock_market.materials_prices[traded_mat],
+			"quantity" = SSstock_market.materials_quantity[traded_mat],
+			"trend" = trend_string,
+			"color" = color_string,
+			"requested" = "[!isnull(current_order) ? current_order.pack.contains[sheet_to_buy] : 0]"
+			))
+
+	//get account balance
 	var/balance = 0
 	if(!ordering_private)
 		var/datum/bank_account/dept = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -144,22 +172,23 @@
 	else
 		balance = used_id_card?.registered_account?.account_balance
 
+	//is market crashing
 	var/market_crashing = FALSE
 	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		market_crashing = TRUE
 
+	//get final order cost
 	var/current_cost = 0
-	var/datum/supply_order/current_order = find_order(user, is_ordering_private)
 	if(!isnull(current_order))
 		current_cost = current_order.get_final_cost()
 
-	data["catastrophe"] = market_crashing
-	data["materials"] = material_data
-	data["creditBalance"] = balance
-	data["orderBalance"] = current_cost
-	data["orderingPrive"] = ordering_private
-	data["canOrderCargo"] = can_buy_via_budget
-	return data
+	//pack data
+	.["catastrophe"] = market_crashing
+	.["materials"] = material_data
+	.["creditBalance"] = balance
+	.["orderBalance"] = current_cost
+	.["orderingPrive"] = ordering_private
+	.["canOrderCargo"] = can_buy_via_budget
 
 /obj/machinery/materials_market/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -172,9 +201,9 @@
 	if(isnull(used_id_card))
 		say("No ID Found")
 		return
+	var/can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
 	//if multiple users open the UI some of them may not have the required access so we recheck
-	var/can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 	var/is_ordering_private = ordering_private
 	if(!can_buy_via_budget) //no cargo access then force private purchase
 		is_ordering_private = TRUE
@@ -184,6 +213,7 @@
 			var/material_str = params["material"]
 			var/quantity = text2num(params["quantity"])
 
+			//find material from it's name
 			var/datum/material/material_bought
 			var/obj/item/stack/sheet/sheet_to_buy
 			for(var/datum/material/mat as anything in SSstock_market.materials_prices)
@@ -192,7 +222,11 @@
 					break
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
+			sheet_to_buy = initial(material_bought.sheet_type)
+			if(!sheet_to_buy)
+				CRASH("Material with no sheet type being sold on materials market!")
 
+			//get available bank account for purchasing
 			var/datum/bank_account/account_payable
 			if(is_ordering_private)
 				account_payable = used_id_card.registered_account
@@ -202,29 +236,38 @@
 				say("No bank account detected!")
 				return
 
-			sheet_to_buy = initial(material_bought.sheet_type)
-			if(!sheet_to_buy)
-				CRASH("Material with no sheet type being sold on materials market!")
+
+			//sanity checks for available quantity & budget
+			if(quantity > SSstock_market.materials_quantity[material_bought])
+				say("Not enough materials on the market to purchase!")
+				return
+
 			var/cost = SSstock_market.materials_prices[material_bought] * quantity
 			if(cost > account_payable.account_balance)
-				to_chat(living_user, span_warning("You don't have enough money to buy that!"))
+				say("Not enough money to start purchase!")
 				return
 
 			var/list/things_to_order = list()
 			things_to_order += (sheet_to_buy)
 			things_to_order[sheet_to_buy] = quantity
+
 			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
 			// If we already have a custom order on SSshuttle, we should add the things to order to that order
 			var/datum/supply_order/current_order = find_order(living_user, is_ordering_private)
 			if(!isnull(current_order))
-				// Check if this order exceeded its limit
-				var/prior_stacks = 0
-				for(var/obj/item/stack/sheet/sheet as anything in current_order.pack.contains)
-					prior_stacks += ROUND_UP(current_order.pack.contains[sheet] / 50)
-					if(prior_stacks >= 10)
-						say("There is already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
-						playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
-						return
+				// Check if this order exceeded the market limit
+				var/prior_sheets = current_order.pack.contains[sheet_to_buy]
+				if(prior_sheets + quantity > SSstock_market.materials_quantity[material_bought] )
+					say("There is not enough sheets in the market! Please wait for them to arrive before ordering more.")
+					playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
+					return
+
+				// Check if the order exceeded the purchase limit
+				var/prior_stacks = ROUND_UP(prior_sheets / MAX_STACK_SIZE)
+				if(prior_stacks >= MAX_STACK_LIMIT)
+					say("There is already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
+					playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
+					return
 
 				// Prevents you from ordering more than the available budget
 				var/datum/bank_account/paying_account = account_payable
@@ -234,7 +277,7 @@
 					say("Order exceeds available budget!. Please send it before purchasing more.")
 					return
 
-				// Append to this order
+				// Finally Append to this order
 				current_order.append_order(things_to_order, cost)
 				say("Order appended, total cost is [current_order.get_final_cost()] cr.")
 				return
@@ -281,6 +324,11 @@
 	/// Is this stock block currently updating it's value with the market (aka fluid)?
 	var/fluid = FALSE
 
+/obj/item/stock_block/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES)
+
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
 	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
@@ -288,11 +336,6 @@
 		. += span_warning("\The [src] is currently liquid! It's value is based on the market price.")
 	else
 		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before it's value becomes liquid!")
-
-/obj/item/stock_block/Initialize(mapload)
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES)
-	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES)
 
 /obj/item/stock_block/proc/value_warning()
 	visible_message(span_warning("\The [src] is starting to become liquid!"))
@@ -309,3 +352,4 @@
 	update_appearance(UPDATE_ICON_STATE)
 	visible_message(span_warning("\The [src] becomes liquid!"))
 
+#undef MAX_STACK_LIMIT
