@@ -11,20 +11,13 @@
 	severity = DISEASE_SEVERITY_HARMFUL
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
-	required_organs = list(/obj/item/organ/internal/liver)
+	required_organ = ORGAN_SLOT_LIVER
 	bypasses_immunity = TRUE
-
 
 /datum/disease/parasite/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
-
-	var/obj/item/organ/internal/liver/affected_liver = affected_mob.get_organ_by_type(/obj/item/organ/internal/liver)
-	if(!affected_liver)
-		affected_mob.visible_message(span_notice("<B>[affected_mob]'s liver is covered in tiny larva! They quickly shrivel and die after being exposed to the open air.</B>"))
-		cure()
-		return FALSE
 
 	switch(stage)
 		if(1)
@@ -48,7 +41,9 @@
 					affected_mob.adjust_nutrition(-12)
 				else
 					to_chat(affected_mob, span_warning("You feel much, MUCH lighter!"))
-					affected_mob.vomit(20, TRUE)
+					affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
+					// disease code already checks if the liver exists otherwise it is cured
+					var/obj/item/organ/internal/liver/affected_liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 					affected_liver.Remove(affected_mob)
 					affected_liver.forceMove(get_turf(affected_mob))
 					cure()

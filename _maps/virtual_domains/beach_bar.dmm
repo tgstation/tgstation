@@ -1,0 +1,3272 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/machinery/vending/cigarette/beach,
+/obj/effect/turf_decal/sand,
+/obj/structure/sign/poster/contraband/have_a_puff/directional/west,
+/turf/open/floor/iron,
+/area/virtual_domain/powered)
+"af" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"ag" = (
+/turf/open/floor/carpet/red,
+/area/virtual_domain/powered)
+"as" = (
+/obj/structure/closet/crate/bin,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/trash/candy,
+/obj/item/toy/talking/owl,
+/obj/effect/turf_decal/sand,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/virtual_domain/powered)
+"aw" = (
+/obj/machinery/grill,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"aE" = (
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"aZ" = (
+/obj/machinery/light/small/directional/east,
+/obj/structure/closet/crate{
+	name = "fuel crate"
+	},
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"bf" = (
+/mob/living/basic/crab{
+	name = "Jonny"
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"bm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 10
+	},
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"bC" = (
+/obj/effect/turf_decal/sand,
+/mob/living/basic/crab{
+	name = "James"
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"bM" = (
+/mob/living/basic/crab{
+	name = "Jon"
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"bQ" = (
+/obj/structure/fluff/beach_umbrella/cap,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"bS" = (
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo";
+	pixel_x = -4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"cb" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/pill/lsd,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"cv" = (
+/turf/open/floor/carpet/royalblue,
+/area/virtual_domain/powered)
+"cz" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/jukebox,
+/obj/item/coin/gold,
+/turf/open/floor/sepia,
+/area/virtual_domain/powered)
+"cG" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/water/beach,
+/area/virtual_domain/powered)
+"cK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"db" = (
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/boozeomat,
+/obj/structure/closet/secure_closet{
+	icon_state = "cabinet";
+	name = "booze storage";
+	req_access = list("bar")
+	},
+/obj/item/storage/backpack/duffelbag,
+/obj/item/etherealballdeployer,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"di" = (
+/obj/machinery/vending/boozeomat,
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/vending/boozeomat
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"dj" = (
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/virtual_domain/powered)
+"dx" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/floor/sepia,
+/area/virtual_domain/powered)
+"dG" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/virtual_domain/powered)
+"dH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"dI" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"dZ" = (
+/obj/structure/bookcase/random/reference,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"ed" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"er" = (
+/obj/structure/noticeboard/staff,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"fc" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/happy,
+/obj/item/toy/figure/bartender{
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain{
+	pixel_y = 8;
+	pixel_x = 5
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"fr" = (
+/obj/item/melee/skateboard/hoverboard,
+/obj/machinery/light/directional/west,
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"fF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"gh" = (
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/water/beach,
+/area/virtual_domain/powered)
+"gl" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"gJ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/virtual_domain/powered)
+"hk" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"hE" = (
+/obj/structure/sign/departments/restroom/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"hG" = (
+/obj/machinery/door/airlock/sandstone{
+	name = "Surfer Shack 1"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"hI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"hU" = (
+/turf/closed/mineral/random/volcanic,
+/area/virtual_domain/powered)
+"iz" = (
+/turf/closed/indestructible/binary,
+/area/lavaland/surface/outdoors/virtual_domain)
+"iL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"iR" = (
+/obj/structure/table,
+/obj/item/book/manual/wiki/barman_recipes,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/item/reagent_containers/cup/rag,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"jc" = (
+/turf/open/floor/iron/stairs/right,
+/area/virtual_domain/powered)
+"jg" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"jl" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"jy" = (
+/obj/effect/turf_decal/sand{
+	density = 1
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/pod/light{
+	density = 1
+	},
+/area/virtual_domain/powered)
+"jW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"ke" = (
+/obj/structure/marker_beacon/bronze,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"kn" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/sepia,
+/area/virtual_domain/powered)
+"kv" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/lavaland/surface/outdoors/virtual_domain)
+"kG" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"kK" = (
+/obj/structure/mirror/directional/west,
+/obj/structure/sink/kitchen/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"kM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"kT" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"lq" = (
+/obj/item/melee/skateboard/hoverboard,
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"lB" = (
+/obj/item/toy/seashell,
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"lS" = (
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/virtual_domain/powered)
+"ml" = (
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"mq" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"mG" = (
+/obj/structure/easel,
+/obj/item/canvas/twentythree_twentythree,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"mP" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 1
+	},
+/area/virtual_domain/powered)
+"mX" = (
+/obj/structure/closet/secure_closet/freezer/meat/all_access,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawbacon,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/rawcutlet,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"nP" = (
+/obj/item/stack/sheet/iron/fifty,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"oE" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
+/area/virtual_domain/powered)
+"oP" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"pr" = (
+/turf/template_noop,
+/area/template_noop)
+"pC" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"pT" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"pZ" = (
+/obj/machinery/light/directional/south,
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/virtual_domain/powered)
+"qc" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"qg" = (
+/obj/structure/sign/poster/contraband/space_up/directional/west,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"qR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/spawner/structure/window,
+/obj/structure/curtain,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"qW" = (
+/obj/item/melee/skateboard/hoverboard,
+/mob/living/basic/chicken{
+	name = "Chicken Joe"
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"qZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"rc" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"ri" = (
+/obj/structure/sign/poster/official/fruit_bowl,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"rm" = (
+/obj/item/storage/crayons,
+/obj/structure/closet/crate/wooden,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"rT" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"sp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 10
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"sB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"sT" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"tm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"tE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/door/airlock/public/glass{
+	name = "Resort Casino"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"tF" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"tZ" = (
+/obj/structure/toilet,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"uc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"ug" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "cabinet";
+	name = "bartender's closet";
+	req_access = list("bar")
+	},
+/obj/item/clothing/shoes/sandal{
+	desc = "A very fashionable pair of flip-flops.";
+	name = "flip-flops"
+	},
+/obj/item/clothing/neck/beads,
+/obj/item/clothing/glasses/sunglasses/reagent,
+/obj/item/clothing/suit/costume/hawaiian,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"uk" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/shovel/spade,
+/obj/item/reagent_containers/cup/bucket,
+/obj/item/cultivator,
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"uq" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain,
+/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"uU" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/sepia,
+/area/virtual_domain/powered)
+"uV" = (
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"ve" = (
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/item/toy/dodgeball,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"vp" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"vq" = (
+/obj/machinery/oven/range,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"vr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"vv" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"vJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"vM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 9
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"vN" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/pill/morphine,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"vT" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/beach/coast/corner,
+/area/virtual_domain/powered)
+"vW" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"wb" = (
+/obj/structure/closet/crate/freezer{
+	name = "Cooler"
+	},
+/obj/item/reagent_containers/cup/glass/ice,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	desc = "Beer advertised to be the best in space.";
+	name = "Masterbrand Beer"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"wD" = (
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"xb" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
+"xh" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"xk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/table/wood/poker,
+/obj/item/storage/dice,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"xq" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/megaphone,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"xw" = (
+/turf/open/floor/pod/dark,
+/area/virtual_domain/powered)
+"xJ" = (
+/obj/structure/closet/cabinet,
+/obj/item/storage/backpack/duffelbag,
+/obj/item/clothing/under/shorts/blue,
+/obj/item/clothing/shoes/sandal{
+	desc = "A very fashionable pair of flip-flops.";
+	name = "flip-flops"
+	},
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/neck/beads,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"xR" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
+/obj/structure/chair/stool/directional/south,
+/obj/item/storage/backpack/duffelbag,
+/obj/item/clothing/under/shorts/red,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"xW" = (
+/turf/open/space/basic,
+/area/space)
+"ya" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/pill/zoom,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"yi" = (
+/obj/structure/sink/kitchen/directional/west{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"yl" = (
+/obj/item/reagent_containers/cup/glass/colocup{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/cup/glass/colocup{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/rum{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/powered)
+"yn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"ys" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light/directional/east,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"yv" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/food_cart,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"yB" = (
+/obj/item/instrument/guitar,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain/powered)
+"yU" = (
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"yX" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/carpet/red,
+/area/virtual_domain/powered)
+"zn" = (
+/obj/machinery/light/directional/east,
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/virtual_domain/powered)
+"zt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"zw" = (
+/obj/structure/punching_bag,
+/turf/open/floor/pod/dark,
+/area/virtual_domain/powered)
+"zI" = (
+/obj/structure/marker_beacon/indigo,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"zU" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Aa" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/sepia,
+/area/virtual_domain/powered)
+"Ae" = (
+/obj/structure/chair,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Al" = (
+/turf/closed/mineral/random/volcanic,
+/area/lavaland/surface/outdoors/virtual_domain)
+"An" = (
+/obj/structure/marker_beacon/yellow,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Au" = (
+/obj/structure/fluff/beach_umbrella/science,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"AI" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"AP" = (
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Bl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"Br" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/cas{
+	pixel_x = -6
+	},
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Bu" = (
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/virtual_domain/powered)
+"Bw" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"BD" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/condiment/saltshaker,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"BJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"BM" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"BQ" = (
+/obj/machinery/seed_extractor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"Cb" = (
+/obj/machinery/light/directional/north,
+/mob/living/basic/crab{
+	name = "Eddie"
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Cv" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"CA" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"CO" = (
+/obj/machinery/vending/dinnerware,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Db" = (
+/obj/machinery/barsign/all_access,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"Dc" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Ds" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Resort Lobby"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Dt" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"DL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 5
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"Em" = (
+/obj/item/reagent_containers/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = 5
+	},
+/obj/structure/table,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Et" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"Ev" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"EC" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/obj/structure/sign/warning/gas_mask/directional/west,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"EP" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/washing_machine,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"EQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Fn" = (
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"FD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"FM" = (
+/obj/effect/landmark/bitrunning/safehouse_spawn,
+/turf/template_noop,
+/area/virtual_domain/safehouse)
+"FQ" = (
+/obj/structure/table/reinforced,
+/obj/item/secateurs,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez,
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"FS" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"FY" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Ge" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Gh" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/sign/poster/contraband/starkist/directional/north,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Gz" = (
+/obj/structure/flora/tree/palm,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"GA" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/bikehorn/airhorn,
+/obj/structure/table/wood,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Hs" = (
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/white,
+/area/virtual_domain/powered)
+"HF" = (
+/obj/machinery/deepfryer,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"HH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Ia" = (
+/obj/structure/urinal/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Ii" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/stairs/left,
+/area/virtual_domain/powered)
+"Ir" = (
+/obj/machinery/vending/cola,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/virtual_domain/powered)
+"Is" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer4,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/virtual_domain/powered)
+"Iv" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/condiment/peppermill,
+/obj/item/reagent_containers/condiment/soysauce,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"IH" = (
+/obj/item/toy/beach_ball,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"IM" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"IP" = (
+/obj/machinery/vending/snack,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron,
+/area/virtual_domain/powered)
+"IT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"Jt" = (
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"JC" = (
+/obj/structure/fluff/beach_umbrella/engine,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"JE" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/mayonnaise,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"JS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"JY" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Kd" = (
+/obj/structure/sign/warning/secure_area,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"KH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 8
+	},
+/obj/structure/mineral_door/wood{
+	name = "Croupier's Booth"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"KZ" = (
+/obj/structure/flora/bush/stalky/style_random,
+/turf/open/water/beach,
+/area/virtual_domain/powered)
+"LD" = (
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"LW" = (
+/obj/item/storage/cans/sixbeer,
+/turf/open/floor/carpet/orange,
+/area/virtual_domain/powered)
+"Mp" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Mw" = (
+/obj/structure/chair/sofa/right/brown,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Mz" = (
+/obj/structure/chair/sofa/left/brown,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Nh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Nq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"Nr" = (
+/obj/machinery/light/directional/north,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Nw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"NF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"NM" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/obj/item/food/grown/ambrosia/vulgaris,
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"NO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 10
+	},
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/virtual_domain/powered)
+"NX" = (
+/obj/effect/landmark/bitrunning/loot_signal,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/virtual_domain/powered)
+"OE" = (
+/obj/effect/mob_spawn/ghost_role/human/beach{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"OK" = (
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"OR" = (
+/obj/machinery/light/directional/south,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"OW" = (
+/obj/structure/sink/kitchen/directional/east{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink"
+	},
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"OZ" = (
+/obj/structure/marker_beacon/teal,
+/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
+/area/lavaland/surface/outdoors/virtual_domain)
+"Pc" = (
+/obj/structure/chair/wood,
+/obj/machinery/light/directional/west,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Pg" = (
+/obj/structure/sign/poster/official/high_class_martini/directional/west,
+/obj/effect/mob_spawn/ghost_role/human/bartender{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"PM" = (
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"Qb" = (
+/obj/machinery/griddle,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Qj" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"Qk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"Qu" = (
+/obj/structure/curtain,
+/turf/open/floor/iron/white,
+/area/virtual_domain/powered)
+"QB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"QP" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"QX" = (
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Rx" = (
+/turf/open/floor/iron/stairs/medium,
+/area/virtual_domain/powered)
+"RB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"RL" = (
+/obj/structure/closet/cabinet,
+/obj/item/storage/backpack/duffelbag,
+/obj/item/clothing/under/shorts/purple,
+/obj/item/clothing/shoes/cookflops{
+	desc = "A very fashionable pair of flip flops.";
+	name = "flip-flops"
+	},
+/obj/item/clothing/glasses/sunglasses/big,
+/obj/item/clothing/neck/beads,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Sg" = (
+/obj/structure/flora/coconuts,
+/obj/machinery/light/directional/north,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"SB" = (
+/obj/machinery/door/airlock/sandstone{
+	name = "Resort Bathroom"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"SD" = (
+/obj/machinery/door/airlock/sandstone{
+	name = "Bar Access"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"SY" = (
+/obj/machinery/door/airlock/sandstone{
+	name = "Surfer Shack 2"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"TG" = (
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"TJ" = (
+/obj/structure/fluff/beach_umbrella/security,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"TM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 6
+	},
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/powered)
+"TX" = (
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris/directional/north,
+/turf/open/floor/iron/grimy,
+/area/virtual_domain/powered)
+"Ud" = (
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Uh" = (
+/turf/open/floor/iron/stairs/old,
+/area/virtual_domain/powered)
+"Uq" = (
+/obj/structure/weightmachine/weightlifter,
+/turf/open/floor/pod/dark,
+/area/virtual_domain/powered)
+"UU" = (
+/obj/structure/flora/bush/large/style_random,
+/obj/structure/flora/bush/jungle/a/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Ve" = (
+/obj/machinery/processor,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Vf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"VA" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"VH" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"VO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/virtual_domain/powered)
+"VX" = (
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"We" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
+/obj/item/clothing/suit/apron/chef,
+/obj/item/clothing/head/utility/chefhat,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Wg" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Ww" = (
+/turf/open/water/beach,
+/area/virtual_domain/powered)
+"WL" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"WO" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"WW" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/icecream_vat,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"WX" = (
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Soaks-The-Rays"
+	},
+/turf/open/floor/carpet/orange,
+/area/virtual_domain/powered)
+"Xt" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/virtual_domain/powered)
+"Xv" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"XL" = (
+/obj/machinery/light/directional/east,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"XM" = (
+/turf/open/misc/beach/coast,
+/area/virtual_domain/powered)
+"XP" = (
+/turf/open/floor/carpet/blue,
+/area/virtual_domain/powered)
+"XT" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/sign/departments/botany/directional/south,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Yi" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/item/toy/seashell,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Yq" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"YI" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Supply Room"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/plating,
+/area/virtual_domain/powered)
+"YJ" = (
+/turf/open/floor/carpet/purple,
+/area/virtual_domain/powered)
+"YN" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light/directional/west,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Zb" = (
+/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/west,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Zd" = (
+/obj/structure/sign/poster/contraband/space_cola/directional/north,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Zg" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+"Zt" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/pill/morphine,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/wood,
+/area/virtual_domain/powered)
+
+(1,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+kv
+"}
+(2,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+iz
+"}
+(3,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+gl
+gl
+gl
+gl
+gl
+Al
+Al
+gl
+gl
+gl
+gl
+gl
+Al
+Al
+gl
+gl
+gl
+Al
+gl
+gl
+gl
+gl
+Al
+Al
+gl
+gl
+gl
+Al
+Al
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(4,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(5,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+zI
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(6,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+OZ
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(7,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+gl
+gl
+gl
+An
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+ke
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+ml
+ml
+ml
+ml
+ml
+FM
+gl
+Al
+iz
+"}
+(8,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+ml
+ml
+ml
+ml
+ml
+ml
+gl
+Al
+iz
+"}
+(9,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+gl
+gl
+ml
+ml
+ml
+ml
+ml
+ml
+gl
+Al
+iz
+"}
+(10,1,1) = {"
+pr
+pr
+pr
+pr
+iz
+Al
+Al
+Al
+Al
+xb
+xb
+xb
+Al
+Al
+gl
+gl
+gl
+Al
+TM
+IT
+IT
+IT
+IT
+IT
+IT
+IT
+IT
+IT
+DL
+Al
+gl
+gl
+ml
+ml
+ml
+ml
+ml
+ml
+gl
+Al
+iz
+"}
+(11,1,1) = {"
+iz
+iz
+iz
+iz
+iz
+Al
+Al
+Al
+Fn
+PM
+PM
+Fn
+Fn
+hU
+hU
+hU
+TM
+IT
+vM
+Pc
+bf
+Bw
+Fn
+Ev
+Pg
+iR
+kG
+di
+sp
+DL
+Al
+gl
+ml
+ml
+ml
+ml
+ml
+ml
+gl
+Al
+iz
+"}
+(12,1,1) = {"
+iz
+Al
+Al
+Al
+Al
+Al
+Al
+hU
+Fn
+pT
+LD
+LD
+Fn
+TM
+Kd
+IT
+vM
+bQ
+cv
+wD
+Bw
+JY
+Fn
+db
+TG
+TG
+Vf
+EQ
+AP
+Qk
+Al
+gl
+ml
+ml
+ml
+ml
+ml
+ml
+gl
+Al
+iz
+"}
+(13,1,1) = {"
+iz
+Al
+Fn
+Fn
+Fn
+Fn
+Fn
+Fn
+Fn
+LD
+pT
+LD
+EC
+hI
+pT
+PM
+wD
+wD
+cv
+wD
+wD
+OR
+Fn
+ug
+TG
+TG
+iL
+Nh
+QX
+tm
+Al
+gl
+ml
+ml
+ml
+ml
+ml
+sT
+gl
+Al
+iz
+"}
+(14,1,1) = {"
+iz
+Al
+Fn
+VA
+kT
+Zb
+TG
+Fn
+Fn
+Fn
+yU
+LD
+Et
+Bl
+LD
+PM
+wD
+wD
+wD
+wD
+wD
+qc
+Fn
+Fn
+SD
+Mp
+uq
+fc
+Fn
+QB
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(15,1,1) = {"
+iz
+Al
+Fn
+VA
+yX
+ag
+kT
+Br
+TG
+TM
+IT
+IT
+IT
+vM
+Fn
+Fn
+Gz
+wD
+Bw
+rm
+wD
+wD
+wD
+Ii
+dx
+kn
+kn
+kn
+Aa
+QB
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(16,1,1) = {"
+iz
+Al
+Fn
+pC
+yX
+ag
+kM
+BJ
+af
+tm
+as
+ab
+Ir
+IP
+YN
+uV
+wD
+wD
+wD
+mG
+vv
+Bw
+wD
+Rx
+uU
+lS
+lS
+lS
+uU
+QB
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(17,1,1) = {"
+iz
+Al
+Fn
+Mw
+ag
+ag
+vp
+xk
+EQ
+cK
+Ud
+Ud
+bC
+Ud
+Ud
+wD
+IH
+wD
+wD
+Bw
+wD
+wD
+wD
+Rx
+uU
+lS
+NX
+lS
+cz
+QB
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(18,1,1) = {"
+iz
+Al
+Fn
+Mz
+TG
+TG
+TM
+IT
+KH
+vM
+Zd
+wD
+wD
+Bw
+wD
+VX
+wD
+UU
+wD
+wD
+wD
+wD
+wD
+Rx
+uU
+lS
+lS
+lS
+uU
+QB
+Al
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(19,1,1) = {"
+iz
+Al
+TM
+IT
+tE
+tE
+vM
+uV
+NF
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+jc
+uU
+uU
+uU
+uU
+uU
+sp
+DL
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+gl
+Al
+iz
+"}
+(20,1,1) = {"
+iz
+Al
+QB
+zU
+wD
+wD
+wD
+wD
+Dt
+Ud
+Ud
+Ud
+Ud
+Ud
+Ud
+Ud
+ys
+wD
+wD
+TJ
+wb
+wD
+wD
+vT
+gJ
+gJ
+gJ
+gJ
+gJ
+oE
+QB
+gl
+gl
+Al
+Al
+gl
+gl
+Al
+gl
+Al
+iz
+"}
+(21,1,1) = {"
+iz
+Al
+QB
+wD
+wD
+Bw
+wD
+wD
+FD
+BM
+BM
+We
+Zt
+BD
+Iv
+BM
+Db
+Nr
+wD
+yl
+ag
+wD
+wD
+XM
+KZ
+Ww
+Ww
+Ww
+cG
+dj
+QB
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+iz
+"}
+(22,1,1) = {"
+iz
+Al
+sp
+DL
+wD
+wD
+wD
+wD
+yn
+Zg
+VH
+TG
+TG
+TG
+TG
+mX
+BM
+wD
+wD
+Au
+wD
+rT
+wD
+XM
+Ww
+Ww
+Ww
+Ww
+Ww
+dj
+QB
+Al
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+"}
+(23,1,1) = {"
+iz
+Al
+dG
+QB
+Cb
+wD
+JC
+wD
+NO
+HF
+HH
+JE
+BM
+aw
+TG
+TG
+ya
+wD
+wD
+YJ
+YJ
+wD
+wD
+XM
+Ww
+Ww
+Ww
+Ww
+Ww
+dj
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(24,1,1) = {"
+iz
+Al
+Is
+Qk
+wD
+Gz
+WX
+wD
+jW
+Em
+TG
+mq
+ri
+Qb
+TG
+TG
+cb
+wD
+wD
+bQ
+wD
+wD
+wD
+XM
+Ww
+Ww
+KZ
+KZ
+Ww
+pZ
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(25,1,1) = {"
+iz
+Al
+dG
+QB
+OK
+Gz
+LW
+wD
+bm
+bS
+Dc
+oP
+BM
+vq
+TG
+TG
+vN
+wD
+wD
+XP
+yB
+wD
+wD
+XM
+KZ
+Ww
+KZ
+gh
+Ww
+dj
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(26,1,1) = {"
+iz
+Al
+dG
+QB
+Sg
+wD
+wD
+wD
+BM
+Ve
+rc
+yi
+TG
+TG
+TG
+CO
+BM
+wD
+Yi
+XL
+wD
+wD
+wD
+XM
+Ww
+Ww
+Ww
+Ww
+Ww
+dj
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(27,1,1) = {"
+iz
+Al
+TM
+vM
+Bw
+wD
+wD
+wD
+BM
+BM
+BM
+BM
+FY
+BM
+BM
+BM
+er
+wD
+GA
+xq
+jy
+wD
+wD
+XM
+Ww
+cG
+Ww
+Ww
+KZ
+dj
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(28,1,1) = {"
+iz
+Al
+QB
+Nr
+wD
+wD
+Bw
+wD
+YN
+Ud
+WW
+yv
+Ud
+Ud
+Ud
+Ud
+YN
+wD
+xR
+CA
+Uh
+wD
+qW
+XM
+Ww
+Ww
+Ww
+Ww
+Ww
+pZ
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(29,1,1) = {"
+iz
+Al
+QB
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+Jt
+wD
+mP
+zn
+Bu
+Bu
+Bu
+Bu
+Xt
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(30,1,1) = {"
+iz
+Al
+Nq
+Ds
+Ds
+DL
+VX
+wD
+wD
+wD
+wD
+wD
+XL
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+XT
+Fn
+Fn
+Fn
+Fn
+Fn
+Fn
+TM
+IT
+vM
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(31,1,1) = {"
+iz
+Al
+QB
+TG
+TG
+sp
+DL
+jl
+TM
+dH
+qR
+qZ
+DL
+WO
+wD
+Bw
+wD
+wD
+wD
+wD
+bM
+Ud
+aE
+aE
+aE
+lq
+fr
+hk
+QB
+Al
+Al
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(32,1,1) = {"
+iz
+Al
+JS
+Nh
+HH
+TG
+sp
+IT
+vM
+dZ
+OE
+Nw
+sp
+dH
+qR
+qZ
+DL
+wD
+wD
+wD
+Ae
+Ud
+zw
+xw
+Uq
+aE
+aE
+aE
+sp
+DL
+Al
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(33,1,1) = {"
+iz
+Al
+fF
+EP
+Dc
+TG
+TG
+TG
+hG
+uc
+TG
+Ge
+Fn
+dZ
+OE
+Nw
+QB
+Gz
+uV
+wD
+wD
+Ud
+xw
+xw
+xw
+zt
+aE
+sB
+OW
+sp
+DL
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(34,1,1) = {"
+iz
+Al
+QB
+Xv
+TG
+hE
+TG
+TG
+Fn
+Wg
+rc
+xJ
+Fn
+uc
+TG
+RB
+QB
+wD
+wD
+Bw
+wD
+lB
+zw
+xw
+Uq
+vJ
+FQ
+VO
+aE
+jg
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(35,1,1) = {"
+iz
+Al
+QB
+Fn
+SB
+Fn
+WL
+TG
+Fn
+Fn
+Fn
+Fn
+Fn
+Wg
+TG
+RL
+QB
+Gh
+Ud
+Ud
+Ud
+FS
+aE
+aE
+aE
+vJ
+AI
+BQ
+aE
+NM
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(36,1,1) = {"
+iz
+Al
+JS
+kK
+TG
+Fn
+TG
+TG
+TG
+TG
+qg
+TG
+Fn
+Fn
+SY
+Fn
+sp
+Ds
+Ds
+vr
+YI
+dH
+IT
+DL
+TX
+vJ
+aE
+VO
+aE
+uk
+QB
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(37,1,1) = {"
+iz
+Al
+fF
+Ia
+dI
+Fn
+Fn
+Fn
+QP
+TG
+TG
+TG
+TG
+TG
+TG
+TG
+TG
+TG
+TG
+QB
+ve
+nP
+ed
+QB
+Cv
+Qj
+IM
+vW
+Cv
+TM
+vM
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(38,1,1) = {"
+iz
+Al
+QB
+tZ
+TG
+Qu
+Hs
+TM
+IT
+DL
+TG
+rc
+TG
+TG
+TG
+tF
+xh
+TG
+TG
+QB
+Yq
+aZ
+Fn
+sp
+IT
+Qk
+IT
+tm
+IT
+vM
+Al
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(39,1,1) = {"
+iz
+Al
+sp
+IT
+IT
+IT
+IT
+vM
+hU
+sp
+IT
+IT
+IT
+IT
+IT
+tm
+Qk
+IT
+IT
+vM
+Fn
+Fn
+Fn
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(40,1,1) = {"
+iz
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+Al
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}
+(41,1,1) = {"
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+iz
+pr
+pr
+pr
+pr
+pr
+pr
+pr
+xW
+"}

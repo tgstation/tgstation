@@ -7,7 +7,7 @@
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_emote = list("grunts", "grunts lowly")
-	butcher_results = list(/obj/item/food/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab/grassfed = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently nudges"
@@ -47,3 +47,8 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 	)
+
+/// Cold resistent and doesn't need to breathe
+/mob/living/basic/deer/ice
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0

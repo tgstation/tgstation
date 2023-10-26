@@ -156,6 +156,7 @@
 	volume = 30
 	amount_per_transfer_from_this = 30
 	list_reagents = list(/datum/reagent/medicine/sansufentanyl = 20)
+	stealthy = TRUE
 	//Was the injector used on someone yet?
 	var/used = FALSE
 

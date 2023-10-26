@@ -199,8 +199,8 @@
 	if(next_beep <= world.time)
 		next_beep = world.time + (2 SECONDS)
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-	var/image/alarm_image = image(icon, src, "alarm_light", layer+1)
-	flick_overlay_view(alarm_image, 2 SECONDS)
+	var/mutable_appearance/alarm_display = mutable_appearance(icon, "alarm_light")
+	flick_overlay_view(alarm_display, 2 SECONDS)
 	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)

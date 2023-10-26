@@ -30,7 +30,7 @@
 	if(!QDELETED(reward_target))
 		reward_target.get_kill(owner)
 
-/datum/status_effect/syphon_mark/tick()
+/datum/status_effect/syphon_mark/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		get_kill()
 		qdel(src)
@@ -96,7 +96,7 @@
 	playsound(owner, 'sound/weapons/gun/shotgun/rack.ogg', 75, FALSE)
 	return ..()
 
-/datum/status_effect/bounty/tick()
+/datum/status_effect/bounty/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		rewards()
 		qdel(src)
@@ -343,7 +343,7 @@
 /datum/status_effect/caltropped
 	id = "caltropped"
 	duration = 1 SECONDS
-	tick_interval = INFINITY
+	tick_interval = -1
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
@@ -374,7 +374,7 @@
 		QDEL_NULL(alt_clone)
 	return ..()
 
-/datum/status_effect/eigenstasium/tick()
+/datum/status_effect/eigenstasium/tick(seconds_between_ticks)
 	. = ..()
 	//This stuff runs every cycle
 	if(prob(5))
@@ -541,3 +541,20 @@
 
 /datum/status_effect/tinlux_light/on_remove()
 	QDEL_NULL(mob_light_obj)
+
+/datum/status_effect/gutted
+	id = "gutted"
+	alert_type = null
+	duration = -1
+	tick_interval = -1
+
+/datum/status_effect/gutted/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(stop_gutting))
+	return TRUE
+
+/datum/status_effect/gutted/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+
+/datum/status_effect/gutted/proc/stop_gutting()
+	SIGNAL_HANDLER
+	qdel(src)

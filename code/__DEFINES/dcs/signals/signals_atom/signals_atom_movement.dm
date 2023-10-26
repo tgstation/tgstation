@@ -38,7 +38,7 @@
 	#define COMSIG_BLOCK_RELAYMOVE (1<<0)
 
 /// From base of atom/setDir(): (old_dir, new_dir). Called before the direction changes
-#define COMSIG_ATOM_PRE_DIR_CHANGE "mob_pre_face_atom"
+#define COMSIG_ATOM_PRE_DIR_CHANGE "atom_pre_face_atom"
 	#define COMPONENT_ATOM_BLOCK_DIR_CHANGE (1<<0)
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
@@ -53,3 +53,5 @@
 #define COMSIG_ATOM_PRE_PRESSURE_PUSH "atom_pre_pressure_push"
 	///prevents pressure movement
 	#define COMSIG_ATOM_BLOCKS_PRESSURE (1<<0)
+///From base of /datum/move_loop/process() after attempting to move a movable: (datum/move_loop/loop, old_dir)
+#define COMSIG_MOVABLE_MOVED_FROM_LOOP "movable_moved_from_loop"

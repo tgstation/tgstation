@@ -12,6 +12,7 @@
 	speed = 1
 	attack_verb_continuous = "lacerates"
 	attack_verb_simple = "lacerate"
+	melee_attack_cooldown = 1 SECONDS
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
@@ -81,5 +82,5 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

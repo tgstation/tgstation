@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * role: mafia_role datum to reward.
  */
 /datum/mafia_controller/proc/award_role(award, datum/mafia_role/rewarded)
-	var/client/role_client = GLOB.directory[rewarded.body.client]
+	var/client/role_client = rewarded.body.client
 	role_client?.give_award(award, rewarded.body)
 
 /**

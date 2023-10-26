@@ -85,6 +85,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_fingerprints,
 	/client/proc/list_law_changes,
 	/client/proc/list_signalers,
+	/client/proc/manage_sect, /*manage chaplain religious sect*/
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
 	/client/proc/respawn_character,
 	/client/proc/show_manifest,
@@ -797,6 +798,33 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(holder)
 		src.holder.output_ai_laws()
 
+/client/proc/manage_sect()
+	set name = "Manage Religious Sect"
+	set category = "Admin.Game"
+
+	if (!isnull(GLOB.religious_sect))
+		var/you_sure = tgui_alert(
+			usr,
+			"The Chaplain has already chosen [GLOB.religious_sect.name], override their selection?",
+			"Replace God?",
+			list("Yes", "Cancel"),
+		)
+		if (you_sure != "Yes")
+			return
+
+	var/static/list/choices = list()
+	if (!length(choices))
+		choices["nothing"] = null
+		for(var/datum/religion_sect/sect as anything in subtypesof(/datum/religion_sect))
+			choices[initial(sect.name)] = sect
+	var/choice = tgui_input_list(usr, "Set new Chaplain sect", "God Picker", choices)
+	if(isnull(choice))
+		return
+	if(choice == "nothing")
+		reset_religious_sect()
+		return
+	set_new_religious_sect(choices[choice], reset_existing = TRUE)
+
 /client/proc/deadmin()
 	set name = "Deadmin"
 	set category = "Admin"
@@ -1023,7 +1051,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	if(!isobserver(usr))
 		admin_ghost()
-	usr.forceMove(coords2turf(reservation.bottom_left_coords))
+	usr.forceMove(reservation.bottom_left_turfs[1])
 
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
 	to_chat(usr, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))

@@ -3,7 +3,7 @@
 /datum/status_effect/his_grace
 	id = "his_grace"
 	duration = -1
-	tick_interval = 4
+	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/his_grace
 	var/bloodlust = 0
 
@@ -32,7 +32,7 @@
 /datum/status_effect/his_grace/on_remove()
 	owner.remove_stun_absorption(id)
 
-/datum/status_effect/his_grace/tick()
+/datum/status_effect/his_grace/tick(seconds_between_ticks)
 	bloodlust = 0
 	var/graces = 0
 	for(var/obj/item/his_grace/HG in owner.held_items)
@@ -75,7 +75,7 @@
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
 	duration = 10
-	tick_interval = 0
+	tick_interval = -1
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
 /atom/movable/screen/alert/status_effect/blooddrunk
@@ -136,7 +136,7 @@
 /datum/status_effect/fleshmend/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_EXTINGUISHED))
 
-/datum/status_effect/fleshmend/tick()
+/datum/status_effect/fleshmend/tick(seconds_between_ticks)
 	if(owner.on_fire)
 		return
 
@@ -170,7 +170,7 @@
 	id = "Hippocratic Oath"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
-	tick_interval = 25
+	tick_interval = 2.5 SECONDS
 	alert_type = null
 
 	var/datum/component/aura_healing/aura_healing
@@ -211,7 +211,7 @@
 /datum/status_effect/hippocratic_oath/get_examine_text()
 	return span_notice("[owner.p_They()] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
 
-/datum/status_effect/hippocratic_oath/tick()
+/datum/status_effect/hippocratic_oath/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		if(deathTick < 4)
 			deathTick += 1
@@ -282,7 +282,7 @@
 	tick_interval = 1 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 
-/datum/status_effect/good_music/tick()
+/datum/status_effect/good_music/tick(seconds_between_ticks)
 	if(owner.can_hear())
 		owner.adjust_dizzy(-4 SECONDS)
 		owner.adjust_jitter(-4 SECONDS)
@@ -436,17 +436,17 @@
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
-/datum/status_effect/nest_sustenance/tick(seconds_per_tick, times_fired)
+/datum/status_effect/nest_sustenance/tick(seconds_between_ticks)
 	. = ..()
 
 	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
 		qdel(src)
 		return
 
-	owner.adjustBruteLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustFireLoss(-2 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustOxyLoss(-4 * seconds_per_tick, updating_health = FALSE)
-	owner.adjustStaminaLoss(-4 * seconds_per_tick, updating_stamina = FALSE)
+	owner.adjustBruteLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	owner.adjustStaminaLoss(-4 * seconds_between_ticks, updating_stamina = FALSE)
 	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
@@ -454,3 +454,65 @@
 	name = "Nest Vitalization"
 	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
 	icon_state = "nest_life"
+
+/**
+ * Granted to wizards upon satisfying the cheese sacrifice during grand rituals.
+ * Halves incoming damage and makes the owner stun immune, damage slow immune, levitating(even in space and hyperspace!) and glowing.
+ */
+/datum/status_effect/blessing_of_insanity
+	id = "blessing_of_insanity"
+	duration = -1
+	tick_interval = -1
+	alert_type = /atom/movable/screen/alert/status_effect/blessing_of_insanity
+
+/atom/movable/screen/alert/status_effect/blessing_of_insanity
+	name = "Blessing of Insanity"
+	desc = "Your devotion to madness has improved your resilience to all damage and you gain the power to levitate!"
+	//no screen alert - the gravity already throws one
+
+/datum/status_effect/blessing_of_insanity/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		var/datum/physiology/owner_physiology = human_owner.physiology
+		owner_physiology.brute_mod *= 0.5
+		owner_physiology.burn_mod *= 0.5
+		owner_physiology.tox_mod *= 0.5
+		owner_physiology.oxy_mod *= 0.5
+		owner_physiology.clone_mod *= 0.5
+		owner_physiology.stamina_mod *= 0.5
+	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
+	owner.AddElement(/datum/element/forced_gravity, 0)
+	owner.AddElement(/datum/element/simple_flying)
+	owner.add_stun_absorption(source = id, priority = 4)
+	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
+	return TRUE
+
+/datum/status_effect/blessing_of_insanity/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		var/datum/physiology/owner_physiology = human_owner.physiology
+		owner_physiology.brute_mod *= 2
+		owner_physiology.burn_mod *= 2
+		owner_physiology.tox_mod *= 2
+		owner_physiology.oxy_mod *= 2
+		owner_physiology.clone_mod *= 2
+		owner_physiology.stamina_mod *= 2
+	owner.remove_filter("mad_glow")
+	owner.RemoveElement(/datum/element/forced_gravity, 0)
+	owner.RemoveElement(/datum/element/simple_flying)
+	owner.remove_stun_absorption(id)
+	remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+
+/// Gives you a brief period of anti-gravity
+/datum/status_effect/jump_jet
+	id = "jump_jet"
+	alert_type = null
+	duration = 5 SECONDS
+
+/datum/status_effect/jump_jet/on_apply()
+	owner.AddElement(/datum/element/forced_gravity, 0)
+	return TRUE
+
+/datum/status_effect/jump_jet/on_remove()
+	owner.RemoveElement(/datum/element/forced_gravity, 0)

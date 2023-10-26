@@ -1,4 +1,4 @@
-import { BlockQuote, Collapsible, LabeledList, Modal, Section, Stack, Tabs } from '../components';
+import { BlockQuote, Collapsible, Modal, Section, Stack, Tabs } from '../components';
 import { useBackend } from '../backend';
 import { useLocalState } from '../backend';
 import { Window } from '../layouts';
@@ -73,18 +73,20 @@ const UsersScreen = (props, context) => {
   return (
     <Section fill scrollable title="Crew Account Summary">
       {PlayerAccounts.map((account) => (
-        <Collapsible fill key={account.index} title={account.name}>
-          <LabeledList>
-            <LabeledList.Item label="Occupation">
-              {account.job}
-            </LabeledList.Item>
-            <LabeledList.Item label="Balance">
-              {account.balance}
-            </LabeledList.Item>
-            <LabeledList.Item label="Pay Modifier">
-              {account.modifier * 100}%
-            </LabeledList.Item>
-          </LabeledList>
+        <Collapsible
+          fill
+          key={account.index}
+          title={account.name + ' the ' + account.job}>
+          <Stack vertical>
+            <BlockQuote>
+              <Stack.Item textColor={'green'}>
+                {account.balance} credit balance
+              </Stack.Item>
+              <Stack.Item>
+                Employee has {account.modifier * 100}% pay modifier
+              </Stack.Item>
+            </BlockQuote>
+          </Stack>
         </Collapsible>
       ))}
     </Section>

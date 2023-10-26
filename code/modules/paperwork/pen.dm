@@ -237,7 +237,7 @@
 		return
 	if(!M.reagents)
 		return
-	reagents.trans_to(M, reagents.total_volume, transfered_by = user, methods = INJECT)
+	reagents.trans_to(M, reagents.total_volume, transferred_by = user, methods = INJECT)
 
 
 /obj/item/pen/sleepy/Initialize(mapload)
@@ -362,6 +362,9 @@
 	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
+
+/obj/item/pen/screwdriver/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER)
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()

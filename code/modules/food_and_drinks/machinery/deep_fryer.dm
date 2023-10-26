@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
+	reagents.add_reagent(/datum/reagent/consumable/nutriment/fat/oil, 25)
 	fry_loop = new(src, FALSE)
 
 /obj/machinery/deepfryer/Destroy()
@@ -93,12 +93,12 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
 		user.visible_message(span_notice("[user] drops [weapon] into [src]."), span_notice("You dissolve [weapon] in [src]."))
-		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transfered_by = user)
+		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transferred_by = user)
 		qdel(weapon)
 		return
 	// Make sure we have cooking oil
-	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
-		to_chat(user, span_warning("[src] has no cooking oil to fry with!"))
+	if(!reagents.has_reagent(/datum/reagent/consumable/nutriment/fat, check_subtypes = TRUE))
+		to_chat(user, span_warning("[src] has no fat or oil to fry with!"))
 		return
 	// Don't deep fry indestructible things, for sanity reasons
 	if(weapon.resistance_flags & INDESTRUCTIBLE)
@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer/process(seconds_per_tick)
 	..()
-	var/datum/reagent/consumable/cooking_oil/frying_oil = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
+	var/datum/reagent/consumable/nutriment/fat/frying_oil = reagents.has_reagent(/datum/reagent/consumable/nutriment/fat, check_subtypes = TRUE)
 	if(!frying_oil)
 		return
 	reagents.chem_temp = frying_oil.fry_temperature
@@ -153,11 +153,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == frying)
-		reset_frying()
-
-/obj/machinery/deepfryer/handle_atom_del(atom/deleting_atom)
-	. = ..()
-	if(deleting_atom == frying)
 		reset_frying()
 
 /obj/machinery/deepfryer/proc/reset_frying()

@@ -88,7 +88,7 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-	if(!blood_volume)
+	if(!blood_volume || (status_flags & GODMODE))
 		return
 	blood_volume = max(blood_volume - amt, 0)
 

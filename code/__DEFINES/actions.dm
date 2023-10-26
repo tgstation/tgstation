@@ -19,6 +19,8 @@ DEFINE_BITFIELD(check_flags, list(
 
 ///Action button triggered with right click
 #define TRIGGER_SECONDARY_ACTION (1<<0)
+///Action triggered to ignore any availability checks
+#define TRIGGER_FORCE_AVAILABLE (1<<1)
 
 // Defines for formatting cooldown actions for the stat panel.
 /// The stat panel the action is displayed in.

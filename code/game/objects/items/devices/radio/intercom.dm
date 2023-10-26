@@ -34,6 +34,9 @@
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	GLOB.intercoms_list += src
+	if(!unscrewed)
+		find_and_hang_on_wall(directional = TRUE, \
+			custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 
 /obj/item/radio/intercom/Destroy()
 	. = ..()
@@ -79,8 +82,7 @@
 	if(tool.use_tool(src, user, 80))
 		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		new/obj/item/wallframe/intercom(get_turf(src))
-		qdel(src)
+		knock_down()
 
 /**
  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
@@ -173,6 +175,13 @@
 	else
 		set_on(current_area.powered(AREA_USAGE_EQUIP)) // set "on" to the equipment power status of our area.
 	update_appearance()
+
+/**
+ * Called by the wall mount component and reused during the tool deconstruction proc.
+ */
+/obj/item/radio/intercom/proc/knock_down()
+	new/obj/item/wallframe/intercom(get_turf(src))
+	qdel(src)
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom

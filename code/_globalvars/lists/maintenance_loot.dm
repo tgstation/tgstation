@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/pen/fountain = 1,
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/restraints/legcuffs/bola = 1,
-		/obj/item/roller = 1,
+		/obj/item/emergency_bed = 1,
 		/obj/item/spear = 1,
 		/obj/item/weldingtool/largetank = 1,
 		/obj/item/market_uplink/blackmarket = 1,
@@ -301,7 +301,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/shield/buckler = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/weldingtool/hugetank = 1,
-		/obj/item/fishing_rod/master = 1,
+		/obj/item/fishing_rod/telescopic/master = 1,
 		/obj/item/spess_knife = 1,
 		) = 1,
 

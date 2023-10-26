@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - bugfix: "Fixed players being able to roll antagonist without ever being eligible to play any role. Players who have their preferences set up so that they're likely to return to lobby when the round starts have a lowered chance of becoming antagonist."

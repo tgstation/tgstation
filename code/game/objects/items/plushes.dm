@@ -108,10 +108,10 @@
 
 	return ..()
 
-/obj/item/toy/plush/handle_atom_del(atom/A)
-	if(A == grenade)
+/obj/item/toy/plush/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == grenade)
 		grenade = null
-	..()
 
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
@@ -148,7 +148,6 @@
 		else
 			to_chat(user, span_notice("You remove the grenade from [src]."))
 			user.put_in_hands(grenade)
-			grenade = null
 		return
 	if(isgrenade(I))
 		if(stuffed)

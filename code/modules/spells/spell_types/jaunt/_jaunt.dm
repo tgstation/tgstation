@@ -19,6 +19,12 @@
 	/// What dummy mob type do we put jaunters in on jaunt?
 	var/jaunt_type = /obj/effect/dummy/phased_mob
 
+/datum/action/cooldown/spell/jaunt/get_caster_from_target(atom/target)
+	if(istype(target.loc, jaunt_type))
+		return target
+
+	return ..()
+
 /datum/action/cooldown/spell/jaunt/before_cast(atom/cast_on)
 	return ..() | SPELL_NO_FEEDBACK // Don't do the feedback until after we're jaunting
 

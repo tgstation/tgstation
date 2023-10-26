@@ -14,7 +14,7 @@
 	worn_icon_state = "holybow"
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
-	mag_type = /obj/item/ammo_box/magazine/internal/bow/holy
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow/holy
 
 /obj/item/ammo_box/magazine/internal/bow/holy
 	name = "divine bowstring"

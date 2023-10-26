@@ -19,7 +19,7 @@
 /turf/open/floor/carpet/red/airless,
 /area/ruin/space/prison_shuttle)
 "g" = (
-/mob/living/simple_animal/hostile/asteroid/basilisk{
+/mob/living/basic/mining/basilisk{
 	environment_smash = 0
 	},
 /turf/open/misc/asteroid/airless,

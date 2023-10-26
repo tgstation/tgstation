@@ -36,6 +36,11 @@
 
 #define SUPERMATTER_WARNING_DELAY (60 SECONDS)
 
+/// If the crystal is healing faster than this per damage check, we suppress the Common radio notification for the cooldown
+#define SUPERMATTER_FAST_HEALING_RATE 0.025
+
+#define SUPERMATTER_COMMON_RADIO_DELAY (6 MINUTES)
+
 #define SM_HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
 #define GRAVITATIONAL_ANOMALY "gravitational_anomaly"
@@ -46,7 +51,10 @@
 #define VORTEX_ANOMALY "vortex_anomaly"
 #define DIMENSIONAL_ANOMALY "dimensional_anomaly"
 
-#define SUPERMATTER_COUNTDOWN_TIME (30 SECONDS)
+/// How long it takes for the supermatter to delaminate after hitting 0 integrity
+#define SUPERMATTER_COUNTDOWN_TIME (15 SECONDS)
+/// How long it takes for the supermatter to delaminate after hitting 0 integrity if a sliver has been removed
+#define SUPERMATTER_SLIVER_REMOVED_COUNTDOWN_TIME (5 SECONDS)
 
 ///to prevent accent sounds from layering
 #define SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN (2 SECONDS)
@@ -54,6 +62,8 @@
 #define DEFAULT_ZAP_ICON_STATE "sm_arc"
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
+
+#define SUPERMATTER_DEFAULT_BULLET_ENERGY 2
 
 #define SUPERMATTER_CASCADE_PERCENT 80
 

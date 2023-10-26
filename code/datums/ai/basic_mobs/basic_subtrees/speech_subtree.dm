@@ -149,7 +149,7 @@
 
 /datum/ai_planning_subtree/random_speech/tree
 	speech_chance = 3
-	emote_see = list("photosynthesizes angirly.")
+	emote_see = list("photosynthesizes angrily.")
 
 /datum/ai_planning_subtree/random_speech/pig
 	speech_chance = 3
@@ -157,6 +157,15 @@
 	sound = list('sound/creatures/pig1.ogg', 'sound/creatures/pig2.ogg')
 	emote_hear = list("snorts.")
 	emote_see = list("sniffs around.")
+
+/datum/ai_planning_subtree/random_speech/pony
+	speech_chance = 3
+	emote_hear = list("whinnies!")
+	emote_see = list("horses around.")
+
+/datum/ai_planning_subtree/random_speech/pony/tamed
+	speech_chance = 3
+	emote_see = list("snorts.")
 
 /datum/ai_planning_subtree/random_speech/killer_tomato
 	speech_chance = 3
@@ -176,7 +185,33 @@
 	emote_see = list("shakes their head.", "shivers.")
 	speak = list("Ack-Ack", "Ack-Ack-Ack-Ackawoooo", "Geckers", "Awoo", "Tchoff")
 
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 1
+	emote_hear = list("clicks.")
+	emote_see = list("clacks.")
+
 /datum/ai_planning_subtree/random_speech/penguin
 	speech_chance = 5
 	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")
 	emote_hear = list("squawks", "gakkers")
+
+/datum/ai_planning_subtree/random_speech/bear
+	speech_chance = 5
+	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
+	emote_see = list("stares ferociously.")
+
+/datum/ai_planning_subtree/random_speech/blackboard //literal tower of babel, subtree form
+	speech_chance = 1
+
+/datum/ai_planning_subtree/random_speech/blackboard/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/list/speech_lines = controller.blackboard[BB_BASIC_MOB_SPEAK_LINES]
+	if(isnull(speech_lines))
+		return ..()
+	
+	speak = speech_lines[BB_EMOTE_SAY] ? speech_lines[BB_EMOTE_SAY] : initial(speak)
+	emote_see = speech_lines[BB_EMOTE_SEE] ? speech_lines[BB_EMOTE_SEE] : initial(emote_see)
+	emote_hear = speech_lines[BB_EMOTE_HEAR] ? speech_lines[BB_EMOTE_HEAR] : initial(emote_hear)
+	sound = speech_lines[BB_EMOTE_SOUND] ? speech_lines[BB_EMOTE_SOUND] : initial(sound)
+	speech_chance = speech_lines[BB_EMOTE_CHANCE] ? speech_lines[BB_EMOTE_CHANCE] : initial(speech_chance)
+
+	return ..()

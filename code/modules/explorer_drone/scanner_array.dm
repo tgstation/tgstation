@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	name = "Scanner array"
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "scanner_off"
-	desc = "Sophisticated scanning array. Easily influenced by enviroment."
+	desc = "A sophisticated scanning array. Easily influenced by its environment."
 
 /obj/machinery/exoscanner/Initialize(mapload)
 	. = ..()
@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /datum/scan_condition/nebula
 	name = "Nebula"
-	description = "Site is within a unusually dense nebula, to reduce scanner noise position dishes at least 15 tiles apart"
+	description = "Site is within an unusually dense nebula. To reduce scanner noise, position dishes at least 15 tiles apart."
 	var/distance = 15
 
 /datum/scan_condition/nebula/check_dish(obj/machinery/exoscanner/dish)
@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /datum/scan_condition/pulsar
 	name = "Pulsar"
-	description = "Pulsar near the site requires dishes to be shielded from electomagnetic noise, ensure no other machines are working near the dish."
+	description = "A pulsar near the site requires dishes to be shielded from electomagnetic noise. Ensure no other machines are working near the dish."
 	var/distance = 2
 
 /datum/scan_condition/pulsar/check_dish(obj/machinery/exoscanner/dish)
@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /datum/scan_condition/asteroid_belt
 	name = "Asteroid Belt"
-	description = "An asteroid belt is obscuring the direct line of sight from the station to the site, ensure the dishes are placed outside of station z level."
+	description = "An asteroid belt is obscuring the direct line of sight from the station to the site. Ensure the dishes are placed outside of the station z level."
 
 /datum/scan_condition/asteroid_belt/check_dish(obj/machinery/exoscanner/dish)
 	var/turf/dish_turf = get_turf(dish)
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /datum/scan_condition/black_hole
 	name = "Black Hole"
-	description = "Background black hole requires you to focus the scan point precisely, ensure the dishes isolated from rest of the station with at least 6 walls around them."
+	description = "A background black hole requires you to focus the scan point precisely. Ensure the dishes are isolated from rest of the station with at least 6 walls around them."
 
 /datum/scan_condition/black_hole/check_dish(obj/machinery/exoscanner/dish)
 	var/wall_count = 0

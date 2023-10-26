@@ -85,7 +85,7 @@ xxx xxx xxx
 	for(var/dir in cardinals)
 		var/left = turn(dir, 90)
 		var/right = turn(dir, -90)
-		var/opposite = turn(dir, 180)
+		var/opposite = REVERSE_DIR(dir)
 		// Need to encode diagonals here because it's possible, even if it is always false
 		var/list/acceptable_adjacents = new /list(largest_dir)
 		// Alright, what directions are acceptable to us
@@ -123,7 +123,7 @@ xxx xxx xxx
 #define CAN_DIAGONAL_SMOOTH(border_obj, target, direction) (\
 	(target.smoothing_flags & SMOOTH_BORDER_OBJECT) ? \
 		GLOB.adjacent_direction_lookup[border_obj.dir][direction + 1]?[target.dir] : \
-		(GLOB.adjacent_direction_lookup[border_obj.dir][direction + 1]) ? turn(direction, 180) : NONE \
+		(GLOB.adjacent_direction_lookup[border_obj.dir][direction + 1]) ? REVERSE_DIR(direction) : NONE \
 	)
 
 #define DEFAULT_UNDERLAY_ICON 'icons/turf/floors.dmi'
@@ -412,7 +412,7 @@ xxx xxx xxx
 		break set_adj_in_dir; \
 	/// Check that non border objects use to smooth against border objects
 	/// Returns true if the smooth is acceptable, FALSE otherwise
-	#define BITMASK_ON_BORDER_CHECK(target, direction) (!(target.smoothing_flags & SMOOTH_BORDER_OBJECT) || CAN_DIAGONAL_SMOOTH(target, src, turn(direction, 180)))
+	#define BITMASK_ON_BORDER_CHECK(target, direction) (!(target.smoothing_flags & SMOOTH_BORDER_OBJECT) || CAN_DIAGONAL_SMOOTH(target, src, REVERSE_DIR(direction)))
 
 	#define BORDER_FOUND(target, direction, direction_flag) new_junction |= CAN_DIAGONAL_SMOOTH(src, target, direction)
 	// Border objects require an object as context, so we need a dummy. I'm sorry

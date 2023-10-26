@@ -98,7 +98,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "aZ" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /obj/structure/table,
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
@@ -2816,7 +2816,7 @@
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "La" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "Lc" = (

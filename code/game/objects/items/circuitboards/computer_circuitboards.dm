@@ -324,14 +324,6 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/shuttle/white_ship/bridge
 
-/obj/item/circuitboard/computer/white_ship/pod
-	name = "Salvage Pod"
-	build_path = /obj/machinery/computer/shuttle/white_ship/pod
-
-/obj/item/circuitboard/computer/white_ship/pod/recall
-	name = "Salvage Pod Recall"
-	build_path = /obj/machinery/computer/shuttle/white_ship/pod/recall
-
 /obj/item/circuitboard/computer/bountypad
 	name = "Bounty Pad"
 	build_path = /obj/machinery/computer/piratepad_control/civilian
@@ -548,6 +540,10 @@
 	name = "Golem Ship Equipment Vendor Console"
 	build_path = /obj/machinery/computer/order_console/mining/golem
 
+/obj/item/circuitboard/computer/order_console/bitrunning
+	name = "Bitrunning Vendor Console"
+	build_path = /obj/machinery/computer/order_console/bitrunning
+
 /obj/item/circuitboard/computer/ferry
 	name = "Transport Ferry"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
@@ -609,3 +605,8 @@
 	name = "Medical Order"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/computer/department_orders/medical
+
+/obj/item/circuitboard/computer/quantum_console
+	name = "Quantum Server Console"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/quantum_console

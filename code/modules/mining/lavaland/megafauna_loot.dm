@@ -282,7 +282,7 @@
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
-	AddComponent(/datum/component/gags_recolorable)
+	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(seconds_per_tick)
 	. = ..()
@@ -328,7 +328,7 @@
 	butcher_callback = CALLBACK(src, PROC_REF(consume)), \
 	)
 	AddElement(/datum/element/radiation_protected_clothing)
-	AddComponent(/datum/component/gags_recolorable)
+	AddElement(/datum/element/gags_recolorable)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
@@ -641,9 +641,10 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	AddComponent(/datum/component/butchering, \
-	speed = 15 SECONDS, \
-	effectiveness = 90, \
+	AddComponent(\
+		/datum/component/butchering, \
+		speed = 15 SECONDS, \
+		effectiveness = 90, \
 	)
 
 /obj/item/melee/ghost_sword/Destroy()
@@ -777,7 +778,7 @@
 	var/create_delay = 3 SECONDS
 	var/reset_cooldown = 5 SECONDS
 	var/timer = 0
-	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
+	var/static/list/banned_turfs = typecacheof(list(/turf/open/space, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

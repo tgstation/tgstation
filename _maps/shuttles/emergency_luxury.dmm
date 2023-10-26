@@ -927,11 +927,6 @@
 /obj/item/storage/box/fireworks/dangerous,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
-"KC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "KE" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -1461,7 +1456,7 @@ zR
 JO
 KE
 kJ
-KC
+rh
 ty
 kJ
 Yb

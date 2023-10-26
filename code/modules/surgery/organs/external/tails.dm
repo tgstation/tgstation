@@ -34,12 +34,18 @@
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
 		wag(FALSE)
+
+	return ..()
+
+/obj/item/organ/external/tail/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
+
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
 	if(type in organ_owner.dna.species.external_organs)
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
+
 
 /obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))

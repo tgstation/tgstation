@@ -14,6 +14,7 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
+	melee_attack_cooldown = 1 SECONDS
 	faction = list(FACTION_NETHER)
 	speak_emote = list("screams")
 	death_message = "falls apart into a fine dust."
@@ -42,5 +43,5 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/average_speed,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

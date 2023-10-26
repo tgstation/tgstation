@@ -54,7 +54,7 @@
 	possible_heads = list(
 		JOB_HEAD_OF_SECURITY = list(
 			/mob/living/basic/carp/pet/lia,
-			/mob/living/basic/giant_spider/sgt_araneus,
+			/mob/living/basic/spider/giant/sgt_araneus,
 		),
 		JOB_WARDEN = list(
 			/mob/living/basic/pet/dog/pug/mcgriff

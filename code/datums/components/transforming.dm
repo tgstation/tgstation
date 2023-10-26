@@ -89,6 +89,23 @@
 		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(on_sharpen))
 
 	RegisterSignal(parent, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
+	RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
+	RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
+
+/datum/component/transforming/proc/apply_fantasy_bonuses(obj/item/source, bonus)
+	SIGNAL_HANDLER
+	active = FALSE
+	set_inactive(source)
+	force_on = source.modify_fantasy_variable("force_on", force_on, bonus)
+	throwforce_on = source.modify_fantasy_variable("throwforce_on", throwforce_on, bonus)
+
+/datum/component/transforming/proc/remove_fantasy_bonuses(obj/item/source, bonus)
+	SIGNAL_HANDLER
+	active = FALSE
+	set_inactive(source)
+	force_on = source.reset_fantasy_variable("force_on", force_on)
+	throwforce_on = source.reset_fantasy_variable("throwforce_on", throwforce_on)
+
 
 /datum/component/transforming/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT, COMSIG_DETECTIVE_SCANNED))

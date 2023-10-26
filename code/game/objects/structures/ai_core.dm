@@ -46,16 +46,16 @@
 			if(AI_READY_CORE)
 				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
 
-/obj/structure/ai_core/handle_atom_del(atom/A)
-	if(A == circuit)
+/obj/structure/ai_core/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == circuit)
 		circuit = null
 		if((state != GLASS_CORE) && (state != AI_READY_CORE))
 			state = EMPTY_CORE
 			update_appearance()
-	if(A == core_mmi)
+	if(gone == core_mmi)
 		core_mmi = null
-	return ..()
-
+		update_appearance()
 
 /obj/structure/ai_core/Destroy()
 	QDEL_NULL(circuit)
@@ -200,9 +200,7 @@
 					P.play_tool_sound(src)
 					balloon_alert(user, "circuit board removed")
 					state = EMPTY_CORE
-					update_appearance()
 					circuit.forceMove(loc)
-					circuit = null
 					return
 			if(SCREWED_CORE)
 				if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
@@ -298,8 +296,6 @@
 					P.play_tool_sound(src)
 					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
 					core_mmi.forceMove(loc)
-					core_mmi = null
-					update_appearance()
 					return
 
 			if(GLASS_CORE)

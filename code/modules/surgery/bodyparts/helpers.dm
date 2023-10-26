@@ -199,6 +199,14 @@
 			. = "#c4915e"
 		if("indian")
 			. = "#b87840"
+		if("mixed1")
+			. = "#a57a66"
+		if("mixed2")
+			. = "#87563d"
+		if("mixed3")
+			. = "#725547"
+		if("mixed4")
+			. = "#866e63"
 		if("african1")
 			. = "#754523"
 		if("african2")

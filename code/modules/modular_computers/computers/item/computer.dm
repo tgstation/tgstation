@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
-
 // This is the base type of computer
 // Other types expand it - tablets and laptops are subtypes
 // consoles use "procssor" item that is held inside it.
@@ -67,6 +65,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	///If the computer has a flashlight/LED light built-in.
 	var/has_light = FALSE
+	/// If the computer's flashlight/LED light has forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 	/// How far the computer's light can reach, is not editable by players.
 	var/comp_light_luminosity = 3
 	/// The built-in light's color, editable by players.
@@ -129,15 +129,15 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
+		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	if(inserted_disk)
 		inserted_disk = new inserted_disk(src)
 	if(internal_cell)
 		internal_cell = new internal_cell(src)
 
-	update_appearance()
-	register_context()
-	Add_Messenger()
 	install_default_programs()
+	register_context()
+	update_appearance()
 
 /obj/item/modular_computer/proc/install_default_programs()
 	SHOULD_CALL_PARENT(FALSE)
@@ -151,7 +151,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
-	Remove_Messenger()
 
 	if(istype(inserted_disk))
 		QDEL_NULL(inserted_disk)
@@ -204,10 +203,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return TRUE
 
 	if(istype(inserted_pai)) // Remove pAI
-		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
-		inserted_pai = null
-		update_appearance(UPDATE_ICON)
+		remove_pai(user)
 		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
@@ -280,16 +276,15 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(crew_manifest_update)
 		GLOB.manifest.modify(computer_id_slot.registered_name, computer_id_slot.assignment, computer_id_slot.get_trim_assignment())
 
-	if(user)
-		if(!issilicon(user) && in_range(src, user))
-			user.put_in_hands(computer_id_slot)
-		balloon_alert(user, "removed ID")
-		to_chat(user, span_notice("You remove the card from the card slot."))
+	if(user && !issilicon(user) && in_range(src, user))
+		user.put_in_hands(computer_id_slot)
 	else
 		computer_id_slot.forceMove(drop_location())
 
 	computer_id_slot = null
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	balloon_alert(user, "removed ID")
+	to_chat(user, span_notice("You remove the card from the card slot."))
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
@@ -419,7 +414,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			var/mob/living/carbon/human/human_wearer = loc
 			human_wearer.sec_hud_set_ID()
 	if(inserted_pai == gone)
-		inserted_pai = null
+		update_appearance(UPDATE_ICON)
 	if(inserted_disk == gone)
 		inserted_disk = null
 		update_appearance(UPDATE_ICON)
@@ -648,9 +643,24 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	enabled = FALSE
 	update_appearance()
 
+///Imprints name and job into the modular computer, and calls back to necessary functions.
+///Acts as a replacement to directly setting the imprints fields. All fields are optional, the proc will try to fill in missing gaps.
+/obj/item/modular_computer/proc/imprint_id(name = null, job_name = null)
+	saved_identification = name || computer_id_slot?.registered_name || saved_identification
+	saved_job = job_name || computer_id_slot?.assignment || saved_job
+	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_UPDATED, saved_identification, saved_job)
+	UpdateDisplay()
+
+///Resets the imprinted name and job back to null.
+/obj/item/modular_computer/proc/reset_imprint()
+	saved_identification = null
+	saved_job = null
+	SEND_SIGNAL(src, COMSIG_MODULAR_PDA_IMPRINT_RESET)
+	UpdateDisplay()
+
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
-		toggle_flashlight()
+		toggle_flashlight(user)
 		return
 
 	return ..()
@@ -661,13 +671,31 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
  * Called from ui_act(), does as the name implies.
  * It is separated from ui_act() to be overwritten as needed.
 */
-/obj/item/modular_computer/proc/toggle_flashlight()
+/obj/item/modular_computer/proc/toggle_flashlight(mob/user)
 	if(!has_light)
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, disabled_time))
+		balloon_alert(user, "disrupted!")
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
 	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
+
+/**
+ * Disables the computer's flashlight/LED light, if it has one, for a given disrupt_duration.
+ *
+ * Called when sent COMSIG_HIT_BY_SABOTEUR.
+ */
+/obj/item/modular_computer/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(!has_light)
+		return
+	set_light_on(FALSE)
+	update_appearance()
+	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	COOLDOWN_START(src, disabled_time, disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /**
  * Sets the computer's light color, if it has a light.
@@ -703,12 +731,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 
 	// Inserting a pAI
-	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_pai = attacking_item
-		balloon_alert(user, "inserted pai")
-		update_appearance(UPDATE_ICON)
+	if(istype(attacking_item, /obj/item/pai_card) && insert_pai(user, attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
@@ -721,6 +744,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 		internal_cell = attacking_item
 		to_chat(user, span_notice("You plug \the [attacking_item] to \the [src]."))
+		return
+
+	if(istype(attacking_item, /obj/item/photo))
+		var/obj/item/photo/attacking_photo = attacking_item
+		if(store_file(new /datum/computer_file/picture(attacking_photo.picture)))
+			balloon_alert(user, "photo scanned")
+		else
+			balloon_alert(user, "no space!")
 		return
 
 	// Check if any Applications need it
@@ -774,7 +805,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	internal_cell?.forceMove(drop_location())
 	computer_id_slot?.forceMove(drop_location())
 	inserted_disk?.forceMove(drop_location())
-	inserted_pai?.forceMove(drop_location())
+	remove_pai()
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
@@ -819,12 +850,33 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return physical.Adjacent(neighbor)
 	return ..()
 
-/obj/item/modular_computer/proc/Add_Messenger()
-	GLOB.TabletMessengers += src
-
-/obj/item/modular_computer/proc/Remove_Messenger()
-	GLOB.TabletMessengers -= src
-
 ///Returns a string of what to send at the end of messenger's messages.
 /obj/item/modular_computer/proc/get_messenger_ending()
 	return "Sent from my PDA"
+
+/obj/item/modular_computer/proc/insert_pai(mob/user, obj/item/pai_card/card)
+	if(inserted_pai)
+		return FALSE
+	if(!user.transferItemToLoc(card, src))
+		return FALSE
+	inserted_pai = card
+	balloon_alert(user, "inserted pai")
+	var/datum/action/innate/pai/messenger/messenger_ability = new(inserted_pai.pai)
+	messenger_ability.Grant(inserted_pai.pai)
+	update_appearance(UPDATE_ICON)
+	return TRUE
+
+/obj/item/modular_computer/proc/remove_pai(mob/user)
+	if(!inserted_pai)
+		return FALSE
+	var/datum/action/innate/pai/messenger/messenger_ability = locate() in inserted_pai.pai.actions
+	messenger_ability.Remove(inserted_pai.pai)
+	qdel(messenger_ability)
+	if(user)
+		user.put_in_hands(inserted_pai)
+		balloon_alert(user, "removed pAI")
+	else
+		inserted_pai.forceMove(drop_location())
+	inserted_pai = null
+	update_appearance(UPDATE_ICON)
+	return TRUE

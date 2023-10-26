@@ -15,10 +15,13 @@
 
 /datum/ai_controller/basic_controller/able_to_run()
 	. = ..()
-	if(isliving(pawn))
-		var/mob/living/living_pawn = pawn
-		if(IS_DEAD_OR_INCAP(living_pawn))
-			return FALSE
+	if(!isliving(pawn))
+		return
+	var/mob/living/living_pawn = pawn
+	if(!(ai_traits & CAN_ACT_WHILE_DEAD) && IS_DEAD_OR_INCAP(living_pawn))
+		return FALSE
+	if(ai_traits & PAUSE_DURING_DO_AFTER && LAZYLEN(living_pawn.do_afters))
+		return FALSE
 
 /datum/ai_controller/basic_controller/proc/update_speed(mob/living/basic/basic_mob)
 	SIGNAL_HANDLER

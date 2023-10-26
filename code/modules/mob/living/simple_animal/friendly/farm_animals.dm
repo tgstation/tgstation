@@ -11,7 +11,7 @@
 	emote_see = list("shakes their head.", "stamps a foot.", "glares around.")
 	speak_chance = 1
 	turns_per_move = 5
-	butcher_results = list(/obj/item/food/meat/slab = 4)
+	butcher_results = list(/obj/item/food/meat/slab/grassfed = 4)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -38,6 +38,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
 	AddComponent(/datum/component/udder)
+	AddElement(/datum/element/cliff_walking) //we walk the cliff
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life(seconds_per_tick = SSMOBS_DT, times_fired)

@@ -16,8 +16,8 @@
  * Define subtypes of this datum
  */
 /datum/client_colour
-	///Any client.color-valid value
-	var/colour = ""
+	///The color we want to give to the client. This has to be either a hexadecimal color or a color matrix.
+	var/colour
 	///The mob that owns this client_colour.
 	var/mob/owner
 	/**
@@ -32,8 +32,8 @@
 	///Same as above, but on removal.
 	var/fade_out = 0
 
-/datum/client_colour/New(mob/_owner)
-	owner = _owner
+/datum/client_colour/New(mob/owner)
+	src.owner = owner
 
 /datum/client_colour/Destroy()
 	if(!QDELETED(owner))
@@ -150,7 +150,6 @@
 
 /datum/client_colour/glass_colour
 	priority = PRIORITY_LOW
-	colour = "red"
 
 /datum/client_colour/glass_colour/green
 	colour = "#aaffaa"
@@ -212,9 +211,10 @@
 	colour = list(0,0,0,0,0,0,0,0,0,1,0,0) //pure red.
 	fade_out = 10
 
-/datum/client_colour/bloodlust/New(mob/_owner)
+/datum/client_colour/bloodlust/New(mob/owner)
 	..()
-	addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
+	if(owner)
+		addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
 
 /datum/client_colour/rave
 	priority = PRIORITY_LOW

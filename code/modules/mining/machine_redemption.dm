@@ -52,7 +52,11 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		mat_container_flags = BREAKDOWN_FLAGS_ORM \
+	)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	stored_research = null
@@ -84,16 +88,12 @@
 		unload_mineral(gathered_ore)
 
 	else
-		var/list/stack_mats = gathered_ore.get_material_composition(BREAKDOWN_FLAGS_ORM)
-		var/mats = stack_mats & mat_container.materials
 		var/ore_amount = gathered_ore.amount
 		var/ore_points= gathered_ore.points
-		var/ore_name = gathered_ore.name
 		var/refined_type = gathered_ore?.refined_type
-		if(mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM) > 0) //increase points only if insertion was successfull
+		if(mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM, context = src) > 0) //increase points only if insertion was successfull
 			if(refined_type)
 				points += ore_points * point_upgrade * ore_amount
-			materials.silo_log(src, "smelted", ore_amount, ore_name, mats)
 
 	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
 
@@ -352,12 +352,7 @@
 
 				var/desired = text2num(params["sheets"])
 				var/sheets_to_remove = round(min(desired, 50, stored_amount))
-
-				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
-				var/list/mats = list()
-				mats[mat] = SHEET_MATERIAL_AMOUNT
-				materials.silo_log(src, "released", -count, "sheets", mats)
-				//Logging deleted for quick coding
+				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir))
 			return TRUE
 		if("Smelt")
 			if(!mat_container)
@@ -375,8 +370,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				mat_container.use_materials(alloy.materials, amount)
-				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
+				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets")
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)
@@ -400,7 +394,7 @@
 	if((machine_stat & NOPOWER))
 		return
 	var/image/ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[input_dir]")
-	var/image/ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[turn(input_dir, 180)]")
+	var/image/ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[REVERSE_DIR(input_dir)]")
 
 	switch(input_dir)
 		if(NORTH)

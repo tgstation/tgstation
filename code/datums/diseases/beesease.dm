@@ -38,4 +38,4 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.visible_message(span_danger("[affected_mob] coughs up a swarm of bees!"), \
 													span_userdanger("You cough up a swarm of bees!"))
-				new /mob/living/simple_animal/hostile/bee(affected_mob.loc)
+				new /mob/living/basic/bee(affected_mob.loc)

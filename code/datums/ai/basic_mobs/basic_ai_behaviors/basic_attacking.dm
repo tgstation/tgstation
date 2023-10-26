@@ -1,11 +1,10 @@
 /datum/ai_behavior/basic_melee_attack
-	action_cooldown = 2 SECONDS
+	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
-	if(isnull(targetting_datum))
+	if(!controller.blackboard_key_exists(targetting_datum_key))
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
 	//Hiding location is priority
@@ -16,6 +15,11 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+	if (isliving(controller.pawn))
+		var/mob/living/pawn = controller.pawn
+		if (world.time < pawn.next_move)
+			return
+
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore
@@ -41,17 +45,12 @@
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
 
-/datum/ai_behavior/basic_melee_attack/average_speed
-	action_cooldown = 1 SECONDS
-
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 3
-	/// How many shots to fire
-	var/shots = 1
-	/// The interval between individual shots in a burst
-	var/burst_interval = 0.2 SECONDS
+	/// range we will try chasing the target before giving up
+	var/chase_range = 9
 
 /datum/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -61,13 +60,12 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
-	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
-	if(!targetting_datum.can_attack(basic_mob, target))
+	if(!targetting_datum.can_attack(basic_mob, target, chase_range))
 		finish_action(controller, FALSE, target_key)
 		return
 
@@ -75,19 +73,11 @@
 	var/atom/final_target = hiding_target ? hiding_target : target
 
 	if(!can_see(basic_mob, final_target, required_distance))
-		finish_action(controller, FALSE, target_key)
 		return
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
-
-	if(shots>1)
-		var/atom/burst_target = final_target
-		var/datum/callback/callback = CALLBACK(basic_mob, TYPE_PROC_REF(/mob/living/basic,RangedAttack), burst_target)
-		for(var/i in 2 to shots)
-			addtimer(callback, (i - 1) * burst_interval)
-		callback.Invoke()
-	else
-		basic_mob.RangedAttack(final_target)
+	basic_mob.RangedAttack(final_target)
+	return ..() //only start the cooldown when the shot is shot
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()

@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	attack_verb_simple = "punch"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
-	healable = FALSE //don't brusepack the guardian
+	mob_biotypes = MOB_BEAST
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //how much damage from each damage type we transfer to the owner
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	light_range = 3
 	light_on = FALSE
 	hud_type = /datum/hud/guardian
-	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	faction = list()
 
 	/// The guardian's color, used for their sprite, chat, and some effects made by it.
@@ -366,10 +365,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return ..()
 
 /mob/living/simple_animal/hostile/guardian/death(gibbed)
-	. = ..()
 	if(!QDELETED(summoner))
 		to_chat(summoner, span_bolddanger("Your [name] died somehow!"))
 		summoner.dust()
+	return ..()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	var/severity = 0
@@ -407,10 +406,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	to_chat(summoner, span_bolddanger("Your [name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
-	switch(summoner.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(summoner, span_bolddanger("Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!"))
-			summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
+	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+		to_chat(summoner, span_bolddanger("Your head pounds, you can't take the strain of sustaining [src] in this condition!"))
+		summoner.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount * 0.5)
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
@@ -450,8 +448,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 	equipping.screen_loc = null // will get moved if inventory is visible
 	equipping.forceMove(src)
-	equipping.equipped(src, slot)
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
+	equipping.on_equipped(src, slot)
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
 	if((. = guardian_overlays[cache_index]))

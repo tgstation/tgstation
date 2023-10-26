@@ -23,6 +23,9 @@
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Turn a department into a testament for your dark knowledge."
+	hardcore_random_bonus = TRUE
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -43,6 +46,8 @@
 	var/high_value_sacrifices = 0
 	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
+	/// List of all sacrifice target's names, used for end of round report
+	var/list/all_sac_targets = list()
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
@@ -59,6 +64,7 @@
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
+		PATH_KNOCK = "yellow",
 	)
 	var/static/list/path_to_rune_color = list(
 		PATH_START = COLOR_LIME,
@@ -68,6 +74,7 @@
 		PATH_VOID = COLOR_CYAN,
 		PATH_BLADE = COLOR_SILVER,
 		PATH_COSMIC = COLOR_PURPLE,
+		PATH_KNOCK = COLOR_YELLOW,
 	)
 
 /datum/antagonist/heretic/Destroy()
@@ -108,6 +115,7 @@
 	var/list/data = list()
 
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 
 	for(var/path in researched_knowledge)
 		var/list/knowledge_data = list()
@@ -142,6 +150,19 @@
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			knowledge_points -= initial(researched_path.cost)
 			return TRUE
+
+/datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
+	if (isnull(owner) || isnull(owner.current))
+		return
+	var/confirmed = tgui_alert(
+		owner.current,
+		message = "Are you sure? You will no longer be able to Ascend.",
+		title = "Reject the call?",
+		buttons = list("Yes", "No"),
+	) == "Yes"
+	if (!confirmed)
+		return
+	return ..()
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
 	if(user.stat == DEAD)
@@ -408,6 +429,7 @@
 
 	LAZYSET(sac_targets, target, target_image)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
+	all_sac_targets += target.real_name
 
 /**
  * Removes [target] from the heretic's sacrifice list.
@@ -447,15 +469,13 @@
 
 	parts += printplayer(owner)
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
-
+	parts += "The heretic's sacrifice targets were: [english_list(all_sac_targets, nothing_text = "No one")]."
 	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective as anything in objectives)
-			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_greentext("Success!")]"
-			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_redtext("Fail.")]"
+			if(!objective.check_completion())
 				succeeded = FALSE
+			parts += "<b>Objective #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
 
 	if(ascended)
@@ -490,6 +510,7 @@
 			.["Remove Heart Target"] = CALLBACK(src, PROC_REF(remove_target))
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, PROC_REF(admin_change_points))
+	.["Give Focus"] = CALLBACK(src, PROC_REF(admin_give_focus))
 
 /**
  * Admin proc for giving a heretic a Living Heart easily.
@@ -564,6 +585,18 @@
 		return
 
 	knowledge_points += change_num
+
+/**
+ * Admin proc for giving a heretic a focus.
+ */
+/datum/antagonist/heretic/proc/admin_give_focus(mob/admin)
+	if(!admin.client?.holder)
+		to_chat(admin, span_warning("You shouldn't be using this!"))
+		return
+	
+	var/mob/living/pawn = owner.current
+	pawn.equip_to_slot_if_possible(new /obj/item/clothing/neck/heretic_focus(get_turf(pawn)), ITEM_SLOT_NECK, TRUE, TRUE)
+	to_chat(pawn, span_hypnophrase("The Mansus has manifested you a focus."))
 
 /datum/antagonist/heretic/antag_panel_data()
 	var/list/string_of_knowledge = list()
@@ -651,6 +684,8 @@
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */
 /datum/antagonist/heretic/proc/can_ascend()
+	if(!can_assign_self_objectives)
+		return FALSE // We spurned the offer of the Mansus :(
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
 			return FALSE
@@ -760,3 +795,4 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
+

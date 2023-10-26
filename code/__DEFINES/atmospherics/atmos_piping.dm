@@ -47,6 +47,8 @@
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
 /// The default initial value gas plasmamen tanks releases valves are set to.
 #define TANK_PLASMAMAN_RELEASE_PRESSURE 4
+/// The default initial value gas flown tanks releases valves are set to.
+#define TANK_CLOWN_RELEASE_PRESSURE 20
 /// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
 #define TANK_MELT_TEMPERATURE 1000000
 /// The internal pressure in kPa at which a handheld gas tank begins to take damage.

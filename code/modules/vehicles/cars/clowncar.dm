@@ -110,10 +110,33 @@
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped) && !istype(bumped, /mob/living/basic/deer))
+	if(isliving(bumped))
 		if(ismegafauna(bumped))
 			return
 		var/mob/living/hittarget_living = bumped
+
+		if(istype(hittarget_living, /mob/living/basic/deer))
+			visible_message(span_warning("[src] careens into [hittarget_living]! Oh the humanity!"))
+			for(var/mob/living/carbon/carbon_occupant in occupants)
+				if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
+					continue
+				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
+					var/pick_mode = text2num(pick(list(
+						"[WOUND_PICK_LOWEST_SEVERITY]",
+						"[WOUND_PICK_HIGHEST_SEVERITY]"
+					)))
+					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
+					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
+					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
+
+			hittarget_living.adjustBruteLoss(200)
+			new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
+
+			log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
+			dump_mobs(TRUE)
+			playsound(src, 'sound/vehicles/car_crash.ogg', 100)
+			return
+
 		if(iscarbon(hittarget_living))
 			var/mob/living/carbon/carb = hittarget_living
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal

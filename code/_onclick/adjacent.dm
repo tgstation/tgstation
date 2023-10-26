@@ -87,19 +87,23 @@
 
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.
-	This is defined as any dense ON_BORDER_1 object, or any dense object without LETPASSTHROW.
+This is defined as any dense ON_BORDER_1 object, or any dense object without LETPASSTHROW or LETPASSCLICKS.
 	The border_only flag allows you to not objects (for source and destination squares)
 */
 /turf/proc/ClickCross(target_dir, border_only, atom/target, atom/movable/mover)
 	for(var/obj/O in src)
 		if((mover && O.CanPass(mover, target_dir)) || (!mover && !O.density))
 			continue
-		if(O == target || O == mover || (O.pass_flags_self & LETPASSTHROW)) //check if there's a dense object present on the turf
-			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)
+
+		//If there's a dense object on the turf, only allow the click to pass if you can throw items over it or it has a special flag.
+		if(O == target || O == mover || (O.pass_flags_self & (LETPASSTHROW|LETPASSCLICKS)))
+			continue
 
 		if( O.flags_1&ON_BORDER_1) // windows are on border, check them first
 			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
 				return FALSE   //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
+
 		else if( !border_only ) // dense, not on border, cannot pass over
 			return FALSE
+
 	return TRUE

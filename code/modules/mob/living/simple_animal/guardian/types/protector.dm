@@ -35,7 +35,7 @@
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)
-		var/image/flash_overlay = new('icons/effects/effects.dmi', src, "shield-flash", layer+0.01, dir = pick(GLOB.cardinals))
+		var/image/flash_overlay = new('icons/effects/effects.dmi', src, "shield-flash", dir = pick(GLOB.cardinals))
 		flash_overlay.color = guardian_color
 		flick_overlay_view(flash_overlay, 0.5 SECONDS)
 

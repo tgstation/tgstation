@@ -136,10 +136,10 @@
 
 	// Scale the preview if it's bigger than one tile
 	var/mutable_appearance/preview_overlay = new(typepath)
-	var/icon/size_check = icon(initial(typepath.icon), icon_state = initial(typepath.icon_state))
+	var/list/icon_dimensions = get_icon_dimensions(initial(typepath.icon))
+	var/width = icon_dimensions["width"]
+	var/height = icon_dimensions["height"]
 	var/scale = 1
-	var/width = size_check.Width()
-	var/height = size_check.Height()
 	if(width > world.icon_size || height > world.icon_size)
 		if(width >= height)
 			scale = world.icon_size / width

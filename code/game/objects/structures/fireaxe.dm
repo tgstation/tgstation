@@ -36,6 +36,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(populate_contents)
 		held_item = new item_path(src)
 	update_appearance()
+	find_and_hang_on_wall()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(held_item)
@@ -156,10 +157,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	. = ..()
 	if(held_item)
 		. += item_overlay
+	var/hp_percent = (atom_integrity/max_integrity) * 100
+
 	if(open)
-		. += "glass_raised"
+		if(broken)
+			. += "glass4_raised"
+			return
+
+		switch(hp_percent)
+			if(-INFINITY to 40)
+				. += "glass3_raised"
+			if(40 to 60)
+				. += "glass2_raised"
+			if(60 to 80)
+				. += "glass1_raised"
+			if(80 to INFINITY)
+				. += "glass_raised"
 		return
-	var/hp_percent = atom_integrity/max_integrity * 100
+
 	if(broken)
 		. += "glass4"
 	else

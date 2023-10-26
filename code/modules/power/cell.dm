@@ -461,9 +461,10 @@
 
 /obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()
-	var/area/A = get_area(src)
-	if(!A.lightswitch || !A.light_power)
-		charge = 0 //For naturally depowered areas, we start with no power
+	var/area/area = get_area(src)
+	if(area)
+		if(!area.lightswitch || !area.light_power)
+			charge = 0 //For naturally depowered areas, we start with no power
 
 /obj/item/stock_parts/cell/crystal_cell
 	name = "crystal power cell"

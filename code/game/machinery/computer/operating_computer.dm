@@ -17,17 +17,17 @@
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		linked_techweb = SSresearch.science_tech
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/operating/LateInitialize()
 	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
 	experiment_handler = AddComponent( \
 		/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/dissection), \
+		allowed_experiments = list(/datum/experiment/autopsy), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
 	)

@@ -7,8 +7,6 @@
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	///category for plumbing RCD
-	category="Synthesizers"
 
 	/**
 	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.

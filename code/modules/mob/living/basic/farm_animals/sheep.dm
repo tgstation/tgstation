@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("baas","bleats")
 	speed = 1.1
-	butcher_results = list(/obj/item/food/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab/grassfed = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

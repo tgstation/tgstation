@@ -165,7 +165,7 @@
 /datum/reagent/consumable/potato_juice
 	name = "Potato Juice"
 	description = "Juice of the potato. Bleh."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "irish sadness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -173,7 +173,7 @@
 /datum/reagent/consumable/pickle
 	name = "Pickle Juice"
 	description = "More accurately, this is the brine the pickle was floating in"
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "vinegar brine"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -296,9 +296,38 @@
 	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+	var/to_chatted = FALSE
+	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
+		if(SPT_PROB(10, seconds_per_tick))
+			var/helped = iter_wound.tea_life_process()
+			if(!to_chatted && helped)
+				to_chat(affected_mob, span_notice("A calm, relaxed feeling suffuses you. Your wounds feel a little healthier."))
+			to_chatted = TRUE
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
+
+// Different handling, different name.
+// Returns FALSE by default so broken bones and 'loss' wounds don't give a false message
+/datum/wound/proc/tea_life_process()
+	return FALSE
+
+// Slowly increase (gauzed) clot rate
+/datum/wound/pierce/bleed/tea_life_process()
+	gauzed_clot_rate += 0.1
+	return TRUE
+
+// Slowly increase clot rate
+/datum/wound/slash/flesh/tea_life_process()
+	clot_rate += 0.2
+	return TRUE
+
+// There's a designated burn process, but I felt this would be better for consistency with the rest of the reagent's procs
+/datum/wound/burn/flesh/tea_life_process()
+	// Sanitizes and heals, but with a limit
+	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.02
+	infestation_rate = max(infestation_rate - 0.005, 0)
+	return TRUE
 
 /datum/reagent/consumable/lemonade
 	name = "Lemonade"
@@ -314,7 +343,7 @@
 	description = "Encourages the patient to go golfing."
 	color = "#FFB766"
 	quality = DRINK_NICE
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	taste_description = "bitter tea"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -434,7 +463,7 @@
 	description = "A delightfully bubbly root beer, filled with so much sugar that it can actually speed up the user's trigger finger."
 	color = "#181008" // rgb: 24, 16, 8
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	taste_description = "a monstrous sugar rush"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -606,6 +635,24 @@
 	..()
 	. = TRUE
 
+/datum/reagent/consumable/wellcheers
+	name = "Wellcheers"
+	description = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
+	color = "#762399" // rgb: 118, 35, 153
+	taste_description = "grapes and the fresh open sea"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/wellcheers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.adjust_drowsiness(3 SECONDS * REM * seconds_per_tick)
+	switch(affected_mob.mob_mood.sanity_level)
+		if (SANITY_INSANE to SANITY_CRAZY)
+			affected_mob.adjustStaminaLoss(3 * REM * seconds_per_tick, 0)
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			affected_mob.adjustBruteLoss(-1.5 * REM * seconds_per_tick, 0)
+	return ..()
+
 /datum/reagent/consumable/monkey_energy
 	name = "Monkey Energy"
 	description = "The only drink that will make you unleash the ape."
@@ -727,7 +774,7 @@
 	description = "A cherry flavored milkshake."
 	color = "#FFB6C1"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "creamy tart cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -737,7 +784,7 @@
 	description = "An exotic milkshake."
 	color = "#00F1FF"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "creamy blue cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -746,7 +793,7 @@
 	description = "A vanilla flavored milkshake. The basics are still good."
 	color = "#E9D2B2"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "sweet creamy vanilla"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -756,7 +803,7 @@
 	description = "A caramel flavored milkshake. Your teeth hurt looking at it."
 	color = "#E17C00"
 	quality = DRINK_GOOD
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	taste_description = "sweet rich creamy caramel"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -766,7 +813,7 @@
 	description = "A frosty chocolate milkshake."
 	color = "#541B00"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "sweet creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -776,7 +823,7 @@
 	description = "A strawberry milkshake."
 	color = "#ff7b7b"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "sweet strawberries and milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -786,7 +833,7 @@
 	description = "A banana milkshake. Stuff that clowns drink at their honkday parties."
 	color = "#f2d554"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	taste_description = "thick banana"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
@@ -796,7 +843,7 @@
 	description = "A mix of pumpkin juice and coffee."
 	color = "#F4A460"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 3
 	taste_description = "creamy pumpkin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -805,7 +852,7 @@
 	description = "Ice cream on top of a Dr. Gibb glass."
 	color = "#B22222"
 	quality = DRINK_NICE
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 3
 	taste_description = "creamy cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -853,7 +900,7 @@
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
 	description = "Made with love! And coco beans."
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -870,7 +917,7 @@
 /datum/reagent/consumable/italian_coco
 	name = "Italian Hot Chocolate"
 	description = "Made with love! You can just imagine a happy Nonna from the smell."
-	nutriment_factor = 8 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	color = "#57372A"
 	quality = DRINK_VERYGOOD
 	taste_description = "thick creamy chocolate"
@@ -1142,3 +1189,58 @@
 			drinker.adjust_hallucinations(60 SECONDS * REM * seconds_per_tick)
 
 	return ..()
+
+/datum/reagent/consumable/t_letter
+	name = "T"
+	description = "You expected to find this in a soup, but this is fine too."
+	color = "#583d09" // rgb: 88, 61, 9
+	taste_description = "one of your 26 favorite letters"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/t_letter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!HAS_MIND_TRAIT(affected_mob, TRAIT_MIMING))
+		return ..()
+	affected_mob.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
+	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	if(affected_mob.getToxLoss() && SPT_PROB(25, seconds_per_tick))
+		affected_mob.adjustToxLoss(-2, FALSE, required_biotype = affected_biotype)
+	return ..()
+
+/datum/reagent/consumable/hakka_mate
+	name = "Hakka-Mate"
+	description = "A Martian-made yerba mate soda, dragged straight out of the pits of a hacking convention."
+	color = "#c4b000"
+	taste_description = "bubbly yerba mate"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/coconut_milk
+	name = "Coconut Milk"
+	description = "A versatile milk substitute that's perfect for everything from cooking to making cocktails."
+	color = "#DFDFDF"
+	taste_description = "milky coconut"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/melon_soda
+	name = "Melon Soda"
+	description = "A neon green hit of nostalgia."
+	color = "#6FEB48"
+	taste_description = "fizzy melon"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/volt_energy
+	name = "24-Volt Energy"
+	description = "An artificially coloured and flavoured electric energy drink, in lanternfruit flavour. Made for ethereals, by ethereals."
+	color = "#99E550"
+	taste_description = "sour pear"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/volt_energy/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+		return
+
+	var/mob/living/carbon/exposed_carbon = exposed_mob
+	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(istype(stomach))
+		stomach.adjust_charge(reac_volume * 3)

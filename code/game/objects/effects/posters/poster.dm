@@ -74,11 +74,6 @@
 		if(!QDELING(src))
 			qdel(src) //we're now a poster, huzzah!
 
-/obj/item/poster/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == poster_structure)
-		poster_structure.moveToNullspace() //get it the fuck out of us since atom/destroy qdels contents and it'll cause a qdel loop
-	return ..()
-
 /obj/item/poster/Destroy(force)
 	QDEL_NULL(poster_structure)
 	return ..()

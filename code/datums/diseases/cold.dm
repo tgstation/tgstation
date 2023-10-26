@@ -9,6 +9,7 @@
 	spreading_modifier = 0.5
 	spread_text = "Airborne"
 	severity = DISEASE_SEVERITY_NONTHREAT
+	required_organ = ORGAN_SLOT_LUNGS
 
 
 /datum/disease/cold/stage_act(seconds_per_tick, times_fired)

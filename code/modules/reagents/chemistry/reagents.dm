@@ -162,14 +162,18 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
 
+/// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
+/datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
+	return
+
 /*
-Used to run functions before a reagent is transfered. Returning TRUE will block the transfer attempt.
+Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.
 Primarily used in reagents/reaction_agents
 */
 /datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target)
 	return FALSE
 
-///Called after a reagent is transfered
+///Called after a reagent is transferred
 /datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
 	return
 

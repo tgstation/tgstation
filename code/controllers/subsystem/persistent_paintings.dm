@@ -1,4 +1,4 @@
-#define PAINTINGS_DATA_FORMAT_VERSION 2
+#define PAINTINGS_DATA_FORMAT_VERSION 3
 
 // Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
 #define PATRONAGE_OK_FRAME (PAYCHECK_CREW * 3) // 150 credits, as of march 2022
@@ -196,6 +196,11 @@ SUBSYSTEM_DEF(persistent_paintings)
 		current_data =  migrate_to_version_1(current_data)
 	if(version < 2) //Makes sure old paintings get a cosmetic frame type from their patronage tiers.
 		current_data =  migrate_to_version_2(current_data)
+	if(version < 3) //Reduces the allowed length of titles from 1000 characters circa to 42.
+		current_data["version"] = 3
+		var/old_title = current_data["title"]
+		var/new_title = reject_bad_name(old_title, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
+		current_data["title"] = new_title || "Illegibly Titled Artwork"
 
 	return current_data
 

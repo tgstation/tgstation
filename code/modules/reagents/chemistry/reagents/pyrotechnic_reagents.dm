@@ -203,6 +203,7 @@
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_fire_stacks(1 * REM * seconds_per_tick)
 	..()
+	return TRUE
 
 /datum/reagent/napalm/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()

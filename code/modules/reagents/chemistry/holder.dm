@@ -82,10 +82,10 @@
 			if(reagent_to_react_count[reagent_id] < reagent_to_react_count[preferred_id])
 				preferred_id = reagent_id
 				continue
-
-		if(!reaction_lookup[preferred_id])
-			reaction_lookup[preferred_id] = list()
-		reaction_lookup[preferred_id] += reaction
+		if (preferred_id != null)
+			if(!reaction_lookup[preferred_id])
+				reaction_lookup[preferred_id] = list()
+			reaction_lookup[preferred_id] += reaction
 
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
 		var/list/product_ids = list()
@@ -421,6 +421,28 @@
 			SEND_SIGNAL(src, COMSIG_REAGENTS_DEL_REAGENT, reagent)
 	return TRUE
 
+/// Turn one reagent into another, preserving volume, temp, purity, ph
+/datum/reagents/proc/convert_reagent(source_reagent_typepath, target_reagent_typepath, multiplier = 1, include_source_subtypes = FALSE)
+	var/reagent_amount
+	var/reagent_purity
+	var/reagent_ph
+	if(include_source_subtypes)
+		reagent_ph = ph
+		var/weighted_purity
+		for(var/datum/reagent/reagent as anything in reagent_list)
+			if(reagent.type in typecacheof(source_reagent_typepath))
+				weighted_purity += reagent.volume * reagent.purity
+				reagent_amount += reagent.volume
+				remove_reagent(reagent.type, reagent.volume)
+		reagent_purity = weighted_purity / reagent_amount
+	else
+		var/datum/reagent/source_reagent = get_reagent(source_reagent_typepath)
+		reagent_amount = source_reagent.volume
+		reagent_purity = source_reagent.purity
+		reagent_ph = source_reagent.ph
+		remove_reagent(source_reagent_typepath, reagent_amount)
+	add_reagent(target_reagent_typepath, reagent_amount * multiplier, reagtemp = chem_temp, added_purity = reagent_purity, added_ph = reagent_ph)
+
 //Converts the creation_purity to purity
 /datum/reagents/proc/uncache_creation_purity(id)
 	var/datum/reagent/R = has_reagent(id)
@@ -449,20 +471,27 @@
  * Reagent takes a PATH to a reagent.
  * Amount checks for having a specific amount of that chemical.
  * Needs matabolizing takes into consideration if the chemical is matabolizing when it's checked.
+ * Check subtypes controls whether it should it should also include subtypes: ispath(type, reagent) versus type == reagent.
  */
-/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
+/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE, check_subtypes = FALSE)
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
-		if (holder_reagent.type == reagent)
+		if (check_subtypes ? ispath(holder_reagent.type, reagent) : holder_reagent.type == reagent)
 			if(!amount)
 				if(needs_metabolizing && !holder_reagent.metabolizing)
+					if(check_subtypes)
+						continue
 					return FALSE
 				return holder_reagent
 			else
 				if(round(holder_reagent.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					if(needs_metabolizing && !holder_reagent.metabolizing)
+						if(check_subtypes)
+							continue
 						return FALSE
 					return holder_reagent
+				else if(!check_subtypes)
+					return FALSE
 	return FALSE
 
 /**
@@ -490,14 +519,14 @@
  * * multiplier - multiplies amount of each reagent by this number
  * * preserve_data - if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
  * * no_react - passed through to [/datum/reagents/proc/add_reagent]
- * * mob/transfered_by - used for logging
+ * * mob/transferred_by - used for logging
  * * remove_blacklisted - skips transferring of reagents without REAGENT_CAN_BE_SYNTHESIZED in chemical_flags
  * * methods - passed through to [/datum/reagents/proc/expose_single] and [/datum/reagent/proc/on_transfer]
  * * show_message - passed through to [/datum/reagents/proc/expose_single]
  * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
  */
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transferred_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -544,7 +573,7 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 				continue
 			if(methods)
 				r_to_send += reagent
@@ -578,7 +607,7 @@
 				transfer_amount = reagent.volume
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
@@ -591,9 +620,9 @@
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 			transfer_log[reagent.type] = reagent_qualities
 
-	if(transfered_by && target_atom)
-		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-		log_combat(transfered_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
+	if(transferred_by && target_atom)
+		target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
+		log_combat(transferred_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
 
 	update_total()
 	R.update_total()
@@ -906,7 +935,7 @@
 		return FALSE //Yup, no reactions here. No siree.
 
 	if(is_reacting)//Prevent wasteful calculations
-		if(!(datum_flags & DF_ISPROCESSING))//If we're reacting - but not processing (i.e. we've transfered)
+		if(!(datum_flags & DF_ISPROCESSING))//If we're reacting - but not processing (i.e. we've transferred)
 			START_PROCESSING(SSreagents, src)
 		if(!(has_changed_state()))
 			return FALSE
@@ -1104,7 +1133,7 @@
 * Force stops the current holder/reagents datum from reacting
 *
 * Calls end_reaction() for each equlilbrium datum in reaction_list and finish_reacting()
-* Usually only called when a datum is transfered into a NO_REACT container
+* Usually only called when a datum is transferred into a NO_REACT container
 */
 /datum/reagents/proc/force_stop_reacting()
 	var/list/mix_message = list()
@@ -1139,7 +1168,7 @@
 * Transfers the reaction_list to a new reagents datum
 *
 * Arguments:
-* * target - the datum/reagents that this src is being transfered into
+* * target - the datum/reagents that this src is being transferred into
 */
 /datum/reagents/proc/transfer_reactions(datum/reagents/target)
 	if(QDELETED(target))
@@ -1325,17 +1354,16 @@
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()
-	if(total_volume >= maximum_volume)
-		return TRUE
-	return FALSE
+	return total_volume >= maximum_volume
 
 /// Get the amount of this reagent
-/datum/reagents/proc/get_reagent_amount(reagent)
+/datum/reagents/proc/get_reagent_amount(reagent, include_subtypes = FALSE)
 	var/list/cached_reagents = reagent_list
+	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
-		if(cached_reagent.type == reagent)
-			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
-	return 0
+		if((!include_subtypes && cached_reagent.type == reagent) || (include_subtypes && ispath(cached_reagent.type, reagent)))
+			total_amount += round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+	return total_amount
 
 /datum/reagents/proc/get_multiple_reagent_amounts(list/reagents)
 	var/list/cached_reagents = reagent_list
@@ -1352,6 +1380,36 @@
 		if(cached_reagent.type == reagent)
 			return round(cached_reagent.purity, 0.01)
 	return 0
+
+/// Directly set the purity of all contained reagents to a new value
+/datum/reagents/proc/set_all_reagents_purity(new_purity = 0)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		cached_reagent.purity = max(0, new_purity)
+
+/// Get the average purity of all reagents (or all subtypes of provided typepath)
+/datum/reagents/proc/get_average_purity(parent_type = null)
+	var/total_amount
+	var/weighted_purity
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(!isnull(parent_type) && !istype(reagent, parent_type))
+			continue
+		total_amount += reagent.volume
+		weighted_purity += reagent.volume * reagent.purity
+	return weighted_purity / total_amount
+
+/// Get the average nutriment_factor of all consumable reagents
+/datum/reagents/proc/get_average_nutriment_factor()
+	var/consumable_volume
+	var/weighted_nutriment_factor
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(istype(reagent, /datum/reagent/consumable))
+			var/datum/reagent/consumable/consumable_reagent = reagent
+			consumable_volume += consumable_reagent.volume
+			weighted_nutriment_factor += consumable_reagent.volume * consumable_reagent.nutriment_factor
+	return weighted_nutriment_factor / consumable_volume
 
 /// Get a comma separated string of every reagent name in this holder. UNUSED
 /datum/reagents/proc/get_reagent_names()

@@ -42,6 +42,21 @@
 	icon_file = 'icons/obj/clothing/belt_overlays.dmi'
 	json_config = 'code/datums/greyscale/json_configs/screwdriver_worn.json'
 
+/datum/greyscale_config/fish_analyzer_inhand_left
+	name = "Held Fish Analyzer, Left"
+	icon_file = 'icons/mob/inhands/items_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
+/datum/greyscale_config/fish_analyzer_inhand_right
+	name = "Held Fish Analyzer, Right"
+	icon_file = 'icons/mob/inhands/items_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
+/datum/greyscale_config/fish_analyzer_worn
+	name = "Worn Fish Analyzer"
+	icon_file = 'icons/mob/clothing/belt.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
 //
 // WEAPONS
 //

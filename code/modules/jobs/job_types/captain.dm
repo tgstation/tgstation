@@ -42,7 +42,7 @@
 		/obj/item/skillchip/sabrage = 5,
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 	rpg_title = "Star Duke"
 
 	voice_of_god_power = 1.4 //Command staff has authority
@@ -75,6 +75,7 @@
 	backpack = /obj/item/storage/backpack/captain
 	satchel = /obj/item/storage/backpack/satchel/cap
 	duffelbag = /obj/item/storage/backpack/duffelbag/captain
+	messenger = /obj/item/storage/backpack/messenger/cap
 
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 	chameleon_extras = list(

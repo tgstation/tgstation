@@ -217,7 +217,7 @@
 		for(var/obj/machinery/duct/duct in get_step(parent, direction))
 			if(!(duct.duct_layer & ducting_layer))
 				continue
-			duct.remove_connects(turn(direction, 180))
+			duct.remove_connects(REVERSE_DIR(direction))
 			duct.neighbours.Remove(parent)
 			duct.update_appearance()
 
@@ -302,7 +302,7 @@
 /datum/component/plumbing/proc/direct_connect(datum/component/plumbing/plumbing, dir)
 	if(!plumbing.active)
 		return
-	var/opposite_dir = turn(dir, 180)
+	var/opposite_dir = REVERSE_DIR(dir)
 	if(plumbing.demand_connects & opposite_dir && supply_connects & dir || plumbing.supply_connects & opposite_dir && demand_connects & dir) //make sure we arent connecting two supplies or demands
 		var/datum/ductnet/net = new()
 		net.add_plumber(src, dir)

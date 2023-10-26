@@ -69,14 +69,14 @@
  * Handles all the calculations needed for the gases, work done, temperature increase/decrease
  */
 /obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
-	//pump gases. if no gases were transfered then no work was done
+	//pump gases. if no gases were transferred then no work was done
 	var/output_pressure = PRESSURE_MAX(output_mix.return_pressure())
-	var/datum/gas_mixture/transfered_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
-	if(!transfered_gases)
+	var/datum/gas_mixture/transferred_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
+	if(!transferred_gases)
 		return 0
 
 	//compute work done
-	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * PRESSURE_MAX(transfered_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	var/work_done = QUANTIZE(transferred_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transferred_gases.temperature * log((transferred_gases.volume * PRESSURE_MAX(transferred_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
 		work_done = work_done - work_amount_to_remove
 
@@ -257,7 +257,7 @@
 	compressor_work = 0
 	compressor_pressure = MINIMUM_TURBINE_PRESSURE
 	if(QDELETED(input_turf))
-		input_turf = get_step(loc, turn(dir, 180))
+		input_turf = get_step(loc, REVERSE_DIR(dir))
 
 	var/datum/gas_mixture/input_turf_mixture = input_turf.return_air()
 	if(!input_turf_mixture)
@@ -421,7 +421,7 @@
 	//log rotor to link later to computer
 	balloon_alert(user, "all parts linked")
 	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
+	multitool.set_buffer(src)
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 
 	//success
@@ -452,19 +452,19 @@
 
 	//locate compressor & turbine, when checking we simply check to see if they are still there
 	if(!check_only)
-		compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, turn(dir, 180))
+		compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, REVERSE_DIR(dir))
 		turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, dir)
 
 		//maybe look for them the other way around. we want the rotor to allign with them either way for player convinience
 		if(!compressor && !turbine)
 			compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, dir)
-			turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, turn(dir, 180))
+			turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, REVERSE_DIR(dir))
 
 	//sanity checks for compressor
 	if(QDELETED(compressor))
 		feedback(user, "missing compressor!")
 		return (all_parts_connected = FALSE)
-	if(compressor.dir != dir && compressor.dir != turn(dir, 180)) //make sure it's not perpendicular to the rotor
+	if(compressor.dir != dir && compressor.dir != REVERSE_DIR(dir)) //make sure it's not perpendicular to the rotor
 		feedback(user, "compressor not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!compressor.can_connect)
@@ -478,7 +478,7 @@
 	if(QDELETED(turbine))
 		feedback(user, "missing turbine!")
 		return (all_parts_connected = FALSE)
-	if(turbine.dir != dir && turbine.dir != turn(dir, 180))
+	if(turbine.dir != dir && turbine.dir != REVERSE_DIR(dir))
 		feedback(user, "turbine not aligned with rotor!")
 		return (all_parts_connected = FALSE)
 	if(!turbine.can_connect)

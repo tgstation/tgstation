@@ -19,7 +19,61 @@
 	throw_speed = 3
 	throw_range = 7
 	var/empty = FALSE
-	var/damagetype_healed //defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
+	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
+	var/damagetype_healed
+	/// you just type this in holdables list of medkits instead of copypasting bunch of text.
+	var/static/list/list_of_everything_medkits_can_hold = list(
+		/obj/item/healthanalyzer,
+		/obj/item/dnainjector,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/cup/beaker,
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/spray,
+		/obj/item/lighter,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/storage/pill_bottle,
+		/obj/item/stack/medical,
+		/obj/item/flashlight/pen,
+		/obj/item/extinguisher/mini,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/sensor_device,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/lazarus_injector,
+		/obj/item/bikehorn/rubberducky,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/clothing/mask/breath,
+		/obj/item/clothing/mask/breath/medical,
+		/obj/item/surgical_drapes,
+		/obj/item/scalpel,
+		/obj/item/circular_saw,
+		/obj/item/bonesetter,
+		/obj/item/surgicaldrill,
+		/obj/item/retractor,
+		/obj/item/cautery,
+		/obj/item/hemostat,
+		/obj/item/blood_filter,
+		/obj/item/shears,
+		/obj/item/geiger_counter,
+		/obj/item/clothing/neck/stethoscope,
+		/obj/item/stamp,
+		/obj/item/clothing/glasses,
+		/obj/item/wrench/medical,
+		/obj/item/clothing/mask/muzzle,
+		/obj/item/reagent_containers/blood,
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/implantcase,
+		/obj/item/implant,
+		/obj/item/implanter,
+		/obj/item/pinpointer/crew,
+		/obj/item/holosign_creator/medical,
+		/obj/item/stack/sticky_tape,
+	)
 
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
@@ -74,58 +128,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 	atom_storage.max_slots = 12
 	atom_storage.max_total_storage = 24
-	atom_storage.set_holdable(list(
-		/obj/item/healthanalyzer,
-		/obj/item/dnainjector,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/spray,
-		/obj/item/lighter,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/pill_bottle,
-		/obj/item/stack/medical,
-		/obj/item/flashlight/pen,
-		/obj/item/extinguisher/mini,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/sensor_device,
-		/obj/item/radio,
-		/obj/item/clothing/gloves/,
-		/obj/item/lazarus_injector,
-		/obj/item/bikehorn/rubberducky,
-		/obj/item/clothing/mask/surgical,
-		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/breath/medical,
-		/obj/item/surgical_drapes, //for true paramedics
-		/obj/item/scalpel,
-		/obj/item/circular_saw,
-		/obj/item/bonesetter,
-		/obj/item/surgicaldrill,
-		/obj/item/retractor,
-		/obj/item/cautery,
-		/obj/item/hemostat,
-		/obj/item/blood_filter,
-		/obj/item/shears,
-		/obj/item/geiger_counter,
-		/obj/item/clothing/neck/stethoscope,
-		/obj/item/stamp,
-		/obj/item/clothing/glasses,
-		/obj/item/wrench/medical,
-		/obj/item/clothing/mask/muzzle,
-		/obj/item/reagent_containers/blood,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/implantcase,
-		/obj/item/implant,
-		/obj/item/implanter,
-		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical,
-		/obj/item/stack/sticky_tape, //surgical tape
-	))
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
 
 /obj/item/storage/medkit/surgery/PopulateContents()
 	if(empty)
@@ -277,8 +280,9 @@
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_slots = 12
+	atom_storage.max_slots = 21
 	atom_storage.max_total_storage = 24
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
@@ -304,6 +308,14 @@
 	desc = "May or may not contain traces of lead."
 	grind_results = list(/datum/reagent/lead = 10)
 
+/obj/item/storage/medkit/tactical/premium/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_big_nesting = TRUE // so you can put back the box you took out
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 21
+	atom_storage.max_total_storage = 34
+	atom_storage.set_holdable(list_of_everything_medkits_can_hold)
+
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
 		return
@@ -325,6 +337,7 @@
 		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	)
 	generate_items_inside(items_inside,src)
+	list_of_everything_medkits_can_hold += items_inside
 
 /obj/item/storage/medkit/coroner
 	name = "compact coroner's medkit"
@@ -332,19 +345,15 @@
 	icon = 'icons/obj/storage/medkit.dmi'
 	icon_state = "compact_coronerkit"
 	inhand_icon_state = "coronerkit"
-	var/max_slots = 6
-	var/max_total_storage = 6
-	var/max_object_size = WEIGHT_CLASS_SMALL //so it cannot fit an autopsy scanner
 
 /obj/item/storage/medkit/coroner/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = max_object_size
-	atom_storage.max_slots = max_slots
-	atom_storage.max_total_storage = max_total_storage
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 14
+	atom_storage.max_total_storage = 24
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers,
 		/obj/item/bodybag,
-		/obj/item/folder/white,
 		/obj/item/toy/crayon,
 		/obj/item/pen,
 		/obj/item/paper,
@@ -368,35 +377,6 @@
 	)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/medkit/coroner/large
-	name = "coroner's medkit"
-	desc = "A medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
-	icon = 'icons/obj/storage/medkit.dmi'
-	icon_state = "coronerkit"
-	inhand_icon_state = "coronerkit"
-	max_slots = 14
-	max_total_storage = 24
-	max_object_size = WEIGHT_CLASS_NORMAL
-
-/obj/item/storage/medkit/coroner/large/PopulateContents()
-	if(empty)
-		return
-	var/static/items_inside = list(
-		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
-		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/toy/crayon/white = 1,
-		/obj/item/reagent_containers/blood = 1,
-		/obj/item/bodybag = 2,
-		/obj/item/reagent_containers/syringe = 1,
-		/obj/item/folder/white = 1,//for storing autopsy reports from the scanner
-		/obj/item/surgical_drapes = 1,
-		/obj/item/scalpel/cruel = 1,
-		/obj/item/retractor/cruel = 1,
-		/obj/item/hemostat/cruel = 1,
-		/obj/item/cautery/cruel = 1,
-	)
-	generate_items_inside(items_inside,src)
-
 //medibot assembly
 /obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
 	if((!istype(bodypart, /obj/item/bodypart/arm/left/robot)) && (!istype(bodypart, /obj/item/bodypart/arm/right/robot)))
@@ -407,6 +387,7 @@
 		balloon_alert(user, "items inside!")
 		return
 
+	///if you add a new one don't forget to update /datum/crafting_recipe/medbot/on_craft_completion()
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
 	if (istype(src, /obj/item/storage/medkit/fire))
 		medbot_assembly.set_skin("ointment")
@@ -418,6 +399,8 @@
 		medbot_assembly.set_skin("brute")
 	else if (istype(src, /obj/item/storage/medkit/advanced))
 		medbot_assembly.set_skin("advanced")
+	else if (istype(src, /obj/item/storage/medkit/tactical))
+		medbot_assembly.set_skin("bezerk")
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
 	medbot_assembly.robot_arm = bodypart.type
@@ -728,7 +711,7 @@
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
 	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			balloon_alert(user, "[units]u transferred")
 			return

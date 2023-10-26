@@ -104,7 +104,9 @@
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
-	/// The antag datam applied
+	/// The outfit given to plasmaman operatives
+	var/datum/outfit/syndicate/plasma_outfit = /datum/outfit/syndicate/reinforcement/plasmaman
+	/// The antag datum applied
 	var/datum/antagonist/nukeop/antag_datum = /datum/antagonist/nukeop
 	/// Style used by the droppod
 	var/pod_style = STYLE_SYNDICATE
@@ -144,11 +146,11 @@
 	else
 		to_chat(user, span_warning("Unable to connect to Syndicate command. Please wait and try again later or use the beacon on your uplink to get your points refunded."))
 
-/obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T, kind, datum/mind/user)
+/obj/item/antag_spawner/nuke_ops/spawn_antag(client/our_client, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/nukie = new()
 	var/obj/structure/closet/supplypod/pod = setup_pod()
-	C.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
-	nukie.ckey = C.key
+	our_client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
+	nukie.ckey = our_client.key
 	var/datum/mind/op_mind = nukie.mind
 	if(length(GLOB.newplayer_start)) // needed as hud code doesn't render huds if the atom (in this case the nukie) is in nullspace, so just move the nukie somewhere safe
 		nukie.forceMove(pick(GLOB.newplayer_start))
@@ -157,6 +159,7 @@
 
 	antag_datum = new()
 	antag_datum.send_to_spawnpoint = FALSE
+
 	antag_datum.nukeop_outfit = use_subtypes ? pick(subtypesof(outfit)) : outfit
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
@@ -241,9 +244,7 @@
 
 	var/shatter_msg = span_notice("You shatter the bottle, no turning back now!")
 	var/veil_msg = span_warning("You sense a dark presence lurking just beyond the veil...")
-	var/mob/living/demon_type = /mob/living/simple_animal/hostile/imp/slaughter
-	var/antag_type = /datum/antagonist/slaughter
-
+	var/mob/living/demon_type = /mob/living/basic/demon/slaughter
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
 	if(!is_station_level(user.z))
@@ -267,15 +268,11 @@
 		to_chat(user, span_warning("The bottle's contents usually pop and boil constantly, but right now they're eerily still and calm. Perhaps you should try again later."))
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/mob/living/simple_animal/hostile/imp/slaughter/S = new demon_type(T)
-	new /obj/effect/dummy/phased_mob(T, S)
+	var/mob/living/basic/demon/spawned = new demon_type(T)
+	new /obj/effect/dummy/phased_mob(T, spawned)
 
-	S.key = C.key
-	S.mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))
-	S.mind.special_role = ROLE_SLAUGHTER_DEMON
-	S.mind.add_antag_datum(antag_type)
-	to_chat(S, span_bold("You are currently not currently in the same plane of existence as the station. \
-		Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
+	spawned.key = C.key
+	spawned.generate_antagonist_status()
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -285,5 +282,4 @@
 	color = "#FF69B4" // HOT PINK
 
 	veil_msg = span_warning("You sense an adorable presence lurking just beyond the veil...")
-	demon_type = /mob/living/simple_animal/hostile/imp/slaughter/laughter
-	antag_type = /datum/antagonist/slaughter/laughter
+	demon_type = /mob/living/basic/demon/slaughter/laughter

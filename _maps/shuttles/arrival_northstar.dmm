@@ -16,7 +16,8 @@
 /area/shuttle/arrival)
 "d" = (
 /obj/machinery/requests_console/directional/north{
-	department = "Arrivals shuttle"
+	department = "Arrivals shuttle";
+	name = "Arrival Shuttle Requests Console"
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/medkit/regular{
