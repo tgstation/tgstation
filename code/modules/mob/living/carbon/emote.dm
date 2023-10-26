@@ -20,7 +20,7 @@
 		// This implies you have no neck to snap. You're making Peanut sad!
 		return
 
-	if(prob(99.9))
+	if(prob(99))
 		// Peanut has spared you--for the moment.
 		return
 
