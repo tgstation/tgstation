@@ -162,8 +162,6 @@
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(force_allaccess)
-		return TRUE
 	if(istype(mover, /obj/vehicle/ridden))
 		for(var/M in mover.buckled_mobs)
 			if(ishuman(M))
@@ -171,7 +169,7 @@
 					return FALSE
 	if(ishuman(mover))
 		return CheckHuman(mover)
-		return TRUE
+			return TRUE
 
 /obj/structure/holosign/barrier/medical/Bumped(atom/movable/AM)
 	. = ..()
