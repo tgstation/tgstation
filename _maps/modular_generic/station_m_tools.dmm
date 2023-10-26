@@ -7,12 +7,12 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "c" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/anticorner{
@@ -20,7 +20,7 @@
 	},
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/corner,
-/area/virtual_domain)
+/area/template_noop)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -35,10 +35,10 @@
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
-/area/virtual_domain)
+/area/template_noop)
 "g" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "h" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -46,7 +46,7 @@
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
-/area/virtual_domain)
+/area/template_noop)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/table_or_rack,
@@ -55,22 +55,22 @@
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "k" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "l" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/anticorner,
@@ -81,7 +81,7 @@
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "t" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/turf_decal/tile/yellow/anticorner{
@@ -92,7 +92,7 @@
 /turf/open/floor/iron/corner{
 	dir = 8
 	},
-/area/virtual_domain)
+/area/template_noop)
 "u" = (
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -104,7 +104,7 @@
 /turf/open/floor/iron/corner{
 	dir = 4
 	},
-/area/virtual_domain)
+/area/template_noop)
 "w" = (
 /obj/modular_map_root,
 /turf/template_noop,
@@ -119,13 +119,13 @@
 /turf/open/floor/iron/edge{
 	dir = 2
 	},
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Auxiliary Tool Storage"
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "A" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -137,7 +137,7 @@
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
-/area/virtual_domain)
+/area/template_noop)
 "E" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/fyellow{
@@ -155,63 +155,63 @@
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
-/area/virtual_domain)
+/area/template_noop)
 "F" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "H" = (
 /obj/item/stack/tile/iron{
 	pixel_x = 6;
 	pixel_y = 4
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "M" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "N" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "O" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "Q" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "R" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "T" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Auxiliary Tool Storage"
 	},
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "U" = (
 /turf/template_noop,
 /area/template_noop)
@@ -220,7 +220,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 U

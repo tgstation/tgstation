@@ -24,7 +24,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "c" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -38,7 +38,7 @@
 	},
 /obj/machinery/grill,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -61,7 +61,7 @@
 	},
 /obj/effect/spawner/random/entertainment/musical_instrument,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "e" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -78,10 +78,10 @@
 	},
 /obj/machinery/griddle,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "f" = (
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "g" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -103,13 +103,13 @@
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "h" = (
 /obj/machinery/smartfridge/food,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "i" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -131,7 +131,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "k" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -148,7 +148,7 @@
 	},
 /obj/machinery/grill,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "l" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -171,7 +171,7 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "n" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/white{
@@ -185,13 +185,13 @@
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Kitchen"
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "p" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -211,7 +211,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "q" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -236,7 +236,7 @@
 	pixel_x = -6
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "r" = (
 /obj/machinery/deepfryer,
 /obj/effect/turf_decal/tile/neutral{
@@ -251,7 +251,7 @@
 	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "s" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -276,7 +276,7 @@
 	},
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "t" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -301,11 +301,11 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "u" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "v" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -329,7 +329,7 @@
 	pixel_x = 11
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "w" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -358,10 +358,10 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "x" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "y" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -379,7 +379,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/white{
@@ -392,14 +392,14 @@
 /obj/item/storage/box/ingredients/wildcard,
 /obj/item/storage/box/ingredients/wildcard,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "A" = (
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 8;
 	pixel_x = 16
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "B" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -417,7 +417,7 @@
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /obj/machinery/light/cold/no_nightlight/directional/east,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "C" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -433,7 +433,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "D" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -454,7 +454,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "F" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -474,7 +474,7 @@
 /obj/item/clothing/head/utility/chefhat,
 /obj/item/clothing/mask/fakemoustache/italian,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "G" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -487,7 +487,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "I" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -504,7 +504,7 @@
 	},
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "J" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -520,7 +520,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "K" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -542,7 +542,7 @@
 	name = "Kitchen Shutters"
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "L" = (
 /obj/machinery/button/door/directional/west{
 	id = "kitchen";
@@ -552,7 +552,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "M" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half{
@@ -577,7 +577,7 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "N" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -597,7 +597,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "O" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -621,7 +621,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "P" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -645,7 +645,7 @@
 	pixel_x = 5
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "Q" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -668,7 +668,7 @@
 	},
 /obj/effect/spawner/random/entertainment/plushie,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "S" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -691,7 +691,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "T" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -715,7 +715,7 @@
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/spawner/random/entertainment/cigarette_pack,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "W" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -743,7 +743,7 @@
 	pixel_x = 7
 	},
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 "Y" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -761,7 +761,7 @@
 	},
 /obj/item/stack/sheet/mineral/coal/ten,
 /turf/open/floor/iron/dark/textured,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 a

@@ -2,7 +2,7 @@
 "a" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "b" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/head/utility/chefhat{
@@ -14,7 +14,7 @@
 	pixel_x = -6
 	},
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/salad,
@@ -23,14 +23,14 @@
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "e" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Kitchen"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "f" = (
 /obj/modular_map_root,
 /turf/template_noop,
@@ -44,35 +44,35 @@
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "k" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "l" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/three_course_meal,
 /obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "m" = (
 /obj/machinery/computer/arcade/amputation,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 "n" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "p" = (
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "q" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/donuts,
@@ -82,7 +82,7 @@
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "s" = (
 /obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Cafeteria"
@@ -91,16 +91,16 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "v" = (
 /obj/item/chair/stool/bar,
 /obj/effect/spawner/random/trash/bacteria,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "y" = (
 /obj/machinery/door/airlock/multi_tile/public/glass{
 	name = "Cafeteria"
@@ -110,18 +110,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 "A" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "B" = (
 /obj/item/food/deadmouse/moldy,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "D" = (
 /obj/machinery/light/small/directional/north,
 /turf/template_noop,
@@ -139,20 +139,20 @@
 /obj/effect/spawner/random/trash/bacteria,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "K" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 "L" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 "M" = (
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 "R" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/food_or_drink/dinner,
@@ -161,7 +161,7 @@
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "S" = (
 /obj/machinery/griddle,
 /obj/item/food/meat/steak/chicken{
@@ -173,7 +173,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "U" = (
 /turf/template_noop,
 /area/template_noop)
@@ -181,12 +181,12 @@
 /obj/machinery/oven/range,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
-/area/virtual_domain)
+/area/template_noop)
 "Y" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 U

@@ -5,13 +5,13 @@
 	dir = 8
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/sand,
 /obj/effect/spawner/random/trash/box,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "c" = (
 /obj/effect/spawner/random/trash/botanical_waste,
 /obj/effect/turf_decal/weather/sand{
@@ -19,22 +19,22 @@
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/confetti,
 /obj/item/reagent_containers/spray/chemsprayer/party,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "e" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 1
 	},
 /turf/open/misc/beach/coast,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "f" = (
 /turf/open/misc/beach/coast,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "g" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 5
@@ -44,7 +44,7 @@
 	},
 /obj/effect/decal/cleanable/confetti,
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "h" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/weather/sand{
@@ -59,7 +59,7 @@
 	pixel_x = 18
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "i" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 5
@@ -73,7 +73,7 @@
 	pixel_x = 18
 	},
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "j" = (
 /obj/structure/fluff/beach_umbrella/engine,
 /obj/effect/decal/cleanable/dirt,
@@ -81,52 +81,52 @@
 	dir = 8
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "k" = (
 /obj/effect/spawner/random/trash,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/sand,
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "l" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/weather/sand,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "m" = (
 /turf/open/misc/beach/coast{
 	dir = 6
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "n" = (
 /turf/open/misc/beach/coast/corner,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "p" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 4
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "q" = (
 /turf/open/misc/beach/coast{
 	dir = 1
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "s" = (
 /obj/structure/flora/ash/cacti{
 	icon_state = "cactus3p"
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "u" = (
 /obj/structure/flora/bush/stalky/style_random,
 /turf/open/water/beach,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "v" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 1
@@ -135,11 +135,11 @@
 	icon_state = "cactus2"
 	},
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "w" = (
 /obj/item/toy/beach_ball,
 /turf/open/water/beach,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "x" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 8
@@ -147,7 +147,7 @@
 /obj/item/chair/stool/bar,
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "z" = (
 /obj/modular_map_root,
 /turf/template_noop,
@@ -161,7 +161,7 @@
 	},
 /obj/item/clothing/head/costume/party/festive,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "B" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 4
@@ -169,17 +169,17 @@
 /turf/open/misc/beach/coast{
 	dir = 8
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "C" = (
 /turf/open/misc/beach/coast/corner{
 	dir = 4
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "D" = (
 /turf/open/misc/beach/coast{
 	dir = 9
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "E" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 8
@@ -187,7 +187,7 @@
 /turf/open/misc/beach/coast{
 	dir = 4
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "F" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 5
@@ -197,33 +197,33 @@
 	},
 /obj/effect/spawner/random/trash/mess,
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "G" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/water/beach,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "H" = (
 /turf/open/misc/beach/coast{
 	dir = 8
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "I" = (
 /obj/structure/fluff/beach_umbrella/cap,
 /turf/open/misc/beach/coast/corner{
 	dir = 8
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/confetti,
 /obj/item/clothing/mask/party_horn,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "K" = (
 /turf/open/misc/beach/coast/corner{
 	dir = 1
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "L" = (
 /obj/effect/spawner/random/trash,
 /obj/effect/turf_decal/weather/sand{
@@ -231,7 +231,7 @@
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "M" = (
 /turf/template_noop,
 /area/template_noop)
@@ -244,7 +244,7 @@
 	},
 /obj/effect/spawner/random/structure/chair_flipped,
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "O" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/weather/sand{
@@ -256,7 +256,7 @@
 /obj/structure/rack,
 /obj/item/circuitboard/machine/sleeper/party,
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "P" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 5
@@ -271,7 +271,7 @@
 	pixel_y = 7
 	},
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "Q" = (
 /obj/effect/spawner/random/trash,
 /obj/effect/turf_decal/weather/sand{
@@ -279,13 +279,13 @@
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "R" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 1
 	},
 /turf/open/misc/beach/coast/corner,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "S" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
@@ -300,19 +300,19 @@
 	pixel_y = 21
 	},
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "T" = (
 /turf/open/misc/beach/coast{
 	dir = 4
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "U" = (
 /obj/structure/flora/rock/pile/style_2,
 /turf/open/water/beach,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "V" = (
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "W" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 10
@@ -322,22 +322,22 @@
 	},
 /obj/effect/spawner/random/trash/mess,
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "X" = (
 /obj/effect/turf_decal/weather/sand,
 /turf/open/misc/beach/coast{
 	dir = 1
 	},
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "Y" = (
 /obj/effect/turf_decal/weather/sand,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "Z" = (
 /obj/effect/spawner/random/structure/shipping_container,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 
 (1,1,1) = {"
 M

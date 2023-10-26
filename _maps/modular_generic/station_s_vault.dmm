@@ -12,7 +12,7 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -25,7 +25,7 @@
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "k" = (
 /obj/effect/mob_spawn/corpse/human/generic_assistant,
 /obj/item/clothing/neck/stethoscope{
@@ -39,7 +39,7 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/dark_blue/corner,
@@ -47,7 +47,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_half,
-/area/virtual_domain)
+/area/template_noop)
 "r" = (
 /obj/item/book{
 	desc = "An undeniably handy book.";
@@ -66,11 +66,11 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/warning,
 /turf/open/floor/iron/smooth_half,
-/area/virtual_domain)
+/area/template_noop)
 "t" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "y" = (
 /obj/structure/safe,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -82,7 +82,7 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 8
 	},
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /obj/structure/closet/crate/preopen,
 /obj/item/stack/sheet/mineral/gold,
@@ -97,7 +97,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/trimline/dark_blue/corner,
 /turf/open/floor/iron/smooth_corner,
-/area/virtual_domain)
+/area/template_noop)
 "J" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -116,15 +116,15 @@
 /obj/effect/turf_decal/trimline/dark_blue/corner,
 /obj/effect/turf_decal/trimline/white,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "Q" = (
 /turf/closed/wall/r_wall,
-/area/virtual_domain)
+/area/template_noop)
 "U" = (
 /obj/effect/spawner/random/structure/barricade,
 /obj/structure/door_assembly/door_assembly_vault,
 /turf/open/floor/iron/smooth_large,
-/area/virtual_domain)
+/area/template_noop)
 "Z" = (
 /obj/effect/decal/cleanable/generic,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -138,7 +138,7 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 a

@@ -10,14 +10,14 @@
 	pixel_x = 10
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "c" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 4
@@ -27,22 +27,22 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "m" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "q" = (
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "r" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 6
 	},
 /obj/machinery/grill,
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "u" = (
 /obj/effect/turf_decal/siding/dark,
 /obj/item/storage/box/ingredients/random{
@@ -51,24 +51,24 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "w" = (
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "y" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
 /obj/structure/closet/secure_closet/freezer/fridge/all_access,
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "C" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/condiment/enzyme{
@@ -80,13 +80,13 @@
 	pixel_x = 6
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "D" = (
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 10
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "F" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -95,7 +95,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "G" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -105,7 +105,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "L" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/condiment/ketchup{
@@ -117,24 +117,24 @@
 	pixel_y = 3
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "M" = (
 /obj/effect/turf_decal/trimline/green/warning{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "S" = (
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "U" = (
 /obj/effect/turf_decal/siding/dark,
 /turf/open/floor/iron/kitchen,
-/area/virtual_domain)
+/area/template_noop)
 "V" = (
 /turf/template_noop,
 /area/template_noop)

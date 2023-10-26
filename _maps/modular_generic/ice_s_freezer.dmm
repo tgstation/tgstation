@@ -5,7 +5,7 @@
 /obj/structure/rack,
 /obj/item/food/meat/slab/monkey,
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "c" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -18,11 +18,11 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "e" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
@@ -35,7 +35,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "h" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/template_noop,
@@ -43,7 +43,7 @@
 "j" = (
 /obj/machinery/door/airlock/freezer,
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -60,7 +60,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "q" = (
 /obj/structure/table,
 /obj/item/food/meat/slab/goliath,
@@ -68,19 +68,19 @@
 	pixel_y = 4
 	},
 /turf/open/floor/fake_snow,
-/area/virtual_domain)
+/area/template_noop)
 "t" = (
 /obj/machinery/door/airlock/maintenance/external,
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "w" = (
 /obj/structure/closet/secure_closet/freezer/empty/open,
 /obj/item/food/meat/slab/spider,
 /obj/item/food/meat/slab/chicken,
 /obj/item/food/meat/slab/rawcrab,
 /turf/open/floor/fake_snow,
-/area/virtual_domain)
+/area/template_noop)
 "G" = (
 /turf/template_noop,
 /area/template_noop)
@@ -99,10 +99,10 @@
 	pixel_y = -8
 	},
 /turf/open/floor/fake_snow,
-/area/virtual_domain)
+/area/template_noop)
 "N" = (
 /turf/closed/wall/ice,
-/area/virtual_domain)
+/area/template_noop)
 "O" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -120,10 +120,10 @@
 	dir = 4
 	},
 /turf/open/floor/plating/snowed,
-/area/virtual_domain)
+/area/template_noop)
 "W" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 G

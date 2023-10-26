@@ -6,19 +6,19 @@
 	},
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "b" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "c" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/machinery/light/small/directional/north,
 /turf/template_noop,
@@ -27,7 +27,7 @@
 /obj/machinery/light/broken/directional/north,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "f" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -42,7 +42,7 @@
 	pixel_y = 19
 	},
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "g" = (
 /obj/modular_map_root,
 /turf/template_noop,
@@ -66,34 +66,34 @@
 	},
 /obj/item/pen,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "l" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/shipping_container,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "p" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "q" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "r" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "s" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/loading_area{
@@ -102,32 +102,32 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/here_for_your_safety/directional/north,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "t" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "u" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "w" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "x" = (
 /obj/structure/window/fulltile,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "B" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -139,7 +139,7 @@
 	pixel_x = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "H" = (
 /obj/structure/closet{
 	name = "Equipment Locker"
@@ -155,35 +155,35 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "J" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Hold"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "K" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "L" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "O" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "V" = (
 /obj/machinery/light/directional/east,
 /obj/structure/sign/poster/official/moth_hardhat/directional/east,
@@ -193,7 +193,7 @@
 	},
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "X" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -202,11 +202,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 h

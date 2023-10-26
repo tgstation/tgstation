@@ -7,7 +7,7 @@
 	},
 /obj/structure/table_frame,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "b" = (
 /obj/structure/broken_flooring/side/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -16,40 +16,40 @@
 	pixel_y = -2
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/structure/holosign/wetsign,
 /turf/open/floor/plating/rust,
-/area/virtual_domain)
+/area/template_noop)
 "e" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/plasma,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "f" = (
 /obj/structure/holosign/barrier/engineering,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating/rust,
-/area/virtual_domain)
+/area/template_noop)
 "j" = (
 /obj/structure/lattice,
 /obj/structure/broken_flooring/plating/directional/east,
 /turf/open/chasm/true,
-/area/virtual_domain)
+/area/template_noop)
 "n" = (
 /obj/structure/holosign/barrier/engineering,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/rust,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/structure/lattice,
 /turf/open/chasm/true,
-/area/virtual_domain)
+/area/template_noop)
 "t" = (
 /obj/structure/broken_flooring/pile/directional/west,
 /obj/effect/decal/cleanable/plasma,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "C" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -58,25 +58,25 @@
 /obj/structure/broken_flooring/corner/directional/north,
 /obj/item/tank/internals/plasma/empty,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "E" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "N" = (
 /turf/open/chasm/true,
-/area/virtual_domain)
+/area/template_noop)
 "P" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "T" = (
 /obj/structure/lattice,
 /obj/structure/broken_flooring/plating/directional/south,
 /turf/open/chasm/true,
-/area/virtual_domain)
+/area/template_noop)
 "V" = (
 /turf/template_noop,
 /area/template_noop)

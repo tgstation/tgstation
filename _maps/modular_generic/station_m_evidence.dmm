@@ -10,7 +10,7 @@
 	name = "evidence safe"
 	},
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "h" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/turf_decal/siding/red{
@@ -18,7 +18,7 @@
 	},
 /obj/structure/noticeboard/directional/west,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "j" = (
 /obj/structure/closet{
 	name = "evidence closet"
@@ -27,14 +27,14 @@
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/mod/maint,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "m" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "n" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "q" = (
 /obj/structure/closet/secure_closet/evidence,
 /obj/effect/spawner/random/sakhno/ammo,
@@ -42,7 +42,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "r" = (
 /obj/structure/closet{
 	name = "evidence closet"
@@ -54,18 +54,18 @@
 /obj/effect/spawner/random/contraband/cannabis,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "s" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/light/small/red/directional/west,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "v" = (
 /obj/effect/spawner/random/structure/crate_abandoned{
 	spawn_loot_chance = 50
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "x" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 8
@@ -75,7 +75,7 @@
 	spawn_loot_chance = 35
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /obj/machinery/door/window/brigdoor{
 	name = "Secure Evidence Lockup";
@@ -84,25 +84,25 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "A" = (
 /obj/machinery/door/airlock/security{
 	name = "Evidence Lockup"
 	},
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "C" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "D" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/turf_decal/siding/red{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "F" = (
 /obj/structure/closet/secure_closet/evidence,
 /obj/effect/spawner/random/contraband/narcotics,
@@ -112,22 +112,22 @@
 /obj/effect/spawner/random/entertainment/money_large,
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "G" = (
 /turf/closed/wall/r_wall,
-/area/virtual_domain)
+/area/template_noop)
 "J" = (
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
 /obj/structure/window/reinforced/tinted/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "K" = (
 /obj/effect/spawner/random/structure/crate{
 	spawn_loot_chance = 80
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "L" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/machinery/light/directional/east,
@@ -135,7 +135,7 @@
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "R" = (
 /obj/modular_map_root,
 /turf/template_noop,
@@ -146,7 +146,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "U" = (
 /obj/structure/closet{
 	name = "evidence closet"
@@ -155,20 +155,20 @@
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/medical/surgery_tool,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "V" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 "X" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "Z" = (
 /obj/structure/closet{
 	name = "evidence closet"
@@ -178,7 +178,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/poster/random_contraband,
 /turf/open/floor/iron/dark/textured_large,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 a

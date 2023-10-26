@@ -14,19 +14,19 @@
 	},
 /obj/item/food/baguette,
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "i" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "v" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "A" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -36,7 +36,7 @@
 	initial_duration = 0
 	},
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "K" = (
 /obj/structure/dresser,
 /obj/item/toy/figure/mime{
@@ -48,7 +48,7 @@
 	pixel_x = 7
 	},
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "L" = (
 /obj/structure/table/wood,
 /obj/item/clothing/accessory/mime_fan_pin{
@@ -60,10 +60,10 @@
 	pixel_x = 7
 	},
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "Q" = (
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 "Y" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	name = "mime's closet"
@@ -71,7 +71,7 @@
 /obj/item/clothing/mask/gas/mime,
 /obj/item/book/granter/action/spell/mime/mimery,
 /turf/open/floor/iron/checker,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 a

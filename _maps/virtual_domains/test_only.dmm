@@ -1,15 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "D" = (
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/floor,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "I" = (
 /mob/living/basic/pet/dog/corgi,
 /turf/open/floor,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "U" = (
 /obj/effect/landmark/bitrunning/safehouse_spawn,
 /turf/open/floor,

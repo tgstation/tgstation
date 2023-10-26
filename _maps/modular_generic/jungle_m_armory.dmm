@@ -10,7 +10,7 @@
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/structure/sign/poster/contraband/calada_jelly/directional/south,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "e" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
 /obj/effect/turf_decal/weather/dirt{
@@ -23,17 +23,17 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "g" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/reed/style_random,
 /turf/open/water/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "h" = (
 /obj/structure/closet/crate/wooden,
 /obj/item/gun/ballistic/rifle/boltaction,
 /turf/open/water/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "i" = (
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = -8
@@ -48,7 +48,7 @@
 	pixel_y = -3
 	},
 /turf/open/misc/grass/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "j" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -57,7 +57,7 @@
 /obj/item/hatchet/wooden,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "k" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/weather/dirt{
@@ -68,7 +68,7 @@
 	pixel_x = 7
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "m" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/turf_decal/weather/dirt{
@@ -82,7 +82,7 @@
 	},
 /obj/effect/mob_spawn/corpse/human/pirate,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "n" = (
 /obj/modular_map_root,
 /turf/template_noop,
@@ -100,7 +100,7 @@
 	dir = 5
 	},
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "q" = (
 /obj/item/stack/sheet/mineral/wood,
 /obj/effect/turf_decal/weather/dirt{
@@ -118,16 +118,16 @@
 	pixel_y = 9
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "r" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/water/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "s" = (
 /obj/effect/spawner/random/trash/botanical_waste,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "u" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 10
@@ -141,7 +141,7 @@
 	pixel_y = -3
 	},
 /turf/open/misc/grass/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "v" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -153,7 +153,7 @@
 	pixel_y = 21
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "x" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -167,10 +167,10 @@
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "y" = (
 /turf/closed/wall/mineral/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "z" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -184,7 +184,7 @@
 	pixel_x = 9
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "A" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -196,12 +196,12 @@
 /obj/effect/spawner/random/medical/medkit_rare,
 /obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "C" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/bush/jungle/c/style_random,
@@ -209,16 +209,16 @@
 	dir = 9
 	},
 /turf/open/misc/grass/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "D" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash,
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "J" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/weather/dirt{
@@ -227,11 +227,11 @@
 /obj/structure/flora/rock/style_2,
 /obj/structure/railing,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "K" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/water/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "L" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -252,7 +252,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "M" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
@@ -262,16 +262,16 @@
 	pixel_y = -3
 	},
 /turf/open/misc/grass/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "O" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "P" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/structure/flora/bush/style_random,
 /turf/open/water/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "Q" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -282,7 +282,7 @@
 	},
 /obj/effect/spawner/random/clothing/backpack,
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "R" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/effect/turf_decal/siding/wood{
@@ -293,7 +293,7 @@
 	},
 /obj/structure/flora/rock/style_3,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "T" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -302,7 +302,7 @@
 	dir = 6
 	},
 /turf/open/misc/dirt,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "U" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -314,7 +314,7 @@
 	},
 /obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "W" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/bush/jungle,
@@ -323,11 +323,11 @@
 	},
 /obj/effect/spawner/random/structure/crate,
 /turf/open/misc/grass/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "X" = (
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/water/jungle,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 "Y" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -342,7 +342,7 @@
 	icon_state = "floor5-old"
 	},
 /turf/open/floor/wood,
-/area/virtual_domain/fullbright)
+/area/template_noop)
 
 (1,1,1) = {"
 a

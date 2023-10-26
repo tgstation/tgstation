@@ -6,23 +6,23 @@
 /obj/structure/railing/corner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "d" = (
 /obj/effect/turf_decal/bot/right,
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "f" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "g" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "h" = (
 /obj/item/key/atv{
 	pixel_x = -8;
@@ -36,7 +36,7 @@
 	pixel_x = 8
 	},
 /turf/closed/wall/ice,
-/area/virtual_domain)
+/area/template_noop)
 "i" = (
 /obj/structure/railing{
 	layer = 4
@@ -44,44 +44,44 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "j" = (
 /obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "k" = (
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "l" = (
 /obj/structure/reagent_dispensers/fueltank/large,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "n" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/crate_loot,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "p" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "q" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "modular_room_1";
 	name = "Garage Door"
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "r" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "s" = (
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
@@ -89,7 +89,7 @@
 	id = "modular_room_1"
 	},
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "t" = (
 /obj/structure/table,
 /obj/item/pizzabox/meat{
@@ -98,23 +98,23 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "u" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate_loot,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "v" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "w" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "x" = (
 /obj/item/trash/boritos/red{
 	pixel_y = 9;
@@ -126,7 +126,7 @@
 	layer = 4
 	},
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "y" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
@@ -134,7 +134,7 @@
 	layer = 4
 	},
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "z" = (
 /obj/structure/stairs{
 	dir = 1
@@ -143,12 +143,12 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "A" = (
 /obj/structure/rack,
 /obj/item/weldingtool/hugetank,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "B" = (
 /obj/effect/turf_decal/box,
 /obj/vehicle/ridden/atv{
@@ -156,20 +156,20 @@
 	},
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "C" = (
 /obj/machinery/door/airlock/mining{
 	name = "Warehouse"
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "D" = (
 /obj/structure/railing{
 	layer = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "F" = (
 /obj/effect/turf_decal/box,
 /obj/vehicle/ridden/atv{
@@ -177,10 +177,10 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "G" = (
 /turf/closed/wall/ice,
-/area/virtual_domain)
+/area/template_noop)
 "H" = (
 /obj/structure/closet{
 	name = "Fuel Tank Closet"
@@ -198,7 +198,7 @@
 	pixel_y = -10
 	},
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "J" = (
 /obj/structure/chair/plastic{
 	dir = 1
@@ -208,24 +208,24 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "K" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/crate_loot,
 /obj/machinery/light/dim/directional/west,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "L" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "M" = (
 /obj/effect/turf_decal/bot/right,
 /obj/structure/closet/crate/large,
 /obj/item/crowbar/large/heavy,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "N" = (
 /obj/structure/rack,
 /obj/item/fuel_pellet,
@@ -238,7 +238,7 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "O" = (
 /obj/structure/sign/warning/directional/north,
 /turf/template_noop,
@@ -248,20 +248,20 @@
 /obj/structure/closet/crate/large,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "R" = (
 /obj/effect/turf_decal/bot/left,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate_empty,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "T" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stairs{
@@ -271,22 +271,22 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "U" = (
 /obj/structure/railing/corner{
 	dir = 8
 	},
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "V" = (
 /obj/structure/noticeboard/directional/north,
 /obj/structure/broken_flooring/singular/directional/west,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "W" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "X" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -296,7 +296,7 @@
 	},
 /obj/item/flashlight/lamp,
 /turf/open/floor/plastic,
-/area/virtual_domain)
+/area/template_noop)
 "Y" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/box,
@@ -305,13 +305,13 @@
 	},
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 a

@@ -56,6 +56,7 @@
 		projectile_sound = 'sound/weapons/gun/smg/shot.ogg', \
 		burst_shots = 6 \
 	)
+	AddComponent(/datum/component/seethrough_mob)
 
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/rockets = new(src)
 	rockets.Grant(src)

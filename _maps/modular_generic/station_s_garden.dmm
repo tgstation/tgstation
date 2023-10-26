@@ -9,19 +9,19 @@
 	},
 /obj/machinery/light/floor,
 /turf/open/floor/grass,
-/area/virtual_domain)
+/area/template_noop)
 "m" = (
 /obj/structure/flora/grass/jungle/a/style_2,
 /turf/open/misc/dirt/station,
-/area/virtual_domain)
+/area/template_noop)
 "n" = (
 /obj/structure/water_source/puddle,
 /turf/open/misc/dirt/station,
-/area/virtual_domain)
+/area/template_noop)
 "o" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/grass,
-/area/virtual_domain)
+/area/template_noop)
 "p" = (
 /obj/modular_map_connector,
 /turf/template_noop,
@@ -31,7 +31,7 @@
 	pixel_x = -25
 	},
 /turf/open/floor/grass,
-/area/virtual_domain)
+/area/template_noop)
 "B" = (
 /obj/structure/flora/bush/flowers_br/style_2{
 	pixel_x = 6
@@ -41,7 +41,7 @@
 	pixel_x = -3
 	},
 /turf/open/floor/grass,
-/area/virtual_domain)
+/area/template_noop)
 "G" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
 	dir = 10
@@ -56,18 +56,18 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/terracotta/small,
-/area/virtual_domain)
+/area/template_noop)
 "H" = (
 /obj/structure/flora/bush/jungle/b/style_2,
 /turf/open/misc/dirt/station,
-/area/virtual_domain)
+/area/template_noop)
 "I" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "J" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "O" = (
 /obj/structure/flora/rock/pile/jungle/style_2{
 	pixel_y = -4
@@ -76,25 +76,25 @@
 	pixel_y = 11
 	},
 /turf/open/floor/grass,
-/area/virtual_domain)
+/area/template_noop)
 "P" = (
 /obj/structure/flora/grass/jungle/b/style_4{
 	pixel_y = 8
 	},
 /turf/open/misc/dirt/station,
-/area/virtual_domain)
+/area/template_noop)
 "Q" = (
 /obj/structure/flora/bush/flowers_br/style_3{
 	pixel_x = 4
 	},
 /turf/open/floor/grass,
-/area/virtual_domain)
+/area/template_noop)
 "R" = (
 /obj/structure/flora/rock/pile/jungle/style_5{
 	pixel_y = -3
 	},
 /turf/open/floor/grass,
-/area/virtual_domain)
+/area/template_noop)
 "U" = (
 /obj/item/reagent_containers/cup/bucket/wooden{
 	pixel_x = -12;
@@ -105,7 +105,7 @@
 	},
 /obj/structure/flora/bush/sparsegrass/style_2,
 /turf/open/misc/dirt/station,
-/area/virtual_domain)
+/area/template_noop)
 "Y" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta/corner{
 	dir = 8
@@ -120,13 +120,13 @@
 	pixel_x = 2
 	},
 /turf/open/floor/iron/terracotta/small,
-/area/virtual_domain)
+/area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
 	dir = 10
 	},
 /turf/open/floor/iron/terracotta/small,
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 a

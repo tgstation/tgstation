@@ -14,7 +14,7 @@
 	plane = -7
 	},
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "cP" = (
 /obj/structure/railing{
 	dir = 1
@@ -25,7 +25,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron/dark/side,
-/area/virtual_domain)
+/area/template_noop)
 "dy" = (
 /obj/structure/railing{
 	dir = 10
@@ -40,7 +40,7 @@
 	plane = -7
 	},
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "es" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating_new,
@@ -49,26 +49,26 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "fN" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/diagonal,
-/area/virtual_domain)
+/area/template_noop)
 "fS" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "gu" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "gW" = (
 /turf/closed/wall,
-/area/virtual_domain)
+/area/template_noop)
 "hL" = (
 /obj/structure/broken_flooring/singular/directional/north,
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -78,7 +78,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "ik" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 1
@@ -89,12 +89,12 @@
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "iB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/iron/dark,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "jd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -102,12 +102,12 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "kF" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "mK" = (
 /turf/template_noop,
 /area/template_noop)
@@ -120,7 +120,7 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "rS" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/structure/broken_flooring/side/directional/west,
@@ -128,18 +128,18 @@
 	color = "#737373"
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "sc" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/floor/iron/dark/diagonal,
-/area/virtual_domain)
+/area/template_noop)
 "uC" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/filingcabinet,
 /turf/open/floor/iron/dark/side,
-/area/virtual_domain)
+/area/template_noop)
 "vI" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
@@ -156,7 +156,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
-/area/virtual_domain)
+/area/template_noop)
 "vX" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -168,17 +168,17 @@
 	pixel_y = 13
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "wA" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
 	},
-/area/virtual_domain)
+/area/template_noop)
 "xD" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/diagonal,
-/area/virtual_domain)
+/area/template_noop)
 "xF" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -189,7 +189,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/virtual_domain)
+/area/template_noop)
 "xW" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -198,7 +198,7 @@
 /obj/machinery/light/warm/dim/directional/north,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "yf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -208,7 +208,7 @@
 	},
 /obj/item/multitool,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "zM" = (
 /obj/structure/railing{
 	dir = 4
@@ -222,7 +222,7 @@
 /obj/structure/cable,
 /obj/item/stack/tile/iron/dark,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Bi" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -234,7 +234,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
-/area/virtual_domain)
+/area/template_noop)
 "BB" = (
 /obj/structure/railing{
 	dir = 1
@@ -246,14 +246,14 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/iron/dark/corner,
-/area/virtual_domain)
+/area/template_noop)
 "Cd" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /obj/structure/barricade/sandbags{
 	color = "#737373"
 	},
 /turf/open/floor/iron/dark/corner,
-/area/virtual_domain)
+/area/template_noop)
 "Dp" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 8
@@ -264,7 +264,7 @@
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
-/area/virtual_domain)
+/area/template_noop)
 "Ec" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -274,7 +274,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "Gf" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -284,35 +284,35 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/flora/bush/jungle/b/style_2,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Gy" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/dark/diagonal,
-/area/virtual_domain)
+/area/template_noop)
 "GW" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
 /obj/structure/broken_flooring/singular,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "If" = (
 /obj/structure/flora/bush/jungle/b/style_2,
 /obj/structure/barricade/sandbags{
 	color = "#737373"
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
+/area/template_noop)
 "KL" = (
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/airlock/maintenance_hatch,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Lp" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Mi" = (
 /obj/structure/railing{
 	dir = 8
@@ -323,14 +323,14 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "Nr" = (
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "NW" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 4
@@ -341,24 +341,24 @@
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
-/area/virtual_domain)
+/area/template_noop)
 "PB" = (
 /obj/structure/flora/bush/jungle/b/style_2,
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "Ql" = (
 /obj/structure/broken_flooring/pile/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "RW" = (
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "RY" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating_new,
@@ -367,7 +367,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Te" = (
 /obj/structure/railing{
 	dir = 6
@@ -380,7 +380,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "Tf" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -392,7 +392,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 "Uf" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/thinplating_new,
@@ -400,7 +400,7 @@
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "UW" = (
 /obj/structure/table,
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
@@ -412,7 +412,7 @@
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
-/area/virtual_domain)
+/area/template_noop)
 "Vf" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -420,12 +420,12 @@
 /obj/structure/cable,
 /obj/item/stack/tile/iron/dark,
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/template_noop)
 "VU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/virtual_domain)
+/area/template_noop)
 "ZE" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -436,7 +436,7 @@
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
-/area/virtual_domain)
+/area/template_noop)
 
 (1,1,1) = {"
 mK

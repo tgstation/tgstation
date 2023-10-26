@@ -10,16 +10,16 @@
 	var/pick_random_of = 0
 	/// The list of mobs to spawn
 	var/list/mob/living/mobs = list()
+	/// The mobs spawned from this segment
+	var/list/spawned_mob_refs = list()
 	/// Chance this will spawn (1 - 100)
 	var/probability = SPAWN_LIKELY
 
 /// Spawns mobs in a circle around the location
-/datum/modular_mob_segment/proc/spawn_mobs(turf/location)
+/datum/modular_mob_segment/proc/spawn_mobs(turf/origin)
 	if(!prob(probability))
 		return
 
-	var/spawned
-	var/current_distance = 1
 	var/current_index = 1
 
 	var/total_amount
@@ -33,15 +33,19 @@
 
 	shuffle_inplace(mobs)
 
+	var/turf/nearby = view(5, origin)
+
+	var/spawned = FALSE
 	for(var/index in 1 to total_amount)
 		spawned = FALSE
 
 		while(!spawned)
-			if(current_distance > 10)
-				CRASH("Could not find a spot to spawn a modular mob segment!")
+			if(length(nearby) == 0)
+				break
 
-			for(var/turf/open/spot in view(current_distance, location))
-				if(spot.is_blocked_turf())
+			for(var/turf/open/possible_turf in nearby)
+				if(possible_turf.is_blocked_turf())
+					nearby -= possible_turf
 					continue
 
 				var/path
@@ -51,11 +55,12 @@
 					path = mobs[current_index]
 					current_index++
 
-				new path(spot)
+				var/mob/living/mob = new path(possible_turf)
+				nearby -= possible_turf
 				spawned = TRUE
-				break
+				spawned_mob_refs.Add(WEAKREF(mob))
 
-			current_distance++
+				break
 
 // Some generic mob segments. If you want to add generic ones for any map, add them here
 

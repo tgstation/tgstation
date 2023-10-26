@@ -19,7 +19,7 @@
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch
-	var/glitch_chance = 0.03
+	var/glitch_chance = 0.05
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
@@ -83,7 +83,7 @@
 	. = ..()
 
 	obj_flags |= EMAGGED
-	glitch_chance = 0.06
+	glitch_chance = 0.09
 
 	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
 	balloon_alert(user, "bzzzt...")
