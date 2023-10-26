@@ -52,11 +52,9 @@
 		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
 
 /// Selects the role and waits for a ghost orbiter
-/obj/machinery/quantum_server/proc/setup_glitch()
-	if(!length(mutation_candidate_refs))
+/obj/machinery/quantum_server/proc/setup_glitch(datum/antagonist/bitrunning_glitch/forced_role)
+	if(!validate_mutation_candidates())
 		return
-
-	validate_mutation_candidates()
 
 	var/mob/living/mutation_target = get_mutation_target()
 	if(isnull(mutation_target))
@@ -64,7 +62,7 @@
 
 	mutation_target.AddElement(/datum/element/digital_aura)
 
-	var/datum/antagonist/bitrunning_glitch/chosen_role = get_antagonist_role()
+	var/datum/antagonist/bitrunning_glitch/chosen_role = forced_role || get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(spawn_glitch), chosen_role, mutation_target)
@@ -149,4 +147,9 @@
 		if(isnull(creature) || creature.mind)
 			mutation_candidate_refs.Remove(creature_ref)
 
+	if(!length(mutation_candidate_refs))
+		return FALSE
+
 	shuffle_inplace(mutation_candidate_refs)
+
+	return TRUE

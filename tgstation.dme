@@ -3280,6 +3280,7 @@
 #include "code\modules\bitrunning\alerts.dm"
 #include "code\modules\bitrunning\areas.dm"
 #include "code\modules\bitrunning\designs.dm"
+#include "code\modules\bitrunning\event.dm"
 #include "code\modules\bitrunning\job.dm"
 #include "code\modules\bitrunning\outfits.dm"
 #include "code\modules\bitrunning\turfs.dm"
