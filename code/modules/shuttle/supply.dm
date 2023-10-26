@@ -226,6 +226,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	//clear out all rejected uncancellable orders
 	for(var/datum/supply_order/rejected_order in rejected_orders)
 		SSshuttle.shopping_list -= rejected_order
+		qdel(rejected_order)
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
 	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case
