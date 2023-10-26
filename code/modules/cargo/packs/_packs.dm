@@ -126,4 +126,10 @@
 /datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
 	. = ..()
 	//Remove our material sheets from SSstock_market's materials_quantity equal to the quantity within the crate.
-	
+	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
+		if(!istype(possible_stack))
+			continue
+		if(possible_stack.material_type)
+			if(!SSstock_market.materials_quantity[possible_stack.material_type])
+				continue
+			SSstock_market.materials_quantity[possible_stack.materials_type] -= possible_stack.amount
