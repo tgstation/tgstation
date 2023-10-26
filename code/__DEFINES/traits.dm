@@ -282,6 +282,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
+/// Carbons with this trait cant have their dna scrambled by genetics or a disease retrovirus.
+#define TRAIT_NO_DNA_SCRAMBLE "no_dna_scramble"
 /// Carbons with this trait can eat blood to regenerate their own blood volume, instead of injecting it
 #define TRAIT_DRINKS_BLOOD "drinks_blood"
 /// Mob is immune to clone (cellular) damage
