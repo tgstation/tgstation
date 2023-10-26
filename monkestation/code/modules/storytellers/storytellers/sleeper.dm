@@ -6,7 +6,7 @@
 		EVENT_TRACK_MUNDANE = 1,
 		EVENT_TRACK_MODERATE = 0.7,
 		EVENT_TRACK_MAJOR = 0.7,
-		EVENT_TRACK_ROLESET = 0.7,
+		EVENT_TRACK_ROLESET = 0.1, ///rolesets are entirely evil atm so crank this down
 		EVENT_TRACK_OBJECTIVES = 1
 		)
 	guarantees_roundstart_roleset = FALSE
