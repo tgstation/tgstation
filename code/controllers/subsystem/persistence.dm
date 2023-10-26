@@ -492,42 +492,34 @@ statues fixes:
 		data.placer_key = trophy_case.placer_key
 		saved_trophies += data
 
-///Collects trophies from all existing trophy cases.
+///Saves statues if they successfully enter the hall of fame shuttle
 /datum/controller/subsystem/persistence/proc/collect_statues()
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED && istype(SSshuttle.selected, datum/map_template/shuttle/escape/fame))
-		for(var/obj/structure/statue/custom/custom_statue in GLOB.custom_statues)
-			if(custom_statue.onCentCom() || custom_statue.onSyndieBase()))
-				// is statue engraved? is statue named?
+	if(!EMERGENCY_ESCAPED_OR_ENDGAMED && !istype(SSshuttle.selected, /datum/map_template/shuttle/emergency/fame))
+		return
 
+	var/list/saved_data = list()
 
+	saved_data["version"] = STATUE_ENGRAVING_PERSISTENCE_VERSION
+	saved_data["entries"] = list()
 
-isshuttleturf
-EMERGENCY_ESCAPED_OR_ENDGAMED
-/area/shuttle/escape
+	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
+	if(fexists(json_file))
+		var/list/old_json = json_decode(file2text(json_file))
+		if(old_json)
+			saved_data["entries"] = old_json["entries"]
 
-var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
-var/datum/map_template/shuttle/shuttle = locate(params["shuttle"]) in shuttles
-if (!istype(shuttle))
-	return
+	for(var/obj/structure/statue/custom/custom_statue in GLOB.custom_statues)
+		if(!custom_statue.onCentCom())
+			continue
 
+		var/datum/component/engraved/engraving = custom_statue.GetComponent(/datum/component/engraved)
 
+		// the statue needs to be engraved and not a persistent loaded one from a previous round
+		if(engarving && !engraving.persistent_save)
+			saved_data["entries"] += save_statue(custom_statue)
 
-
-	for(var/trophy_case in GLOB.trophy_cases)
-		save_trophy(trophy_case)
-
-	var/json_file = file("data/trophy_items.json")
-	var/list/file_data = list()
-	var/list/converted_data = list()
-
-	for(var/datum/trophy_data/data in saved_trophies)
-		converted_data += list(data.to_json())
-
-	converted_data = remove_duplicate_trophies(converted_data)
-
-	file_data["data"] = converted_data
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(saved_data))
 
 ///Updates the list of the most recent maps.
 /datum/controller/subsystem/persistence/proc/collect_maps()
