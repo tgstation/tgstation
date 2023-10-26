@@ -9,7 +9,7 @@
 	icon = 'icons/mob/nonhuman-player/netguardian.dmi'
 	icon_state = "netguardian"
 	icon_living = "netguardian"
-	icon_dead = "netguardian_dead"
+	icon_dead = "crash"
 
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
@@ -75,6 +75,17 @@
 	default_projectile_spread = 15
 	projectile_type = /obj/projectile/bullet/rocket
 	shot_count = 3
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/attack_sequence(mob/living/firer, atom/target)
+	playsound(firer, 'sound/mecha/skyfall_power_up.ogg', 120)
+	firer.say("target acquired.", "machine")
+
+	var/mutable_appearance/firing_effect = mutable_appearance('icons/mob/nonhuman-player/netguardian.dmi', "firing")
+	firer.add_overlay(firing_effect)
+	if(do_after(firer, 1.5 SECONDS))
+		..()
+
+	firer.cut_overlay(firing_effect)
 
 /datum/ai_controller/basic_controller/netguardian
 	blackboard = list(

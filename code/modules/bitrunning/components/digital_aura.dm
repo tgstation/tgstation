@@ -16,15 +16,16 @@
 	if(!length(dimensions))
 		return ELEMENT_INCOMPATIBLE
 
-	switch(dimensions[1])
+	switch(dimensions["width"])
 		if(32)
 			base_icon = 'icons/effects/bitrunning.dmi'
 		if(48)
 			base_icon = 'icons/effects/bitrunning_48.dmi'
+
 		if(64)
 			base_icon = 'icons/effects/bitrunning_64.dmi'
 
-	redshift = mutable_appearance('icons/effects/bitrunning.dmi', "redshift")
+	redshift = mutable_appearance(base_icon, "redshift")
 	redshift.blend_mode = BLEND_MULTIPLY
 
 	glitch_effect = mutable_appearance(base_icon, "glitch", MUTATIONS_LAYER, alpha = 150)

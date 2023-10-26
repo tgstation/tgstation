@@ -95,7 +95,7 @@ const SpecificInfo = (props, context) => {
           </Stack.Item>
         </>
       );
-    case 'Cyber Behemoth':
+    case 'NetGuardian Prime':
       return (
         <Stack.Item grow>
           <span style={{ ...textStyles.danger, 'font-size': '16px' }}>

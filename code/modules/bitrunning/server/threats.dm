@@ -71,6 +71,7 @@
 		job_bans = ROLE_GLITCH, \
 		to_call = to_call, \
 		title = role_name, \
+		header = "Bitrunning Malfunction", \
 	)
 
 /// Orbit poll has concluded - spawn the antag
@@ -98,7 +99,7 @@
 	ghost_mind.special_role = ROLE_GLITCH
 	ghost_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
 
-	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
+	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, vary = TRUE)
 	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")
 	antag_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
 
@@ -138,7 +139,7 @@
 	else
 		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.", RADIO_CHANNEL_COMMON)
 
-	do_teleport(antag, get_turf(chosen_forge), forced = TRUE)
+	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/magic/ethereal_enter.ogg', asoundout = 'sound/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
 
 /// Removes any invalid candidates from the list
 /obj/machinery/quantum_server/proc/validate_mutation_candidates()

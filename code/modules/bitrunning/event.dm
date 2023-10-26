@@ -50,7 +50,7 @@
 		event.forced_role = chosen
 
 /datum/event_admin_setup/minimum_candidate_requirement/bitrunning_glitch
-	output_text = "There must be valid mobs to mutate or players in the domain!"
+	output_text = "There must be valid mobs to mutate!"
 
 /datum/event_admin_setup/minimum_candidate_requirement/bitrunning_glitch/count_candidates()
 	var/datum/round_event_control/bitrunning_glitch/cyber_control = event_control
