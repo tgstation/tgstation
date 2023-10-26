@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Dropdown, Input, Section, Stack, TextArea } from '../components';
+import { Box, Button, Dropdown, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -8,6 +8,9 @@ type Data = {
   command_name: string;
   command_name_presets: string[];
   command_report_content: string;
+  announcement_color: string;
+  announcement_colors: string[];
+  subheader: string;
   custom_name: string;
   played_sound: string;
   print_report: string;
@@ -18,15 +21,17 @@ export const CommandReport = () => {
     <Window
       title="Create Command Report"
       width={325}
-      height={525}
+      height={685}
       theme="admin">
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
             <CentComName />
+            <AnnouncementColor />
+            <AnnouncementSound />
           </Stack.Item>
           <Stack.Item>
-            <AnnouncementSound />
+            <SubHeader />
           </Stack.Item>
           <Stack.Item>
             <ReportText />
@@ -67,6 +72,50 @@ const CentComName = (props, context) => {
           }
         />
       )}
+    </Section>
+  );
+};
+
+/** Allows the user to set the "sender" of the message via dropdown */
+const SubHeader = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { subheader } = data;
+
+  return (
+    <Section title="Set report subheader" textAlign="center">
+      <Box>Keep blank to not include a subheader</Box>
+      <Input
+        width="100%"
+        mt={1}
+        value={subheader}
+        placeholder={subheader}
+        onChange={(_, value) =>
+          act('set_subheader', {
+            new_subheader: value,
+          })
+        }
+      />
+    </Section>
+  );
+};
+
+/** Features a section with dropdown for the announcement colour. */
+const AnnouncementColor = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { announcement_colors = [], announcement_color } = data;
+
+  return (
+    <Section title="Set announcement color" textAlign="center">
+      <Dropdown
+        width="100%"
+        displayText={announcement_color}
+        options={announcement_colors}
+        onSelected={(value) =>
+          act('update_announcement_color', {
+            updated_announcement_color: value,
+          })
+        }
+      />
     </Section>
   );
 };
