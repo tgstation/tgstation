@@ -38,8 +38,8 @@ SUBSYSTEM_DEF(communications)
 	else
 		var/list/message_data = user.treat_message(input)
 		if(syndicate)
-//			priority_announce(html_decode(message_data["message"]), null, 'sound/misc/announce_syndi.ogg', ANNOUNCEMENT_TYPE_SYNDICATE, has_important_message = TRUE, players = players) MONKESTATION EDIT CHANGE OLD -- We dont have TTS
-			priority_announce(html_decode(message_data), null, 'sound/misc/announce_syndi.ogg', ANNOUNCEMENT_TYPE_SYNDICATE, has_important_message = TRUE, players = players) // MONKESTATION EDIT CHANGE NEW
+//			priority_announce(html_decode(message_data["message"]), null, 'sound/misc/announce_syndi.ogg', ANNOUNCEMENT_TYPE_SYNDICATE, has_important_message = TRUE, players = players, color_override = "red") MONKESTATION EDIT CHANGE OLD -- We dont have TTS
+			priority_announce(html_decode(message_data), null, 'sound/misc/announce_syndi.ogg', ANNOUNCEMENT_TYPE_SYNDICATE, has_important_message = TRUE, players = players, color_override = "red") // MONKESTATION EDIT CHANGE NEW
 		else
 //			priority_announce(html_decode(message_data["message"]), null, 'sound/misc/announce.ogg', ANNOUNCEMENT_TYPE_CAPTAIN, has_important_message = TRUE, players = players) MONKESTATION EDIT CHANGE OLD -- We dont have TTS
 			priority_announce(html_decode(message_data), null, 'sound/misc/announce.ogg', ANNOUNCEMENT_TYPE_CAPTAIN, has_important_message = TRUE, players = players) // MONKESTATION EDIT CHANGE NEW
