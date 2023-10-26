@@ -43,13 +43,11 @@
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
-		/obj/item/mod/module/
 	)
 
 /datum/armor/mod_theme_glitch
