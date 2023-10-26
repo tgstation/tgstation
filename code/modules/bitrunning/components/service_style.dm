@@ -1,3 +1,4 @@
+/// Gives the appearance of being an agent
 /datum/element/service_style
 
 /datum/element/service_style/Attach(datum/target)

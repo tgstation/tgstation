@@ -1,3 +1,4 @@
+/// Removes loot tables from megafauna and lowers their health.
 /datum/element/virtual_elite_mob
 
 /datum/element/virtual_elite_mob/Attach(datum/target)
