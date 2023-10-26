@@ -326,7 +326,6 @@
 	player_speed_modifier = -4
 	sight = SEE_TURFS
 	menu_description = "Atmospherically resistant with the ability to destroy walls and limbs, and to send warnings to the nest."
-	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/breacher/Initialize(mapload)
 	. = ..()
