@@ -153,12 +153,7 @@
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
 	max_integrity = 1
-	var/force_allaccess = FALSE
 	var/buzzcd = 0
-
-/obj/structure/holosign/barrier/medical/examine(mob/user)
-	. = ..()
-	. += span_notice("The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.")
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
