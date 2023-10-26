@@ -113,7 +113,6 @@
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
 /// Will differentiate into the "tangle" giant spider.
-
 /mob/living/basic/spider/growing/young/tangle
 	grow_as = /mob/living/basic/spider/giant/tangle
 	name = "young tangle spider"
