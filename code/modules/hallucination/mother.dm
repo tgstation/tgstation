@@ -88,4 +88,6 @@
 
 	image_icon = hallucinator.icon
 	image_state = hallucinator.icon_state
+	image_pixel_x = hallucinator.pixel_x
+	image_pixel_y = hallucinator.pixel_y
 	return ..()
