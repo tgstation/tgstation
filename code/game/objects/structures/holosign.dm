@@ -169,7 +169,7 @@
 					return FALSE
 	if(ishuman(mover))
 		return CheckHuman(mover)
-			return TRUE
+	return TRUE
 
 /obj/structure/holosign/barrier/medical/Bumped(atom/movable/AM)
 	. = ..()
