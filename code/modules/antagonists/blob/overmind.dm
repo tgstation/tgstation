@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
 			check_area.icon_state = "blob_shield"
 			check_area.layer = BELOW_MOB_LAYER
-			check_area.invisibility = 0
+			check_area.SetInvisibility(INVISIBILITY_NONE)
 			check_area.blend_mode = 0
 
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
@@ -294,7 +294,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, span_boldwarning("You cannot send IC messages (muted)."))
 			return
-		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
+		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if (stat)
@@ -313,7 +313,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	var/message_a = say_quote(message)
 	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
-	blob_telepathy(rendered, src)
+	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src)
 
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return

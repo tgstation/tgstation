@@ -2,7 +2,7 @@
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_dog
@@ -18,10 +18,8 @@
 /datum/ai_controller/basic_controller/dog/corgi
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,
-		// IF you dont have this fleeing behavviour will just refuse to work, isn't that funny ha ha
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
 		// Find nearby mobs with tongs in hand.
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/holding_object(/obj/item/kitchen/tongs),
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/dog),
@@ -44,4 +42,4 @@
 	if(!istype(corgi_pawn))
 		return
 
-	return corgi_pawn.access_card
+	return corgi_pawn.access_card.GetAccess()

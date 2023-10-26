@@ -65,7 +65,7 @@
 	damage = 10
 	ricochets_max = 0
 
-/obj/projectile/bullet/c38/trac/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c38/trac/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/mob/living/carbon/M = target
 	if(!istype(M))
@@ -83,7 +83,7 @@
 	damage = 20
 	ricochets_max = 0
 
-/obj/projectile/bullet/c38/hotshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c38/hotshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -96,7 +96,7 @@
 	var/temperature = 100
 	ricochets_max = 0
 
-/obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/M = target

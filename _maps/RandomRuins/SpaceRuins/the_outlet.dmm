@@ -1626,7 +1626,7 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "gib2-old"
 	},
-/mob/living/simple_animal/hostile/construct/juggernaut/hostile,
+/mob/living/basic/construct/juggernaut/hostile,
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/the_outlet/cultinfluence)
 "MR" = (

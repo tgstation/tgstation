@@ -1,0 +1,643 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"d" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"e" = (
+/obj/structure/flora/ash/fireblossom,
+/mob/living/basic/mining/mook/worker/tribal_chief,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"f" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"g" = (
+/obj/structure/bed/maint,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"h" = (
+/turf/closed/wall/mineral/wood,
+/area/lavaland/surface/outdoors)
+"i" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"j" = (
+/obj/structure/closet/cabinet,
+/obj/item/food/grown/banana,
+/obj/item/food/meat/slab/goliath,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"k" = (
+/obj/structure/table/wood/shuttle_bar,
+/obj/item/flashlight/flare/candle/infinite,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"l" = (
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"m" = (
+/obj/item/flashlight/lantern{
+	on = 1
+	},
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"n" = (
+/obj/structure/flora/ash/fireblossom,
+/mob/living/basic/mining/mook/worker,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"o" = (
+/obj/structure/railing/corner,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"p" = (
+/obj/structure/material_stand,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"q" = (
+/obj/item/fishing_rod,
+/obj/structure/bed/maint,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"r" = (
+/turf/open/floor/carpet/lone/lavaland,
+/area/lavaland/surface/outdoors)
+"s" = (
+/obj/effect/landmark/mook_village,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"t" = (
+/obj/structure/chair/pew/left,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"u" = (
+/obj/structure/railing,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"v" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"w" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"x" = (
+/obj/structure/table/wood/shuttle_bar,
+/obj/item/clothing/head/costume/garland/poppy,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"y" = (
+/turf/open/misc/grass/jungle/lavaland,
+/area/lavaland/surface/outdoors)
+"z" = (
+/mob/living/basic/mining/mook/worker/bard,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"A" = (
+/obj/structure/chair/pew/right,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"C" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/wood,
+/area/lavaland/surface/outdoors)
+"E" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/grass/jungle/lavaland,
+/area/lavaland/surface/outdoors)
+"F" = (
+/obj/structure/chair/pew,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"G" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/nanotrasen,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"H" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"I" = (
+/mob/living/basic/mining/mook,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"J" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"M" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"O" = (
+/obj/structure/table/wood/shuttle_bar,
+/obj/item/hatchet/wooden,
+/obj/item/storage/belt/champion,
+/turf/open/floor/wood/lavaland,
+/area/lavaland/surface/outdoors)
+"P" = (
+/mob/living/basic/mining/mook/worker,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Q" = (
+/obj/structure/flora/tree/jungle/style_5,
+/turf/open/misc/grass/jungle/lavaland,
+/area/lavaland/surface/outdoors)
+"S" = (
+/obj/item/flashlight/lantern{
+	on = 1
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"V" = (
+/obj/structure/chair/pew{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"W" = (
+/obj/structure/flora/tree/jungle/style_3,
+/turf/open/misc/grass/jungle/lavaland,
+/area/lavaland/surface/outdoors)
+"Y" = (
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Z" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+l
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+l
+S
+a
+a
+a
+a
+a
+a
+a
+t
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+p
+a
+a
+a
+a
+F
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+h
+h
+h
+h
+h
+h
+a
+s
+a
+a
+a
+a
+a
+a
+a
+F
+a
+b
+a
+a
+"}
+(5,1,1) = {"
+c
+c
+j
+g
+c
+c
+a
+S
+a
+a
+a
+a
+P
+a
+S
+F
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+c
+m
+c
+c
+c
+c
+r
+n
+a
+P
+a
+a
+a
+a
+a
+A
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+c
+c
+c
+c
+c
+c
+r
+a
+I
+a
+a
+a
+a
+a
+l
+e
+Y
+V
+V
+M
+"}
+(8,1,1) = {"
+c
+i
+k
+f
+c
+c
+a
+a
+a
+o
+w
+w
+w
+Z
+I
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+h
+h
+h
+h
+h
+h
+a
+a
+a
+u
+y
+y
+Q
+d
+a
+a
+a
+P
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+I
+a
+u
+y
+y
+E
+d
+a
+a
+l
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+l
+l
+a
+a
+a
+a
+a
+u
+y
+W
+E
+d
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+P
+a
+a
+a
+u
+y
+y
+Q
+d
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+v
+J
+J
+J
+H
+a
+a
+P
+a
+a
+a
+"}
+(14,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+z
+S
+l
+a
+a
+I
+l
+l
+a
+I
+a
+a
+l
+"}
+(15,1,1) = {"
+g
+g
+g
+g
+q
+g
+g
+l
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+r
+a
+a
+a
+a
+h
+c
+c
+c
+h
+a
+a
+a
+"}
+(17,1,1) = {"
+c
+c
+c
+m
+c
+c
+c
+r
+a
+P
+a
+a
+h
+O
+c
+c
+h
+a
+a
+a
+"}
+(18,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+a
+a
+a
+a
+a
+C
+x
+c
+c
+h
+a
+a
+a
+"}
+(19,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+a
+a
+l
+a
+S
+h
+m
+c
+G
+h
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
+c
+c
+c
+h
+a
+a
+a
+"}
