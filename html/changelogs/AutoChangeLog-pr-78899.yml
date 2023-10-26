@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - refactor: "Adds charges to omens and omen smiting rather than only being permanent or one-use. Mirrors now grant seven bad luckers."
-  - qol: "Reduces omen bad luck if nobody's nearby to witness the funny. (Ghosts are included in the check!)"
-  - bugfix: "Fixed an issue where a monkey check in doorcrushing was never actually able to pass. Also they screech now."

@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes:
-  - bugfix: "fixed hair gradients not applying properly on dismembered heads."
