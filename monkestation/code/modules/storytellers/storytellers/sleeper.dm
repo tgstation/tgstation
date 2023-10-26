@@ -4,8 +4,8 @@
 	desc = "The Sleeper will create less impactful events, especially ones involving combat or destruction. The chill experience."
 	point_gains_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
-		EVENT_TRACK_MODERATE = 0.7,
-		EVENT_TRACK_MAJOR = 0.7,
+		EVENT_TRACK_MODERATE = 1.2,
+		EVENT_TRACK_MAJOR = 1.2,
 		EVENT_TRACK_ROLESET = 0.1, ///rolesets are entirely evil atm so crank this down
 		EVENT_TRACK_OBJECTIVES = 1
 		)
