@@ -76,7 +76,6 @@
 	name = "chief medical officer PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
-	inserted_item = /obj/item/flashlight/pen/paramedic
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -216,7 +215,6 @@
 	name = "medical PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
-	inserted_item = /obj/item/flashlight/pen
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/robocontrol,
@@ -226,7 +224,6 @@
 	name = "paramedic PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#28334D#000099#3F96CC"
-	inserted_item = /obj/item/flashlight/pen/paramedic
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
@@ -236,7 +233,6 @@
 	name = "virology PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
-	inserted_item = /obj/item/flashlight/pen
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/robocontrol,
@@ -246,13 +242,11 @@
 	name = "chemist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#355FAC#EA6400"
-	inserted_item = /obj/item/flashlight/pen
 
 /obj/item/modular_computer/pda/coroner
 	name = "coroner PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#1f2026"
-	inserted_item = /obj/item/flashlight/pen
 	starting_programs = list(
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/crew_manifest,
