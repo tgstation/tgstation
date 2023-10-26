@@ -11,8 +11,6 @@
 	icon_state = "young_guard"
 	icon_living = "young_guard"
 	icon_dead = "young_guard_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BUG
-	faction = list(FACTION_SPIDER)
 	butcher_results = list(/obj/item/food/meat/slab/spider = 1)
 	speed = 1
 	maxHealth = 60
