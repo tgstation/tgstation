@@ -193,7 +193,7 @@
 		return FALSE
 	return TRUE
 
-	/// Will differentiate into the "breacher" giant spider.
+/// Will differentiate into the "breacher" giant spider.
 /mob/living/basic/spider/growing/young/breacher
 	grow_as = /mob/living/basic/spider/giant/breacher
 	name = "young breacher spider"
