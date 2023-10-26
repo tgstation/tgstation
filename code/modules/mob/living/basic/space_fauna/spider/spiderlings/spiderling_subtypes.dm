@@ -60,7 +60,7 @@
 	icon_state = "tank_spiderling"
 	icon_dead = "tank_spiderling_dead"
 
-	/// Will differentiate into the "breacher" young spider.
+/// Will differentiate into the "breacher" young spider.
 /mob/living/basic/spider/growing/spiderling/breacher
 	grow_as = /mob/living/basic/spider/growing/young/breacher
 	name = "breacher spiderling"
