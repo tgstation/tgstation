@@ -83,7 +83,7 @@
 			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
 			header = ghost_notification_message,
-			notify_volume = 75
+			notify_volume = 75,
 		)
 
 

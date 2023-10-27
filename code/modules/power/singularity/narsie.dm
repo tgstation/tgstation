@@ -62,7 +62,7 @@
 			"Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.",
 			source = src,
 			alert_overlay = alert_overlay,
-			action = NOTIFY_PLAY
+			action = NOTIFY_PLAY,
 		)
 
 	narsie_spawn_animation()

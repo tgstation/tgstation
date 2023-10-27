@@ -37,7 +37,7 @@
 		"[src] has borne fruit!",
 		source = src,
 		action = NOTIFY_PLAY,
-		ignore_key = POLL_IGNORE_VENUSHUMANTRAP
+		ignore_key = POLL_IGNORE_VENUSHUMANTRAP,
 	)
 
 /obj/effect/mob_spawn/ghost_role/venus_human_trap/allow_spawn(mob/user, silent = FALSE)

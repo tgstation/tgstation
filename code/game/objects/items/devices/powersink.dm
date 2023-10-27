@@ -127,7 +127,7 @@
 			notify_ghosts(
 				"[user] has activated a power sink!",
 				source = src,
-				header = "Shocking News!"
+				header = "Shocking News!",
 			)
 			set_mode(OPERATING)
 

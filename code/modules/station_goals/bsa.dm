@@ -244,7 +244,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	notify_ghosts(
 		"The Bluespace Artillery has been fired!",
 		source = bullseye,
-		header = "KABOOM!"
+		header = "KABOOM!",
 	)
 
 	if(!blocker)

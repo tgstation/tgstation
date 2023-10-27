@@ -50,7 +50,7 @@
 			source = affected_mob,
 			action = NOTIFY_ORBIT,
 			header = "Who Will Win?",
-			notify_flags = NOTIFY_CATEGORY_DEFAULT
+			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 		)
 		reaping = TRUE
 		if(affected_mob.apply_status_effect(/datum/status_effect/necropolis_curse, CURSE_BLINDING))
