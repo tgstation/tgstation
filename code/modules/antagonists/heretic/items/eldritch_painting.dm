@@ -24,7 +24,7 @@
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
 	// A basic proximity sensor
-	var/datum/proximity_monitor/advanced/eldritch_painting/painting_proximity_sensor
+	var/painting_proximity_sensor = /datum/proximity_monitor/advanced/eldritch_painting
 	// Set to false since we don't want this to persist
 	persistence_id = FALSE
 
@@ -143,7 +143,7 @@
 	name = "The First Desire"
 	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
 	icon_state = "frame-empty"
-	/datum/proximity_monitor/advanced/eldritch_painting/desire/painting_proximity_sensor
+	painting_proximity_sensor = /datum/proximity_monitor/advanced/eldritch_painting/desire
 
 // Moodlets used to track hunger and provide feedback
 /datum/mood_event/eldritch_painting/desire_heretic
