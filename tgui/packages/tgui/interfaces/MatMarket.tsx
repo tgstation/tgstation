@@ -104,7 +104,7 @@ export const MatMarket = (props, context) => {
 
                   <Stack.Item width="33%" ml={2}>
                     <b>{material.quantity}</b> sheets of <b>{material.name}</b>{' '}
-                    trading. {material.requested || 'zero'} sheets ordered
+                    trading. {material.requested || 'zero'} sheets ordered.
                   </Stack.Item>
                   <Stack.Item
                     width="40%"
