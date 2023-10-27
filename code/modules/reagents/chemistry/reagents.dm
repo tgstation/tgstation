@@ -154,8 +154,9 @@
  *
  */
 /datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
-	current_cycle++
+	return
+
+/datum/reagent/proc/metabolize_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(reagent_removal_skip_list))
 		return
 	if(isnull(holder))
@@ -169,6 +170,7 @@
 			metabolizing_out *= affected_mob.metabolism_efficiency
 
 	holder.remove_reagent(type, metabolizing_out)
+
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
@@ -203,11 +205,15 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob)
 	return
 
-/// Called when a reagent is inside of a mob when they are dead. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+/**
+ * Called when a reagent is inside of a mob when they are dead if the reagent has the REAGENT_DEAD_PROCESS flag
+ * Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+ */
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
-	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
-		return
-	current_cycle++
+	return
+
+/// clears a portion of the reagent after on_mob_dead() is called
+/datum/reagent/proc/metabolize_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	if(length(reagent_removal_skip_list))
 		return
 	if(holder)

@@ -858,10 +858,15 @@
 
 			if(reagent.overdosed)
 				need_mob_update += reagent.overdose_process(owner, seconds_per_tick, times_fired)
+		reagent.current_cycle++
 		if(!dead)
 			need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, times_fired)
-	if(dead)
-		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
+			if(!QDELETED(owner) && !QDELETED(reagent))
+				reagent.metabolize_life(owner, seconds_per_tick, times_fired)
+		else
+			need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
+			if(!QDELETED(owner) && !QDELETED(reagent))
+				reagent.metabolize_dead(owner, seconds_per_tick)
 	return need_mob_update
 
 /**
