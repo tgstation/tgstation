@@ -78,22 +78,24 @@
 	projectile_type = /obj/projectile/bullet/rocket
 	shot_count = 3
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/attack_sequence(mob/living/firer, atom/target)
-	playsound(firer, 'sound/mecha/skyfall_power_up.ogg', 120)
-	firer.say("target acquired.", "machine")
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/netguardian/Activate(atom/target_atom)
+	var/mob/living/player = owner
+	playsound(player, 'sound/mecha/skyfall_power_up.ogg', 120)
+	player.say("target acquired.", "machine")
 
 	var/mutable_appearance/firing_effect = mutable_appearance('icons/mob/nonhuman-player/netguardian.dmi', "firing")
-	firer.add_overlay(firing_effect)
-
-	StartCooldown(cooldown_time)
-	if(!do_after(firer, 1.5 SECONDS))
-		StartCooldown(5 SECONDS)
-		firer.cut_overlay(firing_effect)
-		return
+	player.add_overlay(firing_effect)
 
 	StartCooldown()
-	firer.cut_overlay(firing_effect)
-	return ..()
+	if(!do_after(player, 1.5 SECONDS))
+		StartCooldown(cooldown_time * 0.2)
+		player.cut_overlay(firing_effect)
+		return TRUE
+
+	player.cut_overlay(firing_effect)
+	attack_sequence(owner, target_atom)
+	StartCooldown()
+	return TRUE
 
 /datum/ai_controller/basic_controller/netguardian
 	blackboard = list(
