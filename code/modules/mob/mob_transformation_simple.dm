@@ -22,6 +22,9 @@
 		to_chat(usr, span_danger("Cannot convert into a new_player mob type."))
 		return
 
+	if (SEND_SIGNAL(src, COMSIG_PRE_MOB_CHANGED_TYPE) & COMPONENT_BLOCK_MOB_CHANGE)
+		return
+
 	return change_mob_type_unchecked(new_type, location, new_name, delete_old_mob)
 
 /// Version of [change_mob_type] that does no usr prompting (may send an error message though). Satisfies procs with the SHOULD_NOT_SLEEP restriction
@@ -32,7 +35,7 @@
 	else
 		desired_mob = new new_type(src.loc)
 
-	if(!desired_mob || !ismob(desired_mob))
+	if(!ismob(desired_mob))
 		to_chat(usr, "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder.")
 		qdel(desired_mob)
 		return
