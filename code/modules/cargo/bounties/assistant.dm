@@ -212,11 +212,11 @@
 
 /datum/bounty/item/assistant/fish
 	name = "Fish"
-	description = "We need fish to populate our aquariums with. Fishes that are dead or from fish cases will only be paid half as much."
+	description = "We need fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
 	reward = CARGO_CRATE_VALUE * 9
 	required_count = 4
 	wanted_types = list(/obj/item/fish = TRUE)
-	///the penalty for shipping dead/bought fish, which can drain up to half reward in total.
+	///the penalty for shipping dead/bought fish, which can subtract up to half the reward in total.
 	var/shipping_penalty
 
 /datum/bounty/item/assistant/fish/New()
@@ -241,7 +241,7 @@
 	..()
 	fluid_type = pick(AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_SULPHWATEVER)
 	name = "[fluid_type] Fish"
-	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or from fish cases will only be paid half as much."
+	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
 
 /datum/bounty/item/assistant/fish/fluid/applies_to(obj/shipped)
 	. = ..()
@@ -252,27 +252,30 @@
 
 ///A subtype of the fish bounty that requires specific fish types. The higher their rarity, the better the pay.
 /datum/bounty/item/assistant/fish/specific
-	description = "Our prestigious fish collection is currently lacking a few specific species. Fishes that are dead or from fish cases will only be paid half as much."
+	description = "Our prestigious fish collection is currently lacking a few specific species. Fishes that are dead or bought from cargo will only be paid half as much."
 	reward = CARGO_CRATE_VALUE * 16
 	required_count = 3
 	wanted_types = list()
 
 /datum/bounty/item/assistant/fish/specific/New()
 	var/static/list/choosable_fishes
-	if(!choosable_fishes)
+	if(isnull(choosable_fishes))
 		choosable_fishes = list()
-		for(var/obj/item/fish/prototype in subtypesof(/obj/item/fish))
+		for(var/obj/item/fish/prototype as anything in subtypesof(/obj/item/fish))
 			if(initial(prototype.experisci_scannable) && initial(prototype.show_in_catalog))
 				choosable_fishes += prototype
 
 	var/list/fishes_copylist = choosable_fishes.Copy()
 	///Used to calculate the extra reward
 	var/total_rarity = 0
-	for(var/i in 1 to rand(2,3))
+	var/list/name_list = list()
+	var/num_paths = rand(2,3)
+	for(var/i in 1 to num_paths)
 		var/obj/item/fish/chosen_path = pick_n_take(fishes_copylist)
 		wanted_types[chosen_path] = TRUE
-		total_rarity += initial(chosen_path.random_case_rarity) / 3
-	name = english_list(wanted_types)
+		name_list += initial(chosen_path.name)
+		total_rarity += initial(chosen_path.random_case_rarity) / num_paths
+	name = english_list(name_list)
 
 	switch(total_rarity)
 		if(FISH_RARITY_NOPE to FISH_RARITY_GOOD_LUCK_FINDING_THIS)
