@@ -5,10 +5,7 @@ import { resolveAsset } from '../assets';
 
 export const TrenchMap = (props, context) => {
   const { act, data } = useBackend(context);
-  const { map, map_image } = data;
-  const textHtml = {
-    __html: map,
-  };
+  const { map_image } = data;
   return (
     <Window width={510} height={600}>
       <HotspotRender />
