@@ -16,7 +16,7 @@
 	mother = new(spawn_loc, hallucinator, src)
 	mother.AddComponent(/datum/component/leash, owner = hallucinator, distance = get_dist(hallucinator, mother)) //basically makes mother follow them
 	point_at(hallucinator)
-	talk("[hallucinator]!!!!")
+	talk("[capitalize(hallucinator.real_name)]!!!!") // Your mother won't be fooled by paltry disguises
 	var/list/scold_lines = list(
 		pick(list("CLEAN YOUR ROOM THIS INSTANT!", "IT'S TIME TO WAKE UP FOR SCHOOL!!")),
 		pick(list("YOU INSULT YOUR GRANDPARENTS!", "USELESS!")),
