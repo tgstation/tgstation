@@ -1,7 +1,0 @@
-author: "Dexee"
-delete-after: True
-changes:
-  - rscadd: "New navmakers for some lesser known places, as well as most station solar platforms"
-  - qol: "Moved/replaced a ton of existing markers to better common sense spots.\nTram:"
-  - qol: "Aseembly lab door renamed to Assembly Lab.\nIce Box Coggers Bar:"
-  - rscadd: "added the missing Booze-O-Mat. (thanks Skell Bones II)"

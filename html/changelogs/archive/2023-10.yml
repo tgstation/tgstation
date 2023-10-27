@@ -257,3 +257,14 @@
   - bugfix: sprite ffix
   scriptis:
   - rscadd: don't blink. don't blink not even for a second
+2023-10-27:
+  Dexee:
+  - rscadd: New navmakers for some lesser known places, as well as most station solar
+      platforms
+  - qol: 'Moved/replaced a ton of existing markers to better common sense spots.
+
+      Tram:'
+  - qol: 'Aseembly lab door renamed to Assembly Lab.
+
+      Ice Box Coggers Bar:'
+  - rscadd: added the missing Booze-O-Mat. (thanks Skell Bones II)
