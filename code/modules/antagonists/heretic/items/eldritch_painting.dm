@@ -78,10 +78,6 @@
 		// Add a mood event that causes the hallucinations to not trigger anymore
 		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
 
-/obj/structure/sign/painting/eldritch/Destroy()
-	QDEL_NULL(base_painting)
-	return ..()
-
 // Applies an affect on view
 /datum/proximity_monitor/advanced/eldritch_painting
 
@@ -100,11 +96,11 @@
 		return
 	if(IS_HERETIC(viewer))
 		return
-	to_chat(viewer, span_notice("Wow, great poster!"))
+	to_chat(viewer, span_notice("Wow, what a nice painting! She is so fair, and HE WEEPS STILL!!!"))
 	viewer.gain_trauma(/datum/brain_trauma/severe/weeping, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /*
- * The brain traumas that these eldritch paintings apply
+ * A brain trauma that this eldritch paintings apply
  * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
  */
 /datum/brain_trauma/severe/weeping
@@ -190,16 +186,7 @@
 		// Adds a negative mood event to our heretic
 		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
 	// Do they have the mood event added with the hallucination?
-	if("eldritch_weeping" in user.mob_mood.mood_events)
-		to_chat(user, span_notice("Respite, for now...."))
-		// Remove the mood event associated with the hallucinations
-		user.mob_mood.mood_events.Remove("eldritch_weeping")
-		// Add a mood event that causes the hallucinations to not trigger anymore
-		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
-
-/obj/structure/sign/painting/eldritch/desire/Destroy()
-	QDEL_NULL(desire_painting)
-	return ..()
+	if (user.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
 
 // Specific proximity monitor for The First Desire or /obj/item/wallframe/painting/eldritch/desire
 /datum/proximity_monitor/advanced/eldritch_painting/desire
@@ -207,12 +194,12 @@
 /datum/proximity_monitor/advanced/eldritch_painting/desire/on_seen(mob/living/carbon/human/viewer)
 	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
 		return
-	if (viewer.has_trauma_type(/datum/brain_trauma/severe/weeping))
+	if (viewer.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
 		return
 	if(IS_HERETIC(viewer))
 		return
-	to_chat(viewer, span_notice("Wow, great poster!"))
-	viewer.gain_trauma(/datum/brain_trauma/severe/weeping, TRAUMA_RESILIENCE_ABSOLUTE)
+	to_chat(viewer, span_notice("Oh, what arts! Though it does make me hungry, maybe there is an organ nearby?"))
+	viewer.gain_trauma(/datum/brain_trauma/severe/flesh_desire, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /*
  * A brain trauma that this eldritch paintings apply
@@ -220,30 +207,33 @@
  */
 /datum/brain_trauma/severe/flesh_desire
 	name = "The Desire for Flesh"
-	desc = "Patient seems to only be able to eat organs or raw flesh for nutrients, also seems to metabolize at a faster rate"
+	desc = "Patient seems to only be able to eat organs or raw flesh for nutrients, also seems to become hungrier at a faster rate"
 	scan_desc = "H_(82882)G3E:__))9R"
-	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
-	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
-
-/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
-		return
-	// If they have the weeping withdrawl mood event return
-	if("weeping_withdrawl" in owner.mob_mood.mood_events)
-		return
-	// If they already have the weeping mood event return, its duration is the same as the hallucination so this is done to prevent large amounts of lag
-	if("eldritch_weeping" in owner.mob_mood.mood_events)
-		return
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
-	..()
+	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
+	lose_text = span_notice("Your stomach no longer craves flesh, and your tongue feels duller.")
+	/// How much faster we loose hunger
+	var/hunger_rate = 10
 
 /datum/brain_trauma/severe/flesh_desire/on_gain()
-	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	// Allows them to eat faster, mainly for flavor
+	owner.add_traits(TRAIT_VORACIOUS)
+	// We don't want this to be bypassed by Aguesia so if they have it, remove it
+	if(HAS_TRAIT(owner, TRAIT_AGEUSIA))
+		owner.remove_traits(TRAIT_AGEUSIA)
+	// If they have a tongue, make it crave meat
+	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.liked_foodtypes = GORE | MEAT
 	..()
 
+/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
+	// Causes them to need to eat at 10x the normal rate
+	owner.adjust_nutrition(hunger_rate * HUNGER_FACTOR)
+	if(prob(2))
+		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
+
 /datum/brain_trauma/severe/flesh_desire/on_lose()
-	to_chat(owner, span_notice("You feel the tendrils of something dark slip from your mind..."))
-	owner.mob_mood.mood_events.Remove("eldritch_weeping")
+	owner.remove_traits(TRAIT_VORACIOUS)
+	// After loosing this trauma you also loose the ability to taste, sad!
+	owner.add_traits(TRAIT_AGEUSIA)
 	..()
