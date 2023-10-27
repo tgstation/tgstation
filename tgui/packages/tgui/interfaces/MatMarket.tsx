@@ -126,6 +126,7 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
+                    creditBalance - orderBalance < material.price ||
                     material.requested + 1 > material.quantity
                   }
                   tooltip={material.price * 1}
@@ -141,6 +142,7 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
+                    creditBalance - orderBalance < material.price * 5 ||
                     material.requested + 5 > material.quantity
                   }
                   tooltip={material.price * 5}
@@ -156,6 +158,7 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
+                    creditBalance - orderBalance < material.price * 10 ||
                     material.requested + 10 > material.quantity
                   }
                   tooltip={material.price * 10}
@@ -171,6 +174,7 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
+                    creditBalance - orderBalance < material.price * 25 ||
                     material.requested + 25 > material.quantity
                   }
                   tooltip={material.price * 25}
@@ -186,6 +190,7 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
+                    creditBalance - orderBalance < material.price * 50 ||
                     material.requested + 50 > material.quantity
                   }
                   tooltip={material.price * 50}
