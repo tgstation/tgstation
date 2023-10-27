@@ -160,7 +160,7 @@
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
-			"requested" = "[!isnull(current_order) ? current_order.pack.contains[sheet_to_buy] : 0]"
+			"requested" = !isnull(current_order) ? current_order.pack.contains[sheet_to_buy] : 0
 			))
 
 	//get account balance
