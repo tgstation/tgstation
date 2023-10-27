@@ -3,7 +3,7 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/not_while_on_target/trader
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
@@ -52,10 +52,8 @@
 /datum/ai_behavior/setup_shop
 
 /datum/ai_behavior/setup_shop/setup(datum/ai_controller/controller, target_key)
-	. = ..()
 	var/obj/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
+	return !QDELETED(target)
 
 /datum/ai_behavior/setup_shop/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -77,10 +75,10 @@
 	var/turf/sign_turf
 
 	sign_turf = try_find_valid_spot(living_pawn.loc, turn(shop_spot.dir, -90))
-	if(!sign_turf) //No space to my left, lets try right
+	if(isnull(sign_turf)) //No space to my left, lets try right
 		sign_turf = try_find_valid_spot(living_pawn.loc, turn(shop_spot.dir, 90))
 
-	if(sign_turf)
+	if(!isnull(sign_turf))
 		var/obj/sign = controller.blackboard[BB_SHOP_SIGN]
 		if(QDELETED(sign))
 			var/sign_type_path =  controller.blackboard[BB_SHOP_SIGN_TYPE]
@@ -93,6 +91,16 @@
 	controller.clear_blackboard_key(BB_FIRST_CUSTOMER)
 
 	finish_action(controller, TRUE, target_key)
+
+///Look for a spot we can place our sign on
+/datum/ai_behavior/setup_shop/proc/try_find_valid_spot(origin_turf, direction_to_check)
+	var/turf/sign_turf = get_step(origin_turf, direction_to_check)
+	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf) && !sign_turf.is_blocked_turf())
+		return sign_turf
+	return null
+
+/datum/idle_behavior/idle_random_walk/not_while_on_target/trader
+	target_key = BB_SHOP_SPOT
 
 ///Version of setup show where the trader will run at you to assault you with incredible deals
 /datum/ai_planning_subtree/setup_shop/jumpscare
@@ -109,13 +117,3 @@
 /datum/ai_behavior/setup_shop/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-
-///Look for a spot we can place our sign on
-/datum/ai_behavior/setup_shop/proc/try_find_valid_spot(origin_turf, direction_to_check)
-	var/turf/sign_turf = get_step(origin_turf, direction_to_check)
-	if(sign_turf && !isgroundlessturf(sign_turf) && !isclosedturf(sign_turf) && sign_turf.is_blocked_turf())
-		return sign_turf
-	return null
-
-/datum/idle_behavior/idle_random_walk/not_while_on_target/trader
-	target_key = BB_SHOP_SPOT

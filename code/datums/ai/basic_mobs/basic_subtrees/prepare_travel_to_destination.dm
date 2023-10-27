@@ -16,7 +16,7 @@
 	if(controller.blackboard[target_key] == controller.blackboard[travel_destination_key])
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/set_travel_destination, target_key)
+	controller.queue_behavior(/datum/ai_behavior/set_travel_destination, target_key, travel_destination_key)
 	return //continue planning regardless of success
 
 /datum/ai_planning_subtree/prepare_travel_to_destination/trader
