@@ -103,6 +103,7 @@
 /area/station/commons/lounge)
 "hi" = (
 /obj/machinery/firealarm/directional/east,
+/obj/structure/chair/sofa/left/brown,
 /turf/open/misc/grass/jungle,
 /area/station/commons/lounge)
 "ho" = (
@@ -297,6 +298,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/dim/directional/north,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "Es" = (
@@ -356,12 +358,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
-"JV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/autoname/directional/north,
-/turf/open/floor/wood,
-/area/station/commons/lounge)
 "Ke" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -371,9 +367,6 @@
 /area/station/commons/lounge)
 "Km" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/restaurant_portal/bar,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
@@ -431,7 +424,9 @@
 /area/station/service/bar)
 "QV" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "Rp" = (
@@ -448,6 +443,12 @@
 /obj/machinery/light/dim/directional/north,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
+"Tg" = (
+/obj/machinery/holopad,
+/turf/open/misc/dirt/jungle/wasteland{
+	slowdown = 0
+	},
+/area/station/commons/lounge)
 "TK" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -455,6 +456,14 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/station/commons/lounge)
+"Vc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "Vd" = (
@@ -489,7 +498,6 @@
 /obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "YU" = (
@@ -509,7 +517,7 @@ EK
 tV
 xY
 OC
-Ke
+Vc
 TK
 YA
 pl
@@ -548,7 +556,7 @@ de
 EK
 EK
 EK
-ac
+xY
 Xr
 Xr
 dB
@@ -587,7 +595,7 @@ EK
 EK
 "}
 (7,1,1) = {"
-JV
+HP
 Xr
 mL
 LG
@@ -620,7 +628,7 @@ tx
 GX
 Mt
 qR
-qR
+Tg
 qR
 Xr
 Xr
