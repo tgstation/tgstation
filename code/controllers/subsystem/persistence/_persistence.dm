@@ -52,7 +52,9 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
-	if(SStramprocess.can_fire)
+	if(SStransport.can_fire)
+		for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+			save_tram_history(transport.specific_transport_id)
 		save_tram_counter()
 
 ///Loads up Poly's speech buffer.
