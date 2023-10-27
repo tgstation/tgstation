@@ -83,6 +83,7 @@
 /obj/machinery/materials_market/ui_data(mob/user)
 	var/data = list()
 	var/material_data
+	var/order_quantity = 1
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		var/trend_string = ""
 		if(SSstock_market.materials_trends[traded_mat] == 0)
@@ -123,11 +124,14 @@
 	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		market_crashing = TRUE
 
+
+
 	data["catastrophe"] = market_crashing
 	data["materials"] = material_data
 	data["creditBalance"] = balance
 	data["orderingPrive"] = ordering_private
 	data["canOrderCargo"] = can_buy_via_budget
+	data["currentOrderQuantity"] = order_quantity
 	return data
 
 /obj/machinery/materials_market/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)

@@ -132,4 +132,4 @@
 		if(possible_stack.material_type)
 			if(!SSstock_market.materials_quantity[possible_stack.material_type])
 				continue
-			SSstock_market.materials_quantity[possible_stack.materials_type] -= possible_stack.amount
+			SSstock_market.materials_quantity[possible_stack.material_type] -= possible_stack.amount
