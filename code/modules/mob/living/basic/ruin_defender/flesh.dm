@@ -26,6 +26,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "tries desperately to attach to"
 	attack_verb_simple = "try to attach to"
+	mob_biotypes = MOB_ORGANIC | MOB_SPECIAL
 	ai_controller = /datum/ai_controller/basic_controller/living_limb_flesh
 	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and shit
 	var/obj/item/bodypart/current_bodypart
