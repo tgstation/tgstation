@@ -1340,3 +1340,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WING_BUFFET_TIRED "wing_buffet_tired"
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
+
+/// Trait given to mobs that we do not want to mindswap
+#define TRAIT_NO_MINDSWAP "no_mindswap"
