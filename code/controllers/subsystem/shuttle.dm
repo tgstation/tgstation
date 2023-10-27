@@ -533,8 +533,6 @@ SUBSYSTEM_DEF(shuttle)
 	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED))
 		emergency.mode = SHUTTLE_DOCKED
 		emergency.setTimer(emergency_dock_time)
-		to_chat(world, "emergency timer [emergency_dock_time]")
-		to_chat(world, "shuttle timer [emergency.timeLeft(1 SECONDS)]")
 		priority_announce(
 			text = "You have [DisplayTimeText(emergency_dock_time)] to board the emergency shuttle.",
 			title = "Hostile Environment Resolved",
