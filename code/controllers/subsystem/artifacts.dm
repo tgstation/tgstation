@@ -3,13 +3,14 @@
 	if (!loc)
 		return
 
-	var/list/datum/component/artifact/weighted_list
+	var/list/weighted_list
 	if(forced_origin)
 		weighted_list = SSartifacts.artifact_rarities[forced_origin]
 	else
 		weighted_list = SSartifacts.artifact_rarities["all"]
 
-	var/type = initial(pick_weight(weighted_list).associated_object)
+	var/datum/component/artifact/picked  = pick_weight(weighted_list)
+	var/type = initial(picked.associated_object)
 	return new type(loc)
 
 

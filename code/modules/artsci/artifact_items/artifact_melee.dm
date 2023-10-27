@@ -18,8 +18,6 @@
 ARTIFACT_SETUP(/obj/item/melee/artifact, SSobj)
 
 /obj/item/melee/artifact/afterattack(mob/living/victim, mob/user, proximity)
-	SIGNAL_HANDLER
-
 	if(!istype(victim) || !assoc_comp.active || !COOLDOWN_FINISHED(src,special_cooldown) || !special || !proximity)
 		return
 	. |= AFTERATTACK_PROCESSED_ITEM
