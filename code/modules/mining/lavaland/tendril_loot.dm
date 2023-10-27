@@ -540,7 +540,7 @@
 		return
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	if(!HAS_TRAIT(exposed_human, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5 || !exposed_human.dna)
-		if((methods & INGEST) && show_message)
+		if((methods & INGEST|INHALE) && show_message)
 			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 		return
 	if(exposed_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS))
