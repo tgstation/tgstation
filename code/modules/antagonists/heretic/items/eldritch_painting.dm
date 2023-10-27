@@ -38,7 +38,7 @@
 /datum/mood_event/eldritch_painting/weeping
 	description = "HE IS HERE, AND HE WEEPS!"
 	mood_change = -3
-	timeout = 5 MINUTES
+	timeout = 10 SECONDS
 
 /datum/mood_event/eldritch_painting/weeping_heretic
 	description = "Oh such arts! They truly inspire me!"
@@ -120,10 +120,10 @@
 	// If they have the weeping withdrawl mood event return
 	if("weeping_withdrawl" in owner.mob_mood.mood_events)
 		return
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	// If they already have the weeping mood event return, if they don't give them it
+	// If they already have the weeping mood event return, its duration is the same as the hallucination so this is done to prevent large amounts of lag
 	if("eldritch_weeping" in owner.mob_mood.mood_events)
 		return
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
 	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
 	..()
 
@@ -132,12 +132,9 @@
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
 	..()
 
-/datum/brain_trauma/severe/weeping/on_lose()
-	to_chat(owner, span_notice("You feel the tendrils of something dark slip from your mind..."))
-	owner.mob_mood.mood_events.Remove("eldritch_weeping")
-	..()
 
-// The First Desire
+
+// The First Desire painting, using a lot of the painting/eldritch framework
 /obj/item/wallframe/painting/eldritch/desire
 	name = "The First Desire"
 	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
@@ -150,6 +147,59 @@
 	icon_state = "frame-empty"
 	// A basic proximity sensor
 	var/datum/proximity_monitor/advanced/eldritch_painting/desire/desire_painting
+
+// Moodlets used to track hunger and provide feedback
+/datum/mood_event/eldritch_painting/desire_heretic
+	description = "A part gained, the manus takes and gives. What did it take from me?"
+	mood_change = -2
+	timeout = 1 MINUTES
+
+/obj/structure/sign/painting/eldritch/desire/Initialize(mapload, dir, building)
+	desire_painting = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
+	return ..()
+
+/obj/structure/sign/painting/eldritch/desire/wirecutter_act(mob/living/user, obj/item/I)
+	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
+	to_chat(user, span_notice("A hungering echo fills your mind"))
+	QDEL_NULL(desire_painting)
+	qdel(src)
+
+/obj/structure/sign/painting/eldritch/desire/examine(mob/living/carbon/user)
+	if(IS_HERETIC(user))
+		// If they already have the negative moodlet return
+		if("heretic_eldritch_hunger" in user.mob_mood.mood_events)
+			return
+		// A list made of the organs and bodyparts the heretic possess
+		var/list/random_bodypart_or_organ = list(
+			/obj/item/organ/internal/brain,
+			/obj/item/organ/internal/lungs,
+			/obj/item/organ/internal/eyes,
+			/obj/item/organ/internal/ears,
+			/obj/item/organ/internal/heart,
+			/obj/item/organ/internal/liver,
+			/obj/item/organ/internal/stomach,
+			/obj/item/organ/internal/appendix,
+			/obj/item/bodypart/arm/left,
+			/obj/item/bodypart/arm/right,
+			/obj/item/bodypart/leg/left,
+			/obj/item/bodypart/leg/right
+		)
+		var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
+		new organ_or_bodypart_to_spawn(src.loc)
+		to_chat(user, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
+		// Adds a negative mood event to our heretic
+		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
+	// Do they have the mood event added with the hallucination?
+	if("eldritch_weeping" in user.mob_mood.mood_events)
+		to_chat(user, span_notice("Respite, for now...."))
+		// Remove the mood event associated with the hallucinations
+		user.mob_mood.mood_events.Remove("eldritch_weeping")
+		// Add a mood event that causes the hallucinations to not trigger anymore
+		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
+
+/obj/structure/sign/painting/eldritch/desire/Destroy()
+	QDEL_NULL(desire_painting)
+	return ..()
 
 // Specific proximity monitor for The First Desire or /obj/item/wallframe/painting/eldritch/desire
 /datum/proximity_monitor/advanced/eldritch_painting/desire
@@ -164,6 +214,36 @@
 	to_chat(viewer, span_notice("Wow, great poster!"))
 	viewer.gain_trauma(/datum/brain_trauma/severe/weeping, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/obj/structure/sign/painting/eldritch/desire/Initialize(mapload, dir, building)
-	desire_painting = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
-	return ..()
+/*
+ * A brain trauma that this eldritch paintings apply
+ * This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
+ */
+/datum/brain_trauma/severe/flesh_desire
+	name = "The Desire for Flesh"
+	desc = "Patient seems to only be able to eat organs or raw flesh for nutrients, also seems to metabolize at a faster rate"
+	scan_desc = "H_(82882)G3E:__))9R"
+	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
+	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
+
+/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
+	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+		return
+	// If they have the weeping withdrawl mood event return
+	if("weeping_withdrawl" in owner.mob_mood.mood_events)
+		return
+	// If they already have the weeping mood event return, its duration is the same as the hallucination so this is done to prevent large amounts of lag
+	if("eldritch_weeping" in owner.mob_mood.mood_events)
+		return
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
+	..()
+
+/datum/brain_trauma/severe/flesh_desire/on_gain()
+	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	..()
+
+/datum/brain_trauma/severe/flesh_desire/on_lose()
+	to_chat(owner, span_notice("You feel the tendrils of something dark slip from your mind..."))
+	owner.mob_mood.mood_events.Remove("eldritch_weeping")
+	..()

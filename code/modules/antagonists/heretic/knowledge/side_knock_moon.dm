@@ -69,7 +69,7 @@
 				new /obj/item/wallframe/painting/eldritch(loc)
 				continue
 			if(optional_atoms == /obj/item/bodypart)
-				new /obj/item/wallframe/painting/eldritch(loc)
+				new /obj/item/wallframe/painting/eldritch/desire(loc)
 				continue
 			if(optional_atoms == /obj/item/trash)
 				new /obj/item/wallframe/painting/eldritch(loc)
