@@ -46293,7 +46293,6 @@
 /obj/item/flashlight,
 /obj/item/flashlight/flare,
 /obj/machinery/light/small/directional/west,
-/obj/item/relic,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)

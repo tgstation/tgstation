@@ -191,7 +191,6 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/tool,
-/obj/item/relic,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "yB" = (

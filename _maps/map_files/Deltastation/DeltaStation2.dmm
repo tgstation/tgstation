@@ -9048,7 +9048,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "ccY" = (
-/obj/item/relic,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/cardboard,
@@ -31039,7 +31038,6 @@
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/item/relic,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
@@ -94251,7 +94249,6 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/item/relic,
 /obj/item/assembly/signaler{
 	pixel_x = 6;
 	pixel_y = 5

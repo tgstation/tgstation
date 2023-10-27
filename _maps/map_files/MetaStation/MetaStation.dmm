@@ -3498,7 +3498,13 @@
 /area/station/maintenance/port/fore)
 "bkM" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/engine,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
 /area/station/science/explab)
 "bkO" = (
 /obj/machinery/iv_drip,
@@ -5154,9 +5160,8 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bRb" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/scientist,
-/turf/open/floor/engine,
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "bRG" = (
 /obj/machinery/shower/directional/west,
@@ -7312,10 +7317,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"cKm" = (
-/obj/structure/training_machine,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "cKn" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -7367,6 +7368,7 @@
 /area/station/engineering/atmos)
 "cLu" = (
 /obj/effect/turf_decal/tile/purple,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "cLx" = (
@@ -15445,6 +15447,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/teleporter)
+"fRE" = (
+/obj/machinery/artifact_xray,
+/turf/open/floor/iron/white,
+/area/station/science/explab)
 "fRG" = (
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -15731,7 +15737,9 @@
 "fXm" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/engine,
+/obj/structure/table,
+/obj/item/analysis_bin,
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "fXK" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -17979,7 +17987,8 @@
 /area/station/command/bridge)
 "gNC" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/engine,
+/obj/effect/artifact_spawner,
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "gND" = (
 /obj/machinery/iv_drip,
@@ -22637,10 +22646,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
-"itn" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "itp" = (
 /obj/structure/chair{
 	dir = 8
@@ -27322,7 +27327,8 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jSk" = (
-/turf/open/floor/engine,
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad,
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "jSm" = (
 /obj/structure/cable,
@@ -42129,7 +42135,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/engine,
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "phz" = (
 /obj/machinery/navbeacon{
@@ -46040,10 +46046,12 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "qBK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 9
 	},
-/turf/open/floor/engine,
+/turf/open/floor/iron/dark,
 /area/station/science/explab)
 "qCa" = (
 /obj/structure/rack,
@@ -47890,8 +47898,12 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "rkT" = (
-/obj/item/target/syndicate,
-/turf/open/floor/engine,
+/obj/structure/table,
+/obj/item/sticker/analysis_form{
+	pixel_y = -3;
+	pixel_x = -5
+	},
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "rla" = (
 /obj/effect/turf_decal/stripes/line{
@@ -49396,7 +49408,13 @@
 /area/station/cargo/miningoffice)
 "rKB" = (
 /obj/machinery/airalarm/directional/east,
-/turf/open/floor/engine,
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/station/science/explab)
 "rKG" = (
 /obj/structure/cable,
@@ -52222,11 +52240,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"sIW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "sIX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2{
 	dir = 9
@@ -57751,7 +57764,11 @@
 	c_tag = "Science Firing Range";
 	network = list("ss13","rd")
 	},
-/turf/open/floor/engine,
+/obj/effect/artifact_spawner,
+/obj/effect/turf_decal/trimline/purple/filled/warning{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
 /area/station/science/explab)
 "uEn" = (
 /obj/machinery/light/directional/west,
@@ -59107,10 +59124,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
-"vdx" = (
-/obj/machinery/rnd/experimentor,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "vdJ" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood/random,
@@ -59196,7 +59209,10 @@
 	name = "Research Test Chamber";
 	req_access = list("science")
 	},
-/turf/open/floor/engine,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "vfm" = (
 /obj/effect/turf_decal/tile/bar,
@@ -59982,7 +59998,11 @@
 "vrv" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/engine,
+/obj/machinery/artifact_zapper{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/warning,
+/turf/open/floor/iron/dark,
 /area/station/science/explab)
 "vrF" = (
 /obj/structure/table/reinforced,
@@ -66774,7 +66794,7 @@
 /area/station/hallway/primary/port)
 "xOx" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/engine,
+/turf/open/floor/iron/white,
 /area/station/science/explab)
 "xOF" = (
 /obj/docking_port/stationary/laborcamp_home{
@@ -103178,10 +103198,10 @@ gwf
 ucd
 tVv
 uDS
-vdx
-sIW
+bQs
+bQs
 bRb
-cKm
+bQs
 oWk
 nYU
 fPD
@@ -103434,9 +103454,9 @@ hXd
 gwf
 itC
 tVv
-jSk
-itn
-sIW
+fRE
+bQs
+bQs
 jSk
 rkT
 oWk
@@ -103692,7 +103712,7 @@ emh
 fQo
 tVv
 gNC
-jSk
+bQs
 qBK
 rKB
 bkM

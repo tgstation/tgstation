@@ -242,7 +242,6 @@
 	required_points = 10
 	required_atoms = list(
 		/obj/machinery/mecha_part_fabricator = 1,
-		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/dna_scannernew = 1,
 		/obj/machinery/microwave = 2,
 		/obj/machinery/deepfryer = 2,
@@ -273,7 +272,6 @@
 	required_points = 6
 	required_atoms = list(
 		/obj/machinery/dna_scannernew = 1,
-		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/medical_kiosk = 2,
 		/obj/machinery/piratepad/civilian = 2,
 	)
@@ -299,7 +297,6 @@
 	required_atoms = list(
 		/obj/machinery/mecha_part_fabricator = 1,
 		/obj/machinery/microwave = 1,
-		/obj/machinery/rnd/experimentor = 1,
 		/obj/machinery/atmospherics/components/unary/thermomachine/freezer = 2,
 		/obj/machinery/power/emitter = 2,
 		/obj/machinery/chem_heater = 2,

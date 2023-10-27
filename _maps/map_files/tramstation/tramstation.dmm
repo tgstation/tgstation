@@ -4314,7 +4314,6 @@
 "axO" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/relic,
 /obj/item/pen{
 	pixel_x = -4
 	},
@@ -5249,7 +5248,6 @@
 "aFk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/relic,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -17661,11 +17659,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
-"erw" = (
-/obj/item/stack/ore/glass,
-/obj/item/relic,
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
 "erR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/food/pie_smudge,
@@ -21239,7 +21232,6 @@
 /obj/structure/closet,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/maintenance/three,
-/obj/item/relic,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "fDk" = (
@@ -29661,7 +29653,6 @@
 "iwi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/relic,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "iwm" = (
@@ -35436,10 +35427,6 @@
 /obj/effect/landmark/blobstart,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"kpo" = (
-/obj/item/relic,
-/turf/open/misc/asteroid/dug,
-/area/station/maintenance/department/cargo)
 "kpq" = (
 /obj/machinery/atmospherics/pipe/color_adapter,
 /turf/closed/wall/r_wall,
@@ -54216,11 +54203,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"qsZ" = (
-/obj/item/relic,
-/obj/item/stack/ore/glass,
-/turf/open/misc/asteroid/dug,
-/area/station/maintenance/starboard/greater)
 "qtb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/violet/visible{
 	dir = 8
@@ -58016,10 +57998,6 @@
 "rBT" = (
 /turf/closed/wall/rock,
 /area/station/engineering)
-"rBV" = (
-/obj/item/relic,
-/turf/open/misc/asteroid/dug,
-/area/station/maintenance/starboard/lesser)
 "rBW" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -118981,7 +118959,7 @@ crh
 kPE
 kPE
 vlD
-qsZ
+seu
 vlD
 acy
 acx
@@ -120544,7 +120522,7 @@ psP
 tHh
 bcj
 lQw
-rBV
+lQw
 lQw
 aWg
 oPQ
@@ -122064,7 +122042,7 @@ wmK
 eXL
 alA
 whL
-erw
+vfm
 rvV
 mbJ
 jBC
@@ -175237,7 +175215,7 @@ apj
 nIh
 dbA
 xaW
-kpo
+dbA
 itB
 hDd
 itB

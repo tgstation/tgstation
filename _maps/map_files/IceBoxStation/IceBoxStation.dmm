@@ -19505,7 +19505,6 @@
 /area/station/tcommsat/computer)
 "giR" = (
 /obj/structure/table,
-/obj/item/relic,
 /obj/effect/spawner/random/maintenance,
 /obj/item/screwdriver,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -32550,7 +32549,6 @@
 /obj/structure/rack,
 /obj/item/poster/random_official,
 /obj/effect/spawner/random/maintenance,
-/obj/item/relic,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "kxp" = (

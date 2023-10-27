@@ -233,9 +233,6 @@
 /area/ruin/space/unpowered)
 "pl" = (
 /obj/structure/table,
-/obj/item/relic{
-	pixel_y = 5
-	},
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "qL" = (

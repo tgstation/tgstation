@@ -361,13 +361,6 @@
 	starting_title = "Research and Development 101"
 	page_link = "Guide_to_Research_and_Development"
 
-/obj/item/book/manual/wiki/experimentor
-	name = "Mentoring your Experiments"
-	icon_state = "rdbook"
-	starting_author = "Dr. H.P. Kritz"
-	starting_title = "Mentoring your Experiments"
-	page_link = "Experimentor"
-
 /obj/item/book/manual/wiki/cooking_to_serve_man
 	name = "To Serve Man"
 	desc = "It's a cookbook!"
