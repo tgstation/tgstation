@@ -1424,6 +1424,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
+"dY" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/landmark/navigate_destination/centcom/borbop,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/borbop)
 "dZ" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -2689,6 +2695,10 @@
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/syndicate_mothership/control)
+"hV" = (
+/obj/effect/landmark/navigate_destination/centcom/boxing,
+/turf/open/floor/carpet,
+/area/centcom/central_command_areas/hall)
 "hX" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/item/kirbyplants{
@@ -3995,6 +4005,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
+"mg" = (
+/obj/effect/landmark/navigate_destination/centcom/hydro,
+/turf/open/floor/wood/large,
+/area/centcom/central_command_areas/botany)
 "mh" = (
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
@@ -4671,6 +4685,7 @@
 "ok" = (
 /obj/structure/fight_button,
 /obj/machinery/light/floor/has_bulb,
+/obj/effect/landmark/navigate_destination/centcom/duelbutton,
 /turf/open/floor/wood/large,
 /area/centcom/tdome/observation)
 "ol" = (
@@ -8972,6 +8987,10 @@
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/botany)
+"Bj" = (
+/obj/effect/landmark/navigate_destination/centcom/dresser,
+/turf/open/floor/iron/dark/herringbone,
+/area/centcom/central_command_areas/hall)
 "Bk" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood{
@@ -15380,6 +15399,10 @@
 "Uz" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/hall)
+"UA" = (
+/obj/effect/landmark/navigate_destination/centcom/medical,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/medical)
 "UB" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
@@ -16872,6 +16895,11 @@
 /obj/item/kirbyplants/fullysynthetic,
 /turf/open/floor/mineral/titanium/white,
 /area/centcom/central_command_areas/admin)
+"Zj" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/landmark/navigate_destination/centcom/kitchen,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/kitchen)
 "Zk" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/plating,
@@ -56661,7 +56689,7 @@ LK
 kM
 cc
 XE
-XE
+mg
 Zp
 PO
 YZ
@@ -60313,7 +60341,7 @@ wf
 wf
 wf
 wf
-wf
+hV
 vh
 sb
 sb
@@ -60515,7 +60543,7 @@ IV
 GX
 tK
 gr
-ao
+Zj
 ao
 cE
 qT
@@ -60544,7 +60572,7 @@ fD
 Lh
 Jm
 Jm
-uq
+dY
 Iy
 ui
 Jm
@@ -62369,7 +62397,7 @@ GJ
 aA
 qK
 qK
-qK
+Bj
 qK
 qK
 OA
@@ -64367,7 +64395,7 @@ cu
 Nb
 XW
 Cx
-Nb
+UA
 Ca
 Re
 vS
