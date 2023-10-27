@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "Examining an ammo box (incl. magazines) now tells you the top loaded round, so if you have different ammo types in different magazines, you can at least try to figure out which one is which."
-  - spellcheck: "Ammo boxes (incl. magazines) can now be set to use different phrasing for their ammunition (e.g. cartridges, shells, etc. instead of just mixing \"rounds\" and \"shells\")."
