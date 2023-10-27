@@ -111,9 +111,9 @@
 			null,
 			enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>",
 			source = src,
-			action = NOTIFY_ORBIT,
+			action = NOTIFY_PLAY,
 			ignore_key = POLL_IGNORE_SPIDER,
-			notify_flags = notify_flags_to_pass
+			notify_flags = notify_flags_to_pass,
 		)
 		STOP_PROCESSING(SSobj, src)
 
