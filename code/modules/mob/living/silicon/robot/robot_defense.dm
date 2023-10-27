@@ -434,9 +434,3 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(!hitting_projectile.is_hostile_projectile() || hitting_projectile.damage <= 0)
 		return
 	spark_system.start()
-
-/mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	. = ..()
-	if (. || AM.throwforce < CYBORG_THROW_SLOWDOWN_THRESHOLD)
-		return
-	apply_status_effect(/datum/status_effect/borg_throw_slow)

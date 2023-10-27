@@ -1,17 +1,3 @@
-
-/mob/living/silicon/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	var/hit_percent = (100-blocked)/100
-	if((!damage || (!forced && hit_percent <= 0)))
-		return 0
-	var/damage_amount = forced ? damage : damage * hit_percent
-	switch(damagetype)
-		if(BRUTE)
-			adjustBruteLoss(damage_amount, forced = forced)
-		if(BURN)
-			adjustFireLoss(damage_amount, forced = forced)
-	return 1
-
-
 /mob/living/silicon/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
 	return FALSE //The only effect that can hit them atm is flashes and they still directly edit so this works for now. (This was written in at least 2016. Help)
 

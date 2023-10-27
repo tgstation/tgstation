@@ -84,10 +84,6 @@
 		possession_overlays[1] = hands_overlays
 	apply_overlay(1)
 
-/mob/living/basic/proc/apply_overlay(cache_index)
-	if((. = possession_overlays[cache_index]))
-		add_overlay(.)
-
 /mob/living/basic/proc/remove_overlay(cache_index)
 	var/I = possession_overlays[cache_index]
 	if(I)

@@ -106,12 +106,12 @@
 		return attack_threshold_check(damage)
 
 /mob/living/simple_animal/attack_drone(mob/living/basic/drone/user)
-	if(user.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
+	if(user.istate & ISTATE_HARM) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 
 /mob/living/simple_animal/attack_drone_secondary(mob/living/basic/drone/user)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 

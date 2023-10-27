@@ -1,7 +1,7 @@
 ///Bloodsuckers spawning a Guardian will get the Bloodsucker one instead.
 /obj/item/guardian_creator/spawn_guardian(mob/living/user, mob/dead/candidate)
 	var/list/guardians = user.get_all_linked_holoparasites()
-	if(length(guardians) &&)
+	if(length(guardians))
 		to_chat(user, span_holoparasite("You already have a [mob_name]!"))
 		used = FALSE
 		return
@@ -53,7 +53,7 @@
 		ADD_TRAIT(bloodsucker_guardian.summoner, TRAIT_TIME_STOP_IMMUNE, REF(src))
 
 /datum/action/cooldown/spell/timestop/guardian/Remove(mob/remove_from)
-	var/mob/mob/living/basic/guardian/standard/bloodsucker_guardian = owner
+	var/mob/living/basic/guardian/standard/bloodsucker_guardian = owner
 	if(bloodsucker_guardian && istype(bloodsucker_guardian) && bloodsucker_guardian.summoner)
 		REMOVE_TRAIT(bloodsucker_guardian.summoner, TRAIT_TIME_STOP_IMMUNE, REF(src))
 	return ..()

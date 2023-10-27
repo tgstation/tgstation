@@ -340,6 +340,8 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 6
 	incompatible_modules = list(/obj/item/mod/module/energy_net)
 	cooldown_time = 1.5 SECONDS
+	/// List of all energy nets this module made.
+	var/list/energy_nets = list()
 
 /obj/item/mod/module/energy_net/on_select_use(atom/target)
 	. = ..()
@@ -369,7 +371,7 @@
 
 /obj/item/mod/module/energy_net/proc/add_net(obj/structure/energy_net/net)
 	energy_nets += net
-	RegisterSignal(net, COMSIG_QDELETING, PROC_REF(remove_net))
+	RegisterSignal(net, COMSIG_PARENT_QDELETING, PROC_REF(remove_net))
 
 /obj/item/mod/module/energy_net/proc/remove_net(obj/structure/energy_net/net)
 	SIGNAL_HANDLER

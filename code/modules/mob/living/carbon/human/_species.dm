@@ -204,6 +204,64 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Replaces default bladder with a different organ
 	var/obj/item/organ/internal/bladder/mutantbladder = /obj/item/organ/internal/bladder
+	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
+	/// IE: 10 = 10% less damage taken.
+	var/damage_modifier = 0
+	///multiplier for damage from cold temperature
+	var/coldmod = 1
+	///multiplier for damage from hot temperature
+	var/heatmod = 1
+	///multiplier for stun durations
+	var/stunmod = 1
+	///multiplier for money paid at payday
+	var/payday_modifier = 1.0
+	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
+	var/siemens_coeff = 1
+	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
+	var/fixed_mut_color = ""
+	///A fixed hair color that's independent of the mcolor feature in DNA.
+	var/fixed_hair_color = ""
+	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
+	var/inert_mutation = /datum/mutation/human/dwarfism
+	///Used to set the mob's death_sound upon species change
+	var/death_sound
+	///Sounds to override barefeet walking
+	var/list/special_step_sounds
+	///Special sound for grabbing
+	var/grab_sound
+	/// A path to an outfit that is important for species life e.g. plasmaman outfit
+	var/datum/outfit/outfit_important_for_life
+
+	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
+	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
+	/// The natural temperature for a body
+	var/bodytemp_normal = BODYTEMP_NORMAL
+	/// Minimum amount of kelvin moved toward normal body temperature per tick.
+	var/bodytemp_autorecovery_min = BODYTEMP_AUTORECOVERY_MINIMUM
+	/// The body temperature limit the body can take before it starts taking damage from heat.
+	var/bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
+	/// The body temperature limit the body can take before it starts taking damage from cold.
+	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
+
+	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
+	var/fire_overlay = "human"
+
+	/// Generic traits tied to having the species.
+	var/list/inherent_traits = list()
+	/// List of biotypes the mob belongs to. Used by diseases.
+	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
+	var/inherent_respiration_type = RESPIRATION_OXYGEN
+	///List of factions the mob gain upon gaining this species.
+	var/list/inherent_factions
+
+	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
+	var/breathid = GAS_O2
+
+	///What anim to use for dusting
+	var/dust_anim = "dust-h"
+	///What anim to use for gibbing
+	var/gib_anim = "gibbed-h"
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -1157,9 +1215,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdose_start(H)
 		H.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
 
-/datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
-	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
-
 /**
  * Equip the outfit required for life. Replaces items currently worn.
  */
@@ -1407,24 +1462,34 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						span_userdanger("You block [weapon]!"))
 		return FALSE
 
-	var/hit_area
-	if(!affecting) //Something went wrong. Maybe the limb is missing?
-		affecting = human.bodyparts[1]
+	affecting ||= human.bodyparts[1] //Something went wrong. Maybe the limb is missing?
+	var/hit_area = affecting.plaintext_zone
+	var/armor_block = min(human.run_armor_check(
+		def_zone = affecting,
+		attack_flag = MELEE,
+		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
+		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
+		armour_penetration = weapon.armour_penetration,
+		weak_against_armour = weapon.weak_against_armour,
+	), ARMOR_MAX_BLOCK) //cap damage reduction at 90%
 
-	hit_area = affecting.plaintext_zone
-	var/def_zone = affecting.body_zone
-
-	var/armor_block = human.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),weapon.armour_penetration, weak_against_armour = weapon.weak_against_armour)
-	armor_block = min(ARMOR_MAX_BLOCK, armor_block) //cap damage reduction at 90%
-	var/Iwound_bonus = weapon.wound_bonus
-
+	var/modified_wound_bonus = weapon.wound_bonus
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
 	if((weapon.item_flags & SURGICAL_TOOL) && !(user.istate & ISTATE_HARM) && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
-		Iwound_bonus = CANT_WOUND
-
-	var/weakness = check_species_weakness(weapon, user)
+		modified_wound_bonus = CANT_WOUND
 
 	human.send_item_attack_message(weapon, user, hit_area, affecting)
+	var/damage_dealt = human.apply_damage(
+		damage = weapon.force,
+		damagetype = weapon.damtype,
+		def_zone = affecting,
+		blocked = armor_block,
+		wound_bonus = modified_wound_bonus,
+		bare_wound_bonus = weapon.bare_wound_bonus,
+		sharpness = weapon.get_sharpness(),
+		attack_direction = get_dir(user, human),
+		attacking_item = weapon,
+	)
 
 
 	var/attack_direction = get_dir(user, human)
@@ -1499,59 +1564,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		human.force_say(user)
 
 	return TRUE
-
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
-	var/hit_percent = (100-(blocked+armor))/100
-	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
-
-	var/obj/item/bodypart/BP = null
-	if(!spread_damage)
-		if(isbodypart(def_zone))
-			BP = def_zone
-		else
-			if(!def_zone)
-				def_zone = H.get_random_valid_zone(def_zone)
-			BP = H.get_bodypart(check_zone(def_zone))
-			if(!BP)
-				BP = H.bodyparts[1]
-
-	switch(damagetype)
-		if(BRUTE)
-			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
-			if(BP)
-				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					H.update_damage_overlays()
-			else//no bodypart, we deal damage with a more general method.
-				H.adjustBruteLoss(damage_amount)
-		if(BURN)
-			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
-			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					H.update_damage_overlays()
-			else
-				H.adjustFireLoss(damage_amount)
-		if(TOX)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod
-			H.adjustToxLoss(damage_amount)
-		if(OXY)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.oxy_mod
-			H.adjustOxyLoss(damage_amount)
-		if(CLONE)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.clone_mod
-			H.adjustCloneLoss(damage_amount)
-		if(STAMINA)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.stamina_mod
-			H.stamina.adjust(-damage_amount)
-		if(BRAIN)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
-	SEND_SIGNAL(H, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
-	return 1
 
 //////////////////////////
 // ENVIRONMENT HANDLERS //
@@ -1832,11 +1844,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
-				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
-			else
+			if(HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
+			else
+				var/pressure_damage = min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
+				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
@@ -1860,7 +1873,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
 			else
-				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * seconds_per_tick)
+				var/pressure_damage = LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
+				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
 

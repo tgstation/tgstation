@@ -280,10 +280,10 @@
 		hitx = target.pixel_x + rand(-8, 8)
 		hity = target.pixel_y + rand(-8, 8)
 
-	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_loca) && prob(75))
-		var/turf/closed/wall/W = target_loca
+	if(damage > 0 && (damage_type == BRUTE || damage_type == BURN) && iswallturf(target_turf) && prob(75))
+		var/turf/closed/wall/W = target_turf
 		if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_loca, hitx, hity)
+			new impact_effect_type(target_turf, hitx, hity)
 
 		W.add_dent(WALL_DENT_SHOT, hitx, hity)
 
@@ -291,7 +291,7 @@
 
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_loca, hitx, hity)
+			new impact_effect_type(target_turf, hitx, hity)
 		if(isturf(target) && hitsound_wall)
 			var/volume = clamp(vol_by_damage() + 20, 0, 100)
 			if(suppressed)
@@ -305,15 +305,15 @@
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
 			if(starting)
-				splatter_dir = get_dir(starting, target_loca)
+				splatter_dir = get_dir(starting, target_turf)
 			if(isalien(L))
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
 			else
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
 			if(prob(33))
-				L.add_splatter_floor(target_loca)
+				L.add_splatter_floor(target_turf)
 		else if(impact_effect_type && !hitscan)
-			new impact_effect_type(target_loca, hitx, hity)
+			new impact_effect_type(target_turf, hitx, hity)
 
 		var/organ_hit_text = ""
 		var/limb_hit = hit_limb
@@ -330,8 +330,6 @@
 				playsound(src, hitsound, volume, TRUE, -1)
 			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
-			if(living_target.is_blind())
-				to_chat(living_target, span_userdanger("You feel something hit you[organ_hit_text]!"))
 
 	var/reagent_note
 	if(reagents?.reagent_list)

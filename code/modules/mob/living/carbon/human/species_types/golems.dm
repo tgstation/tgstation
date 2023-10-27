@@ -403,11 +403,6 @@
 	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && user != H)
 		radiation_emission(H)
 
-/datum/species/golem/uranium/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	..()
-	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown))
-		radiation_emission(H)
-
 //Immune to physical bullets and resistant to brute, but very vulnerable to burn damage. Dusts on death.
 /datum/species/golem/sand
 	name = "Sand Golem"
@@ -518,11 +513,6 @@
 	if(world.time > last_teleport + teleport_cooldown && user != H)
 		reactive_teleport(H)
 
-/datum/species/golem/bluespace/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	..()
-	if(world.time > last_teleport + teleport_cooldown)
-		reactive_teleport(H)
-
 /datum/species/golem/bluespace/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
@@ -631,12 +621,6 @@
 /datum/species/golem/bananium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
 	..()
 	if((user != H) && COOLDOWN_FINISHED(src, banana_cooldown))
-		new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
-		COOLDOWN_START(src, banana_cooldown, banana_delay)
-
-/datum/species/golem/bananium/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	..()
-	if(COOLDOWN_FINISHED(src, banana_cooldown))
 		new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
 		COOLDOWN_START(src, banana_cooldown, banana_delay)
 

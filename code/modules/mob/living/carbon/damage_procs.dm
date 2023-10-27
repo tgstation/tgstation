@@ -1,8 +1,19 @@
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
+/mob/living/carbon/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	// Spread damage should always have def zone be null
+	if(spread_damage)
+		def_zone = null
 
 	// Otherwise if def zone is null, we'll get a random bodypart / zone to hit.
 	// ALso we'll automatically covnert string def zones into bodyparts to pass into parent call.
@@ -16,9 +27,6 @@
 		damageoverlaytemp += .
 
 	return .
-
-/mob/living/carbon/human/get_damage_mod(damage_type)
-	return ..()
 
 /mob/living/carbon/human/apply_damage(
 	damage = 0,
@@ -36,6 +44,7 @@
 
 	// Add relevant DR modifiers into blocked value to pass to parent
 	blocked += physiology?.damage_resistance
+	blocked += dna?.species?.damage_modifier
 	return ..()
 
 /mob/living/carbon/human/get_incoming_damage_modifier(

@@ -405,7 +405,7 @@
 	if(!isliving(victim) || target.anchored || victim.throwing)
 		return BULLET_ACT_BLOCK
 
-	if(!iscarbon(victim) || !ishuman(ling) || !ling.combat_mode)
+	if(!iscarbon(victim) || !ishuman(ling) || !(ling.istate & ISTATE_HARM))
 		victim.visible_message(
 			span_danger("[victim] is grabbed by [ling]'s [src]]!"),
 			span_userdanger("\A [src] grabs you and pulls you towards [ling]!"),
@@ -436,7 +436,7 @@
 		to_chat(ling, span_danger("[victim] has nothing in hand to disarm!"))
 		return BULLET_ACT_HIT
 
-	if(ling.combat_mode)
+	if(ling.istate & ISTATE_HARM)
 		victim.visible_message(
 			span_danger("[victim] is thrown towards [ling] by \a [src]!"),
 			span_userdanger("\A [src] grabs you and throws you towards [ling]!"),

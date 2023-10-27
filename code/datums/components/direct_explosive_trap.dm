@@ -20,7 +20,7 @@
 	expire_time = 1 MINUTES,
 	glow_colour = COLOR_RED,
 	datum/callback/explosive_checks,
-	list/triggering_signals = list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BUMPED)
+	list/triggering_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BUMPED)
 )
 	. = ..()
 	if (!isatom(parent))

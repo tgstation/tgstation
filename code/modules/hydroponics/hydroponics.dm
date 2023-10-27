@@ -237,7 +237,7 @@
 	else if(istype(Proj , /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
-				myseed.set_instability(myseed.instability/2)
+				myseed.mutate()
 		mutatespecie()
 	else
 		return ..()

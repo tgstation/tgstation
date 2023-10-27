@@ -64,17 +64,6 @@
 
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
 
-/mob/living/basic/mining/goldgrub/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(!.)
-		return
-
-	if(!proximity_flag)
-		return
-
-	if(istype(attack_target, /obj/item/stack/ore))
-		consume_ore(attack_target)
-
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 

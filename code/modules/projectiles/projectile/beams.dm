@@ -106,7 +106,6 @@
 	stamina = 45
 	paralyze_timer = 5 SECONDS
 	armor_flag = ENERGY
-	hitsound = 'sound/weapons/sear_disabler.ogg'
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/disabler

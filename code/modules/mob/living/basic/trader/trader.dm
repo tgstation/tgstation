@@ -12,7 +12,6 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	basic_mob_flags = DEL_ON_DEATH
 	unsuitable_atmos_damage = 2.5
-	combat_mode = FALSE
 	move_resist = MOVE_FORCE_STRONG
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
