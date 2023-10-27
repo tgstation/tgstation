@@ -19,6 +19,7 @@ type Material = {
   trend: string;
   price: number;
   color: string;
+  ordered: number;
 };
 
 export const MatMarket = (props, context) => {
@@ -85,7 +86,7 @@ export const MatMarket = (props, context) => {
 
                   <Stack.Item width="33%">
                     <b>{material.quantity}</b> sheets of <b>{material.name}</b>{' '}
-                    trading.
+                    trading. <b>{material.ordered}</b> sheets ordered.
                   </Stack.Item>
                   <Stack.Item
                     width="40%"
@@ -103,8 +104,12 @@ export const MatMarket = (props, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
-                  tooltip={material.price * 1}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    material.ordered + 1 >= material.quantity
+                  }
+                  tooltip={material.price * 1 + ' cr'}
                   onClick={() =>
                     act('buy', {
                       quantity: 1,
@@ -114,8 +119,12 @@ export const MatMarket = (props, context) => {
                   Buy 1
                 </Button>
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
-                  tooltip={material.price * 5}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    material.ordered + 5 >= material.quantity
+                  }
+                  tooltip={material.price * 5 + ' cr'}
                   onClick={() =>
                     act('buy', {
                       quantity: 5,
@@ -125,8 +134,12 @@ export const MatMarket = (props, context) => {
                   5
                 </Button>
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
-                  tooltip={material.price * 10}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    material.ordered + 10 >= material.quantity
+                  }
+                  tooltip={material.price * 10 + ' cr'}
                   onClick={() =>
                     act('buy', {
                       quantity: 10,
@@ -136,8 +149,12 @@ export const MatMarket = (props, context) => {
                   10
                 </Button>
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
-                  tooltip={material.price * 25}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    material.ordered + 25 >= material.quantity
+                  }
+                  tooltip={material.price * 25 + ' cr'}
                   onClick={() =>
                     act('buy', {
                       quantity: 25,
@@ -147,8 +164,12 @@ export const MatMarket = (props, context) => {
                   25
                 </Button>
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
-                  tooltip={material.price * 50}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    material.ordered + 50 >= material.quantity
+                  }
+                  tooltip={material.price * 50 + ' cr'}
                   onClick={() =>
                     act('buy', {
                       quantity: 50,

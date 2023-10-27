@@ -97,12 +97,26 @@
 			color_string = splicetext(initial(traded_mat.greyscale_colors), 7, length(initial(traded_mat.greyscale_colors)), "") //slice it to a standard 6 char hex
 		else if(initial(traded_mat.color))
 			color_string = initial(traded_mat.color)
+
+		var/sheet_running_total = 0
+		// Get counts for every material in all open orders
+		for(var/datum/supply_order/order in SSshuttle.shopping_list)
+			// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
+			if(order.orderer_rank == "Galactic Materials Market" && ( \
+				(!ordering_private && order.paying_account == null) || \
+				(ordering_private && order.paying_account != null && order.orderer == user) \
+			))
+				for(var/obj/item/stack/sheet/nu_sheet as anything in order.pack.contains)
+					if(nu_sheet.material_type == traded_mat)
+						sheet_running_total += order.pack.contains[nu_sheet]
+
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
+			"ordered" = sheet_running_total
 			))
 
 	can_buy_via_budget = FALSE
