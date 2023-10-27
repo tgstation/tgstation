@@ -3943,7 +3943,6 @@
 	layer = 4.1
 	},
 /obj/structure/railing{
-	dir = 10;
 	layer = 3.1
 	},
 /turf/open/space/basic,
@@ -56363,7 +56362,6 @@
 "nHf" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
-	dir = 10;
 	layer = 3.1
 	},
 /turf/open/space/basic,
@@ -98851,7 +98849,6 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 10;
 	layer = 3.1
 	},
 /turf/open/space/basic,
