@@ -70,14 +70,7 @@
 /obj/effect/landmark/navigate_destination/oshan/miningelevator
 	location = "Miners' Elevator"
 
-
-// Northstar Specific
-
-
-
 // Metastation Specific
-
-
 
 // Deltastation specific
 
