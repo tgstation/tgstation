@@ -47,8 +47,7 @@
 
 /datum/component/deployable/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-
-	examine_list += span_notice("It can be used <b>in hand</b> to deploy into [multiple_deployments ? "[deployments] more" : "\a"] [deployed_name].")
+	examine_list += span_notice("It can be used <b>in hand</b> to deploy into [((deployments > 1) && multiple_deployments) ? "[deployments]" : "a"] [deployed_name].")
 
 /datum/component/deployable/proc/on_attack_hand(datum/source, mob/user, location, direction)
 	SIGNAL_HANDLER
