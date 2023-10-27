@@ -1,3 +1,4 @@
+//Proto-Kinetic Crushers
 /obj/item/kinetic_crusher/machete
 	icon = 'monkestation/icons/obj/items_and_weapons.dmi'
 	icon_state = "PKMachete"
@@ -187,3 +188,310 @@
 		speed = 5 SECONDS, \
 		effectiveness = 100, \
 	)
+
+//Proto-Kinetic Accelerators
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/railgun
+	name = "proto-kinetic railgun"
+	desc = "Before the nice streamlined and modern day Proto-Kinetic Accelerator was created, multiple designs were drafted by the Mining Research and Development \
+	team. Many were failures, including this one, which came out too bulky and too ineffective. Well recently the MR&D Team got drunk and said 'fuck it we ball' and \
+	went back to the bulky design, overclocked it, and made it functional, turning it into what is essentially a literal man portable particle accelerator.\
+	The design results in a massive hard to control blast of kinetic energy, with the power to punch right through creatures and cause massive damage. The \
+	only problem with the design is that it is so bulky you need to carry it with two hands, and the technology has no optimization for a pressured enviorment, \
+	resulting in a near zero force value in pressurized areas."
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	w_class = WEIGHT_CLASS_HUGE
+	recharge_time = 3 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/railgun)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_HEAVY
+	can_bayonet = FALSE
+	max_mod_capacity = 0 //fuck off
+	recoil = 3 //railgun go brrrrr
+	gun_flags = NOT_A_REAL_GUN
+	disablemodification = TRUE
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/repeater
+	name = "proto-kinetic repeater"
+	desc = "During the pizza party celebrating the release of the new crusher designs, the Mining Research and Development team members were only allowed one slice.\
+	One member exclaimed 'I wish we could have more than one slice' and another replied 'I wish we could shoot the accelerator more than once' and thus, the repeater\
+	on the spot. The repeater trades a bit of power for the ability to fire three shots before becoming empty, while retaining the ability to fully recharge in one\
+	go. The extra technology packed inside to make this possible unfortunately reduces mod space meaning you cnat carry as many mods compared to a regular accelerator."
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	recharge_time = 2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/repeater)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_LIGHT
+	can_bayonet = TRUE
+	knife_x_offset = 20
+	knife_y_offset = 12
+	max_mod_capacity = 60
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/shotgun
+	name = "proto-kinetic shotgun"
+	desc = "During the crusher design pizza party, one member of the Mining Research and Development team brought out a real riot shotgun, and killed three\
+	other research members with one blast. The MR&D Director immedietly thought of a genuis idea, creating the proto-kinetic shotgun moments later, which he\
+	immedietly used to execute the research member who brought the real shotgun. The proto-kinetic shotgun trades off some mod capacity and cooldown in favor\
+	of firing three shots at once with reduce range and power. The total damage of all three shots is higher than a regular PKA but the individual shots are weaker."
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	recharge_time = 2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shotgun)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_LIGHT
+	can_bayonet = TRUE
+	knife_x_offset = 20
+	knife_y_offset = 12
+	max_mod_capacity = 60
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/glock
+	name = "proto-kinetic pistol"
+	desc = "During the pizza party for the Mining Research and Development team, one special snowflake researcher wanted a mini murphy instead of a regular\
+	pizza slice, so reluctantly the Director bought him his mini murphy, which the dumbass immedietly dropped ontop of a PKA. Suddenly the idea to create\
+	a 'build your own PKA' design was created. The proto-kinetic pistol is arguably worse than the base PKA, sporting lower damage and range. But this lack\
+	of base efficiency allows room for nearly double the mods, making it truely 'your own PKA'."
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	recharge_time = 1.45 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_LIGHT
+	can_bayonet = FALSE
+	max_mod_capacity = 200
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/pounder
+	name = "proto-kinetic pounder"
+	desc = "Quite frankly, we have no idea how the Mining Research and Development team came up with this one, all we know is that alot of \
+	beer was involved. This proto-kinetic design will slam the ground, creating a shockwave around the user, with the same power as the base PKA.\
+	The only downside is the lowered mod capacity, the lack of range it offers, and the higher cooldown, but its pretty good for clearing rocks."
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	recharge_time = 2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/pounder)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_LIGHT
+	can_bayonet = FALSE
+	max_mod_capacity = 60
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/grappling
+	name = "Miner Zip Hook"
+	desc = "During the pizza party for the Mining Research and Development team, the Mining Research Director went outside, and played with his favorite ball.\
+	Unfortunetly he accidently tossed it to the other side of a massive lavalake. Out of pure spite he decided that instead of getting an RCD like any sane individual\
+	he would create a brand new PKA type using the meathook he kept in his office. Thus the grappleing hook was (finally) created. The Proto-Kinetic grapple hook\
+	allows quick traversal over pits, chasms, and lava, by firing a high speed grapple hook and yanking the user towards it. Dont worry about the inertia, the nerds\
+	in RND took care of that problem (after six test subjects)."
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	recharge_time = 5 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hook)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_LIGHT
+	can_bayonet = FALSE
+	max_mod_capacity = 0
+	disablemodification = TRUE
+
+//Accelerator Casing
+/obj/item/ammo_casing/energy/kinetic/railgun
+	projectile_type = /obj/projectile/kinetic/railgun
+	select_name = "kinetic"
+	e_cost = 500
+	fire_sound = 'sound/weapons/beam_sniper.ogg'
+
+/obj/item/ammo_casing/energy/kinetic/repeater
+	projectile_type = /obj/projectile/kinetic/repeater
+	select_name = "kinetic"
+	e_cost = 150 //about three shots
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+/obj/item/ammo_casing/energy/kinetic/shotgun
+	projectile_type = /obj/projectile/kinetic/shotgun
+	select_name = "kinetic"
+	e_cost = 500
+	pellets = 3
+	variance = 80
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+/obj/item/ammo_casing/energy/kinetic/glock
+	projectile_type = /obj/projectile/kinetic/glock
+	select_name = "kinetic"
+	e_cost = 500
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+
+/obj/item/ammo_casing/energy/kinetic/pounder
+	projectile_type = /obj/projectile/kinetic/pounder
+	select_name = "kinetic"
+	e_cost = 500
+	pellets = 8
+	variance = 360
+	fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+
+/obj/item/ammo_casing/energy/kinetic/hook
+	name = "grappling hook"
+	desc = "A mining grapple hook."
+	e_cost = 500
+	projectile_type = /obj/projectile/hook/mining
+	caliber = ENERGY
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+	harmful = FALSE //finally, some good fucking food for pacafists
+
+
+//Accelerator Projectiles
+/obj/projectile/kinetic/railgun
+	name = "hyper kinetic force"
+	icon_state = null
+	damage = 100
+	damage_type = BRUTE
+	armor_flag = BOMB
+	range = 7
+	log_override = TRUE
+	pressure_decrease = 0.10 //Pressured enviorments are a no go for the railgun
+	speed = 0.1 //NYOOM
+	projectile_piercing = PASSMOB
+
+/obj/projectile/kinetic/repeater
+	name = "rapid kinetic force"
+	icon_state = null
+	damage = 20
+	damage_type = BRUTE
+	armor_flag = BOMB
+	range = 4
+	log_override = TRUE
+
+/obj/projectile/kinetic/shotgun
+	name = "split kinetic force"
+	icon_state = null
+	damage = 20
+	damage_type = BRUTE
+	armor_flag = BOMB
+	range = 3
+	log_override = TRUE
+
+/obj/projectile/kinetic/glock
+	name = "light kinetic force"
+	icon_state = null
+	damage = 15
+	damage_type = BRUTE
+	armor_flag = BOMB
+	range = 3
+	log_override = TRUE
+
+/obj/projectile/kinetic/pounder
+	name = "concussive kinetic force"
+	icon_state = null
+	damage = 40
+	damage_type = BRUTE
+	armor_flag = BOMB
+	range = 1
+	log_override = TRUE
+
+/obj/projectile/hook/mining
+	name = "grapple hook"
+	icon_state = "hook"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	pass_flags = PASSTABLE
+	damage = 0
+	stamina = 0
+	armour_penetration = 0
+	damage_type = BRUTE
+	hitsound = 'sound/effects/splat.ogg'
+	knockdown_time = (0 SECONDS)
+	disablepull = TRUE
+	range = 10
+	speed = 0.1
+
+//Procs for mining grapplehook
+
+/obj/projectile/hook/mining/on_hit(atom/target)
+	. = ..()
+	var/atom/A = target
+	A.visible_message(span_danger("[firer] zips towards [A] as the hook latches on!"))
+	ADD_TRAIT(firer, TRAIT_MOVE_FLYING, null)
+	new /datum/forced_movement(firer, A, 10, TRUE)
+	sleep(0.5 SECONDS)
+	REMOVE_TRAIT(firer, TRAIT_MOVE_FLYING, null)
+
+//ADMIN ONLY MEMES
+/obj/item/gun/energy/recharge/kinetic_accelerator/meme
+	name = "adminium reaper"
+	desc = "Mining RnD broke the fabric of space time, please return to your nearest centralcommand officer. <b> WARNING FROM THE MINING RND DIRECTOR : DO NOT RAPIDLY PULL TRIGGER : FABRIC OF SPACE TIME LIABLE TO BREAK </b>"
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	recharge_time = 0.1
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/meme)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	weapon_weight = WEAPON_LIGHT
+	can_bayonet = TRUE
+	knife_x_offset = 20
+	knife_y_offset = 12
+	max_mod_capacity = 420
+
+/obj/item/ammo_casing/energy/kinetic/meme
+	projectile_type = /obj/projectile/kinetic/meme
+	select_name = "kinetic"
+	e_cost = 1
+	pellets = 69
+	variance = 90
+	fire_sound = 'sound/effects/adminhelp.ogg'
+	variance = 3
+
+/obj/projectile/kinetic/meme
+	name = "proto kinetic meme force"
+	icon_state = null
+	damage = 420
+	damage_type = BRUTE
+	range = 300
+	log_override = TRUE
+	pressure_decrease = 1
+	dismemberment = 10
+	catastropic_dismemberment = TRUE
+	hitsound = 'sound/effects/adminhelp.ogg'
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/meme/nonlethal
+	name = "adminium stunner"
+	desc = "Mining RnD broke the fabric of space time AGAIN, please return to your nearest centralcommand officer. <b> WARNING FROM THE MINING RND DIRECTOR : DO NOT RAPIDLY PULL TRIGGER : FABRIC OF SPACE TIME LIABLE TO BREAK </b>\
+	Im being bullied by the admins"
+	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
+	inhand_icon_state = "kineticgun"
+	recharge_time = 0.1
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/meme/nonlethal)
+	can_bayonet = FALSE
+	max_mod_capacity = 0
+
+/obj/item/ammo_casing/energy/kinetic/meme/nonlethal
+	projectile_type = /obj/projectile/kinetic/meme/nonlethal
+	select_name = "kinetic"
+	fire_sound = 'sound/effects/adminhelp.ogg'
+
+/obj/projectile/kinetic/meme/nonlethal
+	name = "surprisingly soft proto kinetic meme force"
+	damage = 0
+	dismemberment = 0
+	catastropic_dismemberment = FALSE
+	stun = 69
+	knockdown = 69
+	paralyze = 69
+	immobilize = 69
+	unconscious = 69
+	eyeblur = 69
+	drowsy = 69 SECONDS
+	jitter = 69 SECONDS
+	stamina = 69 SECONDS
+	stutter = 69 SECONDS
+	slur = 69 SECONDS

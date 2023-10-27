@@ -43,6 +43,7 @@
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain
 	var/knockdown_time = (0.5 SECONDS)
+	var/disablepull = FALSE //monke edit
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
@@ -52,20 +53,21 @@
 
 /obj/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(ismovable(target))
-		var/atom/movable/A = target
-		if(A.anchored)
-			return
-		A.visible_message(span_danger("[A] is snagged by [firer]'s hook!"))
-		//Should really be a movement loop, but I don't want to support moving 5 tiles a tick
-		//It just looks bad
-		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
-		if (isliving(target))
-			var/mob/living/fresh_meat = target
-			fresh_meat.Knockdown(knockdown_time)
-			return
-		//TODO: keep the chain beamed to A
-		//TODO: needs a callback to delete the chain
+	if(!disablepull) //monke edit
+		if(ismovable(target))
+			var/atom/movable/A = target
+			if(A.anchored)
+				return
+			A.visible_message(span_danger("[A] is snagged by [firer]'s hook!"))
+			//Should really be a movement loop, but I don't want to support moving 5 tiles a tick
+			//It just looks bad
+			new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
+			if (isliving(target))
+				var/mob/living/fresh_meat = target
+				fresh_meat.Knockdown(knockdown_time)
+				return
+			//TODO: keep the chain beamed to A
+			//TODO: needs a callback to delete the chain
 
 /obj/projectile/hook/Destroy()
 	qdel(chain)
