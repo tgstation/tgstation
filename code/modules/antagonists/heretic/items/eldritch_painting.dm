@@ -24,7 +24,9 @@
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
 	// A basic proximity sensor
-	var/painting_proximity_sensor = /datum/proximity_monitor/advanced/eldritch_painting
+	var/datum/proximity_monitor/painting_proximity_sensor
+	// For changing sensor types on subtypes
+	var/sensor_type = /datum/proximity_monitor/advanced/eldritch_painting
 	// Set to false since we don't want this to persist
 	persistence_id = FALSE
 
@@ -51,7 +53,7 @@
 	timeout = 5 MINUTES
 
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
-	painting_proximity_sensor = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
+	painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
 	return ..()
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
@@ -143,7 +145,7 @@
 	name = "The First Desire"
 	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
 	icon_state = "frame-empty"
-	painting_proximity_sensor = /datum/proximity_monitor/advanced/eldritch_painting/desire
+	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/desire
 
 // Moodlets used to track hunger and provide feedback
 /datum/mood_event/eldritch_painting/desire_heretic
