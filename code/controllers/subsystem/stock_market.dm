@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(stock_market)
 	switch(trend)
 		if(MARKET_TREND_UPWARD)
 			price_change = ROUND_UP(gaussian(price_units * 0.1, price_baseline * 0.05)) //If we don't ceil, small numbers will get trapped at low values
-			quantity_change = -round(gaussian(quantity_baseline * 0.1, quantity_baseline * 0.05))
+			quantity_change = -round(gaussian(quantity_baseline * 0.05, quantity_baseline * 0.05))
 		if(MARKET_TREND_STABLE)
 			price_change = round(gaussian(0, price_baseline * 0.01))
 			quantity_change = round(gaussian(0, quantity_baseline * 0.01))
