@@ -73,7 +73,7 @@
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else
-				new_mob.key = affected_mob.key
+				KEY_TRANSFER(new_mob, affected_mob)
 		if(transformed_antag_datum)
 			new_mob.mind.add_antag_datum(transformed_antag_datum)
 		new_mob.name = affected_mob.real_name
@@ -89,7 +89,7 @@
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(FALSE)
-		affected_mob.key = C.key
+		KEY_TRANSFER(affected_mob, C)
 	else
 		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
 		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)

@@ -48,7 +48,7 @@
 		qdel(src)
 		return
 
-	stranger_backseat.key = ghost.key
+	KEY_TRANSFER(stranger_backseat, ghost)
 	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
@@ -214,7 +214,7 @@
 	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", null, null, 7.5 SECONDS, stranger_backseat)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
+		KEY_TRANSFER(stranger_backseat, C)
 	else
 		qdel(src)
 

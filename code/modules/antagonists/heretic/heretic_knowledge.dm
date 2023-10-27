@@ -555,7 +555,7 @@
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = picked_candidate.key
+	KEY_TRANSFER(summoned, picked_candidate)
 
 	user.log_message("created a [summoned.name], controlled by [key_name(picked_candidate)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")

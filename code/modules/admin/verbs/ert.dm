@@ -170,7 +170,7 @@
 				var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
 				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
 				admin_officer.equipOutfit(chosen_outfit)
-				admin_officer.key = usr.key
+				KEY_TRANSFER(admin_officer, usr)
 
 			else
 				to_chat(usr, span_warning("Could not spawn you in as briefing officer as you are not a ghost!"))
@@ -224,7 +224,7 @@
 			//Spawn the body
 			var/mob/living/carbon/human/ert_operative = new ertemplate.mobtype(spawnloc)
 			chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE)
-			ert_operative.key = chosen_candidate.key
+			KEY_TRANSFER(ert_operative, chosen_candidate)
 
 			if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN)) // Don't want any exploding plasmemes
 				ert_operative.set_species(/datum/species/human)

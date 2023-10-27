@@ -25,7 +25,7 @@
 
 	if(origin && (origin.current ? (origin.current.stat == DEAD) : origin.get_ghost()))
 		origin.transfer_to(spawned_monkey)
-		spawned_monkey.key = origin.key
+		KEY_TRANSFER(spawned_monkey, origin)
 		var/datum/antagonist/changeling/changeling_datum = origin.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling_datum)
 			changeling_datum = origin.add_antag_datum(/datum/antagonist/changeling/headslug)

@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 		spawned_animals++
 
-		selected.key = picked_candidate.key
+		KEY_TRANSFER(selected, picked_candidate)
 
 		selected.grant_all_languages(UNDERSTOOD_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_ATOM)
 

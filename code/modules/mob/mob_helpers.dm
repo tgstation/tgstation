@@ -367,7 +367,7 @@
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = C.key
+		KEY_TRANSFER(M, C)
 		M.client?.init_verbs()
 		return TRUE
 	else

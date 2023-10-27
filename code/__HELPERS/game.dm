@@ -356,7 +356,7 @@
 
 	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
-	new_character.key = ghost_player.key
+	KEY_TRANSFER(new_character, ghost_player)
 
 	return new_character
 

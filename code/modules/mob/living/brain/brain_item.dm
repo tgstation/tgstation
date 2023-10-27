@@ -83,7 +83,7 @@
 			if(brainmob.mind)
 				brainmob.mind.transfer_to(brain_owner)
 			else
-				brain_owner.key = brainmob.key
+				KEY_TRANSFER(brain_owner, brainmob)
 
 			brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 

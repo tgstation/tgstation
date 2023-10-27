@@ -698,7 +698,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(FALSE)
-			mob_to_revive.key = C.key
+			KEY_TRANSFER(mob_to_revive, C)
 		else
 			fail_invoke()
 			return
@@ -954,7 +954,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				old_mind = ghost_to_spawn.mind, \
 				old_body = ghost_to_spawn.mind.current, \
 			)
-		new_human.key = ghost_to_spawn.key
+		KEY_TRANSFER(new_human, ghost_to_spawn)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
 		to_chat(new_human, span_cultitalic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))

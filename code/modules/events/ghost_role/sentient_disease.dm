@@ -20,7 +20,7 @@
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 
 	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
-	virus.key = selected.key
+	KEY_TRANSFER(virus, selected)
 	INVOKE_ASYNC(virus, TYPE_PROC_REF(/mob/camera/disease, pick_name))
 	message_admins("[ADMIN_LOOKUPFLW(virus)] has been made into a sentient disease by an event.")
 	virus.log_message("was spawned as a sentient disease by an event.", LOG_GAME)

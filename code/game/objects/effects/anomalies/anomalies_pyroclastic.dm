@@ -40,7 +40,7 @@
 		return
 
 	var/mob/dead/observer/chosen = pick(candidates)
-	pyro.key = chosen.key
+	KEY_TRANSFER(pyro, chosen)
 	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME
 	pyro.mind.add_antag_datum(/datum/antagonist/pyro_slime)
 	pyro.log_message("was made into a slime by pyroclastic anomaly", LOG_GAME)

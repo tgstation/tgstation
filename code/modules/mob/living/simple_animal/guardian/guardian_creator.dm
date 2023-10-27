@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		return
 	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new guardian_path(user, theme)
 	summoned_guardian.set_summoner(user, different_person = TRUE)
-	summoned_guardian.key = candidate.key
+	KEY_TRANSFER(summoned_guardian, candidate)
 	user.log_message("has summoned [key_name(summoned_guardian)], a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	summoned_guardian.log_message("was summoned as a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	to_chat(user, summoned_guardian.used_fluff_string)

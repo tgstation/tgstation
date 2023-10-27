@@ -95,7 +95,7 @@
 
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(FALSE)
-		body.key = C.key
+		KEY_TRANSFER(body, C)
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 // ----------- Emergency Shuttle Balloon

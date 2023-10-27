@@ -594,7 +594,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(src, span_boldholoparasite("Your <font color=\"[chosen_guardian.guardian_color]\">[chosen_guardian.real_name]</font> has been successfully reset."))
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
-	chosen_guardian.key = candidate.key
+	KEY_TRANSFER(chosen_guardian, candidate)
 	COOLDOWN_START(chosen_guardian, resetting_cooldown, 5 MINUTES)
 	chosen_guardian.guardian_rename() //give it a new color and name, to show it's a new person
 	chosen_guardian.guardian_recolor()

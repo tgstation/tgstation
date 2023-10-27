@@ -2592,7 +2592,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		summoned_guardian.fully_replace_character_name(null, picked_name)
 	if(picked_color)
 		summoned_guardian.set_guardian_color(picked_color)
-	summoned_guardian.key = guardian_client?.key
+	KEY_TRANSFER(summoned_guardian, guardian_client?)
 	guardian_client?.init_verbs()
 	if(del_mob)
 		qdel(old_mob)

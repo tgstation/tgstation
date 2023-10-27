@@ -242,7 +242,7 @@
 		if(mob_possessor.mind)
 			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
 		else
-			spawned_mob.key = mob_possessor.key
+			KEY_TRANSFER(spawned_mob, mob_possessor)
 	var/datum/mind/spawned_mind = spawned_mob.mind
 	if(spawned_mind)
 		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.GetJobType(spawner_job_path))

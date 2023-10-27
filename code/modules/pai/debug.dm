@@ -24,7 +24,7 @@
 
 	pai.name = chosen_name
 	pai.real_name = pai.name
-	pai.key = choice.key
+	KEY_TRANSFER(pai, choice)
 	card.set_personality(pai)
 	if(SSpai.candidates[key])
 		SSpai.candidates -= key

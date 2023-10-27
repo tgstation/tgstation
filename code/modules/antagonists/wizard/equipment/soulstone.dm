@@ -389,7 +389,7 @@
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [victim.real_name]"
 	soulstone_spirit.real_name = "Shade of [victim.real_name]"
-	soulstone_spirit.key = shade_controller.key
+	KEY_TRANSFER(soulstone_spirit, shade_controller)
 	soulstone_spirit.copy_languages(victim, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	if(user)
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
@@ -502,7 +502,7 @@
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/SM = new()
 		SM.Grant(newstruct)
-	newstruct.key = target.key
+	KEY_TRANSFER(newstruct, target)
 	var/atom/movable/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker?.mode)
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)

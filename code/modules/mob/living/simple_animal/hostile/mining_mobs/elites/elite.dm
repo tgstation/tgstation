@@ -212,7 +212,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
-		mychild.key = elitemind.key
+		KEY_TRANSFER(mychild, elitemind)
 		mychild.sentience_act()
 		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")

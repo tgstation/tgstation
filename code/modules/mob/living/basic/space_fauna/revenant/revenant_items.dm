@@ -71,7 +71,7 @@
 	var/user_name = old_ckey
 	if(isnull(revenant.client))
 		var/mob/potential_user = get_new_user()
-		revenant.key = potential_user.key
+		KEY_TRANSFER(revenant, potential_user)
 		user_name = potential_user.ckey
 		qdel(potential_user)
 

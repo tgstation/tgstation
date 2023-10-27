@@ -70,7 +70,7 @@
 	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
-	M.key = C.key
+	KEY_TRANSFER(M, C)
 	var/datum/mind/app_mind = M.mind
 
 	var/datum/antagonist/wizard/apprentice/app = new()
@@ -225,7 +225,7 @@
 	borg.mmi.brainmob.name = brainopsname
 	borg.real_name = borg.name
 
-	borg.key = C.key
+	KEY_TRANSFER(borg, C)
 
 	var/datum/antagonist/nukeop/new_borg = new()
 	new_borg.send_to_spawnpoint = FALSE
@@ -271,7 +271,7 @@
 	var/mob/living/basic/demon/spawned = new demon_type(T)
 	new /obj/effect/dummy/phased_mob(T, spawned)
 
-	spawned.key = C.key
+	KEY_TRANSFER(spawned, C)
 	spawned.generate_antagonist_status()
 
 /obj/item/antag_spawner/slaughter_demon/laughter

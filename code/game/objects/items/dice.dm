@@ -429,7 +429,7 @@
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/candidate = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(candidate)] was spawned as Dice Servant")
-				human_servant.key = candidate.key
+				KEY_TRANSFER(human_servant, candidate)
 
 			human_servant.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()

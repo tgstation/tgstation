@@ -88,7 +88,7 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
-		santa.key = C.key
+		KEY_TRANSFER(santa, C)
 
 		var/datum/antagonist/santa/A = new
 		santa.mind.add_antag_datum(A)

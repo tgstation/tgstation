@@ -61,7 +61,7 @@
 		qdel(src)
 		return
 
-	friend.key = ghost.key
+	KEY_TRANSFER(friend, ghost)
 	friend_initialized = TRUE
 	friend.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(friend)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")

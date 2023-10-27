@@ -719,7 +719,7 @@
 		being_used = FALSE
 		return
 
-	dumb_mob.key = ghost.key
+	KEY_TRANSFER(dumb_mob, ghost)
 	dumb_mob.mind.enslave_mind_to_creator(user)
 	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
 

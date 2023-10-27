@@ -134,7 +134,7 @@
 	if (extra_control_checks && !extra_control_checks.Invoke(harbinger))
 		return
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
-	new_body.key = harbinger.key
+	KEY_TRANSFER(new_body, harbinger)
 	to_chat(new_body, span_boldnotice(assumed_control_message))
 	after_assumed_control?.Invoke(harbinger)
 	qdel(src)
