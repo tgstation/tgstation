@@ -3,7 +3,7 @@
 // All eldritch paintings are based on this one, with some light changes
 /obj/item/wallframe/painting/eldritch
 	name = "The sister and He Who Wept"
-	desc = "A perfect artwork showing a beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
+	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
 	icon = 'icons/obj/signs.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
@@ -13,7 +13,7 @@
 
 /obj/structure/sign/painting/eldritch
 	name = "The sister and He Who Wept"
-	desc = "A perfect artwork showing a beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
+	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
@@ -25,13 +25,11 @@
 	layer = CORGI_ASS_PIN_LAYER
 	// A basic proximity sensor
 	var/datum/proximity_monitor/advanced/eldritch_painting/base_painting
-	// A variable for how many people have to rip the painting
-	var/rip_resistance = 10
 	// Set to false since we don't want this to persist
 	persistence_id = FALSE
 
 // Mood applied for ripping the painting
-// These moods are here to check or multiple things and provide user feedback
+// These moods are here to check hallucinations and provide easier user feedback
 /datum/mood_event/eldritch_painting
 	description = "YOU, I SHOULD NOT HAVE DONE THAT!!!"
 	mood_change = -6
@@ -57,17 +55,10 @@
 	return ..()
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
-	var/rips = 0
-	// Has the user already ripped up this painting once?
-	if("ripped_eldritch_painting" in user.mob_mood.mood_events)
-		return
-	// Adds one to the amount of rips
-	rips +=1
 	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-	to_chat(user, span_notice("IT STILL STANDS [rip_resistance-rips] MORE HAVE TO TRY!!!"))
-	if(rip_resistance>rips)
-		QDEL_NULL(base_painting)
-		qdel(src)
+	to_chat(user, span_notice("laugher echoes through your mind"))
+	QDEL_NULL(base_painting)
+	qdel(src)
 
 /obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
 	if(IS_HERETIC(user))
@@ -146,3 +137,33 @@
 	owner.mob_mood.mood_events.Remove("eldritch_weeping")
 	..()
 
+// The First Desire
+/obj/item/wallframe/painting/eldritch/desire
+	name = "The First Desire"
+	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
+	icon_state = "frame-empty"
+	result_path = /obj/structure/sign/painting/eldritch/desire
+
+/obj/structure/sign/painting/eldritch/desire
+	name = "The First Desire"
+	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
+	icon_state = "frame-empty"
+	// A basic proximity sensor
+	var/datum/proximity_monitor/advanced/eldritch_painting/desire/desire_painting
+
+// Specific proximity monitor for The First Desire or /obj/item/wallframe/painting/eldritch/desire
+/datum/proximity_monitor/advanced/eldritch_painting/desire
+
+/datum/proximity_monitor/advanced/eldritch_painting/desire/on_seen(mob/living/carbon/human/viewer)
+	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
+		return
+	if (viewer.has_trauma_type(/datum/brain_trauma/severe/weeping))
+		return
+	if(IS_HERETIC(viewer))
+		return
+	to_chat(viewer, span_notice("Wow, great poster!"))
+	viewer.gain_trauma(/datum/brain_trauma/severe/weeping, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/obj/structure/sign/painting/eldritch/desire/Initialize(mapload, dir, building)
+	desire_painting = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
+	return ..()

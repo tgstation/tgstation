@@ -46,10 +46,41 @@
 	required_atoms = list(
 		/obj/item/canvas = 1,
 	)
-	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
+	result_atoms = list(/obj/item/canvas)
 	optional_atoms = list(
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/internal/eyes = 1,
+		/obj/item/bodypart = 1,
+		/obj/item/trash = 1,
+		/obj/item/food/grown = 1,
+		/obj/item/clothing/gloves = 1,
 	)
-	optional_result_atoms = list(/obj/item/blackbox)
+	optional_result_atoms = list(/obj/item/canvas)
 	cost = 1
 	route = PATH_SIDE
+
+/datum/heretic_knowledge/painting/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc, list/optional_selected_atoms)
+	if(!length(result_atoms))
+		return FALSE
+
+	// List comparison
+	if(length(optional_selected_atoms))
+		for(var/optional_atoms in optional_selected_atoms)
+			if(optional_atoms == /obj/item/organ/internal/eyes)
+				new /obj/item/wallframe/painting/eldritch(loc)
+				continue
+			if(optional_atoms == /obj/item/bodypart)
+				new /obj/item/wallframe/painting/eldritch(loc)
+				continue
+			if(optional_atoms == /obj/item/trash)
+				new /obj/item/wallframe/painting/eldritch(loc)
+				continue
+			if(optional_atoms == /obj/item/food/grown)
+				new /obj/item/wallframe/painting/eldritch(loc)
+				continue
+			if(optional_atoms == /obj/item/clothing/gloves)
+				new /obj/item/wallframe/painting/eldritch(loc)
+				continue
+	else
+		for(var/result in result_atoms)
+			new result(loc)
+	return TRUE
