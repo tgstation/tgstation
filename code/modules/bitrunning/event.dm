@@ -28,6 +28,7 @@
 
 /// All servers currently running, has players in it, and map has valid mobs
 /datum/round_event_control/bitrunning_glitch/proc/validate_servers()
+	active_servers.Cut()
 	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
 		if(server.validate_mutation_candidates())
 			active_servers.Add(server)
@@ -54,6 +55,7 @@
 
 /datum/event_admin_setup/minimum_candidate_requirement/bitrunning_glitch/count_candidates()
 	var/datum/round_event_control/bitrunning_glitch/cyber_control = event_control
+
 	cyber_control.validate_servers()
 
 	var/total = 0

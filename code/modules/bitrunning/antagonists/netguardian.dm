@@ -84,10 +84,16 @@
 
 	var/mutable_appearance/firing_effect = mutable_appearance('icons/mob/nonhuman-player/netguardian.dmi', "firing")
 	firer.add_overlay(firing_effect)
-	if(do_after(firer, 1.5 SECONDS))
-		..()
 
+	StartCooldown(cooldown_time)
+	if(!do_after(firer, 1.5 SECONDS))
+		StartCooldown(5 SECONDS)
+		firer.cut_overlay(firing_effect)
+		return
+
+	StartCooldown()
 	firer.cut_overlay(firing_effect)
+	return ..()
 
 /datum/ai_controller/basic_controller/netguardian
 	blackboard = list(
