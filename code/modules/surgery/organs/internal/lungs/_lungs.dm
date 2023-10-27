@@ -794,6 +794,18 @@
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+/obj/item/organ/internal/lungs/proc/currently_breathing()
+	if (!owner)
+		return FALSE
+	if (owner.stat == DEAD)
+		return FALSE
+	if (HAS_TRAIT(owner, TRAIT_NOBREATH))
+		return FALSE
+	if (failed)
+		return FALSE
+
+	return TRUE
+
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
 #define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
 

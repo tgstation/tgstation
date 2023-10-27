@@ -4,23 +4,29 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/obj/item/reagent_containers/inhaler_canister/canister
+	var/obj/item/reagent_containers/inhaler_canister/initial_casister_path
 
-	var/pre_insert_sound = 'sound/items/taperecorder/tape_flip.ogg'
-	var/post_insert_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
+	icon = 'icons/obj/medical/chemical.dmi'
+	icon_state = "inhaler"
 
-	var/pre_insert_volume = 50
-	var/post_insert_volume = 50
-
-	var/insertion_time = 2 SECONDS
-
-	var/self_administer_delay = 0 SECONDS
-	var/other_administer_delay = 3 SECONDS
+	var/mutable_appearance/canister_underlay
 
 /obj/item/inhaler/Initialize(mapload)
-	if (ispath(canister, /obj/item/reagent_containers/inhaler_canister))
-		set_canister(new canister)
+	if (ispath(initial_casister_path, /obj/item/reagent_containers/inhaler_canister))
+		set_canister(new initial_casister_path)
 
-	return FALSE
+	return ..()
+
+/obj/item/inhaler/Destroy(force)
+	set_canister(null)
+
+	return ..()
+
+/obj/item/inhaler/examine(mob/user)
+	. = ..()
+
+	if (!isnull(canister))
+		. += span_blue("It seems to have <b>[canister]</b> inserted.")
 
 /obj/item/inhaler/attack(mob/living/target_mob, mob/living/user, params)
 	if (!can_puff(target_mob, user))
@@ -37,7 +43,7 @@
 	var/post_use_target_message
 
 	if (target_mob == user) // no need for a target message
-		puff_timer = self_administer_delay
+		puff_timer = canister.self_administer_delay
 
 		pre_use_visible_message = span_notice("[user] puts [src] to [user.p_their()] lips, fingers on the canister...")
 		pre_use_self_message = span_notice("You put [src] to your lips and put pressure on canister...")
@@ -45,7 +51,7 @@
 		post_use_visible_message = span_notice("[user] takes a puff of [src]!")
 		post_use_self_message = span_notice("You take a puff of [src]!")
 	else
-		puff_timer = other_administer_delay
+		puff_timer = canister.other_administer_delay
 
 		pre_use_visible_message = span_warning("[user] tries to force [src] between [target_mob]'s lips...")
 		pre_use_self_message = span_notice("You try to put [src] to [target_mob]'s lips...")
@@ -88,35 +94,51 @@
 		balloon_alert(user, "no canister inserted!")
 		return FALSE
 
+	if (canister.removal_time > 0)
+		balloon_alert(user, "removing canister...")
+		if (!do_after(user, canister.removal_time))
+			return FALSE
+
 	balloon_alert(user, "canister removed")
+	playsound(src, canister.post_insert_sound, canister.post_insert_volume)
 	set_canister(null, user)
 
-/obj/item/inhaler/proc/try_insert_canister(obj/item/reagent_container/inhaler_canisters/new_canister, mob/living/user, params)
+/obj/item/inhaler/proc/try_insert_canister(obj/item/reagent_containers/inhaler_canister/new_canister, mob/living/user, params)
 	if (!isnull(canister))
 		balloon_alert(user, "remove the existing canister!")
 		return FALSE
 
 	balloon_alert(user, "inserting canister...")
-	playsound(src, pre_insert_sound, pre_insert_volume)
-	if (!do_after(user, insertion_time))
+	playsound(src, new_canister.pre_insert_sound, new_canister.pre_insert_volume)
+	if (!do_after(user, new_canister.insertion_time))
 		return FALSE
-	playsound(src, post_insert_sound, post_insert_volume)
+	playsound(src, new_canister.post_insert_sound, new_canister.post_insert_volume)
 	balloon_alert(user, "canister inserted")
 	set_canister(new_canister, user)
 
 	return TRUE
 
 /obj/item/inhaler/proc/set_canister(obj/item/reagent_containers/inhaler_canister/new_canister, mob/living/user)
-
 	if (!isnull(canister))
 		if (iscarbon(loc))
 			var/mob/living/carbon/carbon_loc = loc
-			carbon_loc.put_in_hands(canister)
+			INVOKE_ASYNC(carbon_loc, TYPE_PROC_REF(/mob/living/carbon, put_in_hands), canister)
 		else if (!isnull(loc))
 			canister.forceMove(loc)
+		UnregisterSignal(canister, COMSIG_QDELETING)
 
 	canister = new_canister
 	canister?.forceMove(src)
+	RegisterSignal(canister, COMSIG_QDELETING, PROC_REF(canister_deleting))
+	update_canister_underlay()
+
+/obj/item/inhaler/proc/update_canister_underlay()
+	if (isnull(canister))
+		underlays -= canister_underlay
+		canister_underlay = null
+	else if (isnull(canister_underlay))
+		canister_underlay = mutable_appearance(canister.icon, canister.icon_state)
+		underlays += canister_underlay
 
 /obj/item/inhaler/proc/can_puff(mob/living/target_mob, mob/living/user, silent = FALSE)
 	if (isnull(canister))
@@ -137,19 +159,43 @@
 		return FALSE
 	return TRUE
 
+/obj/item/inhaler/proc/canister_deleting(datum/signal_source)
+	SIGNAL_HANDLER
+
+	set_canister(null)
+
 /obj/item/reagent_containers/inhaler_canister
 	name = "inhaler canister"
 	desc = "A small canister filled with aerosolized reagents for use in a inhaler."
 	w_class = WEIGHT_CLASS_TINY
 
+	icon = 'icons/obj/medical/chemical.dmi'
+	icon_state = "inhaler_canister"
+
 	amount_per_transfer_from_this = 10
 	volume = 30
-
 
 	var/puff_sound = 'sound/effects/spray.ogg'
 	var/puff_volume = 20
 
+	var/pre_insert_sound = 'sound/items/taperecorder/tape_flip.ogg'
+	var/post_insert_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
+
+	var/pre_insert_volume = 50
+	var/post_insert_volume = 50
+
+	var/insertion_time = 2 SECONDS
+	var/removal_time = 0.5 SECONDS
+
+	var/other_administer_delay = 3 SECONDS
+	var/self_administer_delay = 0.5 SECONDS
+
 /obj/item/reagent_containers/inhaler_canister/proc/puff(mob/living/user, mob/living/carbon/target)
 	playsound(src, puff_sound, puff_volume, TRUE, -6)
-	reagents.trans_to(M, amount_per_transfer_from_this, transferred_by = user, methods = INHALE)
+	reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user, methods = INHALE)
 
+/obj/item/inhaler/salbutamol
+	initial_casister_path = /obj/item/reagent_containers/inhaler_canister/salbutamol
+
+/obj/item/reagent_containers/inhaler_canister/salbutamol
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 30)

@@ -440,7 +440,7 @@
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
-	if(methods & INGEST)
+	if(methods & INGEST|INHALE)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
 			if(prob(15))
 				to_chat(exposed_mob, span_danger("[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]"))
@@ -570,12 +570,18 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (TOUCH | VAPOR))
+	if(methods & (TOUCH|VAPOR))
 		var/tear_proof = victim.is_eyes_covered()
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
 			victim.emote("cry")
 			victim.adjust_eye_blur(6 SECONDS)
+	if(methods & (INHALE))
+		to_chat(exposed_mob, span_warning("Your lungs sting!"))
+		if (prob(15))
+			victim.emote("cough")
+		if (prob(5))
+			victim.losebreath += 1
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"

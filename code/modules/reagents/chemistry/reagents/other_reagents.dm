@@ -42,7 +42,7 @@
 					continue
 
 				exposed_mob.ForceContractDisease(strain)
-			else if((methods & VAPOR) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+			else if((methods & (VAPOR|INHALE)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
 					continue
 

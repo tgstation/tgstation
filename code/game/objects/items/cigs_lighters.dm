@@ -351,12 +351,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			reagents.remove_any(to_smoke)
 			return
 
-	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
+	reagents.expose(smoker, INHALE, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/internal/lungs/lungs = smoker.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(lungs && IS_ORGANIC_ORGAN(lungs))
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm * smoker_resistance)
-	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(smoker, to_smoke, methods = INHALE))
 		reagents.remove_any(to_smoke)
 
 /obj/item/clothing/mask/cigarette/process(seconds_per_tick)
@@ -1164,7 +1164,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		e.start(src)
 		qdel(src)
 
-	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
+	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INHALE, ignore_stomach = TRUE))
 		reagents.remove_any(REAGENTS_METABOLISM)
 
 /obj/item/clothing/mask/vape/process(seconds_per_tick)

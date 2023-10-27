@@ -386,12 +386,12 @@
 		return FALSE
 	if(!istype(smoker))
 		return FALSE
-	if(smoker.internal != null || smoker.has_smoke_protection())
+	if(smoker.has_smoke_protection())
 		return FALSE
 
 	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
 	reagents.copy_to(smoker, reagents.total_volume, fraction)
-	reagents.expose(smoker, INHALE, fraction)
+	reagents.expose(smoker, VAPOR, fraction)
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke

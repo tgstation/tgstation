@@ -122,11 +122,27 @@
 	if(breath)
 		loc.assume_air(breath)
 
-/mob/living/carbon/proc/has_smoke_protection()
-	if(HAS_TRAIT(src, TRAIT_NOBREATH))
-		return TRUE
-	return FALSE
+/mob/living/carbon/currently_breathing()
+	. = ..()
+	if (!.)
+		return
 
+	var/obj/item/organ/internal/lungs/our_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	if (isnull(our_lungs))
+		return FALSE
+	return our_lungs.currently_breathing()
+
+/mob/living/carbon/can_breathe_reagents(consider_internals = TRUE)
+	. = ..()
+	if (!.)
+		return
+
+	if (consider_internals && can_breathe_internals())
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/proc/has_smoke_protection()
+	return !(can_breathe_reagents())
 /**
  * This proc tests if the lungs can breathe, if the mob can breathe a given gas mixture, and throws/clears gas alerts.
  * If there are moles of gas in the given gas mixture, side-effects may be applied/removed on the mob.
