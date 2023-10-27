@@ -51,6 +51,8 @@
 	///we store our analysis form var here
 	var/obj/item/sticker/analysis_form/analysis
 
+	var/mutable_appearance/extra_effect //monkestation edit ART_SCI_OVERRIDE
+
 /datum/component/artifact/Initialize(forced_origin = null)
 	. = ..()
 	if(!isobj(parent))
@@ -72,16 +74,23 @@
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
 
 	var/dat_icon
-	var/origin_name = artifact_origin.type_name
 	switch(artifact_size)
 		if(ARTIFACT_SIZE_LARGE)
-			dat_icon = "[origin_name]-[rand(1,artifact_origin.max_icons)]"
+			holder.icon = artifact_origin.icon_file_large //Monkestation edit ART_SCI_OVERRIDES
+			dat_icon = "[artifact_origin.sprite_name]-[rand(1,artifact_origin.max_icons)]" //Monkestation edit ART_SCI_OVERRIDES
 		if(ARTIFACT_SIZE_SMALL)
-			dat_icon = "[origin_name]-item-[rand(1,artifact_origin.max_item_icons)]"
+			holder.icon = artifact_origin.icon_file_medium //Monkestation edit ART_SCI_OVERRIDES
+			dat_icon = "[artifact_origin.sprite_name]-item-[rand(1,artifact_origin.max_item_icons)]" //Monkestation edit ART_SCI_OVERRIDES
 		if(ARTIFACT_SIZE_TINY)
-			dat_icon = "[origin_name]-item-small-[rand(1,artifact_origin.max_item_icons)]"
+			holder.icon = artifact_origin.icon_file_small //Monkestation edit ART_SCI_OVERRIDES
+			dat_icon = "[artifact_origin.sprite_name]-item-small-[rand(1,artifact_origin.max_item_icons_small)]" //Monkestation edit ART_SCI_OVERRIDES
 	holder.icon_state = dat_icon
 
+	//Monkestation edit start ART_SCI_OVERRIDES
+	if(artifact_origin.type_name == ORIGIN_WIZARD)
+		extra_effect = mutable_appearance(holder.icon, "[holder.icon_state]-gem", offset_spokesman = holder)
+		extra_effect.color = rgb(rand(artifact_origin.overlay_red_minimum,artifact_origin.overlay_red_maximum),rand(artifact_origin.overlay_green_minimum,artifact_origin.overlay_green_maximum),rand(artifact_origin.overlay_blue_minimum,artifact_origin.overlay_blue_maximum))
+	//Monkestation edit end ART_SCI_OVERRIDES
 	act_effect = mutable_appearance(holder.icon, "[holder.icon_state]fx", offset_spokesman = holder, alpha = rand(artifact_origin.overlay_alpha_minimum, artifact_origin.overlay_alpha_maximum))
 	act_effect.color = rgb(rand(artifact_origin.overlay_red_minimum,artifact_origin.overlay_red_maximum),rand(artifact_origin.overlay_green_minimum,artifact_origin.overlay_green_maximum),rand(artifact_origin.overlay_blue_minimum,artifact_origin.overlay_blue_maximum))
 	act_effect.overlays += emissive_appearance(act_effect.icon, act_effect.icon_state, holder, alpha = act_effect.alpha)
@@ -102,7 +111,8 @@
 	for(var/datum/artifact_trigger/trigger in triggers)
 		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
 		trigger.range = trigger.amount + (trigger.hint_range * 2)
-
+	holder.update_appearance()
+	
 /datum/component/artifact/proc/setup()
 	return
 
@@ -117,10 +127,21 @@
 	RegisterSignal(parent, COMSIG_STICKER_STICKED, PROC_REF(on_analysis))
 	RegisterSignal(parent, COMSIG_STICKER_UNSTICKED, PROC_REF(deanalyze))
 	RegisterSignal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(Irradiating))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays)) //Monkestation edit ART_SCI_OVERRIDES
 
 /datum/component/artifact/UnregisterFromParent()
 	SSartifacts.artifacts -= parent
-	UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP,COMSIG_ATOM_ATTACK_HAND,COMSIG_ATOM_DESTRUCTION,COMSIG_PARENT_EXAMINE,COMSIG_ATOM_EMP_ACT,COMSIG_ATOM_EX_ACT,COMSIG_STICKER_STICKED,COMSIG_STICKER_UNSTICKED))
+	UnregisterSignal(parent, list(
+		COMSIG_ITEM_PICKUP,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_DESTRUCTION,
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EMP_ACT,
+		COMSIG_ATOM_EX_ACT,
+		COMSIG_STICKER_STICKED,
+		COMSIG_STICKER_UNSTICKED,
+		COMSIG_ATOM_UPDATE_OVERLAYS //Monkestation edit ART_SCI_OVERRIDES
+	))
 
 /datum/component/artifact/proc/Activate(silent=FALSE)
 	if(active) //dont activate activated objects
@@ -215,7 +236,7 @@
 		return
 	Touched(null, user)
 
-/datum/artifact/proc/Irradiating(atom/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
+/datum/component/artifact/proc/Irradiating(atom/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER
 	if(!active)
 		Stimulate(STIMULUS_RADIATION, get_perceived_radiation_danger(pulse_information,insulation_to_target)*2)

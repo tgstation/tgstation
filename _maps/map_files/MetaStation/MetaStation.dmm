@@ -27327,7 +27327,9 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jSk" = (
-/obj/machinery/atmospherics/components/unary/artifact_heatingpad,
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "jSm" = (

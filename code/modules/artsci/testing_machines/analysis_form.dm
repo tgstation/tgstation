@@ -103,7 +103,7 @@
 /obj/item/sticker/analysis_form/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("It has an artifact analysis form attached to it...")
-	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/, ui_interact), user)
 
 /obj/item/sticker/analysis_form/examine(mob/user)
 	. = ..()
@@ -131,7 +131,6 @@
 	analyze_attached()
 
 /obj/item/sticker/analysis_form/peel(atom/source)
-	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(deanalyze_attached))
 	..()
 

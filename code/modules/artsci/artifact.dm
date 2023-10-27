@@ -7,6 +7,7 @@
 	anchored = FALSE
 	density = TRUE
 	var/datum/component/artifact/assoc_comp
+	var/mutable_appearance/extra_effect
 
 ARTIFACT_SETUP(/obj/structure/artifact, SSobj)
 

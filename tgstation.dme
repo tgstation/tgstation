@@ -5706,6 +5706,8 @@
 #include "monkestation\code\modules\antimatter\code\containment_jar.dm"
 #include "monkestation\code\modules\antimatter\code\control.dm"
 #include "monkestation\code\modules\antimatter\code\shielding.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_datum.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_origins.dm"
 #include "monkestation\code\modules\ballpit\ballbit_sink.dm"
 #include "monkestation\code\modules\ballpit\ballpit.dm"
 #include "monkestation\code\modules\bitrunners\code\ability_disks.dm"

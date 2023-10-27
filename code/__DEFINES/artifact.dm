@@ -15,6 +15,7 @@
 #define ORIGIN_NARSIE "narnar"
 #define ORIGIN_SILICON "silicon"
 #define ORIGIN_WIZARD "wiznerd"
+#define ORIGIN_PRECURSOR "precursor" //Monkestation edit ART_SCI_OVERRIDES
 // rarities
 #define ARTIFACT_COMMON 500
 #define ARTIFACT_UNCOMMON 400
