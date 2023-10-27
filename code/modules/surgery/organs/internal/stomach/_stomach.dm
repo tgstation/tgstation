@@ -288,6 +288,7 @@
 /obj/item/organ/internal/stomach/cybernetic
 	name = "basic cybernetic stomach"
 	desc = "A basic device designed to mimic the functions of a human stomach"
+	failing_desc = "seems to be broken."
 	icon_state = "stomach-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5

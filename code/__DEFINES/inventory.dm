@@ -107,7 +107,7 @@
 #define HAND_RIGHT (1<<10)
 #define HANDS (HAND_LEFT | HAND_RIGHT)
 #define NECK (1<<11)
-#define FULL_BODY (~0)
+#define FULL_BODY ALL
 
 //defines for the index of hands
 #define LEFT_HANDS 1
@@ -145,6 +145,7 @@
 #define MASKCOVERSMOUTH (1<<3) // on other items, these are just for mask/head
 #define HEADCOVERSMOUTH (1<<4)
 #define PEPPERPROOF (1<<5) //protects against pepperspray
+#define EARS_COVERED (1<<6)
 
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully

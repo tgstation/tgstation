@@ -8,9 +8,11 @@
 	description = "Syndicate troops pour out of portals."
 
 /datum/round_event/portal_storm/syndicate_shocktroop
-	boss_types = list(/mob/living/basic/syndicate/melee/space/stormtrooper = 2)
-	hostile_types = list(/mob/living/basic/syndicate/melee/space = 8,\
-						/mob/living/basic/syndicate/ranged/space = 2)
+	boss_types = list(/mob/living/basic/trooper/syndicate/melee/space/stormtrooper = 2)
+	hostile_types = list(
+		/mob/living/basic/trooper/syndicate/melee/space = 8,
+		/mob/living/basic/trooper/syndicate/ranged/space = 2,
+	)
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
@@ -23,9 +25,11 @@
 	max_wizard_trigger_potency = 7
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/mob/living/simple_animal/hostile/construct/artificer/hostile = 6)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/juggernaut/hostile = 8,\
-						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
+	boss_types = list(/mob/living/basic/construct/artificer/hostile = 6)
+	hostile_types = list(
+		/mob/living/basic/construct/juggernaut/hostile = 8,
+		/mob/living/simple_animal/hostile/construct/wraith/hostile = 6,
+	)
 
 /datum/round_event/portal_storm
 	start_when = 7

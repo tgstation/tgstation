@@ -54,7 +54,17 @@
 		force_wielded = force_wielded, \
 		icon_wielded = "[icon_prefix]1", \
 	)
+	add_headpike_component()
 	update_appearance()
+
+// I dunno man
+/obj/item/spear/proc/add_headpike_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpike)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/spear/update_icon_state()
 	icon_state = "[icon_prefix]0"
@@ -142,7 +152,7 @@
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)
 	explosive.detonate()
-	user.gib()
+	user.gib(DROP_ALL_REMAINS)
 	qdel(src)
 	return BRUTELOSS
 
@@ -223,6 +233,14 @@
 	force_unwielded = 12
 	force_wielded = 20
 
+/obj/item/spear/bonespear/add_headpike_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebone)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /*
  * Bamboo Spear
  */
@@ -237,3 +255,12 @@
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 20)
 	force_unwielded = 10
 	force_wielded = 18
+
+
+/obj/item/spear/bamboospear/add_headpike_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebamboo)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)

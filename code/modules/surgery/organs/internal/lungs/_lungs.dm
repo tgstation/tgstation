@@ -514,6 +514,7 @@
 		if(prob(20))
 			n2o_euphoria = EUPHORIA_ACTIVE
 			breather.emote(pick("giggle", "laugh"))
+			breather.set_drugginess(30 SECONDS)
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
 		return
@@ -837,6 +838,7 @@
 /obj/item/organ/internal/lungs/cybernetic
 	name = "basic cybernetic lungs"
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
+	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5

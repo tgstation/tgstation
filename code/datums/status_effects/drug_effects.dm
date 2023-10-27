@@ -70,7 +70,7 @@
 
 /datum/status_effect/stoned/on_apply()
 	if(!ishuman(owner))
-		CRASH("[type] status effect added to non-human owner: [owner ? owner.type : "null owner"]")
+		return FALSE
 	var/mob/living/carbon/human/human_owner = owner
 	original_eye_color_left = human_owner.eye_color_left
 	original_eye_color_right = human_owner.eye_color_right
@@ -85,7 +85,7 @@
 
 /datum/status_effect/stoned/on_remove()
 	if(!ishuman(owner))
-		stack_trace("[type] status effect being removed from non-human owner: [owner ? owner.type : "null owner"]")
+		return
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis)
 	human_owner.eye_color_left = original_eye_color_left

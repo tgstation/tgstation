@@ -12,7 +12,7 @@
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual_domain
 	can_be_cybercop = FALSE
 	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	health = 1500
+	health = 1600
 	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	maxHealth = 1500
+	maxHealth = 1600
 	true_spawn = FALSE

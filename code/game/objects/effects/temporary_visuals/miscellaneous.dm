@@ -58,7 +58,7 @@
 /obj/effect/temp_visual/dir_setting/firing_effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect"
-	duration = 2
+	duration = 3
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
@@ -74,8 +74,14 @@
 			pixel_y = rand(-1,1)
 	..()
 
-/obj/effect/temp_visual/dir_setting/firing_effect/energy
-	icon_state = "firing_effect_energy"
+/obj/effect/temp_visual/dir_setting/firing_effect/blue
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_blue"
+	duration = 3
+
+/obj/effect/temp_visual/dir_setting/firing_effect/red
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_red"
 	duration = 3
 
 /obj/effect/temp_visual/dir_setting/firing_effect/magic
@@ -592,11 +598,22 @@
 	var/datum/weakref/pinged_person
 	/// The icon state applied to the image created for this ping.
 	var/real_icon_state = "sonar_ping"
+	/// Does the visual follow the creature?
+	var/follow_creature = TRUE
+	/// Creature's X & Y coords, which can either be overridden or kept the same depending on follow_creature.
+	var/creature_x
+	var/creature_y
 
-/obj/effect/temp_visual/sonar_ping/Initialize(mapload, mob/living/looker, mob/living/creature)
+/obj/effect/temp_visual/sonar_ping/Initialize(mapload, mob/living/looker, mob/living/creature, ping_state, follow_creatures = TRUE)
 	. = ..()
 	if(!looker || !creature)
 		return INITIALIZE_HINT_QDEL
+	if(ping_state)
+		real_icon_state = ping_state
+	follow_creature = follow_creatures
+	creature_x = creature.x
+	creature_y = creature.y
+
 	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
@@ -629,8 +646,12 @@
 	if(isnull(looker) || isnull(creature))
 		return PROCESS_KILL
 	modsuit_image.loc = looker.loc
-	modsuit_image.pixel_x = ((creature.x - looker.x) * 32)
-	modsuit_image.pixel_y = ((creature.y - looker.y) * 32)
+	// Long pings follow, short pings stay put. We still need to update for looker.x&y though
+	if(follow_creature)
+		creature_y = creature.y
+		creature_x = creature.x
+	modsuit_image.pixel_x = ((creature_x - looker.x) * 32)
+	modsuit_image.pixel_y = ((creature_y - looker.y) * 32)
 
 /obj/effect/temp_visual/block //color is white by default, set to whatever is needed
 	name = "blocking glow"

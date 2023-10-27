@@ -350,3 +350,7 @@
 /datum/outfit/prey_pod_victim
 	name = "Prey Pod Victim"
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
+
+/obj/effect/mob_spawn/corpse/human/cyber_police
+	name = "Dead Cyber Police"
+	outfit = /datum/outfit/cyber_police

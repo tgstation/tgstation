@@ -15,6 +15,8 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "multiz"
 
+	has_gas_visuals = FALSE
+
 	///Our central icon
 	var/mutable_appearance/center = null
 	///The pipe icon

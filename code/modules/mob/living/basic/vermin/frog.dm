@@ -78,7 +78,7 @@
 /datum/ai_controller/basic_controller/frog
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

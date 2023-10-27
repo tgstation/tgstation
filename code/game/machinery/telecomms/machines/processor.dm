@@ -1,11 +1,10 @@
-/*
-	The processor is a very simple machine that decompresses subspace signals and
-	transfers them back to the original bus. It is essential in producing audible
-	data.
-
-	Link to servers if bus is not present
-*/
-
+/**
+ * The processor is a very simple machine that decompresses subspace signals and
+ * transfers them back to the original bus. It is essential in producing audible
+ * data.
+ *
+ * They'll link to servers if bus is not present, with some delay added to it.
+ */
 /obj/machinery/telecomms/processor
 	name = "processor unit"
 	icon_state = "processor"
@@ -14,16 +13,22 @@
 	density = TRUE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	circuit = /obj/item/circuitboard/machine/telecomms/processor
-	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
+	/// Whether this processor is currently compressing the data,
+	/// or actually decompressing it. Defaults to `FALSE`.
+	var/compressing = FALSE
+
+#define COMPRESSION_AMOUNT_COMPRESSING 100
+#define COMPRESSION_AMOUNT_DECOMPRESSING 0
 
 /obj/machinery/telecomms/processor/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	if(!is_freq_listening(signal))
 		return
 
-	if (!process_mode)
-		signal.data["compression"] = 100 // even more compressed signal
-	else if (signal.data["compression"])
-		signal.data["compression"] = 0 // uncompress subspace signal
+	if(compressing)
+		signal.data["compression"] = COMPRESSION_AMOUNT_COMPRESSING // We compress the signal even further.
+	// Otherwise we just fully decompress it if it was compressed to begin with.
+	else if(signal.data["compression"])
+		signal.data["compression"] = COMPRESSION_AMOUNT_DECOMPRESSING
 
 	if(istype(machine_from, /obj/machinery/telecomms/bus))
 		relay_direct_information(signal, machine_from) // send the signal back to the machine
@@ -31,7 +36,10 @@
 		signal.data["slow"] += rand(5, 10) // slow the signal down
 		relay_information(signal, signal.server_type)
 
-//Preset Processors
+#undef COMPRESSION_AMOUNT_COMPRESSING
+#undef COMPRESSION_AMOUNT_DECOMPRESSING
+
+// Preset Processors
 
 /obj/machinery/telecomms/processor/preset_one
 	id = "Processor 1"

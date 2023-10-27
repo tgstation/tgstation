@@ -8,7 +8,7 @@
 	var/can_respawn = TRUE
 	///Reference to the game this player is participating in.
 	var/datum/ctf_controller/ctf_game
-	///Item dropped on death, 
+	///Item dropped on death,
 	var/death_drop = /obj/effect/powerup/ammo/ctf
 	///Reference to players ckey, used for sending messages to them relating to CTF.
 	var/ckey_reference
@@ -22,19 +22,20 @@
 	var/datum/mind/true_parent = parent
 	player_mob = true_parent.current
 	ckey_reference = player_mob.ckey
-	setup_dusting()
-	
+	register_mob()
+
 /datum/component/ctf_player/PostTransfer()
 	if(!istype(parent, /datum/mind))
 		return COMPONENT_INCOMPATIBLE
 	var/datum/mind/true_parent = parent
 	player_mob = true_parent.current
-	setup_dusting()
+	register_mob()
 
-///CTF players are dusted upon taking damage that puts them into critical or leaving their body.
-/datum/component/ctf_player/proc/setup_dusting()
+/// Called when we get a new player mob, register signals and set up the mob.
+/datum/component/ctf_player/proc/register_mob()
 	RegisterSignal(player_mob, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(damage_type_check))
 	RegisterSignal(player_mob, COMSIG_MOB_GHOSTIZED, PROC_REF(ctf_dust))
+	ADD_TRAIT(player_mob, TRAIT_PERMANENTLY_MORTAL, CTF_TRAIT)
 
 ///Stamina and oxygen damage will not dust a player by themself.
 /datum/component/ctf_player/proc/damage_type_check(datum/source, damage, damage_type)

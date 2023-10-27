@@ -63,7 +63,7 @@
 
 /datum/status_effect/inebriated/tick(seconds_between_ticks)
 	// Drunk value does not decrease while dead or in stasis
-	if(owner.stat == DEAD || IS_IN_STASIS(owner))
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_STASIS))
 		return
 
 	// Every tick, the drunk value decrases by
@@ -182,18 +182,27 @@
 	if(drunk_value >= 91)
 		owner.adjustToxLoss(1)
 		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
-		if(owner.stat == CONSCIOUS && prob(20))
-			// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
-			if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))
-				to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
-
-			else
-				to_chat(owner, span_warning("Just a quick nap..."))
-				owner.Sleeping(90 SECONDS)
+		if(owner.stat == CONSCIOUS)
+			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
 	if(drunk_value >= 101)
 		owner.adjustToxLoss(2)
+
+/datum/status_effect/inebriated/drunk/proc/attempt_to_blackout()
+	var/mob/living/carbon/drunkard = owner
+	if(drunkard.has_trauma_type(/datum/brain_trauma/severe/split_personality/blackout))// prevent ping spamming
+		if(prob(10))
+			to_chat(owner, span_warning("You stumbled and fall over!"))
+			owner.slip(1 SECONDS)
+		return
+	if(drunkard.gain_trauma(/datum/brain_trauma/severe/split_personality/blackout, TRAUMA_LIMIT_ABSOLUTE))
+		drunk_value -= 70 //So that the drunk personality can spice things up without being killed by liver failure
+		return
+	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
+		to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
+	else
+		owner.Sleeping(90 SECONDS)
 
 /// Status effect for being fully drunk (not tipsy).
 /atom/movable/screen/alert/status_effect/drunk

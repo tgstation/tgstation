@@ -121,6 +121,10 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2
 
+/datum/dynamic_ruleset/roundstart/traitorbro/forget_startup()
+	pre_brother_teams = list()
+	return ..()
+
 /datum/dynamic_ruleset/roundstart/traitorbro/pre_execute(population)
 	. = ..()
 	var/num_teams = (get_antag_cap(population)/min_team_size) * (scaled_times + 1) // 1 team per scaling

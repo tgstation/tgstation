@@ -154,6 +154,13 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/chaplain/habit_veil
+	name = "nun veil"
+	desc = "No nunsene clothing."
+	icon_state = "nun_hood_alt"
+	flags_inv = HIDEHAIR | HIDEEARS
+	clothing_flags = SNUG_FIT // can't be knocked off by throwing a paper hat.
+
 /obj/item/clothing/head/chaplain/bishopmitre
 	name = "bishop mitre"
 	desc = "An opulent hat that functions as a radio to God. Or as a lightning rod, depending on who you ask."
@@ -246,7 +253,7 @@
 	var/prefix_index = findtext(raw_message, prefix)
 	if(prefix_index != 1)
 		return FALSE
-	
+
 	var/the_phrase = trim_left(replacetext(raw_message, prefix, ""))
 	var/obj/item/result = items_by_phrase[the_phrase]
 	if(!result)
@@ -336,8 +343,20 @@
 
 /obj/item/clothing/head/hats/hos/cap
 	name = "head of security cap"
-	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
+	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge. Looks a bit stout."
 	icon_state = "hoscap"
+
+/obj/item/clothing/head/hats/hos/cap/Initialize(mapload)
+	. = ..()
+	// Give it a little publicity
+	var/static/list/slapcraft_recipe_list = list(\
+		/datum/crafting_recipe/sturdy_shako,\
+		)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /datum/armor/hats_hos
 	melee = 40
@@ -591,6 +610,83 @@
 	name = "black surgery cap"
 	icon_state = "surgicalcapblack"
 	desc = "A black medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
+
+/obj/item/clothing/head/utility/head_mirror
+	name = "head mirror"
+	desc = "Used by doctors to look into a patient's eyes, ears, and mouth. \
+		A little useless now, given the technology available, but it certainly completes the look."
+	icon_state = "headmirror"
+	body_parts_covered = NONE
+
+/obj/item/clothing/head/utility/head_mirror/examine(mob/user)
+	. = ..()
+	. += span_notice("In a properly lit room, you can use this to examine people's eyes, ears, and mouth <i>closer</i>.")
+
+/obj/item/clothing/head/utility/head_mirror/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & slot_flags)
+		RegisterSignal(user, COMSIG_MOB_EXAMINING_MORE, PROC_REF(examining))
+	else
+		UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_EXAMINING_MORE)
+
+/obj/item/clothing/head/utility/head_mirror/proc/examining(mob/living/examiner, atom/examining, list/examine_list)
+	SIGNAL_HANDLER
+	if(!ishuman(examining) || examining == examiner || examiner.is_blind() || !examiner.Adjacent(examining))
+		return
+	var/mob/living/carbon/human/human_examined = examining
+	if(!human_examined.get_bodypart(BODY_ZONE_HEAD))
+		return
+	if(!examiner.has_light_nearby())
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but it's too dark. Should've invested in a head lamp.")
+		return
+	if(examiner.dir == examining.dir) // disallow examine from behind - every other dir is OK
+		examine_list += span_warning("You attempt to use your [name] to examine [examining]'s head better... but [examining.p_theyre()] facing the wrong way.")
+		return
+
+	var/list/final_message = list("You examine [examining]'s head closer with your [name], you notice [examining.p_they()] [examining.p_have()]...")
+	if(human_examined.is_mouth_covered())
+		final_message += "\tYou can't see [examining.p_their()] mouth."
+	else
+		var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
+		var/pill_count = 0
+		for(var/datum/action/item_action/hands_free/activate_pill/pill in human_examined.actions)
+			pill_count++
+
+		if(pill_count >= 1 && has_tongue)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, and \a [has_tongue]."
+		else if(pill_count >= 1)
+			final_message += "\t[pill_count] pill\s in [examining.p_their()] mouth, but oddly no tongue."
+		else if(has_tongue)
+			final_message += "\t\A [has_tongue] in [examining.p_their()] mouth - go figure."
+		else
+			final_message += "\tNo tongue in [examining.p_their()] mouth, oddly enough."
+
+	if(human_examined.is_ears_covered())
+		final_message += "\tYou can't see [examining.p_their()] ears."
+	else
+		var/obj/item/organ/internal/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
+		if(has_ears)
+			if(has_ears.deaf)
+				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
+			else
+				final_message += "\tA set of [has_ears.damage ? "" : "healthy "][has_ears.name]."
+		else
+			final_message += "\tNo eardrums and empty ear canals... how peculiar."
+
+	if(human_examined.is_eyes_covered())
+		final_message += "\tYou can't see [examining.p_their()] eyes."
+	else
+		var/obj/item/organ/internal/eyes/has_eyes = human_examined.get_organ_slot(ORGAN_SLOT_EYES)
+		if(has_eyes)
+			final_message += "\tA pair of [has_eyes.damage ? "" : "healthy "][has_eyes.name]."
+		else
+			final_message += "\tEmpty eye sockets."
+
+	examine_list += span_notice("<i>[jointext(final_message, "\n")]</i>")
 
 //Engineering
 /obj/item/clothing/head/beret/engi

@@ -247,11 +247,7 @@
 		// So we'll let it leak in, and move the water over.
 		set_recipient_reagents_holder(nutri_reagents)
 		reagents = nutri_reagents
-		process_request(
-			amount = MACHINE_REAGENT_TRANSFER,
-			reagent = null,
-			dir = dir
-		)
+		process_request(dir = dir)
 
 		// Move the leaked water from nutrients to... water
 		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
@@ -285,11 +281,11 @@
 /obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
-	if(istype(Proj , /obj/projectile/energy/floramut))
+	if(istype(Proj , /obj/projectile/energy/flora/mut))
 		mutate()
-	else if(istype(Proj , /obj/projectile/energy/florayield))
+	else if(istype(Proj , /obj/projectile/energy/flora/yield))
 		return myseed.bullet_act(Proj)
-	else if(istype(Proj , /obj/projectile/energy/florarevolution))
+	else if(istype(Proj , /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)

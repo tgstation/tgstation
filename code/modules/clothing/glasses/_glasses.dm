@@ -351,6 +351,18 @@
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
 
+/obj/item/clothing/glasses/sunglasses/Initialize(mapload)
+	. = ..()
+	add_glasses_slapcraft_component()
+
+/obj/item/clothing/glasses/sunglasses/proc/add_glasses_slapcraft_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	icon_state = "sunhudbeer"
@@ -362,6 +374,14 @@
 	icon_state = "sunhudsci"
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
+
+/obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/scienceglassesremoval)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "black gar glasses"

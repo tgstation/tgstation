@@ -62,6 +62,7 @@
 	mask = /obj/item/clothing/mask/surgical
 	neck = /obj/item/camera
 	suit = /obj/item/clothing/suit/apron
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/obsessed/post_equip(mob/living/carbon/human/H)
 	for(var/obj/item/carried_item in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))

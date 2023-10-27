@@ -32,7 +32,7 @@
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 50
-	unique_name = 1
+	unique_name = TRUE
 	gold_core_spawnable = NO_SPAWN
 	death_sound = 'sound/voice/hiss6.ogg'
 	death_message = "lets out a waning guttural screech, green blood bubbling from its maw..."
@@ -91,7 +91,7 @@
 	projectiletype = /obj/projectile/neurotoxin/damaging
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
-	unique_name = 0
+	unique_name = FALSE
 	var/sterile = 1
 	var/plants_off = 0
 	var/egg_cooldown = 30
@@ -160,7 +160,7 @@
 	. = ..()
 	AddElement(/datum/element/cleaning)
 
-/mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
+/mob/living/simple_animal/hostile/alien/maid/AttackingTarget(atom/attacked_target)
 	if(ismovable(target))
 		target.wash(CLEAN_SCRUB)
 		if(istype(target, /obj/effect/decal/cleanable))

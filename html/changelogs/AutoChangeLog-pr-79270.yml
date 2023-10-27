@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "If a mob you are shapeshifted into attempts to grow up into a different kind of mob then you will stop being shapeshifted"

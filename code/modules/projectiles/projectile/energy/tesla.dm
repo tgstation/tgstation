@@ -5,9 +5,9 @@
 	damage = 10 //A worse lasergun
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 	var/zap_range = 3
-	var/power = 10000
+	var/power = 4e6
 
-/obj/projectile/energy/tesla/on_hit(atom/target)
+/obj/projectile/energy/tesla/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	tesla_zap(src, zap_range, power, zap_flags)
 	qdel(src)
@@ -22,7 +22,7 @@
 
 /obj/projectile/energy/tesla/cannon
 	name = "tesla orb"
-	power = 20000
+	power = 8e6
 	damage = 15 //Mech man big
 
 /obj/projectile/energy/tesla_cannon
@@ -32,7 +32,7 @@
 	speed = 1.5
 	var/shock_damage = 5
 
-/obj/projectile/energy/tesla_cannon/on_hit(atom/target)
+/obj/projectile/energy/tesla_cannon/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/victim = target

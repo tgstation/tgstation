@@ -8,11 +8,10 @@
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_HARDLY_WOUNDED,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
 		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_TRANSFORMATION_STING,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTCOLD,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -144,6 +143,10 @@
 		'sound/voice/plasmaman/plasmeme_scream_2.ogg',
 		'sound/voice/plasmaman/plasmeme_scream_3.ogg',
 	)
+
+/datum/species/plasmaman/get_physical_attributes()
+	return "Plasmamen literally breathe and live plasma. They spontaneously combust on contact with oxygen, and besides all the quirks that go with that, \
+		they're very vulnerable to all kinds of physical damage due to their brittle structure."
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

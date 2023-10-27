@@ -1,8 +1,8 @@
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/lobster,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_LOBSTROSITY_FINGER_LUST = 0
 	)
 
@@ -19,14 +19,11 @@
 		/datum/ai_planning_subtree/find_fingers,
 	)
 
-/datum/targetting_datum/basic/lobster
-	stat_attack = HARD_CRIT
-
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if (controller.blackboard[BB_BASIC_MOB_FLEEING])
+	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
 	if (!isnull(controller.blackboard[BB_LOBSTROSITY_TARGET_LIMB]))
 		return
@@ -48,14 +45,20 @@
 		is_vulnerable = TRUE
 		break
 	if (!is_vulnerable)
-		controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, TRUE)
-	if (controller.blackboard[BB_BASIC_MOB_FLEEING])
+		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
+	if (!controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		finish_action(controller = controller, succeeded = TRUE, target_key = target_key) // We don't want to clear our target
 		return
 	return ..()
 
 /datum/ai_planning_subtree/flee_target/lobster
 	flee_behaviour = /datum/ai_behavior/run_away_from_target/lobster
+
+/datum/ai_planning_subtree/flee_target/lobster/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/using_action = controller.blackboard[BB_TARGETTED_ACTION]
+	if (using_action?.IsAvailable())
+		return
+	return ..()
 
 /datum/ai_behavior/run_away_from_target/lobster
 	clear_failed_targets = FALSE
@@ -64,10 +67,11 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(isnull(target))
 		return ..()
+
 	for (var/trait in controller.blackboard[BB_LOBSTROSITY_EXPLOIT_TRAITS])
 		if (!HAS_TRAIT(target, trait))
 			continue
-		controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+		controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
 		finish_action(controller, succeeded = FALSE)
 		return
 

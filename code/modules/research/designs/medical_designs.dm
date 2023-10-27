@@ -1114,6 +1114,13 @@
 	surgery = /datum/surgery/advanced/wing_reconstruction
 	research_icon_state = "surgery_chest"
 
+/datum/design/surgery/advanced_plastic_surgery
+	name = "Advanced Plastic Surgery"
+	desc = "An advanced form of the plastic surgery, allowing oneself to remodel someone's face and voice based off a picture of someones face"
+	surgery = /datum/surgery/plastic_surgery/advanced
+	id = "surgery_advanced_plastic_surgery"
+	research_icon_state = "surgery_head"
+
 /datum/design/surgery/experimental_dissection
 	name = "Experimental Dissection"
 	desc = "An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."

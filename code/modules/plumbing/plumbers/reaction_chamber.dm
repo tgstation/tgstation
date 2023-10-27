@@ -1,5 +1,8 @@
 ///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
 
+/// coefficient to convert temperature to joules. same lvl as acclimator
+#define HEATER_COEFFICIENT 0.05
+
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
 	desc = "Keeps chemicals separated until given conditions are met."
@@ -19,9 +22,6 @@
 
 	///towards which temperature do we build (except during draining)?
 	var/target_temperature = 300
-	///cool/heat power
-	var/heater_coefficient = 0.05 //same lvl as acclimator
-
 
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -35,30 +35,45 @@
 /// Handles properly detaching signal hooks.
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
+
 	UnregisterSignal(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_CLEAR_REAGENTS, COMSIG_REAGENTS_REACTED, COMSIG_QDELETING))
 	return NONE
 
 /// Handles stopping the emptying process when the chamber empties.
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
-	if(holder.total_volume == 0 && emptying) //we were emptying, but now we aren't
+
+	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
-	if(!emptying || reagents.is_reacting) //suspend heating/cooling during emptying phase
-		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
-		reagents.handle_reactions()
+	//half the power for getting reagents in
+	var/power_usage = active_power_usage * 0.5
 
-	use_power(active_power_usage * seconds_per_tick)
+	if(!emptying || reagents.is_reacting)
+		//adjust temperature of final solution
+		var/temp_diff = target_temperature - reagents.chem_temp
+		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
+			reagents.adjust_thermal_energy(temp_diff * HEATER_COEFFICIENT * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+
+		//do other stuff with final solution
+		handle_reagents(seconds_per_tick)
+
+		//full power for doing reactions
+		power_usage *= 2
+
+	use_power(power_usage * seconds_per_tick)
+
+///For subtypes that want to do additional reagent handling
+/obj/machinery/plumbing/reaction_chamber/proc/handle_reagents(seconds_per_tick)
+	return
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	. = ..()
-	if(use_power != NO_POWER_USE)
-		icon_state = initial(icon_state) + "_on"
-	else
-		icon_state = initial(icon_state)
+
+	icon_state = initial(icon_state) + "[use_power != NO_POWER_USE ? "_on" : ""]"
 
 /obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -67,31 +82,29 @@
 		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
-	var/list/data = list()
+	. = list()
 
 	var/list/reagents_data = list()
 	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
 		var/list/reagent_data = list()
 		reagent_data["name"] = initial(required_reagent.name)
-		reagent_data["required_reagent"] = required_reagents[required_reagent]
+		reagent_data["volume"] = required_reagents[required_reagent]
 		reagents_data += list(reagent_data)
 
-	data["reagents"] = reagents_data
-	data["emptying"] = emptying
-	data["temperature"] = round(reagents.chem_temp, 0.1)
-	data["targetTemp"] = target_temperature
-	data["isReacting"] = reagents.is_reacting
-	return data
+	.["reagents"] = reagents_data
+	.["emptying"] = emptying
+	.["temperature"] = round(reagents.chem_temp, 0.1)
+	.["targetTemp"] = target_temperature
+	.["isReacting"] = reagents.is_reacting
 
-/obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
+/obj/machinery/plumbing/reaction_chamber/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
 
-	. = FALSE
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.chemical_name_list)
 			if(!selected_reagent)
 				return TRUE
 
@@ -104,32 +117,41 @@
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
 
-			. = TRUE
+			return TRUE
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
-			. = TRUE
+			return TRUE
 
 		if("temperature")
 			var/target = text2num(params["target"])
 			if(target != null)
-				target_temperature=clamp(target, 0, 1000)
-			.=TRUE
+				target_temperature = clamp(target, 0, 1000)
+			return TRUE
+
+	var/result = handle_ui_act(action, params, ui, state)
+	if(isnull(result))
+		result = FALSE
+	return result
+
+/// For custom handling of ui actions from inside a subtype
+/obj/machinery/plumbing/reaction_chamber/proc/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	return null
 
 ///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting
 /obj/machinery/plumbing/reaction_chamber/chem
 	name = "reaction chamber"
 
-	///If above this pH, we start dumping buffer into it
-	var/acidic_limit = 9
 	///If below this pH, we start dumping buffer into it
-	var/alkaline_limit = 5
+	var/acidic_limit = 5
+	///If above this pH, we start dumping acid into it
+	var/alkaline_limit = 9
 
-	///Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a separate thing. It's a small (50u) beaker
+	///beaker that holds the acidic buffer(50u)
 	var/obj/item/reagent_containers/cup/beaker/acidic_beaker
-	///beaker that holds the alkaline buffer.
+	///beaker that holds the alkaline buffer(50u).
 	var/obj/item/reagent_containers/cup/beaker/alkaline_beaker
 
 /obj/machinery/plumbing/reaction_chamber/chem/Initialize(mapload, bolt, layer)
@@ -147,13 +169,34 @@
 	QDEL_NULL(alkaline_beaker)
 	return ..()
 
-/obj/machinery/plumbing/reaction_chamber/chem/process(seconds_per_tick)
-	//add acidic/alkaine buffer if over/under limit
-	if(reagents.is_reacting && reagents.ph < alkaline_limit)
-		alkaline_beaker.reagents.trans_to(reagents, 1 * seconds_per_tick)
-	if(reagents.is_reacting && reagents.ph > acidic_limit)
-		acidic_beaker.reagents.trans_to(reagents, 1 * seconds_per_tick)
-	..()
+/obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
+	while(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
+		//no power
+		if(machine_stat & NOPOWER)
+			return
+
+		//nothing to react with
+		var/num_of_reagents = length(reagents.reagent_list)
+		if(!num_of_reagents)
+			return
+
+		/**
+		 * figure out which buffer to transfer to restore balance
+		 * if solution is getting too basic(high ph) add some acid to lower it's value
+		 * else if solution is getting too acidic(low ph) add some base to increase it's value
+		 */
+		var/datum/reagents/buffer = reagents.ph > alkaline_limit ? acidic_beaker.reagents : alkaline_beaker.reagents
+		if(!buffer.total_volume)
+			return
+
+		//transfer buffer and handle reactions
+		var/ph_change = (reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph))
+		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents))
+		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
+			return
+
+		//some power for accurate ph balancing
+		use_power(active_power_usage * 0.03 * buffer_amount * seconds_per_tick)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -167,16 +210,16 @@
 	.["reagentAcidic"] = acidic_limit
 	.["reagentAlkaline"] = alkaline_limit
 
-/obj/machinery/plumbing/reaction_chamber/chem/ui_act(action, params)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/plumbing/reaction_chamber/chem/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = TRUE
 
 	switch(action)
 		if("acidic")
-			acidic_limit = round(text2num(params["target"]))
+			acidic_limit = clamp(round(text2num(params["target"])), 0, alkaline_limit)
 		if("alkaline")
-			alkaline_limit = round(text2num(params["target"]))
+			alkaline_limit = clamp(round(text2num(params["target"])), acidic_limit + 0.01, 14)
+		else
+			return FALSE
 
-	return TRUE
 
+#undef HEATER_COEFFICIENT

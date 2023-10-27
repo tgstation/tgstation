@@ -4,4 +4,4 @@
 
 /datum/smite/gib/effect(client/user, mob/living/target)
 	. = ..()
-	target.gib(/* no_brain = */ FALSE)
+	target.gib(DROP_ORGANS|DROP_BODYPARTS)

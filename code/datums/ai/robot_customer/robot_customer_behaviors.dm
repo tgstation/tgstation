@@ -3,7 +3,7 @@
 
 /datum/ai_behavior/find_seat/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
+	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
@@ -44,7 +44,7 @@
 
 /datum/ai_behavior/order_food/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
+	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
 	if(get_turf(seat_marker) == get_turf(customer_pawn))
@@ -75,7 +75,7 @@
 
 	// SPT_PROB 1.5 is about a 40% chance that the tourist will have vocalised at least once every minute.
 	if(SPT_PROB(0.85, seconds_per_tick))
-		var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
+		var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
 
@@ -98,7 +98,7 @@
 
 /datum/ai_behavior/wait_for_food/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
-	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
+	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/mob/living/greytider = controller.blackboard[BB_CUSTOMER_CURRENT_TARGET]
 	//usually if we stop waiting, it's because we're done with the venue. but here we're either beating some dude up
