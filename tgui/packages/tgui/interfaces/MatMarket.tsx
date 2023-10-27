@@ -15,7 +15,7 @@ type Material = {
 };
 
 type Data = {
-  orderingPrive: BooleanLike; // you will need to import this
+  orderingPrive: BooleanLike;
   canOrderCargo: BooleanLike;
   creditBalance: number;
   orderBalance: number;
@@ -33,7 +33,7 @@ export const MatMarket = (props, context) => {
     orderBalance,
     materials = [],
     catastrophe,
-  } = data; // better to destructure here (style nit)
+  } = data;
   return (
     <Window width={980} height={630}>
       <Window.Content scrollable>
