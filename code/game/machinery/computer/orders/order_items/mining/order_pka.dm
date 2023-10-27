@@ -26,7 +26,7 @@
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/gun/hook //monke edit
-	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/hook
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/grappling
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/range
