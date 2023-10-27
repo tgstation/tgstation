@@ -156,6 +156,7 @@
 /datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	return
 
+///Metabolizes a portion of the reagent after on_mob_life() is called
 /datum/reagent/proc/metabolize_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(reagent_removal_skip_list))
 		return
@@ -212,7 +213,7 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	return
 
-/// clears a portion of the reagent after on_mob_dead() is called
+///Metabolizes a portion of the reagent after on_mob_dead() is called
 /datum/reagent/proc/metabolize_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	if(length(reagent_removal_skip_list))
 		return
