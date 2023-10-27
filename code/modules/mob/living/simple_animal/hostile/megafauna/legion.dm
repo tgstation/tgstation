@@ -202,7 +202,7 @@
 
 
 ///In addition to parent functionality, this will also turn the target into a small legion if they are unconscious.
-/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(!. || !ishuman(target))
 		return
@@ -269,14 +269,14 @@
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
 	armor_type = /datum/armor/structure_legionturret
+	//Compared with the targeted mobs. If they have the faction, turret won't shoot.
+	faction = list(FACTION_MINING)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
 	var/initial_firing_time = 18
 	///How long it takes between shooting the tracer and the projectile.
 	var/shot_delay = 8
-	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
-	var/faction = list(FACTION_MINING)
 
 /datum/armor/structure_legionturret
 	laser = 100
@@ -324,7 +324,6 @@
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
 	range = 6
-	eyeblur = 0
 	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion

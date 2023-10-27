@@ -247,6 +247,20 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/sinew
 
+/obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+
+	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
+	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
+	var/static/list/slapcraft_recipe_list = list(\
+		/datum/crafting_recipe/goliathcloak, /datum/crafting_recipe/skilt, /datum/crafting_recipe/drakecloak,\
+		)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/stack/sheet/sinew/wolf
 	name = "wolf sinew"
 	desc = "Long stringy filaments which came from the insides of a wolf."
@@ -296,6 +310,16 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/ashdrake
+
+/obj/item/stack/sheet/animalhide/ashdrake/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/drakecloak)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 //Step one - dehairing.
 
@@ -354,8 +378,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	AddComponent(/datum/component/bakeable, /obj/item/stack/sheet/leather, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/stack/sheet/wethide/burn()
-	visible_message(span_notice("[src] burns up, leaving a sheet of leather behind!"))
-	new /obj/item/stack/sheet/leather(loc) // only one sheet remains to incentivise not burning your wethide to dry it
+	visible_message(span_notice("[src] dries up!"))
+	new /obj/item/stack/sheet/leather(loc, amount) // all the sheets to incentivize not losing your whole stack by accident
 	qdel(src)
 
 /obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -364,6 +388,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/wethide/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	wetness--
 	if(wetness == 0)
-		new /obj/item/stack/sheet/leather(drop_location(), 1)
+		new /obj/item/stack/sheet/leather(drop_location(), amount)
 		wetness = initial(wetness)
 		use(1)

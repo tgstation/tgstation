@@ -152,11 +152,13 @@
 	if(player_mob.dna.species.outfit_important_for_life)
 		player_mob.set_species(/datum/species/human)
 
-	player_mob.AddComponent( \
-		/datum/component/temporary_body, \
-		old_mind = new_team_member.mob.mind, \
-		old_body = new_team_member.mob.mind.current, \
-	)
+	var/datum/mind/new_member_mind = new_team_member.mob.mind
+	if(new_member_mind?.current)
+		player_mob.AddComponent( \
+			/datum/component/temporary_body, \
+			old_mind = new_member_mind, \
+			old_body = new_member_mind.current, \
+		)
 
 	player_mob.ckey = new_team_member.ckey
 	if(isnull(ctf_player_component))

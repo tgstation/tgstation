@@ -63,24 +63,15 @@
 	damage = 15
 	paralyze = 10
 
-/obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
 	explosion(target, devastation_range = -1, light_impact_range = 1, explosion_cause = src)
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	var/tile_dropoff = 0.45
-	var/tile_dropoff_s = 0.25
-
-/obj/projectile/bullet/pellet/Range()
-	..()
-	if(damage > 0)
-		damage -= tile_dropoff
-	if(stamina > 0)
-		stamina -= tile_dropoff_s
-	if(damage < 0 && stamina < 0)
-		qdel(src)
+	damage_falloff_tile = -0.45
+	stamina_falloff_tile = -0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"

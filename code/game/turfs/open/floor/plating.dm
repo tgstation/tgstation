@@ -177,7 +177,7 @@
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	return
 
 //reinforced plating deconstruction states

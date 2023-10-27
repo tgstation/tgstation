@@ -76,6 +76,7 @@
 #define ROLE_SERVANT_GOLEM "Servant Golem"
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
 #define ROLE_WIZARD_APPRENTICE "apprentice"
+#define ROLE_SYNDICATE_MONKEY "Syndicate Monkey Agent"
 
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
