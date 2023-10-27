@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(movement)
 		var/list/new_bucket = list(list(target_time, buckets[string_time]))
 		BINARY_INSERT_DEFINE(new_bucket, sorted_buckets, SORT_VAR_NO_TYPE, list(target_time), SORT_FIRST_INDEX, COMPARE_KEY)
 
-	buckets[string_time] |= loop
+	buckets[string_time] += loop
 
 /datum/controller/subsystem/movement/proc/dequeue_loop(datum/move_loop/loop)
 	var/list/our_entries = buckets["[loop.timer]"]
