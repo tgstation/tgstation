@@ -977,8 +977,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	if(istype(weapon, /obj/item/chameleon))
-		var/obj/item/chameleon/C = weapon
-		C.make_copy(source, user)
+		var/obj/item/chameleon/chameleon_weapon = weapon
+		chameleon_weapon.make_copy(source, user)
 
 	return open_storage_on_signal(source, user)
 
