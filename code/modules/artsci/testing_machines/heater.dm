@@ -30,9 +30,9 @@
 	var/state_to_use = ""
 	switch(port.temperature)
 		if(BODYTEMP_HEAT_WARNING_1 to INFINITY)
-			state_to_use = "pad_hot"
+			state_to_use = "pad_on" // MONKESTATION EDIT ART_SCI_OVERRIDE
 		if(-INFINITY to BODYTEMP_COLD_WARNING_1)
-			state_to_use = "pad_cold"
+			state_to_use = "pad_on" // MONKESTATION EDIT ART_SCI_OVERRIDE
 		else
 			state_to_use = "pad_norm"
 
@@ -46,8 +46,22 @@
 	. = ..()
 	if(!initial(icon))
 		return
-	var/mutable_appearance/pipe = new(initial(icon))
+	var/mutable_appearance/pipe = new('icons/obj/machines/atmospherics/heatingpad.dmi')
 	. += get_pipe_image(pipe, "pipe", dir, COLOR_LIME, piping_layer)
+
+	// MONKESTATION EDIT START ART_SCI_OVERRIDE
+	var/datum/gas_mixture/port = airs[1]
+	if(!port?.total_moles())
+		return
+	switch(port.temperature)
+		if(BODYTEMP_HEAT_WARNING_1 to INFINITY)
+			. += emissive_appearance(icon, "heat+3", src)
+			. += mutable_appearance(icon, "heat+3", src)
+		if(-INFINITY to BODYTEMP_COLD_WARNING_1)
+			. += emissive_appearance(icon, "heat-3", src)
+			. += mutable_appearance(icon, "heat-3", src)
+			
+	// MONKESTATION EDIT END ART_SCI_OVERRIDE
 
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad/RefreshParts()
 	. = ..()

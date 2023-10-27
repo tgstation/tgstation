@@ -11,6 +11,7 @@ This adds a modular overrides to the art sci pr on tgstation
 
 ### TG Proc/File Changes:
 	- code\modules\artsci\artifact_datum.dm
+	- code\modules\artsci\testing_machines\heater.dm
 <!-- If you had to edit, or append to any core procs in the process of making this PR, list them here. APPEND: Also, please include any files that you've changed. .DM files that is. -->
 
 ### Defines:

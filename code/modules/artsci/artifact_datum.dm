@@ -85,11 +85,12 @@
 			holder.icon = artifact_origin.icon_file_small //Monkestation edit ART_SCI_OVERRIDES
 			dat_icon = "[artifact_origin.sprite_name]-item-small-[rand(1,artifact_origin.max_item_icons_small)]" //Monkestation edit ART_SCI_OVERRIDES
 	holder.icon_state = dat_icon
-
+	
 	//Monkestation edit start ART_SCI_OVERRIDES
 	if(artifact_origin.type_name == ORIGIN_WIZARD)
 		extra_effect = mutable_appearance(holder.icon, "[holder.icon_state]-gem", offset_spokesman = holder)
 		extra_effect.color = rgb(rand(artifact_origin.overlay_red_minimum,artifact_origin.overlay_red_maximum),rand(artifact_origin.overlay_green_minimum,artifact_origin.overlay_green_maximum),rand(artifact_origin.overlay_blue_minimum,artifact_origin.overlay_blue_maximum))
+	holder.update_appearance()
 	//Monkestation edit end ART_SCI_OVERRIDES
 	act_effect = mutable_appearance(holder.icon, "[holder.icon_state]fx", offset_spokesman = holder, alpha = rand(artifact_origin.overlay_alpha_minimum, artifact_origin.overlay_alpha_maximum))
 	act_effect.color = rgb(rand(artifact_origin.overlay_red_minimum,artifact_origin.overlay_red_maximum),rand(artifact_origin.overlay_green_minimum,artifact_origin.overlay_green_maximum),rand(artifact_origin.overlay_blue_minimum,artifact_origin.overlay_blue_maximum))
@@ -111,8 +112,7 @@
 	for(var/datum/artifact_trigger/trigger in triggers)
 		trigger.amount = max(trigger.base_amount,trigger.base_amount + (trigger.max_amount - trigger.base_amount) * (potency/100))
 		trigger.range = trigger.amount + (trigger.hint_range * 2)
-	holder.update_appearance()
-	
+
 /datum/component/artifact/proc/setup()
 	return
 

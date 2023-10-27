@@ -49410,11 +49410,11 @@
 /area/station/cargo/miningoffice)
 "rKB" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
