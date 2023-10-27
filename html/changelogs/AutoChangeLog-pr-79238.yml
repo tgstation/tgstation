@@ -1,4 +1,0 @@
-author: "Xackii"
-delete-after: True
-changes:
-  - bugfix: "Fixed gorilla attack cooldown. Now attacking speed to mobs is the same as attacking speed to objects."
