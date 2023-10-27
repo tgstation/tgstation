@@ -9408,9 +9408,6 @@
 /area/station/cargo/miningdock)
 "bKe" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
@@ -16508,7 +16505,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/ladder,
 /obj/structure/railing{
-	dir = 9;
 	layer = 3.1
 	},
 /turf/open/openspace,
@@ -20777,7 +20773,6 @@
 	dir = 1
 	},
 /obj/structure/railing{
-	dir = 10;
 	layer = 3.1
 	},
 /turf/open/openspace,
@@ -26553,7 +26548,6 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 9;
 	layer = 3.1
 	},
 /turf/open/floor/plating,
@@ -43294,14 +43288,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
-"mQi" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
-/obj/structure/railing{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/station/engineering/atmos)
 "mQk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -44880,16 +44866,6 @@
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
-"nqB" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "nqG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -46345,9 +46321,6 @@
 /area/station/bitrunning/den)
 "nPp" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "nPv" = (
@@ -52421,7 +52394,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/railing{
-	dir = 9;
 	layer = 3.1
 	},
 /obj/structure/railing{
@@ -53543,9 +53515,14 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qir" = (
-/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/plastic,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
 "qit" = (
@@ -53776,7 +53753,6 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 9;
 	layer = 3.1
 	},
 /turf/open/floor/plating,
@@ -68350,9 +68326,14 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "uQP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 5
+	},
+/obj/structure/railing{
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
@@ -115437,7 +115418,7 @@ hZr
 pHM
 hZr
 djX
-mQi
+hYn
 ixc
 ixc
 bNz
@@ -117241,7 +117222,7 @@ nPp
 gTl
 bKe
 eno
-nqB
+qud
 vXM
 vXM
 mzx
