@@ -18278,6 +18278,7 @@
 	},
 /area/station/engineering/engine_smes)
 "fNA" = (
+/obj/structure/sign/warning/bodysposal/directional/north,
 /turf/open/openspace,
 /area/station/medical/medbay/central)
 "fNK" = (
@@ -54668,6 +54669,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "rzS" = (
 /obj/structure/sign/departments/chemistry/pharmacy/directional/west,
+/obj/structure/sign/warning/bodysposal/directional/south,
 /turf/open/openspace,
 /area/station/medical/medbay/lobby)
 "rAr" = (
@@ -64363,10 +64365,6 @@
 "uJt" = (
 /turf/open/floor/carpet,
 /area/station/service/chapel)
-"uJO" = (
-/obj/machinery/porta_turret/aux_base,
-/turf/closed/wall/r_wall,
-/area/station/security/lockers)
 "uJX" = (
 /obj/structure/closet/firecloset,
 /obj/item/radio/intercom/directional/north,
@@ -231349,7 +231347,7 @@ tGr
 tGr
 tGr
 tGr
-uJO
+bDu
 bDu
 bDu
 bDu
