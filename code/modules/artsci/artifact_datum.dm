@@ -116,6 +116,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
 	RegisterSignal(parent, COMSIG_STICKER_STICKED, PROC_REF(on_analysis))
 	RegisterSignal(parent, COMSIG_STICKER_UNSTICKED, PROC_REF(deanalyze))
+	RegisterSignal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(Irradiating))
 
 /datum/component/artifact/UnregisterFromParent()
 	SSartifacts.artifacts -= parent
@@ -151,7 +152,7 @@
 
 /datum/component/artifact/proc/Artifact_Destroyed(atom/source, silent=FALSE)
 	SIGNAL_HANDLER
-	//UnregisterSignal(holder, COMSIG_IN_RANGE_OF_IRRADIATION)
+	UnregisterSignal(holder, COMSIG_IN_RANGE_OF_IRRADIATION)
 	if(!silent && !QDELETED(holder))
 		holder.loc.visible_message(span_warning("[holder] [artifact_origin.destroy_message]"))
 	Deactivate(silent=TRUE)
@@ -214,12 +215,10 @@
 		return
 	Touched(null, user)
 
-//doesnt work
-/*/datum/artifact/proc/Irradiating(atom/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
+/datum/artifact/proc/Irradiating(atom/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER
-	to_chat(world,"[get_perceived_radiation_danger(pulse_information,insulation_to_target)]")
 	if(!active)
-		Stimulate(STIMULUS_RADIATION, get_perceived_radiation_danger(pulse_information,insulation_to_target)*2)*/
+		Stimulate(STIMULUS_RADIATION, get_perceived_radiation_danger(pulse_information,insulation_to_target)*2)
 
 /datum/component/artifact/proc/attack_by(atom/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
