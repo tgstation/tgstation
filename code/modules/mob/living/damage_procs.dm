@@ -51,6 +51,7 @@
 				if(actual_hit.receive_damage(
 					brute = damage_amount,
 					burn = 0,
+					forced = forced,
 					wound_bonus = wound_bonus,
 					bare_wound_bonus = bare_wound_bonus,
 					sharpness = sharpness,
@@ -68,6 +69,7 @@
 				if(actual_hit.receive_damage(
 					brute = 0,
 					burn = damage_amount,
+					forced = forced,
 					wound_bonus = wound_bonus,
 					bare_wound_bonus = bare_wound_bonus,
 					sharpness = sharpness,
@@ -154,6 +156,10 @@
 			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
+
+/// return the total damage of all types which update your health
+/mob/living/proc/get_total_damage(precision = DAMAGE_PRECISION)
+	return round(getBruteLoss() + getFireLoss() + getToxLoss() + getOxyLoss() + getCloneLoss(), precision)
 
 /// Applies multiple damages at once via [apply_damage][/mob/living/proc/apply_damage]
 /mob/living/proc/apply_damages(

@@ -795,7 +795,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 	switch(action)
-		if(NOTIFY_ATTACK)
+		if(NOTIFY_PLAY)
 			target.attack_ghost(ghost_owner)
 		if(NOTIFY_JUMP)
 			var/turf/target_turf = get_turf(target)

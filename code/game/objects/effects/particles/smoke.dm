@@ -18,6 +18,9 @@
 /particles/smoke/burning
 	position = list(0, 0, 0)
 
+/particles/smoke/burning/fireplace
+	position = list(0, 29, 0)
+
 /particles/smoke/burning/small
 	spawning = 1
 	scale = list(0.8, 0.8)
