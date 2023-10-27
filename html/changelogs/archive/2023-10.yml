@@ -1062,3 +1062,26 @@
       able to pass. Also they screech now.
   timothymtorres:
   - qol: Add smoke particles to burning fireplace
+2023-10-27:
+  FlufflesTheDog:
+  - bugfix: Wigs now properly follow your head when you're any non-standard height
+  Hatterhat:
+  - qol: Examining an ammo box (incl. magazines) now tells you the top loaded round,
+      so if you have different ammo types in different magazines, you can at least
+      try to figure out which one is which.
+  - spellcheck: Ammo boxes (incl. magazines) can now be set to use different phrasing
+      for their ammunition (e.g. cartridges, shells, etc. instead of just mixing "rounds"
+      and "shells").
+  Jacquerel:
+  - bugfix: Dying when using (most) shapeshift spells will now kill you rather than
+      having you pop out of the corpse of your previous form.
+  - bugfix: Damage will now be accurately carried between forms rather than being
+      slightly reduced upon each transformation.
+  Watermelon914:
+  - rscadd: Reworked the colour schemes for the minor and major announcements as well
+      as their layout
+  - rscdel: Rolled back changes to deadchat notifications
+  - admin: Admins can now select the colour of their announcements as well as the
+      subheader when creating a command report.
+  mc-oofert:
+  - bugfix: venus human traps no longer die when on weeds
