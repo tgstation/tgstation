@@ -378,15 +378,19 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 		var/mob/living/trader = parent
 		trader.say(trader_data.return_trader_phrase(TRADER_NOT_BUYING_ANYTHING))
 		return
+
+	var/list/buy_info = list(span_green("I'm willing to buy the following:"))
+
 	var/list/product_info
-	to_chat(customer, span_green("I'm willing to buy the following; "))
 	for(var/obj/item/thing as anything in wanted_items)
 		product_info = wanted_items[thing]
 		var/tern_op_result = (product_info[TRADER_PRODUCT_INFO_QUANTITY] == INFINITY ? "as many as I can." : "[product_info[TRADER_PRODUCT_INFO_QUANTITY]]") //Coder friendly string concat
 		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Zero demand
-			to_chat(customer, span_notice("[span_red("(DOESN'T WANT MORE)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_red("[tern_op_result]")] more."))
+			buy_info += span_notice("&bull; [span_red("(DOESN'T WANT MORE)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_red("[tern_op_result]")] more.")
 		else
-			to_chat(customer, span_notice("[initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_green("[tern_op_result]")]"))
+			buy_info += span_notice("&bull; [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name][product_info[TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION]]; willing to buy [span_green("[tern_op_result]")]")
+
+	to_chat(customer, examine_block(buy_info.Join("\n")))
 
 ///Displays to the customer what the trader is selling and how much is in stock
 /datum/component/trader/proc/trader_sells_what(mob/customer)
@@ -396,15 +400,16 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	if(!length(products))
 		trader.say(trader_data.return_trader_phrase(TRADER_NOT_SELLING_ANYTHING))
 		return
+	var/list/sell_info = list(span_green("I'm currently selling the following:"))
 	var/list/product_info
-	to_chat(customer, span_green("I'm currently selling the following; "))
 	for(var/obj/item/thing as anything in products)
 		product_info = products[thing]
 		var/tern_op_result = (product_info[TRADER_PRODUCT_INFO_QUANTITY] == INFINITY ? "an infinite amount" : "[product_info[TRADER_PRODUCT_INFO_QUANTITY]]") //Coder friendly string concat
 		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Out of stock
-			to_chat(customer, span_notice("[span_red("(OUT OF STOCK)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_red("[tern_op_result]")] left in stock"))
+			sell_info += span_notice("&bull; [span_red("(OUT OF STOCK)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_red("[tern_op_result]")] left in stock")
 		else
-			to_chat(customer, span_notice("[initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_green("[tern_op_result]")] left in stock"))
+			sell_info += span_notice("&bull; [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_green("[tern_op_result]")] left in stock")
+	to_chat(customer, examine_block(sell_info.Join("\n")))
 
 ///Sets quantity of all products to initial(quanity); this proc is currently called during initialize
 /datum/component/trader/proc/restock_products()
