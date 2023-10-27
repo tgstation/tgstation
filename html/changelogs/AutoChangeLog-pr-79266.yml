@@ -1,0 +1,4 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - balance: "Sutures now heal a percentage of basic/animal max health instead of a flat amount."
