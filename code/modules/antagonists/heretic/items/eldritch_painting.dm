@@ -24,7 +24,7 @@
 	// This stops people hiding their sneaky posters behind signs
 	layer = CORGI_ASS_PIN_LAYER
 	// A basic proximity sensor
-	var/datum/proximity_monitor/advanced/eldritch_painting/base_painting
+	var/datum/proximity_monitor/advanced/eldritch_painting/painting_proximity_sensor
 	// Set to false since we don't want this to persist
 	persistence_id = FALSE
 
@@ -51,13 +51,13 @@
 	timeout = 5 MINUTES
 
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
-	base_painting = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
+	painting_proximity_sensor = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
 	return ..()
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-	to_chat(user, span_notice("laugher echoes through your mind"))
-	QDEL_NULL(base_painting)
+	to_chat(user, span_notice("laughter echoes through your mind"))
+	QDEL_NULL(painting_proximity_sensor)
 	qdel(src)
 
 /obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
@@ -80,6 +80,8 @@
 
 // Applies an affect on view
 /datum/proximity_monitor/advanced/eldritch_painting
+	var/applied_trauma = /datum/brain_trauma/severe/weeping
+	var/text_to_display = "Oh what arts! She is so fair, and he...HE WEEPS!!!"
 
 /datum/proximity_monitor/advanced/eldritch_painting/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	. = ..()
@@ -92,12 +94,12 @@
 /datum/proximity_monitor/advanced/eldritch_painting/proc/on_seen(mob/living/carbon/human/viewer)
 	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
 		return
-	if (viewer.has_trauma_type(/datum/brain_trauma/severe/weeping))
+	if (viewer.has_trauma_type(applied_trauma))
 		return
 	if(IS_HERETIC(viewer))
 		return
-	to_chat(viewer, span_notice("Wow, what a nice painting! She is so fair, and HE WEEPS STILL!!!"))
-	viewer.gain_trauma(/datum/brain_trauma/severe/weeping, TRAUMA_RESILIENCE_ABSOLUTE)
+	to_chat(viewer, span_notice(text_to_display))
+	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /*
  * A brain trauma that this eldritch paintings apply
@@ -141,8 +143,7 @@
 	name = "The First Desire"
 	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
 	icon_state = "frame-empty"
-	// A basic proximity sensor
-	var/datum/proximity_monitor/advanced/eldritch_painting/desire/desire_painting
+	/datum/proximity_monitor/advanced/eldritch_painting/desire/painting_proximity_sensor
 
 // Moodlets used to track hunger and provide feedback
 /datum/mood_event/eldritch_painting/desire_heretic
@@ -150,16 +151,12 @@
 	mood_change = -2
 	timeout = 1 MINUTES
 
-/obj/structure/sign/painting/eldritch/desire/Initialize(mapload, dir, building)
-	desire_painting = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
-	return ..()
+/datum/mood_event/eldritch_painting/desire_examine
+	description = "A hunger kept at bay..."
+	mood_change = 3
+	timeout = 1 MINUTES
 
-/obj/structure/sign/painting/eldritch/desire/wirecutter_act(mob/living/user, obj/item/I)
-	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-	to_chat(user, span_notice("A hungering echo fills your mind"))
-	QDEL_NULL(desire_painting)
-	qdel(src)
-
+// The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/desire/examine(mob/living/carbon/user)
 	if(IS_HERETIC(user))
 		// If they already have the negative moodlet return
@@ -185,21 +182,23 @@
 		to_chat(user, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 		// Adds a negative mood event to our heretic
 		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
-	// Do they have the mood event added with the hallucination?
+	// Do they have the mood event added on examine, if so return
+	if ("respite_eldritch_hunger" in user.mob_mood.mood_events)
+		to_chat(user, span_notice("You are still full from your last viewing!"))
+		return
 	if (user.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
+		// Gives them some nutrition
+		user.adjust_nutrition(50)
+		to_chat(user, warning("You feel a searing pain in your stomach!"))
+		user.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
+		to_chat(user, span_notice("You feel less hungry, but more empty somehow?"))
+		user.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
+
 
 // Specific proximity monitor for The First Desire or /obj/item/wallframe/painting/eldritch/desire
 /datum/proximity_monitor/advanced/eldritch_painting/desire
-
-/datum/proximity_monitor/advanced/eldritch_painting/desire/on_seen(mob/living/carbon/human/viewer)
-	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
-		return
-	if (viewer.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
-		return
-	if(IS_HERETIC(viewer))
-		return
-	to_chat(viewer, span_notice("Oh, what arts! Though it does make me hungry, maybe there is an organ nearby?"))
-	viewer.gain_trauma(/datum/brain_trauma/severe/flesh_desire, TRAUMA_RESILIENCE_ABSOLUTE)
+	applied_trauma = /datum/brain_trauma/severe/flesh_desire
+	text_to_display = "What an artwork, just looking at it makes me hunger...."
 
 /*
  * A brain trauma that this eldritch paintings apply
@@ -212,7 +211,7 @@
 	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
 	lose_text = span_notice("Your stomach no longer craves flesh, and your tongue feels duller.")
 	/// How much faster we loose hunger
-	var/hunger_rate = 10
+	var/hunger_rate = 15
 
 /datum/brain_trauma/severe/flesh_desire/on_gain()
 	// Allows them to eat faster, mainly for flavor
@@ -228,7 +227,7 @@
 
 /datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
 	// Causes them to need to eat at 10x the normal rate
-	owner.adjust_nutrition(hunger_rate * HUNGER_FACTOR)
+	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
 	if(prob(2))
 		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
 
