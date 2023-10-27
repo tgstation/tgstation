@@ -1,8 +1,9 @@
-#define ELDRITCH_PAINTING "eldritch_painting_mood"
 
+// The sister and He Who Wept eldritch painting
+// All eldritch paintings are based on this one, with some light changes
 /obj/item/wallframe/painting/eldritch
 	name = "The sister and He Who Wept"
-	desc = "A perfect artwork showing a beutiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
+	desc = "A perfect artwork showing a beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
 	icon = 'icons/obj/signs.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
@@ -12,10 +13,9 @@
 
 /obj/structure/sign/painting/eldritch
 	name = "The sister and He Who Wept"
-	desc = "A perfect artwork showing a beutiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
+	desc = "A perfect artwork showing a beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
-	base_icon_state = "frame"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
@@ -31,16 +31,26 @@
 	persistence_id = FALSE
 
 // Mood applied for ripping the painting
+// These moods are here to check or multiple things and provide user feedback
 /datum/mood_event/eldritch_painting
 	description = "YOU, I SHOULD NOT HAVE DONE THAT!!!"
 	mood_change = -6
-	category = ELDRITCH_PAINTING
 	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/weeping
-	description = "I MUST SEE THE HIM AGAIN, I MUST GAZE UPON THE ARTS!"
-	mood_change = -2
-	timeout = 1 MINUTES
+	description = "HE IS HERE, AND HE WEEPS!"
+	mood_change = -3
+	timeout = 5 MINUTES
+
+/datum/mood_event/eldritch_painting/weeping_heretic
+	description = "Oh such arts! They truly inspire me!"
+	mood_change = 5
+	timeout = 5 MINUTES
+
+/datum/mood_event/eldritch_painting/weeping_withdrawl
+	description = "My mind is clear from his influence."
+	mood_change = 1
+	timeout = 5 MINUTES
 
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
 	base_painting = new(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
@@ -49,11 +59,11 @@
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	var/rips = 0
 	// Has the user already ripped up this painting once?
-	if(user.mob_mood.has_mood_of_category(ELDRITCH_PAINTING))
+	if("ripped_eldritch_painting" in user.mob_mood.mood_events)
 		return
 	// Adds one to the amount of rips
 	rips +=1
-	user.add_mood_event(/datum/mood_event/eldritch_painting)
+	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
 	to_chat(user, span_notice("IT STILL STANDS [rip_resistance-rips] MORE HAVE TO TRY!!!"))
 	if(rip_resistance>rips)
 		QDEL_NULL(base_painting)
@@ -61,20 +71,27 @@
 
 /obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
 	if(IS_HERETIC(user))
+		// If they already have the positive moodlet return
+		if("heretic_eldritch_painting" in user.mob_mood.mood_events)
+			return
 		to_chat(user, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
-	if(user.has_trauma_type(/datum/brain_trauma/severe/weeping))
+		// Adjusts every hallucination by -300, thus removing them if we have any
+		user.adjust_hallucinations(-300 SECONDS)
+		// Adds a very good mood event to the heretic
+		user.add_mood_event("heretic_eldritch_painting", /datum/mood_event/eldritch_painting/weeping_heretic)
+	// Do they have the mood event added with the hallucination?
+	if("eldritch_weeping" in user.mob_mood.mood_events)
 		to_chat(user, span_notice("Respite, for now...."))
-	user.adjust_hallucinations(user.hallucinations)
+		// Remove the mood event associated with the hallucinations
+		user.mob_mood.mood_events.Remove("eldritch_weeping")
+		// Add a mood event that causes the hallucinations to not trigger anymore
+		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
 
 /obj/structure/sign/painting/eldritch/Destroy()
 	QDEL_NULL(base_painting)
 	return ..()
 
-/*
- * Applies an affect on view
- *
- * - Applies affects on examine
- */
+// Applies an affect on view
 /datum/proximity_monitor/advanced/eldritch_painting
 
 /datum/proximity_monitor/advanced/eldritch_painting/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
@@ -97,6 +114,7 @@
 
 /*
  * The brain traumas that these eldritch paintings apply
+ * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
  */
 /datum/brain_trauma/severe/weeping
 	name = "The Weeping"
@@ -108,27 +126,23 @@
 /datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
-	if(has_hallucination)
+	// If they have the weeping withdrawl mood event return
+	if("weeping_withdrawl" in owner.mob_mood.mood_events)
 		return
-	owner.add_mood_event(/datum/mood_event/eldritch_painting/weeping)
-	if(times_fired>600)
-		owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
+	// If they already have the weeping mood event return, if they don't give them it
+	if("eldritch_weeping" in owner.mob_mood.mood_events)
+		return
+	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
 	..()
 
 /datum/brain_trauma/severe/weeping/on_gain()
+	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
 	..()
 
 /datum/brain_trauma/severe/weeping/on_lose()
-	owner.adjust_hallucinations(-300 SECONDS)
+	to_chat(owner, span_notice("You feel the tendrils of something dark slip from your mind..."))
+	owner.mob_mood.mood_events.Remove("eldritch_weeping")
 	..()
 
-
-
-
-
-
-
-
-
-#undef ELDRITCH_PAINTING
