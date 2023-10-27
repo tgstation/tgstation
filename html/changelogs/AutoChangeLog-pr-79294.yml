@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "The Demonic Frost-Miner will no longer run around destroying the corpses in its arena the moment the round begins."

@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Mobs without the \"advanced tool user\" trait - such as monkeys - are no longer able to interact with camera consoles."
