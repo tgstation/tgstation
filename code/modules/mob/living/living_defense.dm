@@ -555,6 +555,13 @@
 	if(methods & INGEST)
 		taste(source)
 
+	if(methods & VAPOR)
+		if (can_breathe_reagents())
+			methods |= INHALE
+
+	else if(methods == INHALE && !can_breathe_reagents()) // ONLY inhale
+		return
+
 	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/reagent in reagents)
