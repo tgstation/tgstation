@@ -1,0 +1,8 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - rscadd: "Centcom map now has nav support"
+  - rscadd: "Icebox now has cryo signs in spots to point towards the room, because its on lower Z level."
+  - bugfix: "Fixed railings on Delta, Meta, Icebox."
+  - rscdel: "Lots of railings on Northstar"
+  - rscadd: "Icebox now has signs next to the stairs to the morgue to help indicate where the Morgue is (z level problems and navigate)"
