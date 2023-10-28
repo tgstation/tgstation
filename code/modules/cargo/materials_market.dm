@@ -258,7 +258,7 @@
 				// Check if this order exceeded the market limit
 				var/prior_sheets = current_order.pack.contains[sheet_to_buy]
 				if(prior_sheets + quantity > SSstock_market.materials_quantity[material_bought] )
-					say("There is not enough sheets in the market! Please wait for them to arrive before ordering more.")
+					say("There aren't enough sheets on the market! Please wait for more sheets to be traded before adding more.")
 					playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
 					return
 
