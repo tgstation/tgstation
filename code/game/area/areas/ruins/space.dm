@@ -20,7 +20,7 @@
 // Ruin solars define, /area/solars was moved to /area/station/solars, causing the solars specific areas to lose their properties
 /area/ruin/space/solars
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -310,7 +310,7 @@
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	sound_environment = SOUND_AREA_SPACE
 
 /area/ruin/space/ancientstation/charlie/storage
@@ -534,7 +534,7 @@
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
 	icon_state = "DJ"
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/djstation/service
@@ -682,3 +682,13 @@
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
+
+//garbage trucks
+/area/ruin/space/has_grav/garbagetruck
+	name = "decommissioned garbage truck"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_MAINT
+/area/ruin/space/has_grav/garbagetruck/foodwaste
+/area/ruin/space/has_grav/garbagetruck/medicalwaste
+/area/ruin/space/has_grav/garbagetruck/squat
+/area/ruin/space/has_grav/garbagetruck/toystore
