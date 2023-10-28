@@ -401,6 +401,23 @@
 			render_list += "<span class='notice ml-2'>[cyberimp_detect]</span>\n"
 	// we handled the last <br> so we don't need handholding
 
+	if (iscarbon(target))
+		// Lungs
+		var/mob/living/carbon/carbontarget = target
+		var/obj/item/organ/internal/lungs/lungs = carbontarget.get_organ_slot(ORGAN_SLOT_LUNGS)
+		if (lungs)
+			var/initial_pressure_mult = initial(lungs.received_pressure_mult)
+			if (lungs.received_pressure_mult != initial_pressure_mult)
+				var/lung_message
+				if (lungs.received_pressure_mult > initial_pressure_mult) // higher than usual
+					lung_message = span_blue("Subject lungs are <b>bronchodilated</b> and are breathing <b>[lungs.received_pressure_mult * 100]%</b> more gas than normal.")
+				else
+					if (lungs.received_pressure_mult <= 0) // lethal
+						lung_message = span_danger("Subject lungs are <b>bronchocontracted</b> and are <b>completely unable to breathe!</b> If asthmatic, administer albuterol or perform windpipe surgery immediately!")
+					else
+						lung_message = span_danger("Subject lungs are <b>bronchocontracted</b> and can only breathe up to <b>[lungs.received_pressure_mult * 100]%</b> of its usual capacity. \
+						If subject is choking, it is suggested to provide them with a <b>high-pressure</b> gas tank.")
+				render_list += lung_message
 	if(tochat)
 		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 	else

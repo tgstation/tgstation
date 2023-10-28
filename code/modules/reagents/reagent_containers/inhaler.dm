@@ -9,7 +9,11 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "inhaler"
 
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.1)
+
 	var/mutable_appearance/canister_underlay
+	var/canister_underlay_y_offset = 4
+	var/show_puffs_left = TRUE
 
 /obj/item/inhaler/Initialize(mapload)
 	if (ispath(initial_casister_path, /obj/item/reagent_containers/inhaler_canister))
@@ -27,6 +31,8 @@
 
 	if (!isnull(canister))
 		. += span_blue("It seems to have <b>[canister]</b> inserted.")
+		if (show_puffs_left)
+			. += "Its rotary display shows its canister can be used [span_blue("[canister.get_puffs_left()]")] more times."
 
 /obj/item/inhaler/attack(mob/living/target_mob, mob/living/user, params)
 	if (!can_puff(target_mob, user))
@@ -138,6 +144,7 @@
 		canister_underlay = null
 	else if (isnull(canister_underlay))
 		canister_underlay = mutable_appearance(canister.icon, canister.icon_state)
+		canister_underlay.pixel_y = canister_underlay_y_offset
 		underlays += canister_underlay
 
 /obj/item/inhaler/proc/can_puff(mob/living/target_mob, mob/living/user, silent = FALSE)
@@ -172,8 +179,12 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "inhaler_canister"
 
-	amount_per_transfer_from_this = 10
-	volume = 30
+	amount_per_transfer_from_this = 5
+	volume = 25
+	reagent_flags = SEALED_CONTAINER|DRAINABLE|REFILLABLE
+	has_variable_transfer_amount = FALSE
+
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.2)
 
 	var/puff_sound = 'sound/effects/spray.ogg'
 	var/puff_volume = 20
@@ -188,14 +199,41 @@
 	var/removal_time = 0.5 SECONDS
 
 	var/other_administer_delay = 3 SECONDS
-	var/self_administer_delay = 0.5 SECONDS
+	var/self_administer_delay = 1 SECONDS
 
 /obj/item/reagent_containers/inhaler_canister/proc/puff(mob/living/user, mob/living/carbon/target)
 	playsound(src, puff_sound, puff_volume, TRUE, -6)
 	reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user, methods = INHALE)
 
+/obj/item/reagent_containers/inhaler_canister/proc/get_puffs_left()
+	return ROUND_UP(reagents.total_volume / amount_per_transfer_from_this)
+
 /obj/item/inhaler/salbutamol
+	name = "salbutamol inhaler"
 	initial_casister_path = /obj/item/reagent_containers/inhaler_canister/salbutamol
 
 /obj/item/reagent_containers/inhaler_canister/salbutamol
+	name = "salbutamol canister"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 30)
+
+/obj/item/inhaler/albuterol
+	name = "albuterol inhaler"
+	initial_casister_path = /obj/item/reagent_containers/inhaler_canister/albuterol
+
+/obj/item/reagent_containers/inhaler_canister/albuterol
+	name = "albuterol canister"
+	desc = "A small canister filled with aerosolized reagents for use in a inhaler. This one contains albuterol, a potent bronchodilator that can stop \
+	asthma attacks in their tracks."
+	list_reagents = list(/datum/reagent/medicine/albuterol = 30)
+
+/obj/item/reagent_containers/inhaler_canister/albuterol/asthma
+	name = "low-pressure albuterol canister"
+	desc = "A small canister filled with aerosolized reagents for use in a inhaler. This one contains albuterol, a potent bronchodilator that can stop \
+	asthma attacks in their tracks. It seems to be a lower-pressure variant, and can only hold 20u."
+	list_reagents = list(/datum/reagent/medicine/albuterol = 20)
+	volume = 20
+	amount_per_transfer_from_this = 5
+
+/obj/item/inhaler/albuterol/asthma
+	name = "rescue inhaler"
+	initial_casister_path = /obj/item/reagent_containers/inhaler_canister/albuterol/asthma

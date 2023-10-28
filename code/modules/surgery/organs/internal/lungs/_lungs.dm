@@ -64,6 +64,7 @@
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
 
+	var/received_pressure_mult = 1
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -162,6 +163,7 @@
 	receiver.clear_alert(ALERT_NOT_ENOUGH_NITRO)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
+	update_bronchodilation_alerts()
 
 /obj/item/organ/internal/lungs/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -175,6 +177,7 @@
 
 		call(src, on_loss)(organ_owner, dummy, last_partial_pressures[gas_id])
 	dummy.garbage_collect()
+	update_bronchodilation_alerts()
 
 /**
  * Tells the lungs to pay attention to the passed in gas type
@@ -637,7 +640,7 @@
 	// Build out our partial pressures, for use as we go
 	var/list/partial_pressures = list()
 	for(var/gas_id in breath_gases)
-		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_gases[gas_id][MOLES])
+		partial_pressures[gas_id] = breath.get_breath_partial_pressure(breath_gases[gas_id][MOLES] * received_pressure_mult)
 
 	// Treat gas as other types of gas
 	for(var/list/conversion_packet in treat_as)
@@ -703,6 +706,7 @@
 	// Returning FALSE indicates the breath failed.
 	if(!breather.failed_last_breath)
 		return TRUE
+	return FALSE
 
 /// Remove gas from breath. If output_gas is given, transfers the removed gas to the lung's gas_mixture.
 /// Removes 100% of the given gas type unless given a volume argument.
@@ -780,30 +784,37 @@
 
 /obj/item/organ/internal/lungs/on_life(seconds_per_tick, times_fired)
 	. = ..()
-	if(failed && !(organ_flags & ORGAN_FAILING))
+	if(failed && can_breathe(only_check_failure_states = TRUE))
 		failed = FALSE
 		return
 	if(damage >= low_threshold)
 		var/do_i_cough = SPT_PROB((damage < high_threshold) ? 2.5 : 5, seconds_per_tick) // between : past high
 		if(do_i_cough)
 			owner.emote("cough")
-	if(organ_flags & ORGAN_FAILING && owner.stat == CONSCIOUS)
+	if(!failed && owner.stat == CONSCIOUS && !can_breathe(only_check_failure_states = TRUE))
 		owner.visible_message(span_danger("[owner] grabs [owner.p_their()] throat, struggling for breath!"), span_userdanger("You suddenly feel like you can't breathe!"))
 		failed = TRUE
 
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+/obj/item/organ/internal/lungs/proc/can_breathe(only_check_failure_states = FALSE)
+	if (organ_flags & ORGAN_FAILING)
+		return FALSE
+	if (received_pressure_mult <= 0) // i mean, its literally impossible to get you to breathe when no air comes in
+		return FALSE
+	if (!only_check_failure_states)
+		if (HAS_TRAIT(owner, TRAIT_NOBREATH))
+			return FALSE
+	return TRUE
+
 /obj/item/organ/internal/lungs/proc/currently_breathing()
 	if (!owner)
 		return FALSE
 	if (owner.stat == DEAD)
 		return FALSE
-	if (HAS_TRAIT(owner, TRAIT_NOBREATH))
+	if (!can_breathe())
 		return FALSE
-	if (failed)
-		return FALSE
-
 	return TRUE
 
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
@@ -989,6 +1000,25 @@
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 
+/obj/item/organ/internal/lungs/proc/adjust_received_pressure_mult(adjustment)
+	received_pressure_mult += adjustment
+	update_bronchodilation_alerts()
+
+/obj/item/organ/internal/lungs/proc/set_received_pressure_mult(new_value)
+	received_pressure_mult = new_value
+	update_bronchodilation_alerts()
+
+/obj/item/organ/internal/lungs/proc/update_bronchodilation_alerts()
+	if (!owner)
+		return
+
+	var/initial_value = initial(received_pressure_mult)
+	if (received_pressure_mult == initial_value)
+		owner?.clear_alert(ALERT_BRONCHODILATION)
+	else if (received_pressure_mult > initial(received_pressure_mult))
+		owner?.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchodilated)
+	else
+		owner?.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchoconstricted)
 
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT

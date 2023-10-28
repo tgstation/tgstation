@@ -55,3 +55,5 @@
 #define COMSIG_REAGENTS_EXPOSE_TURF "reagents_expose_turf"
 ///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
 #define COMSIG_REAGENTS_CRAFTING_PING "reagents_crafting_ping"
+///from base of [/datum/reagents/proc/trans_to]: (datum/reagents/transferrer, list/datum/reagent/transferred_reagents, final_total, mob/transferred_by, methods, ignore_stomach)
+#define COMSIG_ATOM_REAGENTS_TRANSFERRED_TO "reagents_transferred_to_atom"
