@@ -127,6 +127,7 @@
 	var/trend_string = ""
 	var/color_string = ""
 	var/sheet_to_buy
+	var/requested_amount
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
 		switch(SSstock_market.materials_trends[traded_mat])
@@ -153,6 +154,10 @@
 		if(!sheet_to_buy)
 			CRASH("Material with no sheet type being sold on materials market!")
 
+		requested_amount = 0
+		if(!isnull(current_order))
+			requested_amount = current_order.pack.contains[sheet_to_buy]
+
 		//send data
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
@@ -160,7 +165,7 @@
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
-			"requested" = !isnull(current_order) ? current_order.pack.contains[sheet_to_buy] : 0
+			"requested" = requested_amount
 			))
 
 	//get account balance
