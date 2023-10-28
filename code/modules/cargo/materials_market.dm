@@ -279,7 +279,6 @@
 
 				// Finally Append to this order
 				current_order.append_order(things_to_order, cost)
-				say("Order appended, total cost is [current_order.get_final_cost()] cr.")
 				return
 
 			//Place a new order
