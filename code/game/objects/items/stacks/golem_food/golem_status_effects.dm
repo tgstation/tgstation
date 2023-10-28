@@ -364,7 +364,6 @@
 /datum/status_effect/golem/titanium/proc/buff_arm(obj/item/bodypart/arm/arm)
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
-	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
 	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
@@ -383,7 +382,6 @@
 		return
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
-	arm.unarmed_stun_threshold -= damage_increase
 	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms
