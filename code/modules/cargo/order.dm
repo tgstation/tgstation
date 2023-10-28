@@ -90,9 +90,9 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
+	if(paying_account && !pack.goody) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
-	return cost
+	return round(cost)
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition_paper = new(T)

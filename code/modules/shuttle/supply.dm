@@ -163,29 +163,22 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
-		var/price = spawning_order.pack.get_cost()
-		if(spawning_order.applied_coupon)
-			price *= (1 - spawning_order.applied_coupon.discount_pct_off)
-		price = round(price)
-
-		var/datum/bank_account/paying_for_this
+		var/price = spawning_order.get_final_cost()
 
 		//department orders EARN money for cargo, not the other way around
+		var/datum/bank_account/paying_for_this
 		if(!spawning_order.department_destination && spawning_order.charge_on_purchase)
 			if(spawning_order.paying_account) //Someone paid out of pocket
 				paying_for_this = spawning_order.paying_account
-				var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account] // so we can access the length a few lines down
-				if(!spawning_order.pack.goody)
-					price *= 1.1 //TODO make this customizable by the quartermaster
-
 				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
-				else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
-					price += CRATE_TAX
-					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
+				if(spawning_order.pack.goody)
+					var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account] // so we can access the length a few lines down
+					if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
+						price = round(price + CRATE_TAX)
+						paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
 			else
 				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
-			price = round(price)
 			if(paying_for_this)
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
