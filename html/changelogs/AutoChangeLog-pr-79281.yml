@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "The health bar on the mech diagnostic hud display should update consistently now."
