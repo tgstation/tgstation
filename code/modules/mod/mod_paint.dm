@@ -145,8 +145,10 @@
 		return
 	var/list/skins = list()
 	for(var/mod_skin_name in mod.theme.skins)
-		var/list/skin = mod.theme.skins[mod_skin_name]
-		skins[mod_skin_name] = image(icon = skin[MOD_ICON_OVERRIDE], icon_state = "[mod_skin_name]-control")
+		var/list/mod_skin = mod.theme.skins[mod_skin_name]
+		skins[mod_skin_name] = image(icon = mod.icon, icon_state = "[mod_skin_name]-control")
+		if(mod_skin[MOD_ICON_OVERRIDE])
+			skins[mod_skin_name] = image(icon = mod_skin[MOD_ICON_OVERRIDE], icon_state = "[mod_skin_name]-control")
 	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), mod, user), require_near = TRUE)
 	if(!pick)
 		balloon_alert(user, "no skin picked!")
