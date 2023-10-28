@@ -317,7 +317,7 @@
 			if(!isnull(current_order))
 				SSshuttle.shopping_list -= current_order
 				qdel(current_order)
-			return TRUE
+				return TRUE
 
 /obj/item/stock_block
 	name = "stock block"
