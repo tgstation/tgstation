@@ -215,7 +215,8 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Gets the number of antagonists the antagonist injection events will stop rolling after.
 /datum/controller/subsystem/gamemode/proc/get_antag_cap()
-	var/cap = FLOOR((get_correct_popcount() / ANTAG_CAP_DENOMINATOR), 1) + ANTAG_CAP_FLAT
+	var/total_number = get_correct_popcount() + (sec_crew * 2)
+	var/cap = FLOOR((total_number / ANTAG_CAP_DENOMINATOR), 1) + ANTAG_CAP_FLAT
 	return cap
 
 /// Whether events can inject more antagonists into the round
@@ -234,7 +235,7 @@ SUBSYSTEM_DEF(gamemode)
 	return (get_antag_cap() > total_valid_antags)
 
 /// Gets candidates for antagonist roles.
-/datum/controller/subsystem/gamemode/proc/get_candidates(be_special, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, midround_antag_pref, no_antags = TRUE, list/restricted_roles)
+/datum/controller/subsystem/gamemode/proc/get_candidates(be_special, job_ban, observers, ready_newplayers, living_players, required_time, inherit_required_time = TRUE, midround_antag_pref, no_antags = TRUE, list/restricted_roles, list/required_roles)
 	var/list/candidates = list()
 	var/list/candidate_candidates = list() //lol
 
@@ -246,7 +247,7 @@ SUBSYSTEM_DEF(gamemode)
 		else if (observers && isobserver(player))
 			candidate_candidates += player
 		else if (living_players && isliving(player))
-			if(!ishuman(player))
+			if(!ishuman(player) && !isAI(player))
 				continue
 			if(!(player.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
 				continue
@@ -260,6 +261,9 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))
 				continue
+			if(length(required_roles) && !(candidate.mind.assigned_role.title in required_roles))
+				continue
+
 		if(be_special)
 			if(!(candidate.client.prefs) || !(be_special in candidate.client.prefs.be_special))
 				continue
@@ -440,7 +444,7 @@ SUBSYSTEM_DEF(gamemode)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		event.max_occurrences = 0
 	else if(. == EVENT_READY)
-		event.runEvent(random = TRUE) // fallback to dynamic
+		event.runEvent(random = TRUE, admin_forced = forced) // fallback to dynamic
 
 ///Resets frequency multiplier.
 /datum/controller/subsystem/gamemode/proc/resetFrequency()

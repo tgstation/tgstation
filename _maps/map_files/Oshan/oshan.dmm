@@ -23004,7 +23004,6 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "lGn" = (
@@ -23961,6 +23960,14 @@
 /obj/item/stack/sheet/iron,
 /turf/open/floor/eighties/red,
 /area/station/service/electronic_marketing_den)
+"mgQ" = (
+/obj/machinery/door/airlock/external{
+	name = "Trench Elevator"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
+/obj/effect/landmark/navigate_destination/oshan/miningelevator,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "mgS" = (
 /obj/machinery/light/directional/east,
 /turf/closed/wall,
@@ -45913,7 +45920,6 @@
 	name = "Private Study";
 	req_access = list("library")
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "xcq" = (
@@ -46209,6 +46215,7 @@
 "xkw" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/cytology)
 "xkQ" = (
@@ -71992,7 +71999,7 @@ gmy
 mXE
 dGk
 dGk
-jzj
+mgQ
 itp
 itp
 xMS
