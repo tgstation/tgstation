@@ -51,6 +51,26 @@ const LabeledListItem = (props: LabeledListItemProps) => {
     tooltip,
   } = props;
 
+  let innerLabel = label
+    ? typeof label === 'string'
+      ? label + ':'
+      : label
+    : null;
+
+  if (tooltip !== undefined) {
+    innerLabel = (
+      <Tooltip content={tooltip}>
+        <Box
+          as="span"
+          style={{
+            'border-bottom': '2px dotted rgba(255, 255, 255, 0.1)',
+          }}>
+          {innerLabel}
+        </Box>
+      </Tooltip>
+    );
+  }
+
   let labelChild = (
     <Box
       as="td"
@@ -61,13 +81,9 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         !labelWrap && 'LabeledList__label--nowrap',
       ])}
       verticalAlign={verticalAlign}>
-      {label ? (typeof label === 'string' ? label + ':' : label) : null}
+      {innerLabel}
     </Box>
   );
-
-  if (tooltip !== undefined) {
-    labelChild = <Tooltip content={tooltip}>{labelChild}</Tooltip>;
-  }
 
   return (
     <tr className={classes(['LabeledList__row', className])}>
