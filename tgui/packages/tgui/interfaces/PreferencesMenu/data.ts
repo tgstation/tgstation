@@ -84,7 +84,6 @@ export type Quirk = {
   value: number;
   customizable: boolean;
   customization_options: string[];
-  customization_expanded: BooleanLike;
 };
 
 export type QuirkInfo = {
