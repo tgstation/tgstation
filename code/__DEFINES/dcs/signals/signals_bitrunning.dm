@@ -32,3 +32,6 @@
 
 /// from /obj/machinery/quantum_server/scrub_vdom()
 #define COMSIG_BITRUNNER_DOMAIN_SCRUBBED "bitrunner_domain_scrubbed"
+
+/// from /obj/machinery/netpod/open_machine()
+#define COMSIG_BITRUNNER_NETPOD_OPENED "bitrunner_netpod_opened"

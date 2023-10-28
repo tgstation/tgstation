@@ -476,7 +476,7 @@
 	else
 		switch(rand(1, 4))
 			if(1)
-				new /mob/living/simple_animal/hostile/construct/juggernaut/hostile(get_turf(src))
+				new /mob/living/basic/construct/juggernaut/hostile(get_turf(src))
 			if(2)
 				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
 			if(3)

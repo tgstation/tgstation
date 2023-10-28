@@ -79,16 +79,17 @@
 
 /// Grants the action to the passed mob, making it the owner
 /datum/action/proc/Grant(mob/grant_to)
-	if(!grant_to)
+	if(isnull(grant_to))
 		Remove(owner)
 		return
-	if(owner)
-		if(owner == grant_to)
-			return
-		Remove(owner)
-	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, grant_to)
-	SEND_SIGNAL(grant_to, COMSIG_MOB_GRANTED_ACTION, src)
+	if(grant_to == owner)
+		return // We already have it
+	var/mob/previous_owner = owner
 	owner = grant_to
+	if(!isnull(previous_owner))
+		Remove(previous_owner)
+	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, owner)
+	SEND_SIGNAL(owner, COMSIG_MOB_GRANTED_ACTION, src)
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(clear_ref), override = TRUE)
 
 	// Register some signals based on our check_flags
@@ -120,27 +121,29 @@
 	LAZYREMOVE(remove_from?.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
 	viewers = list()
 
-	if(owner)
-		SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
-		SEND_SIGNAL(owner, COMSIG_MOB_REMOVED_ACTION, src)
-		UnregisterSignal(owner, COMSIG_QDELETING)
+	if(isnull(owner))
+		return
+	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
+	SEND_SIGNAL(owner, COMSIG_MOB_REMOVED_ACTION, src)
+	UnregisterSignal(owner, COMSIG_QDELETING)
 
-		// Clean up our check_flag signals
-		UnregisterSignal(owner, list(
-			COMSIG_LIVING_SET_BODY_POSITION,
-			COMSIG_MOB_STATCHANGE,
-			SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
-			SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
-			SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
-			SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED),
-			SIGNAL_REMOVETRAIT(TRAIT_HANDS_BLOCKED),
-			SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED),
-			SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED),
-			SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED),
-		))
+	// Clean up our check_flag signals
+	UnregisterSignal(owner, list(
+		COMSIG_LIVING_SET_BODY_POSITION,
+		COMSIG_MOB_STATCHANGE,
+		SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
+		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
+		SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
+		SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED),
+		SIGNAL_REMOVETRAIT(TRAIT_HANDS_BLOCKED),
+		SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED),
+		SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED),
+		SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED),
+	))
 
-		if(target == owner)
-			RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_ref))
+	if(target == owner)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_ref))
+	if (owner == remove_from)
 		owner = null
 
 /// Actually triggers the effects of the action.

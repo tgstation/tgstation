@@ -4,6 +4,33 @@ import { BlockQuote, Box, Button, Collapsible, Flex, NumberInput, Section, Stack
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
+type Data = {
+  accountName: string;
+  requests: Request[];
+  applicants: Applicant[];
+  bountyValue: number;
+  bountyText: string;
+  user: User;
+};
+
+type Request = {
+  name: string;
+  owner: string;
+  description: string;
+  value: number;
+  acc_number: number;
+};
+
+type Applicant = {
+  name: string;
+  request_id: number;
+  requestee_id: number;
+};
+
+type User = {
+  name: string;
+};
+
 export const BountyBoard = (props, context) => {
   return (
     <Window width={550} height={600}>
@@ -15,7 +42,7 @@ export const BountyBoard = (props, context) => {
 };
 
 export const BountyBoardContent = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const {
     accountName,
     requests = [],
