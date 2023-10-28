@@ -81,16 +81,6 @@
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_gone))
 	return ..()
 
-/// Schedules a qdel if not already scheduled.
-/datum/sound_spatial_tracker/proc/schedule_qdel(length)
-	if(qdel_scheduled)
-		return
-	qdel_scheduled = QDEL_IN_STOPPABLE(src, length)
-
-/datum/sound_spatial_tracker/proc/source_gone()
-	SIGNAL_HANDLER
-	qdel(src)
-
 /datum/sound_spatial_tracker/Destroy(force, ...)
 	SSsounds.unregister_spatial_tracker(src)
 	release_all_listeners()
@@ -104,10 +94,6 @@
 		return
 	release_all_listeners(leavers)
 	leavers.Cut()
-
-/datum/sound_spatial_tracker/proc/on_source_moved()
-	SIGNAL_HANDLER
-	update_spatial_tracker()
 
 /// Go through and check our location for spatial grid changes
 /datum/sound_spatial_tracker/proc/update_spatial_tracker()
@@ -127,29 +113,9 @@
 	for(var/mob/listener as anything in listeners)
 		update_listener(listener)
 
-/// Sets up a listener to be tracked by this datum.
-/datum/sound_spatial_tracker/proc/link_to_listener(mob/listener)
-	if(listeners[listener])
-		return
-	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, PROC_REF(on_listener_moved))
-	LISTENER_OFFSET_SET(listener, LISTENER_OFFSET_UNKNOWN)
-
-/// Release all listeners from the given list; if no list is specified, release all listeners.
-/datum/sound_spatial_tracker/proc/release_all_listeners(list/going)
-	going ||= listeners
-	for(var/mob/listener as anything in going)
-		release_listener(listener)
-
-/// Release a specific listener.
-/datum/sound_spatial_tracker/proc/release_listener(mob/listener)
-	if(!listeners[listener])
-		return
-	listeners -= listener
-	UnregisterSignal(listener, COMSIG_MOVABLE_MOVED)
-	if(isnull(listener.client))
-		return
-	stop_sound_for(listener)
-
+/datum/sound_spatial_tracker/proc/on_source_moved()
+	SIGNAL_HANDLER
+	update_spatial_tracker()
 
 /// Helper to send a null sound to a listener; which stops it from playing.
 /datum/sound_spatial_tracker/proc/stop_sound_for(mob/listener)
@@ -209,14 +175,28 @@
 		sound_to_use = sound,
 	)
 
-/datum/sound_spatial_tracker/proc/on_listener_moved(mob/movable)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(update_listener), movable)
+/// Sets up a listener to be tracked by this datum.
+/datum/sound_spatial_tracker/proc/link_to_listener(mob/listener)
+	if(listeners[listener])
+		return
+	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, PROC_REF(on_listener_moved))
+	LISTENER_OFFSET_SET(listener, LISTENER_OFFSET_UNKNOWN)
 
-/datum/sound_spatial_tracker/proc/entered_cell(datum/cell, list/entered_contents)
-	SIGNAL_HANDLER
-	for(var/mob/listener as anything in entered_contents)
-		link_to_listener(listener)
+/// Release a specific listener.
+/datum/sound_spatial_tracker/proc/release_listener(mob/listener)
+	if(!listeners[listener])
+		return
+	listeners -= listener
+	UnregisterSignal(listener, COMSIG_MOVABLE_MOVED)
+	if(isnull(listener.client))
+		return
+	stop_sound_for(listener)
+
+/// Release all listeners from the given list; if no list is specified, release all listeners.
+/datum/sound_spatial_tracker/proc/release_all_listeners(list/going)
+	going ||= listeners
+	for(var/mob/listener as anything in going)
+		release_listener(listener)
 
 /datum/sound_spatial_tracker/proc/exited_cell(datum/cell, list/exited_contents)
 	SIGNAL_HANDLER
@@ -225,6 +205,25 @@
 			continue
 		leavers[listener] = TRUE
 		stop_sound_for(listener)
+
+/datum/sound_spatial_tracker/proc/entered_cell(datum/cell, list/entered_contents)
+	SIGNAL_HANDLER
+	for(var/mob/listener as anything in entered_contents)
+		link_to_listener(listener)
+
+/datum/sound_spatial_tracker/proc/on_listener_moved(mob/movable)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(update_listener), movable)
+
+/// Schedules a qdel if not already scheduled.
+/datum/sound_spatial_tracker/proc/schedule_qdel(length)
+	if(qdel_scheduled)
+		return
+	qdel_scheduled = QDEL_IN_STOPPABLE(src, length)
+
+/datum/sound_spatial_tracker/proc/source_gone()
+	SIGNAL_HANDLER
+	qdel(src)
 
 #undef LISTENER_OFFSET_UNKNOWN
 #undef LISTENER_OFFSET_GAP
