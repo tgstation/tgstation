@@ -168,7 +168,7 @@
 
 /atom/movable/screen/alert/status_effect/stupor
 	name = "Hallucinogenic Stupor"
-	desc = "You've fallen under the influence of Slime Weed, AKA BZ gas. You feel very friendly..."
+	desc = "You've fallen under the influence of Slime Weed, AKA Pluoxium gas. You feel very friendly..."
 	icon_state = "???"
 
 /datum/status_effect/slime/stupor

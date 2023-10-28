@@ -294,6 +294,13 @@
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
 
+#define MAXIMUM_STASIS_TIME 30 SECONDS
+
+/datum/status_effect/grouped/stasis/timed
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 10 SECONDS
+	max_duration = MAXIMUM_STASIS_TIME
+
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1

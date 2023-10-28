@@ -109,13 +109,21 @@
 		clear_friends()
 		absorb_gas(air, /datum/gas/tritium, 5)
 /**
- * BZ-exposed slimes gain a temporary status effect that makes them pacifist, docile, and be friends with everyone they see.
- * They also slowly lose charge over time.
+ * BZ-exposed slimes fall into stasis!
  */
 /mob/living/simple_animal/slime/proc/bz_expose(current_gas_pp, datum/gas_mixture/air)
+	if(current_gas_pp > 0.05 && (bodytemperature > (T0C + 100))) // if air is hot and bz is here, sleepy
+		apply_status_effect(/datum/status_effect/slime/stasis, 5 SECONDS)
+		absorb_gas(air, /datum/gas/bz, 0.1)
+
+/**
+ * Pluox-exposed slimes gain a temporary status effect that makes them pacifist, docile, and be friends with everyone they see.
+ * They also slowly lose charge over time.
+ */
+/mob/living/simple_animal/slime/proc/pluox_expose(current_gas_pp, datum/gas_mixture/air)
 	if(current_gas_pp > 0.1 && prob(15)) // small. cast friendliness!
 		apply_status_effect(/datum/status_effect/slime/stupor, 10 SECONDS)
-		absorb_gas(air, /datum/gas/bz, 0.1)
+		absorb_gas(air, /datum/gas/pluoxium, 0.1)
 
 /**
  * Nitrium-exposed slimes become very fast, gain charge over time, and ignore damage slowdown.
