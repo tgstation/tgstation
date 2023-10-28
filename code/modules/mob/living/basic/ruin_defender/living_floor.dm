@@ -52,6 +52,7 @@
 
 /mob/living/basic/living_floor/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(look_aggro), COMSIG_ATOM_EXITED = PROC_REF(look_deaggro))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 
