@@ -303,7 +303,7 @@
 	name = "Throwing Arm"
 	desc = "Your arms have a lot of heft to them! Objects that you throw just always seem to fly further than everyone elses, and you never miss a toss."
 	icon = "baseball"
-	value = 7
+	value = 5 //monkestation edit
 	mob_trait = TRAIT_THROWINGARM
 	gain_text = span_notice("Your arms are full of energy!")
 	lose_text = span_danger("Your arms ache a bit.")
