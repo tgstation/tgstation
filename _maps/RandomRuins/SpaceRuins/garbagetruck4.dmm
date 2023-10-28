@@ -1,0 +1,1158 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"aM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"aZ" = (
+/obj/item/mop,
+/obj/item/multitool{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/obj/structure/mop_bucket,
+/obj/item/broken_bottle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"bO" = (
+/obj/structure/spider/stickyweb,
+/obj/item/food/badrecipe/moldy,
+/obj/item/grown/bananapeel,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ch" = (
+/obj/structure/spider/stickyweb,
+/obj/item/stock_parts/water_recycler,
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"cz" = (
+/obj/item/trash/candle,
+/obj/item/food/canned/pine_nuts,
+/obj/item/kitchen/fork,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"dj" = (
+/obj/item/chair/wood,
+/obj/item/c_tube,
+/obj/effect/decal/cleanable/generic,
+/obj/structure/broken_flooring/corner,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"dR" = (
+/obj/effect/decal/cleanable/glass/plastitanium/screws,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"eb" = (
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/item/trash/candy{
+	pixel_x = 7
+	},
+/obj/item/lead_pipe{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/plate_shard{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"eq" = (
+/obj/structure/spider/solid,
+/obj/item/food/badrecipe/moldy/bacteria,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ez" = (
+/obj/item/stack/sheet/plastic/five,
+/obj/item/stack/sheet/plastic/five,
+/obj/structure/mannequin/plastic,
+/obj/item/clothing/neck/tie/black,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/spear,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"eS" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"fi" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/lead,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"fY" = (
+/obj/item/papercutter,
+/obj/item/paper_bin,
+/obj/structure/spider/stickyweb,
+/obj/structure/spider/spikes,
+/obj/structure/table_frame/wood,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"gf" = (
+/obj/structure/filingcabinet,
+/obj/structure/spider/stickyweb,
+/obj/item/storage/wallet/random,
+/obj/item/pen/blue,
+/obj/item/paper/fluff/junkmail_redpill,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"gq" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"hy" = (
+/obj/structure/table/reinforced,
+/obj/item/analyzer{
+	pixel_y = 6
+	},
+/obj/item/geiger_counter{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/flashlight{
+	pixel_x = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"hH" = (
+/obj/item/vending_refill/snack,
+/obj/item/food/candy,
+/obj/structure/broken_flooring/side,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"hP" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/mail/junkmail,
+/obj/item/healthanalyzer/simple/disease,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ip" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"it" = (
+/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/entertainment/plushie_delux,
+/obj/effect/spawner/random/entertainment/toy,
+/obj/item/c_tube{
+	pixel_y = -6
+	},
+/obj/structure/spider/stickyweb,
+/obj/item/toy/sword{
+	pixel_y = 4
+	},
+/obj/item/toy/sword{
+	pixel_y = 8
+	},
+/obj/item/kitchen/spoon/plastic,
+/obj/effect/spawner/random/entertainment/toy,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"iI" = (
+/obj/item/hand_labeler,
+/obj/item/hand_labeler_refill,
+/obj/structure/spider/stickyweb,
+/mob/living/basic/giant_spider/hunter/scrawny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"jq" = (
+/obj/structure/window/reinforced/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"jY" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/toy/figure/wizard{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/toy/figure/clown{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/toy/figure/secofficer{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/toy/figure/secofficer{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/toy/figure/secofficer{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/toy/figure/dsquad{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/toy/figure/dsquad{
+	pixel_y = -1
+	},
+/obj/item/toy/figure/dsquad{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/toy/figure/dsquad{
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ki" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"kl" = (
+/obj/structure/spider/solid,
+/obj/item/book/manual/wiki/cytology,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"kG" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"lc" = (
+/obj/effect/decal/cleanable/robot_debris/down,
+/obj/item/clothing/under/costume/skeleton,
+/obj/item/clothing/mask/gas/prop,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ld" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"lA" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"lC" = (
+/obj/effect/spawner/random/trash,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"lD" = (
+/obj/structure/spider/stickyweb,
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ma" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"me" = (
+/obj/machinery/power/terminal,
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"mz" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/trash{
+	pixel_x = -12;
+	pixel_y = 0
+	},
+/obj/item/storage/bag/trash,
+/obj/item/storage/bag/trash{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"mA" = (
+/obj/item/trash/cheesie,
+/obj/item/shovel,
+/obj/item/seeds/nettle,
+/obj/item/popsicle_stick,
+/obj/item/hatchet/wooden,
+/obj/item/cigbutt,
+/obj/item/secateurs,
+/obj/item/pickaxe/rusted,
+/obj/item/boxcutter,
+/obj/structure/closet/crate/preopen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"mG" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"mL" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"mM" = (
+/obj/structure/sign/flag/mothic,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"nd" = (
+/obj/structure/closet/cardboard,
+/obj/item/bodypart/chest/robot,
+/obj/item/toy/katana,
+/obj/item/toy/plush/snakeplushie,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"nF" = (
+/obj/item/clothing/glasses/blindfold,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"nQ" = (
+/obj/structure/floodlight_frame,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"oh" = (
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"oB" = (
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/effect/spawner/random/bureaucracy/paper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"pj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"pS" = (
+/obj/item/kirbyplants/synthetic/plant27,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"qa" = (
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"rm" = (
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"rw" = (
+/obj/item/paper/crumpled,
+/obj/item/stock_parts/cell/hyper,
+/obj/item/hand_labeler,
+/obj/item/hand_labeler_refill,
+/obj/item/hand_labeler_refill,
+/obj/item/hand_labeler_refill,
+/obj/item/hand_labeler_refill,
+/obj/item/barcodescanner,
+/obj/item/pen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"rS" = (
+/obj/item/toy/xmas_cracker,
+/obj/item/kirbyplants/synthetic/plant26,
+/obj/item/storage/pill_bottle/probital,
+/obj/item/clothing/head/costume/festive,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"sz" = (
+/obj/item/storage/wallet/random,
+/obj/item/coin/plastic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"sX" = (
+/obj/structure/spider/sticky,
+/obj/item/food/badrecipe/moldy,
+/obj/structure/spider/stickyweb,
+/obj/item/food/spidereggs{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/structure/closet/crate/trashcart,
+/obj/item/food/spidereggs{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/item/food/spidereggs,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ub" = (
+/obj/item/clothing/suit/syndicatefake,
+/obj/item/weldingtool/largetank{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"vr" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"vC" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/catwalk_floor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"wC" = (
+/obj/structure/spider/solid,
+/obj/structure/spider/stickyweb,
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"wM" = (
+/obj/item/paint_palette,
+/obj/item/storage/crayons,
+/obj/structure/spider/stickyweb,
+/obj/structure/table_frame/wood,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"wO" = (
+/obj/item/stack/spacecash/c500,
+/obj/item/coin/plastic,
+/obj/structure/safe,
+/obj/structure/spider/stickyweb,
+/obj/item/tank/jetpack/oxygen,
+/obj/item/switchblade,
+/obj/item/survivalcapsule/bathroom,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"xp" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/toy/xmas_cracker,
+/obj/item/toy/xmas_cracker,
+/obj/item/toy/toy_xeno,
+/obj/item/clothing/head/costume/party/festive,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"xB" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"yk" = (
+/obj/structure/spider/effigy,
+/obj/structure/spider/stickyweb,
+/obj/item/coin/silver,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"yu" = (
+/obj/item/rack_parts,
+/obj/structure/spider/stickyweb,
+/obj/item/folder/blue{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/folder/blue,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"yR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/pile,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"zd" = (
+/obj/structure/lattice/catwalk,
+/obj/item/crowbar/large/emergency,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"zL" = (
+/obj/structure/table/reinforced,
+/obj/item/gps/spaceruin{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/storage/backpack/industrial{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"AF" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/gloves{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/machinery/recharger{
+	pixel_y = -10
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"AT" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/space/basic,
+/area/space)
+"Be" = (
+/obj/structure/mannequin/wood{
+	desc = "Oh, so this is a dress-up game now. It makes eye contact."
+	},
+/obj/item/clothing/shoes/kindle_kicks{
+	pixel_y = -10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ce" = (
+/obj/structure/bed/maint,
+/obj/item/pen/survival,
+/obj/item/bedsheet/grey,
+/obj/effect/decal/cleanable/shreds,
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ck" = (
+/obj/structure/mannequin/plastic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ct" = (
+/obj/item/clothing/head/costume/rabbitears,
+/obj/item/grown/bananapeel,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Dq" = (
+/obj/item/food/badrecipe/moldy/bacteria,
+/obj/effect/decal/cleanable/ants,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"EI" = (
+/obj/structure/spider/stickyweb,
+/obj/item/clothing/under/costume/mummy,
+/obj/item/clothing/mask/mummy,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"EZ" = (
+/obj/structure/spider/stickyweb,
+/obj/structure/spider/sticky,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Fc" = (
+/obj/structure/closet/mini_fridge,
+/obj/item/storage/cans/sixsoda,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Gy" = (
+/obj/item/clothing/head/cone{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/light/warm,
+/obj/machinery/power/apc{
+	cell_type = /obj/item/stock_parts/cell/lead;
+	locked = 0;
+	pixel_y = -25;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"GE" = (
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"GJ" = (
+/obj/structure/closet/crate/trashcart,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/suit/costume/whitedress,
+/obj/structure/broken_flooring/singular,
+/obj/item/clothing/head/costume/nursehat,
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Hi" = (
+/obj/structure/closet/crate/mail,
+/obj/item/trash/can,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"HP" = (
+/obj/structure/spider/stickyweb,
+/obj/structure/closet/crate/cardboard,
+/obj/item/bikehorn/rubberducky,
+/obj/item/clothing/glasses/monocle,
+/obj/item/clothing/head/hats/tophat{
+	desc = "It's a fancy looking hat. Inside is a label with a triangle drawn on it."
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Im" = (
+/obj/effect/decal/cleanable/oil,
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Iu" = (
+/obj/structure/closet/crate/cardboard/mothic,
+/obj/item/clothing/head/mothcap,
+/obj/item/clothing/mask/gas/explorer,
+/obj/item/clothing/under/misc/overalls,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/glasses/meson,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"II" = (
+/obj/structure/spider/passage,
+/obj/effect/spawner/random/mod/maint,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"IL" = (
+/obj/item/c_tube,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ka" = (
+/obj/effect/spawner/random/decoration/paint,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ku" = (
+/obj/structure/spider/passage,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Lx" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/robot_debris/up,
+/obj/item/clothing/suit/costume/ianshirt,
+/obj/item/melee/skateboard,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Lz" = (
+/obj/structure/closet/crate/large,
+/obj/item/rwd/loaded,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"LA" = (
+/obj/structure/table/reinforced,
+/obj/item/gas_filter,
+/obj/item/gas_filter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/orange{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ma" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/obj/effect/spawner/random/entertainment/plushie,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Mn" = (
+/obj/item/food/spidereggs,
+/obj/effect/mob_spawn/corpse/human{
+	brute_damage = 200;
+	mob_type = /mob/living/carbon/human/species/moth;
+	outfit = /datum/outfit/abductorcorpse;
+	oxy_damage = 200
+	},
+/obj/structure/spider/cocoon{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/mod/control/pre_equipped/standard{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/mob/living/basic/giant_spider/viper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Mp" = (
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Nf" = (
+/obj/item/paper/fluff/junkmail_generic,
+/obj/item/pen/red,
+/obj/structure/table_frame/wood,
+/obj/item/mod/paint,
+/obj/effect/spawner/random/decoration/paint,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"No" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Og" = (
+/obj/structure/closet/crate/trashcart/filled,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/card/cardboard,
+/obj/item/broken_bottle,
+/obj/item/cardpack/resin,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"OA" = (
+/obj/item/food/canned/tomatoes{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/food/canned/tomatoes{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/structure/closet/crate/cardboard/mothic,
+/obj/item/food/uncooked_rice{
+	pixel_x = 0;
+	pixel_y = -6
+	},
+/obj/item/food/uncooked_rice{
+	pixel_x = 2;
+	pixel_y = -6
+	},
+/obj/item/food/uncooked_rice{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/food/uncooked_rice{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/food/uncooked_rice{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/obj/item/food/cracker,
+/obj/item/food/cracker,
+/obj/item/food/cracker,
+/obj/item/food/cracker,
+/obj/item/food/cracker,
+/obj/item/food/cracker{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/food/cracker{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/food/cracker{
+	pixel_y = 1
+	},
+/obj/item/food/cracker{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/food/cracker{
+	pixel_y = -2
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"OH" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Pj" = (
+/turf/open/space/basic,
+/turf/template_noop,
+/area/space)
+"Po" = (
+/obj/structure/spider/stickyweb,
+/obj/item/food/badrecipe/moldy,
+/obj/item/storage/box/pdas,
+/obj/effect/spawner/random/entertainment/money_small,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Rl" = (
+/obj/structure/closet/preopen,
+/obj/item/stack/spacecash/c200,
+/obj/item/storage/backpack/satchel,
+/obj/item/toy/plush/shark,
+/obj/item/instrument/banjo,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ry" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Sm" = (
+/obj/item/cardboard_cutout,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/glass/plastitanium/screws,
+/obj/item/clothing/suit/costume/ianshirt,
+/obj/item/clothing/neck/tie/horrible,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"SE" = (
+/obj/item/trash/candy,
+/obj/structure/broken_flooring/pile,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"TH" = (
+/obj/structure/spider/stickyweb,
+/obj/item/clothing/ears/earmuffs,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"TM" = (
+/obj/structure/spider/passage,
+/mob/living/basic/giant_spider/hunter/scrawny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Us" = (
+/obj/structure/broken_flooring/pile,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Ut" = (
+/obj/machinery/computer/terminal{
+	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
+	desc = "A garbage truck's dusty old control console.";
+	name = "dashboard";
+	upperinfo = "Controls locked."
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Va" = (
+/obj/item/scooter_frame,
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/garbage,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Vb" = (
+/obj/item/trash/pistachios,
+/obj/structure/closet/crate/cardboard/mothic,
+/obj/item/storage/fancy/pickles_jar,
+/obj/item/food/spaghetti/raw,
+/obj/item/food/spaghetti/raw,
+/obj/item/food/sustenance_bar/wonka,
+/obj/item/food/fueljacks_lunch,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"VX" = (
+/obj/item/barcodescanner,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cardpack/series_one{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/cardpack/series_one{
+	pixel_y = 4
+	},
+/obj/item/cardpack/series_one{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/cardpack/series_one,
+/obj/structure/closet/crate/cardboard,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Wa" = (
+/obj/structure/spider/stickyweb,
+/obj/item/kirbyplants/synthetic/plant29,
+/obj/item/crowbar/hammer,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"WD" = (
+/obj/machinery/light/warm,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Xt" = (
+/obj/item/storage/box/mousetraps,
+/obj/structure/table/reinforced,
+/obj/item/melee/flyswatter,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"Yv" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"YD" = (
+/obj/item/dice/d10,
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/computer_disk/maintenance/modsuit_control,
+/obj/item/computer_disk/maintenance/modsuit_control,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"YS" = (
+/obj/structure/door_assembly/door_assembly_wood,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+
+(1,1,1) = {"
+Pj
+Pj
+mG
+mG
+mG
+kG
+AT
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+"}
+(2,1,1) = {"
+Pj
+kG
+jq
+jq
+kG
+kG
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+"}
+(3,1,1) = {"
+eS
+ma
+AF
+fi
+Xt
+kG
+ld
+Sm
+VX
+GJ
+oB
+iI
+wM
+fY
+Nf
+ez
+nd
+eb
+aZ
+Yv
+"}
+(4,1,1) = {"
+Ma
+jq
+Ut
+No
+WD
+kG
+ld
+hH
+dj
+SE
+ki
+pj
+YS
+gf
+nF
+EZ
+EI
+ub
+mA
+ld
+"}
+(5,1,1) = {"
+xB
+jq
+zL
+LA
+mL
+kG
+ld
+ip
+Us
+Im
+dR
+lC
+Lz
+wC
+Wa
+IL
+Lx
+lc
+it
+ld
+"}
+(6,1,1) = {"
+eS
+jq
+ma
+kG
+Mp
+vC
+vr
+pj
+OH
+OH
+OH
+pS
+Va
+Ku
+TM
+bO
+HP
+Ct
+jY
+ld
+"}
+(7,1,1) = {"
+eS
+ma
+mz
+hy
+mL
+vC
+vr
+OH
+OH
+OH
+pj
+OH
+lA
+wO
+yR
+lD
+II
+yk
+Po
+ld
+"}
+(8,1,1) = {"
+Ma
+ma
+qa
+qa
+mL
+kG
+ld
+nQ
+OH
+Ka
+OH
+OH
+Og
+xp
+oh
+ch
+eq
+kl
+sX
+ld
+"}
+(9,1,1) = {"
+eS
+ma
+qa
+mL
+Gy
+kG
+mM
+Rl
+Ce
+Iu
+Hi
+OH
+Ck
+YD
+Dq
+OH
+TH
+Mn
+yu
+ld
+"}
+(10,1,1) = {"
+xB
+ma
+qa
+me
+rm
+kG
+ld
+Fc
+cz
+Vb
+OA
+aM
+gq
+hP
+sz
+OH
+rS
+rw
+Be
+Yv
+"}
+(11,1,1) = {"
+Pj
+kG
+Ry
+ma
+kG
+kG
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+GE
+GE
+GE
+ld
+ld
+ld
+ld
+"}
+(12,1,1) = {"
+Pj
+Pj
+mG
+mG
+zd
+kG
+AT
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+"}

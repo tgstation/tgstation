@@ -1,0 +1,1196 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"aU" = (
+/obj/structure/table/reinforced,
+/obj/item/gps/spaceruin{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/storage/backpack/industrial{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"bZ" = (
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"ci" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"cl" = (
+/obj/item/clothing/suit/caution,
+/obj/item/trash/syndi_cakes,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/t_scanner,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"cz" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"cH" = (
+/obj/structure/chair/stool,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"cU" = (
+/obj/structure/chair/office,
+/obj/item/reagent_containers/cup/mortar,
+/obj/item/pestle,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"dc" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"de" = (
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/structure/closet/crate/cardboard,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate{
+	pixel_x = -9
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
+	pixel_x = 1
+	},
+/obj/item/gas_filter/damaged{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/gas{
+	desc = "This gas mask feels different. It's not quite like the others.";
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"eC" = (
+/obj/item/tank/internals/oxygen/yellow,
+/obj/structure/closet/crate/preopen,
+/obj/effect/decal/cleanable/shreds,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"eL" = (
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/structure/girder/displaced,
+/obj/item/stock_parts/scanning_module,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"fk" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"fw" = (
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"fK" = (
+/obj/item/storage/box/zipties{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/storage/box/stockparts/basic{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/storage/box/disks{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/structure/closet/crate/large,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"gz" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/obj/effect/spawner/random/entertainment/plushie,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"gV" = (
+/turf/open/space/basic,
+/turf/template_noop,
+/area/space)
+"hN" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"iA" = (
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/item/stack/rods/ten,
+/obj/structure/closet/crate/preopen,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"jL" = (
+/obj/item/rollingpaper{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/obj/item/rollingpaper{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/wooden,
+/obj/item/clothing/glasses/night{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/obj/item/melee/roastingstick{
+	pixel_x = 11
+	},
+/obj/item/flamethrower/full/tank{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"lf" = (
+/obj/structure/door_assembly/door_assembly_mhatch,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/shard,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"lD" = (
+/obj/structure/table/reinforced,
+/obj/item/gas_filter,
+/obj/item/gas_filter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/orange{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"mb" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"mj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/can/food/beans{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"mE" = (
+/obj/item/shard/plasma{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/trash/semki{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/food/badrecipe/moldy{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"mS" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/firelock_frame,
+/obj/structure/broken_flooring/pile,
+/obj/item/reagent_containers/syringe/contraband/methamphetamine,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"nd" = (
+/obj/item/burner/fuel{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/ash,
+/obj/item/reagent_containers/cup/beaker/plastic{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/dropper{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"nq" = (
+/obj/item/food/pizzaslice/moldy/bacteria,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"nv" = (
+/obj/item/binoculars,
+/obj/item/crowbar/large/old,
+/obj/item/tank/jetpack/improvised,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"nR" = (
+/obj/machinery/power/terminal,
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"oF" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/storage/bag/construction,
+/obj/item/clothing/shoes/winterboots/ice_boots/eva{
+	desc = "A heavy pair of boots with grips applied to the bottom to keep the wearer vertical while walking in freezing conditions. It's clearly been well used.";
+	name = "ice climbing boots"
+	},
+/obj/structure/closet/crate/engineering/electrical,
+/obj/item/stock_parts/capacitor/adv,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"po" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/gloves{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/machinery/recharger{
+	pixel_y = -10
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"pM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/item/pen,
+/obj/item/stock_parts/subspace/analyzer,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"pX" = (
+/obj/structure/bed/maint,
+/obj/item/knife/shiv,
+/obj/item/storage/backpack/satchel/leather/withwallet,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"qa" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"qB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/lead,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"qG" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"qM" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/clothing/shoes/workboots{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"sh" = (
+/obj/item/clothing/suit/apron/overalls{
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/reagent_dispensers/fueltank/large,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"so" = (
+/obj/structure/fermenting_barrel,
+/obj/item/reagent_containers/cup/bottle/welding_fuel{
+	pixel_x = 9;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"sz" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/stock_parts/scanning_module,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"sL" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"sY" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/girder/displaced,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"uh" = (
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"uk" = (
+/obj/item/cigbutt,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"uM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"uO" = (
+/obj/item/cigbutt/cigarbutt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/syringe/contraband/krokodil,
+/obj/item/screwdriver,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/reagent_dispensers/fueltank/large,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"vL" = (
+/obj/item/trash/semki/healthy,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"wf" = (
+/obj/item/lead_pipe,
+/obj/structure/door_assembly/door_assembly_mhatch,
+/obj/effect/decal/cleanable/glass,
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/item/shard,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"xa" = (
+/obj/structure/closet/crate,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/airlock_painter,
+/obj/item/pen/screwdriver,
+/obj/item/rcd_ammo,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"xc" = (
+/obj/item/plate_shard,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"xt" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/item/trash/boritos/purple,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"xP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/bonfire{
+	desc = "Begging to be lit."
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"yL" = (
+/obj/item/match,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/spawner/random/entertainment/cigarette,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"za" = (
+/obj/structure/table/reinforced,
+/obj/item/analyzer{
+	pixel_y = 6
+	},
+/obj/item/geiger_counter{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/flashlight{
+	pixel_x = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"AI" = (
+/obj/machinery/light/warm,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"AR" = (
+/obj/item/bedsheet/purple,
+/obj/item/clothing/mask/cigarette/space_cigarette,
+/obj/structure/bed/maint,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Bd" = (
+/obj/item/clothing/head/beanie/red{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/regular,
+/obj/structure/table,
+/obj/item/food/grown/kronkus{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Bj" = (
+/obj/item/cigbutt/cigarbutt{
+	desc = "A manky old cigar butt. A little cobweb is on the end.";
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"BH" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/space/basic,
+/area/space)
+"BR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Cb" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/stock_parts/cell/crap/empty,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Cl" = (
+/obj/structure/reagent_dispensers/fueltank/large,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Cm" = (
+/obj/item/trash/spacers_sidekick,
+/obj/item/trash/flare,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/spawner/random/contraband/narcotics,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Cy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/minimeteor,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"CH" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"CO" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Do" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/catwalk_floor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"DM" = (
+/obj/structure/closet/cardboard,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/pushbroom,
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/item/toy/brokenradio,
+/obj/effect/spawner/random/engineering/tool,
+/mob/living/basic/cockroach,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"DU" = (
+/obj/structure/table,
+/obj/item/food/drug/moon_rock{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/lighter/skull{
+	light_color = "#F57247";
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/weldingtool/largetank{
+	light_color = "#F57247";
+	max_fuel = 50;
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Gi" = (
+/obj/machinery/space_heater/improvised_chem_heater,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Go" = (
+/obj/machinery/computer/terminal{
+	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
+	desc = "A garbage truck's dusty old control console.";
+	name = "dashboard";
+	upperinfo = "Controls locked."
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Hn" = (
+/obj/structure/bed/dogbed,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/canister_frame,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"HN" = (
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/oil/streak,
+/mob/living/basic/syndicate/russian,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"HP" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Ij" = (
+/obj/item/stack/rods/ten,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"JD" = (
+/obj/item/bikehorn/rubberducky,
+/obj/structure/closet/mini_fridge/grimy,
+/obj/item/reagent_containers/cup/soda_cans/grey_bull,
+/obj/item/reagent_containers/cup/soda_cans/monkey_energy,
+/obj/item/reagent_containers/cup/soda_cans/monkey_energy,
+/obj/item/reagent_containers/cup/soda_cans/pwr_game,
+/obj/item/reagent_containers/cup/blastoff_ampoule,
+/obj/structure/table,
+/obj/item/food/drug/moon_rock,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Km" = (
+/obj/structure/chem_separator,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Kr" = (
+/obj/structure/lattice/catwalk,
+/obj/item/crowbar/large/emergency,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"KD" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"KK" = (
+/obj/item/food/deadmouse,
+/obj/item/trash/candy,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"KQ" = (
+/obj/item/storage/pill_bottle/stimulant{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/storage/pill_bottle/maintenance_pill/full{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/structure/closet/crate/preopen,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/syringe/contraband/methamphetamine{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/syringe/contraband/krokodil{
+	pixel_x = -1;
+	pixel_y = -2
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Lo" = (
+/obj/item/bedsheet/rainbow,
+/obj/item/cigbutt,
+/obj/item/clothing/ears/earmuffs,
+/obj/structure/bed/maint,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/spawner/random/contraband/permabrig_gear,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"LC" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Ne" = (
+/obj/item/rollingpaper,
+/obj/item/book/random{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/clothing/gloves/fingerless{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/structure/table,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"NB" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"NW" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"PD" = (
+/obj/item/mod/module/jetpack,
+/obj/effect/decal/cleanable/garbage,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/stock_parts/servo,
+/obj/item/stock_parts/subspace/filter,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"PO" = (
+/obj/item/clothing/head/cone{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/light/warm,
+/obj/machinery/power/apc{
+	cell_type = /obj/item/stock_parts/cell/lead;
+	locked = 0;
+	pixel_y = -25;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Re" = (
+/obj/item/food/badrecipe/moldy,
+/obj/item/tank/internals/plasma/empty{
+	pixel_x = -10;
+	pixel_y = 4
+	},
+/obj/item/tank/internals/plasma/empty{
+	pixel_y = 4
+	},
+/obj/item/popsicle_stick,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Sh" = (
+/obj/structure/window/reinforced/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"SD" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"SO" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/boxcutter,
+/obj/item/boxcutter,
+/obj/item/folder/yellow,
+/obj/item/geiger_counter,
+/obj/item/stack/sticky_tape,
+/obj/structure/closet/crate/preopen,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Ta" = (
+/obj/item/mecha_parts/chassis/ripley,
+/obj/item/mecha_parts/part/ripley_right_leg{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/item/mecha_parts/part/ripley_left_leg{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/mecha_parts/part/ripley_torso,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/closet/crate/large{
+	desc = "A hefty wooden crate with the word \"REJECT\" stamped on it. You'll need a crowbar to get it open."
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Tm" = (
+/obj/item/tank/internals/plasma/full,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/reagent_dispensers/fueltank/large,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Ts" = (
+/obj/structure/closet/crate/engineering/electrical,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/obj/item/electronics/firelock,
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Tt" = (
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Ud" = (
+/obj/item/food/candy,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/trashcart,
+/obj/item/storage/bag/trash/filled,
+/obj/item/trash/champagne_cork,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Ux" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/trash{
+	pixel_x = -12;
+	pixel_y = 0
+	},
+/obj/item/storage/bag/trash,
+/obj/item/storage/bag/trash{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Vj" = (
+/obj/item/sticker/toolbox,
+/obj/structure/closet/crate/cardboard,
+/obj/item/book/manual/wiki/engineering_guide,
+/obj/item/book/manual/wiki/engineering_construction,
+/obj/item/book/manual/ripley_build_and_repair,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Vs" = (
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Vu" = (
+/obj/item/food/branrequests,
+/obj/item/kitchen/spoon/plastic,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"VK" = (
+/obj/item/stock_parts/cell/crap/empty{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/cigarette/space_cigarette{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/crowbar/hammer{
+	desc = "A large claw hammer. It's been heavily used, as evidenced by the dents and scratches covering its head.";
+	name = "claw hammer"
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_cannabis{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"VZ" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/molten_object/large,
+/obj/structure/broken_flooring/pile,
+/obj/item/food/deadmouse/moldy,
+/obj/item/stock_parts/water_recycler,
+/obj/item/stock_parts/cell/lead,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Wo" = (
+/obj/item/cigbutt/roach,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Ws" = (
+/obj/item/storage/box/mousetraps,
+/obj/structure/table/reinforced,
+/obj/item/melee/flyswatter,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Wt" = (
+/obj/item/food/deadmouse,
+/obj/item/clothing/shoes/sneakers/red,
+/obj/item/clothing/mask/cigarette/carp,
+/obj/item/extinguisher/mini,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"WW" = (
+/obj/structure/mecha_wreckage/ripley,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/molten_object,
+/obj/item/organ/internal/tongue/robot,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"WX" = (
+/obj/item/toy/mecha/marauder,
+/obj/structure/closet/cardboard,
+/obj/item/toy/plush/snakeplushie,
+/obj/item/storage/fancy/cigarettes/cigpack_robust,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Xc" = (
+/obj/item/clothing/mask/cigarette/robust,
+/obj/structure/closet/emcloset,
+/obj/item/clothing/suit/utility/fire/heavy,
+/obj/item/clothing/head/utility/hardhat/welding/atmos,
+/obj/item/survivalcapsule/bathroom,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Xp" = (
+/obj/item/cigbutt/cigarbutt,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/closet/crate/trashcart,
+/obj/item/storage/bag/trash,
+/obj/item/clothing/shoes/sneakers/black,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/squat)
+"Yr" = (
+/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
+
+(1,1,1) = {"
+gV
+gV
+qa
+qa
+qa
+NB
+BH
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+"}
+(2,1,1) = {"
+gV
+NB
+Sh
+Sh
+NB
+NB
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+"}
+(3,1,1) = {"
+CO
+sL
+po
+qB
+Ws
+NB
+mb
+Lo
+AR
+Vu
+pX
+Hn
+so
+fK
+wf
+Xc
+Ta
+oF
+cl
+SD
+"}
+(4,1,1) = {"
+gz
+Sh
+Go
+CH
+AI
+NB
+mb
+sh
+qM
+uk
+dc
+mj
+Bj
+iA
+sY
+WW
+VK
+DM
+PD
+mb
+"}
+(5,1,1) = {"
+hN
+Sh
+aU
+lD
+LC
+NB
+mb
+Xp
+uh
+cz
+uh
+uh
+mE
+xP
+mS
+Ts
+Tm
+VZ
+eL
+mb
+"}
+(6,1,1) = {"
+CO
+Sh
+sL
+NB
+bZ
+Do
+KD
+dc
+dc
+dc
+uh
+fk
+ci
+nq
+HP
+Cy
+pM
+Cb
+lf
+mb
+"}
+(7,1,1) = {"
+CO
+sL
+Ux
+za
+LC
+Do
+KD
+xt
+uh
+KQ
+qG
+fk
+uh
+KK
+Ij
+HN
+xa
+SO
+WX
+mb
+"}
+(8,1,1) = {"
+gz
+sL
+Yr
+Yr
+LC
+NB
+mb
+Bd
+Wo
+nd
+cH
+uh
+uh
+vL
+uh
+Re
+sz
+Vj
+eC
+mb
+"}
+(9,1,1) = {"
+CO
+sL
+Yr
+LC
+PO
+NB
+mb
+Ne
+cU
+DU
+Km
+uM
+Gi
+Cl
+uh
+BR
+fk
+xc
+fk
+mb
+"}
+(10,1,1) = {"
+hN
+sL
+Yr
+nR
+fw
+NB
+mb
+JD
+uh
+de
+jL
+uO
+Ud
+fk
+yL
+Cm
+nv
+Tt
+Wt
+SD
+"}
+(11,1,1) = {"
+gV
+NB
+NW
+sL
+NB
+NB
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+Vs
+Vs
+Vs
+mb
+mb
+mb
+mb
+"}
+(12,1,1) = {"
+gV
+gV
+qa
+qa
+Kr
+NB
+BH
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+gV
+"}
