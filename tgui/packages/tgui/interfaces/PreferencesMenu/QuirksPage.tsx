@@ -72,6 +72,9 @@ const QuirkList = (props: {
             role="button"
             tabIndex="1"
             onClick={() => {
+              if (props.selected) {
+                toggle_customization(false);
+              }
               props.onClick(quirkKey, quirk);
             }}>
             <Stack fill>
@@ -138,7 +141,9 @@ const QuirkList = (props: {
                         icon="cog"
                         tooltip={
                           props.selected
-                            ? 'This quirk is customizable! Click this button to open a customization menu!'
+                            ? customization_expanded
+                              ? 'Click this button to close the customization menu!'
+                              : 'This quirk is customizable! Click this button to open a customization menu!'
                             : 'You must take this quirk before you can customize it!'
                         }
                         onClick={(e) => {
