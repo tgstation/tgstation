@@ -268,3 +268,17 @@
 
       Ice Box Coggers Bar:'
   - rscadd: added the missing Booze-O-Mat. (thanks Skell Bones II)
+2023-10-28:
+  DexeeXI:
+  - rscadd: Centcom map now has nav support
+  - rscadd: Icebox now has cryo signs in spots to point towards the room, because
+      its on lower Z level.
+  - bugfix: Fixed railings on Delta, Meta, Icebox.
+  - rscdel: Lots of railings on Northstar
+  - rscadd: Icebox now has signs next to the stairs to the morgue to help indicate
+      where the Morgue is (z level problems and navigate)
+  - qol: updated interview link for da rulez.
+  Salted-Zen:
+  - balance: Machete now has 25 block instead of 50
+  dwasint:
+  - bugfix: malf ai should roll again
