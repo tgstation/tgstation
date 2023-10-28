@@ -1,6 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - rscadd: "Reworked the colour schemes for the minor and major announcements as well as their layout"
-  - rscdel: "Rolled back changes to deadchat notifications"
-  - admin: "Admins can now select the colour of their announcements as well as the subheader when creating a command report."
