@@ -55,6 +55,11 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_static_data, /datum/quirk_static_data, generate
 
 	return customization_data
 
+/// Is this quirk customizable? If true, a button will appear within the quirk's description box in the quirks page, and upon clicking it,
+/// will open a customization menu for the quirk.
+/datum/quirk_static_data/proc/is_customizable()
+	return (LAZYLEN(customization_options))
+
 /datum/quirk_static_data/Destroy(force, ...)
 	var/error_message = "[src], a singleton quirk static data instance, was destroyed! This should not happen!"
 	if (force)

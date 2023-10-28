@@ -1,5 +1,5 @@
 /datum/preference/choiced/phobia
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_NON_APPLICABLE
 	savefile_key = "phobia"
 	savefile_identifier = PREFERENCE_CHARACTER
 

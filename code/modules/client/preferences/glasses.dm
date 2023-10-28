@@ -1,5 +1,5 @@
 /datum/preference/choiced/glasses
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_NON_APPLICABLE
 	savefile_key = "glasses"
 	savefile_identifier = PREFERENCE_CHARACTER
 	should_generate_icons = TRUE
