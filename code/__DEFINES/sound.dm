@@ -1,4 +1,5 @@
-//max channel is 1024. Only go lower from here, because byond tends to pick the first available channel to play sounds on
+// DO NOT ADD ANYMORE SOUND CHANNELS. REFACTOR THE SOUND SUBSYSTEM TO ALLOW NAMED CHANNEL RESERVATIONS INSTEAD
+
 #define SOUND_CHANNEL_MAX 1024
 #define SOUND_CHANNEL_LOBBYMUSIC 1024
 #define SOUND_CHANNEL_ADMIN 1023
@@ -12,9 +13,10 @@
 #define SOUND_CHANNEL_CHARGED_SPELL 1015
 #define SOUND_CHANNEL_ELEVATOR 1014
 
-//THIS SHOULD ALWAYS BE THE LOWEST ONE!
-#define SOUND_CHANNEL_HIGHEST_AVAILABLE 1014
-//KEEP IT UPDATED
+// DO NOT ADD ANYMORE SOUND CHANNELS. REFACTOR THE SOUND SUBSYSTEM TO ALLOW NAMED CHANNEL RESERVATIONS INSTEAD
+
+/// This is used to denote the highest channel that SSsound can reserve. It should be lower than all the channels above.
+#define SOUND_CHANNEL_HIGHEST_AVAILABLE 1013
 
 ///Default range of a sound.
 #define SOUND_RANGE 17

@@ -8,6 +8,9 @@ SUBSYSTEM_DEF(sounds)
 	/// Amount of channels to reserve for random usage rather than reservations being allowed to reserve all channels. Also a nice safeguard for when someone screws up.
 	var/static/random_channels_min = 50
 
+	/// All spatial trackers indexed by their channel. Note that ANY channel can use a spatial tracker not just ones that get divvied out
+	VAR_PRIVATE/list/datum/sound_spatial_tracker/spatial_trackers = new /list(SOUND_CHANNEL_MAX)
+
 	// Hey uh these two needs to be initialized fast because the whole "things get deleted before init" thing.
 	/// Assoc list, `"[channel]" =` either the datum using it or TRUE for an unsafe-reserved (datumless reservation) channel
 	var/list/using_channels
@@ -27,6 +30,15 @@ SUBSYSTEM_DEF(sounds)
 	setup_available_channels()
 	return SS_INIT_SUCCESS
 
+/datum/controller/subsystem/sounds/Recover()
+	spatial_trackers = SSsounds.spatial_trackers
+	using_channels = SSsounds.using_channels
+	using_channels_by_datum = SSsounds.using_channels_by_datum
+	channel_list = SSsounds.channel_list
+	reserved_channels = SSsounds.reserved_channels
+	channel_random_low = SSsounds.channel_random_low
+	channel_reserve_high = SSsounds.channel_reserve_high
+
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
 	channel_list = list()
 	reserved_channels = list()
@@ -36,6 +48,44 @@ SUBSYSTEM_DEF(sounds)
 		channel_list += i
 	channel_random_low = 1
 	channel_reserve_high = length(channel_list)
+
+/datum/controller/subsystem/sounds/proc/register_spatial_tracker(datum/sound_spatial_tracker/tracker)
+	if(!istype(tracker))
+		CRASH("attempted to register an invalid sound spatial tracker")
+
+	var/on_channel = tracker.channel
+	if(!on_channel)
+		CRASH("attempted to register a sound spatial tracker with no channel")
+	if(on_channel > length(spatial_trackers))
+		CRASH("attempted to register a sound spatial tracker with a channel that is too high")
+
+	var/datum/sound_spatial_tracker/existing = spatial_trackers[on_channel]
+	if(!isnull(existing) && (existing != tracker))
+		qdel(existing) // long live the king
+
+	spatial_trackers[on_channel] = tracker
+
+/datum/controller/subsystem/sounds/proc/unregister_spatial_tracker(datum/sound_spatial_tracker/gone)
+	if(!istype(gone))
+		CRASH("attempted to unregister an invalid sound spatial tracker")
+
+	var/on_channel = gone.channel
+	if(!on_channel)
+		CRASH("attempted to unregister a sound spatial tracker with no channel")
+	if(on_channel > length(spatial_trackers))
+		CRASH("attempted to unregister a sound spatial tracker with a channel that is too high")
+
+	var/datum/sound_spatial_tracker/existing = spatial_trackers[on_channel]
+	if(existing != gone)
+		return // someone else already took over
+	spatial_trackers[on_channel] = null
+
+/datum/controller/subsystem/sounds/proc/get_spatial_tracker(channel)
+	if(istext(channel))
+		channel = text2num(channel)
+	if(channel > length(spatial_trackers))
+		CRASH("attempted to get a sound spatial tracker with a channel that is too high")
+	return spatial_trackers[channel]
 
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)

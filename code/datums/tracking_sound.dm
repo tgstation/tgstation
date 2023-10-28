@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new /list(SOUND_CHANNEL_MAX))
-
 /// The listener offset gap, used as an offset for the offset to ensure that the offset is never at or below 0.
 /// You may ask why this is so high, and thats because SEND_SOUND will wait for the client to acknowledge the sound before continuing
 /// Which means that we can have a negative offset if the client has a high latency.
@@ -23,6 +21,9 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	var/max_distance
 	var/falloff_distance
 	var/use_reverb
+
+	/// null sound datum used to stop the sound on a client; stored to prevent constant generation
+	var/sound/null_sound
 
 	/// world.timeofday we started playing the sound.
 	var/start_time
@@ -71,7 +72,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	src.use_reverb = use_reverb
 
 	start_time = REALTIMEOFDAY
-	GLOB.sound_spatial_trackers[channel] = src
+	SSsounds.register_spatial_tracker(src)
 	spatial_tracker = new(max_distance, max_distance)
 	update_spatial_tracker()
 	src.sound_length = sound_length
@@ -80,6 +81,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_gone))
 	return ..()
 
+/// Schedules a qdel if not already scheduled.
 /datum/sound_spatial_tracker/proc/schedule_qdel(length)
 	if(qdel_scheduled)
 		return
@@ -90,25 +92,24 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	qdel(src)
 
 /datum/sound_spatial_tracker/Destroy(force, ...)
-	source = null
-	for(var/mob/listener as anything in listeners)
-		release_listener(listener)
-	listeners.Cut()
-	if(GLOB.sound_spatial_trackers[channel] == src)
-		GLOB.sound_spatial_trackers[channel] = null
+	SSsounds.unregister_spatial_tracker(src)
+	release_all_listeners()
 	spatial_tracker = null
+	source = null
 	cells.Cut()
 	return ..()
 
 /datum/sound_spatial_tracker/process(seconds_per_tick)
-	for(var/mob/listent as anything in leavers)
-		release_listener(listent)
+	if(!length(leavers))
+		return
+	release_all_listeners(leavers)
 	leavers.Cut()
 
 /datum/sound_spatial_tracker/proc/on_source_moved()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(update_spatial_tracker))
+	update_spatial_tracker()
 
+/// Go through and check our location for spatial grid changes
 /datum/sound_spatial_tracker/proc/update_spatial_tracker()
 	var/list/new_and_old_cells = spatial_tracker.recalculate_cells(get_turf(source))
 	for(var/datum/spatial_grid_cell/new_cell as anything in new_and_old_cells[1])
@@ -126,12 +127,20 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	for(var/mob/listener as anything in listeners)
 		update_listener(listener)
 
+/// Sets up a listener to be tracked by this datum.
 /datum/sound_spatial_tracker/proc/link_to_listener(mob/listener)
 	if(listeners[listener])
 		return
 	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, PROC_REF(on_listener_moved))
 	LISTENER_OFFSET_SET(listener, LISTENER_OFFSET_UNKNOWN)
 
+/// Release all listeners from the given list; if no list is specified, release all listeners.
+/datum/sound_spatial_tracker/proc/release_all_listeners(list/going)
+	going ||= listeners
+	for(var/mob/listener as anything in going)
+		release_listener(listener)
+
+/// Release a specific listener.
 /datum/sound_spatial_tracker/proc/release_listener(mob/listener)
 	if(!listeners[listener])
 		return
@@ -141,9 +150,11 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 		return
 	stop_sound_for(listener)
 
+
+/// Helper to send a null sound to a listener; which stops it from playing.
 /datum/sound_spatial_tracker/proc/stop_sound_for(mob/listener)
-	var/sound/null_sound = sound(null, channel = channel)
-	SEND_SOUND(listener.client, null_sound)
+	null_sound ||= sound(null, channel = channel)
+	SEND_SOUND(listener, null_sound)
 
 /datum/sound_spatial_tracker/proc/update_listener(mob/listener)
 	set waitfor = FALSE
@@ -151,6 +162,7 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 	// having a breakpoint here will cause the logic to break as the offset won't take into account the time it takes to step through this proc
 
 	if(isnull(listener.client))
+		release_listener(listener)
 		return
 
 	if(get_dist(listener, source) > max_distance)
@@ -213,9 +225,6 @@ GLOBAL_LIST_INIT_TYPED(sound_spatial_trackers, /datum/sound_spatial_tracker, new
 			continue
 		leavers[listener] = TRUE
 		stop_sound_for(listener)
-
-/mob/verb/TEST_SPATIAL_SOUND(obj/target as obj in view())
-	playsound(target, 'sound/magic/clockwork/ark_activation_sequence.ogg', vol = 100, use_spatial_tracking = TRUE)
 
 #undef LISTENER_OFFSET_UNKNOWN
 #undef LISTENER_OFFSET_GAP
