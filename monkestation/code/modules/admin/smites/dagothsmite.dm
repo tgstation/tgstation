@@ -2,7 +2,7 @@
 /datum/smite/dagothsmite
 	name = "Dagoth Smite"
 
-datum/smite/dagothsmite/effect(client/user, mob/living/target)
+/datum/smite/dagothsmite/effect(client/user, mob/living/target)
 	. = ..()
 	if (!iscarbon(target))
 		to_chat(user, span_warning("This must be used on a carbon mob."), confidential = TRUE)
