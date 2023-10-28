@@ -125,5 +125,3 @@
 #define COMSIG_ATOM_GERM_EXPOSED "atom_germ_exposed"
 /// when atom is picked up from the floor or moved to an elevated structure: (datum/component/germ_exposure)
 #define COMSIG_ATOM_GERM_UNEXPOSED "atom_germ_unexposed"
-/// when atom is washed
-#define COMSIG_ATOM_WASHED "atom_washed"
