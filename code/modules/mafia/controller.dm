@@ -126,10 +126,9 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * Puts players in each role randomly
  * Arguments:
  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
- * * ready_ghosts: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
- * * ready_pdas: list of PDAs wanting to play the Mafia game.
+ * * ready_ghosts_and_pdas: list of filtered, sane players & PDAs (so not playing or disconnected) for the game to put into roles
  */
-/datum/mafia_controller/proc/prepare_game(setup_list, ready_ghosts, ready_pdas)
+/datum/mafia_controller/proc/prepare_game(setup_list, ready_ghosts_and_pdas)
 	var/static/list/possible_maps = subtypesof(/datum/map_template/mafia)
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in GLOB.landmarks_list)
 
@@ -161,23 +160,17 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/list/spawnpoints = landmarks.Copy()
 	for(var/datum/mafia_role/role as anything in all_roles)
 		role.assigned_landmark = pick_n_take(spawnpoints)
-		var/selected_player
+		var/selected_player //this can be a ckey or a PDA
 		if(!debug)
-			if(length(ready_pdas))
-				selected_player = pick(ready_pdas)
-			else
-				selected_player = pick(ready_ghosts)
+			selected_player = pick(ready_ghosts_and_pdas)
 		else
-			if(length(ready_pdas))
-				selected_player = peek(ready_pdas)
-			else
-				selected_player = peek(ready_ghosts)
-		if(selected_player in ready_pdas)
-			role.player_pda = selected_player
-			ready_pdas -= selected_player
-		else
+			selected_player = peek(ready_ghosts_and_pdas)
+		var/client/player_client = GLOB.directory[selected_player]
+		if(player_client)
 			role.player_key = selected_player
-			ready_ghosts -= selected_player
+		else
+			role.player_pda = selected_player
+		ready_ghosts_and_pdas -= selected_player
 
 ///Sends a global message to all players, or just 'team' if set.
 /datum/mafia_controller/proc/send_message(msg, team, log_only = FALSE)
@@ -960,18 +953,16 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/basic_setup()
 	var/req_players = MAFIA_MAX_PLAYER_COUNT
 	var/list/setup = custom_setup
-	if(setup.len)
+	if(length(setup))
 		req_players = assoc_value_sum(setup)
 
-	var/list/filtered_pdas = GLOB.pda_mafia_signup
-	if(!isnull(filtered_pdas)) //pdas get priority
-		req_players -= length(GLOB.pda_mafia_signup)
-	var/list/filtered_keys = filter_players(req_players)
-	var/needed_players = length(filtered_keys) + length(filtered_pdas)
+	var/list/filtered_keys_and_pdas = filter_players(req_players)
 
-	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
-		setup = generate_standard_setup(needed_players)
-	prepare_game(setup, filtered_keys, filtered_pdas)
+	//don't actually have one yet, so generate a max player random setup.
+	//it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
+	if(!length(setup))
+		setup = generate_standard_setup(length(filtered_keys_and_pdas))
+	prepare_game(setup, filtered_keys_and_pdas)
 	start_game()
 
 /**
@@ -982,17 +973,15 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /datum/mafia_controller/proc/forced_setup()
 	check_signups() //Refresh the signup list, so our numbers are accurate and we only take active players into consideration.
-	var/list/filtered_pdas = GLOB.pda_mafia_signup
-	var/list/filtered_keys = filter_players(length(GLOB.mafia_signup))
-	var/req_players = length(filtered_keys) + length(filtered_pdas)
-
-	if(!req_players) //If we have nobody signed up, we give up on starting
+	var/players_needed = GLOB.mafia_signup.len + GLOB.pda_mafia_signup.len
+	var/list/filtered_keys_and_pdas = filter_players(players_needed)
+	if(!length(filtered_keys_and_pdas)) //If we have nobody signed up, we give up on starting
 		log_admin("Attempted to force a mafia game to start with nobody signed up!")
 		return
 
-	var/list/setup = generate_standard_setup(req_players)
+	var/list/setup = generate_standard_setup(length(filtered_keys_and_pdas))
 
-	prepare_game(setup, filtered_keys, filtered_pdas)
+	prepare_game(setup, filtered_keys_and_pdas)
 	early_start = TRUE
 	start_game()
 
@@ -1023,38 +1012,42 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * This should only be run as we are in the process of starting a game.
  *
  * max_players - The maximum number of keys to put in our return list before we start telling people they're not getting in.
- * filtered_keys - A list of player ckeys, to be included in the game.
+ * filtered_keys_and_pdas - A list of player ckeys and PDAs, to be included in the game.
  */
 /datum/mafia_controller/proc/filter_players(max_players)
 	//final list for all the players who will be in this game
-	var/list/filtered_keys = list()
+	var/list/filtered_keys_and_pdas = list()
 	//cuts invalid players from signups (disconnected/not a ghost)
-	var/list/possible_keys = list()
+	var/list/possible_players = list()
 	for(var/key in GLOB.mafia_signup)
 		if(GLOB.directory[key])
 			var/client/C = GLOB.directory[key]
 			if(isobserver(C.mob))
-				possible_keys += key
+				possible_players += key
 				continue
 		GLOB.mafia_signup -= key //not valid to play when we checked so remove them from signups
 
-	//If we're not over capacity and don't need to notify anyone of their exclusion, return early.
-	if(length(possible_keys) < max_players)
-		return filtered_keys
+	for(var/obj/item/modular_computer/pda/pdas as anything in GLOB.pda_mafia_signup)
+		possible_players += pdas
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends
 	for(var/i in 1 to max_players)
-		var/chosen_key = pick_n_take(possible_keys)
-		filtered_keys += chosen_key
-		GLOB.mafia_signup -= chosen_key
+		var/chosen_key = pick_n_take(possible_players)
+		filtered_keys_and_pdas += chosen_key
+		if(chosen_key in GLOB.pda_mafia_signup)
+			GLOB.pda_mafia_signup -= chosen_key
+		else if(chosen_key in GLOB.mafia_signup)
+			GLOB.mafia_signup -= chosen_key
 	//small message about not getting into this game for clarity on why they didn't get in
-	for(var/unpicked in possible_keys)
+	for(var/unpicked in possible_players)
+		if(!(unpicked in GLOB.mafia_signup))
+			continue
 		var/client/unpicked_client = GLOB.directory[unpicked]
 		to_chat(unpicked_client, span_danger("Sorry, the starting mafia game has too many players and you were not picked."))
 		to_chat(unpicked_client, span_warning("You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes."))
 
-	return filtered_keys
+	return filtered_keys_and_pdas
 
 /**
  * Called when someone signs up, and sees if there are enough people in the signup list to begin.
