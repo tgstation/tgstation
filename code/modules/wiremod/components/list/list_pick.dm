@@ -54,7 +54,8 @@
 
 
 /obj/item/circuit_component/list_pick/input_received(datum/port/input/port)
-	if(parent.Adjacent(user.value))
+	if(!parent.Adjacent(user.value))
+		failure.set_output(COMPONENT_SIGNAL)
 		return
 
 	if(ismob(user.value))
