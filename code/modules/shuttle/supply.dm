@@ -157,13 +157,15 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/value = 0
 	var/purchases = 0
+	var/price
+	var/pack_cost
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
 	var/list/rejected_orders = list() //list of all orders that exceeded the available budget and are uncancelable
 
 	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
-		var/price = spawning_order.get_final_cost()
+		price = spawning_order.get_final_cost()
 
 		//department orders EARN money for cargo, not the other way around
 		var/datum/bank_account/paying_for_this
@@ -187,6 +189,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 						rejected_orders += spawning_order
 					continue
 
+		pack_cost = spawning_order.pack.get_cost()
 		if(spawning_order.paying_account)
 			paying_for_this = spawning_order.paying_account
 			if(spawning_order.pack.goody)
@@ -197,8 +200,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			paying_for_this.bank_card_talk(reciever_message)
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
-		value += spawning_order.pack.get_cost()
+			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
+		value += pack_cost
 		SSshuttle.shopping_list -= spawning_order
 		SSshuttle.order_history += spawning_order
 		QDEL_NULL(spawning_order.applied_coupon)
