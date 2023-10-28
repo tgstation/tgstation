@@ -82,7 +82,8 @@
 	if(check_holidays(HALLOWEEN))
 		// Makes things a tad greyscale (leaning purple) and drops low colors for vibes
 		// We're basically using alpha as better constant here btw
-		add_filter("spook_color", 2, color_matrix_filter(list(0.75,0.13,0.13,0, 0.13,0.7,0.13,0, 0.13,0.13,0.75,0, -0.06,-0.09,-0.08,1, 0,0,0,0)))
+		add_filter("spook_color_boost", 2, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0.04,0.07,0.06,1, 0,0,0,0)))
+		add_filter("spook_color_dim", 3, color_matrix_filter(list(0.67,0.13,0.13,0, 0.13,0.58,0.13,0, 0.13,0.13,0.67,0, -0.08,-0.11,-0.1,1, 0,0,0,0)))
 
 // Blackness renders weird when you view down openspace, because of transforms and borders and such
 // This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
@@ -174,7 +175,6 @@
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
-
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/hide_from(mob/oldmob)
 	. = ..()
