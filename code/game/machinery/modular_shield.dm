@@ -442,17 +442,21 @@
 /obj/machinery/modular_shield/module/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 
-	if(default_change_direction_wrench(user, tool))
-		if(shield_generator)
-			LAZYREMOVE(shield_generator.connected_modules, (src))
-			shield_generator.calculate_boost()
-			shield_generator = null
-			update_icon_state()
-		if(connected_node)
-			LAZYREMOVE(connected_node.connected_through_us, (src))
-			connected_node = null
-		connected_turf = get_step(loc, dir)
-		return TRUE
+	if(!default_change_direction_wrench(user, tool))
+		return FALSE
+
+	if(shield_generator)
+		LAZYREMOVE(shield_generator.connected_modules, (src))
+		shield_generator.calculate_boost()
+		shield_generator = null
+		update_icon_state()
+
+	if(connected_node)
+		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node = null
+
+	connected_turf = get_step(loc, dir)
+	return TRUE
 
 /obj/machinery/modular_shield/module/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -521,18 +525,23 @@
 
 /obj/machinery/modular_shield/module/node/wrench_act(mob/living/user, obj/item/tool)
 
-	if(default_change_direction_wrench(user, tool))
-		disconnect_connected_through_us()
-		if(shield_generator)
-			LAZYREMOVE(shield_generator.connected_modules, (src))
-			shield_generator.calculate_boost()
-			shield_generator = null
-			update_icon_state()
-		if(connected_node)
-			LAZYREMOVE(connected_node.connected_through_us, (src))
-			connected_node = null
-		connected_turf = get_step(loc, dir)
-		return TRUE
+	if(!default_change_direction_wrench(user, tool))
+		return FALSE
+
+	disconnect_connected_through_us()
+
+	if(shield_generator)
+		LAZYREMOVE(shield_generator.connected_modules, (src))
+		shield_generator.calculate_boost()
+		shield_generator = null
+		update_icon_state()
+
+	if(connected_node)
+		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node = null
+
+	connected_turf = get_step(loc, dir)
+	return TRUE
 
 //after trying to connect to a machine infront of us, we will try to link anything connected to us to a generator
 /obj/machinery/modular_shield/module/node/try_connect(user)
