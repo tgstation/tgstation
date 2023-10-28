@@ -800,13 +800,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 3.4
 	tox_damage = 0
 
-/datum/reagent/inverse/sal_acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	. = ..()
-	if(myseed && chems.has_reagent(src.type, 1))
-		myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.25))
-		myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.2))
-		myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.2))
-		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 0.5))
+/datum/reagent/inverse/sal_acid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume * 0.5))
+	mytray.myseed?.adjust_production(-round(volume * 0.2))
+	mytray.myseed?.adjust_potency(round(volume * 0.25))
+	mytray.myseed?.adjust_yield(round(volume * 0.2))
 
 /datum/reagent/inverse/oxandrolone
 	name = "Oxymetholone"
@@ -833,7 +831,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick)
 	else if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 3)
-		//affected_mob.adjustBruteLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
 		affected_mob.Paralyze(3 SECONDS)
 
 /datum/reagent/inverse/salbutamol
@@ -848,11 +845,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/salbutamol/on_mob_metabolize(mob/living/L)
 	. = ..()
-	ADD_TRAIT(L,TRAIT_BAMETHAN_BLEED,type)
+	ADD_TRAIT(L, TRAIT_EASYBLEED ,type)
 
 /datum/reagent/inverse/salbutamol/on_mob_end_metabolize(mob/living/M)
 	. = ..()
-	REMOVE_TRAIT(M,TRAIT_BAMETHAN_BLEED,type)
+	REMOVE_TRAIT(M, TRAIT_EASYBLEED ,type)
 
 /datum/reagent/inverse/pen_acid
 	name = "Pendetide"
@@ -865,12 +862,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	tox_damage = 0
 
 /datum/reagent/inverse/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(holder.has_reagent(/datum/reagent/medicine/c2/seiver))
-		holder.remove_reagent(/datum/reagent/medicine/c2/seiver, 5 * REM * seconds_per_tick)
-	if(holder.has_reagent(/datum/reagent/medicine/potass_iodide))
-		holder.remove_reagent(/datum/reagent/medicine/potass_iodide, 5 * REM * seconds_per_tick)
-	if(holder.has_reagent(/datum/reagent/medicine/c2/multiver))
-		holder.remove_reagent(/datum/reagent/medicine/c2/multiver, 5 * REM * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/c2/seiver, 5 * REM * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/potass_iodide, 5 * REM * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/c2/multiver, 5 * REM * seconds_per_tick)
 
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
@@ -878,7 +872,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(affected_mob, span_warning("A horrible ache spreads in your insides!"))
-			affected_mob.adjust_confusion(10 SECONDS)
+			affected_mob.adjust_confusion_up_to(10 SECONDS, 15 SECONDS)
 
 /datum/reagent/inverse/atropine
 	name = "Hyoscyamine"
@@ -895,10 +889,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, -1 * REM * seconds_per_tick)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick)
-	if(need_mob_update)
-		. = UPDATE_MOB_HEALTH
 	if(affected_mob.getToxLoss() <= 25)
 		need_mob_update = affected_mob.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/inverse/atropine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -918,20 +912,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.emote("scream")
-		affected_mob.say(pick("AAAAAAAHHHHH!!","OOOOH NOOOOOO!!","GGGUUUUHHHHH!!","AIIIIIEEEEEE!!","HAHAHAHAHAAAAAA!!","OORRRGGGHHH!!","AAAAAAAJJJJJJJJJ!!"), forced = /datum/reagent/inverse/ammoniated_mercury)
+		affected_mob.say(pick("AAAAAAAHHHHH!!","OOOOH NOOOOOO!!","GGGUUUUHHHHH!!","AIIIIIEEEEEE!!","HAHAHAHAHAAAAAA!!","OORRRGGGHHH!!","AAAAAAAJJJJJJJJJ!!"), forced = type)
 
 /datum/reagent/inverse/rezadone
 	name = "Inreziniver"
-	description = "A sinister poison that converts toxin damage to cellular damage. Unable to be scanned by any reagent analysis."
+	description = "Makes the user horribly afraid of all things related to carps."
 	reagent_state = LIQUID
 	color = "#c92eb4"
 	ph = 13.9
-	metabolization_rate = 0.1 * REM
+	metabolization_rate = 0.05 * REM
 	tox_damage = 0
 
-/datum/reagent/inverse/rezadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/inverse/rezadone/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(affected_mob.getToxLoss() >= 1.5)
-		var/need_mob_update
-		need_mob_update = affected_mob.adjustToxLoss(-1.5 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustCloneLoss((0.25 + creation_purity) * REM * seconds_per_tick, updating_health = FALSE)
+	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/carps, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/inverse/rezadone/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/carps, resilience = TRAUMA_RESILIENCE_ABSOLUTE)

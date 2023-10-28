@@ -67,8 +67,7 @@
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER))
 		damage *= 1.1
 
-	//For inverse reagent Bamethan!
-	if(HAS_TRAIT(owner, TRAIT_BAMETHAN_BLEED) && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
+	if(HAS_TRAIT(owner, TRAIT_EASYBLEED) && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
 		damage *= 1.5
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
