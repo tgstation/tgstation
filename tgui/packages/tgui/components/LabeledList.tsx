@@ -63,7 +63,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         <Box
           as="span"
           style={{
-            'border-bottom': '2px dotted rgba(255, 255, 255, 0.1)',
+            'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
           }}>
           {innerLabel}
         </Box>
