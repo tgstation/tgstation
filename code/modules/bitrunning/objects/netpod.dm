@@ -81,10 +81,10 @@
 
 /obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
 	var/mob/living/carbon/player = user
-	if(!iscarbon(player))
+	if(!iscarbon(player) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational || !state_open)
 		return
 
-	if((HAS_TRAIT(player, TRAIT_UI_BLOCKED) && !player.resting) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational)
+	if(player.buckled || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))
 		return
 
 	close_machine(target)

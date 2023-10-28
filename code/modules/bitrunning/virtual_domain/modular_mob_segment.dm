@@ -4,10 +4,10 @@
 #define SPAWN_RARE 10
 
 /datum/modular_mob_segment
+	/// Spawn no more than this amount
+	var/max = 4
 	/// Set this to false if you want explicitly what's in the list to spawn
-	var/randomized = TRUE
-	/// Spawn a random amount from the list
-	var/pick_random_of = 0
+	var/exact = FALSE
 	/// The list of mobs to spawn
 	var/list/mob/living/mobs = list()
 	/// The mobs spawned from this segment
@@ -20,90 +20,71 @@
 	if(!prob(probability))
 		return
 
-	var/current_index = 1
-
-	var/total_amount
-	if(pick_random_of > 0)
-		total_amount = pick_random_of
-	else
-		if(!randomized)
-			total_amount = length(mobs)
-		else
-			total_amount = rand(1, 6)
+	var/total_amount = exact ? rand(1, max) : length(mobs)
 
 	shuffle_inplace(mobs)
 
-	var/turf/nearby = view(5, origin)
+	var/turf/nearby = RANGE_TURFS(2, origin)
+	for(var/turf/tile in nearby)
+		if(tile.is_blocked_turf())
+			nearby -= tile
 
-	var/spawned = FALSE
+	if(!length(nearby))
+		stack_trace("Couldn't find any valid turfs to spawn on")
+		return
+
 	for(var/index in 1 to total_amount)
-		spawned = FALSE
+		// For each of those, we need to find an open space
+		var/turf/destination = pick(nearby)
 
-		while(!spawned)
-			if(length(nearby) == 0)
-				break
+		var/path // Either a random mob or the next mob in the list
+		if(exact)
+			path = mobs[index]
+		else
+			path = pick(mobs)
 
-			for(var/turf/open/possible_turf in nearby)
-				if(possible_turf.is_blocked_turf())
-					nearby -= possible_turf
-					continue
-
-				var/path
-				if(randomized)
-					path = pick(mobs)
-				else
-					path = mobs[current_index]
-					current_index++
-
-				var/mob/living/mob = new path(possible_turf)
-				nearby -= possible_turf
-				spawned = TRUE
-				spawned_mob_refs.Add(WEAKREF(mob))
-
-				break
+		var/mob/living/mob = new path(destination)
+		nearby -= destination
+		spawned_mob_refs.Add(WEAKREF(mob))
 
 // Some generic mob segments. If you want to add generic ones for any map, add them here
 
 /datum/modular_mob_segment/gondolas
-	pick_random_of = 3
 	mobs = list(
 		/mob/living/simple_animal/pet/gondola,
 	)
 
 /datum/modular_mob_segment/corgis
-	pick_random_of = 2
+	max = 2
 	mobs = list(
 		/mob/living/basic/pet/dog/corgi,
 	)
 
 /datum/modular_mob_segment/monkeys
-	pick_random_of = 3
 	mobs = list(
 		/mob/living/carbon/human/species/monkey,
 	)
 
 /datum/modular_mob_segment/syndicate_team
-	pick_random_of = 3
 	mobs = list(
 		/mob/living/basic/trooper/syndicate/ranged,
 		/mob/living/basic/trooper/syndicate/melee,
 	)
 
 /datum/modular_mob_segment/syndicate_elite
-	pick_random_of = 3
 	mobs = list(
 		/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 		/mob/living/basic/trooper/syndicate/ranged/space/stormtrooper,
 	)
 
 /datum/modular_mob_segment/bears
-	pick_random_of = 2
+	max = 2
 	mobs = list(
 		/mob/living/basic/bear,
 	)
 
 /datum/modular_mob_segment/bees
-	randomized = FALSE
+	exact = TRUE
 	mobs = list(
 		/mob/living/basic/bee,
 		/mob/living/basic/bee,
@@ -134,14 +115,12 @@
 	)
 
 /datum/modular_mob_segment/hivebots_strong
-	pick_random_of = 3
 	mobs = list(
 		/mob/living/basic/hivebot/strong,
 		/mob/living/basic/hivebot/range,
 	)
 
 /datum/modular_mob_segment/lavaland_assorted
-	pick_random_of = 3
 	mobs = list(
 		/mob/living/basic/mining/basilisk,
 		/mob/living/basic/mining/goliath,
@@ -157,9 +136,6 @@
 		/mob/living/basic/spider/giant/tarantula,
 		/mob/living/basic/spider/giant/midwife,
 	)
-
-/datum/modular_mob_segment/spider/threatening
-	pick_random_of = 6
 
 /datum/modular_mob_segment/venus_trap
 	mobs = list(
