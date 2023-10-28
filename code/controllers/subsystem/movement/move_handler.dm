@@ -151,17 +151,14 @@ SUBSYSTEM_DEF(move_manager)
 	favorite_subsystem.add_loop(running_loop)
 
 /datum/movement_packet/proc/remove_loop(datum/controller/subsystem/movement/remove_from, datum/move_loop/loop_to_remove)
+	remove_from.remove_loop(loop_to_remove)
 	if(loop_to_remove == running_loop)
-		remove_from.remove_loop(loop_to_remove)
 		running_loop = null
-	if(loop_to_remove.flags & MOVEMENT_LOOP_IGNORE_PRIORITY)
-		remove_from.remove_loop(loop_to_remove)
 	if(QDELETED(src))
 		return
 	if(existing_loops[remove_from] == loop_to_remove)
 		existing_loops -= remove_from
 	decide_on_running_loop()
-	return
 
 /datum/movement_packet/proc/remove_subsystem(datum/controller/subsystem/movement/remove)
 	var/datum/move_loop/our_loop = existing_loops[remove]
