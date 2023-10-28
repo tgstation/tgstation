@@ -15,9 +15,9 @@
 	Person.unequip_everything()
 	Person.Paralyze(15)
 	playsound(target,'sound/magic/lightningshock.ogg', 50, 1)
-	playsound(target, 'monkestation/sound/misc/dagothgod.ogg', 80)
+	playsound(target,'monkestation/sound/misc/dagothgod.ogg', 80)
 	Person.electrocution_animation(15)
 	spawn(15)
 		Person.gib()
-		dyn_explosion(Location, 1, 0)
+		playsound(Location,'sound/effects/explosion3.ogg', 75, 1)
 	return
