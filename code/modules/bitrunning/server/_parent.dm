@@ -56,9 +56,8 @@
 	. = ..()
 
 	radio = new(src)
-	radio.set_frequency(FREQ_SUPPLY)
-	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
+	radio.keyslot = new /obj/item/encryptionkey/headset_cargo()
+	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))

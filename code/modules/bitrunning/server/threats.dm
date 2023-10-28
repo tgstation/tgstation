@@ -74,6 +74,8 @@
 		header = "Bitrunning Malfunction", \
 	)
 
+	return mutation_target
+
 /// Orbit poll has concluded - spawn the antag
 /obj/machinery/quantum_server/proc/spawn_glitch(datum/antagonist/bitrunning_glitch/chosen_role, mob/living/mutation_target, mob/dead/observer/ghost)
 	if(QDELETED(mutation_target))
@@ -107,14 +109,14 @@
 
 /// Oh boy - transports the antag station side
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)
-	balloon_alert(antag, "scanning...")
+	antag.balloon_alert(antag, "scanning...")
 	chosen_forge.setup_particles(angry = TRUE)
 	radio.talk_into(src, "SECURITY BREACH: Unauthorized entry sequence detected.", RADIO_CHANNEL_SUPPLY)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_STATION_SPAWN)
 
 	var/timeout = 2 SECONDS
 	if(!ishuman(antag))
-		radio.talk_into(src, "WARNING: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", RADIO_CHANNEL_COMMON)
+		radio.talk_into(src, "Fabrication protocols have crashed unexpectedly. Please evacuate the area.", RADIO_CHANNEL_SUPPLY)
 		timeout = 10 SECONDS
 
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)
@@ -137,7 +139,7 @@
 	if(ishuman(antag))
 		reset_equipment(antag)
 	else
-		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.", RADIO_CHANNEL_COMMON)
+		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.")
 
 	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/magic/ethereal_enter.ogg', asoundout = 'sound/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
 

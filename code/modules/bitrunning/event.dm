@@ -80,7 +80,7 @@
 	if(!unlucky_server.validate_mutation_candidates())
 		return MAP_ERROR
 
-	unlucky_server.setup_glitch(forced_role)
+	spawned_mobs = unlucky_server.setup_glitch(forced_role)
 
 	return SUCCESSFUL_SPAWN
 
