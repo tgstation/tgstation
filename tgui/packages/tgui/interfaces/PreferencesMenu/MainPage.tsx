@@ -349,6 +349,7 @@ export const PreferenceList = (props: {
   act: typeof sendAct;
   preferences: Record<string, unknown>;
   randomizations: Record<string, RandomSetting>;
+  maxHeight: string;
 }) => {
   return (
     <Stack.Item
@@ -359,7 +360,8 @@ export const PreferenceList = (props: {
         padding: '4px',
       }}
       overflowX="hidden"
-      overflowY="scroll">
+      overflowY="auto"
+      maxHeight={props.maxHeight}>
       <LabeledList>
         {sortPreferences(Object.entries(props.preferences)).map(
           ([featureId, value]) => {
@@ -612,6 +614,7 @@ export const MainPage = (
                       context
                     )}
                     preferences={contextualPreferences}
+                    maxHeight="auto"
                   />
 
                   <PreferenceList
@@ -623,6 +626,7 @@ export const MainPage = (
                       context
                     )}
                     preferences={nonContextualPreferences}
+                    maxHeight="auto"
                   />
                 </Stack>
               </Stack.Item>

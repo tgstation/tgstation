@@ -168,31 +168,39 @@ const QuirkList = (props: {
                   placement: 'bottom-end',
                 }}
                 popperContent={
-                  <Stack
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                    maxWidth="300px"
-                    backgroundColor="black">
-                    <Stack.Item>
-                      <PreferenceList
-                        act={act}
-                        preferences={getCorrespondingPreferences(
-                          quirk.customization_options,
-                          data.character_preferences.all_preferences
-                        )}
-                        randomizations={getRandomization(
-                          getCorrespondingPreferences(
+                  <Box
+                    style={{
+                      'box-shadow': '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
+                    }}>
+                    <Stack
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      maxWidth="300px"
+                      backgroundColor="black"
+                      px="5px"
+                      py="3px">
+                      <Stack.Item>
+                        <PreferenceList
+                          act={act}
+                          preferences={getCorrespondingPreferences(
                             quirk.customization_options,
                             data.character_preferences.all_preferences
-                          ),
-                          props.serverData,
-                          props.randomBodyEnabled,
-                          props.context
-                        )}
-                      />
-                    </Stack.Item>
-                  </Stack>
+                          )}
+                          randomizations={getRandomization(
+                            getCorrespondingPreferences(
+                              quirk.customization_options,
+                              data.character_preferences.all_preferences
+                            ),
+                            props.serverData,
+                            props.randomBodyEnabled,
+                            props.context
+                          )}
+                          maxHeight="100px"
+                        />
+                      </Stack.Item>
+                    </Stack>
+                  </Box>
                 }>
                 {child}
               </Popper>
