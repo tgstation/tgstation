@@ -308,6 +308,7 @@
 	neo.set_static_vision(3 SECONDS)
 	add_healing(occupant)
 	if(!do_after(neo, 2 SECONDS, src))
+		open_machine()
 		return
 
 	// Very invalid
