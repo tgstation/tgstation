@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Disablers and Lasers now show their on-impact effects on hit mobs again."

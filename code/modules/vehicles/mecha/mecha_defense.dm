@@ -41,6 +41,7 @@
 	if(damage_taken <= 0 || atom_integrity < 0)
 		return damage_taken
 
+	diag_hud_set_mechhealth()
 	spark_system?.start()
 	try_deal_internal_damage(damage_taken)
 	if(damage_taken >= 5 || prob(33))
@@ -332,6 +333,7 @@
 	. = ..()
 	if(.)
 		try_damage_component(., user.zone_selected)
+		diag_hud_set_mechhealth()
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
@@ -428,6 +430,7 @@
 			break
 	if(did_the_thing)
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+		diag_hud_set_mechhealth()
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 
@@ -436,6 +439,7 @@
 	atom_integrity = max_integrity
 	if(cell && charge_cell)
 		cell.charge = cell.maxcharge
+		diag_hud_set_mechcell()
 	if(internal_damage & MECHA_INT_FIRE)
 		clear_internal_damage(MECHA_INT_FIRE)
 	if(internal_damage & MECHA_INT_TEMP_CONTROL)
@@ -446,6 +450,7 @@
 		clear_internal_damage(MECHA_CABIN_AIR_BREACH)
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		clear_internal_damage(MECHA_INT_CONTROL_LOST)
+	diag_hud_set_mechhealth()
 
 /obj/vehicle/sealed/mecha/narsie_act()
 	emp_act(EMP_HEAVY)
