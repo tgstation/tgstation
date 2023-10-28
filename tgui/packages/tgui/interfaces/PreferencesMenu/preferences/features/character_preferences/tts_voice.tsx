@@ -35,10 +35,13 @@ const FeatureTTSDropdownInput = (
 
 export const tts_voice: FeatureChoiced = {
   name: 'Voice',
+  description: 'The voice of your character, used in TTS.',
   component: FeatureTTSDropdownInput,
 };
 
 export const tts_voice_pitch: FeatureNumeric = {
   name: 'Voice Pitch Adjustment',
+  description:
+    'When your character speaks in TTS, pitch will be adjusted by this much.',
   component: FeatureSliderInput,
 };
