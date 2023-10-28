@@ -64,21 +64,19 @@
 
 	// List comparison
 	if(length(optional_selected_atoms))
-		for(var/optional_atoms in optional_selected_atoms)
-			if(optional_atoms == /obj/item/organ/internal/eyes)
+		// What atoms are needed for different paintings
+		var/weeping_atoms = /obj/item/organ/internal/eyes
+		var/desire_atoms = /obj/item/bodypart
+		var/vines_atoms = /obj/item/food/grown
+		for(var/optional_atom in optional_selected_atoms)
+			if(optional_atom == weeping_atoms)
 				new /obj/item/wallframe/painting/eldritch(loc)
 				continue
-			if(optional_atoms == /obj/item/bodypart)
+			if(optional_atom == desire_atoms)
 				new /obj/item/wallframe/painting/eldritch/desire(loc)
 				continue
-			if(optional_atoms == /obj/item/trash)
-				new /obj/item/wallframe/painting/eldritch(loc)
-				continue
-			if(optional_atoms == /obj/item/food/grown)
-				new /obj/item/wallframe/painting/eldritch(loc)
-				continue
-			if(optional_atoms == /obj/item/clothing/gloves)
-				new /obj/item/wallframe/painting/eldritch(loc)
+			if(optional_atom == vines_atoms)
+				new /obj/item/wallframe/painting/eldritch/vines(loc)
 				continue
 	else
 		for(var/result in result_atoms)

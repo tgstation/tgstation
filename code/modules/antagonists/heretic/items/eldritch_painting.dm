@@ -53,7 +53,8 @@
 	timeout = 5 MINUTES
 
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
-	painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
+	if(sensor_type)
+		painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
 	return ..()
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
@@ -137,13 +138,13 @@
 // The First Desire painting, using a lot of the painting/eldritch framework
 /obj/item/wallframe/painting/eldritch/desire
 	name = "The First Desire"
-	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
+	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth."
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting/eldritch/desire
 
 /obj/structure/sign/painting/eldritch/desire
 	name = "The First Desire"
-	desc = "A perfect artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
+	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
 	icon_state = "frame-empty"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/desire
 
@@ -232,9 +233,70 @@
 	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
 	if(prob(2))
 		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
+	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
 /datum/brain_trauma/severe/flesh_desire/on_lose()
 	owner.remove_traits(TRAIT_VORACIOUS)
 	// After loosing this trauma you also loose the ability to taste, sad!
 	owner.add_traits(TRAIT_AGEUSIA)
 	..()
+
+
+
+// Great Chaparral over rolling hills, this one doesn't have the sensor type, and only an intialized effect
+/obj/item/wallframe/painting/eldritch/vines
+	name = "Great Chaparral over rolling hills"
+	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame."
+	icon_state = "frame-empty"
+	result_path = /obj/structure/sign/painting/eldritch/vines
+
+/obj/structure/sign/painting/eldritch/vines
+	name = "Great Chaparral over rolling hills"
+	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame. Destroyable with wirecutters."
+	icon_state = "frame-empty"
+	sensor_type = null
+	// A static list of 5 pretty strong mutations, simple to expand for any admins
+	var/list/mutations = list(
+		/datum/spacevine_mutation/hardened,
+		/datum/spacevine_mutation/toxicity,
+		/datum/spacevine_mutation/thorns,
+		/datum/spacevine_mutation/fire_proof,
+		/datum/spacevine_mutation/aggressive_spread,
+		)
+
+/obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
+	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
+	return ..()
+
+/obj/structure/sign/painting/eldritch/vines/examine(mob/living/carbon/user)
+	if(IS_HERETIC(user))
+		to_chat(user, span_notice("Over the great rolling hills the thicket stands, oh what beauty we find in arts!"))
+	else
+		new /datum/spacevine_controller(get_turf(user), mutations, 0, 10)
+		to_chat(user, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
+
+
+
+// Lady out of gates
+//obj/item/wallframe/painting/eldritch/desire
+//	name = "The First Desire"
+//	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth."
+//	icon_state = "frame-empty"
+//	result_path = /obj/structure/sign/painting/eldritch/desire
+
+//obj/structure/sign/painting/eldritch/desire
+//	name = "The First Desire"
+//	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
+//	icon_state = "frame-empty"
+//	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/desire
+
+// The special examine interaction for this painting
+//obj/structure/sign/painting/eldritch/desire/examine(mob/living/carbon/user)
+//	if(IS_HERETIC(user))
+//	if (user.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
+
+
+// Specific proximity monitor for The First Desire or /obj/item/wallframe/painting/eldritch/desire
+//datum/proximity_monitor/advanced/eldritch_painting/desire
+//	applied_trauma = /datum/brain_trauma/severe/flesh_desire
+//	text_to_display = "What an artwork, just looking at it makes me hunger...."

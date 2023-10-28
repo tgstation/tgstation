@@ -301,4 +301,3 @@
 	name = "Moon Converted"
 	desc = "They LIE, SLAY ALL OF THE THEM!!! THE LIARS OF THE SUN MUST FALL!!!"
 	icon_state = "moon_insanity"
-
