@@ -8,6 +8,15 @@
 #define TRADER_RADIAL_DISCUSS_BUY "TRADER_RADIAL_DISCUSS_BUY"
 #define TRADER_RADIAL_DISCUSS_SELL "TRADER_RADIAL_DISCUSS_SELL"
 
+#define TRADER_OPTION_BUY "Buy"
+#define TRADER_OPTION_SELL "Sell"
+#define TRADER_OPTION_TALK "Talk"
+#define TRADER_OPTION_LORE "Lore"
+#define TRADER_OPTION_NO "No"
+#define TRADER_OPTION_YES "Yes"
+#define TRADER_OPTION_BUYING "Buying?"
+#define TRADER_OPTION_SELLING "Selling?"
+
 //The defines below show the index the info is located in the product_info entry list
 
 #define TRADER_PRODUCT_INFO_PRICE 1
@@ -103,11 +112,11 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 		return
 	var/list/npc_options = list()
 	if(length(products))
-		npc_options["Buy"] = radial_icons_cache[TRADER_RADIAL_BUY]
+		npc_options[TRADER_OPTION_BUY] = radial_icons_cache[TRADER_RADIAL_BUY]
 	if(length(wanted_items))
-		npc_options["Sell"] = radial_icons_cache[TRADER_RADIAL_SELL]
+		npc_options[TRADER_OPTION_SELL] = radial_icons_cache[TRADER_RADIAL_SELL]
 	if(length(trader_data.say_phrases))
-		npc_options["Talk"] = radial_icons_cache[TRADER_RADIAL_TALK]
+		npc_options[TRADER_OPTION_TALK] = radial_icons_cache[TRADER_RADIAL_TALK]
 	if(!length(npc_options))
 		return
 
@@ -129,11 +138,11 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 		return
 	var/npc_result = show_radial_menu(customer, parent, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	switch(npc_result)
-		if("Buy")
+		if(TRADER_OPTION_BUY)
 			buy_item(customer)
-		if("Sell")
+		if(TRADER_OPTION_SELL)
 			try_sell(customer)
-		if("Talk")
+		if(TRADER_OPTION_TALK)
 			discuss(customer)
 
 /**
@@ -195,12 +204,12 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 
 	trader.say("It will cost you [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?")
 	var/list/npc_options = list(
-		"Yes" = radial_icons_cache[TRADER_RADIAL_YES],
-		"No" = radial_icons_cache[TRADER_RADIAL_NO],
+		TRADER_OPTION_YES = radial_icons_cache[TRADER_RADIAL_YES],
+		TRADER_OPTION_NO = radial_icons_cache[TRADER_RADIAL_NO],
 	)
 
 	var/buyer_will_buy = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
-	if(buyer_will_buy != "Yes" || !can_trade(customer))
+	if(buyer_will_buy != TRADER_OPTION_YES || !can_trade(customer))
 		return
 
 	trader.face_atom(customer)
@@ -289,8 +298,8 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	trader.say(trader_data.return_trader_phrase(INTERESTED_PHRASE))
 	trader.say("You will receive [cost] [trader_data.currency_name] for the [selling].")
 	var/list/npc_options = list(
-		"Yes" = radial_icons_cache[TRADER_RADIAL_YES],
-		"No" = radial_icons_cache[TRADER_RADIAL_NO],
+		TRADER_OPTION_YES = radial_icons_cache[TRADER_RADIAL_YES],
+		TRADER_OPTION_NO = radial_icons_cache[TRADER_RADIAL_NO],
 	)
 
 	trader.face_atom(customer)
@@ -298,7 +307,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	var/npc_result = show_radial_menu(customer, trader, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	if(!can_trade(customer))
 		return
-	if(npc_result != "Yes")
+	if(npc_result != TRADER_OPTION_YES)
 		trader.say(trader_data.return_trader_phrase(ITEM_SELLING_CANCELED_PHRASE))
 		return TRUE
 
@@ -354,20 +363,20 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 ///Talk about what items are being sold/wanted by the trader and in what quantity or lore
 /datum/component/trader/proc/discuss(mob/customer)
 	var/list/npc_options = list(
-		"Lore" = radial_icons_cache[TRADER_RADIAL_LORE],
-		"Selling?" = radial_icons_cache[TRADER_RADIAL_DISCUSS_SELL],
-		"Buying?" = radial_icons_cache[TRADER_RADIAL_DISCUSS_BUY],
+		TRADER_OPTION_LORE = radial_icons_cache[TRADER_RADIAL_LORE],
+		TRADER_OPTION_SELLING = radial_icons_cache[TRADER_RADIAL_DISCUSS_SELL],
+		TRADER_OPTION_BUYING = radial_icons_cache[TRADER_RADIAL_DISCUSS_BUY],
 	)
 	var/pick = show_radial_menu(customer, parent, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), customer), require_near = TRUE, tooltips = TRUE)
 	if(!can_trade(customer))
 		return
 	switch(pick)
-		if("Lore")
+		if(TRADER_OPTION_LORE)
 			var/mob/living/trader = parent
 			trader.say(trader_data.return_trader_phrase(TRADER_LORE_PHRASE))
-		if("Buying?")
+		if(TRADER_OPTION_BUYING)
 			trader_buys_what(customer)
-		if("Selling?")
+		if(TRADER_OPTION_SELLING)
 			trader_sells_what(customer)
 
 ///Displays to the customer what the trader is willing to buy and how much until a restock happens
@@ -442,3 +451,12 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 #undef TRADER_PRODUCT_INFO_PRICE
 #undef TRADER_PRODUCT_INFO_QUANTITY
 #undef TRADER_PRODUCT_INFO_PRICE_MOD_DESCRIPTION
+
+#undef TRADER_OPTION_BUY
+#undef TRADER_OPTION_SELL
+#undef TRADER_OPTION_TALK
+#undef TRADER_OPTION_LORE
+#undef TRADER_OPTION_NO
+#undef TRADER_OPTION_YES
+#undef TRADER_OPTION_BUYING
+#undef TRADER_OPTION_SELLING
