@@ -93,7 +93,7 @@
 			patient.balloon_alert(user, "not hurt!")
 			return FALSE
 		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
-		patient.heal_bodypart_damage((heal_brute * 0.5))
+		patient.heal_bodypart_damage((heal_brute * patient.maxHealth/100))
 		return TRUE
 	if(iscarbon(patient))
 		return heal_carbon(patient, user, heal_brute, heal_burn)

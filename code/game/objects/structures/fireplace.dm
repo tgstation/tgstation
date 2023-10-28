@@ -167,6 +167,7 @@
 	fuel_added = 0
 	update_appearance()
 	adjust_light()
+	particles = new /particles/smoke/burning/fireplace()
 
 /obj/structure/fireplace/proc/put_out()
 	STOP_PROCESSING(SSobj, src)
@@ -175,6 +176,7 @@
 	update_appearance()
 	adjust_light()
 	desc = initial(desc)
+	QDEL_NULL(particles)
 
 #undef LOG_BURN_TIMER
 #undef PAPER_BURN_TIMER

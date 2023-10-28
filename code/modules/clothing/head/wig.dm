@@ -32,6 +32,17 @@
 	return ..()
 
 
+/obj/item/clothing/head/wig/build_worn_icon(
+	default_layer = 0,
+	default_icon_file = null,
+	isinhands = FALSE,
+	female_uniform = NO_FEMALE_UNIFORM,
+	override_state = null,
+	override_file = null,
+	use_height_offset = TRUE,
+)
+	return ..(default_layer, default_icon_file, isinhands, female_uniform, override_state, override_file, use_height_offset = FALSE)
+
 /obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
 	. = ..()
 	if(isinhands)
