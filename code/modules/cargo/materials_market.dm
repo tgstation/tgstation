@@ -154,6 +154,7 @@
 		if(!sheet_to_buy)
 			CRASH("Material with no sheet type being sold on materials market!")
 
+		//get the ordered amount from the order
 		requested_amount = 0
 		if(!isnull(current_order))
 			requested_amount = current_order.pack.contains[sheet_to_buy]
