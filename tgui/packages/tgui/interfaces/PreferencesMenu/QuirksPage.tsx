@@ -135,26 +135,71 @@ const QuirkList = (props: {
                     }}>
                     {quirk.description}
                     {!!quirk.customizable && (
-                      <Button
-                        disabled={!props.selected}
-                        selected={customization_expanded}
-                        icon="cog"
-                        tooltip={
-                          props.selected
-                            ? customization_expanded
-                              ? 'Click this button to close the customization menu!'
-                              : 'This quirk is customizable! Click this button to open a customization menu!'
-                            : 'You must take this quirk before you can customize it!'
-                        }
-                        onClick={(e) => {
-                          e.stopPropagation();
+                      <Popper
+                        options={{
+                          placement: 'bottom-end',
+                        }}
+                        popperContent={
+                          hasExpandableCustomization && (
+                            <Box
+                              mt="1px"
+                              style={{
+                                'box-shadow':
+                                  '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
+                              }}>
+                              <Stack
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                                maxWidth="300px"
+                                backgroundColor="black"
+                                px="5px"
+                                py="3px">
+                                <Stack.Item>
+                                  <PreferenceList
+                                    act={act}
+                                    preferences={getCorrespondingPreferences(
+                                      quirk.customization_options,
+                                      data.character_preferences.all_preferences
+                                    )}
+                                    randomizations={getRandomization(
+                                      getCorrespondingPreferences(
+                                        quirk.customization_options,
+                                        data.character_preferences
+                                          .all_preferences
+                                      ),
+                                      props.serverData,
+                                      props.randomBodyEnabled,
+                                      props.context
+                                    )}
+                                    maxHeight="100px"
+                                  />
+                                </Stack.Item>
+                              </Stack>
+                            </Box>
+                          )
+                        }>
+                        <Button
+                          disabled={!props.selected}
+                          selected={customization_expanded}
+                          icon="cog"
+                          tooltip={
+                            props.selected
+                              ? customization_expanded
+                                ? 'Click this button to close the customization menu!'
+                                : 'This quirk is customizable! Click this button to open a customization menu!'
+                              : 'You must take this quirk before you can customize it!'
+                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
 
-                          toggle_customization(!customization_expanded);
-                        }}
-                        style={{
-                          'float': 'right',
-                        }}
-                      />
+                            toggle_customization(!customization_expanded);
+                          }}
+                          style={{
+                            'float': 'right',
+                          }}
+                        />
+                      </Popper>
                     )}
                   </Stack.Item>
                 </Stack>
@@ -166,53 +211,7 @@ const QuirkList = (props: {
         if (quirk.failTooltip) {
           return <Tooltip content={quirk.failTooltip}>{child}</Tooltip>;
         } else {
-          if (hasExpandableCustomization) {
-            return (
-              <Popper
-                options={{
-                  placement: 'bottom-end',
-                }}
-                popperContent={
-                  <Box
-                    style={{
-                      'box-shadow': '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
-                    }}>
-                    <Stack
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                      maxWidth="300px"
-                      backgroundColor="black"
-                      px="5px"
-                      py="3px">
-                      <Stack.Item>
-                        <PreferenceList
-                          act={act}
-                          preferences={getCorrespondingPreferences(
-                            quirk.customization_options,
-                            data.character_preferences.all_preferences
-                          )}
-                          randomizations={getRandomization(
-                            getCorrespondingPreferences(
-                              quirk.customization_options,
-                              data.character_preferences.all_preferences
-                            ),
-                            props.serverData,
-                            props.randomBodyEnabled,
-                            props.context
-                          )}
-                          maxHeight="100px"
-                        />
-                      </Stack.Item>
-                    </Stack>
-                  </Box>
-                }>
-                {child}
-              </Popper>
-            );
-          } else {
-            return child;
-          }
+          return child;
         }
       })}
     </Box>
