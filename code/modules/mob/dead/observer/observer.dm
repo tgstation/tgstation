@@ -728,6 +728,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(istype(target) && (target != src))
 				ManualFollow(target)
 				return
+
 		if(href_list["x"] && href_list["y"] && href_list["z"])
 			var/tx = text2num(href_list["x"])
 			var/ty = text2num(href_list["y"])
@@ -736,9 +737,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(istype(target))
 				abstract_move(target)
 				return
+
 		if(href_list["reenter"])
 			reenter_corpse()
 			return
+
+		if(href_list["jump"])
+			var/atom/movable/target = locate(href_list["jump"])
+			var/turf/target_turf = get_turf(target)
+			if(target_turf && isturf(target_turf))
+				abstract_move(target_turf)
+
+		if(href_list["play"])
+			var/atom/movable/target = locate(href_list["play"])
+			if(istype(target) && (target != src))
+				target.attack_ghost(usr)
+				return
 
 //We don't want to update the current var
 //But we will still carry a mind.

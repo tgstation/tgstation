@@ -359,7 +359,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "xb" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
+/mob/living/basic/drone/snowflake/bardrone,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "xf" = (

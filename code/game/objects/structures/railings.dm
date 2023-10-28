@@ -63,6 +63,13 @@
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
+/obj/structure/railing/examine(mob/user)
+	. = ..()
+	if(anchored == TRUE)
+		. += span_notice("The railing is <b>bolted</b> to the floor.")
+	else
+		. += span_notice("The railing is <i>unbolted</i> from the floor and can be deconstructed with <b>wirecutters</b>.")
+
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
 	add_fingerprint(user)

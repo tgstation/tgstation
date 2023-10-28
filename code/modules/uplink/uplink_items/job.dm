@@ -340,3 +340,25 @@
 	item = /obj/item/bee_smoker
 	cost = 4
 	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/monkey_agent
+	name = "Simian Agent Reinforcements"
+	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
+		They've been trained to operate machinery and can read, but they can't speak Common. \
+		Please note that these are free-range monkeys that don't react with Mutadone."
+	item = /obj/item/antag_spawner/loadout/monkey_man
+	cost = 6
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted = TRUE
+	refundable = TRUE
+
+/datum/uplink_item/role_restricted/monkey_supplies
+	name = "Simian Agent Supplies"
+	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
+		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+	item = /obj/item/storage/toolbox/guncase/monkeycase
+	cost = 4
+	limited_stock = 3
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted = TRUE
+	refundable = FALSE
