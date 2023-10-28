@@ -301,9 +301,9 @@
 
 /datum/quirk/throwingarm
 	name = "Throwing Arm"
-	desc = "Your arms have a lot of heft to them! You throw objects a bit further than other people, and you never miss a toss into a disposal bin." //monkestation edit
+	desc = "Your arms have a lot of heft to them! Objects that you throw just always seem to fly further than everyone elses, and you never miss a toss."
 	icon = "baseball"
-	value = 5 //monkestation edit
+	value = 7
 	mob_trait = TRAIT_THROWINGARM
 	gain_text = span_notice("Your arms are full of energy!")
 	lose_text = span_danger("Your arms ache a bit.")
