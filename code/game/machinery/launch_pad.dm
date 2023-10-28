@@ -107,7 +107,7 @@
 
 /// Whether this launchpad can send or receive.
 /obj/machinery/launchpad/proc/is_available()
-	if(QDELETED(src) || !is_operational || panel__open)
+	if(QDELETED(src) || !is_operational || panel_open)
 		return FALSE
 	return TRUE
 
@@ -152,7 +152,7 @@
 		return "ERROR: Launchpad busy."
 
 	var/area/surrounding = get_area(src)
-	if(!(surrounding.area_flags & NOTELEPORT) || !is_station_level(z))
+	if(is_centcom_level(z) || istype(surrounding, /area/shuttle))
 		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
 
 	return null
