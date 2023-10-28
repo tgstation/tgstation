@@ -117,9 +117,6 @@
 	access = list()
 	crate_type = /obj/structure/closet/crate/cardboard
 
-/datum/supply_pack/custom/minerals/get_cost()
-	return round(..() + CARGO_CRATE_VALUE)
-
 /datum/supply_pack/custom/minerals/New(purchaser, cost, list/contains)
 	. = ..()
 	name = "[purchaser]'s Materials Order"

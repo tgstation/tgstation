@@ -201,6 +201,12 @@
 			pack.contains[i] = new_contents[i]
 	pack.cost += cost_increase
 
+//To append cargo crate value to final order cost
+/datum/supply_order/materials
+
+/datum/supply_order/materials/get_final_cost()
+	return (..() + CARGO_CRATE_VALUE)
+
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME
 #undef MANIFEST_ERROR_CONTENTS
