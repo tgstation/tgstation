@@ -18,7 +18,7 @@
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list(FACTION_PLANTS, FACTION_VINES)
-	burnmod = 2
+	burnmod = 1.8
 	heatmod = 0.67 //Same as lizard people
 	coldmod = 1.5 //Same as lizard people
 	speedmod = -0.1 //Same as arachnids
@@ -51,11 +51,10 @@
 	if(isturf(H.loc))
 		var/turf/T = H.loc
 		light_amount = min(1, T.get_lumcount()) - 0.5
-		//Removed nutrition gain from sunlight, now they gotta eats
-		if(light_amount > 0.3) //Raised from 0.2
-			H.heal_overall_damage(brute = 0.25 * seconds_per_tick, burn = 0.25 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
-			H.adjustToxLoss(-0.25 * seconds_per_tick) //Lowered to 0.25
-			H.adjustOxyLoss(-0.25 * seconds_per_tick) //Lowered to 0.25
+		if(light_amount > 0.3)
+			H.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
+			H.adjustToxLoss(-0.5 * seconds_per_tick)
+			H.adjustOxyLoss(-0.5 * seconds_per_tick)
 
 /datum/species/floran/on_species_gain(mob/living/carbon/new_floran, datum/species/old_species, pref_load)
 	. = ..()
@@ -74,9 +73,10 @@
 		H.adjustToxLoss(3 * REM * seconds_per_tick)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return TRUE
-	/*if(chem.type == /datum/reagent/potassium)
-		H.reagents.remove_reagent(chem.type, /*All of the reagent*/)
-		explosion(H.loc, 0, 0, 0, 1, 1)*/
+	if(chem.type == /datum/reagent/potassium) //Floran "blood" is water, water does not like potassium
+		to_chat(H, span_danger("You feel your skin bubble and pop painfully!"))
+		H.adjustBruteLoss(10*REM, FALSE)
+		return TRUE
 	return ..()
 
 /datum/species/floran/randomize_features(mob/living/carbon/human_mob)
@@ -92,7 +92,6 @@
 
 /datum/species/floran/get_laugh_sound(mob/living/carbon/human/human)
 	return 'monkestation/sound/voice/laugh/lizard/lizard_laugh.ogg'
-
 
 /datum/species/floran/get_species_description()
 	return "Plant-based humanoids, they are extremely violent carnivores with no central government or power structure, \
