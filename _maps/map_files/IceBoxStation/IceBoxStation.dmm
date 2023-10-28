@@ -5033,6 +5033,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/structure/sign/directions/cryo/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "bEH" = (
@@ -12169,6 +12170,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"dNb" = (
+/obj/structure/sign/directions/cryo/directional/west,
+/turf/closed/wall,
+/area/station/commons/storage/mining)
 "dNi" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
@@ -18278,6 +18283,7 @@
 	},
 /area/station/engineering/engine_smes)
 "fNA" = (
+/obj/structure/sign/warning/bodysposal/directional/north,
 /turf/open/openspace,
 /area/station/medical/medbay/central)
 "fNK" = (
@@ -21092,6 +21098,10 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"gJR" = (
+/obj/structure/sign/directions/cryo/directional/north,
+/turf/closed/wall,
+/area/station/maintenance/central/lesser)
 "gJT" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/white/side{
@@ -22888,6 +22898,11 @@
 /obj/item/shovel/spade,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"hrG" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/sign/directions/cryo/directional/west,
+/turf/open/floor/plating,
+/area/station/hallway/primary/central)
 "hrJ" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -31263,6 +31278,7 @@
 /area/station/science/ordnance/testlab)
 "kdF" = (
 /obj/effect/spawner/random/vending/snackvend,
+/obj/structure/sign/directions/cryo/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "kdJ" = (
@@ -43063,12 +43079,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
-"nOy" = (
-/obj/structure/sign/directions/cryo/directional/south{
-	pixel_y = 1
-	},
-/turf/closed/wall,
-/area/station/service/hydroponics/garden)
 "nOB" = (
 /obj/structure/railing{
 	dir = 4
@@ -43540,6 +43550,10 @@
 	dir = 1
 	},
 /area/station/service/hydroponics)
+"nVA" = (
+/obj/structure/sign/directions/cryo/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "nVB" = (
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 4
@@ -54009,6 +54023,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"roD" = (
+/obj/structure/sign/directions/cryo/directional/west,
+/turf/closed/wall,
+/area/station/commons/toilet)
 "roH" = (
 /obj/structure/chair/pew/right,
 /turf/open/floor/wood,
@@ -54668,6 +54686,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "rzS" = (
 /obj/structure/sign/departments/chemistry/pharmacy/directional/west,
+/obj/structure/sign/warning/bodysposal/directional/south,
 /turf/open/openspace,
 /area/station/medical/medbay/lobby)
 "rAr" = (
@@ -56487,6 +56506,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
+"seS" = (
+/obj/structure/sign/directions/cryo/directional/north,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/central/greater)
 "seX" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical,
@@ -64363,10 +64386,6 @@
 "uJt" = (
 /turf/open/floor/carpet,
 /area/station/service/chapel)
-"uJO" = (
-/obj/machinery/porta_turret/aux_base,
-/turf/closed/wall/r_wall,
-/area/station/security/lockers)
 "uJX" = (
 /obj/structure/closet/firecloset,
 /obj/item/radio/intercom/directional/north,
@@ -221886,7 +221905,7 @@ kMu
 esB
 oCO
 xJv
-fsv
+nVA
 fsv
 nDk
 fsv
@@ -222143,7 +222162,7 @@ slv
 rEN
 oCO
 oCO
-nOy
+oCO
 aPI
 iKR
 aPI
@@ -231349,7 +231368,7 @@ tGr
 tGr
 tGr
 tGr
-uJO
+bDu
 bDu
 bDu
 bDu
@@ -231931,7 +231950,7 @@ gfb
 gfb
 pYB
 gfb
-gfb
+seS
 nqU
 rcE
 rcE
@@ -234222,7 +234241,7 @@ tgn
 itN
 nuX
 yfF
-pAZ
+hrG
 dnq
 kgD
 utR
@@ -236050,7 +236069,7 @@ qQC
 qQC
 kta
 kta
-kta
+dNb
 tqQ
 iuv
 vyb
@@ -239105,7 +239124,7 @@ uja
 uja
 uja
 hsB
-uja
+roD
 wJk
 iuv
 ezK
@@ -239127,7 +239146,7 @@ lpM
 lpM
 log
 sIt
-sIt
+gJR
 sIt
 log
 mhQ
