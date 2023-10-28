@@ -285,7 +285,7 @@
 
 				// Finally Append to this order
 				current_order.append_order(things_to_order, cost)
-				return
+				return TRUE
 
 			//Place a new order
 			var/datum/supply_pack/custom/minerals/mineral_pack = new(
@@ -304,17 +304,20 @@
 			)
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 			SSshuttle.shopping_list += new_order
+			return TRUE
 
 		if("toggle_budget")
 			if(!can_buy_via_budget)
 				return
 			ordering_private = !ordering_private
+			return TRUE
 
 		if("clear")
 			var/datum/supply_order/current_order = find_order(living_user, is_ordering_private)
 			if(!isnull(current_order))
 				SSshuttle.shopping_list -= current_order
 				qdel(current_order)
+			return TRUE
 
 /obj/item/stock_block
 	name = "stock block"

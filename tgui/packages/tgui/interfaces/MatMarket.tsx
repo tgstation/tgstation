@@ -99,7 +99,7 @@ export const MatMarket = (props, context) => {
                   </Stack.Item>
 
                   <Stack.Item width="15%" pr="2%">
-                    Trading at <b>{material.price}</b> cr.
+                    Trading at <b>{formatMoney(material.price)}</b> cr.
                   </Stack.Item>
 
                   <Stack.Item width="33%" ml={2}>
