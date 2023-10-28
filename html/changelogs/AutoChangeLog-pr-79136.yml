@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Added a few fish related bounties."
+  - rscadd: "Fish cases to store and preserve life fish within can be now printed from the service techfab and the autolathe."
