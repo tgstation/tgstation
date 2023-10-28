@@ -467,11 +467,11 @@
 		return FALSE
 
 	// Very invalid
-	if(QDELETED(neo) || QDELETED(current_avatar) || QDELETED(src) || !is_operational)
+	if(QDELETED(neo) || QDELETED(avatar) || QDELETED(src) || !is_operational)
 		return FALSE
 
 	// Invalid
-	if(occupant != neo || isnull(neo.mind) || neo.stat > SOFT_CRIT || current_avatar.stat == DEAD)
+	if(occupant != neo || isnull(neo.mind) || neo.stat > SOFT_CRIT || avatar.stat == DEAD)
 		return FALSE
 
 	return TRUE
