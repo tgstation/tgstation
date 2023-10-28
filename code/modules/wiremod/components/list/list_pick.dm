@@ -54,25 +54,24 @@
 
 
 /obj/item/circuit_component/list_pick/input_received(datum/port/input/port)
-	if(!parent.Adjacent(user.value))
-		failure.set_output(COMPONENT_SIGNAL)
-		return
-
-	if(ismob(user.value))
+	if(isliving(user.value))
+		var/mob/living/living_user = user.value
+		if(!(living_user.can_perform_action(parent.shell, FORBID_TELEKINESIS_REACH, ALLOW_SILICON_REACH, ALLOW_RESTING)))
+			return
 		trigger_output.set_output(COMPONENT_SIGNAL)
 		INVOKE_ASYNC(src, PROC_REF(show_list), user.value, input_name.value, input_list.value)
 
 /// Show a list of options to the user using standed TGUI input list
-/obj/item/circuit_component/list_pick/proc/show_list(mob/user, message, list/showed_list)
+/obj/item/circuit_component/list_pick/proc/show_list(mob/living/u, message, list/showed_list)
 	if(!showed_list || showed_list.len == 0)
 		failure.set_output(COMPONENT_SIGNAL)
 		return
 	if(!message)
 		message = "circuit input"
-	if(!(user.can_perform_action(src, FORBID_TELEKINESIS_REACH)))
+	if(!(u.can_perform_action(parent.shell, FORBID_TELEKINESIS_REACH, ALLOW_SILICON_REACH, ALLOW_RESTING)))
 		return
-	var/picked = tgui_input_list(user, message = message, items = showed_list)
-	if(!(user.can_perform_action(src, FORBID_TELEKINESIS_REACH)))
+	var/picked = tgui_input_list(u, message = message, items = showed_list)
+	if(!(u.can_perform_action(parent.shell, FORBID_TELEKINESIS_REACH, ALLOW_SILICON_REACH, ALLOW_RESTING)))
 		return
 	choose_item(picked, showed_list)
 
