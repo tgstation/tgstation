@@ -185,10 +185,12 @@
 		to_chat(user, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 		// Adds a negative mood event to our heretic
 		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
+
 	// Do they have the mood event added on examine, if so return
 	if ("respite_eldritch_hunger" in user.mob_mood.mood_events)
 		to_chat(user, span_notice("You are still full from your last viewing!"))
 		return
+
 	if (user.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
 		// Gives them some nutrition
 		user.adjust_nutrition(50)
@@ -243,15 +245,15 @@
 
 
 
-// Great Chaparral over rolling hills, this one doesn't have the sensor type, and only an intialized effect
+// Great chaparral over rolling hills, this one doesn't have the sensor type, and only an intialized effect
 /obj/item/wallframe/painting/eldritch/vines
-	name = "Great Chaparral over rolling hills"
+	name = "Great chaparral over rolling hills"
 	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame."
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting/eldritch/vines
 
 /obj/structure/sign/painting/eldritch/vines
-	name = "Great Chaparral over rolling hills"
+	name = "Great chaparral over rolling hills"
 	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame. Destroyable with wirecutters."
 	icon_state = "frame-empty"
 	sensor_type = null
@@ -277,26 +279,53 @@
 
 
 
-// Lady out of gates
-//obj/item/wallframe/painting/eldritch/desire
-//	name = "The First Desire"
-//	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth."
-//	icon_state = "frame-empty"
-//	result_path = /obj/structure/sign/painting/eldritch/desire
+// Lady out of gates, gives a brain trauma causing the person to scratch themselves
+/obj/item/wallframe/painting/eldritch/beauty
+	name = "Lady out of gates"
+	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth."
+	icon_state = "frame-empty"
+	result_path = /obj/structure/sign/painting/eldritch/beauty
 
-//obj/structure/sign/painting/eldritch/desire
-//	name = "The First Desire"
-//	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
-//	icon_state = "frame-empty"
-//	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/desire
+/obj/structure/sign/painting/eldritch/beauty
+	name = "Lady out of gates"
+	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
+	icon_state = "frame-empty"
+	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/beauty
+	var/list/reagents_to_add = list(/datum/reagent/medicine/mutadone)
 
 // The special examine interaction for this painting
-//obj/structure/sign/painting/eldritch/desire/examine(mob/living/carbon/user)
-//	if(IS_HERETIC(user))
-//	if (user.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
+/obj/structure/sign/painting/eldritch/beauty/examine(mob/living/carbon/human/user)
+	if(IS_HERETIC(user))
+		to_chat(user, "Your imperfections shed and you are restored.")
+		user.reagents.add_reagent(reagents_to_add, 5)
+
+	if (user.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
+		to_chat(user, "Your imperfections shed and you are restored.")
 
 
-// Specific proximity monitor for The First Desire or /obj/item/wallframe/painting/eldritch/desire
-//datum/proximity_monitor/advanced/eldritch_painting/desire
-//	applied_trauma = /datum/brain_trauma/severe/flesh_desire
-//	text_to_display = "What an artwork, just looking at it makes me hunger...."
+// Specific proximity monitor for Lady out of gates or /obj/item/wallframe/painting/eldritch/beauty
+/datum/proximity_monitor/advanced/eldritch_painting/beauty
+	applied_trauma = /datum/brain_trauma/severe/eldritch_beauty
+	text_to_display = "Her flesh glows in the pale light, and mine can too...If it wasnt for these imperfections...."
+
+/datum/brain_trauma/severe/eldritch_beauty
+	name = "The Pursuit of perfection"
+	desc = "Patient seems to furiously scratch at their body, the only way to make them cease is for them to remove their jumpsuit."
+	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
+	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
+	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
+	/// How much damage we deal with each scratch
+	var/scratch_damage = 0.5
+
+/datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
+	// If they don't have a jumpsuit, return. They are encouraged to remove their jumpsuit to avoid damage.
+	if(!(owner.get_item_by_slot(ITEM_SLOT_ICLOTHING)))
+		return
+
+	// Scratching code
+	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
+	if(bodypart && IS_ORGANIC_LIMB(bodypart) && !(bodypart.bodypart_flags & BODYPART_PSEUDOPART))
+		if(!owner.incapacitated())
+			bodypart.receive_damage(scratch_damage)
+			if(prob(2))
+				to_chat(owner, span_notice("You scratch furiously at [bodypart] to rid its imperfections!"))
