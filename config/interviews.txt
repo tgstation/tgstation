@@ -8,5 +8,5 @@ INTERVIEW_WELCOME_MSG Welcome to our server. As you have not played here before,
 INTERVIEW_QUESTIONS Why have you joined the server today?
 INTERVIEW_QUESTIONS Have you played space-station 13 before? If so, on what servers?
 INTERVIEW_QUESTIONS Do you know anybody on the server today? If so, who?
-INTERVIEW_QUESTIONS Have you read and understood our [rules](https://tgstation13.org/wiki/Rules)?
+INTERVIEW_QUESTIONS Have you read and understood our [rules](https://wiki.monkestation.com/)?
 INTERVIEW_QUESTIONS Do you have any additional comments or questions?

@@ -1,3 +1,4 @@
+#define ONLY_TURF 1
 
 /// Gives all current occupants a notification that the server is going down
 /obj/machinery/quantum_server/proc/begin_shutdown(mob/user)
@@ -119,7 +120,6 @@
 		new /obj/structure/closet/crate/secure/bitrunning/encrypted(pick(crate_turfs))
 
 	return TRUE
-#define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
 
 /// Loads the safehouse
 /obj/machinery/quantum_server/proc/initialize_safehouse()
@@ -160,7 +160,8 @@
 
 /// Deletes all the tile contents
 /obj/machinery/quantum_server/proc/scrub_vdom()
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR) // just in case
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR) /// just in case someone's connected
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
 
 	if(length(generated_domain.reservations))
 		var/datum/turf_reservation/res = generated_domain.reservations[1]

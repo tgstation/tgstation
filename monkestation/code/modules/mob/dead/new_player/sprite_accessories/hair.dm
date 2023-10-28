@@ -91,7 +91,12 @@
 	name = "Long and Messy"
 	icon_state = "long_messy"
 
-/datum/sprite_accessory/hair/edgerunner
+/datum/sprite_accessory/hair/monkeyking
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
-	name = "Edgerunner"
-	icon_state = "edgerunner"
+	name = "Monkey king"
+	icon_state = "monkey_king"
+
+/datum/sprite_accessory/hair/edgerunner
+    icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+    name = "Edgerunner"
+    icon_state = "edgerunner"

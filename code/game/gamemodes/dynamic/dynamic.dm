@@ -135,7 +135,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/waittime_h = 1800
 
 	/// Maximum amount of threat allowed to generate.
-	var/max_threat_level = 50
+	var/max_threat_level = 0 //disables dynamic threat PLEASE DONT LET ME MERGE THIS
 
 	/// The extra chance multiplier that a heavy impact midround ruleset will run next time.
 	/// For example, if this is set to 50, then the next heavy roll will be about 50% more likely to happen.

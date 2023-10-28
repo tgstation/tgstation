@@ -9,6 +9,7 @@
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+	RegisterSignal(SSdcs, COMSIG_GLOBAL_GREY_TIDE_TRAITOR, PROC_REF(grey_tide)) //monkestation edit
 
 /// Forces the airlock to unbolt and open
 /obj/machinery/door/airlock/proc/secure_open()
@@ -35,7 +36,7 @@
 	locked = FALSE
 	return ..()
 
-/obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
+/obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas, traitor_bug = FALSE) //monkestation edit: adds traitor_bug
 	SIGNAL_HANDLER
 
 	if(!is_station_level(z) || critical_machine)
@@ -44,7 +45,12 @@
 	for(var/area_type in grey_tide_areas)
 		if(!istype(get_area(src), area_type))
 			continue
-		INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
+//monkestation edit start
+		if(traitor_bug)
+			INVOKE_ASYNC(src, PROC_REF(traitor_bug_tide))
+		else
+//monkestation edit end
+			INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
 
 /obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
