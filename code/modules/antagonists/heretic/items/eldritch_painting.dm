@@ -291,6 +291,7 @@
 	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
 	icon_state = "frame-empty"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/beauty
+	// Set to mutadone by default to remove mutations
 	var/list/reagents_to_add = list(/datum/reagent/medicine/mutadone)
 
 // The special examine interaction for this painting
@@ -298,9 +299,10 @@
 	if(IS_HERETIC(user))
 		to_chat(user, "Your imperfections shed and you are restored.")
 		user.reagents.add_reagent(reagents_to_add, 5)
-
 	if (user.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
-		to_chat(user, "Your imperfections shed and you are restored.")
+		to_chat(user, "You feel changed, more perfect....")
+		if(!user.has_dna())
+		user.easy_random_mutate((NEGATIVE | MINOR_NEGATIVE) TRUE, TRUE, TRUE)
 
 
 // Specific proximity monitor for Lady out of gates or /obj/item/wallframe/painting/eldritch/beauty
@@ -319,7 +321,7 @@
 
 /datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
 	// If they don't have a jumpsuit, return. They are encouraged to remove their jumpsuit to avoid damage.
-	if(!(owner.get_item_by_slot(ITEM_SLOT_ICLOTHING)))
+	if(!owner.get_item_by_slot(ITEM_SLOT_ICLOTHING))
 		return
 
 	// Scratching code
