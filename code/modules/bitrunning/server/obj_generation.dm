@@ -85,7 +85,8 @@
 	if(domain_forbids_spells)
 		import_ban += "imported_abilities"
 		disk_ban += "powers"
-	if(import_ban)
+
+	if(length(import_ban))
 		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your disk [english_list(disk_ban)] will not be granted!"))
 
 	var/failed = FALSE

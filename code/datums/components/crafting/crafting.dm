@@ -67,11 +67,7 @@
 		var/list/instances_list = list()
 		for(var/instance_path in item_instances)
 			if(ispath(instance_path, requirement_path))
-				var/obj/item/item = item_instances[instance_path]
-				if(item.flags_1 & HOLOGRAM_1)
-					continue
-
-				instances_list += item
+				instances_list += item_instances[instance_path]
 
 		requirements_list[requirement_path] = instances_list
 
@@ -126,14 +122,15 @@
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
-			else if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
-				var/obj/item/reagent_containers/container = item
-				for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
-					.["other"][reagent.type] += reagent.volume
-			else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
-				if(item.tool_behaviour)
-					.["tool_behaviour"] += item.tool_behaviour
+			else
 				.["other"][item.type] += 1
+				if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
+					var/obj/item/reagent_containers/container = item
+					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
+						.["other"][reagent.type] += reagent.volume
+				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
+					if(item.tool_behaviour)
+						.["tool_behaviour"] += item.tool_behaviour
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 		else if (isstructure(object))

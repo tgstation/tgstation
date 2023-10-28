@@ -190,7 +190,7 @@
 	return ..()
 
 /// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
-/datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype)
+/datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BURN)
 		return
