@@ -124,8 +124,8 @@
 	var/datum/supply_order/current_order = find_order(user, is_ordering_private)
 
 	var/material_data
-	var/trend_string = ""
-	var/color_string = ""
+	var/trend_string
+	var/color_string
 	var/sheet_to_buy
 	var/requested_amount
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
