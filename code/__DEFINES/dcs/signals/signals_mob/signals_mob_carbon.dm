@@ -108,6 +108,8 @@
 	#define COMSIG_CARBON_BLOCK_BREATH (1 << 0)
 ///Called when a carbon breathes, before the breath has actually occured
 #define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
+///Called after a carbon breathes. (result - did check_breath fail or not)
+#define COMSIG_CARBON_POST_BREATHE "carbon_post_breathe"
 ///Called when a carbon updates their mood
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
 ///Called when a carbon attempts to eat (eating)
@@ -160,3 +162,6 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+///from base of [/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob]: (mob/living/carbon/smoker, seconds_per_tick)
+#define COMSIG_CARBON_EXPOSED_TO_SMOKE "carbon_exposed_to_smoke"

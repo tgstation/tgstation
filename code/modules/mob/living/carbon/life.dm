@@ -117,7 +117,8 @@
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
-	check_breath(breath)
+	var/result = check_breath(breath)
+	SEND_SIGNAL(src, COMSIG_CARBON_POST_BREATHE, result, breath)
 
 	if(breath)
 		loc.assume_air(breath)

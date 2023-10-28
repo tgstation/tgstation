@@ -79,8 +79,9 @@
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
 			return
 		if(SPT_PROB(cure_chance, seconds_per_tick))
-			update_stage(max(stage - 1, 1))
-		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
+			if (!update_stage(stage - 1))
+				return FALSE
+		if(disease_flags & CURABLE && !(disease_flags & INCREMENTAL_CURE) && SPT_PROB(cure_chance, seconds_per_tick))
 			cure()
 			return FALSE
 	else if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
@@ -91,6 +92,10 @@
 
 /datum/disease/proc/update_stage(new_stage)
 	stage = new_stage
+	if (stage <= 0)
+		cure()
+		return FALSE
+	return TRUE
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & (CURABLE | CHRONIC)))

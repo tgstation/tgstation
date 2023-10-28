@@ -413,6 +413,8 @@
 		"med_spray_bottle",
 		"medical_kiosk",
 		"medigel",
+		"inhaler",
+		"inhaler_canister",
 		"medipen_refiller",
 		"pandemic",
 		"soda_dispenser",

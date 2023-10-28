@@ -602,7 +602,10 @@
 	if(!no_react)
 		target_holder.handle_reactions()
 		src.handle_reactions()
-	return FLOOR(total_transfered_amount, CHEMICAL_QUANTISATION_LEVEL)
+	var/final_total = FLOOR(total_transfered_amount, CHEMICAL_QUANTISATION_LEVEL)
+	SEND_SIGNAL(target, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, src, reagents_to_remove, final_total, transferred_by, methods, ignore_stomach)
+
+	return final_total
 
 /**
  * Transfer a specific reagent id to the target object
