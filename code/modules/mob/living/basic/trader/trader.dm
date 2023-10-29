@@ -57,7 +57,7 @@
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
 
-	setup_shop = new (src, trader_data.shop_spot_type, trader_data.sign_type, trader_data.sell_sound, trader_data.say_phrases[TRADER_SHOP_OPENING_PHRASE])
+	setup_shop = new (src, trader_data)
 	setup_shop.Grant(src)
 	ai_controller.set_blackboard_key(BB_SETUP_SHOP, setup_shop)
 
