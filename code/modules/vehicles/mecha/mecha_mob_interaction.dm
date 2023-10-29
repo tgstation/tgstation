@@ -193,7 +193,9 @@
 	is_currently_ejecting = FALSE
 
 /obj/vehicle/sealed/mecha/proc/pilot_died(datum/source)
-	. = ..()
+	SIGNAL_HANDLER
+	if(issilicon(source) || isbrain(source))
+		return
 	playsound(src, 'sound/machines/synth_no.ogg', 25, TRUE)
 	say("Pilot fatality.")
 	mob_exit(source, randomstep = TRUE)
