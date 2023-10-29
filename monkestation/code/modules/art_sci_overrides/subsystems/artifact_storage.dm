@@ -1,19 +1,3 @@
-
-/proc/spawn_artifact(turf/loc, forced_origin)
-	if (!loc)
-		return
-
-	var/list/weighted_list
-	if(forced_origin)
-		weighted_list = SSartifacts.artifact_rarities[forced_origin]
-	else
-		weighted_list = SSartifacts.artifact_rarities["all"]
-
-	var/datum/component/artifact/picked  = pick_weight(weighted_list)
-	var/type = initial(picked.associated_object)
-	return new type(loc)
-
-
 /// Subsystem for managing artifacts.
 SUBSYSTEM_DEF(artifacts)
 	name = "Artifacts"
@@ -48,6 +32,7 @@ SUBSYSTEM_DEF(artifacts)
 		artifact_origin_name_to_typename[origin.name] = origin.type_name
 		artifact_origins_by_typename[origin.type_name] = origin
 		artifact_rarities[origin.type_name] = list()
+
 	for (var/datum/component/artifact/artifact_type as anything in subtypesof(/datum/component/artifact))
 		var/weight = initial(artifact_type.weight)
 		if(!weight)
@@ -59,5 +44,6 @@ SUBSYSTEM_DEF(artifacts)
 		for (var/origin in artifact_rarities)
 			if(origin in initial(artifact_type.valid_origins))
 				artifact_rarities[origin][artifact_type] = weight
+				
 	for (var/datum/artifact_activator/trigger_type as anything in subtypesof(/datum/artifact_activator))
 		artifact_trigger_name_to_type[initial(trigger_type.name)] = trigger_type

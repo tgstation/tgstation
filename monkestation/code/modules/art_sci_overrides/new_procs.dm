@@ -17,3 +17,18 @@
 	var/alpha = rand(alpha_pairs[1], alpha_pairs[2])
 
 	return rgb(red, green, blue, alpha)
+
+
+/proc/spawn_artifact(turf/loc, forced_origin)
+	if (!loc)
+		return
+
+	var/list/weighted_list
+	if(forced_origin)
+		weighted_list = SSartifacts.artifact_rarities[forced_origin]
+	else
+		weighted_list = SSartifacts.artifact_rarities["all"]
+
+	var/datum/component/artifact/picked  = pick_weight(weighted_list)
+	var/type = initial(picked.associated_object)
+	return new type(loc)
