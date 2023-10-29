@@ -66132,9 +66132,9 @@
 	pixel_y = 7
 	},
 /obj/item/flashlight/lamp/green{
-	on = 0;
 	pixel_x = -3;
-	pixel_y = 8
+	pixel_y = 8;
+	start_on = 0
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)

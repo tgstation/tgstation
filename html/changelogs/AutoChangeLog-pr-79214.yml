@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Gnomes no longer runtime if they explode while sinking into the ground"

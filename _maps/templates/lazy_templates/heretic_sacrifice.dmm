@@ -282,7 +282,7 @@
 	fuel = 1e+031;
 	randomize_fuel = 0;
 	icon_state = "flare-on";
-	on = 1
+	start_on = 1
 	},
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
@@ -540,7 +540,7 @@
 	fuel = 1e+031;
 	randomize_fuel = 0;
 	icon_state = "flare-on";
-	on = 1
+	start_on = 1
 	},
 /turf/open/indestructible/plating,
 /area/centcom/heretic_sacrifice/knock)
