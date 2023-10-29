@@ -365,8 +365,6 @@
 	desc = "A painting depicting something climbing a mountain of rust, it gives you an eerie feeling. Destroyable with wirecutters."
 	icon_state = "frame-empty"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/rust
-	// This item is popped up on examine by a heretic
-	var/list/item_on_examine = list(/obj/item/ammo_box/strilka310/lionhunter)
 
 // Moodlets used to prevent rust and give a positive moodlet for heretics
 /datum/mood_event/eldritch_painting/rust_examine
@@ -376,7 +374,7 @@
 
 /datum/mood_event/eldritch_painting/rust_heretic_examine
 	description = "I must hurry the rusted climb!"
-	mood_change = 4
+	mood_change = 6
 	timeout = 5 MINUTES
 
 // The special examine interaction for this painting
@@ -385,9 +383,8 @@
 		return
 
 	if(IS_HERETIC(user))
-		to_chat(user, "You see the climber reach and drop something.")
+		to_chat(user, "You see the climber, and are inspired by it!")
 		user.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)
-		new item_on_examine(user.loc)
 
 	if(user.has_trauma_type(/datum/brain_trauma/severe/rusting))
 		to_chat(user, "It can wait...")
@@ -412,7 +409,7 @@
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
 	var/atom/tile = get_turf(owner)
-	// If they have the special mood event for rusted climb they don't start rusting tiles beneath them
+	// If they have the special mood event for rusted climb they don't start randomly rusting tiles beneath them
 	if("rusted_examine" in owner.mob_mood.mood_events)
 		return
 
