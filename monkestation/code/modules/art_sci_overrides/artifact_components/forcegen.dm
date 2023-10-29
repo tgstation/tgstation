@@ -14,16 +14,17 @@
 /obj/structure/artifact_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
-/obj/structure/artifact/forcegen
-	assoc_comp = /datum/component/artifact/forcegen
-
 /datum/component/artifact/forcegen
 	associated_object = /obj/structure/artifact/forcegen
 	weight = ARTIFACT_UNCOMMON
 	type_name = "Forcefield Generator"
 	activation_message = "springs to life and starts emitting a forcefield!"
 	deactivation_message = "shuts down, its forcefields shutting down with it."
-	valid_triggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/force)
+	valid_activators = list(
+		/datum/artifact_activator/touch/carbon,
+		/datum/artifact_activator/touch/silicon,
+		/datum/artifact_activator/range/force
+	)
 	var/cooldown_time //cooldown AFTER the shield lowers
 	var/shield_iconstate
 	var/list/projected_forcefields = list()
@@ -43,17 +44,22 @@
 /datum/component/artifact/forcegen/effect_activate()
 	if(!COOLDOWN_FINISHED(src,cooldown))
 		holder.visible_message(span_notice("[holder] wheezes, shutting down."))
-		Deactivate(silent=TRUE)
+		artifact_deactivate(TRUE)
 		return
 	holder.anchored = TRUE
 	var/turf/our_turf = get_turf(holder)
+	var/list/bad_turfs
+	if(radius > 1)
+		bad_turfs = range(radius - 1, holder)
 	for(var/turf/open/floor in range(radius,holder))
+		if(floor in bad_turfs)
+			continue
 		if(floor == our_turf)
 			continue
 		var/obj/field = new /obj/structure/artifact_forcefield(floor)
 		field.icon_state = shield_iconstate
 		projected_forcefields += field
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, Deactivate)), shield_time)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), shield_time)
 	COOLDOWN_START(src,cooldown,shield_time + cooldown_time)
 
 /datum/component/artifact/forcegen/effect_deactivate()

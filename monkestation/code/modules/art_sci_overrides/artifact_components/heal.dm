@@ -1,17 +1,26 @@
-/obj/structure/artifact/heal
-	assoc_comp = /datum/component/artifact/heal
-
+#define PROCESSES_PER_HEAL 5
 /datum/component/artifact/heal
 	associated_object = /obj/structure/artifact/heal
 	weight = ARTIFACT_VERYUNCOMMON
 	type_name = "Single Healer"
 	activation_message = "starts emitting a soothing aura!"
 	deactivation_message = "becomes silent."
-	valid_triggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	valid_activators = list(
+		/datum/artifact_activator/touch/carbon,
+		/datum/artifact_activator/touch/silicon
+	)
 	///list of damage types we heal, this is randomly removed from at setup
-	var/list/damage_types = list(BRUTE,BURN,TOX,OXY,BRAIN)
+	var/list/damage_types = list(
+		BRUTE,
+		BURN,
+		TOX,
+		OXY,
+		BRAIN
+	)
 	///how much do we heal
 	var/heal_amount
+	///process count
+	var/process_count = 0
 	COOLDOWN_DECLARE(heal_cooldown)
 
 /datum/component/artifact/heal/setup()
@@ -32,3 +41,19 @@
 	to_chat(user, span_notice("You feel slightly refreshed!"))
 	new /obj/effect/temp_visual/heal(get_turf(user), COLOR_HEALING_CYAN)
 	COOLDOWN_START(src, heal_cooldown, 5 SECONDS)
+
+/datum/component/artifact/heal/effect_process()
+
+	process_count++
+	if(process_count < PROCESSES_PER_HEAL)
+		return
+	process_count = 0
+
+	for(var/mob/living/carbon/user in view(5, src))
+		var/damage_length = length(damage_types)
+		for(var/dam_type in damage_types)
+			user.apply_damage_type( -(heal_amount / damage_length), dam_type)
+		to_chat(user, span_notice("You feel slightly refreshed!"))
+		new /obj/effect/temp_visual/heal(get_turf(user), COLOR_HEALING_CYAN)
+
+#undef PROCESSES_PER_HEAL

@@ -1,13 +1,13 @@
-/obj/structure/artifact/bonk
-	assoc_comp = /datum/component/artifact/bonk
-
 /datum/component/artifact/bonk
 	associated_object = /obj/structure/artifact/bonk
 	weight = ARTIFACT_UNCOMMON
 	type_name = "Slammer"
 	activation_message = "opens up!"
 	deactivation_message = "closes up."
-	valid_triggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	valid_activators = list(
+		/datum/artifact_activator/touch/carbon,
+		/datum/artifact_activator/touch/silicon
+	)
 	///force of the hit
 	var/hit_power = 1
 	COOLDOWN_DECLARE(bonk_cooldown)
@@ -25,7 +25,7 @@
 			holder.say("My condolences to your missing head.") //they can speak uhh galactic common because alien tech idk
 			holder.visible_message(span_notice("[holder] shakes [user][p_s()] hands with an apparatus."))
 			playsound(get_turf(holder), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-			Deactivate()
+			artifact_deactivate()
 			return
 		else
 			carbon.apply_damage(hit_power, BRUTE, BODY_ZONE_HEAD, carbon.run_armor_check(BODY_ZONE_HEAD, MELEE))

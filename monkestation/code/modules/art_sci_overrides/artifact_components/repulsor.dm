@@ -1,5 +1,3 @@
-/obj/structure/artifact/repulsor
-	assoc_comp = /datum/component/artifact/repulsor
 
 /datum/component/artifact/repulsor
 	associated_object = /obj/structure/artifact/repulsor

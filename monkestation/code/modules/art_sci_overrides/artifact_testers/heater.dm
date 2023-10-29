@@ -1,5 +1,5 @@
-/obj/machinery/atmospherics/components/unary/artifact_heatingpad //this is literally a fancy thermomachine
-	icon = 'icons/obj/machines/atmospherics/heatingpad.dmi'
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad
+	icon = 'goon/icons/obj/networked.dmi'
 	icon_state = "pad_norm"
 
 	name = "Heating Pad"
@@ -95,7 +95,7 @@
 			var/datum/component/artifact/pulled_artifact = SSartifacts.artifacts[content]
 			if(!istype(pulled_artifact))
 				return
-			pulled_artifact.Stimulate(STIMULUS_HEAT, port.temperature) //if its in the artifacts list it should have the component and if it doesnt shit is fuck
+			pulled_artifact.process_stimuli(STIMULUS_HEAT, port.temperature) //if its in the artifacts list it should have the component and if it doesnt shit is fuck
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/artifact_heatingpad/screwdriver_act(mob/living/user, obj/item/tool)

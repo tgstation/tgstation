@@ -93,7 +93,7 @@
 			return
 	var/datum/component/artifact/component = occupant.GetComponent(/datum/component/artifact)
 	if(component)
-		component.stimulate(STIMULUS_RADIATION, chosen_level)
+		component.process_stimuli(STIMULUS_RADIATION, chosen_level)
 	else
 		if(!HAS_TRAIT(occupant, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(occupant))
 			occupant.AddComponent(/datum/component/irradiated)

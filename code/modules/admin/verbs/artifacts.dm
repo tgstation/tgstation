@@ -64,6 +64,6 @@
 
 			message_admins("[key_name_admin(user)] has [component.active ? "deactivated" : "activated"] [object][ADMIN_FLW(object)] via Artifact Panel.")
 			if(component.active)
-				component.Deactivate(silent = do_silently)
+				component.artifact_deactivate(do_silently)
 			else
-				component.Activate(silent = do_silently)
+				component.artifact_activate(do_silently)

@@ -1,6 +1,11 @@
 /datum/component/artifact/bomb
 	examine_hint = span_warning("It is covered in very conspicuous markings.")
-	valid_triggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/heat,/datum/artifact_trigger/shock,/datum/artifact_trigger/radiation)
+	valid_activators = list(
+		/datum/artifact_activator/range/force,
+		/datum/artifact_activator/range/heat,
+		/datum/artifact_activator/range/shock,
+		/datum/artifact_activator/range/radiation
+	)
 	deactivation_message = "sputters a bit, and falls silent once more."
 	xray_result = "COMPLEX"
 	var/dud = FALSE
@@ -25,7 +30,7 @@
 /datum/component/artifact/bomb/effect_activate()
 	if(!COOLDOWN_FINISHED(src,explode_cooldown_time))
 		holder.visible_message(span_warning("[holder] [deactivation_message]")) //rekt
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, Deactivate)), 1 SECONDS)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), 1 SECONDS)
 		return
 	holder.visible_message(span_bolddanger("[holder] [initial_warning]"))
 	COOLDOWN_START(src,activation_cooldown,explode_cooldown_time)
@@ -53,20 +58,20 @@
 	else
 		payload()
 
-/datum/component/artifact/bomb/Artifact_Destroyed(silent=FALSE)
+/datum/component/artifact/bomb/on_destroy(/datum/source)
 	. = ..()
 	if(active)
 		payload()
 		deltimer(timer_id)
+		
 /datum/component/artifact/bomb/proc/payload()
 	. = TRUE
 	if(dud || !active)
 		holder.visible_message(span_notice("[holder] [dud_message]"))
-		Deactivate(silent=TRUE)
+		artifact_deactivate(TRUE)
 		return FALSE
 
-/obj/structure/artifact/bomb
-	assoc_comp = /datum/component/artifact/bomb/explosive
+/// EXPLOSIVE BOMB
 
 /datum/component/artifact/bomb/explosive
 	associated_object = /obj/structure/artifact/bomb
@@ -87,10 +92,9 @@
 	if(!..())
 		return FALSE
 	explosion(holder, devast,heavy,light,light*1.5)
-	Artifact_Destroyed(silent=TRUE)
+	on_destroy()
 
-/obj/structure/artifact/bomb/devastating
-	assoc_comp = /datum/component/artifact/bomb/explosive/devastating
+/// DEVESTATING BOMB
 
 /datum/component/artifact/bomb/explosive/devastating
 	associated_object = /obj/structure/artifact/bomb/devastating
@@ -106,28 +110,8 @@
 	heavy = rand(7,12)
 	light = rand(10,25)
 	potency = (devast + heavy + light) * 2.25 // get real
-	
-/* TODO
-/obj/structure/artifact/bomb/chemical
-	assoc_comp = /datum/component/artifact/bomb/chemical
-/datum/component/artifact/bomb/chemical
-	associated_object = /obj/structure/artifact/bomb/chemical
-	type_name = "Bomb (chemical)"
-	weight = ARTIFACT_RARE
-	explode_delay = 1 // so it dont complain
-	explode_cooldown_time = 5 MINUTES
-	finale_delay = 0
-	var/single_use = FALSE //true = destroy on payload
-	var/smoke = FALSE // if false deliver via foam instead
-/datum/component/artifact/bomb/chemical/setup()
-	. = ..()
-	single_use = prob(70)
-	smoke = prob(50)
-	initial_warning = "'s pores start releasing [smoke ? "a thick smoke!" : "foam!"]"
-*/
 
-/obj/structure/artifact/bomb/gas
-	assoc_comp = /datum/component/artifact/bomb/gas
+/// GAS BOMB
 
 /datum/component/artifact/bomb/gas
 	associated_object = /obj/structure/artifact/bomb/gas
@@ -144,11 +128,11 @@
 
 /datum/component/artifact/bomb/gas/payload()
 	if(!..())
-		Deactivate()
+		artifact_deactivate()
 		return FALSE
 	var/turf/open/O = get_turf(holder)
 	if(!isopenturf(O))
-		Deactivate()
+		artifact_deactivate()
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(payload_gas)

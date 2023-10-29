@@ -5,7 +5,7 @@ MODULE ID: ART_SCI_OVERRIDES
 
 ### Description:
 
-This adds a modular overrides to the art sci pr on tgstation
+This redoes art sci to be code compliant
 
 <!-- Here, try to describe what your PR does, what features it provides and any other directly useful information -->
 

@@ -3,19 +3,13 @@
 #define ARTIFACT_SIZE_TINY 0 //items
 #define ARTIFACT_SIZE_SMALL 1 //big items
 #define ARTIFACT_SIZE_LARGE 2 //not items
-// stimuli
-#define STIMULUS_CARBON_TOUCH "carbontouch"
-#define STIMULUS_SILICON_TOUCH "silicontouch"
-#define STIMULUS_FORCE "force"
-#define STIMULUS_HEAT "heat" //also works for cold
-#define STIMULUS_SHOCK "electricity"
-#define STIMULUS_RADIATION "rads"
-#define STIMULUS_DATA "data"
+
 // origins
 #define ORIGIN_NARSIE "narnar"
 #define ORIGIN_SILICON "silicon"
 #define ORIGIN_WIZARD "wiznerd"
-#define ORIGIN_PRECURSOR "precursor" //Monkestation edit ART_SCI_OVERRIDES
+#define ORIGIN_PRECURSOR "precursor"
+#define ORIGIN_MARTIAN "martian"
 // rarities
 #define ARTIFACT_COMMON 500
 #define ARTIFACT_UNCOMMON 400
@@ -35,8 +29,16 @@
 	assoc_comp = null;\
 } \
 ##X/process(){\
-	assoc_comp?.heat_from_turf(get_turf(src));\
+	assoc_comp?.stimulate_from_turf_heat(get_turf(src));\
 	if(assoc_comp?.active) {\
 		assoc_comp.effect_process();\
 	}\
 }
+
+#define STIMULUS_CARBON_TOUCH (1<<0)
+#define STIMULUS_SILICON_TOUCH (2<<0)
+#define STIMULUS_FORCE (3<<0)
+#define STIMULUS_HEAT (4<<0)
+#define STIMULUS_SHOCK (5<<0)
+#define STIMULUS_RADIATION (6<<0)
+#define STIMULUS_DATA (7<<0)

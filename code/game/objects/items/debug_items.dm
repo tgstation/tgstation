@@ -162,5 +162,5 @@
 	..()
 	var/datum/component/artifact/artifact = target.GetComponent(/datum/component/artifact)
 	if(isobj(target) && artifact)
-		artifact.Activate()
+		artifact.artifact_activate()
 

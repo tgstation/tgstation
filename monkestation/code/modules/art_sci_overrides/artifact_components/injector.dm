@@ -1,5 +1,4 @@
-/obj/structure/artifact/injector
-	assoc_comp = /datum/component/artifact/injector
+
 /datum/component/artifact/injector
 	associated_object = /obj/structure/artifact/injector
 	weight = ARTIFACT_UNCOMMON

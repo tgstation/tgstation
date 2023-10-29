@@ -26,16 +26,12 @@ SUBSYSTEM_DEF(artifacts)
 	var/list/datum/component/artifact/artifact_types = list()
 	/// names of all artifact subtype type_name
 	var/list/artifact_type_names = list()
-	/// artifact typepath from type_name
-	var/list/artifact_types_from_name = list()
 	/// instances of origins
 	var/list/artifact_origins = list()
 	/// assoc list of origin type name to instance
 	var/list/artifact_origins_by_typename = list()
 	/// assoc list of IC name to origin typename
 	var/list/artifact_origin_name_to_typename = list()
-	/// list of IC origin names
-	var/list/artifact_origins_names = list()
 	/// artifact rarities for weighted picking
 	var/list/artifact_rarities = list()
 	/// get an artifact trigger typepath by name
@@ -49,7 +45,6 @@ SUBSYSTEM_DEF(artifacts)
 	for (var/origin_type in subtypesof(/datum/artifact_origin))
 		var/datum/artifact_origin/origin = new origin_type
 		artifact_origins += origin
-		artifact_origins_names += origin.name
 		artifact_origin_name_to_typename[origin.name] = origin.type_name
 		artifact_origins_by_typename[origin.type_name] = origin
 		artifact_rarities[origin.type_name] = list()
@@ -59,11 +54,10 @@ SUBSYSTEM_DEF(artifacts)
 			continue
 		artifact_types += artifact_type
 		artifact_type_names += initial(artifact_type.type_name)
-		artifact_types_from_name[initial(artifact_type.type_name)] = artifact_type
 
 		artifact_rarities["all"][artifact_type] = weight
 		for (var/origin in artifact_rarities)
 			if(origin in initial(artifact_type.valid_origins))
 				artifact_rarities[origin][artifact_type] = weight
-	for (var/datum/artifact_trigger/trigger_type as anything in subtypesof(/datum/artifact_trigger))
+	for (var/datum/artifact_activator/trigger_type as anything in subtypesof(/datum/artifact_activator))
 		artifact_trigger_name_to_type[initial(trigger_type.name)] = trigger_type

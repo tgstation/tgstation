@@ -1,5 +1,3 @@
-/obj/structure/artifact/vomit
-	assoc_comp = /datum/component/artifact/vomit
 /datum/component/artifact/vomit
 	associated_object = /obj/structure/artifact/vomit
 	weight = ARTIFACT_UNCOMMON
@@ -36,3 +34,11 @@
 		carbon.vomit(blood = bloody_vomit, stun = (spew_organs ? TRUE : prob(25)), distance = spew_range)
 		if(spew_organs && prob(40))
 			carbon.spew_organ()
+
+/datum/component/artifact/vomit/effect_process()
+	for(var/mob/living/carbon/viewed in view(range, src))
+		if(prob(100 - potency))
+			continue
+		viewed.vomit(blood = bloody_vomit, stun = (spew_organs ? TRUE : prob(25)), distance = spew_range)
+		if(spew_organs && prob(10))
+			viewed.spew_organ()

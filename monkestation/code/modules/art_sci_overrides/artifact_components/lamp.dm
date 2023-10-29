@@ -1,7 +1,4 @@
-/obj/structure/artifact/lamp
-	assoc_comp = /datum/component/artifact/lamp
-	light_system = MOVABLE_LIGHT
-	light_on = FALSE
+
 /datum/component/artifact/lamp
 	associated_object = /obj/structure/artifact/lamp
 	weight = ARTIFACT_COMMON
@@ -20,9 +17,10 @@
 		if(76 to 100)
 			range = rand(4,10)
 			power = rand(2,10) // the sun
+			
 	if(artifact_origin.type_name == ORIGIN_NARSIE && prob(40))
 		color = COLOR_BLACK
-	holder.set_light_range_power_color(range,power,color)
+	holder.set_light_range_power_color(range, power, color)
 	potency += (range + power) * 2
 
 /datum/component/artifact/lamp/effect_touched(mob/user)

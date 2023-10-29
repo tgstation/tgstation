@@ -1,4 +1,4 @@
-#define MAX_POSSIBLE_GEN 600 KW
+#define MAX_POSSIBLE_GEN 800 MW
 #define SIDEEFFECT_THRESHOLD 100 KW
 #define SHITFUCK_THRESHOLD 400 KW
 
@@ -18,8 +18,17 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 	associated_object = /obj/machinery/power/generator_artifact
 	type_name = "Power Generator"
 	weight = ARTIFACT_RARE
-	valid_triggers = list(/datum/artifact_trigger/heat, /datum/artifact_trigger/shock, /datum/artifact_trigger/radiation)
-	valid_origins = list(ORIGIN_WIZARD,ORIGIN_SILICON) //narnar doesnt need power
+	valid_activators = list(
+		/datum/artifact_activator/range/heat,
+		/datum/artifact_activator/range/shock,
+		/datum/artifact_activator/range/radiation
+	)
+	valid_origins = list(
+		ORIGIN_WIZARD,
+		ORIGIN_SILICON,
+		ORIGIN_PRECURSOR,
+		ORIGIN_MARTIAN,
+	) //narnar doesnt need power
 	activation_message = "begins emitting a faint, droning hum."
 	deactivation_message = "shortcircuits!"
 	xray_result = "COMPLEX"
@@ -29,7 +38,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 	///does the power output fluctuate
 	var/unstable_generation = FALSE
 
-/datum/component/artifact/generator/setup()
+/datum/component/artifact/generator/setup() //TODO: Make this use some weird scaling math to have it pick higher numbers at lower odds
 	if(prob(65))
 		power_gen = rand(1 KW, MAX_POSSIBLE_GEN / 2)
 	else
@@ -39,12 +48,14 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 
 /datum/component/artifact/generator/effect_touched(mob/living/user)
 	var/obj/machinery/power/generator_artifact/powerholder = holder
+	//if on cable and not setup, connect and setup
 	if(!powerholder.anchored && locate(/obj/structure/cable) in get_turf(powerholder))
 		powerholder.visible_message(span_warning("[holder] seems to snap to the cable!"))
 		playsound(get_turf(powerholder), 'sound/items/deconstruct.ogg', 50, TRUE)
 		powerholder.anchored = TRUE
 		powerholder.connect_to_network()
-		return	
+		return
+
 	holder.Beam(user, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(get_turf(powerholder), 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	var/damage = user.electrocute_act(power_gen / 2 KW, powerholder, flags = SHOCK_NOSTUN)
@@ -55,10 +66,10 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 		user.safe_throw_at(throwtarget, power_gen / 38 KW, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 	if(damage > 400 && prob(50))
 		user.dust(just_ash = TRUE, drop_items = TRUE)
-		Deactivate() //shortcircuit
+		artifact_deactivate() //shortcircuit
 
 	if(prob(20)) //try to get yourself shocked with insuls many times to shortcircuit it (in retrospect this sucks)
-		Deactivate()
+		artifact_deactivate()
 
 /datum/component/artifact/generator/effect_process() //todo add more
 	if(!holder.anchored)

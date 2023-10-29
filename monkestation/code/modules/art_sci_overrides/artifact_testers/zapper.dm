@@ -66,7 +66,7 @@
 	Beam(component.parent, icon_state="lightning[rand(1,12)]", time = pulse_cooldown_time)
 	playsound(get_turf(src), 'sound/magic/lightningshock.ogg', 60, TRUE, extrarange = 2)
 	use_power(chosen_level)
-	component.stimulate(STIMULUS_SHOCK, chosen_level)
+	component.process_stimuli(STIMULUS_SHOCK, chosen_level)
 	COOLDOWN_START(src,pulse_cooldown, pulse_cooldown_time)
 
 
