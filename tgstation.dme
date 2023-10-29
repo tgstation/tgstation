@@ -5688,6 +5688,7 @@
 #include "monkestation\code\modules\antimatter\code\shielding.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_origins.dm"
 #include "monkestation\code\modules\art_sci_overrides\generic_artifact_objects.dm"
+#include "monkestation\code\modules\art_sci_overrides\globals.dm"
 #include "monkestation\code\modules\art_sci_overrides\item_stimuli.dm"
 #include "monkestation\code\modules\art_sci_overrides\new_procs.dm"
 #include "monkestation\code\modules\art_sci_overrides\activators\_base.dm"

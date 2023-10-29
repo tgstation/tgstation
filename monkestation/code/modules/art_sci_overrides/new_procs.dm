@@ -19,7 +19,6 @@
 	return rgb(red, green, blue, alpha)
 
 
-GLOBAL_LIST_INIT(artifact_rarity, list())
 /proc/spawn_artifact(turf/loc, forced_origin)
 	if (!loc)
 		return

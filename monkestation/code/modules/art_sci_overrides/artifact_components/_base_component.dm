@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT(running_artifact_list, list())
-
 #define BASE_MAX_ACTIVATORS 2
 
 /datum/component/artifact
