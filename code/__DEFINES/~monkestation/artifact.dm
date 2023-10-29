@@ -33,6 +33,9 @@
 	if(assoc_comp?.active) {\
 		assoc_comp.effect_process();\
 	}\
+} \
+##X/rad_act(intensity){\
+	assoc_comp?.stimulate_from_rad_act(intensity)\
 }
 
 #define STIMULUS_CARBON_TOUCH (1<<0)

@@ -197,4 +197,7 @@
 /datum/component/artifact/proc/stimulate_from_turf_heat(turf/target)
 	process_stimuli(STIMULUS_HEAT, target.return_air().temperature)
 
+/datum/component/artifact/proc/stimulate_from_rad_act(intensity)
+	process_stimuli(STIMULUS_RADIATION, intensity)
+
 #undef BASE_MAX_ACTIVATORS
