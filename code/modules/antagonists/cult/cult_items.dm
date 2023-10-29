@@ -628,8 +628,8 @@ Striking a noncultist, however, will tear their flesh."}
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
-	on = TRUE
 	var/charges = 5
+	start_on = TRUE
 
 /obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)

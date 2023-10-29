@@ -1085,3 +1085,56 @@
       subheader when creating a command report.
   mc-oofert:
   - bugfix: venus human traps no longer die when on weeds
+2023-10-28:
+  GPeckman:
+  - bugfix: The health bar on the mech diagnostic hud display should update consistently
+      now.
+  Jacquerel:
+  - bugfix: If a mob you are shapeshifted into attempts to grow up into a different
+      kind of mob then you will stop being shapeshifted
+  Melbert:
+  - bugfix: Disablers and Lasers now show their on-impact effects on hit mobs again.
+  - bugfix: People held at gunpoint can now flinch when being hit.
+  - bugfix: Regenerating mobs no longer stop regenerating no matter hit with what.
+  - bugfix: Pressure damage is now properly modified by a mob's brute damage modifier.
+  - bugfix: Fixes some occasions which some effects (glass jaw, explodable worn items)
+      won't respond to hits.
+  - refactor: Refactored core code related to mobs sustaining damage.
+  Xackii:
+  - balance: Sutures now heal a percentage of basic/animal max health instead of a
+      flat amount.
+  lizardqueenlexi:
+  - bugfix: Mobs without the "advanced tool user" trait - such as monkeys - are no
+      longer able to interact with camera consoles.
+  - bugfix: Monkeys can now properly attack parrots.
+  - bugfix: The Demonic Frost-Miner will no longer run around destroying the corpses
+      in its arena the moment the round begins.
+  unit0016:
+  - bugfix: Every misaligned railing ending has been corrected by the Nanotrasen Hall
+      Monitor's Lunchclub.
+2023-10-29:
+  DrDiasyl:
+  - sound: Dying with a SecHailer on your face will make a unique death sound
+  Ghommie:
+  - rscadd: Added a few fish related bounties.
+  - rscadd: Fish cases to store and preserve life fish within can be now printed from
+      the service techfab and the autolathe.
+  GoldenAlpharex:
+  - code_imp: Added support to the wet_floor component to make it so the wet overlay
+      could not be applied to certain turfs if desired.
+  - bugfix: Ice turfs no longer look tiled, and instead look smooth when placed next
+      to one-another.
+  Melbert:
+  - bugfix: Fixes being unable to open airlocks with telekinesis
+  Paxilmaniac:
+  - code_imp: the deployable component has been tweaked and improved with some new
+      options to it
+  Profakos:
+  - bugfix: Gnomes no longer runtime if they explode while sinking into the ground
+  necromanceranne:
+  - bugfix: Every person on the station now no longer has the Tranquility Evades the
+      Shield Pinky Finger Shovegrab unarmed combat technique, an ancient and forbidden
+      strike that allows anyone (literally anyone) to bypass all forms of blocking
+      defense by simply not being in combat mode when they shove or grab their target.
+      As a direct result, the chakra energy of the Spinward Sector has become severely
+      misaligned. Oh well.
