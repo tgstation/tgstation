@@ -5,8 +5,6 @@
 	/// The current temporary frequency used to add new filtered frequencies
 	/// options.
 	var/tempfreq = FREQ_COMMON
-	/// The current mob operating the machine.
-	var/datum/weakref/operator
 	/// Illegal frequencies that can't be listened to by telecommunication servers.
 	var/list/banned_frequencies = list(
 		FREQ_SYNDICATE,
@@ -37,7 +35,6 @@
 		return ..()
 
 /obj/machinery/telecomms/ui_interact(mob/user, datum/tgui/ui)
-	operator = WEAKREF(user)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Telecomms")
@@ -90,13 +87,11 @@
 	if(.)
 		return
 
-	if(!issilicon(usr))
-		if(!istype(usr.get_active_held_item(), /obj/item/multitool))
+	var/mob/living/current_user = usr
+	if(!issilicon(current_user))
+		if(!istype(current_user.get_active_held_item(), /obj/item/multitool))
 			return
 
-	var/mob/living/current_user = operator?.resolve()
-	if (isnull(current_user))
-		return
 	var/obj/item/multitool/heldmultitool = get_multitool(current_user)
 
 	switch(action)
