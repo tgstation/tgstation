@@ -19,16 +19,35 @@
 	return rgb(red, green, blue, alpha)
 
 
+GLOBAL_LIST_INIT(artifact_rarity, list())
 /proc/spawn_artifact(turf/loc, forced_origin)
 	if (!loc)
 		return
+	if(!length(GLOB.artifact_rarity))
+		build_weighted_rarities()
 
 	var/list/weighted_list
+
 	if(forced_origin)
-		weighted_list = SSartifacts.artifact_rarities[forced_origin]
+		weighted_list = GLOB.artifact_rarity[forced_origin]
 	else
-		weighted_list = SSartifacts.artifact_rarities["all"]
+		weighted_list = GLOB.artifact_rarity["all"]
 
 	var/datum/component/artifact/picked  = pick_weight(weighted_list)
 	var/type = initial(picked.associated_object)
 	return new type(loc)
+
+
+/proc/build_weighted_rarities()
+	for(var/origin_type in subtypesof(/datum/artifact_origin))
+		var/datum/artifact_origin/origin = new origin_type
+		GLOB.artifact_rarity[origin.type_name] = list()
+
+	for(var/datum/component/artifact/artifact_type in subtypesof(/datum/component/artifact))
+		var/weight = initial(artifact_type.weight)
+		if(!weight)
+			continue
+		GLOB.artifact_rarity["all"][artifact_type] = weight
+		for (var/origin in artifact_rarities)
+			if(origin in initial(artifact_type.valid_origins))
+				GLOB.artifact_rarity[origin][artifact_type] = weight

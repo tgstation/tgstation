@@ -28,8 +28,8 @@
 /datum/artifactpanel/ui_data(mob/user)
 	. = list()
 	.["artifacts"] = list()
-	for(var/obj/art in SSartifacts.artifacts)
-		var/datum/component/artifact/component = SSartifacts.artifacts[art]
+	for(var/obj/art in GLOB.running_artifact_list)
+		var/datum/component/artifact/component = GLOB.running_artifact_list[art]
 		.["artifacts"] += list(list(
 			"name" = art.name,
 			"ref" = REF(art),
@@ -45,7 +45,7 @@
 		return
 	switch (action)
 		if ("delete")
-			var/atom/movable/to_delete = locate(params["ref"]) in SSartifacts.artifacts
+			var/atom/movable/to_delete = locate(params["ref"]) in GLOB.running_artifact_list
 			if(isnull(to_delete))
 				return
 			var/ask = tgui_alert(usr, "Are you sure you want to delete that?", "Are you sure about that?", list("YEAH BABY LETS GO", "Naw"))
@@ -53,10 +53,10 @@
 				message_admins("[key_name_admin(user)] has deleted [to_delete] via Artifact Panel at [ADMIN_VERBOSEJMP(to_delete)].")
 				qdel(to_delete)
 		if ("toggle")
-			var/atom/movable/object = locate(params["ref"]) in SSartifacts.artifacts
+			var/atom/movable/object = locate(params["ref"]) in GLOB.running_artifact_list
 			if(isnull(object))
 				return
-			var/datum/component/artifact/component = SSartifacts.artifacts[object]
+			var/datum/component/artifact/component = GLOB.running_artifact_list[object]
 			var/ask = tgui_alert(usr, "Do you want to do it silently?", "Silently?", list("Visible", "Silent"))
 			var/do_silently = FALSE
 			if(ask == "Silent")

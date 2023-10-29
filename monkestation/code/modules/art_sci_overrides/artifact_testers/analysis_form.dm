@@ -69,9 +69,21 @@
 
 /obj/item/sticker/analysis_form/ui_static_data(mob/user)
 	. = ..()
-	.["allorigins"] = SSartifacts.artifact_origin_name_to_typename
-	.["alltypes"] = SSartifacts.artifact_type_names
-	.["alltriggers"] = SSartifacts.artifact_trigger_name_to_type
+	var/list/origins_names = list()
+	for(var/datum/artifact_origin/subtype in subtypesof(/datum/artifact_origin))
+		origins_names += subtype.type_name
+	
+	var/list/trigger_names = list()
+	for(var/datum/artifact_activator/subtype in subtypesof(/datum/artifact_activator))
+		trigger_names += subtype.name
+
+	var/list/artifact_names = list()
+	for(var/datum/component/artifact/subtype in subtypesof(/datum/component/artifact))
+		artifact_names += subtype.type_name
+
+	.["allorigins"] = origins_names
+	.["alltypes"] = artifact_names
+	.["alltriggers"] = trigger_names
 	return
 
 /obj/item/sticker/analysis_form/ui_data(mob/user)
@@ -154,17 +166,20 @@
 	var/total_guesses = 0 
 
 	if(art.artifact_origin.type_name == chosen_origin)
-		correct += 1
+		correct ++
 	if(chosen_origin)
-		total_guesses += 1
+		total_guesses ++
 	if(chosentype)
-		total_guesses += 1
+		total_guesses ++
 	if(art.type_name == chosentype)
-		correct += 1
+		correct ++
 	for(var/name in chosentriggers)
-		total_guesses += 1
-		if(locate(SSartifacts.artifact_trigger_name_to_type[name]) in art.activators)
-			correct += 1
+		total_guesses++
+
+		for(var/datum/artifact_activator/listed in art.activators)
+			if(listed.name != name)
+				continue
+			correct++
 
 	var/incorrect = total_guesses - correct
 	return round((CARGO_CRATE_VALUE/4) * art.potency * (max((ARTIFACT_COMMON - art.weight) * 0.01, 0.01) * max(correct - incorrect, 0.01)))

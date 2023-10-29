@@ -91,8 +91,8 @@
 			if(victim.bodytemperature < port.temperature)
 				victim.adjust_bodytemperature(port.temperature * TEMPERATURE_DAMAGE_COEFFICIENT)
 			continue
-		else if(content in SSartifacts.artifacts) //this is an artifact, probably!
-			var/datum/component/artifact/pulled_artifact = SSartifacts.artifacts[content]
+		else if(content in GLOB.running_artifact_list) //this is an artifact, probably!
+			var/datum/component/artifact/pulled_artifact = GLOB.running_artifact_list[content]
 			if(!istype(pulled_artifact))
 				return
 			pulled_artifact.process_stimuli(STIMULUS_HEAT, port.temperature) //if its in the artifacts list it should have the component and if it doesnt shit is fuck

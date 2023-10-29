@@ -24,10 +24,10 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 		/datum/artifact_activator/range/radiation
 	)
 	valid_origins = list(
-		ORIGIN_WIZARD,
-		ORIGIN_SILICON,
-		ORIGIN_PRECURSOR,
-		ORIGIN_MARTIAN,
+		/datum/artifact_origin/wizard,
+		/datum/artifact_origin/silicon,
+		/datum/artifact_origin/precursor,
+		/datum/artifact_origin/martian,
 	) //narnar doesnt need power
 	activation_message = "begins emitting a faint, droning hum."
 	deactivation_message = "shortcircuits!"

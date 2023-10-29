@@ -5716,7 +5716,6 @@
 #include "monkestation\code\modules\art_sci_overrides\artifact_testers\heater.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_testers\xray.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_testers\zapper.dm"
-#include "monkestation\code\modules\art_sci_overrides\subsystems\artifact_storage.dm"
 #include "monkestation\code\modules\ballpit\ballbit_sink.dm"
 #include "monkestation\code\modules\ballpit\ballpit.dm"
 #include "monkestation\code\modules\bitrunners\code\ability_disks.dm"

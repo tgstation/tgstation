@@ -4,7 +4,11 @@
 	type_name = "Vomiting Inducer"
 	activation_message = "starts emitting disgusting imagery!"
 	deactivation_message = "falls silent, its aura dissipating!"
-	valid_origins = list(ORIGIN_NARSIE,ORIGIN_WIZARD) //silicons dont like organic stuff or something
+	valid_origins = list(
+		/datum/artifact_origin/narsie,
+		/datum/artifact_origin/wizard,
+		/datum/artifact_origin/martian,
+	) //silicons dont like organic stuff or something
 	var/range = 0
 	var/spew_range = 1
 	var/spew_organs = FALSE

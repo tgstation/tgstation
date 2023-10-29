@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(running_artifact_list, list())
+
 #define BASE_MAX_ACTIVATORS 2
 
 /datum/component/artifact
@@ -35,11 +37,11 @@
 	var/datum/artifact_origin/artifact_origin
 	///origin datums to pick
 	var/list/valid_origins = list(
-		ORIGIN_NARSIE,
-		ORIGIN_WIZARD,
-		ORIGIN_SILICON,
-		ORIGIN_PRECURSOR,
-		ORIGIN_MARTIAN,
+		/datum/artifact_origin/narsie,
+		/datum/artifact_origin/wizard,
+		/datum/artifact_origin/silicon,
+		/datum/artifact_origin/precursor,
+		/datum/artifact_origin/martian,
 	)
 	var/activation_message
 	var/activation_sound
@@ -64,15 +66,15 @@
 		return COMPONENT_INCOMPATIBLE
 
 	holder = parent
-	SSartifacts.artifacts[holder] = src
+	GLOB.running_artifact_list[holder] = src
 
 	if(forced_origin)
 		valid_origins = list(forced_origin)
 
-	artifact_origin = SSartifacts.artifact_origins_by_typename[pick(valid_origins)]
+	artifact_origin = pick(valid_origins)
 	fake_name = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
 	
-	for(var/datum/artifact_origin/origins in SSartifacts.artifact_origins)
+	for(var/datum/artifact_origin/origins in subtypesof(/datum/artifact_origin))
 		var/a_name = origins.generate_name()
 		if(a_name)
 			names[origins.type_name] = a_name
@@ -135,7 +137,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
 
 /datum/component/artifact/UnregisterFromParent()
-	SSartifacts.artifacts -= parent
+	GLOB.running_artifact_list -= parent
 	UnregisterSignal(parent, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,

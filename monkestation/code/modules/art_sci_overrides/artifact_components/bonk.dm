@@ -19,6 +19,7 @@
 /datum/component/artifact/bonk/effect_touched(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, bonk_cooldown))
 		return
+		
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon = user
 		if(!carbon.get_bodypart(BODY_ZONE_HEAD))
