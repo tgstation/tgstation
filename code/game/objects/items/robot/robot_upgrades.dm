@@ -631,9 +631,6 @@
 		if (nozer)
 			R.model.remove_module(nozer, TRUE)
 
-#define EXTINGUISHER 0
-#define RESIN_LAUNCHER 1
-#define RESIN_FOAM 2
 /obj/item/extinguisher/cyborg
 	name = "Integrated firefighter nozzle"
 	desc = "A firefighter nozzle connected to an internal resevoir. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
@@ -757,9 +754,33 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 
-/obj/item/inducer/cyborg/Initialize(mapload)
-	. = ..()
+/obj/item/borg/upgrade/holographic_atmos
+	name = "Holographic atmos barrier projector"
+	desc = "Adds a atmospheric stopping photon projector allow the cyborg to project atmospheric barrier"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
 
+/obj/item/holosign_creator/atmos/cyborg
+	name = "ATMOS barrier photon projector"
+	max_signs = 10
+
+/obj/item/borg/upgrade/holographic_atmos/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/holosign_creator/atmos/cyborg/projector = locate() in R
+		if(projector)
+			return FALSE
+		projector = new(R.model)
+		R.model.basic_modules += projector
+		R.model.add_module(projector, FALSE, TRUE)
+
+/obj/item/borg/upgrade/holographic_atmos/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/holosign_creator/atmos/cyborg/projector = locate() in R.model
+		if (projector)
+			R.model.remove_module(projector, TRUE)
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
