@@ -88,7 +88,7 @@
 			/obj/item/ammo_casing/shotgun/dart,
 		)
 		if(is_type_in_list(AM, allowed_containers))
-			var/obj/item/reagent_containers/B = AM
+			var/obj/item/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
 				reagents.trans_to(B, wanted_amount, transferred_by = src)
