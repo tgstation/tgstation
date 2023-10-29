@@ -63,6 +63,8 @@
 
 /obj/effect/puzzle_death_signal_holder/Initialize(mapload, mob/listened, id, queue_size = 2)
 	. = ..()
+	if(isnull(id))
+		return INITIALIZE_HINT_QDEL
 	RegisterSignal(listened, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	SSqueuelinks.add_to_queue(src, id, queue_size)
 
