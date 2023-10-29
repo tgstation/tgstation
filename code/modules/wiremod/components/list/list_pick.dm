@@ -62,7 +62,7 @@
 		INVOKE_ASYNC(src, PROC_REF(show_list), user.value, input_name.value, input_list.value)
 
 /// Show a list of options to the user using standed TGUI input list
-/obj/item/circuit_component/list_pick/proc/show_list(mob/living/u, message, list/showed_list)
+/obj/item/circuit_component/list_pick/proc/show_list(mob/living/living_user, message, list/showed_list)
 	if(!showed_list || showed_list.len == 0)
 		failure.set_output(COMPONENT_SIGNAL)
 		return
@@ -70,7 +70,7 @@
 		message = "circuit input"
 	if(!(u.can_perform_action(parent.shell, FORBID_TELEKINESIS_REACH, ALLOW_SILICON_REACH, ALLOW_RESTING)))
 		return
-	var/picked = tgui_input_list(u, message = message, items = showed_list)
+	var/picked = tgui_input_list(living_user, message = message, items = showed_list)
 	if(!(u.can_perform_action(parent.shell, FORBID_TELEKINESIS_REACH, ALLOW_SILICON_REACH, ALLOW_RESTING)))
 		return
 	choose_item(picked, showed_list)
