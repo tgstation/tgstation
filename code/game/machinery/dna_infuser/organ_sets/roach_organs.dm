@@ -56,10 +56,10 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = ROACH_COLORS
 
-	/// Timer ID for resetting the damage resistance applied from attacks from behind
-	var/defense_timerid
 	/// Bodypart overlay applied to the chest the heart is in
 	var/datum/bodypart_overlay/simple/roach_shell/roach_shell
+
+	COOLDOWN_DECLARE(harden_effect_cd)
 
 /obj/item/organ/internal/heart/roach/Initialize(mapload)
 	. = ..()
@@ -78,7 +78,8 @@
 
 	var/mob/living/carbon/human/human_owner = organ_owner
 
-	RegisterSignal(human_owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(modify_damage))
+	RegisterSignal(human_owner, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(modify_damage))
+	RegisterSignal(human_owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(do_block_effect))
 	human_owner.physiology.knockdown_mod *= 3
 
 	var/obj/item/bodypart/chest/chest = human_owner.get_bodypart(BODY_ZONE_CHEST)
@@ -92,50 +93,55 @@
 
 	var/mob/living/carbon/human/human_owner = organ_owner
 
-	UnregisterSignal(human_owner, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(human_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
 	human_owner.physiology.knockdown_mod /= 3
-
-	if(defense_timerid)
-		reset_damage(human_owner)
 
 	var/obj/item/bodypart/chest/chest = human_owner.get_bodypart(BODY_ZONE_CHEST)
 	chest.remove_bodypart_overlay(roach_shell)
 	human_owner.update_body_parts()
 
 /**
- * Signal proc for [COMSIG_MOB_APPLY_DAMAGE]
+ * Signal proc for [COMSIG_MOB_APPLY_DAMAGE_MODIFIERS]
  *
- * Being hit with brute damage in the back will impart a large damage resistance bonus for a very short period.
+ * Adds a 0.5 modifier to attacks from the back
  */
-/obj/item/organ/internal/heart/roach/proc/modify_damage(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+/obj/item/organ/internal/heart/roach/proc/modify_damage(mob/living/carbon/human/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
 
-	if(!ishuman(owner) || !attack_direction || damagetype != BRUTE || owner.stat >= UNCONSCIOUS)
+	if(!is_blocking(source, damage_amount, damagetype, attack_direction))
 		return
 
-	var/mob/living/carbon/human/human_owner = owner
+	damage_mods += 0.5
+
+/**
+ * Signal proc for [COMSIG_MOB_AFTER_APPLY_DAMAGE]
+ *
+ * Does a special effect if we blocked damage with our back
+ */
+/obj/item/organ/internal/heart/roach/proc/do_block_effect(mob/living/carbon/human/source, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, obj/item/attacking_item)
+	SIGNAL_HANDLER
+
+	if(!is_blocking(source, damage_dealt, damagetype, attack_direction))
+		return
+
+	if(COOLDOWN_FINISHED(src, harden_effect_cd))
+		source.visible_message(span_warning("[source]'s back hardens against the blow!"))
+		playsound(source, 'sound/effects/constructform.ogg', 25, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+
+	COOLDOWN_START(src, harden_effect_cd, 5 SECONDS) // Cooldown resets EVERY time we get hit
+
+/// Checks if the passed mob is in a valid state to be blocking damage with the roach shell
+/obj/item/organ/internal/heart/roach/proc/is_blocking(mob/living/carbon/human/blocker, damage_amount, damagetype, attack_direction)
+	if(damage_amount < 5 || damagetype != BRUTE || !attack_direction)
+		return
+	if(!ishuman(blocker) || blocker.stat >= UNCONSCIOUS)
+		return FALSE
 	// No tactical spinning
-	if(human_owner.flags_1 & IS_SPINNING_1)
-		return
-
-	// If we're lying down, or were attacked from the back, we get armor.
-	var/should_armor_up = (human_owner.body_position == LYING_DOWN) || (human_owner.dir & attack_direction)
-	if(!should_armor_up)
-		return
-
-	// Take 50% less damage from attack behind us
-	if(!defense_timerid)
-		human_owner.physiology.brute_mod /= 2
-		human_owner.visible_message(span_warning("[human_owner]'s back hardens against the blow!"))
-		playsound(human_owner, 'sound/effects/constructform.ogg', 25, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-
-	defense_timerid = addtimer(CALLBACK(src, PROC_REF(reset_damage), owner), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
-
-/obj/item/organ/internal/heart/roach/proc/reset_damage(mob/living/carbon/human/human_owner)
-	defense_timerid = null
-	if(!QDELETED(human_owner))
-		human_owner.physiology.brute_mod *= 2
-		human_owner.visible_message(span_warning("[human_owner]'s back softens again."))
+	if(blocker.flags_1 & IS_SPINNING_1)
+		return FALSE
+	if(blocker.body_position == LYING_DOWN || (blocker.dir & attack_direction))
+		return TRUE
+	return FALSE
 
 // Simple overlay so we can add a roach shell to guys with roach hearts
 /datum/bodypart_overlay/simple/roach_shell
