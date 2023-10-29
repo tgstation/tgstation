@@ -31,6 +31,10 @@
 		/datum/artifact_activator/range/shock, 
 		/datum/artifact_activator/range/radiation, 
 	)
+	///valid list of faults with their weights [10 is base]
+	var/list/valid_faults = list(
+		/datum/artifact_fault/ignite = 10
+	)
 	///origin datum
 	var/datum/artifact_origin/artifact_origin
 	///origin datums to pick
@@ -57,7 +61,9 @@
 	var/obj/item/sticker/analysis_form/analysis
 
 	var/mutable_appearance/extra_effect
-
+	///the fault we picked from the listed ones
+	var/datum/artifact_fault/chosen_fault
+	
 /datum/component/artifact/Initialize(forced_origin = null)
 	. = ..()
 	if(!isobj(parent))
@@ -71,7 +77,9 @@
 
 	artifact_origin = pick(valid_origins)
 	fake_name = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
-	
+	var/picked_fault = pick_weight(valid_faults)
+	chosen_fault = new picked_fault
+
 	for(var/datum/artifact_origin/origins in subtypesof(/datum/artifact_origin))
 		var/a_name = origins.generate_name()
 		if(a_name)
@@ -181,6 +189,9 @@
 	
 	for(var/datum/artifact_activator/listed_activator in activators)
 		if(!(listed_activator.required_stimuli & stimuli))
+			if(prob(chosen_fault.trigger_chance))
+				chosen_fault.on_trigger(src)
+				holder.visible_message("[holder] [chosen_fault.visible_message]")
 			continue
 		if(istype(listed_activator, /datum/artifact_activator/range))
 			var/datum/artifact_activator/range/ranged_activator = listed_activator
