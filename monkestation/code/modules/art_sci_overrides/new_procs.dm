@@ -48,6 +48,6 @@ GLOBAL_LIST_INIT(artifact_rarity, list())
 		if(!weight)
 			continue
 		GLOB.artifact_rarity["all"][artifact_type] = weight
-		for (var/origin in GLOB.artifact_rarity)
+		for(var/origin in GLOB.artifact_rarity)
 			if(origin in initial(artifact_type.valid_origins))
 				GLOB.artifact_rarity[origin][artifact_type] = weight
