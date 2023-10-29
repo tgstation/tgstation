@@ -9,17 +9,11 @@ modules = ["station_m_tools.dmm", "station_m_evidence.dmm", "station_m_kitchen.d
 [rooms.station_large]
 modules = ["station_l_morgue.dmm", "station_l_crates.dmm", "station_l_webs.dmm", "station_l_bathroom.dmm", "station_l_kitchen.dmm", "station_l_security.dmm", "station_l_kilojan.dmm"]
 
-[rooms.beach_small]
-modules = []
-
 [rooms.beach_medium]
 modules = ["beach_m_shipping.dmm", "beach_m_oasis.dmm"]
 
 [rooms.beach_large]
 modules = ["beach_l_ribs.dmm"]
-
-[rooms.jungle_small]
-modules = []
 
 [rooms.jungle_medium]
 modules = ["jungle_m_armory.dmm"]

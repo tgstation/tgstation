@@ -71,7 +71,7 @@
 /obj/structure/closet/crate/secure/bitrunning/decrypted/proc/spawn_loot(list/extra_loot)
 	for(var/path in extra_loot)
 		if(!ispath(path))
-			continue
+			return FALSE
 
 		if(isnull(extra_loot[path]))
 			return FALSE

@@ -1,7 +1,7 @@
 /datum/antagonist/bitrunning_glitch/cyber_tac
 	name = ROLE_CYBER_TAC
 	preview_outfit = /datum/outfit/cyber_police/tactical
-	threat = 70
+	threat = 50
 	show_in_antagpanel = TRUE
 
 /datum/antagonist/bitrunning_glitch/cyber_tac/on_gain()

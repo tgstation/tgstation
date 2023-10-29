@@ -144,10 +144,9 @@
 
 /datum/modular_mob_segment/xenos
 	mobs = list(
-		/mob/living/carbon/alien/adult/hunter,
-		/mob/living/carbon/alien/adult/sentinel,
-		/mob/living/carbon/alien/adult/drone,
-
+		/mob/living/simple_animal/hostile/hunter,
+		/mob/living/simple_animal/hostile/sentinel,
+		/mob/living/simple_animal/hostile/drone,
 	)
 
 #undef SPAWN_ALWAYS

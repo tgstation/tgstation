@@ -116,11 +116,12 @@
 	if(isnull(landmark))
 		CRASH("vdom: failed to find safehouse spawn landmark")
 
-	var/datum/map_template/safehouse/new_safehouse = new generated_domain.safehouse_path()
-	if(!new_safehouse.load(get_turf(landmark)))
-		CRASH("vdom: failed to load safehouse")
-
+	var/turf/spawn_loc = get_turf(landmark)
 	qdel(landmark)
+
+	var/datum/map_template/safehouse/new_safehouse = new generated_domain.safehouse_path()
+	if(!new_safehouse.load(spawn_loc))
+		CRASH("vdom: failed to load safehouse")
 
 	return TRUE
 
@@ -143,7 +144,7 @@
 	domain_randomized = FALSE
 	retries_spent = 0
 
-/// Deletes all the tile contents
+/// Tries to clean up everything in the domain
 /obj/machinery/quantum_server/proc/scrub_vdom()
 	sever_connections()
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
@@ -152,7 +153,7 @@
 		var/datum/turf_reservation/res = generated_domain.reservations[1]
 		res.Release()
 
-	var/list/datum/weakref/creatures = spawned_threat_refs + mutation_candidate_refs
+	var/list/creatures = spawned_threat_refs + mutation_candidate_refs
 	for(var/datum/weakref/creature_ref as anything in creatures)
 		var/mob/living/creature = creature_ref?.resolve()
 		if(isnull(creature))
