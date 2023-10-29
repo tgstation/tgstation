@@ -1266,14 +1266,8 @@
 /mob/proc/update_sight()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
-	sync_lighting_plane_cutoff()
-
-///Set the lighting plane hud filters to the mobs lighting_cutoff var
-/mob/proc/sync_lighting_plane_cutoff()
-	if(!hud_used)
-		return
-	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
-		light.set_light_cutoff(lighting_cutoff, lighting_color_cutoffs)
+	if(hud_used)
+		SEND_SIGNAL(hud_used, COMSIG_HUD_UPDATE_SIGHT)
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()

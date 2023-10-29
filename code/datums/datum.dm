@@ -312,7 +312,7 @@
 /datum/proc/add_filter(name, priority, list/params)
 	LAZYINITLIST(filter_data)
 	var/list/copied_parameters = params.Copy()
-	copied_parameters["priority"] = priority
+	copied_parameters[FILTER_PRIORITY] = priority
 	filter_data[name] = copied_parameters
 	update_filters()
 
@@ -325,7 +325,7 @@
 	for(var/filter_raw in filter_data)
 		var/list/data = filter_data[filter_raw]
 		var/list/arguments = data.Copy()
-		arguments -= "priority"
+		arguments -= FILTER_PRIORITY
 		atom_cast.filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
 
@@ -345,6 +345,7 @@
 	if(!filter)
 		return
 	if(overwrite)
+		new_params[FILTER_PRIORITY] = filter_data[name][FILTER_PRIORITY]
 		filter_data[name] = new_params
 	else
 		for(var/thing in new_params)
@@ -375,7 +376,7 @@
 	if(!filter_data || !filter_data[name])
 		return
 
-	filter_data[name]["priority"] = new_priority
+	filter_data[name][FILTER_PRIORITY] = new_priority
 	update_filters()
 
 /// Returns the filter associated with the passed key

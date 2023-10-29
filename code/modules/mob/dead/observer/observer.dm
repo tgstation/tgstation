@@ -626,9 +626,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 
-
 	updateghostimages()
-	..()
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+	return ..()
 
 /proc/updateallghostimages()
 	list_clear_nulls(GLOB.ghost_images_default)

@@ -45,7 +45,7 @@
 		owner.lighting_cutoff_green -= 15
 		owner.lighting_cutoff_blue -= 5
 
-	owner.sync_lighting_plane_cutoff()
+	owner.update_sight()
 
 	to_chat(owner, span_notice("You toggle your meson vision [(owner.sight & SEE_TURFS) ? "on" : "off"]."))
 

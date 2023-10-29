@@ -82,8 +82,36 @@
 	if(check_holidays(HALLOWEEN))
 		// Makes things a tad greyscale (leaning purple) and drops low colors for vibes
 		// We're basically using alpha as better constant here btw
-		add_filter("spook_color_boost", 2, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0.04,0.07,0.06,1, 0,0,0,0)))
-		add_filter("spook_color_dim", 3, color_matrix_filter(list(0.67,0.13,0.13,0, 0.13,0.58,0.13,0, 0.13,0.13,0.67,0, -0.08,-0.11,-0.1,1, 0,0,0,0)))
+		add_filter("spook_color_boost", 2, color_matrix_filter(list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0.07,0.04,0.06,1, 0,0,0,0)))
+		add_filter("spook_color_dim", 3, color_matrix_filter(list(0.67,0.13,0.13,0, 0.13,0.58,0.13,0, 0.13,0.13,0.67,0, -0.12,-0.08,-0.1,1, 0,0,0,0)))
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+	if(!check_holidays(HALLOWEEN))
+		return
+	var/datum/hud/hud = home.our_hud
+	if(hud)
+		RegisterSignal(hud, COMSIG_HUD_UPDATE_SIGHT, PROC_REF(spooky_sight_updated), override = TRUE)
+	account_for_cutoffs(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/spooky_sight_updated(datum/source)
+	SIGNAL_HANDLER
+	var/mob/our_mob = home.our_hud.mymob
+	account_for_cutoffs(our_mob.lighting_cutoff, our_mob.lighting_color_cutoffs)
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/account_for_cutoffs(cutoff, list/color_cutoff)
+	// Spooky lighting cuts down lights somewhat, if we're using cutoffs we should not, since it'll fuck up their effect
+	if(cutoff > 0 || (color_cutoff && (color_cutoff[1] > 0 || color_cutoff[2] > 0 || color_cutoff[3] > 0)))
+		var/red_offset = min(0, 0.07 - 0.12 + (cutoff + color_cutoff[1]) / 100)
+		var/green_offset = min(0, 0.04 - 0.08 + (cutoff + color_cutoff[1]) / 100)
+		var/blue_offset = min(0, 0.06 - 0.1 + (cutoff + color_cutoff[1]) / 100)
+		// Gonna mess with the multiples here to make the effect better. it's not like, perfect, tends to tint the screen more then I'd like, but it's close enough to the non
+		// Cut colors that I can live with it
+		modify_filter("spook_color_dim", color_matrix_filter(list(0.6,0.13,0.13,0, 0.13,0.42,0.13,0, 0.13,0.13,0.6,0, -0.07+red_offset,-0.04+green_offset,-0.06+blue_offset,1, 0,0,0,0)), overwrite = TRUE)
+	else
+		modify_filter("spook_color_dim", color_matrix_filter(list(0.67,0.13,0.13,0, 0.13,0.58,0.13,0, 0.13,0.13,0.67,0, -0.11,-0.1,-0.1,1, 0,0,0,0)), overwrite = TRUE)
 
 // Blackness renders weird when you view down openspace, because of transforms and borders and such
 // This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up
@@ -173,6 +201,7 @@
 	// show_to can be called twice successfully with no hide_from call. Ensure no runtimes off the registers from this
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change), override = TRUE)
+		RegisterSignal(hud, COMSIG_HUD_UPDATE_SIGHT, PROC_REF(sight_updated), override = TRUE)
 	offset_change(hud?.current_plane_offset || 0)
 	set_light_cutoff(mymob.lighting_cutoff, mymob.lighting_color_cutoffs)
 
@@ -194,6 +223,12 @@
 		disable_alpha()
 	else
 		enable_alpha()
+
+/atom/movable/screen/plane_master/rendering_plate/lighting/proc/sight_updated(datum/source)
+	SIGNAL_HANDLER
+	// We just updated our color cutoffs, let's apply those
+	var/mob/our_mob = home.our_hud.mymob
+	set_light_cutoff(our_mob.lighting_cutoff, our_mob.lighting_color_cutoffs)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/set_light_cutoff(light_cutoff, list/color_cutoffs)
 	var/list/new_cutoffs = list(light_cutoff)

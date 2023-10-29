@@ -99,7 +99,7 @@
 			lighting_cutoff_green = 0
 			lighting_cutoff_blue = 0
 			msg = "You deactivate your night vision."
-	sync_lighting_plane_cutoff()
+	update_sight()
 	to_chat(src, span_notice(msg))
 
 

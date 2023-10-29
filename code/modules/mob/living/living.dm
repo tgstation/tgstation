@@ -1845,7 +1845,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(NAMEOF(src, maxHealth))
 			updatehealth()
 		if(NAMEOF(src, lighting_cutoff))
-			sync_lighting_plane_cutoff()
+			update_sight()
 
 
 /mob/living/vv_get_header()

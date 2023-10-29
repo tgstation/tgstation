@@ -71,7 +71,7 @@
 	return a.priority - b.priority
 
 /proc/cmp_filter_data_priority(list/A, list/B)
-	return A["priority"] - B["priority"]
+	return A[FILTER_PRIORITY] - B[FILTER_PRIORITY]
 
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
 	return a.timeToRun - b.timeToRun
