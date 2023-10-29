@@ -79,11 +79,6 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 
 	src.trader_data = trader_data
 
-	var/mob/living/trader = parent
-	trader.ai_controller.set_blackboard_key(BB_SHOP_SPOT_TYPE, src.trader_data.shop_spot_type)
-	trader.ai_controller.set_blackboard_key(BB_SHOP_SIGN_TYPE, src.trader_data.sign_type)
-	trader.ai_controller.set_blackboard_key(BB_SHOP_SOUND, src.trader_data.sell_sound)
-
 	radial_icons_cache = list(
 		TRADER_RADIAL_BUY = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy"),
 		TRADER_RADIAL_SELL = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell"),

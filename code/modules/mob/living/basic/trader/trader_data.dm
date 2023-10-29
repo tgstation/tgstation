@@ -65,6 +65,9 @@
 		TRADER_BATTLE_END_PHRASE = list(
 			"That is a discount I call death.",
 		),
+		TRADER_SHOP_OPENING_PHRASE = list(
+			"Welcome to my shop, friend!",
+		),
 	)
 
 /**
@@ -146,5 +149,8 @@
 		),
 		TRADER_BATTLE_END_PHRASE = list(
 			"Mr. Bones never misses!",
+		),
+		TRADER_SHOP_OPENING_PHRASE = list(
+			"My wild ride is open!",
 		),
 	)

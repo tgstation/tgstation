@@ -4577,6 +4577,7 @@
 #include "code\modules\mob\living\basic\space_fauna\wumborian_fugu\wumborian_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\wumborian_fugu\wumborian_fugu.dm"
 #include "code\modules\mob\living\basic\trader\trader.dm"
+#include "code\modules\mob\living\basic\trader\trader_actions.dm"
 #include "code\modules\mob\living\basic\trader\trader_ai.dm"
 #include "code\modules\mob\living\basic\trader\trader_data.dm"
 #include "code\modules\mob\living\basic\trader\trader_items.dm"
