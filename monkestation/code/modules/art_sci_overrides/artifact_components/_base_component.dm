@@ -183,10 +183,10 @@
 		if(!(listed_activator.required_stimuli & stimuli))
 			continue
 		if(istype(listed_activator, /datum/artifact_activator/range))
-			var/datum/artifact_activator/range/ranged_activator
+			var/datum/artifact_activator/range/ranged_activator = listed_activator
 			//if we fail the range check check if we are in hint range to send out the hint
-			if(!ISINRANGE(stimuli_value, ranged_activator.amount, ranged_activator.range))
-				if(hint_text && !ISINRANGE(stimuli_value, ranged_activator.amount, ranged_activator.range + ranged_activator.hint_range))
+			if(!ISINRANGE(stimuli_value, ranged_activator.amount, ranged_activator.upper_range))
+				if(hint_text && !ISINRANGE(stimuli_value, ranged_activator.amount - ranged_activator.hint_range, ranged_activator.upper_range + ranged_activator.hint_range))
 					continue
 				if(!prob(ranged_activator.hint_prob))
 					continue

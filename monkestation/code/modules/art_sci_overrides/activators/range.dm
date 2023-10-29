@@ -1,10 +1,10 @@
 /datum/artifact_activator/range
 	name = "Generic Range Trigger"
-	//the range we use math will be explained later
-	var/range = 0
-	///low end range for hints
+	//the upper range of the weapon basically between amount, and upper_range
+	var/upper_range = 0
+	///Hint range goes like amount - hint_range to upper_range + hint_range
 	var/hint_range = 0
-	///if we are in the hint range the odds of pulling a hint out
+	///if we are in the hint range the odds of pulling a hint out.
 	var/hint_prob = 15
 
 /datum/artifact_activator/range/setup(potency)
