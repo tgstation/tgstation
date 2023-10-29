@@ -21,20 +21,20 @@ export const LabeledList = (props: LabeledListProps) => {
 
 LabeledList.defaultHooks = pureComponentHooks;
 
-type LabeledListItemProps = {
-  className?: string | BooleanLike;
-  label?: string | InfernoNode | BooleanLike;
-  labelColor?: string | BooleanLike;
-  labelWrap?: boolean;
-  color?: string | BooleanLike;
-  textAlign?: string | BooleanLike;
-  buttons?: InfernoNode;
+type LabeledListItemProps = Partial<{
+  className: string | BooleanLike;
+  label: string | InfernoNode | BooleanLike;
+  labelColor: string | BooleanLike;
+  labelWrap: boolean;
+  color: string | BooleanLike;
+  textAlign: string | BooleanLike;
+  buttons: InfernoNode;
   /** @deprecated */
-  content?: any;
-  children?: InfernoNode;
-  verticalAlign?: string;
-  tooltip?: string;
-};
+  content: any;
+  children: InfernoNode;
+  verticalAlign: string;
+  tooltip: string;
+}>;
 
 const LabeledListItem = (props: LabeledListItemProps) => {
   const {
@@ -51,11 +51,16 @@ const LabeledListItem = (props: LabeledListItemProps) => {
     tooltip,
   } = props;
 
-  let innerLabel = label
-    ? typeof label === 'string'
-      ? label + ':'
-      : label
-    : null;
+  let innerLabel;
+  if (label) {
+    if (typeof label === 'string') {
+      innerLabel = label + ':';
+    } else {
+      innerLabel = label;
+    }
+  } else {
+    innerLabel = null;
+  }
 
   if (tooltip !== undefined) {
     innerLabel = (
