@@ -9,7 +9,7 @@
 
 /datum/artifact_activator/range/setup(potency)
 	. = ..()
-	range = amount + (hint_range * 2)
+	upper_range = amount + (hint_range * 2)
 
 /datum/artifact_activator/range/force
 	name = "Physical Trauma"
