@@ -99,6 +99,47 @@
 	fire = 100
 	acid = 100
 
+/obj/vehicle/sealed/mecha/ripley/paddy
+	desc = "Autonomous Power Loader Unit Subtype Paddy. A Modified MK-I Ripley design intended for light security use."
+	name = "\improper APLU \"Paddy\""
+	icon_state = "paddy"
+	base_icon_state = "paddy"
+	max_temperature = 20000
+	max_integrity = 250
+	mech_type = EXOSUIT_MODULE_PADDY
+	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	armor_type = /datum/armor/mecha_paddy
+	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
+	silicon_icon_state = "paddy-empty"
+	cargo_capacity = 4
+
+/datum/armor/mecha_paddy
+	melee = 40
+	bullet = 20
+	laser = 10
+	energy = 20
+	bomb = 40
+	fire = 100
+	acid = 100
+
+/obj/vehicle/sealed/mecha/ripley/paddy/Exit(atom/movable/leaving, direction)
+	if(!(leaving in cargo))
+		for(var/contained in cargo)
+			forceMove(contained, loc)
+	return ..()
+
+/obj/vehicle/sealed/mecha/ripley/paddy/preset
+	accesses = list(ACCESS_SECURITY)
+	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | ID_LOCK_ON
+	equip_by_category = list(
+		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
+		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw,
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
+	)
+
 /obj/vehicle/sealed/mecha/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
@@ -220,10 +261,10 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		"cargo_capacity" = miner.cargo_capacity,
 		"cargo" = list()
 		)
-	for(var/obj/crate in miner.cargo)
+	for(var/atom/entry in miner.cargo)
 		data["cargo"] += list(list(
-			"name" = crate.name,
-			"ref" = REF(crate),
+			"name" = entry.name,
+			"ref" = REF(entry),
 		))
 	return data
 

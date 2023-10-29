@@ -331,9 +331,10 @@
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
 	name = "Ripley MK-II Conversion Kit"
-	desc = "A pressurized canopy attachment kit for an Autonomous Power Loader Unit \"Ripley\" MK-I mecha, to convert it to the slower, but space-worthy MK-II design. This kit cannot be removed, once applied."
+	desc = "A pressurized canopy attachment kit for an Autonomous Power Loader Unit \"Ripley\" MK-I exosuit, to convert it to the slower, but space-worthy MK-II design. This kit cannot be removed, once applied."
 	icon_state = "ripleyupgrade"
 	mech_flags = EXOSUIT_MODULE_RIPLEY
+	var/result = /obj/vehicle/sealed/mecha/ripley/mk2
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
 	if(mecha.type != /obj/vehicle/sealed/mecha/ripley)
@@ -354,43 +355,56 @@
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone, attach_right = FALSE)
-	var/obj/vehicle/sealed/mecha/ripley/mk2/marktwo = new (get_turf(markone),1)
-	if(!marktwo)
+	var/obj/vehicle/sealed/mecha/newmech = new result(get_turf(markone),1)
+	if(!newmech)
 		return
-	QDEL_NULL(marktwo.cell)
+	QDEL_NULL(newmech.cell)
 	if (markone.cell)
-		marktwo.cell = markone.cell
-		markone.cell.forceMove(marktwo)
+		newmech.cell = markone.cell
+		markone.cell.forceMove(newmech)
 		markone.cell = null
-	QDEL_NULL(marktwo.scanmod)
+	QDEL_NULL(newmech.scanmod)
 	if (markone.scanmod)
-		marktwo.scanmod = markone.scanmod
-		markone.scanmod.forceMove(marktwo)
+		newmech.scanmod = markone.scanmod
+		markone.scanmod.forceMove(newmech)
 		markone.scanmod = null
-	QDEL_NULL(marktwo.capacitor)
+	QDEL_NULL(newmech.capacitor)
 	if (markone.capacitor)
-		marktwo.capacitor = markone.capacitor
-		markone.capacitor.forceMove(marktwo)
+		newmech.capacitor = markone.capacitor
+		markone.capacitor.forceMove(newmech)
 		markone.capacitor = null
-	QDEL_NULL(marktwo.servo)
+	QDEL_NULL(newmech.servo)
 	if (markone.servo)
-		marktwo.servo = markone.servo
-		markone.servo.forceMove(marktwo)
+		newmech.servo = markone.servo
+		markone.servo.forceMove(newmech)
 		markone.servo = null
-	marktwo.update_part_values()
+	newmech.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
 		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))
-			continue //the MK2 already has one.
+			continue //the new mech already has one.
 		var/righthandgun = markone.equip_by_category[MECHA_R_ARM] == equipment
-		equipment.detach(marktwo)
-		equipment.attach(marktwo, righthandgun)
-	marktwo.dna_lock = markone.dna_lock
-	marktwo.mecha_flags = markone.mecha_flags
-	marktwo.strafe = markone.strafe
+		equipment.detach(newmech)
+		equipment.attach(newmech, righthandgun)
+	newmech.dna_lock = markone.dna_lock
+	newmech.mecha_flags = markone.mecha_flags
+	newmech.strafe = markone.strafe
 	//Integ set to the same percentage integ as the old mecha, rounded to be whole number
-	marktwo.update_integrity(round((markone.get_integrity() / markone.max_integrity) * marktwo.get_integrity()))
+	newmech.update_integrity(round((markone.get_integrity() / markone.max_integrity) * newmech.get_integrity()))
 	if(markone.name != initial(markone.name))
-		marktwo.name = markone.name
+		newmech.name = markone.name
 	markone.wreckage = FALSE
 	qdel(markone)
-	playsound(get_turf(marktwo),'sound/items/ratchet.ogg',50,TRUE)
+	playsound(get_turf(newmech),'sound/items/ratchet.ogg',50,TRUE)
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
+	name = "Paddy Conversion Kit"
+	desc = "A hardpoint modification kit for an Autonomous Power Loader Unit \"Ripley\" MK-I exosuit, to convert it to the Paddy lightweight security design. This kit cannot be removed, once applied."
+	icon_state = "paddyupgrade"
+	mech_flags = EXOSUIT_MODULE_RIPLEY
+	result = /obj/vehicle/sealed/mecha/ripley/paddy
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
+	if(mecha.equip_by_category[MECHA_L_ARM] || mecha.equip_by_category[MECHA_R_ARM]) //Paddys can't use RIPLEY-type equipment
+		to_chat(user, span_warning("This kit cannot be applied with hardpoint equipment attached."))
+		return FALSE
+	return ..()

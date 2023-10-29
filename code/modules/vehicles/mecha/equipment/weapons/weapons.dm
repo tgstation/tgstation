@@ -540,3 +540,60 @@
 	equip_cooldown = 60
 	det_time = 20
 	mech_flags = EXOSUIT_MODULE_HONK
+
+///long claw of the law
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw
+	name = "hydraulic claw"
+	desc = "A modified hydraulic clamp, for use exclusively with the Paddy exosuit. Non-lethally apprehends suspects."
+	icon_state = "paddy_claw"
+	equip_cooldown = 15
+	energy_drain = 10
+	tool_behaviour = TOOL_RETRACTOR
+	range = MECHA_MELEE
+	toolspeed = 0.8
+	mech_flags = EXOSUIT_MODULE_PADDY
+	///Var for the chassis we are attached to, needed to access ripley contents and such
+	var/obj/vehicle/sealed/mecha/ripley/paddy/cargo_holder
+	///Audio for using the hydraulic clamp
+	var/clampsound = 'sound/mecha/hydraulic.ogg'
+	var/cuff_type = /obj/item/restraints/handcuffs/cable/zipties/used
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/attach(obj/vehicle/sealed/mecha/new_mecha)
+	. = ..()
+	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley/paddy))
+		cargo_holder = chassis
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/living/source, atom/target, list/modifiers)
+	if(ismob(target))
+		var/mob/living/mobtarget = target
+		if(LAZYLEN(cargo_holder.cargo) >= cargo_holder.cargo_capacity)
+			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
+			return
+
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		chassis.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."))
+		if(!do_after_cooldown(mobtarget, source))
+			return
+		LAZYADD(cargo_holder.cargo, mobtarget)
+		mobtarget.forceMove(chassis)
+		log_message("Loaded [mobtarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
+		to_chat(source, "[icon2html(src, source)][span_notice("[mobtarget] successfully loaded.")]")
+		if(iscarbon(target))
+			var/mob/living/carbon/carbontarget = target
+			carbontarget.set_handcuffed(new cuff_type(carbontarget))
+			carbontarget.update_handcuffed()
+		return
+
+	if(istype(target, /obj/machinery/door/firedoor))
+		var/obj/machinery/door/firedoor/targetfiredoor = target
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		targetfiredoor.try_to_crowbar(src, source)
+		return
+	if(istype(target, /obj/machinery/door/airlock/))
+		var/obj/machinery/door/airlock/targetairlock = target
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		targetairlock.try_to_crowbar(src, source, TRUE)
+		return
+
+
+

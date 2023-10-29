@@ -1600,9 +1600,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	volume_rate = 200;
 	dir = 8;
-	initialize_directions = 8
+	initialize_directions = 8;
+	volume_rate = 200
 	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
@@ -34766,8 +34766,8 @@
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/south,
 /obj/item/storage/box/bandages{
-	pixel_y = 6;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
@@ -43415,8 +43415,8 @@
 "lqD" = (
 /obj/structure/table,
 /obj/item/storage/box/bandages{
-	pixel_y = 6;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/storage/box/donkpockets{
 	pixel_x = 6
@@ -59236,9 +59236,9 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/commons/storage/primary)
 "pvO" = (
-/obj/item/kirbyplants/organic/plant10,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/vehicle/sealed/mecha/ripley/paddy/preset,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "pvZ" = (
@@ -76780,6 +76780,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "ufL" = (
@@ -79144,9 +79145,9 @@
 /area/station/maintenance/floor2/port/aft)
 "uLB" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	volume_rate = 200;
 	dir = 8;
-	initialize_directions = 8
+	initialize_directions = 8;
+	volume_rate = 200
 	},
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2{
 	dir = 8
