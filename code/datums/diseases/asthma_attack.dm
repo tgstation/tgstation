@@ -93,10 +93,10 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 
 /datum/disease/asthma_attack/minor
 	severity = DISEASE_SEVERITY_MEDIUM
-	stage_prob = 1
+	stage_prob = 4
 
-	max_time_til_remission = 60 SECONDS
-	min_time_til_remission = 50 SECONDS
+	max_time_til_remission = 80 SECONDS
+	min_time_til_remission = 120 SECONDS
 	max_stages = 3
 
 	cure_chance = 25
@@ -116,10 +116,10 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 
 /datum/disease/asthma_attack/moderate
 	severity = DISEASE_SEVERITY_HARMFUL
-	stage_prob = 2
+	stage_prob = 5
 
 	max_time_til_remission = 80 SECONDS
-	min_time_til_remission = 70 SECONDS
+	min_time_til_remission = 120 SECONDS
 	max_stages = 4
 
 	cure_chance = 25
@@ -146,9 +146,9 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 
 /datum/disease/asthma_attack/severe
 	severity = DISEASE_SEVERITY_DANGEROUS
-	stage_prob = 5
+	stage_prob = 6
 
-	max_time_til_remission = 90 SECONDS
+	max_time_til_remission = 120 SECONDS
 	min_time_til_remission = 80 SECONDS
 	max_stages = 5
 
@@ -185,8 +185,8 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	stage_prob = 85
 
-	max_time_til_remission = 40 SECONDS // this kills you extremely quickly, so its fair
-	min_time_til_remission = 30 SECONDS
+	max_time_til_remission = 60 SECONDS // this kills you extremely quickly, so its fair
+	min_time_til_remission = 40 SECONDS
 	max_stages = 6
 
 	cure_chance = 30

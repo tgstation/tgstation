@@ -10,7 +10,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/inhaler_canister/albuterol)
 
-	var/hit_max_mult_at_inflammation_percent = 0.8
+	var/hit_max_mult_at_inflammation_percent = 0.9
 
 	var/inflammation = 0
 	var/max_inflammation = 500
@@ -34,12 +34,12 @@
 	var/datum/disease/asthma_attack/current_attack
 	var/time_next_attack_allowed
 
-	var/time_first_attack_can_happen = 0
+	var/time_first_attack_can_happen = 10 MINUTES
 
 	var/min_time_between_attacks = 20 MINUTES
 	var/max_time_between_attacks = 30 MINUTES
 
-	var/chance_for_attack_to_happen_per_second = 100
+	var/chance_for_attack_to_happen_per_second = 0.05
 
 /datum/quirk/item_quirk/asthma/add_unique(client/client_source)
 	. = ..()
@@ -97,11 +97,7 @@
 		if (inhaled_albuterol > 0)
 			adjust_inflammation(-(albuterol_inflammtion_reduction * seconds_per_tick))
 
-	else if (carbon_quirk_holder.client &&
-			isnull(current_attack) &&
-			world.time > time_next_attack_allowed &&
-			SPT_PROB(chance_for_attack_to_happen_per_second, seconds_per_tick))
-
+	else if (carbon_quirk_holder.client && isnull(current_attack) && world.time > time_next_attack_allowed && SPT_PROB(chance_for_attack_to_happen_per_second, seconds_per_tick))
 		do_asthma_attack()
 
 /datum/quirk/item_quirk/asthma/proc/do_asthma_attack()

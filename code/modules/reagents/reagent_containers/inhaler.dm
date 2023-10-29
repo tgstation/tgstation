@@ -72,7 +72,7 @@
 		to_chat(user, pre_use_self_message)
 		if (pre_use_target_message)
 			to_chat(target_mob, pre_use_target_message)
-		if (!do_after(user, puff_timer))
+		if (!do_after(user, puff_timer, src))
 			return FALSE
 		if (!can_puff(target_mob, user)) // sanity
 			return FALSE
@@ -102,7 +102,7 @@
 
 	if (canister.removal_time > 0)
 		balloon_alert(user, "removing canister...")
-		if (!do_after(user, canister.removal_time))
+		if (!do_after(user, canister.removal_time, src))
 			return FALSE
 
 	balloon_alert(user, "canister removed")
@@ -116,7 +116,7 @@
 
 	balloon_alert(user, "inserting canister...")
 	playsound(src, new_canister.pre_insert_sound, new_canister.pre_insert_volume)
-	if (!do_after(user, new_canister.insertion_time))
+	if (!do_after(user, new_canister.insertion_time, src))
 		return FALSE
 	playsound(src, new_canister.post_insert_sound, new_canister.post_insert_volume)
 	balloon_alert(user, "canister inserted")
@@ -160,10 +160,15 @@
 		if (!silent)
 			balloon_alert(user, "not a carbon!")
 		return FALSE
-	if (user.is_mouth_covered())
+	if (target_mob.is_mouth_covered())
 		if (!silent)
 			balloon_alert(user, "expose the mouth!")
 		return FALSE
+	if (!target_mob.can_breathe_reagents())
+		if (!silent)
+			balloon_alert(user, "not breathing!")
+		return FALSE
+
 	return TRUE
 
 /obj/item/inhaler/proc/canister_deleting(datum/signal_source)

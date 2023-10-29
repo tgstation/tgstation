@@ -578,9 +578,9 @@
 			victim.adjust_eye_blur(6 SECONDS)
 	if(methods & (INHALE))
 		to_chat(exposed_mob, span_warning("Your lungs sting!"))
-		if (prob(15))
+		if (prob(45))
 			victim.emote("cough")
-		if (prob(5))
+		if (prob(35))
 			victim.losebreath += 1
 
 /datum/reagent/consumable/sprinkles

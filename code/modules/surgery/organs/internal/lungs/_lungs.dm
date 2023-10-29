@@ -1001,11 +1001,11 @@
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 
 /obj/item/organ/internal/lungs/proc/adjust_received_pressure_mult(adjustment)
-	received_pressure_mult += adjustment
+	received_pressure_mult = max(received_pressure_mult + adjustment, 0)
 	update_bronchodilation_alerts()
 
 /obj/item/organ/internal/lungs/proc/set_received_pressure_mult(new_value)
-	received_pressure_mult = new_value
+	received_pressure_mult = max(new_value, 0)
 	update_bronchodilation_alerts()
 
 /obj/item/organ/internal/lungs/proc/update_bronchodilation_alerts()
