@@ -31,13 +31,13 @@
 	var/sound_on = 'sound/weapons/magin.ogg'
 	/// The sound the light makes when it's turned off
 	var/sound_off = 'sound/weapons/magout.ogg'
-	/// Is the light turned on or off currently
-	var/on = FALSE
+	/// Should the flashlight start turned on?
+	var/start_on = FALSE
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
-	if(icon_state == "[initial(icon_state)]-on")
-		on = TRUE
+	if(start_on)
+		set_light_on(TRUE)
 	update_brightness()
 	register_context()
 	if(toggle_context)
@@ -52,18 +52,19 @@
 
 /obj/item/flashlight/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	// single use lights can be toggled on once
-	if(isnull(held_item) && (toggle_context || !on))
+	if(isnull(held_item) && (toggle_context || !light_on))
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle light"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/flashlight) && (toggle_context || !on))
+	if(istype(held_item, /obj/item/flashlight) && (toggle_context || !light_on))
 		context[SCREENTIP_CONTEXT_LMB] = "Toggle light"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
-/obj/item/flashlight/proc/update_brightness()
-	if(on)
+/obj/item/flashlight/update_icon_state()
+	. = ..()
+	if(light_on)
 		icon_state = "[initial(icon_state)]-on"
 		if(!isnull(inhand_icon_state))
 			inhand_icon_state = "[initial(inhand_icon_state)]-on"
@@ -71,22 +72,26 @@
 		icon_state = initial(icon_state)
 		if(!isnull(inhand_icon_state))
 			inhand_icon_state = initial(inhand_icon_state)
-	set_light_on(on)
+
+/obj/item/flashlight/proc/update_brightness()
+	update_appearance(UPDATE_ICON)
 	if(light_system == STATIC_LIGHT)
 		update_light()
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
-	var/disrupted = FALSE
-	on = !on
-	playsound(src, on ? sound_on : sound_off, 40, TRUE)
+	playsound(src, light_on ? sound_off : sound_on, 40, TRUE)
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		if(user)
 			balloon_alert(user, "disrupted!")
-			on = FALSE
-			disrupted = TRUE
+		set_light_on(FALSE)
+		update_brightness()
+		update_item_action_buttons()
+		return FALSE
+	var/old_light_on = light_on
+	set_light_on(!light_on)
 	update_brightness()
 	update_item_action_buttons()
-	return !disrupted
+	return light_on != old_light_on // If the value of light_on didn't change, return false. Otherwise true.
 
 /obj/item/flashlight/attack_self(mob/user)
 	toggle_light(user)
@@ -104,7 +109,7 @@
 
 /obj/item/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(istype(M) && on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)))
+	if(istype(M) && light_on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)))
 
 		if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50)) //too dumb to use flashlight properly
 			return ..() //just hit them in the head
@@ -274,7 +279,7 @@
 /// when hit by a light disruptor - turns the light off, forces the light to be disabled for a few seconds
 /obj/item/flashlight/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
-	if(on)
+	if(light_on)
 		toggle_light()
 	COOLDOWN_START(src, disabled_time, disrupt_duration)
 	return COMSIG_SABOTEUR_SUCCESS
@@ -355,7 +360,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	custom_materials = null
-	on = TRUE
+	start_on = TRUE
 
 // green-shaded desk lamp
 /obj/item/flashlight/lamp/green
@@ -403,7 +408,7 @@
 	. = ..()
 	if(randomize_fuel)
 		fuel = rand(25 MINUTES, 35 MINUTES)
-	if(on)
+	if(light_on)
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		hitsound = 'sound/items/welder.ogg'
@@ -419,15 +424,16 @@
 	if(!isliving(victim))
 		return ..()
 
-	if(on && victim.ignite_mob())
+	if(light_on && victim.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(victim)] on fire with [src] at [AREACOORD(user)]")
 		user.log_message("set [key_name(victim)] on fire with [src]", LOG_ATTACK)
 
 	return ..()
 
 /obj/item/flashlight/flare/toggle_light()
-	if(on || !fuel)
+	if(light_on || !fuel)
 		return FALSE
+	. = ..()
 
 	name = "lit [initial(name)]"
 	attack_verb_continuous = string_list(list("burns", "singes"))
@@ -435,10 +441,10 @@
 	hitsound = 'sound/items/welder.ogg'
 	force = on_damage
 	damtype = BURN
-	. = ..()
+
 
 /obj/item/flashlight/flare/proc/turn_off()
-	on = FALSE
+	set_light_on(FALSE)
 	name = initial(name)
 	attack_verb_continuous = initial(attack_verb_continuous)
 	attack_verb_simple = initial(attack_verb_simple)
@@ -454,14 +460,14 @@
 
 /obj/item/flashlight/flare/update_brightness()
 	..()
-	inhand_icon_state = "[initial(inhand_icon_state)]" + (on ? "-on" : "")
+	inhand_icon_state = "[initial(inhand_icon_state)]" + (light_on ? "-on" : "")
 	update_appearance()
 
 /obj/item/flashlight/flare/process(seconds_per_tick)
 	open_flame(heat)
 	fuel = max(fuel - seconds_per_tick * (1 SECONDS), 0)
 
-	if(!fuel || !on)
+	if(!fuel || !light_on)
 		turn_off()
 		STOP_PROCESSING(SSobj, src)
 
@@ -474,7 +480,7 @@
 		if(user)
 			balloon_alert(user, "out of fuel!")
 		return NO_FUEL
-	if(on)
+	if(light_on)
 		if(user)
 			balloon_alert(user, "already lit!")
 		return ALREADY_LIT
@@ -495,7 +501,7 @@
 		user.visible_message(span_notice("[user] lights \the [src]."), span_notice("You light \the [initial(src.name)]!"))
 
 /obj/item/flashlight/flare/get_temperature()
-	return on * heat
+	return light_on * heat
 
 /obj/item/flashlight/flare/candle
 	name = "red candle"
@@ -543,8 +549,8 @@
 
 /obj/item/flashlight/flare/candle/update_icon_state()
 	. = ..()
-	icon_state = "candle[current_wax_level][on ? "_lit" : ""]"
-	inhand_icon_state = "candle[on ? "_lit" : ""]"
+	icon_state = "candle[current_wax_level][light_on ? "_lit" : ""]"
+	inhand_icon_state = "candle[light_on ? "_lit" : ""]"
 
 /**
  * Try to ignite the candle.
@@ -603,7 +609,7 @@
 	return ..()
 
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
-	if(on && (fuel != INFINITY || !can_be_extinguished)) // can't extinguish eternal candles
+	if(light_on && (fuel != INFINITY || !can_be_extinguished)) // can't extinguish eternal candles
 		turn_off()
 		user.visible_message(span_notice("[user] snuffs [src]."))
 
@@ -614,9 +620,9 @@
 /obj/item/flashlight/flare/candle/infinite
 	name = "eternal candle"
 	fuel = INFINITY
-	on = TRUE
 	randomize_fuel = FALSE
 	can_be_extinguished = FALSE
+	start_on = TRUE
 
 /obj/item/flashlight/flare/torch
 	name = "torch"
@@ -697,7 +703,7 @@
 	return TRUE
 
 /obj/item/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))) // call original attack when examining organs
+	if(light_on && (user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))) // call original attack when examining organs
 		..()
 	return
 
@@ -763,7 +769,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/glowstick/proc/turn_off()
-	on = FALSE
+	set_light_on(FALSE)
 	update_appearance(UPDATE_ICON)
 
 /obj/item/flashlight/glowstick/update_appearance(updates=ALL)
@@ -771,18 +777,18 @@
 	if(fuel <= 0)
 		set_light_on(FALSE)
 		return
-	if(on)
+	if(light_on)
 		set_light_on(TRUE)
 		return
 
 /obj/item/flashlight/glowstick/update_icon_state()
+	. = ..()
 	icon_state = "[base_icon_state][(fuel <= 0) ? "-empty" : ""]"
-	inhand_icon_state = "[base_icon_state][((fuel > 0) && on) ? "-on" : ""]"
-	return ..()
+	inhand_icon_state = "[base_icon_state][((fuel > 0) && light_on) ? "-on" : ""]"
 
 /obj/item/flashlight/glowstick/update_overlays()
 	. = ..()
-	if(fuel <= 0 && !on)
+	if(fuel <= 0 && !light_on)
 		return
 
 	var/mutable_appearance/glowstick_overlay = mutable_appearance(icon, "glowstick-glow")
@@ -793,7 +799,7 @@
 	if(fuel <= 0)
 		balloon_alert(user, "glowstick is spent!")
 		return
-	if(on)
+	if(light_on)
 		balloon_alert(user, "already lit!")
 		return
 
@@ -847,13 +853,13 @@
 	light_power = 10
 	alpha = 0
 	plane = FLOOR_PLANE
-	on = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///Boolean that switches when a full color flip ends, so the light can appear in all colors.
 	var/even_cycle = FALSE
 	///Base light_range that can be set on Initialize to use in smooth light range expansions and contractions.
 	var/base_light_range = 4
+	start_on = TRUE
 
 /obj/item/flashlight/spotlight/Initialize(mapload, _light_range, _light_power, _light_color)
 	. = ..()
@@ -876,6 +882,7 @@
 	var/dark_light_range = 2.5
 	///Variable to preserve old lighting behavior in flashlights, to handle darkness.
 	var/dark_light_power = -3
+	var/on = FALSE
 
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()
