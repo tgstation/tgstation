@@ -53,13 +53,8 @@ const LabeledListItem = (props: LabeledListItemProps) => {
 
   let innerLabel;
   if (label) {
-    if (typeof label === 'string') {
-      innerLabel = label + ':';
-    } else {
-      innerLabel = label;
-    }
-  } else {
-    innerLabel = null;
+    innerLabel = label;
+    if (typeof label === 'string') innerLabel += ':';
   }
 
   if (tooltip !== undefined) {
