@@ -42,7 +42,7 @@
 		teleport(loser)
 
 /obj/effect/knock_portal/Destroy()
-	if(!QDELING(destination))
+	if(!isnull(destination) && !QDELING(destination))
 		QDEL_NULL(destination)
 	
 	destination = null
