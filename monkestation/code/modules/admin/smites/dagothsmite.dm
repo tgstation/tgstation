@@ -10,8 +10,8 @@
 	var/mob/living/carbon/human/Person = target
 	var/turf/Location = get_turf(target)
 	var/turf/T = get_step(get_step(Person, NORTH), NORTH)
-	to_chat(Person,"<span class='ratvar'>What a grand and intoxicating innocence. Perish.</span>")
-	T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 15)
+	to_chat(Person,span_ratvar("What a grand and intoxicating innocence. Perish."))
+	T.Beam(Person, icon_state="lightning[rand(1,12)]", time = 1.5 SECONDS)
 	Person.unequip_everything()
 	Person.Paralyze(15)
 	playsound(target,'sound/magic/lightningshock.ogg', 50, 1)
