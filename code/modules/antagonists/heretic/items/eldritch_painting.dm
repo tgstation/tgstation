@@ -299,10 +299,11 @@
 	if(IS_HERETIC(user))
 		to_chat(user, "Your imperfections shed and you are restored.")
 		user.reagents.add_reagent(reagents_to_add, 5)
-	if (user.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
+	if(!user.has_dna())
+		return
+	if(user.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
 		to_chat(user, "You feel changed, more perfect....")
-		if(!user.has_dna())
-		user.easy_random_mutate((NEGATIVE | MINOR_NEGATIVE) TRUE, TRUE, TRUE)
+		user.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 
 
 // Specific proximity monitor for Lady out of gates or /obj/item/wallframe/painting/eldritch/beauty
