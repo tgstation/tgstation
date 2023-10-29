@@ -46,7 +46,8 @@
 /datum/emote/help/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/list/keys = list()
-	var/list/message = list("Available emotes, you can use them with say [span_bold("\"*emote\"")]: \n\n")
+	var/list/message = list("Available emotes, you can use them with say [span_bold("\"*emote\"")]: \n")
+	message += span_smallnoticeital("Note - emotes highlighted in blue play a sound \n\n")
 
 	for(var/key in GLOB.emote_list)
 		for(var/datum/emote/emote_action in GLOB.emote_list[key])
