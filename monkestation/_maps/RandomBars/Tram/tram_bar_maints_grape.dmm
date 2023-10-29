@@ -133,9 +133,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "cS" = (
-/obj/effect/spawner/random/structure/crate_loot{
-	desc = dd
-	},
+/obj/effect/spawner/random/structure/crate_loot,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "cT" = (
@@ -452,10 +450,6 @@
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/glass,
 /area/station/service/kitchen)
-"le" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/station/commons/lounge)
 "lg" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -1862,9 +1856,7 @@
 /area/station/commons/lounge)
 "Pq" = (
 /obj/machinery/light/cold/directional/west,
-/obj/effect/spawner/random/structure/crate_loot{
-	desc = dd
-	},
+/obj/effect/spawner/random/structure/crate_loot,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "PJ" = (
@@ -1969,11 +1961,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"Rn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/station/commons/lounge)
 "RJ" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/money_small,
@@ -2072,6 +2059,10 @@
 "TV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/station/commons/lounge)
+"TZ" = (
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "Ud" = (
@@ -2312,6 +2303,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/commons/lounge)
+"XL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/station/commons/lounge)
 "XN" = (
 /obj/machinery/restaurant_portal/restaurant,
 /obj/machinery/camera/directional/north{
@@ -2422,7 +2418,7 @@ Pq
 cS
 hC
 KX
-le
+TZ
 hC
 eF
 ch
@@ -2449,7 +2445,7 @@ Cm
 hC
 hC
 hC
-Rn
+XL
 hC
 hC
 oK
@@ -2476,7 +2472,7 @@ Ys
 hC
 hC
 hC
-Rn
+XL
 hC
 hC
 hC
