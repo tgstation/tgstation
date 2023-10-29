@@ -1112,3 +1112,29 @@
   unit0016:
   - bugfix: Every misaligned railing ending has been corrected by the Nanotrasen Hall
       Monitor's Lunchclub.
+2023-10-29:
+  DrDiasyl:
+  - sound: Dying with a SecHailer on your face will make a unique death sound
+  Ghommie:
+  - rscadd: Added a few fish related bounties.
+  - rscadd: Fish cases to store and preserve life fish within can be now printed from
+      the service techfab and the autolathe.
+  GoldenAlpharex:
+  - code_imp: Added support to the wet_floor component to make it so the wet overlay
+      could not be applied to certain turfs if desired.
+  - bugfix: Ice turfs no longer look tiled, and instead look smooth when placed next
+      to one-another.
+  Melbert:
+  - bugfix: Fixes being unable to open airlocks with telekinesis
+  Paxilmaniac:
+  - code_imp: the deployable component has been tweaked and improved with some new
+      options to it
+  Profakos:
+  - bugfix: Gnomes no longer runtime if they explode while sinking into the ground
+  necromanceranne:
+  - bugfix: Every person on the station now no longer has the Tranquility Evades the
+      Shield Pinky Finger Shovegrab unarmed combat technique, an ancient and forbidden
+      strike that allows anyone (literally anyone) to bypass all forms of blocking
+      defense by simply not being in combat mode when they shove or grab their target.
+      As a direct result, the chakra energy of the Spinward Sector has become severely
+      misaligned. Oh well.
