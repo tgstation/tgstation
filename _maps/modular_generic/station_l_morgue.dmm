@@ -291,7 +291,7 @@
 /turf/open/floor/iron/dark,
 /area/template_noop)
 "K" = (
-/obj/modular_map_root,
+/obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "L" = (

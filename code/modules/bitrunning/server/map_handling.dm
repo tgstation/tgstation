@@ -147,7 +147,7 @@
 /// Tries to clean up everything in the domain
 /obj/machinery/quantum_server/proc/scrub_vdom()
 	sever_connections()
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // cleanup just in case
 
 	if(length(generated_domain.reservations))
 		var/datum/turf_reservation/res = generated_domain.reservations[1]

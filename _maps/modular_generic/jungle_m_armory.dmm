@@ -84,7 +84,7 @@
 /turf/open/floor/wood,
 /area/template_noop)
 "n" = (
-/obj/modular_map_root,
+/obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "p" = (

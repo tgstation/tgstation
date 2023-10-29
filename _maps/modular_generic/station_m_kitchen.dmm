@@ -32,7 +32,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/template_noop)
 "f" = (
-/obj/modular_map_root,
+/obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "g" = (

@@ -59,7 +59,7 @@
 	},
 /area/template_noop)
 "j" = (
-/obj/modular_map_root,
+/obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "k" = (

@@ -397,7 +397,7 @@
 /turf/open/floor/iron/small,
 /area/template_noop)
 "T" = (
-/obj/modular_map_root,
+/obj/modular_map_connector,
 /turf/template_noop,
 /area/template_noop)
 "U" = (
