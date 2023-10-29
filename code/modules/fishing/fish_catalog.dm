@@ -1,17 +1,17 @@
 ///Book detailing where to get the fish and their properties.
-/obj/item/book/fish_catalog
+/obj/item/book/manual/fish_catalog
 	name = "Fish Encyclopedia"
 	desc = "Indexes all fish known to mankind (and related species)."
 	icon_state = "fishbook"
 	starting_content = "Lot of fish stuff" //book wrappers could use cleaning so this is not necessary
 
-/obj/item/book/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/book/manual/fish_catalog/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "FishCatalog", name)
 		ui.open()
 
-/obj/item/book/fish_catalog/ui_static_data(mob/user)
+/obj/item/book/manual/fish_catalog/ui_static_data(mob/user)
 	. = ..()
 	var/static/fish_info
 	if(!fish_info)
@@ -43,7 +43,7 @@
 	.["fish_info"] = fish_info
 	.["sponsored_by"] = AQUARIUM_COMPANY
 
-/obj/item/book/proc/bait_description(bait)
+/obj/item/book/manual/fish_catalog/proc/bait_description(bait)
 	if(ispath(bait))
 		var/obj/bait_item = bait
 		return initial(bait_item.name)
@@ -52,6 +52,9 @@
 		switch(special_identifier["Type"])
 			if("Foodtype")
 				return jointext(bitfield_to_list(special_identifier["Value"], FOOD_FLAGS_IC),",")
+			if("Reagent")
+				var/datum/reagent/prototype = special_identifier["Value"]
+				return "[initial(prototype.name)] (at least [special_identifier["Amount"]]u)"
 			else
 				stack_trace("Unknown bait identifier in fish favourite/disliked list")
 				return "SOMETHING VERY WEIRD"
@@ -59,7 +62,7 @@
 		//Here we handle descriptions of traits fish use as qualifiers
 		return "something special"
 
-/obj/item/book/fish_catalog/proc/build_fishing_tips(fish_type)
+/obj/item/book/manual/fish_catalog/proc/build_fishing_tips(fish_type)
 	var/obj/item/fish/fishy = fish_type
 	. = list()
 	//// Where can it be found - iterate fish sources, how should this handle key
@@ -101,7 +104,7 @@
 			.["difficulty"] = "Hard"
 	return .
 
-/obj/item/book/fish_catalog/ui_assets(mob/user)
+/obj/item/book/manual/fish_catalog/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/fish)
 	)

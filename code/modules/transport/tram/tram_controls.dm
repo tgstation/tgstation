@@ -241,7 +241,7 @@
 				if(INVALID_PLATFORM)
 					say("Configuration error. Please contact the nearest engineer.")
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer.")
+					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
 				else
 					return
 

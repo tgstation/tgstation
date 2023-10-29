@@ -804,6 +804,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /proc/scramble_dna(mob/living/carbon/M, ui=FALSE, se=FALSE, uf=FALSE, probability)
 	if(!M.has_dna())
 		CRASH("[M] does not have DNA")
+	if(HAS_TRAIT(M, TRAIT_NO_DNA_SCRAMBLE))
+		return
 	if(se)
 		for(var/i=1, i <= DNA_MUTATION_BLOCKS, i++)
 			if(prob(probability))

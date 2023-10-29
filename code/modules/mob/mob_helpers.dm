@@ -84,7 +84,6 @@
 			CRASH("limbs is empty and the chest is blacklisted. this may not be intended!")
 	return (((chest_blacklisted && !base_zone) || even_weights) ? pick_weight(limbs) : ran_zone(base_zone, base_probability, limbs))
 
-
 ///Would this zone be above the neck
 /proc/above_neck(zone)
 	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
@@ -258,62 +257,56 @@
  * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
-/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
+/proc/notify_ghosts(
+	message,
+	ghost_sound,
+	enter_link,
+	atom/source,
+	mutable_appearance/alert_overlay,
+	action = NOTIFY_JUMP,
+	flashwindow = TRUE,
+	ignore_mapload = TRUE,
+	ignore_key,
+	header = "",
+	notify_suiciders = TRUE,
+	notify_volume = 100
+)
 
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
+
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
-		var/orbit_link
-		if(source && action == NOTIFY_ORBIT)
-			orbit_link = " <a href='?src=[REF(ghost)];follow=[REF(source)]'>(Orbit)</a>"
-		to_chat(ghost, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
-		if(ghost_sound)
-			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
+
 		if(flashwindow)
 			window_flash(ghost.client)
-		if(!source)
-			continue
-		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
-		if(!alert)
-			continue
-		var/ui_style = ghost.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
-		if(ui_style)
-			alert.icon = ui_style2icon(ui_style)
-		if (header)
-			alert.name = header
-		alert.desc = message
-		alert.action = action
-		alert.target = source
-		if(!alert_overlay)
-			alert_overlay = new(source)
-			alert_overlay.pixel_x = 0
-			alert_overlay.pixel_y = 0
-			var/icon/size_check = icon(source.icon, source.icon_state)
-			var/scale = 1
-			var/width = size_check.Width()
-			var/height = size_check.Height()
-			if(width > world.icon_size)
-				alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
-			if(height > world.icon_size)
-				alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
-			if(width > world.icon_size || height > world.icon_size)
-				if(width >= height)
-					scale = world.icon_size / width
-				else
-					scale = world.icon_size / height
-			alert_overlay.transform = alert_overlay.transform.Scale(scale)
-		alert_overlay.appearance_flags |= TILE_BOUND
-		alert_overlay.layer = FLOAT_LAYER
-		alert_overlay.plane = FLOAT_PLANE
-		alert.add_overlay(alert_overlay)
 
-/**
- * Heal a robotic body part on a mob
- */
+		if(ghost_sound)
+			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
+
+		if(isnull(source))
+			to_chat(ghost, span_ghostalert(message))
+			continue
+
+		var/custom_link = enter_link ? " [enter_link]" : ""
+		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+
+		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
+
+		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
+			category = "[REF(source)]_notify_action",
+			type = /atom/movable/screen/alert/notify_action,
+			new_master = source,
+		)
+		toast.action = action
+		toast.desc = "Click to [action]."
+		toast.name = header
+		toast.target = source
+
+/// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting || IS_ORGANIC_LIMB(affecting))

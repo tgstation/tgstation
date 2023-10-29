@@ -151,7 +151,7 @@
 		. += span_notice("It can be flipped or rotated with a [EXAMINE_HINT("wrench.")]")
 	switch(operating_status)
 		if(TRANSPORT_REMOTE_WARNING)
-			. += span_notice("The yellow [EXAMINE_HINT("remote warning")] light is on.")
+			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
 			. += span_notice("The status display reads: Check track sensor.")
 		if(TRANSPORT_REMOTE_FAULT)
 			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
@@ -250,19 +250,24 @@
 	SIGNAL_HANDLER
 
 	if(machine_stat & BROKEN || machine_stat & NOPOWER)
+		operating_status = TRANSPORT_LOCAL_FAULT
+		update_appearance()
 		return
 
 	if(prob(TRANSPORT_BREAKDOWN_RATE))
+		operating_status = TRANSPORT_LOCAL_FAULT
 		local_fault()
 		return
-
-	operating_status = TRANSPORT_SYSTEM_NORMAL
 
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 	var/obj/machinery/transport/guideway_sensor/linked_sensor = sensor_ref?.resolve()
 
-	if(isnull(tram) || tram.controller_status & COMM_ERROR)
+	if(malfunctioning)
+		operating_status = TRANSPORT_LOCAL_FAULT
+	else if(isnull(tram) || tram.controller_status & COMM_ERROR)
 		operating_status = TRANSPORT_REMOTE_FAULT
+	else
+		operating_status = TRANSPORT_SYSTEM_NORMAL
 
 	if(isnull(linked_sensor))
 		link_sensor()
@@ -271,14 +276,17 @@
 
 /obj/machinery/transport/crossing_signal/on_set_machine_stat()
 	. = ..()
-	if(machine_stat & BROKEN)
-		operating_status = TRANSPORT_REMOTE_FAULT
+	if(machine_stat & BROKEN || machine_stat & NOPOWER)
+		operating_status = TRANSPORT_LOCAL_FAULT
 	else
 		operating_status = TRANSPORT_SYSTEM_NORMAL
 
 /obj/machinery/transport/crossing_signal/on_set_is_operational()
 	. = ..()
-
+	if(!is_operational)
+		operating_status = TRANSPORT_LOCAL_FAULT
+	else
+		operating_status = TRANSPORT_SYSTEM_NORMAL
 	update_operating()
 
 /obj/machinery/transport/crossing_signal/proc/comms_change(source, controller, new_status)
@@ -529,7 +537,7 @@
 		. += span_notice("It can be rotated with a [EXAMINE_HINT("wrench.")]")
 	switch(operating_status)
 		if(TRANSPORT_REMOTE_WARNING)
-			. += span_notice("The yellow [EXAMINE_HINT("remote warning")] light is on.")
+			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
 			. += span_notice("The status display reads: Check paired sensor.")
 		if(TRANSPORT_REMOTE_FAULT)
 			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
@@ -603,10 +611,8 @@
 
 /obj/machinery/transport/guideway_sensor/update_overlays()
 	. = ..()
-	if(machine_stat & NOPOWER)
-		return
 
-	if(machine_stat & BROKEN)
+	if(machine_stat & BROKEN || machine_stat & NOPOWER || malfunctioning)
 		operating_status = TRANSPORT_LOCAL_FAULT
 		. += mutable_appearance(icon, "sensor-[TRANSPORT_LOCAL_FAULT]")
 		. += emissive_appearance(icon, "sensor-[TRANSPORT_LOCAL_FAULT]", src, alpha = src.alpha)
@@ -649,9 +655,11 @@
 	SIGNAL_HANDLER
 
 	if(machine_stat & BROKEN)
+		update_appearance()
 		return
 
 	if(prob(TRANSPORT_BREAKDOWN_RATE))
+		operating_status = TRANSPORT_LOCAL_FAULT
 		local_fault()
 
 	var/obj/machinery/transport/guideway_sensor/buddy = paired_sensor?.resolve()

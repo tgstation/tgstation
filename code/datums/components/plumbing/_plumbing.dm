@@ -414,3 +414,8 @@
 	return (buffer.mode == READY) ? ..() : FALSE
 
 #undef READY
+
+///Lazily demand from any direction. Overlays won't look good, and the aquarium sprite occupies about the entire 32x32 area anyway.
+/datum/component/plumbing/aquarium
+	demand_connects = SOUTH|NORTH|EAST|WEST
+	use_overlays = FALSE
