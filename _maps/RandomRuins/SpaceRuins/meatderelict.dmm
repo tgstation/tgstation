@@ -1670,8 +1670,7 @@
 /obj/item/instrument/piano_synth/headphones,
 /obj/structure/table,
 /obj/machinery/puzzle_button/directional/north{
-	used = 1;
-	id = "this does nothing"
+	used = 1
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,

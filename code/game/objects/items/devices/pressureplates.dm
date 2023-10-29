@@ -103,7 +103,8 @@
 
 /obj/item/pressure_plate/puzzle/Initialize(mapload)
 	. = ..()
-	SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
+	if(!isnull(puzzle_id))
+		SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
 
 /obj/item/pressure_plate/puzzle/trigger()
 	can_trigger = FALSE

@@ -66,7 +66,7 @@
 
 /obj/machinery/door/puzzle/Initialize(mapload)
 	. = ..()
-	if(uses_queuelinks)
+	if(!isnull(puzzle_id) && uses_queuelinks)
 		SSqueuelinks.add_to_queue(src, puzzle_id)
 
 /obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
@@ -232,7 +232,8 @@
 		var/position = !!(generated_board & (1<<i))
 		light_list[i+1] = position
 	update_icon(UPDATE_OVERLAYS)
-	SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
+	if(!isnull(puzzle_id))
+		SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
 
 /obj/structure/light_puzzle/update_overlays()
 	. = ..()
@@ -306,9 +307,8 @@
 
 /obj/machinery/puzzle_button/Initialize(mapload)
 	. = ..()
-	if(used) //already used on init? this button is probably fluff!!
-		return
-	SSqueuelinks.add_to_queue(src, id, queue_size)
+	if(!isnull(id))
+		SSqueuelinks.add_to_queue(src, id, queue_size)
 
 /obj/machinery/puzzle_button/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -347,7 +347,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
 
 /obj/machinery/puzzle_keycardpad/Initialize(mapload)
 	. = ..()
-	SSqueuelinks.add_to_queue(src, id, queue_size)
+	if(!isnull(id))
+		SSqueuelinks.add_to_queue(src, id, queue_size)
 
 /obj/machinery/puzzle_keycardpad/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -390,7 +391,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 
 /obj/structure/puzzle_blockade/Initialize(mapload)
 	. = ..()
-	SSqueuelinks.add_to_queue(src, id)
+	if(!isnull(id))
+		SSqueuelinks.add_to_queue(src, id)
 
 /obj/structure/puzzle_blockade/MatchedLinks(id, list/partners)
 	for(var/partner in partners)
