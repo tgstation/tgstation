@@ -40,8 +40,7 @@ GLOBAL_LIST_INIT(artifact_rarity, list())
 
 /proc/build_weighted_rarities()
 	for(var/origin_type in subtypesof(/datum/artifact_origin))
-		var/datum/artifact_origin/origin = new origin_type
-		GLOB.artifact_rarity[origin.type_name] = list()
+		GLOB.artifact_rarity[initial(origin.type_name)] = list()
 
 	for(var/datum/component/artifact/artifact_type in subtypesof(/datum/component/artifact))
 		var/weight = initial(artifact_type.weight)
