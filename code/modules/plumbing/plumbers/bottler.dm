@@ -82,7 +82,7 @@
 	if(reagents.total_volume + 0.01 >= wanted_amount && anchored && length(inputspot.contents))
 		use_power(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
-		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
+		if(istype(AM, /obj/item/reagent_containers/cup/bottle))
 			var/obj/item/reagent_containers/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
@@ -91,10 +91,8 @@
 				return
 			///glass was full so we move it away
 			AM.forceMove(badspot)
-		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
+		else if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
 			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
-			return
-		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
+		else if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
 			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
-			return
