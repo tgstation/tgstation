@@ -80,7 +80,7 @@
 	var/picked_fault = pick_weight(valid_faults)
 	chosen_fault = new picked_fault
 
-	for(var/datum/artifact_origin/origins in subtypesof(/datum/artifact_origin))
+	for(var/datum/artifact_origin/origins as anything in subtypesof(/datum/artifact_origin))
 		var/a_name = origins.generate_name()
 		if(a_name)
 			names[origins.type_name] = a_name
@@ -186,9 +186,12 @@
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value)
 	if(!stimuli || active) // if called without a stimuli dont bother if active we dont wanna reactivate
 		return
-	
+	var/checked_fault = FALSE
 	for(var/datum/artifact_activator/listed_activator in activators)
 		if(!(listed_activator.required_stimuli & stimuli))
+			if(checked_fault)
+				continue
+			checked_fault = TRUE
 			if(prob(chosen_fault.trigger_chance))
 				chosen_fault.on_trigger(src)
 				holder.visible_message("[holder] [chosen_fault.visible_message]")

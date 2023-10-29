@@ -38,10 +38,10 @@
 
 
 /proc/build_weighted_rarities()
-	for(var/datum/artifact_origin/origin in subtypesof(/datum/artifact_origin))
+	for(var/datum/artifact_origin/origin as anything in subtypesof(/datum/artifact_origin))
 		GLOB.artifact_rarity[initial(origin.type_name)] = list()
 
-	for(var/datum/component/artifact/artifact_type in subtypesof(/datum/component/artifact))
+	for(var/datum/component/artifact/artifact_type as anything in subtypesof(/datum/component/artifact))
 		var/weight = initial(artifact_type.weight)
 		if(!weight)
 			continue
