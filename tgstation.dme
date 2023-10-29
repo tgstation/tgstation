@@ -5546,6 +5546,7 @@
 #include "monkestation\code\game\objects\items\objects\items\robot\robot_upgrades.dm"
 #include "monkestation\code\game\objects\items\storage\book.dm"
 #include "monkestation\code\game\objects\items\storage\boxes.dm"
+#include "monkestation\code\game\objects\items\storage\crate.dm"
 #include "monkestation\code\game\objects\items\storage\uplink_kits.dm"
 #include "monkestation\code\modules\admin\antag_tokens.dm"
 #include "monkestation\code\modules\admin\camera_view.dm"
