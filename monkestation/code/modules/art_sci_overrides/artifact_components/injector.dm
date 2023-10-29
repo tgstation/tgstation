@@ -25,7 +25,7 @@
 		if(ORIGIN_NARSIE)
 			for(var/i in 1 to max_reagents)
 				reagent_datums += pick(poisons) //cult likes killing people ok
-		if(ORIGIN_WIZARD)
+		if(ORIGIN_WIZARD || ORIGIN_MARTIAN || ORIGIN_PRECURSOR)
 			max_reagents = rand(1,3)
 			reagent_amount = rand(1,50)
 			potency += 5

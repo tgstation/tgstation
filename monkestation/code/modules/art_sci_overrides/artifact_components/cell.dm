@@ -15,7 +15,7 @@
 	cell.corrupted = prob(10) //trolled
 	cell.maxcharge = rand(5 KW, 8 GW) // the heavenly battery
 	cell.charge = cell.maxcharge / 2
-	cell.chargerate = rand(5000,round(cell.maxcharge * 0.4))
+	cell.chargerate = rand(5000, round(cell.maxcharge * 0.4))
 	potency += cell.maxcharge / 900
 	potency += cell.chargerate / 4000
 
