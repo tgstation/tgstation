@@ -413,7 +413,7 @@
 					lung_message = span_blue("Subject lungs are <b>bronchodilated</b> and are breathing <b>[lungs.received_pressure_mult * 100]%</b> more gas than normal.")
 				else
 					if (lungs.received_pressure_mult <= 0) // lethal
-						lung_message = span_danger("Subject lungs are <b>bronchocontracted</b> and are <b>completely unable to breathe!</b> If asthmatic, administer albuterol or perform windpipe surgery immediately!")
+						lung_message = span_danger("Subject lungs are <b>bronchocontracted</b> and are <b>completely unable to breathe!</b> If asthmatic, administer albuterol via inhaler or perform windpipe surgery immediately!")
 					else
 						lung_message = span_danger("Subject lungs are <b>bronchocontracted</b> and can only breathe up to <b>[lungs.received_pressure_mult * 100]%</b> of its usual capacity. \
 						If subject is choking, it is suggested to provide them with a <b>high-pressure</b> gas tank.")

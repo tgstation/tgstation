@@ -527,21 +527,25 @@
 		target_holder = target
 		target_atom = target_holder.my_atom
 	else
-		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
-			var/mob/living/carbon/eater = target
-			var/obj/item/organ/internal/stomach/belly = eater.get_organ_slot(ORGAN_SLOT_STOMACH)
-			if(!belly)
-				var/expel_amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
-				if(expel_amount > 0 )
-					eater.expel_ingested(my_atom, expel_amount)
+		if (iscarbon(target))
+			var/mob/living/carbon/carbon_target = target
+			if(!ignore_stomach && (methods & INGEST) )
+				var/obj/item/organ/internal/stomach/belly = carbon_target.get_organ_slot(ORGAN_SLOT_STOMACH)
+				if(!belly)
+					var/expel_amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+					if(expel_amount > 0 )
+						carbon_target.expel_ingested(my_atom, expel_amount)
+					return
+				target_holder = belly.reagents
+				target_atom = belly
+			else if (methods == INHALE && (!carbon_target.can_breathe_reagents())) // ONLY inhale
 				return
-			target_holder = belly.reagents
-			target_atom = belly
-		else if(!target.reagents)
+
+	if (isnull(target_holder))
+		target_holder = target.reagents
+		target_atom = target
+		if (isnull(target_holder))
 			return
-		else
-			target_holder = target.reagents
-			target_atom = target
 
 	var/cached_amount = amount
 

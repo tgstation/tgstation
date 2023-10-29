@@ -3,7 +3,7 @@
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
 	requires_bodypart_type = NONE
 	organ_to_manipulate = ORGAN_SLOT_LUNGS
-	possible_locs = list(BODY_ZONE_HEAD)
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -67,21 +67,22 @@
 		return
 
 	var/mob/living/carbon/human/human_patient = target
-	human_patient.losebreath += 2
 
 	display_results(
 		user,
 		target,
-		span_bolddanger("You stretch [target]'s windpipe with [tool], but acidentally clip a few arteries, causing blood to pour out!"),
-		span_bolddanger("[user] succeeds at stretching [target]'s windpipe with [tool], but acidentally clips a few arteries, causing blood to pour out!"),
+		span_bolddanger("You stretch [target]'s windpipe with [tool], but accidentally clip a few arteries!"),
+		span_bolddanger("[user] succeeds at stretching [target]'s windpipe with [tool], but accidentally clips a few arteries!"),
 		span_bolddanger("[user] finishes stretching [target]'s windpipe, but screws up!")
 	)
+	human_patient.losebreath++
 	var/wound_bonus = tool.wound_bonus
-	var/obj/item/bodypart/head/patient_head = human_patient.get_bodypart(HEAD)
-	if (prob(30))
-		if (patient_head)
-			wound_bonus += patient_head.get_wound_threshold_of_wound_type(WOUND_SLASH, WOUND_SEVERITY_MODERATE, 0, tool)
-	patient_head.receive_damage(10, BRUTE, wound_bonus = wound_bonus, damage_source = tool)
+	var/obj/item/bodypart/head/patient_chest = human_patient.get_bodypart(BODY_ZONE_CHEST)
+	if (patient_chest)
+		if (prob(30))
+			human_patient.cause_wound_of_type_and_severity(WOUND_SLASH, patient_chest, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL, WOUND_PICK_LOWEST_SEVERITY, tool)
+		patient_chest.receive_damage(brute = 10, wound_bonus = wound_bonus, sharpness = SHARP_EDGED, damage_source = tool)
+	playsound(human_patient, 'sound/weapons/bladeslice.ogg', 40)
 
 	return FALSE
 
