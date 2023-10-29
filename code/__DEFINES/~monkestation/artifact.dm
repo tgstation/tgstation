@@ -36,9 +36,9 @@
 }
 
 #define STIMULUS_CARBON_TOUCH (1<<0)
-#define STIMULUS_SILICON_TOUCH (2<<0)
-#define STIMULUS_FORCE (3<<0)
-#define STIMULUS_HEAT (4<<0)
-#define STIMULUS_SHOCK (5<<0)
-#define STIMULUS_RADIATION (6<<0)
-#define STIMULUS_DATA (7<<0)
+#define STIMULUS_SILICON_TOUCH (1<<1)
+#define STIMULUS_FORCE (1<<2)
+#define STIMULUS_HEAT (1<<3)
+#define STIMULUS_SHOCK (1<<4)
+#define STIMULUS_RADIATION (1<<5)
+#define STIMULUS_DATA (1<<6)
