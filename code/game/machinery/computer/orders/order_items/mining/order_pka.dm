@@ -13,8 +13,8 @@
 	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shotgun
 	cost_per_order = 1250
 
-/datum/orderable_item/accelerator/gun/pounder //monke edit
-	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/pounder
+/datum/orderable_item/accelerator/gun/shockwave //monke edit
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave
 	cost_per_order = 1250
 
 /datum/orderable_item/accelerator/gun/glock //monke edit

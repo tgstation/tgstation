@@ -221,8 +221,9 @@
 	One member exclaimed 'I wish we could have more than one slice' and another replied 'I wish we could shoot the accelerator more than once' and thus, the repeater\
 	on the spot. The repeater trades a bit of power for the ability to fire three shots before becoming empty, while retaining the ability to fully recharge in one\
 	go. The extra technology packed inside to make this possible unfortunately reduces mod space meaning you cnat carry as many mods compared to a regular accelerator."
-	icon_state = "kineticgun"
-	base_icon_state = "kineticgun"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon_state = "kineticrepeater"
+	base_icon_state = "kineticrepeater"
 	inhand_icon_state = "kineticgun"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/repeater)
@@ -240,8 +241,9 @@
 	other research members with one blast. The MR&D Director immedietly thought of a genuis idea, creating the proto-kinetic shotgun moments later, which he\
 	immedietly used to execute the research member who brought the real shotgun. The proto-kinetic shotgun trades off some mod capacity and cooldown in favor\
 	of firing three shots at once with reduce range and power. The total damage of all three shots is higher than a regular PKA but the individual shots are weaker."
-	icon_state = "kineticgun"
-	base_icon_state = "kineticgun"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon_state = "kineticshotgun"
+	base_icon_state = "kineticshotgun"
 	inhand_icon_state = "kineticgun"
 	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shotgun)
@@ -271,8 +273,8 @@
 	can_bayonet = FALSE
 	max_mod_capacity = 200
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/pounder
-	name = "proto-kinetic pounder"
+/obj/item/gun/energy/recharge/kinetic_accelerator/shockwave
+	name = "proto-kinetic shockwave"
 	desc = "Quite frankly, we have no idea how the Mining Research and Development team came up with this one, all we know is that alot of \
 	beer was involved. This proto-kinetic design will slam the ground, creating a shockwave around the user, with the same power as the base PKA.\
 	The only downside is the lowered mod capacity, the lack of range it offers, and the higher cooldown, but its pretty good for clearing rocks."
@@ -280,7 +282,7 @@
 	base_icon_state = "kineticgun"
 	inhand_icon_state = "kineticgun"
 	recharge_time = 2 SECONDS
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/pounder)
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/shockwave)
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
@@ -333,8 +335,8 @@
 	e_cost = 500
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 
-/obj/item/ammo_casing/energy/kinetic/pounder
-	projectile_type = /obj/projectile/kinetic/pounder
+/obj/item/ammo_casing/energy/kinetic/shockwave
+	projectile_type = /obj/projectile/kinetic/shockwave
 	select_name = "kinetic"
 	e_cost = 500
 	pellets = 8
@@ -391,7 +393,7 @@
 	range = 3
 	log_override = TRUE
 
-/obj/projectile/kinetic/pounder
+/obj/projectile/kinetic/shockwave
 	name = "concussive kinetic force"
 	icon_state = null
 	damage = 40
