@@ -199,8 +199,9 @@
 	The design results in a massive hard to control blast of kinetic energy, with the power to punch right through creatures and cause massive damage. The \
 	only problem with the design is that it is so bulky you need to carry it with two hands, and the technology has no optimization for a pressured enviorment, \
 	resulting in a near zero force value in pressurized areas."
-	icon_state = "kineticgun"
-	base_icon_state = "kineticgun"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon_state = "kineticrailgun"
+	base_icon_state = "kineticrailgun"
 	inhand_icon_state = "kineticgun"
 	w_class = WEIGHT_CLASS_HUGE
 	recharge_time = 3 SECONDS
@@ -258,8 +259,9 @@
 	pizza slice, so reluctantly the Director bought him his mini murphy, which the dumbass immedietly dropped ontop of a PKA. Suddenly the idea to create\
 	a 'build your own PKA' design was created. The proto-kinetic pistol is arguably worse than the base PKA, sporting lower damage and range. But this lack\
 	of base efficiency allows room for nearly double the mods, making it truely 'your own PKA'."
-	icon_state = "kineticgun"
-	base_icon_state = "kineticgun"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon_state = "kineticpistol"
+	base_icon_state = "kineticpistol"
 	inhand_icon_state = "kineticgun"
 	recharge_time = 1.45 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
