@@ -245,7 +245,7 @@
 
 
 
-// Great chaparral over rolling hills, this one doesn't have the sensor type, and only an intialized effect
+// Great chaparral over rolling hills, this one doesn't have the sensor type
 /obj/item/wallframe/painting/eldritch/vines
 	name = "Great chaparral over rolling hills"
 	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame."
@@ -265,14 +265,32 @@
 		/datum/spacevine_mutation/fire_proof,
 		/datum/spacevine_mutation/aggressive_spread,
 		)
+	// Items to pick from to spawn on examine
+	var/list/items_to_spawn = list(
+		/obj/item/food/grown/poppy,
+		/obj/item/food/grown/harebell,
+	)
+
+// Moodlets used to prevent rust
+/datum/mood_event/eldritch_painting/heretic_vines
+	description = "Oh what a lovely flower!"
+	mood_change = 3
+	timeout = 1 MINUTES
 
 /obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
 	return ..()
 
 /obj/structure/sign/painting/eldritch/vines/examine(mob/living/carbon/user)
+	if("heretic_vines" in user.mob_mood.mood_events)
+		return
+
 	if(IS_HERETIC(user))
-		to_chat(user, span_notice("Over the great rolling hills the thicket stands, oh what beauty we find in arts!"))
+		var/item_to_spawn = pick(items_to_spawn)
+		to_chat(user, span_notice("You picture yourself in the thicket picking flowers.."))
+		// Spawns one of two flowers that often are used by heretics
+		new item_to_spawn(user.loc)
+		user.add_mood_event("heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
 	else
 		new /datum/spacevine_controller(get_turf(user), mutations, 0, 10)
 		to_chat(user, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
@@ -282,13 +300,13 @@
 // Lady out of gates, gives a brain trauma causing the person to scratch themselves
 /obj/item/wallframe/painting/eldritch/beauty
 	name = "Lady out of gates"
-	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth."
+	desc = "A painting depicting a perfect lady, and I must be perfect like her..."
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting/eldritch/beauty
 
 /obj/structure/sign/painting/eldritch/beauty
 	name = "Lady out of gates"
-	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
+	desc = "A painting depicting a perfect lady, and I must be perfect like her. Destroyable with wirecutters."
 	icon_state = "frame-empty"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/beauty
 	// Set to mutadone by default to remove mutations
@@ -332,3 +350,72 @@
 			bodypart.receive_damage(scratch_damage)
 			if(prob(2))
 				to_chat(owner, span_notice("You scratch furiously at [bodypart] to rid its imperfections!"))
+
+
+
+// Climb over the rusted mountain, gives a brain trauma causing the person to randomly rust tiles beneath them
+/obj/item/wallframe/painting/eldritch/rust
+	name = "Climb over the rusted mountain"
+	desc = "A painting depicting something climbing a mountain of rust, it gives you an eerie feeling."
+	icon_state = "frame-empty"
+	result_path = /obj/structure/sign/painting/eldritch/rust
+
+/obj/structure/sign/painting/eldritch/rust
+	name = "Climb over the rusted mountain"
+	desc = "A painting depicting something climbing a mountain of rust, it gives you an eerie feeling. Destroyable with wirecutters."
+	icon_state = "frame-empty"
+	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/rust
+	// This item is popped up on examine by a heretic
+	var/list/item_on_examine = list(/obj/item/ammo_box/strilka310/lionhunter)
+
+// Moodlets used to prevent rust and give a positive moodlet for heretics
+/datum/mood_event/eldritch_painting/rust_examine
+	description = "The rusted climb can wait..."
+	mood_change = -2
+	timeout = 3 MINUTES
+
+/datum/mood_event/eldritch_painting/rust_heretic_examine
+	description = "I must hurry the rusted climb!"
+	mood_change = 4
+	timeout = 5 MINUTES
+
+// The special examine interaction for this painting
+/obj/structure/sign/painting/eldritch/rust/examine(mob/living/carbon/human/user)
+	if("rusted_examine" in user.mob_mood.mood_events)
+		return
+
+	if(IS_HERETIC(user))
+		to_chat(user, "You see the climber reach and drop something.")
+		user.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)
+		new item_on_examine(user.loc)
+
+	if(user.has_trauma_type(/datum/brain_trauma/severe/rusting))
+		to_chat(user, "It can wait...")
+		user.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
+
+
+// Specific proximity monitor for Climb over the rusted mountain or /obj/item/wallframe/painting/eldritch/rust
+/datum/proximity_monitor/advanced/eldritch_painting/rust
+	applied_trauma = /datum/brain_trauma/severe/rusting
+	text_to_display = "It climbs, and I will aid it...The rust calls and I shall answer..."
+
+/*
+ * A brain trauma that this eldritch paintings apply
+ * This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
+ */
+/datum/brain_trauma/severe/rusting
+	name = "The Rusted Climb"
+	desc = "Patient seems to oxidise things around them at random, and seem to believe they are aiding a creature in climbing a mountin."
+	scan_desc = "C_)L(#_I_##M;B"
+	gain_text = span_warning("The rusted climb shall finish at the peak")
+	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
+
+/datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
+	var/atom/tile = get_turf(owner)
+	// If they have the special mood event for rusted climb they don't start rusting tiles beneath them
+	if("rusted_examine" in owner.mob_mood.mood_events)
+		return
+
+	if(prob(2))
+		to_chat(owner, span_notice("You feel eldritch energies pulse from your body!"))
+		tile.rust_heretic_act()
