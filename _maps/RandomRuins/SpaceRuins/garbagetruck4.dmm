@@ -158,7 +158,7 @@
 /obj/item/hand_labeler,
 /obj/item/hand_labeler_refill,
 /obj/structure/spider/stickyweb,
-/mob/living/basic/giant_spider/hunter/scrawny,
+/mob/living/basic/spider/giant/hunter/scrawny,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "jq" = (
@@ -666,7 +666,7 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/mob/living/basic/giant_spider/viper,
+/mob/living/basic/spider/giant/viper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Mp" = (
@@ -803,7 +803,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "TM" = (
 /obj/structure/spider/passage,
-/mob/living/basic/giant_spider/hunter/scrawny,
+/mob/living/basic/spider/giant/hunter/scrawny,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Us" = (
