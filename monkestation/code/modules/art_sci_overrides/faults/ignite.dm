@@ -6,3 +6,4 @@
 /datum/artifact_fault/ignite/on_trigger(datum/component/artifact/component)
 	for(var/mob/living/living in range(rand(3, 5), component.parent))
 		living.adjust_fire_stacks(10)
+		living.ignite_mob()

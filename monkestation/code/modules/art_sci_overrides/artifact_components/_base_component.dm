@@ -74,18 +74,19 @@
 
 	if(forced_origin)
 		valid_origins = list(forced_origin)
-
-	artifact_origin = pick(valid_origins)
+	var/picked_origin = pick(valid_origins)
+	artifact_origin = new picked_origin
 	fake_name = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
 	var/picked_fault = pick_weight(valid_faults)
 	chosen_fault = new picked_fault
 
 	for(var/datum/artifact_origin/origins as anything in subtypesof(/datum/artifact_origin))
-		var/a_name = origins.generate_name()
+		var/datum/artifact_origin/new_origin = new origins
+		var/a_name = new_origin.generate_name()
 		if(a_name)
-			names[origins.type_name] = a_name
+			names[new_origin.type_name] = a_name
 		else
-			names[origins.type_name] = "[pick(origins.name_vars["adjectives"])] [pick(isitem(holder) ? origins.name_vars["small-nouns"] : origins.name_vars["large-nouns"])]"
+			names[new_origin.type_name] = "[pick(new_origin.name_vars["adjectives"])] [pick(isitem(holder) ? new_origin.name_vars["small-nouns"] : new_origin.name_vars["large-nouns"])]"
 
 	holder.name = fake_name
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
@@ -183,12 +184,14 @@
 	holder.cut_overlay(act_effect)
 	effect_deactivate(nosound)
 
-/datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value)
+/datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
 	if(!stimuli || active) // if called without a stimuli dont bother if active we dont wanna reactivate
 		return
 	var/checked_fault = FALSE
 	for(var/datum/artifact_activator/listed_activator in activators)
 		if(!(listed_activator.required_stimuli & stimuli))
+			if(!triggers_faults)
+				continue
 			if(checked_fault)
 				continue
 			checked_fault = TRUE
@@ -209,7 +212,7 @@
 		artifact_activate()
 
 /datum/component/artifact/proc/stimulate_from_turf_heat(turf/target)
-	process_stimuli(STIMULUS_HEAT, target.return_air().temperature)
+	process_stimuli(STIMULUS_HEAT, target.return_air().temperature, FALSE)
 
 /datum/component/artifact/proc/stimulate_from_rad_act(intensity)
 	process_stimuli(STIMULUS_RADIATION, intensity)

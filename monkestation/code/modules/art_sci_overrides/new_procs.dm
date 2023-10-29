@@ -38,6 +38,7 @@
 
 
 /proc/build_weighted_rarities()
+	GLOB.artifact_rarity["all"] = list() ///this needs to be created first for indexing sake
 	for(var/datum/artifact_origin/origin as anything in subtypesof(/datum/artifact_origin))
 		GLOB.artifact_rarity[initial(origin.type_name)] = list()
 
