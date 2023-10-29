@@ -25,6 +25,7 @@
 		potency += spew_range
 	bloody_vomit = prob(50)
 	potency += (range) * 4
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), round(30 * (potency * 10) SECONDS))
 
 /datum/component/artifact/vomit/on_examine(atom/source, mob/user, list/examine_list)
 	. = ..()
