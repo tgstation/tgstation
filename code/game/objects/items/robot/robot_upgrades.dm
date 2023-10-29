@@ -606,7 +606,7 @@
 			R.model.remove_module(RPED, TRUE)
 
 /obj/item/borg/upgrade/foamer
-	name = "engineering firefighter nozzel"
+	name = "engineering firefighter kit"
 	desc = "A nozzel connected to a large internal resevoir of water to fight the nasiest of fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "waterbackpackatmos"
