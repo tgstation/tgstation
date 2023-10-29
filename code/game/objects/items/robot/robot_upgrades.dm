@@ -606,6 +606,127 @@
 		if (RPED)
 			R.model.remove_module(RPED, TRUE)
 
+/obj/item/borg/upgrade/foamer
+	name = "engineering firefighter nozzel"
+	desc = "A nozzel connected to a large internal resevoir of water to fight the nasiest of fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "waterbackpackatmos"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/foamer/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/extinguisher/cyborg/nozer = locate() in R
+		if(nozer)
+			to_chat(user, span_warning("This unit is already equipped with a RPED module!"))
+			return FALSE
+		nozer = new(R.model)
+		R.model.basic_modules += nozer
+		R.model.add_module(nozer, FALSE, TRUE)
+
+/obj/item/borg/upgrade/foamer/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/extinguisher/cyborg/nozer = locate() in R.model
+		if (nozer)
+			R.model.remove_module(nozer, TRUE)
+
+#define EXTINGUISHER 0
+#define RESIN_LAUNCHER 1
+#define RESIN_FOAM 2
+/obj/item/extinguisher/cyborg
+	name = "Integrated firefighter nozzle"
+	desc = "A firefighter nozzle connected to an internal resevoir. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "atmos_nozzle"
+	chem = /datum/reagent/water
+	max_water = 500
+	safety = 0
+	power = 8
+	force = 10
+	precision = TRUE
+	cooling_power = 5
+	var/nozzle_mode = 0
+	var/metal_synthesis_cooldown = 0
+	COOLDOWN_DECLARE(resin_cooldown)
+
+/obj/item/extinguisher/cyborg/attack_self(mob/user)
+	switch(nozzle_mode)
+		if(EXTINGUISHER)
+			nozzle_mode = RESIN_LAUNCHER
+			balloon_alert(user, "switched to resin launcher")
+			return
+		if(RESIN_LAUNCHER)
+			nozzle_mode = RESIN_FOAM
+			balloon_alert(user, "switched to resin foam")
+			return
+		if(RESIN_FOAM)
+			nozzle_mode = EXTINGUISHER
+			balloon_alert(user, "switched to fire extinguisher")
+			return
+	return
+
+/obj/item/extinguisher/cyborg/afterattack(atom/target, mob/user)
+	if(AttemptRefill(target, user))
+		return
+	if(nozzle_mode == EXTINGUISHER)
+		return ..()
+	var/Adj = user.Adjacent(target)
+	if(nozzle_mode == RESIN_LAUNCHER)
+		if(Adj)
+			return //Safety check so you don't blast yourself trying to refill your tank
+		var/datum/reagents/R = reagents
+		if(R.total_volume < 100)
+			balloon_alert(user, "not enough water!")
+			return
+		if(!COOLDOWN_FINISHED(src, resin_cooldown))
+			balloon_alert(user, "still recharging!")
+			return
+		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
+		R.remove_any(100)
+		var/obj/effect/resin_container/resin = new (get_turf(src))
+		user.log_message("used Resin Launcher", LOG_GAME)
+		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
+		var/delay = 2
+		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(resin_stop_check))
+		RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(resin_landed))
+		return
+	if(nozzle_mode == RESIN_FOAM)
+		if(!Adj || !isturf(target))
+			balloon_alert(user, "too far!")
+			return
+		for(var/S in target)
+			if(istype(S, /obj/effect/particle_effect/fluid/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
+				balloon_alert(user, "already has resin!")
+				return
+		if(metal_synthesis_cooldown < 5)
+			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(target))
+			foam.group.target_size = 0
+			metal_synthesis_cooldown++
+			addtimer(CALLBACK(src, PROC_REF(reduce_metal_synth_cooldown)), 10 SECONDS)
+		else
+			balloon_alert(user, "still being synthesized!")
+			return
+/obj/item/extinguisher/cyborg/proc/resin_stop_check(datum/move_loop/source, result)
+	SIGNAL_HANDLER
+	if(result == MOVELOOP_SUCCESS)
+		return
+	resin_landed(source)
+	qdel(source)
+
+/obj/item/extinguisher/cyborg/proc/resin_landed(datum/move_loop/source)
+	SIGNAL_HANDLER
+	if(!istype(source.moving, /obj/effect/resin_container) || QDELETED(source.moving))
+		return
+	var/obj/effect/resin_container/resin = source.moving
+	resin.Smoke()
+
+/obj/item/extinguisher/cyborg/proc/reduce_metal_synth_cooldown()
+	metal_synthesis_cooldown--
+
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
