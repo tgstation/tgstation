@@ -82,7 +82,12 @@
 	if(reagents.total_volume + 0.01 >= wanted_amount && anchored && length(inputspot.contents))
 		use_power(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
-		if(istype(AM, /obj/item/reagent_containers/cup/bottle))
+		//allowed containers
+		var/static/list/allowed_containers = list(
+			/obj/item/reagent_containers/cup,
+			/obj/item/ammo_casing/shotgun/dart,
+		)
+		if(is_type_in_list(AM, allowed_containers))
 			var/obj/item/reagent_containers/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
