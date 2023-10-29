@@ -18,7 +18,7 @@
 //How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
 #define LATHE_TAX 10
 //How much POWER a borg's cell is taxed if they print something from a departmental lathe.
-#define SILICON_LATHE_TAX 2000
+#define SILICON_LATHE_TAX 200
 
 #define STATION_TARGET_BUFFER 25
 
