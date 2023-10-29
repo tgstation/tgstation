@@ -13,7 +13,7 @@
 	var/list/hint_texts = list("emits a <i>faint</i> noise..")
 
 /datum/artifact_activator/proc/setup(potency)
-	amount = max(base_trigger_amount, base_trigger_amount + (highest_trigger_amount - base_trigger_amount) * (potency/100))
+	amount = round(max(base_trigger_amount, base_trigger_amount + (highest_trigger_amount - base_trigger_amount) * (potency/100)))
 
 /datum/artifact_activator/proc/grab_hint()
 	return pick(hint_texts)
