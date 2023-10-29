@@ -52,6 +52,8 @@ SUBSYSTEM_DEF(movement)
 	while(processing.len)
 		var/datum/move_loop/loop = processing[processing.len]
 		processing.len--
+		// No longer queued since we just got removed from the loop
+		loop.queued_time = -1
 		loop.process() //This shouldn't get nulls, if it does, runtime
 		if(!QDELETED(loop)) //Re-Insert the loop
 			loop.timer = world.time + loop.delay
@@ -86,22 +88,32 @@ SUBSYSTEM_DEF(movement)
 	buckets -= "[bucket_time]"
 
 /datum/controller/subsystem/movement/proc/queue_loop(datum/move_loop/loop)
-	var/target_time = loop.timer
-	var/string_time = "[target_time]"
+	if(loop.queued_time != -1)
+		stack_trace("just tried to add a loop at the time ([loop.timer]) that already has a queued time ([loop.queued_time]), what'd you do?")
+		return
+	loop.queued_time = loop.timer
+	var/list/our_bucket = buckets["[loop.queued_time]"]
 	// If there's no bucket for this, lets set them up
-	if(!buckets[string_time])
-		buckets[string_time] = list()
+	if(!our_bucket)
+		buckets["[loop.queued_time]"] = list()
+		our_bucket = buckets["[loop.queued_time]"]
 		// This makes assoc buckets and sorted buckets point to the same place, allowing for quicker inserts
-		var/list/new_bucket = list(list(target_time, buckets[string_time]))
-		BINARY_INSERT_DEFINE(new_bucket, sorted_buckets, SORT_VAR_NO_TYPE, list(target_time), SORT_FIRST_INDEX, COMPARE_KEY)
+		var/list/new_bucket = list(list(loop.queued_time, our_bucket))
+		BINARY_INSERT_DEFINE(new_bucket, sorted_buckets, SORT_VAR_NO_TYPE, list(loop.queued_time), SORT_FIRST_INDEX, COMPARE_KEY)
 
-	buckets[string_time] += loop
+	our_bucket += loop
 
 /datum/controller/subsystem/movement/proc/dequeue_loop(datum/move_loop/loop)
-	var/list/our_entries = buckets["[loop.timer]"]
+	// Go home, you're not here anyway
+	if(loop.queued_time == -1)
+		return
+	if(loop.queued_time != loop.timer)
+		stack_trace("We just would have failed to remove a loop, our timer was ([loop.timer]) but our queued time was ([loop.queued_time]) why?")
+	var/list/our_entries = buckets["[loop.queued_time]"]
 	our_entries -= loop
 	if(!length(our_entries))
-		smash_bucket(bucket_time = loop.timer) // We can't pass an index in for context because we don't know our position
+		smash_bucket(bucket_time = loop.queued_time) // We can't pass an index in for context because we don't know our position
+	loop.queued_time = -1
 
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
 	add.loop_started()

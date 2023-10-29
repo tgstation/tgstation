@@ -24,7 +24,7 @@
 	if(controller.pathing_attempts >= max_pathing_attempts)
 		controller.CancelActions()
 
-///Should the movement be allowed to happen? As of writing this, MOVELOOP_SKIP_STEP is defined as (1<<0) so be careful on using (return TRUE) or (can_move = TRUE; return can_move)
+///Should the movement be allowed to happen? As of writing this, return TRUE if it can, FALSE otherwise
 /datum/ai_movement/proc/allowed_to_move(datum/move_loop/source)
 	var/atom/movable/pawn = source.moving
 	var/datum/ai_controller/controller = source.extra_info
@@ -41,19 +41,18 @@
 	if(!controller.able_to_run())
 		controller.CancelActions()
 		qdel(source) //stop moving
-		return MOVELOOP_SKIP_STEP
+		return FALSE
 
-	//Why doesn't this return TRUE or can_move?
-	//MOVELOOP_SKIP_STEP is defined as (1<<0) and TRUE are defined as the same "1", returning TRUE would be the equivalent of skipping the move
 	if(can_move)
-		return
+		return TRUE
 	increment_pathing_failures(controller)
-	return MOVELOOP_SKIP_STEP
+	return FALSE
 
 ///Anything to do before moving; any checks if the pawn should be able to move should be placed in allowed_to_move() and called by this proc
 /datum/ai_movement/proc/pre_move(datum/move_loop/source)
 	SIGNAL_HANDLER
-	return allowed_to_move(source)
+	if(!allowed_to_move(source))
+		return MOVELOOP_SKIP_STEP
 
 //Anything to do post movement
 /datum/ai_movement/proc/post_move(datum/move_loop/source, succeeded)

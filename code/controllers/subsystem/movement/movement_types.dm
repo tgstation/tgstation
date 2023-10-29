@@ -21,8 +21,10 @@
 	var/delay = 1
 	///The next time we should process
 	///Used primarially as a hint to be reasoned about by our [controller], and as the id of our bucket
-	///Should not be modified directly outside of [start_loop]
 	var/timer = 0
+	///The time we are CURRENTLY queued for processing
+	///Do not modify this directly
+	var/queued_time = -1
 	///Is this loop running or not
 	var/running = FALSE
 	///Track if we're currently paused
