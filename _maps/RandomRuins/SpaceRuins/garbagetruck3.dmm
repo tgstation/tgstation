@@ -598,7 +598,7 @@
 "HN" = (
 /obj/effect/decal/cleanable/ash,
 /obj/effect/decal/cleanable/oil/streak,
-/mob/living/basic/syndicate/russian,
+/mob/living/basic/trooper/russian,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "HP" = (
