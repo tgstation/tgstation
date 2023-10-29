@@ -754,7 +754,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 
-/obj/item/borg/upgrade/holographic_atmos
+/obj/item/borg/upgrade/atmos_hologram
 	name = "Holographic atmos barrier projector"
 	desc = "Adds a atmospheric stopping photon projector allow the cyborg to project atmospheric barrier"
 	require_model = TRUE
@@ -765,7 +765,7 @@
 	name = "ATMOS barrier photon projector"
 	max_signs = 10
 
-/obj/item/borg/upgrade/holographic_atmos/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/atmos_hologram/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
 		var/obj/item/holosign_creator/atmos/cyborg/projector = locate() in R
@@ -775,10 +775,35 @@
 		R.model.basic_modules += projector
 		R.model.add_module(projector, FALSE, TRUE)
 
-/obj/item/borg/upgrade/holographic_atmos/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/atmos_hologram/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
 		var/obj/item/holosign_creator/atmos/cyborg/projector = locate() in R.model
+		if (projector)
+			R.model.remove_module(projector, TRUE)
+
+/obj/item/borg/upgrade/engi_hologram
+	name = "Holographic engineering barrier projector"
+	desc = "Adds a engineering hologram projector"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+
+/obj/item/borg/upgrade/engi_hologram/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/holosign_creator/engineering/projector = locate() in R
+		if(projector)
+			return FALSE
+		projector = new(R.model)
+		R.model.basic_modules += projector
+		R.model.add_module(projector, FALSE, TRUE)
+
+/obj/item/borg/upgrade/engi_hologram/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/holosign_creator/engineering/projector = locate() in R.model
 		if (projector)
 			R.model.remove_module(projector, TRUE)
 
