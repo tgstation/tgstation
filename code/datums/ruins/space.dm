@@ -126,6 +126,12 @@
 	name = "Derelict 8"
 	description = "An auxiliary storage bay might be the least respected room on any functional station, but studies show they are the least likely to be hit in an artillery strike."
 
+/datum/map_template/ruin/space/derelict9
+	id = "derelict9"
+	suffix = "derelict9.dmm"
+	name = "Derelict 9"
+	description = "Someone already found this high-security supply cache already, but were unable to get inside. Perhaps the next visitor will have more luck."
+
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"
 	suffix = "emptyshell.dmm"
@@ -176,6 +182,12 @@
 	suffix = "spacehotel.dmm"
 	name = "The Twin-Nexus Hotel"
 	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+
+/datum/map_template/ruin/space/turreted_outpost
+	id = "turreted-outpost"
+	suffix = "turretedoutpost.dmm"
+	name = "Unnamed Turreted Outpost"
+	description = "We'd ask them to stop blaring that ruskiepop music, but none of us are brave enough to go near those death turrets they have."
 
 /datum/map_template/ruin/space/oldshuttle
 	id = "spaceman-origins"
