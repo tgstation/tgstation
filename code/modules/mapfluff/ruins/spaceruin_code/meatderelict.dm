@@ -43,7 +43,7 @@
 /obj/machinery/door/puzzle/meatderelict
 	name = "lockdown door"
 	desc = "A beaten door, still sturdy. Impervious to conventional methods of destruction, must be a way to open it nearby."
-	icon = 'icons/obj/doors/puzzledoor/default.dmi'
+	icon = 'icons/obj/doors/puzzledoor/danger.dmi'
 	puzzle_id = "md_prevault"
 
 /mob/living/basic/meteor_heart/opens_puzzle_door
