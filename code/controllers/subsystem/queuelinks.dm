@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(queuelinks)
 	if(!isatom(what))
 		CRASH("Attempted to add a non-atom to queue; [what]!")
 	if(isnull(id))
-		return
+		CRASH("Attempted to add to queue with no ID; [what]")
 
 	var/datum/queue_link/link
 	if(isnull(queues[id]))
