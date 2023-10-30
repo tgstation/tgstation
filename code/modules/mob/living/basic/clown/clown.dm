@@ -541,22 +541,16 @@
 		BB_EMOTE_SEE = list("bites into the banana", "plucks a banana off its head", "photosynthesizes"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'),
 	)
-	///Our peel dropping ability
-	var/datum/action/cooldown/rustle/banana_rustle
-	///Our banana bunch spawning ability
-	var/datum/action/cooldown/exquisite_bunch/banana_bunch
+
+	/// Actions that we apply on initialization
+	var/static/list/initial_actions = list(
+		/datum/action/cooldown/exquisite_bunch,
+		/datum/action/cooldown/rustle,
+	)
 
 /mob/living/basic/clown/banana/Initialize(mapload)
 	. = ..()
-	banana_rustle = new()
-	banana_rustle.Grant(src)
-	banana_bunch = new()
-	banana_bunch.Grant(src)
-
-/mob/living/basic/clown/banana/Destroy()
-	. = ..()
-	QDEL_NULL(banana_rustle)
-	QDEL_NULL(banana_bunch)
+	grant_multiple_actions(initial_actions)
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle
