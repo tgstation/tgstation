@@ -34,23 +34,24 @@
 ///changes the tile array
 /obj/machinery/plumbing/bottler/setDir(newdir)
 	. = ..()
+	var/turf/target_turf = get_turf(src)
 	switch(dir)
 		if(NORTH)
-			goodspot = get_step(get_turf(src), NORTH)
-			inputspot = get_step(get_turf(src), SOUTH)
-			badspot = get_step(get_turf(src), EAST)
+			goodspot = get_step(target_turf, NORTH)
+			inputspot = get_step(target_turf, SOUTH)
+			badspot = get_step(target_turf, EAST)
 		if(SOUTH)
-			goodspot = get_step(get_turf(src), SOUTH)
-			inputspot = get_step(get_turf(src), NORTH)
-			badspot = get_step(get_turf(src), WEST)
+			goodspot = get_step(target_turf, SOUTH)
+			inputspot = get_step(target_turf, NORTH)
+			badspot = get_step(target_turf, WEST)
 		if(WEST)
-			goodspot = get_step(get_turf(src), WEST)
-			inputspot = get_step(get_turf(src), EAST)
-			badspot = get_step(get_turf(src), NORTH)
+			goodspot = get_step(target_turf, WEST)
+			inputspot = get_step(target_turf, EAST)
+			badspot = get_step(target_turf, NORTH)
 		if(EAST)
-			goodspot = get_step(get_turf(src), EAST)
-			inputspot = get_step(get_turf(src), WEST)
-			badspot = get_step(get_turf(src), SOUTH)
+			goodspot = get_step(target_turf, EAST)
+			inputspot = get_step(target_turf, WEST)
+			badspot = get_step(target_turf, SOUTH)
 
 	//If by some miracle
 	if( ( !valid_output_configuration ) && ( goodspot != null && inputspot != null && badspot != null ) )
@@ -63,7 +64,7 @@
 	if(!valid_output_configuration)
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
-	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = 100)
+	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = reagents.maximum_volume, round_value = TRUE)
 	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return .
 	wanted_amount = new_amount
@@ -78,7 +79,7 @@
 		return PROCESS_KILL
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
-	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
+	if(reagents.total_volume + 0.01 >= wanted_amount && anchored && length(inputspot.contents))
 		use_power(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))

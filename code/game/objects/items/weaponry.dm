@@ -922,7 +922,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(isliving(target))
 			var/mob/living/bug = target
 			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
-			bug.gib()
+			bug.gib(DROP_ALL_REMAINS)
 		else
 			qdel(target)
 		return
@@ -1099,7 +1099,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(living_target.stat == DEAD && prob(force*damage_mod*0.5))
 			living_target.visible_message(span_danger("[living_target] explodes in a shower of gore!"), blind_message = span_hear("You hear organic matter ripping and tearing!"))
 			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			living_target.gib()
+			living_target.gib(DROP_ALL_REMAINS)
 			log_combat(user, living_target, "gibbed", src)
 	else if(target.uses_integrity)
 		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)

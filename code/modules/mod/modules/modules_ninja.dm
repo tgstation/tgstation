@@ -24,7 +24,7 @@
 		return
 	if(bumpoff)
 		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignals(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
@@ -36,7 +36,7 @@
 		return
 	if(bumpoff)
 		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
 	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
 
 /obj/item/mod/module/stealth/proc/unstealth(datum/source)
@@ -143,10 +143,10 @@
 	var/door_hack_counter = 0
 
 /obj/item/mod/module/hacker/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(hack))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(hack))
 
 /obj/item/mod/module/hacker/on_suit_deactivation(deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK)
 
 /obj/item/mod/module/hacker/proc/hack(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -275,7 +275,7 @@
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
 	living_user.investigate_log("has been gibbed by using a MODsuit equipped with [src].", INVESTIGATE_DEATHS)
-	living_user.gib()
+	living_user.gib(DROP_ALL_REMAINS)
 
 /obj/item/mod/module/dna_lock/reinforced/on_emp(datum/source, severity)
 	return
@@ -374,7 +374,7 @@
 		line = firer.Beam(src, "net_beam", 'icons/obj/clothing/modsuit/mod_modules.dmi')
 	return ..()
 
-/obj/projectile/energy_net/on_hit(mob/living/target)
+/obj/projectile/energy_net/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!istype(target))
 		return

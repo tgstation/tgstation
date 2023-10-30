@@ -260,7 +260,7 @@
 		if(2 to INFINITY)
 			var/obj/dummy = new(get_turf(here))
 			dummy.pass_flags |= PASSTABLE
-			dummy.invisibility = INVISIBILITY_ABSTRACT
+			dummy.SetInvisibility(INVISIBILITY_ABSTRACT)
 			for(var/i in 1 to reach) //Limit it to that many tries
 				var/turf/T = get_step(dummy, get_dir(dummy, there))
 				if(dummy.CanReach(there))
@@ -277,7 +277,10 @@
 
 
 /**
- * Translates into [atom/proc/attack_hand], etc.
+ * UnarmedAttack: The higest level of mob click chain discounting click itself.
+ *
+ * This handles, just "clicking on something" without an item. It translates
+ * into [atom/proc/attack_hand], [atom/proc/attack_animal] etc.
  *
  * Note: proximity_flag here is used to distinguish between normal usage (flag=1),
  * and usage when clicking on things telekinetically (flag=0).  This proc will

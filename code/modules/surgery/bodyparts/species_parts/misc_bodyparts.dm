@@ -387,6 +387,25 @@
 	burn_modifier = 1.25
 	speed_modifier = 0.75 //big fungus big fungus
 
+/// Dullahan head preserves organs inside it
+/obj/item/bodypart/head/dullahan
+	throwforce = 25 // It's also a potent weapon
+	show_organs_on_examine = FALSE
+	speech_span = null
+
+/obj/item/bodypart/head/dullahan/Entered(obj/item/organ/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if (!isorgan(arrived))
+		return
+	arrived.organ_flags |= ORGAN_FROZEN
+
+/obj/item/bodypart/head/dullahan/Exited(obj/item/organ/gone, direction)
+	. = ..()
+	if (!isorgan(gone))
+		return
+	gone.organ_flags &= ~ORGAN_FROZEN
+
+
 //GOLEM
 /obj/item/bodypart/head/golem
 	icon = 'icons/mob/human/species/golems.dmi'
@@ -539,3 +558,45 @@
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
+
+///flesh
+
+/obj/item/bodypart/arm/left/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+
+/obj/item/bodypart/arm/right/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+
+/obj/item/bodypart/leg/left/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+
+/obj/item/bodypart/leg/right/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)

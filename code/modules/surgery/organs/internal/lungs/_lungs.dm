@@ -264,7 +264,7 @@
 		return
 
 	var/ratio = (breath.gases[/datum/gas/oxygen][MOLES] / safe_oxygen_max) * 10
-	breather.apply_damage_type(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
+	breather.apply_damage(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type, spread_damage = TRUE)
 	breather.throw_alert(ALERT_TOO_MUCH_OXYGEN, /atom/movable/screen/alert/too_much_oxy)
 
 /// Handles NOT having too much o2. only relevant if safe_oxygen_max has a value
@@ -320,10 +320,10 @@
 		breather.throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 		breather.Unconscious(6 SECONDS)
 		// Lets hurt em a little, let them know we mean business.
-		breather.apply_damage_type(3, co2_damage_type)
+		breather.apply_damage(3, co2_damage_type, spread_damage = TRUE)
 		// They've been in here 30s now, start to kill them for their own good!
 		if((world.time - breather.co2overloadtime) > 30 SECONDS)
-			breather.apply_damage_type(8, co2_damage_type)
+			breather.apply_damage(8, co2_damage_type, spread_damage = TRUE)
 
 /// Handles NOT having too much co2. only relevant if safe_co2_max has a value
 /obj/item/organ/internal/lungs/proc/safe_co2(mob/living/carbon/breather, datum/gas_mixture/breath, old_co2_pp)
@@ -364,7 +364,7 @@
 		breather.throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 
 	var/ratio = (breath.gases[/datum/gas/plasma][MOLES] / safe_plasma_max) * 10
-	breather.apply_damage_type(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type)
+	breather.apply_damage(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type, spread_damage = TRUE)
 
 /// Resets plasma side effects
 /obj/item/organ/internal/lungs/proc/safe_plasma(mob/living/carbon/breather, datum/gas_mixture/breath, old_plasma_pp)
@@ -514,6 +514,7 @@
 		if(prob(20))
 			n2o_euphoria = EUPHORIA_ACTIVE
 			breather.emote(pick("giggle", "laugh"))
+			breather.set_drugginess(30 SECONDS)
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
 		return
@@ -753,11 +754,11 @@
 	if(!HAS_TRAIT(breather, TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = breather.dna.species.coldmod
 		if(breath_temperature < cold_level_3_threshold)
-			breather.apply_damage_type(cold_level_3_damage*cold_modifier, cold_damage_type)
+			breather.apply_damage(cold_level_3_damage*cold_modifier, cold_damage_type, spread_damage = TRUE)
 		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
-			breather.apply_damage_type(cold_level_2_damage*cold_modifier, cold_damage_type)
+			breather.apply_damage(cold_level_2_damage*cold_modifier, cold_damage_type, spread_damage = TRUE)
 		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
-			breather.apply_damage_type(cold_level_1_damage*cold_modifier, cold_damage_type)
+			breather.apply_damage(cold_level_1_damage*cold_modifier, cold_damage_type, spread_damage = TRUE)
 		if(breath_temperature < cold_level_1_threshold)
 			if(prob(20))
 				to_chat(breather, span_warning("You feel [cold_message] in your [name]!"))
@@ -765,11 +766,11 @@
 	if(!HAS_TRAIT(breather, TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = breather.dna.species.heatmod
 		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
-			breather.apply_damage_type(heat_level_1_damage*heat_modifier, heat_damage_type)
+			breather.apply_damage(heat_level_1_damage*heat_modifier, heat_damage_type, spread_damage = TRUE)
 		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
-			breather.apply_damage_type(heat_level_2_damage*heat_modifier, heat_damage_type)
+			breather.apply_damage(heat_level_2_damage*heat_modifier, heat_damage_type, spread_damage = TRUE)
 		if(breath_temperature > heat_level_3_threshold)
-			breather.apply_damage_type(heat_level_3_damage*heat_modifier, heat_damage_type)
+			breather.apply_damage(heat_level_3_damage*heat_modifier, heat_damage_type, spread_damage = TRUE)
 		if(breath_temperature > heat_level_1_threshold)
 			if(prob(20))
 				to_chat(breather, span_warning("You feel [hot_message] in your [name]!"))

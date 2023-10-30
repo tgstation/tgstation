@@ -263,7 +263,7 @@
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = faction_check_mob(L)
+			var/faction_check = faction_check_atom(L)
 			if(robust_searching)
 				if(faction_check && !attack_same)
 					return FALSE
@@ -314,14 +314,14 @@
 		for(var/i in 1 to rapid_melee)
 			addtimer(cb, (i - 1)*delay)
 	else
-		AttackingTarget()
+		AttackingTarget(target)
 	if(patience)
 		GainPatience()
 
 /mob/living/simple_animal/hostile/proc/CheckAndAttack()
 	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(target && isturf(target_from.loc) && target.Adjacent(target_from) && !incapacitated())
-		AttackingTarget()
+		AttackingTarget(target)
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget(list/possible_targets)//Step 5, handle movement between us and our target
 	stop_automated_movement = 1
@@ -432,7 +432,7 @@
 	playsound(loc, 'sound/machines/chime.ogg', 50, TRUE, -1)
 	var/atom/target_from = GET_TARGETS_FROM(src)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, target_from))
-		if(faction_check_mob(M, TRUE))
+		if(faction_check_atom(M, TRUE))
 			if(M.AIStatus == AI_OFF)
 				return
 			else
@@ -444,7 +444,7 @@
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
-				if(faction_check_mob(L) && !attack_same)
+				if(faction_check_atom(L) && !attack_same)
 					return TRUE
 
 /mob/living/simple_animal/hostile/proc/OpenFire(atom/A)

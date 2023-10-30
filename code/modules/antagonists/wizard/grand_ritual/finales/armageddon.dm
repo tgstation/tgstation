@@ -31,9 +31,9 @@
 	)
 
 /datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker)
-	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]")
+	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]", color_override = "purple")
 	var/turf/current_location = get_turf(invoker)
-	invoker.gib()
+	invoker.gib(DROP_ALL_REMAINS)
 
 	var/static/list/doom_options = list()
 	if (!length(doom_options))

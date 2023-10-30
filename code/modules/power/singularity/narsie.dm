@@ -58,7 +58,7 @@
 	var/area/area = get_area(src)
 	if(area)
 		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult/effects.dmi', "ghostalertsie")
-		notify_ghosts("Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action = NOTIFY_ATTACK)
+		notify_ghosts("Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action = NOTIFY_PLAY)
 	narsie_spawn_animation()
 
 	GLOB.cult_narsie = src
@@ -112,7 +112,7 @@
 	return ..()
 
 /obj/narsie/attack_ghost(mob/user)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
+	makeNewConstruct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
 
 /obj/narsie/process()
 	var/datum/component/singularity/singularity_component = singularity.resolve()

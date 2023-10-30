@@ -60,7 +60,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/engineering)
 "as" = (
-/mob/living/basic/syndicate/ranged/smg,
+/mob/living/basic/trooper/syndicate/ranged/smg,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "at" = (
@@ -91,7 +91,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/mob/living/basic/syndicate,
+/mob/living/basic/trooper/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "az" = (
@@ -185,7 +185,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aT" = (
-/mob/living/basic/syndicate/melee/sword,
+/mob/living/basic/trooper/syndicate/melee/sword,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aU" = (
@@ -553,7 +553,7 @@
 /area/awaymission/research/interior/maint)
 "cz" = (
 /obj/structure/cable,
-/mob/living/basic/syndicate/ranged/smg,
+/mob/living/basic/trooper/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cA" = (
@@ -581,7 +581,7 @@
 /area/awaymission/research/interior/gateway)
 "cL" = (
 /obj/structure/cable,
-/mob/living/basic/syndicate/ranged,
+/mob/living/basic/trooper/syndicate/ranged,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "cM" = (
@@ -696,7 +696,7 @@
 /area/awaymission/research/interior)
 "dn" = (
 /obj/item/ammo_casing/c45,
-/mob/living/basic/syndicate,
+/mob/living/basic/trooper/syndicate,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
@@ -779,7 +779,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dP" = (
-/mob/living/basic/syndicate/ranged/smg,
+/mob/living/basic/trooper/syndicate/ranged/smg,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
@@ -826,7 +826,7 @@
 /turf/open/floor/iron/stairs,
 /area/awaymission/research/interior/genetics)
 "ec" = (
-/mob/living/basic/syndicate/ranged/smg,
+/mob/living/basic/trooper/syndicate/ranged/smg,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "ed" = (
@@ -918,7 +918,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "eB" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/mob/living/basic/trooper/nanotrasen/ranged,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -967,7 +967,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "eL" = (
-/mob/living/basic/syndicate,
+/mob/living/basic/trooper/syndicate,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
@@ -1019,7 +1019,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "eV" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/basic/trooper/nanotrasen/ranged/smg,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "eW" = (
@@ -1098,7 +1098,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "fn" = (
-/mob/living/basic/syndicate/melee/sword,
+/mob/living/basic/trooper/syndicate/melee/sword,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "fo" = (
@@ -1159,7 +1159,7 @@
 /area/awaymission/research/interior/secure)
 "fA" = (
 /obj/machinery/light/small/directional/west,
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/basic/trooper/nanotrasen/ranged/smg,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "fD" = (
@@ -1289,7 +1289,7 @@
 /area/awaymission/research/interior/secure)
 "gj" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/basic/trooper/nanotrasen/ranged/smg,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "gk" = (
@@ -1469,7 +1469,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "hq" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/basic/trooper/nanotrasen/ranged/smg,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
@@ -1807,7 +1807,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
 "iQ" = (
-/mob/living/basic/syndicate,
+/mob/living/basic/trooper/syndicate,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
@@ -2963,7 +2963,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/security)
 "sn" = (
-/mob/living/basic/syndicate/ranged/smg,
+/mob/living/basic/trooper/syndicate/ranged/smg,
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
@@ -3166,7 +3166,7 @@
 	pixel_x = 32;
 	pixel_y = 26
 	},
-/mob/living/basic/syndicate/ranged/smg,
+/mob/living/basic/trooper/syndicate/ranged/smg,
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
@@ -3184,7 +3184,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "yW" = (
-/mob/living/simple_animal/hostile/nanotrasen,
+/mob/living/basic/trooper/nanotrasen,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/cryo)
@@ -3264,7 +3264,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
 "BQ" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/smg,
+/mob/living/basic/trooper/nanotrasen/ranged/smg,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
@@ -3346,7 +3346,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
 "DY" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/mob/living/basic/trooper/nanotrasen/ranged,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
@@ -3788,7 +3788,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
 "Qq" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged,
+/mob/living/basic/trooper/nanotrasen/ranged,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/security)
@@ -3868,7 +3868,7 @@
 /turf/open/misc/asteroid,
 /area/awaymission/research/exterior)
 "Th" = (
-/mob/living/basic/syndicate,
+/mob/living/basic/trooper/syndicate,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
@@ -3923,7 +3923,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "Uq" = (
-/mob/living/basic/syndicate/ranged/smg/space,
+/mob/living/basic/trooper/syndicate/ranged/smg/space,
 /turf/open/misc/asteroid/airless,
 /area/awaymission/research/exterior)
 "Uu" = (

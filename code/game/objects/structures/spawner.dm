@@ -8,12 +8,59 @@
 	anchored = TRUE
 	density = TRUE
 
+	faction = list(FACTION_HOSTILE)
+
 	var/max_mobs = 5
 	var/spawn_time = 30 SECONDS
 	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_text = "emerges from"
-	var/faction = list(FACTION_HOSTILE)
 	var/spawner_type = /datum/component/spawner
+	/// Is this spawner taggable with something?
+	var/scanner_taggable = FALSE
+	/// If this spawner's taggable, what can we tag it with?
+	var/static/list/scanner_types = list(/obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner)
+	/// If this spawner's taggable, what's the text we use to describe what we can tag it with?
+	var/scanner_descriptor = "mining analyzer"
+	/// Has this spawner been tagged/analyzed by a mining scanner?
+	var/gps_tagged = FALSE
+	/// A short identifier for the mob it spawns. Keep around 3 characters or less?
+	var/mob_gps_id = "???"
+	/// A short identifier for what kind of spawner it is, for use in putting together its GPS tag.
+	var/spawner_gps_id = "Creature Nest"
+	/// A complete identifier. Generated on tag (if tagged), used for its examine.
+	var/assigned_tag
+
+/obj/structure/spawner/examine(mob/user)
+	. = ..()
+	if(!scanner_taggable)
+		return
+	if(gps_tagged)
+		. += span_notice("A holotag's been attached, projecting \"<b>[assigned_tag]</b>\".")
+	else
+		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
+
+/obj/structure/spawner/attackby(obj/item/item, mob/user, params)
+	. = ..()
+	if(.)
+		return TRUE
+	if(scanner_taggable && is_type_in_list(item, scanner_types))
+		gps_tag(user)
+		return TRUE
+
+/// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.
+/obj/structure/spawner/proc/gps_tag(mob/user)
+	if(gps_tagged)
+		to_chat(user, span_warning("[src] already has a holotag attached!"))
+		return
+	to_chat(user, span_notice("You affix a holotag to [src]."))
+	playsound(src, 'sound/machines/twobeep.ogg', 100)
+	gps_tagged = TRUE
+	assigned_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
+	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
+	if(our_gps)
+		our_gps.gpstag = assigned_tag
+		return
+	AddComponent(/datum/component/gps, assigned_tag)
 
 /obj/structure/spawner/Initialize(mapload)
 	. = ..()
@@ -30,8 +77,10 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
-	mob_types = list(/mob/living/basic/syndicate/ranged)
+	mob_types = list(/mob/living/basic/trooper/syndicate/ranged)
 	faction = list(ROLE_SYNDICATE)
+	mob_gps_id = "SYN" // syndicate
+	spawner_gps_id = "Hostile Warp Beacon"
 
 /obj/structure/spawner/skeleton
 	name = "bone pit"
@@ -41,9 +90,11 @@
 	max_integrity = 150
 	max_mobs = 15
 	spawn_time = 15 SECONDS
-	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
+	mob_types = list(/mob/living/basic/skeleton)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_SKELETON)
+	mob_gps_id = "SKL" // skeletons
+	spawner_gps_id = "Bone Pit"
 
 /obj/structure/spawner/clown
 	name = "Laughing Larry"
@@ -67,6 +118,8 @@
 	)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_CLOWN)
+	mob_gps_id = "???" // clowns
+	spawner_gps_id = "Clown Planet Distortion"
 
 /obj/structure/spawner/mining
 	name = "monster den"
@@ -80,7 +133,7 @@
 		/mob/living/basic/mining/basilisk,
 		/mob/living/basic/mining/goldgrub,
 		/mob/living/basic/mining/goliath/ancient,
-		/mob/living/basic/mining/legion,
+		/mob/living/basic/mining/hivelord,
 		/mob/living/basic/wumborian_fugu,
 	)
 	faction = list(FACTION_MINING)
@@ -89,26 +142,31 @@
 	name = "goldgrub den"
 	desc = "A den housing a nest of goldgrubs, annoying but arguably much better than anything else you'll find in a nest."
 	mob_types = list(/mob/living/basic/mining/goldgrub)
+	mob_gps_id = "GG"
 
 /obj/structure/spawner/mining/goliath
 	name = "goliath den"
 	desc = "A den housing a nest of goliaths, oh god why?"
 	mob_types = list(/mob/living/basic/mining/goliath/ancient)
+	mob_gps_id = "GL|A"
 
 /obj/structure/spawner/mining/hivelord
 	name = "hivelord den"
 	desc = "A den housing a nest of hivelords."
 	mob_types = list(/mob/living/basic/mining/hivelord)
+	mob_gps_id = "HL"
 
 /obj/structure/spawner/mining/basilisk
 	name = "basilisk den"
 	desc = "A den housing a nest of basilisks, bring a coat."
 	mob_types = list(/mob/living/basic/mining/basilisk)
+	mob_gps_id = "BK"
 
 /obj/structure/spawner/mining/wumborian
 	name = "wumborian fugu den"
 	desc = "A den housing a nest of wumborian fugus, how do they all even fit in there?"
 	mob_types = list(/mob/living/basic/wumborian_fugu)
+	mob_gps_id = "WF"
 
 /obj/structure/spawner/nether
 	name = "netherworld link"
@@ -125,6 +183,9 @@
 		/mob/living/basic/migo,
 	)
 	faction = list(FACTION_NETHER)
+	scanner_taggable = TRUE
+	mob_gps_id = "?!?"
+	spawner_gps_id = "Netheric Distortion"
 
 /obj/structure/spawner/nether/Initialize(mapload)
 	. = ..()

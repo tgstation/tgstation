@@ -407,7 +407,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(unforeseen_consequences)
 		to_chat(unforeseen_consequences, span_warning("\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart."))
 		unforeseen_consequences.investigate_log("has been gibbed by using [H] while inside of it.", INVESTIGATE_DEATHS)
-		unforeseen_consequences.gib()
+		unforeseen_consequences.gib(DROP_ALL_REMAINS)
 
 	var/turf/targetturf = find_safe_turf()
 	if(!targetturf)
@@ -532,28 +532,28 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			to_chat(user, "No vacated rooms.")
 		return .
 
-/obj/effect/landmark/lift_id/hilbert
-	specific_lift_id = HILBERT_TRAM
+/obj/effect/landmark/transport/transport_id/hilbert
+	specific_transport_id = HILBERT_LINE_1
 
-/obj/effect/landmark/tram/nav/hilbert
-	name = HILBERT_TRAM
-	specific_lift_id = TRAM_NAV_BEACONS
+/obj/effect/landmark/transport/nav_beacon/tram/nav/hilbert
+	name = HILBERT_LINE_1
+	specific_transport_id = TRAM_NAV_BEACONS
 
-/obj/effect/landmark/tram/platform/hilbert/left
+/obj/effect/landmark/transport/nav_beacon/tram/platform/hilbert/left
 	name = "Port"
-	specific_lift_id = HILBERT_TRAM
+	specific_transport_id = HILBERT_LINE_1
 	platform_code = HILBERT_PORT
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
-/obj/effect/landmark/tram/platform/hilbert/middle
+/obj/effect/landmark/transport/nav_beacon/tram/platform/hilbert/middle
 	name = "Central"
-	specific_lift_id = HILBERT_TRAM
+	specific_transport_id = HILBERT_LINE_1
 	platform_code = HILBERT_CENTRAL
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
-/obj/effect/landmark/tram/platform/hilbert/right
+/obj/effect/landmark/transport/nav_beacon/tram/platform/hilbert/right
 	name = "Starboard"
-	specific_lift_id = HILBERT_TRAM
+	specific_transport_id = HILBERT_LINE_1
 	platform_code = HILBERT_STARBOARD
 	tgui_icons = list("Ordnance" = "bullseye", "Office" = "user", "Dormitories" = "bed")
 

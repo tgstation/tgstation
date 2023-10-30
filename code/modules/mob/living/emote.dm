@@ -107,9 +107,14 @@
 		message_animal_or_basic = custom_message
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
-	if(. && user.death_sound)
-		if(!user.can_speak() || user.oxyloss >= 50)
-			return //stop the sound if oxyloss too high/cant speak
+	if(!. && !user.can_speak() || user.getOxyLoss() >= 50)
+		return //stop the sound if oxyloss too high/cant speak
+	var/mob/living/carbon/carbon_user = user
+	// For masks that give unique death sounds
+	if(istype(carbon_user) && isclothing(carbon_user.wear_mask) && carbon_user.wear_mask.unique_death)
+		playsound(carbon_user, carbon_user.wear_mask.unique_death, 200, TRUE, TRUE)
+		return
+	if(user.death_sound)
 		playsound(user, user.death_sound, 200, TRUE, TRUE)
 
 /datum/emote/living/drool
@@ -141,6 +146,8 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		var/obj/item/organ/external/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+
+		// open/close functional wings
 		if(istype(wings))
 			if(wings.wings_open)
 				open = TRUE
@@ -148,6 +155,10 @@
 			else
 				wings.open_wings()
 			addtimer(CALLBACK(wings,  open ? TYPE_PROC_REF(/obj/item/organ/external/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/external/wings/functional, close_wings)), wing_time)
+
+		// play moth flutter noise if moth wing
+		if(istype(wings, /obj/item/organ/external/wings/moth))
+			playsound(H, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -464,7 +475,7 @@
 /datum/emote/living/tremble
 	key = "tremble"
 	key_third_person = "trembles"
-	message = "trembles in fear!"
+	message = "trembles!"
 
 #define TREMBLE_LOOP_DURATION (4.4 SECONDS)
 /datum/emote/living/tremble/run_emote(mob/living/user, params, type_override, intentional)
