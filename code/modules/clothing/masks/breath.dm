@@ -12,6 +12,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = NONE
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /datum/armor/mask_breath
 	bio = 50

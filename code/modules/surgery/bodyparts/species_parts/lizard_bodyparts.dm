@@ -41,6 +41,8 @@
 /obj/item/bodypart/leg/left/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
+	can_be_digitigrade = TRUE
+	digitigrade_id = "digitigrade"
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/leg/left/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
@@ -67,6 +69,8 @@
 /obj/item/bodypart/leg/right/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
+	can_be_digitigrade = TRUE
+	digitigrade_id = "digitigrade"
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
 /obj/item/bodypart/leg/right/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)

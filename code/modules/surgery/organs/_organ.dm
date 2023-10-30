@@ -41,10 +41,22 @@
 	var/failure_time = 0
 	///Do we effect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
+	///If the organ is cosmetic only, it loses all organ functionality.
+	var/cosmetic_only = FALSE
 	/// Traits that are given to the holder of the organ. If you want an effect that changes this, don't add directly to this. Use the add_organ_trait() proc
-	var/list/organ_traits
+	var/list/organ_traits = list()
 	/// Status Effects that are given to the holder of the organ.
 	var/list/organ_effects
+	///Sometimes we need multiple layers, for like the back, middle and front of the person
+	var/list/layers
+	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth'. 'mothwings' would then be feature_key
+	var/feature_key = ""
+	/// The savefile_key of the preference this relates to. Used for the preferences UI.
+	var/preference
+	///With what DNA block do we mutate in mutate_feature() ? For genetics
+	var/dna_block
+	///Does this organ have any bodytypes to pass to it's ownerlimb?
+	var/external_bodytypes = NONE
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -52,7 +64,7 @@
 // any nonhumans created in that time would experience the same effect.
 INITIALIZE_IMMEDIATE(/obj/item/organ)
 
-/obj/item/organ/Initialize(mapload)
+/obj/item/organ/Initialize(mapload, mob_sprite)
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
@@ -60,6 +72,16 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			foodtypes = RAW | MEAT | GORE,\
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
+
+	if(cosmetic_only) //Cosmetic organs don't process.
+		if(mob_sprite)
+			set_sprite(mob_sprite)
+
+/obj/item/organ/proc/set_sprite(sprite_name)
+	stored_feature_id = sprite_name
+	sprite_datum = get_global_feature_list()[sprite_name]
+	if(!sprite_datum && stored_feature_id)
+		stack_trace("External organ has no valid sprite datum for name [sprite_name]")
 
 /*
  * Insert the organ into the select mob.

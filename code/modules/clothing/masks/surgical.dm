@@ -10,6 +10,7 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	armor_type = /datum/armor/mask_surgical
 	actions_types = list(/datum/action/item_action/adjust)
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /datum/armor/mask_surgical
 	bio = 100

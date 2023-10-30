@@ -25,6 +25,7 @@
 	plane = GAME_PLANE_FOV_HIDDEN
 	max_integrity = 100
 	item_flags = XENOMORPH_HOLDABLE
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE

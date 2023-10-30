@@ -607,6 +607,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 	var/voice_change = 1 ///This determines if the voice changer is on or off.
 

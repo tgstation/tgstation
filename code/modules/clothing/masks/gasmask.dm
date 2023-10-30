@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	armor_type = /datum/armor/mask_gas
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter

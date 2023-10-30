@@ -20,6 +20,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana_inhands_left
 	greyscale_config_inhand_right = /datum/greyscale_config/bandana_inhands_right
 	greyscale_colors = "#2e2e2e"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	if(slot_flags & ITEM_SLOT_NECK)
@@ -51,8 +52,8 @@
 		else if(!user.is_holding(src))
 			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 			return
-		
-		
+
+
 		if(slot_flags & ITEM_SLOT_MASK)
 			undyeable = TRUE
 			slot_flags = ITEM_SLOT_NECK

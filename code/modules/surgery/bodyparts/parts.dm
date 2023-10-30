@@ -312,6 +312,13 @@
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 10
 
+	/// Can these legs be digitigrade? See digitigrade.dm
+	var/can_be_digitigrade = FALSE
+	///Set limb_id to this when in "digi mode". MUST BE UNIQUE LIKE ALL LIMB IDS
+	var/digitigrade_id
+	/// Used solely by digitigrade limbs to remember what their old limb ID was.
+	var/old_limb_id
+
 /obj/item/bodypart/leg/left
 	name = "left leg"
 	desc = "Some athletes prefer to tie their left shoelaces first for good \

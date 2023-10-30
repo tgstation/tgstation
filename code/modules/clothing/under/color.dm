@@ -7,6 +7,8 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
+	greyscale_config_worn_digitigrade = /datum/greyscale_config/jumpsuit_worn/digitigrade
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"
@@ -20,6 +22,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	icon_state = "jumpskirt"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config_worn_digitigrade = null
 
 /// Returns a random, acceptable jumpsuit typepath
 /proc/get_random_jumpsuit()
