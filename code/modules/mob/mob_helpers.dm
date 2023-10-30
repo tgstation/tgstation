@@ -560,3 +560,17 @@
 		raw_lines += recent_speech[key]
 
 	return raw_lines
+
+/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key) and handles granting the action and adding it to the mob's AI controller blackboard.
+/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
+/// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
+/mob/proc/grant_multiple_actions(list/input)
+	for(var/action in input)
+		var/datum/action/ability = new action(src)
+		ability.Grant(src)
+
+		var/blackboard_key = input[action]
+		if(isnull(blackboard_key))
+			continue
+
+		ai_controller?.set_blackboard_key(blackboard_key, ability)
