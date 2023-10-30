@@ -114,9 +114,8 @@
 
 	//take an equal amount from each supplier
 	var/currentRequest
-	var/target_volume = reagents.total_volume + amount
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
-		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
+		currentRequest = amount / suppliersLeft
 		give.transfer_to(src, currentRequest, reagent, net)
 		suppliersLeft--
 
@@ -131,8 +130,6 @@
 				return TRUE
 	else if(reagents.total_volume) //take whatever
 		return TRUE
-
-	return FALSE
 
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
 /datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
