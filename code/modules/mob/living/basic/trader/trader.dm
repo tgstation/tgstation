@@ -41,9 +41,6 @@
 	var/trader_data_path = /datum/trader_data
 
 
-	/// Our shop set up ability
-	var/datum/action/setup_shop/setup_shop
-
 /mob/living/basic/trader/Initialize(mapload)
 	. = ..()
 	apply_dynamic_human_appearance(src, species_path = species_path, mob_spawn_path = spawner_path, r_hand = held_weapon_visual)
@@ -57,7 +54,7 @@
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
 
-	setup_shop = new (src, trader_data)
+	var/datum/action/setup_shop = new (src, trader_data)
 	setup_shop.Grant(src)
 	ai_controller.set_blackboard_key(BB_SETUP_SHOP, setup_shop)
 

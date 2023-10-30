@@ -7,9 +7,13 @@
 	var/datum/weakref/shop_spot_ref
 	/// The server this console is connected to.
 	var/datum/weakref/sign_ref
+	/// The type of the chair we sit on
 	var/shop_spot_type
+	/// The type of our advertising sign
 	var/sign_type
+	/// The sound we make when we summon our shop gear
 	var/shop_sound
+	/// Lines we say when we open our shop
 	var/opening_lines
 
 /datum/action/setup_shop/IsAvailable(feedback = FALSE)
@@ -24,6 +28,7 @@
 
 /datum/action/setup_shop/New(Target, datum/trader_data/data)
 	. = ..()
+
 	src.shop_spot_type = data.shop_spot_type
 	src.sign_type = data.sign_type
 	src.shop_sound = data.sell_sound
@@ -38,8 +43,7 @@
 	var/obj/shop_spot = new shop_spot_type(owner.loc)
 	shop_spot.dir = owner.dir
 	shop_spot_ref = WEAKREF(shop_spot)
-	if(owner.ai_controller)
-		owner.ai_controller.set_blackboard_key(BB_SHOP_SPOT, shop_spot)
+	owner.ai_controller?.set_blackboard_key(BB_SHOP_SPOT, shop_spot)
 
 	playsound(owner, shop_sound, 50, TRUE)
 
@@ -49,14 +53,16 @@
 	if(isnull(sign_turf)) //No space to my left, lets try right
 		sign_turf = try_find_valid_spot(owner.loc, turn(shop_spot.dir, 90))
 
-	if(!isnull(sign_turf))
-		var/obj/sign = sign_ref?.resolve()
-		if(QDELETED(sign))
-			var/obj/new_sign = new sign_type(sign_turf)
-			sign_ref = WEAKREF(sign)
-			do_sparks(3, FALSE, new_sign)
-		else
-			do_teleport(sign,sign_turf)
+	if(isnull(sign_turf))
+		return
+
+	var/obj/sign = sign_ref?.resolve()
+	if(QDELETED(sign))
+		var/obj/new_sign = new sign_type(sign_turf)
+		sign_ref = WEAKREF(sign)
+		do_sparks(3, FALSE, new_sign)
+	else
+		do_teleport(sign,sign_turf)
 
 ///Look for a spot we can place our sign on
 /datum/action/setup_shop/proc/try_find_valid_spot(origin_turf, direction_to_check)
