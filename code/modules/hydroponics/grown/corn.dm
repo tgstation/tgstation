@@ -116,7 +116,7 @@
 	trash_type = /obj/item/grown/corncob/pepper
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/blackpepper = 0)
-	tastes = list("pepper, sneezing" = 1)
+	tastes = list("pepper" = 1, "sneezing" = 1)
 
 /obj/item/grown/corncob/pepper
 	seed = /obj/item/seeds/corn/pepper
