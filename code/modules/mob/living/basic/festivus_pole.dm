@@ -47,11 +47,7 @@
 	var/static/list/death_loot = list(/obj/item/stack/rods)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
-
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC,
-	)
-	grant_actions_by_list(innate_actions)
+	grant_actions_by_list(list(/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC))
 
 /datum/ai_controller/basic_controller/festivus_pole
 	blackboard = list(
