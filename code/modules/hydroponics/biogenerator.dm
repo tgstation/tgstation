@@ -313,7 +313,6 @@
 		var/obj/item/food/food_to_convert = locate(/obj/item/food) in contents
 
 		if(food_to_convert.flags_1 & HOLOGRAM_1)
-			visible_message(span_notice("[food_to_convert] fades away!"))
 			qdel(food_to_convert)
 			continue
 
