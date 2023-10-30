@@ -82,7 +82,7 @@
 
 	generated_name = artifact_origin.generate_name()
 	if(!generated_name)
-		generated_name  = = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
+		generated_name  = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
 
 	holder.name = fake_name
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
