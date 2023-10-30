@@ -125,3 +125,5 @@
 #define COMSIG_ATOM_GERM_EXPOSED "atom_germ_exposed"
 /// when atom is picked up from the floor or moved to an elevated structure: (datum/component/germ_exposure)
 #define COMSIG_ATOM_GERM_UNEXPOSED "atom_germ_unexposed"
+/// signal sent to puzzle pieces by activator
+#define COMSIG_PUZZLE_COMPLETED "puzzle_completed"

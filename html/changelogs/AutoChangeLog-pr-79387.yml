@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - spellcheck: "Changed candy description to read better"

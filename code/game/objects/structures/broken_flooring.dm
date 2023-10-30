@@ -8,6 +8,8 @@
 	opacity = FALSE
 	plane = FLOOR_PLANE
 	layer = CATWALK_LAYER
+	/// do we always have FLOOR_PLANE even if we arent on plating?
+	var/always_floorplane = FALSE
 
 /obj/structure/broken_flooring/Initialize(mapload)
 	. = ..()
@@ -16,7 +18,7 @@
 /obj/structure/broken_flooring/LateInitialize()
 	. = ..()
 	var/turf/turf = get_turf(src)
-	if(!isplatingturf(turf)) // Render as trash if not on plating
+	if(!isplatingturf(turf) && !always_floorplane) // Render as trash if not on plating
 		plane = GAME_PLANE
 		layer = LOW_OBJ_LAYER
 		return
@@ -35,20 +37,40 @@
 /obj/structure/broken_flooring/singular
 	icon_state = "singular"
 
+/obj/structure/broken_flooring/singular/always_floorplane
+	always_floorplane = TRUE
+
 /obj/structure/broken_flooring/pile
 	icon_state = "pile"
+
+/obj/structure/broken_flooring/pile/always_floorplane
+	always_floorplane = TRUE
 
 /obj/structure/broken_flooring/side
 	icon_state = "side"
 
+/obj/structure/broken_flooring/side/always_floorplane
+	always_floorplane = TRUE
+
 /obj/structure/broken_flooring/corner
 	icon_state = "corner"
 
+/obj/structure/broken_flooring/corner/always_floorplane
+	always_floorplane = TRUE
+
 /obj/structure/broken_flooring/plating
 	icon_state = "plating"
+
+/obj/structure/broken_flooring/plating/always_floorplane
+	always_floorplane = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/singular, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/pile, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/side, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/corner, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/plating, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/singular/always_floorplane, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/pile/always_floorplane, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/side/always_floorplane, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/corner/always_floorplane, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/plating/always_floorplane, 0)

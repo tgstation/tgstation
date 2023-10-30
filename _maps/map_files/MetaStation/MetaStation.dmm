@@ -2921,9 +2921,9 @@
 	pixel_x = 10
 	},
 /obj/item/flashlight/lamp{
-	on = 0;
 	pixel_x = -7;
-	pixel_y = 18
+	pixel_y = 18;
+	start_on = 0
 	},
 /obj/item/kitchen/rollingpin{
 	pixel_x = -4
