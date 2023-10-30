@@ -105,7 +105,7 @@
 		extra_effect = mutable_appearance(holder.icon, "[holder.icon_state]-gem", ABOVE_OBJ_LAYER, offset_spokesman = holder)
 		extra_effect.color = random_rgb_pairlists(artifact_origin.overlays_reds, artifact_origin.overlays_blues, artifact_origin.overlays_greens, artifact_origin.overlays_alpha)
 	
-	holder.update_appearance()
+	holder.update_appearance() // force an all update specifically to try and apply secondary overlays
 
 	act_effect = mutable_appearance(holder.icon, "[holder.icon_state]fx", offset_spokesman = holder, alpha = rand(artifact_origin.overlays_alpha[1], artifact_origin.overlays_alpha[2]))
 	act_effect.color = random_rgb_pairlists(artifact_origin.overlays_reds, artifact_origin.overlays_blues, artifact_origin.overlays_greens, artifact_origin.overlays_alpha)
@@ -138,6 +138,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT, PROC_REF(on_robot_attack))
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 
 /datum/component/artifact/UnregisterFromParent()
 	GLOB.running_artifact_list -= parent
@@ -203,7 +204,7 @@
 					continue
 				if(!prob(ranged_activator.hint_prob))
 					continue
-				holder.visible_message(span_notice("[holder] [hint_text]"))
+				holder.visible_message(span_notice("[hint_text]"))
 				continue
 		artifact_activate()
 
