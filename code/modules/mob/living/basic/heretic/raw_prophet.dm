@@ -15,8 +15,12 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	/// Some ability we use to make people go blind
-	var/blind_action_type = /datum/action/cooldown/spell/pointed/blind/eldritch
+	/// List of innate abilities we have to add.
+	var/static/list/innate_abilities = list(
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long = null,
+		/datum/action/cooldown/spell/list_target/telepathy/eldritch = null,
+		/datum/action/innate/expand_sight = null,
+	)
 
 /mob/living/basic/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
@@ -39,13 +43,13 @@
 		unlink_message = on_unlink_message, \
 	)
 
-	var/static/list/add_abilities = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long = null,
-		/datum/action/cooldown/spell/list_target/telepathy/eldritch = null,
-		/datum/action/innate/expand_sight = null,
-	)
+	grant_multiple_actions(get_innate_abilities())
 
-	grant_multiple_actions(add_abilities + list(blind_action_type = BB_TARGETTED_ACTION))
+/// Returns a list of abilities that we should add.
+/mob/living/basic/heretic_summon/raw_prophet/proc/get_innate_abilities()
+	var/list/returnable_list = innate_abilities.Copy()
+	returnable_list += list(/datum/action/cooldown/spell/pointed/blind/eldritch = BB_TARGETTED_ACTION)
+	return returnable_list
 
 /*
  * Callback for the mind_linker component.
@@ -72,7 +76,11 @@
 /// NPC variant with a less bullshit ability
 /mob/living/basic/heretic_summon/raw_prophet/ruins
 	ai_controller = /datum/ai_controller/basic_controller/raw_prophet
-	blind_action_type = /datum/action/cooldown/mob_cooldown/watcher_gaze
+
+/mob/living/basic/heretic_summon/raw_prophet/ruins/get_innate_abilities()
+	var/list/returnable_list = innate_abilities.Copy()
+	returnable_list += list(/datum/action/cooldown/mob_cooldown/watcher_gaze = BB_TARGETTED_ACTION)
+	return returnable_list
 
 /// Walk and attack people, blind them when we can
 /datum/ai_controller/basic_controller/raw_prophet

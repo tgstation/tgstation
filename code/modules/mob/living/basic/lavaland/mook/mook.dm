@@ -69,10 +69,10 @@
 /// Returns a list of actions and blackboard keys to pass into `grant_multiple_actions`.
 /// Uses the dot operator explicitly so it's more comphrensible on subtypes.
 /mob/living/basic/mining/mook/proc/get_innate_abilities()
-	. = list(
+	var/static/list/innate_abilities = list(
 		/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump = BB_MOOK_JUMP_ABILITY,
 	)
-	return .
+	return innate_abilities
 
 /mob/living/basic/mining/mook/proc/grant_healer_abilities()
 	AddComponent(\
@@ -206,11 +206,15 @@
 	update_appearance()
 
 /mob/living/basic/mining/mook/worker/get_innate_abilities()
-	. = ..()
-	. += list(
-		/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap = BB_MOOK_LEAP_ABILITY,
-	)
-	return .
+	var/static/list/worker_innate_abilites = null
+
+	if(isnull(worker_innate_abilites))
+		worker_innate_abilites = ..()
+		worker_innate_abilites += list(
+			/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap = BB_MOOK_LEAP_ABILITY,
+		)
+
+	return worker_innate_abilites
 
 /mob/living/basic/mining/mook/worker/attack_sequence(atom/target)
 	. = ..()
