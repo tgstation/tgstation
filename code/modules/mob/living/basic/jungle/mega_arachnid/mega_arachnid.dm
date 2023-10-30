@@ -37,8 +37,8 @@
 /mob/living/basic/mega_arachnid/Initialize(mapload)
 	. = ..()
 	var/static/list/innate_actions = list(
-		/datum/action/innate/mob_cooldown/secrete_acid = BB_ARACHNID_SLIP,
-		/datum/action/innate/pointed/projectile/flesh_restraints = BB_ARACHNID_RESTRAIN,
+		/datum/action/cooldown/mob_cooldown/secrete_acid = BB_ARACHNID_SLIP,
+		/datum/action/cooldown/spell/pointed/projectile/flesh_restraints = BB_ARACHNID_RESTRAIN,
 	)
 	grant_multiple_actions(innate_actions)
 

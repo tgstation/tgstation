@@ -64,10 +64,11 @@
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)
 
-	var/static/list/innate_actions(
+	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/domain = BB_DOMAIN_ABILITY,
 		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
 	)
+
 	grant_multiple_actions(innate_actions)
 
 /mob/living/basic/regal_rat/examine(mob/user)

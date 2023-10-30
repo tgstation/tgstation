@@ -55,7 +55,7 @@
 
 	real_name = src.name
 
-	var/static/list/innate_actions(
+	var/static/list/innate_actions = list(
 		/datum/action/cooldown/alien/promote,
 		/datum/action/cooldown/spell/aoe/repulse/xeno,
 	)
