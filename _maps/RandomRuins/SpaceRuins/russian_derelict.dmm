@@ -742,7 +742,6 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "jD" = (
-/obj/machinery/light/small/directional/east,
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
@@ -3329,7 +3328,7 @@
 "Az" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("ks13"="Primary Air Supply")
+	atmos_chambers = list("ks13" = "Primary Air Supply")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
@@ -4252,12 +4251,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
-"Fy" = (
-/obj/machinery/light/small/directional/west,
-/obj/machinery/light/small/directional/west,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "FB" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/closet,
@@ -4935,11 +4928,6 @@
 /obj/item/wallframe/firealarm,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"Jm" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "Jp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -6529,7 +6517,7 @@
 /area/ruin/space/ks13/science/genetics)
 "RO" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("ks13-2"="Secondary Chamber")
+	atmos_chambers = list("ks13-2" = "Secondary Chamber")
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -6581,7 +6569,7 @@
 "Sf" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/beaker{
-	list_reagents = list(/datum/reagent/toxin/acid=50)
+	list_reagents = list(/datum/reagent/toxin/acid = 50)
 	},
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
 /obj/item/pen,
@@ -11732,7 +11720,7 @@ PI
 Ex
 pi
 FI
-Fy
+FI
 FI
 FI
 zv
@@ -12862,7 +12850,7 @@ fg
 Jc
 gB
 PI
-Jm
+zv
 zv
 zv
 HX
