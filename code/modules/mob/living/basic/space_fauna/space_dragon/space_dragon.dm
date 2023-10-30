@@ -76,11 +76,6 @@
 	buffet = new(src)
 	buffet.Grant(src)
 
-/mob/living/basic/space_dragon/Destroy()
-	QDEL_NULL(fire_breath)
-	QDEL_NULL(buffet)
-	return ..()
-
 /mob/living/basic/space_dragon/Login()
 	. = ..()
 	if(!isnull(chosen_colour))

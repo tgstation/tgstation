@@ -53,9 +53,7 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK), INNATE_TRAIT)
-	for(var/spell in construct_spells)
-		var/datum/action/new_spell = new spell(src)
-		new_spell.Grant(src)
+	grant_multiple_actions(construct_spells)
 
 	var/spell_count = 1
 	for(var/datum/action/spell as anything in actions)

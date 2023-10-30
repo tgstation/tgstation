@@ -67,22 +67,17 @@ Difficulty: Medium
 	. = ..()
 	miner_saw = new(src)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	dash = new /datum/action/cooldown/mob_cooldown/dash()
-	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator()
-	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack()
-	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon()
+
+	dash = new /datum/action/cooldown/mob_cooldown/dash
+	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
+	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack
+	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon
 	dash.Grant(src)
 	kinetic_accelerator.Grant(src)
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
-	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
-	QDEL_NULL(dash)
-	QDEL_NULL(kinetic_accelerator)
-	QDEL_NULL(dash_attack)
-	QDEL_NULL(transform_weapon)
-	return ..()
+	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	if(client)

@@ -2,6 +2,8 @@
 #define HEARTBEAT_FAST (0.6 SECONDS)
 #define HEARTBEAT_FRANTIC (0.4 SECONDS)
 
+#define SPIKES_ABILITY_TYPEPATH /datum/action/cooldown/mob_cooldown/chasing_spikes
+
 /mob/living/basic/meteor_heart
 	name = "meteor heart"
 	desc = "A pulsing lump of flesh and bone growing directly out of the ground."
@@ -25,10 +27,7 @@
 	maximum_survivable_temperature = 1500
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
-	/// Action which sends a line of spikes chasing a player
-	var/datum/action/cooldown/mob_cooldown/chasing_spikes/spikes
-	/// Action which summons areas the player can't stand in
-	var/datum/action/cooldown/mob_cooldown/spine_traps/traps
+
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
 
@@ -39,14 +38,11 @@
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/relay_attackers)
 
-	spikes = new(src)
-	spikes.Grant(src)
-	ai_controller.set_blackboard_key(BB_METEOR_HEART_GROUND_SPIKES, spikes)
-
-	traps = new(src)
-	traps.Grant(src)
-	ai_controller.set_blackboard_key(BB_METEOR_HEART_SPINE_TRAPS, traps)
-
+	var/static/list/innate_actions = list(
+		SPIKES_ABILITY_TYPEPATH = BB_METEOR_HEART_GROUND_SPIKES,
+		/datum/action/cooldown/mob_cooldown/spine_traps = BB_METEOR_HEART_SPINE_TRAPS,
+	)
+	grant_multiple_actions(innate_actions)
 	ai_controller.set_ai_status(AI_STATUS_OFF)
 
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
@@ -60,12 +56,13 @@
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 
-
-	AddComponent(/datum/component/bloody_spreader,\
+	AddComponent(\
+		/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
 		blood_dna = list("meaty DNA" = "MT-"),\
 		diseases = null,\
 	)
+
 /// Called when we get mad at something, either for attacking us or attacking the nearby area
 /mob/living/basic/meteor_heart/proc/aggro()
 	if (ai_controller.ai_status == AI_STATUS_ON)
@@ -85,7 +82,7 @@
 /// Animate when using certain abilities
 /mob/living/basic/meteor_heart/proc/used_ability(mob/living/owner, datum/action/cooldown/mob_cooldown/ability)
 	SIGNAL_HANDLER
-	if (ability != spikes)
+	if(!istype(ability, SPIKES_ABILITY_TYPEPATH))
 		return
 	Shake(1, 0, 1.5 SECONDS)
 

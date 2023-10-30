@@ -64,13 +64,11 @@
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)
 
-	var/datum/action/cooldown/mob_cooldown/domain/domain = new(src)
-	domain.Grant(src)
-	ai_controller.set_blackboard_key(BB_DOMAIN_ABILITY, domain)
-
-	var/datum/action/cooldown/mob_cooldown/riot/riot = new(src)
-	riot.Grant(src)
-	ai_controller.set_blackboard_key(BB_RAISE_HORDE_ABILITY, riot)
+	var/static/list/innate_actions(
+		/datum/action/cooldown/mob_cooldown/domain = BB_DOMAIN_ABILITY,
+		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
+	)
+	grant_multiple_actions(innate_actions)
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
