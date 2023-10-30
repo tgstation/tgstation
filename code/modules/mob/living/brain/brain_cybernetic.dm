@@ -49,3 +49,13 @@
 
 		return TRUE
 	return FALSE
+
+/obj/item/organ/internal/brain/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	switch(severity) // Hard cap on brain damage from EMP
+		if (1)
+			apply_organ_damage(20, BRAIN_DAMAGE_SEVERE)
+		if (2)
+			apply_organ_damage(10, BRAIN_DAMAGE_MILD)
