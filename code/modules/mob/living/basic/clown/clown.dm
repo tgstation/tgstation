@@ -542,15 +542,14 @@
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'),
 	)
 
-	/// Actions that we apply on initialization
-	var/static/list/initial_actions = list(
+/mob/living/basic/clown/banana/Initialize(mapload)
+	. = ..()
+
+	var/static/list/innate_actions = list(
 		/datum/action/cooldown/exquisite_bunch,
 		/datum/action/cooldown/rustle,
 	)
-
-/mob/living/basic/clown/banana/Initialize(mapload)
-	. = ..()
-	grant_multiple_actions(initial_actions)
+	grant_multiple_actions(innate_actions)
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle

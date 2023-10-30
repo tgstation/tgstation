@@ -40,10 +40,6 @@
 	///how much charge we give off to cells around us when rubbed
 	var/recharge_value = 75
 
-	/// Actions that we apply on initialization
-	var/static/list/initial_actions = list(
-		/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC,
-	)
 
 /mob/living/basic/festivus/Initialize(mapload)
 	. = ..()
@@ -51,7 +47,11 @@
 	var/static/list/death_loot = list(/obj/item/stack/rods)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
-	grant_multiple_actions(initial_actions)
+
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC,
+	)
+	grant_multiple_actions(innate_actions)
 
 /datum/ai_controller/basic_controller/festivus_pole
 	blackboard = list(
