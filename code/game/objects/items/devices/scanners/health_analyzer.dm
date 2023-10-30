@@ -315,6 +315,7 @@
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span>\n"
 
 		// Hulk and body temperature
+		var/datum/species/targetspecies = humantarget.dna.species
 		var/mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
