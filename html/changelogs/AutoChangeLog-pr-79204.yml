@@ -1,0 +1,5 @@
+author: "Toastgoats"
+delete-after: True
+changes:
+  - rscadd: "The Ethereal Vintner's Union has been \"convinced\" to trade their signature Lanternfruit with Nanotrasen!"
+  - image: "Sprites for the aforementioned fruit."
