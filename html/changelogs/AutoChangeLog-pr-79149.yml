@@ -1,0 +1,6 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - rscadd: "living floor, living flesh, and other stuff for the bioresearch outpost ruin"
+  - rscadd: "bioresearch outpost ruin"
+  - bugfix: "you may not defeat indestructible grilles and windows with mere tools"
