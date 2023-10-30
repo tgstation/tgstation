@@ -104,13 +104,13 @@
 
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
 			if(!selected_reagent)
-				return TRUE
+				return FALSE
 
-			var/input_reagent = get_chem_id(selected_reagent)
+			var/datum/reagent/input_reagent = GLOB.name2reagent[selected_reagent]
 			if(!input_reagent)
-				return TRUE
+				return FALSE
 
 			if(!required_reagents.Find(input_reagent))
 				var/input_amount = text2num(params["amount"])

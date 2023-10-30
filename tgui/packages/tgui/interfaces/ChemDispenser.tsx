@@ -1,21 +1,47 @@
 import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
+type BeakerReagent = {
+  name: string;
+  volume: number;
+  pH: number;
+  purity: number;
+};
+
+type DispensableReagent = {
+  title: string;
+  id: string;
+  pH: number;
+  pHCol: string;
+};
+
+type Data = {
+  showpH: BooleanLike;
+  amount: number;
+  energy: number;
+  maxEnergy: number;
+  isBeakerLoaded: BooleanLike;
+  beakerContents: BeakerReagent[];
+  beakerCurrentVolume: number;
+  beakerMaxVolume: number;
+  beakerTransferAmounts: number[];
+  beakerCurrentpH: number;
+  chemicals: DispensableReagent[];
+  recipes: string[];
+  recordingRecipe: string[];
+  recipeReagents: string[];
+};
+
 export const ChemDispenser = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const recording = !!data.recordingRecipe;
-  const { recipeReagents = [] } = data;
+  const { recipeReagents = [], recipes = [] } = data;
   const [hasCol, setHasCol] = useLocalState(context, 'has_col', false);
-  // TODO: Change how this piece of shit is built on server side
-  // It has to be a list, not a fucking OBJECT!
-  const recipes = Object.keys(data.recipes).map((name) => ({
-    name,
-    contents: data.recipes[name],
-  }));
+
   const beakerTransferAmounts = data.beakerTransferAmounts || [];
   const beakerContents =
     (recording &&
@@ -108,16 +134,16 @@ export const ChemDispenser = (props, context) => {
             </>
           }>
           <Box mr={-1}>
-            {recipes.map((recipe) => (
+            {Object.keys(recipes).map((recipe, index) => (
               <Button
-                key={recipe.name}
+                key={recipe}
                 icon="tint"
                 width="129.5px"
                 lineHeight={1.75}
-                content={recipe.name}
+                content={recipe}
                 onClick={() =>
                   act('dispense_recipe', {
-                    recipe: recipe.name,
+                    recipe: recipe,
                   })
                 }
               />
@@ -186,7 +212,6 @@ export const ChemDispenser = (props, context) => {
                   <Button
                     icon="eject"
                     content="Eject"
-                    disabled={!data.isBeakerLoaded}
                     onClick={() => act('eject')}
                   />
                 )

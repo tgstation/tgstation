@@ -4,19 +4,20 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
 	worn_icon_state = "portable_chem_mixer"
+	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
-	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_CREW * 14
 
-	var/obj/item/reagent_containers/beaker = null ///Creating an empty slot for a beaker that can be added to dispense into
-	var/amount = 30 ///The amount of reagent that is to be dispensed currently
-
-	var/list/dispensable_reagents = list() ///List in which all currently dispensable reagents go
-
-	///If the UI has the pH meter shown
-	var/show_ph = TRUE
+	///Creating an empty slot for a beaker that can be added to dispense into
+	var/obj/item/reagent_containers/beaker = null
+	///The amount of reagent that is to be dispensed currently
+	var/amount = 30
+	///List in which all currently dispensable reagents go
+	var/list/dispensable_reagents = list()
+	///List of possible transfer ammounts
+	var/static/list/transfer_amounts = list(1, 5, 10, 30, 50, 100)
 
 /obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
@@ -35,39 +36,20 @@
 	return ..()
 
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
-	if(severity > EXPLODE_LIGHT)
-		return ..()
-
-	return FALSE
+	return severity > EXPLODE_LIGHT ? ..() : FALSE
 
 /obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
 	if (is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container() && atom_storage.locked)
 		var/obj/item/reagent_containers/B = I
-		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
-			return
+			return TRUE
+
 		replace_beaker(user, B)
 		update_appearance()
 		ui_interact(user)
-		return
+
+		return TRUE
 	return ..()
-
-/**
- * Updates the contents of the portable chemical mixer
- *
- * A list of dispensable reagents is created by iterating through each source beaker in the portable chemical beaker and reading its contents
- */
-/obj/item/storage/portable_chem_mixer/proc/update_contents()
-	dispensable_reagents.Cut()
-
-	for (var/obj/item/reagent_containers/B in contents)
-		var/key = B.reagents.get_master_reagent_id()
-		if (!(key in dispensable_reagents))
-			dispensable_reagents[key] = list()
-			dispensable_reagents[key]["reagents"] = list()
-		dispensable_reagents[key]["reagents"] += B.reagents
-
-	return
 
 /obj/item/storage/portable_chem_mixer/update_icon_state()
 	if(!atom_storage.locked)
@@ -78,7 +60,6 @@
 		return ..()
 	icon_state = "portablechemicalmixer_empty"
 	return ..()
-
 
 /obj/item/storage/portable_chem_mixer/AltClick(mob/living/user)
 	if(!atom_storage.locked)
@@ -93,14 +74,24 @@
 		atom_storage.locked = STORAGE_NOT_LOCKED
 	else
 		atom_storage.locked = STORAGE_FULLY_LOCKED
+
+	//reload reagents
 	if (!atom_storage.locked)
-		update_contents()
+		dispensable_reagents.Cut()
+		for (var/obj/item/reagent_containers/B in contents)
+			var/key = B.reagents.get_master_reagent_id()
+			if (!(key in dispensable_reagents))
+				dispensable_reagents[key] = list()
+				dispensable_reagents[key]["reagents"] = list()
+			dispensable_reagents[key]["reagents"] += B.reagents
+
+	//replace beaker
 	if (atom_storage.locked)
 		atom_storage.hide_contents(usr)
 		replace_beaker(user)
+
 	update_appearance()
 	playsound(src, 'sound/items/screwdriver2.ogg', 50)
-	return
 
 /**
  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
@@ -152,27 +143,19 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "PortableChemMixer", name)
-
-		var/is_hallucinating = FALSE
-		if(isliving(user))
-			var/mob/living/living_user = user
-			is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
-
-		if(is_hallucinating)
-			// to not ruin the immersion by constantly changing the fake chemicals
-			ui.set_autoupdate(FALSE)
-
 		ui.open()
 
+	var/is_hallucinating = FALSE
+	if(isliving(user))
+		var/mob/living/living_user = user
+		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
+	ui.set_autoupdate(!is_hallucinating) // to not ruin the immersion by constantly changing the fake chemicals
+
 /obj/item/storage/portable_chem_mixer/ui_data(mob/user)
-	var/list/data = list()
-	data["amount"] = amount
-	data["isBeakerLoaded"] = beaker ? 1 : 0
-	data["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : null
-	data["beakerMaxVolume"] = beaker ? beaker.volume : null
-	data["beakerTransferAmounts"] = beaker ? list(1,5,10,30,50,100) : null
-	data["showpH"] = show_ph
-	var/chemicals[0]
+	. = list()
+	.["amount"] = amount
+
+	var/list/chemicals = list()
 	var/is_hallucinating = FALSE
 	if(isliving(user))
 		var/mob/living/living_user = user
@@ -190,26 +173,32 @@
 				total_ph = rs.ph
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(temp.name), "volume" = total_volume, "pH" = total_ph)))
-	data["chemicals"] = chemicals
-	var/beakerContents[0]
+			chemicals += list(list("title" = chemname, "id" = temp.name, "volume" = total_volume, "pH" = total_ph))
+	.["chemicals"] = chemicals
+
+	.["isBeakerLoaded"] = beaker ? 1 : 0
+	.["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : 0
+	.["beakerMaxVolume"] = beaker ? beaker.volume : 0
+	.["beakerTransferAmounts"] = beaker ? transfer_amounts : 0
+	.["beakerCurrentpH"] = beaker ? round(beaker.reagents.ph, 0.01) : 0
+	var/list/beakerContents = list()
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = R.volume, "pH" = R.ph))) // list in a list because Byond merges the first list...
-		data["beakerCurrentpH"] = round(beaker.reagents.ph, 0.01)
-	data["beakerContents"] = beakerContents
+			beakerContents += list(list("name" = R.name, "id" = R.name, "volume" = R.volume, "pH" = R.ph)) // list in a list because Byond merges the first list...
+	.["beakerContents"] = beakerContents
 
-	return data
-
-/obj/item/storage/portable_chem_mixer/ui_act(action, params)
+/obj/item/storage/portable_chem_mixer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+
 	switch(action)
 		if("amount")
 			var/target = text2num(params["target"])
-			amount = target
-			. = TRUE
+			if(target in beaker.possible_transfer_amounts)
+				amount = target
+				return TRUE
+
 		if("dispense")
 			var/reagent_name = params["reagent"]
 			var/datum/reagent/reagent = GLOB.name2reagent[reagent_name]
@@ -220,16 +209,18 @@
 				// todo: add check if we have enough reagent left
 				for (var/datum/reagents/source in entry["reagents"])
 					var/to_transfer = min(source.total_volume, actual)
-					source.trans_to(beaker, to_transfer)
+					source.trans_to(beaker, to_transfer, transferred_by = ui.user)
 					actual -= to_transfer
 					if (actual <= 0)
 						break
-			. = TRUE
+			return TRUE
+
 		if("remove")
 			var/amount = text2num(params["amount"])
 			beaker.reagents.remove_all(amount)
-			. = TRUE
+			return TRUE
+
 		if("eject")
-			replace_beaker(usr)
+			replace_beaker(ui.user)
 			update_appearance()
-			. = TRUE
+			return TRUE
