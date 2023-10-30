@@ -768,6 +768,9 @@
  *
  */
 /mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	if(QDELETED(src))
+		// Bro just like, don't ok
+		return FALSE
 	if(excess_healing)
 		adjustOxyLoss(-excess_healing, updating_health = FALSE)
 		adjustToxLoss(-excess_healing, updating_health = FALSE, forced = TRUE) //slime friendly

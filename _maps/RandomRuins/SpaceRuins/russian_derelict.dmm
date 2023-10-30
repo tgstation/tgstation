@@ -3328,7 +3328,7 @@
 "Az" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("ks13" = "Primary Air Supply")
+	atmos_chambers = list("ks13"="Primary Air Supply")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
@@ -3633,7 +3633,6 @@
 	pixel_y = 9
 	},
 /obj/item/wallframe/apc,
-/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "Ce" = (
@@ -6055,7 +6054,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
 "Ps" = (
-/obj/machinery/light/small/directional/east,
 /obj/item/circuitboard/machine/smes,
 /obj/structure/table,
 /obj/machinery/light/small/directional/east,
@@ -6517,7 +6515,7 @@
 /area/ruin/space/ks13/science/genetics)
 "RO" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("ks13-2" = "Secondary Chamber")
+	atmos_chambers = list("ks13-2"="Secondary Chamber")
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -6569,7 +6567,7 @@
 "Sf" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/beaker{
-	list_reagents = list(/datum/reagent/toxin/acid = 50)
+	list_reagents = list(/datum/reagent/toxin/acid=50)
 	},
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished,
 /obj/item/pen,
