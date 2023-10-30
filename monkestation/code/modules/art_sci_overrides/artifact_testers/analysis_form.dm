@@ -151,7 +151,7 @@
 	if(!to_analyze)
 		return
 	if(chosen_origin)
-		to_analyze.holder.name = to_analyze.names[chosen_origin]
+		to_analyze.holder.name = to_analyze.generated_name
 	if(chosentype)
 		to_analyze.holder.name += " ([chosentype])"
 

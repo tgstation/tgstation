@@ -13,8 +13,8 @@
 	var/type_name = "Generic Artifact Type"
 	/// fake name for when unanalyzed
 	var/fake_name
-	///randomly generated names by origin for when it gets analyzed
-	var/list/names = list()
+	///the randomly generated name using our origin
+	var/generated_name
 	///Is the artifact active?
 	var/active = FALSE
 	///activators that activate the artifact
@@ -80,13 +80,9 @@
 	var/picked_fault = pick_weight(valid_faults)
 	chosen_fault = new picked_fault
 
-	for(var/datum/artifact_origin/origins as anything in subtypesof(/datum/artifact_origin))
-		var/datum/artifact_origin/new_origin = new origins
-		var/a_name = new_origin.generate_name()
-		if(a_name)
-			names[new_origin.type_name] = a_name
-		else
-			names[new_origin.type_name] = "[pick(new_origin.name_vars["adjectives"])] [pick(isitem(holder) ? new_origin.name_vars["small-nouns"] : new_origin.name_vars["large-nouns"])]"
+	generated_name = artifact_origin.generate_name()
+	if(!generated_name)
+		generated_name  = = "[pick(artifact_origin.name_vars["adjectives"])] [pick(isitem(holder) ? artifact_origin.name_vars["small-nouns"] : artifact_origin.name_vars["large-nouns"])]"
 
 	holder.name = fake_name
 	holder.desc = "You have absolutely no clue what this thing is or how it got here."
