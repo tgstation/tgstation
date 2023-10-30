@@ -74,7 +74,7 @@
 //just redirect to on_unarmed
 /datum/component/artifact/proc/on_robot_attack(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	on_unarmed(source, user)
+	on_unarmed(source, user) 
 
 /datum/component/artifact/proc/ex_act(atom/source, severity)
 	SIGNAL_HANDLER
@@ -85,3 +85,7 @@
 	SIGNAL_HANDLER
 	process_stimuli(STIMULUS_SHOCK, 800 * severity)
 	process_stimuli(STIMULUS_RADIATION, 2 * severity)
+
+/datum/component/artifact/proc/on_attackby(atom/source, obj/item/I, mob/user)
+	SIGNAL_HANDLER
+	I.on_artifact_interact(src, user)
