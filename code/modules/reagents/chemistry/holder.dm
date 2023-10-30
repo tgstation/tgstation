@@ -123,7 +123,7 @@
 	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
-		amount = FLOOR(maximum_volume - cached_total, CHEMICAL_QUANTISATION_LEVEL) //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
+		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
 		if(amount <= 0)
 			return FALSE
 
@@ -144,7 +144,7 @@
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
 			iter_reagent.ph = ((iter_reagent.ph*(iter_reagent.volume))+(added_ph*amount))/(iter_reagent.volume+amount)
-			iter_reagent.volume += FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+			iter_reagent.volume += round(amount, CHEMICAL_QUANTISATION_LEVEL)
 			update_total()
 
 			iter_reagent.on_merge(data, amount)
@@ -221,7 +221,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -229,7 +229,7 @@
 		if(cached_reagent.type == reagent_type)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = FLOOR(clamp(amount, 0, cached_reagent.volume),  CHEMICAL_QUANTISATION_LEVEL)
+			amount = round(clamp(amount, 0, cached_reagent.volume),  CHEMICAL_QUANTISATION_LEVEL)
 			cached_reagent.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
@@ -251,7 +251,7 @@
 		return FALSE
 
 	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -300,7 +300,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -311,7 +311,7 @@
 	// when i = 2(2nd iteration) each reagent contributes maximum to how much is left over
 	for(var/i in 1 to 2)
 		for(var/datum/reagent/reagent as anything in cached_reagents)
-			var/remove_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
+			var/remove_amount = round(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
 			remove_reagent(reagent.type, remove_amount)
 			removed_amount += remove_amount
 			if(removed_amount >= amount)
@@ -345,7 +345,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -472,7 +472,7 @@
 					return FALSE
 				return holder_reagent
 			else
-				if(FLOOR(holder_reagent.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
+				if(round(holder_reagent.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
 					if(needs_metabolizing && !holder_reagent.metabolizing)
 						if(check_subtypes)
 							continue
@@ -565,7 +565,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(min(amount * multiplier, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
 	//Set up new reagents to inherit the old ongoing reactions
@@ -597,7 +597,7 @@
 					trans_data = copy_data(reagent)
 				if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
 					continue
-				var/transfer_amount = FLOOR(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
+				var/transfer_amount = round(min(reagent.volume, i == 1 ? equal_contribution : final_contribution), CHEMICAL_QUANTISATION_LEVEL)
 				if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 					continue
 				if(methods)
@@ -641,7 +641,7 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
 				continue
-			var/transfer_amount = FLOOR(min(amount, reagent.volume), CHEMICAL_QUANTISATION_LEVEL)
+			var/transfer_amount = round(min(amount, reagent.volume), CHEMICAL_QUANTISATION_LEVEL)
 			if(!target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transferred.
 				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
@@ -698,7 +698,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(min(amount, available_volume, holder.maximum_volume - holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return
 
 	var/list/cached_reagents = reagent_list
@@ -754,7 +754,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(min(amount * multiplier, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return
 
 	var/list/cached_reagents = reagent_list
@@ -878,7 +878,7 @@
 		// skip metabolizing effects for small units of toxins
 		if(istype(reagent, /datum/reagent/toxin) && liver && !dead)
 			var/datum/reagent/toxin/toxin = reagent
-			var/amount = FLOOR(toxin.volume, CHEMICAL_QUANTISATION_LEVEL)
+			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL)
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
@@ -1216,7 +1216,7 @@
 	is_reacting = FALSE
 	//Cap off values
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		reagent.volume = FLOOR(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)//To prevent runaways.
+		reagent.volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)//To prevent runaways.
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	if(!QDELING(src))
@@ -1316,7 +1316,7 @@
 	var/datum/cached_my_atom = my_atom
 	var/multiplier = INFINITY
 	for(var/reagent in cached_required_reagents)
-		multiplier = FLOOR(min(multiplier, get_reagent_amount(reagent) / cached_required_reagents[reagent]), CHEMICAL_QUANTISATION_LEVEL)
+		multiplier = min(multiplier, round(get_reagent_amount(reagent) / cached_required_reagents[reagent]))
 
 	if(multiplier == 0)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
 		return FALSE
@@ -1360,7 +1360,7 @@
 	. = 0 // This is a relatively hot proc.
 	var/total_ph = 0 // I know I know, I'm sorry
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(reagent.volume < CHEMICAL_QUANTISATION_LEVEL)//For clarity
+		if(reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)//For clarity
 			del_reagent(reagent.type)
 		else
 			. += reagent.volume
@@ -1433,7 +1433,7 @@
 	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if((!include_subtypes && cached_reagent.type == reagent) || (include_subtypes && ispath(cached_reagent.type, reagent)))
-			total_amount += FLOOR(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+			total_amount +=  round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return total_amount
 
 /**
@@ -1446,7 +1446,7 @@
 	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type in reagents)
-			total_amount += FLOOR(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+			total_amount +=  round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return total_amount
 
 /**
@@ -1678,7 +1678,7 @@
 	var/list/data = list()
 
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		data += "[reagent.type] ([FLOOR(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)]u, [reagent.purity] purity)"
+		data += "[reagent.type] ([round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)]u, [reagent.purity] purity)"
 
 	return english_list(data)
 
