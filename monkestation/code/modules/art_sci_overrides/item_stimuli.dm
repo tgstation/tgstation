@@ -28,15 +28,15 @@
 		playsound(user,'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 
 /obj/item/circuitboard/on_artifact_interact(datum/component/artifact/interacted, mob/user)
-	interacted.holder.visible_message(span_notice("[user] presses the [arm] against the artifact."))
+	interacted.holder.visible_message(span_notice("[user] presses the [src] against the artifact."))
 	interacted.process_stimuli(STIMULUS_DATA)
 
 /obj/item/disk/data/on_artifact_interact(datum/component/artifact/interacted, mob/user)
-	interacted.holder.visible_message(span_notice("[user] presses the [arm] against the artifact."))
+	interacted.holder.visible_message(span_notice("[user] presses the [src] against the artifact."))
 	interacted.process_stimuli(STIMULUS_DATA)
 
 /obj/item/bodypart/arm/on_artifact_interact(datum/component/artifact/interacted, mob/user)
-	interacted.holder.visible_message(span_notice("[user] presses the [arm] against the artifact."))
+	interacted.holder.visible_message(span_notice("[user] presses the [src] against the artifact."))
 	if(bodytype & BODYTYPE_ROBOTIC)
 		interacted.process_stimuli(STIMULUS_SILICON_TOUCH)
 	else
