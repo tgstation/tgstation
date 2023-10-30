@@ -535,9 +535,9 @@
 	base_reagent_purity = 0.5
 
 /obj/machinery/chem_dispenser/drinks/Initialize(mapload)
-	if(!length(dispensable_reagents))
+	if(dispensable_reagents != null && !dispensable_reagents.len)
 		dispensable_reagents = drinks_dispensable_reagents
-	if(!length(emagged_reagents))
+	if(emagged_reagents != null && !emagged_reagents.len)
 		emagged_reagents = drink_emagged_reagents
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
