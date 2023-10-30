@@ -46,13 +46,13 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 /datum/component/germ_sensitive/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_GERM_SENSITIVE, REF(src))
 	UnregisterSignal(parent, list(
+		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXAMINE,
-		COMSIG_MOVABLE_MOVED,
+		COMSIG_ATOM_EXITED,
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_ATOM_EXITED,
 		COMSIG_ITEM_PICKUP,
-		COMSIG_ATOM_ENTERED,
+		COMSIG_MOVABLE_MOVED,
 	))
 
 /datum/component/germ_sensitive/Destroy()

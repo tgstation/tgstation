@@ -333,16 +333,16 @@
 		span_notice("You start to fix part of [src]..."),
 	)
 
-	if(tool.use_tool(src, user, 2 SECONDS, volume = 50))
-		user.visible_message(
-			span_notice("[user] fixes part of [src]."),
-			span_notice("You fix part of [src]."),
-		)
-		broken = KINDA_BROKEN // Fix it a bit
-		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return TOOL_ACT_SIGNAL_BLOCKING
 
-	return TOOL_ACT_SIGNAL_BLOCKING
+	user.visible_message(
+		span_notice("[user] fixes part of [src]."),
+		span_notice("You fix part of [src]."),
+	)
+	broken = KINDA_BROKEN // Fix it a bit
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/microwave/welder_act(mob/living/user, obj/item/tool)
 	if(broken != KINDA_BROKEN)
@@ -353,16 +353,16 @@
 		span_notice("You start to fix part of [src]..."),
 	)
 
-	if(tool.use_tool(src, user, 2 SECONDS, amount = 1, volume = 50))
-		user.visible_message(
-			span_notice("[user] fixes [src]."),
-			span_notice("You fix [src]."),
-		)
-		broken = NOT_BROKEN
-		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!tool.use_tool(src, user, 2 SECONDS, amount = 1, volume = 50))
+		return TOOL_ACT_SIGNAL_BLOCKING
 
-	return TOOL_ACT_SIGNAL_BLOCKING
+	user.visible_message(
+		span_notice("[user] fixes [src]."),
+		span_notice("You fix [src]."),
+	)
+	broken = NOT_BROKEN
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/microwave/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(operating)
@@ -531,10 +531,12 @@
 
 /obj/machinery/microwave/wash(clean_types)
 	. = ..()
-	if(clean_types & CLEAN_SCRUB)
-		dirty = 0
-		update_appearance()
-		return TRUE
+	if(operating || !(clean_types & CLEAN_SCRUB))
+		return .
+
+	dirty = 0
+	update_appearance()
+	return . || TRUE
 
 /obj/machinery/microwave/proc/eject()
 	var/atom/drop_loc = drop_location()
