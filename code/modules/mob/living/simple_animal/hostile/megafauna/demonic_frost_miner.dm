@@ -83,12 +83,12 @@ Difficulty: Extremely Hard
 	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
-	QDEL_NULL(frost_orbs)
-	QDEL_NULL(hard_frost_orbs)
-	QDEL_NULL(snowball_machine_gun)
-	QDEL_NULL(hard_snowball_machine_gun)
-	QDEL_NULL(ice_shotgun)
-	QDEL_NULL(hard_ice_shotgun)
+	frost_orbs = null
+	hard_frost_orbs = null
+	snowball_machine_gun = null
+	hard_snowball_machine_gun = null
+	ice_shotgun = null
+	hard_ice_shotgun = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()

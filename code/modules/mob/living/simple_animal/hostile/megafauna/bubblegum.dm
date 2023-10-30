@@ -105,10 +105,10 @@ Difficulty: Hard
 			sound_volume = 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
-	QDEL_NULL(triple_charge)
-	QDEL_NULL(hallucination_charge)
-	QDEL_NULL(hallucination_charge_surround)
-	QDEL_NULL(blood_warp)
+	triple_charge = null
+	hallucination_charge = null
+	hallucination_charge_surround = null
+	blood_warp = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)

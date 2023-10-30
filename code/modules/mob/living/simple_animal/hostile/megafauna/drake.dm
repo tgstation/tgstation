@@ -95,10 +95,10 @@
 	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
-	QDEL_NULL(fire_cone)
-	QDEL_NULL(meteors)
-	QDEL_NULL(mass_fire)
-	QDEL_NULL(lava_swoop)
+	fire_cone = null
+	meteors = null
+	mass_fire = null
+	lava_swoop = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()

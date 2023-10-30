@@ -87,10 +87,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	RemoveElement(/datum/element/projectile_shield)
-	QDEL_NULL(spiral_shots)
-	QDEL_NULL(random_shots)
-	QDEL_NULL(shotgun_blast)
-	QDEL_NULL(dir_shots)
+	spiral_shots = null
+	random_shots = null
+	shotgun_blast = null
+	dir_shots = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
