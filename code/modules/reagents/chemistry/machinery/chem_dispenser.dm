@@ -22,7 +22,7 @@
 	var/recharge_counter = 0
 	/// The temperature reagents are dispensed into the beaker
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
-	///If the UI has the pH meter shown
+	/// If the UI has the pH meter shown
 	var/show_ph = TRUE
 	/// The overlay used to display the beaker on the machine
 	var/mutable_appearance/beaker_overlay
