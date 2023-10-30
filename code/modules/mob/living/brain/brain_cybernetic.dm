@@ -2,6 +2,7 @@
 	name = "cybernetic brain"
 	desc = "A mechanical brain found inside of androids. Not to be confused with a positronic brain."
 	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken, and will not work without repairs."
 
 /obj/item/organ/internal/brain/cybernetic/brain_damage_examine()
 	. = ""
