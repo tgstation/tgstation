@@ -312,6 +312,11 @@
 	for(var/i in 1 to processed_items_per_cycle)
 		var/obj/item/food/food_to_convert = locate(/obj/item/food) in contents
 
+		if(food_to_convert.flags_1 & HOLOGRAM_1)
+			to_chat(user, span_notice("You try to process [food_to_convert], but it fades away!"))
+			qdel(food_to_convert)
+			continue
+
 		if(!food_to_convert)
 			break
 
