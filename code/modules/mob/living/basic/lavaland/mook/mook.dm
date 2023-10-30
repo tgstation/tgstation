@@ -67,7 +67,6 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /// Returns a list of actions and blackboard keys to pass into `grant_multiple_actions`.
-/// Uses the dot operator explicitly so it's more comphrensible on subtypes.
 /mob/living/basic/mining/mook/proc/get_innate_abilities()
 	var/static/list/innate_abilities = list(
 		/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump = BB_MOOK_JUMP_ABILITY,
