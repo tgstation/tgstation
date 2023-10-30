@@ -24,7 +24,7 @@
 
 /mob/living/basic/spider/giant/Initialize(mapload)
 	. = ..()
-	add_actions_by_list(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 /**
  * ### Ambush Spider
