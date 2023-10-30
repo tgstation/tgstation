@@ -39,19 +39,13 @@
 		unlink_message = on_unlink_message, \
 	)
 
-	// We don't use these for AI so we can just repeat the same adding process
 	var/static/list/add_abilities = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
-		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
-		/datum/action/innate/expand_sight,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long = null,
+		/datum/action/cooldown/spell/list_target/telepathy/eldritch = null,
+		/datum/action/innate/expand_sight = null,
 	)
-	for (var/ability_type in add_abilities)
-		var/datum/action/new_action = new ability_type(src)
-		new_action.Grant(src)
 
-	var/datum/action/cooldown/blind = new blind_action_type(src)
-	blind.Grant(src)
-	ai_controller?.set_blackboard_key(BB_TARGETTED_ACTION, blind)
+	grant_multiple_actions(add_abilities + list(blind_action_type = BB_TARGETTED_ACTION))
 
 /*
  * Callback for the mind_linker component.
