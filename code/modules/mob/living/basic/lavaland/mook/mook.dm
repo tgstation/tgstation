@@ -209,7 +209,8 @@
 	var/static/list/worker_innate_abilites = null
 
 	if(isnull(worker_innate_abilites))
-		worker_innate_abilites = ..()
+		worker_innate_abilites = list()
+		worker_innate_abilites += ..()
 		worker_innate_abilites += list(
 			/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap = BB_MOOK_LEAP_ABILITY,
 		)
