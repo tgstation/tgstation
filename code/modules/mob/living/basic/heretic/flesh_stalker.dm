@@ -21,7 +21,7 @@
 /mob/living/basic/heretic_summon/stalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ai_target_timer)
-	grant_multiple_actions(actions_to_add)
+	grant_actions_by_list(actions_to_add)
 
 /// Changes shape and lies in wait when it has no target, uses EMP and attacks once it does
 /datum/ai_controller/basic_controller/stalker

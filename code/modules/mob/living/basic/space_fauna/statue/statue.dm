@@ -63,7 +63,7 @@
 		/datum/action/cooldown/spell/aoe/blindness,
 		/datum/action/cooldown/spell/aoe/flicker_lights,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 	// Set creator
 	if(creator)

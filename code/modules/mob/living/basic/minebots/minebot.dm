@@ -64,7 +64,7 @@
 		/datum/action/cooldown/mob_cooldown/minedrone/dump_ore = BB_MINEBOT_DUMP_ABILITY,
 	)
 
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)

@@ -41,7 +41,7 @@
 		/datum/action/cooldown/spell/pointed/wizard_mimic = BB_WIZARD_MIMICS,
 	)
 
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/paper_wizard/proc/grant_loot()
 	AddElement(/datum/element/death_drops, dropped_loot)

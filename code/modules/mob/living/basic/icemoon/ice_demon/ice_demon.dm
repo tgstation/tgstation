@@ -33,7 +33,7 @@
 		/datum/action/cooldown/mob_cooldown/ice_demon_teleport = BB_DEMON_TELEPORT_ABILITY,
 		/datum/action/cooldown/spell/conjure/create_afterimages = BB_DEMON_CLONE_ABILITY,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 	AddComponent(\
 		/datum/component/ranged_attacks,\

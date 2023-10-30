@@ -69,7 +69,7 @@
 		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
 	)
 
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()

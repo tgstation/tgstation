@@ -549,7 +549,7 @@
 		/datum/action/cooldown/exquisite_bunch,
 		/datum/action/cooldown/rustle,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle

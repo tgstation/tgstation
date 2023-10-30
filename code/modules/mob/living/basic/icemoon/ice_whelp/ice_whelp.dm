@@ -52,7 +52,7 @@
 		/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross = BB_WHELP_WIDESPREAD_FIRE,
 	)
 
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 
 /mob/living/basic/mining/ice_whelp/proc/pre_attack(mob/living/sculptor, atom/target)

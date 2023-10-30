@@ -61,7 +61,7 @@
 		/datum/action/cooldown/mob_cooldown/solarbeam = BB_SOLARBEAM_ABILITY,
 	)
 
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 	var/petal_color = pick(possible_colors)
 

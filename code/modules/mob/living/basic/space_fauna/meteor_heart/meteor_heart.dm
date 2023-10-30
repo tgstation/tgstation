@@ -42,7 +42,7 @@
 		SPIKES_ABILITY_TYPEPATH = BB_METEOR_HEART_GROUND_SPIKES,
 		/datum/action/cooldown/mob_cooldown/spine_traps = BB_METEOR_HEART_SPINE_TRAPS,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 	ai_controller.set_ai_status(AI_STATUS_OFF)
 
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))

@@ -108,7 +108,7 @@
 		/datum/action/innate/imaginary_join,
 		/datum/action/innate/imaginary_hide,
 	)
-	grant_multiple_actions(grantable_actions)
+	grant_actions_by_list(grantable_actions)
 
 /// Links this imaginary friend to the provided mob
 /mob/camera/imaginary_friend/proc/attach_to_owner(mob/living/imaginary_friend_owner)

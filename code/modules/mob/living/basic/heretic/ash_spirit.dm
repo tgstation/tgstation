@@ -20,4 +20,4 @@
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/pointed/cleave,
 	)
-	grant_multiple_actions(actions_to_add)
+	grant_actions_by_list(actions_to_add)

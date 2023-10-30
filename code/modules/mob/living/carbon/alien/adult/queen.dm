@@ -59,7 +59,7 @@
 		/datum/action/cooldown/alien/promote,
 		/datum/action/cooldown/spell/aoe/repulse/xeno,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 	return ..()
 

@@ -22,7 +22,7 @@
 		/datum/action/cooldown/spell/aoe/rust_conversion/small = BB_GENERIC_ACTION,
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short = BB_TARGETTED_ACTION,
 	)
-	grant_multiple_actions(grantable_spells)
+	grant_actions_by_list(grantable_spells)
 
 /mob/living/basic/heretic_summon/rust_walker/setDir(newdir)
 	. = ..()

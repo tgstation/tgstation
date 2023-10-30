@@ -55,7 +55,7 @@
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/spell/pointed/death_glare = BB_GLARE_ABILITY
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 100, after_tame = CALLBACK(src, PROC_REF(on_tame)))

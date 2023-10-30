@@ -52,7 +52,7 @@
 		move_resist = MOVE_RESIST_DEFAULT,\
 	)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(attack_intruder)))
-	grant_multiple_actions(get_innate_abilities())
+	grant_actions_by_list(get_innate_abilities())
 
 	ore_overlay = mutable_appearance(icon, "mook_ore_overlay")
 
@@ -66,7 +66,7 @@
 
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
-/// Returns a list of actions and blackboard keys to pass into `grant_multiple_actions`.
+/// Returns a list of actions and blackboard keys to pass into `grant_actions_by_list`.
 /mob/living/basic/mining/mook/proc/get_innate_abilities()
 	var/static/list/innate_abilities = list(
 		/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump = BB_MOOK_JUMP_ABILITY,

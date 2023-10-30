@@ -68,7 +68,7 @@
 		/datum/action/cooldown/mob_cooldown/lay_web/sticky_web = null,
 		/datum/action/cooldown/mob_cooldown/lay_web/web_spikes = null,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 /datum/action/cooldown/mob_cooldown/lay_web/flesh
 	webbing_time = 3 SECONDS

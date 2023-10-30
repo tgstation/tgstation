@@ -177,7 +177,7 @@
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/vine_tangle = BB_TARGETTED_ACTION,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!combat_mode)

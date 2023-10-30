@@ -41,7 +41,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 
-	grant_multiple_actions(get_innate_actions())
+	grant_actions_by_list(get_innate_actions())
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!eat_atom(I, TRUE))

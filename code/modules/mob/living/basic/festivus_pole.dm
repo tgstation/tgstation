@@ -51,7 +51,7 @@
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/charge_apc = BB_FESTIVE_APC,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 /datum/ai_controller/basic_controller/festivus_pole
 	blackboard = list(

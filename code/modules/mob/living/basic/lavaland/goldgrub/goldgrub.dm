@@ -51,7 +51,7 @@
 		/datum/action/cooldown/mob_cooldown/spit_ore = BB_SPIT_ABILITY,
 		/datum/action/cooldown/mob_cooldown/burrow = BB_BURROW_ABILITY,
 	)
-	grant_multiple_actions(innate_actions)
+	grant_actions_by_list(innate_actions)
 
 	AddElement(/datum/element/wall_smasher)
 	AddComponent(/datum/component/ai_listen_to_weather)

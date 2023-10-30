@@ -74,7 +74,7 @@
 			structure_types_typecache = structure_types,\
 			)
 	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK), INNATE_TRAIT)
-	grant_multiple_actions(construct_spells)
+	grant_actions_by_list(construct_spells)
 
 	var/spell_count = 1
 	for(var/datum/action/spell as anything in actions)

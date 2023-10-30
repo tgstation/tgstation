@@ -43,7 +43,7 @@
 		unlink_message = on_unlink_message, \
 	)
 
-	grant_multiple_actions(get_innate_abilities())
+	grant_actions_by_list(get_innate_abilities())
 
 /// Returns a list of abilities that we should add.
 /mob/living/basic/heretic_summon/raw_prophet/proc/get_innate_abilities()
