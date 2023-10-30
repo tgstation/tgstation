@@ -164,7 +164,7 @@
 			amount_grown = 0
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
-			var/datum/action/innate/slime/reproduce/reproduce_action = new
+			var/datum/action/innate/slime/reproduce/reproduce_action = new(src)
 			reproduce_action.Grant(src)
 			regenerate_icons()
 			update_name()
