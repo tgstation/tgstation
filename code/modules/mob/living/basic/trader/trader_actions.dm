@@ -26,13 +26,13 @@
 		return FALSE
 	return TRUE
 
-/datum/action/setup_shop/New(Target, datum/trader_data/data)
+/datum/action/setup_shop/New(Target, shop_spot_type = /obj/structure/chair/plastic, sign_type = /obj/structure/trader_sign, sell_sound = 'sound/effects/cashregister.ogg', opening_lines = list("Welcome to my shop, friend!"))
 	. = ..()
 
-	src.shop_spot_type = data.shop_spot_type
-	src.sign_type = data.sign_type
-	src.shop_sound = data.sell_sound
-	src.opening_lines = data.say_phrases[TRADER_SHOP_OPENING_PHRASE]
+	src.shop_spot_type = shop_spot_type
+	src.sign_type = sign_type
+	src.shop_sound = sell_sound
+	src.opening_lines = opening_lines
 
 /datum/action/setup_shop/Trigger(trigger_flags)
 	. = ..()

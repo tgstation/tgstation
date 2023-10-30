@@ -49,12 +49,12 @@
 	AddComponent(/datum/component/trader, trader_data = trader_data)
 	AddComponent(/datum/component/ranged_attacks, casing_type = ranged_attack_casing, projectile_sound = ranged_attack_sound, cooldown_time = 3 SECONDS)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/ai_swap_combat_mode, BB_BASIC_MOB_CURRENT_TARGET, string_list(trader_data.say_phrases[TRADER_BATTLE_START_PHRASE], trader_data.say_phrases[TRADER_BATTLE_END_PHRASE]))
+	AddElement(/datum/element/ai_swap_combat_mode, BB_BASIC_MOB_CURRENT_TARGET, string_list(trader_data.say_phrases[TRADER_BATTLE_START_PHRASE]), string_list(trader_data.say_phrases[TRADER_BATTLE_END_PHRASE]))
 	if(LAZYLEN(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
 
-	var/datum/action/setup_shop = new (src, trader_data)
+	var/datum/action/setup_shop/setup_shop = new (src, trader_data.shop_spot_type, trader_data.sign_type, trader_data.sell_sound, trader_data.say_phrases[TRADER_SHOP_OPENING_PHRASE])
 	setup_shop.Grant(src)
 	ai_controller.set_blackboard_key(BB_SETUP_SHOP, setup_shop)
 
