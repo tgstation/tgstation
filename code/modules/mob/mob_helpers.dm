@@ -304,7 +304,7 @@
 		toast.action = action
 		toast.desc = "Click to [action]."
 		toast.name = header
-		toast.target = source
+		toast.target_ref = WEAKREF(source)
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
