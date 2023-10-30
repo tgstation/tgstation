@@ -1,5 +1,7 @@
 /// The maximum number of stacks you can place in 1 order
 #define MAX_STACK_LIMIT 10
+/// The order rank for all galactic material market orders
+#define GALATIC_MATERIAL_ORDER "Galactic Materials Market"
 
 /obj/machinery/materials_market
 	name = "galactic materials market"
@@ -88,7 +90,7 @@
 /obj/machinery/materials_market/proc/find_order(mob/user, is_ordering_private)
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
-		if(order.orderer_rank == "Galactic Materials Market" && ( \
+		if(order.orderer_rank == GALATIC_MATERIAL_ORDER && ( \
 			(!is_ordering_private && isnull(order.paying_account)) || \
 			(is_ordering_private && !isnull(order.paying_account) && order.orderer == user) \
 		))
@@ -239,7 +241,6 @@
 				say("No bank account detected!")
 				return
 
-
 			//sanity checks for available quantity & budget
 			if(quantity > SSstock_market.materials_quantity[material_bought])
 				say("Not enough materials on the market to purchase!")
@@ -293,7 +294,7 @@
 			var/datum/supply_order/materials/new_order = new(
 				pack = mineral_pack,
 				orderer = living_user,
-				orderer_rank = "Galactic Materials Market",
+				orderer_rank = GALATIC_MATERIAL_ORDER,
 				orderer_ckey = living_user.ckey,
 				paying_account = is_ordering_private ? account_payable : null,
 				cost_type = "cr",
@@ -359,3 +360,4 @@
 	visible_message(span_warning("\The [src] becomes liquid!"))
 
 #undef MAX_STACK_LIMIT
+#undef GALATIC_MATERIAL_ORDER
