@@ -556,7 +556,10 @@
 	var/obj/vehicle/sealed/mecha/ripley/paddy/cargo_holder
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
+	///Var for the cuff type. Basically stole how cuffing works from secbots
 	var/cuff_type = /obj/item/restraints/handcuffs/cable/zipties/used
+	///Var for autocuff, can be toggled in the mech interface.
+	var/autocuff = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
@@ -578,7 +581,7 @@
 		mobtarget.forceMove(chassis)
 		log_message("Loaded [mobtarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
 		to_chat(source, "[icon2html(src, source)][span_notice("[mobtarget] successfully loaded.")]")
-		if(iscarbon(target))
+		if(iscarbon(target) && autocuff)
 			var/mob/living/carbon/carbontarget = target
 			carbontarget.set_handcuffed(new cuff_type(carbontarget))
 			carbontarget.update_handcuffed()
@@ -592,8 +595,17 @@
 	if(istype(target, /obj/machinery/door/airlock/))
 		var/obj/machinery/door/airlock/targetairlock = target
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		targetairlock.try_to_crowbar(src, source, TRUE)
+		targetairlock.try_to_crowbar(src, source)
 		return
 
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_CLAW,
+		"autocuff" = autocuff,
+	)
 
-
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/handle_ui_act(action, list/params)
+	switch(action)
+		if("togglecuff")
+			autocuff = !autocuff
+			return TRUE
