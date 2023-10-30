@@ -1008,6 +1008,10 @@
 		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
 		"borg_upgrade_hypermod",
+		"borg_upgrade_atmos_holo",
+		"borg_upgrade_engi_holo",
+		"borg_upgrade_inducer",
+		"borg_upgrade_foamer"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
