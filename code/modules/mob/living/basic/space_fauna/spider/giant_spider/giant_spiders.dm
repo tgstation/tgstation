@@ -19,7 +19,12 @@
 	melee_damage_upper = 25
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
+	/// Actions to grant on Initialize
+	var/list/innate_actions = null
 
+/mob/living/basic/spider/giant/Initialize(mapload)
+	. = ..()
+	add_actions_by_list(innate_actions)
 
 /**
  * ### Ambush Spider
@@ -42,14 +47,13 @@
 	speed = 5
 	player_speed_modifier = -3.1
 	menu_description = "Slow spider variant specializing in stalking and ambushing prey, above avarage health and damage with a strong grip."
+	innate_actions = list(/datum/action/cooldown/mob_cooldown/sneak/spider)
 
 /mob/living/basic/spider/giant/ambush/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/spider)
 
 /**
  * ### Guard Spider
@@ -72,12 +76,11 @@
 	speed = 5
 	player_speed_modifier = -4
 	menu_description = "Tanky and strong for the defense of the nest and other spiders."
+	innate_actions = list(/datum/action/cooldown/mob_cooldown/web_effigy)
 
 /mob/living/basic/spider/giant/guard/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/web_effigy)
 
 /**
  * ### Hunter Spider
@@ -102,7 +105,6 @@
 
 /mob/living/basic/spider/giant/hunter/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
 /**
@@ -128,12 +130,11 @@
 	player_speed_modifier = -3.1
 	sight = SEE_SELF|SEE_MOBS
 	menu_description = "Fast spider variant specializing in scouting and alerting of prey, with the ability to travel in vents."
+	innate_actions = list(/datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders)
 
 /mob/living/basic/spider/giant/scout/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders)
 
 /**
  * ### Nurse Spider
@@ -207,16 +208,15 @@
 	player_speed_modifier = -3.1
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Support spider variant specializing in contruction to protect their brethren, but has very low amount of health and deals low damage."
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/lay_web/solid_web,
+		/datum/action/cooldown/mob_cooldown/lay_web/sticky_web,
+		/datum/action/cooldown/mob_cooldown/lay_web/web_passage,
+		/datum/action/cooldown/mob_cooldown/lay_web/web_spikes,
+	)
 
 /mob/living/basic/spider/giant/tangle/Initialize(mapload)
 	. = ..()
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/solid_web)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_passage)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_spikes)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/sticky_web)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
@@ -265,17 +265,16 @@
 	web_speed = 0.7
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup."
-	/// Charging ability
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/charge/basic_charge,
+		/datum/action/cooldown/mob_cooldown/lay_web/solid_web,
+		/datum/action/cooldown/mob_cooldown/lay_web/web_passage,
+	)
+	/// Charging ability, kept seperate from innate_actions due to implementation details
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/basic/spider/giant/tarantula/Initialize(mapload)
 	. = ..()
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/solid_web)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_passage)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/charge/basic_charge)
-
 	AddElement(/datum/element/tear_wall)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
@@ -310,13 +309,13 @@
 	player_speed_modifier = -2.5
 	gold_core_spawnable = NO_SPAWN
 	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage."
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/defensive_mode,
+	)
 
 /mob/living/basic/spider/giant/viper/Initialize(mapload)
 	. = ..()
-
 	AddElement(/datum/element/bonus_damage)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/defensive_mode)
 
 /**
  * ### Spider Broodmother
@@ -344,26 +343,20 @@
 	web_speed = 0.5
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	menu_description = "Royal spider variant specializing in reproduction and leadership, deals low damage."
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/command_spiders,
+		/datum/action/cooldown/mob_cooldown/lay_eggs,
+		/datum/action/cooldown/mob_cooldown/lay_eggs/enriched,
+		/datum/action/cooldown/mob_cooldown/lay_web/solid_web,
+		/datum/action/cooldown/mob_cooldown/lay_web/sticky_web,
+		/datum/action/cooldown/mob_cooldown/lay_web/web_passage,
+		/datum/action/cooldown/mob_cooldown/lay_web/web_spikes,
+		/datum/action/cooldown/mob_cooldown/set_spider_directive,
+		/datum/action/cooldown/mob_cooldown/wrap,
+	)
 
 /mob/living/basic/spider/giant/midwife/Initialize(mapload)
 	. = ..()
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/solid_web)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_passage)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_spikes)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/sticky_web)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/wrap)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_eggs)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_eggs/enriched)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/set_spider_directive)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/command_spiders)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
@@ -478,15 +471,14 @@
 	unsuitable_heat_damage = 1
 	menu_description = "Stronger assassin spider variant with an unmatched speed, high amount of health and very deadly poison, but deals very low amount of damage. It also has ability to ventcrawl."
 	apply_spider_antag = FALSE
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/lay_web/sticky_web,
+		/datum/action/cooldown/mob_cooldown/lay_web/web_spikes,
+	)
 
 /mob/living/basic/spider/giant/viper/wizard/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_spikes)
-
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/sticky_web)
-
 
 /**
  * ### Sergeant Araneus
