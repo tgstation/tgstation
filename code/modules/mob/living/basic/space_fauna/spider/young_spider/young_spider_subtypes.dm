@@ -27,7 +27,7 @@
 
 /mob/living/basic/spider/growing/young/ambush/Initialize(mapload)
 	. = ..()
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/spider)
 
 /// Will differentiate into the "scout" giant spider.
 /mob/living/basic/spider/growing/young/scout

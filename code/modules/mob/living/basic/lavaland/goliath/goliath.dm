@@ -44,6 +44,8 @@
 	COOLDOWN_DECLARE(ability_animation_cooldown)
 	/// Our base tentacles ability
 	var/datum/action/cooldown/mob_cooldown/goliath_tentacles/tentacles
+	/// Our melee tentacles ability
+	var/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles
 	/// Our long-ranged tentacles ability
 	var/datum/action/cooldown/mob_cooldown/tentacle_grasp/tentacle_line
 	/// Things we want to eat off the floor (or a plate, we're not picky)
@@ -76,7 +78,8 @@
 
 	tentacles = new (src)
 	tentacles.Grant(src)
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles)
+	melee_tentacles = new(src)
+	melee_tentacles.Grant(src)
 	AddComponent(/datum/component/revenge_ability, melee_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], max_range = 1, target_self = TRUE)
 	tentacle_line = new (src)
 	tentacle_line.Grant(src)

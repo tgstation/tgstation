@@ -7,7 +7,7 @@
 	alien_speed = 0.2
 
 /mob/living/carbon/alien/adult/sentinel/Initialize(mapload)
-	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/alien/sneaky_beaky)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/alien)
 	return ..()
 
 /mob/living/carbon/alien/adult/sentinel/create_internal_organs()

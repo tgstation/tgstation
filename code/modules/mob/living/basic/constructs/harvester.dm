@@ -33,7 +33,8 @@
 		minimum_stat = CONSCIOUS,\
 	)
 	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
-	GRANT_ACTION(/datum/action/innate/seek_prey/seek)
+	var/datum/action/innate/seek_prey/seek = new(src)
+	seek.Grant(src)
 	seek.Activate()
 
 /// If the attack is a limbless carbon, abort the attack, paralyze them, and get a special message from Nar'Sie.
