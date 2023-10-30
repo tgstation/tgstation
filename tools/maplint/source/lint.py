@@ -69,7 +69,7 @@ class BannedNeighbor:
             if identified.path != neighbor.path:
                 return False
 
-            if sorted(identified.var_edits) != sorted(neighbor.var_edits):
+            if identified.var_edits != neighbor.var_edits:
                 return False
 
             return True
