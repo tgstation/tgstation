@@ -52,9 +52,7 @@
 		move_resist = MOVE_RESIST_DEFAULT,\
 	)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(attack_intruder)))
-	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
-	jump.Grant(src)
-	ai_controller.set_blackboard_key(BB_MOOK_JUMP_ABILITY, jump)
+	grant_multiple_actions(get_innate_abilities())
 
 	ore_overlay = mutable_appearance(icon, "mook_ore_overlay")
 
@@ -67,6 +65,14 @@
 		grant_healer_abilities()
 
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+
+/// Returns a list of actions and blackboard keys to pass into `grant_multiple_actions`.
+/// Uses the dot operator explicitly so it's more comphrensible on subtypes.
+/mob/living/basic/mining/mook/proc/get_innate_abilities()
+	. = list(
+		/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump = BB_MOOK_JUMP_ABILITY,
+	)
+	return .
 
 /mob/living/basic/mining/mook/proc/grant_healer_abilities()
 	AddComponent(\
@@ -198,9 +204,13 @@
 	neutral_stance = mutable_appearance(icon, "mook_axe_overlay")
 	attack_stance = mutable_appearance(icon, "axe_strike_overlay")
 	update_appearance()
-	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/leap = new(src)
-	leap.Grant(src)
-	ai_controller.set_blackboard_key(BB_MOOK_LEAP_ABILITY, leap)
+
+/mob/living/basic/mining/mook/worker/get_innate_abilities()
+	. = ..()
+	. += list(
+		/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap = BB_MOOK_LEAP_ABILITY,
+	)
+	return .
 
 /mob/living/basic/mining/mook/worker/attack_sequence(atom/target)
 	. = ..()

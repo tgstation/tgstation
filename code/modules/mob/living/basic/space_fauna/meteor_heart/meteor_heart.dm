@@ -90,8 +90,6 @@
 	Shake(1, 0, 1.5 SECONDS)
 
 /mob/living/basic/meteor_heart/Destroy()
-	QDEL_NULL(spikes)
-	QDEL_NULL(traps)
 	QDEL_NULL(soundloop)
 	return ..()
 
