@@ -535,8 +535,10 @@
 	base_reagent_purity = 0.5
 
 /obj/machinery/chem_dispenser/drinks/Initialize(mapload)
-	dispensable_reagents = drinks_dispensable_reagents
-	emagged_reagents = drink_emagged_reagents
+	if(!length(dispensable_reagents))
+		dispensable_reagents = drinks_dispensable_reagents
+	if(!length(emagged_reagents))
+		emagged_reagents = drink_emagged_reagents
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
@@ -637,10 +639,16 @@
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
-	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
+	/// The default list of reagents dispensable by mutagen chem dispenser
+	var/static/list/mutagen_dispensable_reagents = list(/datum/reagent/toxin/mutagen)
 	upgrade_reagents = null
-	emagged_reagents = list(/datum/reagent/toxin/plasma)
+	/// The default list of emagged reagents dispensable by mutagen chem dispenser
+	var/static/list/mutagen_emagged_reagents = list(/datum/reagent/toxin/plasma)
 
+/obj/machinery/chem_dispenser/mutagen/Initialize(mapload)
+	dispensable_reagents = mutagen_dispensable_reagents
+	emagged_reagents = mutagen_emagged_reagents
+	. = ..()
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
 	name = "botanical chemical dispenser"
