@@ -557,10 +557,11 @@
 	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), added_delay)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
-	if(QDELETED(holder.my_atom))
+	var/atom/holder_atom = holder.my_atom
+	if(QDELETED(holder_atom))
 		return
-	tesla_zap(holder.my_atom, 7, power, zap_flags)
-	playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
+	tesla_zap(source = holder_atom, zap_range = 7, power = power, zap_flags = zap_flags)
+	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474

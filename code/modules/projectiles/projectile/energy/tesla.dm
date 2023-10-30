@@ -9,13 +9,13 @@
 
 /obj/projectile/energy/tesla/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	tesla_zap(src, zap_range, power, zap_flags)
+	tesla_zap(source = src, zap_range = zap_range, power = power, zap_flags = zap_flags)
 	qdel(src)
 
 /obj/projectile/energy/tesla/process()
 	. = ..()
 	//Many coders have given their blood for this speed
-	tesla_zap(src, zap_range, power, zap_flags)
+	tesla_zap(source = src, zap_range = zap_range, power = power, zap_flags = zap_flags)
 
 /obj/projectile/energy/tesla/revolver
 	name = "energy orb"

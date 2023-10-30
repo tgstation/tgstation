@@ -496,7 +496,7 @@
 
 /obj/projectile/magic/aoe/lightning/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	tesla_zap(src, zap_range, zap_power, zap_flags)
+	tesla_zap(source = src, zap_range = zap_range, power = zap_power, zap_flags = zap_flags)
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	QDEL_NULL(chain)
