@@ -73,9 +73,9 @@
 
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
-		return PROCESS_KILL
-
-	if(!reagents.holder_full())
+		STOP_PROCESSING(SSplumbing, src)
+		return
+	if(reagents.total_volume < reagents.maximum_volume)
 		for(var/D in GLOB.cardinals)
 			if(D & demand_connects)
 				send_request(D)
@@ -93,29 +93,23 @@
 
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
-	process_request(dir = dir)
+	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = null, dir = dir)
 
 ///check who can give us what we want, and how many each of them will give us
-/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir)
-	//find the duct to take from
+/datum/component/plumbing/proc/process_request(amount, reagent, dir)
+	var/list/valid_suppliers = list()
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
 		return
 	net = ducts[num2text(dir)]
-
-	//find all valid suppliers in the duct
-	var/list/valid_suppliers = list()
 	for(var/datum/component/plumbing/supplier as anything in net.suppliers)
 		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
+	// Need to ask for each in turn very carefully, making sure we get the total volume. This is to avoid a division that would always round down and become 0
+	var/targetVolume = reagents.total_volume + amount
 	var/suppliersLeft = valid_suppliers.len
-	if(!suppliersLeft)
-		return
-
-	//take an equal amount from each supplier
-	var/currentRequest
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
-		currentRequest = amount / suppliersLeft
+		var/currentRequest = (targetVolume - reagents.total_volume) / suppliersLeft
 		give.transfer_to(src, currentRequest, reagent, net)
 		suppliersLeft--
 
@@ -128,7 +122,7 @@
 		for(var/datum/reagent/contained_reagent as anything in reagents.reagent_list)
 			if(contained_reagent.type == reagent)
 				return TRUE
-	else if(reagents.total_volume) //take whatever
+	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
@@ -138,7 +132,7 @@
 	if(reagent)
 		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
 	else
-		reagents.trans_to(target.recipient_reagents_holder, amount, methods = methods)
+		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
