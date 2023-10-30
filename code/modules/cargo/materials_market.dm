@@ -80,7 +80,7 @@
 	return ..()
 
 /**
- * Find the order purchased either privatly or by cargo budget
+ * Find the order purchased either privately or by cargo budget
  * Arguments
  * * [user][mob] - the user who placed this order
  * * is_ordering_private - is the player ordering privatly. If FALSE it means they are using cargo budget
@@ -112,13 +112,10 @@
 	if(isliving(user))
 		var/mob/living/living_user = user
 		used_id_card = living_user.get_idcard(TRUE)
-		if(!isnull(used_id_card))
-			can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
+		can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
 	//if no cargo access then force private purchase
-	var/is_ordering_private = ordering_private
-	if(!can_buy_via_budget)
-		is_ordering_private = TRUE
+	var/is_ordering_private = ordering_private || !can_buy_via_budget
 
 	//find current order based on ordering mode & player
 	var/datum/supply_order/current_order = find_order(user, is_ordering_private)
@@ -271,7 +268,7 @@
 				// Check if the order exceeded the purchase limit
 				var/prior_stacks = ROUND_UP(prior_sheets / MAX_STACK_SIZE)
 				if(prior_stacks >= MAX_STACK_LIMIT)
-					say("There is already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
+					say("There are already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
 					playsound(usr, 'sound/machines/synth_no.ogg', 35, FALSE)
 					return
 
@@ -280,7 +277,7 @@
 				if(!isnull(current_order.paying_account)) //order is already being paid by another account
 					paying_account = current_order.paying_account
 				if(current_order.get_final_cost() + cost > paying_account.account_balance)
-					say("Order exceeds available budget!. Please send it before purchasing more.")
+					say("Order exceeds available budget! Please send it before purchasing more.")
 					return
 
 				// Finally Append to this order
@@ -335,8 +332,8 @@
 
 /obj/item/stock_block/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES)
-	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES, TIMER_DELETE_ME)
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
