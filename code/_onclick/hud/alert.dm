@@ -25,7 +25,7 @@
 		thealert = alerts[category]
 		if(thealert.override_alerts)
 			return thealert
-		if(master_ref && thealert.master_ref && master != thealert.master_ref)
+		if(master_ref && thealert.master_ref && master_ref != thealert.master_ref)
 			var/datum/current_master = thealert.master_ref.resolve()
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [current_master]")
 
