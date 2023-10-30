@@ -46,8 +46,7 @@
 	//setup mob abilities
 
 	//well, one of them has to start on infinite cooldown
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile = new attack_action_path(src)
-	spew_bile.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/bileworm/spew_bile)
 	spew_bile.StartCooldownSelf(INFINITY)
 	ai_controller?.set_blackboard_key(BB_BILEWORM_SPEW_BILE, spew_bile)
 

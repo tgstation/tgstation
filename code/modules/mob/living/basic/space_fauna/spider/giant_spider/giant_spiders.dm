@@ -49,8 +49,7 @@
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
-	var/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web = new(src)
-	sneak_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web)
 
 /**
  * ### Guard Spider
@@ -78,8 +77,7 @@
 	. = ..()
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
-	var/datum/action/cooldown/mob_cooldown/web_effigy/shed = new(src)
-	shed.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/web_effigy/shed)
 
 /**
  * ### Hunter Spider
@@ -135,8 +133,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	var/datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders/spiders_communication = new(src)
-	spiders_communication.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders/spiders_communication)
 
 /**
  * ### Nurse Spider
@@ -213,17 +210,13 @@
 
 /mob/living/basic/spider/giant/tangle/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
-	web_solid.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
-	passage_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
-	spikes_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
-	web_sticky.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
@@ -277,11 +270,9 @@
 
 /mob/living/basic/spider/giant/tarantula/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
-	web_solid.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
-	passage_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web)
 
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
@@ -326,8 +317,7 @@
 
 	AddElement(/datum/element/bonus_damage)
 
-	var/datum/action/cooldown/mob_cooldown/defensive_mode/defensive_action = new(src)
-	defensive_action.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/defensive_mode/defensive_action)
 
 /**
  * ### Spider Broodmother
@@ -358,32 +348,23 @@
 
 /mob/living/basic/spider/giant/midwife/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid = new(src)
-	web_solid.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/solid_web/web_solid)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web = new(src)
-	passage_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_passage/passage_web)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
-	spikes_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
-	web_sticky.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky)
 
-	var/datum/action/cooldown/mob_cooldown/wrap/wrapping = new(src)
-	wrapping.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/wrap/wrapping)
 
-	var/datum/action/cooldown/mob_cooldown/lay_eggs/make_eggs = new(src)
-	make_eggs.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_eggs/make_eggs)
 
-	var/datum/action/cooldown/mob_cooldown/lay_eggs/enriched/make_better_eggs = new(src)
-	make_better_eggs.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_eggs/enriched/make_better_eggs)
 
-	var/datum/action/cooldown/mob_cooldown/set_spider_directive/give_orders = new(src)
-	give_orders.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/set_spider_directive/give_orders)
 
-	var/datum/action/cooldown/mob_cooldown/command_spiders/not_hivemind_talk = new(src)
-	not_hivemind_talk.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/command_spiders/not_hivemind_talk)
 
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 
@@ -503,11 +484,9 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
-	spikes_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
-	web_sticky.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky)
 
 
 /**

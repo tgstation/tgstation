@@ -76,8 +76,7 @@
 
 	tentacles = new (src)
 	tentacles.Grant(src)
-	var/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles = new (src)
-	melee_tentacles.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/tentacle_burst/melee_tentacles)
 	AddComponent(/datum/component/revenge_ability, melee_tentacles, targetting = ai_controller.blackboard[BB_TARGETTING_DATUM], max_range = 1, target_self = TRUE)
 	tentacle_line = new (src)
 	tentacle_line.Grant(src)
