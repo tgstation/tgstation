@@ -106,6 +106,10 @@ There are several things that need to be remembered:
 			icon_file = MONKEY_UNIFORM_FILE
 		else if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = uniform.worn_icon_digitigrade || DIGITIGRADE_UNIFORM_FILE
+			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))) //if the digitigrade icon doesn't exist
+				var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_UNIFORM, uniform)
+				if(species_icon_file)
+					icon_file = species_icon_file
 		//Female sprites have lower priority than digitigrade sprites
 		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_UNIFORM, w_uniform)
@@ -326,8 +330,12 @@ There are several things that need to be remembered:
 		var/mutant_override = FALSE
 		if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			var/obj/item/bodypart/leg/leg = src.get_bodypart(BODY_ZONE_L_LEG)
-			if(leg.limb_id == leg.digitigrade_id) //Snowflakey and bad. But it makes it look consistent.
+			if(leg.limb_id == leg.digitigrade_id) //make sure our legs are visually digitigrade
 				icon_file = shoes.worn_icon_digitigrade || DIGITIGRADE_SHOES_FILE
+				if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))) //if the digitigrade icon doesn't exist
+					var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SHOES, shoes)
+					if(species_icon_file)
+						icon_file = species_icon_file
 				mutant_override = TRUE
 		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SHOES, shoes)
@@ -402,7 +410,7 @@ There are several things that need to be remembered:
 
 		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			mutant_override = FALSE
-			icon_file = 'icons/mob/clothing/head.dmi'
+			icon_file = 'icons/mob/clothing/head/default.dmi'
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
 		if(!mutant_override &&(OFFSET_HEAD in dna.species.offset_features))
@@ -644,40 +652,6 @@ There are several things that need to be remembered:
 				continue
 			out += overlays_standing[i]
 	return out
-
-/**
- * Override with a fallback sprite for this item.
- *
- * Arguments:
- * * file2use - The normal `icon` for this item.
- * * state2use - The normal `icon_state` for this item.
- * * layer - The layer that the final sprite should be rendered on.
- * * species_file - The [/datum/species/var/fallback_clothing_path] of the species trying to wear this item.
- */
-/obj/item/proc/wear_fallback_version(file2use, state2use, layer, species_file)
-	return
-
-/**
- * Returns a mutable_appearance of this clothing's fallback sprite.
- *
- * If a sprite for this item hasn't already been generated, a new one is made in [generate_fallback_clothing], and added to `GLOB.fallback_clothing_icons`.
- *
- * Arguments:
- * * file2use - The normal `icon` for this item.
- * * state2use - The normal `icon_state` for this item.
- * * layer - The layer that the final sprite should be rendered on.
- * * species_file - The [/datum/species/var/fallback_clothing_path] of the species trying to wear this item.
- */
-/obj/item/clothing/wear_fallback_version(file2use, state2use, layer, species_file)
-	LAZYINITLIST(GLOB.fallback_clothing_icons[species_file])
-
-	// Either ["path/to/file.dmi-jumpsuit"] or ["#ffe14d-jumpsuit"]
-	var/list_key = "[(greyscale_colors && greyscale_config_worn) ? greyscale_colors : file2use]-[state2use]"
-
-	var/icon/species_clothing_icon = GLOB.fallback_clothing_icons[species_file][list_key]
-	if(!species_clothing_icon) // Create standing/laying icons if they don't exist
-		generate_fallback_clothing(file2use, state2use, species_file, list_key)
-	return mutable_appearance(GLOB.fallback_clothing_icons[species_file][list_key], layer = -layer)
 
 //human HUD updates for items in our inventory
 

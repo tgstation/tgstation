@@ -51,8 +51,14 @@
 	var/list/layers
 	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth'. 'mothwings' would then be feature_key
 	var/feature_key = ""
+	///Similar to feature key, but overrides it in the case you need more fine control over the iconstate, like with Tails.
+	var/render_key = ""
+	///Stores the dna.features[feature_key], used for external organs that can be surgically removed or inserted.
+	var/stored_feature_id = ""
 	/// The savefile_key of the preference this relates to. Used for the preferences UI.
 	var/preference
+	///Sprite datum we use to draw on the bodypart
+	var/datum/sprite_accessory/sprite_datum
 	///With what DNA block do we mutate in mutate_feature() ? For genetics
 	var/dna_block
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
@@ -82,6 +88,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	sprite_datum = get_global_feature_list()[sprite_name]
 	if(!sprite_datum && stored_feature_id)
 		stack_trace("External organ has no valid sprite datum for name [sprite_name]")
+
+///Return a dumb glob list for this specific feature (called from parse_sprite)
+/obj/item/organ/proc/get_global_feature_list()
+	CRASH("External organ has no feature list, it will render invisible")
 
 /*
  * Insert the organ into the select mob.

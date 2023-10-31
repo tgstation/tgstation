@@ -477,45 +477,6 @@ BLIND     // can't see anything
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
-/**
- * Generates a 'fallback' sprite from `fallback_colors` and `fallback_icon_state`, then adds it to `GLOB.fallback_clothing_icons`.
- *
- * The fallback sprite is created by getting each colour specified in [fallback_colors],
- * then mapping each of them to the red, green, and blue sections of the sprite specified by [fallback_icon_state].
- *
- * Arguments:
- * * file2use - The normal `icon` for this item.
- * * state2use - The normal `icon_state` for this item.
- * * species_file - The [/datum/species/var/fallback_clothing_path] of the species trying to wear this item.
- * * list_key - The key that this icon will be saved under in the global list. (Either ["path/to/file.dmi-jumpsuit"], or ["#ffe14d-jumpsuit"] if GAGS is used)
- */
-/obj/item/clothing/proc/generate_fallback_clothing(file2use, state2use, species_file, list_key)
-	var/icon/human_clothing_icon = icon(file2use, state2use) // Default human 'worn' sprite for this item.
-
-	if(greyscale_config_worn && greyscale_colors) // Get the coloured version if it's greyscale.
-		human_clothing_icon = icon(SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors), state2use)
-
-	if(!fallback_colors || !fallback_icon_state)
-		GLOB.fallback_clothing_icons[species_file][list_key] = human_clothing_icon
-		return // If no fallback data is set for this item, just use the human version.
-
-	var/icon/final_icon = icon(species_file, fallback_icon_state) // RGB fallback sprite.
-
-	var/list/final_list = list() // List of colours to map onto the RGB sprite.
-	for(var/i in 1 to 3)
-		if(length(fallback_colors) < i) // If less than 3 colours are specified, fill the remaining indices with black.
-			final_list += "#000000"
-			continue
-		var/color = fallback_colors[i]
-		if(islist(color)) // If `color` is a coordinates list, get the colour of the pixel at that location.
-			final_list += human_clothing_icon.GetPixel(color[1], color[2]) || "#000000"
-		else if(istext(color)) // Otherwise if it's a hex colour, use that instead.
-			final_list += color
-
-	final_icon.MapColors(final_list[1], final_list[2], final_list[3])
-	final_icon = fcopy_rsc(final_icon)
-	GLOB.fallback_clothing_icons[species_file][list_key] = final_icon
-
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(user))
 		return FALSE
