@@ -701,6 +701,7 @@
 	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return
 
+	amount = min(round(amount, CHEMICAL_VOLUME_ROUNDING), holder.maximum_volume - holder.total_volume)
 	var/list/cached_reagents = reagent_list
 
 	var/trans_data = null
@@ -1216,7 +1217,7 @@
 	is_reacting = FALSE
 	//Cap off values
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		reagent.volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)//To prevent runaways.
+		reagent.volume = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)//To prevent runaways.
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	if(!QDELING(src))
@@ -1360,7 +1361,7 @@
 	. = 0 // This is a relatively hot proc.
 	var/total_ph = 0 // I know I know, I'm sorry
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)//For clarity
+		if(reagent.volume <= CHEMICAL_VOLUME_MINIMUM)//For clarity
 			del_reagent(reagent.type)
 		else
 			. += reagent.volume

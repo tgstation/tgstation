@@ -60,6 +60,10 @@
 //Used in holder.dm/equlibrium.dm to set values and volume limits
 ///the minimum volume of reagents than can be operated on.
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001
+///Sanity check limit to prevent tiny amounts of chems sticking around.
+#define CHEMICAL_VOLUME_MINIMUM 0.001
+///Sanity check limit to clamp chems to sane amounts and prevent rounding errors during transfer.
+#define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
 ///The maximum temperature a reagent holder can attain
