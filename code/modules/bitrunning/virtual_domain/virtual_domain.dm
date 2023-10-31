@@ -36,3 +36,7 @@
 	var/test_only = FALSE
 	/// The safehouse to load into the map
 	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/den
+
+/// Overridable proc to be called after the map is loaded.
+/datum/lazy_template/virtual_domain/proc/setup_domain(list/created_atoms)
+	return
