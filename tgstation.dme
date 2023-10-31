@@ -14,6 +14,12 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\virtual_domains\ash_drake.dmm"
+#include "_maps\virtual_domains\blood_drunk_miner.dmm"
+#include "_maps\virtual_domains\bubblegum.dmm"
+#include "_maps\virtual_domains\colossus.dmm"
+#include "_maps\virtual_domains\hierophant.dmm"
+#include "_maps\virtual_domains\wendigo.dmm"
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\_experiments.dm"
@@ -3297,6 +3303,7 @@
 #include "code\modules\bitrunning\components\avatar_connection.dm"
 #include "code\modules\bitrunning\components\bitrunning_points.dm"
 #include "code\modules\bitrunning\components\netpod_healing.dm"
+#include "code\modules\bitrunning\components\virtual_elite_mob.dm"
 #include "code\modules\bitrunning\objects\byteforge.dm"
 #include "code\modules\bitrunning\objects\clothing.dm"
 #include "code\modules\bitrunning\objects\disks.dm"
@@ -3326,7 +3333,6 @@
 #include "code\modules\bitrunning\virtual_domain\domains\colossus.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\hierophant.dm"
-#include "code\modules\bitrunning\virtual_domain\domains\legion.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pipedream.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pirates.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\psyker_shuffle.dm"

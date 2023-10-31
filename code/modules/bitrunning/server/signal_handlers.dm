@@ -83,8 +83,11 @@
 		if(isliving(thing)) // so we can mutate them
 			var/mob/living/creature = thing
 
-			if(creature.can_be_cybercop)
-				mutation_candidate_refs.Add(WEAKREF(creature))
+			if(ismegafauna(creature))
+				creature.AddElement(/datum/element/virtual_elite_mob)
+				continue
+
+			mutation_candidate_refs.Add(WEAKREF(creature))
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
