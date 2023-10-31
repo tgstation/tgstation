@@ -15,7 +15,7 @@
 	attack_sound = 'sound/weapons/punch2.ogg'
 	playstyle_string = span_bold("You are a Proteon. Your abilities in combat are outmatched by most combat constructs, but you are still fast and nimble. Run metal and supplies, and cooperate with your fellow cultists.")
 
-/// Hostile NPC version,
+/// Hostile NPC version
 /mob/living/basic/construct/proteon/hostile
 	ai_controller = /datum/ai_controller/basic_controller/proteon
 	smashes_walls = FALSE
