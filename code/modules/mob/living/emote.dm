@@ -163,7 +163,7 @@
 /datum/emote/living/flap/aflap
 	key = "aflap"
 	key_third_person = "aflaps"
-	name = "flap angry"
+	name = "Flap (Angry)"
 	message = "flaps their wings ANGRILY!"
 	hands_use_check = TRUE
 	wing_time = 10
@@ -191,6 +191,7 @@
 /datum/emote/living/gasp_shock
 	key = "gaspshock"
 	key_third_person = "gaspsshock"
+	name = "Gasp (Shocked)"
 	message = "gasps in shock!"
 	message_mime = "gasps in silent shock!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
@@ -507,7 +508,7 @@
 
 /datum/emote/living/twitch_s
 	key = "twitch_s"
-	name = "twitch slightly"
+	name = "Twitch (Slight)"
 	message = "twitches."
 
 /datum/emote/living/twitch_s/run_emote(mob/living/user, params, type_override, intentional)
@@ -532,7 +533,7 @@
 /datum/emote/living/wsmile
 	key = "wsmile"
 	key_third_person = "wsmiles"
-	name = "smile weak"
+	name = "Smile (Weak)"
 	message = "smiles weakly."
 
 /// The base chance for your yawn to propagate to someone else if they're on the same tile as you
