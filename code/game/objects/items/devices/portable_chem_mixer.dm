@@ -63,7 +63,7 @@
 	if(QDELETED(beaker))
 		. += span_notice("A beaker can be inserted to dispense reagents after it is locked.")
 	else
-		. += span_notice("A beaker of [beaker.reagents.maximum_volume] units is inserted.")
+		. += span_notice("A beaker of [beaker.reagents.maximum_volume] units capacity is inserted.")
 		. += span_notice("It can be ejected with [EXAMINE_HINT("alt click")].")
 
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
