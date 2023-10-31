@@ -100,6 +100,11 @@
 			qdel(thing)
 			continue
 
+		if(istype(thing, /obj/effect/landmark/bitrunning/loot_signal))
+			var/turf/signaler_turf = get_turf(thing)
+			signaler_turf.AddComponent(/datum/component/bitrunning_loot_signal, generated_domain)
+			qdel(thing)
+
 	if(!length(exit_turfs))
 		CRASH("Failed to find exit turfs on generated domain.")
 	if(!length(goal_turfs))
@@ -137,7 +142,7 @@
 	else
 		scrub_vdom() // used in unit testing, no need to wait for callbacks
 
-	addtimer(CALLBACK(src, PROC_REF(cool_off)), min(server_cooldown_time * capacitor_coefficient), TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(cool_off)), ROUND_UP(server_cooldown_time * capacitor_coefficient), TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 	update_appearance()
 
 	update_use_power(IDLE_POWER_USE)

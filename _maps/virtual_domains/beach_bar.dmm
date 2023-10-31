@@ -159,9 +159,9 @@
 	pixel_x = -8;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_y = 8;
-	pixel_x = 5
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled{
+	pixel_y = 5;
+	pixel_x = 6
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -427,10 +427,10 @@
 /area/virtual_domain/fullbright)
 "uq" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_x = -4;
-	pixel_y = 8
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled{
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -881,11 +881,11 @@
 /area/virtual_domain/fullbright)
 "Mp" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_y = 7;
-	pixel_x = 4
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled{
+	pixel_x = 5;
+	pixel_y = 5
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "Mw" = (

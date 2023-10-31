@@ -2,31 +2,31 @@
 "ae" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "cK" = (
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/virtual_domain)
 "cU" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "df" = (
 /obj/effect/spawner/random/vending/snackvend,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "do" = (
 /obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "eU" = (
-/obj/effect/spawner/random/trash/bin,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
+/obj/effect/spawner/random/structure/crate,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/catwalk_floor,
 /area/virtual_domain)
 "gh" = (
 /obj/effect/spawner/random/vending/colavend,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "hz" = (
 /obj/item/clothing/head/cowboy,
@@ -36,19 +36,19 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "il" = (
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "iJ" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /obj/effect/spawner/random/structure/table,
 /obj/effect/spawner/random/entertainment/plushie,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "iO" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "jt" = (
 /obj/item/gun/energy/marksman_revolver{
@@ -66,11 +66,11 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "ma" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /obj/effect/spawner/random/structure/table,
 /obj/effect/spawner/random/decoration/generic,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "mq" = (
 /obj/effect/baseturf_helper/virtual_domain,
@@ -83,7 +83,7 @@
 /obj/modular_map_root/virtual_domain{
 	key = "station_large"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "on" = (
 /obj/structure/table/greyscale,
@@ -101,7 +101,7 @@
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "po" = (
 /obj/effect/baseturf_helper/virtual_domain,
@@ -112,15 +112,15 @@
 /obj/modular_map_root/virtual_domain{
 	key = "station_small"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "sX" = (
 /obj/effect/spawner/random/decoration/statue,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "uW" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "ve" = (
 /obj/effect/spawner/random/trash/graffiti,
@@ -128,88 +128,95 @@
 /area/virtual_domain)
 "wB" = (
 /obj/effect/spawner/random/engineering/tank,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/virtual_domain)
+"wK" = (
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/virtual_domain)
 "yF" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /obj/effect/spawner/random/structure/table,
 /obj/effect/spawner/random/food_or_drink/snack,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "zU" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /obj/effect/spawner/random/structure/table,
 /obj/effect/turf_decal/tile/dark_red/half,
 /obj/machinery/recharger{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Au" = (
 /obj/effect/spawner/random/trash/garbage,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/virtual_domain)
 "AF" = (
 /obj/effect/turf_decal/tile/dark_red/half,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "AQ" = (
 /obj/modular_map_root/virtual_domain{
 	key = "station_medium"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Bi" = (
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "BX" = (
 /obj/effect/spawner/random/trash/graffiti,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Ey" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /obj/effect/spawner/random/structure/table,
 /obj/effect/spawner/random/decoration/ornament,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "EK" = (
 /obj/effect/spawner/random/structure/chair_maintenance{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Gz" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/turf_decal/tile/dark_red/half,
 /obj/effect/spawner/random/armory/shotgun,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "GY" = (
 /obj/effect/spawner/random/entertainment/arcade,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Ib" = (
 /obj/effect/spawner/random/trash/bin,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Il" = (
 /obj/effect/turf_decal/tile/dark_red/half,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Ix" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/exotic/antag_gear,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/virtual_domain)
 "Ja" = (
@@ -221,7 +228,7 @@
 /area/virtual_domain)
 "KD" = (
 /obj/effect/landmark/bitrunning/cache_spawn,
-/turf/open/floor/plating,
+/turf/template_noop,
 /area/virtual_domain)
 "KN" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -238,21 +245,23 @@
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/tile/dark_red/half,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
+/obj/machinery/light/directional/south,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "MG" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
+/obj/effect/spawner/random/trash/graffiti,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/catwalk_floor,
 /area/virtual_domain)
 "Oq" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Ox" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/five,
 /obj/effect/spawner/random/armory/laser_gun,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/virtual_domain)
 "OX" = (
@@ -260,42 +269,45 @@
 /area/virtual_domain)
 "OZ" = (
 /obj/effect/spawner/random/structure/billboard,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "PE" = (
-/turf/open/floor/plating,
+/turf/template_noop,
+/area/virtual_domain)
+"QO" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Rk" = (
 /obj/effect/spawner/random/trash/graffiti,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Te" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /obj/effect/spawner/random/structure/table,
 /obj/effect/spawner/random/engineering/toolbox,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Tn" = (
 /turf/open/space/basic,
 /area/virtual_domain)
 "TM" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "VX" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Wd" = (
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 "Wp" = (
 /obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/floor/iron,
+/turf/open/floor/sepia,
 /area/virtual_domain)
 
 (1,1,1) = {"
@@ -457,7 +469,7 @@ PE
 PE
 PE
 PE
-MG
+il
 il
 il
 il
@@ -611,7 +623,7 @@ PE
 PE
 PE
 PE
-MG
+il
 il
 il
 il
@@ -701,7 +713,7 @@ Ja
 Ja
 PE
 PE
-KD
+PE
 cK
 PE
 PE
@@ -719,7 +731,7 @@ Ja
 (23,1,1) = {"
 Ja
 PE
-PE
+KD
 PE
 PE
 PE
@@ -763,7 +775,7 @@ PE
 PE
 PE
 PE
-MG
+il
 il
 VX
 il
@@ -814,7 +826,7 @@ Ja
 (28,1,1) = {"
 Ja
 PE
-PE
+KD
 PE
 PE
 PE
@@ -853,7 +865,7 @@ Ja
 Ja
 PE
 PE
-KD
+PE
 cK
 PE
 PE
@@ -915,7 +927,7 @@ PE
 PE
 PE
 PE
-MG
+il
 il
 il
 il
@@ -927,7 +939,7 @@ Ja
 "}
 (34,1,1) = {"
 Ja
-OX
+wK
 ve
 OX
 OX
@@ -1005,7 +1017,7 @@ Ja
 Ja
 PE
 PE
-KD
+PE
 cK
 PE
 PE
@@ -1023,7 +1035,7 @@ Ja
 (39,1,1) = {"
 Ja
 PE
-PE
+KD
 PE
 PE
 PE
@@ -1067,7 +1079,7 @@ PE
 PE
 PE
 PE
-MG
+il
 uW
 il
 il
@@ -1156,8 +1168,8 @@ Ja
 (46,1,1) = {"
 Ja
 PE
-PE
 KD
+PE
 cK
 PE
 PE
@@ -1219,7 +1231,7 @@ PE
 PE
 PE
 PE
-eU
+Ib
 il
 il
 il
@@ -1231,7 +1243,7 @@ Ja
 "}
 (50,1,1) = {"
 Ja
-ve
+MG
 OX
 OX
 OX
@@ -1293,8 +1305,8 @@ PE
 cK
 PE
 PE
-PE
 KD
+PE
 PE
 PE
 uW
@@ -1328,7 +1340,7 @@ Ja
 Ja
 PE
 PE
-KD
+PE
 PE
 PE
 PE
@@ -1365,7 +1377,7 @@ Ja
 (57,1,1) = {"
 Ja
 PE
-PE
+KD
 PE
 PE
 PE
@@ -1411,7 +1423,7 @@ PE
 PE
 PE
 PE
-MG
+il
 il
 Wd
 KN
@@ -1421,7 +1433,7 @@ Ja
 "}
 (60,1,1) = {"
 Ja
-JA
+eU
 OX
 OX
 OX
@@ -1461,7 +1473,7 @@ Ja
 Ja
 PE
 PE
-PE
+KD
 PE
 PE
 PE
@@ -1499,7 +1511,7 @@ Ja
 Ja
 PE
 PE
-KD
+PE
 cK
 PE
 PE
@@ -1753,7 +1765,7 @@ PE
 PE
 PE
 PE
-MG
+il
 VX
 BX
 KN
@@ -1763,7 +1775,7 @@ Ja
 "}
 (78,1,1) = {"
 Ja
-JA
+eU
 JA
 OX
 OX
@@ -1772,7 +1784,7 @@ OX
 OX
 OX
 il
-il
+QO
 il
 Wd
 KN

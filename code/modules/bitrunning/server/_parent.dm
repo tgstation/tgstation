@@ -104,6 +104,14 @@
 	icon_state = "[base_icon_state]_[is_ready ? "on" : "off"]"
 	return ..()
 
+/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(istype(weapon, /obj/item/bitrunning_debug))
+		obj_flags |= EMAGGED
+		glitch_chance = 0.5
+		capacitor_coefficient = 0.01
+		points = 100
+
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = ..()
 
