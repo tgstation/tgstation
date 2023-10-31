@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Bitrunners can no longer get mass-mindswapped out of their avatar when the wizard does the event. Something about machinery and magic not going well together."
