@@ -49,6 +49,7 @@
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_completed))
 	RegisterSignal(server, COMSIG_BITRUNNER_QSRV_SEVER, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
+	RegisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
 #ifndef UNIT_TESTS
 	RegisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 #endif
@@ -203,6 +204,19 @@
 	)
 	alert.name = "Domain Rebooting"
 	alert.desc = "The domain is rebooting. Find an exit."
+
+/// Server has spawned a ghost role threat
+/datum/component/avatar_connection/proc/on_threat_created(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/avatar = parent
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
+		ALERT_BITRUNNER_THREAT,
+		/atom/movable/screen/alert/bitrunning,
+		new_master = source,
+	)
+	alert.name = "Threat Detected"
+	alert.desc = "Data stream abnormalities present."
 
 /// Returns the mind to the old body
 /datum/component/avatar_connection/proc/return_to_old_body()
