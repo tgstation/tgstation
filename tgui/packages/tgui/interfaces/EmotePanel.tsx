@@ -1,8 +1,9 @@
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Button, Section, Flex, Icon } from '../components';
+import { Button, Section, Flex, Icon, Box } from '../components';
 import { BooleanLike } from '../../common/react';
 import { SearchBar } from './Fabrication/SearchBar';
+import { capitalizeFirst } from '../../common/string';
 
 type Emote = {
   key: string;
@@ -178,8 +179,10 @@ export const EmotePanelContent = (props, context) => {
                   (filterHands ? emote.hands : true) &&
                   (filterUseParams ? emote.use_params : true)
               )
+              .sort((a, b) => (a.name > b.name ? 1 : -1))
               .map((emote) => (
                 <Button
+                  width={13}
                   key={emote.name}
                   onClick={() =>
                     act('play_emote', {
@@ -187,14 +190,18 @@ export const EmotePanelContent = (props, context) => {
                       use_params: useParams,
                     })
                   }>
-                  {emote.visible ? <Icon name="eye" /> : ''}
-                  {emote.audible ? <Icon name="comment" /> : ''}
-                  {emote.sound ? <Icon name="volume-up" /> : ''}
-                  {emote.hands ? <Icon name="hand-paper" /> : ''}
-                  {emote.use_params ? <Icon name="crosshairs" /> : ''}
-                  {showNames
-                    ? emote.name.toUpperCase()
-                    : emote.key.toUpperCase()}
+                  <Box align="left" inline width="50%" height="100%">
+                    {showNames
+                      ? capitalizeFirst(emote.name.toLowerCase())
+                      : capitalizeFirst(emote.key.toUpperCase())}
+                  </Box>
+                  <Box align="right" inline width="50%" height="100%">
+                    {emote.visible ? <Icon name="eye" /> : ''}
+                    {emote.audible ? <Icon name="comment" /> : ''}
+                    {emote.sound ? <Icon name="volume-up" /> : ''}
+                    {emote.hands ? <Icon name="hand-paper" /> : ''}
+                    {emote.use_params ? <Icon name="crosshairs" /> : ''}
+                  </Box>
                 </Button>
               ))}
           </Flex.Item>
