@@ -48,7 +48,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 // Creates a new turf
 // new_baseturfs can be either a single type or list of types, formated the same as baseturfs. see turf.dm
-/turf/proc/ChangeTurf(path, list/new_baseturfs, flags)
+/turf/proc/ChangeTurf(turf/path, list/new_baseturfs, flags)
+	if(flags & CHANGETURF_DEFAULT_BASETURF)
+		new_baseturfs = initial(path.baseturfs)
+
 	switch(path)
 		if(null)
 			return

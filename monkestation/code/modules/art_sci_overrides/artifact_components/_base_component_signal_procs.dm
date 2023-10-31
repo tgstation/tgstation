@@ -51,6 +51,7 @@
 
 	if(artifact_size == ARTIFACT_SIZE_LARGE) //only large artifacts since the average spessman wouldnt notice)
 		user.visible_message(span_notice("[user] touches [holder]."))
+		
 	if(ishuman(user))
 		var/mob/living/carbon/human/human = user 
 		var/obj/item/bodypart/arm = human.get_active_hand()
