@@ -9,7 +9,7 @@
 	forge_ref = WEAKREF(forge)
 
 	var/mob/living/owner = parent
-	server.spawned_threat_refs.Remove(WEAKREF(owner))
+	server.spawned_threat_refs.Remove(WEAKREF(owner)) // so the server doesn't dust us
 
 	owner.faction.Cut()
 	owner.faction += list(ROLE_GLITCH)

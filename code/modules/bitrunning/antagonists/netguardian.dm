@@ -83,16 +83,18 @@
 	playsound(player, 'sound/mecha/skyfall_power_up.ogg', 120)
 	player.say("target acquired.", "machine")
 
-	var/mutable_appearance/firing_effect = mutable_appearance('icons/mob/nonhuman-player/netguardian.dmi', "firing")
-	player.add_overlay(firing_effect)
+	var/mutable_appearance/scan_effect = mutable_appearance('icons/mob/nonhuman-player/netguardian.dmi', "scan")
+	var/mutable_appearance/rocket_effect = mutable_appearance('icons/mob/nonhuman-player/netguardian.dmi', "rockets")
+	var/list/overlays = list(scan_effect, rocket_effect)
+	player.add_overlay(overlays)
 
 	StartCooldown()
 	if(!do_after(player, 1.5 SECONDS))
 		StartCooldown(cooldown_time * 0.2)
-		player.cut_overlay(firing_effect)
+		player.cut_overlay(overlays)
 		return TRUE
 
-	player.cut_overlay(firing_effect)
+	player.cut_overlay(overlays)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 	return TRUE
