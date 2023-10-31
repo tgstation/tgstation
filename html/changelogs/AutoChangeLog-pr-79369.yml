@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - code_imp: "Changing security levels will only trigger the nightshift subsystem if lighting changes are required"
