@@ -98,7 +98,7 @@
 	if (!isturf(T))
 		return
 
-	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
 		return
 
 	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
@@ -119,7 +119,7 @@
 	var/turf/user_turf = user.loc
 	if (!isturf(user_turf))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
 		return
 	var/mining_speed = mining_arms ? tool_mine_speed : hand_mine_speed
 	TIMER_COOLDOWN_START(src, REF(user), mining_speed)
