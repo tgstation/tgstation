@@ -20,16 +20,6 @@
 	if(!spawn_location?.resolve())
 		return kill()
 
-/datum/round_event_control/random_artifact/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
-	. = ..()
-	if(!.)
-		return
-	//just in case
-	if(!length(GLOB.generic_event_spawns))
-		return FALSE
-	else
-		return
-
 /datum/round_event/random_artifact/start()
 	var/marker = spawn_location.resolve()
 	if(!marker)

@@ -1,3 +1,6 @@
+//range artifacts require stimuli to fall within a range between amount and upper range
+// hint range and hint chance are added onto range to see if something we should pull a hint for the user
+
 /datum/artifact_activator/range
 	name = "Generic Range Trigger"
 	//the upper range of the weapon basically between amount, and upper_range
