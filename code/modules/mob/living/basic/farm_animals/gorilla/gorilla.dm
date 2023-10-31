@@ -88,6 +88,11 @@
 /mob/living/basic/gorilla/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if (!. || !isliving(target))
+		var/obj/item/can_be_obj = target
+		if(istype(can_be_obj, /obj/item))
+			SEND_SIGNAL(can_be_obj, COMSIG_ATOM_ATTACK_PAW, src, modifiers, ignore_cooldown)
+			if(!src.get_active_held_item() && (can_be_obj.item_flags & IN_STORAGE))
+				INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, put_in_hands), can_be_obj, modifiers, ignore_cooldown)
 		return
 	ooga_ooga()
 	if (prob(paralyze_chance))
