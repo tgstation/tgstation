@@ -40,6 +40,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = area.lightswitch ? "Flick off" : "Flick on"
 		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour != TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
 /obj/machinery/light_switch/update_appearance(updates=ALL)
@@ -69,8 +72,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	. = ..()
 	set_lights(!area.lightswitch)
 
-/obj/machinery/light_switch/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour != TOOL_SCREWDRIVER)
+/obj/machinery/light_switch/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "You pop \the [src] off the wall.")
 		deconstruct()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
