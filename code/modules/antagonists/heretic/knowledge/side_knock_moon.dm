@@ -62,28 +62,23 @@
 	if(!length(result_atoms))
 		return FALSE
 
-	// List comparison
 	if(length(optional_selected_atoms))
-		// What atoms are needed for different paintings
-		//var/obj/item/organ/internal/eyes/weeping_atoms
-		//var/obj/item/bodypart/desire_atoms
-		//var/obj/item/food/grown/vines_atoms
-		//var/obj/item/clothing/gloves/beauty_atoms
-		//var/obj/item/trash/rust_atoms
-		if(is_type_in_list(/obj/item/organ/internal/eyes, optional_selected_atoms))
-			new /obj/item/wallframe/painting/eldritch(loc)
-
-		if(is_type_in_list(/obj/item/bodypart, optional_selected_atoms))
-			new /obj/item/wallframe/painting/eldritch/desire(loc)
-
-		if(is_type_in_list(/obj/item/food/grown, optional_selected_atoms))
-			new /obj/item/wallframe/painting/eldritch/vines(loc)
-
-		if(is_type_in_list(/obj/item/clothing/gloves, optional_selected_atoms))
-			new /obj/item/wallframe/painting/eldritch/beauty(loc)
-
-		if(is_type_in_list(/obj/item/trash, optional_selected_atoms))
-			new /obj/item/wallframe/painting/eldritch/rust(loc)
+		for(var/optional_type in optional_selected_atoms)
+			if(istype(optional_type, /obj/item/organ/internal/eyes))
+				new /obj/item/wallframe/painting/eldritch(loc)
+				continue
+			if(istype(optional_type, /obj/item/bodypart))
+				new /obj/item/wallframe/painting/eldritch/desire(loc)
+				continue
+			if(istype(optional_type, /obj/item/food/grown))
+				new /obj/item/wallframe/painting/eldritch/vines(loc)
+				continue
+			if(istype(optional_type, /obj/item/clothing/gloves))
+				new /obj/item/wallframe/painting/eldritch/beauty(loc)
+				continue
+			if(istype(optional_type, /obj/item/trash))
+				new /obj/item/wallframe/painting/eldritch/rust(loc)
+				continue
 		return TRUE
 	else
 		for(var/result in result_atoms)
