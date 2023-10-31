@@ -196,11 +196,14 @@ export const EmotePanelContent = (props, context) => {
                       : capitalizeFirst(emote.key.toUpperCase())}
                   </Box>
                   <Box align="right" inline width="50%" height="100%">
-                    {emote.visible ? <Icon name="eye" /> : ''}
-                    {emote.audible ? <Icon name="comment" /> : ''}
-                    {emote.sound ? <Icon name="volume-up" /> : ''}
-                    {emote.hands ? <Icon name="hand-paper" /> : ''}
-                    {emote.use_params ? <Icon name="crosshairs" /> : ''}
+                    <Icon name="eye" color={!emote.visible ? 'red' : ''} />
+                    <Icon name="comment" color={!emote.audible ? 'red' : ''} />
+                    <Icon name="volume-up" color={!emote.sound ? 'red' : ''} />
+                    <Icon name="hand-paper" color={!emote.hands ? 'red' : ''} />
+                    <Icon
+                      name="crosshairs"
+                      color={!emote.use_params ? 'red' : ''}
+                    />
                   </Box>
                 </Button>
               ))}
