@@ -26,6 +26,7 @@
 	var/mob/dead/observer/ghost_player = allocate(/mob/dead/observer)
 	var/datum/client_interface/mock_client = new()
 	ghost_player.mock_client = mock_client
+	mock_client.mob = ghost_player
 	ADD_TRAIT(ghost_player, TRAIT_PRESERVE_UI_WITHOUT_CLIENT, TRAIT_SOURCE_UNIT_TESTS)
 
 	//First make the human sign up for Mafia, then the ghost, then we'll auto-start it.
@@ -35,8 +36,8 @@
 	controller.basic_setup()
 
 	TEST_ASSERT(mafia_game_started, "Mafia game did not start despite basic_setup being called.")
-	TEST_ASSERT(controller.player_role_lookup[modpc_player], "The Modular Computer was unable to join a game of Mafia.")
-	TEST_ASSERT(controller.player_role_lookup[mock_client], "The Mock client wasn't put into a game of Mafia.")
+	TEST_ASSERT_NOTNULL(controller.player_role_lookup[modpc_player], "The Modular Computer was unable to join a game of Mafia.")
+	TEST_ASSERT_NOTNULL(controller.player_role_lookup[mock_client], "The Mock client wasn't put into a game of Mafia.")
 
 /datum/unit_test/mafia/proc/on_mafia_start(datum/controller/subsystem/processing/dcs/source, datum/mafia_controller/game)
 	SIGNAL_HANDLER

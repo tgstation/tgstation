@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * Puts players in each role randomly
  * Arguments:
  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
- * * ready_ghosts_and_pdas: list of filtered, sane players & PDAs (so not playing or disconnected) for the game to put into roles
+ * * ready_ghosts_and_pdas: list of filtered, sane (so not playing or disconnected) ghost ckeys & PDAs for the game to put into roles.
  */
 /datum/mafia_controller/proc/prepare_game(setup_list, ready_ghosts_and_pdas)
 	var/static/list/possible_maps = subtypesof(/datum/map_template/mafia)
@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/list/bounds = current_map.load(spawn_area)
 	if(!bounds)
 		CRASH("Loading mafia map failed!")
-	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23,spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
+	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 23, spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
 	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
 		for(var/obj/effect/landmark/mafia/possible_spawn in GLOB.landmarks_list)
