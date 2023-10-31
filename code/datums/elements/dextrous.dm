@@ -51,7 +51,9 @@
 /datum/element/dextrous/proc/on_hand_clicked(mob/living/hand_haver, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 	if(!proximity)
-		return NONE
+		var/obj/item/can_be_obj = target
+		if(!istype(can_be_obj, /obj/item/storage) && !(can_be_obj.item_flags & IN_STORAGE))
+			return NONE
 	if (!isitem(target) && hand_haver.combat_mode)
 		return NONE
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
