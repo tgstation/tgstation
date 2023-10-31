@@ -45,11 +45,10 @@
 		return
 
 	current_target = target
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_clear_target))
-	if (!isnull(aggro_state))
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_icon_state_updated))
-	if (!isnull(aggro_overlay))
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlays_updated))
+	if (!isnull(aggro_overlay) || !isnull(aggro_state))
+		source.update_appearance(UPDATE_ICON)
+	if (!isnull(alpha_on_aggro))
+		animate(source, alpha = alpha_on_aggro, time = 2 SECONDS)
 
 /datum/component/appearance_on_aggro/Destroy()
 	if (!isnull(current_target))
@@ -61,7 +60,6 @@
 	revert_appearance(parent)
 
 /datum/component/appearance_on_aggro/proc/revert_appearance(mob/living/source)
-	UnregisterSignal(current_target, COMSIG_PARENT_QDELETING)
 	current_target = null
 	if (!isnull(aggro_overlay) || !isnull(aggro_state))
 		source.update_appearance(UPDATE_ICON)
