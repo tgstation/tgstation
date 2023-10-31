@@ -16702,9 +16702,9 @@
 	c_tag = "Security - HoS Office"
 	},
 /obj/item/flashlight/lamp/green{
-	on = 0;
 	pixel_x = -6;
-	pixel_y = 16
+	pixel_y = 16;
+	start_on = 0
 	},
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -65011,7 +65011,7 @@
 /area/station/security/brig/upper)
 "tSs" = (
 /obj/item/flashlight/lantern{
-	on = 1
+	start_on = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -70786,7 +70786,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/flashlight/lamp{
-	on = 0
+	start_on = 0
 	},
 /turf/open/floor/wood,
 /area/station/maintenance/aft/greater)

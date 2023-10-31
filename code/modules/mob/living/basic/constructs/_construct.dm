@@ -22,6 +22,7 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
+	melee_attack_cooldown = CLICK_CD_MELEE
 
 	// Vivid red, cause cult theme
 	lighting_cutoff_red = 30
@@ -42,14 +43,19 @@
 	var/can_repair_self = FALSE
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
-	/// What flavor of gunk does this construct drop on death?
-	var/static/list/remains = list(/obj/item/ectoplasm/construct)
 	/// Can this construct smash walls? Gets the wall_smasher element if so.
 	var/smashes_walls = FALSE
+	/// The different flavors of goop constructs can drop, depending on theme.
+	var/static/list/remains_by_theme = list(
+		THEME_CULT = list(/obj/item/ectoplasm/construct),
+		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
+		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
+	)
 
 /mob/living/basic/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	var/list/remains = string_list(remains_by_theme[theme])
 	if(length(remains))
 		AddElement(/datum/element/death_drops, remains)
 	if(smashes_walls)

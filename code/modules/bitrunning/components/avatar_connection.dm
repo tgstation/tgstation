@@ -33,6 +33,7 @@
 	server.avatar_connection_refs.Add(WEAKREF(src))
 
 	avatar.key = old_body.key
+	ADD_TRAIT(avatar, TRAIT_NO_MINDSWAP, REF(src)) // do not remove this one
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
 	RegisterSignals(old_body, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_STATUS_UNCONSCIOUS), PROC_REF(on_sever_connection))
@@ -108,7 +109,7 @@
 	)
 
 /// Transfers damage from the avatar to the old_body
-/datum/component/avatar_connection/proc/on_linked_damage(datum/source, damage, damage_type, def_zone, blocked, forced)
+/datum/component/avatar_connection/proc/on_linked_damage(datum/source, damage, damage_type, def_zone, blocked, ...)
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/old_body = old_body_ref?.resolve()
@@ -123,7 +124,7 @@
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(old_body, TYPE_PROC_REF(/mob/living, emote), "scream")
 
-	old_body.apply_damage(damage, damage_type, def_zone, blocked, forced, wound_bonus = CANT_WOUND)
+	old_body.apply_damage(damage, damage_type, def_zone, blocked, wound_bonus = CANT_WOUND)
 
 	if(old_body.stat > SOFT_CRIT) // KO!
 		full_avatar_disconnect(forced = TRUE)
