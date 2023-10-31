@@ -1401,7 +1401,6 @@
 #include "code\datums\elements\strippable.dm"
 #include "code\datums\elements\structure_repair.dm"
 #include "code\datums\elements\swabbable.dm"
-#include "code\datums\elements\tear_wall.dm"
 #include "code\datums\elements\temporary_atom.dm"
 #include "code\datums\elements\tenacious.dm"
 #include "code\datums\elements\tiny_mob_hunter.dm"
