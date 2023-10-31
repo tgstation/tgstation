@@ -9,7 +9,7 @@
 
 /datum/component/bitrunning_points/Initialize(datum/lazy_template/virtual_domain/domain)
 	. = ..()
-	if(isturf(parent))
+	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(domain, COMSIG_BITRUNNER_GOAL_POINT, PROC_REF(on_add_points))
