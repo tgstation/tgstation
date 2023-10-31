@@ -4220,6 +4220,7 @@
 #include "code\modules\mafia\roles\town\town_protective.dm"
 #include "code\modules\mafia\roles\town\town_support.dm"
 #include "code\modules\mapfluff\centcom\nuke_ops.dm"
+#include "code\modules\mapfluff\ruins\generic.dm"
 #include "code\modules\mapfluff\ruins\lavaland_ruin_code.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\hotsprings.dm"
 #include "code\modules\mapfluff\ruins\icemoonruin_code\library.dm"
