@@ -191,7 +191,7 @@
 /datum/emote/living/gasp_shock
 	key = "gaspshock"
 	key_third_person = "gaspsshock"
-	name = "Gasp (Shocked)"
+	name = "Gasp (Shock)"
 	message = "gasps in shock!"
 	message_mime = "gasps in silent shock!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
