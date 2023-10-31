@@ -315,6 +315,9 @@
 		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
 
+/turf/open/lava/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(crossing, TRAIT_LAVA_IMMUNE)
+
 /turf/open/lava/smooth
 	name = "lava"
 	baseturfs = /turf/open/lava/smooth
