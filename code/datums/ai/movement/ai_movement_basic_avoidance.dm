@@ -17,7 +17,7 @@
 	. = ..()
 	var/turf/target_turf = get_step_towards(source.moving, source.target)
 
-	if(isnull(target_turf) || !target_turf.can_cross_safely(source.moving))
+	if(!target_turf?.can_cross_safely(source.moving))
 		. = MOVELOOP_SKIP_STEP
 	return .
 

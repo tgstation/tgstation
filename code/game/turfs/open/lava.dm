@@ -316,7 +316,7 @@
 		burn_living.ignite_mob()
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)
-	return HAS_TRAIT(crossing, TRAIT_LAVA_IMMUNE) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
 
 /turf/open/lava/smooth
 	name = "lava"
