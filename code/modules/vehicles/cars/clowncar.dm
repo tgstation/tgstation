@@ -198,7 +198,7 @@
  * * Fart and make everyone nearby laugh
  */
 /obj/vehicle/sealed/car/clowncar/proc/roll_the_dice(mob/user)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
 		to_chat(user, span_notice("The button panel is currently recharging."))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CLOWNCAR_RANDOMNESS, dice_cooldown_time)

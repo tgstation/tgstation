@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/retaliate/trader : /mob/living/basic/trader{@OLD}
+/mob/living/simple_animal/hostile/retaliate/trader/mrbones : /mob/living/basic/trader/mrbones{@OLD}

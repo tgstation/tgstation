@@ -3,8 +3,6 @@
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
 	speed = 1.1
-	melee_damage_lower = 10
-	melee_damage_upper = 10
 	faction = list(ROLE_SYNDICATE)
 	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/syndicatesoldier

@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "People held at gunpoint can now flinch when being hit."
-  - bugfix: "Regenerating mobs no longer stop regenerating no matter hit with what."
-  - bugfix: "Pressure damage is now properly modified by a mob's brute damage modifier."
-  - bugfix: "Fixes some occasions which some effects (glass jaw, explodable worn items) won't respond to hits."
-  - refactor: "Refactored core code related to mobs sustaining damage."

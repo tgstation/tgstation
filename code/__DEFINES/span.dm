@@ -115,6 +115,7 @@
 #define span_smallnoticeital(str) ("<span class='smallnoticeital'>" + str + "</span>")
 #define span_spiderbroodmother(str) ("<span class='spiderbroodmother'>" + str + "</span>")
 #define span_spiderscout(str) ("<span class='spiderscout'>" + str + "</span>")
+#define span_spiderbreacher(str) ("<span class='spiderbreacher'>" + str + "</span>")
 #define span_suicide(str) ("<span class='suicide'>" + str + "</span>")
 #define span_suppradio(str) ("<span class='suppradio'>" + str + "</span>")
 #define span_syndradio(str) ("<span class='syndradio'>" + str + "</span>")
