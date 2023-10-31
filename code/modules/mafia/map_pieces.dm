@@ -44,17 +44,8 @@
 	description = "The original, the OG. The 2020 Summer ball was where mafia came from, with this map."
 	map_suffix = "mafia_ball.dmm"
 
-/datum/map_template/mafia/syndicate
-	name = "Syndicate Megastation"
-	description = "Yes, it's a very confusing day at the Megastation. Will the syndicate conflict resolution operatives succeed?"
-	map_suffix = "mafia_syndie.dmm"
-	custom_outfit = /datum/outfit/mafia/syndie
-
-/datum/map_template/mafia/lavaland
-	name = "Lavaland Excursion"
-	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and worst of all... lawyers roleblocking you every night."
-	map_suffix = "mafia_lavaland.dmm"
-	custom_outfit = /datum/outfit/mafia/lavaland
+//we only have one map in unit tests for consistency.
+#ifndef UNIT_TESTS
 
 /datum/map_template/mafia/ufo
 	name = "Alien Mothership"
@@ -68,14 +59,27 @@
 	map_suffix = "mafia_spiderclan.dmm"
 	custom_outfit = /datum/outfit/mafia/ninja
 
+/datum/map_template/mafia/gothic
+	name = "Vampire's Castle"
+	description = "Vampires and changelings clash to find out who's the superior bloodsucking monster in this creepy castle map."
+	map_suffix = "mafia_gothic.dmm"
+	custom_outfit = /datum/outfit/mafia/gothic
+
+/datum/map_template/mafia/syndicate
+	name = "Syndicate Megastation"
+	description = "Yes, it's a very confusing day at the Megastation. Will the syndicate conflict resolution operatives succeed?"
+	map_suffix = "mafia_syndie.dmm"
+	custom_outfit = /datum/outfit/mafia/syndie
+
 /datum/map_template/mafia/snowy
 	name = "Snowdin"
 	description = "Based off of the icy moon map of the same name, the guy who reworked it did a good enough job to recieve a derivative piece of work based on it. Cool!"
 	map_suffix = "mafia_snow.dmm"
 	custom_outfit = /datum/outfit/mafia/snowy
 
-/datum/map_template/mafia/gothic
-	name = "Vampire's Castle"
-	description = "Vampires and changelings clash to find out who's the superior bloodsucking monster in this creepy castle map."
-	map_suffix = "mafia_gothic.dmm"
-	custom_outfit = /datum/outfit/mafia/gothic
+/datum/map_template/mafia/lavaland
+	name = "Lavaland Excursion"
+	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and worst of all... lawyers roleblocking you every night."
+	map_suffix = "mafia_lavaland.dmm"
+	custom_outfit = /datum/outfit/mafia/lavaland
+#endif
