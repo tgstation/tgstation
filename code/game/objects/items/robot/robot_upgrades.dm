@@ -807,6 +807,125 @@
 		if (projector)
 			R.model.remove_module(projector, TRUE)
 
+/obj/item/borg/upgrade/integrated_toolset
+	name = "Engineering integrated toolset"
+	desc = "Replaces all the old bulky tools with a sleak automatic multiool to swap between devices."
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+
+/obj/item/borg/upgrade/integrated_toolset/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/combo_tool/engineering/tool = locate() in R.model
+		if(tool)
+			return FALSE
+		tool = new(R.model)
+		R.model.basic_modules -= locate(/obj/item/screwdriver/cyborg) in R.model.basic_modules
+		R.model.basic_modules -= locate(/obj/item/wrench/cyborg) in R.model.basic_modules
+		R.model.basic_modules -= locate(/obj/item/multitool/cyborg) in R.model.basic_modules
+		R.model.basic_modules -= locate(/obj/item/wirecutters/cyborg) in R.model.basic_modules
+		R.model.basic_modules -= locate(/obj/item/crowbar/cyborg) in R.model.basic_modules
+
+		R.model.basic_modules += tool
+		R.model.add_module(tool, FALSE, TRUE)
+
+
+/obj/item/borg/upgrade/integrated_toolset/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/combo_tool/engineering/tool = locate() in R.model
+		if (tool)
+			R.model.basic_modules += /obj/item/wrench/cyborg
+			R.model.basic_modules += /obj/item/multitool/cyborg
+			R.model.basic_modules += /obj/item/wirecutters/cyborg
+			R.model.basic_modules += /obj/item/crowbar/cyborg
+			R.model.basic_modules += /obj/item/screwdriver/cyborg
+
+			R.model.remove_module(tool, TRUE)
+
+/obj/item/combo_tool
+	icon = 'icons/obj/device.dmi'
+	icon_state = "forensic1"
+	//A list of typepaths to create and insert into ourself on init
+	var/list/items_to_create = list()
+	/// Used to store a list of all items inside, for multi-item implants.
+	var/list/items_list = list()// I would use contents, but they shuffle on every activation/deactivation leading to interface inconsistencies.
+	/// You can use this var for item path, it would be converted into an item on New().
+	var/obj/item/active_item
+
+/obj/item/combo_tool/Initialize(mapload)
+	. = ..()
+	if(ispath(active_item))
+		active_item = new active_item(src)
+		items_list += WEAKREF(active_item)
+
+	for(var/typepath in items_to_create)
+		var/atom/new_item = new typepath(src)
+		items_list += WEAKREF(new_item)
+
+	if(items_list.len)
+		swap_tool(items_list[1])
+
+/obj/item/combo_tool/Destroy()
+	active_item = null
+	for(var/datum/weakref/ref in items_list)
+		var/obj/item/to_del = ref.resolve()
+		if(!to_del)
+			continue
+		qdel(to_del)
+	items_list.Cut()
+	return ..()
+
+/obj/item/combo_tool/attack_self(mob/user, list/modifiers)
+	var/list/choice_list = list()
+	for(var/datum/weakref/augment_ref in items_list)
+		var/obj/item/augment_item = augment_ref.resolve()
+		if(!augment_item)
+			items_list -= augment_ref
+			continue
+		choice_list[augment_item] = image(augment_item)
+	var/tool_result = show_radial_menu(user, src, choice_list, require_near = TRUE, tooltips = TRUE)
+	swap_tool(tool_result)
+
+
+/obj/item/combo_tool/proc/swap_tool(obj/item/tool)
+	var/list/test_list = list()
+	for(var/datum/weakref/augment_ref in items_list)
+		test_list += augment_ref.resolve()
+	if(tool && (tool in test_list))
+		active_item = tool
+		tool_behaviour = tool.tool_behaviour
+		usesound = tool.usesound
+		hitsound = tool.hitsound
+		toolspeed = tool.toolspeed
+
+/obj/item/combo_tool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	if(active_item)
+		. = active_item.use_tool(target,user,delay,amount,volume,extra_checks)
+	else
+		. = ..()
+
+/obj/item/combo_tool/melee_attack_chain(mob/user, atom/target, params)
+	if(active_item)
+		. = active_item.melee_attack_chain(A,user,parms)
+	else
+		. = ..()
+
+/obj/item/combo_tool/engineering
+	name = "Automatic multitool"
+	desc = "Swaps into various other tools for your convenience"
+	items_to_create = list(
+		/obj/item/screwdriver/cyborg,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/multitool/cyborg)
+
+/obj/item/combo_tool/engineering/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_CROWBAR, TOOL_MULTITOOL,TOOL_WIRECUTTER)
+
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
