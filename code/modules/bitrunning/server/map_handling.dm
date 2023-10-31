@@ -155,7 +155,6 @@
 
 	update_use_power(IDLE_POWER_USE)
 	domain_randomized = FALSE
-	domain_threats = 0
 	retries_spent = 0
 
 /// Deletes all the tile contents

@@ -139,4 +139,3 @@
 
 	servo_bonus = servo_rating
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SERVER_UPGRADED, servo_rating)

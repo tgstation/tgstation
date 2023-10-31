@@ -32,6 +32,9 @@
 /// from /obj/machinery/quantum_server/shutdown() : (mob/living)
 #define COMSIG_BITRUNNER_SHUTDOWN_ALERT "bitrunner_shutdown"
 
+/// from /obj/machinery/quantum_server/notify_threat()
+#define COMSIG_BITRUNNER_THREAT_CREATED "bitrunner_threat"
+
 /// from /obj/machinery/quantum_server/scrub_vdom()
 #define COMSIG_BITRUNNER_DOMAIN_SCRUBBED "bitrunner_domain_scrubbed"
 
@@ -43,3 +46,5 @@
 #define COMSIG_BITRUNNER_LADDER_SEVER "bitrunner_ladder_sever"
 
 
+/// deprecated
+#define COMSIG_BITRUNNER_SPAWN_GLITCH "bitrunner_spawn_glitch"
