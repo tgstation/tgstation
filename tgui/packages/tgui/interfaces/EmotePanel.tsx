@@ -72,6 +72,12 @@ export const EmotePanelContent = (props, context) => {
     true
   );
 
+  const [showIcons, toggleShowIcons] = useLocalState<boolean>(
+    context,
+    'showIcons',
+    false
+  );
+
   return (
     <Section>
       <Section
@@ -140,20 +146,18 @@ export const EmotePanelContent = (props, context) => {
         buttons={
           <Flex>
             <Flex.Item>
-              <Button
-                width="100%"
-                height="100%"
-                align="center"
-                onClick={() => toggleShowNames(!showNames)}>
+              <Button onClick={() => toggleShowNames(!showNames)}>
                 {showNames ? 'Show Names' : 'Show Keys'}
+              </Button>
+              <Button
+                selected={showIcons}
+                onClick={() => toggleShowIcons(!showIcons)}>
+                Show Icons
               </Button>
             </Flex.Item>
             <Flex.Item>
               <Button
                 icon="crosshairs"
-                width="100%"
-                height="100%"
-                align="center"
                 selected={useParams}
                 onClick={() => toggleUseParams(!useParams)}>
                 Use Params
@@ -182,29 +186,45 @@ export const EmotePanelContent = (props, context) => {
               .sort((a, b) => (a.name > b.name ? 1 : -1))
               .map((emote) => (
                 <Button
-                  width={13}
+                  width={showIcons ? 16 : 8}
                   key={emote.name}
+                  tooltip={
+                    showIcons ? (
+                      ''
+                    ) : (
+                      <EmoteIcons
+                        visible={emote.visible}
+                        audible={emote.audible}
+                        sound={emote.sound}
+                        hands={emote.hands}
+                        use_params={emote.use_params}
+                        margin={0.5}
+                      />
+                    )
+                  }
                   onClick={() =>
                     act('play_emote', {
                       emote_path: emote.emote_path,
                       use_params: useParams,
                     })
                   }>
-                  <Box align="left" inline width="50%" height="100%">
+                  <Box inline width="50%">
                     {showNames
                       ? capitalizeFirst(emote.name.toLowerCase())
-                      : capitalizeFirst(emote.key.toUpperCase())}
+                      : emote.key}
                   </Box>
-                  <Box align="right" inline width="50%" height="100%">
-                    <Icon name="eye" color={!emote.visible ? 'red' : ''} />
-                    <Icon name="comment" color={!emote.audible ? 'red' : ''} />
-                    <Icon name="volume-up" color={!emote.sound ? 'red' : ''} />
-                    <Icon name="hand-paper" color={!emote.hands ? 'red' : ''} />
-                    <Icon
-                      name="crosshairs"
-                      color={!emote.use_params ? 'red' : ''}
+                  {showIcons ? (
+                    <EmoteIcons
+                      visible={emote.visible}
+                      audible={emote.audible}
+                      sound={emote.sound}
+                      hands={emote.hands}
+                      use_params={emote.use_params}
+                      margin={0}
                     />
-                  </Box>
+                  ) : (
+                    ''
+                  )}
                 </Button>
               ))}
           </Flex.Item>
@@ -214,9 +234,23 @@ export const EmotePanelContent = (props, context) => {
   );
 };
 
+const EmoteIcons = (props, context) => {
+  const { visible, audible, sound, hands, use_params, margin } = props;
+
+  return (
+    <Box inline align="right">
+      <Icon name="eye" m={margin} color={!visible ? 'red' : ''} />
+      <Icon name="comment" m={margin} color={!audible ? 'red' : ''} />
+      <Icon name="volume-up" m={margin} color={!sound ? 'red' : ''} />
+      <Icon name="hand-paper" m={margin} color={!hands ? 'red' : ''} />
+      <Icon name="crosshairs" m={margin} color={!use_params ? 'red' : ''} />
+    </Box>
+  );
+};
+
 export const EmotePanel = (props, context) => {
   return (
-    <Window width={700} height={450}>
+    <Window width={630} height={500}>
       <Window.Content scrollable>
         <EmotePanelContent />
       </Window.Content>
