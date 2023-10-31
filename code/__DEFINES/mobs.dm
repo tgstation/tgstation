@@ -141,6 +141,7 @@
 #define BODYPART_ID_DIGITIGRADE "digitigrade"
 #define BODYPART_ID_LARVA "larva"
 #define BODYPART_ID_PSYKER "psyker"
+#define BODYPART_ID_MEAT "meat"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
