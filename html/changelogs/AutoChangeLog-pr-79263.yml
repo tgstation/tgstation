@@ -1,0 +1,4 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - bugfix: "chameleon projector now can copy icon for storage items(backpacks, box, holsters etc) using right-click on it."
