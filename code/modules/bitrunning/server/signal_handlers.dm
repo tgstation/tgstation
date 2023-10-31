@@ -2,10 +2,7 @@
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
-	if(isnull(generated_domain))
-		return
-
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	sever_connections()
 
 /// Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations
 /obj/machinery/quantum_server/proc/on_corpse_spawned(datum/source, mob/living/corpse)
@@ -18,7 +15,7 @@
 	SIGNAL_HANDLER
 
 	if(generated_domain)
-		SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+		sever_connections()
 		scrub_vdom()
 
 	if(is_ready)
@@ -56,15 +53,8 @@
 	if(!istype(loot_crate))
 		return
 
-	for(var/mob/person in loot_crate.contents)
-		if(isnull(person.mind))
-			person.forceMove(get_turf(loot_crate))
-
-		var/datum/component/avatar_connection/connection = person.GetComponent(/datum/component/avatar_connection)
-		connection?.full_avatar_disconnect()
-
 	spark_at_location(loot_crate)
-	qdel(loot_crate)
+
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, arrived, generated_domain.reward_points)
 	generate_loot()
 

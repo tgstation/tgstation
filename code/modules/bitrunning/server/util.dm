@@ -7,19 +7,6 @@
 	update_appearance()
 	radio.talk_into(src, "Thermal systems within operational parameters. Proceeding to domain configuration.", RADIO_CHANNEL_SUPPLY)
 
-/// Attempts to connect to a quantum console
-/obj/machinery/quantum_server/proc/find_console()
-	var/obj/machinery/computer/quantum_console/console = console_ref?.resolve()
-	if(console)
-		return console
-
-	for(var/direction in GLOB.cardinals)
-		var/obj/machinery/computer/quantum_console/nearby_console = locate(/obj/machinery/computer/quantum_console, get_step(src, direction))
-		if(nearby_console)
-			console_ref = WEAKREF(nearby_console)
-			nearby_console.server_ref = WEAKREF(src)
-			return nearby_console
-
 /// Compiles a list of available domains.
 /obj/machinery/quantum_server/proc/get_available_domains()
 	var/list/levels = list()
@@ -130,6 +117,13 @@
 		)
 
 		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
+
+/// Severs any connected users
+/obj/machinery/quantum_server/proc/sever_connections()
+	if(isnull(generated_domain) || !length(avatar_connection_refs))
+		return
+
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_QSRV_SEVER)
 
 /// Do some magic teleport sparks
 /obj/machinery/quantum_server/proc/spark_at_location(obj/cache)
