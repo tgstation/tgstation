@@ -538,6 +538,8 @@
 	. = ..()
 	if(!ishuman(exposed_mob) || exposed_mob.stat == DEAD)
 		return
+	if(!(methods & (INGEST | TOUCH)))
+		return
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	var/obj/item/bodypart/chest/chest = exposed_human.get_bodypart(BODY_ZONE_CHEST)
 	if(!chest.wing_types || reac_volume < 5 || !exposed_human.dna)
