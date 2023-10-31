@@ -8955,12 +8955,10 @@
 /obj/item/folder/white,
 /obj/item/pen,
 /obj/item/taperecorder,
-/obj/item/paper_bin{
-	pixel_y = 6
-	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/item/analysis_bin,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "cMA" = (
@@ -11598,8 +11596,11 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness)
 "dDm" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/artifact_heatingpad{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -17369,6 +17370,10 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
+"fxE" = (
+/obj/machinery/artifact_xray,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "fxJ" = (
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19294,9 +19299,6 @@
 "geg" = (
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/science/explab)
@@ -27105,10 +27107,6 @@
 	pixel_x = 10;
 	pixel_y = 3
 	},
-/obj/item/book/manual/wiki/experimentor{
-	pixel_x = 10;
-	pixel_y = 8
-	},
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_x = -7;
@@ -28834,6 +28832,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"joc" = (
+/obj/machinery/artifact_zapper{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/science/explab)
 "joh" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hooded/wintercoat/eva{
@@ -33986,6 +33990,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/fore/lesser)
+"kUp" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/station/science/explab)
 "kUu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 4
@@ -37870,9 +37881,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "mko" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4
-	},
 /obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -39135,7 +39143,6 @@
 /area/station/command/heads_quarters/ce)
 "mHd" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "mHu" = (
@@ -47124,7 +47131,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "pdO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/explab)
 "pdR" = (
@@ -47199,7 +47208,6 @@
 	name = "Test Chamber"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
@@ -49082,6 +49090,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
+"pJx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/station/science/explab)
 "pJy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -53254,6 +53268,12 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"rbn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/science/explab)
 "rbC" = (
 /turf/closed/wall,
 /area/station/command/heads_quarters/qm)
@@ -62127,6 +62147,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"tXO" = (
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers/deep)
 "tXV" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/directional/north{
@@ -62335,10 +62359,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
-"uaT" = (
-/obj/machinery/rnd/experimentor,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "ubc" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -62811,6 +62831,7 @@
 	network = list("test","rd")
 	},
 /obj/machinery/light/directional/south,
+/obj/effect/artifact_spawner,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "uif" = (
@@ -62933,7 +62954,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "ukf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "uko" = (
@@ -63976,7 +63996,6 @@
 	id = "testlab";
 	name = "Test Chamber Blast Door"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /turf/open/floor/engine,
 /area/station/science/explab)
@@ -69668,6 +69687,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
+"wvo" = (
+/obj/effect/artifact_spawner,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "wvv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -71968,6 +71991,12 @@
 /obj/machinery/teleport/hub,
 /turf/open/floor/plating,
 /area/station/command/teleporter)
+"xeF" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "xeH" = (
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
@@ -78074,7 +78103,7 @@ oSU
 oSU
 oSU
 oSU
-oSU
+tXO
 oSU
 oSU
 oSU
@@ -255346,10 +255375,10 @@ opB
 nsZ
 mHd
 hjE
+fxE
+joc
 rDZ
-rDZ
-rDZ
-rDZ
+wvo
 bgx
 cJC
 gqv
@@ -255606,7 +255635,7 @@ hjE
 rDZ
 rDZ
 rDZ
-rDZ
+wvo
 bgx
 qUY
 jCl
@@ -255858,11 +255887,11 @@ vaa
 xLq
 xLq
 nsZ
-pdO
+rDZ
 sFA
 rDZ
 vyx
-uaT
+rDZ
 uie
 bgx
 jCl
@@ -256117,7 +256146,7 @@ grs
 nsZ
 pdO
 dDm
-rDZ
+pJx
 rDZ
 rDZ
 rDZ
@@ -256372,12 +256401,12 @@ vaa
 xLq
 ezJ
 nsZ
+xeF
+rbn
+kUp
 rDZ
 pxu
-rDZ
-rDZ
-pxu
-rDZ
+wvo
 bgx
 vzD
 vzD

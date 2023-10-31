@@ -6208,7 +6208,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 4
 	},
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/research)
@@ -32092,6 +32091,13 @@
 "lAM" = (
 /turf/closed/wall/r_wall,
 /area/station/security/brig)
+"lBh" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/obj/machinery/artifact_zapper{
+	dir = 8
+	},
+/turf/closed/wall/r_wall,
+/area/station/science/ordnance/burnchamber)
 "lBm" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -99679,7 +99685,7 @@ huj
 fhi
 xEU
 iqx
-deY
+lBh
 gil
 deY
 oet

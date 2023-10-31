@@ -1,8 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aah" = (
-/obj/machinery/rnd/experimentor,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "aak" = (
 /obj/structure/displaycase/labcage,
 /turf/open/floor/engine,
@@ -181022,7 +181018,7 @@ cwq
 vlV
 xuv
 xOe
-aah
+qyx
 qyx
 lRi
 tGa
