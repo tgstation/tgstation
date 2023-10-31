@@ -31,7 +31,7 @@
 	cost = CARGO_CRATE_VALUE * 40
 	unit_name = "lava planet artifact"
 	export_types = list(
-		/obj/item/guardiancreator/miner,
+		/obj/item/guardian_creator/miner,
 		/obj/item/rod_of_asclepius,
 		/obj/item/dragons_blood,
 		/obj/item/melee/ghost_sword,
