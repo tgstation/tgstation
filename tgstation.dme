@@ -15,6 +15,7 @@
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
 #include "_maps\virtual_domains\beach_bar.dmm"
+#include "_maps\virtual_domains\breeze_bay.dmm"
 #include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\_experiments.dm"
@@ -3322,6 +3323,7 @@
 #include "code\modules\bitrunning\virtual_domain\domains\ash_drake.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\beach_bar.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\blood_drunk_miner.dm"
+#include "code\modules\bitrunning\virtual_domain\domains\breeze_bay.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\bubblegum.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\clown_planet.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\colossus.dm"
