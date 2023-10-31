@@ -150,7 +150,7 @@
 			to_chat(user, span_notice("You clear all active holograms, and reset your projector to normal."))
 			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 0.5 SECONDS
-			for(var/obj/structure/holosign/hologram in signs)
+			for(var/obj/structure/holosign/hologram as anything in signs)
 				qdel(hologram)
 			shock = FALSE
 			return
@@ -158,7 +158,7 @@
 			to_chat(user, span_warning("You clear all active holograms, and overload your energy projector!"))
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 3 SECONDS
-			for(var/obj/structure/holosign/hologram in signs)
+			for(var/obj/structure/holosign/hologram as anything in signs)
 				qdel(hologram)
 			shock = TRUE
 			return
