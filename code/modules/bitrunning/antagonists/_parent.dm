@@ -23,32 +23,10 @@
 	. = ..()
 
 	forge_objectives()
+	owner.current.AddElement(/datum/element/npc_friendly)
 
-	owner.current.add_traits(list(
-		TRAIT_NO_AUGMENTS,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NOBLOOD,
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_WEATHER_IMMUNE,
-		), TRAIT_GENERIC,
-	)
-
-	owner.current.faction |= list(
-		FACTION_BOSS,
-		FACTION_HIVEBOT,
-		FACTION_HOSTILE,
-		FACTION_MIMIC,
-		FACTION_PIRATE,
-		FACTION_SPIDER,
-		FACTION_STICKMAN,
-		ROLE_ALIEN,
-		ROLE_GLITCH,
-		ROLE_SYNDICATE,
-	)
+	if(iscarbon(owner.current))
+		owner.current.AddElement(/datum/element/digital_carbon_mob)
 
 /datum/antagonist/bitrunning_glitch/forge_objectives()
 	var/datum/objective/bitrunning_glitch_fluff/objective = new()
