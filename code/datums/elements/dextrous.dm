@@ -53,7 +53,7 @@
 	if(!proximity)
 		if(isitem(target))
 			var/obj/item/obj_item = target
-			if(!istype(obj_item, /obj/item/storage) && !(obj_item.item_flags & IN_STORAGE))
+			if(!obj_item.atom_storage && !(obj_item.item_flags & IN_STORAGE))
 				return NONE
 	if (!isitem(target) && hand_haver.combat_mode)
 		return NONE
