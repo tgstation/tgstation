@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Practice laser carbines can no longer be used to rapidly fire regular laser guns."
