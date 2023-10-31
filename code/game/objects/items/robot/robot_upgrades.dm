@@ -909,7 +909,7 @@
 
 /obj/item/combo_tool/melee_attack_chain(mob/user, atom/target, params)
 	if(active_item)
-		. = active_item.melee_attack_chain(user,target,parms)
+		. = active_item.melee_attack_chain(user,target,params)
 	else
 		. = ..()
 
