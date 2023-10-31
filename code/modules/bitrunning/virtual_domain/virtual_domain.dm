@@ -42,10 +42,8 @@
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
 
-/// Overridable proc to be called after the map is loaded. Useful for setting up the map
+/// Overridable proc to be called after the map is loaded.
 /datum/lazy_template/virtual_domain/proc/setup_domain(list/created_atoms)
 	return
 
-/// Generic modular map - use this if you want to use the vdom generic pool
-/obj/modular_map_root/virtual_domain
-	config_file = "strings/modular_maps/virtual_domain.toml"
+
