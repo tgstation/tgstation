@@ -36,6 +36,10 @@
 			if(100 to INFINITY)
 				. += span_info("These eggs are plump, teeming with life. Any moment now...")
 
+/obj/structure/spider/eggcluster/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
+
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
 	color = rgb(148, 0, 211)
@@ -134,6 +138,16 @@
 	var/datum/antagonist/spider/spider_antag = new granted_datum(directive)
 	spawned_mob.mind.add_antag_datum(spider_antag)
 
+/obj/effect/mob_spawn/ghost_role/spider/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
+	cluster_type = /obj/structure/spider/eggcluster/abnormal
+	potentialspawns = list(
+		/mob/living/basic/spider/growing/spiderling/tank,
+		/mob/living/basic/spider/growing/spiderling/breacher,
+	)
+	flash_window = TRUE
+
 /obj/effect/mob_spawn/ghost_role/spider/enriched
 	name = "enriched egg cluster"
 	color = rgb(148, 0, 211)
@@ -168,7 +182,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/basic/spider/giant/midwife, // We don't want the event to end instantly because of a 2 hp spiderling dying
+		/mob/living/basic/spider/growing/spiderling/midwife, // We don't want the event to end instantly because broodmothers got a bad spawn
 	)
 	flash_window = TRUE
 
