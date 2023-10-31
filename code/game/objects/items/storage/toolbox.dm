@@ -385,7 +385,6 @@
 /obj/item/storage/toolbox/guncase/sword_and_board/PopulateContents()
 	new weapon_to_spawn (src)
 	new extra_to_spawn (src)
-	new /obj/item/mod/module/hat_stabilizer (src)
 	new /obj/item/clothing/head/costume/knight (src)
 
 /obj/item/storage/toolbox/guncase/cqc
@@ -396,8 +395,8 @@
 /obj/item/storage/toolbox/guncase/cqc/PopulateContents()
 	new weapon_to_spawn (src)
 	new extra_to_spawn (src)
-	new /obj/item/mod/module/hat_stabilizer (src)
 	new /obj/item/clothing/head/costume/snakeeater (src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src)
 
 /obj/item/clothing/head/costume/snakeeater
 	name = "strange bandana"
