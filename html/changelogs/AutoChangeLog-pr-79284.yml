@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - refactor: "Pirate NPCs now use the basic mob framework. They'll be a little smarter in combat, and if you're wearing your ID they'll siphon your bank account with every melee attack! Beware! Please report any bugs."

@@ -118,8 +118,6 @@
 		/mob/living/simple_animal/hostile/retaliate,
 		/mob/living/simple_animal/hostile/retaliate/goose,
 		/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-		/mob/living/simple_animal/hostile/retaliate/trader,
-		/mob/living/simple_animal/hostile/retaliate/trader/mrbones,
 		/mob/living/simple_animal/hostile/vatbeast,
 		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,
