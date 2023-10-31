@@ -63436,6 +63436,10 @@
 "vOP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "detpriv";
+	name = "Curtains"
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/security/detectives_office)
 "vPa" = (
@@ -65772,9 +65776,10 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/machinery/button/door/directional/west{
-	id = "detpriv";
-	name = "Curtains"
+/obj/machinery/button/curtain{
+	pixel_x = -24;
+	name = "Curtains";
+	id = "detpriv"
 	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)

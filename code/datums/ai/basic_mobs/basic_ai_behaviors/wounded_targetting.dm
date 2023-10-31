@@ -7,5 +7,5 @@
 		living_targets += filtered_targets
 	if(living_targets.len)
 		sortTim(living_targets, GLOBAL_PROC_REF(cmp_mob_health))
-		return living_targets[1]
+		return pop(living_targets)
 	return ..()
