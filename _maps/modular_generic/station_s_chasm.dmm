@@ -1,0 +1,146 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/transfer_valve{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/structure/table_frame,
+/turf/open/floor/iron,
+/area/template_noop)
+"b" = (
+/obj/structure/broken_flooring/side/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/cable_coil{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/structure/holosign/wetsign,
+/turf/open/floor/plating/rust,
+/area/template_noop)
+"e" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/iron,
+/area/template_noop)
+"f" = (
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/rust,
+/area/template_noop)
+"j" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/plating/directional/east,
+/turf/open/chasm/true,
+/area/template_noop)
+"n" = (
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/template_noop)
+"o" = (
+/obj/structure/lattice,
+/turf/open/chasm/true,
+/area/template_noop)
+"t" = (
+/obj/structure/broken_flooring/pile/directional/west,
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/plating,
+/area/template_noop)
+"C" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"D" = (
+/obj/structure/broken_flooring/corner/directional/north,
+/obj/item/tank/internals/plasma/empty,
+/turf/open/floor/plating,
+/area/template_noop)
+"E" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron,
+/area/template_noop)
+"N" = (
+/turf/open/chasm/true,
+/area/template_noop)
+"P" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/iron,
+/area/template_noop)
+"T" = (
+/obj/structure/lattice,
+/obj/structure/broken_flooring/plating/directional/south,
+/turf/open/chasm/true,
+/area/template_noop)
+"V" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+V
+V
+V
+V
+V
+V
+C
+"}
+(2,1,1) = {"
+V
+P
+N
+n
+D
+e
+V
+"}
+(3,1,1) = {"
+V
+b
+N
+N
+j
+E
+V
+"}
+(4,1,1) = {"
+V
+N
+N
+N
+o
+d
+V
+"}
+(5,1,1) = {"
+V
+N
+T
+N
+N
+N
+V
+"}
+(6,1,1) = {"
+V
+f
+t
+N
+N
+a
+V
+"}
+(7,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+"}

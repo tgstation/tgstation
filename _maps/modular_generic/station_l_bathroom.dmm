@@ -1,0 +1,617 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 8;
+	pixel_y = 13
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/structure/broken_flooring/pile/directional/east,
+/obj/structure/sign/poster/random/directional/east,
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/turf/open/floor/iron/small,
+/area/template_noop)
+"c" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"d" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/mop_bucket,
+/obj/item/mop,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/garbage,
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/small,
+/area/template_noop)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/structure/fluff/paper/corner,
+/obj/effect/spawner/random/trash/caution_sign,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"g" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"h" = (
+/obj/structure/chair/stool/directional/east{
+	pixel_x = -6
+	},
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"i" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/poster/random/directional/west,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner,
+/obj/effect/spawner/random/engineering/toolbox,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"j" = (
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/structure/fluff/paper{
+	dir = 6;
+	plane = -9
+	},
+/obj/structure/table,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 9;
+	pixel_y = 13
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/decal/cleanable/vomit,
+/obj/machinery/light/small/dim/directional/north,
+/obj/item/trash/semki/healthy,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"m" = (
+/obj/structure/sign/poster/random/directional/north,
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"o" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 4
+	},
+/obj/structure/fluff/paper{
+	dir = 10
+	},
+/turf/open/floor/iron/small,
+/area/template_noop)
+"p" = (
+/obj/structure/toilet{
+	dir = 1
+	},
+/obj/structure/closet/crate/trashcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/armory/shotgun,
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/freezer,
+/area/template_noop)
+"q" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/machinery/light/small/dim/directional/east,
+/obj/item/cigbutt,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"r" = (
+/obj/item/chair/stool{
+	pixel_x = -3;
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/template_noop)
+"s" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/freezer,
+/area/template_noop)
+"t" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"u" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/mob/living/basic/blankbody,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/trash/soap,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/machinery/light/small/red/dim/directional/west,
+/turf/open/floor/iron/freezer,
+/area/template_noop)
+"v" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/machinery/light_switch/directional/south,
+/obj/structure/broken_flooring/pile/directional/west,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"w" = (
+/obj/structure/sink/directional/west,
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"x" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 8
+	},
+/obj/structure/fluff/paper/corner,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"y" = (
+/obj/structure/sign/poster/random/directional/east,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cigbutt{
+	pixel_y = 7
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"z" = (
+/obj/effect/spawner/random/clothing/wardrobe_closet_colored,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/machinery/light/small/dim/directional/south,
+/obj/structure/sign/poster/random/directional/south,
+/obj/structure/fluff/paper/corner,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"A" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"C" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plating,
+/area/template_noop)
+"E" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"F" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/item/trash/boritos/purple{
+	pixel_x = -11;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/small,
+/area/template_noop)
+"G" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"H" = (
+/turf/closed/wall,
+/area/template_noop)
+"I" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/structure/sign/clock/directional/west,
+/obj/machinery/light/warm/dim/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"J" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"K" = (
+/obj/structure/sign/poster/random/directional/west,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner,
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/boritos{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/small,
+/area/template_noop)
+"L" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"N" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/effect/decal/cleanable/ants,
+/obj/machinery/light/small/dim/directional/west,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"O" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"P" = (
+/obj/structure/sink/directional/west,
+/obj/structure/mirror/broken/directional/east,
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor3-old"
+	},
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"Q" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/chair/stool/directional/south{
+	pixel_y = 16
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"R" = (
+/obj/structure/hedge,
+/obj/structure/window/reinforced/tinted/spawner/directional/south,
+/obj/structure/window/reinforced/tinted/spawner/directional/north,
+/obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/structure/window/reinforced/tinted/spawner/directional/east,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"S" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"T" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/corner{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"V" = (
+/obj/effect/turf_decal/tile/dark/diagonal_centre,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/diagonal,
+/area/template_noop)
+"W" = (
+/obj/machinery/door/airlock,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/freezer,
+/area/template_noop)
+"X" = (
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "tracks"
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = -6
+	},
+/turf/open/floor/iron/small,
+/area/template_noop)
+"Y" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/iron/small,
+/area/template_noop)
+"Z" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random/directional/south,
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/structure/fluff/paper/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/small,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+T
+"}
+(2,1,1) = {"
+a
+H
+H
+H
+H
+H
+H
+H
+H
+H
+a
+"}
+(3,1,1) = {"
+a
+H
+u
+W
+X
+I
+K
+s
+p
+H
+a
+"}
+(4,1,1) = {"
+a
+H
+H
+H
+Q
+d
+v
+H
+H
+H
+a
+"}
+(5,1,1) = {"
+a
+H
+i
+g
+F
+t
+Y
+e
+o
+H
+a
+"}
+(6,1,1) = {"
+a
+H
+l
+c
+P
+q
+w
+G
+Z
+H
+a
+"}
+(7,1,1) = {"
+a
+C
+E
+J
+H
+R
+H
+L
+O
+H
+a
+"}
+(8,1,1) = {"
+a
+H
+m
+V
+r
+N
+h
+A
+z
+H
+a
+"}
+(9,1,1) = {"
+a
+H
+x
+b
+U
+S
+f
+y
+j
+H
+a
+"}
+(10,1,1) = {"
+a
+H
+H
+H
+H
+C
+H
+H
+H
+H
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
