@@ -233,6 +233,8 @@
 
 /obj/item/organ/internal/brain/examine(mob/user)
 	. = ..()
+	if(length(skillchips))
+		. += span_info("It has a skillchip embedded in it.")
 	. += brain_damage_examine()
 	if(brain_size < 1)
 		. += span_notice("It is a bit on the smaller side...")
@@ -241,21 +243,17 @@
 
 /// Needed so subtypes can override examine text while still calling parent
 /obj/item/organ/internal/brain/proc/brain_damage_examine()
-	. = ""
-	if(length(skillchips))
-		. += span_info("It has a skillchip embedded in it.")
 	if(suicided)
-		. += span_info("It's started turning slightly grey. They must not have been able to handle the stress of it all.")
-		return
+		return span_info("It's started turning slightly grey. They must not have been able to handle the stress of it all.")
 	if(brainmob && (decoy_override || brainmob.client || brainmob.get_ghost()))
 		if(organ_flags & ORGAN_FAILING)
-			. += span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.")
+			return span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.")
 		else if(damage >= BRAIN_DAMAGE_DEATH*0.5)
-			. += span_info("You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.")
+			return span_info("You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.")
 		else
-			. += span_info("You can feel the small spark of life still left in this one.")
+			return span_info("You can feel the small spark of life still left in this one.")
 	else
-		. += span_info("This one is completely devoid of life.")
+		return span_info("This one is completely devoid of life.")
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))

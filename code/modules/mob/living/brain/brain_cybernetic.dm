@@ -1,25 +1,21 @@
 /obj/item/organ/internal/brain/cybernetic
 	name = "cybernetic brain"
 	desc = "A mechanical brain found inside of androids. Not to be confused with a positronic brain."
-	organ_flags = ORGAN_ROBOTIC
+	organ_flags = ORGAN_ROBOTIC | ORGAN_VITAL
 	failing_desc = "seems to be broken, and will not work without repairs."
 
 /obj/item/organ/internal/brain/cybernetic/brain_damage_examine()
-	. = ""
-	if(length(skillchips))
-		. += span_info("It has a skillchip embedded in it.")
 	if(suicided)
-		. += span_info("Its circuitry is smoking slightly. They must not have been able to handle the stress of it all.")
-		return
+		return span_info("Its circuitry is smoking slightly. They must not have been able to handle the stress of it all.")
 	if(brainmob && (decoy_override || brainmob.client || brainmob.get_ghost()))
 		if(organ_flags & ORGAN_FAILING)
-			. += span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to repair it with a <b>multitool</b>.")
+			return span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to repair it with a <b>multitool</b>.")
 		else if(damage >= BRAIN_DAMAGE_DEATH*0.5)
-			. += span_info("You can feel the small spark of life still left in this one, but it's got some dents. You may be able to restore it with a <b>multitool</b>.")
+			return span_info("You can feel the small spark of life still left in this one, but it's got some dents. You may be able to restore it with a <b>multitool</b>.")
 		else
-			. += span_info("You can feel the small spark of life still left in this one.")
+			return span_info("You can feel the small spark of life still left in this one.")
 	else
-		. += span_info("This one is completely devoid of life.")
+		return span_info("This one is completely devoid of life.")
 
 /obj/item/organ/internal/brain/cybernetic/check_for_repair(obj/item/item, mob/user)
 	if (item.tool_behaviour == TOOL_MULTITOOL) //attempt to repair the brain
@@ -56,7 +52,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	switch(severity) // Hard cap on brain damage from EMP
-		if (1)
+		if (EMP_HEAVY)
 			apply_organ_damage(20, BRAIN_DAMAGE_SEVERE)
-		if (2)
+		if (EMP_LIGHT)
 			apply_organ_damage(10, BRAIN_DAMAGE_MILD)
