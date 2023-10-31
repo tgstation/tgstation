@@ -184,7 +184,7 @@ export const EmotePanelContent = (props, context) => {
                   onClick={() =>
                     act('play_emote', {
                       emote_path: emote.emote_path,
-                      useParams: useParams,
+                      use_params: useParams,
                     })
                   }>
                   {emote.visible ? <Icon name="eye" /> : ''}
@@ -206,7 +206,7 @@ export const EmotePanelContent = (props, context) => {
 
 export const EmotePanel = (props, context) => {
   return (
-    <Window width={500} height={450}>
+    <Window width={700} height={450}>
       <Window.Content scrollable>
         <EmotePanelContent />
       </Window.Content>

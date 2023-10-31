@@ -41,8 +41,8 @@
 			var/datum/emote/emote = new emote_path()
 			var/emote_act = emote.key
 			var/emote_param
-			if(emote.message_param && use_params == "true")
-				emote_param = input(usr, "Add params to the emote...", emote.message_param)
+			if(emote.message_param && use_params)
+				emote_param = tgui_input_text(usr, "Add params to the emote...", emote.message_param)
 			usr.emote(emote_act, message = emote_param, intentional = TRUE)
 
 /datum/emote_panel/ui_interact(mob/user, datum/tgui/ui)
