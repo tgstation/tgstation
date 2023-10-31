@@ -3,6 +3,9 @@
 /// coefficient to convert temperature to joules. same lvl as acclimator
 #define HEATER_COEFFICIENT 0.05
 
+/// maximum number of attempts the reaction chamber will make to balance the ph(More means better results but higher tick usage)
+#define MAX_PH_ADJUSTMENTS 3
+
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
 	desc = "Keeps chemicals separated until given conditions are met."
@@ -170,7 +173,8 @@
 	return ..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
-	while(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
+	var/ph_balance_attempts = 0
+	while(ph_balance_attempts < MAX_PH_ADJUSTMENTS && (reagents.ph < acidic_limit || reagents.ph > alkaline_limit))
 		//no power
 		if(machine_stat & NOPOWER)
 			return
@@ -195,8 +199,9 @@
 		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
 			return
 
-		//some power for accurate ph balancing
+		//some power for accurate ph balancing & keep track of attempts made
 		use_power(active_power_usage * 0.03 * buffer_amount * seconds_per_tick)
+		ph_balance_attempts += 1
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -221,5 +226,5 @@
 		else
 			return FALSE
 
-
 #undef HEATER_COEFFICIENT
+#undef MAX_PH_ADJUSTMENTS
