@@ -14,7 +14,7 @@
 	var/key = ""
 	/// This will also call the emote.
 	var/key_third_person = ""
-	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "angrily flap". Defaulted to key.
+	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "flap angry". Defaulted to key.
 	var/name = ""
 	/// Message displayed when emote is used.
 	var/message = ""
