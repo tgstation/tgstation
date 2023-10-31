@@ -59,7 +59,7 @@
 	if(length(remains))
 		AddElement(/datum/element/death_drops, remains)
 	if(smashes_walls)
-		AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE, tear_time = 2 SECONDS)
+		AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	if(can_repair)
 		AddComponent(\
 			/datum/component/healing_touch,\

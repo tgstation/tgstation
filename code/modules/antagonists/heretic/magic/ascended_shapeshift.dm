@@ -26,7 +26,7 @@
 	monster.melee_damage_lower = max((monster.melee_damage_lower * 2), 40)
 	monster.melee_damage_upper = monster.melee_damage_upper / 2
 	monster.transform *= 1.5
-	AddElement(/datum/element/wall_tearer, tear_time = 2 SECONDS, reinforced_multiplier = 2)
+	AddElement(/datum/element/wall_tearer)
 
 /datum/action/cooldown/spell/shapeshift/eldritch/ascension/do_unshapeshift(mob/living/caster)
 	. = ..()
