@@ -16,7 +16,7 @@
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/M = owner
-	if(M.stat == DEAD || !M.client || !M) //No use assigning people to a corpse or braindead
+	if(!M || M.stat == DEAD || !M.client) //No use assigning people to a corpse or braindead
 		qdel(src)
 		return
 	..()
