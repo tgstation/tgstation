@@ -104,6 +104,7 @@
 /obj/item/fishing_hook,
 /obj/item/fishing_hook,
 /obj/structure/closet/crate,
+/obj/item/bait_can/worm,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "O" = (
