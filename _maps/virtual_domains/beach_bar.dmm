@@ -159,7 +159,7 @@
 	pixel_x = -8;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled{
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
 	pixel_y = 5;
 	pixel_x = 6
 	},
@@ -427,8 +427,8 @@
 /area/virtual_domain/powered)
 "uq" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled{
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -881,11 +881,11 @@
 /area/virtual_domain/powered)
 "Mp" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled{
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "Mw" = (
