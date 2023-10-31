@@ -47,13 +47,13 @@ export const EmotePanelContent = (props, context) => {
     false
   );
 
-  const [filterUseParams, toggleUseParams] = useLocalState<boolean>(
+  const [filterUseParams, toggleUseParamsFilter] = useLocalState<boolean>(
     context,
     'filterUseParams',
     false
   );
 
-  const [useParams, toggleuseParams] = useLocalState<boolean>(
+  const [useParams, toggleUseParams] = useLocalState<boolean>(
     context,
     'useParams',
     false
@@ -120,7 +120,7 @@ export const EmotePanelContent = (props, context) => {
               align="center"
               tooltip="Params"
               selected={filterUseParams}
-              onClick={() => toggleUseParams(!filterUseParams)}
+              onClick={() => toggleUseParamsFilter(!filterUseParams)}
             />
           </Flex>
         }>
@@ -154,7 +154,7 @@ export const EmotePanelContent = (props, context) => {
                 height="100%"
                 align="center"
                 selected={useParams}
-                onClick={() => toggleuseParams(!useParams)}>
+                onClick={() => toggleUseParams(!useParams)}>
                 Use Params
               </Button>
             </Flex.Item>
