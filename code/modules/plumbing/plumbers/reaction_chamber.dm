@@ -4,7 +4,7 @@
 #define HEATER_COEFFICIENT 0.05
 
 /// maximum number of attempts the reaction chamber will make to balance the ph(More means better results but higher tick usage)
-#define MAX_PH_ADJUSTMENTS 3
+#define MAX_PH_ADJUSTMENTS 5
 
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
@@ -220,9 +220,9 @@
 
 	switch(action)
 		if("acidic")
-			acidic_limit = clamp(round(text2num(params["target"])), 0, alkaline_limit)
+			acidic_limit = clamp(round(text2num(params["target"])), CHEMICAL_MIN_PH, alkaline_limit)
 		if("alkaline")
-			alkaline_limit = clamp(round(text2num(params["target"])), acidic_limit + 0.01, 14)
+			alkaline_limit = clamp(round(text2num(params["target"])), acidic_limit + 1, CHEMICAL_MAX_PH)
 		else
 			return FALSE
 
