@@ -15,8 +15,10 @@
 	var/obj/effect/knock_portal/destination
 	///The airlock we are linked to, we delete if it is destroyed
 	var/obj/machinery/door/our_airlock
+	/// if true the heretic is teleported to a random airlock, nonheretics are sent to the target
+	var/inverted = FALSE
 
-/obj/effect/knock_portal/Initialize(mapload, target)
+/obj/effect/knock_portal/Initialize(mapload, target, invert = FALSE)
 	. = ..()
 	if(target)
 		our_airlock = target
@@ -26,6 +28,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	inverted = invert
 
 ///Deletes us and our destination portal if our_airlock is destroyed
 /obj/effect/knock_portal/proc/delete_on_door_delete(datum/source)
@@ -39,7 +42,10 @@
 		teleport(loser)
 
 /obj/effect/knock_portal/Destroy()
-	QDEL_NULL(destination)
+	if(!isnull(destination) && !QDELING(destination))
+		QDEL_NULL(destination)
+	
+	destination = null
 	our_airlock = null
 	return ..()
 
@@ -50,7 +56,7 @@
 		return
 
 	//get it?
-	var/obj/machinery/door/doorstination = IS_HERETIC_OR_MONSTER(teleportee) ? destination.our_airlock : find_random_airlock()
+	var/obj/machinery/door/doorstination = (inverted ? !IS_HERETIC_OR_MONSTER(teleportee) : IS_HERETIC_OR_MONSTER(teleportee)) ? destination.our_airlock : find_random_airlock()
 	if(!do_teleport(teleportee, get_turf(doorstination), channel = TELEPORT_CHANNEL_MAGIC))
 		return
 
@@ -88,6 +94,8 @@
 	var/obj/effect/knock_portal/portal_two
 	///The first door we are linking in the pair, so we can create a portal pair
 	var/datum/weakref/link
+	/// are our created portals inverted? (heretics get sent to a random airlock, crew get sent to the target)
+	var/inverted = FALSE
 
 /obj/item/card/id/advanced/heretic/examine(mob/user)
 	. = ..()
@@ -97,6 +105,7 @@
 	. += span_hypnophrase("Using an ID on this will consume it and allow you to copy its accesses.")
 	. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
 	. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
+	. += span_hypnophrase("<b>Ctrl-clicking the ID</b>, makes the ID make inverted portals instead, which teleport you onto a random airlock onstation, while heathens are teleported to the destination.")
 
 /obj/item/card/id/advanced/heretic/attack_self(mob/user)
 	. = ..()
@@ -108,6 +117,13 @@
 		return ..()
 	var/obj/item/card/id/card = fused_ids[cardname]
 	shapeshift(card)
+
+/obj/item/card/id/advanced/heretic/CtrlClick(mob/user)
+	. = ..()
+	if(!IS_HERETIC(user))
+		return
+	inverted = !inverted
+	balloon_alert(user, "[inverted ? "now" : "no longer"] creating inverted rifts")
 
 ///Changes our appearance to the passed ID card
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
@@ -139,8 +155,8 @@
 		clear_portals()
 		message += ", previous cleared"
 	
-	portal_one = new(get_turf(door2), door2)
-	portal_two = new(get_turf(door1), door1)
+	portal_one = new(get_turf(door2), door2, inverted)
+	portal_two = new(get_turf(door1), door1, inverted)
 	portal_one.destination = portal_two
 	RegisterSignal(portal_one, COMSIG_QDELETING, PROC_REF(clear_portal_refs))  //we only really need to register one because they already qdel both portals if one is destroyed
 	portal_two.destination = portal_one
