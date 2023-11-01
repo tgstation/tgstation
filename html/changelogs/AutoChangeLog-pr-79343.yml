@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - qol: "The RPD now accepts upgrade disks inserted by hand, as well as their original method of hitting the disk with the RPD"
