@@ -5,5 +5,5 @@
 
 
 /datum/artifact_fault/explosion/on_trigger(datum/component/artifact/component)
-	explosion(component.holder, light_impact_range = 2, admin_log = TRUE, explosion_cause = src)
+	explosion(component.holder, light_impact_range = 2, explosion_cause = src)
 	qdel(component.holder)

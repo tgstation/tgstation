@@ -15,7 +15,7 @@
 /datum/artifact_fault/reagent/poison
 	name = "Poison"
 
-/datum/artifact_fault/poison/on_trigger(datum/component/artifact/component)
+/datum/artifact_fault/reagent/poison/on_trigger(datum/component/artifact/component)
 	if(!reagents.len) //mostly copied from reagents.dm but oh well
 		for(var/datum/reagent/reagent as anything in subtypesof(/datum/reagent/toxin))
 			if(initial(reagent.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
