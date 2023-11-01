@@ -10,7 +10,8 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
 		/obj/item/broken_bottle,
-		/obj/item/pickaxe/rusted
+		/obj/item/pickaxe/rusted,
+		/obj/effect/artifact_spawner,
 	)
 	crate_name = "scrapyard crate"
 
