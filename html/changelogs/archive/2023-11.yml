@@ -1,0 +1,105 @@
+2023-11-01:
+  Data_:
+  - bugfix: The detective's curtains can be closed again in Birdshot.
+  EEASAS:
+  - rscadd: Added a new ruin to Ice Box Station, Lizard Gas Station
+  GPeckman:
+  - refactor: The wings you get from a flight potion (if any) are now determined by
+      your chest bodypart, not your species.
+  - qol: Functional wings can now be ground up to get the flight potion back, if you
+      want to get a different wing variant.
+  - bugfix: Practice laser carbines can no longer be used to rapidly fire regular
+      laser guns.
+  - bugfix: The fire visual on mobs should no longer persist after the fire has been
+      extinguished.
+  Iajret:
+  - code_imp: mod reskins now properly shows their icon when skins loaded from different
+      .dmi
+  Jackraxxus:
+  - bugfix: Obsessed's moodlets (Both positive and negative) go away when the trauma
+      is cured or the antag status is removed.
+  Jacquerel:
+  - bugfix: Non-human mobs can hallucinate their mothers without causing a runtime
+      error
+  LT3:
+  - code_imp: Changing security levels will only trigger the nightshift subsystem
+      if lighting changes are required
+  Melbert:
+  - qol: Clicking on an adjacent dense object (or mob) with Spray Cleaner will now
+      spritz it rather than doing nothing. This means you can use Spray Cleaner to
+      clean bloodied windows, as the janitor gods intended. It also means you can
+      fill a spray bottle with Napalm, I guess.
+  - refactor: Any cleaning object can now clean a microwave.
+  Pickle-Coding:
+  - bugfix: Fixes tesla zaps being weird.
+  - admin: Logs explosions from explosive zaps.
+  Profakos:
+  - refactor: Traders are basic mobs now. Please alert us of any strange behaviours!
+  - code_imp: If there is only one option, radial lists will autopick it. This behaviour
+      can be turned off via a new argument.
+  SethLafuente:
+  - rscadd: Added Abnormal Eggs
+  - rscadd: Added Two new spiders
+  - rscdel: Some Tarantula abilities
+  - balance: Spiders speed are now connected to health
+  - balance: Spiders now take more brute damage
+  - balance: All egg laying now has a cooldown
+  SyncIt21:
+  - bugfix: Plumbing IV Drip has full control over its injection/draining rate. No
+      longer displays the message controlled by plumbing system
+  - bugfix: Plumbing IV Drip can be plunged by plunger again
+  - bugfix: Cargo will remove/cancel orders from its cart if that order exceeds the
+      available budget (both private or cargo) and the player cannot cancel this order
+      manually. All order costs are rounded up to integer values
+  - bugfix: Galactic material market will deny appending stacks to your existing order
+      if it exceeds the available (private or cargo depending on the mode of ordering)
+      budget & if it exceeds the available materials on the market. Galactic material
+      market UI is overall improved.
+  Xackii:
+  - bugfix: chameleon projector now can copy icon for storage items(backpacks, box,
+      holsters etc) using right-click on it.
+  ZephyrTFA:
+  - bugfix: signals in circuits now actually function
+  deathrobotpunch1:
+  - rscdel: Removed the biometric scanning toggle from the PENLITE holobarrier
+  jlsnow301:
+  - bugfix: Paraplegics can now enter netpods.
+  - bugfix: Fixes an exploit caused by teleporting out of a netpod.
+  - bugfix: Outfit selection at netpods shouldn't give armor bonuses any longer.
+  - bugfix: Bluespace launchpads no longer work on shuttles
+  mc-oofert:
+  - rscadd: ctrlclicking the knock path eldritch id card will toggle whether it creates
+      inverted portals or not
+  moocowswag:
+  - bugfix: Modular shield generator modules no longer lose linkage when riding a
+      shuttle
+  - bugfix: Modular shield generators now gracefully turn off when being moved by
+      a shuttle rather than leaving their projections behind, the generator's description
+      was updated to advertise this behavior.
+  necromanceranne:
+  - bugfix: Lethal ballistic pellet-based shotgun shells no longer instantly delete.
+  - balance: Operatives can once again read about the basics of CQC at a reasonable
+      price of 14 TC.
+  - qol: All Syndicate MODsuits come with the potent ability to wear hats on their
+      helmets FOR FREE. No longer does any operative need be shamed by their bald
+      helmet's unhatted state when they spot the captain, in their MODsuit, wearing
+      a hat on their helmet. The embarrassment has resulted in more than a few operatives
+      prematurely detonating their implants! BUT NO LONGER! FASHION IS YOURS!
+  - qol: There is now a Core Gear Box, containing a few essential pieces of gear for
+      success as an operative. This is right at the top of the uplink, you can't miss
+      it! Great for those operatives just starting out, or operatives who need all
+      their baseline equipment NOW.
+  - qol: To avoid poor magazine discipline, most combat-ready personnel have instructed
+      _not_ to put magazines into the gun loops on their armor vests.
+  rageguy505:
+  - rscdel: Removed extra consoles from birdshot's bitrunners
+  starrm4nn:
+  - bugfix: The Syndicate Revolver now has a Syndicate Firing Pin on the Nuke Ops
+      uplink.
+  timothymtorres:
+  - rscdel: Remove duplicate pipe on pirate ship
+  - rscdel: Remove duplicate power computer on oldstation ruin
+  - rscdel: Remove duplicate light in battlecruiser starfury
+  - rscdel: Remove duplicate space heater from snowcabin ruin
+  zxaber:
+  - balance: Malf Ability "Robotics Factory" can now be purchased multiple times.
