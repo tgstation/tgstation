@@ -150,13 +150,6 @@
 /turf/open/floor/catwalk_floor/iron,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"oV" = (
-/obj/structure/table/rolling{
-	desc = "An Interdyne Pharmaceutics brand "Crash Cart Classic" rolling table for surgical tools. It can and will move.";
-	name = "rolling surgical tray"
-	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "pu" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
@@ -294,6 +287,13 @@
 "zb" = (
 /obj/item/wheelchair,
 /obj/item/cane/white,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"zj" = (
+/obj/structure/table/rolling{
+	desc = "An Interdyne Pharmaceutics brand 'Crash Cart Classic' rolling table for surgical tools. It can and will move.";
+	name = "rolling surgical tray"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "zn" = (
@@ -801,7 +801,7 @@ CJ
 CJ
 Kk
 CJ
-oV
+zj
 Go
 bv
 MC
