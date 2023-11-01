@@ -121,10 +121,18 @@
 	initial_warning = "begins rattling violenty!"
 	final_message = "reaches a critical pressure, cracks forming at its surface!"
 	var/datum/gas/payload_gas
+	var/list/weighted_gas = list(
+		/datum/gas/plasma = 5,
+		/datum/gas/carbon_dioxide = 10,
+		/datum/gas/nitrous_oxide = 10,
+		/datum/gas/tritium = 5,
+		/datum/gas/hydrogen = 5,
+		/datum/gas/zauker = 2,
+	)
 
 /datum/component/artifact/bomb/gas/setup()
 	. = ..()
-	payload_gas = pick(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/tritium, /datum/gas/hydrogen)
+	payload_gas = pick_weight(weighted_gas)
 
 /datum/component/artifact/bomb/gas/payload()
 	if(!..())

@@ -158,7 +158,7 @@
 /datum/component/artifact/proc/setup()
 	return
 
-/datum/component/artifact/proc/artifact_activate(nosound)
+/datum/component/artifact/proc/artifact_activate(silent)
 	if(active) //dont activate activated objects
 		return FALSE
 
@@ -171,7 +171,7 @@
 	effect_activate(nosound)
 	return TRUE
 
-/datum/component/artifact/proc/artifact_deactivate(nosound)
+/datum/component/artifact/proc/artifact_deactivate(silent)
 	if(!active)
 		return
 	if(deactivation_sound && !nosound)
@@ -183,7 +183,7 @@
 	effect_deactivate(nosound)
 
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
-	if(!stimuli || active) // if called without a stimuli dont bother if active we dont wanna reactivate
+	if(!stimuli || active) // if called without a stimuli dont bother, if active we dont wanna reactivate
 		return
 	var/checked_fault = FALSE
 	for(var/datum/artifact_activator/listed_activator in activators)

@@ -15,7 +15,8 @@
 		BURN,
 		TOX,
 		OXY,
-		BRAIN
+		BRAIN,
+		CLONE,
 	)
 	///how much do we heal
 	var/heal_amount
@@ -45,7 +46,7 @@
 /datum/component/artifact/heal/effect_process()
 	if(potency < 75)
 		return
-		
+
 	process_count++
 	if(process_count < PROCESSES_PER_HEAL)
 		return

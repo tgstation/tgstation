@@ -1,4 +1,3 @@
-
 /datum/component/artifact/injector
 	associated_object = /obj/structure/artifact/injector
 	weight = ARTIFACT_UNCOMMON
@@ -16,15 +15,15 @@
 	holder.create_reagents(200, NO_REACT | SEALED_CONTAINER)
 	reagent_amount = rand(10,25)
 	max_reagents = rand(1,2)
-	var/static/list/poisons = list()
+	var/static/list/poisons_and_medicines = list()
 	if(!poisons.len) //mostly copied from reagents.dm but oh well
-		for(var/datum/reagent/reagent as anything in subtypesof(/datum/reagent/toxin))
+		for(var/datum/reagent/reagent as anything in (subtypesof(/datum/reagent/toxin) + subtypesof(/datum/reagent/medicine))
 			if(initial(reagent.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-				poisons += reagent
+				poisons_and_medicines += reagent
 	switch(artifact_origin.type_name)
 		if(ORIGIN_NARSIE)
 			for(var/i in 1 to max_reagents)
-				reagent_datums += pick(poisons) //cult likes killing people ok
+				reagent_datums += pick(poisons_and_medicines) //cult likes killing people ok
 		if(ORIGIN_WIZARD, ORIGIN_MARTIAN, ORIGIN_PRECURSOR)
 			max_reagents = rand(1,3)
 			reagent_amount = rand(1,50)
