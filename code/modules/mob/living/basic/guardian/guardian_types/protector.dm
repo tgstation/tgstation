@@ -33,7 +33,7 @@
 /mob/living/basic/guardian/protector/toggle_modes()
 	shield.Trigger()
 
-/mob/living/simple_animal/hostile/guardian/protector/ex_act(severity)
+/mob/living/basic/guardian/protector/ex_act(severity)
 	if(severity >= EXPLODE_DEVASTATE)
 		adjustBruteLoss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
 		return TRUE

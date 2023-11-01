@@ -2578,7 +2578,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		old_mob = guardian_client.mob
 		if(isobserver(old_mob) || tgui_alert(admin, "Do you want to delete [guardian_client]'s old mob?", "Guardian Controller", list("Yes"," No")) == "Yes")
 			del_mob = TRUE
-	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/simple_animal/hostile/guardian))
+	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/basic/guardian))
 	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER, "Random"))
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
@@ -2586,7 +2586,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
 	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
 		return
-	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new picked_type(src, picked_theme)
+	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)
 	summoned_guardian.set_summoner(src, different_person = TRUE)
 	if(picked_name)
 		summoned_guardian.fully_replace_character_name(null, picked_name)
