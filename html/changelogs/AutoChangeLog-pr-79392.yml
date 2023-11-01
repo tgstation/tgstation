@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Lethal ballistic pellet-based shotgun shells no longer instantly delete."
