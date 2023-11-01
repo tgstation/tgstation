@@ -203,6 +203,8 @@
 
 	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
+	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
+
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
 	if(!. || isnull(owner))

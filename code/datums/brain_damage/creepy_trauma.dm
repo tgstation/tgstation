@@ -67,6 +67,7 @@
 /datum/brain_trauma/special/obsessed/on_lose()
 	..()
 	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
+	owner.clear_mood_event("creeping")
 	if(obsession)
 		UnregisterSignal(obsession, COMSIG_MOB_EYECONTACT)
 
