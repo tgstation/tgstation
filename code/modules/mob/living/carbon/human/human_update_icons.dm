@@ -465,9 +465,9 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SUIT_FILE
 
 		var/mutant_override = FALSE
-		if(dna.species.bodytype & BODYTYPE_DIGITIGRADE)
-			if(worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION)
-				icon_file = wear_suit.worn_icon_digitigrade || DIGITIGRADE_SUIT_FILE
+		if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (wear_suit.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+			icon_file = wear_suit.worn_icon_digitigrade || DIGITIGRADE_SUIT_FILE
+			mutant_override = TRUE
 		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_SUIT, wear_suit)
 			if(species_icon_file)
