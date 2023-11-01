@@ -13725,6 +13725,10 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/table,
 /obj/structure/cable,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "fbf" = (
@@ -16436,6 +16440,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
+/obj/machinery/button/door/directional/east{
+	name = "Security Mech Garage Door Controls";
+	id = "secmechbay"
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "gcU" = (
@@ -18514,7 +18522,8 @@
 /area/station/medical/virology)
 "gOT" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/station/security/mechbay)
 "gOY" = (
 /obj/structure/chair{
@@ -28882,6 +28891,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "kqZ" = (
@@ -31303,6 +31313,7 @@
 "llU" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "lma" = (
@@ -50393,6 +50404,10 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Security - Office - Port"
 	},
+/obj/machinery/button/door/directional/west{
+	id = "secmechbay";
+	name = "Security Mech Garage Door Controls"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "sab" = (
@@ -61808,6 +61823,8 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/item/stack/rods/two,
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "vUx" = (
@@ -65073,6 +65090,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "xcz" = (
@@ -66937,6 +66955,11 @@
 /area/station/command/bridge)
 "xJv" = (
 /obj/machinery/light/directional/north,
+/obj/item/stack/rods/two,
+/obj/item/stack/rods/two{
+	pixel_y = -11;
+	pixel_x = 8
+	},
 /turf/open/floor/iron/recharge_floor,
 /area/station/security/mechbay)
 "xJA" = (
