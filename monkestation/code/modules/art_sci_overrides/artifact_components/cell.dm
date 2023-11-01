@@ -9,6 +9,15 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
+	valid_faults = list(
+		/datum/artifact_fault/ignite = 10,
+		/datum/artifact_fault/warp = 10,
+		/datum/artifact_fault/reagent/poison = 10,
+		/datum/artifact_fault/death = 2,
+		/datum/artifact_fault/tesla_zap = 5,
+		/datum/artifact_fault/grow = 10,
+		/datum/artifact_fault/explosion = 2,
+	)
 
 /datum/component/artifact/cell/setup()
 	var/obj/item/stock_parts/cell/artifact/cell = holder

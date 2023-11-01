@@ -20,3 +20,4 @@
 	component.holder.w_class++
 	if(component.holder.w_class > WEIGHT_CLASS_HUGE)
 		component.holder.visible_message("[component.holder] becomes to cumbersome to carry!")
+		component.holder.anchored = TRUE

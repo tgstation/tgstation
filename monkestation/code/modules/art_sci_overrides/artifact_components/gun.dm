@@ -12,6 +12,15 @@
 		/datum/artifact_activator/range/shock,
 		/datum/artifact_activator/range/radiation
 	)
+	valid_faults = list(
+		/datum/artifact_fault/ignite = 10,
+		/datum/artifact_fault/warp = 10,
+		/datum/artifact_fault/reagent/poison = 10,
+		/datum/artifact_fault/death = 2,
+		/datum/artifact_fault/tesla_zap = 5,
+		/datum/artifact_fault/grow = 10,
+		/datum/artifact_fault/explosion = 2,
+	)
 
 	//list of projectile exclusive projectiles
 	///damage each shot does
@@ -35,11 +44,11 @@
 
 	///list of damage types
 	var/list/damage_types = list(
-		BRUTE, 
-		BURN, 
-		TOX, 
-		OXY, 
-		BRAIN, 
+		BRUTE,
+		BURN,
+		TOX,
+		OXY,
+		BRAIN,
 		STAMINA
 	)
 

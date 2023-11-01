@@ -34,7 +34,13 @@
 	)
 	///valid list of faults with their weights [10 is base]
 	var/list/valid_faults = list(
-		/datum/artifact_fault/ignite = 10
+		/datum/artifact_fault/ignite = 10,
+		/datum/artifact_fault/warp = 10,
+		/datum/artifact_fault/reagent/poison = 10,
+		/datum/artifact_fault/death = 2,
+		/datum/artifact_fault/tesla_zap = 5,
+		/datum/artifact_fault/shrink = 10,
+		/datum/artifact_fault/explosion = 2,
 	)
 	///origin datum
 	var/datum/artifact_origin/artifact_origin
