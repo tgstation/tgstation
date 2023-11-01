@@ -81,10 +81,10 @@
 
 /obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
 	var/mob/living/carbon/player = user
-	if(!iscarbon(player))
+	if(!iscarbon(player) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational || !state_open)
 		return
 
-	if((HAS_TRAIT(player, TRAIT_UI_BLOCKED) && !player.resting) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational)
+	if(player.buckled || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))
 		return
 
 	close_machine(target)
@@ -312,15 +312,9 @@
 
 	neo.set_static_vision(3 SECONDS)
 	add_healing(occupant)
-	if(!do_after(neo, 2 SECONDS, src))
-		return
 
-	// Very invalid
-	if(QDELETED(neo) || QDELETED(current_avatar) || QDELETED(src))
-		return
-
-	// Invalid
-	if(occupant != neo || isnull(neo.mind) || neo.stat == DEAD || current_avatar.stat == DEAD)
+	if(!validate_entry(neo, current_avatar))
+		open_machine()
 		return
 
 	current_avatar.AddComponent( \
@@ -466,5 +460,20 @@
 	set_density(TRUE)
 
 	update_appearance()
+
+/// Checks for cases to eject/fail connecting an avatar
+/obj/machinery/netpod/proc/validate_entry(mob/living/neo, mob/living/avatar)
+	if(!do_after(neo, 2 SECONDS, src))
+		return FALSE
+
+	// Very invalid
+	if(QDELETED(neo) || QDELETED(avatar) || QDELETED(src) || !is_operational)
+		return FALSE
+
+	// Invalid
+	if(occupant != neo || isnull(neo.mind) || neo.stat > SOFT_CRIT || avatar.stat == DEAD)
+		return FALSE
+
+	return TRUE
 
 #undef BASE_DISCONNECT_DAMAGE

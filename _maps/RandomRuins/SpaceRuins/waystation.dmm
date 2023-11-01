@@ -1388,17 +1388,6 @@
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/template_noop,
 /area/template_noop)
-"xk" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 1;
-	max_integrity = 80
-	},
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 1;
-	max_integrity = 80
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/waystation/assaultpod)
 "xq" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -4714,7 +4703,7 @@ Qx
 SL
 jG
 my
-xk
+lM
 tb
 FM
 TW

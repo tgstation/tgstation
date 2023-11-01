@@ -38221,15 +38221,6 @@
 /obj/machinery/computer/quantum_console{
 	dir = 4
 	},
-/obj/machinery/computer/quantum_console{
-	dir = 4
-	},
-/obj/machinery/computer/quantum_console{
-	dir = 4
-	},
-/obj/machinery/computer/quantum_console{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/bitrunning/den)
@@ -94795,7 +94786,7 @@ tgw
 lqt
 ghD
 aZP
-wPf
+xQw
 mvT
 vrn
 kvT

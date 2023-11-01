@@ -1,5 +1,4 @@
-// This whole file is just a container for the spiderling subtypes that actually differentiate into different young spiders. None of them are particularly special as of now.
-
+/// This whole file is just a container for the spiderling subtypes that actually differentiate into different young spiders. None of them are particularly special as of now.
 /// Will differentiate into the base young spider (known colloquially as the "guard" spider).
 /mob/living/basic/spider/growing/spiderling/guard
 	grow_as = /mob/living/basic/spider/growing/young/guard
@@ -51,6 +50,24 @@
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "tangle_spiderling"
 	icon_dead = "tangle_spiderling_dead"
+
+/// Will differentiate into the "tank" young spider.
+/mob/living/basic/spider/growing/spiderling/tank
+	grow_as = /mob/living/basic/spider/growing/young/tank
+	name = "tank spiderling"
+	desc = "Furry and purple, it looks defenseless. This one has dim yellow eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "tank_spiderling"
+	icon_dead = "tank_spiderling_dead"
+
+/// Will differentiate into the "breacher" young spider.
+/mob/living/basic/spider/growing/spiderling/breacher
+	grow_as = /mob/living/basic/spider/growing/young/breacher
+	name = "breacher spiderling"
+	desc = "Furry and baige, it looks defenseless. This one has dim red eyes."
+	icon = 'icons/mob/simple/arachnoid.dmi'
+	icon_state = "breacher_spiderling"
+	icon_dead = "breacher_spiderling_dead"
 
 /// Will differentiate into the "midwife" young spider.
 /mob/living/basic/spider/growing/spiderling/midwife
