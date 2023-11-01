@@ -74,13 +74,14 @@
 	var/stealth_wound_bonus = -20 //from -100, you can now wound!
 
 /datum/status_effect/guardian_stealth/on_apply()
-	var/mob/living/basic/basic_owner = owner
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(owner))
-	basic_owner.melee_damage_lower += damage_bonus
-	basic_owner.melee_damage_upper += damage_bonus
-	basic_owner.armour_penetration = 100
-	basic_owner.wound_bonus = stealth_wound_bonus
-	basic_owner.obj_damage = 0
+	owner.melee_damage_lower += damage_bonus
+	owner.melee_damage_upper += damage_bonus
+	if (isbasicmob(owner))
+		var/mob/living/basic/basic_owner = owner
+		basic_owner.armour_penetration = 100
+		basic_owner.wound_bonus = stealth_wound_bonus
+		basic_owner.obj_damage = 0
 	to_chat(owner, span_bolddanger("You enter stealth, empowering your next attack."))
 	animate(owner, alpha = 15, time = 0.5 SECONDS)
 
@@ -89,12 +90,13 @@
 	return TRUE
 
 /datum/status_effect/guardian_stealth/on_remove()
-	var/mob/living/basic/basic_owner = owner
-	basic_owner.melee_damage_lower -= damage_bonus
-	basic_owner.melee_damage_upper -= damage_bonus
-	basic_owner.armour_penetration = initial(basic_owner.armour_penetration)
-	basic_owner.wound_bonus = initial(basic_owner.wound_bonus)
-	basic_owner.obj_damage = initial(basic_owner.obj_damage)
+	owner.melee_damage_lower -= damage_bonus
+	owner.melee_damage_upper -= damage_bonus
+	if (isbasicmob(owner))
+		var/mob/living/basic/basic_owner = owner
+		basic_owner.armour_penetration = initial(basic_owner.armour_penetration)
+		basic_owner.wound_bonus = initial(basic_owner.wound_bonus)
+		basic_owner.obj_damage = initial(basic_owner.obj_damage)
 	animate(owner, alpha = initial(owner.alpha), time = 0.5 SECONDS)
 	UnregisterSignal(owner, list(COMSIG_GUARDIAN_RECALLED, COMSIG_HOSTILE_POST_ATTACKINGTARGET) + COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES)
 
