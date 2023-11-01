@@ -39,13 +39,19 @@
 	path = "_maps/map_files/Mafia/" + map_suffix
 	return ..()
 
+//we only have one map in unit tests for consistency.
+#ifdef UNIT_TESTS
+/datum/map_template/mafia/unit_test
+	name = "Mafia Unit Test"
+	description = "A map designed specifically for Unit Testing to ensure the game runs properly."
+	map_suffix = "mafia_unit_test.dmm"
+
+#else
+
 /datum/map_template/mafia/summerball
 	name = "Summerball 2020"
 	description = "The original, the OG. The 2020 Summer ball was where mafia came from, with this map."
 	map_suffix = "mafia_ball.dmm"
-
-//we only have one map in unit tests for consistency.
-#ifndef UNIT_TESTS
 
 /datum/map_template/mafia/ufo
 	name = "Alien Mothership"
@@ -82,4 +88,5 @@
 	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and worst of all... lawyers roleblocking you every night."
 	map_suffix = "mafia_lavaland.dmm"
 	custom_outfit = /datum/outfit/mafia/lavaland
+
 #endif

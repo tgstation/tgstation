@@ -37,7 +37,7 @@
 
 	TEST_ASSERT(mafia_game_started, "Mafia game did not start despite basic_setup being called.")
 	TEST_ASSERT_NOTNULL(controller.player_role_lookup[modpc_player], "The Modular Computer was unable to join a game of Mafia.")
-	TEST_ASSERT_NOTNULL(controller.player_role_lookup[mock_client], "The Mock client wasn't put into a game of Mafia.")
+	TEST_ASSERT_NOTNULL(controller.player_role_lookup[mock_client.ckey], "The Mock client wasn't put into a game of Mafia.")
 
 /datum/unit_test/mafia/proc/on_mafia_start(datum/controller/subsystem/processing/dcs/source, datum/mafia_controller/game)
 	SIGNAL_HANDLER
