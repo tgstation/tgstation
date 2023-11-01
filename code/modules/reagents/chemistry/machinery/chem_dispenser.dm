@@ -218,17 +218,6 @@
 	.["amount"] = amount
 	.["energy"] = cell.charge ? cell.charge * powerefficiency : 0 //To prevent NaN in the UI.
 	.["maxEnergy"] = cell.maxcharge * powerefficiency
-	.["isBeakerLoaded"] = beaker ? 1: 0
-
-	.["beakerMaxVolume"] = beaker ? beaker.volume : 0
-	.["beakerTransferAmounts"] = beaker ? beaker.possible_transfer_amounts : 0
-	.["beakerCurrentpH"] = beaker ? round(beaker.reagents.ph, 0.01) : 0
-	var/list/beakerContents = list()
-	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents += list(list("name" = R.name, "volume" = round(R.volume, 0.01), "pH" = R.ph, "purity" = R.purity)) // list in a list because Byond merges the first list...
-	.["beakerContents"] = beakerContents
-	.["beakerCurrentVolume"] = beaker ? round(beaker.reagents.total_volume, 0.01) : 0
 
 	var/list/chemicals = list()
 	var/is_hallucinating = FALSE
@@ -253,6 +242,20 @@
 		for(var/_reagent in reaction.required_reagents)
 			var/datum/reagent/reagent = find_reagent_object_from_type(_reagent)
 			.["recipeReagents"] += reagent.name
+
+	var/list/beaker_data = null
+	if(!QDELETED(beaker))
+		beaker_data = list()
+		beaker_data["maxVolume"] = beaker.volume
+		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
+		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		var/list/beakerContents = list()
+		if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+		beaker_data["contents"] = beakerContents
+	.["beaker"] = beaker_data
 
 /obj/machinery/chem_dispenser/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

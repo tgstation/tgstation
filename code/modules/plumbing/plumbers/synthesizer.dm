@@ -53,9 +53,8 @@
 		return
 
 	//otherwise we get leftovers, and we need this to be precise
-	if(reagents.total_volume >= amount)
-		return
-	reagents.add_reagent(reagent_id, amount)
+	if(reagents.total_volume < amount)
+		reagents.add_reagent(reagent_id, amount)
 
 	use_power(active_power_usage)
 
@@ -79,13 +78,13 @@
 		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
 	var/list/chemicals = list()
 
-	for(var/A in dispensable_reagents)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
-		if(R)
-			var/chemname = R.name
+	for(var/reagentID in dispensable_reagents)
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagentID]
+		if(reagent)
+			var/chemname = reagent.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals += list(list("title" = chemname, "id" = R.name))
+			chemicals += list(list("title" = chemname, "id" = reagent.name))
 	.["chemicals"] = chemicals
 
 	.["current_reagent"] = initial(reagent_id.name)

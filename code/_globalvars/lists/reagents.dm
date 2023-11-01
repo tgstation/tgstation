@@ -179,10 +179,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 	//build map with keys stored seperatly
 	var/list/name_to_reagent = list()
 	var/list/only_names = list()
-	for (var/datum/reagent/R as anything in GLOB.chemical_reagents_list)
-		var/name = initial(R.name)
+	for (var/datum/reagent/reagent as anything in GLOB.chemical_reagents_list)
+		var/name = initial(reagent.name)
 		if (length(name))
-			name_to_reagent[name] = R
+			name_to_reagent[name] = reagent
 			only_names += name
 
 	//sort keys

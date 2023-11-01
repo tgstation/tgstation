@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { BooleanLike } from 'common/react';
+import { Beaker } from './ChemDispenser';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
@@ -11,28 +11,17 @@ type DispensableReagent = {
   pH: number;
 };
 
-type BeakerReagent = {
-  name: string;
-  id: string;
-  volume: number;
-  pH: number;
-};
-
 type Data = {
   amount: number;
   chemicals: DispensableReagent[];
-  isBeakerLoaded: BooleanLike;
-  beakerCurrentVolume: number;
-  beakerMaxVolume: number;
-  beakerCurrentpH: number;
-  beakerTransferAmounts: number[];
-  beakerContents: BeakerReagent[];
+  beaker: Beaker;
 };
 
 export const PortableChemMixer = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const beakerTransferAmounts = data.beakerTransferAmounts || [];
-  const beakerContents = data.beakerContents || [];
+  const { beaker } = data;
+  const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
+  const beakerContents = beaker ? beaker.contents : [];
   const chemicals = sortBy((chem: DispensableReagent) => chem.id)(
     data.chemicals
   );
@@ -86,7 +75,7 @@ export const PortableChemMixer = (props, context) => {
             <LabeledList.Item
               label="Beaker"
               buttons={
-                !!data.isBeakerLoaded && (
+                !!beaker && (
                   <Button
                     icon="eject"
                     content="Eject"
@@ -94,20 +83,17 @@ export const PortableChemMixer = (props, context) => {
                   />
                 )
               }>
-              {(data.isBeakerLoaded && (
+              {(!!beaker && (
                 <>
-                  <AnimatedNumber
-                    initial={0}
-                    value={data.beakerCurrentVolume}
-                  />
-                  /{data.beakerMaxVolume} units
+                  <AnimatedNumber initial={0} value={beaker.currentVolume} />/
+                  {beaker.maxVolume} units
                 </>
               )) ||
                 'No beaker'}
             </LabeledList.Item>
             <LabeledList.Item label="Contents">
               <Box color="label">
-                {(!data.isBeakerLoaded && 'N/A') ||
+                {(!beaker && 'N/A') ||
                   (beakerContents.length === 0 && 'Nothing')}
               </Box>
               {beakerContents.map((chemical) => (
@@ -119,7 +105,7 @@ export const PortableChemMixer = (props, context) => {
               {beakerContents.length > 0 && (
                 <Box>
                   pH:
-                  <AnimatedNumber value={data.beakerCurrentpH} />
+                  <AnimatedNumber value={beaker.pH} />
                 </Box>
               )}
             </LabeledList.Item>

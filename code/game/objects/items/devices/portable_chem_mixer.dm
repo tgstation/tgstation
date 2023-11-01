@@ -16,8 +16,6 @@
 	var/amount = 30
 	///List in which all currently dispensable reagents go
 	var/list/dispensable_reagents = list()
-	///List of possible transfer ammounts
-	var/static/list/transfer_amounts = list(1, 5, 10, 30, 50, 100)
 
 /obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
@@ -202,16 +200,19 @@
 			chemicals += list(list("title" = chemname, "id" = temp.name, "volume" = total_volume, "pH" = total_ph))
 	.["chemicals"] = chemicals
 
-	.["isBeakerLoaded"] = beaker ? 1 : 0
-	.["beakerTransferAmounts"] = beaker ? transfer_amounts : 0
-	.["beakerCurrentVolume"] = beaker ? beaker.reagents.total_volume : 0
-	.["beakerMaxVolume"] = beaker ? beaker.volume : 0
-	.["beakerCurrentpH"] = beaker ? round(beaker.reagents.ph, 0.01) : 0
-	var/list/beakerContents = list()
-	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents += list(list("name" = R.name, "id" = R.name, "volume" = R.volume, "pH" = R.ph)) // list in a list because Byond merges the first list...
-	.["beakerContents"] = beakerContents
+	var/list/beaker_data = null
+	if(!QDELETED(beaker))
+		beaker_data = list()
+		beaker_data["maxVolume"] = beaker.volume
+		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
+		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		var/list/beakerContents = list()
+		if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+		beaker_data["contents"] = beakerContents
+	.["beaker"] = beaker_data
 
 /obj/item/storage/portable_chem_mixer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -229,8 +230,8 @@
 				return
 
 			if(!QDELETED(beaker))
-				var/datum/reagents/R = beaker.reagents
-				var/actual = min(amount, 1000, R.maximum_volume - R.total_volume)
+				var/datum/reagents/container = beaker.reagents
+				var/actual = min(amount, 1000, container.maximum_volume - container.total_volume)
 				for (var/datum/reagents/source in dispensable_reagents[reagent]["reagents"])
 					var/to_transfer = min(source.total_volume, actual)
 					source.trans_to(beaker, to_transfer, transferred_by = ui.user)

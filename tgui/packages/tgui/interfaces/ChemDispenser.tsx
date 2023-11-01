@@ -5,11 +5,17 @@ import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-type BeakerReagent = {
+export type BeakerReagent = {
   name: string;
   volume: number;
+};
+
+export type Beaker = {
+  maxVolume: number;
+  transferAmounts: number[];
   pH: number;
-  purity: number;
+  currentVolume: number;
+  contents: BeakerReagent[];
 };
 
 type DispensableReagent = {
@@ -24,25 +30,20 @@ type Data = {
   amount: number;
   energy: number;
   maxEnergy: number;
-  isBeakerLoaded: BooleanLike;
-  beakerContents: BeakerReagent[];
-  beakerCurrentVolume: number;
-  beakerMaxVolume: number;
-  beakerTransferAmounts: number[];
-  beakerCurrentpH: number;
   chemicals: DispensableReagent[];
   recipes: string[];
   recordingRecipe: string[];
   recipeReagents: string[];
+  beaker: Beaker;
 };
 
 export const ChemDispenser = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const recording = !!data.recordingRecipe;
-  const { recipeReagents = [], recipes = [] } = data;
+  const { recipeReagents = [], recipes = [], beaker } = data;
   const [hasCol, setHasCol] = useLocalState(context, 'has_col', false);
 
-  const beakerTransferAmounts = data.beakerTransferAmounts || [];
+  const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const beakerContents =
     (recording &&
       Object.keys(data.recordingRecipe).map((id) => ({
@@ -50,7 +51,7 @@ export const ChemDispenser = (props, context) => {
         name: toTitleCase(id.replace(/_/, ' ')),
         volume: data.recordingRecipe[id],
       }))) ||
-    data.beakerContents ||
+    beaker?.contents ||
     [];
   return (
     <Window width={565} height={620}>
@@ -67,10 +68,10 @@ export const ChemDispenser = (props, context) => {
               )}
               <Button
                 icon="book"
-                disabled={!data.isBeakerLoaded}
+                disabled={!beaker}
                 content={'Reaction search'}
                 tooltip={
-                  data.isBeakerLoaded
+                  beaker
                     ? 'Look up recipes and reagents!'
                     : 'Please insert a beaker!'
                 }
@@ -110,7 +111,7 @@ export const ChemDispenser = (props, context) => {
               {!recording && (
                 <Button
                   icon="circle"
-                  disabled={!data.isBeakerLoaded}
+                  disabled={!beaker}
                   content="Record"
                   onClick={() => act('record_recipe')}
                 />
@@ -134,7 +135,7 @@ export const ChemDispenser = (props, context) => {
             </>
           }>
           <Box mr={-1}>
-            {Object.keys(recipes).map((recipe, index) => (
+            {Object.keys(recipes).map((recipe) => (
               <Button
                 key={recipe}
                 icon="tint"
@@ -208,7 +209,7 @@ export const ChemDispenser = (props, context) => {
             <LabeledList.Item
               label="Beaker"
               buttons={
-                !!data.isBeakerLoaded && (
+                !!beaker && (
                   <Button
                     icon="eject"
                     content="Eject"
@@ -217,20 +218,17 @@ export const ChemDispenser = (props, context) => {
                 )
               }>
               {(recording && 'Virtual beaker') ||
-                (data.isBeakerLoaded && (
+                (!!beaker && (
                   <>
-                    <AnimatedNumber
-                      initial={0}
-                      value={data.beakerCurrentVolume}
-                    />
-                    /{data.beakerMaxVolume} units
+                    <AnimatedNumber initial={0} value={beaker.currentVolume} />/
+                    {beaker.maxVolume} units
                   </>
                 )) ||
                 'No beaker'}
             </LabeledList.Item>
             <LabeledList.Item label="Contents">
               <Box color="label">
-                {(!data.isBeakerLoaded && !recording && 'N/A') ||
+                {(!beaker && !recording && 'N/A') ||
                   (beakerContents.length === 0 && 'Nothing')}
               </Box>
               {beakerContents.map((chemical) => (
@@ -242,7 +240,7 @@ export const ChemDispenser = (props, context) => {
               {beakerContents.length > 0 && !!data.showpH && (
                 <Box>
                   pH:
-                  <AnimatedNumber value={data.beakerCurrentpH} />
+                  <AnimatedNumber value={beaker.pH} />
                 </Box>
               )}
             </LabeledList.Item>
