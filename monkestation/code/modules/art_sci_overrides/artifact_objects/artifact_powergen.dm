@@ -56,7 +56,7 @@ ARTIFACT_SETUP(/obj/machinery/power/generator_artifact, SSmachines)
 		powerholder.connect_to_network()
 		return
 
-	holder.Beam(user, icon_state="lightning[rand(1,12)]", time = 0.5 SECONDS)
+	holder.Beam(user, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(get_turf(powerholder), 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	var/damage = user.electrocute_act(power_gen / 2 KW, powerholder, flags = SHOCK_NOSTUN)
 	to_chat(user, span_userdanger("You are hit by a burst of electricity from [holder]!"))

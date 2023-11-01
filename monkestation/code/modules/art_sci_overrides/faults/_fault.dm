@@ -1,7 +1,7 @@
 /datum/artifact_fault
 	var/name = "Generic Fault"
 	///the visible message sent when triggered
-	var/visible_message = ""
+	var/visible_message
 	///the chance of us triggering on bad info
 	var/trigger_chance = 0
 

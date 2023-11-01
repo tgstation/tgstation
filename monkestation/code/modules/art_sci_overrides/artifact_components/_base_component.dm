@@ -27,10 +27,10 @@
 		/datum/artifact_activator/touch/silicon,
 		/datum/artifact_activator/touch/data,
 
-		/datum/artifact_activator/range/force, 
-		/datum/artifact_activator/range/heat, 
-		/datum/artifact_activator/range/shock, 
-		/datum/artifact_activator/range/radiation, 
+		/datum/artifact_activator/range/force,
+		/datum/artifact_activator/range/heat,
+		/datum/artifact_activator/range/shock,
+		/datum/artifact_activator/range/radiation,
 	)
 	///valid list of faults with their weights [10 is base]
 	var/list/valid_faults = list(
@@ -64,7 +64,7 @@
 	var/mutable_appearance/extra_effect
 	///the fault we picked from the listed ones
 	var/datum/artifact_fault/chosen_fault
-	
+
 /datum/component/artifact/Initialize(forced_origin = null)
 	. = ..()
 	if(!isobj(parent))
@@ -100,12 +100,12 @@
 			holder.icon = artifact_origin.icon_file_small
 			dat_icon = "[artifact_origin.sprite_name]-[rand(1,artifact_origin.max_item_icons_small)]"
 	holder.icon_state = dat_icon
-	
+
 	//wizards got an extract MA for the gem coloring, if we have extras add them below this
 	if(artifact_origin.type_name == ORIGIN_WIZARD)
 		extra_effect = mutable_appearance(holder.icon, "[holder.icon_state]-gem", ABOVE_OBJ_LAYER, offset_spokesman = holder)
 		extra_effect.color = random_rgb_pairlists(artifact_origin.overlays_reds, artifact_origin.overlays_blues, artifact_origin.overlays_greens, artifact_origin.overlays_alpha)
-	
+
 	holder.update_appearance() // force an all update specifically to try and apply secondary overlays
 
 	act_effect = mutable_appearance(holder.icon, "[holder.icon_state]fx", offset_spokesman = holder, alpha = rand(artifact_origin.overlays_alpha[1], artifact_origin.overlays_alpha[2]))
@@ -195,7 +195,8 @@
 			checked_fault = TRUE
 			if(prob(chosen_fault.trigger_chance))
 				chosen_fault.on_trigger(src)
-				holder.visible_message("[holder] [chosen_fault.visible_message]")
+				if(chosen_fault.visible_message)
+					holder.visible_message("[holder] [chosen_fault.visible_message]")
 			continue
 		if(istype(listed_activator, /datum/artifact_activator/range))
 			var/datum/artifact_activator/range/ranged_activator = listed_activator
