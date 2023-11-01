@@ -1,5 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - refactor: "The wings you get from a flight potion (if any) are now determined by your chest bodypart, not your species."
-  - qol: "Functional wings can now be ground up to get the flight potion back, if you want to get a different wing variant."

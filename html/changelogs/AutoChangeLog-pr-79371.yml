@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - rscadd: "ctrlclicking the knock path eldritch id card will toggle whether it creates inverted portals or not"
