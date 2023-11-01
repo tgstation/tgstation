@@ -215,7 +215,7 @@
 
 /turf/closed/mineral/random
 	var/mineralChance = 13
-	var/turf_transforms
+	var/turf_transforms = TRUE
 
 /// Returns a list of the chances for minerals to spawn.
 /// Will only run once, and will then be cached.

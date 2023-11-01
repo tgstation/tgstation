@@ -16,11 +16,10 @@
 
 /turf/closed/mineral/random/asteroid/tospace/mineral_chances()
 	return list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stack/ore/diamond = 1,
 		/obj/item/stack/ore/gold = 2,
-		/obj/item/stack/ore/iron = 20,
-		/obj/item/stack/ore/plasma = 10,
+		/obj/item/stack/ore/iron = 10,
+		/obj/item/stack/ore/plasma = 5,
 		/obj/item/stack/ore/silver = 1,
 		/obj/item/stack/ore/titanium = 1,
 		/obj/item/stack/ore/uranium = 1,

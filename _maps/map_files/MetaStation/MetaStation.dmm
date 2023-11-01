@@ -25781,6 +25781,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "artsci"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "jrL" = (
@@ -45116,6 +45119,9 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "artsci"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)

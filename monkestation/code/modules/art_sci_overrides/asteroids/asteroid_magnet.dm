@@ -227,6 +227,7 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 
 	var/turf/turf = locate(center_x, center_y, src.z)
 	var/datum/mining_template/simple_asteroid/template = new(turf, 3)
+	CleanupAsteroidMagnet(template.center, template.size)
 
 	var/list/turfs = ReserveTurfsForAsteroidGeneration(template.center, template.size)
 	var/datum/callback/asteroid_cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(GenerateRoundAsteroid), template, template.center, /turf/closed/mineral/random/asteroid/tospace, null, turfs, TRUE)
