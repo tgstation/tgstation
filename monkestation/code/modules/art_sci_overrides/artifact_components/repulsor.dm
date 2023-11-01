@@ -1,7 +1,7 @@
 
 /datum/component/artifact/repulsor
 	associated_object = /obj/structure/artifact/repulsor
-	weight = ARTIFACT_UNCOMMON
+	weight = ARTIFACT_COMMON
 	type_name = "Repulsor/Impulsor"
 	activation_message = "opens up, a weird aura starts emitting from it!"
 	deactivation_message = "closes up."
