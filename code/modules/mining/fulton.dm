@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(thing.anchored || (thing.move_resist > max_force_fulton))
 		return
 
-	balloon_alert_to_viewers(user, "attaching...")
+	balloon_alert_to_viewers("attaching...")
 	playsound(thing, 'sound/items/zip.ogg', 50, vary = TRUE)
 	if(isliving(thing))
 		var/mob/living/creature = thing
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!do_after(user, 5 SECONDS, target = thing))
 		return
 
-	balloon_alert_to_viewers(user, "extracting!")
+	balloon_alert_to_viewers("extracting!")
 	if(loc == user)
 		user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
 	uses_left--
