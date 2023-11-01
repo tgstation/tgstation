@@ -20,6 +20,7 @@
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	mutantlungs = /obj/item/organ/internal/lungs/oozeling
+	mutanttongue = /obj/item/organ/internal/tongue/oozeling
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimeooze
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs

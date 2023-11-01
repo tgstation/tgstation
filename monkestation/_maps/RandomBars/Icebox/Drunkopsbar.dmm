@@ -592,7 +592,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "Gc" = (
-/obj/structure/closet/gimmick/tacticool,
 /obj/structure/cable,
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
@@ -600,6 +599,9 @@
 /obj/item/toy/sword,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/item/clothing/head/collectable/swat,
+/obj/structure/closet{
+	icon_state = "syndicate"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "Gv" = (
@@ -726,12 +728,14 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/structure/railing,
-/obj/structure/closet/gimmick/tacticool,
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/item/toy/gun,
 /obj/item/toy/sword,
 /obj/item/clothing/mask/gas,
+/obj/structure/closet{
+	icon_state = "syndicate"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "Pk" = (
@@ -785,6 +789,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/bar/backroom)
 "Qe" = (
@@ -849,7 +854,9 @@
 /obj/item/toy/mecha/mauler,
 /obj/item/toy/sword,
 /obj/item/clothing/mask/gas,
-/obj/structure/closet,
+/obj/structure/closet{
+	icon_state = "syndicate"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "RX" = (
@@ -924,7 +931,9 @@
 /obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/item/toy/gun,
 /obj/item/toy/sword,
-/obj/structure/closet,
+/obj/structure/closet{
+	icon_state = "syndicate"
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "TO" = (
