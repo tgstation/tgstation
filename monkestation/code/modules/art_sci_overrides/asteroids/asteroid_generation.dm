@@ -55,7 +55,7 @@
 
 		for(var/atom/movable/AM as anything in T)
 			CHECK_TICK
-			if(isdead(AM) || iscameramob(AM) || iseffect(AM) || iseminence(AM))
+			if(isdead(AM) || iscameramob(AM) || iseffect(AM) || iseminence(AM) || ismob(AM))
 				continue
 			qdel(AM)
 
