@@ -26,7 +26,7 @@
 	. = ..()
 	var/power_usage = 250
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
-		max_radiation = round(2.5 * laser.tier)
+		max_radiation = round(2.5 * laser.rating)
 	for(var/datum/stock_part/capacitor/capac in component_parts)
 		power_usage -= 30 * capac.tier
 	update_mode_power_usage(ACTIVE_POWER_USE, power_usage)
