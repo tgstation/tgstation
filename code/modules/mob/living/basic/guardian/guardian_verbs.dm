@@ -21,12 +21,13 @@
 
 /// Do something when we appear.
 /mob/living/basic/guardian/proc/manifest_effects()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_GUARDIAN_MANIFESTED)
 
 /// Do something when we vanish.
 /mob/living/basic/guardian/proc/recall_effects()
-	return
-
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_GUARDIAN_RECALLED)
 
 /// Swap to a different mode... if we have one
 /mob/living/basic/guardian/proc/toggle_modes()
@@ -136,4 +137,4 @@
 	chosen_guardian.key = candidate.key
 	COOLDOWN_START(chosen_guardian, resetting_cooldown, 5 MINUTES)
 	chosen_guardian.guardian_rename() //give it a new color and name, to show it's a new person
-	chosen_guardian.guardian_recolor()
+	chosen_guardian.guardian_recolour()

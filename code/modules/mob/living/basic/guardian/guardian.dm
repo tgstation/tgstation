@@ -196,7 +196,7 @@
 		qdel(src) // No life of free invulnerability for you.
 		return
 	cut_summoner(different_person)
-	AddComponent(/datum/component/life_link, to_who, CALLBACK(src, on_harm), CALLBACK(src, on_summoner_death))
+	AddComponent(/datum/component/life_link, to_who, CALLBACK(src, PROC_REF(on_harm)), CALLBACK(src, PROC_REF(on_summoner_death)))
 	summoner = to_who
 	updatehealth()
 	add_verb(to_who, control_verbs)
