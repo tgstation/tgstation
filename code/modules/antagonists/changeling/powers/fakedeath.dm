@@ -26,13 +26,13 @@
 	if(user.has_status_effect(/datum/status_effect/gutted))
 		death_duration_mod *= 8 // Anti-megafauna cheese
 
-	if(enable_fakedeath(user, duration_modifier = death_duration_mod))
-		to_chat(user, span_changeling("We begin our stasis, preparing energy to arise once more."))
-		if(death_duration_mod > 1)
-			to_chat(user, span_changeling("<b>Our body has sustained severe damage, and will take longer to regenerate.</b>"))
-		return TRUE
+	if(!enable_fakedeath(user, duration_modifier = death_duration_mod))
+		CRASH("Changeling revive failed to enter fakedeath when it should have been in a valid state to.")
 
-	stack_trace("Changeling revive failed to enter fakedeath when it should have been in a valid state to.")
+	to_chat(user, span_changeling("We begin our stasis, preparing energy to arise once more."))
+	if(death_duration_mod > 1)
+		to_chat(user, span_changeling(span_bold("Our body has sustained severe damage, and will take [death_duration_mod >= 5 ? "far ":""]longer to regenerate.")))
+	return TRUE
 
 /// Used to enable fakedeath and register relevant signals / start timers
 /datum/action/changeling/fakedeath/proc/enable_fakedeath(mob/living/changeling, duration_modifier = 1)
