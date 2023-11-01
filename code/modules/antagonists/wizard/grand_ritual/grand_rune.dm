@@ -1,5 +1,5 @@
 /// Number of times you need to cast on the rune to complete it
-#define GRAND_RUNE_INVOKES_TO_COMPLETE 3
+//#define GRAND_RUNE_INVOKES_TO_COMPLETE 3 //monkestation removal
 /// Base time to take to invoke one stage of the rune. This is done three times to complete the rune.
 #define BASE_INVOKE_TIME 7 SECONDS
 /// Time to add on to each step every time a previous rune is completed.
@@ -90,22 +90,31 @@
 
 /obj/effect/grand_rune/examine(mob/user)
 	. = ..()
-	if (times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
+	if (times_invoked >= invokes_needed) //monkestation edit: replaced GRAND_RUNE_INVOKES_TO_COMPLETE with invokes_needed
 		. += span_notice("Its power seems to have been expended.")
 		return
 	if(!IS_WIZARD(user))
 		return
-	. += span_notice("Invoke this rune [GRAND_RUNE_INVOKES_TO_COMPLETE - times_invoked] more times to complete the ritual.")
+	. += span_notice("Invoke this rune [invokes_needed - times_invoked] more times to complete the ritual.")//monkestation edit: replaced GRAND_RUNE_INVOKES_TO_COMPLETE with invokes_needed
 
 /obj/effect/grand_rune/can_interact(mob/living/user)
 	. = ..()
 	if(!.)
 		return
-	if(!IS_WIZARD(user))
+//monkestation edit start
+	if(!owning_mind && !IS_WIZARD(user))
 		return FALSE
+
+	else if(owning_mind && !(user.mind == owning_mind?.resolve()))
+		return FALSE
+//monkestation edit end
+//monkestation removal start
+	/*if(!IS_WIZARD(user))
+		return FALSE*/
+//monkestation removal end
 	if(is_in_use)
 		return FALSE
-	if (times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
+	if (times_invoked >= invokes_needed) //monkestation edit: replaced GRAND_RUNE_INVOKES_TO_COMPLETE with invokes_needed
 		return FALSE
 	return TRUE
 
@@ -157,7 +166,7 @@
 	for(var/obj/machinery/light/light in orange(4, src.loc))
 		light.flicker()
 
-	if(times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
+	if(times_invoked >= invokes_needed) //monkestation edit: replaced GRAND_RUNE_INVOKES_TO_COMPLETE with invokes_needed
 		on_invocation_complete(user)
 		return
 	flick("[icon_state]_flash", src)
@@ -264,7 +273,7 @@
 			new_influence.after_drain()
 		created++
 
-#undef GRAND_RUNE_INVOKES_TO_COMPLETE
+//#undef GRAND_RUNE_INVOKES_TO_COMPLETE //monkestation removal
 
 #undef BASE_INVOKE_TIME
 #undef ADD_INVOKE_TIME

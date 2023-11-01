@@ -91,6 +91,7 @@
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "ec" = (
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/orange,
 /area/station/service/bar)
 "eG" = (
@@ -100,6 +101,7 @@
 	name = "Bar Backroom"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/structure/cable,
 /turf/open/floor/eighties/red,
 /area/station/service/bar/backroom)
 "eS" = (
@@ -149,6 +151,7 @@
 /area/station/service/bar)
 "hH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/orange,
 /area/station/service/bar)
 "ip" = (
@@ -171,6 +174,7 @@
 /area/station/commons/lounge)
 "jn" = (
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/eighties/red,
 /area/station/service/bar/backroom)
 "jp" = (
@@ -205,6 +209,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/eighties,
 /area/station/service/theater)
 "kp" = (
@@ -276,6 +281,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/commons/lounge)
 "pH" = (
@@ -348,6 +354,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/eighties/red,
 /area/station/service/bar/backroom)
 "ut" = (
@@ -372,6 +379,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/eighties/red,
 /area/station/commons/lounge)
 "vl" = (
@@ -447,10 +455,12 @@
 "xW" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/orange,
 /area/station/service/bar)
 "xX" = (
 /obj/structure/sink/kitchen/directional/east,
+/obj/structure/cable,
 /turf/open/floor/eighties/red,
 /area/station/service/bar/backroom)
 "ys" = (
@@ -612,6 +622,7 @@
 	name = "bar mixing area";
 	req_access = list("bar")
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/service/bar)
 "FR" = (
@@ -629,6 +640,7 @@
 /area/station/commons/lounge)
 "FS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/eighties/red,
 /area/station/service/bar/backroom)
 "FW" = (
@@ -722,6 +734,7 @@
 /area/station/service/bar/backroom)
 "Jv" = (
 /obj/machinery/duct,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/orange,
 /area/station/service/bar)
 "Kc" = (
@@ -866,7 +879,7 @@
 /turf/open/floor/carpet/neon/simple/purple,
 /area/station/commons/lounge)
 "OO" = (
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/service/bar)
 "OW" = (
@@ -896,6 +909,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/lounge)
+"PL" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/template_noop,
+/area/template_noop)
 "PN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -1119,7 +1136,7 @@ dn
 XN
 "}
 (4,1,1) = {"
-Ow
+PL
 Ow
 Ow
 eS

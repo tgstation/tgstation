@@ -19,8 +19,10 @@
 
 	order_categories = list(
 		CATEGORY_BITRUNNING_FLAIR,
-		CATEGORY_BITRUNNING_TECH,
+//		CATEGORY_BITRUNNING_TECH, Monkestation removal: split up into combat gear and abilities tabs
 		CATEGORY_BEPIS,
+		CATEGORY_BITRUNNING_COMBAT_GEAR,
+		CATEGORY_BITRUNNING_ABILITIES,
 	)
 	blackbox_key = "bitrunning"
 
