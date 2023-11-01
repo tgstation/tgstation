@@ -16443,7 +16443,8 @@
 /obj/structure/cable,
 /obj/machinery/button/door/directional/east{
 	name = "Security Mech Garage Door Controls";
-	id = "secmechbay"
+	id = "secmechbay";
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
@@ -50413,7 +50414,8 @@
 	},
 /obj/machinery/button/door/directional/west{
 	id = "secmechbay";
-	name = "Security Mech Garage Door Controls"
+	name = "Security Mech Garage Door Controls";
+	req_access = list("security")
 	},
 /obj/item/circuitboard/computer/mech_bay_power_console,
 /obj/item/stack/sheet/glass{

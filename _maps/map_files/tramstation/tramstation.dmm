@@ -30559,7 +30559,8 @@
 "jWy" = (
 /obj/machinery/button/door/directional/east{
 	name = "Security Mech Garage Door Controls";
-	id = "secmechbay"
+	id = "secmechbay";
+	req_access = list("security")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54580,7 +54581,8 @@
 	},
 /obj/machinery/button/door/directional/south{
 	name = "Security Mech Garage Door Controls";
-	id = "secmechbay"
+	id = "secmechbay";
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
