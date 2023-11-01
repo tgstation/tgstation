@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "plumbing reaction chamber will attempt to balance the ph of the solution a maximum of 5 times before giving up and thus preventing infinite loops, high tick usage"
