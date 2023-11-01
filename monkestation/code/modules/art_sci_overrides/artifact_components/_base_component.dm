@@ -204,6 +204,7 @@
 				if(chosen_fault.visible_message)
 					holder.visible_message("[holder] [chosen_fault.visible_message]")
 			continue
+		checked_fault = TRUE
 		if(istype(listed_activator, /datum/artifact_activator/range))
 			var/datum/artifact_activator/range/ranged_activator = listed_activator
 			//if we fail the range check check if we are in hint range to send out the hint
