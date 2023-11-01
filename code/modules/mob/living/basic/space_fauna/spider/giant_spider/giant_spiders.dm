@@ -130,7 +130,7 @@
 	speed = 2.8
 	player_speed_modifier = -3.1
 	sight = SEE_SELF|SEE_MOBS
-	menu_description = menu_description = "Fast spider able to see enemies through walls, send messages to the nest and the ability to travel in vents."
+	menu_description = "Fast spider able to see enemies through walls, send messages to the nest and the ability to travel in vents."
 	innate_actions = list(/datum/action/cooldown/mob_cooldown/command_spiders/communication_spiders)
 
 /mob/living/basic/spider/giant/scout/Initialize(mapload)
