@@ -4429,6 +4429,7 @@
 #include "code\modules\mob\living\basic\guardian\guardian_types\dextrous.dm"
 #include "code\modules\mob\living\basic\guardian\guardian_types\explosive.dm"
 #include "code\modules\mob\living\basic\guardian\guardian_types\gaseous.dm"
+#include "code\modules\mob\living\basic\guardian\guardian_types\gravitokinetic.dm"
 #include "code\modules\mob\living\basic\heretic\ash_spirit.dm"
 #include "code\modules\mob\living\basic\heretic\fire_shark.dm"
 #include "code\modules\mob\living\basic\heretic\flesh_stalker.dm"
