@@ -17,17 +17,15 @@ export const ArtifactForm = (props, context) => {
     <Window width={480} height={400} title={'Analysis Form'} theme={'paper'}>
       <Window.Content>
         <Section title="Origin">
-          {Object.keys(allorigins).map((key) => (
+          {allorigins.map((key) => (
             <Button
               key={key}
-              icon={
-                chosenorigin === allorigins[key] ? 'check-square-o' : 'square-o'
-              }
+              icon={chosenorigin === key ? 'check-square-o' : 'square-o'}
               content={key}
-              selected={chosenorigin === allorigins[key]}
+              selected={chosenorigin === key}
               onClick={() =>
                 act('origin', {
-                  origin: allorigins[key],
+                  origin: key,
                 })
               }
             />
@@ -49,7 +47,7 @@ export const ArtifactForm = (props, context) => {
           ))}
         </Section>
         <Section title="Triggers">
-          {Object.keys(alltriggers).map((trig) => (
+          {alltriggers.map((trig) => (
             <Button
               key={trig}
               icon={
