@@ -630,7 +630,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 	// Adds the upgrade from the disk and then deletes the disk
 	upgrade_flags |= rpd_disk.upgrade_flags
-	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
 	balloon_alert(user, "upgrade installed")
 	qdel(rpd_disk)
 
