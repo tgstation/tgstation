@@ -28177,6 +28177,7 @@
 	dir = 2
 	},
 /obj/effect/turf_decal/tile/red/anticorner,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "hvc" = (
@@ -38253,6 +38254,7 @@
 	name = "Security Mech Garage Door Controls"
 	},
 /obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "kcy" = (

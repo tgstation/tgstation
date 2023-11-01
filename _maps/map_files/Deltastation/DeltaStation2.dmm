@@ -1296,7 +1296,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "apu" = (
 /obj/machinery/holopad,
@@ -35049,7 +35049,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "iHq" = (
 /obj/effect/turf_decal/trimline/neutral/warning{
