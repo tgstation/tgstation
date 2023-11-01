@@ -10,7 +10,7 @@
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
 	. = ..()
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
-	if(!. || !reaction_chamber.emptying || reagents.is_reacting == TRUE)
+	if(!. || !reaction_chamber.emptying || reagents.is_reacting)
 		return FALSE
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)

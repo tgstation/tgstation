@@ -106,12 +106,12 @@
 		if(supplier.can_give(amount, reagent, net))
 			valid_suppliers += supplier
 	// Need to ask for each in turn very carefully, making sure we get the total volume. This is to avoid a division that would always round down and become 0
-	var/targetVolume = reagents.total_volume + amount
-	var/suppliersLeft = valid_suppliers.len
+	var/target_volume = reagents.total_volume + amount
+	var/suppliers_left = valid_suppliers.len
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
-		var/currentRequest = (targetVolume - reagents.total_volume) / suppliersLeft
-		give.transfer_to(src, currentRequest, reagent, net)
-		suppliersLeft--
+		var/current_request = (target_volume - reagents.total_volume) / suppliers_left
+		give.transfer_to(src, current_request, reagent, net)
+		suppliers_left--
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
