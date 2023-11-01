@@ -5700,6 +5700,7 @@
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\_base_subtype_helpers.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\bomb.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\bonk.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_components\borger.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\cell.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\forcegen.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\gun.dm"
