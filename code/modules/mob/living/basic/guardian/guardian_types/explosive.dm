@@ -42,7 +42,7 @@
 	var/static/list/boom_signals = list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 
 /datum/action/cooldown/mob_cooldown/explosive_booby_trap/PreActivate(atom/target)
-	if (!isobj(attack_target))
+	if (!isobj(target))
 		return FALSE
 	if (!owner.Adjacent(target))
 		return FALSE
