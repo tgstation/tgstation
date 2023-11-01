@@ -385,6 +385,10 @@
 	demand_connects = NORTH
 	supply_connects = SOUTH
 
+/datum/component/plumbing/iv_drip
+	demand_connects = SOUTH
+	supply_connects = NORTH
+
 /datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
 	return
 
