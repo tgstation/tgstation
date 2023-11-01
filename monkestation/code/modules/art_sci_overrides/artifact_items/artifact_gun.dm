@@ -27,7 +27,7 @@
 
 /obj/item/gun/magic/artifact
 	icon = 'icons/obj/artifacts.dmi'
-	icon_state = "narnar-item1"
+	icon_state = "narnar-item-1"
 	resistance_flags = LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	icon = 'icons/obj/artifacts.dmi'
 	inhand_icon_state = "plasmashiv"
