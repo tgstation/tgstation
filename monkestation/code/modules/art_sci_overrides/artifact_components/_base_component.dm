@@ -162,25 +162,25 @@
 	if(active) //dont activate activated objects
 		return FALSE
 
-	if(activation_sound && !nosound)
+	if(activation_sound && !silent)
 		playsound(holder, activation_sound, 75, TRUE)
-	if(activation_message && !nosound)
+	if(activation_message && !silent)
 		holder.visible_message(span_notice("[holder] [activation_message]"))
 	active = TRUE
 	holder.add_overlay(act_effect)
-	effect_activate(nosound)
+	effect_activate(silent)
 	return TRUE
 
 /datum/component/artifact/proc/artifact_deactivate(silent)
 	if(!active)
 		return
-	if(deactivation_sound && !nosound)
+	if(deactivation_sound && !silent)
 		playsound(holder, deactivation_sound, 75, TRUE)
-	if(deactivation_message && !nosound)
+	if(deactivation_message && !silent)
 		holder.visible_message(span_notice("[holder] [deactivation_message]"))
 	active = FALSE
 	holder.cut_overlay(act_effect)
-	effect_deactivate(nosound)
+	effect_deactivate(silent)
 
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
 	if(!stimuli || active) // if called without a stimuli dont bother, if active we dont wanna reactivate

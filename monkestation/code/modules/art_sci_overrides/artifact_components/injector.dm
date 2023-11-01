@@ -16,8 +16,8 @@
 	reagent_amount = rand(10,25)
 	max_reagents = rand(1,2)
 	var/static/list/poisons_and_medicines = list()
-	if(!poisons.len) //mostly copied from reagents.dm but oh well
-		for(var/datum/reagent/reagent as anything in (subtypesof(/datum/reagent/toxin) + subtypesof(/datum/reagent/medicine))
+	if(!poisons_and_medicines.len) //mostly copied from reagents.dm but oh well
+		for(var/datum/reagent/reagent as anything in (subtypesof(/datum/reagent/toxin) + subtypesof(/datum/reagent/medicine)))
 			if(initial(reagent.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
 				poisons_and_medicines += reagent
 	switch(artifact_origin.type_name)
