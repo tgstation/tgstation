@@ -1372,7 +1372,7 @@
 		ph = CHEMICAL_NORMAL_PH
 		return .
 	//Keep limited // should really be defines
-	ph = clamp(total_ph/total_volume, 0, 14)
+	ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
 
 /**
