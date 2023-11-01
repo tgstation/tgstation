@@ -79,6 +79,13 @@ Difficulty: Medium
 
 	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
+	dash = null
+	kinetic_accelerator = null
+	dash_attack = null
+	transform_weapon = null
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	if(client)
 		return
