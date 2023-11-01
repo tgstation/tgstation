@@ -3,9 +3,6 @@
 #define GUARDIAN_THEME_CARP "carp"
 #define GUARDIAN_THEME_MINER "miner"
 
-#define GUARDIAN_COLOR_LAYER 1
-#define GUARDIAN_TOTAL_LAYERS 1
-
 #define GUARDIAN_ASSASSIN "assassin"
 #define GUARDIAN_CHARGER "charger"
 #define GUARDIAN_DEXTROUS "dextrous"
@@ -24,3 +21,7 @@ GLOBAL_LIST_INIT(guardian_themes, list(
 	GUARDIAN_THEME_CARP = new /datum/guardian_fluff/carp,
 	GUARDIAN_THEME_MINER = new /datum/guardian_fluff/miner,
 ))
+
+// todo: delete these
+#define GUARDIAN_COLOR_LAYER 1
+#define GUARDIAN_TOTAL_LAYERS 1

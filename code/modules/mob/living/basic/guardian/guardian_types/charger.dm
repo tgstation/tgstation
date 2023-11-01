@@ -2,6 +2,7 @@
  * Very fast, has a charging attack, and most importantly can be ridden like a horse.
  */
 /mob/living/basic/guardian/charger
+	guardian_type = GUARDIAN_CHARGER
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = -0.5

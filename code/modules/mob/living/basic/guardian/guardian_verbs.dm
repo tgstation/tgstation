@@ -14,9 +14,9 @@
 	if (!is_deployed() || isnull(summoner) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
 		return FALSE
 	new /obj/effect/temp_visual/guardian/phase/out(loc)
+	recall_effects()
 	forceMove(summoner)
 	COOLDOWN_START(src, manifest_cooldown, 1 SECONDS)
-	recall_effects()
 	return TRUE
 
 /// Do something when we appear.

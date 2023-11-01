@@ -11,15 +11,13 @@
 	creator_name = "Dextrous"
 	creator_desc = "Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item."
 	creator_icon = "dextrous"
-	dextrous = TRUE
 	hud_type = /datum/hud/dextrous/guardian
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself
 
 /mob/living/simple_animal/hostile/guardian/dextrous/death(gibbed)
-	. = ..()
-	if(internal_storage)
-		dropItemToGround(internal_storage)
+	dropItemToGround(internal_storage)
+	return ..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
 	. = ..()
