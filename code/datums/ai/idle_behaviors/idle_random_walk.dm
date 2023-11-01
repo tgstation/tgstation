@@ -25,6 +25,20 @@
 		return
 	return ..()
 
+/// Only walk if we are not on the target's location
+/datum/idle_behavior/idle_random_walk/not_while_on_target
+	///What is the spot we have to stand on?
+	var/target_key
+
+/datum/idle_behavior/idle_random_walk/not_while_on_target/perform_idle_behavior(seconds_per_tick, datum/ai_controller/controller)
+	var/atom/target = controller.blackboard[target_key]
+
+	//Don't move, if we are are already standing on it
+	if(!QDELETED(target) && ((isturf(target) && controller.pawn.loc == target) || (target.loc == controller.pawn.loc)))
+		return
+
+	return ..()
+
 /// walk randomly however stick near a target
 /datum/idle_behavior/walk_near_target
 	/// chance to walk
