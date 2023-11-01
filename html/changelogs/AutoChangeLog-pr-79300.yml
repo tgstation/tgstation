@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Non-human mobs can hallucinate their mothers without causing a runtime error"
