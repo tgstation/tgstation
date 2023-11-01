@@ -21,8 +21,10 @@
 #define ARTIFACT_SETUP(X,subsystem) ##X/Initialize(mapload, var/forced_origin = null){\
 	. = ..();\
 	START_PROCESSING(subsystem, src);\
-	assoc_comp = AddComponent(assoc_comp, forced_origin);\
-	RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(on_delete));\
+	if(assoc_comp) {\
+		assoc_comp = AddComponent(assoc_comp, forced_origin);\
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(on_delete));\
+	}\
 } \
 ##X/proc/on_delete(atom/source){\
 	SIGNAL_HANDLER;\

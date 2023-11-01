@@ -1,6 +1,7 @@
 #define BASE_MAX_ACTIVATORS 2
 
 /datum/component/artifact
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///object related to this datum for spawning
 	var/obj/associated_object
 	///actual specific object for this instance
