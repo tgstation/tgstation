@@ -1,8 +1,10 @@
-// Dagoth Smite! (ported from Biblefart code) - Dexee
-/datum/smite/dagothsmite
-	name = "Dagoth Smite"
+// Dagoth KILL Smite! (ported from Biblefart code) - Dexee
+// tweaked the name of this to make it extremely apparent that someone's gonna get fucked up. completely and utterly apparent. will be making a separate funny smite that doesn't kill
 
-/datum/smite/dagothsmite/effect(client/user, mob/living/target)
+/datum/smite/dagothkillsmite
+	name = "Dagoth KILL Smite"
+
+/datum/smite/dagothkillsmite/effect(client/user, mob/living/target)
 	. = ..()
 	if (!iscarbon(target))
 		to_chat(user, span_warning("This must be used on a carbon mob."), confidential = TRUE)
