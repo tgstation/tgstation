@@ -38,9 +38,9 @@
 	GLOB.directory[ckey] = src
 
 /datum/client_interface/Destroy(force, ...)
-	GLOB.directory -= src
+	. = ..()
 	mob = null
-	return ..()
+	GLOB.directory -= src
 
 /datum/client_interface/proc/IsByondMember()
 	return FALSE
