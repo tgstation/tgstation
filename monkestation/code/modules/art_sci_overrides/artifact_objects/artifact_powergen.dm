@@ -1,6 +1,6 @@
 #define MAX_POSSIBLE_GEN 800 MW
 #define SIDEEFFECT_THRESHOLD 100 KW
-#define SHITFUCK_THRESHOLD 400 KW
+#define SHITFUCK_THRESHOLD 600 MW
 
 /obj/machinery/power/generator_artifact
 	icon = 'icons/obj/artifacts.dmi'
