@@ -264,14 +264,8 @@
 	. = ..()
 	add_gulag_minerals(expanded_gulag_minerals)
 
-/obj/item/boulder/stubby
-	name = "stubby boulder"
-	desc = "A stange, dusty boulder."
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
-	durability = 1
-
 /obj/item/boulder/shabby
 	name = "shabby boulder"
 	desc = "A bizzare, twisted boulder. Wait, wait no, it's just a rock."
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 	durability = 1
