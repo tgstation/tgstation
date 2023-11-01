@@ -384,7 +384,7 @@
 /obj/item/soulstone/proc/init_shade(mob/living/carbon/human/victim, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = victim
-	victim.stop_sound_channel(CHANNEL_HEARTBEAT)
+	victim.stop_sound_channel(SOUND_CHANNEL_HEARTBEAT)
 	var/mob/living/simple_animal/shade/soulstone_spirit = new /mob/living/simple_animal/shade(src)
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [victim.real_name]"

@@ -734,7 +734,7 @@
 			ADD_TRAIT(src, TRAIT_NODROP, "psycho")
 			. += span_hypnophrase("Look at that subtle coloring... The tasteful thickness of it. Oh my God, it even has a watermark...")
 			var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
-			user.playsound_local(get_turf(src), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+			user.playsound_local(get_turf(src), slowbeat, 40, 0, channel = SOUND_CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			if(isliving(user))
 				var/mob/living/living_user = user
 				living_user.adjust_jitter(10 SECONDS)
@@ -742,7 +742,7 @@
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
 
 /obj/item/card/id/proc/drop_card(mob/user)
-	user.stop_sound_channel(CHANNEL_HEARTBEAT)
+	user.stop_sound_channel(SOUND_CHANNEL_HEARTBEAT)
 	REMOVE_TRAIT(src, TRAIT_NODROP, "psycho")
 	if(user.is_holding(src))
 		user.dropItemToGround(src)

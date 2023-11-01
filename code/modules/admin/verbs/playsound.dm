@@ -18,7 +18,7 @@
 	var/sound/admin_sound = new()
 	admin_sound.file = S
 	admin_sound.priority = 250
-	admin_sound.channel = CHANNEL_ADMIN
+	admin_sound.channel = SOUND_CHANNEL_ADMIN
 	admin_sound.frequency = freq
 	admin_sound.wait = 1
 	admin_sound.repeat = FALSE

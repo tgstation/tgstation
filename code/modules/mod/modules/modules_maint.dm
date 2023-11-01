@@ -105,7 +105,7 @@
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
+		mod.wearer.playsound_local(get_turf(src), null, 50, channel = SOUND_CHANNEL_JUKEBOX, sound_to_use = sound(selection.song_path), use_reverb = FALSE)
 
 /obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -113,10 +113,10 @@
 		return
 	QDEL_NULL(rave_screen)
 	if(selection)
-		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
+		mod.wearer.stop_sound_channel(SOUND_CHANNEL_JUKEBOX)
 		if(deleting)
 			return
-		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
+		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = SOUND_CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()

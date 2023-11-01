@@ -25,7 +25,7 @@
 			handle_brain_damage(seconds_per_tick, times_fired)
 
 	if(stat == DEAD)
-		stop_sound_channel(CHANNEL_HEARTBEAT)
+		stop_sound_channel(SOUND_CHANNEL_HEARTBEAT)
 	else
 
 		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
