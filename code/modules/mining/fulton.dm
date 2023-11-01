@@ -25,7 +25,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/obj/structure/extraction_point/extraction_point as anything in GLOB.total_extraction_beacons)
+	for(var/datum/weakref/point_ref as anything in GLOB.total_extraction_beacons)
+		var/obj/structure/extraction_point/extraction_point = point_ref.resolve()
+		if(isnull(extraction_point))
+			GLOB.total_extraction_beacons.Remove(point_ref)
 		if(extraction_point.beacon_network in beacon_networks)
 			possible_beacons += extraction_point
 	if(!length(possible_beacons))
@@ -39,12 +42,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	beacon_ref = WEAKREF(chosen_beacon)
 	to_chat(user, span_notice("You link the extraction pack to the beacon system."))
 
-/obj/item/extraction_pack/afterattack(atom/movable/thing, mob/living/carbon/human/user, flag, params)
+/obj/item/extraction_pack/afterattack(atom/movable/thing, mob/living/carbon/human/user, proximity_flag, params)
 	. = ..()
 	. |= AFTERATTACK_PROCESSED_ITEM
 
 	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
-	if(isnull(beacon) || !(beacon in GLOB.total_extraction_beacons))
+	if(isnull(beacon))
 		balloon_alert(user, "not linked")
 		return
 
@@ -54,7 +57,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			balloon_alert(user, "not outdoors")
 			return
 
-	if(!flag || !istype(thing))
+	if(!proximity_flag || !istype(thing))
 		return
 
 	if(!safe_for_living_creatures && check_for_living_mobs(thing))
@@ -68,6 +71,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return
 
 	balloon_alert_to_viewers(user, "attaching...")
+	playsound(thing, 'sound/items/zip.ogg', 50, vary = TRUE)
+	if(isliving(thing))
+		var/mob/living/creature = thing
+		if(creature.mind)
+			to_chat(thing, span_userdanger("You are being extracted! Stand still to proceed."))
 
 	if(!do_after(user, 5 SECONDS, target = thing))
 		return
@@ -78,7 +86,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	uses_left--
 
 	if(uses_left <= 0)
-		user.transferItemToLoc(src, A, TRUE)
+		user.transferItemToLoc(src, thing, TRUE)
 
 	var/mutable_appearance/balloon
 	var/mutable_appearance/balloon2
@@ -86,7 +94,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	if(isliving(thing))
 		var/mob/living/creature = thing
-		to_chat(creature, span_userdanger("You are being extracted!"))
 		creature.Paralyze(320) // Keep them from moving during the duration of the extraction
 		if(creature.buckled)
 			creature.buckled.unbuckle_mob(creature, TRUE) // Unbuckle them to prevent anchoring problems
@@ -190,12 +197,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/structure/extraction_point/Initialize(mapload)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
-	GLOB.total_extraction_beacons += src
+	GLOB.total_extraction_beacons.Add(WEAKREF(src))
 	update_appearance(UPDATE_OVERLAYS)
-
-/obj/structure/extraction_point/Destroy()
-	GLOB.total_extraction_beacons -= src
-	return ..()
 
 /obj/structure/extraction_point/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
