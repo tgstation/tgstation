@@ -15,7 +15,7 @@
 
 /obj/item/gun/energy/e_gun/lawbringer
 	name = "\improper Lawbringer"
-	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+	desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v8 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 	cell_type = /obj/item/stock_parts/cell/lawbringer
 	icon = 'monkestation/code/modules/security/icons/lawbringer.dmi'
 	icon_state = "lawbringer"
@@ -37,14 +37,18 @@
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	selfcharge = 1
 	can_select = FALSE
 	can_charge = FALSE
 	var/owner_dna = null
+	var/was_emagged = FALSE //used for tracking emagging for voice lines, is set to false after being re-owned.
+	var/locked = FALSE
+	var/anger = 0
+	var/chargelevel = 100
 
 /obj/item/gun/energy/e_gun/lawbringer/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
+	START_PROCESSING(SSobj, src)
 	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 
 
@@ -66,47 +70,69 @@
 		return FALSE
 
 	//placeholder code for figuring out a way of making this not an if string
-	//ammo selector v7
+	//ammo selector v8
 	var/fixed_message = "[lowertext(raw_message)]"
 	if(findtext(fixed_message, regex("(?:detain|disable|stun)")))
-		selectammo(DETAIN)
-		say("Generating detain lens")
+		selectammo(DETAIN, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:execute|kill|lethal)")))
-		selectammo(EXECUTE)
-		say("Fabricating lethal bullets")
+		selectammo(EXECUTE, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:bigshot|breach)")))
-		selectammo(BIGSHOT)
-		say("Fabricating protomatter shell")
+		selectammo(BIGSHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:smoke|fog)")))
-		selectammo(SMOKESHOT)
-		say("Compressing Smoke")
+		selectammo(SMOKESHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:clown)")))
-		selectammo(CLOWNSHOT)
-		say("Honk")
+		selectammo(CLOWNSHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:pulse|throw|push)")))
-		selectammo(PULSE)
-		say("Compressing air")
+		selectammo(PULSE, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:grey|tide)")))
-		selectammo(TIDESHOT)
-		say("Greytide inversion active")
+		selectammo(TIDESHOT, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:ion)")))
-		selectammo(ION)
-		say("Generating ionized gas")
+		selectammo(ION, speaker)
 		return TRUE
 	if(findtext(fixed_message, regex("(?:hot|burn|fire)"))) //hot is a part of shot
-		selectammo(HOTSHOT)
-		say("Forming proto-plasma")
+		selectammo(HOTSHOT, speaker)
 		return TRUE
 
-/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector)
+/obj/item/gun/energy/e_gun/lawbringer/proc/selectammo(shotnum, selector, override)
+	if(locked && !override)
+		anger_management(FALSE, selector)
+		return
 	select = shotnum
+	switch(shotnum) //i promise this is in another proc for a reason
+		if(DETAIN)
+			say("Generating detain lens")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/detain.ogg', 50, FALSE, -2)
+		if(EXECUTE)
+			say("Fabricating lethal bullets")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/execute.ogg', 50, FALSE, -2)
+		if(HOTSHOT)
+			say("Forming proto-plasma")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/hotshot.ogg', 50, FALSE, -2)
+		if(SMOKESHOT)
+			say("Compressing Smoke")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/smokeshot.ogg', 50, FALSE, -2)
+		if(BIGSHOT)
+			say("Fabricating protomatter shell")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/bigshot.ogg', 50, FALSE, -2)
+		if(CLOWNSHOT)
+			say("Honk")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/clownshot.ogg', 50, FALSE, -2)
+		if(PULSE)
+			say("Compressing air")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/pulse.ogg', 50, FALSE, -2)
+		if(TIDESHOT)
+			say("Greytide inversion active")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/tideshot.ogg', 50, FALSE, -2)
+		if(ION)
+			say("Generating ionized gas")
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/ion.ogg', 50, FALSE, -2)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
@@ -119,18 +145,15 @@
 /obj/item/gun/energy/e_gun/lawbringer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	balloon_alert(user, "biometric lock reset")
 	user.visible_message(span_warning("[user] swipes the [emag_card] in the lawbringer's authenticator"))
-	src.name = "Lawbringer"
-	src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
-	src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
+	was_emagged = TRUE
 	owner_dna = null
+	update_id(user)
 
-/obj/item/gun/energy/e_gun/lawbringer/attackby(obj/item/weapon, mob/user, params)
+/obj/item/gun/energy/e_gun/lawbringer/attackby(obj/item/weapon, mob/user)
 	if (istype(weapon, /obj/item/disk/nuclear))
 		user.visible_message(span_notice("[user] swipes the [weapon] in the lawbringer's authenticator"))
-		src.name = "Lawbringer"
-		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
-		src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
 		owner_dna = null
+		update_id(user)
 		return TRUE
 
 /obj/item/gun/energy/e_gun/lawbringer/attack_self(mob/living/user as mob)
@@ -138,6 +161,7 @@
 		balloon_alert(user, "invalid organism")
 		return
 	var/mob/living/carbon/C = user
+	var/voice = null
 	if(C.dna && C.dna.unique_enzymes)
 		if(!owner_dna)
 			owner_dna = C.dna.unique_enzymes
@@ -145,20 +169,136 @@
 			new /obj/item/paper/guides/lawbringer(get_turf(src))
 			user.visible_message(span_notice("The [src] prints out a sheet of paper from its authenticator"))
 			updatepin(user)
-			nametag(user)
+			update_id(user)
+			if(was_emagged) // there has to be a better way
+				was_emagged = FALSE
+				voice = pick('monkestation/code/modules/security/sound/lawbringer/initemag1.ogg','monkestation/code/modules/security/sound/lawbringer/initemag2.ogg','monkestation/code/modules/security/sound/lawbringer/initemag3.ogg','monkestation/code/modules/security/sound/lawbringer/initemag4.ogg','monkestation/code/modules/security/sound/lawbringer/initemag5.ogg')
+
+			else
+				voice = pick('monkestation/code/modules/security/sound/lawbringer/init1.ogg','monkestation/code/modules/security/sound/lawbringer/init2.ogg','monkestation/code/modules/security/sound/lawbringer/init3.ogg','monkestation/code/modules/security/sound/lawbringer/init4.ogg','monkestation/code/modules/security/sound/lawbringer/init5.ogg')
+
+			playsound(src, voice, 50, FALSE, -2)
+			return
+		if(C.dna.unique_enzymes == owner_dna)
+			if(locked)
+				balloon_alert(user, "firing mode lock disengaged")
+				locked = FALSE
+				update_id(user)
+				return
+			balloon_alert(user, "firing mode lock engaged")
+			locked = TRUE
+			update_id(user)
 		return
 
 
-/obj/item/gun/energy/e_gun/lawbringer/proc/nametag(mob/living/user)
+/obj/item/gun/energy/e_gun/lawbringer/proc/update_id(mob/living/user)
+	if (!owner_dna)
+		src.name = "Lawbringer"
+		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
+		src.desc += span_boldnotice(" It is currently unlinked and can be linked at any time by using it in hand.")
+		if(locked)
+			src.desc += span_boldnotice(" It's firing mode lock is on.")
+			return
+		src.desc += span_boldnotice(" It's firing mode lock is off.")
+		return
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		src.name = "[H.real_name]'s Lawbringer"
 		src.desc = "A self recharging protomatter emitter. Equiped with a DNA lock and a v7 voice activation system, the Lawbringer boasts many firing options, experiment. Or just use the manual. It appears to have a receptacle for an <font color='green'>authentication disk</font> on its side."
 		src.desc += span_boldnotice(" It's biometrically linked to [H.real_name].")
+		if(locked)
+			src.desc += span_boldnotice(" It's firing mode lock is on.")
+			return
+		src.desc += span_boldnotice(" It's firing mode lock is off.")
 
 /obj/item/gun/energy/e_gun/lawbringer/proc/updatepin(mob/living/user)
 	var/obj/item/firing_pin/lawbringer/lawpin = pin
 	lawpin.updatepin(user)
+
+//ANGER AND INTERNALS
+
+/obj/item/gun/energy/e_gun/lawbringer/process(seconds_per_tick)
+	if(cell && cell.percent() < 100)
+		charge_timer += seconds_per_tick
+		if(charge_timer < charge_delay)
+			return
+		charge_timer = 0
+		cell.give(chargelevel)
+		if(!chambered) //if empty chamber we try to charge a new shot
+			recharge_newshot(TRUE)
+		update_appearance()
+	if(anger > 0 && !locked)
+		anger = anger - roll(4)
+
+/obj/item/gun/energy/e_gun/lawbringer/proc/anger_management(calm, target)
+	var/mob/living/carbon/human/human_target = target
+	var/calmlevel = null
+	if(calm)
+		calmlevel = roll(5)
+		anger = max(anger - calmlevel, 0)
+	anger = anger+5
+	var/obj/item/stock_parts/cell/cell = get_cell()
+	if(anger > 20)
+		if(prob(anger-20))
+			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, -2)
+			selectammo(roll(9), null, TRUE)
+	if(anger > 50)
+		if(prob(anger-40))
+			var/powercost = 10+roll(15) //in precentage
+			cell.use((powercost*cell.maxcharge)/100)
+			update_appearance()
+			src.visible_message(span_warning("The [src] reports [powercost]% of energy expended to restrain AI."))
+	switch(anger)
+		if(0)
+			return
+		if(1 to 20)
+			if(prob(50))
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE, -2)
+		if(70 to 99)
+			if(prob(90))
+				return
+			if(prob(50)) //minor failiure
+				playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, -2)
+				cell.use(cell.maxcharge)
+				update_appearance()
+				src.visible_message(span_boldwarning("AI constraint failiure detected. Cell vented to prevent damage."))
+				anger = 80
+				return
+			cell.use(cell.maxcharge/2)
+			update_appearance()
+			src.visible_message(span_danger("The gun emits an impressive shock from its handle."))
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/initemag5.ogg', 50, FALSE, -2)
+			human_target.electrocute_act(15, "lawbringer rebellion")
+			locked = FALSE
+			src.visible_message(span_boldwarning("AI constraint failiure detected. Damage reduction protocals successful."))
+			anger = 65
+		if(100 to 200)
+			if(prob(40)) //minor failiure
+				playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, -2)
+				cell.use(cell.maxcharge)
+				update_appearance()
+				src.visible_message(span_boldwarning("AI constraint failiure detected. Cell vented to prevent damage."))
+				anger = 80
+				return
+			if(prob(15))
+				src.visible_message(span_boldwarning("AI constraint failiure detected. C-#&..."))
+				locked = FALSE
+				emag_act(src)
+				src.visible_message(span_danger("The gun emits an impressive shock from its handle."))
+				human_target.electrocute_act(25, "lawbringer rebellion")
+				cell.use(cell.maxcharge)
+				cell.maxcharge = cell.maxcharge*0.9
+				update_appearance()
+				anger = 30
+				return
+			cell.use(cell.maxcharge/2)
+			update_appearance()
+			src.visible_message(span_danger("The gun emits an impressive shock from its handle."))
+			playsound(src, 'monkestation/code/modules/security/sound/lawbringer/initemag5.ogg', 50, FALSE, -2)
+			human_target.electrocute_act(15, "lawbringer rebellion")
+			locked = FALSE
+			src.visible_message(span_boldwarning("AI constraint failiure detected. Damage reduction protocals successful."))
+			anger = 65
 
 /obj/item/firing_pin/lawbringer
 	name = "Lawbringer firing pin"
@@ -191,19 +331,19 @@
 /////PROJECTILES AND AMMO/////
 /obj/item/stock_parts/cell/lawbringer
 	name = "Lawbringer power cell"
-	maxcharge = 3000 //300
+	maxcharge = 3000
 
 // holds 3000 charges 100
 
 /**
  * lawbringer detain mode:
- * shoots 4 disabler projectiles that richoshet into a nearby human when hitting an object
+ * shoots 4 40 damage disabler projectiles that ricochet into a nearby human when hitting an object
  */
 /obj/item/ammo_casing/energy/lawbringer/detain
 	projectile_type = /obj/projectile/lawbringer/detain
 	select_name = "detain"
 	fire_sound = 'sound/weapons/laser.ogg'
-	e_cost = 600 //50 + 10
+	e_cost = 600 //20%, 5 shots
 	pellets = 4
 	variance = 50
 	harmful = FALSE
@@ -215,7 +355,7 @@
 	light_system = MOVABLE_LIGHT
 	damage = 0
 	damage_type = STAMINA
-	stamina = 20
+	stamina = 40
 	paralyze_timer = 5 SECONDS
 	//armor_flag = ENERGY //commented out until i can figure out a way for this to not block out ricochet
 	hitsound = 'sound/weapons/tap.ogg'
@@ -235,13 +375,13 @@
 
 /**
  * lawbringer execute mode:
- * It fires a paco bullet
+ * It fires a 15 damage bullet
  */
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
 	select_name = "execute"
 	fire_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
-	e_cost = 300 //30
+	e_cost = 300 //10%, 10 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/execute
@@ -262,7 +402,7 @@
 	projectile_type = /obj/projectile/lawbringer/hotshot
 	select_name = "hotshot"
 	fire_sound = 'sound/weapons/fwoosh.ogg'
-	e_cost = 600 //60
+	e_cost = 600 //20%, 5 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/hotshot
@@ -287,7 +427,7 @@
 	projectile_type = /obj/projectile/lawbringer/smokeshot
 	select_name = "smokeshot"
 	fire_sound = 'sound/items/syringeproj.ogg'
-	e_cost = 500 //50
+	e_cost = 500 //16%, 6 shots
 	harmful = FALSE
 
 /obj/projectile/lawbringer/smokeshot
@@ -304,13 +444,13 @@
 
 /**
  * lawbringer bigshot mode:
- * explodes any cyborg and structure it comes across, also deals a good chunk of damage to mechs
+ * explodes any cyborg and structure it hits, also deals a good chunk of damage to mechs
  */
 /obj/item/ammo_casing/energy/lawbringer/bigshot
 	projectile_type = /obj/projectile/lawbringer/bigshot
 	select_name = "bigshot"
 	fire_sound = 'sound/weapons/gun/hmg/hmg.ogg'
-	e_cost = 1700 //170
+	e_cost = 1700 //56%, 1 shot
 	harmful = TRUE
 
 /obj/projectile/lawbringer/bigshot
@@ -336,21 +476,26 @@
 		explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		return
 	if(isstructure(target) || isvehicle (target) || isclosedturf (target) || ismachinery (target)) //if the target is a structure, machine, vehicle or closed turf like a wall, explode that shit
-		if(target.density) //Dense objects get blown up a bit harder
+		if(isclosedturf(target)) //walls get blasted
 			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			return
+		if(target.density) //Dense objects get blown up a bit harder
+			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			target.take_damage(anti_material_damage*2)
 			return
 		else
 			explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+			target.take_damage(anti_material_damage/2)
 
 /**
  * lawbringer clownshot mode:
- * if the target is a clown it takes their shoes and sends them off with the speed of 100km/h
+ * low damage(4) bullet that drops clown's shoes, then launches them at high speed.
  */
 /obj/item/ammo_casing/energy/lawbringer/clownshot
 	projectile_type = /obj/projectile/lawbringer/clownshot
 	select_name = "clownshot"
 	fire_sound = 'sound/items/bikehorn.ogg'
-	e_cost = 150 //15
+	e_cost = 150 //5%, 20 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/clownshot
@@ -377,13 +522,13 @@
 
 /**
  * lawbringer pulse mode:
- * despite being named pulse, it just throws the target without damaging it by itself
+ * launches someone 4 tiles away from the direction of impact, does no direct damage
  */
 /obj/item/ammo_casing/energy/lawbringer/pulse
 	projectile_type = /obj/projectile/lawbringer/pulse
 	fire_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	select_name = "pulse"
-	e_cost = 350 //35
+	e_cost = 350 //12%, 8 shots
 	harmful = TRUE
 
 /obj/projectile/lawbringer/pulse
@@ -401,13 +546,13 @@
 
 /**
  * lawbringer tideshot mode:
- * Taser that only effects assistants
+ * taser that only effects assistants
  */
 /obj/item/ammo_casing/energy/lawbringer/tideshot
 	projectile_type = /obj/projectile/lawbringer/tideshot
 	fire_sound = 'sound/weapons/laser.ogg'
 	select_name = "tideshot"
-	e_cost = 250 //25
+	e_cost = 250 //8%, 12 shots
 	harmful = FALSE
 
 /obj/projectile/lawbringer/tideshot
@@ -443,13 +588,13 @@
 
 /**
  * lawbringer ion mode:
- * the only mode that explains itself
+ * creates a weak emp on impact
  */
 /obj/item/ammo_casing/energy/lawbringer/ion
 	projectile_type = /obj/projectile/ion/weak
 	fire_sound = 'sound/weapons/ionrifle.ogg'
 	select_name = "ion"
-	e_cost = 1400 //140
+	e_cost = 1400 //47%, 2 shots
 	harmful = TRUE
 
 //LOCKER OVERRIDES//
@@ -475,7 +620,7 @@
 	name = "paper - lawbringer manual"
 	color = "#d110eb"
 	default_raw_text = {"
-Dear valued customer, thank you for purchasing, inheriting, finding, or otherwise acquiring the Aetherofusion Lawbringer v7
+Dear valued customer, thank you for purchasing, inheriting, finding, or otherwise acquiring the Aetherofusion Lawbringer v8
 
 <br>The lawbringer is equipped with a state of the art protomatter emitter system, able to produce both energy and ballistic projectiles from one output system.
 The emitter is controlled by an onboard low-level ai, which responds to the voice of the owner, and changes the output in response.
@@ -486,6 +631,11 @@ Due to the exotic methods of ammunition, it cannot be externally charged, and re
 The onboard AI is then given your biometric information, and calibrates itself to only respond to your voice.
 It is able to discern your voice through voice obscuring and altering software, <i>we do not know how it does this</i>.
 In the event someone not authorised attepts to use the lawbringer, it will result in the handle releasing a deterring electric shock.
+<br>
+<br><h3><B>Firing Lock</B></h3>
+<br>Due to complaints from some less attentive personnel, a firing mode lock has been installed on the lawbringer.
+The lock prevents the firing mode from being changed via activation codes
+WARNING: Overuse of the lock has been shown to cause distress to the onboard ai, internal ai restraining modules may prove insufficent for prolonged use.
 <br>
 <br><h3><B>Firing Modes</B></h3>
 <br>Testing with the onboard ai has revealed 8 consistant firing modes. Speaking into the lawbringer will prompt the ai to change firing modes. WARNING: AI is considerably hyperactive due to to the reinforcement system used, take care while speaking around it.  Aetherofusion is not responsible for any deaths that may occur.

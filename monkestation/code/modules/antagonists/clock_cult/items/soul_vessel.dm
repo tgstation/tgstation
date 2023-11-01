@@ -11,6 +11,8 @@
 	new_mob_message = span_notice("The Soul Vessel starts making a steady ticking sound.")
 	dead_message = span_deadsay("It's gears are not moving.")
 	recharge_message = span_warning("The gears of the Soul Vessel are already spinning.")
+	///Should we add the clock cultist antag datum on being entered by a player
+	var/give_clock_cultist = TRUE
 
 /obj/item/mmi/posibrain/soul_vessel/Initialize(mapload, autoping)
 	. = ..()
@@ -18,3 +20,16 @@
 	radio.set_on(FALSE)
 	if(!brainmob) //we might be forcing someone into it right away
 		set_brainmob(new /mob/living/brain(src))
+
+/obj/item/mmi/posibrain/soul_vessel/transfer_personality(mob/candidate)
+	. = ..()
+	if(!.)
+		return
+
+	if(give_clock_cultist)
+		brainmob?.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
+
+/obj/item/mmi/posibrain/soul_vessel/activate(mob/user)
+	if(is_banned_from(user.ckey, ROLE_CLOCK_CULTIST))
+		return
+	. = ..()

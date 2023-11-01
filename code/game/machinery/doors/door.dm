@@ -299,6 +299,8 @@
 	if(istype(tool, /obj/item/crowbar))
 		var/obj/item/crowbar/crowbar = tool
 		forced_open = crowbar.force_opens
+	if(istype(tool, /obj/item/slasher_machette))
+		forced_open = TRUE
 	try_to_crowbar(tool, user, forced_open)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

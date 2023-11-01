@@ -12,7 +12,7 @@
 
 
 /obj/structure/destructible/clockwork/sigil/vitality/can_affect(mob/living/affected_mob)
-	if(affected_mob.stat == DEAD)
+	if(affected_mob.stat == DEAD && !IS_CLOCK(affected_mob))
 		return FALSE
 
 	if(HAS_TRAIT(affected_mob, TRAIT_NODEATH) || HAS_TRAIT(affected_mob, TRAIT_NO_SOUL))
@@ -30,6 +30,8 @@
 		return FALSE
 
 	if(IS_CLOCK(affected_mob))
+		deltimer(active_timer)
+		active_timer = null
 		var/revived = FALSE
 		if(affected_mob.stat == DEAD)
 			var/damage_healed = 20 + ((affected_mob.maxHealth - affected_mob.health) * 0.6)
@@ -52,7 +54,6 @@
 			else
 				visible_message(span_warning("\The [src] fails to revive [affected_mob]!"))
 				fail_invocation()
-				return
 		if(revived)
 			SEND_SOUND(affected_mob, 'sound/magic/clockwork/scripture_tier_up.ogg')
 			to_chat(affected_mob, span_bigbrass("\"[text2ratvar("MY LIGHT SHINES THROUGH YOU, YOUR SERVITUDE IS NOT FINISHED.")]\""))
@@ -83,8 +84,8 @@
 		if(affected_mob.client)
 			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
-			new_vessel.transfer_personality(affected_mob)
-			new_vessel.brainmob?.mind?.add_antag_datum(/datum/antagonist/clock_cultist)
+			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)))
+				new_vessel.transfer_personality(affected_mob)
 		return
 
 	affected_mob.visible_message(span_clockred("[affected_mob] looks weak as the color fades from their body."), span_clockred("You feel your soul faltering..."))

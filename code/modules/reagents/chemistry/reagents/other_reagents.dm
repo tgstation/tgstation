@@ -1415,6 +1415,7 @@
 	taste_description = "slime"
 	penetrates_skin = NONE
 	ph = 11
+	restricted = TRUE //so they cant roll on maint pills, if this has other sides effects then this can be reworked to a global blacklist
 
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
@@ -2609,11 +2610,12 @@
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
 	penetrates_skin = NONE
+	var/datum/disease/transformation/gondola_disease = /datum/disease/transformation/gondola
 
 /datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/gondola(), FALSE, TRUE)
+		exposed_mob.ForceContractDisease(new gondola_disease, FALSE, TRUE)
 
 
 /datum/reagent/spider_extract
@@ -3037,3 +3039,42 @@
 
 	if(SPT_PROB(10, seconds_per_tick))
 		carbon_metabolizer.set_heartattack(TRUE)
+
+/datum/reagent/hauntium
+	name = "Hauntium"
+	color = "#3B3B3BA3"
+	description = "An eerie liquid created by purifying the prescence of ghosts. If it happens to get in your body, it starts hurting your soul." //soul as in mood and heart
+	taste_description = "evil spirits"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	material = /datum/material/hauntium
+	ph = 10
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/hauntium/expose_obj(obj/exposed_obj, volume) //gives 15 seconds of haunting effect for every unit of it that touches an object
+	. = ..()
+	if(HAS_TRAIT_FROM(exposed_obj, TRAIT_HAUNTED, HAUNTIUM_REAGENT_TRAIT))
+		return
+	exposed_obj.make_haunted(HAUNTIUM_REAGENT_TRAIT, "#f8f8ff")
+	addtimer(CALLBACK(exposed_obj, TYPE_PROC_REF(/atom/movable/, remove_haunted), HAUNTIUM_REAGENT_TRAIT), volume * 20 SECONDS)
+
+/datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	to_chat(affected_mob, span_userdanger("You feel an evil presence inside you!"))
+	if(affected_mob.mob_biotypes & MOB_UNDEAD) //monkestation temp removal: || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID))
+		affected_mob.add_mood_event("morbid_hauntium", /datum/mood_event/morbid_hauntium, name) //8 minutes of slight mood buff if undead or morbid
+	else
+		affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, name) //8 minutes of mood debuff
+
+/datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(affected_mob.mob_biotypes & MOB_UNDEAD) //if morbid or undead, acts like an addiction-less drug //monkestation temp removal: || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID))
+		affected_mob.remove_status_effect(/datum/status_effect/jitter)
+		affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustUnconscious(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustParalyzed(-50 * REM * seconds_per_tick)
+		affected_mob.AdjustImmobilized(-50 * REM * seconds_per_tick)
+		..()
+	else
+		affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick) //1 heart damage per tick
+		if(SPT_PROB(10, seconds_per_tick))
+			affected_mob.emote(pick("twitch","choke","shiver","gag"))
+		..()

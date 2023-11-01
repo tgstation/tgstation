@@ -29,15 +29,20 @@
 	var/charge_time = 15
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
+	var/overrides_main = FALSE //monkestation edit //do we override the main init?
+	var/overrides_twohandrequired = FALSE //Do we have the fumble on one handed attack attempt?
+	var/override_markeffect = FALSE //Do we have the default affect on detonating a mark?
+	var/override_twohandedsprite = FALSE //ENABLE THIS FOR ALL NEW CRUSHER VARIENTS OR ELSE IT WILL BREAK
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-		speed = 6 SECONDS, \
-		effectiveness = 110, \
+	if(!overrides_main)
+		AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+		AddComponent(/datum/component/butchering, \
+			speed = 6 SECONDS, \
+			effectiveness = 110, \
 	)
-	//technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -68,7 +73,7 @@
 		return ..()
 
 /obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !overrides_twohandrequired)
 		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
 		user.drop_all_held_items()
 		return
@@ -85,7 +90,7 @@
 		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 
 /obj/item/kinetic_crusher/afterattack(atom/target, mob/living/user, proximity_flag, clickparams)
-	if(proximity_flag && isliving(target))
+	if(proximity_flag && isliving(target) && !override_markeffect)
 		var/mob/living/L = target
 		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(/datum/status_effect/crusher_mark)
 		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(/datum/status_effect/crusher_mark))
@@ -121,7 +126,7 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !overrides_twohandrequired)
 		balloon_alert(user, "wield it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target == user)
@@ -163,8 +168,9 @@
 
 
 /obj/item/kinetic_crusher/update_icon_state()
-	inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
-	return ..()
+	if(!override_twohandedsprite)
+		inhand_icon_state = "crusher[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
+		return ..()
 
 /obj/item/kinetic_crusher/update_overlays()
 	. = ..()

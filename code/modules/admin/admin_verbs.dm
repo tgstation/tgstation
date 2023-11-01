@@ -116,7 +116,9 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/delay_command_report,
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
+	/client/proc/flip_ghost_spawn,
 	/client/proc/forceEvent,
+	/client/proc/forceGamemode,
 	/client/proc/generate_bulk_code, //monkestation addition
 	/client/proc/generate_code, //monkestation addition
 	/client/proc/mass_add_metacoins, //monkestation addition
@@ -1033,7 +1035,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	if(!isobserver(usr))
 		admin_ghost()
-	usr.forceMove(coords2turf(reservation.bottom_left_coords))
+	usr.forceMove(reservation.bottom_left_turfs[1])
 
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
 	to_chat(usr, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))

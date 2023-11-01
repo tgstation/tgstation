@@ -128,6 +128,7 @@
 				next_attack_tick = world.time + rand(50, 100)
 				send_to_playing_players(span_danger("[pick("You hear the scratching of cogs.", "You hear the clanging of pipes.", "You feel your bones start to rust...")]"))
 				sound_to_playing_players('sound/magic/clockwork/narsie_attack.ogg', 100)
+				explosion(GLOB.cult_ratvar, 0, 2, 6)
 				SpinAnimation(4, 0)
 
 				for(var/mob/living/living_player in GLOB.player_list)

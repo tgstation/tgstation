@@ -213,13 +213,16 @@
 	var/list/removed_turfs = targeted_group.return_connected_liquids_in_range(affected_turf.liquids, turfs_to_pull)
 	targeted_group.trans_to_seperate_group(reagents, target_value, merge = TRUE)
 	for(var/turf/listed_turf in removed_turfs)
+		var/datum/liquid_group/listed_group = listed_turf.liquids.liquid_group
 		targeted_group.remove_from_group(listed_turf)
 		qdel(listed_turf.liquids)
 		for(var/dir in GLOB.cardinals)
 			var/turf/open/direction_turf = get_step(listed_turf, dir)
 			if(!isopenturf(direction_turf) || !direction_turf.liquids)
 				continue
-			listed_turf.liquids.liquid_group.check_edges(direction_turf)
+			if(!listed_group)
+				continue
+			listed_group.check_edges(direction_turf)
 
 	///recalculate the values here because processing
 	targeted_group.total_reagent_volume = targeted_group.reagents.total_volume

@@ -83,6 +83,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 				next_attack_tick = world.time + rand(50, 100)
 				send_to_playing_players(span_danger("[pick("Reality shudders around you.","You hear the tearing of flesh.","The sound of bones cracking fills the air.")]"))
 				sound_to_playing_players('sound/magic/clockwork/ratvar_attack.ogg',100)
+				explosion(GLOB.cult_narsie, 0, 2, 6)
 				SpinAnimation(4, 0)
 
 				for(var/mob/living/living_player in GLOB.player_list)

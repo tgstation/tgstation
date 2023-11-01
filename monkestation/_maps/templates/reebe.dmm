@@ -134,6 +134,10 @@
 	},
 /turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
+"sN" = (
+/obj/structure/destructible/clockwork/gear_base/powered/tinkerers_cache,
+/turf/open/indestructible/reebe_flooring/flat,
+/area/ruin/powered/reebe/city)
 "tr" = (
 /turf/closed/wall/clockwork/reebe,
 /area/ruin/powered/reebe/city)
@@ -271,6 +275,10 @@
 "OA" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
+"OL" = (
+/obj/structure/destructible/clockwork/gear_base/stargazer,
+/turf/open/indestructible/reebe_flooring/flat,
 /area/ruin/powered/reebe/city)
 "OQ" = (
 /obj/machinery/computer/camera_advanced/ratvar{
@@ -4932,7 +4940,7 @@ Ni
 cg
 Ni
 oH
-To
+OL
 oH
 Ni
 cg
@@ -5556,7 +5564,7 @@ FD
 cg
 Ni
 oH
-To
+sN
 oH
 To
 al

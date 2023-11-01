@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(hotspots)
 	///the list of all the hotspots generated
 	var/list/generated_hotspots = list()
 	///the amount of groups we want to create. TODO defer hotspot generation until after roundstart to change this value for wackier rounds
-	var/hotspots_to_generate = 43
+	var/hotspots_to_generate = 30
 	///the map_start map icon
 	var/icon/map
 	///the map icon with all the hotspots rendered ontop
@@ -27,7 +27,6 @@ SUBSYSTEM_DEF(hotspots)
 		return SS_INIT_NO_NEED
 	generate_hotspots()
 	generate_map()
-	generate_finalized_map()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/hotspots/fire()
@@ -38,7 +37,6 @@ SUBSYSTEM_DEF(hotspots)
 		if(generated_hotspot.drift_count >= generated_hotspot.drift_speed)
 			generated_hotspot.drift_count = 0
 			generated_hotspot.move_center(get_step(generated_hotspot.center.return_turf(), generated_hotspot.drift_direction))
-			generate_finalized_map()
 
 /datum/controller/subsystem/hotspots/proc/generate_hotspots()
 	var/datum/hotspot/new_hotspot
@@ -96,7 +94,20 @@ SUBSYSTEM_DEF(hotspots)
 
 ///this is basically the flash's [AOE_flash] but here because aoe flash isn't a global proc.
 /datum/controller/subsystem/hotspots/proc/kerpow(turf/source)
-	return //i know i said all that but i need to recode it a fair bit so for now its nothing..
+	var/list/mob/targets = get_flash_targets(get_turf(source), 3, FALSE)
+	for(var/mob/living/carbon/nearby_carbon in targets)
+		nearby_carbon.flash_act(1,1)
+	return TRUE
+
+/datum/controller/subsystem/hotspots/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
+	if(!target_loc)
+		return list()
+	if(override_vision_checks)
+		return get_hearers_in_view(range, get_turf(target_loc))
+	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
+		return viewers(range, get_turf(target_loc))
+	else
+		return typecache_filter_list(target_loc.get_all_contents(), GLOB.typecache_living)
 
 ///this is where we handle the interaction between using a stomper on a turf and affecting a hotspot
 ///if its the center it locks position, if not it drifts it away from the stomper

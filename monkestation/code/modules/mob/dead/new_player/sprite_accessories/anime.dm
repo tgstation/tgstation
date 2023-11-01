@@ -37,6 +37,12 @@
 	name = "Antlers"
 	icon_state = "antlers"
 
+/datum/sprite_accessory/anime_head/bigantlers
+	name = "Big Antlers"
+	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
+	icon_state = "bigantlers"
+
+
 /datum/sprite_accessory/anime_head/fox
 	name = "Fox Ears"
 	icon_state = "fox"

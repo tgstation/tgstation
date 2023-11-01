@@ -8,3 +8,8 @@
 #define CATEGORY_CONSUMABLES "Consumables"
 #define CATEGORY_TOYS_DRONE "Toys & Drones"
 #define CATEGORY_PKA "PKAs"
+#define CATEGORY_BEPIS "Bepis Tech"
+#define CATEGORY_BITRUNNING_FLAIR "Misc"
+#define CATEGORY_BITRUNNING_TECH "Tech"
+#define CATEGORY_BITRUNNING_COMBAT_GEAR "Combat gear" // monkeystation addition: bitrunning tech split up
+#define CATEGORY_BITRUNNING_ABILITIES "Abilities" // monkeystation addition: bitrunning tech split up

@@ -230,7 +230,7 @@
 	if(locked)
 		return
 	set_bolt(TRUE)
-	playsound(src,boltDown,30,FALSE,3)
+	playsound(src,boltDown,30,FALSE,3, mixer_channel = CHANNEL_MACHINERY)
 	audible_message(span_hear("You hear a click from the bottom of the door."), null,  1)
 	update_appearance()
 
@@ -248,7 +248,7 @@
 	if(!locked)
 		return
 	set_bolt(FALSE)
-	playsound(src,boltUp,30,FALSE,3)
+	playsound(src,boltUp,30,FALSE,3, mixer_channel = CHANNEL_MACHINERY)
 	audible_message(span_hear("You hear a click from the bottom of the door."), null,  1)
 	update_appearance()
 
@@ -515,7 +515,7 @@
 		if("deny")
 			if(!machine_stat)
 				update_icon(ALL, AIRLOCK_DENY)
-				playsound(src,doorDeni,50,FALSE,3)
+				playsound(src,doorDeni,50,FALSE,3, mixer_channel = CHANNEL_MACHINERY)
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon), ALL, AIRLOCK_CLOSED), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/examine(mob/user)
@@ -712,7 +712,7 @@
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
 		if((HAS_TRAIT(H, TRAIT_DUMB)) && Adjacent(user))
-			playsound(src, 'sound/effects/bang.ogg', 25, TRUE)
+			playsound(src, 'sound/effects/bang.ogg', 25, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message(span_danger("[user] headbutts the airlock."), \
 									span_userdanger("You headbutt the airlock!"))
@@ -938,7 +938,7 @@
 			to_chat(user, span_warning("[src] has already been sealed!"))
 			return
 		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
-		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		if(!do_after(user, airlockseal.seal_time, target = src))
 			return
 		if(!density)
@@ -950,7 +950,7 @@
 		if(!user.transferItemToLoc(airlockseal, src))
 			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
 			return
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 		user.visible_message(span_notice("[user] finishes sealing [src]."), span_notice("You finish sealing [src]."))
 		seal = airlockseal
 		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
@@ -978,10 +978,10 @@
 	if(fake.uses)
 		if(check_access_list(fake.access))
 			user.visible_message("<span class='warning'>[user] starts fumbling at \the [src] with a piece of paper!</span>", "<span class='userwarning'>You start swiping \the [fake] in \the [src]!</span>")
-			playsound(src, 'sound/items/handling/paper_pickup.ogg', 100, TRUE)
+			playsound(src, 'sound/items/handling/paper_pickup.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 			if(do_after(user, 50, src))
 				if(open()) //only take a use away if the door actually opens
-					playsound(src, 'sound/items/poster_ripped.ogg', 100, TRUE)
+					playsound(src, 'sound/items/poster_ripped.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 					fake.used()
 					if(fake.uses == 0)
 						to_chat(user, "<span class='warning'>It's no good, this ID is so torn up it won't fit in another door.</span>")
@@ -1044,12 +1044,12 @@
 		to_chat(user, span_warning("You don't have the dexterity to remove the seal!"))
 		return TRUE
 	user.visible_message(span_notice("[user] begins removing the seal from [src]."), span_notice("You begin removing [src]'s pneumatic seal."))
-	playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	if(!do_after(user, airlockseal.unseal_time, target = src))
 		return TRUE
 	if(!seal)
 		return TRUE
-	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 	airlockseal.forceMove(get_turf(user))
 	user.visible_message(span_notice("[user] finishes removing the seal from [src]."), span_notice("You finish removing [src]'s pneumatic seal."))
 	seal = null
@@ -1109,7 +1109,7 @@
 
 			if(!prying_so_hard)
 				var/time_to_open = 50
-				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
+				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS) //is it aliens or just the CE being a dick?
 				prying_so_hard = TRUE
 				if(do_after(user, time_to_open, src))
 					if(check_electrified && shock(user,100))
@@ -1189,7 +1189,7 @@
 			if(!hasPower() || wires.is_cut(WIRE_OPEN) || (obj_flags & EMAGGED))
 				return FALSE
 			use_power(50)
-			playsound(src, doorOpen, 30, TRUE)
+			playsound(src, doorOpen, 30, TRUE, mixer_channel = CHANNEL_MACHINERY)
 			return TRUE
 
 		if(FORCING_DOOR_CHECKS) // Only one check.
@@ -1200,7 +1200,7 @@
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS) // No power usage, special sound, get it open.
-			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 			return TRUE
 
 		else
@@ -1277,11 +1277,11 @@
 			if(obj_flags & EMAGGED)
 				return FALSE
 			use_power(50)
-			playsound(src, doorClose, 30, TRUE)
+			playsound(src, doorClose, 30, TRUE, mixer_channel = CHANNEL_MACHINERY)
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS)
-			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 			return TRUE
 
 		else
@@ -1363,7 +1363,7 @@
 	var/time_to_open = 5 //half a second
 	if(hasPower())
 		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
 
 
 	if(do_after(user, time_to_open, src))

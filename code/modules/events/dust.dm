@@ -1,13 +1,15 @@
 /datum/round_event_control/space_dust
 	name = "Space Dust: Minor"
 	typepath = /datum/round_event/space_dust
-	weight = 200
-	max_occurrences = 1000
+	weight = 200 // why the hell was this so much
+	max_occurrences = 10
 	earliest_start = 0 MINUTES
 	alert_observers = FALSE
 	category = EVENT_CATEGORY_SPACE
 	description = "A single space dust is hurled at the station."
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_DESTRUCTIVE, TAG_SPACE)
 
 /datum/round_event/space_dust
 	start_when = 1

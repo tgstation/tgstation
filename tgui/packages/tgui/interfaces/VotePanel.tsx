@@ -19,6 +19,7 @@ type Vote = {
 type Option = {
   name: string;
   votes: number;
+  desc: string;
 };
 
 type ActiveVote = {
@@ -180,6 +181,7 @@ const ChoicesPanel = (props, context) => {
                   textAlign="right"
                   buttons={
                     <Button
+                      tooltip={choice.desc}
                       disabled={user.singleSelection === choice.name}
                       onClick={() => {
                         act('voteSingle', { voteOption: choice.name });
@@ -217,6 +219,7 @@ const ChoicesPanel = (props, context) => {
                   textAlign="right"
                   buttons={
                     <Button
+                      tooltip={choice.desc}
                       onClick={() => {
                         act('voteMulti', { voteOption: choice.name });
                       }}>
