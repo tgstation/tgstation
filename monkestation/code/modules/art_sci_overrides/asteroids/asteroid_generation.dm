@@ -3,6 +3,7 @@
 	baseturfs = /turf/baseturf_bottom
 	turf_type = /turf/open/misc/asteroid/airless/tospace
 
+
 /proc/button_element(trg, text, action, class, style)
 	return "<a href='?src=\ref[trg];[action]'[class ? "class='[class]'" : ""][style ? "style='[style]'" : ""]>[text]</a>"
 
@@ -10,8 +11,21 @@
 	return "<a href='?src=\ref[trg];[action]' class='box' style='background-color: [color]'></a>"
 
 /// Breaks down to an asteroid floor that breaks down to space
-/turf/closed/mineral/asteroid/random/tospace
+/turf/closed/mineral/random/asteroid/tospace
 	baseturfs = /turf/open/misc/asteroid/airless/tospace
+
+/turf/closed/mineral/random/asteroid/tospace/mineral_chances()
+	return list(
+		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/diamond = 1,
+		/obj/item/stack/ore/gold = 2,
+		/obj/item/stack/ore/iron = 20,
+		/obj/item/stack/ore/plasma = 10,
+		/obj/item/stack/ore/silver = 1,
+		/obj/item/stack/ore/titanium = 1,
+		/obj/item/stack/ore/uranium = 1,
+		/turf/closed/mineral/artifact = 15,
+	)
 
 /datum/controller/subsystem/mapping/proc/generate_asteroid(datum/mining_template/template, datum/callback/asteroid_generator)
 	Master.StartLoadingMap()
@@ -61,7 +75,7 @@
 		CHECK_TICK
 
 /// Generates a circular asteroid.
-/proc/GenerateRoundAsteroid(datum/mining_template/template, turf/center, initial_turf_path = /turf/closed/mineral/asteroid/random/tospace, size = 6, list/turfs, hollow = FALSE)
+/proc/GenerateRoundAsteroid(datum/mining_template/template, turf/center, initial_turf_path = /turf/closed/mineral/random/asteroid/tospace, size = 6, list/turfs, hollow = FALSE)
 	. = list()
 	if(!length(turfs))
 		return list()

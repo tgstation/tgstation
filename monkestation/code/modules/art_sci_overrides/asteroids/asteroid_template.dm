@@ -13,7 +13,7 @@
 	var/y
 
 	var/id
-	
+
 /datum/mining_template/New(center, max_size)
 	. = ..()
 	id = random_string(10, GLOB.hex_characters)
@@ -34,15 +34,12 @@
 	rarity = -1
 	size = 3
 
-/client/verb/TestLoadAsteroid()
-	_TestLoadAsteroid()
-
 /proc/_TestLoadAsteroid(destroy)
 	var/time = world.timeofday
 	var/datum/mining_template/simple_asteroid/template = new(get_turf(usr), 5)
 
 	var/list/turfs = ReserveTurfsForAsteroidGeneration(template.center, template.size)
-	var/datum/callback/asteroid_cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(GenerateRoundAsteroid), template, template.center, /turf/closed/mineral/asteroid/random/tospace, null, turfs, TRUE)
+	var/datum/callback/asteroid_cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(GenerateRoundAsteroid), template, template.center, /turf/closed/mineral/random/asteroid/tospace, null, turfs, TRUE)
 	SSmapping.generate_asteroid(template, asteroid_cb)
 
 	to_chat(usr, span_warning("Asteroid took [DisplayTimeText(world.timeofday - time, 0.01)] to generate."))

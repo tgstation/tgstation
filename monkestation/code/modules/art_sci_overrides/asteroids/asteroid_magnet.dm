@@ -23,6 +23,8 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 	var/center_x
 	var/center_y
 
+	COOLDOWN_DECLARE(asteroid_cooldown)
+
 /obj/machinery/asteroid_magnet/Initialize(mapload)
 	. = ..()
 
@@ -31,7 +33,7 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 	else if(length(GLOB.maps_magnet_center))
 		center_x = GLOB.maps_magnet_center[1]
 		center_y = GLOB.maps_magnet_center[2]
-	
+
 	available_templates = list()
 	all_templates = list()
 	map = new(-100, 100, -100, 100)
@@ -45,7 +47,7 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 	A.y = 1
 	all_templates += A
 	map.set_coordinate(0, 1, A)
-
+/*
 /obj/machinery/asteroid_magnet/Topic(href, href_list)
 	. = ..()
 	if(.)
@@ -214,3 +216,20 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 		ping_result = "AZIMUTH [angle]"
 	else
 		ping_result = "ERR"
+*/ //DISABLED UNTIL FINISHED
+
+/obj/machinery/asteroid_magnet/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!COOLDOWN_FINISHED(src, asteroid_cooldown))
+		return
+
+	var/turf/turf = locate(center_x, center_y, src.z)
+	var/datum/mining_template/simple_asteroid/template = new(turf, 3)
+
+	var/list/turfs = ReserveTurfsForAsteroidGeneration(template.center, template.size)
+	var/datum/callback/asteroid_cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(GenerateRoundAsteroid), template, template.center, /turf/closed/mineral/random/asteroid/tospace, null, turfs, TRUE)
+	SSmapping.generate_asteroid(template, asteroid_cb)
+
+	COOLDOWN_START(src, asteroid_cooldown, 5 MINUTES)

@@ -35517,6 +35517,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
+"iDW" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/iron/dark,
+/area/station/science/explab)
 "iEa" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/wood,
@@ -45527,7 +45531,13 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "kYg" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/table,
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "kYn" = (
@@ -64112,6 +64122,20 @@
 "pFd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/airlock/external{
+	name = "External Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "pFk" = (
@@ -86254,21 +86278,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "uZj" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "External Airlock"
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "uZs" = (
@@ -128348,8 +128358,8 @@ igg
 iEK
 kYg
 jmv
-gLj
-gLj
+iDW
+iDW
 pta
 bOe
 igg

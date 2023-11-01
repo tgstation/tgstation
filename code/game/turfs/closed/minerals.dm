@@ -316,6 +316,7 @@
 		/obj/item/stack/ore/titanium = 4,
 		/obj/item/stack/ore/uranium = 2,
 		/turf/closed/mineral/gibtonite = 2,
+		/turf/closed/mineral/artifact = 2,
 	)
 
 //extremely low chance of rare ores, meant mostly for populating stations with large amounts of asteroid
