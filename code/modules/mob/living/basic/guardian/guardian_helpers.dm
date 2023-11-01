@@ -9,5 +9,5 @@
 	return all_parasites
 
 /// Returns true if this holoparasite has the same summoner as the passed holoparasite.
-/mob/living/basic/guardian/proc/hasmatchingsummoner(mob/living/basic/guardian/other_guardian)
+/mob/living/basic/guardian/proc/shares_summoner(mob/living/basic/guardian/other_guardian)
 	return istype(other_guardian) && other_guardian.summoner == summoner

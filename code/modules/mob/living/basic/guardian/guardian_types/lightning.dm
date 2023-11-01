@@ -75,7 +75,7 @@
 
 /// Confirm whether something is valid to zap with lightning
 /mob/living/basic/guardian/lightning/proc/validate_target(atom/target)
-	return isliving(target) && target != src && target != summoner && !hasmatchingsummoner(target)
+	return isliving(target) && target != src && target != summoner && !shares_summoner(target)
 
 /// Called every few zaps by a chain
 /mob/living/basic/guardian/lightning/proc/on_chain_zap(mob/living/target)

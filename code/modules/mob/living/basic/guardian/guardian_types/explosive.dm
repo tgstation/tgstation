@@ -72,4 +72,4 @@
 	var/mob/living/basic/guardian/guardian_owner = owner
 	if (!istype(guardian_owner))
 		return TRUE
-	return target != guardian_owner.summoner && !guardian_owner.hasmatchingsummoner(target)
+	return target != guardian_owner.summoner && !guardian_owner.shares_summoner(target)

@@ -13,6 +13,8 @@
 	/// Action which toggles our shield
 	var/datum/action/cooldown/mob_cooldown/protector_shield/shield
 
+// TODO invert leash
+
 /mob/living/basic/guardian/protector/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
 	shield = new(src)

@@ -47,7 +47,7 @@
 
 /mob/living/basic/guardian/gravitokinetic/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if (!. || !isliving(target) || target == src || target == summoner || hasmatchingsummoner(target) || gravity_targets[target])
+	if (!. || !isliving(target) || target == src || target == summoner || shares_summoner(target) || gravity_targets[target])
 		return
 	to_chat(src, span_bolddanger("Your punch has applied heavy gravity to [target]!"))
 	add_gravity(target, punch_gravity)
