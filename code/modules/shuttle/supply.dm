@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/quantumpad,
 		/obj/effect/mob_spawn,
 		/obj/effect/hierophant,
-		/obj/structure/receiving_pad,
+		/obj/structure/guardian_beacon,
 		/obj/item/warp_cube,
 		/obj/machinery/rnd/production, //print tracking beacons, send shuttle
 		/obj/machinery/autolathe, //same
