@@ -145,23 +145,6 @@
 /obj/item/melee/flyswatter,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"gK" = (
-/obj/effect/decal/cleanable/food/egg_smudge,
-/obj/item/food/pizzaslice/moldy/bacteria{
-	pixel_x = -8;
-	pixel_y = -4;
-	step_x = -7;
-	step_y = -3
-	},
-/obj/item/food/pizzaslice/moldy/bacteria{
-	pixel_x = 8;
-	pixel_y = 4;
-	step_x = -7;
-	step_y = -3
-	},
-/mob/living/basic/mouse/brown,
-/turf/open/floor/plating/dumpsterair,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "hb" = (
 /obj/machinery/light/warm,
 /obj/structure/cable,
@@ -185,6 +168,10 @@
 	pixel_y = 2
 	},
 /obj/effect/spawner/random/food_or_drink/seed,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"iu" = (
+/obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "iH" = (
@@ -721,10 +708,6 @@
 /obj/effect/spawner/random/trash/bucket,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"EM" = (
-/obj/structure/plasticflaps/opaque,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Fh" = (
 /turf/open/floor/catwalk_floor/iron,
 /turf/open/floor/plating,
@@ -1179,6 +1162,23 @@
 /mob/living/basic/mouse,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Xr" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/obj/item/food/pizzaslice/moldy/bacteria{
+	pixel_x = -8;
+	pixel_y = -4;
+	step_x = 0;
+	step_y = 0
+	},
+/obj/item/food/pizzaslice/moldy/bacteria{
+	pixel_x = 8;
+	pixel_y = 4;
+	step_x = 0;
+	step_y = 0
+	},
+/mob/living/basic/mouse/brown,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Xw" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/structure/fans/tiny,
@@ -1344,7 +1344,7 @@ xu
 OD
 Sa
 Ci
-gK
+Xr
 qd
 zK
 aP
@@ -1481,9 +1481,9 @@ Sa
 Sa
 Sa
 Sa
-EM
-EM
-EM
+iu
+iu
+iu
 Sa
 Sa
 Sa

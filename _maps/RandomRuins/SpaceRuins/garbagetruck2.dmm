@@ -184,9 +184,6 @@
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"qx" = (
-/turf/open/space/basic,
-/area/space)
 "qC" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
@@ -713,9 +710,9 @@ TH
 TH
 TH
 TH
-qx
-qx
-qx
+TH
+TH
+TH
 TH
 TH
 TH
@@ -955,9 +952,9 @@ TH
 TH
 TH
 TH
-qx
-qx
-qx
+TH
+TH
+TH
 TH
 TH
 TH
