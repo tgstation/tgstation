@@ -11,13 +11,13 @@
 		var/shove_dir = get_dir(user, src)
 		if(!Move(get_step(src, shove_dir), shove_dir))
 			log_combat(user, src, "shoved", "failing to move it")
-			user.visible_message(span_danger("[user.name] shoves [src]!"),
-				span_danger("You shove [src]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
+			user.visible_message(span_danger("[user.name] [response_disarm_continuous] [src]!"),
+				span_danger("You [response_disarm_simple] [src]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
 			to_chat(src, span_userdanger("You're shoved by [user.name]!"))
 			return TRUE
 		log_combat(user, src, "shoved", "pushing it")
-		user.visible_message(span_danger("[user.name] shoves [src], pushing [p_them()]!"),
-			span_danger("You shove [src], pushing [p_them()]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
+		user.visible_message(span_danger("[user.name] [response_disarm_continuous] [src], pushing [p_them()]!"),
+			span_danger("You [response_disarm_simple] [src], pushing [p_them()]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
 		to_chat(src, span_userdanger("You're pushed by [user.name]!"))
 		return TRUE
 
