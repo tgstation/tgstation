@@ -3,7 +3,8 @@
 	desc = "This unleashes the parade towards a target."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon_state = "blind"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "moon_parade"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
 	sound = 'sound/magic/cosmic_energy.ogg'
@@ -22,7 +23,7 @@
 
 /obj/projectile/moon_parade
 	name = "Lunar parade"
-	icon_state = "star_ball"
+	icon_state = "lunar_parade"
 	damage = 0
 	damage_type = BURN
 	speed = 1
