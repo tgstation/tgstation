@@ -50,7 +50,8 @@
 	src.chain_damage_feedback = chain_damage_feedback
 	src.feedback_interval = feedback_interval
 
-	chain = parent.Beam(linked_to, icon = beam_icon, icon_state = beam_state, beam_type = beam_type, maxdistance = max_distance)
+	var/atom/atom_parent = parent
+	chain = atom_parent.Beam(linked_to, icon = beam_icon, icon_state = beam_state, beam_type = beam_type, maxdistance = max_distance)
 	RegisterSignal(chain, COMSIG_QDELETING, PROC_REF(end_beam))
 	START_PROCESSING(SSfastprocess, src)
 
