@@ -23,8 +23,11 @@
 		for(var/datum/reagent/containg_reagent as anything in reagents.reagent_list)
 			if(required_reagent == containg_reagent.type)
 				has_reagent = TRUE
-				if(containg_reagent.volume + CHEMICAL_QUANTISATION_LEVEL < chamber.required_reagents[required_reagent])
-					process_request(min(chamber.required_reagents[required_reagent] - containg_reagent.volume, MACHINE_REAGENT_TRANSFER) , required_reagent, dir)
+				if(containg_reagent.volume < chamber.required_reagents[required_reagent])
+					if(round(containg_reagent.volume, CHEMICAL_VOLUME_MINIMUM) == chamber.required_reagents[required_reagent]) //If we got less reagents than requested due to floating-point magic...
+						containg_reagent.volume = chamber.required_reagents[required_reagent] //...then cheat and set it to be sufficient so we don't propagate floating-point errors through the pipenet.
+					else //Otherwise, request as per normal.
+						process_request(min(round(chamber.required_reagents[required_reagent] - containg_reagent.volume, CHEMICAL_VOLUME_MINIMUM), MACHINE_REAGENT_TRANSFER), required_reagent, dir)
 					return
 		if(!has_reagent)
 			process_request(min(chamber.required_reagents[required_reagent], MACHINE_REAGENT_TRANSFER), required_reagent, dir)
