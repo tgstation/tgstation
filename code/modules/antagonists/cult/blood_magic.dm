@@ -70,6 +70,9 @@
 			return
 		qdel(nullify_spell)
 	BS = possible_spells[entered_spell_name]
+	if(locate(BS) in spells)
+		to_chat(owner, span_cultitalic("You cannot carve more than one of the same kind of magic into your flesh."))
+		return
 	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (length(spells) >= limit))
 		return
 	to_chat(owner,span_warning("You begin to carve unnatural symbols into your flesh!"))
@@ -103,6 +106,8 @@
 	var/health_cost = 0
 	/// Have we already been positioned into our starting location?
 	var/positioned = FALSE
+	/// If FALSE, does not delete after the spell ran out of charges. Used on blood rites.
+	var/deletes_on_empty = TRUE
 
 /datum/action/innate/cult/blood_spell/Grant(mob/living/owner, datum/action/innate/cult/blood_magic/BM)
 	if(health_cost)
@@ -350,7 +355,7 @@
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
-		if(uses <= 0)
+		if(uses <= 0 && source.deletes_on_empty)
 			source.hand_magic = null
 			qdel(source)
 			source = null
@@ -358,7 +363,7 @@
 			source.hand_magic = null
 			source.charges = uses
 			source.desc = source.base_desc
-			source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
+			source.desc += "<br><b><u>Has [uses] charges remaining</u></b>."
 			source.build_all_button_icons()
 	return ..()
 
@@ -416,16 +421,31 @@
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
 			to_chat(user, span_cultitalic("In a brilliant flash of red, [target] falls to the ground!"))
-			target.Paralyze(16 SECONDS)
+			var/effect_power = 1
+			var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
+			var/datum/team/cult/cult_team = user_antag.cult_team
+			// If cult ascended, stuns are weaker
+			if(cult_team.cult_ascendent)
+				to_chat(user, span_cultitalic("The cult's energy has thinned out, spreading to [cult_team.size_at_maximum] acolytes. Your spell is weaker!"))
+				effect_power = 0.3
+			// If they've risen, they're a bit weaker
+			else if(cult_team.cult_risen)
+				to_chat(user, span_cultitalic("The cult's energy is diluted, spreading to [cult_team.size_at_maximum] acolytes. Your spell is weaker!"))
+				effect_power = 0.6
+			// This is the amount that was lost. It's used to cause dizziness rather than stunning.
+			var/power_diluted = 1 - effect_power
+			target.Paralyze((15 * effect_power) SECONDS)
+			target.adjust_dizzy((15 * power_diluted) SECONDS)
+			target.adjust_eye_blur((15 * power_diluted) SECONDS)
 			target.flash_act(1, TRUE)
 			if(issilicon(target))
 				var/mob/living/silicon/silicon_target = target
 				silicon_target.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/carbon_target = target
-				carbon_target.adjust_silence(12 SECONDS)
-				carbon_target.adjust_stutter(30 SECONDS)
-				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
+				carbon_target.adjust_silence((12 * effect_power) SECONDS)
+				carbon_target.adjust_stutter((30 * effect_power) SECONDS)
+				carbon_target.adjust_timed_status_effect((30 * power_diluted) SECONDS, /datum/status_effect/speech/slurring/cult)
 				carbon_target.set_jitter_if_lower(30 SECONDS)
 		uses--
 	..()
