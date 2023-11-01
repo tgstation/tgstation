@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 
 	if(center_x || center_y)
 		GLOB.maps_magnet_center = list(center_x, center_y)
-	else
+	else if(length(GLOB.maps_magnet_center))
 		center_x = GLOB.maps_magnet_center[1]
 		center_y = GLOB.maps_magnet_center[2]
 	
