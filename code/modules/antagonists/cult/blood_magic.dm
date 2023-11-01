@@ -686,6 +686,7 @@
 	name = "Blood Rite Aura"
 	desc = "Absorbs blood from anything you touch. Touching cultists and constructs can heal them. Use in-hand to cast an advanced rite."
 	color = "#7D1717"
+	deletes_on_empty = FALSE
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
 	. = ..()
