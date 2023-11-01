@@ -4,7 +4,7 @@
 #define HEATER_COEFFICIENT 0.05
 
 /// maximum number of attempts the reaction chamber will make to balance the ph(More means better results but higher tick usage)
-#define MAX_PH_ADJUSTMENTS 5
+#define MAX_PH_ADJUSTMENTS 3
 
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
@@ -195,6 +195,8 @@
 
 		//transfer buffer and handle reactions
 		var/ph_change = (reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph))
+		if(ph_change <= 0.5) //make a big jump towards the end to prevent adding very small buffer
+			ph_change = 1
 		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents))
 		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
 			return
