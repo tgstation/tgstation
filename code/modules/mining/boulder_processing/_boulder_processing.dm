@@ -218,11 +218,13 @@
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 		if(is_type_in_list(possible_mat, processable_materials))
 			var/quantity = chosen_boulder.custom_materials[possible_mat]
-			points_held = round(points_held + (quantity * possible_mat.points_per_unit))// put point total here into machine
+			points_held = round(points_held + (quantity * possible_mat.points_per_unit)) // put point total here into machine
 			processable_ores += possible_mat
 			processable_ores[possible_mat] = quantity
+			say("found [quantity] [possible_mat.name] in the boulder.")
 			chosen_boulder.custom_materials -= possible_mat //Remove it from the boulder now that it's tracked
 			tripped = TRUE
+	say("Processed [length(processable_ores)] ores (Which should all go to the new boulder to be made!)")
 	if(!tripped)
 		remove_boulder(chosen_boulder)
 		say("Nothing to process!")
@@ -232,15 +234,18 @@
 	var/is_artifact = (istype(chosen_boulder, /obj/item/boulder/artifact)) //We need to know if it's an artifact so we can carry it over to the new boulder.
 	var/obj/item/boulder/disposable_boulder = new (src)
 	disposable_boulder.set_custom_materials(processable_ores)
+	say("We're inserting disposable boulder into silo with [length(disposable_boulder.custom_materials)] ores.")
 	silo_materials.mat_container.insert_item(
 		weapon = disposable_boulder,\
 		multiplier = refining_efficiency,\
 		breakdown_flags = BREAKDOWN_FLAGS_ORM,\
 		)
+	say("and now we're breaking it.")
 	qdel(disposable_boulder)
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100% now that we've processed any relevant ores.
 	if(!length(chosen_boulder.custom_materials))
+		say("We are breaking our chosen boulder!")
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(is_artifact)
 			points_held = round(points_held + MINER_POINT_MULTIPLIER) /// Artifacts give bonus points!
@@ -248,6 +253,7 @@
 		update_boulder_count()
 		return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
 
+	say("The old boulder contains ([length(chosen_boulder.custom_materials)]) ores.")
 	chosen_boulder.set_custom_materials(chosen_boulder.custom_materials)
 	chosen_boulder.reset_processing_cooldown() //So that we don't pick it back up!
 	chosen_boulder.durability = rand(chosen_boulder.boulder_size, chosen_boulder.boulder_size + BOULDER_SIZE_SMALL) //Reset durability to a random value between the boulder's size and a little more.
