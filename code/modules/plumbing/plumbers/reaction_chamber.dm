@@ -194,15 +194,15 @@
 			return
 
 		//transfer buffer and handle reactions
-		var/ph_change = (reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph))
-		if(ph_change <= 0.5) //make a big jump towards the end to prevent adding very small buffer
-			ph_change = 1
-		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents))
-		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
+		var/ph_change = max((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)), 0.25)
+		if(ph_change <= 0.7) //make big jumps towards the end so we can end our work quickly
+			ph_change *= 2
+		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents)) * seconds_per_tick
+		if(!buffer.trans_to(reagents, buffer_amount))
 			return
 
 		//some power for accurate ph balancing & keep track of attempts made
-		use_power(active_power_usage * 0.03 * buffer_amount * seconds_per_tick)
+		use_power(active_power_usage * 0.03 * buffer_amount)
 		ph_balance_attempts += 1
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
