@@ -4186,6 +4186,7 @@
 #include "code\modules\logging\categories\log_category_debug.dm"
 #include "code\modules\logging\categories\log_category_game.dm"
 #include "code\modules\logging\categories\log_category_href.dm"
+#include "code\modules\logging\categories\log_category_internal.dm"
 #include "code\modules\logging\categories\log_category_misc.dm"
 #include "code\modules\logging\categories\log_category_pda.dm"
 #include "code\modules\logging\categories\log_category_silo.dm"
