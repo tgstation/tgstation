@@ -61679,6 +61679,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/light/small/directional/north,
+/obj/vehicle/sealed/mecha/ripley/paddy/preset,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "vmX" = (
@@ -62666,7 +62667,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/vehicle/sealed/mecha/ripley/paddy/preset,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "vCe" = (
