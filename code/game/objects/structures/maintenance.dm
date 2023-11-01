@@ -267,6 +267,7 @@ at the cost of risking a vicious bite.**/
 		COMSIG_ATOM_EXIT = PROC_REF(blow_steam),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 	update_icon_state()
 
 /obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
@@ -282,6 +283,16 @@ at the cost of risking a vicious bite.**/
 		balloon_alert(user, "vent off")
 		return
 	blow_steam()
+
+/obj/structure/steam_vent/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = vent_active ? "Close valve" : "Open valve"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/steam_vent/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
