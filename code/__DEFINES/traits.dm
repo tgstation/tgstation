@@ -733,6 +733,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait for the gamer quirk.
 #define TRAIT_GAMER "gamer"
 
+/// Trait for the Extra-Sensory Paranoia quirk
+#define TRAIT_PARANOIA "paranoia"
+
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items

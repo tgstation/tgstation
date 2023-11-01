@@ -154,9 +154,6 @@
 	if(linked_machette)
 		linked_machette.force += 2.5
 		linked_machette.throwforce += 2.5
-	if(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
-		qdel(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
-	qdel(stalked_human.tracking_beacon)
 	stalked_human = null
 
 /datum/antagonist/slasher/proc/failed_stalking()
@@ -164,7 +161,4 @@
 	if(linked_machette)
 		linked_machette.force -= 5
 		linked_machette.throwforce -= 5
-	if(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
-		qdel(owner.current.team_monitor.tracking[stalked_human.tracking_beacon])
-	qdel(stalked_human.tracking_beacon)
 	stalked_human = null

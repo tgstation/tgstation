@@ -225,10 +225,14 @@ SUBSYSTEM_DEF(ticker)
 	var/init_start = world.timeofday
 
 	mode = new /datum/game_mode/dynamic
-
+	SSgamemode.init_storyteller() //monkestation addition
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
+	//monkestation addition start
+	can_continue =	SSgamemode.pre_setup()
+	CHECK_TICK
+	//monkestation addition end
 	can_continue = src.mode.pre_setup() //Choose antagonists
 	CHECK_TICK
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
@@ -295,6 +299,8 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
+	SSgamemode.storyteller.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
+	SSgamemode.storyteller.round_started = TRUE
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()

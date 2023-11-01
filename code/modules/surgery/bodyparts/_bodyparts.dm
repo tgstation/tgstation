@@ -772,12 +772,12 @@
 	species_flags_list = owner_species.species_traits
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"
 
-	if(owner_species.use_skintones || owner_species.use_fur)
+	if(owner_species.use_skintones)
 		skin_tone = human_owner.skin_tone
 	else
 		skin_tone = ""
 
-	if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits))) //Ethereal code. Motherfuckers.
+	if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits) || (SPECIES_FUR in owner_species.species_traits))) //Ethereal code. Motherfuckers.
 		if(owner_species.fixed_mut_color)
 			species_color = owner_species.fixed_mut_color
 		else

@@ -282,6 +282,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	if(sleep_offline_after_initializations && CONFIG_GET(flag/resume_after_initializations))
 		world.sleep_offline = FALSE
 	initializations_finished_with_no_players_logged_in = initialized_tod < REALTIMEOFDAY - 10
+	/// run votes
+	SSvote.initiate_vote(/datum/vote/storyteller, "pick round storyteller", forced = TRUE) // idk where else to run this lol
 
 /**
  * Initialize a given subsystem and handle the results.

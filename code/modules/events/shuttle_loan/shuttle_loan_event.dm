@@ -10,7 +10,7 @@
 	admin_setup = list(/datum/event_admin_setup/listed_options/shuttle_loan)
 	var/list/run_situations = list()
 
-/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
 	for(var/datum/round_event/running_event in SSevents.running)
 		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
@@ -37,6 +37,7 @@
 
 	loan_control.run_situations.Add(situation)
 	situation = new situation()
+	setup = TRUE
 
 /datum/round_event/shuttle_loan/announce(fake)
 	priority_announce("Cargo: [situation.announcement_text]", situation.sender)
