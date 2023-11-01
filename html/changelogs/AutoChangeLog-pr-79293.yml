@@ -1,0 +1,4 @@
+author: "deathrobotpunch1"
+delete-after: True
+changes:
+  - rscdel: "Removed the biometric scanning toggle from the PENLITE holobarrier"
