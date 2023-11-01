@@ -32732,7 +32732,6 @@
 /area/station/science/ordnance/testlab)
 "kdy" = (
 /obj/machinery/door/poddoor/shutters{
-	dir = 1;
 	id = "secmechbay";
 	name = "Security Mech Bay Shutters"
 	},
@@ -38309,9 +38308,6 @@
 /area/station/engineering/atmos/storage/gas)
 "lHL" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -50492,7 +50488,6 @@
 /area/station/cargo/office)
 "psY" = (
 /obj/machinery/door/poddoor/shutters{
-	dir = 1;
 	id = "secmechbay";
 	name = "Security Mech Bay Shutters"
 	},
@@ -62523,9 +62518,6 @@
 /area/station/maintenance/department/medical/morgue)
 "taj" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

@@ -93547,7 +93547,6 @@
 /area/station/medical/virology)
 "xqp" = (
 /obj/vehicle/sealed/mecha/ripley/paddy/preset,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/recharge_floor,
 /area/station/security/mechbay)
 "xqM" = (

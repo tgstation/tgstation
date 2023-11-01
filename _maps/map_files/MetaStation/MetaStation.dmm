@@ -50416,7 +50416,9 @@
 	name = "Security Mech Garage Door Controls"
 	},
 /obj/item/circuitboard/computer/mech_bay_power_console,
-/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass{
+	pixel_y = 14
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "sab" = (
