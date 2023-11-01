@@ -1,15 +1,23 @@
+////TODO LIST:
+//Prevent double-spearing
+
 /obj/item/implant/hard_spear
 	name = "hardlight spear implant"
 	actions_types = null
 	implant_color = "b"
+	allow_multiple = TRUE
 	var/timerid
 	var/deltime = 3 SECONDS
 	/// The typepath of the spell we give to people. (yes this is copy pasted from spell implants, yes this has different functionality)
 	var/datum/action/cooldown/spell/spell_type = /datum/action/cooldown/spell/conjure_item/hardlight_spear
 	/// The actual spell we give to the person on implant
-	//var/datum/action/cooldown/spell/spell_to_give
+	var/datum/action/cooldown/spell/spell_to_give
+	/// Does this implant contain a spell
+	var/spell_inside = FALSE
+	/// What is the level of the spell inside
+	var/spell_inside_level = 1
 
-/*/obj/item/implant/hard_spear/Initialize(mapload)
+/obj/item/implant/hard_spear/Initialize(mapload)
 	. = ..()
 	if(!spell_type)
 		return
@@ -29,51 +37,45 @@
 		if(!existing.level_spell())
 			to_chat(target, span_boldnotice("The implant is unable to upgrade your hardlight spear further"))
 			return FALSE
-		existing.level_spell
+		existing.level_spell()
 		timerid = QDEL_IN_STOPPABLE(src, deltime)
 		return TRUE
+	spell_inside = TRUE
 	spell_to_give.Grant(target)
-	timerid = QDEL_IN_STOPPABLE(src, deltime)
-	return TRUE
-*/
-/obj/item/implant/hard_spear/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE) //take 2
-	. = ..()
-	if (!.)
-		return
-
-	if (!spell_type) //WHAT HAVE YOU DONE
-		return FALSE
-
-	var/datum/action/cooldown/spell/existing = locate(spell_type) in user.actions
-	if(existing)
-		if(!existing.level_spell())
-			to_chat(target, span_boldnotice("The implant is unable to upgrade your hardlight spear further"))
-			return FALSE
-		existing.level_spell
-		timerid = QDEL_IN_STOPPABLE(src, deltime)
-		return TRUE
-	spell_type.Grant(target)
-	timerid = QDEL_IN_STOPPABLE(src, deltime)
 	return TRUE
 
 /obj/item/implant/hard_spear/removed(mob/living/source, silent, special) //how??
 	. = ..()
-	deltimer(timerid)
-	timerid = null
+	if (!.)
+		return FALSE
+
+	if(spell_inside)
+		if(spell_to_give)
+			spell_inside_level = spell_to_give.spell_level
+			spell_to_give.Remove(source)
+			if(source.stat != DEAD && !silent)
+				to_chat(source, span_boldnotice(""))
+
+	if(timerid)
+		deltimer(timerid)
+		timerid = null
+
 
 /obj/item/implant/hard_spear/Destroy()
+	QDEL_NULL(spell_to_give)
 	return ..()
 
 /obj/item/implant/hard_spear/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Aetherofusion Hardlight Weapons Platform<BR>
-				<b>Life:</b> 3 seconds.<BR>
-				<b>Important Notes:</b> The modifications made by this implant are permanent and untraceable(assuming you don't use it).<BR>
+				<b>Life:</b> 67 years in a dead host.<BR>
+				<b>Important Notes:</b> The insertion of additional copies of this implant will upgrade the orignal one. Efficacy not shown after 5 upgrades.<BR>
 				<HR>
 				<b>Implant Details:</b><BR>
-				<b>Function:</b> Creates a swarm of nanobots that preform a modification of the brain. After modification is complete the implant self destructs.<BR>
-				<b>Special Features:</b> The modification made to the brain allows the implantee to control and fabricate a single hardlight spear. Additional implants will increase the amount of spears, up to a maximum of 5.<BR>
-				<b>Integrity:</b> Implant will self destruct into bio-safe compounds after preforming its modification."}
+				<b>Function:</b> Preforms and maintains a series of classified modifications to the body.<BR>
+				<b>Special Features:</b> Allows the implantee to control a single hardlight spear, further implants will allow for up to 5 additional spears.<BR>
+				<b>System Resonance:</b> Internal resonance level suggests a [spell_to_give] is contained within.<BR>
+				<b>Integrity:</b> Implant acquires waste material in the blood for self-repair, giving it an unlimited lifespan in a living host."}
 	return dat
 
 /obj/item/implanter/hard_spear
@@ -84,6 +86,34 @@
 	name = "implant case - 'Hardlight Spear'"
 	desc = "A glass case containing a hardlight spear implant."
 	imp_type = /obj/item/implant/hard_spear
+
+
+/obj/item/implant/hard_spear/max
+	name = "hardlight spear implant"
+	spell_type = /datum/action/cooldown/spell/conjure_item/hardlight_spear/max
+	allow_multiple = FALSE
+
+/obj/item/implant/hard_spear/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Aetherofusion Experimental Resonance System<BR>
+				<b>Life:</b>  8 millennia in a dead host.<BR>
+				<b>Important Notes:</b> The insertion of additional copies of this implant will do nothing, you cannot improve on perfection.<BR>
+				<HR>
+				<b>Implant Details:</b><BR>
+				<b>Function:</b> CLASSIFIED.<BR>
+				<b>Special Features:</b> Allows the implantee to control seven hardlight spears.<BR>
+				<b>System Resonance:</b> Internal resonance level is above readable levels.<BR>
+				<b>Integrity:</b> Implant acquires waste material in the blood for self-repair, giving it an unlimited lifespan in a living host."}
+	return dat
+
+/obj/item/implanter/hard_spear/max
+	name = "implanter (hardlight spear)"
+	imp_type = /obj/item/implant/hard_spear/max
+
+/obj/item/implantcase/hard_spear/max
+	name = "implant case - 'Hardlight Spear'"
+	desc = "A glass case containing a hardlight spear implant."
+	imp_type = /obj/item/implant/hard_spear/max
 
 /datum/action/cooldown/spell/conjure_item/hardlight_spear
 	name = "Hardlight Spear"
@@ -129,6 +159,7 @@
 /datum/action/cooldown/spell/conjure_item/hardlight_spear/max
 	name = "Commmanding Hardlight Spear"
 	spell_level = 7
+
 /datum/action/cooldown/spell/conjure_item/hardlight_spear/max/get_spell_title()
 	return "" //commanding commanding
 
@@ -155,6 +186,10 @@
 	slot_flags = null
 	can_charge = FALSE //ITS A SPEAR
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NO_MAT_REDEMPTION
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	light_system = MOVABLE_LIGHT
+	light_outer_range = 3
+	light_power = 1
 	max_charges = 1
 	var/spears_left = 5
 	ammo_type = /obj/item/ammo_casing/magic/hardlight_spear
@@ -168,7 +203,7 @@
 		effectiveness = 70, \
 	)
 
-	block_chance = spears_left*5
+	block_chance = 5+spears_left*5
 
 /obj/item/gun/magic/hardlight_spear/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -219,6 +254,17 @@
 	slot_flags = null
 	projectile_type = /obj/projectile/bullet/hardlight_spear
 	heavy_metal = FALSE
+
+/obj/item/ammo_casing/magic/hardlight_spear/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+	if(!loaded_projectile)
+		return
+
+	if(isliving(target))
+		loaded_projectile.homing = TRUE
+		loaded_projectile.homing_turn_speed = 40
+		loaded_projectile.set_homing_target(target)
+
+	return ..()
 
 /obj/projectile/bullet/hardlight_spear
 	name = "hardlight spear"
