@@ -38,16 +38,18 @@
 /datum/component/spirit_holding/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
 
+	var/atom/thing = parent
+
 	if(attempting_awakening)
-		balloon_alert(user, "already channeling!")
+		thing.balloon_alert(user, "already channeling!")
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		balloon_alert(user, "spirits are unwilling!")
+		thing.balloon_alert(user, "spirits are unwilling!")
 		to_chat(user, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
 		return
 
 	attempting_awakening = TRUE
-	baloon_alert(user, "channeling...")
+	thing.balloon_alert(user, "channeling...")
 
 	var/datum/callback/to_call = CALLBACK(src, PROC_REF(affix_spirit), user)
 	parent.AddComponent(/datum/component/orbit_poll, \
@@ -59,8 +61,10 @@
 
 /// On conclusion of the ghost poll
 /datum/component/spirit_holding/proc/affix_spirit(mob/awakener, mob/dead/observer/ghost)
+	var/atom/thing = parent
+
 	if(isnull(ghost))
-		balloon_alert(awakener, "silence...")
+		thing.balloon_alert(awakener, "silence...")
 		attempting_awakening = FALSE
 		return
 
