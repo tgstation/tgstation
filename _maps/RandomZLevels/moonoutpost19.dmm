@@ -5450,6 +5450,14 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"pO" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/construct/proteon/hostile,
+/turf/open/space,
+/area/space)
 "qr" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -5837,6 +5845,15 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Iv" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/basic/construct/proteon/hostile,
+/obj/structure/flora/lunar_plant,
+/turf/open/space,
+/area/space)
 "IW" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -13954,7 +13971,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -14731,6 +14748,7 @@ aa
 aa
 aa
 aa
+Iv
 aa
 aa
 aa
@@ -14741,8 +14759,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+pO
 aa
 aa
 aa
@@ -17041,7 +17058,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -17310,13 +17327,13 @@ aa
 aa
 aa
 aa
+pO
 aa
 aa
 aa
 aa
 aa
-aa
-aa
+pO
 aa
 aa
 aa
@@ -18312,7 +18329,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -18838,6 +18855,7 @@ aa
 aa
 aa
 aa
+pO
 aa
 aa
 aa
@@ -18851,8 +18869,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+pO
 aa
 aa
 aa
@@ -20107,7 +20124,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -20400,7 +20417,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -21644,7 +21661,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -21900,7 +21917,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa

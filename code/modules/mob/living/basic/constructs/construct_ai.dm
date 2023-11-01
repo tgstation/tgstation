@@ -23,18 +23,39 @@
 /**
  * Juggernauts
  *
- * Juggernauts slowly walk toward non-allied mobs and pummel them into hardcrit.
- * They do not finish off carbons, as that's the job of wraiths.
+ * Juggernauts slowly walk toward non-allied mobs and pummel them to death.
  */
 /datum/ai_controller/basic_controller/juggernaut
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_TARGET_MINIMUM_STAT = SOFT_CRIT,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/attack_obstacle_in_path,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
+/**
+ * Proteons
+ *
+ * Proteons perform cowardly hit-and-run attacks, fleeing melee when struck but returning to fight again.
+ */
+/datum/ai_controller/basic_controller/proteon
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate/to_flee,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

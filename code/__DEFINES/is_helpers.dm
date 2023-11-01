@@ -131,6 +131,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 // basic mobs
 #define isbasicmob(A) (istype(A, /mob/living/basic))
 
+#define isconstruct(A) (istype(A, /mob/living/basic/construct))
+
 #define iscow(A) (istype(A, /mob/living/basic/cow))
 
 /// returns whether or not the atom is either a basic mob OR simple animal
@@ -140,9 +142,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isminingpath(A) (ispath(A, /mob/living/simple_animal/hostile/asteroid) || ispath(A, /mob/living/basic/mining))
 
 #define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
-
-/// constructs, which are both simple and basic for now
-#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct) || istype(A, /mob/living/basic/construct))
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
