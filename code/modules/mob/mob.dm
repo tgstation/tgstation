@@ -51,7 +51,7 @@
 		mind.set_current(null)
 
 	if(mock_client)
-		mock_client.mob = null
+		QDEL_NULL(mock_client)
 
 	return ..()
 
