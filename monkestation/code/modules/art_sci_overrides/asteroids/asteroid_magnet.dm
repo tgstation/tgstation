@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 	name = "asteroid magnet computer"
 	icon_state = "blackbox"
 	use_power = NO_POWER_USE
+	resistance_flags = INDESTRUCTIBLE
 
 	/// Templates available to succ in
 	var/list/datum/mining_template/available_templates

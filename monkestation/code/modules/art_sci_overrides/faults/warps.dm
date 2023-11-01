@@ -5,7 +5,7 @@
 	var/list/warp_areas = list()
 
 /datum/artifact_fault/warp/on_trigger(datum/component/artifact/component)
-	if(!warp_areas)
+	if(!length(warp_areas))
 		warp_areas = GLOB.the_station_areas
 	var/turf/safe_turf = get_safe_random_station_turf(warp_areas)
 

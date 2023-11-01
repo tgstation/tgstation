@@ -70,15 +70,15 @@
 /obj/item/sticker/analysis_form/ui_static_data(mob/user)
 	. = ..()
 	var/list/origins_names = list()
-	for(var/datum/artifact_origin/subtype in subtypesof(/datum/artifact_origin))
+	for(var/datum/artifact_origin/subtype  as anything in subtypesof(/datum/artifact_origin))
 		origins_names += subtype.type_name
-	
+
 	var/list/trigger_names = list()
-	for(var/datum/artifact_activator/subtype in subtypesof(/datum/artifact_activator))
+	for(var/datum/artifact_activator/subtype as anything in subtypesof(/datum/artifact_activator))
 		trigger_names += subtype.name
 
 	var/list/artifact_names = list()
-	for(var/datum/component/artifact/subtype in subtypesof(/datum/component/artifact))
+	for(var/datum/component/artifact/subtype as anything in subtypesof(/datum/component/artifact))
 		artifact_names += subtype.type_name
 
 	.["allorigins"] = origins_names
@@ -163,7 +163,7 @@
 
 /obj/item/sticker/analysis_form/proc/get_export_value(datum/component/artifact/art)
 	var/correct = 0
-	var/total_guesses = 0 
+	var/total_guesses = 0
 
 	if(art.artifact_origin.type_name == chosen_origin)
 		correct ++
