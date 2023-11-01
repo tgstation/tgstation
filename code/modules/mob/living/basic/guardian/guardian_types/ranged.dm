@@ -71,7 +71,8 @@
 	RegisterSignal(owner, COMSIG_GUARDIAN_RECALLED, PROC_REF(on_recall))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(on_click))
 
-	// TODO: remove leash
+	var/mob/living/basic/guardian/guardian_mob = owner
+	guardian_mob.unleash()
 	to_chat(owner, span_bolddanger("You enter scouting mode."))
 	return TRUE
 
@@ -79,7 +80,8 @@
 	animate(owner, alpha = initial(owner.alpha), time = 0.5 SECONDS)
 	UnregisterSignal(owner, list(COMSIG_GUARDIAN_MANIFESTED, COMSIG_GUARDIAN_RECALLED, COMSIG_MOB_CLICKON))
 	to_chat(owner, span_bolddanger("You return to your normal mode."))
-	// TODO: reapply leash
+	var/mob/living/basic/guardian/guardian_mob = owner
+	guardian_mob.leash_to(owner, guardian_mob.summoner)
 
 /// Restore incorporeal move when we become corporeal, yes I know that suonds silly
 /datum/status_effect/guardian_scout_mode/proc/on_manifest()

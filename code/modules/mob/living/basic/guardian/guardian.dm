@@ -214,6 +214,7 @@
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_summoner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_summoner_unshapeshifted))
 	recall(forced = TRUE)
+	leash_to(src, summoner)
 	if (to_who.stat == DEAD)
 		on_summoner_death(src, to_who)
 
@@ -226,6 +227,7 @@
 	var/summoner_turf = get_turf(src)
 	if (!isnull(summoner_turf))
 		forceMove(summoner_turf)
+	unleash()
 	UnregisterSignal(summoner, list(COMSIG_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if (different_person)
 		summoner.faction -= "[REF(src)]"
@@ -234,6 +236,20 @@
 	if (!length(summoner.get_all_linked_holoparasites() - src))
 		remove_verb(summoner, control_verbs)
 	summoner = null
+
+/// Connects these two mobs by a leash
+/mob/living/basic/guardian/proc/leash_to(atom/movable/leashed, atom/movable/leashed_to)
+	AddComponent(\
+		/datum/component/leash,\
+		owner = leashed_to,\
+		distance = range,\
+		force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out,\
+		force_teleport_in_effect = /obj/effect/temp_visual/guardian/phase,\
+	)
+
+/// Removes the leash from this guardian
+/mob/living/basic/guardian/proc/unleash()
+	qdel(GetComponent(/datum/component/leash))
 
 /// Called when our owner dies. We fucked up, so now neither of us get to exist.
 /mob/living/basic/guardian/proc/on_summoner_death(mob/living/source, mob/living/former_owner)

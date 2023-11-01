@@ -13,8 +13,6 @@
 	/// Action which toggles our shield
 	var/datum/action/cooldown/mob_cooldown/protector_shield/shield
 
-// TODO invert leash
-
 /mob/living/basic/guardian/protector/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
 	shield = new(src)
@@ -24,6 +22,13 @@
 /mob/living/basic/guardian/protector/Destroy()
 	QDEL_NULL(shield)
 	return ..()
+
+// Invert the order
+/mob/living/basic/guardian/protector/leash_to(atom/movable/leashed, atom/movable/leashed_to)
+	return ..(leashed_to, leashed)
+
+/mob/living/basic/guardian/protector/unleash()
+	qdel(summoner?.GetComponent(/datum/component/leash))
 
 /mob/living/basic/guardian/protector/toggle_modes()
 	shield.Trigger()

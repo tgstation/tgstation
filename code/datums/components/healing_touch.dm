@@ -193,8 +193,8 @@
 		required_bodytype = required_bodytype,
 		updating_health = FALSE,
 	)
-	healed += target.adjustOxyLoss(-heal_oxy, update_health = FALSE, required_biotype = valid_biotypes)
-	healed += target.adjustToxLoss(-heal_tox, update_health = FALSE, required_biotype = valid_biotypes)
+	healed += target.adjustOxyLoss(-heal_oxy, updating_health = FALSE, required_biotype = valid_biotypes)
+	healed += target.adjustToxLoss(-heal_tox, updating_health = FALSE, required_biotype = valid_biotypes)
 	if (healed)
 		target.updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(target), heal_color)
