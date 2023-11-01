@@ -143,3 +143,142 @@
   - bugfix: all bars now have the proper holosign emitters
   KoboldCommando:
   - rscadd: The botany infuser and splicer are merged into one machine
+2023-10-23:
+  DexeeXI:
+  - rscadd: Readded missing water tank for Botany on Metastation
+  - rscadd: Readded a missing helper for the disposals system on Metastation
+  - rscadd: plantgenes machine in the seed vaults!
+  - rscdel: ALL SM gas filters for gas synthesis are removed, but the space is still
+      there if folk want to setup such filters for their operations.
+  - qol: moved the plantgenes machine and all the botany lexicons on Tram to a different
+      table so its not stacked.
+  - rscdel: reverted the "clown asteroid" on Tramstation down to 99% stock. It should
+      still play clown.wmv when over there, because you still are a clown if you wanna
+      use the place.
+  - rscadd: dinnerware, nanomed vendors added to Centcom
+  - rscadd: readded the missing tcomm server so syndie comms work again. it was on
+      centcom, its now back on centcom.
+  - qol: fixed some of the busted disposals.
+  - qol: zones for rooms in Oshan Medical are redone. Medbay Central is now a "common
+      sense" location so cargo crates can be opened properly.
+2023-10-24:
+  Gboster-0:
+  - rscadd: Added a lot more SMES
+  - bugfix: Singularity to PTL connection on kilo was always broken, now its not so
+      much broken
+  - rscadd: Split the technology tab into gear and abilities tabs on the bitrunner
+      console
+  - qol: The bitrunning disks were split into their individual abilities, no more
+      wasting points on virtual toilets
+  - image: All the abilities and combat gear in bitrunner's stolen now has unique
+      sprites
+  KittyNoodle:
+  - bugfix: Syndicate laser muskets can now be worn on armor again
+  - rscadd: Non-lethal and less than lethal options for autorifles have been made
+      available.
+  - balance: Autorifles have been moved to imports and made more expensive.
+  - balance: Higher technologies are now needed to access autorifle ammo.
+  - refactor: Autorifle code has been modularized
+  OtieBoy:
+  - bugfix: fixed the Tramstation incinerator room atmospherics so that air supply
+      and scrubbing pipenets are connected properly from roundstart
+  SeeBeeSee:
+  - rscadd: Added new quirk that applies a permanent Extra-Sensory Paranoia - no lobotomies
+      for this one.
+  - rscadd: Added a new version of ESP that summons 10 stalkers by default, and can
+      be called by an admin for more.
+  lmenvs:
+  - rscadd: Adds donator items for Senri, Mjolnir, Random and Spinnermaster! Thank
+      you guys!
+2023-10-25:
+  Dexee:
+  - qol: 75% audit of doors, areas done. A TON of door names will have changed to
+      make better sense.
+  - qol: NAVIGATE VERBS! THEY WORK NOW! It covers the bog standard stuff but people
+      will be able to actually use the damn thing. Still working on a solution for
+      the lesser known things like certain rooms in maints or things like that.
+  - qol: MEDBAY CENTRAL is now in the most common sense spot and not some bumfuck
+      hallway nobody cares about.
+  - qol: Psychologist now legally has an office.
+  - qol: The Genetics Lab doors should all now be accessible to both Geneticists and
+      Med Staff.
+  - qol: Botany now has weedkillers. Though this may be moot because it should be
+      blacklisted by this point, but you'll never know.
+  - qol: Added some lights here and there. Many to count.
+  - qol: Moved a ton of the flood mitigation drains to get them off things like vents,
+      scrubbers and lights in the central hallway.
+  - qol: Adjusted a TON of doors to not only reflect what departments they actually
+      are, but also their permissions where needed.
+  - rscadd: a single stethoscope is now in the operating theatre. What kind of doctors
+      are you if you don't have your old timey thing that proves you're a doctor!
+  - qol: Moved the ATMOS main APC because YOU CANT PUT THAT IN GLASS (it also causes
+      it to render under the glass so its difficult for those that dont know where
+      to look in order to fix it)
+  - qol: Redid wiring for the ATMOS Turbine Generator.
+  - qol: Redid the PIPING for the ATMOS Turbine Generator. You no longer have a broken
+      pipe in a window that prevents you from even starting it. There, you now have
+      an alternate power source.
+  - qol: 'Added a plumbing disposal unit connected to the drain system so that the
+      system can, hopefully at this point after multiple test attempts, function properly.
+
+      Delta:'
+  - qol: 'Moved 2 tiles of pipes and wires to connect to maints by engineering due
+      to the SMES additions.
+
+      Tram:'
+  - rscadd: 'a single piece of missing layer 1 wire that was preventing the AI sat
+      solars from charging correctly.
+
+      Icebox Arcade Bar:'
+  - qol: moved APC, fixed wires.
+  dwasint:
+  - rscadd: votable story tellers
+2023-10-26:
+  Dexee:
+  - qol: even more doors audited and names fixed.
+  - rscadd: Custodial Closet/Janitor now on NAVIGATE VERB
+  - qol: 'moved the prisoner spawners to the brig bridge next to the hole so they
+      can throw themselves in. (note: if an AI main is reading this, no, you are not
+      allowed to release the prisoners under Law 1 unless the HOS/Captain gives you
+      specific position. This is to help the prisoners that start on Oshan don''t
+      just fucking die)'
+  - qol: 'There are now patient rooms. Yay.
+
+      Tram:'
+  - rscadd: a single missing disposal pipe in front of det's office so now trash doesn't
+      come flying out of the floor.
+  DexeeXI:
+  - qol: fixed some bad door perms (one v all)
+  - qol: fixed tiles in science being marked as AIRLESS tiles instead of... well,
+      not.
+  - qol: some lights replaced in maints with maints varients. offsets should be getting
+      adjusted so they look less like shit.
+  MomoBerri:
+  - bugfix: sprite ffix
+  scriptis:
+  - rscadd: don't blink. don't blink not even for a second
+2023-10-27:
+  Dexee:
+  - rscadd: New navmakers for some lesser known places, as well as most station solar
+      platforms
+  - qol: 'Moved/replaced a ton of existing markers to better common sense spots.
+
+      Tram:'
+  - qol: 'Aseembly lab door renamed to Assembly Lab.
+
+      Ice Box Coggers Bar:'
+  - rscadd: added the missing Booze-O-Mat. (thanks Skell Bones II)
+2023-10-28:
+  DexeeXI:
+  - rscadd: Centcom map now has nav support
+  - rscadd: Icebox now has cryo signs in spots to point towards the room, because
+      its on lower Z level.
+  - bugfix: Fixed railings on Delta, Meta, Icebox.
+  - rscdel: Lots of railings on Northstar
+  - rscadd: Icebox now has signs next to the stairs to the morgue to help indicate
+      where the Morgue is (z level problems and navigate)
+  - qol: updated interview link for da rulez.
+  Salted-Zen:
+  - balance: Machete now has 25 block instead of 50
+  dwasint:
+  - bugfix: malf ai should roll again

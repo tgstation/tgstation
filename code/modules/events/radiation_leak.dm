@@ -8,6 +8,8 @@
 	category = EVENT_CATEGORY_ENGINEERING
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL)
 
 /datum/round_event/radiation_leak
 	start_when = 1 // 2 seconds in
@@ -47,6 +49,7 @@
 			// We found something, we can just return now
 			picked_machine_ref = WEAKREF(sick_device)
 			return
+	setup = TRUE
 
 /datum/round_event/radiation_leak/announce(fake)
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()
