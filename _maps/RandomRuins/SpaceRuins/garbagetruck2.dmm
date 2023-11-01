@@ -74,6 +74,16 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"io" = (
+/obj/structure/closet/body_bag,
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/corpse/human{
+	brute_damage = 35;
+	mob_type = /mob/living/carbon/human/species/fly;
+	oxy_damage = 65
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "iw" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -83,16 +93,6 @@
 "iU" = (
 /obj/effect/spawner/random/trash/garbage,
 /obj/effect/spawner/random/medical/medkit,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"jR" = (
-/obj/structure/closet/body_bag,
-/obj/structure/table/optable,
-/obj/effect/mob_spawn/corpse/human{
-	brute_damage = 10;
-	mob_type = /mob/living/carbon/human/species/fly;
-	oxy_damage = 390
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "kf" = (
@@ -152,6 +152,16 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "pu" = (
 /obj/structure/plasticflaps/opaque,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"py" = (
+/obj/structure/closet/body_bag,
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/obj/effect/mob_spawn/corpse/human{
+	brute_damage = 50;
+	burn_damage = 50
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "pD" = (
@@ -274,6 +284,13 @@
 "xj" = (
 /obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"xw" = (
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/reagent_containers/condiment/soysauce,
+/obj/item/reagent_containers/pill/mannitol,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "xH" = (
@@ -426,16 +443,6 @@
 "Gp" = (
 /obj/item/organ/internal/eyes/robotic/basic,
 /obj/item/kitchen/spoon,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"GT" = (
-/obj/structure/closet/body_bag,
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/obj/effect/mob_spawn/corpse/human{
-	hairstyle = bald;
-	oxy_damage = 200
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Hx" = (
@@ -686,10 +693,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"YA" = (
-/obj/structure/closet/crate/trashcart/filled,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Zi" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
@@ -757,8 +760,8 @@ zZ
 hu
 vM
 AB
-GT
-jR
+py
+io
 TM
 XC
 "}
@@ -845,7 +848,7 @@ JW
 CJ
 EJ
 AB
-YA
+xw
 CJ
 kp
 MC
