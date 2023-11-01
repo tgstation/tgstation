@@ -349,7 +349,7 @@
 		var/atom/movable/created_reward = ..()
 		if(ismob(created_reward))
 			created_reward.name = "small [created_reward.name]"
-			created_reward.transform.Scale(0.5)
+			created_reward.transform = created_reward.transform.Scale(0.75)
 		return created_reward
 
 	var/static/list/seeds_to_draw_from
