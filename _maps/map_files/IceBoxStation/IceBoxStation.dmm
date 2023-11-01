@@ -37082,7 +37082,8 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/machinery/button/door/directional/east{
 	name = "Security Mech Garage Door Controls";
-	id = "secmechbay"
+	id = "secmechbay";
+	req_access = list("security")
 	},
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
@@ -38313,7 +38314,8 @@
 	},
 /obj/machinery/button/door/directional/north{
 	id = "secmechbay";
-	name = "Security Mech Garage Door Controls"
+	name = "Security Mech Garage Door Controls";
+	req_access = list("security")
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)

@@ -30473,7 +30473,8 @@
 /obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/machinery/button/door/directional/east{
 	name = "Security Mech Garage Door Controls";
-	id = "secmechbay"
+	id = "secmechbay";
+	req_access = list("security")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60476,7 +60477,8 @@
 	},
 /obj/machinery/button/door/directional/north{
 	id = "secmechbay";
-	name = "Security Mech Garage Door Controls"
+	name = "Security Mech Garage Door Controls";
+	req_access = list("security")
 	},
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 1
