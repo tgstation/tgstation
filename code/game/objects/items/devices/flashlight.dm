@@ -289,15 +289,15 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	light_range = 2
-	var/holo_cooldown = 0
+	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(proximity_flag)
 		return
 
-	if(holo_cooldown > world.time)
-		to_chat(user, span_warning("[src] is not ready yet!"))
+	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
+		balloon_alert(user, "not ready!")
 		return
 
 	var/target_turf = get_turf(target)
@@ -308,7 +308,7 @@
 
 	to_chat(living_target, span_boldnotice("[user] is offering medical assistance; please halt your actions."))
 	new /obj/effect/temp_visual/medical_holosign(target_turf, user) //produce a holographic glow
-	holo_cooldown = world.time + 10 SECONDS
+	COOLDOWN_START(src, holosign_cooldown, 10 SECONDS)
 
 // see: [/datum/wound/burn/flesh/proc/uv()]
 /obj/item/flashlight/pen/paramedic

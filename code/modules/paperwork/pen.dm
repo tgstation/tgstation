@@ -406,7 +406,7 @@
 	name = "security pen"
 	desc = "This is a red ink pen exclusively provided to members of the Security Department. Its opposite end features a built-in holographic projector designed for issuing arrest prompts to individuals."
 	icon_state = "pen_sec"
-	var/holo_cooldown = 0
+	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/pen/red/security/examine(mob/user)
 	. = ..()
@@ -415,8 +415,8 @@
 //Code from the medical penlight
 /obj/item/pen/red/security/afterattack(atom/target, mob/living/user, proximity)
 	. = ..()
-	if(holo_cooldown > world.time)
-		to_chat(user, span_warning("[src] is not ready yet!"))
+	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
+		balloon_alert(user, "not ready!")
 		return
 
 	var/target_turf = get_turf(target)
@@ -428,7 +428,7 @@
 	living_target.apply_status_effect(/datum/status_effect/surrender_timed)
 	to_chat(living_target, span_userdanger("[user] requests your immediate surrender! You are given 30 seconds to comply!"))
 	new /obj/effect/temp_visual/security_holosign(target_turf, user) //produce a holographic glow
-	holo_cooldown = world.time + 30 SECONDS
+	COOLDOWN_START(src, holosign_cooldown, 30 SECONDS)
 
 /obj/effect/temp_visual/security_holosign
 	name = "security holosign"
