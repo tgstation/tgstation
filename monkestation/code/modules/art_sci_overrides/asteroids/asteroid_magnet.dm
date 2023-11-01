@@ -26,6 +26,12 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 
 	COOLDOWN_DECLARE(asteroid_cooldown)
 
+/obj/machinery/asteroid_magnet/examine(mob/user)
+	. = ..()
+	if(asteroid_cooldown)
+		. += span_notice("It seems to be cooling down, you estimate it will take about [DisplayTimeText(COOLDOWN_TIMELEFT(src, next_song_timer))].")
+
+
 /obj/machinery/asteroid_magnet/Initialize(mapload)
 	. = ..()
 
