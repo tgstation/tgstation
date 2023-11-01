@@ -1,6 +1,3 @@
-////TODO LIST:
-//Prevent double-spearing
-
 /obj/item/implant/hard_spear
 	name = "hardlight spear implant"
 	actions_types = null
@@ -133,6 +130,12 @@
 
 	delete_old = FALSE
 	item_type = /obj/item/gun/magic/hardlight_spear
+
+/datum/action/cooldown/spell/conjure_item/hardlight_spear/before_cast(mob/living/cast_on)
+	for(var/I in cast_on.get_contents())
+		if(istype(I, /obj/item/gun/magic/hardlight_spear))
+			return . | SPELL_CANCEL_CAST
+
 
 /datum/action/cooldown/spell/conjure_item/hardlight_spear/make_item()
 	. = ..()
