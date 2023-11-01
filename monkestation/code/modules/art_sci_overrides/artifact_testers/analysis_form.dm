@@ -71,15 +71,15 @@
 	. = ..()
 	var/list/origins_names = list()
 	for(var/datum/artifact_origin/subtype  as anything in subtypesof(/datum/artifact_origin))
-		origins_names += subtype.type_name
+		origins_names += initial(subtype.type_name)
 
 	var/list/trigger_names = list()
 	for(var/datum/artifact_activator/subtype as anything in subtypesof(/datum/artifact_activator))
-		trigger_names += subtype.name
+		trigger_names += initial(subtype.name)
 
 	var/list/artifact_names = list()
 	for(var/datum/component/artifact/subtype as anything in subtypesof(/datum/component/artifact))
-		artifact_names += subtype.type_name
+		artifact_names += initial(subtype.type_name)
 
 	.["allorigins"] = origins_names
 	.["alltypes"] = artifact_names

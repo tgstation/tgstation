@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(maps_magnet_center, list())
 /obj/machinery/asteroid_magnet/examine(mob/user)
 	. = ..()
 	if(asteroid_cooldown)
-		. += span_notice("It seems to be cooling down, you estimate it will take about [DisplayTimeText(COOLDOWN_TIMELEFT(src, next_song_timer))].")
+		. += span_notice("It seems to be cooling down, you estimate it will take about [DisplayTimeText(COOLDOWN_TIMELEFT(src, asteroid_cooldown))].")
 
 
 /obj/machinery/asteroid_magnet/Initialize(mapload)
