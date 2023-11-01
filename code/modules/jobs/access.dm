@@ -1,17 +1,22 @@
 
-//returns TRUE if this mob has sufficient access to use this object
+//
+/**
+ * Returns TRUE if this mob has sufficient access to use this object
+ *
+ * * accessor - mob trying to access this object, !!CAN BE NULL!! because of telekiesis because we're in hell
+ */
 /obj/proc/allowed(mob/accessor)
 	var/result_bitflags = SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor)
 	if(result_bitflags & COMPONENT_OBJ_ALLOW)
 		return TRUE
 	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
 		return FALSE
-	if(HAS_TRAIT(accessor, TRAIT_ALWAYS_NO_ACCESS))
+	if(!isnull(accessor) && HAS_TRAIT(accessor, TRAIT_ALWAYS_NO_ACCESS))
 		return FALSE
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
-	if(!istype(accessor)) //likely a TK user.
+	if(isnull(accessor)) //likely a TK user.
 		return FALSE
 	if(issilicon(accessor))
 		if(ispAI(accessor))

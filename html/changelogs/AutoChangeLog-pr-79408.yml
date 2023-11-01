@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscdel: "Remove duplicate syndi turret on waystation ruin"

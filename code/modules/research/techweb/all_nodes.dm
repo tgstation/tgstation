@@ -48,6 +48,7 @@
 		"experimentor",
 		"extinguisher",
 		"fax",
+		"fish_case",
 		"fishing_rod",
 		"fishing_portal_generator",
 		"flashlight",

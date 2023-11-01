@@ -64,7 +64,7 @@
 	var/obj/item/our_weapon = proxy_weapon || parent
 	if(!istype(our_weapon))
 		CRASH("[our_weapon] somehow failed istype")
-	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK))
+	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BUMP_ATTACK))
 		TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, attack_cooldown)
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attackby), our_weapon, bumper)
 		bumper.visible_message(span_danger("[bumper] charges into [target], attacking with [our_weapon]!"), span_danger("You charge into [target], attacking with [our_weapon]!"), vision_distance = COMBAT_MESSAGE_RANGE)
