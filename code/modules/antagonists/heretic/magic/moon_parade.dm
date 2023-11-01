@@ -27,7 +27,7 @@
 	damage = 0
 	damage_type = BURN
 	speed = 1
-	range = 100
+	range = 80
 	ricochets_max = 40
 	ricochet_chance = 500
 	ricochet_incidence_leeway = 0
