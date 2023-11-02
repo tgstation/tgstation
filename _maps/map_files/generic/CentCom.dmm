@@ -997,21 +997,7 @@
 "cW" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/material,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/storage/backpack/duffelbag/med/surgery{
-	pixel_x = 5;
-	pixel_y = 9
-	},
-/obj/item/storage/backpack/duffelbag/med/surgery{
-	pixel_y = 10;
-	pixel_x = -10
-	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "cX" = (
@@ -3992,11 +3978,6 @@
 "lP" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/tactical,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/vending/medical,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
@@ -9617,14 +9598,8 @@
 /obj/structure/railing/wood,
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/tactical,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/railing/wood,
 /obj/structure/table/reinforced,
-/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
 "CE" = (
@@ -14725,7 +14700,7 @@
 /area/centcom/central_command_areas/hall)
 "Ry" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase"="Burn Chamber");
+	atmos_chambers = list("nukiebase"="Burn    Chamber");
 	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
 	dir = 1;
 	name = "Ordnance Chamber Monitor"
