@@ -21,7 +21,16 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/examine()
 	. = ..()
-	. += "It has [uses_left] use\s remaining."
+	. += span_infoplain("It has [uses_left] use\s remaining.")
+
+	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
+
+	if(isnull(beacon))
+		beacon_ref = null
+		. += span_infoplain("It is not linked to a beacon.")
+		return
+
+	. += span_infoplain("It is linked to [beacon.name].")
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
@@ -32,7 +41,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		if(extraction_point.beacon_network in beacon_networks)
 			possible_beacons += extraction_point
 	if(!length(possible_beacons))
-		to_chat(user, span_warning("There are no extraction beacons in existence!"))
+		balloon_alert(user, "no beacons")
 		return
 
 	var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
@@ -40,7 +49,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return
 
 	beacon_ref = WEAKREF(chosen_beacon)
-	to_chat(user, span_notice("You link the extraction pack to the beacon system."))
+	balloon_alert(user, "linked!")
 
 /obj/item/extraction_pack/afterattack(atom/movable/thing, mob/living/carbon/human/user, proximity_flag, params)
 	. = ..()
@@ -71,7 +80,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return
 
 	balloon_alert_to_viewers("attaching...")
-	playsound(thing, 'sound/items/zip.ogg', 50, vary = TRUE)
+	playsound(thing, 'sound/items/zip.ogg', vol = 50, vary = TRUE)
 	if(isliving(thing))
 		var/mob/living/creature = thing
 		if(creature.mind)
@@ -116,21 +125,17 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon2)
 	holder_obj.add_overlay(balloon)
-	playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', 50, TRUE, -3)
-	animate(holder_obj, pixel_z = 10, time = 20)
+	playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', vol = 50, vary = TRUE, extrarange = -3)
 
-	sleep(2 SECONDS)
-	animate(holder_obj, pixel_z = 15, time = 10)
-	sleep(1 SECONDS)
-	animate(holder_obj, pixel_z = 10, time = 10)
-	sleep(1 SECONDS)
-	animate(holder_obj, pixel_z = 15, time = 10)
-	sleep(1 SECONDS)
-	animate(holder_obj, pixel_z = 10, time = 10)
-	sleep(1 SECONDS)
+	animate(holder_obj, pixel_z = 10, time = 2 SECONDS)
+	animate(holder_obj, pixel_z = 15, time = 1 SECONDS)
+	animate(holder_obj, pixel_z = 10, time = 1 SECONDS)
+	animate(holder_obj, pixel_z = 15, time = 1 SECONDS)
+	animate(holder_obj, pixel_z = 10, time = 1 SECONDS)
+	sleep(6 SECONDS)
 
-	playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', 50, TRUE, -3)
-	animate(holder_obj, pixel_z = 1000, time = 30)
+	playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', vol = 50, vary = TRUE, extrarange = -3)
+	animate(holder_obj, pixel_z = 1000, time = 3 SECONDS)
 
 	if(ishuman(thing))
 		var/mob/living/carbon/human/creature = thing
@@ -140,31 +145,32 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	sleep(3 SECONDS)
 
-	var/list/flooring_near_beacon = list()
-	for(var/turf/open/floor in orange(1, beacon))
-		flooring_near_beacon += floor
+	var/turf/flooring_near_beacon = list()
+	for(var/turf/floor as anything in RANGE_TURFS(1, beacon))
+		if(!floor.is_blocked_turf())
+			flooring_near_beacon += floor
+
+	if(!length(flooring_near_beacon))
+		flooring_near_beacon += get_turf(beacon)
 
 	holder_obj.forceMove(pick(flooring_near_beacon))
-	animate(holder_obj, pixel_z = 10, time = 50)
-	sleep(5 SECONDS)
-	animate(holder_obj, pixel_z = 15, time = 10)
-	sleep(1 SECONDS)
-	animate(holder_obj, pixel_z = 10, time = 10)
-	sleep(1 SECONDS)
+
+	animate(holder_obj, pixel_z = 10, time = 5 SECONDS)
+	animate(holder_obj, pixel_z = 15, time = 1 SECONDS)
+	animate(holder_obj, pixel_z = 10, time = 1 SECONDS)
+	sleep(7 SECONDS)
 
 	balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
 	balloon3.pixel_y = 10
 	balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon)
 	holder_obj.add_overlay(balloon3)
-
 	sleep(0.4 SECONDS)
 
 	holder_obj.cut_overlay(balloon3)
 	thing.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
 	thing.set_density(initial(thing.density))
-	animate(holder_obj, pixel_z = 0, time = 5)
-
+	animate(holder_obj, pixel_z = 0, time = 0.5 SECONDS)
 	sleep(0.5 SECONDS)
 
 	thing.forceMove(holder_obj.loc)
