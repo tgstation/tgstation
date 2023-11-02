@@ -147,12 +147,13 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	sleep(3 SECONDS)
 
 	var/turf/flooring_near_beacon = list()
-	for(var/turf/floor as anything in RANGE_TURFS(1, beacon))
+	var/turf/beacon_turf = get_turf(beacon)
+	for(var/turf/floor as anything in RANGE_TURFS(1, beacon_turf))
 		if(!floor.is_blocked_turf())
 			flooring_near_beacon += floor
 
 	if(!length(flooring_near_beacon))
-		flooring_near_beacon += get_turf(beacon)
+		flooring_near_beacon += beacon_turf
 
 	holder_obj.forceMove(pick(flooring_near_beacon))
 
