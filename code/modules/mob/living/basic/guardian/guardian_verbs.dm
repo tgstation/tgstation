@@ -74,67 +74,112 @@
 
 	src.log_talk(input, LOG_SAY, tag="guardian")
 
+
 /// Speak with your guardian(s) at a distance.
-/mob/living/proc/guardian_comm()
-	set name = "Communicate"
-	set category = "Guardian"
-	set desc = "Communicate telepathically with your guardian."
-	var/input = tgui_input_text(src, "Enter a message to tell your guardian", "Message")
+/datum/action/cooldown/mob_cooldown/guardian_comms
+	name = "Guardian Communication"
+	desc = "Communicate telepathically with your guardian."
+	button_icon = 'icons/hud/guardian.dmi'
+	button_icon_state = "communicate"
+	background_icon = 'icons/hud/guardian.dmi'
+	background_icon_state = "base"
+	click_to_activate = FALSE
+	cooldown_time = 0 SECONDS
+	melee_cooldown_time = 0
+	shared_cooldown = NONE
+
+/datum/action/cooldown/mob_cooldown/guardian_comms/Activate(atom/target)
+	StartCooldown(360 SECONDS)
+	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message")
+	StartCooldown()
 	if (!input)
-		return
+		return FALSE
 
 	var/preliminary_message = span_boldholoparasite("[input]") //apply basic color/bolding
-	var/my_message = span_boldholoparasite("<i>[src]:</i> [preliminary_message]") //add source, color source with default grey...
+	var/my_message = span_boldholoparasite("<i>[owner]:</i> [preliminary_message]") //add source, color source with default grey...
 
-	to_chat(src, "<span class='say'>[my_message]</span>")
-	var/list/guardians = get_all_linked_holoparasites()
+	to_chat(owner, "<span class='say'>[my_message]</span>")
+	var/mob/living/living_owner = owner
+	var/list/guardians = living_owner.get_all_linked_holoparasites()
 	for(var/mob/living/basic/guardian/guardian as anything in guardians)
-		to_chat(guardian, "<span class='say'><font color=\"[guardian.guardian_colour]\"><b><i>[src]:</i></b></font> [preliminary_message]</span>" )
+		to_chat(guardian, "<span class='say'><font color=\"[guardian.guardian_colour]\"><b><i>[owner]:</i></b></font> [preliminary_message]</span>" )
 	for(var/dead_mob in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(dead_mob, src)
+		var/link = FOLLOW_LINK(dead_mob, owner)
 		to_chat(dead_mob, "<span class='say'>[link] [my_message]</span>")
+	owner.log_talk(input, LOG_SAY, tag="guardian")
 
-	src.log_talk(input, LOG_SAY, tag="guardian")
+	return TRUE
 
 
 /// Tell your slacking or distracted guardian to come home.
-/mob/living/proc/guardian_recall()
-	set name = "Recall Guardian"
-	set category = "Guardian"
-	set desc = "Forcibly recall your guardian."
-	var/list/guardians = get_all_linked_holoparasites()
+/datum/action/cooldown/mob_cooldown/recall_guardian
+	name = "Recall Guardian"
+	desc = "Forcibly recall your guardian."
+	button_icon = 'icons/hud/guardian.dmi'
+	button_icon_state = "recall"
+	background_icon = 'icons/hud/guardian.dmi'
+	background_icon_state = "base"
+	click_to_activate = FALSE
+	cooldown_time = 0 SECONDS
+	melee_cooldown_time = 0
+	shared_cooldown = NONE
+
+/datum/action/cooldown/mob_cooldown/recall_guardian/Activate(atom/target)
+	var/mob/living/living_owner = owner
+	var/list/guardians = living_owner.get_all_linked_holoparasites()
 	for(var/mob/living/basic/guardian/guardian in guardians)
 		guardian.recall()
-
+	StartCooldown()
+	return TRUE
 
 /// Replace an annoying griefer you were paired up to with a different but probably no less annoying player.
-/mob/living/proc/guardian_reset()
-	set name = "Reset Guardian Player (5 Minute Cooldown)"
-	set category = "Guardian"
-	set desc = "Re-rolls which ghost will control your Guardian. Can be used once per 5 minutes."
+/datum/action/cooldown/mob_cooldown/replace_guardian
+	name = "Reset Guardian Consciousness"
+	desc = "Replaces the mind of your guardian with that of a different ghost."
+	button_icon = 'icons/mob/simple/mob.dmi'
+	button_icon_state = "ghost"
+	background_icon = 'icons/hud/guardian.dmi'
+	background_icon_state = "base"
+	click_to_activate = FALSE
+	cooldown_time = 5 SECONDS
+	melee_cooldown_time = 0
+	shared_cooldown = NONE
 
-	var/list/guardians = get_all_linked_holoparasites()
+/datum/action/cooldown/mob_cooldown/replace_guardian/Activate(atom/target)
+	StartCooldown(5 MINUTES)
+
+	var/mob/living/living_owner = owner
+	var/list/guardians = living_owner.get_all_linked_holoparasites()
 	for(var/mob/living/basic/guardian/resetting_guardian as anything in guardians)
 		if (!COOLDOWN_FINISHED(resetting_guardian, resetting_cooldown))
 			guardians -= resetting_guardian //clear out guardians that are already reset
 
-	var/mob/living/basic/guardian/chosen_guardian = tgui_input_list(src, "Pick the guardian you wish to reset", "Guardian Reset", sort_names(guardians))
-	if (isnull(chosen_guardian))
-		to_chat(src, span_holoparasite("You decide not to reset [length(guardians) > 1 ? "any of your guardians":"your guardian"]."))
-		return
+	if (!length(resetting_guardian))
+		to_chat(owner, span_holoparasite("You cannot reset [length(guardians) > 1 ? "any of your guardians":"your guardian"] yet."))
+		StartCooldown()
+		return FALSE
 
-	to_chat(src, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\"><b>[chosen_guardian.real_name]</b></font>'s personality..."))
-	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [src.real_name]'s Guardian Spirit?", ROLE_PAI, FALSE, 100)
+	var/mob/living/basic/guardian/chosen_guardian = tgui_input_list(owner, "Pick the guardian you wish to reset", "Guardian Reset", sort_names(guardians))
+	if (isnull(chosen_guardian))
+		to_chat(owner, span_holoparasite("You decide not to reset [length(guardians) > 1 ? "any of your guardians":"your guardian"]."))
+		StartCooldown()
+		return FALSE
+
+	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\"><b>[chosen_guardian.real_name]</b></font>'s personality..."))
+	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", ROLE_PAI, FALSE, 100)
 	if (!LAZYLEN(ghost_candidates))
-		to_chat(src, span_holoparasite("There were no ghosts willing to take control of <font color=\"[chosen_guardian.guardian_colour]\"><b>[chosen_guardian.real_name]</b></font>. Looks like you're stuck with it for now."))
-		return
+		to_chat(owner, span_holoparasite("There were no ghosts willing to take control of <font color=\"[chosen_guardian.guardian_colour]\"><b>[chosen_guardian.real_name]</b></font>. Looks like you're stuck with it for now."))
+		StartCooldown()
+		return FALSE
 
 	var/mob/dead/observer/candidate = pick(ghost_candidates)
 	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-	to_chat(src, span_boldholoparasite("Your <font color=\"[chosen_guardian.guardian_colour]\">[chosen_guardian.real_name]</font> has been successfully reset."))
+	to_chat(owner, span_boldholoparasite("Your <font color=\"[chosen_guardian.guardian_colour]\">[chosen_guardian.theme.name]</font> has been successfully reset."))
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
 	chosen_guardian.key = candidate.key
 	COOLDOWN_START(chosen_guardian, resetting_cooldown, 5 MINUTES)
 	chosen_guardian.guardian_rename() //give it a new color and name, to show it's a new person
 	chosen_guardian.guardian_recolour()
+	StartCooldown()
+	return TRUE

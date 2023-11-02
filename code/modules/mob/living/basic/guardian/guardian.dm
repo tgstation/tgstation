@@ -76,11 +76,11 @@
 	/// Cooldown between the summoner resetting the guardian's client.
 	COOLDOWN_DECLARE(resetting_cooldown)
 
-	/// List of verbs we give to our summoner
-	var/static/list/control_verbs = list(
-		/mob/living/proc/guardian_comm,
-		/mob/living/proc/guardian_recall,
-		/mob/living/proc/guardian_reset,
+	/// List of actions we give to our summoner
+	var/static/list/control_actions = list(
+		/datum/action/cooldown/mob_cooldown/guardian_comms,
+		/datum/action/cooldown/mob_cooldown/recall_guardian,
+		/datum/action/cooldown/mob_cooldown/replace_guardian,
 	)
 
 /mob/living/basic/guardian/Initialize(mapload, datum/guardian_fluff/theme)
@@ -213,7 +213,13 @@
 	cut_summoner(different_person)
 	AddComponent(/datum/component/life_link, to_who, CALLBACK(src, PROC_REF(on_harm)), CALLBACK(src, PROC_REF(on_summoner_death)))
 	summoner = to_who
-	add_verb(to_who, control_verbs)
+
+	for (var/action_type in control_actions)
+		if (locate(action_type) in summoner.actions)
+			continue
+		var/datum/action/new_action = new action_type(summoner)
+		new_action.Grant(summoner)
+
 	if (different_person)
 		if (mind)
 			mind.enslave_mind_to_creator(to_who)
@@ -248,7 +254,11 @@
 		faction -= summoner.faction
 		mind?.remove_all_antag_datums()
 	if (!length(summoner.get_all_linked_holoparasites() - src))
-		remove_verb(summoner, control_verbs)
+		for (var/action_type in control_actions)
+			var/datum/action/remove_action = locate(action_type) in summoner.actions
+			if (isnull(remove_action))
+				continue
+			remove_action.Remove(summoner)
 	summoner = null
 
 /// Connects these two mobs by a leash

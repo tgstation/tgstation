@@ -117,12 +117,15 @@
 	var/list/placed_snares = list()
 
 /datum/action/cooldown/mob_cooldown/guardian_alarm_snare/Activate(atom/target)
+	StartCooldown(360 SECONDS)
+
 	if (length(placed_snares) >= maximum_snares)
 		var/picked_snare = tgui_input_list(owner, "Choose a snare to replace.", "Remove Snare", sort_names(placed_snares))
 		if(isnull(picked_snare))
 			return FALSE
 		qdel(picked_snare)
 	if (length(placed_snares) >= maximum_snares)
+		StartCooldown(0)
 		return FALSE
 
 	owner.balloon_alert(owner, "snare deployed") // We need feedback because they are invisible

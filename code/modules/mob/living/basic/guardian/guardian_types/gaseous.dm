@@ -102,12 +102,14 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/expel_gas/Activate(atom/target)
+	StartCooldown(360 SECONDS)
 	// Regeneated each time just in case someone fucks with our list
 	var/list/gas_selection = list("None")
 	for(var/datum/gas/gas as anything in possible_gases)
 		gas_selection[initial(gas.name)] = gas
 
 	var/picked_gas = tgui_input_list(owner, "Select a gas to emit.", "Gas Producer", gas_selection)
+		StartCooldown()
 	if(picked_gas == "None")
 		stop_gas()
 		return
