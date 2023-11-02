@@ -42,7 +42,7 @@
 
 /proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
-		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name)
+		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 		return
 	if(!threat?.answered)
 		return
@@ -51,9 +51,9 @@
 	if(plundered_account)
 		if(plundered_account.adjust_money(-payoff))
 			chosen_gang.paid_off = TRUE
-			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
+			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 		else
-			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
+			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 
 /proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
 	if(chosen_gang.paid_off)

@@ -37,7 +37,7 @@
 	if(!parent.shell)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent.shell, COOLDOWN_CIRCUIT_VIEW_SENSOR))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_VIEW_SENSOR))
 		result.set_output(null)
 		cooldown.set_output(COMPONENT_SIGNAL)
 		return

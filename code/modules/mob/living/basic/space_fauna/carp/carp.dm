@@ -112,8 +112,8 @@
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
-	AddElement(/datum/element/basic_eating, 10, 0, null, desired_food)
-	AddElement(/datum/element/basic_eating, 0, 10, BRUTE, desired_trash) // We are killing our planet
+	AddElement(/datum/element/basic_eating, food_types = desired_food)
+	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 10, damage_type = BRUTE, food_types = desired_trash) // We are killing our planet
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, desired_food + desired_trash)
 
 /// Set a random colour on the carp, override to do something else
