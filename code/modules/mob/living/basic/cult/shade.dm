@@ -39,12 +39,13 @@
 /mob/living/basic/shade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+	if(isnull(theme))
+		return
+	icon_state = "shade_[theme]"
 	var/list/remains = string_list(remains_by_theme[theme])
 	if(length(remains))
 		AddElement(/datum/element/death_drops, remains)
-	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
-	if(!isnull(theme))
-		icon_state = "shade_[theme]"
 
 /mob/living/basic/shade/update_icon_state()
 	. = ..()
