@@ -51,5 +51,7 @@
 
 	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
+	living_parent.key = null
+	living_parent.ckey = null
 	old_mind = null
 	old_body = null

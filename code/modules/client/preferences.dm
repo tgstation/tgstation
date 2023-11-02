@@ -92,6 +92,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
+	parent = null
 	return ..()
 
 /datum/preferences/New(client/parent)
