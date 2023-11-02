@@ -154,7 +154,7 @@
 		if (!COOLDOWN_FINISHED(resetting_guardian, resetting_cooldown))
 			guardians -= resetting_guardian //clear out guardians that are already reset
 
-	if (!length(resetting_guardian))
+	if (!length(guardians))
 		to_chat(owner, span_holoparasite("You cannot reset [length(guardians) > 1 ? "any of your guardians":"your guardian"] yet."))
 		StartCooldown()
 		return FALSE
