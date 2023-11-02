@@ -25,9 +25,6 @@
  * Parent call
  */
 /mob/Destroy()
-	if(mock_client)
-		QDEL_NULL(mock_client)
-
 	if(client)
 		stack_trace("Mob with client has been deleted.")
 	else if(ckey)
@@ -52,6 +49,9 @@
 	ghostize() //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
+
+	if(mock_client)
+		mock_client.mob = null
 
 	return ..()
 

@@ -120,14 +120,15 @@
  *
  * Does not count as visiting, see visit proc.
  */
-/datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch=FALSE)
+/datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch = FALSE)
+	if(game_status == MAFIA_DEAD)
+		return FALSE
 	if(attacker && (attacker.role_flags & ROLE_ROLEBLOCKED))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MAFIA_ON_KILL, game, attacker, lynch) & MAFIA_PREVENT_KILL)
 		return FALSE
-	if(game_status != MAFIA_DEAD)
-		game_status = MAFIA_DEAD
-		body.death()
+	game_status = MAFIA_DEAD
+	body.death()
 	if(lynch)
 		reveal_role(game, verbose = TRUE)
 	game.living_roles -= src

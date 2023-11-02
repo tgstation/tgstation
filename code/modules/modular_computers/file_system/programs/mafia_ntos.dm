@@ -14,6 +14,7 @@
 	RegisterSignal(SSdcs, COMSIG_MAFIA_GAME_START, PROC_REF(on_game_start))
 
 /datum/computer_file/program/mafia/Destroy(force)
+	UnregisterSignal(SSdcs, COMSIG_MAFIA_GAME_START)
 	var/datum/mafia_controller/game = GLOB.mafia_game
 	if(!game)
 		return

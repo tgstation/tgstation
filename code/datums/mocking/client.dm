@@ -39,8 +39,7 @@
 
 /datum/client_interface/Destroy(force, ...)
 	GLOB.directory -= ckey
-	. = ..()
-	mob = null
+	return ..()
 
 /datum/client_interface/proc/IsByondMember()
 	return FALSE

@@ -250,7 +250,7 @@
 
 /// Fully randomizes everything according to the given flags.
 /mob/living/carbon/human/proc/randomize_human_appearance(randomize_flags = ALL)
-	var/datum/client_interface/pref_mock = new()
+	var/datum/client_interface/pref_mock = new(new /datum/client_interface)
 	var/datum/preferences/preferences = new(pref_mock)
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
@@ -261,7 +261,6 @@
 			preference.apply_to_human(src, preference.create_random_value(preferences))
 
 	fully_replace_character_name(real_name, dna.species.random_name())
-	qdel(pref_mock)
 
 /**
  * Setter for mob height

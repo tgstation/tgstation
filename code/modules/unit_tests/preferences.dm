@@ -2,8 +2,7 @@
 /datum/unit_test/preferences_implement_everything
 
 /datum/unit_test/preferences_implement_everything/Run()
-	var/datum/client_interface/pref_mock = new()
-	var/datum/preferences/preferences = new(pref_mock)
+	var/datum/preferences/preferences = new(new /datum/client_interface)
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	for (var/preference_type in GLOB.preference_entries)
@@ -20,7 +19,6 @@
 		preference.is_valid("string")
 		preference.is_valid(100)
 		preference.is_valid(list(1, 2, 3))
-	qdel(pref_mock)
 
 /// Requires all preferences to have a valid, unique savefile_identifier.
 /datum/unit_test/preferences_valid_savefile_key
