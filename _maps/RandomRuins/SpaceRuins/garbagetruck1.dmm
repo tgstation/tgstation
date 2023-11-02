@@ -42,6 +42,10 @@
 /obj/effect/decal/cleanable/garbage,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"bF" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "ew" = (
 /obj/item/trash/can/food/peaches/maint,
 /obj/item/food/breadslice/moldy/bacteria,
@@ -66,6 +70,9 @@
 	pixel_y = -10
 	},
 /turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"fI" = (
+/turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "fP" = (
 /obj/item/match,
@@ -145,11 +152,10 @@
 /obj/item/melee/flyswatter,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"hb" = (
-/obj/machinery/light/warm,
+"hq" = (
+/obj/structure/chair/comfy/shuttle,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "hH" = (
 /obj/item/clothing/mask/surgical,
@@ -266,6 +272,11 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"kS" = (
+/obj/machinery/light/warm,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "kV" = (
 /obj/machinery/computer/terminal{
 	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
@@ -317,22 +328,6 @@
 /obj/structure/closet/secure_closet/freezer/empty,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"oF" = (
-/obj/item/clothing/head/cone{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/machinery/light/warm,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
-	locked = 0;
-	pixel_y = -25;
-	start_charge = 0
-	},
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "oL" = (
 /obj/structure/table/reinforced,
 /obj/item/analyzer{
@@ -359,12 +354,6 @@
 /obj/effect/decal/cleanable/ants,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"pD" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "pF" = (
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/item/food/deadmouse/moldy,
@@ -384,6 +373,9 @@
 	},
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"qM" = (
+/turf/open/space/basic,
+/area/space)
 "re" = (
 /obj/item/trash/shrimp_chips,
 /obj/item/trash/sosjerky,
@@ -520,11 +512,6 @@
 	pixel_y = -6
 	},
 /turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
-"xu" = (
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "xZ" = (
 /obj/item/restraints/handcuffs/cable/zipties/used,
@@ -708,10 +695,6 @@
 /obj/effect/spawner/random/trash/bucket,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"Fh" = (
-/turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Fp" = (
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/item/storage/bag/trash/filled,
@@ -839,6 +822,13 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ie" = (
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "II" = (
 /obj/structure/closet/crate/trashcart/filled,
@@ -1056,6 +1046,21 @@
 /obj/item/organ/internal/heart/rat,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"PU" = (
+/obj/item/clothing/head/cone{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/light/warm,
+/obj/machinery/power/apc{
+	cell_type = /obj/item/stock_parts/cell/lead;
+	locked = 0;
+	pixel_y = -25;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Qi" = (
 /obj/item/book/bible,
 /obj/structure/closet/crate/cardboard,
@@ -1090,14 +1095,6 @@
 /mob/living/basic/mouse/rat,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"RO" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
-	},
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Sa" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
@@ -1121,10 +1118,6 @@
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"TH" = (
-/turf/open/space/basic,
-/turf/template_noop,
-/area/space)
 "TX" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/dumpsterair,
@@ -1248,29 +1241,29 @@
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 
 (1,1,1) = {"
-TH
-TH
+qM
+qM
 pP
 pP
 pP
 OD
 VL
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
 "}
 (2,1,1) = {"
-TH
+qM
 OD
 TB
 TB
@@ -1317,8 +1310,8 @@ yi
 og
 TB
 kV
-pD
-hb
+hq
+kS
 OD
 Sa
 xf
@@ -1340,7 +1333,7 @@ AR
 TB
 xk
 IR
-xu
+bF
 OD
 Sa
 Ci
@@ -1362,7 +1355,7 @@ XY
 TB
 Od
 OD
-RO
+Ie
 JA
 tU
 TX
@@ -1384,7 +1377,7 @@ XY
 Od
 Yu
 oL
-xu
+bF
 JA
 tU
 fb
@@ -1404,9 +1397,9 @@ Sa
 (8,1,1) = {"
 og
 Od
-Fh
-Fh
-xu
+fI
+fI
+bF
 OD
 Sa
 js
@@ -1426,9 +1419,9 @@ Sa
 (9,1,1) = {"
 XY
 Od
-Fh
-xu
-oF
+fI
+bF
+PU
 OD
 Sa
 Qi
@@ -1448,7 +1441,7 @@ Sa
 (10,1,1) = {"
 AR
 Od
-Fh
+fI
 vA
 VB
 OD
@@ -1468,7 +1461,7 @@ JH
 yi
 "}
 (11,1,1) = {"
-TH
+qM
 OD
 Xw
 Od
@@ -1490,24 +1483,24 @@ Sa
 Sa
 "}
 (12,1,1) = {"
-TH
-TH
+qM
+qM
 pP
 pP
 UX
 OD
 VL
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
+qM
 "}

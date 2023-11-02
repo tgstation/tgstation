@@ -17,6 +17,10 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/toystore)
+"bU" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/toystore)
 "cf" = (
 /obj/item/paint_palette,
 /obj/item/storage/crayons,
@@ -30,6 +34,11 @@
 /obj/item/clothing/mask/mummy,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"cq" = (
+/obj/machinery/light/warm,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "cT" = (
 /obj/item/c_tube,
@@ -56,25 +65,8 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
-"gz" = (
-/obj/item/clothing/head/cone{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/machinery/light/warm,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
-	locked = 0;
-	pixel_y = -25;
-	start_charge = 0
-	},
-/obj/structure/cable,
+"eL" = (
 /turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/toystore)
-"gA" = (
-/turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "hD" = (
 /obj/structure/mannequin/wood{
@@ -312,6 +304,13 @@
 /obj/structure/frame/computer,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
+"wu" = (
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/toystore)
 "wy" = (
 /obj/item/barcodescanner,
 /obj/effect/decal/cleanable/dirt,
@@ -546,6 +545,11 @@
 /obj/machinery/door/poddoor/shutters/preopen,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
+"ER" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/toystore)
 "FM" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/clothing/mask/surgical,
@@ -633,18 +637,27 @@
 /obj/item/computer_disk/maintenance/modsuit_control,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
+"KR" = (
+/obj/item/clothing/head/cone{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/light/warm,
+/obj/machinery/power/apc{
+	cell_type = /obj/item/stock_parts/cell/lead;
+	locked = 0;
+	pixel_y = -25;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/toystore)
 "Lm" = (
 /obj/effect/decal/cleanable/garbage,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Lu" = (
 /obj/item/kirbyplants/synthetic/plant27,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/toystore)
-"LS" = (
-/obj/machinery/light/warm,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Mp" = (
@@ -659,20 +672,9 @@
 /obj/item/healthanalyzer/simple/disease,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
-"No" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/toystore)
 "Nz" = (
 /obj/machinery/door/airlock/shuttle,
 /turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/toystore)
-"Oy" = (
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "OZ" = (
@@ -785,10 +787,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/toystore)
-"TH" = (
-/turf/open/space/basic,
-/turf/template_noop,
-/area/space)
 "TO" = (
 /obj/item/mop,
 /obj/item/multitool{
@@ -826,14 +824,6 @@
 "Xg" = (
 /obj/structure/spider/stickyweb,
 /obj/item/clothing/ears/earmuffs,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/toystore)
-"Xq" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
-	},
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "Xs" = (
@@ -880,6 +870,9 @@
 /obj/effect/spawner/random/bureaucracy/paper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
+"Zi" = (
+/turf/open/space/basic,
+/area/space)
 "ZM" = (
 /obj/item/papercutter,
 /obj/item/paper_bin,
@@ -891,29 +884,29 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 
 (1,1,1) = {"
-TH
-TH
+Zi
+Zi
 lg
 lg
 lg
 nM
 VL
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
 "}
 (2,1,1) = {"
-TH
+Zi
 nM
 dn
 dn
@@ -960,8 +953,8 @@ rb
 yP
 dn
 zs
-No
-LS
+ER
+cq
 nM
 Yr
 ng
@@ -983,7 +976,7 @@ rI
 dn
 uX
 uT
-Oy
+bU
 nM
 Yr
 mf
@@ -1005,7 +998,7 @@ Hj
 dn
 jD
 nM
-Xq
+wu
 Nz
 Dv
 IS
@@ -1027,7 +1020,7 @@ Hj
 jD
 bL
 Ym
-Oy
+bU
 Nz
 Dv
 ld
@@ -1047,9 +1040,9 @@ Yr
 (8,1,1) = {"
 yP
 jD
-gA
-gA
-Oy
+eL
+eL
+bU
 nM
 Yr
 rr
@@ -1069,9 +1062,9 @@ Yr
 (9,1,1) = {"
 Hj
 jD
-gA
-Oy
-gz
+eL
+bU
+KR
 nM
 Gt
 UD
@@ -1091,7 +1084,7 @@ Yr
 (10,1,1) = {"
 rI
 jD
-gA
+eL
 ST
 aj
 nM
@@ -1111,7 +1104,7 @@ hD
 rb
 "}
 (11,1,1) = {"
-TH
+Zi
 nM
 IM
 jD
@@ -1133,24 +1126,24 @@ Yr
 Yr
 "}
 (12,1,1) = {"
-TH
-TH
+Zi
+Zi
 lg
 lg
 ri
 nM
 VL
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
-TH
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
+Zi
 "}
