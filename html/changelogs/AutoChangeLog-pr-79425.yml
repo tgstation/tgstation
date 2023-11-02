@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - refactor: "Proteon constructs now use the basic mob framework. The ones encountered in ruins are a bit flightier now, and will briefly flee combat if attacked - only so that they can return and menace you again soon after. Please report any bugs."

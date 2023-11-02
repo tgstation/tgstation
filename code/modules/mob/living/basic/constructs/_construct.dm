@@ -66,7 +66,7 @@
 			heal_brute = 5,\
 			heal_burn = 0,\
 			heal_time = 0,\
-			valid_targets_typecache = typecacheof(list(/mob/living/basic/construct, /mob/living/simple_animal/hostile/construct, /mob/living/simple_animal/shade)),\
+			valid_targets_typecache = typecacheof(list(/mob/living/basic/construct, /mob/living/simple_animal/shade)),\
 			valid_biotypes = MOB_MINERAL | MOB_SPIRIT,\
 			self_targetting = can_repair_self ? HEALING_TOUCH_ANYONE : HEALING_TOUCH_NOT_SELF,\
 			action_text = "%SOURCE% begins repairing %TARGET%'s dents.",\
@@ -128,34 +128,6 @@
 
 /mob/living/basic/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return FALSE
-
-// Allows simple constructs to repair basic constructs.
-/mob/living/basic/construct/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(!isconstruct(user))
-		if(src != user)
-			return ..()
-		return
-
-	if(src == user) //basic constructs use the healing hands component instead
-		return
-
-	var/mob/living/simple_animal/hostile/construct/doll = user
-	if(!doll.can_repair || (doll == src && !doll.can_repair_self))
-		return ..()
-	if(theme != doll.theme)
-		return ..()
-
-	if(health >= maxHealth)
-		to_chat(user, span_cult("You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!"))
-		return
-
-	heal_overall_damage(brute = 5)
-
-	Beam(user, icon_state = "sendbeam", time = 4)
-	user.visible_message(
-		span_danger("[user] repairs some of \the <b>[src]'s</b> dents."),
-		span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."),
-	)
 
 /// Construct ectoplasm. Largely a placeholder, since the death drop element needs a unique list.
 /obj/item/ectoplasm/construct
