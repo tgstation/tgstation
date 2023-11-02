@@ -58,6 +58,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
 	if(isnull(beacon))
 		balloon_alert(user, "not linked")
+		beacon_ref = null
 		return
 
 	if(!can_use_indoors)
