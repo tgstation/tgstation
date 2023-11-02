@@ -5766,7 +5766,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/closed/wall,
 /area/station/science/xenobiology)
@@ -7672,46 +7672,16 @@
 /turf/open/floor/iron,
 /area/station/escapepodbay)
 "bmO" = (
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 8
+/obj/machinery/elevator_control_panel/directional/west{
+	linked_elevator_id = "tram_cargo_lift";
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
+	},
+/obj/effect/landmark/lift_id{
+	specific_lift_id = "tram_cargo_lift"
 	},
 /obj/structure/industrial_lift/public,
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
-	},
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "tram_cargo_lift"
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 8
-	},
-/obj/structure/industrial_lift/public,
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
-	},
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "tram_cargo_lift"
-	},
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "tram_cargo_lift"
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 8
-	},
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_cargo_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck");
-	req_access = list("mining")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/miningdock)
@@ -9556,36 +9526,13 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "bSs" = (
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 9
+/obj/machinery/elevator_control_panel/directional/west{
+	linked_elevator_id = "tram_sci_lift";
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 9
-	},
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 9
-	},
-/obj/structure/industrial_lift/public,
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 9
-	},
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_sci_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/science/lower)
@@ -10966,36 +10913,13 @@
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "cnD" = (
-/obj/effect/turf_decal/caution/stand_clear/red{
-	dir = 1
-	},
-/obj/structure/industrial_lift/public,
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/caution/stand_clear/red{
-	dir = 1
-	},
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 1
-	},
-/obj/machinery/elevator_control_panel/directional/west{
-	linked_elevator_id = "tram_perma_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/security/execution/transfer)
@@ -11029,24 +10953,7 @@
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
-	},
-/obj/structure/railing,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning,
-/obj/structure/industrial_lift/public,
-/obj/machinery/elevator_control_panel/directional/south{
-	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning,
-/obj/machinery/elevator_control_panel/directional/south{
-	linked_elevator_id = "tram_dorm_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
@@ -21381,7 +21288,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "fGj" = (
 /obj/machinery/computer/atmos_control/oxygen_tank{
-	atmos_chambers = list("o2ordance"="Oxygen  Supply")
+	atmos_chambers = list("o2ordance"="Oxygen    Supply")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/north,
@@ -43733,33 +43640,10 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "mXG" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/machinery/elevator_control_panel/directional/north{
-	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 1
-	},
-/obj/structure/industrial_lift/public,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/elevator_control_panel/directional/north{
-	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 1
-	},
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "tram_upper_center_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 1
@@ -61205,45 +61089,16 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sEp" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 4
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /obj/structure/industrial_lift/public,
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "tram_lower_center_lift";
 	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/dark_red/warning{
 	dir = 4
-	},
-/obj/structure/industrial_lift/public,
-/obj/machinery/elevator_control_panel/directional/east{
-	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
-	},
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/dark_red/warning{
-	dir = 4
-	},
-/obj/machinery/elevator_control_panel/directional/east{
-	linked_elevator_id = "tram_lower_center_lift";
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/secondary/construction/engineering)
@@ -76432,7 +76287,7 @@
 /obj/machinery/elevator_control_panel{
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower    Deck","3"="Upper    Deck")
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/dark_red/warning{
@@ -77039,7 +76894,7 @@
 	layer = 3.1;
 	linked_elevator_id = "tram_xeno_lift";
 	pixel_y = 2;
-	preset_destination_names = list("2"="Lower                                Deck","3"="Upper                                Deck")
+	preset_destination_names = list("2"="Lower                                                                Deck","3"="Upper                                                                Deck")
 	},
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
