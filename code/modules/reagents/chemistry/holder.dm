@@ -812,7 +812,7 @@
 			var/datum/reagent/toxin/toxin = reagent
 			var/amount = toxin.volume
 			if(belly)
-				amount = belly.reagents.get_reagent_amount(toxin.type)
+				amount += belly.reagents.get_reagent_amount(toxin.type)
 
 			if(amount <= liver_tolerance)
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * seconds_per_tick)
