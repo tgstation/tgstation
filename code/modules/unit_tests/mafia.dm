@@ -41,6 +41,8 @@
 
 	mock_client.mob = null
 
+	qdel(controller)
+
 /datum/unit_test/mafia/proc/on_mafia_start(datum/controller/subsystem/processing/dcs/source, datum/mafia_controller/game)
 	SIGNAL_HANDLER
 	mafia_game_started = TRUE

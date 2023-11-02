@@ -401,6 +401,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /**
  * The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.
  * Because of how check_victory works, the game is halted in other places by this point.
+ * We won't delete ourselves in a certain amount of time in unit tests, as the unit test will handle our deletion instead.
  *
  * What players do in this phase:
  * * See everyone's role postgame
@@ -415,7 +416,9 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			roles.mafia_alert.update_text("[message]")
 		roles.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
+#ifndef UNIT_TESTS
 	next_phase_timer = QDEL_IN_STOPPABLE(src, VICTORY_LAP_PERIOD_LENGTH)
+#endif
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
