@@ -3,10 +3,8 @@
 /obj/item/storage/belt/unfathomable_curio
 	name = "Unfathomable Curio"
 	desc = "It. It looks backs. It looks past. It looks in. It sees. It hides. It opens."
-	icon = 'icons/obj/antags/eldritch.dmi'
-	base_icon_state = "book"
-	icon_state = "book"
-	worn_icon_state = "book"
+	icon_state = "unfathomable_curio"
+	worn_icon_state = "unfathomable_curio"
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_CREW * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
