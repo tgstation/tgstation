@@ -46,7 +46,7 @@
 
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
-	ghostize() //False, since we're deleting it currently
+	ghostize(can_reenter_corpse = FALSE) //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
 
