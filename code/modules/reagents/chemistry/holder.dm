@@ -1409,8 +1409,8 @@
 	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type in reagents)
-			total_amount += round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
-	return total_amount
+			total_amount += cached_reagent.volume
+	return round(total_amount, CHEMICAL_QUANTISATION_LEVEL)
 
 /**
  * Get the purity of this reagent
