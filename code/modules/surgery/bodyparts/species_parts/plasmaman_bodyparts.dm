@@ -24,6 +24,7 @@
 	brute_modifier = 1.5 //Plasmemes are weak
 	burn_modifier = 1.5 //Plasmemes are weak
 	bodypart_flags = BODYPART_UNHUSKABLE
+	wing_types = NONE
 
 /obj/item/bodypart/arm/left/plasmaman
 	icon = 'icons/mob/human/species/plasmaman/bodyparts.dmi'

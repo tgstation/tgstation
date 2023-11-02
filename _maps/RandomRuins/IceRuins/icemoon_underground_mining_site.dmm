@@ -207,7 +207,7 @@
 /area/icemoon/underground/explored)
 "BN" = (
 /obj/item/flashlight/glowstick/red{
-	on = 1
+	start_on = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)

@@ -55,9 +55,19 @@
 	if(!isliving(cast_on))
 		to_chat(owner, span_warning("You can only swap minds with living beings!"))
 		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_MIND_TEMPORARILY_GONE))
+		to_chat(owner, span_warning("This creature's mind is somewhere else entirely!"))
+		return FALSE
+
+	if(HAS_TRAIT(cast_on, TRAIT_NO_MINDSWAP))
+		to_chat(owner, span_warning("This type of magic can't operate on [cast_on.p_their()] mind!"))
+		return FALSE
+
 	if(is_type_in_typecache(cast_on, blacklisted_mobs))
 		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
 		return FALSE
+
 	if(isguardian(cast_on))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
 		if(stand.summoner && stand.summoner == owner)
