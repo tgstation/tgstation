@@ -18,4 +18,4 @@
 /datum/lazy_template/virtual_domain/beach_bar/proc/on_drink_drank(datum/source)
 	SIGNAL_HANDLER
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_GOAL_POINT, 0.5)
+	add_points(0.5)

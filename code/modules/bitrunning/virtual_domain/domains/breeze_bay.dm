@@ -19,4 +19,4 @@
 	if(isnull(reward))
 		return
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_GOAL_POINT, 2)
+	add_points(2)
