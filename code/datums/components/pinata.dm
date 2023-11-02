@@ -33,7 +33,7 @@
 			return
 	return COMPONENT_INCOMPATIBLE
 
-/datum/component/pinata/proc/damage_inflicted(obj/target, damage, damage_type)
+/datum/component/pinata/proc/damage_inflicted(obj/target, damage, damage_type, ...)
 	SIGNAL_HANDLER
 	if(damage < minimum_damage || damage_type == STAMINA || damage_type == OXY)
 		return
