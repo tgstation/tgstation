@@ -140,7 +140,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/list/bounds = current_map.load(spawn_area)
 	if(!bounds)
 		CRASH("Loading mafia map failed!")
+#ifdef UNIT_TESTS //unit test map is smaller
+	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 7, spawn_area.y + 7, spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
+#else
 	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 23, spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
+#endif
 	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
 		for(var/obj/effect/landmark/mafia/possible_spawn in GLOB.landmarks_list)
 			if(istype(possible_spawn, /obj/effect/landmark/mafia/town_center))
