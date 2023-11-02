@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Changelings gutted by Megafauna now take 8x as long to finalize revival stasis (~5 minutes)."

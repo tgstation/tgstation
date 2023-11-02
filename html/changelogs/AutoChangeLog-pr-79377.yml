@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes:
+  - bugfix: "Fixes turrets being invisible when they shouldn't be"
