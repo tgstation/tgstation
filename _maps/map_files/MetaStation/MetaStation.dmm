@@ -21899,10 +21899,6 @@
 "ihb" = (
 /turf/closed/wall,
 /area/station/security/prison/shower)
-"ihh" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/station/maintenance/aft/lesser)
 "ihq" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/central)
@@ -99434,7 +99430,7 @@ lMJ
 uGg
 nFa
 uGg
-ihh
+dKC
 dKC
 aaa
 aaa
