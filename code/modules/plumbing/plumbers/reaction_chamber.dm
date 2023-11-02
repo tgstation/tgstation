@@ -46,7 +46,7 @@
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 
-	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
+	if(holder.total_volume <= CHEMICAL_VOLUME_ROUNDING && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
 	return NONE
@@ -56,6 +56,9 @@
 	var/power_usage = active_power_usage * 0.5
 
 	if(!emptying || reagents.is_reacting)
+		//do reactions and stuff
+		reagents.handle_reactions()
+
 		//adjust temperature of final solution
 		var/temp_diff = target_temperature - reagents.chem_temp
 		if(abs(temp_diff) > 0.01) //if we are not close enough keep going

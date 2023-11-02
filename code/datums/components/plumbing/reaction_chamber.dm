@@ -30,7 +30,7 @@
 
 		//compute how much more is needed and round it
 		diff = chamber.required_reagents[required_reagent] - present_amount
-		if(diff >= 0.01)
+		if(diff >= CHEMICAL_VOLUME_ROUNDING)
 			process_request(min(diff, MACHINE_REAGENT_TRANSFER), required_reagent, dir)
 			return
 
