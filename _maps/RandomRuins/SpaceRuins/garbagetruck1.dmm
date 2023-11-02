@@ -176,6 +176,11 @@
 /obj/effect/spawner/random/food_or_drink/seed,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"hN" = (
+/obj/item/shard,
+/obj/item/food/pizzaslice/moldy/bacteria,
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "iu" = (
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating/dumpsterair,
@@ -371,6 +376,12 @@
 /obj/structure/reagent_dispensers/servingdish{
 	anchored = 0
 	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"qm" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/obj/item/food/pizzaslice/moldy,
+/mob/living/basic/mouse/brown,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "qM" = (
@@ -1145,10 +1156,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
-"VF" = (
-/obj/item/shard,
-/turf/open/floor/plating/dumpsterair,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/space/basic,
@@ -1157,23 +1164,6 @@
 /obj/item/food/badrecipe/moldy/bacteria,
 /obj/effect/decal/cleanable/food/egg_smudge,
 /mob/living/basic/mouse,
-/turf/open/floor/plating/dumpsterair,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
-"Xr" = (
-/obj/effect/decal/cleanable/food/egg_smudge,
-/obj/item/food/pizzaslice/moldy/bacteria{
-	pixel_x = -8;
-	pixel_y = -4;
-	step_x = 0;
-	step_y = 0
-	},
-/obj/item/food/pizzaslice/moldy/bacteria{
-	pixel_x = 8;
-	pixel_y = 4;
-	step_x = 0;
-	step_y = 0
-	},
-/mob/living/basic/mouse/brown,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "XF" = (
@@ -1335,7 +1325,7 @@ bF
 OD
 Sa
 Ci
-Xr
+qm
 qd
 zK
 aP
@@ -1381,7 +1371,7 @@ tU
 fb
 pF
 Gh
-VF
+hN
 QL
 TX
 Mq
