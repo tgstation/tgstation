@@ -18,7 +18,6 @@
 				emotes += list(list(
 					"key" = emote.key,
 					"name" = emote.name,
-					"emote_path" = emote.type,
 					"hands" = emote.hands_use_check,
 					"visible" = emote.emote_type & EMOTE_VISIBLE,
 					"audible" = emote.emote_type & EMOTE_AUDIBLE,
@@ -36,14 +35,15 @@
 		return
 	switch(action)
 		if("play_emote")
-			var/emote_path = params["emote_path"]
+			var/emote_key = params["emote_key"]
+			if(isnull(emote_key) || !GLOB.emote_list[emote_key])
+				return
 			var/use_params = params["use_params"]
-			var/datum/emote/emote = new emote_path()
-			var/emote_act = emote.key
+			var/datum/emote/emote = GLOB.emote_list[emote_key][1]
 			var/emote_param
 			if(emote.message_param && use_params)
 				emote_param = tgui_input_text(usr, "Add params to the emote...", emote.message_param)
-			usr.emote(emote_act, message = emote_param, intentional = TRUE)
+			usr.emote(emote_key, message = emote_param, intentional = TRUE)
 
 /datum/emote_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -8,7 +8,6 @@ import { capitalizeFirst } from '../../common/string';
 type Emote = {
   key: string;
   name: string;
-  emote_path: string;
   hands: BooleanLike;
   visible: BooleanLike;
   audible: BooleanLike;
@@ -204,7 +203,7 @@ export const EmotePanelContent = (props, context) => {
                   }
                   onClick={() =>
                     act('play_emote', {
-                      emote_path: emote.emote_path,
+                      emote_key: emote.key,
                       use_params: useParams,
                     })
                   }>
