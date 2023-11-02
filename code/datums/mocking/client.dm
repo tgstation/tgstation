@@ -38,7 +38,7 @@
 	GLOB.directory[ckey] = src
 
 /datum/client_interface/Destroy(force, ...)
-	GLOB.directory -= src
+	GLOB.directory -= ckey
 	. = ..()
 	mob = null
 
