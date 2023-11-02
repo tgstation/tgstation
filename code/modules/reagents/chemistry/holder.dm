@@ -1410,6 +1410,7 @@
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type in reagents)
 			total_amount += cached_reagent.volume
+
 	return round(total_amount, CHEMICAL_QUANTISATION_LEVEL)
 
 /**
