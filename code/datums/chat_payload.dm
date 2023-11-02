@@ -2,6 +2,8 @@
 /datum/chat_payload
 	/// Number of times we tried to send this payload
 	var/send_tries = 0
+	/// world.time we sent last
+	var/last_send = 0
 	/// Sequence number of this payload
 	var/sequence_number = 0
 	/// Message we are sending

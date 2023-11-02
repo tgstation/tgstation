@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-#define CHAT_MAXIMUM_RESEND_TRIES 3
-
 SUBSYSTEM_DEF(chat)
 	name = "Chat"
 	flags = SS_TICKER|SS_NO_INIT
@@ -30,6 +28,7 @@ SUBSYSTEM_DEF(chat)
 /datum/controller/subsystem/chat/proc/send_payload_to_client(client/target, datum/chat_payload/payload)
 	target.tgui_panel.window.send_message("chat/message", payload.into_message())
 	payload.send_tries += 1
+	payload.last_send = world.time
 
 /datum/controller/subsystem/chat/fire()
 	for(var/ckey in client_to_payloads)
@@ -39,9 +38,11 @@ SUBSYSTEM_DEF(chat)
 			continue
 
 		for(var/datum/chat_payload/payload as anything in client_to_payloads[ckey])
-			if(payload.send_tries > CHAT_MAXIMUM_RESEND_TRIES)
+			if(payload.send_tries > CHAT_RESEND_TRIES)
 				LAZYREMOVEASSOC(client_to_payloads, ckey, payload)
 				continue // don't send this payload anymore; we tried
+			if((payload.last_send + CHAT_RESEND_TICKS) >= world.time)
+				continue // don't send this payload yet; we sent it recently
 			send_payload_to_client(target, payload)
 
 		if(MC_TICK_CHECK)

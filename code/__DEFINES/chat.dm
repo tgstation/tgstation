@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 
+/// Maximum number of times we will try to resend a message before giving up
+#define CHAT_RESEND_TRIES 3
+/// Number of ticks between each resend attempt
+#define CHAT_RESEND_TICKS 5
+
 #define MESSAGE_TYPE_SYSTEM "system"
 #define MESSAGE_TYPE_LOCALCHAT "localchat"
 #define MESSAGE_TYPE_RADIO "radio"
