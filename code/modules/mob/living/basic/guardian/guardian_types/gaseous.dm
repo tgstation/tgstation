@@ -98,8 +98,8 @@
 	RegisterSignal(owner, COMSIG_GUARDIAN_RECALLED, PROC_REF(stop_gas))
 
 /datum/action/cooldown/mob_cooldown/expel_gas/Remove(mob/removed_from)
-	. = ..()
 	UnregisterSignal(owner, list(COMSIG_GUARDIAN_RECALLED, COMSIG_LIVING_LIFE))
+	return ..()
 
 /datum/action/cooldown/mob_cooldown/expel_gas/Activate(atom/target)
 	// Regeneated each time just in case someone fucks with our list
@@ -107,7 +107,7 @@
 	for(var/datum/gas/gas as anything in possible_gases)
 		gas_selection[initial(gas.name)] = gas
 
-	var/picked_gas = tgui_input_list(src, "Select a gas to emit.", "Gas Producer", gas_selection)
+	var/picked_gas = tgui_input_list(owner, "Select a gas to emit.", "Gas Producer", gas_selection)
 	if(picked_gas == "None")
 		stop_gas()
 		return
@@ -115,8 +115,10 @@
 	var/gas_type = gas_selection[picked_gas]
 	if(isnull(picked_gas) || isnull(gas_type))
 		return
+
 	to_chat(owner, span_bolddanger("You start releasing [picked_gas]."))
 	owner.investigate_log("set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
+	var/had_gas = active_gas == null
 	active_gas = gas_type
 	if(!owner.particles)
 		owner.particles = new /particles/smoke/steam()
@@ -124,7 +126,8 @@
 		owner.particles.fadein = 5
 		owner.particles.height = 200
 	owner.particles.color = gas_colors[gas_type]
-	RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	if (!had_gas)
+		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /// Turns off the gas
 /datum/action/cooldown/mob_cooldown/expel_gas/proc/stop_gas()

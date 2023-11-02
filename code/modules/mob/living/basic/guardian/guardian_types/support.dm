@@ -35,7 +35,7 @@
 
 /mob/living/basic/guardian/support/set_guardian_colour(colour)
 	. = ..()
-	AddComponent(/datum/component/healing_touch, heal_colour = guardian_colour)
+	AddComponent(/datum/component/healing_touch, heal_color = guardian_colour)
 
 /// Called after we heal someone, show some visuals
 /mob/living/basic/guardian/support/proc/after_healed(mob/living/healed)
@@ -56,9 +56,12 @@
 	desc = "Mark the ground under your feet as a teleportation point. Alt-click things to teleport them to your beacon."
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "the_freezer"
+	background_icon = 'icons/hud/guardian.dmi'
+	background_icon_state = "base"
 	cooldown_time = 5 MINUTES
 	melee_cooldown_time = 0
 	cooldown_rounding = 1
+	click_to_activate = FALSE
 	/// Our teleportation beacon.
 	var/obj/structure/guardian_beacon/beacon
 	/// Time it takes to teleport something.
@@ -66,10 +69,10 @@
 
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/Grant(mob/granted_to)
 	. = ..()
-	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_teleporting))
+	RegisterSignal(owner, COMSIG_MOB_ALTCLICKON, PROC_REF(try_teleporting))
 
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/Remove(mob/removed_from)
-	UnregisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(owner, COMSIG_MOB_ALTCLICKON)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/Activate(atom/movable/target)
@@ -98,10 +101,8 @@
 	beacon = null
 
 /// Try and teleport something to our beacon
-/datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/try_teleporting(mob/living/source, atom/target, proximity, modifiers)
+/datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/try_teleporting(mob/living/source, atom/target)
 	SIGNAL_HANDLER
-	if (!LAZYACCESS(modifiers, ALT_CLICK))
-		return
 	if (!can_teleport(source, target))
 		return
 	INVOKE_ASYNC(src, PROC_REF(perform_teleport), source, target)
@@ -116,7 +117,7 @@
 		var/mob/living/basic/guardian/guardian_mob = source
 		if (!guardian_mob.is_deployed())
 			source.balloon_alert(source, "manifest yourself!")
-		return FALSE
+			return FALSE
 	if (!source.Adjacent(target))
 		target.balloon_alert(source, "too far!")
 		return FALSE

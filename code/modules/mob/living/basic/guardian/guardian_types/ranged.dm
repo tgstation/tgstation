@@ -64,6 +64,7 @@
 /// Become an incorporeal scout
 /datum/status_effect/guardian_scout_mode
 	id = "guardian_scout"
+	alert_type = null
 
 /datum/status_effect/guardian_scout_mode/on_apply()
 	animate(owner, alpha = 45, time = 0.5 SECONDS)
@@ -103,10 +104,13 @@
 /datum/action/cooldown/mob_cooldown/guardian_alarm_snare
 	name = "Surveillance Snare"
 	desc = "Place an invisible snare which will alert you when it is crossed."
-	button_icon = 'icons/effects/effects.dmi'
-	button_icon_state = "sonar_ping"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "eye"
+	background_icon = 'icons/hud/guardian.dmi'
+	background_icon_state = "base"
 	cooldown_time = 2 SECONDS
 	melee_cooldown_time = 0
+	click_to_activate = FALSE
 	/// How many snares can we have?
 	var/maximum_snares = 5
 	/// What snares have we already placed?
@@ -114,7 +118,7 @@
 
 /datum/action/cooldown/mob_cooldown/guardian_alarm_snare/Activate(atom/target)
 	if (length(placed_snares) >= maximum_snares)
-		var/picked_snare = tgui_input_list(src, "Choose a snare to replace.", "Remove Snare", sort_names(placed_snares))
+		var/picked_snare = tgui_input_list(owner, "Choose a snare to replace.", "Remove Snare", sort_names(placed_snares))
 		if(isnull(picked_snare))
 			return FALSE
 		qdel(picked_snare)

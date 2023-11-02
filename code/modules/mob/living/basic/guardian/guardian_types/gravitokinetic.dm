@@ -32,7 +32,7 @@
 	to_who.AddElement(/datum/element/forced_gravity, 1)
 
 /mob/living/basic/guardian/gravitokinetic/cut_summoner(different_person)
-	summoner.RemoveElement(/datum/element/forced_gravity, 1)
+	summoner?.RemoveElement(/datum/element/forced_gravity, 1)
 	return ..()
 
 /mob/living/basic/guardian/gravitokinetic/death(gibbed)

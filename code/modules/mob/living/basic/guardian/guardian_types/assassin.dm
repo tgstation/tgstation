@@ -67,7 +67,7 @@
 /// Status effect which makes us sneakier and do bonus damage
 /datum/status_effect/guardian_stealth
 	id = "guardian_stealth"
-	alert_type = /atom/movable/screen/alert/instealth
+	alert_type = /atom/movable/screen/alert/status_effect/instealth
 	/// Damage added in stealth mode.
 	var/damage_bonus = 35
 	/// Our wound bonus when in stealth mode.

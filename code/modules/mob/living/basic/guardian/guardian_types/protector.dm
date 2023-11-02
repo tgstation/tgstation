@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_PROTECTOR
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	range = 15
+	range = 5 // You want this to be low so you can drag them around
 	damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
 	playstyle_string = span_holoparasite("As a <b>protector</b> type you cause your summoner to leash to you instead of you leashing to them and have two modes; Combat Mode, where you do and take medium damage, and Protection Mode, where you do and take almost no damage, but move slightly slower.")
 	creator_name = "Protector"
@@ -45,6 +45,8 @@
 	desc = "Enter a defensive stance which slows you down and reduces your damage, but makes you almost invincible."
 	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "shield-old"
+	background_icon = 'icons/hud/guardian.dmi'
+	background_icon_state = "base"
 	cooldown_time = 1 SECONDS
 	click_to_activate = FALSE
 
@@ -61,6 +63,7 @@
 /// Makes the guardian even more durable, but slower
 /datum/status_effect/protector_shield
 	id = "guardian_shield"
+	alert_type = null
 	/// Damage removed in protecting mode.
 	var/damage_penalty = 13
 	/// Colour for our various overlays.
@@ -112,7 +115,7 @@
 /// Flash an animation when someone tries to hurt us
 /datum/status_effect/protector_shield/proc/on_health_changed(mob/living/our_mob, type, amount, forced)
 	SIGNAL_HANDLER
-	if (amount <= 0)
+	if (amount <= 0 && !QDELETED(our_mob))
 		return
 	var/image/flash_overlay = new('icons/effects/effects.dmi', owner, "shield-flash", dir = pick(GLOB.cardinals))
 	flash_overlay.color = overlay_colour

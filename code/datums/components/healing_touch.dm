@@ -42,7 +42,7 @@
 	/// Color for the healing effect
 	var/heal_color
 	/// Optional click modifier required
-	var/require_modifier
+	var/required_modifier
 	/// Callback to run after healing a mob
 	var/datum/callback/after_healed
 
@@ -63,7 +63,7 @@
 	complete_text = "%SOURCE% finishes healing %TARGET%",
 	show_health = FALSE,
 	heal_color = COLOR_HEALING_CYAN,
-	require_modifier = null,
+	required_modifier = null,
 	datum/callback/after_healed = null,
 )
 	if (!isliving(parent))
@@ -85,7 +85,7 @@
 	src.complete_text = complete_text
 	src.show_health = show_health
 	src.heal_color = heal_color
-	src.require_modifier = require_modifier
+	src.required_modifier = required_modifier
 	src.after_healed = after_healed
 
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_healing)) // Players
@@ -113,7 +113,7 @@
 	if (!isliving(target))
 		return
 
-	if (!isnull(require_modifier) && !LAZYACCESS(modifiers, require_modifier))
+	if (!isnull(required_modifier) && !LAZYACCESS(modifiers, required_modifier))
 		return
 
 	if (length(valid_targets_typecache) && !is_type_in_typecache(target, valid_targets_typecache))

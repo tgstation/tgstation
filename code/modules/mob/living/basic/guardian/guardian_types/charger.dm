@@ -15,20 +15,40 @@
 /mob/living/basic/guardian/charger/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/guardian)
-	var/datum/action/cooldown/mob_cooldown/charge/guardian/charge = new(src)
+	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/charge = new(src)
 	charge.Grant(src)
+	charge.set_click_ability(src)
 
 /// Guardian charger's charging attack, it knocks items out of people's hands
-/datum/action/cooldown/mob_cooldown/charge/guardian
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian
 	name = "Charge!"
 	cooldown_time = 4 SECONDS
 	melee_cooldown_time = 0 SECONDS
-	button_icon = 'icons/mob/actions/actions_elites.dmi'
-	button_icon_state = "legionnaire_charge"
+	button_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "speed"
+	background_icon = 'icons/hud/guardian.dmi'
+	background_icon_state = "base"
+	charge_delay = 0
+	recoil_duration = 0
 	charge_damage = 20
+	charge_distance = 10
 	unset_after_click = FALSE
+	destroy_objects = FALSE
 
-/datum/action/cooldown/mob_cooldown/charge/guardian/can_hit_target(atom/movable/source, atom/target)
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/PreActivate(atom/target)
+	if (!isguardian(owner))
+		return ..()
+	var/mob/living/basic/guardian/guardian_owner = owner
+	if (guardian_owner.is_deployed())
+		return ..()
+	return FALSE
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/do_charge_indicator(atom/charger, atom/charge_target)
+	playsound(charger, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
+	var/obj/effect/temp_visual/decoy/decoy_flash = new /obj/effect/temp_visual/decoy(charger.loc, charger)
+	animate(decoy_flash, alpha = 0, color = "#FF0000", transform = matrix() * 2, time = 3)
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/can_hit_target(atom/movable/source, atom/target)
 	var/mob/living/living_target = target
 	if (!istype(living_target))
 		return FALSE

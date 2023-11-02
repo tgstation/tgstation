@@ -100,6 +100,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		SEND_SIGNAL(src, COMSIG_TRAITOR_ITEM_USED(type))
 	else
 		to_chat(user, failure_message)
+		used = FALSE
 
 /// Actually create our guy
 /obj/item/guardian_creator/proc/spawn_guardian(mob/living/user, mob/dead/candidate, guardian_path)
@@ -110,12 +111,12 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		balloon_alert(user, "already got one!")
 		used = FALSE
 		return
-	var/mob/living/basic/guardian/summoned_guardian = new guardian_path(user, theme)
+	var/datum/guardian_fluff/guardian_theme = GLOB.guardian_themes[theme]
+	var/mob/living/basic/guardian/summoned_guardian = new guardian_path(user, guardian_theme)
 	summoned_guardian.set_summoner(user, different_person = TRUE)
 	summoned_guardian.key = candidate.key
 	user.log_message("has summoned [key_name(summoned_guardian)], a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
 	summoned_guardian.log_message("was summoned as a [summoned_guardian.creator_name] holoparasite.", LOG_GAME)
-	var/datum/guardian_fluff/guardian_theme = GLOB.guardian_themes[theme]
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
 	to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
 	summoned_guardian.client?.init_verbs()

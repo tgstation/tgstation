@@ -17,6 +17,12 @@
 		updatehealth()
 	return . - bruteloss
 
+/mob/living/basic/get_damage_mod(damage_type)
+	var/modifier = ..()
+	if (damage_type in damage_coeff)
+		return modifier * damage_coeff[damage_type]
+	return modifier
+
 /mob/living/basic/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0

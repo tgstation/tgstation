@@ -50,7 +50,7 @@
 /// Try picking up items
 /datum/element/dextrous/proc/on_hand_clicked(mob/living/hand_haver, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
-	if(!proximity)
+	if(!proximity && target.loc != hand_haver)
 		return NONE
 	if (!isitem(target) && hand_haver.combat_mode)
 		return NONE

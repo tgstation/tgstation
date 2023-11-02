@@ -170,7 +170,6 @@
 /// Actually hit someone
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, mob/living/target, damage_dealt)
 	target.visible_message("<span class='danger'>[source] slams into [target]!</span>", "<span class='userdanger'>[source] tramples you into the ground!</span>")
-	source.forceMove(get_turf(target))
 	target.apply_damage(damage_dealt, BRUTE, wound_bonus = CANT_WOUND)
 	playsound(get_turf(target), 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	shake_camera(target, 4, 3)
@@ -218,7 +217,7 @@
 			living_source.Stun(recoil_duration, ignore_canstun = TRUE)
 			return
 
-	living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
+	living_target.visible_message(span_danger("[source] charges into [living_target]!"), span_userdanger("[source] charges into you!"))
 	living_target.Knockdown(knockdown_duration)
 
 /datum/status_effect/tired_post_charge

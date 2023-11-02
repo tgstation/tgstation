@@ -46,7 +46,8 @@
 	if (!. || !validate_target(target) || (target in enemy_chains))
 		return
 	if (length(enemy_chains) == 2)
-		var/datum/old_chain = popleft(enemy_chains)
+		var/old_target = enemy_chains[1]
+		var/datum/old_chain = enemy_chains[old_target]
 		qdel(old_chain)
 	var/datum/new_chain = chain_to(target)
 	RegisterSignal(new_chain, COMSIG_QDELETING, PROC_REF(on_chain_deleted))
@@ -56,6 +57,7 @@
 /mob/living/basic/guardian/lightning/proc/chain_to(atom/target, max_range = 7)
 	var/datum/component/chain = AddComponent(\
 		/datum/component/damage_chain, \
+		linked_to = target, \
 		max_distance = max_range, \
 		beam_state = "lightning[rand(1,12)]", \
 		beam_type = /obj/effect/ebeam/chain, \

@@ -15,6 +15,10 @@
 #define GUARDIAN_STANDARD "standard"
 #define GUARDIAN_SUPPORT "support"
 
+/// List of all guardians currently extant
+GLOBAL_LIST_EMPTY(parasites)
+
+/// Assoc list of guardian theme singletons
 GLOBAL_LIST_INIT(guardian_themes, list(
 	GUARDIAN_THEME_TECH = new /datum/guardian_fluff/tech,
 	GUARDIAN_THEME_MAGIC = new /datum/guardian_fluff,

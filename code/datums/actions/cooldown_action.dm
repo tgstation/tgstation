@@ -177,6 +177,8 @@
 /// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownOthers(override_cooldown_time)
+	if(!length(owner.actions))
+		return // Possible if they have an action they don't control
 	for(var/datum/action/cooldown/shared_ability in owner.actions - src)
 		if(!(shared_cooldown & shared_ability.shared_cooldown))
 			continue

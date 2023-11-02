@@ -26,8 +26,9 @@
 	RegisterSignals(parent, COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES, PROC_REF(on_damage_adjusted))
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_updated))
 	RegisterSignal(parent, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_status_tab_updated))
-	var/mob/living/living_parent = parent
-	living_parent.updatehealth()
+	if (!isnull(host))
+		var/mob/living/living_parent = parent
+		living_parent.updatehealth()
 
 /datum/component/life_link/UnregisterFromParent()
 	unregister_host()
@@ -41,6 +42,7 @@
 	unregister_host()
 	if (isnull(new_host))
 		return
+	host = new_host
 	RegisterSignal(host, COMSIG_LIVING_DEATH, PROC_REF(on_host_died))
 	RegisterSignal(host, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_updated))
 	RegisterSignal(host, COMSIG_LIVING_REVIVE, PROC_REF(on_host_revived))
@@ -60,17 +62,18 @@
 	SIGNAL_HANDLER
 	if (forced)
 		return
+	amount *= our_mob.get_damage_mod(type)
 	switch (type)
 		if(BRUTE)
-			host.adjustBruteLoss(amount, forced = forced)
+			host.adjustBruteLoss(amount, forced = TRUE)
 		if(BURN)
-			host.adjustFireLoss(amount, forced = forced)
+			host.adjustFireLoss(amount, forced = TRUE)
 		if(TOX)
-			host.adjustToxLoss(amount, forced = forced)
+			host.adjustToxLoss(amount, forced = TRUE)
 		if(OXY)
-			host.adjustOxyLoss(amount, forced = forced)
+			host.adjustOxyLoss(amount, forced = TRUE)
 		if(CLONE)
-			host.adjustCloneLoss(amount, forced = forced)
+			host.adjustCloneLoss(amount, forced = TRUE)
 
 	on_passed_damage?.Invoke(our_mob, host, amount)
 	return COMPONENT_IGNORE_CHANGE

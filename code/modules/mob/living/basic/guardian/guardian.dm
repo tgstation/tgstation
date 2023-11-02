@@ -146,7 +146,7 @@
 /mob/living/basic/guardian/proc/set_guardian_colour(colour)
 	guardian_colour = colour
 	set_light_color(guardian_colour)
-	overlay.color = guardian_colour
+	overlay?.color = guardian_colour
 	update_appearance(UPDATE_ICON)
 
 /mob/living/basic/guardian/proc/guardian_rename()
@@ -194,12 +194,12 @@
 /// Link up with a summoner mob.
 /mob/living/basic/guardian/proc/set_summoner(mob/living/to_who, different_person = FALSE)
 	if (QDELETED(to_who))
+		ghostize(FALSE)
 		qdel(src) // No life of free invulnerability for you.
 		return
 	cut_summoner(different_person)
 	AddComponent(/datum/component/life_link, to_who, CALLBACK(src, PROC_REF(on_harm)), CALLBACK(src, PROC_REF(on_summoner_death)))
 	summoner = to_who
-	updatehealth()
 	add_verb(to_who, control_verbs)
 	if (different_person)
 		if (mind)
@@ -217,6 +217,7 @@
 	leash_to(src, summoner)
 	if (to_who.stat == DEAD)
 		on_summoner_death(src, to_who)
+	summoner.updatehealth()
 
 /// Remove all references to our summoner
 /mob/living/basic/guardian/proc/cut_summoner(different_person = FALSE)
@@ -239,7 +240,7 @@
 
 /// Connects these two mobs by a leash
 /mob/living/basic/guardian/proc/leash_to(atom/movable/leashed, atom/movable/leashed_to)
-	AddComponent(\
+	leashed.AddComponent(\
 		/datum/component/leash,\
 		owner = leashed_to,\
 		distance = range,\
@@ -263,8 +264,8 @@
 
 /// Called when our health changes, inform our owner of why they are getting hurt (if they are)
 /mob/living/basic/guardian/proc/on_harm(mob/living/source, mob/living/summoner, amount)
-	if (amount <= 0)
-		return // Don't bother telling them about healing
+	if (QDELETED(src) || QDELETED(summoner) || amount <= 2)
+		return
 	to_chat(summoner, span_bolddanger("[name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
 	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
@@ -276,6 +277,7 @@
 	SIGNAL_HANDLER
 	cut_summoner()
 	to_chat(src, span_danger("Your summoner is gone, you feel yourself fading!"))
+	ghostize(FALSE)
 	qdel(src)
 
 /// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
