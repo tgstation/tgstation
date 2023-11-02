@@ -54,11 +54,9 @@
 		role_unique_actions -= abilities
 
 /datum/mafia_role/Destroy(force, ...)
-	if(body)
-		UnregisterSignal(body, COMSIG_MOB_SAY)
-		QDEL_NULL(body)
-	if(mafia_alert)
-		QDEL_NULL(mafia_alert)
+	UnregisterSignal(body, COMSIG_MOB_SAY)
+	QDEL_NULL(body)
+	QDEL_NULL(mafia_alert)
 	QDEL_LIST(role_unique_actions)
 	role_messages = null
 	return ..()

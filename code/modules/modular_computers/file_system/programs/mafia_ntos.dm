@@ -14,14 +14,13 @@
 	RegisterSignal(SSdcs, COMSIG_MAFIA_GAME_START, PROC_REF(on_game_start))
 
 /datum/computer_file/program/mafia/Destroy(force)
-	UnregisterSignal(SSdcs, COMSIG_MAFIA_GAME_START)
 	var/datum/mafia_controller/game = GLOB.mafia_game
 	if(!game)
-		return
+		return ..()
 	UnregisterSignal(game, COMSIG_MAFIA_GAME_END)
 	var/datum/mafia_role/pda_role = game.get_role_player(computer)
 	if(!pda_role)
-		return
+		return ..()
 	game.send_message(span_notice("[pda_role.body] has deleted the game from their PDA, and therefore has left the game."))
 	pda_role.kill(game)
 	return ..()
