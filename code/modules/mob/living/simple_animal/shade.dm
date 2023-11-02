@@ -48,21 +48,6 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(isconstruct(user))
-		var/mob/living/simple_animal/hostile/construct/doll = user
-		if(!doll.can_repair)
-			return
-		if(health < maxHealth)
-			adjustHealth(-25)
-			Beam(user,icon_state="sendbeam", time = 4)
-			user.visible_message(span_danger("[user] heals \the <b>[src]</b>."), \
-					   span_cult("You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
-		else
-			to_chat(user, span_cult("You cannot heal <b>[src]</b>, as [p_theyre()] unharmed!"))
-	else if(src != user)
-		return ..()
-
 /mob/living/simple_animal/shade/attackby(obj/item/item, mob/user, params)  //Marker -Agouri
 	if(istype(item, /obj/item/soulstone))
 		var/obj/item/soulstone/stone = item

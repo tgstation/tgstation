@@ -1,0 +1,7 @@
+author: "DrDiasyl"
+delete-after: True
+changes:
+  - qol: "There is now a more convenient way to prompt surrender to emote - the Security Pen. Each officer is equipped with one in their PDA. Simply click someone with it to prompt a 30-second surrender. They are printable at Security Techfab as well."
+  - qol: "Penlights now are printable at Medical Techfab."
+  - image: "Penlights got a new cleaner sprite to replace its ancient one"
+  - code_imp: "The code for Penlight's holographic sign has been improved."
