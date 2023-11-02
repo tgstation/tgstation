@@ -75,3 +75,6 @@
 	desc = "Ungodly salty, bane of slugs, treasure of horses."
 	icon_state = "saltcane"
 	foodtypes = VEGETABLES | GROSS
+
+/obj/item/food/grown/sugarcane/saltcane/make_dryable()
+	AddElement(/datum/element/dryable, /obj/item/food/seaweedsheet/saltcane) //soooshi
