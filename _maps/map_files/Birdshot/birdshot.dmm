@@ -66718,18 +66718,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "wPf" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/hop)
+/obj/item/clothing/glasses/blindfold,
+/turf/open/space/basic,
+/area/space)
 "wPh" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -95300,7 +95291,7 @@ njA
 lqt
 cpT
 xQv
-wPf
+xQw
 mvT
 vrn
 ncL
@@ -132056,7 +132047,7 @@ dDB
 dDB
 dDB
 dDB
-dDB
+wPf
 dDB
 dDB
 dDB
