@@ -384,6 +384,8 @@
 			client << link(href_list["url"])
 		if("cacheReloaded")
 			reinitialize()
+		if("chat/acknowledge")
+			SSchat.handle_acknowledge(client, payload)
 
 /datum/tgui_window/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, id) && ..()

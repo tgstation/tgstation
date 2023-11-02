@@ -10,6 +10,7 @@ import { createPage } from './model';
 export const loadChat = createAction('chat/load');
 export const rebuildChat = createAction('chat/rebuild');
 export const updateMessageCount = createAction('chat/updateMessageCount');
+export const acknowledgeMessage = createAction('chat/acknowledgeMessage');
 export const addChatPage = createAction('chat/addPage', () => ({
   payload: createPage(),
 }));

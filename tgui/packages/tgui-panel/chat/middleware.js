@@ -85,9 +85,9 @@ export const chatMiddleware = (store) => {
       loadChatFromStorage(store);
     }
     if (type === 'chat/message') {
-      // Normalize the payload
-      const batch = Array.isArray(payload) ? payload : [payload];
-      chatRenderer.processBatch(batch);
+      const payload_obj = JSON.parse(payload);
+      Byond.sendMessage('chat/acknowledge', payload_obj.sequence);
+      chatRenderer.processBatch([payload_obj.content]);
       return;
     }
     if (type === loadChat.type) {
