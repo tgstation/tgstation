@@ -509,7 +509,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/triumphal_arch
 	. = ..()
 	. += span_notice("<i>You browse some of the poster's information...</i>")
 	. += "\t[span_info("Va Lümla Commissary Menu (Spring 335)")]"
-	. += "\t[span_info("Windgrass Cigarettes, Half-Pack (6): 1 Ticket")]"
+	. += "\t[span_info("Sparkweed Cigarettes, Half-Pack (6): 1 Ticket")]"
 	. += "\t[span_info("Töchtaüse Schnapps, Bottle (4 Measures): 2 Tickets")]"
 	. += "\t[span_info("Activin Gum, Pack (4): 1 Ticket")]"
 	. += "\t[span_info("A18 Sustenance Bar, Breakfast, Bar (4): 1 Ticket")]"
