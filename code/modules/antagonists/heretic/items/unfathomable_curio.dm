@@ -42,7 +42,7 @@
 		return
 
 	//Vars used for the shield component
-	var/heretic_shield_icon = "shield-old"
+	var/heretic_shield_icon = "unfathomable_shield"
 	var/max_charges = 5
 	var/recharge_start_delay = 60 SECONDS
 	var/charge_increment_delay = 60 SECONDS
