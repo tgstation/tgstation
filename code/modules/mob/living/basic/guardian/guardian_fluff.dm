@@ -7,6 +7,8 @@
 	var/name = "Guardian Spirit"
 	/// Mob description to apply
 	var/desc = "A mysterious being that stands by its charge, ever vigilant."
+	/// Are we magical or technological? Mostly just used to pick a surname
+	var/fluff_type = GUARDIAN_MAGIC
 	/// What speech bubble do we use?
 	var/bubble_icon = "guardian"
 	/// What is our base icon state?
@@ -42,7 +44,6 @@
 /datum/guardian_fluff/proc/apply(mob/living/basic/guardian/guardian)
 	guardian.name = name
 	guardian.real_name = name
-	guardian.guardian_theme_name = name
 	guardian.bubble_icon = bubble_icon
 	guardian.icon_living = icon_state
 	guardian.icon_state = icon_state
@@ -62,6 +63,7 @@
 /// Used by holoparasites in the Traitor uplink
 /datum/guardian_fluff/tech
 	name = "Holoparasite"
+	fluff_type = GUARDIAN_TECH
 	bubble_icon = "holo"
 	icon_state = "techbase"
 	overlay_state = "tech"
@@ -101,6 +103,7 @@
 /// Used by holocarp spawned by admins
 /datum/guardian_fluff/carp
 	name = "Holocarp"
+	fluff_type = GUARDIAN_TECH
 	desc = "A mysterious fish that swims by its charge, ever fingilant."
 	icon_state = null // Handled entirely by the overlay
 	bubble_icon = "holo"

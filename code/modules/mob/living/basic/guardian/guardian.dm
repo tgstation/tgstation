@@ -64,8 +64,8 @@
 
 	/// What type of guardian are we?
 	var/guardian_type = null
-	/// What do we call the type of guardian we are?
-	var/guardian_theme_name = "Error"
+	/// How are we themed?
+	var/datum/guardian_fluff/theme
 	/// A string explaining to the guardian what they can do.
 	var/playstyle_string = span_boldholoparasite("You are a Guardian without any type. You shouldn't exist and are an affront to god!")
 
@@ -86,6 +86,7 @@
 /mob/living/basic/guardian/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
 	GLOB.parasites += src
+	src.theme = theme
 	theme?.apply(src)
 	var/static/list/death_loot = string_list(list(/obj/item/stack/sheet/mineral/wood))
 	AddElement(/datum/element/death_drops, death_loot)
@@ -113,7 +114,7 @@
 	if (isnull(summoner))
 		to_chat(src, span_boldholoparasite("For some reason, somehow, you have no summoner. Please report this bug immediately."))
 	else
-		to_chat(src, span_holoparasite("You are a <b>[guardian_theme_name]</b>, bound to serve [summoner.real_name]."))
+		to_chat(src, span_holoparasite("You are a <b>[theme.name]</b>, bound to serve [summoner.real_name]."))
 		to_chat(src, span_holoparasite("You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with [summoner.p_them()] privately there."))
 		to_chat(src, span_holoparasite("While personally invincible, you will die if [summoner.real_name] does, and any damage dealt to you will have a portion passed on to [summoner.p_them()] as you feed upon [summoner.p_them()] to sustain yourself."))
 	to_chat(src, playstyle_string)
@@ -152,13 +153,25 @@
 /mob/living/basic/guardian/proc/guardian_rename()
 	if (isnull(client))
 		return
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", generate_random_name(), MAX_NAME_LEN)))
 	if (!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Invalid name, please try again."))
 		guardian_rename()
 		return
 	to_chat(src, span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
 	fully_replace_character_name(null, new_name)
+
+/// Picks a random name as a suggestion
+/mob/living/basic/guardian/proc/generate_random_name()
+	var/list/surname_options
+	switch(theme.fluff_type)
+		if (GUARDIAN_MAGIC)
+			surname_options = GLOB.guardian_fantasy_surnames
+		if (GUARDIAN_TECH)
+			surname_options = GLOB.guardian_tech_surnames
+
+	return "[pick(GLOB.guardian_first_names)] [pick(surname_options)]"
 
 /mob/living/basic/guardian/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	if (!is_deployed())
