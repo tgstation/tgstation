@@ -55,8 +55,8 @@
 
 /datum/mafia_role/Destroy(force, ...)
 	UnregisterSignal(body, COMSIG_MOB_SAY)
-	QDEL_NULL(body)
 	QDEL_NULL(mafia_alert)
+	QDEL_NULL(body)
 	QDEL_LIST(role_unique_actions)
 	role_messages = null
 	return ..()
