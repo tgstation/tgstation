@@ -230,6 +230,12 @@
 /obj/effect/mob_spawn/corpse/human/wizard/black
 	outfit = /datum/outfit/wizardcorpse/black
 
+/obj/effect/mob_spawn/corpse/human/wizard/marisa
+	outfit = /datum/outfit/wizardcorpse/marisa
+
+/obj/effect/mob_spawn/corpse/human/wizard/tape
+	outfit = /datum/outfit/wizardcorpse/tape
+
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"
 	uniform = /obj/item/clothing/under/color/lightpurple
@@ -248,6 +254,14 @@
 /datum/outfit/wizardcorpse/black
 	suit = /obj/item/clothing/suit/wizrobe/black
 	head = /obj/item/clothing/head/wizard/black
+
+/datum/outfit/wizardcorpse/marisa
+	suit = /obj/item/clothing/suit/wizrobe/marisa
+	head = /obj/item/clothing/head/wizard/marisa
+
+/datum/outfit/wizardcorpse/tape
+	suit = /obj/item/clothing/suit/wizrobe/tape
+	head = /obj/item/clothing/head/wizard/tape
 
 /obj/effect/mob_spawn/corpse/human/wizard/dark
 	name = "Dark Wizard Corpse"
