@@ -50,6 +50,38 @@
 	tastes = list("koi" = 1)
 	wine_power = 40
 
+//Butterbeans, the beans wid da butta!
+// Butterbeans! - Squeeze for a single butter slice!
+/obj/item/seeds/soya/butter
+	name = "pack of butterbean seeds"
+	desc = "These seeds grow into butterbean plants."
+	icon_state = "seed-butterbean"
+	species = "butterbean"
+	plantname = "butterbean Plants"
+	product = /obj/item/food/grown/butterbeans
+	potency = 10
+	mutatelist = null
+	reagents_add = list(/datum/reagent/consumable/milk = 0.05, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/cream = 0.05)
+	rarity = 20
+
+/obj/item/food/grown/butterbeans
+	seed = /obj/item/seeds/soya/butter
+	name = "butterbean"
+	desc = "Soft, creamy and milky... You could almost smear them over toast."
+	icon_state = "butterbeans"
+	foodtypes = VEGETABLES | DAIRY
+	tastes = list("creamy butter" = 1)
+	distill_reagent = /datum/reagent/consumable/yoghurt
+
+/obj/item/food/grown/butterbeans/attack_self(mob/living/user)
+	user.visible_message(span_notice("[user] crushes [src] into a pat of butter."), span_notice("You crush [src] into something that resembles butter."))
+	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
+	var/obj/item/food/butterslice/butties = new(null)
+	butties.reagents.set_all_reagents_purity(seed.get_reagent_purity())
+	qdel(src)
+	user.put_in_hands(butties)
+	return TRUE
+
 // Green Beans
 /obj/item/seeds/greenbean
 	name = "pack of green bean seeds"
