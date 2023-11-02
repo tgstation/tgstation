@@ -19,7 +19,6 @@
 	icon_state = "standard-chestplate"
 	base_icon_state = "chestplate"
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	worn_icon_snouted = 'monkestation/icons/mob/mod.dmi'
 	blood_overlay_type = "armor"
 	allowed = list(
 		/obj/item/tank/internals,
@@ -54,7 +53,7 @@
 	icon_state = "standard-boots"
 	base_icon_state = "boots"
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	worn_icon_snouted = 'monkestation/icons/mob/mod.dmi'
+	worn_icon_digitigrade = 'monkestation/icons/mob/mod.dmi'
 	armor_type = /datum/armor/none
 	body_parts_covered = FEET|LEGS
 	heat_protection = FEET|LEGS
