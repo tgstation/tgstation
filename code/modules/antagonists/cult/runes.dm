@@ -289,6 +289,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		convertee.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
 
 	else
+		// Remove other stuns, includes cult hand's secondary effects
+		convertee.AdjustAllImmobility(0 SECONDS)
+		convertee.set_dizzy(0 SECONDS)
+		convertee.set_eye_blur(0 SECONDS)
+		// But we KO them because Nar Nar's touch is not gentle. She is a tomboy
 		convertee.Unconscious(10 SECONDS)
 
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
