@@ -670,6 +670,10 @@
 /obj/effect/spawner/random/food_or_drink/condiment,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ct" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "CF" = (
 /obj/machinery/reagentgrinder{
 	anchored = 0
@@ -849,11 +853,6 @@
 	pixel_y = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
-"JA" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "JH" = (
 /obj/item/petri_dish/random,
@@ -1095,6 +1094,11 @@
 /mob/living/basic/mouse/rat,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Rq" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Sa" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
@@ -1171,12 +1175,6 @@
 	},
 /mob/living/basic/mouse/brown,
 /turf/open/floor/plating/dumpsterair,
-/area/ruin/space/has_grav/garbagetruck/foodwaste)
-"Xw" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/turf/open/floor/catwalk_floor,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "XF" = (
 /obj/item/shard,
@@ -1356,7 +1354,7 @@ TB
 Od
 OD
 Ie
-JA
+Ct
 tU
 TX
 yh
@@ -1378,7 +1376,7 @@ Od
 Yu
 oL
 bF
-JA
+Ct
 tU
 fb
 pF
@@ -1463,7 +1461,7 @@ yi
 (11,1,1) = {"
 qM
 OD
-Xw
+Rq
 Od
 OD
 OD

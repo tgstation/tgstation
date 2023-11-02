@@ -304,12 +304,21 @@
 /obj/structure/frame/computer,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
+"wo" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/toystore)
 "wu" = (
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/toystore)
+"ww" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "wy" = (
 /obj/item/barcodescanner,
@@ -596,12 +605,6 @@
 /obj/item/toy/plush/snakeplushie,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
-"IM" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/garbagetruck/toystore)
 "IQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/pile,
@@ -670,11 +673,6 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/mail/junkmail,
 /obj/item/healthanalyzer/simple/disease,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/garbagetruck/toystore)
-"Nz" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "OZ" = (
@@ -999,7 +997,7 @@ dn
 jD
 nM
 wu
-Nz
+wo
 Dv
 IS
 ld
@@ -1021,7 +1019,7 @@ jD
 bL
 Ym
 bU
-Nz
+wo
 Dv
 ld
 ld
@@ -1106,7 +1104,7 @@ rb
 (11,1,1) = {"
 Zi
 nM
-IM
+ww
 jD
 nM
 nM

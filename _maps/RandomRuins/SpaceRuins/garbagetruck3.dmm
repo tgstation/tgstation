@@ -99,12 +99,6 @@
 /obj/item/t_scanner,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
-"fJ" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/garbagetruck/squat)
 "gq" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/shuttle,
@@ -185,6 +179,11 @@
 /obj/item/stock_parts/scanning_module,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
+"jZ" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
 "kb" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/stock_parts/cell/crap/empty,
@@ -227,11 +226,6 @@
 /obj/structure/closet/crate/large,
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
-/area/ruin/space/has_grav/garbagetruck/squat)
-"lw" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/catwalk_floor,
-/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "lA" = (
 /obj/item/sticker/toolbox,
@@ -782,6 +776,10 @@
 /obj/structure/sign/warning,
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/garbagetruck/squat)
+"PE" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/squat)
 "PH" = (
 /obj/item/bikehorn/rubberducky,
 /obj/structure/closet/mini_fridge/grimy,
@@ -1037,7 +1035,7 @@ gy
 gq
 HZ
 lE
-lw
+PE
 JW
 WV
 WV
@@ -1059,7 +1057,7 @@ gq
 hk
 FD
 dF
-lw
+PE
 JW
 oD
 Xt
@@ -1144,7 +1142,7 @@ Pz
 (11,1,1) = {"
 JX
 HZ
-fJ
+jZ
 gq
 HZ
 HZ
