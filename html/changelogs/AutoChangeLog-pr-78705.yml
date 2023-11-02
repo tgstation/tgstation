@@ -1,9 +1,0 @@
-author: "SethLafuente"
-delete-after: True
-changes:
-  - rscadd: "Added Abnormal Eggs"
-  - rscadd: "Added Two new spiders"
-  - rscdel: "Some Tarantula abilities"
-  - balance: "Spiders speed are now connected to health"
-  - balance: "Spiders now take more brute damage"
-  - balance: "All egg laying now has a cooldown"
