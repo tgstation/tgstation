@@ -1,4 +1,5 @@
 #define NO_RANK "None"
+#define UNSUBBED "UNSUBBED"
 #define THANKS_RANK "9641441"
 #define ASSISTANT_RANK "9641458"
 #define COMMAND_RANK "9641523"
