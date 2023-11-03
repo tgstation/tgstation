@@ -44,16 +44,14 @@ export const OreBox = (props, context) => {
                 </Table.Cell>
               </Table.Row>
             ))}
-            {boulders > 0 && (
-              <Table.Row>
-                <Table.Cell>Boulders</Table.Cell>
-                <Table.Cell collapsing textAlign="right">
-                  <Box color="label" inline>
-                    {boulders}
-                  </Box>
-                </Table.Cell>
-              </Table.Row>
-            )}
+            <Table.Row>
+              <Table.Cell>Boulders</Table.Cell>
+              <Table.Cell collapsing textAlign="right">
+                <Box color="label" inline>
+                  {boulders}
+                </Box>
+              </Table.Cell>
+            </Table.Row>
           </Table>
         </Section>
         <Section>

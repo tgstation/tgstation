@@ -69,15 +69,16 @@
 		contents[O.type] += O.amount
 
 	var/data = list()
-	data["materials"] = list()
 	var/boulder_count = 0
+	data["materials"] = list()
+
 	for(var/type in contents)
 		if(istype(type, /obj/item/stack/ore))
 			var/obj/item/stack/ore/O = type
 			var/name = initial(O.name)
 			data["materials"] += list(list("name" = name, "amount" = contents[type], "id" = type))
 		else if(istype(type, /obj/item/boulder))
-			boulder_count++ //We can't really tell apart boulders, so we just count them.
+			boulder_count ++ //We can't really tell apart boulders, so we just count them.
 	data["boulders"] = boulder_count
 
 	return data
