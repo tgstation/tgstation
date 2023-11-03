@@ -258,6 +258,7 @@
 /datum/outfit/wizardcorpse/marisa
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	head = /obj/item/clothing/head/wizard/marisa
+	shoes = /obj/item/clothing/shoes/sneakers/marisa
 
 /datum/outfit/wizardcorpse/tape
 	suit = /obj/item/clothing/suit/wizrobe/tape

@@ -40,7 +40,6 @@
 	var/static/list/targeted_spell_list = list(
 		/datum/action/cooldown/spell/pointed/projectile/fireball/lesser,
 		/datum/action/cooldown/spell/pointed/projectile/lightningbolt,
-		/datum/action/cooldown/spell/pointed/projectile/spell_cards,
 	)
 
 	/// Typepath for the wizard's secondary spell. If null, selects randomly.
