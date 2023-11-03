@@ -241,11 +241,11 @@
 
 /// Remove all references to our summoner
 /mob/living/basic/guardian/proc/cut_summoner(different_person = FALSE)
-	if (QDELETED(summoner) || isnull(summoner))
+	if (isnull(summoner))
 		return
 	if (is_deployed())
 		recall_effects()
-	var/summoner_turf = get_turf(src)
+	var/summoner_turf = get_turf(summoner)
 	if (!isnull(summoner_turf))
 		forceMove(summoner_turf)
 	unleash()
