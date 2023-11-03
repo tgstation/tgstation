@@ -22,8 +22,6 @@
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	if (!HAS_TRAIT_FROM(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, /datum/component/ranged_attacks))
-		CRASH("Attempted to add [type] to [parent.type], which lacks ranged attacks.")
 
 	src.autofire_shot_delay = autofire_shot_delay
 
@@ -52,10 +50,11 @@
 
 	var/mob/living/living_parent = parent
 
-	if (QDELETED(target) || get_turf(target) != target_loc) // Target moved or got destroyed since we last aimed.
+	if (isnull(target) || get_turf(target) != target_loc) // Target moved or got destroyed since we last aimed.
+		set_target(target_loc)
 		target = target_loc // So we keep firing on the emptied tile until we move our mouse and find a new target.
 	if (get_dist(living_parent, target) <= 0)
-		target = get_step(living_parent, living_parent.dir) // Shoot in the direction faced if the mouse is on the same tile as we are.
+		set_target(get_step(living_parent, living_parent.dir)) // Shoot in the direction faced if the mouse is on the same tile as we are.
 		target_loc = target
 	else if (!in_view_range(living_parent, target))
 		stop_firing()
@@ -65,6 +64,19 @@
 	COOLDOWN_START(src, next_shot_cooldown, autofire_shot_delay)
 	living_parent.RangedAttack(target)
 	return TRUE
+
+/// Setter for reference handling
+/datum/component/ranged_mob_full_auto/proc/set_target(atom/new_target)
+	if (!isnull(target))
+		UnregisterSignal(target, COMSIG_QDELETING)
+	target = new_target
+	if (!isnull(target))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
+
+/// Don't hang references
+/datum/component/ranged_mob_full_auto/proc/on_target_deleted()
+	SIGNAL_HANDLER
+	set_target(null)
 
 /// When we gain a client, start tracking clicks
 /datum/component/ranged_mob_full_auto/proc/on_gained_client(mob/living/source)
@@ -104,7 +116,7 @@
 	if (isnull(location) || istype(target, /atom/movable/screen)) // Clicking on a screen object.
 		if (target.plane != CLICKCATCHER_PLANE) // The clickcatcher is a special case. We want the click to trigger then, under it.
 			return // If we click and drag on our worn backpack, for example, we want it to open instead.
-		target = parse_caught_click_modifiers(modifiers, get_turf(source.eye), source)
+		set_target(parse_caught_click_modifiers(modifiers, get_turf(source.eye), source))
 		params = list2params(modifiers)
 		if (isnull(target))
 			CRASH("Failed to get the turf under clickcatcher")
@@ -114,7 +126,7 @@
 	if (is_firing)
 		stop_firing()
 
-	target = target
+	set_target(target)
 	target_loc = get_turf(target)
 	INVOKE_ASYNC(src, PROC_REF(start_firing))
 
@@ -139,7 +151,7 @@
 /datum/component/ranged_mob_full_auto/proc/on_mouse_drag(client/source, atom/src_object, atom/over_object, turf/src_location, turf/over_location, src_control, over_control, params)
 	SIGNAL_HANDLER
 	if (!isnull(over_location))
-		target = over_object
+		set_target(over_object)
 		target_loc = get_turf(over_object)
 		return
 
@@ -149,7 +161,7 @@
 	params = list2params(modifiers)
 
 	if (!isnull(new_target))
-		target = new_target
+		set_target(new_target)
 		target_loc = new_target
 		return
 
@@ -157,7 +169,8 @@
 		stop_firing()
 		CRASH("on_mouse_drag failed to get the turf under screen object [over_object.type]. Old target was incidentally QDELETED.")
 
-	target = get_turf(target) //If previous target wasn't a turf, let's turn it into one to avoid locking onto a potentially moving target.
+
+	set_target(get_turf(target)) //If previous target wasn't a turf, let's turn it into one to avoid locking onto a potentially moving target.
 	target_loc = target
 	CRASH("on_mouse_drag failed to get the turf under screen object [over_object.type]")
 
@@ -175,7 +188,7 @@
 		return
 
 	is_firing = FALSE
-	target = null
+	set_target(null)
 	target_loc = null
 	STOP_PROCESSING(SSprojectiles, src)
 	awaiting_status = AUTOFIRE_MOUSEDOWN
