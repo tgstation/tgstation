@@ -33,11 +33,11 @@ SUBSYSTEM_DEF(chat)
 	client_history["[sequence]"] = payload
 
 	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
-		var/oldest
-		for(var/stored in client_history)
-			var/stored_num = text2num(stored)
-			if(stored_num < oldest)
-				oldest = stored_num
+		var/oldest = text2num(client_history[1])
+		for(var/index in 2 to length(client_history))
+			var/test = text2num(client_history[index])
+			if(test < oldest)
+				oldest = test
 		client_history -= "[oldest]"
 	return payload
 
