@@ -19,8 +19,8 @@
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 10
 	construct_spells = list(
-		/datum/action/cooldown/spell/forcewall/cult,
 		/datum/action/cooldown/spell/basic_projectile/juggernaut,
+		/datum/action/cooldown/spell/forcewall/cult,
 		/datum/action/innate/cult/create_rune/wall,
 	)
 	playstyle_string = span_bold("You are a Juggernaut. Though slow, your shell can withstand heavy punishment, create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.")
@@ -31,6 +31,7 @@
 /mob/living/basic/construct/juggernaut/hostile
 	ai_controller = /datum/ai_controller/basic_controller/juggernaut
 	smashes_walls = FALSE
+	melee_attack_cooldown = 2 SECONDS
 
 /mob/living/basic/construct/juggernaut/bullet_act(obj/projectile/bullet)
 	if(!istype(bullet, /obj/projectile/energy) && !istype(bullet, /obj/projectile/beam))
@@ -58,5 +59,3 @@
 
 /mob/living/basic/construct/juggernaut/mystic
 	theme = THEME_WIZARD
-
-/mob/living/basic/construct/juggernaut/noncult

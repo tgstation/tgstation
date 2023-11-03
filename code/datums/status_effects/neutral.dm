@@ -334,6 +334,22 @@
 
 	owner.emote("surrender")
 
+///For when you need to make someone be prompted for surrender, but not forever
+/datum/status_effect/surrender_timed
+	id = "surrender_timed"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/surrender_timed/on_apply()
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+/datum/status_effect/surrender_timed/on_remove()
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+
 /*
  * A status effect used for preventing caltrop message spam
  *
