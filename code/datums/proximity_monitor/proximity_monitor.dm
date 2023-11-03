@@ -78,7 +78,7 @@
 	SIGNAL_HANDLER
 	return //Used by the advanced subtype for effect fields.
 
-/datum/proximity_monitor/proc/on_entered(atom/source, atom/movable/arrived)
+/datum/proximity_monitor/proc/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
 	SIGNAL_HANDLER
 	if(source != host)
 		hasprox_receiver?.HasProximity(arrived)

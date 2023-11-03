@@ -37,9 +37,8 @@
 	var/list/new_field_turfs = new_turfs[FIELD_TURFS_KEY]
 	var/list/new_edge_turfs = new_turfs[EDGE_TURFS_KEY]
 
-	for(var/turf/old_turf as anything in field_turfs)
-		if(!(old_turf in new_field_turfs))
-			cleanup_field_turf(old_turf)
+	for(var/turf/old_turf as anything in field_turfs - new_field_turfs)
+		cleanup_field_turf(old_turf)
 	for(var/turf/old_turf as anything in edge_turfs)
 		cleanup_edge_turf(old_turf)
 
@@ -50,12 +49,12 @@
 		edge_turfs |= new_turf
 		setup_edge_turf(new_turf)
 
-/datum/proximity_monitor/advanced/on_entered(turf/source, atom/movable/entered)
+/datum/proximity_monitor/advanced/on_entered(turf/source, atom/movable/entered, turf/old_loc)
 	. = ..()
 	if(get_dist(source, host) == current_range)
-		field_edge_crossed(entered, source)
+		field_edge_crossed(entered, old_loc, source)
 	else
-		field_turf_crossed(entered, source)
+		field_turf_crossed(entered, old_loc, source)
 
 /datum/proximity_monitor/advanced/on_moved(atom/movable/movable, atom/old_loc)
 	. = ..()
@@ -72,9 +71,9 @@
 
 /datum/proximity_monitor/advanced/on_uncrossed(turf/source, atom/movable/gone, direction)
 	if(get_dist(source, host) == current_range)
-		field_edge_uncrossed(gone, source)
+		field_edge_uncrossed(gone, source, get_turf(gone))
 	else
-		field_turf_uncrossed(gone, source)
+		field_turf_uncrossed(gone, source, get_turf(gone))
 
 /// Called when a turf in the field of the monitor is linked
 /datum/proximity_monitor/advanced/proc/setup_field_turf(turf/target)
@@ -124,19 +123,19 @@
 	if(T.y == (checking_from.y + current_range))
 		return NORTH
 
-/datum/proximity_monitor/advanced/proc/field_turf_crossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/proc/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
 	return
 
-/datum/proximity_monitor/advanced/proc/field_turf_uncrossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/proc/field_turf_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
 	return
 
-/datum/proximity_monitor/advanced/proc/field_edge_crossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/proc/field_edge_crossed(atom/movable/movable, turf/old_location, turf/new_location)
 	if(edge_is_a_field) // If the edge is considered a field, pass crossed to that
-		field_turf_crossed(movable, location)
+		field_turf_crossed(movable, old_location, new_location)
 
-/datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
 	if(edge_is_a_field) // If the edge is considered a field, pass uncrossed to that
-		field_turf_uncrossed(movable, location)
+		field_turf_uncrossed(movable, old_location, new_location)
 
 //DEBUG FIELD ITEM
 /obj/item/multitool/field_debug
