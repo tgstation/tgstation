@@ -457,6 +457,24 @@
 	investigate_log("has succumbed to death.", INVESTIGATE_DEATHS)
 	death()
 
+/mob/living/setup_incapacitated()
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)), PROC_REF(update_incapacitated))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED)), PROC_REF(update_incapacitated))
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_STASIS), SIGNAL_REMOVETRAIT(TRAIT_STASIS)), PROC_REF(update_incapacitated))
+
+/mob/living/build_incapacitated()
+	// Blocks all incap flags
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		return ALL
+	var/incap_status = NONE
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		incap_status |= ~IGNORE_RESTRAINTS
+	if(pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
+		incap_status |= ~IGNORE_GRAB
+	if(HAS_TRAIT(src, TRAIT_STASIS))
+		incap_status |= ~IGNORE_STASIS
+	return incap_status
+
 /**
  * Checks if a mob is incapacitated
  *
@@ -2185,6 +2203,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Updates the grab state of the mob and updates movespeed
 /mob/living/setGrabState(newstate)
 	. = ..()
+	update_incapacitated()
 	switch(grab_state)
 		if(GRAB_PASSIVE)
 			remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE)
