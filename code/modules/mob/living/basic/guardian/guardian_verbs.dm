@@ -62,15 +62,15 @@
 		return
 
 	var/preliminary_message = span_boldholoparasite("[input]") //apply basic color/bolding
-	var/my_message = "<font color=\"[guardian_colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //add source, color source with the guardian's color
+	var/my_message = "<font color=\"[guardian_colour]\">[span_bolditalic(src.name)]:</font> [preliminary_message]" //add source, color source with the guardian's color
 
-	to_chat(summoner, "<span class='say'>[my_message]</span>")
+	to_chat(summoner, "[my_message]")
 	var/list/guardians = summoner.get_all_linked_holoparasites()
 	for(var/guardian in guardians)
-		to_chat(guardian, "<span class='say'>[my_message]</span>")
+		to_chat(guardian, "[my_message]")
 	for(var/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, src)
-		to_chat(dead_mob, "<span class='say'>[link] [my_message]</span>")
+		to_chat(dead_mob, "[link] [my_message]")
 
 	src.log_talk(input, LOG_SAY, tag="guardian")
 
@@ -98,14 +98,14 @@
 	var/preliminary_message = span_boldholoparasite("[input]") //apply basic color/bolding
 	var/my_message = span_boldholoparasite("<i>[owner]:</i> [preliminary_message]") //add source, color source with default grey...
 
-	to_chat(owner, "<span class='say'>[my_message]</span>")
+	to_chat(owner, "[my_message]")
 	var/mob/living/living_owner = owner
 	var/list/guardians = living_owner.get_all_linked_holoparasites()
 	for(var/mob/living/basic/guardian/guardian as anything in guardians)
-		to_chat(guardian, "<span class='say'><font color=\"[guardian.guardian_colour]\"><b><i>[owner]:</i></b></font> [preliminary_message]</span>" )
+		to_chat(guardian, "<font color=\"[guardian.guardian_colour]\">[span_bolditalic(owner.real_name)]:</font> [preliminary_message]" )
 	for(var/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, owner)
-		to_chat(dead_mob, "<span class='say'>[link] [my_message]</span>")
+		to_chat(dead_mob, "[link] [my_message]")
 	owner.log_talk(input, LOG_SAY, tag="guardian")
 
 	return TRUE
@@ -165,10 +165,10 @@
 		StartCooldown()
 		return FALSE
 
-	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\"><b>[chosen_guardian.real_name]</b></font>'s personality..."))
+	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>'s personality..."))
 	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", ROLE_PAI, FALSE, 100)
 	if (!LAZYLEN(ghost_candidates))
-		to_chat(owner, span_holoparasite("There were no ghosts willing to take control of <font color=\"[chosen_guardian.guardian_colour]\"><b>[chosen_guardian.real_name]</b></font>. Looks like you're stuck with it for now."))
+		to_chat(owner, span_holoparasite("There were no ghosts willing to take control of <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>. Looks like you're stuck with it for now."))
 		StartCooldown()
 		return FALSE
 
