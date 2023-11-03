@@ -1,4 +1,0 @@
-/obj/structure/window:
-  banned_neighbors:
-    /obj/structure/window:
-      identical: true
