@@ -18,7 +18,7 @@ And the only victory you achieved was a lie. Now you understand Gotham is beyond
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(update_able_to_run))
 
 /datum/ai_controller/bane/clear_able_to_run()
-	UnregisterSignals(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
 
 /datum/ai_controller/bane/get_able_to_run()
 	var/mob/living/living_pawn = pawn

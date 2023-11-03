@@ -21,7 +21,7 @@
 	LAZYREMOVE(controller.current_behaviors, src)
 	// If a controller isn't doing anything, send it to idle
 	if(!LAZYLEN(controller.current_behaviors))
-		START_PROCESSING(controller, SSai_idle)
+		START_PROCESSING(SSai_idle, controller)
 
 	controller.behavior_args -= type
 	if(!(behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT)) //If this was a movement task, reset our movement target if necessary

@@ -210,7 +210,7 @@ multiple modular subtrees with behaviors
 	RegisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)), PROC_REF(update_able_to_run))
 
 /datum/ai_controller/proc/clear_able_to_run()
-	UnregisterSignals(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)))
+	UnregisterSignal(pawn, list(SIGNAL_ADDTRAIT(TRAIT_AI_PAUSED), SIGNAL_REMOVETRAIT(TRAIT_AI_PAUSED)))
 
 /datum/ai_controller/proc/update_able_to_run()
 	SIGNAL_HANDLER
@@ -321,8 +321,8 @@ multiple modular subtrees with behaviors
 	if(!behavior.setup(arglist(arguments)))
 		return
 	// If we were on idle and we are no longer, then stop yeah?
-	if(!LAZYLEN(controller.current_behaviors))
-		STOP_PROCESSING(controller, SSai_idle)
+	if(!LAZYLEN(current_behaviors))
+		STOP_PROCESSING(SSai_idle, src)
 	addtimer(src, CALLBACK(src, PROC_REF(handle_behavior)), behavior.action_cooldown)
 	LAZYADDASSOC(current_behaviors, behavior, TRUE)
 	LAZYADDASSOC(planned_behaviors, behavior, TRUE)

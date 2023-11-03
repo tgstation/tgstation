@@ -56,7 +56,7 @@
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(update_able_to_run))
 
 /datum/ai_controller/hostile_friend/clear_able_to_run()
-	UnregisterSignals(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
 
 /datum/ai_controller/hostile_friend/get_able_to_run()
 	var/mob/living/living_pawn = pawn
