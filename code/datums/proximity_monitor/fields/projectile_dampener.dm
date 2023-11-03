@@ -91,16 +91,15 @@
 
 /datum/proximity_monitor/advanced/projectile_dampener/proc/on_projector_del(datum/source)
 	SIGNAL_HANDLER
-
 	qdel(src)
 
-/datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
 	if(isprojectile(movable) && get_dist(movable, host) > current_range)
 		if(movable in tracked)
 			release_projectile(movable)
 
-/datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location)
-	if(isprojectile(movable) && !(movable in tracked))
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location, turf/old_location)
+	if(isprojectile(movable))
 		capture_projectile(movable)
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(seconds_per_tick)
