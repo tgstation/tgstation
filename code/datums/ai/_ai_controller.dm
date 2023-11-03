@@ -279,6 +279,7 @@ multiple modular subtrees with behaviors
 	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
 		return FALSE
 
+	var/list/old_planned_behaviors = LAZYCOPY(planned_behaviors)
 	LAZYINITLIST(current_behaviors)
 	LAZYCLEARLIST(planned_behaviors)
 
@@ -287,16 +288,15 @@ multiple modular subtrees with behaviors
 			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
-	var/list/datum/ai_behavior/removed_behaviors = current_behaviors - planned_behaviors
 	/// We reverse this just to avoid constant requeuing
-	for(var/datum/ai_behavior/forgotten_behavior as anything in reverse_range(removed_behaviors))
+	for(var/datum/ai_behavior/forgotten_behavior as anything in reverse_range(current_behaviors - planned_behaviors))
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[forgotten_behavior.type]
 		if(stored_arguments)
 			arguments += stored_arguments
 		forgotten_behavior.finish_action(arglist(arguments))
 
-	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, removed_behaviors)
+	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, old_planned_behaviors, planned_behaviors)
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
@@ -325,7 +325,7 @@ multiple modular subtrees with behaviors
 	arguments[1] = src
 
 	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
-		LAZYADD(planned_behaviors, behavior)
+		LAZYSET(planned_behaviors, behavior, TRUE)
 		return
 
 	if(!behavior.setup(arglist(arguments)))
@@ -335,7 +335,7 @@ multiple modular subtrees with behaviors
 		STOP_PROCESSING(SSai_idle, src)
 		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
 	LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown(src))
-	LAZYADD(planned_behaviors, behavior)
+	LAZYSET(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
