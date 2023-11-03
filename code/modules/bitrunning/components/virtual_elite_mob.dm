@@ -4,7 +4,7 @@
 /datum/element/virtual_elite_mob/Attach(datum/target)
 	. = ..()
 	if(!ismegafauna(target))
-		return
+		return ELEMENT_INCOMPATIBLE
 
 	var/mob/living/simple_animal/hostile/megafauna/boss = target
 

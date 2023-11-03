@@ -42,8 +42,10 @@
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
 
+/// Sends a point to any loot signals on the map
+/datum/lazy_template/virtual_domain/proc/add_points(points_to_add)
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_GOAL_POINT, points_to_add)
+
 /// Overridable proc to be called after the map is loaded.
 /datum/lazy_template/virtual_domain/proc/setup_domain(list/created_atoms)
 	return
-
-

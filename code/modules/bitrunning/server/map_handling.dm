@@ -81,7 +81,7 @@
 	var/turf/goal_turfs = list()
 	var/turf/cache_turfs = list()
 
-	for(var/thing in GLOB.landmarks_list)
+	for(var/obj/effect/landmark/bitrunning/thing in GLOB.landmarks_list)
 		if(istype(thing, /obj/effect/landmark/bitrunning/hololadder_spawn))
 			exit_turfs += get_turf(thing)
 			qdel(thing) // i'm worried about multiple servers getting confused so lets clean em up
@@ -102,7 +102,7 @@
 
 		if(istype(thing, /obj/effect/landmark/bitrunning/loot_signal))
 			var/turf/signaler_turf = get_turf(thing)
-			signaler_turf.AddComponent(/datum/component/bitrunning_loot_signal, generated_domain)
+			signaler_turf.AddComponent(/datum/component/bitrunning_points, generated_domain)
 			qdel(thing)
 
 	if(!length(exit_turfs))
@@ -151,8 +151,8 @@
 
 /// Tries to clean up everything in the domain
 /obj/machinery/quantum_server/proc/scrub_vdom()
-	sever_connections()
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // cleanup just in case
+	sever_connections() /// just in case someone's connected
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
 
 	if(length(generated_domain.reservations))
 		var/datum/turf_reservation/res = generated_domain.reservations[1]

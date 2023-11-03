@@ -44,5 +44,3 @@
 // Ladder
 /// from /obj/structure/hololadder/disconnect()
 #define COMSIG_BITRUNNER_LADDER_SEVER "bitrunner_ladder_sever"
-
-
