@@ -86,7 +86,6 @@
 	else
 		add_to_alive_mob_list()
 	update_incapacitated()
-	setup_incapacitated()
 	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
@@ -388,10 +387,6 @@
 
 	return null
 
-/// Register signals to call update_incapacitated whenever anything it cares about changes
-/mob/proc/setup_incapacitated()
-	return
-
 /// Called whenever anything that modifes incapacitated is ran, updates it and sends a signal if it changes
 /// Returns TRUE if anything changed, FALSE otherwise
 /mob/proc/update_incapacitated()
@@ -404,7 +399,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_INCAPACITATE_CHANGED, old_incap, incapacitated)
 	return TRUE
 
-/// Returns an updated incapacitated bitflag. If a flag is set it means we're incap in that case
+/// Returns an updated incapacitated bitflag. If a flag is set it means we're incapacitated in that case
 /mob/proc/build_incapacitated()
 	return NONE
 

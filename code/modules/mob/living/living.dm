@@ -64,7 +64,7 @@
 		return .
 
 	// If you are incapped, you probably can't brace yourself
-	var/can_help_themselves = !(incapacitated & IGNORE_RESTRAINTS)
+	var/can_help_themselves = !INCAPABLE_WITHOUT(src, INCAPABLE_RESTRAINTS)
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
@@ -511,22 +511,20 @@
 	investigate_log("has succumbed to death.", INVESTIGATE_DEATHS)
 	death()
 
-/mob/living/setup_incapacitated()
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)), PROC_REF(update_incapacitated))
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED)), PROC_REF(update_incapacitated))
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_STASIS), SIGNAL_REMOVETRAIT(TRAIT_STASIS)), PROC_REF(update_incapacitated))
-
-/mob/living/build_incapacitated()
-	// Blocks all incap flags
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		return ALL
+// Remember, anything that influences this needs to call update_incapacitated somehow when it changes
+// Most often best done in [code/modules/mob/living/init_signals.dm]
+/mob/living/build_incapacitated(flags)
+	// Holds a set of flags that describe how we are currently incapacitated
 	var/incap_status = NONE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		incap_status |= TRADITIONAL_INCAPACITATED
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		incap_status |= ~IGNORE_RESTRAINTS
+		incap_status |= INCAPABLE_RESTRAINTS
 	if(pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
-		incap_status |= ~IGNORE_GRAB
+		incap_status |= INCAPABLE_GRAB
 	if(HAS_TRAIT(src, TRAIT_STASIS))
-		incap_status |= ~IGNORE_STASIS
+		incap_status |= INCAPABLE_STASIS
+
 	return incap_status
 
 /mob/living/canUseStorage()
@@ -2051,10 +2049,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/can_look_up()
 	if(next_move > world.time)
 		return FALSE
-	if(incapacitated & IGNORE_RESTRAINTS)
+	if(INCAPABLE_WITHOUT(src, INCAPABLE_RESTRAINTS))
 		return FALSE
 	return TRUE
-
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
  *

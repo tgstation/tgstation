@@ -681,7 +681,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(multi_layer)
 		balloon_alert(source_mob, "turn off multi layer!")
 		return
-	if(source_mob.incapacitated & (IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(INCAPABLE_WITHOUT(source_mob, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 	if(source_mob.get_active_held_item() != src)
 		return

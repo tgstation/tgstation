@@ -139,7 +139,7 @@
 	if(!riposte_ready)
 		return
 
-	if(source.incapacitated & IGNORE_GRAB)
+	if(INCAPABLE_WITHOUT(source, INCAPABLE_GRAB))
 		return
 
 	var/mob/living/attacker = hitby.loc
