@@ -338,6 +338,9 @@ multiple modular subtrees with behaviors
 	if(stored_arguments)
 		arguments += stored_arguments
 	behavior.perform(arglist(arguments))
+	// If we're still a behavior, requeue our timer
+	if(LAZYACCESS(current_behaviors, behavior))
+		addtimer(src, CALLBACK(src, PROC_REF(handle_behavior)), behavior.action_cooldown)
 
 /datum/ai_controller/proc/CancelActions()
 	if(!LAZYLEN(current_behaviors))
