@@ -82,8 +82,43 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
 	movement_target_source = source
 	current_movement_target = target
+	RegisterSignal(current_movement_target, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement_target))
+	check_movement_target()
 	if(new_movement)
 		change_ai_movement_type(new_movement)
+
+///Checks to see if the movement target is invalid, or if it's satisfied any of our target locked behaviors
+/datum/ai_controller/proc/check_movement_target()
+	SIGNAL_HANDLER
+	if(current_movement_target && !isatom(current_movement_target))
+		stack_trace("[pawn]'s current movement target is not an atom, rather a [current_movement_target.type]! Did you accidentally set it to a weakref?")
+		CancelActions()
+		return
+
+	if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
+		CancelActions()
+		return
+
+	// This is duplicated code from process(), but it lets us vaugely safely assert that behaviors do not need to be checked
+	// If they are not past their required waiting time, which is v powerful
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT))
+			continue
+		if(!current_movement_target)
+			stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
+			return //This can cause issues, so don't let these slide.
+
+		///Stops pawns from performing such actions that should require the target to be adjacent.
+		var/atom/movable/moving_pawn = pawn
+		if(current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target) && \
+			!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)) ///Are we close enough to engage?
+
+			if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
+				ai_movement.stop_moving_towards(src)
+			return
+
+		else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
+			ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
 
 ///Overrides the current ai_movement of this controller with a new one
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
@@ -125,6 +160,7 @@ multiple modular subtrees with behaviors
 	reset_ai_status()
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
+	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement_target))
 	update_able_to_run()
 	setup_able_to_run()
 
@@ -162,7 +198,7 @@ multiple modular subtrees with behaviors
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
-	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_MOVABLE_MOVED))
 	clear_able_to_run()
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -196,20 +232,9 @@ multiple modular subtrees with behaviors
 		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
-	if(!LAZYLEN(current_behaviors) && idle_behavior)
+	if(idle_behavior && !LAZYLEN(current_behaviors))
 		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
 		return
-
-	if(current_movement_target)
-		if(!isatom(current_movement_target))
-			stack_trace("[pawn]'s current movement target is not an atom, rather a [current_movement_target.type]! Did you accidentally set it to a weakref?")
-			CancelActions()
-			return
-
-		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
-			CancelActions()
-			return
-
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
