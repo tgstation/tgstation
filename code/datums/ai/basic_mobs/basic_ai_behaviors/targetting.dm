@@ -26,20 +26,21 @@
 
 	var/list/potential_targets = hearers(aggro_range, get_turf(controller.pawn)) - living_mob //Remove self, so we don't suicide
 
-	for(var/HM in typecache_filter_list(range(aggro_range, living_mob), hostile_machines)) //Can we see any hostile machines?
-		if(can_see(living_mob, HM, aggro_range))
-			potential_targets += HM
+	for(var/obj/machinery/enemy_spotted in range(aggro_range, living_mob))
+		// Stand down private
+		if(!is_type_in_typecache(enemy_spotted, hostile_machines))
+			continue
+		potential_targets += enemy_spotted
 
 	if(!potential_targets.len)
 		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/list/filtered_targets = list()
-
 	for(var/atom/pot_target in potential_targets)
-		if(targetting_datum.can_attack(living_mob, pot_target))//Can we attack it?
-			filtered_targets += pot_target
+		if(!targetting_datum.can_attack(living_mob, pot_target))//Can we attack it?
 			continue
+		filtered_targets += pot_target
 
 	if(!filtered_targets.len)
 		finish_action(controller, succeeded = FALSE)
