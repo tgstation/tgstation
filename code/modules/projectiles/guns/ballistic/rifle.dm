@@ -202,17 +202,18 @@
 	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
-	if (bolt_locked == FALSE)
-		balloon_alert(user, "bowstring loosened")
-		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
-		process_chamber(FALSE, FALSE, FALSE)
-		bolt_locked = TRUE
-		update_appearance()
+	if (bolt_locked)
+		drop_bolt(user)
 		return
-	drop_bolt(user)
+	balloon_alert(user, "bowstring loosened")
+	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+	process_chamber(FALSE, FALSE, FALSE)
+	bolt_locked = TRUE
+	update_appearance()
 
 /obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
-	if(do_after(user, draw_time SECONDS, target = src))
+	if(!do_after(user, draw_time SECONDS, target = src))
+		return
 		playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 		if (user)
 			balloon_alert(user, "bowstring drawn")
@@ -232,7 +233,7 @@
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
 	name = "Syndicate Rebar Crossbow"
-	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed.\
+	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
 			Holds three shots, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"

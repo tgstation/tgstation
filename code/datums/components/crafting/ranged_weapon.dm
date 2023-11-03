@@ -209,7 +209,8 @@
 /datum/crafting_recipe/rebarxbow
 	name = "Heated Rebar Crossbow"
 	result = /obj/item/gun/ballistic/rifle/rebarxbow
-	reqs = list(/obj/item/stack/rods = 6,
+	reqs = list(
+		/obj/item/stack/rods = 6,
 		/obj/item/stack/cable_coil = 12,
 		/obj/item/inducer =  1,
 	)
