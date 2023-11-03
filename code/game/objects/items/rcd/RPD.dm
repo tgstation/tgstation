@@ -637,7 +637,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 ///Changes the piping layer when the mousewheel is scrolled up or down.
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source_mob.incapacitated & IGNORE_RESTRAINTS|IGNORE_STASIS)
+	if(INCAPABLE_WITHOUT(source_mob, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 	if(source_mob.get_active_held_item() != src)
 		return

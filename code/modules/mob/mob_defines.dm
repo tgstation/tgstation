@@ -73,10 +73,10 @@
 	 * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
 	 * unless there is a flag being used to check if it's ignored
 	 *
-	 * * bitflags: (see code/__DEFINES/status_effects.dm) 
-	 * * IGNORE_RESTRAINTS - mob in a restraint (handcuffs) is not considered incapacitated
-	 * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
-	 * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
+	 * * bitflags: (see code/__DEFINES/status_effects.dm)
+	 * * INCAPABLE_RESTRAINTS - if our mob is in a restraint (handcuffs)
+	 * * INCAPABLE_STASIS - if our mob is in stasis (stasis bed, etc.)
+	 * * INCAPABLE_GRAB - if our mob is being agressively grabbed
 	 *
 	**/
 	VAR_FINAL/incapacitated = NONE

@@ -140,7 +140,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated & IGNORE_STASIS)
+	if(INCAPABLE_WITHOUT(usr, INCAPABLE_STASIS))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE

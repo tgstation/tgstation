@@ -117,7 +117,7 @@
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
-		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && throw_mode && !(incapacitated & IGNORE_GRAB))
+		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && throw_mode && !INCAPABLE_WITHOUT(src, INCAPABLE_GRAB))
 			return TRUE
 	return FALSE
 

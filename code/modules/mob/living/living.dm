@@ -457,22 +457,20 @@
 	investigate_log("has succumbed to death.", INVESTIGATE_DEATHS)
 	death()
 
-/mob/living/setup_incapacitated()
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED)), PROC_REF(update_incapacitated))
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED)), PROC_REF(update_incapacitated))
-	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_STASIS), SIGNAL_REMOVETRAIT(TRAIT_STASIS)), PROC_REF(update_incapacitated))
-
-/mob/living/build_incapacitated()
-	// Blocks all incap flags
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
-		return ALL
+// Remember, anything that influences this needs to call update_incapacitated somehow when it changes
+// Most often best done in [code/modules/mob/living/init_signals.dm]
+/mob/living/build_incapacitated(flags)
+	// Holds a set of flags that describe how we are currently incapacitated
 	var/incap_status = NONE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		incap_status |= TRADITIONAL_INCAPACITATED
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		incap_status |= ~IGNORE_RESTRAINTS
+		incap_status |= INCAPABLE_RESTRAINTS
 	if(pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
-		incap_status |= ~IGNORE_GRAB
+		incap_status |= INCAPABLE_GRAB
 	if(HAS_TRAIT(src, TRAIT_STASIS))
-		incap_status |= ~IGNORE_STASIS
+		incap_status |= INCAPABLE_STASIS
+
 	return incap_status
 
 /mob/living/canUseStorage()
@@ -1981,7 +1979,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !((incapacitated & IGNORE_RESTRAINTS))
+	return !INCAPABLE_WITHOUT(src, INCAPABLE_RESTRAINTS)
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob

@@ -27,7 +27,7 @@
 	var/mob/living/living_pawn = pawn
 	if(!(ai_traits & CAN_ACT_WHILE_DEAD))
 		// Unroll for flags here
-		if (ai_traits & CAN_ACT_IN_STASIS && (living_pawn.stat || living_pawn.incapacitated & IGNORE_STASIS))
+		if (ai_traits & CAN_ACT_IN_STASIS && (living_pawn.stat || INCAPABLE_WITHOUT(living_pawn, INCAPABLE_STASIS)))
 			return FALSE
 		else if(IS_DEAD_OR_INCAP(living_pawn))
 			return FALSE
