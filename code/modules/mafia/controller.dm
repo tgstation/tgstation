@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/Destroy(force, ...)
 	. = ..()
 	end_game()
+	player_role_lookup.Cut()
 	QDEL_NULL(map_deleter)
 	if(GLOB.mafia_game == src)
 		GLOB.mafia_game = null
@@ -605,8 +606,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		H.equipOutfit(outfit_to_distribute)
 		H.status_flags |= GODMODE
 		RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(display_votes))
-		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
-		mafia_panel.Grant(H)
 		var/obj/item/modular_computer/modpc = role.player_pda
 		role.register_body(H)
 		if(modpc)
@@ -846,6 +845,10 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/action/innate/mafia_panel/New(Target, datum/mafia_controller/controller)
 	. = ..()
 	controller_panel = controller
+
+/datum/action/innate/mafia_panel/Destroy()
+	. = ..()
+	controller_panel = null
 
 /datum/action/innate/mafia_panel/Activate()
 	controller_panel.ui_interact(owner)

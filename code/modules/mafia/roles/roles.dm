@@ -27,6 +27,9 @@
 	var/mob/living/carbon/human/body
 	var/obj/effect/landmark/mafia/assigned_landmark
 
+	///The Mafia innate action panel that allows players to view the game's state.
+	var/datum/action/innate/mafia_panel/mafia_panel
+
 	///how many votes submitted when you vote. used in voting and deciding victory.
 	var/vote_power = 1
 	///what they get equipped with when they are revealed
@@ -49,6 +52,8 @@
 
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
+	mafia_panel = new(null,src)
+	mafia_panel.Grant(H)
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions + /datum/mafia_ability/voting)
 		role_unique_actions += new abilities(game, src)
 		role_unique_actions -= abilities
@@ -56,9 +61,12 @@
 /datum/mafia_role/Destroy(force, ...)
 	UnregisterSignal(body, COMSIG_MOB_SAY)
 	QDEL_NULL(mafia_alert)
+	QDEL_NULL(mafia_panel)
 	QDEL_LIST(role_unique_actions)
+	//we null these instead of qdel because Mafia controller's mapdeleter deletes it all.
+	assigned_landmark = null
 	body = null
-	role_messages = null
+	role_messages.Cut()
 	return ..()
 
 /datum/mafia_role/proc/register_body(mob/living/carbon/human/new_body)
