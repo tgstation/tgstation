@@ -88,6 +88,7 @@
 		return
 	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_mob_consume))
 	RegisterSignal(udder_mob, COMSIG_ATOM_ATTACKBY, PROC_REF(on_mob_feed))
+	udder_mob.ai_controller?.set_blackboard_key(BB_CHECK_HUNGRY, TRUE)
 
 /obj/item/udder/proc/on_mob_consume(datum/source, atom/feed)
 	SIGNAL_HANDLER
@@ -117,18 +118,20 @@
 		var/obj/item/stack/food_stack = food
 		final_food = food_stack.split_stack(udder_mob, 1)
 	final_food.forceMove(src)
-	QDEL_IN(food, require_consume_timer)
-	if(isnull(udder_mob.ai_controller))
+
+/obj/item/udder/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(!istype(arrived, require_consume_type))
+		return ..()
+
+	udder_mob.ai_controller?.set_blackboard_key(hunger_key, FALSE)
+	QDEL_IN(arrived, require_consume_timer)
+	return ..()
+
+/obj/item/udder/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(!istype(gone, require_consume_type))
 		return
-	udder_mob.ai_controller.set_blackboard_key(hunger_key, FALSE)
-	RegisterSignals(food, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(toggle_hunger))
-
-/obj/item/udder/proc/toggle_hunger(datum/source)
-	SIGNAL_HANDLER
-
-	udder_mob.ai_controller.set_blackboard_key(hunger_key, TRUE)
-	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
-
+	udder_mob.ai_controller?.set_blackboard_key(hunger_key, TRUE)
 
 
 /obj/item/udder/Destroy()

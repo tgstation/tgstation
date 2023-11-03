@@ -46,13 +46,13 @@
 		generate_loot()
 	else
 		can_lay_eggs = FALSE
-
 	var/datum/action/cooldown/mob_cooldown/spit_ore/spit = new(src)
 	var/datum/action/cooldown/mob_cooldown/burrow/burrow = new(src)
 	spit.Grant(src)
 	burrow.Grant(src)
 	ai_controller.set_blackboard_key(BB_SPIT_ABILITY, spit)
 	ai_controller.set_blackboard_key(BB_BURROW_ABILITY, burrow)
+	AddComponent(/datum/component/ore_collecting, post_collect = CALLBACK(src, PROC_REF(consume_ore)))
 	AddElement(/datum/element/wall_smasher)
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
@@ -66,17 +66,6 @@
 		make_egg_layer()
 
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
-
-/mob/living/basic/mining/goldgrub/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(!.)
-		return
-
-	if(!proximity_flag)
-		return
-
-	if(istype(attack_target, /obj/item/stack/ore))
-		consume_ore(attack_target)
 
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER

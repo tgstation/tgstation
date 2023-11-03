@@ -12,10 +12,7 @@
 		controller.queue_behavior(/datum/ai_behavior/make_babies, BB_BABIES_TARGET, BB_BABIES_CHILD_TYPES)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	if(controller.blackboard[BB_BREED_READY])
-		return
-
-	if(controller.pawn.gender != FEMALE)
+	if(controller.pawn.gender == FEMALE || controller.blackboard[BB_BREED_READY])
 		return
 
 	var/partner_types = controller.blackboard[BB_BABIES_PARTNER_TYPES]

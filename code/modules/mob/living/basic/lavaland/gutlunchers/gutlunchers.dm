@@ -107,19 +107,21 @@
 	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	possible_colors = list("#6d77ff","#8578e4","#97b6f6")
 	//pet commands when we tame the gutluncher
-	var/list/pet_commands = list(
+	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/point_targetting/attack,
 		/datum/pet_command/point_targetting/breed,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/mine_walls,
 	)
 
 /mob/living/basic/mining/gutlunch/warrior/Initialize(mapload)
 	. = ..()
 	roll_stats(melee_damage_lower, speed, maxHealth)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	AddElement(/datum/element/wall_tearer)
 
 /mob/living/basic/mining/gutlunch/milk/update_overlays(new_udder_volume, max_udder_volume)
 	. = ..()

@@ -40,6 +40,7 @@
 /datum/component/breed/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
 	REMOVE_TRAIT(parent, TRAIT_MOB_BREEDER, REF(src))
+	post_birth = null
 
 
 /datum/component/breed/proc/breed_with_partner(mob/living/source, mob/living/target)

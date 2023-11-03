@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/gutlunch
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	blackboard = list(
@@ -10,15 +10,11 @@
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,
 	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/make_babies,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/mine_walls,
 		/datum/ai_planning_subtree/befriend_ashwalkers,
 	)
 
@@ -57,7 +53,6 @@
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/dig_away_from_danger,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
 	)
@@ -68,8 +63,6 @@
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/dig_away_from_danger,
-		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
 		/datum/ai_planning_subtree/find_and_hunt_target/food_trough
 	)
@@ -91,7 +84,7 @@
 
 /datum/ai_behavior/find_hunt_target/food_trough
 
-/datum/ai_behavior/find_hunt_target/hunt_ores/valid_dinner(mob/living/basic/source, obj/target, radius)
+/datum/ai_behavior/find_hunt_target/food_trough/valid_dinner(mob/living/basic/source, obj/target, radius)
 	if(isnull(target))
 		return FALSE
 
@@ -99,3 +92,24 @@
 		return FALSE
 
 	return can_see(source, target, radius)
+
+/datum/pet_command/mine_walls
+	command_name = "Mine"
+	command_desc = "Command your pet to mine down walls."
+	speech_commands = list("mine", "smash")
+
+/datum/pet_command/mine_walls/try_activate_command(mob/living/commander)
+	var/mob/living/parent = weak_parent.resolve()
+	if(isnull(parent))
+		return
+	//no walls for us to mine
+	var/target_in_vicinity = locate(var/turf/closed/mineral/potential_wall) in oview(9, parent)
+	if(isnull(target_in_vicinity))
+		return
+	return ..()
+
+/datum/pet_command/grub_spit/execute_action(datum/ai_controller/controller)
+	if(controller.blackboard_key_exists(BB_TARGET_MINERAL_WALL))
+		controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_CURRENT_PET_TARGET)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	controller.queue_behavior(find_wall_behavior, BB_CURRENT_PET_TARGET)
