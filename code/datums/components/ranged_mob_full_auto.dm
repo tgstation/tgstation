@@ -11,8 +11,11 @@
 	var/is_firing = FALSE
 	/// This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
 	var/awaiting_status = AUTOFIRE_MOUSEDOWN
+	/// What are we currently shooting at?
 	var/atom/target
+	/// Where are we currently shooting at?
 	var/turf/target_loc
+	/// When will we next try to shoot?
 	COOLDOWN_DECLARE(next_shot_cooldown)
 
 /datum/component/ranged_mob_full_auto/Initialize(autofire_shot_delay = 0.5 SECONDS)
