@@ -90,6 +90,7 @@
 
 	StartCooldown()
 	if(!do_after(player, 1.5 SECONDS))
+		player.balloon_alert(player, "cancelled")
 		StartCooldown(cooldown_time * 0.2)
 		player.cut_overlay(overlays)
 		return TRUE
