@@ -1554,6 +1554,7 @@
 #include "code\datums\mutations\webbing.dm"
 #include "code\datums\proximity_monitor\field.dm"
 #include "code\datums\proximity_monitor\proximity_monitor.dm"
+#include "code\datums\proximity_monitor\fields\ai_target_tracking.dm"
 #include "code\datums\proximity_monitor\fields\gravity.dm"
 #include "code\datums\proximity_monitor\fields\projectile_dampener.dm"
 #include "code\datums\proximity_monitor\fields\timestop.dm"
