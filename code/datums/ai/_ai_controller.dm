@@ -216,7 +216,6 @@ multiple modular subtrees with behaviors
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
 		// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
-		var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
 
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //Might need to move closer
 			if(!current_movement_target)
@@ -224,13 +223,15 @@ multiple modular subtrees with behaviors
 				return //This can cause issues, so don't let these slide.
 			///Stops pawns from performing such actions that should require the target to be adjacent.
 			var/atom/movable/moving_pawn = pawn
-			var/can_reach = !(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)
-			if(can_reach && current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target)) ///Are we close enough to engage?
+			if(current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target) && \
+				!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)) ///Are we close enough to engage?
+
 				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
 					ai_movement.stop_moving_towards(src)
 
 				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 					continue
+				var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
 				ProcessBehavior(action_seconds_per_tick, current_behavior)
 				return
 
@@ -240,11 +241,13 @@ multiple modular subtrees with behaviors
 			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
 				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 					continue
+				var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
 				ProcessBehavior(action_seconds_per_tick, current_behavior)
 				return
 		else //No movement required
 			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
 				continue
+			var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
 			ProcessBehavior(action_seconds_per_tick, current_behavior)
 			return
 
