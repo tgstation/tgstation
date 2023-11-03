@@ -376,7 +376,7 @@
 	if(!MP)
 		return FALSE //Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/hostile/construct) || ispath(MP, /mob/living/basic/construct))
+	if(ispath(MP, /mob/living/basic/construct))
 		return FALSE //Verbs do not appear for players.
 
 //Good mobs!

@@ -8,28 +8,30 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
 	circuit = /obj/item/circuitboard/machine/launchpad
+	/// The beam icon
 	var/icon_teleport = "lpad-beam"
-	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
+	/// To prevent briefcase pad deconstruction and such
+	var/stationary = TRUE
+	/// What to name the launchpad in the console
 	var/display_name = "Launchpad"
+	/// The speed of the teleportation
 	var/teleport_speed = 35
+	/// Max range of the launchpad
 	var/range = 10
-	var/teleporting = FALSE //if it's in the process of teleporting
+	/// If it's in the process of teleporting
+	var/teleporting = FALSE
+	/// The power efficiency of the launchpad
 	var/power_efficiency = 1
+	/// Current x target
 	var/x_offset = 0
+	/// Current y target
 	var/y_offset = 0
+	/// The icon to use for the indicator
 	var/indicator_icon = "launchpad_target"
 	/// Determines if the bluespace launchpad is blatantly obvious on teleportation.
 	var/hidden = FALSE
 	/// The beam on teleportation
 	var/teleport_beam = "sm_arc_supercharged"
-
-/obj/machinery/launchpad/RefreshParts()
-	. = ..()
-	var/max_range_multiplier = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		max_range_multiplier += servo.tier
-	range = initial(range)
-	range *= max_range_multiplier
 
 /obj/machinery/launchpad/Initialize(mapload)
 	. = ..()
@@ -39,11 +41,58 @@
 
 	update_hud()
 
+/obj/machinery/launchpad/RefreshParts()
+	. = ..()
+	var/max_range_multiplier = 0
+	for(var/datum/stock_part/servo/servo in component_parts)
+		max_range_multiplier += servo.tier
+	range = initial(range)
+	range *= max_range_multiplier
+
 /obj/machinery/launchpad/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer && !QDELETED(src))
 		update_hud()
 	return ..()
 
+/obj/machinery/launchpad/Destroy()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_atom_from_hud(src)
+	return ..()
+
+/obj/machinery/launchpad/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
+
+/obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, params)
+	if(!stationary)
+		return ..()
+
+	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", weapon))
+		update_indicator()
+		return
+
+	if(panel_open && weapon.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, weapon))
+			return
+		var/obj/item/multitool/multi = weapon
+		multi.set_buffer(src)
+		balloon_alert(user, "saved to buffer")
+		return TRUE
+
+	if(default_deconstruction_crowbar(weapon))
+		return
+
+/obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		return
+	var/target_x = x + x_offset
+	var/target_y = y + y_offset
+	var/turf/target = locate(target_x, target_y, z)
+	ghost.forceMove(target)
+
+/// Updates diagnostic huds
 /obj/machinery/launchpad/proc/update_hud()
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
 	var/mutable_appearance/target = mutable_appearance('icons/effects/effects.dmi', "launchpad_target", ABOVE_OPEN_TURF_LAYER, src, GAME_PLANE)
@@ -56,56 +105,17 @@
 			/obj/item/circuit_component/bluespace_launchpad,
 		))
 
-/obj/machinery/launchpad/Destroy()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src)
-	return ..()
-
-/obj/machinery/launchpad/examine(mob/user)
-	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
-
-/obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
-	if(stationary)
-		if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", I))
-			update_indicator()
-			return
-
-		if(panel_open)
-			if(I.tool_behaviour == TOOL_MULTITOOL)
-				if(!multitool_check_buffer(user, I))
-					return
-				var/obj/item/multitool/M = I
-				M.set_buffer(src)
-				balloon_alert(user, "saved to multitool buffer")
-				return 1
-
-		if(default_deconstruction_crowbar(I))
-			return
-
-	return ..()
-
-/obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
-	. = ..()
-	if(.)
-		return
-	var/target_x = x + x_offset
-	var/target_y = y + y_offset
-	var/turf/target = locate(target_x, target_y, z)
-	ghost.forceMove(target)
-
-/obj/machinery/launchpad/proc/isAvailable()
-	if(machine_stat & NOPOWER)
-		return FALSE
-	if(panel_open)
+/// Whether this launchpad can send or receive.
+/obj/machinery/launchpad/proc/is_available()
+	if(QDELETED(src) || !is_operational || panel_open)
 		return FALSE
 	return TRUE
 
+/// Updates the indicator icon.
 /obj/machinery/launchpad/proc/update_indicator()
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
 	var/turf/target_turf
-	if(isAvailable())
+	if(is_available())
 		target_turf = locate(x + x_offset, y + y_offset, z)
 	if(target_turf)
 		holder.icon_state = indicator_icon
@@ -113,6 +123,7 @@
 	else
 		holder.icon_state = null
 
+/// Sets the offset of the launchpad.
 /obj/machinery/launchpad/proc/set_offset(x, y)
 	if(teleporting)
 		return
@@ -132,15 +143,18 @@
 	. = ..()
 	animate(src, alpha = 0, flags = ANIMATION_PARALLEL, time = BEAM_FADE_TIME)
 
-
+/// Checks if the launchpad can teleport.
 /obj/machinery/launchpad/proc/teleport_checks()
-	if(!isAvailable())
+	if(!is_available())
 		return "ERROR: Launchpad not operative. Make sure the launchpad is ready and powered."
+
 	if(teleporting)
 		return "ERROR: Launchpad busy."
-	var/turf/pad_turf = get_turf(src)
-	if(pad_turf && is_centcom_level(pad_turf.z))
+
+	var/area/surrounding = get_area(src)
+	if(is_centcom_level(z) || istype(surrounding, /area/shuttle))
 		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
+
 	return null
 
 /// Performs the teleport.
@@ -179,7 +193,7 @@
 	indicator_icon = "launchpad_target"
 	update_indicator()
 
-	if(QDELETED(src) || !isAvailable())
+	if(!is_available())
 		return
 
 	teleporting = FALSE
@@ -277,7 +291,7 @@
 	briefcase = null
 	return ..()
 
-/obj/machinery/launchpad/briefcase/isAvailable()
+/obj/machinery/launchpad/briefcase/is_available()
 	if(closed)
 		return FALSE
 	if(panel_open)
