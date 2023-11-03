@@ -1,5 +1,8 @@
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
+	/// How many times we have failed to find a target
+	/// Effects how long we wait between scans (optimization thing)
+	var/found_nothing_count = 0
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
@@ -20,6 +23,10 @@
 		finish_action(controller, succeeded = FALSE)
 		return
 
+	// Every time we try, increment our found nothing count
+	found_nothing_count += 1
+	// Can get at most 5 times slower then the first delay
+	action_cooldown = initial(action_cooldown) * clamp(found_nothing_count, 0, 5)
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 
 	controller.clear_blackboard_key(target_key)
@@ -46,6 +53,9 @@
 		finish_action(controller, succeeded = FALSE)
 		return
 
+	// If we find something, set it back down to 0
+	found_nothing_count = 0
+	action_cooldown = initial(action_cooldown)
 	var/atom/target = pick_final_target(controller, filtered_targets)
 	controller.set_blackboard_key(target_key, target)
 
