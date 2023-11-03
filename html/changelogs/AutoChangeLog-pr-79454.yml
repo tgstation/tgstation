@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - code_imp: "creatures in cowboy boots will retaliate properly"
