@@ -30,15 +30,15 @@ SUBSYSTEM_DEF(chat)
 	if(!(target.ckey in client_to_reliability_history))
 		client_to_reliability_history[target.ckey] = list()
 	var/list/client_history = client_to_reliability_history[target.ckey]
-	client_history[sequence] = payload
+	client_history["[sequence]"] = payload
 
 	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
 		var/oldest
 		for(var/stored in client_history)
-			if(stored < oldest)
-				oldest = stored
-		client_history -= oldest
-
+			var/stored_num = text2num(stored)
+			if(stored_num < oldest)
+				oldest = stored_num
+		client_history -= "[oldest]"
 	return payload
 
 /datum/controller/subsystem/chat/proc/send_payload_to_client(client/target, datum/chat_payload/payload)
@@ -76,6 +76,7 @@ SUBSYSTEM_DEF(chat)
 
 /datum/controller/subsystem/chat/proc/handle_resend(client/client, sequence)
 	var/list/client_history = client_to_reliability_history[client.ckey]
+	sequence = "[sequence]"
 	if(isnull(client_history) || !(sequence in client_history))
 		return
 
