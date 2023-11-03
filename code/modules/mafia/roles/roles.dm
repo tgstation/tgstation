@@ -52,8 +52,7 @@
 
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
-	mafia_panel = new(null,src)
-	mafia_panel.Grant(H)
+	mafia_panel = new(null, game)
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions + /datum/mafia_ability/voting)
 		role_unique_actions += new abilities(game, src)
 		role_unique_actions -= abilities
@@ -70,8 +69,12 @@
 	return ..()
 
 /datum/mafia_role/proc/register_body(mob/living/carbon/human/new_body)
+	if(body)
+		UnregisterSignal(new_body, COMSIG_MOB_SAY)
+		mafia_panel.Remove(body)
 	body = new_body
 	RegisterSignal(new_body, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	mafia_panel.Grant(new_body)
 
 /**
  * send_message_to_player
