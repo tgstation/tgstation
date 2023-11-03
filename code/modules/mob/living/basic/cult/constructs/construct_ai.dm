@@ -85,6 +85,6 @@
 	target_wounded_key = BB_TARGET_WOUNDED_ONLY
 
 /datum/targetting_datum/basic/same_faction/construct/can_attack(mob/living/living_mob, atom/the_target, vision_range, check_faction = TRUE)
-	if(isconstruct(the_target) || istype(the_target, /mob/living/simple_animal/shade))
+	if(isconstruct(the_target) || istype(the_target, /mob/living/basic/shade))
 		return ..()
 	return FALSE
