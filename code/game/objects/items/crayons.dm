@@ -367,7 +367,8 @@
 	.["has_cap"] = has_cap
 	.["is_capped"] = is_capped
 	.["can_change_colour"] = can_change_colour
-	.["current_colour"] = paint_color
+	.["selected_color"] = GLOB.pipe_color_name[paint_color] || paint_color
+	.["paint_colors"] = GLOB.pipe_paint_colors
 
 /obj/item/toy/crayon/ui_act(action, list/params)
 	. = ..()
@@ -390,8 +391,14 @@
 				text_buffer = ""
 			else
 				paint_mode = PAINT_NORMAL
-		if("select_colour")
+		if("custom_color")
 			. = can_change_colour && pick_painting_tool_color(usr, paint_color)
+		if("color")
+			if(!can_change_colour)
+				return
+			paint_color = GLOB.pipe_paint_colors[params["paint_color"]]
+			set_painting_tool_color(paint_color)
+			. = TRUE
 		if("enter_text")
 			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
 			if(isnull(txt))
