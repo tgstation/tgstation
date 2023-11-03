@@ -15,11 +15,11 @@
 	attack_verb_simple = "ram"
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(
+		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
+		/datum/action/cooldown/spell/conjure/construct/lesser,
 		/datum/action/cooldown/spell/conjure/cult_floor,
 		/datum/action/cooldown/spell/conjure/cult_wall,
 		/datum/action/cooldown/spell/conjure/soulstone,
-		/datum/action/cooldown/spell/conjure/construct/lesser,
-		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/innate/cult/create_rune/revive,
 	)
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, \

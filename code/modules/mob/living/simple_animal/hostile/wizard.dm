@@ -57,12 +57,6 @@
 	blink.outer_tele_radius = 3
 	blink.Grant(src)
 
-/mob/living/simple_animal/hostile/wizard/Destroy()
-	QDEL_NULL(fireball)
-	QDEL_NULL(magic_missile)
-	QDEL_NULL(blink)
-	return ..()
-
 /mob/living/simple_animal/hostile/wizard/handle_automated_action()
 	. = ..()
 	if(target && next_cast < world.time)

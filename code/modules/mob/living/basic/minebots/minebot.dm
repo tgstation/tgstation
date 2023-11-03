@@ -58,14 +58,13 @@
 		after_tame = CALLBACK(src, PROC_REF(activate_bot)),\
 	)
 
-	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_light/toggle_light_action = new(src)
-	var/datum/action/cooldown/mob_cooldown/minedrone/toggle_meson_vision/toggle_meson_vision_action = new(src)
-	var/datum/action/cooldown/mob_cooldown/minedrone/dump_ore/dump_ore_action = new(src)
-	toggle_light_action.Grant(src)
-	toggle_meson_vision_action.Grant(src)
-	dump_ore_action.Grant(src)
-	ai_controller.set_blackboard_key(BB_MINEBOT_LIGHT_ABILITY, toggle_light_action)
-	ai_controller.set_blackboard_key(BB_MINEBOT_DUMP_ABILITY, dump_ore_action)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/minedrone/toggle_light = BB_MINEBOT_LIGHT_ABILITY,
+		/datum/action/cooldown/mob_cooldown/minedrone/toggle_meson_vision = null,
+		/datum/action/cooldown/mob_cooldown/minedrone/dump_ore = BB_MINEBOT_DUMP_ABILITY,
+	)
+
+	grant_actions_by_list(innate_actions)
 
 	stored_gun = new(src)
 	var/obj/item/implant/radio/mining/comms = new(src)

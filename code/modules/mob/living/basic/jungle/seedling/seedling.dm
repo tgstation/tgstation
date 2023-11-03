@@ -56,12 +56,12 @@
 
 /mob/living/basic/seedling/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/seed_attack = new(src)
-	seed_attack.Grant(src)
-	ai_controller.set_blackboard_key(BB_RAPIDSEEDS_ABILITY, seed_attack)
-	var/datum/action/cooldown/mob_cooldown/solarbeam/beam_attack = new(src)
-	beam_attack.Grant(src)
-	ai_controller.set_blackboard_key(BB_SOLARBEAM_ABILITY, beam_attack)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling = BB_RAPIDSEEDS_ABILITY,
+		/datum/action/cooldown/mob_cooldown/solarbeam = BB_SOLARBEAM_ABILITY,
+	)
+
+	grant_actions_by_list(innate_actions)
 
 	var/petal_color = pick(possible_colors)
 
