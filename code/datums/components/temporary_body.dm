@@ -49,7 +49,6 @@
 	else
 		old_mind.set_current(old_body)
 
-	living_parent.ckey = null
 	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
 	old_mind = null

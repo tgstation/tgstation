@@ -56,9 +56,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	///current timer for phase
 	var/next_phase_timer
 
-	///used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated
-	var/debug = FALSE
-
 	///was our game forced to start early?
 	var/early_start = FALSE
 
@@ -164,10 +161,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	for(var/datum/mafia_role/role as anything in all_roles)
 		role.assigned_landmark = pick_n_take(spawnpoints)
 		var/selected_player //this can be a ckey or a PDA
-		if(!debug)
-			selected_player = pick(ready_ghosts_and_pdas)
-		else
-			selected_player = peek(ready_ghosts_and_pdas)
+		selected_player = pick(ready_ghosts_and_pdas)
 		var/client/player_client = GLOB.directory[selected_player]
 		if(player_client)
 			role.player_key = selected_player
