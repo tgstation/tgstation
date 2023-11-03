@@ -631,6 +631,7 @@ SUBSYSTEM_DEF(timer)
  *
  * Arguments:
  * * id a timerid or a /datum/timedevent
+ * * timer_subsystem - Optional, the subsystem to pull from. Replaced w SStimer if none is given
  */
 /proc/deltimer(id, datum/controller/subsystem/timer/timer_subsystem)
 	if (!id)
@@ -653,6 +654,7 @@ SUBSYSTEM_DEF(timer)
  *
  * Arguments:
  * * id a timerid or a /datum/timedevent
+ * * timer_subsystem - Optional, the subsystem to pull from. Replaced w SStimer if none is given
  */
 /proc/timeleft(id, datum/controller/subsystem/timer/timer_subsystem)
 	if (!id)
@@ -676,6 +678,7 @@ SUBSYSTEM_DEF(timer)
  * Arguments:
  * * id a timerid or a /datum/timedevent
  * * new_wait the new wait to give this looping timer
+ * * timer_subsystem - Optional, the subsystem to pull from. Replaced w SStimer if none is given
  */
 /proc/updatetimedelay(id, new_wait, datum/controller/subsystem/timer/timer_subsystem)
 	if (!id)
