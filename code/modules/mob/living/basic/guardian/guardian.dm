@@ -205,6 +205,8 @@
 
 /// Link up with a summoner mob.
 /mob/living/basic/guardian/proc/set_summoner(mob/living/to_who, different_person = FALSE)
+	if (QDELETED(src))
+		return // Just in case
 	if (QDELETED(to_who))
 		ghostize(FALSE)
 		qdel(src) // No life of free invulnerability for you.
