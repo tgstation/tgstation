@@ -83,8 +83,7 @@
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
-	var/datum/action/innate/imaginary_join/join
-	var/datum/action/innate/imaginary_hide/hide
+
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -105,10 +104,11 @@
  */
 /mob/camera/imaginary_friend/Initialize(mapload)
 	. = ..()
-	join = new
-	join.Grant(src)
-	hide = new
-	hide.Grant(src)
+	var/static/list/grantable_actions = list(
+		/datum/action/innate/imaginary_join,
+		/datum/action/innate/imaginary_hide,
+	)
+	grant_actions_by_list(grantable_actions)
 
 /// Links this imaginary friend to the provided mob
 /mob/camera/imaginary_friend/proc/attach_to_owner(mob/living/imaginary_friend_owner)

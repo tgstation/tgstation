@@ -32,10 +32,9 @@
 
 /mob/living/basic/spider/growing/young/ambush/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
-	var/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web = new(src)
-	sneak_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/spider)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /// Will differentiate into the "scout" giant spider.
 /mob/living/basic/spider/growing/young/scout

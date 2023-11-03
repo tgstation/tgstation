@@ -164,7 +164,7 @@
 /// Picks a random name as a suggestion
 /mob/living/basic/guardian/proc/generate_random_name()
 	var/list/surname_options = list("Guardian") // Fallback in case you define a guardian with no theme
-	switch(theme.fluff_type)
+	switch(theme?.fluff_type)
 		if (GUARDIAN_MAGIC)
 			surname_options = GLOB.guardian_fantasy_surnames
 		if (GUARDIAN_TECH)

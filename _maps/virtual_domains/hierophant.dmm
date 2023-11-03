@@ -37,7 +37,7 @@
 /turf/closed/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
 "E" = (
-/mob/living/simple_animal/hostile/megafauna/hierophant/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/hierophant,
 /turf/open/indestructible/hierophant/two,
 /area/lavaland/surface/outdoors/virtual_domain)
 "H" = (
@@ -51,7 +51,7 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/indestructible/hierophant,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "S" = (
 /obj/effect/mob_spawn/corpse/human/miner,
 /turf/open/indestructible/hierophant,
