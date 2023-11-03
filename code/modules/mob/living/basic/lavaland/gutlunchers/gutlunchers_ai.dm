@@ -103,13 +103,13 @@
 	if(isnull(parent))
 		return
 	//no walls for us to mine
-	var/target_in_vicinity = locate(var/turf/closed/mineral/potential_wall) in oview(9, parent)
+	var/target_in_vicinity = locate(/turf/closed/mineral) in oview(9, parent)
 	if(isnull(target_in_vicinity))
 		return
 	return ..()
 
-/datum/pet_command/grub_spit/execute_action(datum/ai_controller/controller)
-	if(controller.blackboard_key_exists(BB_TARGET_MINERAL_WALL))
+/datum/pet_command/mine_walls/execute_action(datum/ai_controller/controller)
+	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_CURRENT_PET_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
-	controller.queue_behavior(find_wall_behavior, BB_CURRENT_PET_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_CURRENT_PET_TARGET)

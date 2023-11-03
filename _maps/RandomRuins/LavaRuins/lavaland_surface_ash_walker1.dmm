@@ -1336,6 +1336,12 @@
 /obj/structure/stone_tile,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"Rq" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/railing/corner/end/wooden_fence,
+/obj/structure/railing/corner/end/flip/wooden_fence,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "RE" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
@@ -2002,7 +2008,7 @@ Uh
 Uh
 Gv
 Gv
-Gv
+Rq
 sz
 sz
 sz

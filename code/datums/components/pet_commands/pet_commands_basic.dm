@@ -142,6 +142,36 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
+ * # Breed command. breed with a partner!
+ */
+/datum/pet_command/point_targetting/breed
+	command_name = "Breed"
+	command_desc = "Command your pet to attempt to breed with a partner."
+	radial_icon = 'icons/mob/simple/animal.dmi'
+	radial_icon_state = "heart"
+	speech_commands = list("breed", "consumate")
+
+/datum/pet_command/point_targetting/breed/set_command_target(mob/living/parent, atom/target)
+	if(isnull(target) || !isliving(target))
+		return
+	if(!HAS_TRAIT(parent, TRAIT_MOB_BREEDER) || !HAS_TRAIT(target, TRAIT_MOB_BREEDER))
+		return
+	if(isnull(parent.ai_controller))
+		return
+	if(!parent.ai_controller.blackboard[BB_BREED_READY] || isnull(parent.ai_controller.blackboard[BB_BABIES_PARTNER_TYPES]))
+		return
+	var/mob/living/living_target = target
+	if(!living_target.ai_controller?.blackboard[BB_BREED_READY])
+		return
+	return ..()
+
+/datum/pet_command/point_targetting/breed/execute_action(datum/ai_controller/controller)
+	if(is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
+		controller.queue_behavior(/datum/ai_behavior/make_babies, BB_CURRENT_PET_TARGET)
+	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/**
  * # Pet Command: Targetted Ability
  * Tells a pet to use some kind of ability on the next thing you point at
  */
@@ -207,27 +237,3 @@
 		return
 	if(isliving(attacker) && can_see(owner, attacker, protect_range))
 		set_command_active(owner, attacker)
-
-/datum/pet_command/point_targetting/breed
-	command_name = "Breed"
-	command_desc = "Command your pet to attempt to breed with a partner."
-	radial_icon = 'icons/mob/simple/animal.dmi'
-	radial_icon_state = "heart"
-	speech_commands = list("breed", "consumate")
-
-/datum/pet_command/point_targetting/breed/set_command_target(mob/living/parent, atom/target)
-	if(isnull(target) || !isliving(target))
-		return
-	if(!HAS_TRAIT(parent, TRAIT_MOB_BREEDER) || !HAS_TRAIT(target, TRAIT_MOB_BREEDER))
-		return
-	if(!parent.ai_controller?.blackboard[BB_BREED_READY])
-		return
-	var/mob/living/partner = target
-	if(!partner.ai_controller?.blackboard[BB_BREED_READY])
-		return
-	return ..()
-
-/datum/pet_command/point_targetting/breed/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(/datum/ai_behavior/make_babies, BB_CURRENT_PET_TARGET)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	return SUBTREE_RETURN_FINISH_PLANNING

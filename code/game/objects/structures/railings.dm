@@ -164,3 +164,9 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
+
+/obj/structure/railing/corner/end/wooden_fence
+	icon_state = "wooden_railing_corner"
+
+/obj/structure/railing/corner/end/flip/wooden_fence
+	icon_state = "wooden_railing_corner_flipped"

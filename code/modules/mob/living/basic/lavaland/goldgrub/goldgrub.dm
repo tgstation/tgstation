@@ -52,7 +52,7 @@
 	burrow.Grant(src)
 	ai_controller.set_blackboard_key(BB_SPIT_ABILITY, spit)
 	ai_controller.set_blackboard_key(BB_BURROW_ABILITY, burrow)
-	AddComponent(/datum/component/ore_collecting, post_collect = CALLBACK(src, PROC_REF(consume_ore)))
+	AddElement(/datum/element/ore_collecting)
 	AddElement(/datum/element/wall_smasher)
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
@@ -124,12 +124,14 @@
 		max_eggs_held = 1,\
 	)
 
-/mob/living/basic/mining/goldgrub/proc/consume_ore(obj/item/target_ore)
+/mob/living/basic/mining/goldgrub/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(!istype(arrived, /obj/item/stack/ore))
+		return
 	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	target_ore.forceMove(src)
 	if(!can_lay_eggs)
 		return
-	if(!istype(target_ore, /obj/item/stack/ore/bluespace_crystal) || prob(60))
+	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
 
