@@ -45,10 +45,9 @@
 	var/recharge_start_delay = 60 SECONDS
 	var/charge_increment_delay = 60 SECONDS
 	var/charge_recovery = 1
-	var/show_charge_as_alpha = TRUE
 
 	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, show_charge_as_alpha = show_charge_as_alpha, shield_icon = heretic_shield_icon)
+	charge_recovery = charge_recovery, shield_icon = heretic_shield_icon)
 
 
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
