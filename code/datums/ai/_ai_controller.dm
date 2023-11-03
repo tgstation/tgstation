@@ -23,8 +23,6 @@ multiple modular subtrees with behaviors
 	var/list/planned_behaviors
 	///Current actions being performed by the AI.
 	var/list/current_behaviors
-	///Current actions and their respective last time ran as an assoc list.
-	var/list/behavior_cooldowns = list()
 	///Current status of AI (OFF/ON)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
@@ -99,7 +97,7 @@ multiple modular subtrees with behaviors
 		CancelActions()
 		return
 
-	// This is duplicated code from process(), but it lets us vaugely safely assert that behaviors do not need to be checked
+	// This is duplicated code from handle_behavior(), but it lets us vaugely safely assert that behaviors do not need to be checked
 	// If they are not past their required waiting time, which is v powerful
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT))
@@ -226,6 +224,32 @@ multiple modular subtrees with behaviors
 		return FALSE
 	return TRUE
 
+/// Handles a scheduled ai behavior
+/datum/ai_controller/proc/handle_behavior(datum/ai_behavior/current_behavior)
+	var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
+	if(!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT))
+		ProcessBehavior(action_seconds_per_tick, current_behavior)
+		return
+
+	if(!current_movement_target)
+		stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
+		return //This can cause issues, so don't let these slide.
+	///Stops pawns from performing such actions that should require the target to be adjacent.
+	var/atom/movable/moving_pawn = pawn
+	if(current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target) && \
+		!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)) ///Are we close enough to engage?
+
+		if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
+			ai_movement.stop_moving_towards(src)
+		ProcessBehavior(action_seconds_per_tick, current_behavior)
+		return
+
+	else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
+		ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
+
+	if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
+		ProcessBehavior(action_seconds_per_tick, current_behavior)
+
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
 	if(!able_to_run)
@@ -235,46 +259,6 @@ multiple modular subtrees with behaviors
 	if(idle_behavior && !LAZYLEN(current_behaviors))
 		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
 		return
-
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-
-		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
-		// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
-		// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
-
-		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //Might need to move closer
-			if(!current_movement_target)
-				stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
-				return //This can cause issues, so don't let these slide.
-			///Stops pawns from performing such actions that should require the target to be adjacent.
-			var/atom/movable/moving_pawn = pawn
-			if(current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target) && \
-				!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)) ///Are we close enough to engage?
-
-				if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
-					ai_movement.stop_moving_towards(src)
-
-				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
-					continue
-				var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
-				ProcessBehavior(action_seconds_per_tick, current_behavior)
-				return
-
-			else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
-				ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
-
-			if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
-				if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
-					continue
-				var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
-				ProcessBehavior(action_seconds_per_tick, current_behavior)
-				return
-		else //No movement required
-			if(behavior_cooldowns[current_behavior] > world.time) //Still on cooldown
-				continue
-			var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
-			ProcessBehavior(action_seconds_per_tick, current_behavior)
-			return
 
 ///Determines whether the AI can currently make a new plan
 /datum/ai_controller/proc/able_to_plan()
@@ -324,7 +308,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
 	update_able_to_run()
-	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time)
+	addtimer(src, CALLBACK(src, PROC_REF(update_able_to_run)), time)
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
@@ -340,6 +324,7 @@ multiple modular subtrees with behaviors
 
 	if(!behavior.setup(arglist(arguments)))
 		return
+	addtimer(src, CALLBACK(src, PROC_REF(handle_behavior)), behavior.action_cooldown)
 	LAZYADDASSOC(current_behaviors, behavior, TRUE)
 	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
