@@ -247,6 +247,7 @@
 
 /mob/living/basic/carp/advanced
 	health = 40
+	maxHealth = 40
 	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE

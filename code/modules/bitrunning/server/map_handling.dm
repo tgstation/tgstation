@@ -142,7 +142,7 @@
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	is_ready = FALSE
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	sever_connections()
 
 	if(!fast)
 		notify_spawned_threats()
@@ -155,12 +155,11 @@
 
 	update_use_power(IDLE_POWER_USE)
 	domain_randomized = FALSE
-	domain_threats = 0
 	retries_spent = 0
 
 /// Deletes all the tile contents
 /obj/machinery/quantum_server/proc/scrub_vdom()
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR) /// just in case someone's connected
+	sever_connections() /// just in case someone's connected
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
 
 	if(length(generated_domain.reservations))
