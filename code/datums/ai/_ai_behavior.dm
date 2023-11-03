@@ -24,12 +24,16 @@
 
 ///Called when the action is finished. This needs the same args as perform besides the default ones
 /datum/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded, ...)
-	deltimer(LAZYACCESS(controller.current_behaviors, src), SSai_behaviors)
-	LAZYREMOVE(controller.current_behaviors, src)
-	// If a controller isn't doing anything, send it to idle
-	if(!LAZYLEN(controller.current_behaviors))
-		START_PROCESSING(SSai_idle, controller)
+	if(LAZYACCESS(controller.current_behaviors, 1) == src)
+		deltimer(next_behavior_id, SSai_behaviors)
+		// Queue the next behavior, otherwise send it to idle
+		if(LAZYLEN(controller.current_behaviors) > 1)
+			var/datum/ai_behavior/next_behavior = controller.current_behaviors[2]
+			next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), next_behavior), next_behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		else
+			START_PROCESSING(SSai_idle, controller)
 
+	LAZYREMOVE(controller.current_behaviors, src)
 	controller.behavior_args -= type
 	if(!(behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT)) //If this was a movement task, reset our movement target if necessary
 		return

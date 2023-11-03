@@ -21,8 +21,10 @@ multiple modular subtrees with behaviors
 	var/ai_traits = NONE
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors
-	///Current actions being performed by the AI.
+	///Current actions being performed by the AI -> time to wait until running
 	var/list/current_behaviors
+	///Timerid of the next behavior to run
+	var/next_behavior_id
 	///Current status of AI (OFF/ON)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
@@ -217,6 +219,12 @@ multiple modular subtrees with behaviors
 	able_to_run = get_able_to_run()
 	if(!able_to_run)
 		SSmove_manager.stop_looping(pawn) //stop moving, since we can't run the controller rn
+		deltimer(next_behavior_id, SSai_behaviors)
+	else
+		var/datum/ai_behavior/next = LAZYACCESS(current_behaviors, 1)
+		if(!next)
+			return
+		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), next), LAZYACCESS(current_behaviors, next), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
 
 ///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
 /datum/ai_controller/proc/get_able_to_run()
@@ -323,8 +331,8 @@ multiple modular subtrees with behaviors
 	// If we were on idle and we are no longer, then stop yeah?
 	if(!LAZYLEN(current_behaviors))
 		STOP_PROCESSING(SSai_idle, src)
-	var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-	LAZYSET(current_behaviors, behavior, id)
+		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+	LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown(src))
 	LAZYSET(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
@@ -339,15 +347,15 @@ multiple modular subtrees with behaviors
 		arguments += stored_arguments
 	behavior.perform(arglist(arguments))
 	// If we're still a behavior, requeue our timer
-	if(LAZYACCESS(current_behaviors, behavior))
-		var/id = addtimer(CALLBACK(src,\PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		LAZYSET(current_behaviors, behavior, id)
+	if(LAZYACCESS(current_behaviors, 1) == behavior)
+		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown(src))
 
 /datum/ai_controller/proc/CancelActions()
 	if(!LAZYLEN(current_behaviors))
 		return
-	for(var/i in current_behaviors)
-		var/datum/ai_behavior/current_behavior = i
+	// Reverse to avoid constantly rescheduling timers
+	for(var/datum/ai_behavior/current_behavior as anything in reverse(current_behaviors.Copy()))
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[current_behavior.type]
 		if(stored_arguments)
