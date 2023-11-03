@@ -58,5 +58,7 @@
 	set name = "Emote Panel"
 	set category = "IC"
 
-	var/static/datum/emote_panel/emote_panel = new
+	var/static/datum/emote_panel/emote_panel
+	if(isnull(emote_panel))
+		emote_panel = new
 	emote_panel.ui_interact(src)
