@@ -86,7 +86,37 @@ export const chatMiddleware = (store) => {
     }
     if (type === 'chat/message') {
       const payload_obj = JSON.parse(payload);
-      Byond.sendMessage('chat/acknowledge', payload_obj.sequence);
+      const sequence = payload_obj.sequence;
+      if (chatRenderer.sequences.includes(sequence)) {
+        return;
+      }
+
+      const sequence_count = chatRenderer.sequences.length;
+      seq_check: if (sequence_count > 0) {
+        if (chatRenderer.sequences_requested.includes(sequence)) {
+          chatRenderer.sequences_requested.splice(
+            chatRenderer.sequences_requested.indexOf(sequence),
+            1
+          );
+          // if we are receiving a message we requested, we can stop reliability checks
+          break seq_check;
+        }
+
+        // cannot do reliability if we don't have any messages
+        const expected_sequence =
+          chatRenderer.sequences[sequence_count - 1] + 1;
+        if (sequence !== expected_sequence) {
+          for (
+            let requesting = expected_sequence;
+            requesting < sequence;
+            requesting++
+          ) {
+            chatRenderer.requested_sequences.push(requesting);
+            Byond.sendMessage('chat/resend', requesting);
+          }
+        }
+      }
+
       chatRenderer.processBatch([payload_obj.content]);
       return;
     }

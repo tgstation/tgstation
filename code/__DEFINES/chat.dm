@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-/// Maximum number of times we will try to resend a message before giving up
-#define CHAT_RESEND_TRIES 3
-/// Number of ticks between each resend attempt
-#define CHAT_RESEND_TICKS 5
+/// How many chat payloads to keep in history
+#define CHAT_RELIABILITY_HISTORY_SIZE 5
+/// How many resends to allow before giving up
+#define CHAT_RELIABILITY_MAX_RESENDS 3
 
 #define MESSAGE_TYPE_SYSTEM "system"
 #define MESSAGE_TYPE_LOCALCHAT "localchat"

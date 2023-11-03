@@ -13,22 +13,36 @@ SUBSYSTEM_DEF(chat)
 	/// Assosciates a ckey with a list of messages to send to them.
 	var/list/list/datum/chat_payload/client_to_payloads = list()
 
+	/// Associates a ckey with an assosciative list of their last CHAT_RELIABILITY_HISTORY_SIZE messages.
+	var/list/list/datum/chat_payload/client_to_reliability_history = list()
+
 	/// Assosciates a ckey with their next sequence number.
 	var/list/client_to_sequence_number = list()
 
 /datum/controller/subsystem/chat/proc/generate_payload(client/target, message_data)
-	var/sequence_number = client_to_sequence_number[target.ckey]
+	var/sequence = client_to_sequence_number[target.ckey]
 	client_to_sequence_number[target.ckey] += 1
 
 	var/datum/chat_payload/payload = new
-	payload.sequence_number = sequence_number
+	payload.sequence = sequence
 	payload.content = message_data
+
+	if(!(target.ckey in client_to_reliability_history))
+		client_to_reliability_history[target.ckey] = list()
+	var/list/client_history = client_to_reliability_history[target.ckey]
+	client_history[sequence] = payload
+
+	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
+		var/oldest
+		for(var/stored in client_history)
+			if(stored < oldest)
+				oldest = stored
+		client_history -= oldest
+
 	return payload
 
 /datum/controller/subsystem/chat/proc/send_payload_to_client(client/target, datum/chat_payload/payload)
 	target.tgui_panel.window.send_message("chat/message", payload.into_message())
-	payload.send_tries += 1
-	payload.last_send = world.time
 
 /datum/controller/subsystem/chat/fire()
 	for(var/ckey in client_to_payloads)
@@ -38,22 +52,11 @@ SUBSYSTEM_DEF(chat)
 			continue
 
 		for(var/datum/chat_payload/payload as anything in client_to_payloads[ckey])
-			if(payload.send_tries > CHAT_RESEND_TRIES)
-				LAZYREMOVEASSOC(client_to_payloads, ckey, payload)
-				continue // don't send this payload anymore; we tried
-			if((payload.last_send + CHAT_RESEND_TICKS) >= world.time)
-				continue // don't send this payload yet; we sent it recently
 			send_payload_to_client(target, payload)
+		LAZYREMOVE(client_to_payloads, ckey)
 
 		if(MC_TICK_CHECK)
 			return
-
-/datum/controller/subsystem/chat/proc/handle_acknowledge(client/client, sequence_acknowledged)
-	for(var/datum/chat_payload/payload as anything in LAZYACCESS(client_to_payloads, client.ckey))
-		if(payload.sequence_number != sequence_acknowledged)
-			continue
-		LAZYREMOVEASSOC(client_to_payloads, client.ckey, payload)
-		return
 
 /datum/controller/subsystem/chat/proc/queue(queue_target, list/message_data)
 	var/list/targets = islist(queue_target) ? queue_target : list(queue_target)
@@ -69,6 +72,16 @@ SUBSYSTEM_DEF(chat)
 		var/client/client = CLIENT_FROM_VAR(target)
 		if(isnull(client))
 			continue
-		var/payload = generate_payload(client, message_data)
-		LAZYADDASSOCLIST(client_to_payloads, client.ckey, payload)
-		send_payload_to_client(client, payload)
+		send_payload_to_client(client, generate_payload(client, message_data))
+
+/datum/controller/subsystem/chat/proc/handle_resend(client/client, sequence)
+	var/list/client_history = client_to_reliability_history[client.ckey]
+	if(isnull(client_history) || !(sequence in client_history))
+		return
+
+	var/datum/chat_payload/payload = client_history[sequence]
+	if(payload.resends > CHAT_RELIABILITY_MAX_RESENDS)
+		return // we tried but byond said no
+
+	payload.resends += 1
+	send_payload_to_client(client, client_history[sequence])
