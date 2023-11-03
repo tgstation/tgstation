@@ -899,7 +899,7 @@
 		visible_message(span_warning("[target] fails to climb onto [src]!"))
 		return
 
-	if(target.(incapacitated & IGNORE_GRAB) || (incapacitated & IGNORE_GRAB))
+	if((target.incapacitated & IGNORE_GRAB) || (incapacitated & IGNORE_GRAB))
 		target.visible_message(span_warning("[target] can't hang onto [src]!"))
 		return
 

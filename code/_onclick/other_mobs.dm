@@ -111,7 +111,7 @@
 		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB))
 			ignore_flags |= IGNORE_GRAB
 
-		if(user.(incapacitated & ignore_flags))
+		if(user.incapacitated & ignore_flags)
 			return FALSE
 	return TRUE
 
