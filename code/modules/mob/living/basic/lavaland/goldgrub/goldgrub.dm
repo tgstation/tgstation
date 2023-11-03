@@ -53,7 +53,7 @@
 	burrow.Grant(src)
 	ai_controller.set_blackboard_key(BB_SPIT_ABILITY, spit)
 	ai_controller.set_blackboard_key(BB_BURROW_ABILITY, burrow)
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
 		/datum/component/appearance_on_aggro,\
