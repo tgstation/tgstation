@@ -214,7 +214,6 @@ multiple modular subtrees with behaviors
 		return FALSE
 	return TRUE
 
-
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
 
@@ -242,7 +241,7 @@ multiple modular subtrees with behaviors
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
 		// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
-		var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
+		var/action_seconds_per_tick = max(current_behavior.get_cooldown() * 0.1, seconds_per_tick)
 
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //Might need to move closer
 			if(!current_movement_target)
@@ -353,7 +352,7 @@ multiple modular subtrees with behaviors
 	else
 		behavior_args -= behavior_type
 	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
-	
+
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
 	var/list/arguments = list(seconds_per_tick, src)
 	var/list/stored_arguments = behavior_args[behavior.type]
