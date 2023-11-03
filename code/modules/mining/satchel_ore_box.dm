@@ -64,23 +64,29 @@
 		ui.open()
 
 /obj/structure/ore_box/ui_data()
-	var/contents = list()
-	for(var/obj/item/stack/ore/O in src)
-		contents[O.type] += O.amount
+	var/item_contents = list()
+	var/boulder_count = 0
+	for(var/obj/item/stack/ore/potental_ore as anything in contents)
+		if(istype(potental_ore, /obj/item/stack/ore))
+			item_contents[potental_ore.type] += potental_ore.amount
+		else
+			boulder_count++
+			say("boulder")
 
 	var/data = list()
-	var/boulder_count = 0
+
 	data["materials"] = list()
 
-	for(var/type in contents)
-		if(istype(type, /obj/item/stack/ore))
-			var/obj/item/stack/ore/O = type
-			var/name = initial(O.name)
-			data["materials"] += list(list("name" = name, "amount" = contents[type], "id" = type))
-		else if(istype(type, /obj/item/boulder))
-			boulder_count ++ //We can't really tell apart boulders, so we just count them.
+	for(var/obj/item/stone as anything in item_contents)
+		say("found [stone]")
+		if(istype(stone, /obj/item/stack/ore))
+			say("stack")
+			var/obj/item/stack/ore/found_ore = stone
+			var/name = initial(found_ore.name)
+			data["materials"] += list(list("name" = name, "amount" = item_contents[type], "id" = type))
+		else
+			continue
 	data["boulders"] = boulder_count
-
 	return data
 
 /obj/structure/ore_box/ui_act(action, params)
