@@ -9,11 +9,11 @@
 	var/autofire_stat = AUTOFIRE_STAT_IDLE
 	var/mouse_parameters
 	/// Time between individual shots.
-	var/autofire_shot_delay = 0.3 SECONDS 
+	var/autofire_shot_delay = 0.3 SECONDS
 	/// This seems hacky but there can be two MouseDown() without a MouseUp() in between if the user holds click and uses alt+tab, printscreen or similar.
-	var/mouse_status = AUTOFIRE_MOUSEUP 
+	var/mouse_status = AUTOFIRE_MOUSEUP
 	/// Should dual wielding be allowed?
-	var/allow_akimbo 
+	var/allow_akimbo
 
 	///windup autofire vars
 	///Whether the delay between shots increases over time, simulating a spooling weapon
@@ -275,7 +275,7 @@
 // Gun procs.
 
 /obj/item/gun/proc/on_autofire_start(mob/living/shooter)
-	if(semicd || shooter.incapacitated() || !can_trigger_gun(shooter))
+	if(semicd || shooter.incapacitated || !can_trigger_gun(shooter))
 		return FALSE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
@@ -295,7 +295,7 @@
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, allow_akimbo, params)
 	SIGNAL_HANDLER
-	if(semicd || shooter.incapacitated())
+	if(semicd || shooter.incapacitated)
 		return NONE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)

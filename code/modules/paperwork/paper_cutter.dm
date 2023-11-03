@@ -183,7 +183,7 @@
 /obj/item/papercutter/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/user = usr
-	if(user.incapacitated() || !Adjacent(user))
+	if(user.incapacitated || !Adjacent(user))
 		return
 
 	if(over_object == user)

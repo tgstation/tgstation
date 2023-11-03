@@ -11,7 +11,7 @@
 	button_icon_state = "neckchop"
 
 /datum/action/neck_chop/Trigger(trigger_flags)
-	if(owner.incapacitated())
+	if(owner.incapacitated)
 		to_chat(owner, span_warning("You can't use [name] while you're incapacitated."))
 		return
 	if (owner.mind.martial_art.streak == "neck_chop")
@@ -27,7 +27,7 @@
 	button_icon_state = "legsweep"
 
 /datum/action/leg_sweep/Trigger(trigger_flags)
-	if(owner.incapacitated())
+	if(owner.incapacitated)
 		to_chat(owner, span_warning("You can't use [name] while you're incapacitated."))
 		return
 	if (owner.mind.martial_art.streak == "leg_sweep")
@@ -43,7 +43,7 @@
 	button_icon_state = "lungpunch"
 
 /datum/action/lung_punch/Trigger(trigger_flags)
-	if(owner.incapacitated())
+	if(owner.incapacitated)
 		to_chat(owner, span_warning("You can't use [name] while you're incapacitated."))
 		return
 	if (owner.mind.martial_art.streak == "quick_choke")

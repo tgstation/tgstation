@@ -324,7 +324,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return FALSE
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 

@@ -429,11 +429,11 @@
 		. += "[src] seems empty."
 
 /obj/machinery/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+	if(user.incapacitated || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.incapacitated())
+		if(L.incapacitated)
 			close_machine(target)
 	else
 		user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))

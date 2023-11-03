@@ -428,7 +428,7 @@
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
-	if(incapacitated())
+	if(incapacitated)
 		return FALSE
 
 	return ..()
@@ -489,7 +489,7 @@
  * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
-/mob/living/incapacitated(flags)
+/mob/living/(incapacitated & flags)
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 
@@ -2007,7 +2007,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !(incapacitated(IGNORE_RESTRAINTS))
+	return !((incapacitated & IGNORE_RESTRAINTS))
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob

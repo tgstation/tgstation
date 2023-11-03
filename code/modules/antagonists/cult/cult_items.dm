@@ -650,7 +650,7 @@ Striking a noncultist, however, will tear their flesh."}
 		if(M.current && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated)
 		return
 	if(isnull(cultist_to_receive))
 		to_chat(user, "<span class='cult italic'>You require a destination!</span>")

@@ -225,7 +225,7 @@
 	last_process = world.time
 
 /obj/item/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
-	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated()) //Doesn't work if you're not holding it!
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated) //Doesn't work if you're not holding it!
 		if(automatic_cleanup)
 			stop_aiming()
 		return FALSE

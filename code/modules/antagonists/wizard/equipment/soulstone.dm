@@ -369,7 +369,7 @@
 /obj/item/soulstone/proc/check_menu(mob/user, obj/structure/constructshell/shell)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(src) || !user.CanReach(shell, src))
+	if(user.incapacitated || !user.is_holding(src) || !user.CanReach(shell, src))
 		return FALSE
 	return TRUE
 
@@ -440,7 +440,7 @@
 
 /// Called when a ghost is chosen to become a shade.
 /obj/item/soulstone/proc/on_poll_concluded(mob/living/master, mob/living/victim, mob/dead/observer/ghost)
-	if(isnull(victim) || master.incapacitated() || !master.is_holding(src) || !master.CanReach(victim, src))
+	if(isnull(victim) || master.incapacitated || !master.is_holding(src) || !master.CanReach(victim, src))
 		return FALSE
 	if(isnull(ghost?.client))
 		to_chat(master, span_danger("There were no spirits willing to become a shade."))

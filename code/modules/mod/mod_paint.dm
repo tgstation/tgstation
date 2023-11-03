@@ -154,7 +154,7 @@
 	mod.set_mod_skin(pick)
 
 /obj/item/mod/paint/proc/check_menu(obj/item/mod/control/mod, mob/user)
-	if(user.incapacitated() || !user.is_holding(src) || !mod || mod.active || mod.activating)
+	if(user.incapacitated || !user.is_holding(src) || !mod || mod.active || mod.activating)
 		return FALSE
 	return TRUE
 

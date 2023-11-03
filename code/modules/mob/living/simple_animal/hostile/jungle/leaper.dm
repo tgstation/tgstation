@@ -164,7 +164,7 @@
 		return
 	if(isliving(A))
 		var/mob/living/L = A
-		if(L.incapacitated())
+		if(L.incapacitated)
 			BellyFlop()
 			return
 	if(hop_cooldown <= world.time)
@@ -182,7 +182,7 @@
 	if(target)
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.incapacitated())
+			if(L.incapacitated)
 				BellyFlop()
 				return
 		if(!hopping)
@@ -205,7 +205,7 @@
 				return
 			if(isliving(target))
 				var/mob/living/L = target
-				if(L.incapacitated())
+				if(L.incapacitated)
 					return //No stunlocking. Hop on them after you stun them, you donk.
 		if(AIStatus == AI_ON && !projectile_ready && !ckey)
 			return

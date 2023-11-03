@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 /obj/item/guardiancreator/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(src) || used)
+	if(user.incapacitated || !user.is_holding(src) || used)
 		return FALSE
 	return TRUE
 

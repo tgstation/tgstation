@@ -55,7 +55,7 @@
 		return
 
 	if(W)
-		if(incapacitated())
+		if(incapacitated)
 			return
 
 		//while buckled, you can still connect to and control things like doors, but you can't use your modules

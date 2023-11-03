@@ -152,7 +152,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.incapacitated() || !try_toggle())
+	if(user.incapacitated || !try_toggle())
 		return
 	up = !up
 	flags_1 ^= visor_flags

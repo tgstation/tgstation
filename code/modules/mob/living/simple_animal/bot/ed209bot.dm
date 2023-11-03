@@ -41,7 +41,7 @@
 	var/list/targets = list()
 	for(var/mob/living/carbon/nearby_carbon in view(7, src)) //Let's find us a target
 		var/threatlevel = 0
-		if(nearby_carbon.incapacitated())
+		if(nearby_carbon.incapacitated)
 			continue
 		threatlevel = nearby_carbon.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
 		if(threatlevel < 4 )

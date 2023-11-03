@@ -45,7 +45,7 @@
 	if(!living_user.Adjacent(source))
 		return
 
-	if(living_user.incapacitated())
+	if(living_user.incapacitated)
 		source.balloon_alert(user, "you're incapacitated!")
 		return
 

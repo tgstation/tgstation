@@ -87,6 +87,6 @@
 		return FALSE
 	if(QDELETED(target))
 		return FALSE
-	if(user.incapacitated() || !user.is_holding(target))
+	if(user.incapacitated || !user.is_holding(target))
 		return FALSE
 	return TRUE
