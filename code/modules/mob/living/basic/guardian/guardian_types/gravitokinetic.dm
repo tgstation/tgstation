@@ -29,6 +29,8 @@
 
 /mob/living/basic/guardian/gravitokinetic/set_summoner(mob/living/to_who, different_person)
 	. = ..()
+	if (!QDELETED(src))
+		return
 	to_who.AddElement(/datum/element/forced_gravity, 1)
 
 /mob/living/basic/guardian/gravitokinetic/cut_summoner(different_person)

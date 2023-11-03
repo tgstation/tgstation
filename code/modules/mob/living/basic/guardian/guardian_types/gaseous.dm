@@ -29,13 +29,28 @@
 /mob/living/basic/guardian/gaseous/toggle_modes()
 	gas.Trigger()
 
-/mob/living/basic/guardian/gaseous/Life(seconds_per_tick, times_fired)
+/mob/living/basic/guardian/gaseous/set_summoner(mob/living/to_who, different_person)
 	. = ..()
-	if (isnull(summoner))
+	if (QDELETED(src))
 		return
-	summoner.extinguish_mob()
-	summoner.set_fire_stacks(0, remove_wet_stacks = FALSE)
-	summoner.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), temp_stabilization_rate * seconds_per_tick))
+	RegisterSignal(summoner, COMSIG_LIVING_IGNITED, PROC_REF(on_summoner_ignited))
+	RegisterSignal(summoner, COMSIG_LIVING_LIFE, PROC_REF(on_summoner_life))
+
+/mob/living/basic/guardian/gaseous/cut_summoner(different_person)
+	if (!isnull(summoner))
+		UnregisterSignal(summoner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_LIFE))
+	return ..()
+
+/// Prevent our summoner from being on fire
+/mob/living/basic/guardian/gaseous/proc/on_summoner_ignited(mob/living/source)
+	SIGNAL_HANDLER
+	source.extinguish_mob()
+	source.set_fire_stacks(0, remove_wet_stacks = FALSE)
+
+/// Maintain our summoner at a stable body temperature
+/mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
+	source.adjust_bodytemperature(get_temp_change_amount((summoner.get_body_temp_normal() - summoner.bodytemperature), temp_stabilization_rate * seconds_per_tick))
 
 /mob/living/basic/guardian/gaseous/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -80,16 +95,6 @@
 		/datum/gas/plasma = 3,
 		/datum/gas/bz = 10,
 	)
-	/// Associative list of types of gases to particle effect colour.
-	var/static/list/gas_colors = list(
-		/datum/gas/oxygen = "#63BFDD", //color of frozen oxygen
-		/datum/gas/nitrogen = "#777777", //grey (grey)
-		/datum/gas/water_vapor = "#96ADCF", //water is slightly blue
-		/datum/gas/nitrous_oxide = "#FEFEFE", //white like the sprite
-		/datum/gas/carbon_dioxide = "#222222", //black like coal
-		/datum/gas/plasma = "#B233CC", //color of the plasma sprite
-		/datum/gas/bz = "#FAFF00", //color of the bz metabolites reagent
-	)
 
 /datum/action/cooldown/mob_cooldown/expel_gas/Grant(mob/granted_to)
 	. = ..()
@@ -127,7 +132,8 @@
 		owner.particles.position = list(-1, 8, 0)
 		owner.particles.fadein = 5
 		owner.particles.height = 200
-	owner.particles.color = gas_colors[gas_type]
+	var/datum/gas/chosen_gas = active_gas // Casting it so that we can access gas vars in initial, it's still a typepath
+	owner.particles.color = initial(chosen_gas.primary_color)
 	if (!had_gas)
 		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 

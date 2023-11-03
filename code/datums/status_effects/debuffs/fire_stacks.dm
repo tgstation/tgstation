@@ -233,10 +233,10 @@
 			qdel(moblight)
 		moblight = new moblight_type(owner)
 
-	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
 	update_overlay()
 	update_particles()
+	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	return TRUE
 
 /**
