@@ -140,5 +140,5 @@
 	selectable_items = list(
 		/obj/item/gun/energy/e_gun/nuclear,
 		/obj/item/dualsaber/green,
-		/obj/item/melee/energy/axe
+		/obj/item/grenade/syndieminibomb,
 	)
