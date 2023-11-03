@@ -481,7 +481,7 @@
 	speed = 0.3
 
 	/// The power of the zap itself when it electrocutes someone
-	var/zap_power = 8e6
+	var/zap_power = 2e4
 	/// The range of the zap itself when it electrocutes someone
 	var/zap_range = 15
 	/// The flags of the zap itself when it electrocutes someone
@@ -496,14 +496,14 @@
 
 /obj/projectile/magic/aoe/lightning/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	tesla_zap(src, zap_range, zap_power, zap_flags)
+	tesla_zap(source = src, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	QDEL_NULL(chain)
 	return ..()
 
 /obj/projectile/magic/aoe/lightning/no_zap
-	zap_power = 4e6
+	zap_power = 1e4
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 
