@@ -56,6 +56,7 @@
 /datum/component/glitch/proc/on_forge_broken(datum/source)
 	SIGNAL_HANDLER
 
+	var/mob/living/player = parent
 	var/atom/movable/screen/alert/bitrunning/alert = player.throw_alert(
 		ALERT_BITRUNNER_GLITCH,
 		/atom/movable/screen/alert/bitrunning,
@@ -67,7 +68,6 @@
 	if(!iscarbon(parent)) // Too powerful!
 		return
 
-	var/mob/living/player = parent
 	player.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/glitch_slowdown)
 	to_chat(player, span_danger("Your body feels sluggish..."))
 
