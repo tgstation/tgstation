@@ -1274,9 +1274,6 @@
 
 	selected_reaction.on_reaction(src, null, multiplier)
 
-/proc/test(a)
-	return round(a, CHEMICAL_QUANTISATION_LEVEL * 10)
-
 /// Updates [/datum/reagents/var/total_volume]
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
@@ -1292,7 +1289,7 @@
 	while(chem_index <= num_reagents)
 		var/datum/reagent/reagent = cached_reagents[chem_index]
 		chem_index += 1
-		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL * 10) //round 1 decimal place up to get whole numbers more often
+		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
 		if((reagent_volume <= 0.05 && !is_reacting) || reagent_volume <= CHEMICAL_QUANTISATION_LEVEL)
