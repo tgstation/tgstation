@@ -77,7 +77,7 @@
 	petal_dead = mutable_appearance(icon, "[icon_state]_dead_overlay")
 	petal_dead.color = petal_color
 
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/obeys_commands, seedling_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_can))

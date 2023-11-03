@@ -53,7 +53,7 @@
 	)
 	grant_actions_by_list(innate_actions)
 
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
 		/datum/component/appearance_on_aggro,\

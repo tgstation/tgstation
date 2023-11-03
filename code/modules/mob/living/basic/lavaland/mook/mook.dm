@@ -57,7 +57,7 @@
 	ore_overlay = mutable_appearance(icon, "mook_ore_overlay")
 
 	AddComponent(/datum/component/ai_listen_to_weather)
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_ore))
 
