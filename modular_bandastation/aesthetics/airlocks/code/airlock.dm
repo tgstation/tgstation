@@ -1,10 +1,3 @@
-#define AIRLOCK_CLOSED 1
-#define AIRLOCK_CLOSING 2
-#define AIRLOCK_OPEN 3
-#define AIRLOCK_OPENING 4
-#define AIRLOCK_DENY 5
-#define AIRLOCK_EMAG 6
-
 /obj/machinery/door/airlock
 	icon = 'modular_bandastation/aesthetics/airlocks/icons/station/public.dmi'
 	overlays_file = 'modular_bandastation/aesthetics/airlocks/icons/station/overlays.dmi'
@@ -33,11 +26,3 @@
 				light_state = "poweron"
 			light_state = "[light_state]_open"
 	. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
-
-
-#undef AIRLOCK_CLOSED
-#undef AIRLOCK_CLOSING
-#undef AIRLOCK_OPEN
-#undef AIRLOCK_OPENING
-#undef AIRLOCK_DENY
-#undef AIRLOCK_EMAG
