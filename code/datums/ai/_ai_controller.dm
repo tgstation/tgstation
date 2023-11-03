@@ -215,6 +215,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/update_able_to_run()
 	SIGNAL_HANDLER
 	able_to_run = get_able_to_run()
+	if(!able_to_run)
+		SSmove_manager.stop_looping(pawn) //stop moving, since we can't run the controller rn
 
 ///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
 /datum/ai_controller/proc/get_able_to_run()
@@ -252,10 +254,6 @@ multiple modular subtrees with behaviors
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
-	if(!able_to_run)
-		SSmove_manager.stop_looping(pawn) //stop moving
-		return //this should remove them from processing in the future through event-based stuff.
-
 	if(idle_behavior && !LAZYLEN(current_behaviors))
 		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
 		return
