@@ -3,7 +3,8 @@
 /datum/heretic_knowledge/spell/mind_gate
 	name = "Mind Gate"
 	desc = "Grants you Mind Gate, a spell \
-		which deals you 20 brain damage but the target suffers a hallucination, is left confused for 10 seconds and takes 30 brain damage."
+		which deals you 20 brain damage but the target suffers a hallucination,\
+		 is left confused for 10 seconds, suffers oxygen loss and brain damage."
 	gain_text = "My mind swings open like a gate, and its insight will let me percieve the truth."
 	next_knowledge = list(
 		/datum/heretic_knowledge/key_ring,
@@ -34,9 +35,15 @@
 	route = PATH_SIDE
 
 /datum/heretic_knowledge/painting
-	name = "Glimmering Arts"
+	name = "Unsealed Arts"
 	desc = "Allows you to transmute a canvas and an additional item to create a piece of art, these paintings \
-			have different effects depending on the additional item added. Possible paintings:"
+			have different effects depending on the additional item added. Possible paintings: \
+			The sister and He Who Wept: Eyes. When a non-heretic looks at the painting they will begin to hallucinate everyone as heretics. \
+			The First Desire: Any bodypart. Increases the hunger of non-heretics, when examined drops an organ or body part at your feet. \
+			Great chaparral over rolling hills: Any grown food. Spreads kudzu when placed, when examined grants a flower. \
+			Lady out of gates: Gloves. Causes non-heretics to scratch themselves, when examined removes all your mutations. \
+			Climb over the rusted mountain: Trash. Causes non-heretics to rust the floor they walk on. \
+			These effects are mitigated for a few minutes when a non-heretic suffering an effect examines the painting that caused the effect."
 	gain_text = "A wind of inspiration blows through me, past the walls and past the gate inspirations lie, yet to be depicted. \
 				They yearn for mortal eyes again, and I shall grant that wish."
 	next_knowledge = list(

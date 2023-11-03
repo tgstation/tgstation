@@ -1,12 +1,15 @@
 /datum/action/cooldown/spell/pointed/mind_gate
 	name = "Mind Gate"
 	desc = "Opens your mind, and theirs."
-	button_icon_state = "blind"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "mind_gate"
 
-	sound = 'sound/magic/blind.ogg'
+	sound = 'sound/magic/curse.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 10 SECONDS
+	// The spell deals brain damage so we can allow more spamming
+	cooldown_time = 5 SECONDS
 
 	invocation = "Op' 'oY 'Mi'd"
 	invocation_type = INVOCATION_WHISPER
@@ -29,6 +32,7 @@
 		return FALSE
 
 	cast_on.adjust_confusion(10 SECONDS)
+	cast_on.adjustOxyLoss(50)
 	cast_on.cause_hallucination(\
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"Mind gate, cast by [owner]", \
