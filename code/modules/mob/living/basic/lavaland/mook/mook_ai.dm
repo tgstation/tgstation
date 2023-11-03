@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	target_key = BB_MATERIAL_STAND_TARGET
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/material_stand
 	finding_behavior = /datum/ai_behavior/find_hunt_target
-	hunt_targets = list(/obj/structure/material_stand)
+	hunt_targets = list(/obj/structure/ore_container/material_stand)
 	hunt_range = 9
 
 /datum/ai_planning_subtree/find_and_hunt_target/material_stand/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)

@@ -1,23 +1,19 @@
-//Gutlunches, passive mods that devour blood and gibs
-/mob/living/simple_animal/hostile/asteroid/gutlunch
+#define MAX_SIZE_CLAMP 1.1
+#define MAX_ATTACK_DIFFERENCE 3
+#define MAX_LOWER_ATTACK 15
+#define MINIMUM_POSSIBLE_SPEED 1
+#define MAX_POSSIBLE_HEALTH 100
+
+/mob/living/basic/mining/gutlunch
 	name = "gutlunch"
-	desc = "A scavenger that eats raw meat, often found alongside ash walkers. Produces a thick, nutritious milk."
+	desc = "A scavenger that eats raw ores, often found alongside ash walkers. Produces a thick, nutritious milk."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "gutlunch"
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_emote = list("warbles", "quavers")
-	emote_hear = list("trills.")
-	emote_see = list("sniffs.", "burps.")
-	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	faction = list(FACTION_MINING, FACTION_ASHWALKER)
-	density = FALSE
-	speak_chance = 1
-	turns_per_move = 8
-	obj_damage = 0
-	environment_smash = ENVIRONMENT_SMASH_NONE
-	move_to_delay = 15
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -26,103 +22,185 @@
 	response_harm_simple = "squish"
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
-	combat_mode = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
-	stat_attack = HARD_CRIT
-	gender = NEUTER
-	stop_automated_movement = FALSE
-	stop_automated_movement_when_pulled = TRUE
-	stat_exclusive = TRUE
-	robust_searching = TRUE
-	search_objects = 3 //Ancient simplemob AI shitcode. This makes them ignore all other mobs.
-	del_on_death = TRUE
-	loot = list(/obj/effect/decal/cleanable/blood/gibs)
 	death_message = "is pulped into bugmash."
+	///our size
+	var/size_scale
+	///possible colors we can have
+	var/list/possible_colors
+	///can we breed?
+	var/can_breed = TRUE
 
-	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
-	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch = 100)
-
-	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/, /obj/item/organ)
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize(mapload)
+/mob/living/basic/mining/gutlunch/Initialize(mapload)
 	. = ..()
-	if(wanted_objects.len)
-		AddComponent(/datum/component/udder, /obj/item/udder/gutlunch, CALLBACK(src, PROC_REF(regenerate_icons)), CALLBACK(src, PROC_REF(regenerate_icons)))
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)
+	var/final_size = rand(size_scale, size_scale * MAX_SIZE_CLAMP)
+	transform = transform.Scale(final_size * 0.01)
+	if(!can_breed)
+		return
+	AddComponent(\
+		/datum/component/breed,\
+		can_breed_with = typecacheof(list(/mob/living/basic/mining/gutlunch)),\
+		baby_path = /mob/living/basic/mining/gutlunch/grub,\
+		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+	)
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland
-	if(!the_target || !isturf(the_target.loc)) // bail out on invalids
-		return FALSE
+/mob/living/basic/mining/gutlunch/proc/pre_attack(mob/living/puncher, atom/target)
+	SIGNAL_HANDLER
 
-	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return FALSE
+	if(!istype(target, /obj/structure/ore_container/gutlunch_trough))
+		return
 
-	if(isliving(the_target))
-		var/mob/living/L = the_target
+	var/obj/ore_food = locate(/obj/item/stack/ore) in target
 
-		if(faction_check_atom(L) && !attack_same)
-			return FALSE
-		if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive)
-			return FALSE
-
-		return TRUE
-
-	if(isobj(the_target) && is_type_in_typecache(the_target, wanted_objects))
-		return TRUE
-
-	return FALSE
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/regenerate_icons(new_udder_volume, max_udder_volume)
-	cut_overlays()
-	var/static/gutlunch_full_overlay
-	if(isnull(gutlunch_full_overlay))
-		gutlunch_full_overlay = iconstate2appearance(icon, "gl_full")
-	if(new_udder_volume == max_udder_volume)
-		add_overlay(gutlunch_full_overlay)
-	..()
-
-//Male gutlunch. They're smaller and more colorful!
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck
-	name = "gubbuck"
-	gender = MALE
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/Initialize(mapload)
-	. = ..()
-	add_atom_colour(pick("#E39FBB", "#D97D64", "#CF8C4A"), FIXED_COLOUR_PRIORITY)
-	update_transform(0.85)
-
-//Lady gutlunch. They make the babby.
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen
-	name = "guthen"
-	gender = FEMALE
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch
-	name = "grublunch"
-	wanted_objects = list() //They don't eat.
-	gold_core_spawnable = NO_SPAWN
-	var/growth = 0
-
-//Baby gutlunch
-/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Initialize(mapload)
-	. = ..()
-	add_atom_colour("#9E9E9E", FIXED_COLOUR_PRIORITY) //Somewhat hidden
-	update_transform(0.45)
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
-	growth++
-	if(growth > 50) //originally used a timer for this but it was more of a problem than it was worth.
-		growUp()
-
-/mob/living/simple_animal/hostile/asteroid/gutlunch/grublunch/proc/growUp()
-	var/mob/living/L
-	if(prob(45))
-		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck(loc)
+	if(isnull(ore_food))
+		balloon_alert(src, "no food!")
 	else
-		L = new /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen(loc)
-	mind?.transfer_to(L)
-	L.faction = faction
-	L.setDir(dir)
-	L.Stun(20, ignore_canstun = TRUE)
-	visible_message(span_notice("[src] grows up into [L]."))
+		melee_attack(ore_food)
+	return COMPONENT_HOSTILE_NO_ATTACK
+
+/mob/living/basic/mining/gutlunch/proc/after_birth(mob/living/basic/mining/gutlunch/grub/baby, mob/living/partner)
+	var/our_color = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_GRAY
+	var/partner_color = partner.atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_GRAY
+	baby.add_atom_colour(BlendRGB(our_color, partner_color, 1), FIXED_COLOUR_PRIORITY)
+	var/atom/male_parent = (gender == MALE) ? src : partner
+	baby.inherited_stats = new(male_parent)
+
+/mob/living/basic/mining/gutlunch/proc/roll_stats(input_attack, input_speed, input_health)
+	melee_damage_lower = rand(input_attack, min(MAX_LOWER_ATTACK, input_attack + MAX_ATTACK_DIFFERENCE))
+	melee_damage_upper = melee_damage_lower + MAX_ATTACK_DIFFERENCE
+	speed = rand(MINIMUM_POSSIBLE_SPEED, input_speed)
+	maxHealth = rand(input_health, MAX_POSSIBLE_HEALTH)
+	health = maxHealth
+
+/mob/living/basic/mining/gutlunch/milk
+	name = "gubbuck"
+	gender = FEMALE
+	size_scale = 85
+	possible_colors = list("#E39FBB","#817178","#9d667d")
+	///overlay we display when our udder is full!
+	var/mutable_appearance/full_udder
+
+/mob/living/basic/mining/gutlunch/milk/Initialize(mapload)
+	. = ..()
+	var/datum/callback/milking_callback = CALLBACK(src, TYPE_PROC_REF(/atom/movable, update_overlays))
+	AddComponent(\
+		/datum/component/udder,\
+		udder_type = /obj/item/udder/gutlunch,\
+		on_milk_callback = milking_callback,\
+		on_generate_callback = milking_callback,\
+	)
+	full_udder = mutable_appearance(icon, "gl_full")
+	full_udder.color = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_GRAY
+
+/mob/living/basic/mining/gutlunch/warrior
+	name = "gunther"
+	gender = MALE
+	size_scale = 100
+	melee_damage_lower = 8
+	melee_damage_upper = 13
+	speed = 5
+	maxHealth = 70
+	health = 70
+	possible_colors = list("#6d77ff","#8578e4","#97b6f6")
+
+/mob/living/basic/mining/gutlunch/warrior/Initialize(mapload)
+	. = ..()
+	roll_stats(melee_damage_lower, speed, maxHealth)
+
+/mob/living/basic/mining/gutlunch/milk/update_overlays(new_udder_volume, max_udder_volume)
+	. = ..()
+	if(new_udder_volume != max_udder_volume)
+		return
+	. += full_udder
+
+/mob/living/basic/mining/gutlunch/grub
+	name = "grublunch"
+	size_scale = 60
+	possible_colors = list("#cc9797", "#b74c4c")
+	can_breed = FALSE
+	gender = NEUTER
+	///list of stats we inherited
+	var/datum/gutlunch_inherited_stats/inherited_stats
+
+/mob/living/basic/mining/gutlunch/grub/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/growth_and_differentiation,\
+		growth_time = 20 SECONDS,\
+		growth_probability = 100,\
+		lower_growth_value = 0.5,\
+		upper_growth_value = 1,\
+		signals_to_kill_on = list(COMSIG_MOB_CLIENT_LOGIN),\
+		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
+		optional_grow_behavior = CALLBACK(src, PROC_REF(determine_growth_path)),\
+	)
+
+/mob/living/basic/mining/gutlunch/grub/proc/ready_to_grow()
+	return (stat == CONSCIOUS)
+
+/mob/living/basic/mining/gutlunch/grub/proc/determine_growth_path()
+	var/final_type = prob(50) ? /mob/living/basic/mining/gutlunch/warrior : /mob/living/basic/mining/gutlunch/milk
+	var/mob/living/basic/mining/gutlunch/grown_mob = new final_type(get_turf(src))
+	if(grown_mob.gender == MALE)
+		grown_mob.roll_stats(inherited_stats.attack, inherited_stats.speed, inherited_stats.health)
 	qdel(src)
+
+
+
+/obj/structure/ore_container/gutlunch_trough
+	name = "gutlunch trough"
+	desc = "The gutlunches will eat out of it!"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "gutlunch_trough"
+	density = TRUE
+	anchored = TRUE
+	///list of materials in the trough
+	var/list/list_of_materials = list()
+
+/obj/structure/ore_container/gutlunch_trough/Entered(atom/movable/mover)
+	if(!istype(mover, /obj/item/stack/ore))
+		return ..()
+	if(list_of_materials[mover.type])
+		return ..()
+	list_of_materials[mover.type] = list("pixel_x" = rand(-5, 8), "pixel_y" = rand(-2, -5))
+	return ..()
+
+/obj/structure/ore_container/gutlunch_trough/Exited(atom/movable/mover)
+	if(!istype(mover, /obj/item/stack/ore) || !isnull(locate(mover.type) in contents))
+		return ..()
+	list_of_materials -= mover.type
+	return ..()
+
+/obj/structure/ore_container/gutlunch_trough/deconstruct(disassembled = TRUE)
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
+	qdel(src)
+
+/obj/structure/ore_container/gutlunch_trough/update_overlays()
+	. = ..()
+	for(var/ore_entry in list_of_materials)
+		var/obj/item/ore_item = ore_entry
+		var/image/ore_icon = image(icon = initial(ore_item.icon), icon_state = initial(ore_item.icon_state), layer = LOW_ITEM_LAYER)
+		var/list/pixel_positions = list_of_materials[ore_entry]
+		ore_icon.transform = ore_icon.transform.Scale(0.6, 0.6)
+		ore_icon.pixel_x = pixel_positions["pixel_x"]
+		ore_icon.pixel_y = pixel_positions["pixel_y"]
+		. += ore_icon
+
+
+/datum/gutlunch_inherited_stats
+	///attack we inherited
+	var/attack
+	///speed we inherited
+	var/speed
+	///health we inherited
+	var/health
+
+/datum/gutlunch_inherited_stats/New(mob/living/basic/parent)
+	. = ..()
+	attack = parent.melee_damage_lower
+	speed = parent.speed
+	health = parent.maxHealth

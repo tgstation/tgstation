@@ -10,6 +10,12 @@
 #define BB_PATH_TO_USE "BB_path_to_use"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
+///are we hungry? determined by the udder compnent
+#define BB_CHECK_HUNGRY "BB_check_hungry"
+///are we ready to breed?
+#define BB_BREED_READY "BB_breed_ready"
+///maximum kids we can have
+#define BB_MAX_CHILDREN "BB_max_children"
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
