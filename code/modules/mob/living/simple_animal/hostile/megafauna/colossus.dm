@@ -71,11 +71,11 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //we don't want this guy to float, messes up his animations.
-	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus()
-	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus()
-	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus()
-	dir_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/colossus()
-	colossus_final = new /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final()
+	spiral_shots = new(src)
+	random_shots = new(src)
+	shotgun_blast = new(src)
+	dir_shots = new(src)
+	colossus_final = new(src)
 	spiral_shots.Grant(src)
 	random_shots.Grant(src)
 	shotgun_blast.Grant(src)
@@ -87,10 +87,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	RemoveElement(/datum/element/projectile_shield)
-	QDEL_NULL(spiral_shots)
-	QDEL_NULL(random_shots)
-	QDEL_NULL(shotgun_blast)
-	QDEL_NULL(dir_shots)
+	spiral_shots = null
+	random_shots = null
+	shotgun_blast = null
+	dir_shots = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()

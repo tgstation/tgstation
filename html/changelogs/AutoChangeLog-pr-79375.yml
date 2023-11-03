@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "plumbing bottler now only deals with bottles, beakers similar stuff but not pills, patches, syringes or anything than can hold reagents. That & slime extracts, slime industrial extract & shotgun shell"
