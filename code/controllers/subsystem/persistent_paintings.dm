@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	var/list/paintings = list()
 
 	/// A list of paintings' data for paintings that are currently stored in the library.
-	var/list/painting_data = list()
+	var/list/cached_painting_data = list()
 	/// A list of paintings' data for paintings that are currently stored in the library, with admin metadata
 	var/list/admin_painting_data = list()
 
@@ -147,8 +147,16 @@ SUBSYSTEM_DEF(persistent_paintings)
 	for(var/obj/structure/sign/painting/painting_frame as anything in painting_frames)
 		painting_frame.load_persistent()
 
+	cache_paintings()
+
+	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/persistent_paintings/proc/cache_paintings()
+	cached_painting_data = list()
+	admin_painting_data = list()
+
 	for(var/datum/painting/painting as anything in paintings)
-		painting_data += list(list(
+		cached_painting_data += list(list(
 				"title" = painting.title,
 				"creator" = painting.creator_name,
 				"md5" = painting.md5,
@@ -159,8 +167,6 @@ SUBSYSTEM_DEF(persistent_paintings)
 		var/list/pdata = painting.to_json()
 		pdata["ref"] = REF(painting)
 		admin_painting_data += pdata
-
-	return SS_INIT_SUCCESS
 
 /**
  * Generates painting data ready to be consumed by ui.
@@ -182,7 +188,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 				haystack_text = painting.creator_name
 			if(!findtext(haystack_text, search_text))
 				continue
-	return admin ? admin_painting_data : painting_data
+	return admin ? admin_painting_data : cached_painting_data
 
 /// Returns paintings with given tag.
 /datum/controller/subsystem/persistent_paintings/proc/get_paintings_with_tag(tag_name)
@@ -315,6 +321,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	var/payload = json_encode(all_data)
 	fdel(json_file)
 	WRITE_FILE(json_file, payload)
+	cache_paintings()
 
 #undef PAINTINGS_DATA_FORMAT_VERSION
 #undef PATRONAGE_OK_FRAME
