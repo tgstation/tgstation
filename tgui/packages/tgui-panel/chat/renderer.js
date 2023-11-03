@@ -114,8 +114,6 @@ class ChatRenderer {
     this.visibleMessages = [];
     this.page = null;
     this.events = new EventEmitter();
-    this.sequences = [];
-    this.sequences_requested = [];
     // Scroll handler
     /** @type {HTMLElement} */
     this.scrollNode = null;
