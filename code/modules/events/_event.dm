@@ -231,9 +231,9 @@ Runs the event
 		if (atom_of_interest)
 			notify_ghosts(
 				"[control.name] has an object of interest: [atom_of_interest]!",
-				source=atom_of_interest,
-				action=NOTIFY_ORBIT,
-				header="Something's Interesting!",
+				source = atom_of_interest,
+				action = NOTIFY_ORBIT,
+				header = "Something's Interesting!",
 			)
 	return
 

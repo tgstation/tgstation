@@ -194,7 +194,6 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 			"Legion has been released in the [get_area(src)]!",
 			source = src,
 			alert_overlay = release_overlay,
-			action = NOTIFY_JUMP,
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 

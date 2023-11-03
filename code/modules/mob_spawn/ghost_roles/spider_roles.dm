@@ -108,8 +108,6 @@
 			notify_flags_to_pass &= GHOST_NOTIFY_FLASH_WINDOW
 		notify_ghosts(
 			"[src] is ready to hatch!",
-			null,
-			enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>",
 			source = src,
 			action = NOTIFY_PLAY,
 			ignore_key = POLL_IGNORE_SPIDER,

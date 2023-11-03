@@ -581,7 +581,6 @@
 			notify_ghosts(
 				"[cooker] has overheated their PDA!",
 				source = src,
-				action = NOTIFY_JUMP,
 				notify_flags = NOTIFY_CATEGORY_NOFLASH,
 				header = "Hunger Games: Catching Fire",
 			)

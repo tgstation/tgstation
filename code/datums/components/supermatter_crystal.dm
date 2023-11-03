@@ -305,7 +305,6 @@
 			notify_ghosts(
 				"[consumed_mob] has been dusted by [atom_source]!",
 				source = atom_source,
-				action = NOTIFY_JUMP,
 				header = "Polytechnical Difficulties",
 				notify_flags = NOTIFY_CATEGORY_DEFAULT,
 			)
