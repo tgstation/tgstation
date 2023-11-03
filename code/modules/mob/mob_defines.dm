@@ -67,7 +67,18 @@
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
 
-	/// Whether and how a mob is incapacitated. Bitfield of incapacitated flags from [code/__DEFINES/status_effects.dm]
+	/**
+	 * Whether and how a mob is incapacitated
+	 *
+	 * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+	 * unless there is a flag being used to check if it's ignored
+	 *
+	 * * bitflags: (see code/__DEFINES/status_effects.dm) 
+	 * * IGNORE_RESTRAINTS - mob in a restraint (handcuffs) is not considered incapacitated
+	 * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
+	 * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
+	 *
+	**/
 	VAR_FINAL/incapacitated = NONE
 
 	/* A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
