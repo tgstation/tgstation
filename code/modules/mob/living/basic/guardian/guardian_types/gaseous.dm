@@ -109,7 +109,7 @@
 		gas_selection[initial(gas.name)] = gas
 
 	var/picked_gas = tgui_input_list(owner, "Select a gas to emit.", "Gas Producer", gas_selection)
-		StartCooldown()
+	StartCooldown()
 	if(picked_gas == "None")
 		stop_gas()
 		return
@@ -120,9 +120,9 @@
 
 	to_chat(owner, span_bolddanger("You start releasing [picked_gas]."))
 	owner.investigate_log("set their gas type to [picked_gas].", INVESTIGATE_ATMOS)
-	var/had_gas = active_gas == null
+	var/had_gas = !isnull(active_gas)
 	active_gas = gas_type
-	if(!owner.particles)
+	if(isnull(owner.particles))
 		owner.particles = new /particles/smoke/steam()
 		owner.particles.position = list(-1, 8, 0)
 		owner.particles.fadein = 5

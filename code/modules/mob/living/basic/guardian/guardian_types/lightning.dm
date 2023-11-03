@@ -83,9 +83,9 @@
 /mob/living/basic/guardian/lightning/proc/on_chain_zap(mob/living/target)
 	target.electrocute_act(shock_damage = 0, source = "lightning chain")
 	target.visible_message(
-		span_danger("[target] was shocked by the lightning chain!"), \
-		span_userdanger("You are shocked by the lightning chain!"), \
-		span_hear("You hear a heavy electrical crack.") \
+		span_danger("[target] was shocked by the lightning chain!"),
+		span_userdanger("You are shocked by the lightning chain!"),
+		span_hear("You hear a heavy electrical crack."),
 	)
 
 /// Beam definition for our lightning chain

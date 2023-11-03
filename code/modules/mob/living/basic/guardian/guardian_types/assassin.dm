@@ -70,8 +70,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/instealth
 	/// Damage added in stealth mode.
 	var/damage_bonus = 35
-	/// Our wound bonus when in stealth mode.
-	var/stealth_wound_bonus = -20 //from -100, you can now wound!
+	/// Our wound bonus when in stealth mode. Allows you to actually cause wounds, unlike normal.
+	var/stealth_wound_bonus = -20
 
 /datum/status_effect/guardian_stealth/on_apply()
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(owner))

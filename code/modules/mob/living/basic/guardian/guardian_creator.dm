@@ -86,9 +86,9 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 			return
 	used = TRUE
 	to_chat(user, use_message)
-	var/guardian_type_name = random ? "a random" : "the " + lowertext(initial(guardian_path.creator_name))
+	var/guardian_type_name = random ? "Random" : capitalize(initial(guardian_path.creator_name))
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates(
-		"Do you want to play as [guardian_type_name] [mob_name] of [user.real_name]?",
+		"Do you want to play as [user.real_name]'s [guardian_type_name] [mob_name]?",
 		jobban_type = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_HOLOPARASITE,
@@ -147,17 +147,17 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	)
 
 /obj/item/guardian_creator/wizard/spawn_guardian(mob/living/user, mob/dead/candidate)
-	. = ..()
-	var/mob/guardian = .
+	var/mob/guardian = ..()
 	if(isnull(guardian))
-		return
+		return null
 	// Add the wizard team datum
 	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(isnull(antag_datum))
-		return
+		return guardian
 	if(!antag_datum.wiz_team)
 		antag_datum.create_wiz_team()
 	guardian.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
+	return guardian
 
 /// Guardian creator available in the traitor uplink. All but dextrous are available, you can pick which you want, and changelings cannot use it.
 /obj/item/guardian_creator/tech

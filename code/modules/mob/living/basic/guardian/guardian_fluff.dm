@@ -96,7 +96,7 @@
 		GUARDIAN_LIGHTNING = "The shard reveals... Iron, a conductive font of lightning.",
 		GUARDIAN_PROTECTOR = "The shard reveals... Uranium, dense and resistant.",
 		GUARDIAN_RANGED = "The shard reveals... Diamond, projecting a million sharp edges.",
-		GUARDIAN_STANDARD = "The shard reveals... Platinum, a powerful fighter.",
+		GUARDIAN_STANDARD = "The shard reveals... Plastitanium, a powerful fighter.",
 		GUARDIAN_SUPPORT = "The shard reveals... Bluespace, master of relocation.",
 	)
 

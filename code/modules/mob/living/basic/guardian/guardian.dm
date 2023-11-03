@@ -113,6 +113,7 @@
 		return FALSE
 	if (isnull(summoner))
 		to_chat(src, span_boldholoparasite("For some reason, somehow, you have no summoner. Please report this bug immediately."))
+		stack_trace("Guardian created with client but no summoner.")
 	else
 		to_chat(src, span_holoparasite("You are a <b>[theme.name]</b>, bound to serve [summoner.real_name]."))
 		to_chat(src, span_holoparasite("You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with [summoner.p_them()] privately there."))
@@ -139,8 +140,7 @@
 	var/chosen_guardian_colour = input(src, "What would you like your colour to be?", "Choose Your Colour", "#ffffff") as color|null
 	if (isnull(chosen_guardian_colour)) //redo proc until we get a color
 		to_chat(src, span_warning("Invalid colour, please try again."))
-		guardian_recolour()
-		return
+		return guardian_recolour()
 	set_guardian_colour(chosen_guardian_colour)
 
 /// Apply a new colour to our guardian
@@ -157,14 +157,13 @@
 	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", generate_random_name(), MAX_NAME_LEN)))
 	if (!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Invalid name, please try again."))
-		guardian_rename()
-		return
+		return guardian_rename()
 	to_chat(src, span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
 	fully_replace_character_name(null, new_name)
 
 /// Picks a random name as a suggestion
 /mob/living/basic/guardian/proc/generate_random_name()
-	var/list/surname_options
+	var/list/surname_options = list("Guardian") // Fallback in case you define a guardian with no theme
 	switch(theme.fluff_type)
 		if (GUARDIAN_MAGIC)
 			surname_options = GLOB.guardian_fantasy_surnames
