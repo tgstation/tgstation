@@ -304,7 +304,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
 	update_able_to_run()
-	addtimer(src, CALLBACK(src, PROC_REF(update_able_to_run)), time)
+	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time, timer_subsystem = SSai_behaviors)
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
@@ -323,9 +323,9 @@ multiple modular subtrees with behaviors
 	// If we were on idle and we are no longer, then stop yeah?
 	if(!LAZYLEN(current_behaviors))
 		STOP_PROCESSING(SSai_idle, src)
-	addtimer(src, CALLBACK(src, PROC_REF(handle_behavior)), behavior.action_cooldown)
-	LAZYADDASSOC(current_behaviors, behavior, TRUE)
-	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
+	var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.action_cooldown, TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+	LAZYSET(current_behaviors, behavior, id)
+	LAZYSET(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
@@ -340,7 +340,8 @@ multiple modular subtrees with behaviors
 	behavior.perform(arglist(arguments))
 	// If we're still a behavior, requeue our timer
 	if(LAZYACCESS(current_behaviors, behavior))
-		addtimer(src, CALLBACK(src, PROC_REF(handle_behavior)), behavior.action_cooldown)
+		var/id = addtimer(CALLBACK(src,\PROC_REF(handle_behavior), behavior), behavior.action_cooldown, TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		LAZYSET(current_behaviors, behavior, id)
 
 /datum/ai_controller/proc/CancelActions()
 	if(!LAZYLEN(current_behaviors))

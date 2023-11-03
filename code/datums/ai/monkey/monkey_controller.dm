@@ -91,7 +91,10 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/setup_able_to_run()
 	. = ..()
 	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
-	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/monkey/on_stat_changed(mob/living/source, new_stat)
+	. = ..()
+	update_able_to_run()
 
 /datum/ai_controller/monkey/clear_able_to_run()
 	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))

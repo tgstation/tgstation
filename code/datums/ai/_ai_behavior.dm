@@ -18,6 +18,7 @@
 
 ///Called when the action is finished. This needs the same args as perform besides the default ones
 /datum/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded, ...)
+	deltimer(LAZYACCESS(controller.current_behaviors, src), SSai_behaviors)
 	LAZYREMOVE(controller.current_behaviors, src)
 	// If a controller isn't doing anything, send it to idle
 	if(!LAZYLEN(controller.current_behaviors))

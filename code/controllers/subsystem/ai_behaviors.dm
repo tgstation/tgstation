@@ -1,6 +1,7 @@
 /// Handles queued ai behaviors, for when we care and all
 TIMER_SUBSYSTEM_DEF(ai_behaviors)
 	name = "AI Behavior Queue"
+	flags = SS_TICKER
 	priority = FIRE_PRIORITY_NPC_ACTIONS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_AI_CONTROLLERS
