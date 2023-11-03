@@ -43,7 +43,7 @@
 	var/can_repair_self = FALSE
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
-	/// Can this construct smash walls? Gets the wall_smasher element if so.
+	/// Can this construct destroy walls?
 	var/smashes_walls = FALSE
 	/// The different flavors of goop constructs can drop, depending on theme.
 	var/static/list/remains_by_theme = list(
@@ -59,7 +59,7 @@
 	if(length(remains))
 		AddElement(/datum/element/death_drops, remains)
 	if(smashes_walls)
-		AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_WALLS)
+		AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	if(can_repair)
 		AddComponent(\
 			/datum/component/healing_touch,\
@@ -80,9 +80,7 @@
 			structure_types_typecache = structure_types,\
 			)
 	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK), INNATE_TRAIT)
-	for(var/spell in construct_spells)
-		var/datum/action/new_spell = new spell(src)
-		new_spell.Grant(src)
+	grant_actions_by_list(construct_spells)
 
 	var/spell_count = 1
 	for(var/datum/action/spell as anything in actions)
