@@ -287,13 +287,16 @@ multiple modular subtrees with behaviors
 			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
+	var/list/datum/ai_behavior/removed_behaviors = current_behaviors - planned_behaviors
 	/// We reverse this just to avoid constant requeuing
-	for(var/datum/ai_behavior/forgotten_behavior as anything in reverse_range(current_behaviors - planned_behaviors))
+	for(var/datum/ai_behavior/forgotten_behavior as anything in reverse_range(removed_behaviors))
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[forgotten_behavior.type]
 		if(stored_arguments)
 			arguments += stored_arguments
 		forgotten_behavior.finish_action(arglist(arguments))
+
+	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, removed_behaviors)
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
