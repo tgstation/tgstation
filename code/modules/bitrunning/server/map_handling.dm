@@ -91,7 +91,7 @@
 	var/turf/goal_turfs = list()
 	var/turf/crate_turfs = list()
 
-	for(var/thing in GLOB.landmarks_list)
+	for(var/obj/effect/landmark/bitrunning/thing in GLOB.landmarks_list)
 		if(istype(thing, /obj/effect/landmark/bitrunning/hololadder_spawn))
 			exit_turfs += get_turf(thing)
 			qdel(thing) // i'm worried about multiple servers getting confused so lets clean em up
@@ -109,6 +109,11 @@
 			crate_turfs += get_turf(thing)
 			qdel(thing)
 			continue
+
+		if(istype(thing, /obj/effect/landmark/bitrunning/loot_signal))
+			var/turf/signaler_turf = get_turf(thing)
+			signaler_turf.AddComponent(/datum/component/bitrunning_points, generated_domain)
+			qdel(thing)
 
 	if(!length(exit_turfs))
 		CRASH("Failed to find exit turfs on generated domain.")
