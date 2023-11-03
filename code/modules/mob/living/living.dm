@@ -64,7 +64,7 @@
 		return .
 
 	// If you are incapped, you probably can't brace yourself
-	var/can_help_themselves = !incapacitated(IGNORE_RESTRAINTS)
+	var/can_help_themselves = !(incapacitated & IGNORE_RESTRAINTS)
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
@@ -1074,7 +1074,7 @@
 /mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
 	if ((mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT)))
 		return FALSE
-	var/will_scratch = can_scratch && !incapacitated()
+	var/will_scratch = can_scratch && !incapacitated
 	var/applied_damage = 0
 	if (will_scratch && damage)
 		applied_damage = apply_damage(damage, damagetype = BRUTE, def_zone = target_part)

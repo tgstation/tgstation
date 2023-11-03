@@ -143,6 +143,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	ai_controller.set_blackboard_key(BB_RADIO_CHANNEL, radio_channel)
 	update_appearance()
 
+/mob/living/basic/bot/proc/set_mode_flags(mode_flags)
+	SHOULD_CALL_PARENT(TRUE)
+	bot_mode_flags = mode_flags
+	SEND_SIGNAL(src, COMSIG_BOT_MODE_FLAGS_SET, mode_flags)
+
 /mob/living/basic/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return span_bold("[paicard ? "pAI Controlled" : "Autonomous"]")

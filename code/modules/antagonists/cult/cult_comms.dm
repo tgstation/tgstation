@@ -129,7 +129,7 @@
 
 ///Polls all Cultists on whether the person putting themselves forward should be made the Cult Leader, if they can actually be such.
 /proc/poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
-	if(QDELETED(nominee) || nominee.incapacitated())
+	if(QDELETED(nominee) || nominee.incapacitated)
 		team.cult_vote_called = FALSE
 		for(var/datum/mind/team_member as anything in team.members)
 			if(!team_member.current)
@@ -141,7 +141,7 @@
 		return FALSE
 	var/list/mob/living/asked_cultists = list()
 	for(var/datum/mind/team_member as anything in team.members)
-		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated())
+		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated)
 			continue
 		SEND_SOUND(team_member.current, 'sound/magic/exit_blood.ogg')
 		asked_cultists += team_member.current
@@ -161,7 +161,7 @@
 		chat_text_border_icon = mutable_appearance('icons/effects/effects.dmi', "cult_master_logo")
 		)
 	)
-	if(QDELETED(nominee) || nominee.incapacitated())
+	if(QDELETED(nominee) || nominee.incapacitated)
 		team.cult_vote_called = FALSE
 		for(var/datum/mind/team_member as anything in team.members)
 			if(!team_member.current)

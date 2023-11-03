@@ -35,7 +35,15 @@
 		return
 	RegisterSignal(new_pawn, COMSIG_BOT_RESET, PROC_REF(reset_bot))
 
-/datum/ai_controller/basic_controller/bot/able_to_run()
+/datum/ai_controller/basic_controller/bot/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_BOT_MODE_FLAGS_SET, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/basic_controller/bot/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_BOT_MODE_FLAGS_SET))
+	return ..()
+
+/datum/ai_controller/basic_controller/bot/get_able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_ON))
 		return FALSE
