@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 		"gold" = PATRONAGE_EXCELLENT_FRAME,
 		"diamond" = PATRONAGE_AMAZING_FRAME,
 		"rainbow" = PATRONAGE_SUPERB_FRAME,
-		"supermatter" = PATRONAGE_LEGENDARY_FRAME
+		"supermatter" = PATRONAGE_LEGENDARY_FRAME,
 	)
 
 /datum/controller/subsystem/persistent_paintings/Initialize()
