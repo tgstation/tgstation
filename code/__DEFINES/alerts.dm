@@ -70,3 +70,4 @@
 #define ALERT_BITRUNNER_RESET "bitrunning_reset"
 #define ALERT_BITRUNNER_THREAT "bitrunning_threat"
 #define ALERT_BITRUNNER_BREACH "bitrunning_breach"
+#define ALERT_BITRUNNER_GLITCH "bitrunning_glitch"

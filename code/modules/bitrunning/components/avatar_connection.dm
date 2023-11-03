@@ -120,7 +120,7 @@
 	avatar.throw_alert(
 		ALERT_BITRUNNER_COMPLETED,
 		/atom/movable/screen/alert/bitrunning/qserver_domain_complete,
-		new_master = entered
+		new_master = entered,
 	)
 
 /// Transfers damage from the avatar to the old_body
@@ -162,7 +162,7 @@
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_CROWBAR,
 		/atom/movable/screen/alert/bitrunning,
-		new_master = intruder
+		new_master = intruder,
 	)
 	alert.name = "Netpod Breached"
 	alert.desc = "Someone is prying open the netpod. Find an exit."
@@ -175,7 +175,7 @@
 	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_INTEGRITY,
 		/atom/movable/screen/alert/bitrunning,
-		new_master = source
+		new_master = source,
 	)
 	alert.name = "Integrity Compromised"
 	alert.desc = "The netpod is damaged. Find an exit."
