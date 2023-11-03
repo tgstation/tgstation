@@ -127,6 +127,9 @@
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
 	hunter.UnarmedAttack(hunted, TRUE)
 
+/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+	always_reset_target = TRUE
+
 /datum/ai_behavior/hunt_target/use_ability_on_target
 	always_reset_target = TRUE
 	///the ability we will use

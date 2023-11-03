@@ -185,6 +185,7 @@
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
 	require_consume_type = /obj/item/stack/ore
+	reagent_produced_typepath = /datum/reagent/medicine/mine_salve
 
 /obj/item/udder/gutlunch/generate()
 	. = ..()

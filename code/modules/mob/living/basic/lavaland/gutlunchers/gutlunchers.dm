@@ -79,6 +79,7 @@
 	gender = FEMALE
 	size_scale = 85
 	possible_colors = list("#E39FBB","#817178","#9d667d")
+	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_milk
 	///overlay we display when our udder is full!
 	var/mutable_appearance/full_udder
 
@@ -103,11 +104,22 @@
 	speed = 5
 	maxHealth = 70
 	health = 70
+	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	possible_colors = list("#6d77ff","#8578e4","#97b6f6")
+	//pet commands when we tame the gutluncher
+	var/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/point_targetting/attack,
+		/datum/pet_command/point_targetting/breed,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/fetch,
+	)
 
 /mob/living/basic/mining/gutlunch/warrior/Initialize(mapload)
 	. = ..()
 	roll_stats(melee_damage_lower, speed, maxHealth)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 /mob/living/basic/mining/gutlunch/milk/update_overlays(new_udder_volume, max_udder_volume)
 	. = ..()
@@ -121,6 +133,7 @@
 	possible_colors = list("#cc9797", "#b74c4c")
 	can_breed = FALSE
 	gender = NEUTER
+	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
 	///list of stats we inherited
 	var/datum/gutlunch_inherited_stats/inherited_stats
 
@@ -128,7 +141,7 @@
 	. = ..()
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
-		growth_time = 20 SECONDS,\
+		growth_time = 3 MINUTES,\
 		growth_probability = 100,\
 		lower_growth_value = 0.5,\
 		upper_growth_value = 1,\
@@ -146,61 +159,3 @@
 	if(grown_mob.gender == MALE)
 		grown_mob.roll_stats(inherited_stats.attack, inherited_stats.speed, inherited_stats.health)
 	qdel(src)
-
-
-
-/obj/structure/ore_container/gutlunch_trough
-	name = "gutlunch trough"
-	desc = "The gutlunches will eat out of it!"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "gutlunch_trough"
-	density = TRUE
-	anchored = TRUE
-	///list of materials in the trough
-	var/list/list_of_materials = list()
-
-/obj/structure/ore_container/gutlunch_trough/Entered(atom/movable/mover)
-	if(!istype(mover, /obj/item/stack/ore))
-		return ..()
-	if(list_of_materials[mover.type])
-		return ..()
-	list_of_materials[mover.type] = list("pixel_x" = rand(-5, 8), "pixel_y" = rand(-2, -5))
-	return ..()
-
-/obj/structure/ore_container/gutlunch_trough/Exited(atom/movable/mover)
-	if(!istype(mover, /obj/item/stack/ore) || !isnull(locate(mover.type) in contents))
-		return ..()
-	list_of_materials -= mover.type
-	return ..()
-
-/obj/structure/ore_container/gutlunch_trough/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
-		return
-	new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
-	qdel(src)
-
-/obj/structure/ore_container/gutlunch_trough/update_overlays()
-	. = ..()
-	for(var/ore_entry in list_of_materials)
-		var/obj/item/ore_item = ore_entry
-		var/image/ore_icon = image(icon = initial(ore_item.icon), icon_state = initial(ore_item.icon_state), layer = LOW_ITEM_LAYER)
-		var/list/pixel_positions = list_of_materials[ore_entry]
-		ore_icon.transform = ore_icon.transform.Scale(0.6, 0.6)
-		ore_icon.pixel_x = pixel_positions["pixel_x"]
-		ore_icon.pixel_y = pixel_positions["pixel_y"]
-		. += ore_icon
-
-
-/datum/gutlunch_inherited_stats
-	///attack we inherited
-	var/attack
-	///speed we inherited
-	var/speed
-	///health we inherited
-	var/health
-
-/datum/gutlunch_inherited_stats/New(mob/living/basic/parent)
-	. = ..()
-	attack = parent.melee_damage_lower
-	speed = parent.speed
-	health = parent.maxHealth
