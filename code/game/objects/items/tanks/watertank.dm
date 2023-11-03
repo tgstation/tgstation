@@ -46,7 +46,7 @@
 	if(user.get_item_by_slot(user.getBackSlot()) != src)
 		to_chat(user, span_warning("The watertank must be worn properly to use!"))
 		return
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 
 	if(QDELETED(noz))

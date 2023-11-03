@@ -482,7 +482,7 @@
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
-	if(incapacitated())
+	if(incapacitated)
 		return FALSE
 
 	return ..()
@@ -543,7 +543,7 @@
  * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
-/mob/living/incapacitated(flags)
+/mob/living/(incapacitated & flags)
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 
@@ -1795,7 +1795,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(registered_z && old_level_new_clients == 0)
 		for(var/datum/ai_controller/controller as anything in SSai_controllers.ai_controllers_by_zlevel[registered_z])
 			controller.set_ai_status(AI_STATUS_OFF)
-	
+
 	//Check the amount of clients exists on the Z level we're moving towards, excluding ourselves.
 	var/new_level_old_clients = SSmobs.clients_by_zlevel[new_z].len
 
@@ -2077,7 +2077,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/can_look_up()
 	if(next_move > world.time)
 		return FALSE
-	if(incapacitated(IGNORE_RESTRAINTS))
+	if(incapacitated & IGNORE_RESTRAINTS)
 		return FALSE
 	return TRUE
 

@@ -701,7 +701,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
-	if(ismecha(user.loc) || user.incapacitated() || !user.canUseStorage())
+	if(ismecha(user.loc) || user.incapacitated || !user.canUseStorage())
 		return
 
 	parent.add_fingerprint(user)
@@ -776,7 +776,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!iscarbon(user) && !isdrone(user))
 		return
 	var/mob/living/user_living = user
-	if(user_living.incapacitated())
+	if(user_living.incapacitated)
 		return
 
 	attempt_insert(dropping, user)
@@ -928,7 +928,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		parent.balloon_alert(to_show, "can't reach!")
 		return FALSE
 
-	if(!isliving(to_show) || to_show.incapacitated())
+	if(!isliving(to_show) || to_show.incapacitated)
 		return FALSE
 
 	if(locked)

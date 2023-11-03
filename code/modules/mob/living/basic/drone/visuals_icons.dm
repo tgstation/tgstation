@@ -108,7 +108,7 @@
 /mob/living/basic/drone/proc/check_menu()
 	if(!istype(src))
 		return FALSE
-	if(incapacitated())
+	if(incapacitated)
 		return FALSE
 	return TRUE
 

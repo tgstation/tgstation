@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return FALSE
 	if(!istype(user) || !user.is_holding(src))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
 		return FALSE

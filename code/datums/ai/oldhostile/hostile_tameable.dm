@@ -128,7 +128,7 @@
 /datum/ai_controller/hostile_friend/proc/check_menu(mob/user)
 	if(!istype(user))
 		CRASH("A non-mob is trying to issue an order to [pawn].")
-	if(user.incapacitated() || !can_see(user, pawn))
+	if(user.incapacitated || !can_see(user, pawn))
 		return FALSE
 	return TRUE
 

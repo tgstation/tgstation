@@ -102,7 +102,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if((incapacitated & IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 
 	face_atom(A)
@@ -366,7 +366,7 @@
 		return FALSE
 
 /mob/living/CtrlClick(mob/living/user)
-	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
+	if(!isliving(user) || !user.CanReach(src) || user.incapacitated)
 		return ..()
 
 	if(world.time < user.next_move)

@@ -48,5 +48,5 @@
 		return
 
 	var/mob/living/carbon/caster = cast_on
-	if(caster.incapacitated() || !caster.is_holding(target))
+	if(caster.incapacitated || !caster.is_holding(target))
 		return . | SPELL_CANCEL_CAST

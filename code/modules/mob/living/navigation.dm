@@ -12,7 +12,7 @@
 	set name = "Navigate"
 	set category = "IC"
 
-	if(incapacitated())
+	if(incapacitated)
 		return
 	if(length(client.navigation_images))
 		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
@@ -46,7 +46,7 @@
 
 	if(isnull(navigate_target))
 		return
-	if(incapacitated())
+	if(incapacitated)
 		return
 	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
 

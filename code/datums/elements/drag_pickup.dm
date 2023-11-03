@@ -18,7 +18,7 @@
 /datum/element/drag_pickup/proc/pick_up(atom/source, atom/over, mob/user)
 	SIGNAL_HANDLER
 	var/mob/living/picker = user
-	if(!istype(picker) || picker.incapacitated() || !source.Adjacent(picker))
+	if(!istype(picker) || picker.incapacitated || !source.Adjacent(picker))
 		return
 
 	if(over == picker)

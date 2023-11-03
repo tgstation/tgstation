@@ -74,7 +74,7 @@
 		toggle_internals(user)
 
 /obj/item/tank/jetpack/proc/cycle(mob/user)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 
 	if(!on)

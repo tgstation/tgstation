@@ -120,7 +120,7 @@
 		if(!team_member.current)
 			continue
 		team_member.current.update_mob_action_buttons()
-		if(team_member.current.incapacitated())
+		if(team_member.current.incapacitated)
 			continue
 		SEND_SOUND(team_member.current, 'sound/hallucinations/im_here1.ogg')
 		to_chat(team_member.current, span_cult_large("Acolyte [nominee] has asserted that [nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
@@ -135,7 +135,7 @@
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current,span_cult_large("[nominee] has died in the process of attempting to start a vote!"))
 		return FALSE
@@ -167,7 +167,7 @@
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current,span_cult_large("[nominee] has died in the process of attempting to win the cult's support!"))
 		return FALSE
@@ -177,7 +177,7 @@
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current,span_cult_large("[nominee] has gone catatonic in the process of attempting to win the cult's support!"))
 		return FALSE
@@ -187,7 +187,7 @@
 			if(!team_member.current)
 				continue
 			team_member.current.update_mob_action_buttons()
-			if(team_member.current.incapacitated())
+			if(team_member.current.incapacitated)
 				continue
 			to_chat(team_member.current, span_cult_large("[nominee] could not win the cult's support and shall continue to serve as an acolyte."))
 		return FALSE
