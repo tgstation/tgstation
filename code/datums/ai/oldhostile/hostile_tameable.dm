@@ -50,7 +50,15 @@
 	if(buckler != blackboard[BB_HOSTILE_FRIEND])
 		return COMPONENT_BLOCK_BUCKLE
 
-/datum/ai_controller/hostile_friend/able_to_run()
+/datum/ai_controller/hostile_friend/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
+	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/hostile_friend/clear_able_to_run()
+	UnregisterSignals(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
+
+/datum/ai_controller/hostile_friend/get_able_to_run()
 	var/mob/living/living_pawn = pawn
 
 	if(IS_DEAD_OR_INCAP(living_pawn))
