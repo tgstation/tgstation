@@ -34,6 +34,8 @@
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\
 	)
+	if (ranged_cooldown <= 1 SECONDS)
+		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /mob/living/basic/trooper/nanotrasen/ranged/smg
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
