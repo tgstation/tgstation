@@ -366,6 +366,7 @@
 /datum/greyscale_config/labcoat/worn
 	name = "Labcoat (Worn)"
 	icon_file = 'icons/mob/clothing/suits/labcoat.dmi'
+
 //
 // SUITS
 //
