@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		thing.set_anchored(TRUE)
 		thing.set_density(FALSE)
 
-	var/obj/effect/extraction_holder/holder_obj = new(thing.loc)
+	var/obj/effect/extraction_holder/holder_obj = new(get_turf(thing))
 	holder_obj.appearance = thing.appearance
 	thing.forceMove(holder_obj)
 	balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand")
@@ -158,8 +158,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	holder_obj.forceMove(pick(flooring_near_beacon))
 
 	animate(holder_obj, pixel_z = 10, time = 5 SECONDS)
-	animate(holder_obj, pixel_z = 15, time = 1 SECONDS)
-	animate(holder_obj, pixel_z = 10, time = 1 SECONDS)
+	animate(pixel_z = 15, time = 1 SECONDS)
+	animate(pixel_z = 10, time = 1 SECONDS)
 	sleep(7 SECONDS)
 
 	balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
