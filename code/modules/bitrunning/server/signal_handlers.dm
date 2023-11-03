@@ -87,6 +87,9 @@
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 
+	/// Just in case there's any special handling for the domain
+	generated_domain.setup_domain(created_atoms)
+
 /// Handles when cybercops are summoned into the area or ghosts click a ghost role spawner
 /obj/machinery/quantum_server/proc/on_threat_created(datum/source, mob/living/threat)
 	SIGNAL_HANDLER
