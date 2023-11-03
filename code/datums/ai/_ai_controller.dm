@@ -228,7 +228,7 @@ multiple modular subtrees with behaviors
 
 /// Handles a scheduled ai behavior
 /datum/ai_controller/proc/handle_behavior(datum/ai_behavior/current_behavior)
-	var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, seconds_per_tick)
+	var/action_seconds_per_tick = max(current_behavior.action_cooldown * 0.1, world.tick_lag)
 	if(!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT))
 		ProcessBehavior(action_seconds_per_tick, current_behavior)
 		return
@@ -252,7 +252,7 @@ multiple modular subtrees with behaviors
 	if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
 		ProcessBehavior(action_seconds_per_tick, current_behavior)
 
-///Runs any actions that are currently running
+///Handles idle behavior, called every ds so it's part of a processing subsystem
 /datum/ai_controller/process(seconds_per_tick)
 	if(idle_behavior && !LAZYLEN(current_behaviors))
 		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
@@ -297,9 +297,7 @@ multiple modular subtrees with behaviors
 	switch(ai_status)
 		if(AI_STATUS_ON)
 			SSai_controllers.active_ai_controllers += src
-			START_PROCESSING(SSai_behaviors, src)
 		if(AI_STATUS_OFF)
-			STOP_PROCESSING(SSai_behaviors, src)
 			SSai_controllers.active_ai_controllers -= src
 			CancelActions()
 
@@ -322,6 +320,9 @@ multiple modular subtrees with behaviors
 
 	if(!behavior.setup(arglist(arguments)))
 		return
+	// If we were on idle and we are no longer, then stop yeah?
+	if(!LAZYLEN(controller.current_behaviors))
+		STOP_PROCESSING(controller, SSai_idle)
 	addtimer(src, CALLBACK(src, PROC_REF(handle_behavior)), behavior.action_cooldown)
 	LAZYADDASSOC(current_behaviors, behavior, TRUE)
 	LAZYADDASSOC(planned_behaviors, behavior, TRUE)

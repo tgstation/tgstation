@@ -32,3 +32,5 @@ SUBSYSTEM_DEF(ai_controllers)
 		ai_controller.SelectBehaviors(wait * 0.1)
 		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
 			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
+			// If a controller isn't doing anything, send it to idle
+			START_PROCESSING(controller, SSai_idle)
