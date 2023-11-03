@@ -113,6 +113,11 @@ SUBSYSTEM_DEF(persistent_paintings)
 	/// A list of /datum/paintings saved or ready to be saved this round.
 	var/list/paintings = list()
 
+	/// A list of paintings' data for paintings that are currently stored in the library.
+	var/list/cached_painting_data = list()
+	/// A list of paintings' data for paintings that are currently stored in the library, with admin metadata
+	var/list/admin_painting_data = list()
+
 	///The list of available frame reskins (they are purely cosmetic) and the associated patronage amount required for them.
 	var/list/frame_types_by_patronage_tier = list(
 		"simple" = 0,
@@ -127,8 +132,8 @@ SUBSYSTEM_DEF(persistent_paintings)
 		"gold" = PATRONAGE_EXCELLENT_FRAME,
 		"diamond" = PATRONAGE_AMAZING_FRAME,
 		"rainbow" = PATRONAGE_SUPERB_FRAME,
-		"supermatter" = PATRONAGE_LEGENDARY_FRAME
-			)
+		"supermatter" = PATRONAGE_LEGENDARY_FRAME,
+	)
 
 /datum/controller/subsystem/persistent_paintings/Initialize()
 	var/json_file = file("data/paintings.json")
@@ -141,6 +146,8 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 	for(var/obj/structure/sign/painting/painting_frame as anything in painting_frames)
 		painting_frame.load_persistent()
+
+	cache_paintings()
 
 	return SS_INIT_SUCCESS
 
@@ -171,7 +178,6 @@ SUBSYSTEM_DEF(persistent_paintings)
  * * search_text : text to search for if the PAINTINGS_FILTER_SEARCH_TITLE or PAINTINGS_FILTER_SEARCH_CREATOR filters are enabled.
  */
 /datum/controller/subsystem/persistent_paintings/proc/painting_ui_data(filter=NONE, admin=FALSE, search_text)
-	. = list()
 	var/searching = filter & (PAINTINGS_FILTER_SEARCH_TITLE|PAINTINGS_FILTER_SEARCH_CREATOR) && search_text
 
 	if(!searching)
@@ -325,6 +331,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 	var/payload = json_encode(all_data)
 	fdel(json_file)
 	WRITE_FILE(json_file, payload)
+	cache_paintings()
 
 #undef PAINTINGS_DATA_FORMAT_VERSION
 #undef PATRONAGE_OK_FRAME
