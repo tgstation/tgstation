@@ -96,7 +96,6 @@
 
 	player.cut_overlay(overlays)
 	attack_sequence(owner, target_atom)
-	StartCooldown()
 	return TRUE
 
 /datum/ai_controller/basic_controller/netguardian
