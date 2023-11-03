@@ -18,19 +18,17 @@
 
 	icon_state = "[base_icon_state][rand(0, 7)]"
 	update_icon()
-	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
-/obj/item/bitrunning_disk/proc/on_examined(datum/source, mob/examiner, list/examine_text)
-	SIGNAL_HANDLER
-
-	examine_text += span_infoplain("This disk must be carried on your person into a netpod to be used.")
+/obj/item/bitrunning_disk/examine(mob/user)
+	. = ..()
+	. += span_infoplain("This disk must be carried on your person into a netpod to be used.")
 
 	if(isnull(choice_made))
-		examine_text += span_notice("To make a selection, toggle the disk in hand.")
+		. += span_notice("To make a selection, toggle the disk in hand.")
 		return
 
-	examine_text += span_info("It has been used to select: <b>[choice_made]</b>.")
-	examine_text += span_notice("It cannot make another selection.")
+	. += span_info("It has been used to select: <b>[choice_made]</b>.")
+	. += span_notice("It cannot make another selection.")
 
 /obj/item/bitrunning_disk/ability
 	desc = "A disk containing source code. It can be used to preload abilities into the virtual domain. Duplicate abilities will be ignored."

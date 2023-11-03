@@ -26,23 +26,6 @@
 	if(circuit)
 		qdel(circuit)
 
-/// Handles examining the server. Shows cooldown time and efficiency.
-/obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
-	SIGNAL_HANDLER
-
-	examine_text += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
-
-	if(capacitor_coefficient < 1)
-		examine_text += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
-
-	if(servo_bonus > 0.2)
-		examine_text += span_infoplain("Its manipulation potential is increasing rewards by [servo_bonus]x.")
-		examine_text += span_infoplain("Injury from unsafe ejection reduced [servo_bonus * 100]%.")
-
-	if(!is_ready)
-		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
-		return
-
 /// Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.
 /obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -80,7 +63,7 @@
 			var/mob/living/creature = thing
 
 			if(ismegafauna(creature))
-				creature.AddElement(/datum/element/virtual_elite_mob)
+				creature.AddElement(/datum/element/virtual_megafauna)
 				continue
 
 			mutation_candidate_refs.Add(WEAKREF(creature))

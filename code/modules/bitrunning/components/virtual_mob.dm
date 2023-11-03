@@ -1,8 +1,8 @@
 
 /// Makes a carbon mob resist the elements, have no blood etc.
-/datum/element/digital_carbon_mob
+/datum/element/virtual_mob
 
-/datum/element/digital_carbon_mob/Attach(datum/target)
+/datum/element/virtual_mob/Attach(datum/target)
 	. = ..()
 
 	if(!iscarbon(target))
@@ -21,7 +21,7 @@
 		), TRAIT_GENERIC,
 	)
 
-/datum/element/digital_carbon_mob/Detach(datum/source)
+/datum/element/virtual_mob/Detach(datum/source)
 	. = ..()
 
 	source.remove_traits(list(

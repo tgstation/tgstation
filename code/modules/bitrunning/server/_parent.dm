@@ -62,7 +62,6 @@
 
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
-	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	// This further gets sorted in the client by cost so it's random and grouped
 	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
@@ -77,6 +76,21 @@
 	QDEL_NULL(exit_turfs)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(radio)
+
+/obj/machinery/quantum_server/examine(mob/user)
+	. = ..()
+
+	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
+
+	if(capacitor_coefficient < 1)
+		. += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
+
+	if(servo_bonus > 0.2)
+		. += span_infoplain("Its manipulation potential is increasing rewards by [servo_bonus]x.")
+		. += span_infoplain("Injury from unsafe ejection reduced [servo_bonus * 100]%.")
+
+	if(!is_ready)
+		. += span_notice("It is currently cooling down. Give it a few moments.")
 
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()

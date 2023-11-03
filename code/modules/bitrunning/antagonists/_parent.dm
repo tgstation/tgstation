@@ -26,7 +26,7 @@
 	owner.current.AddElement(/datum/element/npc_friendly)
 
 	if(iscarbon(owner.current))
-		owner.current.AddElement(/datum/element/digital_carbon_mob)
+		owner.current.AddElement(/datum/element/virtual_mob)
 
 /datum/antagonist/bitrunning_glitch/forge_objectives()
 	var/datum/objective/bitrunning_glitch_fluff/objective = new()

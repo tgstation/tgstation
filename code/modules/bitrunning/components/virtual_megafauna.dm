@@ -1,8 +1,9 @@
 /// Removes loot tables from megafauna and lowers their health.
-/datum/element/virtual_elite_mob
+/datum/element/virtual_megafauna
 
-/datum/element/virtual_elite_mob/Attach(datum/target)
+/datum/element/virtual_megafauna/Attach(datum/target)
 	. = ..()
+
 	if(!ismegafauna(target))
 		return ELEMENT_INCOMPATIBLE
 
