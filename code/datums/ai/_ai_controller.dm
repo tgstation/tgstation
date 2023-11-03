@@ -287,14 +287,13 @@ multiple modular subtrees with behaviors
 			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
 
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(LAZYACCESS(planned_behaviors, current_behavior))
-			continue
+	/// We reverse this just to avoid constant requeuing
+	for(var/datum/ai_behavior/forgotten_behavior as anything in reverse_range(current_behaviors - planned_behaviors))
 		var/list/arguments = list(src, FALSE)
-		var/list/stored_arguments = behavior_args[type]
+		var/list/stored_arguments = behavior_args[forgotten_behavior.type]
 		if(stored_arguments)
 			arguments += stored_arguments
-		current_behavior.finish_action(arglist(arguments))
+		forgotten_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
@@ -323,7 +322,7 @@ multiple modular subtrees with behaviors
 	arguments[1] = src
 
 	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
-		LAZYADDASSOC(planned_behaviors, behavior, TRUE)
+		LAZYADD(planned_behaviors, behavior)
 		return
 
 	if(!behavior.setup(arglist(arguments)))
@@ -333,7 +332,7 @@ multiple modular subtrees with behaviors
 		STOP_PROCESSING(SSai_idle, src)
 		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
 	LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown(src))
-	LAZYSET(planned_behaviors, behavior, TRUE)
+	LAZYADD(planned_behaviors, behavior)
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
