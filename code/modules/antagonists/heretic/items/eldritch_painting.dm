@@ -249,13 +249,13 @@
 /obj/item/wallframe/painting/eldritch/vines
 	name = "Great chaparral over rolling hills"
 	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_vines"
 	result_path = /obj/structure/sign/painting/eldritch/vines
 
 /obj/structure/sign/painting/eldritch/vines
 	name = "Great chaparral over rolling hills"
 	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame. Destroyable with wirecutters."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_vines"
 	sensor_type = null
 	// A static list of 5 pretty strong mutations, simple to expand for any admins
 	var/list/mutations = list(
