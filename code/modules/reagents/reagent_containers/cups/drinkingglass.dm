@@ -40,6 +40,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
 	. = ..()
 	fill_icon_thresholds = null
+	add_
 
 // And having our icon reset restores our fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
@@ -100,6 +101,10 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada
+	name = "Pina Colada"
+	list_reagents = list(/datum/reagent/consumable/ethanol/pina_colada = 50)
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full
 	name = "half full glass of water"

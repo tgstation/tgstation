@@ -159,10 +159,6 @@
 	pixel_x = -8;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
-	pixel_y = 5;
-	pixel_x = 6
-	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "fr" = (
@@ -299,10 +295,7 @@
 /obj/item/food/meat/slab/rawcrab,
 /obj/item/food/meat/slab/rawcrab,
 /turf/open/floor/wood,
-/area/virtual_domain/powered)
-"no" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "nP" = (
 /obj/item/stack/sheet/iron/fifty,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -401,7 +394,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "ug" = (
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
@@ -427,9 +420,11 @@
 /area/virtual_domain/fullbright)
 "uq" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
-	pixel_x = -5;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
+	pixel_x = -7;
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
@@ -882,8 +877,8 @@
 "Mp" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 8;
+	pixel_y = 4
 	},
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
 /turf/open/floor/wood,
@@ -2119,7 +2114,7 @@ iz
 (23,1,1) = {"
 iz
 Al
-no
+xb
 Fn
 Cb
 wD
@@ -2162,7 +2157,7 @@ xW
 (24,1,1) = {"
 iz
 Al
-no
+xb
 Fn
 wD
 Gz
@@ -2205,7 +2200,7 @@ xW
 (25,1,1) = {"
 iz
 Al
-no
+xb
 Fn
 OK
 Gz
@@ -2248,7 +2243,7 @@ xW
 (26,1,1) = {"
 iz
 Al
-no
+xb
 Fn
 Sg
 wD
