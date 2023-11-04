@@ -52,8 +52,7 @@
 		return
 
 	if(start)
-		start_wag()
-		if(stop_after)
+		if(start_wag() && stop_after)
 			addtimer(CALLBACK(src, PROC_REF(wag), organ_owner, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
 		stop_wag()
@@ -61,13 +60,14 @@
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag(mob/living/carbon/organ_owner)
 	if(organ_owner.stat == DEAD)
-		return
+		return FALSE
 
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags |= WAG_WAGGING
 	accessory.wagging = TRUE
 	organ_owner.update_body_parts()
 	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(stop_wag))
+	return TRUE
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/stop_wag(mob/living/carbon/organ_owner)
