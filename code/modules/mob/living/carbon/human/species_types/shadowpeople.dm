@@ -10,6 +10,8 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
+		TRAIT_NODISMEMBER,
+		TRAIT_NEVER_WOUNDED
 	)
 	inherent_factions = list(FACTION_FAITHLESS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -34,6 +36,9 @@
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
+
+/datum/species/shadow/get_physical_attributes()
+	return "These cursed creatures heal in the dark, but suffer in the light much more heavily. Their eyes let them see in the dark as though it were day."
 
 /datum/species/shadow/get_species_description()
 	return "Victims of a long extinct space alien. Their flesh is a sickly \

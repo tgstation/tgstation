@@ -12,6 +12,6 @@ GLOBAL_LIST_EMPTY(string_assoc_lists)
 	. = GLOB.string_assoc_lists[string_id]
 
 	if(.)
-		return
+		return .
 
 	return GLOB.string_assoc_lists[string_id] = values

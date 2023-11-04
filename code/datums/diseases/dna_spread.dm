@@ -24,7 +24,7 @@
 		return FALSE
 
 	//Only species that can be spread by transformation sting can be spread by the retrovirus
-	if(HAS_TRAIT(affected_mob, TRAIT_NO_TRANSFORMATION_STING) || HAS_TRAIT(affected_mob, TRAIT_NO_DNA_COPY))
+	if(HAS_TRAIT(affected_mob, TRAIT_NO_DNA_COPY))
 		cure()
 		return FALSE
 

@@ -24,7 +24,7 @@
 	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/ketchup = 0)
-	juice_results = list(/datum/reagent/consumable/tomatojuice = 0)
+	juice_typepath = /datum/reagent/consumable/tomatojuice
 	distill_reagent = /datum/reagent/consumable/enzyme
 
 // Blood Tomato

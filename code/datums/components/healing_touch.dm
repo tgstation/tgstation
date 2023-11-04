@@ -22,12 +22,20 @@
 	var/heal_time
 	/// Typecache of mobs we can heal
 	var/list/valid_targets_typecache
+	/// Bitfield for biotypes of mobs we can heal
+	var/valid_biotypes
+	/// Which kinds of carbon limbs can we heal, has no effect on non-carbon mobs. Set to null if you don't care about excluding prosthetics.
+	var/required_bodytype
 	/// How targetting yourself works, expects one of HEALING_TOUCH_ANYONE, HEALING_TOUCH_NOT_SELF, or HEALING_TOUCH_SELF_ONLY
 	var/self_targetting
 	/// Text to print when action starts, replaces %SOURCE% with healer and %TARGET% with healed mob
 	var/action_text
 	/// Text to print when action completes, replaces %SOURCE% with healer and %TARGET% with healed mob
 	var/complete_text
+	/// Whether to print the target's remaining health after healing (for non-carbon targets only)
+	var/show_health
+	/// Color for the healing effect
+	var/heal_color
 
 /datum/component/healing_touch/Initialize(
 	heal_brute = 20,
@@ -37,9 +45,13 @@
 	interaction_key = DOAFTER_SOURCE_HEAL_TOUCH,
 	datum/callback/extra_checks = null,
 	list/valid_targets_typecache = list(),
+	valid_biotypes = MOB_ORGANIC | MOB_MINERAL,
+	required_bodytype = BODYTYPE_ORGANIC,
 	self_targetting = HEALING_TOUCH_NOT_SELF,
 	action_text = "%SOURCE% begins healing %TARGET%",
 	complete_text = "%SOURCE% finishes healing %TARGET%",
+	show_health = FALSE,
+	heal_color = COLOR_HEALING_CYAN,
 )
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -51,9 +63,13 @@
 	src.interaction_key = interaction_key
 	src.extra_checks = extra_checks
 	src.valid_targets_typecache = valid_targets_typecache.Copy()
+	src.valid_biotypes = valid_biotypes
+	src.required_bodytype = required_bodytype
 	src.self_targetting = self_targetting
 	src.action_text = action_text
 	src.complete_text = complete_text
+	src.show_health = show_health
+	src.heal_color = heal_color
 
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_healing)) // Players
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(try_healing)) // NPCs
@@ -63,7 +79,7 @@
 	return ..()
 
 /datum/component/healing_touch/Destroy(force, silent)
-	QDEL_NULL(extra_checks)
+	extra_checks = null
 	return ..()
 
 /// Validate our target, and interrupt the attack chain to start healing it if it is allowed
@@ -111,7 +127,20 @@
 
 /// Returns true if the target has a kind of damage which we can heal
 /datum/component/healing_touch/proc/has_healable_damage(mob/living/target)
-	return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn) || (target.getStaminaLoss() > 0 && heal_stamina)
+	if (!isnull(valid_biotypes) && !(valid_biotypes & target.mob_biotypes))
+		return FALSE
+	if (target.getStaminaLoss() > 0 && heal_stamina)
+		return TRUE
+	if (!iscarbon(target))
+		return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn)
+	var/mob/living/carbon/carbon_target = target
+	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
+		if (!(part.brute_dam && heal_brute) && !(part.burn_dam && heal_burn))
+			continue
+		if (!isnull(required_bodytype) && !(part.bodytype & required_bodytype))
+			continue
+		return TRUE
+	return FALSE
 
 /// Perform a do_after and then heal our target
 /datum/component/healing_touch/proc/heal_target(mob/living/healer, mob/living/target)
@@ -125,8 +154,12 @@
 	if (complete_text)
 		healer.visible_message(span_notice("[format_string(complete_text, healer, target)]"))
 
-	target.heal_overall_damage(brute = heal_brute, burn = heal_burn, stamina = heal_stamina)
-	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
+	target.heal_overall_damage(brute = heal_brute, burn = heal_burn, stamina = heal_stamina, required_bodytype = required_bodytype)
+	new /obj/effect/temp_visual/heal(get_turf(target), heal_color)
+
+	if(show_health && !iscarbon(target))
+		var/formatted_string = format_string("%TARGET% now has <b>[target.health]/[target.maxHealth] health.</b>", healer, target)
+		to_chat(healer, span_danger(formatted_string))
 
 /// Reformats the passed string with the replacetext keys
 /datum/component/healing_touch/proc/format_string(string, atom/source, atom/target)

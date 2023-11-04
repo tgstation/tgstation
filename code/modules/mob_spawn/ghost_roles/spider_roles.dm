@@ -23,7 +23,7 @@
 /obj/structure/spider/eggcluster/examine_more(mob/user)
 	. = ..()
 
-	if(istype(user, /mob/living/basic/giant_spider/midwife))
+	if(istype(user, /mob/living/basic/spider/giant/midwife))
 		switch(spawner.amount_grown)
 			if(0 to 24)
 				. += span_info("These eggs look shrunken and dormant.")
@@ -36,13 +36,18 @@
 			if(100 to INFINITY)
 				. += span_info("These eggs are plump, teeming with life. Any moment now...")
 
+/obj/structure/spider/eggcluster/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
+
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
 	color = rgb(148, 0, 211)
 
 /obj/structure/spider/eggcluster/bloody
+	icon = 'icons/mob/simple/meteor_heart.dmi'
+	icon_state = "eggs"
 	name = "bloody egg cluster"
-	color = rgb(255, 0, 0)
 
 /obj/structure/spider/eggcluster/midwife
 	name = "midwife egg cluster"
@@ -72,14 +77,16 @@
 	var/cluster_type = /obj/structure/spider/eggcluster
 	/// Physical structure housing the spawner
 	var/obj/structure/spider/eggcluster/egg
+	/// Which antag datum do we grant?
+	var/granted_datum = /datum/antagonist/spider
 	/// The types of spiders that the spawner can produce
 	var/list/potentialspawns = list(
-		/mob/living/basic/spiderling/nurse,
-		/mob/living/basic/spiderling/hunter,
-		/mob/living/basic/spiderling/ambush,
-		/mob/living/basic/spiderling/tangle,
-		/mob/living/basic/spiderling/guard,
-		/mob/living/basic/spiderling/scout,
+		/mob/living/basic/spider/growing/spiderling/nurse,
+		/mob/living/basic/spider/growing/spiderling/hunter,
+		/mob/living/basic/spider/growing/spiderling/ambush,
+		/mob/living/basic/spider/growing/spiderling/tangle,
+		/mob/living/basic/spider/growing/spiderling/guard,
+		/mob/living/basic/spider/growing/spiderling/scout,
 	)
 	/// Do we flash the byond window when this particular egg type is available?
 	var/flash_window = FALSE
@@ -122,11 +129,24 @@
 			to_chat(user, span_warning("\The [src] is not ready to hatch yet!"))
 		return FALSE
 
-/obj/effect/mob_spawn/ghost_role/spider/special(mob/living/basic/giant_spider/spawned_mob, mob/mob_possessor)
-	spawned_mob.directive = directive
+/obj/effect/mob_spawn/ghost_role/spider/special(mob/living/basic/spider/spawned_mob, mob/mob_possessor)
+	. = ..()
+	if (isspider(spawned_mob))
+		spawned_mob.directive = directive
 	egg.spawner = null
 	QDEL_NULL(egg)
-	return ..()
+	var/datum/antagonist/spider/spider_antag = new granted_datum(directive)
+	spawned_mob.mind.add_antag_datum(spider_antag)
+
+/obj/effect/mob_spawn/ghost_role/spider/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
+	cluster_type = /obj/structure/spider/eggcluster/abnormal
+	potentialspawns = list(
+		/mob/living/basic/spider/growing/spiderling/tank,
+		/mob/living/basic/spider/growing/spiderling/breacher,
+	)
+	flash_window = TRUE
 
 /obj/effect/mob_spawn/ghost_role/spider/enriched
 	name = "enriched egg cluster"
@@ -134,23 +154,26 @@
 	you_are_text = "You are an enriched spider."
 	cluster_type = /obj/structure/spider/eggcluster/enriched
 	potentialspawns = list(
-		/mob/living/basic/spiderling/tarantula,
-		/mob/living/basic/spiderling/viper,
-		/mob/living/basic/spiderling/midwife,
+		/mob/living/basic/spider/growing/spiderling/tarantula,
+		/mob/living/basic/spider/growing/spiderling/viper,
+		/mob/living/basic/spider/growing/spiderling/midwife,
 	)
 	flash_window = TRUE
 
 /obj/effect/mob_spawn/ghost_role/spider/bloody
 	name = "bloody egg cluster"
-	color = rgb(255, 0, 0)
-	you_are_text = "You are a bloody spider."
+	icon = 'icons/mob/simple/meteor_heart.dmi'
+	icon_state = "eggs"
+	you_are_text = "You are a flesh spider."
 	flavour_text = "An abomination of nature set upon the station by changelings. Your only goal is to kill, terrorize, and survive."
-	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
+	faction = list()
+	directive = null
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
-		/mob/living/basic/spiderling/hunter/flesh,
+		/mob/living/basic/flesh_spider,
 	)
 	flash_window = TRUE
+	granted_datum = /datum/antagonist/spider/flesh
 
 /obj/effect/mob_spawn/ghost_role/spider/midwife
 	name = "midwife egg cluster"
@@ -159,7 +182,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/basic/spiderling/midwife,
+		/mob/living/basic/spider/growing/spiderling/midwife, // We don't want the event to end instantly because broodmothers got a bad spawn
 	)
 	flash_window = TRUE
 
@@ -173,11 +196,20 @@
  * * newname - If set, renames the mob to this name
  */
 /obj/effect/mob_spawn/ghost_role/spider/create(mob/user, newname)
+	var/chosen_spider = length(potentialspawns) > 1 ? get_radial_choice(user) : potentialspawns[1]
+	if(QDELETED(src) || QDELETED(user) || isnull(chosen_spider))
+		return FALSE
+	mob_type = chosen_spider
+	return ..()
+
+/// Pick a spider type from a radial menu
+/obj/effect/mob_spawn/ghost_role/spider/proc/get_radial_choice(mob/user)
 	var/list/spider_list = list()
 	var/list/display_spiders = list()
 	for(var/choice in potentialspawns)
-		var/mob/living/basic/spiderling/chosen_spiderling = choice
-		var/mob/living/basic/giant_spider/spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/spider/growing/spiderling/chosen_spiderling = choice
+		var/mob/living/basic/spider/growing/young/young_spider = initial(chosen_spiderling.grow_as)
+		var/mob/living/basic/spider/giant/spider = initial(young_spider.grow_as) // God this is so stupid
 		spider_list[initial(spider.name)] = chosen_spiderling
 
 		var/datum/radial_menu_choice/option = new
@@ -193,9 +225,6 @@
 
 		display_spiders[initial(spider.name)] = option
 	sort_list(display_spiders)
+
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
-	chosen_spider = spider_list[chosen_spider]
-	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
-		return FALSE
-	mob_type = chosen_spider
-	return ..()
+	return spider_list[chosen_spider]

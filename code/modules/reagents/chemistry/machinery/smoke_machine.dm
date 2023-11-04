@@ -13,7 +13,6 @@
 	var/efficiency = 20
 	var/on = FALSE
 	var/cooldown = 0
-	var/screen = "home"
 	var/useramount = 30 // Last used amount
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
@@ -103,7 +102,7 @@
 	add_fingerprint(user)
 	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return
@@ -126,18 +125,16 @@
 
 /obj/machinery/smoke_machine/ui_data(mob/user)
 	var/data = list()
-	var/TankContents[0]
-	var/TankCurrentVolume = 0
+	var/tank_contents = list()
+	var/tank_current_volume = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
-		TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
-		TankCurrentVolume += R.volume
-	data["TankContents"] = TankContents
-	data["isTankLoaded"] = reagents.total_volume ? TRUE : FALSE
-	data["TankCurrentVolume"] = reagents.total_volume ? reagents.total_volume : null
-	data["TankMaxVolume"] = reagents.maximum_volume
+		tank_contents += list(list("name" = R.name, "volume" = R.volume)) // list in a list because Byond merges the first list...
+		tank_current_volume += R.volume
+	data["tankContents"] = tank_contents
+	data["tankCurrentVolume"] = reagents.total_volume ? reagents.total_volume : null
+	data["tankMaxVolume"] = reagents.maximum_volume
 	data["active"] = on
 	data["setting"] = setting
-	data["screen"] = screen
 	data["maxSetting"] = max_range
 	return data
 
@@ -163,8 +160,5 @@
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
 				usr.log_message("activated a smoke machine that contains [english_list(reagents.reagent_list)]", LOG_GAME)
 				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
-		if("goScreen")
-			screen = params["screen"]
-			. = TRUE
 
 #undef REAGENTS_BASE_VOLUME

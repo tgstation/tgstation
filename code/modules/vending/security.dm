@@ -29,6 +29,7 @@
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 1,
 		/obj/item/watertank/pepperspray = 2,
+		/obj/item/storage/belt/holster/energy = 4,
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW
@@ -41,7 +42,7 @@
 		G.arm_grenade()
 	else if(istype(I, /obj/item/flashlight))
 		var/obj/item/flashlight/F = I
-		F.on = TRUE
+		F.set_light_on(TRUE)
 		F.update_brightness()
 
 /obj/item/vending_refill/security

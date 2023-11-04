@@ -18,6 +18,14 @@
 	var/max_spawned = 8
 	var/segment_chance = 35
 
+/obj/item/grenade/clusterbuster/apply_grenade_fantasy_bonuses(quality)
+	min_spawned = modify_fantasy_variable("min_spawned", min_spawned, round(quality/2))
+	max_spawned = modify_fantasy_variable("max_spawned", max_spawned, round(quality/2))
+
+/obj/item/grenade/clusterbuster/remove_grenade_fantasy_bonuses(quality)
+	min_spawned = reset_fantasy_variable("min_spawned", min_spawned)
+	max_spawned = reset_fantasy_variable("max_spawned", max_spawned)
+
 /obj/item/grenade/clusterbuster/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)

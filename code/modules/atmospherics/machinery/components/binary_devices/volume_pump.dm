@@ -5,7 +5,7 @@
 //
 // Thus, the two variables affect pump operation are set in New():
 //   air1.volume
-//     This is the volume of gas available to the pump that may be transfered to the output
+//     This is the volume of gas available to the pump that may be transferred to the output
 //   air2.volume
 //     Higher quantities of this cause more air to be perfected later
 //     but overall network volume is also increased as this increases...
@@ -74,10 +74,6 @@
 
 	if((input_starting_pressure < VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE) || ((output_starting_pressure > VOLUME_PUMP_MAX_OUTPUT_PRESSURE)) && !overclocked)
 		return
-
-	if(overclocked && (output_starting_pressure-input_starting_pressure > VOLUME_PUMP_OVERPRESSURE_ALLOWANCE))//Overclocked pumps can only force gas a certain amount.
-		return
-
 
 	var/transfer_ratio = transfer_rate / air1.volume
 

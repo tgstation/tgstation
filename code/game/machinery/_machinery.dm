@@ -91,7 +91,7 @@
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
-	pass_flags_self = PASSMACHINE
+	pass_flags_self = PASSMACHINE | LETPASSCLICKS
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	flags_ricochet = RICOCHET_HARD
@@ -196,16 +196,10 @@
 /obj/machinery/Destroy()
 	SSmachines.unregister_machine(src)
 	end_processing()
-	dump_inventory_contents()
 
-	if (!isnull(component_parts))
-		// Don't delete the stock part singletons
-		for (var/atom/atom_part in component_parts)
-			qdel(atom_part)
-		component_parts.Cut()
-		component_parts = null
+	clear_components()
+	dump_contents()
 
-	QDEL_NULL(circuit)
 	unset_static_power()
 	return ..()
 
@@ -368,6 +362,10 @@
 /obj/machinery/proc/dump_inventory_contents(list/subset = null)
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
+		//so machines like microwaves dont dump out signalers after cooking
+		if(wires && (movable_atom in flatten_list(wires.assemblies)))
+			continue
+
 		if(subset && !(movable_atom in subset))
 			continue
 
@@ -593,13 +591,7 @@
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
 
-	var/is_dextrous = FALSE
-	if(isanimal(user))
-		var/mob/living/simple_animal/user_as_animal = user
-		if (user_as_animal.dextrous)
-			is_dextrous = TRUE
-
-	if(!issilicon(user) && !is_dextrous && !user.can_hold_items())
+	if(!issilicon(user) && !user.can_hold_items())
 		return FALSE //spiders gtfo
 
 	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
@@ -688,10 +680,25 @@
 /obj/machinery/attack_paw(mob/living/user, list/modifiers)
 	if(!user.combat_mode)
 		return attack_hand(user)
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	var/damage = take_damage(4, BRUTE, MELEE, 1)
-	user.visible_message(span_danger("[user] smashes [src] with [user.p_their()] paws[damage ? "." : ", without leaving a mark!"]"), null, null, COMBAT_MESSAGE_RANGE)
+	var/damage = take_damage(damage_amount = 4, damage_type = BRUTE, damage_flag = MELEE, sound_effect = TRUE, attack_dir = get_dir(user, src))
+
+	var/hit_with_what_noun = "paws"
+	var/obj/item/bodypart/arm/arm = user.get_active_hand()
+	if(!isnull(arm))
+		hit_with_what_noun = arm.appendage_noun // hit with "their hand"
+		if(user.usable_hands > 1)
+			hit_with_what_noun += plural_s(hit_with_what_noun) // hit with "their hands"
+
+	user.visible_message(
+		span_danger("[user] smashes [src] with [user.p_their()] [hit_with_what_noun][damage ? "." : ", without leaving a mark!"]"),
+		span_danger("You smash [src] with your [hit_with_what_noun][damage ? "." : ", without leaving a mark!"]"),
+		span_hear("You hear a [damage ? "smash" : "thud"]."),
+		COMBAT_MESSAGE_RANGE,
+	)
+	return TRUE
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
@@ -746,7 +753,7 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type)
+/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
 		return TOOL_ACT_MELEE_CHAIN_BLOCKING
 	. = ..()
@@ -817,6 +824,7 @@
 			new datum_part.physical_object_type(loc)
 		else
 			var/obj/item/obj_part = part
+			component_parts -= part
 			obj_part.forceMove(loc)
 			if(istype(obj_part, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/board = obj_part
@@ -878,21 +886,33 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += occupant
 
-/obj/machinery/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == occupant)
+/obj/machinery/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == occupant)
 		set_occupant(null)
 		update_appearance()
-		updateUsrDialog()
-		return ..()
 
 	// The circuit should also be in component parts, so don't early return.
-	if(deleting_atom == circuit)
+	if(gone == circuit)
 		circuit = null
-	if((deleting_atom in component_parts) && !QDELETED(src))
-		component_parts.Remove(deleting_atom)
+	if((gone in component_parts) && !QDELETED(src))
+		component_parts -= gone
 		// It would be unusual for a component_part to be qdel'd ordinarily.
 		deconstruct(FALSE)
-	return ..()
+
+/**
+ * This should be called before mass qdeling components to make space for replacements.
+ * If not done, things will go awry as Exited() destroys the machine when it detects
+ * even a single component exiting the atom.
+ */
+/obj/machinery/proc/clear_components()
+	if(!component_parts)
+		return
+	var/list/old_components = component_parts
+	circuit = null
+	component_parts = null
+	for(var/atom/atom_part in old_components)
+		qdel(atom_part)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
@@ -915,6 +935,7 @@
 	wrench.play_tool_sound(src, 50)
 	setDir(turn(dir,-90))
 	to_chat(user, span_notice("You rotate [src]."))
+	SEND_SIGNAL(src, COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH, user, wrench)
 	return TRUE
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
@@ -1108,21 +1129,13 @@
 
 /obj/machinery/zap_act(power, zap_flags)
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
-		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
+		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2, adminlog = TRUE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power * 0.0005, BURN, ENERGY)
+		take_damage(power * 2.5e-4, BURN, ENERGY)
 		if(prob(40))
 			emp_act(EMP_LIGHT)
-		power -= power * 0.0005
+		power -= power * 5e-4
 	return ..()
-
-/obj/machinery/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == occupant)
-		set_occupant(null)
-	if(gone == circuit)
-		LAZYREMOVE(component_parts, gone)
-		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/dropped_atom) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(dropped_atom.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.

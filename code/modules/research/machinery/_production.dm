@@ -45,23 +45,22 @@
 		TRUE, \
 	)
 
-	create_reagents(0, OPENCONTAINER)
-	if(stored_research)
-		update_designs()
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+	return ..()
 
+/obj/machinery/rnd/production/on_connected_techweb()
 	. = ..()
-
 	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		PROC_REF(on_techweb_update)
 	)
+	update_designs()
 
 /obj/machinery/rnd/production/Destroy()
 	materials = null
@@ -174,13 +173,9 @@
 	switch (action)
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
-
-			if(!materials.mat_container.can_hold_material(material))
-				// I don't know who you are or what you want, but whatever it is,
-				// we don't have it.
-				return
-
-			eject_sheets(material, params["amount"])
+			var/amount = text2num(params["amount"])
+			// SAFETY: eject_sheets checks for valid mats
+			materials.eject_sheets(material, amount)
 
 		if("build")
 			user_try_print_id(params["ref"], params["amount"])
@@ -188,13 +183,6 @@
 /// Updates the fabricator's efficiency coefficient based on the installed parts.
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
-
-	if(reagents)
-		reagents.maximum_volume = 0
-
-		for(var/obj/item/reagent_containers/cup/beaker in component_parts)
-			reagents.maximum_volume += beaker.volume
-			beaker.reagents.trans_to(src, beaker.reagents.total_volume)
 
 	if(materials)
 		var/total_storage = 0
@@ -210,12 +198,6 @@
 		total_rating -= servo.tier * 0.1
 
 	efficiency_coeff = max(total_rating, 0)
-
-/obj/machinery/rnd/production/on_deconstruction()
-	for(var/obj/item/reagent_containers/cup/G in component_parts)
-		reagents.trans_to(G, G.reagents.maximum_volume)
-
-	return ..()
 
 /obj/machinery/rnd/production/proc/do_print(path, amount)
 	for(var/i in 1 to amount)
@@ -267,14 +249,10 @@
 	print_quantity = clamp(print_quantity, 1, 50)
 	var/coefficient = build_efficiency(design.build_path)
 
-	//check if sufficient materials/reagents are available
+	//check if sufficient materials are available
 	if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 		say("Not enough materials to complete prototype[print_quantity > 1? "s" : ""].")
 		return FALSE
-	for(var/reagent in design.reagents_list)
-		if(!reagents.has_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient))
-			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
-			return FALSE
 
 	//use power
 	var/power = active_power_usage
@@ -308,10 +286,7 @@
 		borg.cell.use(SILICON_LATHE_TAX)
 
 	//consume materials
-	materials.mat_container.use_materials(design.materials, coefficient, print_quantity)
-	materials.silo_log(src, "built", -print_quantity, "[design.name]", design.materials)
-	for(var/reagent in design.reagents_list)
-		reagents.remove_reagent(reagent, design.reagents_list[reagent] * print_quantity * coefficient)
+	materials.use_materials(design.materials, coefficient, print_quantity, "built", "[design.name]")
 	//produce item
 	busy = TRUE
 	if(production_animation)
@@ -322,26 +297,6 @@
 	update_static_data_for_all_viewers()
 
 	return TRUE
-
-/obj/machinery/rnd/production/proc/eject_sheets(eject_sheet, eject_amt)
-	var/datum/component/material_container/mat_container = materials.mat_container
-
-	if(!mat_container)
-		say("No access to material storage, please contact the quartermaster.")
-		return 0
-
-	if(materials.on_hold())
-		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
-
-	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
-
-	var/list/matlist = list()
-	matlist[eject_sheet] = SHEET_MATERIAL_AMOUNT * count
-
-	materials.silo_log(src, "ejected", -count, "sheets", matlist)
-
-	return count
 
 // Stuff for the stripe on the department machines
 /obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)

@@ -171,7 +171,8 @@
 	var/sharpness = NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
-	var/tool_behaviour = NONE
+	var/tool_behaviour = null
+
 	///How fast does the tool work
 	var/toolspeed = 1
 
@@ -207,10 +208,8 @@
 
 	///Grinder var:A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/grind_results
-	//Grinder var:A reagent list containing blah blah... but when JUICED in a grinder!
-	var/list/juice_results
-
-	var/canMouseDown = FALSE
+	///A reagent the nutriments are converted into when the item is juiced.
+	var/datum/reagent/consumable/juice_typepath
 
 	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
 	var/offensive_notes
@@ -219,8 +218,10 @@
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
 
-/obj/item/Initialize(mapload)
+	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
+	var/list/fantasy_modifications = null
 
+/obj/item/Initialize(mapload)
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
 	if(attack_verb_simple)
@@ -239,7 +240,6 @@
 	// Handle adding item associated actions
 	for(var/path in actions_types)
 		add_item_action(path)
-
 	actions_types = null
 
 	if(force_string)
@@ -296,13 +296,15 @@
 
 	LAZYADD(actions, action)
 	RegisterSignal(action, COMSIG_QDELETING, PROC_REF(on_action_deleted))
-	if(ismob(loc))
-		// We're being held or are equipped by someone while adding an action?
-		// Then they should also probably be granted the action, given it's in a correct slot
-		var/mob/holder = loc
-		give_item_action(action, holder, holder.get_slot_by_item(src))
-
+	grant_action_to_bearer(action)
 	return action
+
+/// Grant the action to anyone who has this item equipped to an appropriate slot
+/obj/item/proc/grant_action_to_bearer(datum/action/action)
+	if(!ismob(loc))
+		return
+	var/mob/holder = loc
+	give_item_action(action, holder, holder.get_slot_by_item(src))
 
 /// Removes an instance of an action from our list of item actions.
 /obj/item/proc/remove_item_action(datum/action/action)
@@ -496,7 +498,6 @@
 			return
 		var/datum/fantasy_affix/affix = affixes[picked_affix_name]
 		affixes.Remove(affix)
-		QDEL_LIST_ASSOC(affixes) //remove the rest, we didn't use them
 		var/fantasy_quality = 0
 		if(affix.alignment & AFFIX_GOOD)
 			fantasy_quality++
@@ -642,6 +643,22 @@
 	return
 
 /**
+ * Called after an item is placed in an equipment slot. Runs equipped(), then sends a signal.
+ * This should be called last or near-to-last, after all other inventory code stuff is handled.
+ *
+ * Arguments:
+ * * user is mob that equipped it
+ * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
+ * * initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ */
+/obj/item/proc/on_equipped(mob/user, slot, initial = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	equipped(user, slot, initial)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_POST_EQUIPPED, user, slot) && COMPONENT_EQUIPPED_FAILED)
+		return FALSE
+	return TRUE
+
+/**
  * To be overwritten to only perform visual tasks;
  * this is directly called instead of `equipped` on visual-only features like human dummies equipping outfits.
  *
@@ -652,7 +669,7 @@
 	return
 
 /**
- * Called after an item is placed in an equipment slot.
+ * Called by on_equipped. Don't call this directly, we want the ITEM_POST_EQUIPPED signal to be sent after everything else.
  *
  * Note that hands count as slots.
  *
@@ -663,7 +680,7 @@
  */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(user, COMSIG_HUMAN_EQUIPPING_ITEM, src, slot)
+	PROTECTED_PROC(TRUE)
 	visual_equipped(user, slot, initial)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED_ITEM, src, slot)
@@ -825,6 +842,13 @@
 		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
 
+/**
+ * Extend this to give the item an appearance when placed in a surgical tray. Uses an icon state in `medicart.dmi`.
+ * * tray_extended - If true, the surgical tray the item is placed on is in "table mode"
+ */
+/obj/item/proc/get_surgery_tool_overlay(tray_extended)
+	return null
+
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
 		return
@@ -930,12 +954,35 @@
 /obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
 	return TRUE
 
-///Called BEFORE the object is ground up - use this to change grind results based on conditions. Use "return -1" to prevent the grinding from occurring
+///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
+///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
+/obj/item/proc/grind(datum/reagents/target_holder, mob/user)
+	if(on_grind() == -1)
+		return FALSE
+	if(target_holder)
+		target_holder.add_reagent_list(grind_results)
+		if(reagents)
+			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	return TRUE
+
+///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
+	if(!juice_typepath)
+		return -1
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
+
+///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
+/obj/item/proc/juice(datum/reagents/target_holder, mob/user)
+	if(on_juice() == -1)
+		return FALSE
+	if(reagents)
+		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
+		if(target_holder)
+			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	return TRUE
 
 /obj/item/proc/set_force_string()
 	switch(force)
@@ -1268,7 +1315,7 @@
 		// victim's chest (for cavity implanting the item)
 		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
 		if(victim_cavity.cavity_item)
-			victim.vomit(5, FALSE, FALSE, distance = 0)
+			victim.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = 5, distance = 0)
 			forceMove(drop_location())
 			to_chat(victim, span_warning("You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]"))
 		else
@@ -1299,12 +1346,9 @@
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
-
-	SEND_SIGNAL(src, COMSIG_ATOM_WASHED)
-
 	if(ismob(loc))
 		var/mob/mob_loc = loc
-		mob_loc.regenerate_icons()
+		mob_loc.update_clothing(slot_flags)
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
@@ -1539,3 +1583,57 @@
 /obj/item/update_atom_colour()
 	. = ..()
 	update_slot_icon()
+
+/// Modifies the fantasy variable
+/obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
+	var/result = LAZYACCESS(fantasy_modifications, variable_key)
+	if(!isnull(result))
+		if(HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+			return result // we are immune to your foul magicks you inferior wizard, we keep our bonuses
+
+		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
+
+	var/intended_target = value + bonus
+	value = max(minimum, intended_target)
+
+	var/difference = intended_target - value
+	var/modified_amount = bonus - difference
+	LAZYSET(fantasy_modifications, variable_key, modified_amount)
+	return value
+
+/// Returns the original fantasy variable value
+/obj/item/proc/reset_fantasy_variable(variable_key, current_value)
+	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+
+	if(isnum(modification) && HAS_TRAIT(src, TRAIT_INNATELY_FANTASTICAL_ITEM))
+		return modification // we are immune to your foul magicks you inferior wizard, we keep our bonuses the way they are
+
+	LAZYREMOVE(fantasy_modifications, variable_key)
+	if(isnull(modification))
+		return current_value
+
+	return current_value - modification
+
+/obj/item/proc/apply_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_APPLY_FANTASY_BONUSES, bonus)
+	force = modify_fantasy_variable("force", force, bonus)
+	throwforce = modify_fantasy_variable("throwforce", throwforce, bonus)
+	wound_bonus = modify_fantasy_variable("wound_bonus", wound_bonus, bonus)
+	bare_wound_bonus = modify_fantasy_variable("bare_wound_bonus", bare_wound_bonus, bonus)
+	toolspeed = modify_fantasy_variable("toolspeed", toolspeed, -bonus/10, minimum = 0.1)
+
+/obj/item/proc/remove_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	force = reset_fantasy_variable("force", force)
+	throwforce = reset_fantasy_variable("throwforce", throwforce)
+	wound_bonus = reset_fantasy_variable("wound_bonus", wound_bonus)
+	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
+	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
+	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
+
+//automatically finds tool behavior if there is only one. requires an extension of the proc if a tool has multiple behaviors
+/obj/item/proc/get_all_tool_behaviours()
+	if (!isnull(tool_behaviour))
+		return list(tool_behaviour)
+	return null

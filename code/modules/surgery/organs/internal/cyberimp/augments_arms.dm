@@ -124,12 +124,17 @@
 /obj/item/organ/internal/cyberimp/arm/proc/Retract()
 	if(!active_item || (active_item in src))
 		return FALSE
+	if(owner)
+		owner.visible_message(
+			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+			span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+			span_hear("You hear a short mechanical noise."),
+		)
 
-	owner?.visible_message(span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-		span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-		span_hear("You hear a short mechanical noise."))
+		owner.transferItemToLoc(active_item, src, TRUE)
+	else
+		active_item.forceMove(src)
 
-	owner.transferItemToLoc(active_item, src, TRUE)
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
 	active_item = null
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
@@ -376,11 +381,11 @@
 /obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(ishuman(reciever)) //Sorry, only humans
-		RegisterSignal(reciever, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
+		RegisterSignal(reciever, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
 /obj/item/organ/internal/cyberimp/arm/muscle/Remove(mob/living/carbon/implant_owner, special = 0)
 	. = ..()
-	UnregisterSignal(implant_owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(implant_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
 	. = ..()
@@ -397,20 +402,21 @@
 /obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(source.get_active_hand() != source.get_bodypart(check_zone(zone)) || !proximity)
-		return
+	if(source.get_active_hand() != hand || !proximity)
+		return NONE
 	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
-		return
+		return NONE
 	if(!isliving(target))
-		return
+		return NONE
 	var/datum/dna/dna = source.has_dna()
 	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
-		return
+		return NONE
+	if(!source.can_unarmed_attack())
+		return COMPONENT_SKIP_ATTACK
 
 	var/mob/living/living_target = target
-
 	source.changeNext_move(CLICK_CD_MELEE)
-	var/picked_hit_type = pick("punch", "smash", "kick")
+	var/picked_hit_type = pick("punch", "smash", "pummel", "bash", "slam")
 
 	if(organ_flags & ORGAN_FAILING)
 		if(source.body_position != LYING_DOWN && living_target != source && prob(50))
@@ -433,7 +439,9 @@
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
-	living_target.apply_damage(punch_damage, BRUTE)
+	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
+	var/armor_block = living_target.run_armor_check(target_zone, MELEE)
+	living_target.apply_damage(punch_damage, BRUTE, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)

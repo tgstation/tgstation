@@ -109,41 +109,43 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		person_gender = "Male"
 	if(person.gender == "female")
 		person_gender = "Female"
+	var/datum/dna/record_dna = new()
+	person.dna.copy_dna(record_dna)
 
 	var/datum/record/locked/lockfile = new(
 		age = person.age,
-		blood_type = person.dna.blood_type,
+		blood_type = record_dna.blood_type,
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = assignment,
-		species = person.dna.species.name,
+		species = record_dna.species.name,
 		trim = assignment,
 		// Locked specifics
-		dna_ref = person.dna,
+		locked_dna = record_dna,
 		mind_ref = person.mind,
 	)
 
 	new /datum/record/crew(
 		age = person.age,
-		blood_type = person.dna.blood_type,
+		blood_type = record_dna.blood_type,
 		character_appearance = character_appearance,
-		dna_string = person.dna.unique_enzymes,
-		fingerprint = md5(person.dna.unique_identity),
+		dna_string = record_dna.unique_enzymes,
+		fingerprint = md5(record_dna.unique_identity),
 		gender = person_gender,
 		initial_rank = assignment,
 		name = person.real_name,
 		rank = assignment,
-		species = person.dna.species.name,
+		species = record_dna.species.name,
 		trim = assignment,
 		// Crew specific
 		lock_ref = REF(lockfile),
-		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY),
+		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE),
 		major_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MAJOR_DISABILITY),
-		minor_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY),
+		minor_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY, from_scan = TRUE),
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)

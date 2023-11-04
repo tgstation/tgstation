@@ -43,9 +43,9 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
-/obj/structure/chem_separator/handle_atom_del(atom/deleted_atom)
-	..()
-	if(deleted_atom == beaker)
+/obj/structure/chem_separator/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		update_appearance(UPDATE_ICON)
 

@@ -200,7 +200,7 @@
 			channel.offline_clients.Remove(src)
 			channel.active_clients.Add(src)
 
-/datum/computer_file/program/chatclient/kill_program()
+/datum/computer_file/program/chatclient/kill_program(mob/user)
 	for(var/datum/ntnet_conversation/channel as anything in SSmodular_computers.chat_channels)
 		channel.go_offline(src)
 	active_channel = null

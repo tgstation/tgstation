@@ -55,7 +55,7 @@
 /obj/item/construction/proc/get_silo_iron()
 	if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
 		return silo_mats.mat_container.get_material_amount(/datum/material/iron) / SILO_USE_AMOUNT
-	return FALSE
+	return 0
 
 ///returns local matter units available. overriden by rcd borg to return power units available
 /obj/item/construction/proc/get_matter(mob/user)
@@ -104,6 +104,7 @@
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
+	update_static_data_for_all_viewers()
 
 /// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/item, mob/user)
@@ -176,16 +177,18 @@
 			if(user)
 				balloon_alert(user, "no silo detected!")
 			return FALSE
-		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount))
+
+		if(!silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT))
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
-
-		var/list/materials = list()
-		materials[GET_MATERIAL_REF(/datum/material/iron)] = SILO_USE_AMOUNT
-		silo_mats.mat_container.use_materials(materials, multiplier = amount)
-		silo_mats.silo_log(src, "consume", -amount, "build", materials)
+		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume")
 		return TRUE
+
+/obj/item/construction/ui_static_data(mob/user)
+	. = list()
+
+	.["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
 
 ///shared data for rcd,rld & plumbing
 /obj/item/construction/ui_data(mob/user)
@@ -197,8 +200,6 @@
 		total_matter = 0
 	data["matterLeft"] = total_matter
 
-	//silo details
-	data["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
 	data["silo_enabled"] = silo_link
 
 	return data
@@ -226,6 +227,15 @@
 		toggle_silo(ui.user)
 		return TRUE
 
+	var/update = handle_ui_act(action, params, ui, state)
+	if(isnull(update))
+		update = FALSE
+	return update
+
+/// overwrite to insert custom ui handling for subtypes
+/obj/item/construction/proc/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	return null
+
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_mats.mat_container || !silo_link)
 		if(silo_link)
@@ -238,7 +248,7 @@
 			if(user)
 				balloon_alert(user, "silo on hold!")
 			return FALSE
-		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount)
+		. = silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT)
 	if(!. && user)
 		balloon_alert(user, "low ammo!")
 		if(has_ammobar)
@@ -285,6 +295,14 @@
 /obj/item/rcd_upgrade/simple_circuits
 	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
+
+/obj/item/rcd_upgrade/anti_interrupt
+	desc = "It contains the upgrades necessary to prevent interruption of RCD construction and deconstruction."
+	upgrade = RCD_UPGRADE_ANTI_INTERRUPT
+
+/obj/item/rcd_upgrade/cooling
+	desc = "It contains the upgrades necessary to allow more frequent use of the RCD."
+	upgrade = RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 
 /obj/item/rcd_upgrade/silo_link
 	desc = "It contains direct silo connection RCD upgrade."

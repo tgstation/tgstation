@@ -81,13 +81,15 @@
 		if(prob(10))
 			switch(rand(1,4))
 				if(1) //blood rage
-					magnification.ai_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
+					var/datum/ai_controller/monkey/monky_controller = magnification.ai_controller
+					monky_controller.set_trip_mode(mode = FALSE)
+					monky_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
 				if(2) //brain death
 					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
 				if(3) //primal gene (gorilla)
 					magnification.gorillize()
 				if(4) //genetic mass susceptibility (gib)
-					magnification.gib()
+					magnification.gib(DROP_ALL_REMAINS)
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)

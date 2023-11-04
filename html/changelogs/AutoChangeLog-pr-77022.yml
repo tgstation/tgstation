@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - refactor: "Refactored MOD Suit UI"
-  - qol: "Added options to hide detailed vitals and DNA data to the MOD status module"
-  - qol: "Made MOD Ion Jetpack Module have stabilizers enabled by default"

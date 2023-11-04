@@ -10,11 +10,6 @@
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
-	var/death_trap = TRUE
-
-/obj/item/mod/module/springlock/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	death_trap = !death_trap
 
 /obj/item/mod/module/springlock/on_install()
 	mod.activation_step_time *= 0.5
@@ -42,11 +37,7 @@
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
-
-	if(death_trap)
-		balloon_alert(user, "springlocks aren't responding...?")
-	else
-		balloon_alert(user, "you disable it just in time")
+	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents

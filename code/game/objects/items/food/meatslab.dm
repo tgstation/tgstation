@@ -4,6 +4,27 @@
 	icon = 'icons/obj/food/meat.dmi'
 	var/subjectname = ""
 	var/subjectjob = null
+	var/blood_decal_type = /obj/effect/decal/cleanable/blood
+
+/obj/item/food/meat/Initialize(mapload)
+	. = ..()
+
+	if(!blood_decal_type)
+		return
+
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = blood_decal_type,\
+		blood_spawn_chance = 45,\
+		max_blood = custom_materials[custom_materials[1]],\
+	)
+
+	AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = custom_materials[custom_materials[1]],\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
 
 /obj/item/food/meat/slab
 	name = "meat"
@@ -11,8 +32,9 @@
 	icon_state = "meat"
 	bite_consumption = 3
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 6,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/fat = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
 	) //Meat has fats that a food processor can process into cooking oil
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
@@ -54,6 +76,7 @@
 	tastes = list("slime" = 1, "jelly" = 1)
 	foodtypes = MEAT | RAW | TOXIC
 	venue_value = FOOD_MEAT_MUTANT_RARE
+	blood_decal_type = null
 
 /obj/item/food/meat/slab/human/mutant/golem
 	icon_state = "golemmeat"
@@ -65,6 +88,7 @@
 	tastes = list("rock" = 1)
 	foodtypes = MEAT | RAW | GROSS
 	venue_value = FOOD_MEAT_MUTANT_RARE
+	blood_decal_type = null
 
 /obj/item/food/meat/slab/human/mutant/golem/adamantine
 	icon_state = "agolemmeat"
@@ -77,6 +101,7 @@
 	tastes = list("meat" = 4, "scales" = 1)
 	foodtypes = MEAT | RAW | GORE
 	venue_value = FOOD_MEAT_MUTANT
+	starting_reagent_purity = 0.4 // Take a look at their diet
 
 /obj/item/food/meat/slab/human/mutant/lizard/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -87,6 +112,7 @@
 	tastes = list("salad" = 1, "wood" = 1)
 	foodtypes = VEGETABLES
 	venue_value = FOOD_MEAT_MUTANT_RARE
+	blood_decal_type = /obj/effect/decal/cleanable/food/plant_smudge
 
 /obj/item/food/meat/slab/human/mutant/shadow
 	icon_state = "shadowmeat"
@@ -105,6 +131,7 @@
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
 	foodtypes = MEAT | RAW | GROSS | BUGS | GORE
 	venue_value = FOOD_MEAT_MUTANT
+	blood_decal_type = /obj/effect/decal/cleanable/insectguts
 
 /obj/item/food/meat/slab/human/mutant/moth
 	icon_state = "mothmeat"
@@ -120,6 +147,7 @@
 	tastes = list("bone" = 1)
 	foodtypes = GROSS | GORE
 	venue_value = FOOD_MEAT_MUTANT_RARE
+	blood_decal_type = null
 
 /obj/item/food/meat/slab/human/mutant/skeleton/make_processable()
 	return //skeletons dont have cutlets
@@ -138,6 +166,7 @@
 	tastes = list("pure electricity" = 2, "meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC | GORE
 	venue_value = FOOD_MEAT_MUTANT
+	blood_decal_type = null
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
 
@@ -147,6 +176,7 @@
 	desc = "A synthetic slab of meat."
 	foodtypes = RAW | MEAT //hurr durr chemicals were harmed in the production of this meat thus its non-vegan.
 	venue_value = FOOD_PRICE_WORTHLESS
+	starting_reagent_purity = 0.3
 
 /obj/item/food/meat/slab/synthmeat/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -157,6 +187,7 @@
 	desc = "A slab of station reclaimed and chemically processed meat product."
 	tastes = list("meat flavoring" = 2, "modified starches" = 2, "natural & artificial dyes" = 1, "butyric acid" = 1)
 	foodtypes = RAW | MEAT
+	starting_reagent_purity = 0.3
 
 /obj/item/food/meat/slab/meatproduct/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/meatproduct, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -164,11 +195,13 @@
 /obj/item/food/meat/slab/monkey
 	name = "monkey meat"
 	foodtypes = RAW | MEAT
+	starting_reagent_purity = 0.3 // Monkeys are considered synthetic life
 
 /obj/item/food/meat/slab/bugmeat
 	name = "bug meat"
 	icon_state = "spidermeat"
 	foodtypes = RAW | MEAT | BUGS
+	blood_decal_type = /obj/effect/decal/cleanable/insectguts
 
 /obj/item/food/meat/slab/mouse
 	name = "mouse meat"
@@ -214,6 +247,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("tomato" = 1)
 	foodtypes = FRUIT
+	blood_decal_type = /obj/effect/decal/cleanable/food/tomato_smudge
 
 /obj/item/food/meat/slab/killertomato/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/killertomato, rand(70 SECONDS, 85 SECONDS), TRUE, TRUE)
@@ -229,7 +263,7 @@
 		/datum/reagent/consumable/nutriment/protein = 16,
 		/datum/reagent/medicine/morphine = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
-		/datum/reagent/consumable/cooking_oil = 6,
+		/datum/reagent/consumable/nutriment/fat = 6,
 	)
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = RAW | MEAT
@@ -255,6 +289,7 @@
 	bite_consumption = 4
 	tastes = list("meat" = 1, "acid" = 1)
 	foodtypes = RAW | MEAT
+	blood_decal_type = /obj/effect/decal/cleanable/xenoblood
 
 /obj/item/food/meat/slab/xeno/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -273,6 +308,7 @@
 	)
 	tastes = list("cobwebs" = 1)
 	foodtypes = RAW | MEAT | TOXIC
+	blood_decal_type = /obj/effect/decal/cleanable/insectguts
 
 /obj/item/food/meat/slab/spider/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -286,7 +322,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/toxin = 5,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
@@ -300,7 +336,7 @@
 /obj/item/food/meat/slab/meatwheat
 	name = "meatwheat clump"
 	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 5, /datum/reagent/consumable/cooking_oil = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/blood = 5, /datum/reagent/consumable/nutriment/fat = 1)
 	icon_state = "meatwheat_clump"
 	bite_consumption = 4
 	tastes = list("meat" = 1, "wheat" = 1)
@@ -312,7 +348,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 7,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/consumable/cooking_oil = 5, //Plenty of fat!
+		/datum/reagent/consumable/nutriment/fat = 5, //Plenty of fat!
 	)
 
 /obj/item/food/meat/rawbacon
@@ -322,10 +358,11 @@
 	bite_consumption = 2
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("bacon" = 1)
 	foodtypes = RAW | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/meat/rawbacon/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/bacon, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -337,11 +374,12 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat = 2,
 	)
 	tastes = list("bacon" = 1)
 	foodtypes = MEAT | BREAKFAST
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
+	blood_decal_type = null
 
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"
@@ -349,7 +387,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/gondola_mutation_toxin = 5,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("meat" = 4, "tranquility" = 1)
 	foodtypes = RAW | MEAT | GORE
@@ -366,7 +404,7 @@
 	desc = "A slab of penguin meat."
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("beef" = 1, "cod fish" = 1)
 
@@ -384,7 +422,7 @@
 	bite_consumption = 3
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/consumable/cooking_oil = 3,
+		/datum/reagent/consumable/nutriment/fat = 3,
 	)
 	tastes = list("raw crab" = 1)
 	foodtypes = RAW | MEAT
@@ -399,11 +437,12 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat = 2,
 	)
 	tastes = list("crab" = 1)
 	foodtypes = SEAFOOD
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
+	blood_decal_type = null
 
 /obj/item/food/meat/slab/chicken
 	name = "chicken meat"
@@ -411,6 +450,7 @@
 	desc = "A slab of raw chicken. Remember to wash your hands!"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6) //low fat
 	tastes = list("chicken" = 1)
+	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/chicken/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -428,10 +468,25 @@
 	icon_state = "pig_meat"
 	tastes = list("pig" = 1)
 	foodtypes = RAW | MEAT | GORE
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/fat = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) // Fatty piece
+	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/pig/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/pig, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
+/obj/item/food/meat/slab/grassfed
+	name = "eco meat"
+	desc = "A slab of 100% grass fed award-winning farm meat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/fat = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) // Marble
+	starting_reagent_purity = 1
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 /obj/item/food/meat/steak
@@ -439,12 +494,14 @@
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
 	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/protein = 5,
+		/datum/reagent/consumable/nutriment/fat = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	foodtypes = MEAT
 	tastes = list("meat" = 1)
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
+	blood_decal_type = null
 
 /obj/item/food/meat/steak/Initialize(mapload)
 	. = ..()
@@ -595,6 +652,7 @@
 	name = "raw killer tomato cutlet"
 	tastes = list("tomato" = 1)
 	foodtypes = FRUIT
+	blood_decal_type = /obj/effect/decal/cleanable/food/tomato_smudge
 
 /obj/item/food/meat/rawcutlet/killertomato/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/killertomato, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
@@ -613,6 +671,7 @@
 /obj/item/food/meat/rawcutlet/xeno
 	name = "raw xeno cutlet"
 	tastes = list("meat" = 1, "acid" = 1)
+	blood_decal_type = /obj/effect/decal/cleanable/xenoblood
 
 /obj/item/food/meat/rawcutlet/xeno/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/xeno, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
@@ -620,6 +679,7 @@
 /obj/item/food/meat/rawcutlet/spider
 	name = "raw spider cutlet"
 	tastes = list("cobwebs" = 1)
+	blood_decal_type = /obj/effect/decal/cleanable/insectguts
 
 /obj/item/food/meat/rawcutlet/spider/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/spider, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
@@ -659,7 +719,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
+	blood_decal_type = null
 
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()

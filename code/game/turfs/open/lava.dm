@@ -38,10 +38,13 @@
 	var/mask_icon = 'icons/turf/floors.dmi'
 	/// The icon state that covers the lava bits of our turf
 	var/mask_state = "lava-lightmask"
+	/// The type for the preset fishing spot of this type of turf.
+	var/fish_source_type = /datum/fish_source/lavaland
 
 /turf/open/lava/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
+	if(fish_source_type)
+		AddElement(/datum/element/lazy_fishing_spot, fish_source_type)
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
@@ -151,17 +154,14 @@
 		STOP_PROCESSING(SSobj, src)
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	switch(the_rcd.mode)
-		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
+		return list("delay" = 0, "cost" = 3)
 	return FALSE
 
-/turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_FLOORWALL)
-			to_chat(user, span_notice("You build a floor."))
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			return TRUE
+/turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
+		PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		return TRUE
 	return FALSE
 
 /turf/open/lava/rust_heretic_act()
@@ -315,6 +315,9 @@
 		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
 
+/turf/open/lava/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+
 /turf/open/lava/smooth
 	name = "lava"
 	baseturfs = /turf/open/lava/smooth
@@ -342,6 +345,7 @@
 	icon_state = "liquidplasma"
 	initial_gas_mix = BURNING_COLD
 	baseturfs = /turf/open/lava/plasma
+	fish_source_type = /datum/fish_source/lavaland/icemoon
 
 	light_range = 3
 	light_power = 0.75
@@ -388,8 +392,11 @@
 		if(IS_ROBOTIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
-	burn_human.adjustToxLoss(15, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
-	burn_human.adjustFireLoss(25)
+	var/need_mob_update
+	need_mob_update += burn_human.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
+	need_mob_update += burn_human.adjustFireLoss(25, updating_health = FALSE)
+	if(need_mob_update)
+		burn_human.updatehealth()
 	if(plasma_parts.len)
 		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
 		burn_human.emote("scream")
@@ -423,8 +430,10 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/mafia
 	slowdown = 0
+	fish_source_type = null
 
 //basketball specific lava (normal atmos, no slowdown)
 /turf/open/lava/smooth/basketball
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0
+	fish_source_type = null

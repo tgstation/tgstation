@@ -105,7 +105,7 @@
 				log_silicon("[key_name(usr)] reset [key_name(R)]'s module via wire")
 
 /datum/wires/robot/can_reveal_wires(mob/user)
-	if(HAS_TRAIT(user, TRAIT_KNOW_CYBORG_WIRES))
+	if(HAS_TRAIT(user, TRAIT_KNOW_ROBO_WIRES))
 		return TRUE
 
 	return ..()

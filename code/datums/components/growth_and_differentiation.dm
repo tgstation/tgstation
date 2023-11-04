@@ -66,6 +66,8 @@
 /datum/component/growth_and_differentiation/Destroy(force, silent)
 	STOP_PROCESSING(SSdcs, src)
 	deltimer(timer_id)
+	optional_checks = null
+	optional_grow_behavior = null
 	return ..()
 
 /// Wrapper for qdel() so we can pass it in RegisterSignals(). I hate it here too.

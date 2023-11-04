@@ -103,7 +103,7 @@ In all, this is a lot like the monkey code. /N
 	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
-			gib()
+			gib(DROP_ALL_REMAINS)
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
@@ -126,5 +126,5 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.
 
-/mob/living/carbon/alien/on_fire_stack(seconds_per_tick, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/carbon/alien/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((BODYTEMP_HEATING_MAX + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)

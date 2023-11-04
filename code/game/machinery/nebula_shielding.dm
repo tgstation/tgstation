@@ -16,6 +16,8 @@
 	var/power_use_per_block = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	///State we use when actively blocking a nebula
 	var/active_icon_state
+	/// State for when we're broken and wont work anymore. Make sure to also set integrity_failure for this to work
+	var/broken_icon_state
 
 /obj/machinery/nebula_shielding/Initialize(mapload)
 	. = ..()
@@ -24,20 +26,32 @@
 
 ///Nebula is asking us how strong we are. Return our shield strength is all is well
 /obj/machinery/nebula_shielding/proc/get_nebula_shielding()
-	if(panel_open)
+	if(panel_open || (machine_stat & BROKEN))
 		return
 	if(!powered())
-		icon_state = initial(icon_state)
+		update_appearance(UPDATE_ICON_STATE)
 		return
 
 	use_power_from_net(power_use_per_block)
 	generate_reward()
-	icon_state = active_icon_state
+
+	update_appearance(UPDATE_ICON_STATE)
+
 	return shielding_strength
 
 ///Generate a resource for defending against the nebula
 /obj/machinery/nebula_shielding/proc/generate_reward()
 	return
+
+/obj/machinery/nebula_shielding/update_icon_state()
+	. = ..()
+
+	if((machine_stat & BROKEN) && broken_icon_state)
+		icon_state = broken_icon_state
+	else if(!powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = active_icon_state
 
 ///Short-lived nebula shielding sent by centcom in-case there hasn't been shielding for a while
 /obj/machinery/nebula_shielding/emergency
@@ -76,11 +90,14 @@
 
 	icon_state = "radioactive_shielding"
 	active_icon_state = "radioactive_shielding_on"
+	broken_icon_state = "radioactive_shielding_broken"
 
 	circuit = /obj/item/circuitboard/machine/radioactive_nebula_shielding
 
 	nebula_type = /datum/station_trait/nebula/hostile/radiation
 	shielding_strength = 4
+
+	integrity_failure = 0.4
 
 /obj/machinery/nebula_shielding/radiation/examine(mob/user)
 	. = ..()
@@ -119,11 +136,19 @@
 
 	..()
 
-///Small explanation for engineering on how to set-up the radioactive nebula shielding
+/// Small explanation for engineering on how to set-up the radioactive nebula shielding
 /obj/item/paper/fluff/radiation_nebula
 	name = "radioactive nebula shielding"
 	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
 		Set up these radioactive nebula shielding units before the gravity generators native shielding is overwhelmed! <br>
 		Shielding units passively generate tritium, so make sure to properly ventilate/isolate the area before setting up a shielding unit!
 		More circuit boards can be ordered through cargo. Consider setting up auxillary shielding units in-case of destruction, power loss or sabotage.
+	"}
+
+/// Warns the viro that they can't use radioactive resonance
+/obj/item/paper/fluff/radiation_nebula_virologist
+	name = "radioactive resonance"
+	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
+		During routine bloodscreening on employees working in the nebula, we found no traces of the sympton called 'Radioactive Resonance'. <br>
+		Something inside the nebula is interfering with it, be wary of a more shallow viral genepool.
 	"}

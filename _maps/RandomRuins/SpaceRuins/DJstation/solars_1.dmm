@@ -32,7 +32,7 @@
 /area/ruin/space/djstation/solars)
 "t" = (
 /obj/structure/lattice,
-/obj/item/stack/tile/iron{
+/obj/item/stack/tile/iron/base{
 	pixel_x = 3;
 	pixel_y = 4
 	},

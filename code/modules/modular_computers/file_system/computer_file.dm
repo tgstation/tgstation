@@ -19,7 +19,7 @@
 /datum/computer_file/New()
 	..()
 	uid = file_uid++
-	RegisterSignal(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(on_install))
+	RegisterSignal(src, COMSIG_COMPUTER_FILE_STORE, PROC_REF(on_install))
 
 /datum/computer_file/Destroy(force)
 	if(computer)

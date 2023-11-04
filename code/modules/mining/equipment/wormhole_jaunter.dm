@@ -101,6 +101,7 @@
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6
+	light_on = FALSE
 
 /obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
 	. = ..()

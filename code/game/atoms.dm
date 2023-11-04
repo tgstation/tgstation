@@ -110,6 +110,8 @@
 	var/light_dir = NORTH
 	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
 	var/light_on = TRUE
+	/// How many tiles "up" this light is. 1 is typical, should only really change this if it's a floor light
+	var/light_height = LIGHTING_HEIGHT
 	///Bitflags to determine lighting-related atom properties.
 	var/light_flags = NONE
 	///Our light source. Don't fuck with this directly unless you have a good reason!
@@ -129,6 +131,11 @@
 	var/base_pixel_x = 0
 	///Default pixel y shifting for the atom's icon.
 	var/base_pixel_y = 0
+	// Use SET_BASE_VISUAL_PIXEL(x, y) to set these in typepath definitions, it'll handle pixel_w and z for you
+	///Default pixel w shifting for the atom's icon.
+	var/base_pixel_w = 0
+	///Default pixel z shifting for the atom's icon.
+	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
@@ -182,6 +189,9 @@
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
 
+	VAR_PRIVATE/list/invisibility_sources
+	VAR_PRIVATE/current_invisibility_priority = -INFINITY
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -202,81 +212,6 @@
 		if(SSatoms.InitAtom(src, FALSE, args))
 			//we were deleted
 			return
-
-/**
- * The primary method that objects are setup in SS13 with
- *
- * we don't use New as we have better control over when this is called and we can choose
- * to delay calls or hook other logic in and so forth
- *
- * During roundstart map parsing, atoms are queued for intialization in the base atom/New(),
- * After the map has loaded, then Initalize is called on all atoms one by one. NB: this
- * is also true for loading map templates as well, so they don't Initalize until all objects
- * in the map file are parsed and present in the world
- *
- * If you're creating an object at any point after SSInit has run then this proc will be
- * immediately be called from New.
- *
- * mapload: This parameter is true if the atom being loaded is either being intialized during
- * the Atom subsystem intialization, or if the atom is being loaded from the map template.
- * If the item is being created at runtime any time after the Atom subsystem is intialized then
- * it's false.
- *
- * The mapload argument occupies the same position as loc when Initialize() is called by New().
- * loc will no longer be needed after it passed New(), and thus it is being overwritten
- * with mapload at the end of atom/New() before this proc (atom/Initialize()) is called.
- *
- * You must always call the parent of this proc, otherwise failures will occur as the item
- * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
- * the item being completely unclickable)
- *
- * You must not sleep in this proc, or any subprocs
- *
- * Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
- * there are no other arguments
- *
- * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
- *
- * Note: the following functions don't call the base for optimization and must copypasta handling:
- * * [/turf/proc/Initialize]
- * * [/turf/open/space/proc/Initialize]
- */
-/atom/proc/Initialize(mapload, ...)
-	SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(flags_1 & INITIALIZED_1)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
-
-	SET_PLANE_IMPLICIT(src, plane)
-
-	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
-		update_greyscale()
-
-	//atom color stuff
-	if(color)
-		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-
-	if (light_system == STATIC_LIGHT && light_power && light_range)
-		update_light()
-
-	SETUP_SMOOTHING()
-
-	if(uses_integrity)
-		atom_integrity = max_integrity
-	TEST_ONLY_ASSERT((!armor || istype(armor)), "[type] has an armor that contains an invalid value at intialize")
-
-	// apply materials properly from the default custom_materials value
-	// This MUST come after atom_integrity is set above, as if old materials get removed,
-	// atom_integrity is checked against max_integrity and can BREAK the atom.
-	// The integrity to max_integrity ratio is still preserved.
-	set_custom_materials(custom_materials)
-
-	if(ispath(ai_controller))
-		ai_controller = new ai_controller(src)
-
-	return INITIALIZE_HINT_NORMAL
 
 /**
  * Late Intialization, for code that should run after all atoms have run Intialization
@@ -393,6 +328,8 @@
 /atom/proc/CanPass(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_TRIED_PASS, mover, border_dir) & COMSIG_COMPONENT_PERMIT_PASSAGE)
+		return TRUE
 	if(mover.movement_type & PHASING)
 		return TRUE
 	. = CanAllowThrough(mover, border_dir)
@@ -616,6 +553,7 @@
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent])
+	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
 
 /// Are you allowed to drop this atom
 /atom/proc/AllowDrop()
@@ -632,35 +570,51 @@
 /**
  * React to an EMP of the given severity
  *
- * Default behaviour is to send the [COMSIG_ATOM_EMP_ACT] signal
+ * Default behaviour is to send the [COMSIG_ATOM_PRE_EMP_ACT] and [COMSIG_ATOM_EMP_ACT] signal
  *
- * If the signal does not return protection, and there are attached wires then we call
+ * If the pre-signal does not return protection, and there are attached wires then we call
  * [emp_pulse][/datum/wires/proc/emp_pulse] on the wires
  *
  * We then return the protection value
  */
 /atom/proc/emp_act(severity)
-	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
+	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_PRE_EMP_ACT, severity)
 	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity, protection)
 	return protection // Pass the protection value collected here upwards
 
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
- *
  * @params
- * hitting_projectile - projectile
- * def_zone - zone hit
- * piercing_hit - is this hit piercing or normal?
+ * * hitting_projectile - projectile
+ * * def_zone - zone hit
+ * * piercing_hit - is this hit piercing or normal?
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_PRE_BULLET_ACT, hitting_projectile, def_zone)
+	if(sigreturn & COMPONENT_BULLET_PIERCED)
+		return BULLET_ACT_FORCE_PIERCE
+	if(sigreturn & COMPONENT_BULLET_BLOCKED)
+		return BULLET_ACT_BLOCK
+	if(sigreturn & COMPONENT_BULLET_ACTED)
+		return BULLET_ACT_HIT
+
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
-	// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
-	var/visual_armor_check = check_projectile_armor(def_zone, hitting_projectile)
-	. = hitting_projectile.on_hit(src, visual_armor_check, def_zone, piercing_hit)
+	if(QDELETED(hitting_projectile)) // Signal deleted it?
+		return BULLET_ACT_BLOCK
+
+	return hitting_projectile.on_hit(
+		target = src,
+		// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
+		// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
+		blocked = check_projectile_armor(def_zone, hitting_projectile),
+		pierce_hit = piercing_hit,
+	)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -735,9 +689,9 @@
 		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_EXAMINE, user, ., user_sees_reagents)
 		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
 			if(reagents.flags & TRANSPARENT)
-				if(reagents.total_volume > 0)
+				if(reagents.total_volume)
 					. += "It contains <b>[round(reagents.total_volume, 0.01)]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
-					if(user_sees_reagents) //Show each individual reagent
+					if(user_sees_reagents) //Show each individual reagent for detailed examination
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 							. += "&bull; [round(current_reagent.volume, 0.01)] units of [current_reagent.name]"
 						if(reagents.is_reacting)
@@ -768,6 +722,7 @@
 
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_MORE, user, .)
+	SEND_SIGNAL(user, COMSIG_MOB_EXAMINING_MORE, src, .)
 
 /**
  * Updates the appearence of the icon
@@ -802,7 +757,6 @@
 
 /// Updates the icon of the atom
 /atom/proc/update_icon(updates=ALL)
-	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
@@ -816,19 +770,54 @@
 			SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 
 		var/list/new_overlays = update_overlays(updates)
-		if (managed_overlays)
-			if (length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1))
-				overlays = null
-				POST_OVERLAY_CHANGE(src)
-			else
-				cut_overlay(managed_overlays)
-				managed_overlays = null
-		if(length(new_overlays))
-			if (length(new_overlays) == 1)
-				managed_overlays = new_overlays[1]
-			else
-				managed_overlays = new_overlays
-			add_overlay(new_overlays)
+		var/nulls = 0
+		for(var/i in 1 to length(new_overlays))
+			var/atom/maybe_not_an_atom = new_overlays[i]
+			if(isnull(maybe_not_an_atom))
+				nulls++
+				continue
+			if(istext(maybe_not_an_atom) || isicon(maybe_not_an_atom))
+				continue
+			new_overlays[i] = maybe_not_an_atom.appearance
+		if(nulls)
+			for(var/i in 1 to nulls)
+				new_overlays -= null
+
+		var/identical = FALSE
+		var/new_length = length(new_overlays)
+		if(!managed_overlays && !new_length)
+			identical = TRUE
+		else if(!islist(managed_overlays))
+			if(new_length == 1 && managed_overlays == new_overlays[1])
+				identical = TRUE
+		else if(length(managed_overlays) == new_length)
+			identical = TRUE
+			for(var/i in 1 to length(managed_overlays))
+				if(managed_overlays[i] != new_overlays[i])
+					identical = FALSE
+					break
+
+		if(!identical)
+			var/full_control = FALSE
+			if(managed_overlays)
+				full_control = length(overlays) == (islist(managed_overlays) ? length(managed_overlays) : 1)
+				if(full_control)
+					overlays = null
+				else
+					cut_overlay(managed_overlays)
+
+			switch(length(new_overlays))
+				if(0)
+					if(full_control)
+						POST_OVERLAY_CHANGE(src)
+					managed_overlays = null
+				if(1)
+					add_overlay(new_overlays)
+					managed_overlays = new_overlays[1]
+				else
+					add_overlay(new_overlays)
+					managed_overlays = new_overlays
+
 		. |= UPDATE_OVERLAYS
 
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, updates, .)
@@ -897,8 +886,8 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_RELAYMOVE, user, direction) & COMSIG_BLOCK_RELAYMOVE)
 		return
 	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
-		to_chat(user, span_warning("You can't move while buckled to [src]!"))
+		buckle_message_cooldown = world.time + 25
+		balloon_alert(user, "can't move while buckled!")
 	return
 
 /**
@@ -983,7 +972,7 @@
  */
 /atom/proc/hitby_react(atom/movable/harmed_atom)
 	if(harmed_atom && isturf(harmed_atom.loc))
-		step(harmed_atom, turn(harmed_atom.dir, 180))
+		step(harmed_atom, REVERSE_DIR(harmed_atom.dir))
 
 ///Handle the atom being slipped over
 /atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, force_drop)
@@ -1096,8 +1085,8 @@
  *
  * Default behaviour is to send [COMSIG_ATOM_RCD_ACT] and return FALSE
  */
-/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, rcd_data["[RCD_DESIGN_MODE]"])
 	return FALSE
 
 /**
@@ -1115,14 +1104,6 @@
  */
 /atom/proc/get_dumping_location()
 	return null
-
-/**
- * This proc is called when an atom in our contents has it's [Destroy][/atom/proc/Destroy] called
- *
- * Default behaviour is to simply send [COMSIG_ATOM_CONTENTS_DEL]
- */
-/atom/proc/handle_atom_del(atom/deleting_atom)
-	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, deleting_atom)
 
 /**
  * the vision impairment to give to the mob whose perspective is set to that atom
@@ -1294,8 +1275,15 @@
 			if(light_system == STATIC_LIGHT)
 				set_light(l_dir = var_value)
 				. = TRUE
+		if(NAMEOF(src, light_height))
+			if(light_system == STATIC_LIGHT)
+				set_light(l_height = var_value)
+				. = TRUE
 		if(NAMEOF(src, light_on))
-			set_light_on(var_value)
+			if(light_system == STATIC_LIGHT)
+				set_light(l_on = var_value)
+			else
+				set_light_on(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_flags))
 			set_light_flags(var_value)
@@ -1352,6 +1340,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
+	VV_DROPDOWN_OPTION(VV_HK_TEST_MATRIXES, "Test Matrices")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 	VV_DROPDOWN_OPTION(VV_HK_ARMOR_MOD, "Modify Armor")
 	if(greyscale_colors)
@@ -1435,7 +1424,7 @@
 		ai_controller = new result(src)
 
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
-		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate","Shear")
 		var/matrix/M = transform
 		if(!result)
 			return
@@ -1452,6 +1441,12 @@
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Translate(x,y)
+			if("Shear")
+				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				if(isnull(x) || isnull(y))
+					return
+				transform = M.Shear(x,y)
 			if("Rotate")
 				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 				if(isnull(angle))
@@ -1494,12 +1489,13 @@
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
-		var/client/C = usr.client
-		C?.open_filter_editor(src)
+		usr.client?.open_filter_editor(src)
 
 	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
-		var/client/C = usr.client
-		C?.open_color_matrix_editor(src)
+		usr.client?.open_color_matrix_editor(src)
+
+	if(href_list[VV_HK_TEST_MATRIXES] && check_rights(R_VAREDIT))
+		usr.client?.open_matrix_tester(src)
 
 /atom/vv_get_header()
 	. = ..()
@@ -1639,18 +1635,19 @@
 	if(process_item.use_tool(src, user, processing_time, volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
-		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
+		var/amount_to_create = chosen_option[TOOL_PROCESSING_AMOUNT]
+		for(var/i = 1 to amount_to_create)
 			var/atom/created_atom = new atom_to_create(drop_location())
 			if(custom_materials)
-				created_atom.set_custom_materials(custom_materials, 1 / chosen_option[TOOL_PROCESSING_AMOUNT])
+				created_atom.set_custom_materials(custom_materials, 1 / amount_to_create)
 			created_atom.pixel_x = pixel_x
 			created_atom.pixel_y = pixel_y
 			if(i > 1)
 				created_atom.pixel_x += rand(-8,8)
 				created_atom.pixel_y += rand(-8,8)
 			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 			created_atoms.Add(created_atom)
+		to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
 		UsedforProcessing(user, process_item, chosen_option)
 		return
@@ -1685,7 +1682,7 @@
 /atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Check if the multitool has an item in it's data buffer
+///Check if an item supports a data buffer (is a multitool)
 /atom/proc/multitool_check_buffer(user, obj/item/multitool, silent = FALSE)
 	if(!istype(multitool, /obj/item/multitool))
 		if(user && !silent)
@@ -2075,15 +2072,16 @@
 				| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
 
 			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+				var/screentip_images = active_hud.screentip_images
 				// LMB and RMB on one line...
-				var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
-				var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
+				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
+				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)
 
-				if (lmb_text)
+				if (lmb_text != "")
 					lmb_rmb_line = lmb_text
-					if (rmb_text)
+					if (rmb_text != "")
 						lmb_rmb_line += " | [rmb_text]"
-				else if (rmb_text)
+				else if (rmb_text != "")
 					lmb_rmb_line = rmb_text
 
 				// Ctrl-LMB, Ctrl-RMB on one line...
@@ -2091,33 +2089,34 @@
 					lmb_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_CTRL_LMB in context)
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_LMB, screentip_images)
+
 				if (SCREENTIP_CONTEXT_CTRL_RMB in context)
 					if (ctrl_lmb_ctrl_rmb_line != "")
 						ctrl_lmb_ctrl_rmb_line += " | "
-					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
+					ctrl_lmb_ctrl_rmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_RMB, screentip_images)
 
 				// Alt-LMB, Alt-RMB on one line...
 				if (ctrl_lmb_ctrl_rmb_line != "")
 					ctrl_lmb_ctrl_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_ALT_LMB in context)
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_LMB, screentip_images)
 				if (SCREENTIP_CONTEXT_ALT_RMB in context)
 					if (alt_lmb_alt_rmb_line != "")
 						alt_lmb_alt_rmb_line += " | "
-					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB]]"
+					alt_lmb_alt_rmb_line += build_context(context, SCREENTIP_CONTEXT_ALT_RMB, screentip_images)
 
 				// Shift-LMB, Ctrl-Shift-LMB on one line...
 				if (alt_lmb_alt_rmb_line != "")
 					alt_lmb_alt_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
-					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB]]"
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_SHIFT_LMB, screentip_images)
 				if (SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context)
 					if (shift_lmb_ctrl_shift_lmb_line != "")
 						shift_lmb_ctrl_shift_lmb_line += " | "
-					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
+					shift_lmb_ctrl_shift_lmb_line += build_context(context, SCREENTIP_CONTEXT_CTRL_SHIFT_LMB, screentip_images)
 
 				if (shift_lmb_ctrl_shift_lmb_line != "")
 					extra_lines++
@@ -2153,16 +2152,14 @@
  * For turfs this will only be used if pathing_pass_method is TURF_PATHING_PASS_PROC
  *
  * Arguments:
- * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
- * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
- * * caller- The movable we're checking pass flags for, if we're making any such checks
- * * no_id: When true, doors with public access will count as impassible
+ * * to_dir - What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * pass_info - Datum that stores info about the thing that's trying to pass us
  *
  * IMPORTANT NOTE: /turf/proc/LinkBlockedWithAccess assumes that overrides of CanAStarPass will always return true if density is FALSE
  * If this is NOT you, ensure you edit your can_astar_pass variable. Check __DEFINES/path.dm
  **/
-/atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	if(caller && (caller.pass_flags & pass_flags_self))
+/atom/proc/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(pass_info.pass_flags & pass_flags_self)
 		return TRUE
 	. = !density
 
@@ -2176,16 +2173,18 @@
 	// Now we're gonna do a scanline effect
 	// Gonna take this atom and give it a render target, then use it as a source for a filter
 	// (We use an atom because it seems as if setting render_target on an MA is just invalid. I hate this engine)
-	var/static/atom/movable/scanline
-	if(!scanline)
-		scanline = new(null)
-		scanline.icon = 'icons/effects/effects.dmi'
-		scanline.icon_state = "scanline"
-		// * so it doesn't render
-		scanline.render_target = "*HoloScanline"
+	var/atom/movable/scanline = new(null)
+	scanline.icon = 'icons/effects/effects.dmi'
+	scanline.icon_state = "scanline"
+	scanline.appearance_flags |= RESET_TRANSFORM
+	// * so it doesn't render
+	var/static/uid_scan = 0
+	scanline.render_target = "*HoloScanline [uid_scan]"
+	uid_scan++
 	// Now we add it as a filter, and overlay the appearance so the render source is always around
 	add_filter("HOLO: Scanline", 2, alpha_mask_filter(render_source = scanline.render_target))
 	add_overlay(scanline)
+	qdel(scanline)
 	// Annd let's make the sucker emissive, so it glows in the dark
 	if(!render_target)
 		var/static/uid = 0
@@ -2221,3 +2220,71 @@
 		segment = -segment
 	SEND_SIGNAL(src, COMSIG_ATOM_SPIN_ANIMATION, speed, loops, segments, segment)
 	do_spin_animation(speed, loops, segments, segment, parallel)
+
+#define INVISIBILITY_VALUE 1
+#define INVISIBILITY_PRIORITY 2
+
+/atom/proc/RecalculateInvisibility()
+	PRIVATE_PROC(TRUE)
+
+	if(!invisibility_sources)
+		current_invisibility_priority = -INFINITY
+		invisibility = initial(invisibility)
+		return
+
+	var/highest_priority
+	var/list/highest_priority_invisibility_data
+	for(var/entry in invisibility_sources)
+		var/list/priority_data
+		if(islist(entry))
+			priority_data = entry
+		else
+			priority_data = invisibility_sources[entry]
+
+		var/priority = priority_data[INVISIBILITY_PRIORITY]
+		if(highest_priority > priority) // In the case of equal priorities, we use the last thing in the list so that more recent changes apply first
+			continue
+
+		highest_priority = priority
+		highest_priority_invisibility_data = priority_data
+
+	current_invisibility_priority = highest_priority
+	invisibility = highest_priority_invisibility_data[INVISIBILITY_VALUE]
+
+/**
+ * Sets invisibility according to priority.
+ * If you want to be able to undo the value you set back to what it would be otherwise,
+ * you should provide an id here and remove it using RemoveInvisibility(id)
+ */
+/atom/proc/SetInvisibility(desired_value, id, priority=0)
+	if(!invisibility_sources)
+		invisibility_sources = list()
+
+	if(id)
+		invisibility_sources[id] = list(desired_value, priority)
+	else
+		invisibility_sources += list(list(desired_value, priority))
+
+	if(current_invisibility_priority > priority)
+		return
+
+	RecalculateInvisibility()
+
+/// Removes the specified invisibility source from the tracker
+/atom/proc/RemoveInvisibility(id)
+	if(!invisibility_sources)
+		return
+
+	var/list/priority_data = invisibility_sources[id]
+	invisibility_sources -= id
+
+	if(length(invisibility_sources) == 0)
+		invisibility_sources = null
+
+	if(current_invisibility_priority > priority_data[INVISIBILITY_PRIORITY])
+		return
+
+	RecalculateInvisibility()
+
+#undef INVISIBILITY_VALUE
+#undef INVISIBILITY_PRIORITY

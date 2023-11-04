@@ -12,6 +12,7 @@
 	creator_desc = "Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item."
 	creator_icon = "dextrous"
 	dextrous = TRUE
+	hud_type = /datum/hud/dextrous/guardian
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself
 
@@ -21,17 +22,9 @@
 		dropItemToGround(internal_storage)
 
 /mob/living/simple_animal/hostile/guardian/dextrous/examine(mob/user)
-	if(dextrous)
-		. = list("<span class='info'>This is [icon2html(src)] \a <b>[src]</b>!\n[desc]")
-		for(var/obj/item/held_item in held_items)
-			if(held_item.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
-				continue
-			. += "It has [held_item.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(held_item))]."
-		if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
-			. += "It is holding [internal_storage.get_examine_string(user)] in its internal storage."
-		. += "</span>"
-	else
-		return ..()
+	. = ..()
+	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
+		. += span_info("It is holding [internal_storage.get_examine_string(user)] in its internal storage.")
 
 /mob/living/simple_animal/hostile/guardian/dextrous/recall_effects()
 	drop_all_held_items()

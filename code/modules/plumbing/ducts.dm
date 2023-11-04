@@ -86,7 +86,7 @@ All the important duct code:
 
 ///connect to a duct
 /obj/machinery/duct/proc/connect_duct(obj/machinery/duct/other, direction)
-	var/opposite_dir = turn(direction, 180)
+	var/opposite_dir = REVERSE_DIR(direction)
 	if(!active || !other.active)
 		return
 
@@ -128,7 +128,7 @@ All the important duct code:
 
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/plumbing, direction)
-	var/opposite_dir = turn(direction, 180)
+	var/opposite_dir = REVERSE_DIR(direction)
 
 	if(!(duct_layer & plumbing.ducting_layer))
 		return FALSE
@@ -182,7 +182,7 @@ All the important duct code:
 	if(!(other in neighbours))
 		neighbours[other] = direction
 	if(!(src in other.neighbours))
-		other.neighbours[src] = turn(direction, 180)
+		other.neighbours[src] = REVERSE_DIR(direction)
 
 ///remove all our neighbours, and remove us from our neighbours aswell
 /obj/machinery/duct/proc/lose_neighbours()
@@ -212,7 +212,7 @@ All the important duct code:
 	for(var/direction in GLOB.cardinals)
 		if(direction & connects)
 			for(var/obj/machinery/duct/other in get_step(src, direction))
-				if((turn(direction, 180) & other.connects) && other.active)
+				if((REVERSE_DIR(direction) & other.connects) && other.active)
 					adjacents += other
 	return adjacents
 

@@ -287,11 +287,13 @@
 
 /datum/ai_behavior/perform_emote
 
-/datum/ai_behavior/perform_emote/perform(seconds_per_tick, datum/ai_controller/controller, emote)
+/datum/ai_behavior/perform_emote/perform(seconds_per_tick, datum/ai_controller/controller, emote, speech_sound)
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
 	living_pawn.manual_emote(emote)
+	if(speech_sound) // Only audible emotes will pass in a sound
+		playsound(living_pawn, speech_sound, 80, vary = TRUE)
 	finish_action(controller, TRUE)
 
 /datum/ai_behavior/perform_speech
@@ -303,6 +305,16 @@
 	living_pawn.say(speech, forced = "AI Controller")
 	if(speech_sound)
 		playsound(living_pawn, speech_sound, 80, vary = TRUE)
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/perform_speech_radio
+
+/datum/ai_behavior/perform_speech_radio/perform(seconds_per_tick, datum/ai_controller/controller, speech, obj/item/radio/speech_radio, list/try_channels = list(RADIO_CHANNEL_COMMON))
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn) || !istype(speech_radio) || QDELETED(speech_radio) || !length(try_channels))
+		finish_action(controller, FALSE)
+		return
+	speech_radio.talk_into(living_pawn, speech, pick(try_channels))
 	finish_action(controller, TRUE)
 
 //song behaviors

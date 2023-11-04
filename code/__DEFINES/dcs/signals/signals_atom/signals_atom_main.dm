@@ -11,17 +11,19 @@
 #define COMSIG_ATOM_EXAMINE "atom_examine"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
-///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
-#define COMSIG_ATOM_REAGENT_EXAMINE "atom_reagent_examine"
-	/// Stop the generic reagent examine text
-	#define STOP_GENERIC_REAGENT_EXAMINE (1<<0)
-///from base of atom/examine_more(): (/mob)
-#define COMSIG_ATOM_EXAMINE_MORE "atom_examine_more"
 	//Positions for overrides list
 	#define EXAMINE_POSITION_ARTICLE (1<<0)
 	#define EXAMINE_POSITION_BEFORE (1<<1)
 	//End positions
 	#define COMPONENT_EXNAME_CHANGED (1<<0)
+///from base of atom/examine(): (/mob, list/examine_text, can_see_inside)
+#define COMSIG_ATOM_REAGENT_EXAMINE "atom_reagent_examine"
+	/// Stop the generic reagent examine text
+	#define STOP_GENERIC_REAGENT_EXAMINE (1<<0)
+///from base of atom/examine_more(): (/mob, examine_list)
+#define COMSIG_ATOM_EXAMINE_MORE "atom_examine_more"
+/// from atom/examine_more(): (/atom/examining, examine_list)
+#define COMSIG_MOB_EXAMINING_MORE "mob_examining_more"
 ///from base of [/atom/proc/update_appearance]: (updates)
 #define COMSIG_ATOM_UPDATE_APPEARANCE "atom_update_appearance"
 	/// If returned from [COMSIG_ATOM_UPDATE_APPEARANCE] it prevents the atom from updating its name.
@@ -67,8 +69,6 @@
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
 ///from base of atom/Bumped(): (/atom/movable)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
-///from base of atom/handle_atom_del(): (atom/deleted)
-#define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
@@ -76,7 +76,7 @@
 	#define COMPONENT_ALLOW_REACH (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
-///when an atom is processed (mob/living/user, obj/item/I, list/atom/results)
+///when an atom is processed (mob/living/user, obj/item/process_item, list/atom/results)
 #define COMSIG_ATOM_PROCESSED "atom_processed"
 ///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
 #define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
@@ -125,5 +125,5 @@
 #define COMSIG_ATOM_GERM_EXPOSED "atom_germ_exposed"
 /// when atom is picked up from the floor or moved to an elevated structure: (datum/component/germ_exposure)
 #define COMSIG_ATOM_GERM_UNEXPOSED "atom_germ_unexposed"
-/// when atom is washed
-#define COMSIG_ATOM_WASHED "atom_washed"
+/// signal sent to puzzle pieces by activator
+#define COMSIG_PUZZLE_COMPLETED "puzzle_completed"

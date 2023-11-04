@@ -74,6 +74,9 @@
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/wood/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/wood/tile
 	icon_state = "wood_tile"
 	floor_tile = /obj/item/stack/tile/wood/tile
@@ -275,6 +278,9 @@
 	smoothing_flags = NONE
 	floor_tile = /obj/item/stack/tile/carpet/symbol
 
+/turf/open/floor/carpet/lone/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/carpet/lone/star
 	icon_state = "carpetstar"
 	floor_tile = /obj/item/stack/tile/carpet/star
@@ -470,7 +476,7 @@
 /turf/open/floor/carpet/neon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, null, null, alpha, neon_color, smoothing_junction)
-	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, EMISSIVE_COLOR, smoothing_junction)
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, GLOB.emissive_color, smoothing_junction)
 
 /turf/open/floor/carpet/neon/simple
 	name = "simple neon carpet"
