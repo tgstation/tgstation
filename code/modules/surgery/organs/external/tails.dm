@@ -59,22 +59,20 @@
 		stop_wag()
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
-/obj/item/organ/external/tail/proc/start_wag()
+/obj/item/organ/external/tail/proc/start_wag(mob/living/carbon/organ_owner)
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags |= WAG_WAGGING
 	accessory.wagging = TRUE
-	if(owner)
-		owner.update_body_parts()
-		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(stop_wag))
+	organ_owner.update_body_parts()
+	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(stop_wag))
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
-/obj/item/organ/external/tail/proc/stop_wag()
+/obj/item/organ/external/tail/proc/stop_wag(mob/living/carbon/organ_owner)
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
-	if(owner)
-		owner.update_body_parts()
-		UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	organ_owner.update_body_parts()
+	UnregisterSignal(organ_owner, COMSIG_LIVING_DEATH)
 
 ///Tail parent type, with wagging functionality
 /datum/bodypart_overlay/mutant/tail
