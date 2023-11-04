@@ -80,6 +80,8 @@ multiple modular subtrees with behaviors
 
 ///Sets the current movement target, with an optional param to override the movement behavior
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
+	if(current_movement_target)
+		UnregisterSignal(current_movement_target, COMSIG_MOVABLE_MOVED)
 	movement_target_source = source
 	current_movement_target = target
 	RegisterSignal(current_movement_target, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement_target))
@@ -236,6 +238,9 @@ multiple modular subtrees with behaviors
 
 /// Handles a scheduled ai behavior
 /datum/ai_controller/proc/handle_behavior(datum/ai_behavior/current_behavior)
+	// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
+	// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
+	// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
 	var/action_seconds_per_tick = max(current_behavior.get_cooldown(src) * 0.1, world.tick_lag)
 	if(!(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT))
 		ProcessBehavior(action_seconds_per_tick, current_behavior)
