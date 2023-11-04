@@ -38,16 +38,28 @@
 	var/list/new_edge_turfs = new_turfs[EDGE_TURFS_KEY]
 
 	for(var/turf/old_turf as anything in field_turfs - new_field_turfs)
+		if(QDELETED(src))
+			return
 		cleanup_field_turf(old_turf)
 	for(var/turf/old_turf as anything in edge_turfs)
+		if(QDELETED(src))
+			return
 		cleanup_edge_turf(old_turf)
 
 	for(var/turf/new_turf as anything in new_field_turfs)
+		if(QDELETED(src))
+			return
 		field_turfs |= new_turf
 		setup_field_turf(new_turf)
 	for(var/turf/new_turf as anything in new_edge_turfs)
+		if(QDELETED(src))
+			return
 		edge_turfs |= new_turf
 		setup_edge_turf(new_turf)
+
+/datum/proximity_monitor/advanced/on_initialized(turf/location, atom/created, init_flags)
+	. = ..()
+	on_entered(location, created, null)
 
 /datum/proximity_monitor/advanced/on_entered(turf/source, atom/movable/entered, turf/old_loc)
 	. = ..()
