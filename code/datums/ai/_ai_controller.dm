@@ -341,6 +341,7 @@ multiple modular subtrees with behaviors
 		behavior_args[behavior_type] = arguments
 	else
 		behavior_args -= behavior_type
+	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
 	var/list/arguments = list(seconds_per_tick, src)
