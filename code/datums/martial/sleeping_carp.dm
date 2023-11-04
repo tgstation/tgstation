@@ -8,18 +8,19 @@
 	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
+	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
 
 /datum/martial_art/the_sleeping_carp/teach(mob/living/target, make_temporary = FALSE)
 	. = ..()
 	if(!.)
 		return
-	target.add_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER), SLEEPING_CARP_TRAIT)
+	target.add_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	target.faction |= FACTION_CARP //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
-	target.remove_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER), SLEEPING_CARP_TRAIT)
+	target.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(target, COMSIG_ATOM_ATTACKBY)
 	UnregisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT)
 	target.faction -= FACTION_CARP //:(
@@ -49,7 +50,7 @@
 	defender.visible_message(span_danger("[attacker] [atk_verb]s [defender]!"), \
 					span_userdanger("[attacker] [atk_verb]s you!"), null, null, attacker)
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
-	playsound(get_turf(defender), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "strong punched (Sleeping Carp)")
 	defender.apply_damage(20, attacker.get_attack_type(), affecting)
 	return
@@ -93,14 +94,14 @@
 		return TRUE
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(get_turf(defender), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold"),
 			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
 		)
 		grab_log_description = "grabbed and nerve pinched"
-		defender.apply_effect(10 SECONDS, EFFECT_UNCONSCIOUS)
+		defender.Unconscious(10 SECONDS)
 	defender.apply_damage(20, STAMINA)
 	log_combat(attacker, defender, "[grab_log_description] (Sleeping Carp)")
 	return ..()
@@ -118,7 +119,7 @@
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 
 	defender.apply_damage(rand(10,15), attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND)
-	playsound(get_turf(defender), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "punched (Sleeping Carp)")
 
 	return TRUE
@@ -132,7 +133,7 @@
 		return TRUE
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	playsound(get_turf(defender), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	defender.apply_damage(20, STAMINA)
 	log_combat(attacker, defender, "disarmed (Sleeping Carp)")
 
