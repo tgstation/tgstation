@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - bugfix: "paintings can once again be filtered"
