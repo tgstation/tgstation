@@ -70,7 +70,7 @@
 				<HR>
 				<b>Implant Details:</b><BR>
 				<b>Function:</b> Preforms and maintains a series of classified modifications to the body.<BR>
-				<b>Special Features:</b> Allows the implantee to control a single hardlight spear, further implants will allow for up to 5 additional spears.<BR>
+				<b>Special Features:</b> Allows the implantee to control a single hardlight spear, further implants will allow for up to 4 additional spears.<BR>
 				<b>System Resonance:</b> Internal resonance level suggests a [spell_to_give] is contained within.<BR>
 				<b>Integrity:</b> Implant acquires waste material in the blood for self-repair, giving it an unlimited lifespan in a living host."}
 	return dat
@@ -132,6 +132,7 @@
 	item_type = /obj/item/gun/magic/hardlight_spear
 
 /datum/action/cooldown/spell/conjure_item/hardlight_spear/before_cast(mob/living/cast_on)
+	. = ..()
 	for(var/I in cast_on.get_contents())
 		if(istype(I, /obj/item/gun/magic/hardlight_spear))
 			return . | SPELL_CANCEL_CAST
