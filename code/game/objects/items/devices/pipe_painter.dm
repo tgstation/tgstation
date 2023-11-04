@@ -17,15 +17,16 @@
 
 	if(istype(target, /obj/machinery/atmospherics))
 		var/obj/machinery/atmospherics/target_pipe = target
-		target_pipe.paint(paint_color)
+		target_pipe.paint(GLOB.pipe_paint_colors[paint_color])
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
+		balloon_alert(user, "painted in [paint_color] color")
 	else if(istype(target, /obj/item/pipe))
 		var/obj/item/pipe/target_pipe = target
-		target_pipe.pipe_color = paint_color
-		target.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		var/color = GLOB.pipe_paint_colors[paint_color]
+		target_pipe.pipe_color = color
+		target.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
+		balloon_alert(user, "painted in [paint_color] color")
 
 /obj/item/pipe_painter/attack_self(mob/user)
 	paint_color = tgui_input_list(user, "Which colour do you want to use?", "Pipe painter", GLOB.pipe_paint_colors)
