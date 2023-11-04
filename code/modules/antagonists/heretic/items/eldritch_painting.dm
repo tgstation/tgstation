@@ -357,13 +357,13 @@
 /obj/item/wallframe/painting/eldritch/rust
 	name = "Climb over the rusted mountain"
 	desc = "A painting depicting something climbing a mountain of rust, it gives you an eerie feeling."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_rust"
 	result_path = /obj/structure/sign/painting/eldritch/rust
 
 /obj/structure/sign/painting/eldritch/rust
 	name = "Climb over the rusted mountain"
 	desc = "A painting depicting something climbing a mountain of rust, it gives you an eerie feeling. Destroyable with wirecutters."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_rust"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/rust
 
 // Moodlets used to prevent rust and give a positive moodlet for heretics
