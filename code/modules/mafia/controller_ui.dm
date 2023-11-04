@@ -43,7 +43,6 @@
 	var/datum/mafia_role/user_role = get_role_player(user)
 	if(user_role)
 		data["user_notes"] = user_role.written_notes
-		data["messages"] = list()
 		var/list/ui_messages = list()
 		for(var/i = user_role.role_messages.len to 1 step -1)
 			ui_messages.Add(list(list(
