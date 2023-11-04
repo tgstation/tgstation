@@ -848,7 +848,6 @@
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return
 
-
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		var/color_is_dark = FALSE
 		if(actually_paints)
@@ -858,7 +857,6 @@
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 				return FALSE
 
-			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			if(isitem(target) && isliving(target.loc))
 				var/obj/item/target_item = target
 				var/mob/living/holder = target.loc
@@ -866,6 +864,27 @@
 					holder.update_held_items()
 				else
 					holder.update_clothing(target_item.slot_flags)
+
+			if(istype(target, /obj/machinery/atmospherics))
+				var/obj/machinery/atmospherics/target_pipe = target
+				if(GLOB.pipe_color_name.Find(paint_color))
+					target_pipe.paint(paint_color)
+					balloon_alert(user, "painted in  [GLOB.pipe_color_name[paint_color]] color")
+				else
+					balloon_alert(user, "invalid pipe color!")
+					return FALSE
+			else if(istype(target, /obj/item/pipe))
+				var/obj/item/pipe/target_pipe = target
+				if(GLOB.pipe_color_name.Find(paint_color))
+					target_pipe.pipe_color = paint_color
+					target.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+					balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
+				else
+					balloon_alert(user, "invalid pipe color!")
+					return FALSE
+			else
+				target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+
 		if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 			use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
