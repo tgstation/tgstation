@@ -50,8 +50,6 @@
 /obj/item/organ/external/tail/proc/wag(mob/living/carbon/organ_owner, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
 		return
-	if(organ_owner.stat == DEAD)
-		return
 
 	if(start)
 		start_wag()
@@ -62,6 +60,9 @@
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag(mob/living/carbon/organ_owner)
+	if(organ_owner.stat == DEAD)
+		return
+
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags |= WAG_WAGGING
 	accessory.wagging = TRUE
@@ -71,6 +72,7 @@
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/stop_wag(mob/living/carbon/organ_owner)
 	SIGNAL_HANDLER
+
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
