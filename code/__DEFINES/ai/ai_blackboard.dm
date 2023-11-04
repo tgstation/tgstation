@@ -47,7 +47,7 @@
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
-#define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
+#define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"
 /// Key for the minimum status at which we want to target mobs (does not need to be specified if CONSCIOUS)
 #define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
 /// Flag for whether to target only wounded mobs
