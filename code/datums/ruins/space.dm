@@ -126,6 +126,12 @@
 	name = "Derelict 8"
 	description = "An auxiliary storage bay might be the least respected room on any functional station, but studies show they are the least likely to be hit in an artillery strike."
 
+/datum/map_template/ruin/space/derelict9
+	id = "derelict9"
+	suffix = "derelict9.dmm"
+	name = "Derelict 9"
+	description = "Someone already found this high-security supply cache already, but were unable to get inside. Perhaps the next visitor will have more luck."
+
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"
 	suffix = "emptyshell.dmm"
@@ -375,6 +381,12 @@
 	suffix = "the_faceoff.dmm"
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
+
+/datum/map_template/ruin/space/meatstation
+	id = "meatderelict"
+	suffix = "meatderelict.dmm"
+	name = "Bioresearch Outpost"
+	description = "A bioresearch experiment gone wrong."
 
 /datum/map_template/ruin/space/ghost_restaurant
 	id = "space_ghost_restaurant.dmm"

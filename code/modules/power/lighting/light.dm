@@ -112,9 +112,11 @@
 		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
 
 	// Light projects out backwards from the dir of the light
-	set_light(l_dir = turn(dir, 180))
+	set_light(l_dir = REVERSE_DIR(dir))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -137,14 +139,14 @@
 
 /obj/machinery/light/setDir(newdir)
 	. = ..()
-	set_light(l_dir = turn(dir, 180))
+	set_light(l_dir = REVERSE_DIR(dir))
 
 // If we're adjacent to the source, we make this sorta indentation for our light to ensure it stays lit (and to make distances look right)
 // By shifting the light position we use forward a bit, towards something that isn't off by 0.5 from being in angle
 // Because angle calculation is kinda harsh it's hard to find a happy point between fulldark and fullbright for the corners behind the light. this is good enough tho
 /obj/machinery/light/get_light_offset()
 	var/list/hand_back = ..()
-	var/list/dir_offset = dir2offset(turn(dir, 180))
+	var/list/dir_offset = dir2offset(REVERSE_DIR(dir))
 	hand_back[1] += dir_offset[1] * 0.5
 	hand_back[2] += dir_offset[2] * 0.5
 	return hand_back
@@ -170,7 +172,10 @@
 	if(!on || status != LIGHT_OK)
 		return
 
+	. += emissive_appearance(overlay_icon, "[base_state]", src, alpha = src.alpha)
+
 	var/area/local_area = get_room_area(src)
+
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
@@ -420,7 +425,7 @@
 	if(prob(12))
 		electrocute_mob(user, get_area(src), src, 0.3, TRUE)
 
-/obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/light/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && !QDELETED(src))
 		if(prob(damage_amount * 5))
@@ -671,6 +676,11 @@
 	tube?.burn()
 	return
 
+/obj/machinery/light/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	break_light_tube()
+	return COMSIG_SABOTEUR_SUCCESS
+
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
@@ -678,6 +688,20 @@
 		if(!istype(get_area(src), area_type))
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))
+
+/**
+ * All the effects that occur when a light falls off a wall that it was hung onto.
+ */
+/obj/machinery/light/proc/knock_down()
+	new /obj/item/wallframe/light_fixture(drop_location())
+	new /obj/item/stack/cable_coil(drop_location(), 1, "red")
+	if(status != LIGHT_BROKEN)
+		break_light_tube(FALSE)
+	if(status != LIGHT_EMPTY)
+		drop_light_tube()
+	if(cell)
+		cell.forceMove(drop_location())
+	qdel(src)
 
 /obj/machinery/light/floor
 	name = "floor light"

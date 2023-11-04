@@ -4,3 +4,6 @@
 cartoon_pop.ogg by Tobiasz 'unfa' Karoń
 (https://freesound.org/people/unfa/sounds/245645/)
 It has been licensed under CC-BY 3.0, which can be found at http://creativecommons.org/licenses/by/3.0/
+
+alert.ogg by bbrocer. Extended, looped, and reverbed
+https://freesound.org/people/bbrocer/sounds/389511/

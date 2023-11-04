@@ -111,7 +111,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "w" = (
-/mob/living/simple_animal/hostile/construct/artificer,
+/mob/living/basic/construct/artificer,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "x" = (
@@ -139,7 +139,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "C" = (
-/mob/living/simple_animal/hostile/construct/juggernaut,
+/mob/living/basic/construct/juggernaut,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "D" = (
@@ -166,7 +166,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "H" = (
-/mob/living/simple_animal/hostile/construct/wraith,
+/mob/living/basic/construct/wraith,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "I" = (
@@ -178,14 +178,14 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "J" = (
-/mob/living/simple_animal/hostile/eyeball{
+/mob/living/basic/eyeball{
 	faction = list("cult");
 	name = "left eyeball"
 	},
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "K" = (
-/mob/living/simple_animal/hostile/eyeball{
+/mob/living/basic/eyeball{
 	faction = list("cult");
 	name = "right eyeball"
 	},

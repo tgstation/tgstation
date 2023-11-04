@@ -44,7 +44,7 @@
 
 	var/list/autopsy_information = list()
 	autopsy_information += "[scanned.name] - Species: [scanned.dna.species.name]"
-	autopsy_information += "Time of Death - [scanned.tod]"
+	autopsy_information += "Time of Death - [scanned.station_timestamp_timeofdeath]"
 	autopsy_information += "Time of Autopsy - [station_time_timestamp()]"
 	autopsy_information += "Autopsy Coroner - [user.name]"
 

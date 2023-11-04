@@ -84,6 +84,13 @@
 		on_use()
 	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED, src)
 
+/// Apply a cooldown until this item can be used again
+/obj/item/mod/module/proc/start_cooldown(applied_cooldown)
+	if (isnull(applied_cooldown))
+		applied_cooldown = cooldown_time
+	COOLDOWN_START(src, cooldown_timer, applied_cooldown)
+	SEND_SIGNAL(src, COMSIG_MODULE_COOLDOWN_STARTED, applied_cooldown)
+
 /// Called when the module is activated
 /obj/item/mod/module/proc/on_activation()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
@@ -116,8 +123,8 @@
 			update_signal(used_button)
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
-	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	mod.wearer.update_clothing(mod.slot_flags)
+	start_cooldown()
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	return TRUE
 
@@ -153,7 +160,7 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE)
 		return FALSE
-	COOLDOWN_START(src, cooldown_timer, cooldown_time)
+	start_cooldown()
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_clothing), mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
@@ -329,6 +336,8 @@
 	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
 	/// If this one starts with a core in.
 	var/prebuilt = FALSE
+	/// If the core is removable once socketed.
+	var/core_removable = TRUE
 
 /obj/item/mod/module/anomaly_locked/Initialize(mapload)
 	. = ..()
@@ -347,13 +356,15 @@
 	if(!length(accepted_anomalies))
 		return
 	if(core)
-		. += span_notice("There is a [core.name] installed in it. You could remove it with a <b>screwdriver</b>...")
+		. += span_notice("There is a [core.name] installed in it. [core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable."]")
 	else
 		var/list/core_list = list()
 		for(var/path in accepted_anomalies)
 			var/atom/core_path = path
 			core_list += initial(core_path.name)
 		. += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
+		if(!core_removable)
+			. += span_notice("Due to some design quirk, once a core is inserted, it won't be removable.")
 
 /obj/item/mod/module/anomaly_locked/on_select()
 	if(!core)
@@ -389,6 +400,9 @@
 	. = ..()
 	if(!core)
 		balloon_alert(user, "no core!")
+		return
+	if(!core_removable)
+		balloon_alert(user, "can't remove core!")
 		return
 	balloon_alert(user, "removing core...")
 	if(!do_after(user, 3 SECONDS, target = src))

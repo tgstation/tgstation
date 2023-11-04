@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/bee
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/bee,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -8,12 +9,19 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/pollinate,
+		/datum/ai_planning_subtree/simple_find_target/bee,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
+
+/datum/ai_planning_subtree/simple_find_target/bee/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/hydro_target = controller.blackboard[BB_TARGET_HYDRO]
+	if(hydro_target)
+		return SUBTREE_RETURN_FINISH_PLANNING
+	return ..()
 
 /datum/ai_controller/basic_controller/queen_bee
 	blackboard = list(
@@ -68,7 +76,7 @@
 	if(!SPT_PROB(action_prob, seconds_per_tick))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/enter_exit_hive, BB_CURRENT_HOME)
+	controller.queue_behavior(/datum/ai_behavior/enter_exit_hive, BB_CURRENT_HOME, BB_BASIC_MOB_CURRENT_TARGET)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 //the queen spend more time in the hive

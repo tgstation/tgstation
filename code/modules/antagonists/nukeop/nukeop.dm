@@ -8,9 +8,13 @@
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"
+	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team
-	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
-	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
+	/// If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
+	var/always_new_team = FALSE
+	/// Should the user be moved to default spawnpoint after being granted this datum.
+	var/send_to_spawnpoint = TRUE
+	/// The DEFAULT outfit we will give to players granted this datum
 	var/nukeop_outfit = /datum/outfit/syndicate
 
 	preview_outfit = /datum/outfit/nuclear_operative_elite
@@ -35,9 +39,12 @@
 	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
 		return
 
-	operative.set_species(/datum/species/human) //Plasmamen burn up otherwise, and besides, all other species are vulnerable to asimov AIs. Let's standardize all operatives being human.
+	// If our nuke_ops_species pref is set to TRUE, (or we have no client) make us a human
+	if(isnull(operative.client) || operative.client.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
+		operative.set_species(/datum/species/human)
 
-	operative.equipOutfit(nukeop_outfit)
+	operative.equip_species_outfit(nukeop_outfit)
+
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
@@ -234,7 +241,9 @@
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
 	always_new_team = TRUE
+	/// Randomly chosen honorific, for distinction
 	var/title
+	/// The nuclear challenge remote we will spawn this player with.
 	var/challengeitem = /obj/item/nuclear_challenge
 
 /datum/antagonist/nukeop/leader/memorize_code()

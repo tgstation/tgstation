@@ -107,7 +107,7 @@
 #define HAND_RIGHT (1<<10)
 #define HANDS (HAND_LEFT | HAND_RIGHT)
 #define NECK (1<<11)
-#define FULL_BODY (~0)
+#define FULL_BODY ALL
 
 //defines for the index of hands
 #define LEFT_HANDS 1
@@ -145,6 +145,7 @@
 #define MASKCOVERSMOUTH (1<<3) // on other items, these are just for mask/head
 #define HEADCOVERSMOUTH (1<<4)
 #define PEPPERPROOF (1<<5) //protects against pepperspray
+#define EARS_COVERED (1<<6)
 
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
@@ -164,8 +165,6 @@
 //Allowed equipment lists for security vests.
 
 GLOBAL_LIST_INIT(detective_vest_allowed, list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
 	/obj/item/detective_scanner,
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
@@ -181,11 +180,10 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
+	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
 ))
 
 GLOBAL_LIST_INIT(security_vest_allowed, list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
@@ -198,11 +196,11 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
+	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/pen/red/security,
 ))
 
 GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/melee/baton,
@@ -211,6 +209,7 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
+	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
 ))
 
 //Allowed list for all chaplain suits (except the honkmother robe)

@@ -135,7 +135,7 @@
 			var/datum/outfit/ctf/class = ctf_gear[key]
 			var/datum/radial_menu_choice/option = new
 			option.image  = image(icon = initial(class.icon), icon_state = initial(class.icon_state))
-			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
+			option.info = span_boldnotice("[initial(class.class_description)]")
 			display_classes[key] = option
 
 		sort_list(display_classes)
@@ -151,6 +151,15 @@
 	new_team_member.prefs.safe_transfer_prefs_to(player_mob, is_antag = TRUE)
 	if(player_mob.dna.species.outfit_important_for_life)
 		player_mob.set_species(/datum/species/human)
+
+	var/datum/mind/new_member_mind = new_team_member.mob.mind
+	if(new_member_mind?.current)
+		player_mob.AddComponent( \
+			/datum/component/temporary_body, \
+			old_mind = new_member_mind, \
+			old_body = new_member_mind.current, \
+		)
+
 	player_mob.ckey = new_team_member.ckey
 	if(isnull(ctf_player_component))
 		var/datum/component/ctf_player/player_component = player_mob.mind.AddComponent(/datum/component/ctf_player, team, ctf_game, ammo_type)
@@ -263,7 +272,7 @@
 /obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/ctf_flag))
 		return ..()
-		
+
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))

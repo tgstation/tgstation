@@ -86,6 +86,7 @@
 #define FREQ_ELECTROPACK 1449
 #define FREQ_MAGNETS 1449
 #define FREQ_LOCATOR_IMPLANT 1451
+#define FREQ_RADIO_NAV_BEACON 1455
 #define FREQ_SIGNALER 1457 // the default for new signalers
 #define FREQ_COMMON 1459 // Common comms frequency, dark green
 

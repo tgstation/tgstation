@@ -17,13 +17,23 @@
 	var/static/list/obj/item/food/icecream/cone_prototypes
 	var/static/list/icecream_vat_reagents = list(
 		/datum/reagent/consumable/milk = 6,
+		/datum/reagent/consumable/korta_milk = 6,
 		/datum/reagent/consumable/flour = 6,
+		/datum/reagent/consumable/korta_flour = 6,
 		/datum/reagent/consumable/sugar = 6,
 		/datum/reagent/consumable/ice = 6,
 		/datum/reagent/consumable/coco = 6,
 		/datum/reagent/consumable/vanilla = 6,
 		/datum/reagent/consumable/berryjuice = 6,
-		/datum/reagent/consumable/ethanol/singulo = 6)
+		/datum/reagent/consumable/ethanol/singulo = 6,
+		/datum/reagent/consumable/lemonjuice = 6,
+		/datum/reagent/consumable/caramel = 6,
+		/datum/reagent/consumable/banana = 6,
+		/datum/reagent/consumable/orangejuice = 6,
+		/datum/reagent/consumable/cream = 6,
+		/datum/reagent/consumable/peachjuice = 6,
+		/datum/reagent/consumable/cherryjelly = 6,
+	)
 
 /obj/machinery/icecream_vat/Initialize(mapload)
 	. = ..()

@@ -139,6 +139,19 @@
 	if(gored)
 		name = gored.real_name
 
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 66.6,\
+		max_blood = INFINITY,\
+	)
+
+	AddComponent(/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
+
 /obj/structure/bouncy_castle/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -154,3 +167,66 @@
 	default_raw_text = "<b>Remember!</b> The customers love that gumball we have as a crystal ball. \
 		Even if it's completely useless to us, resist the urge to chew it."
 
+/**
+ * # Bounty Locator
+ *
+ * Locates a random, living fugitive and reports their name/location on a 40 second cooldown.
+ *
+ * Locates a random fugitive antagonist via the GLOB.antagonists list, and reads out their real name and area name.
+ * Captured or dead fugitives are not reported.
+ */
+/obj/machinery/fugitive_locator
+	name = "Bounty Locator"
+	desc = "Tracks the signatures of bounty targets in your sector. Nobody actually knows what mechanism this thing uses to track its targets. \
+		Whether it be bluespace entanglement or a simple RFID implant, this machine will find you who you're looking for no matter where they're hiding."
+	icon = 'icons/obj/machines/dominator.dmi'
+	icon_state = "dominator-Purple"
+	density = TRUE
+	/// Cooldown on locating a fugitive.
+	COOLDOWN_DECLARE(locate_cooldown)
+
+/obj/machinery/fugitive_locator/interact(mob/user)
+	if(!COOLDOWN_FINISHED(src, locate_cooldown))
+		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
+		return
+	var/mob/living/bounty = locate_fugitive()
+	if(!bounty)
+		say("No bounty targets detected.")
+	else
+		say("Bounty Target Located. Bounty ID: [bounty.real_name]. Location: [get_area_name(bounty)]")
+
+	COOLDOWN_START(src, locate_cooldown, 40 SECONDS)
+
+///Locates a random fugitive via their antag datum and returns them.
+/obj/machinery/fugitive_locator/proc/locate_fugitive()
+	var/list/datum_list = shuffle(GLOB.antagonists)
+	for(var/datum/antagonist/fugitive/fugitive_datum in datum_list)
+		if(!fugitive_datum.owner)
+			stack_trace("Fugitive locator tried to locate a fugitive antag datum with no owner.")
+			continue
+		if(fugitive_datum.is_captured)
+			continue
+		var/mob/living/found_fugitive = fugitive_datum.owner.current
+		if(found_fugitive.stat == DEAD)
+			continue
+
+		return found_fugitive
+
+/obj/item/radio/headset/psyker
+	name = "psychic headset"
+	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
+	icon_state = "psyker_headset"
+	worn_icon_state = "syndie_headset"
+
+/obj/item/radio/headset/psyker/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
+/obj/item/radio/headset/psyker/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		ADD_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
+
+/obj/item/radio/headset/psyker/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)

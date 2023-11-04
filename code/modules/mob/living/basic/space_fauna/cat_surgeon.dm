@@ -61,7 +61,6 @@
 	)
 	tail.Remove(attacked)
 	tail.forceMove(drop_location())
-	tail.color = attacked.hair_color
 
 /datum/ai_controller/basic_controller/cat_butcherer
 	blackboard = list(

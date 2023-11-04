@@ -168,11 +168,12 @@
 			for(var/node_id in listin)
 				var/datum/techweb_node/N = SSresearch.techweb_node_by_id(node_id)
 				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
-				if(SSresearch.science_tech.researched_nodes[N.id])
+				var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
+				if(science_web.researched_nodes[N.id])
 					res += str
-				else if(SSresearch.science_tech.boosted_nodes[N.id])
+				else if(science_web.boosted_nodes[N.id])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N.id]) //JOY OF DISCOVERY!
+				if(science_web.visible_nodes[N.id]) //JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output
@@ -639,6 +640,7 @@
 	to_chat(user, message)
 
 	var/static/list/valid_animals = list(
+		/mob/living/basic/bear,
 		/mob/living/basic/bee,
 		/mob/living/basic/butterfly,
 		/mob/living/basic/carp,
@@ -648,7 +650,6 @@
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/basic/pet/fox,
-		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/pet/cat,
 	)

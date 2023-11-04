@@ -64,9 +64,13 @@
 	if(issilicon(meal) || meal.mob_biotypes & MOB_ROBOTIC)
 		return FALSE
 
+	if(meal.flags_1 & HOLOGRAM_1)
+		meal.balloon_alert(src, "no life energy!")
+		return FALSE
+
 	if(isanimal(meal))
 		var/mob/living/simple_animal/simple_meal = meal
-		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
 			if(silent)
 				return FALSE
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
@@ -76,7 +80,7 @@
 			return FALSE
 	else if(isbasicmob(meal))
 		var/mob/living/basic/basic_meal = meal
-		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[CLONE] <= 0)
+		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[BRUTE] <= 0)
 			if (silent)
 				return FALSE
 			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
@@ -132,6 +136,14 @@
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
 			"I do not feel nourished", "This subject is not food")]!</span>")
+
+		var/mob/living/victim = buckled
+
+		if(istype(victim))
+			var/bio_protection = 100 - victim.getarmor(null, BIO)
+			if(prob(bio_protection))
+				victim.apply_status_effect(/datum/status_effect/slimed, slime_colours_to_rgb[colour], colour == SLIME_TYPE_RAINBOW)
+
 		if(!silent)
 			visible_message(span_warning("[src] lets go of [buckled]!"), \
 							span_notice("<i>I stopped feeding.</i>"))
@@ -152,8 +164,7 @@
 			amount_grown = 0
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
-			var/datum/action/innate/slime/reproduce/reproduce_action = new
-			reproduce_action.Grant(src)
+			GRANT_ACTION(/datum/action/innate/slime/reproduce)
 			regenerate_icons()
 			update_name()
 		else
@@ -192,7 +203,7 @@
 			for(var/i in 1 to 4)
 				var/child_colour
 				if(mutation_chance >= 100)
-					child_colour = "rainbow"
+					child_colour = SLIME_TYPE_RAINBOW
 				else if(prob(mutation_chance))
 					child_colour = slime_mutation[rand(1,4)]
 				else

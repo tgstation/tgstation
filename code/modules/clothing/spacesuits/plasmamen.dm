@@ -44,7 +44,7 @@
 	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
 	icon = 'icons/obj/clothing/head/plasmaman_hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/plasmaman_head.dmi'
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | PLASMAMAN_PREVENT_IGNITION | HEADINTERNALS
 	icon_state = "plasmaman-helm"
 	inhand_icon_state = "plasmaman-helm"
 	strip_delay = 80
@@ -126,7 +126,7 @@
 		return
 	if(istype(hitting_item, /obj/item/clothing/head))
 		var/obj/item/clothing/hitting_clothing = hitting_item
-		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
+		if(hitting_clothing.clothing_flags & STACKABLE_HELMET_EXEMPT)
 			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
 			return
 		if(attached_hat)
@@ -436,3 +436,15 @@
 	desc = "A special containment helmet designed for CentCom Staff. You know, so any coffee spills don't kill the poor sod."
 	icon_state = "intern_envirohelm"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/syndie
+	name = "tacticool envirosuit helmet"
+	desc = "There's no doubt about it, this helmet puts you above ALL of the other plasmamen. If you see another plasmaman wearing a helmet like this, it's either because they're a fellow badass, \
+		or they've murdered one of your fellow badasses and have taken it from them as a trophy. Either way, anyone wearing this deserves at least a cursory nod of respect."
+	icon_state = "syndie_envirohelm"
+	inhand_icon_state = null
+
+/obj/item/clothing/head/helmet/space/plasmaman/bitrunner
+	name = "bitrunner's plasma envirosuit helmet"
+	desc = "An envirohelmet with extended blue light filters for bitrunning plasmamen."
+	icon_state = "bitrunner_envirohelm"

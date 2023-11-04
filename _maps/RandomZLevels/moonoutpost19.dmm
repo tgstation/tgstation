@@ -361,7 +361,7 @@
 /turf/open/floor/iron/half,
 /area/awaymission/moonoutpost19/syndicate)
 "cF" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/effect/decal/cleanable/crayon,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -394,7 +394,7 @@
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/research)
 "cS" = (
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/structure/flora/lunar_plant,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -434,7 +434,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dr" = (
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
@@ -2361,7 +2361,7 @@
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /obj/item/clothing/neck/tie/black,
-/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/costume/buttondown/slacks/service,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -2959,7 +2959,7 @@
 "sM" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/item/flashlight/flare{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -4521,7 +4521,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "Dw" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
@@ -6170,7 +6170,7 @@
 /area/awaymission/moonoutpost19/mines)
 "Pf" = (
 /obj/item/flashlight/flare{
-	on = 1
+	start_on = 1
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"

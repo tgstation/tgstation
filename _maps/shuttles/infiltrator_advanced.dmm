@@ -600,6 +600,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/mob/living/simple_animal/bot/medbot/nukie,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "bA" = (

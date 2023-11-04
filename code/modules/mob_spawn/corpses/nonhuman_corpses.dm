@@ -46,12 +46,15 @@
 	pixel_x = -12
 	base_pixel_x = -12
 
+/obj/effect/mob_spawn/corpse/watcher
+	mob_type = /mob/living/basic/mining/watcher
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters_wide.dmi'
+	icon_state = "watcher_dead_helper"
+	pixel_x = -12
+	base_pixel_x = -12
+
 /// Dead headcrab for changeling-themed ruins
 /obj/effect/mob_spawn/corpse/headcrab
-	mob_type = /mob/living/basic/headslug
+	mob_type = /mob/living/basic/headslug/beakless
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "headslug_dead"
-
-/obj/effect/mob_spawn/corpse/headcrab/special(mob/living/basic/headslug/crab)
-	. = ..()
-	crab.egg_lain = TRUE // Prevents using mad science to become a changeling

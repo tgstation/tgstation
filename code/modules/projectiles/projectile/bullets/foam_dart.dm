@@ -7,6 +7,7 @@
 	icon_state = "foamdart_proj"
 	base_icon_state = "foamdart_proj"
 	range = 10
+	embedding = null
 	var/modified = FALSE
 	var/obj/item/pen/pen = null
 

@@ -55,31 +55,12 @@
 
 /obj/item/clothing/neck/cloak/skill_reward
 	var/associated_skill_path = /datum/skill
+	var/element_type = /datum/element/skill_reward
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
-/obj/item/clothing/neck/cloak/skill_reward/examine(mob/user)
+/obj/item/clothing/neck/cloak/skill_reward/Initialize(mapload)
 	. = ..()
-	. += span_notice("You notice a powerful aura about this cloak, suggesting that only the truly experienced may wield it.")
-
-/obj/item/clothing/neck/cloak/skill_reward/proc/check_wearable(mob/user)
-	return user.mind?.get_skill_level(associated_skill_path) >= SKILL_LEVEL_LEGENDARY
-
-/obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
-	to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [src]."))
-	var/hand_index = user.get_held_index_of_item(src)
-	if (hand_index)
-		user.dropItemToGround(src, TRUE)
-	return FALSE
-
-/obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
-	if (!check_wearable(user))
-		unworthy_unequip(user)
-	return ..()
-
-/obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user, list/modifiers)
-	if (!check_wearable(user))
-		unworthy_unequip(user)
-	return ..()
+	AddElement(element_type, associated_skill_path)
 
 /obj/item/clothing/neck/cloak/skill_reward/gaming
 	name = "legendary gamer's cloak"
@@ -103,6 +84,5 @@
 	name = "legendary veteran's cloak"
 	desc = "Worn by the wisest of veteran employees, this legendary cloak is only attainable by maintaining a living employment agreement with Nanotrasen for over <b>five thousand hours</b>. This status symbol represents a being is better than you in nearly every quantifiable way, simple as that."
 	icon_state = "playercloak"
+	element_type = /datum/element/skill_reward/veteran
 
-/obj/item/clothing/neck/cloak/skill_reward/playing/check_wearable(mob/user)
-	return user.client?.is_veteran()

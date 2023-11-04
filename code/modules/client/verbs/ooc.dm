@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	if(!(prefs.chat_toggles & CHAT_OOC))
+	if(!(get_chat_toggles(src) & CHAT_OOC))
 		to_chat(src, span_danger("You have OOC muted."))
 		return
 
@@ -85,7 +85,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	for(var/client/receiver as anything in GLOB.clients)
 		if(!receiver.prefs) // Client being created or deleted. Despite all, this can be null.
 			continue
-		if(!(receiver.prefs.chat_toggles & CHAT_OOC))
+		if(!(get_chat_toggles(receiver) & CHAT_OOC))
 			continue
 		if(holder?.fakekey in receiver.prefs.ignoring)
 			continue

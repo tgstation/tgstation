@@ -12,7 +12,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	novariants = FALSE
-	item_flags = NOBLUDGEON
+	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
 	cost = 250
 	source = /datum/robot_energy_storage/medical
 	merge_type = /obj/item/stack/medical
@@ -36,6 +36,28 @@
 /obj/item/stack/medical/attack(mob/living/patient, mob/user)
 	. = ..()
 	try_heal(patient, user)
+
+/obj/item/stack/medical/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(heal_brute)
+		heal_brute = modify_fantasy_variable("heal_brute", heal_brute, bonus)
+	if(heal_burn)
+		heal_burn = modify_fantasy_variable("heal_burn", heal_burn, bonus)
+	if(stop_bleeding)
+		stop_bleeding = modify_fantasy_variable("stop_bleeding", stop_bleeding, bonus/10)
+	if(sanitization)
+		sanitization = modify_fantasy_variable("sanitization", sanitization, bonus/10)
+	if(flesh_regeneration)
+		flesh_regeneration = modify_fantasy_variable("flesh_regeneration", flesh_regeneration, bonus/10)
+
+/obj/item/stack/medical/remove_fantasy_bonuses(bonus)
+	heal_brute = reset_fantasy_variable("heal_brute", heal_brute)
+	heal_burn = reset_fantasy_variable("heal_burn", heal_burn)
+	stop_bleeding = reset_fantasy_variable("stop_bleeding", stop_bleeding)
+	sanitization = reset_fantasy_variable("sanitization", sanitization)
+	flesh_regeneration = reset_fantasy_variable("flesh_regeneration", flesh_regeneration)
+	return ..()
+
 
 /// In which we print the message that we're starting to heal someone, then we try healing them. Does the do_after whether or not it can actually succeed on a targeted mob
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/user, silent = FALSE)
@@ -64,10 +86,6 @@
 		patient.balloon_alert(user, "they're dead!")
 		return
 	if(isanimal_or_basicmob(patient) && heal_brute) // only brute can heal
-		var/mob/living/simple_animal/critter = patient
-		if (istype(critter) && !critter.healable)
-			patient.balloon_alert(user, "won't work!")
-			return FALSE
 		if (!(patient.mob_biotypes & MOB_ORGANIC))
 			patient.balloon_alert(user, "can't fix that!")
 			return FALSE
@@ -75,7 +93,7 @@
 			patient.balloon_alert(user, "not hurt!")
 			return FALSE
 		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
-		patient.heal_bodypart_damage((heal_brute * 0.5))
+		patient.heal_bodypart_damage((heal_brute * patient.maxHealth/100))
 		return TRUE
 	if(iscarbon(patient))
 		return heal_carbon(patient, user, heal_brute, heal_burn)
@@ -141,6 +159,15 @@
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
+	var/obj/item/bodypart/gauzed_bodypart
+
+/obj/item/stack/medical/gauze/Destroy(force)
+	. = ..()
+
+	if (gauzed_bodypart)
+		gauzed_bodypart.current_gauze = null
+		SEND_SIGNAL(gauzed_bodypart, COMSIG_BODYPART_UNGAUZED, src)
+	gauzed_bodypart = null
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
@@ -397,6 +424,9 @@
 	novariants = TRUE
 	merge_type = /obj/item/stack/medical/bone_gel
 
+/obj/item/stack/medical/bone_gel/get_surgery_tool_overlay(tray_extended)
+	return "gel" + (tray_extended ? "" : "_out")
+
 /obj/item/stack/medical/bone_gel/attack(mob/living/patient, mob/user)
 	patient.balloon_alert(user, "no fractures!")
 	return
@@ -412,10 +442,10 @@
 
 	patient.emote("scream")
 	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i
-		var/datum/wound/blunt/severe/oof_ouch = new
+		var/obj/item/bodypart/bone = i // fine to just, use these raw, its a meme anyway
+		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
-		var/datum/wound/blunt/critical/oof_OUCH = new
+		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
 
 	for(var/i in patient.bodyparts)
@@ -453,3 +483,27 @@
 /obj/item/stack/medical/poultice/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
 	. = ..()
 	healed_mob.adjustOxyLoss(amount_healed)
+
+/obj/item/stack/medical/bandage
+	name = "first aid bandage"
+	desc = "A DeForest brand bandage designed for basic first aid on blunt-force trauma."
+	icon_state = "bandage"
+	inhand_icon_state = "bandage"
+	novariants = TRUE
+	amount = 1
+	max_amount = 1
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	heal_brute = 25
+	stop_bleeding = 0.2
+	self_delay = 3 SECONDS
+	other_delay = 1 SECONDS
+	grind_results = list(/datum/reagent/medicine/c2/libital = 2)
+
+/obj/item/stack/medical/bandage/makeshift
+	name = "makeshift bandage"
+	desc = "A hastily constructed bandage designed for basic first aid on blunt-force trauma."
+	icon_state = "bandage_makeshift"
+	icon_state_preview = "bandage_makeshift"
+	inhand_icon_state = "bandage"
+	novariants = TRUE

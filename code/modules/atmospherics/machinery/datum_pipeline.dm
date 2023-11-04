@@ -1,5 +1,7 @@
 /datum/pipeline
+	/// The gases contained within this pipeline
 	var/datum/gas_mixture/air
+	/// The gas_mixtures of objects directly connected to this pipeline
 	var/list/datum/gas_mixture/other_airs
 
 	var/list/obj/machinery/atmospherics/pipe/members
@@ -8,6 +10,10 @@
 	/// We're essentially caching this to avoid needing to filter over it when processing our machines
 	var/list/obj/machinery/atmospherics/components/require_custom_reconcilation
 
+	/// The weighted color blend of the gas mixture in this pipeline
+	var/gasmix_color
+	/// A named list of icon_file:overlay_object that gets automatically colored when the gasmix_color updates
+	var/list/gas_visuals
 
 	///Should we equalize air amoung all our members?
 	var/update = TRUE
@@ -19,6 +25,7 @@
 	members = list()
 	other_atmos_machines = list()
 	require_custom_reconcilation = list()
+	gas_visuals = list()
 	SSair.networks += src
 
 /datum/pipeline/Destroy()
@@ -28,7 +35,7 @@
 	if(air?.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/considered_pipe in members)
-		considered_pipe.parent = null
+		considered_pipe.replace_pipenet(considered_pipe.parent, null)
 		if(QDELETED(considered_pipe))
 			continue
 		SSair.add_to_rebuild_queue(considered_pipe)
@@ -42,6 +49,13 @@
 	reconcile_air()
 	//Only react if the mix has changed, and don't keep updating if it hasn't
 	update = air.react(src)
+	CalculateGasmixColor(air)
+
+/datum/pipeline/proc/set_air(datum/gas_mixture/new_air)
+	if(new_air == air)
+		return
+	air = new_air
+	CalculateGasmixColor(air)
 
 ///Preps a pipeline for rebuilding, insterts it into the rebuild queue
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
@@ -52,13 +66,13 @@
 		volume = considered_pipe.volume
 		members += considered_pipe
 		if(considered_pipe.air_temporary)
-			air = considered_pipe.air_temporary
+			set_air(considered_pipe.air_temporary)
 			considered_pipe.air_temporary = null
 	else
 		add_machinery_member(base)
 
 	if(!air)
-		air = new
+		set_air(new /datum/gas_mixture)
 
 	air.volume = volume
 	SSair.add_to_expansion(src, base)
@@ -71,13 +85,13 @@
 		volume = considered_pipe.volume
 		members += considered_pipe
 		if(considered_pipe.air_temporary)
-			air = considered_pipe.air_temporary
+			set_air(considered_pipe.air_temporary)
 			considered_pipe.air_temporary = null
 	else
 		add_machinery_member(base)
 
 	if(!air)
-		air = new
+		set_air(new /datum/gas_mixture)
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
@@ -105,7 +119,7 @@
 				possible_expansions += item
 
 				volume += item.volume
-				item.parent = src
+				item.replace_pipenet(item.parent, src)
 
 				if(item.air_temporary)
 					air.merge(item.air_temporary)
@@ -142,7 +156,7 @@
 		var/obj/machinery/atmospherics/pipe/reference_pipe = reference_device
 		if(reference_pipe.parent)
 			merge(reference_pipe.parent)
-		reference_pipe.parent = src
+		reference_pipe.replace_pipenet(reference_pipe.parent, src)
 		var/list/adjacent = reference_pipe.pipeline_expansion()
 		for(var/obj/machinery/atmospherics/pipe/adjacent_pipe in adjacent)
 			if(adjacent_pipe.parent == src)
@@ -159,7 +173,7 @@
 	air.volume += parent_pipeline.air.volume
 	members.Add(parent_pipeline.members)
 	for(var/obj/machinery/atmospherics/pipe/reference_pipe in parent_pipeline.members)
-		reference_pipe.parent = src
+		reference_pipe.replace_pipenet(reference_pipe.parent, src)
 	air.merge(parent_pipeline.air)
 	for(var/obj/machinery/atmospherics/components/reference_component in parent_pipeline.other_atmos_machines)
 		reference_component.replace_pipenet(parent_pipeline, src)
@@ -280,3 +294,64 @@
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 		gas_mixture.copy_from_ratio(total_gas_mixture, gas_mixture.volume / volume_sum)
+
+//--------------------
+// GAS VISUALS STUFF
+//
+// If I could have gotten layer filters to obey the RESET_COLOR appearance flag I would have used that here
+// so that only a single overlay object needs to exist for all pipelines per icon file. It shouldn't be too
+// hard to switch over to that if it becomes possible in the future or some other equivalent feature is added.
+
+/**
+ * Used to create and/or get the gas visual overlay created using the given icon file.
+ * The color is automatically kept up to date and expected to be used as a vis_contents object.
+ */
+/datum/pipeline/proc/GetGasVisual(icon/icon_file)
+	if(gas_visuals[icon_file])
+		return gas_visuals[icon_file]
+
+	var/obj/effect/abstract/new_overlay = new
+	new_overlay.icon = icon_file
+	new_overlay.appearance_flags = RESET_COLOR | KEEP_APART
+	new_overlay.vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	new_overlay.color = gasmix_color
+
+	gas_visuals[icon_file] = new_overlay
+	return new_overlay
+
+/// Called when the gasmix color has changed and the gas visuals need to be updated.
+/datum/pipeline/proc/UpdateGasVisuals()
+	for(var/icon/source as anything in gas_visuals)
+		var/obj/effect/abstract/overlay = gas_visuals[source]
+		animate(overlay, time=5, color=gasmix_color)
+
+/// After updating, this proc handles looking at the new gas mixture and blends the colors together according to percentage of the gas mix.
+/datum/pipeline/proc/CalculateGasmixColor(datum/gas_mixture/source)
+	SIGNAL_HANDLER
+
+	var/current_weight = 0
+	var/current_color
+	for(var/datum/gas/gas_path as anything in air.gases)
+		var/gas_weight = air.gases[gas_path][MOLES]
+		if(!gas_weight)
+			continue
+		var/gas_color = RGBtoHSV(initial(gas_path.primary_color))
+		current_weight += gas_weight
+		if(!current_color)
+			current_color = gas_color
+		else
+			current_color = BlendHSV(current_color, gas_color, gas_weight / current_weight)
+
+	if(!current_color)
+		current_color = "#000000"
+	else
+		// Empty weight is prety much arbitrary, just tuned to make the color change from black reasonably quickly without hitting max color immediately
+		var/empty_weight = (air.volume * 1.5 - current_weight) / 10
+		if(empty_weight > 0)
+			current_color = BlendHSV("#000000", current_color, current_weight / (empty_weight + current_weight))
+
+	current_color = HSVtoRGB(current_color)
+
+	if(gasmix_color != current_color)
+		gasmix_color = current_color
+		UpdateGasVisuals()

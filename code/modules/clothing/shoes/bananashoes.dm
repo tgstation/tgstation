@@ -48,7 +48,7 @@
 		return
 
 	if(bananium.use_amount_mat(material_per_banana, /datum/material/bananium))
-		new banana_type(get_step(src, turn(wearer.dir, 180))) //honk
+		new banana_type(get_step(src, REVERSE_DIR(wearer.dir))) //honk
 		return
 
 	toggle_clowning_action()

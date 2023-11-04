@@ -181,8 +181,10 @@
 /obj/item/gun/ballistic/proc/add_notes_ballistic()
 	if(magazine) // Make sure you have a magazine, to get the notes from
 		return "\n[magazine.add_notes_box()]"
-	else
-		return "\nThe warning attached to the magazine is missing..."
+	else if(chambered) // if you don't have a magazine, is there something chambered?
+		return "\n[chambered.add_notes_ammo()]"
+	else // we have a very expensive mechanical paperweight.
+		return "\nThe lack of magazine and usable cartridge in chamber makes its usefulness questionable, at best."
 
 /obj/item/gun/ballistic/vv_edit_var(vname, vval)
 	. = ..()
@@ -257,26 +259,33 @@
 			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
 			chambered = null
 		else if(casing_ejector || !from_firing)
-			chambered = null
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
 				casing.bounce_away(TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
+			UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
 			chambered = null
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
 ///Used to chamber a new round and eject the old one
-/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
+/obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
-		chambered = magazine.get_round(keep_bullet || bolt_type == BOLT_TYPE_NO_BOLT)
-		if (bolt_type != BOLT_TYPE_OPEN)
+		chambered = magazine.get_round((bolt_type == BOLT_TYPE_OPEN && !bolt_locked) || bolt_type == BOLT_TYPE_NO_BOLT)
+		if (bolt_type != BOLT_TYPE_OPEN && !(internal_magazine && bolt_type == BOLT_TYPE_NO_BOLT))
 			chambered.forceMove(src)
+		else
+			RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
 		if(replace_new_round)
 			magazine.give_round(new chambered.type)
+
+/obj/item/gun/ballistic/proc/clear_chambered(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
+	chambered = null
 
 ///updates a bunch of racking related stuff and also handles the sound effects and the like
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
@@ -321,7 +330,7 @@
 		else
 			playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
-			chamber_round(TRUE)
+			chamber_round()
 		update_appearance()
 		return TRUE
 	else
@@ -375,7 +384,8 @@
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
 			if (chambered && !chambered.loaded_projectile)
 				chambered.forceMove(drop_location())
-				magazine?.stored_ammo -= chambered
+				if(chambered != magazine?.stored_ammo[1])
+					magazine.stored_ammo -= chambered
 				chambered = null
 			var/num_loaded = magazine?.attackby(A, user, params, TRUE)
 			if (num_loaded)
@@ -424,9 +434,6 @@
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
-
-	if(magazine && !chambered.is_cased_ammo)
-		magazine.stored_ammo -= chambered
 
 	return ..()
 
@@ -499,9 +506,8 @@
 			eject_magazine(user)
 			return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
-		chambered = null
 		var/num_unloaded = 0
-		for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
+		for(var/obj/item/ammo_casing/CB as anything in get_ammo_list(FALSE))
 			CB.forceMove(drop_location())
 			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
@@ -509,7 +515,7 @@
 			if(T && is_station_level(T.z))
 				SSblackbox.record_feedback("tally", "station_mess_created", 1, CB.name)
 		if (num_unloaded)
-			balloon_alert(user, "[num_unloaded] [cartridge_wording] unloaded")
+			balloon_alert(user, "[num_unloaded] [cartridge_wording]\s unloaded")
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 			update_appearance()
 		else
@@ -551,14 +557,12 @@
 	return bullets
 
 ///gets a list of every bullet in the gun
-/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE, drop_all = FALSE)
+/obj/item/gun/ballistic/proc/get_ammo_list(countchambered = TRUE)
 	var/list/rounds = list()
 	if(chambered && countchambered)
 		rounds.Add(chambered)
-		if(drop_all)
-			chambered = null
 	if(magazine)
-		rounds.Add(magazine.ammo_list(drop_all))
+		rounds.Add(magazine.ammo_list())
 	return rounds
 
 #define BRAINS_BLOWN_THROW_RANGE 3
@@ -573,7 +577,7 @@
 			var/turf/T = get_turf(user)
 			process_fire(user, user, FALSE, null, BODY_ZONE_HEAD)
 			user.visible_message(span_suicide("[user] blows [user.p_their()] brain[user.p_s()] out with [src]!"))
-			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
+			var/turf/target = get_ranged_target_turf(user, REVERSE_DIR(user.dir), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
 			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_atom_to_turf), /obj/effect/gibspawner/generic, B, 1, FALSE, user)

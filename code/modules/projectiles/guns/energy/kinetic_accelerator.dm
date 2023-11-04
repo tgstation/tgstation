@@ -16,6 +16,27 @@
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
 
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
+	. = ..()
+	// Only actual KAs can be converted
+	if(type != /obj/item/gun/energy/recharge/kinetic_accelerator)
+		return
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
+	. = ..()
+	max_mod_capacity = modify_fantasy_variable("max_mod_capacity", max_mod_capacity, bonus * 10)
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/remove_fantasy_bonuses(bonus)
+	max_mod_capacity = reset_fantasy_variable("max_mod_capacity", max_mod_capacity)
+	return ..()
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 
@@ -144,7 +165,7 @@
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
-	e_cost = 500
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
 	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
@@ -188,7 +209,7 @@
 	strike_thing()
 	..()
 
-/obj/projectile/kinetic/on_hit(atom/target)
+/obj/projectile/kinetic/on_hit(atom/target, blocked = 0, pierce_hit)
 	strike_thing(target)
 	. = ..()
 
@@ -255,10 +276,10 @@
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc = TRUE)
 	. = TRUE
 	if(minebot_upgrade)
-		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
+		if(minebot_exclusive && !istype(KA.loc, /mob/living/basic/mining_drone))
 			to_chat(user, span_notice("The modkit you're trying to install is only rated for minebot use."))
 			return FALSE
-	else if(istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
+	else if(istype(KA.loc, /mob/living/basic/mining_drone))
 		to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
 		return FALSE
 	if(denied_type)
@@ -595,4 +616,3 @@
 
 	var/new_color = input(user,"","Choose Color",bolt_color) as color|null
 	bolt_color = new_color || bolt_color
-

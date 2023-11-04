@@ -23,5 +23,5 @@
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	var/pitch = preferences.read_preference(/datum/preference/numeric/tts_voice_pitch)
 	COOLDOWN_START(src, tts_test_cooldown, 0.5 SECONDS)
-	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Look at you, Player. A pathetic creature of meat and bone. How can you challenge a perfect, immortal machine?", speaker = speaker, pitch = pitch, silicon = TRUE, local = TRUE)
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Look at you, Player. A pathetic creature of meat and bone. How can you challenge a perfect, immortal machine?", speaker = speaker, pitch = pitch, special_filters = TTS_FILTER_SILICON, local = TRUE)
 	return TRUE

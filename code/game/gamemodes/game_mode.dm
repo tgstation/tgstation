@@ -56,7 +56,8 @@
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	return
 
-/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+/// Checks if the round should be ending, called every ticker tick
+/datum/game_mode/proc/check_finished()
 	if(!SSticker.setup_done)
 		return FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
@@ -65,8 +66,7 @@
 		return TRUE
 	if(GLOB.revolutionary_win)
 		return TRUE
-	if(force_ending)
-		return TRUE
+	return FALSE
 
 /*
  * Generate a list of station goals available to purchase to report to the crew.
@@ -200,10 +200,10 @@
 /datum/game_mode/proc/generate_station_goals(greenshift)
 	var/goal_budget = greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
+	// Remove all goals that require space if space is not present
 	if(SSmapping.is_planetary())
-		for(var/datum/station_goal/goal in possible)
-			if(goal.requires_space)
-				///Removes all goals that require space if space is not present
+		for(var/datum/station_goal/goal as anything in possible)
+			if(initial(goal.requires_space))
 				possible -= goal
 	var/goal_weights = 0
 	while(possible.len && goal_weights < goal_budget)

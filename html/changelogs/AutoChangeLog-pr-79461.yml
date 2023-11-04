@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - admin: "Admins without `R_POLL` no longer have access to \"Server Poll Management\", not that they could have used it anyways."

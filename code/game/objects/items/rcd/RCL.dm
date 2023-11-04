@@ -208,7 +208,7 @@
 					return //If we've run out, display message and exit
 			else
 				last = null
-		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
+		last = loaded.place_turf(get_turf(src), user, REVERSE_DIR(user.dir))
 		is_empty(user) //If we've run out, display message
 	update_appearance()
 

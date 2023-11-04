@@ -11,12 +11,14 @@
 	return "Inoculated" //eh, have em try out the mechanic first
 
 /datum/preference/choiced/vampire_status/init_possible_values()
-	var/list/values = list()
+	return list("Inoculated", "Outcast")
 
-	values["Inoculated"] = icon('icons/obj/drinks/drinks.dmi', "bloodglass")
-	values["Outcast"] = icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
-
-	return values
+/datum/preference/choiced/vampire_status/icon_for(value)
+	switch (value)
+		if ("Inoculated")
+			return icon('icons/obj/drinks/drinks.dmi', "bloodglass")
+		if ("Outcast")
+			return icon('icons/obj/medical/bloodpack.dmi', "generic_bloodpack")
 
 ///list that stores a vampire house name for each department
 GLOBAL_LIST_EMPTY(vampire_houses)

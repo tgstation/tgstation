@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 			if(!(locate(/obj/structure/grille) in T))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
+					if (W.dir == REVERSE_DIR(C1.dir) || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)) )
 						window_check = 1
 						break
 				if(!window_check)
@@ -389,7 +389,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/list/foodcount = list()
 	for(var/obj/item/food/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
-		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+		if(!location || !SSmapping.level_trait(location.z, ZTRAIT_STATION))
 			continue
 		LAZYADDASSOC(foodcount, fuck_me.type, 1)
 
@@ -412,7 +412,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/list/stackcount = list()
 	for(var/obj/item/stack/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)
-		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+		if(!location || !SSmapping.level_trait(location.z, ZTRAIT_STATION))
 			continue
 		LAZYADDASSOC(stackcount, fuck_me.type, fuck_me.amount)
 

@@ -243,7 +243,7 @@
 		balloon_alert(ethereal, "can't transfer power!")
 		return
 	if(istype(stomach))
-		balloon_alert(ethereal, "transfered power")
+		balloon_alert(ethereal, "transferred power")
 		stomach.adjust_charge(-APC_POWER_GAIN)
 		cell.give(APC_POWER_GAIN)
 	else
@@ -260,10 +260,6 @@
 			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
 			balloon_alert(user, "cell removed")
 			user.put_in_hands(cell)
-			cell.update_appearance()
-			cell = null
-			charging = APC_NOT_CHARGING
-			update_appearance()
 		return
 	if((machine_stat & MAINT) && !opened) //no board; no interface
 		return
@@ -271,7 +267,7 @@
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
 
-/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE)
+/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
 	if(machine_stat & BROKEN && atom_integrity <= 0)
 		if(sound_effect)

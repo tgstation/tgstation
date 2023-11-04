@@ -26,9 +26,9 @@
 		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
 		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
 		JOB_QUARTERMASTER = list(
-			/mob/living/simple_animal/sloth/citrus,
-			/mob/living/simple_animal/sloth/paperwork,
-			/mob/living/simple_animal/hostile/gorilla/cargo_domestic,
+			/mob/living/basic/gorilla/cargorilla,
+			/mob/living/basic/sloth/citrus,
+			/mob/living/basic/sloth/paperwork,
 		)
 	)
 	/// The head that we are targetting
@@ -54,7 +54,7 @@
 	possible_heads = list(
 		JOB_HEAD_OF_SECURITY = list(
 			/mob/living/basic/carp/pet/lia,
-			/mob/living/basic/giant_spider/sgt_araneus,
+			/mob/living/basic/spider/giant/sgt_araneus,
 		),
 		JOB_WARDEN = list(
 			/mob/living/basic/pet/dog/pug/mcgriff

@@ -197,3 +197,9 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "deaf personnel pin"
 	desc = "Indicates that the wearer is deaf."
 	icon_state = "deaf_pin"
+
+///Awarded for being dutiful and extinguishing the debt from the "Indebted" quirk.
+/obj/item/clothing/accessory/debt_payer_pin
+	name = "debt payer pin"
+	desc = "I've paid my debt and all I've got was this pin."
+	icon_state = "debt_payer_pin"

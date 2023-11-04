@@ -91,6 +91,7 @@
 
 /obj/machinery/power/supermatter_crystal/proc/handle_high_power()
 	if(internal_energy <= POWER_PENALTY_THRESHOLD && damage <= danger_point) //If the power is above 5000 or if the damage is above 550
+		last_high_energy_zap = world.time //Prevent oddly high initial zap due to high energy zaps not getting triggered via too low energy.
 		return
 	var/range = 4
 	zap_cutoff = 1500
@@ -99,7 +100,7 @@
 	var/temp = absorbed_gasmix.temperature
 	if(pressure > 0 && temp > 0)
 		//You may be able to freeze the zapstate of the engine with good planning, we'll see
-		zap_cutoff = clamp(3000 - (internal_energy * total_moles / 10) / temp, 350, 3000)//If the core is cold, it's easier to jump, ditto if there are a lot of mols
+		zap_cutoff = clamp(1.2e6 - (internal_energy * total_moles * 40) / temp, 1.4e5, 1.2e6)//If the core is cold, it's easier to jump, ditto if there are a lot of mols
 		//We should always be able to zap our way out of the default enclosure
 		//See supermatter_zap() for more details
 		range = clamp(internal_energy / pressure * 10, 2, 7)
@@ -128,9 +129,10 @@
 
 	if(zap_count >= 1)
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+		var/delta_time = min((world.time - last_high_energy_zap) * 0.1, 16)
 		for(var/i in 1 to zap_count)
-			supermatter_zap(src, range, clamp(internal_energy*2, 4000, 20000), flags, zap_cutoff = src.zap_cutoff, power_level = internal_energy, zap_icon = src.zap_icon)
-
+			supermatter_zap(src, range, clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time, flags, zap_cutoff = src.zap_cutoff * delta_time, power_level = internal_energy, zap_icon = src.zap_icon)
+		last_high_energy_zap = world.time
 	if(prob(5))
 		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
 	if(prob(5))

@@ -67,7 +67,14 @@
 			message_admins("A restart vote has passed, but there are active admins on with +SERVER, so it has been canceled. If you wish, you may restart the server.")
 			return
 
-		SSticker.Reboot("Restart vote successful.", "restart vote", 1)
+		// If there was a previous map vote, we revert the change.
+		if(!isnull(SSmapping.next_map_config))
+			log_game("The next map has been reset due to successful restart vote.")
+			send_to_playing_players(span_boldannounce("The next map has been reset due to successful restart vote."))
+			revert_map_vote()
+
+		SSticker.force_ending = FORCE_END_ROUND
+		log_game("End round forced by successful restart vote.")
 		return
 
 	CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option || "null"])")

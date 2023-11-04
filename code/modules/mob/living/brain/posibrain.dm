@@ -40,16 +40,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	///List of all ckeys who has already entered this posibrain once before.
 	var/list/ckeys_entered = list()
 
-/obj/item/mmi/posibrain/Topic(href, href_list)
-	if(href_list["activate"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			activate(ghost)
-
 ///Notify ghosts that the posibrain is up for grabs
 /obj/item/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
-		notify_ghosts("[name] [msg] in [get_area(src)]! [ask_role ? "Personality requested: \[[ask_role]\]" : ""]", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, notify_volume = 75, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_POSIBRAIN, notify_suiciders = FALSE)
+		notify_ghosts("[name] [msg] in [get_area(src)]! [ask_role ? "Personality requested: \[[ask_role]\]" : ""]", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, notify_volume = 75, source = src, action = NOTIFY_PLAY, flashwindow = FALSE, ignore_key = POLL_IGNORE_POSIBRAIN, notify_suiciders = FALSE)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + ask_delay
 
@@ -124,20 +118,20 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		brainmob.set_suicide(FALSE)
 	transfer_personality(user)
 
-/obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/transfered_user)
-	name = "[initial(name)] ([transfered_user])"
-	brainmob.name = transfered_user.real_name
-	brainmob.real_name = transfered_user.real_name
-	if(transfered_user.has_dna())
+/obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/transferred_user)
+	name = "[initial(name)] ([transferred_user])"
+	brainmob.name = transferred_user.real_name
+	brainmob.real_name = transferred_user.real_name
+	if(transferred_user.has_dna())
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
-		transfered_user.dna.copy_dna(brainmob.stored_dna)
-	brainmob.timeofdeath = transfered_user.timeofdeath
+		transferred_user.dna.copy_dna(brainmob.stored_dna)
+	brainmob.timeofdeath = transferred_user.timeofdeath
 	brainmob.set_stat(CONSCIOUS)
 	if(brainmob.mind)
 		brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
-	if(transfered_user.mind)
-		transfered_user.mind.transfer_to(brainmob)
+	if(transferred_user.mind)
+		transferred_user.mind.transfer_to(brainmob)
 
 	brainmob.mind.remove_all_antag_datums()
 	brainmob.mind.wipe_memory()

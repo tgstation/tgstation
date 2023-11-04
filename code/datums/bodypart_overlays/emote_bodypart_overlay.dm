@@ -1,6 +1,6 @@
 ///Variant of bodypart_overlay for displaying emote overlays. See [/datum/emote/living/blush/run_emote] for an example on how to use one of these.
 /datum/bodypart_overlay/simple/emote
-	icon = 'icons/mob/species/human/emote_visuals.dmi'
+	icon = 'icons/mob/human/emote_visuals.dmi'
 	///The body zone to attach the overlay to, overlay won't be added if no bodypart can be found with this
 	var/attached_body_zone = BODY_ZONE_CHEST
 	///The feature key used to figure out what specific bodily feature we offset this to follow

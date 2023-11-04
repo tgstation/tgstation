@@ -16,3 +16,13 @@
 /// Temporary trait applied when an attack forecast animation has completed
 #define TRAIT_BASIC_ATTACK_FORECAST "trait_basic_attack_forecast"
 #define INTERACTION_BASIC_ATTACK_FORCEAST "interaction_basic_attack_forecast"
+
+/// Above this speed we stop gliding because it looks silly
+#define END_GLIDE_SPEED 10
+
+///mook attack status flags
+#define MOOK_ATTACK_NEUTRAL 0
+#define MOOK_ATTACK_WARMUP 1
+#define MOOK_ATTACK_ACTIVE 2
+#define MOOK_ATTACK_STRIKE 3
+

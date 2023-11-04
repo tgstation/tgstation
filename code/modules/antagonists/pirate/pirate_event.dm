@@ -42,7 +42,7 @@
 
 /proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
-		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name)
+		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 		return
 	if(!threat?.answered)
 		return
@@ -51,15 +51,15 @@
 	if(plundered_account)
 		if(plundered_account.adjust_money(-payoff))
 			chosen_gang.paid_off = TRUE
-			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
+			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 		else
-			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
+			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
 
 /proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
 	if(chosen_gang.paid_off)
 		return
 
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
+	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a pirate crew of [chosen_gang.name]?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
 	var/template_key = "pirate_[chosen_gang.ship_template_id]"
@@ -80,9 +80,9 @@
 				var/mob/our_candidate = candidates[1]
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
 				candidates -= our_candidate
-				notify_ghosts("The pirate ship has an object of interest: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Pirates!")
+				notify_ghosts("The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Pirates!")
 			else
-				notify_ghosts("The pirate ship has an object of interest: [spawner]!", source = spawner, action = NOTIFY_ORBIT, header="Pirate Spawn Here!")
+				notify_ghosts("The [chosen_gang.ship_name] has an object of interest: [spawner]!", source = spawner, action = NOTIFY_ORBIT, header="Pirate Spawn Here!")
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 

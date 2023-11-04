@@ -54,6 +54,16 @@
 	var/icon_base = "bee"
 	///the bee is a queen?
 	var/is_queen = FALSE
+	///commands we follow
+	var/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/beehive/enter,
+		/datum/pet_command/beehive/exit,
+		/datum/pet_command/follow/bee,
+		/datum/pet_command/point_targetting/attack/swirl,
+		/datum/pet_command/scatter,
+	)
 
 /mob/living/basic/bee/Initialize(mapload)
 	. = ..()
@@ -62,6 +72,7 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
 	AddComponent(/datum/component/swarming)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
@@ -132,7 +143,7 @@
 /mob/living/basic/bee/proc/reagent_incompatible(mob/living/basic/bee/ruler)
 	if(!ruler)
 		return FALSE
-	if(ruler.beegent != beegent)
+	if(ruler.beegent?.type != beegent?.type)
 		return TRUE
 	return FALSE
 
@@ -177,7 +188,9 @@
 /mob/living/basic/bee/proc/assign_reagent(datum/reagent/toxin)
 	if(!istype(toxin))
 		return
-	var/static/list/injection_range = list(1, 5)
+	var/static/list/injection_range
+	if(!injection_range)
+		injection_range = string_numbers_list(list(1, 5))
 	if(beegent) //clear the old since this one is going to have some new value
 		RemoveElement(/datum/element/venomous, beegent.type, injection_range)
 	beegent = toxin
@@ -254,13 +267,22 @@
 		user.visible_message(span_notice("[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"),span_warning("You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"))
 		return
 	var/datum/reagent/chemical = needle.reagents.get_master_reagent()
-	if(chemical && needle.reagents.has_reagent(chemical.type, 5))
-		needle.reagents.remove_reagent(chemical.type, 5)
-		queen.assign_reagent(chemical)
-		user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
-		name = queen.name
-	else
+	if(isnull(chemical))
+		return
+	if(!(chemical.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
+		to_chat(user, span_warning("[chemical.name] cannot be inserted into a bee's genome!"))
+		return
+	if(chemical.type == queen.beegent?.type)
+		to_chat(user, span_warning("[queen] already has this chemical!"))
+		return
+	if(!(needle.reagents.has_reagent(chemical.type, 5)))
 		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
+		return
+	needle.reagents.remove_reagent(chemical.type, 5)
+	var/datum/reagent/bee_chem = GLOB.chemical_reagents_list[chemical.type]
+	queen.assign_reagent(bee_chem)
+	user.visible_message(span_warning("[user] injects [src]'s genome with [chemical.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [chemical.name], mutating its DNA!"))
+	name = queen.name
 
 /obj/item/queen_bee/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

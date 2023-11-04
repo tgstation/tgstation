@@ -19,11 +19,11 @@
 /datum/computer_file/program/ntnet_dos/process_tick(seconds_per_tick)
 	dos_speed = 0
 	switch(ntnet_status)
-		if(1)
+		if(NTNET_LOW_SIGNAL)
 			dos_speed = NTNETSPEED_LOWSIGNAL * 10
-		if(2)
+		if(NTNET_GOOD_SIGNAL)
 			dos_speed = NTNETSPEED_HIGHSIGNAL * 10
-		if(3)
+		if(NTNET_ETHERNET_SIGNAL)
 			dos_speed = NTNETSPEED_ETHERNET * 10
 	if(target && executed)
 		target.dos_overload += dos_speed
@@ -32,7 +32,7 @@
 			target = null
 			error = "Connection to destination relay lost."
 
-/datum/computer_file/program/ntnet_dos/kill_program()
+/datum/computer_file/program/ntnet_dos/kill_program(mob/user)
 	if(target)
 		target.dos_sources.Remove(src)
 	target = null

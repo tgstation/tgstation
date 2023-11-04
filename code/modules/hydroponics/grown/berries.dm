@@ -25,7 +25,7 @@
 	icon_state = "berrypile"
 	gender = PLURAL
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
+	juice_typepath = /datum/reagent/consumable/berryjuice
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
 
@@ -48,7 +48,7 @@
 	icon_state = "poisonberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
+	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
@@ -74,7 +74,7 @@
 	icon_state = "deathberrypile"
 	bite_consumption_mod = 3
 	foodtypes = FRUIT | TOXIC
-	juice_results = list(/datum/reagent/consumable/poisonberryjuice = 0)
+	juice_typepath = /datum/reagent/consumable/poisonberryjuice
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
 	wine_power = 50
@@ -134,7 +134,7 @@
 	icon_state = "grapes"
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
+	juice_typepath = /datum/reagent/consumable/grapejuice
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
 
@@ -185,6 +185,37 @@
 	desc = "A branch with töchtaüse berries on it. They're a favourite on the Mothic Fleet, but not in this form."
 	icon_state = "toechtauese_branch"
 	foodtypes = FRUIT
-	juice_results = list(/datum/reagent/consumable/toechtauese_juice = 0)
+	juice_typepath = /datum/reagent/consumable/toechtauese_juice
 	tastes = list("fiery itchy pain" = 1)
 	distill_reagent = /datum/reagent/toxin/itching_powder
+
+/obj/item/seeds/lanternfruit
+	name = "pack of lanternfruit seeds"
+	desc = "These seeds grow into lanternfruit pods."
+	icon_state = "seed-lanternfruit"
+	species = "lanternfruit"
+	plantname = "Lanternfruit Pod"
+	product = /obj/item/food/grown/lanternfruit
+	lifespan = 35
+	endurance = 35
+	maturation = 5
+	production = 5
+	growthstages = 3
+	instability = 15
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
+	icon_grow = "lanternfruit-grow"
+	icon_dead = "lanternfruit-dead"
+	icon_harvest = "lanternfruit-harvest"
+	genes = list(/datum/plant_gene/trait/glow/yellow)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/sulfur = 0.07, /datum/reagent/consumable/sugar = 0.07, /datum/reagent/consumable/liquidelectricity = 0.07)
+	graft_gene = /datum/plant_gene/trait/glow/yellow
+
+/obj/item/food/grown/lanternfruit
+	seed = /obj/item/seeds/lanternfruit
+	name = "lanternfruits"
+	desc = "A sofly glowing fruit with a handle-shaped stem, an Ethereal favorite!"
+	icon_state = "lanternfruit"
+	foodtypes = FRUIT
+	tastes = list("tv static" = 1, "sour pear" = 1, "grapefruit" = 1)
+	distill_reagent = /datum/reagent/consumable/ethanol/wine_voltaic

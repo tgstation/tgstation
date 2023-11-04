@@ -130,9 +130,10 @@
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	set_density(!density)
 	air_update_turf(TRUE, !density)
-	invisibility = initial(invisibility)
 	if(!density)
-		invisibility = INVISIBILITY_OBSERVER
+		SetInvisibility(INVISIBILITY_OBSERVER, id=type)
+	else
+		RemoveInvisibility(type)
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -368,7 +369,7 @@
 	var/turf/T = loc
 	var/obj/machinery/power/shieldwallgen/G
 	var/steps = 0
-	var/opposite_direction = turn(direction, 180)
+	var/opposite_direction = REVERSE_DIR(direction)
 
 	for(var/i in 1 to shield_range) //checks out to 8 tiles away for another generator
 		T = get_step(T, direction)
@@ -504,7 +505,7 @@
 	for(var/mob/living/L in get_turf(src))
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-		L.gib()
+		L.gib(DROP_ALL_REMAINS)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 
 /obj/machinery/shieldwall/Destroy()

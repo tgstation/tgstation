@@ -20,6 +20,21 @@
 	hackables = "cleaning service protocols"
 	path_image_color = "#993299"
 
+	automated_announcements = list(
+		HYGIENEBOT_VOICED_UNHYGIENIC = 'sound/voice/hygienebot/unhygienicclient.ogg',
+		HYGIENEBOT_VOICED_ENJOY_DAY = 'sound/voice/hygienebot/cleanandtidy.ogg',
+		HYGIENEBOT_VOICED_THREAT_AIRLOCK = 'sound/voice/hygienebot/dragyouout.ogg',
+		HYGIENEBOT_VOICED_FOUL_SMELL = 'sound/voice/hygienebot/foulsmelling.ogg',
+		HYGIENEBOT_VOICED_TROGLODYTE = 'sound/voice/hygienebot/troglodyte.ogg',
+		HYGIENEBOT_VOICED_GREEN_CLOUD = 'sound/voice/hygienebot/greencloud.ogg',
+		HYGIENEBOT_VOICED_ARSEHOLE = 'sound/voice/hygienebot/letmeclean.ogg',
+		HYGIENEBOT_VOICED_THREAT_ARTERIES = 'sound/voice/hygienebot/cutarteries.ogg',
+		HYGIENEBOT_VOICED_STOP_RUNNING = 'sound/voice/hygienebot/stoprunning.ogg',
+		HYGIENEBOT_VOICED_FUCKING_FINALLY = 'sound/voice/hygienebot/finally.ogg',
+		HYGIENEBOT_VOICED_THANK_GOD = 'sound/voice/hygienebot/thankgod.ogg',
+		HYGIENEBOT_VOICED_DEGENERATE = 'sound/voice/hygienebot/degenerate.ogg',
+	)
+
 	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target
 	///The mob's current speed, which varies based on how long the bot chases it's target.
@@ -127,14 +142,12 @@
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
 					start_washing()
 					if(mad)
-						var/static/list/messagevoice = list(
-							"Fucking finally." = 'sound/voice/hygienebot/finally.ogg',
-							"Thank god, you finally stopped." = 'sound/voice/hygienebot/thankgod.ogg',
-							"Well about fucking time you degenerate." = 'sound/voice/hygienebot/degenerate.ogg',
+						var/static/list/relief = list(
+							HYGIENEBOT_VOICED_FUCKING_FINALLY,
+							HYGIENEBOT_VOICED_THANK_GOD,
+							HYGIENEBOT_VOICED_DEGENERATE,
 						)
-						var/message = pick(messagevoice)
-						speak(message)
-						playsound(loc, messagevoice[message], 50)
+						speak(pick(relief))
 						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1) //i think it should still make robot noises too
 						mad = FALSE
 					mode = BOT_SHOWERSTANCE
@@ -146,18 +159,16 @@
 						return
 					SSmove_manager.move_to(src, target, 0, currentspeed)
 					if(mad && prob(min(frustration * 2, 60)))
-						var/static/list/messagevoice = list(
-							"Either you stop running or I will fucking drag you out of an airlock." = 'sound/voice/hygienebot/dragyouout.ogg',
-							"Get back here you foul smelling fucker." = 'sound/voice/hygienebot/foulsmelling.ogg',
-							"I just want to fucking clean you you troglodyte." = 'sound/voice/hygienebot/troglodyte.ogg',
-							"If you don't come back here I'll put a green cloud around you cunt." = 'sound/voice/hygienebot/greencloud.ogg',
-							"Just fucking let me clean you you arsehole!" = 'sound/voice/hygienebot/letmeclean.ogg',
-							"STOP RUNNING OR I WILL CUT YOUR ARTERIES!" = 'sound/voice/hygienebot/cutarteries.ogg',
-							"STOP. RUNNING." = 'sound/voice/hygienebot/stoprunning.ogg',
+						var/static/list/threats = list(
+							HYGIENEBOT_VOICED_THREAT_AIRLOCK,
+							HYGIENEBOT_VOICED_FOUL_SMELL,
+							HYGIENEBOT_VOICED_TROGLODYTE,
+							HYGIENEBOT_VOICED_GREEN_CLOUD,
+							HYGIENEBOT_VOICED_ARSEHOLE,
+							HYGIENEBOT_VOICED_THREAT_ARTERIES,
+							HYGIENEBOT_VOICED_STOP_RUNNING,
 						)
-						var/message = pick(messagevoice)
-						speak(message)
-						playsound(loc, messagevoice[message], 50)
+						speak(pick(threats))
 						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
 					if((get_dist(src, target)) >= olddist)
 						frustration++
@@ -168,8 +179,7 @@
 
 		if(BOT_SHOWERSTANCE)
 			if(check_purity(target))
-				speak("Enjoy your clean and tidy day!")
-				playsound(loc, 'sound/voice/hygienebot/cleanandtidy.ogg', 50)
+				speak(HYGIENEBOT_VOICED_ENJOY_DAY)
 				playsound(loc, 'sound/effects/hygienebot_happy.ogg', 60, 1)
 				back_to_idle()
 				return
@@ -208,8 +218,7 @@
 		if(!check_purity(H)) //Theyre impure
 			target = H
 			oldtarget_name = H.name
-			speak("Unhygienic client found. Please stand still so I can clean you.")
-			playsound(loc, 'sound/voice/hygienebot/unhygienicclient.ogg', 50)
+			speak(HYGIENEBOT_VOICED_UNHYGIENIC)
 			playsound(loc, 'sound/effects/hygienebot_happy.ogg', 60, 1)
 			visible_message("<b>[src]</b> points at [H.name]!")
 			mode = BOT_HUNT

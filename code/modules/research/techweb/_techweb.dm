@@ -216,7 +216,8 @@
 	else
 		researched_designs[design.id] = TRUE
 
-	hidden_nodes -= design.id
+	for(var/list/datum/techweb_node/unlocked_nodes as anything in design.unlocked_by)
+		hidden_nodes -= unlocked_nodes
 
 	return TRUE
 
@@ -282,7 +283,7 @@
 		var/datum/experiment/experiment = completed_experiment
 		if (experiment == experiment_type)
 			return FALSE
-	available_experiments += new experiment_type()
+	available_experiments += new experiment_type(src)
 
 /**
  * Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.
@@ -309,13 +310,21 @@
 	var/refund = skipped_experiment_types[completed_experiment.type] || 0
 	if(refund > 0)
 		add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = refund))
-		result_text += ", refunding [refund] points."
+		result_text += ", refunding [refund] points"
 		// Nothing more to gain here, but we keep it in the list to prevent double dipping
 		skipped_experiment_types[completed_experiment.type] = -1
-	else
-		result_text += "!"
+	var/points_rewarded
+	if(completed_experiment.points_reward)
+		add_point_list(completed_experiment.points_reward)
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding "
+		var/list/english_list_keys = list()
+		for(var/points_type in completed_experiment.points_reward)
+			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
+		points_rewarded += "[english_list(english_list_keys)] points"
+		result_text += points_rewarded
+	result_text += "!"
 
-	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""].")
+	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""][points_rewarded].")
 	return result_text
 
 /datum/techweb/proc/printout_points()
@@ -355,6 +364,10 @@
 		if (unlocked_node.discount_experiments.len > 0)
 			add_experiments(unlocked_node.discount_experiments)
 		update_node_status(unlocked_node)
+
+	// Gain more new experiments
+	if (node.experiments_to_unlock.len)
+		add_experiments(node.experiments_to_unlock)
 
 	// Unlock what the research actually unlocks
 	for(var/id in node.design_ids)
