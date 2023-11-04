@@ -74,15 +74,21 @@
 		return
 
 	if(implant_time)
-		user.visible_message( "[user] prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
-		if(!do_after(user, (8 SECONDS * surgery_speed), target))
+		user.visible_message(
+			span_notice("[user] prepares to use [src] on [target]."),
+			span_notice("You begin to prepare to use [src] on [target]."),
+		)
+		if(!do_after(user, (implant_time * surgery_speed), target))
 			return
 
 	if(target != user)
 		log_combat(user, target, "autosurgeon implanted [stored_organ] into", "[src]", "in [AREACOORD(target)]")
 		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	else
-		user.visible_message(span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."), "You press a button on [src] as it plunges into your body.")
+		user.visible_message(
+			span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."),
+			span_notice("You press a button on [src] as it plunges into your body."),
+		)
 
 	stored_organ.Insert(target)//insert stored organ into the user
 	stored_organ = null

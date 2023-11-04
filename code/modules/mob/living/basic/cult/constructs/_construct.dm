@@ -43,7 +43,7 @@
 	var/can_repair_self = FALSE
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
-	/// Can this construct smash walls? Gets the wall_smasher element if so.
+	/// Can this construct destroy walls?
 	var/smashes_walls = FALSE
 	/// The different flavors of goop constructs can drop, depending on theme.
 	var/static/list/remains_by_theme = list(
@@ -59,14 +59,14 @@
 	if(length(remains))
 		AddElement(/datum/element/death_drops, remains)
 	if(smashes_walls)
-		AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_WALLS)
+		AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	if(can_repair)
 		AddComponent(\
 			/datum/component/healing_touch,\
 			heal_brute = 5,\
 			heal_burn = 0,\
 			heal_time = 0,\
-			valid_targets_typecache = typecacheof(list(/mob/living/basic/construct, /mob/living/simple_animal/hostile/construct, /mob/living/simple_animal/shade)),\
+			valid_targets_typecache = typecacheof(list(/mob/living/basic/construct, /mob/living/basic/shade)),\
 			valid_biotypes = MOB_MINERAL | MOB_SPIRIT,\
 			self_targetting = can_repair_self ? HEALING_TOUCH_ANYONE : HEALING_TOUCH_NOT_SELF,\
 			action_text = "%SOURCE% begins repairing %TARGET%'s dents.",\
@@ -80,9 +80,7 @@
 			structure_types_typecache = structure_types,\
 			)
 	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK), INNATE_TRAIT)
-	for(var/spell in construct_spells)
-		var/datum/action/new_spell = new spell(src)
-		new_spell.Grant(src)
+	grant_actions_by_list(construct_spells)
 
 	var/spell_count = 1
 	for(var/datum/action/spell as anything in actions)
@@ -128,34 +126,6 @@
 
 /mob/living/basic/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return FALSE
-
-// Allows simple constructs to repair basic constructs.
-/mob/living/basic/construct/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(!isconstruct(user))
-		if(src != user)
-			return ..()
-		return
-
-	if(src == user) //basic constructs use the healing hands component instead
-		return
-
-	var/mob/living/simple_animal/hostile/construct/doll = user
-	if(!doll.can_repair || (doll == src && !doll.can_repair_self))
-		return ..()
-	if(theme != doll.theme)
-		return ..()
-
-	if(health >= maxHealth)
-		to_chat(user, span_cult("You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!"))
-		return
-
-	heal_overall_damage(brute = 5)
-
-	Beam(user, icon_state = "sendbeam", time = 4)
-	user.visible_message(
-		span_danger("[user] repairs some of \the <b>[src]'s</b> dents."),
-		span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."),
-	)
 
 /// Construct ectoplasm. Largely a placeholder, since the death drop element needs a unique list.
 /obj/item/ectoplasm/construct

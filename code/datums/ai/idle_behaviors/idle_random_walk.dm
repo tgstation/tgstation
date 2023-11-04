@@ -10,7 +10,10 @@
 
 	if(SPT_PROB(walk_chance, seconds_per_tick) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
 		var/move_dir = pick(GLOB.alldirs)
-		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
+		var/turf/destination_turf = get_step(living_pawn, move_dir)
+		if(!destination_turf?.can_cross_safely(living_pawn))
+			return
+		living_pawn.Move(destination_turf, move_dir)
 
 /datum/idle_behavior/idle_random_walk/less_walking
 	walk_chance = 10
@@ -69,7 +72,7 @@
 		var/turf/possible_step = get_step(living_pawn, direction)
 		if(get_dist(possible_step, target) > minimum_distance)
 			continue
-		if(possible_step.is_blocked_turf())
+		if(possible_step.is_blocked_turf() || !possible_step.can_cross_safely(living_pawn))
 			continue
 		possible_turfs += possible_step
 

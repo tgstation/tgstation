@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscdel: "Remove duplicate atmos fire alarm, cargo air alarm, and chemistry shutter from icebox."

@@ -819,6 +819,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/sec_pen
+	name = "Security Pen"
+	id = "sec_pen"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/pen/red/security
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/plumbing_rcd
 	name = "Plumbing Constructor"
 	id = "plumbing_rcd"
