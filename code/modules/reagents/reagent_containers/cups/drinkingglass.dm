@@ -40,7 +40,6 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
 	. = ..()
 	fill_icon_thresholds = null
-	add_
 
 // And having our icon reset restores our fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
