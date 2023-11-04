@@ -108,7 +108,7 @@
 /obj/machinery/quantum_server/proc/spark_at_location(obj/cache)
 	playsound(cache, 'sound/magic/blink.ogg', 50, vary = TRUE)
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
-	sparks.set_up(5, 1, get_turf(cache))
+	sparks.set_up(5, location = get_turf(cache))
 	sparks.start()
 
 /// Returns a turf if it's not dense, else will find a neighbor.
