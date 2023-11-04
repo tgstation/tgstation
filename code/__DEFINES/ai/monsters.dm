@@ -190,6 +190,16 @@
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
 
+//Wizard AI keys
+/// Key where we store our main targeted spell
+#define BB_WIZARD_TARGETED_SPELL "BB_wizard_targeted_spell"
+/// Key where we store our secondary, untargeted spell
+#define BB_WIZARD_SECONDARY_SPELL "BB_wizard_secondary_spell"
+/// Key where we store our blink spell
+#define BB_WIZARD_BLINK_SPELL "BB_wizard_blink_spell"
+/// Key for the next time we can cast a spell
+#define BB_WIZARD_SPELL_COOLDOWN "BB_wizard_spell_cooldown"
+
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"

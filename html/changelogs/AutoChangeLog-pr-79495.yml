@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - bugfix: "you should now be able to scrub through the library without lagging the server"

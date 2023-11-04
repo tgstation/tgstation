@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscdel: "Remove duplicate machinery from Metastation: morgue disposal bin, medical break room air alarm, and IV drip in permabrig medroom"

@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "The HFR will not print out a piece of paper every time you multitool it, saving any desired energy to use for more useful processes."

@@ -172,3 +172,39 @@
   - bugfix: Fixes turrets being invisible when they shouldn't be
   timothymtorres:
   - bugfix: Fix fireplace smoke particles to work properly with all directions
+2023-11-04:
+  Jacquerel:
+  - balance: Gorillas, Seedlings, Gold Grubs, Mooks, Constructs, Ascended Knock Heretics,
+      Fugu and mobs subject to a Fugu Gland now rip up walls in a slightly slower
+      but more cinematic way.
+  Melbert:
+  - admin: Admins without `R_POLL` no longer have access to "Server Poll Management",
+      not that they could have used it anyways.
+  Tattle:
+  - bugfix: you should now be able to scrub through the library without lagging the
+      server
+  Zergspower:
+  - bugfix: Bounties - Virus bounties work once more
+  jlsnow301:
+  - bugfix: Added feedback for both extractor and extractee while using fulton extraction
+      packs.
+  - qol: Extraction packs now have better exam text.
+  - bugfix: Fixes midround selection for observers
+  - rscadd: Added a new fishing map to bitrunning.
+  - rscadd: You are no longer limited to pina coladas on the beach bar domain. Cheers!
+  lizardqueenlexi:
+  - refactor: Shades now use the basic mob framework. Please report any bugs.
+  nikothedude:
+  - qol: Character preferences now have descriptions as tooltips - hover over their
+      names to see them
+  rageguy505:
+  - rscdel: Removed a extra coffee pot in birdshot's security breakroom
+  san7890:
+  - refactor: The way mobs get specialized actions (like revenants shocking lights
+      or regal rats summoning rats to their side when you slap them) have been modified,
+      please report any bugs.
+  timothymtorres:
+  - rscdel: 'Remove duplicate machinery from Metastation: morgue disposal bin, medical
+      break room air alarm, and IV drip in permabrig medroom'
+  vinylspiders:
+  - bugfix: Softspoken quirk will no longer be applied to sign language

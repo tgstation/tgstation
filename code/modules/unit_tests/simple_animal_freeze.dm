@@ -109,7 +109,6 @@
 		/mob/living/simple_animal/hostile/retaliate/goose,
 		/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 		/mob/living/simple_animal/hostile/vatbeast,
-		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/parrot/natural,
