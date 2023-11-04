@@ -1079,7 +1079,7 @@
 /datum/design/backpack_recharger
 	name = "Backpack Recharger"
 	desc = "A weapon recharger which uses power cells to charge guns, must be worn on the back."
-	id = "stun_boomerang"
+	id = "backpack_recharger"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/portable_recharger
@@ -1091,7 +1091,7 @@
 /datum/design/belt_recharger
 	name = "Belt Recharger"
 	desc = "A weapon recharger which uses power cells to charge guns, must be worn on the belt. More unstable."
-	id = "stun_boomerang"
+	id = "belt_recharger"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/silver =SMALL_MATERIAL_AMOUNT * 4, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 6)
 	build_path = /obj/item/portable_recharger/belt

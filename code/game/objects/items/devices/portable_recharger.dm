@@ -309,7 +309,7 @@
 
 	var/icon_to_use = "[base_icon_state]-[isnull(charging) ? "empty" : (using_power ? "charging" : "full")]"
 	if(hit)
-		. += emissive_appearance(icon, "[base_icon_state]-hit", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-hit", src)
 		return
 	. += mutable_appearance(icon, icon_to_use, alpha = src.alpha)
 	. += emissive_appearance(icon, icon_to_use, src, alpha = src.alpha)
