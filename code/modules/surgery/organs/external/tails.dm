@@ -58,7 +58,6 @@
 			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
 		stop_wag()
-	owner.update_body_parts()
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag()
@@ -66,6 +65,7 @@
 	wag_flags |= WAG_WAGGING
 	accessory.wagging = TRUE
 	if(owner)
+		owner.update_body_parts()
 		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(stop_wag))
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
@@ -74,6 +74,7 @@
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
 	if(owner)
+		owner.update_body_parts()
 		UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 
 ///Tail parent type, with wagging functionality
