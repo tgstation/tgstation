@@ -29,7 +29,7 @@
 /// Used by all young spiders if they ever appear.
 /datum/ai_controller/basic_controller/young_spider
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
+		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
 	)
 

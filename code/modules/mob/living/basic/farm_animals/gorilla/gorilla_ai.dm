@@ -1,7 +1,7 @@
 /// Pretty basic, just click people to death. Also hunt and eat bananas.
 /datum/ai_controller/basic_controller/gorilla
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/allow_items),
+		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/allow_items),
 		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 40,
@@ -27,7 +27,7 @@
 
 /datum/ai_controller/basic_controller/gorilla/lesser
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/allow_items),
+		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/allow_items),
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 60,
 	)

@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/seedling
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
-		BB_PET_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/not_friends),
+		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_PET_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends),
 		BB_WEEDLEVEL_THRESHOLD = 3,
 		BB_WATERLEVEL_THRESHOLD = 90,
 	)
@@ -141,8 +141,8 @@
 
 /datum/ai_controller/basic_controller/seedling/meanie
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
-		BB_PET_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/not_friends),
+		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_PET_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends),
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,

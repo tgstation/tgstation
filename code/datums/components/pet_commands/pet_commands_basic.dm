@@ -123,7 +123,7 @@
 	var/mob/living/living_parent = parent
 	if (!living_parent.ai_controller)
 		return
-	var/datum/targetting_datum/targeter = living_parent.ai_controller.blackboard[targetting_datum_key]
+	var/datum/targeting_strategy/targeter = living_parent.ai_controller.blackboard[targeting_strategy_key]
 	if (!targeter)
 		return
 	if (!targeter.can_attack(living_parent, target))
@@ -138,7 +138,7 @@
 	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
 
 /datum/pet_command/point_targetting/attack/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targetting_datum_key)
+	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targeting_strategy_key)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
@@ -191,7 +191,7 @@
 	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT])
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
-	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETTING_DATUM)
+	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_targeting_strategy)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim)

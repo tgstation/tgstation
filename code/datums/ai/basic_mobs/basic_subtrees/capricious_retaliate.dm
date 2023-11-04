@@ -1,19 +1,19 @@
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_planning_subtree/capricious_retaliate
 	/// Blackboard key which tells us how to select valid targets
-	var/targetting_datum_key = BB_TARGETTING_DATUM
+	var/targeting_strategy_key = BB_targeting_strategy
 	/// Whether we should skip checking faction for our decision
 	var/ignore_faction = TRUE
 
 /datum/ai_planning_subtree/capricious_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	controller.queue_behavior(/datum/ai_behavior/capricious_retaliate, targetting_datum_key, ignore_faction)
+	controller.queue_behavior(/datum/ai_behavior/capricious_retaliate, targeting_strategy_key, ignore_faction)
 
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_behavior/capricious_retaliate
 	action_cooldown = 1 SECONDS
 
-/datum/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targetting_datum_key, ignore_faction)
+/datum/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
 	. = ..()
 	var/atom/pawn = controller.pawn
 	if (controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
@@ -38,7 +38,7 @@
 		failed_targetting(controller, pawn, ignore_faction)
 		return
 
-	var/datum/targetting_datum/target_helper = controller.blackboard[targetting_datum_key]
+	var/datum/targeting_strategy/target_helper = controller.blackboard[targeting_strategy_key]
 
 	var/mob/living/final_target = null
 	if (ignore_faction)

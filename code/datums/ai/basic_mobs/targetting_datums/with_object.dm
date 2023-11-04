@@ -5,15 +5,15 @@
  * only target the mob if they have a specific item in their hand.
  *
  */
-/datum/targetting_datum/basic/holding_object
+/datum/targeting_strategy/basic/holding_object
 	/// BB key that holds the target typepath to use
 	var/target_item_key = BB_TARGET_HELD_ITEM
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targetting_datum/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range)
+/datum/targeting_strategy/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range)
 	var/datum/ai_controller/controller = living_mob.ai_controller
 	var/object_type_path = controller.blackboard[target_item_key]
-	
+
 	if (object_type_path == null)
 		return FALSE // no op
 	if(!ismob(target))

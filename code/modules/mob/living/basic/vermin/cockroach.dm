@@ -60,8 +60,8 @@
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
-		BB_PET_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/not_friends),
+		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_PET_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

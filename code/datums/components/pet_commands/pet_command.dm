@@ -116,7 +116,7 @@
 	/// Text describing an action we perform upon receiving a new target
 	var/pointed_reaction
 	/// Blackboard key for targetting datum, this is likely going to need it
-	var/targetting_datum_key = BB_PET_TARGETTING_DATUM
+	var/targeting_strategy_key = BB_PET_targeting_strategy
 
 /datum/pet_command/point_targetting/add_new_friend(mob/living/tamer)
 	. = ..()

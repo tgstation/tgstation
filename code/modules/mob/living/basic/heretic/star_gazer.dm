@@ -66,7 +66,7 @@
 
 	target.apply_status_effect(/datum/status_effect/star_mark)
 	target.apply_damage(damage = 5, damagetype = CLONE)
-	var/datum/targetting_datum/target_confirmer = ai_controller.blackboard[BB_TARGETTING_DATUM]
+	var/datum/targeting_strategy/target_confirmer = ai_controller.blackboard[BB_targeting_strategy]
 	for(var/mob/living/nearby_mob in range(1, src))
 		if(target == nearby_mob || !target_confirmer?.can_attack(src, nearby_mob))
 			continue
@@ -78,9 +78,9 @@
 
 /datum/ai_controller/basic_controller/star_gazer
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
+		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_PET_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/not_friends/attack_closed_turfs),
+		BB_PET_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends/attack_closed_turfs),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

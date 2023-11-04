@@ -83,9 +83,9 @@
 	if(valid_hives.len)
 		return pick(valid_hives)
 
-/datum/targetting_datum/basic/bee
+/datum/targeting_strategy/basic/bee
 
-/datum/targetting_datum/basic/bee/can_attack(mob/living/owner, atom/target, vision_range)
+/datum/targeting_strategy/basic/bee/can_attack(mob/living/owner, atom/target, vision_range)
 	if(!isliving(target))
 		return FALSE
 	. = ..()

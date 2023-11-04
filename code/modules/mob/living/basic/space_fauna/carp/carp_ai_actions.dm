@@ -16,7 +16,7 @@
 /// Interrupt your attack chain if: you have a spell, it's not on cooldown, and it has a target
 /datum/ai_behavior/basic_melee_attack/magicarp
 
-/datum/ai_behavior/basic_melee_attack/magicarp/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
+/datum/ai_behavior/basic_melee_attack/magicarp/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, health_ratio_key)
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_MAGICARP_SPELL]
 	if (QDELETED(using_action))
 		return ..()
@@ -39,7 +39,7 @@
 
 	var/spell_targetting = controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING]
 	if (!spell_targetting)
-		controller.queue_behavior(/datum/ai_behavior/find_potential_targets/nearest/magicarp, BB_MAGICARP_SPELL_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+		controller.queue_behavior(/datum/ai_behavior/find_potential_targets/nearest/magicarp, BB_MAGICARP_SPELL_TARGET, BB_targeting_strategy, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 		return
 
 	switch(spell_targetting)

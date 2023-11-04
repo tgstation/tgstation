@@ -8,7 +8,7 @@
 	/// The ability to use when we are attacked
 	var/datum/action/cooldown/ability
 	/// Optional datum for validating targets
-	var/datum/targetting_datum/targetting
+	var/datum/targeting_strategy/targetting
 	/// Trigger only if target is at least this far away
 	var/min_range
 	/// Trigger only if target is at least this close
@@ -16,7 +16,7 @@
 	/// Target the ability at ourself instead of at the offender
 	var/target_self
 
-/datum/component/revenge_ability/Initialize(datum/action/cooldown/ability, datum/targetting_datum/targetting, min_range = 0, max_range = INFINITY, target_self = FALSE)
+/datum/component/revenge_ability/Initialize(datum/action/cooldown/ability, datum/targeting_strategy/targetting, min_range = 0, max_range = INFINITY, target_self = FALSE)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
