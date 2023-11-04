@@ -367,7 +367,7 @@
 	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
 	var/is_pathing = FALSE
 	///Callbacks to invoke once we make a path
-	var/list/datum/callback/on_finish_callbacks
+	var/list/datum/callback/on_finish_callbacks = list()
 
 /datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	. = ..()
