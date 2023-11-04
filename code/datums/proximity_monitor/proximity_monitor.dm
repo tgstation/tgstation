@@ -11,7 +11,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_ATOM_EXITED = PROC_REF(on_uncrossed),
-		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_entered),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_initialized),
 	)
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
@@ -82,3 +82,8 @@
 	SIGNAL_HANDLER
 	if(source != host)
 		hasprox_receiver?.HasProximity(arrived)
+
+/datum/proximity_monitor/proc/on_initialized(turf/location, atom/created, init_flags)
+	SIGNAL_HANDLER
+	if(location != host)
+		hasprox_receiver?.HasProximity(created)
