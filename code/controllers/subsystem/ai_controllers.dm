@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(ai_controllers)
 		if(!ai_controller.able_to_plan())
 			continue
 		ai_controller.SelectBehaviors(wait * 0.1)
-		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
+		if(!length(ai_controller.current_behaviors)) //Still no plan
 			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
 			// If a controller isn't doing anything, send it to idle
 			START_PROCESSING(SSai_idle, ai_controller)

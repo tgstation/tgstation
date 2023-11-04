@@ -21,7 +21,7 @@ multiple modular subtrees with behaviors
 	var/ai_traits = NONE
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors
-	///Current actions being performed by the AI -> time to wait until running
+	///Current actions being performed by the AI -> (timerid if active, otherwise desired execute time)
 	var/list/current_behaviors
 	///Current status of AI (OFF/ON)
 	var/ai_status
@@ -134,7 +134,7 @@ multiple modular subtrees with behaviors
 
 ///Loops over the subtrees in planning_subtrees and looks at the ai_controllers to grab a reference, ENSURE planning_subtrees ARE TYPEPATHS AND NOT INSTANCES/REFERENCES BEFORE EXECUTING THIS
 /datum/ai_controller/proc/init_subtrees()
-	if(!LAZYLEN(planning_subtrees))
+	if(!length(planning_subtrees))
 		return
 	var/list/temp_subtree_list = list()
 	for(var/subtree in planning_subtrees)
@@ -244,7 +244,7 @@ multiple modular subtrees with behaviors
 	// Only one action per tick
 	if(world.time == last_action_ran)
 		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), current_behavior), 1 TICKS, TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		LAZYSET(current_behaviors, current_behavior, id)
+		current_behaviors[current_behavior] = id
 		return
 
 	// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
@@ -276,7 +276,7 @@ multiple modular subtrees with behaviors
 
 ///Handles idle behavior, called every ds so it's part of a processing subsystem
 /datum/ai_controller/process(seconds_per_tick)
-	if(idle_behavior && !LAZYLEN(current_behaviors))
+	if(idle_behavior && !length(current_behaviors))
 		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
 		return
 
@@ -293,11 +293,10 @@ multiple modular subtrees with behaviors
 	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
 		return FALSE
 
-	var/list/old_planned_behaviors = LAZYCOPY(planned_behaviors)
-	LAZYINITLIST(current_behaviors)
-	LAZYCLEARLIST(planned_behaviors)
+	var/list/old_planned_behaviors = planned_behaviors
+	planned_behaviors = list()
 
-	if(LAZYLEN(planning_subtrees))
+	if(length(planning_subtrees))
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
 			if(subtree.SelectBehaviors(src, seconds_per_tick) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
@@ -338,23 +337,23 @@ multiple modular subtrees with behaviors
 	var/list/arguments = args.Copy()
 	arguments[1] = src
 
-	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
-		LAZYSET(planned_behaviors, behavior, TRUE)
+	if(current_behaviors[behavior]) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
+		planned_behaviors[behavior] = TRUE
 		return
 
 	if(!behavior.setup(arglist(arguments)))
 		return
 	// If we were on idle and we are no longer, then stop yeah?
-	if(!LAZYLEN(current_behaviors))
+	if(!length(current_behaviors))
 		STOP_PROCESSING(SSai_idle, src)
 
 	if(able_to_run)
 		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		LAZYSET(current_behaviors, behavior, id)
+		current_behaviors[behavior] = id
 	else
-		LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown())
+		current_behaviors[behavior] = world.time + behavior.get_cooldown()
 
-	LAZYSET(planned_behaviors, behavior, TRUE)
+	planned_behaviors[behavior] = TRUE
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
@@ -370,12 +369,12 @@ multiple modular subtrees with behaviors
 		arguments += stored_arguments
 	behavior.perform(arglist(arguments))
 	// If we're still a behavior, requeue our timer
-	if(LAZYACCESS(current_behaviors, behavior))
+	if(current_behaviors[behavior])
 		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		LAZYSET(current_behaviors, behavior, id)
+		current_behaviors[behavior] = id
 
 /datum/ai_controller/proc/CancelActions()
-	if(!LAZYLEN(current_behaviors))
+	if(!length(current_behaviors))
 		return
 	// Reverse to avoid constantly rescheduling timers
 	for(var/datum/ai_behavior/current_behavior as anything in reverse_range(current_behaviors.Copy()))
