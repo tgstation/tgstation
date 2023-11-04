@@ -50,6 +50,7 @@
 /obj/item/organ/external/tail/proc/wag(mob/living/carbon/organ_owner, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
 		return
+
 	if(start)
 		start_wag()
 		if(stop_after)
