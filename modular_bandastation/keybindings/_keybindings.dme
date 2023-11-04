@@ -5,7 +5,7 @@
 #include "code/carbon.dm"
 #include "code/client.dm"
 #include "code/communication.dm"
-#include "code/emote.dm"
+//#include "code/emote.dm" TODO: Return it when Emote Panel is merged
 #include "code/human.dm"
 #include "code/living.dm"
 #include "code/mob.dm"

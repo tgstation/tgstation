@@ -1,11 +1,3 @@
-/datum/emote
-	var/name
-
-/datum/emote/New()
-	. = ..()
-	if(!name)
-		name = key
-
 // Imaginary Friend
 
 /datum/emote/imaginary_friend/point
