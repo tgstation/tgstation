@@ -53,6 +53,7 @@
 	Probably best to stay clear."
 	suffix = "lavaland_surface_ash_walker1.dmm"
 	cost = 20
+	always_place = TRUE
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/syndicate_base

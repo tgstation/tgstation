@@ -326,7 +326,7 @@
 "bh" = (
 /obj/effect/mapping_helpers/no_lava,
 /obj/structure/railing/wooden_fence{
-	dir = 8
+	dir = 5
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -512,14 +512,14 @@
 /area/lavaland/surface/outdoors)
 "bJ" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 5
-	},
+/mob/living/basic/mining/gutlunch/milk,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cp" = (
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/basic/mining/gutlunch/warrior,
+/obj/structure/railing/wooden_fence{
+	dir = 8
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cF" = (
@@ -948,7 +948,7 @@
 "vV" = (
 /obj/effect/mapping_helpers/no_lava,
 /obj/structure/railing/wooden_fence{
-	dir = 10
+	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -1220,13 +1220,14 @@
 /area/lavaland/surface/outdoors)
 "JD" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/table/wood,
-/obj/item/flashlight/lantern,
+/obj/structure/ore_container/gutlunch_trough,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Kg" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/stone_tile/block,
+/obj/structure/railing/wooden_fence{
+	dir = 10
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Kt" = (
@@ -1319,16 +1320,13 @@
 /area/lavaland/surface/outdoors)
 "Pk" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 6
-	},
+/obj/structure/railing/corner/end/wooden_fence,
+/obj/structure/railing/corner/end/flip/wooden_fence,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "PA" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/wooden_fence{
-	dir = 4
-	},
+/mob/living/basic/mining/gutlunch/warrior,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "PK" = (
@@ -1338,8 +1336,9 @@
 /area/lavaland/surface/outdoors)
 "Rq" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/railing/corner/end/wooden_fence,
-/obj/structure/railing/corner/end/flip/wooden_fence,
+/obj/structure/railing/wooden_fence{
+	dir = 6
+	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "RE" = (
@@ -1388,7 +1387,8 @@
 /area/lavaland/surface/outdoors)
 "Tl" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/structure/ore_container/gutlunch_trough,
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Tr" = (
@@ -1427,7 +1427,7 @@
 /area/lavaland/surface/outdoors)
 "Uh" = (
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/basic/mining/gutlunch/milk,
+/obj/structure/stone_tile/block,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "UI" = (
@@ -1892,13 +1892,13 @@ cQ
 (20,1,1) = {"
 ah
 Gv
-ar
-bh
-bh
-bh
-bh
-bh
-vV
+Gv
+Gv
+Gv
+Gv
+Gv
+Gv
+Gv
 Gv
 Gv
 Dz
@@ -1914,14 +1914,14 @@ cR
 (21,1,1) = {"
 ah
 Gv
-al
+ar
 cp
+cp
+cp
+cp
+cp
+Kg
 Gv
-Gv
-Gv
-Gv
-qH
-KQ
 Gv
 Gv
 qm
@@ -1937,11 +1937,11 @@ ah
 ah
 Gv
 al
+PA
 Gv
 Gv
 Gv
 Gv
-cp
 qH
 KQ
 Gv
@@ -1960,12 +1960,12 @@ ah
 Gv
 al
 Gv
-Uh
-Uh
 Gv
 Gv
+Gv
+PA
 qH
-JD
+KQ
 Gv
 Gv
 qm
@@ -1981,13 +1981,13 @@ ah
 ah
 Gv
 al
-Uh
 Gv
-Gv
+bJ
+bJ
 Gv
 Gv
 qH
-Gv
+Tl
 Gv
 Gv
 qm
@@ -2003,13 +2003,13 @@ ah
 ah
 Gv
 al
-Gv
-Uh
-Uh
+bJ
 Gv
 Gv
-Rq
-sz
+Gv
+Gv
+qH
+Gv
 sz
 sz
 qm
@@ -2017,29 +2017,29 @@ Gv
 Gv
 ah
 ah
-aa
-aa
-aa
+ah
+ah
+ah
 "}
 (26,1,1) = {"
 ah
 Gv
 al
 Gv
+bJ
+bJ
 Gv
 Gv
-Gv
-Gv
-qH
-Gv
+Pk
+sz
 Gv
 Oe
 Gv
 Gv
 Gv
 ah
-aa
-aa
+ah
+ah
 aa
 aa
 "}
@@ -2048,7 +2048,7 @@ ah
 Gv
 al
 Gv
-Tl
+Gv
 Gv
 Gv
 Gv
@@ -2060,8 +2060,8 @@ Gv
 Gv
 Gv
 ah
-aa
-aa
+ah
+ah
 aa
 aa
 "}
@@ -2070,10 +2070,10 @@ ah
 Gv
 al
 Gv
+JD
 Gv
 Gv
 Gv
-cp
 qH
 Gv
 Gv
@@ -2082,8 +2082,8 @@ Gv
 Dz
 Gv
 ah
-aa
-aa
+ah
+ah
 aa
 aa
 "}
@@ -2093,9 +2093,9 @@ Gv
 al
 Gv
 Gv
-cp
 Gv
 Gv
+PA
 qH
 Gv
 Gv
@@ -2104,34 +2104,78 @@ Gv
 Gv
 Gv
 ah
-aa
-aa
+ah
+ah
 aa
 aa
 "}
 (30,1,1) = {"
 ah
 Gv
-bJ
+al
+Gv
+Gv
 PA
-PA
-PA
-PA
-PA
-Pk
-Kg
+Gv
+Gv
+qH
+Gv
 mo
 ah
 ah
 ah
 ah
 ah
-aa
+ah
 aa
 aa
 aa
 "}
 (31,1,1) = {"
+ah
+Gv
+bh
+vV
+vV
+vV
+vV
+vV
+Rq
+Uh
+ty
+ah
+ah
+ah
+ah
+ah
+ah
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+ah
+Gv
+Gv
+Gv
+Gv
+Gv
+Gv
+Gv
+Gv
+Gv
+ty
+ah
+ah
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
 ah
 ah
 ah

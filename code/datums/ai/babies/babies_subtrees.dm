@@ -8,6 +8,9 @@
 /datum/ai_planning_subtree/make_babies/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 
+	if(!SPT_PROB(chance, seconds_per_tick))
+		return
+
 	if(controller.blackboard_key_exists(BB_BABIES_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/make_babies, BB_BABIES_TARGET, BB_BABIES_CHILD_TYPES)
 		return SUBTREE_RETURN_FINISH_PLANNING

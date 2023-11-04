@@ -12,6 +12,7 @@
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	basic_mob_flags = DEL_ON_DEATH
 	speak_emote = list("warbles", "quavers")
 	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	response_help_continuous = "pets"
@@ -44,6 +45,7 @@
 		can_breed_with = typecacheof(list(/mob/living/basic/mining/gutlunch)),\
 		baby_path = /mob/living/basic/mining/gutlunch/grub,\
 		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
+		breed_timer = 3 MINUTES,\
 	)
 
 /mob/living/basic/mining/gutlunch/proc/pre_attack(mob/living/puncher, atom/target)
@@ -122,6 +124,7 @@
 	roll_stats(melee_damage_lower, speed, maxHealth)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/wall_tearer)
+	AddElement(/datum/element/ai_retaliate)
 
 /mob/living/basic/mining/gutlunch/milk/update_overlays(new_udder_volume, max_udder_volume)
 	. = ..()
@@ -158,6 +161,12 @@
 /mob/living/basic/mining/gutlunch/grub/proc/determine_growth_path()
 	var/final_type = prob(50) ? /mob/living/basic/mining/gutlunch/warrior : /mob/living/basic/mining/gutlunch/milk
 	var/mob/living/basic/mining/gutlunch/grown_mob = new final_type(get_turf(src))
-	if(grown_mob.gender == MALE)
+	if(grown_mob.gender == MALE && inherited_stats)
 		grown_mob.roll_stats(inherited_stats.attack, inherited_stats.speed, inherited_stats.health)
 	qdel(src)
+
+#undef MAX_SIZE_CLAMP
+#undef MAX_ATTACK_DIFFERENCE
+#undef MAX_LOWER_ATTACK
+#undef MINIMUM_POSSIBLE_SPEED
+#undef MAX_POSSIBLE_HEALTH

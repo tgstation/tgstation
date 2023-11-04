@@ -164,9 +164,27 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
+	plane = GAME_PLANE_FOV_HIDDEN
+	layer = ABOVE_MOB_LAYER
+
+/obj/structure/railing/wooden_fence/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_change_layer))
+	adjust_dir_layer(dir)
+
+/obj/structure/railing/wooden_fence/proc/on_change_layer(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	adjust_dir_layer(new_dir)
+
+/obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
+	var/new_layer = (direction & NORTH) ? MOB_LAYER : ABOVE_MOB_LAYER
+	layer = new_layer
+
 
 /obj/structure/railing/corner/end/wooden_fence
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing_corner"
 
 /obj/structure/railing/corner/end/flip/wooden_fence
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing_corner_flipped"

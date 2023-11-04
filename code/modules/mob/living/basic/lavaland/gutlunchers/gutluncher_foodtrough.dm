@@ -13,7 +13,7 @@
 		return ..()
 	if(list_of_materials[mover.type])
 		return ..()
-	list_of_materials[mover.type] = list("pixel_x" = rand(-5, 8), "pixel_y" = rand(-2, -5))
+	list_of_materials[mover.type] = list("pixel_x" = rand(-5, 8), "pixel_y" = rand(-2, -7))
 	return ..()
 
 /obj/structure/ore_container/gutlunch_trough/Exited(atom/movable/mover)
@@ -34,7 +34,7 @@
 		var/obj/item/ore_item = ore_entry
 		var/image/ore_icon = image(icon = initial(ore_item.icon), icon_state = initial(ore_item.icon_state), layer = LOW_ITEM_LAYER)
 		var/list/pixel_positions = list_of_materials[ore_entry]
-		ore_icon.transform = ore_icon.transform.Scale(0.6, 0.6)
+		ore_icon.transform = ore_icon.transform.Scale(0.4, 0.4)
 		ore_icon.pixel_x = pixel_positions["pixel_x"]
 		ore_icon.pixel_y = pixel_positions["pixel_y"]
 		. += ore_icon
