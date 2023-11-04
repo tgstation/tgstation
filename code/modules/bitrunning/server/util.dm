@@ -63,31 +63,28 @@
 
 	return pick(nearby_forges)
 
-/// Gets a random available domain given the current points. Weighted towards higher cost domains.
+/// Gets a random available domain given the current points.
 /obj/machinery/quantum_server/proc/get_random_domain_id()
 	if(points < 1)
 		return
 
 	var/list/random_domains = list()
-	var/total_cost = 0
 
 	for(var/datum/lazy_template/virtual_domain/available as anything in subtypesof(/datum/lazy_template/virtual_domain))
 		var/init_cost = initial(available.cost)
-		if(!initial(available.test_only) && init_cost > 0 && init_cost < 4 && init_cost <= points)
-			random_domains += list(list(
-				cost = init_cost,
-				id = initial(available.key),
-			))
 
-	var/random_value = rand(0, total_cost)
-	var/accumulated_cost = 0
+		if(!initial(available.test_only) && \
+			init_cost <= points && \
+			init_cost > BITRUNNER_COST_NONE && \
+			init_cost < BITRUNNER_COST_EXTREME \
+		)
+			random_domains.Add(available)
 
-	for(var/available as anything in random_domains)
-		accumulated_cost += available["cost"]
-		if(accumulated_cost >= random_value)
-			domain_randomized = TRUE
-			return available["id"]
+	shuffle_inplace(random_domains)
+	var/datum/lazy_template/virtual_domain/selected = pick(random_domains)
+	domain_randomized = TRUE
 
+	return initial(selected.key)
 
 /// Removes all blacklisted items from a mob and returns them to base state
 /obj/machinery/quantum_server/proc/reset_equipment(mob/living/carbon/human/person)

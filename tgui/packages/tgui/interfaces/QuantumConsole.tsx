@@ -101,11 +101,19 @@ const AccessView = (props, context) => {
     ready,
     occupants,
     points,
+    randomized,
   } = data;
 
   const sorted = available_domains.sort((a, b) => a.cost - b.cost);
 
-  const selected = sorted.find(({ id }) => id === generated_domain);
+  let selected;
+  if (generated_domain) {
+    selected = randomized
+      ? '???'
+      : sorted.find(({ id }) => id === generated_domain)?.name;
+  } else {
+    selected = 'Nothing loaded';
+  }
 
   return (
     <Stack fill vertical>
@@ -144,9 +152,7 @@ const AccessView = (props, context) => {
         <Section>
           <Stack fill>
             <Stack.Item grow>
-              <NoticeBox info={!!generated_domain}>
-                {selected?.name ?? 'Nothing loaded'}
-              </NoticeBox>
+              <NoticeBox info={!!generated_domain}>{selected}</NoticeBox>
             </Stack.Item>
             <Stack.Item>
               <Button.Confirm
