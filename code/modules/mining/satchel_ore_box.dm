@@ -71,7 +71,6 @@
 			item_contents[potental_ore.type] += potental_ore.amount
 		else
 			boulder_count++
-			say("boulder")
 
 	var/data = list()
 
@@ -79,13 +78,10 @@
 
 	for(var/obj/item/stone as anything in item_contents)
 		say("found [stone]")
-		if(istype(stone, /obj/item/stack/ore))
-			say("stack")
+		if(ispath(stone, /obj/item/stack/ore))
 			var/obj/item/stack/ore/found_ore = stone
 			var/name = initial(found_ore.name)
-			data["materials"] += list(list("name" = name, "amount" = item_contents[type], "id" = type))
-		else
-			continue
+			data["materials"] += list(list("name" = name, "amount" = item_contents[stone], "id" = type))
 	data["boulders"] = boulder_count
 	return data
 
