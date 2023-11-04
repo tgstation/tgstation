@@ -391,8 +391,8 @@
 	COOLDOWN_DECLARE(repath_cooldown)
 	///Bool used to determine if we're already making a path in JPS. this prevents us from re-pathing while we're already busy.
 	var/is_pathing = FALSE
-	///Callback to invoke once we make a path
-	var/datum/callback/on_finish_callback
+	///Callbacks to invoke once we make a path
+	var/list/datum/callback/on_finish_callbacks = list()
 
 /datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	. = ..()
