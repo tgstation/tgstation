@@ -34,7 +34,7 @@
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
-		wag(FALSE)
+		wag(organ_owner, start = FALSE)
 
 	return ..()
 
@@ -47,15 +47,13 @@
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
-
-/obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
+/obj/item/organ/external/tail/proc/wag(mob/living/carbon/organ_owner, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
 		return
-
 	if(start)
 		start_wag()
 		if(stop_after)
-			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
+			addtimer(CALLBACK(src, PROC_REF(wag), organ_owner, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
 		stop_wag()
 
