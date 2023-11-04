@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 /datum/ai_controller/basic_controller/mook
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite, /turf/closed/mineral/strong),
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 7,
 		BB_STORM_APPROACHING = FALSE,
@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///bard mook plays nice music for the village
 /datum/ai_controller/basic_controller/mook/bard
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
 		BB_STORM_APPROACHING = FALSE,
 		BB_SONG_LINES = MOOK_SONG,
@@ -264,10 +264,10 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///healer mooks guard the village from intruders and heal the miner mooks when they come home
 /datum/ai_controller/basic_controller/mook/support
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
 		BB_STORM_APPROACHING = FALSE,
-		BB_PET_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends),
+		BB_PET_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends),
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///the chief would rather command his mooks to attack people than attack them himself
 /datum/ai_controller/basic_controller/mook/tribal_chief
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mook),
 		BB_STORM_APPROACHING = FALSE,
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village

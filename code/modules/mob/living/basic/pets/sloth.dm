@@ -75,7 +75,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 /// They're really passive in game, so they just wanna get away if you start smacking them. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
 /datum/ai_controller/basic_controller/sloth
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 		BB_FLEE_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 	)
 

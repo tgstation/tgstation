@@ -57,7 +57,7 @@
 
 /datum/ai_controller/basic_controller/mushroom
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mushroom),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/mushroom),
 		BB_TARGET_MINIMUM_STAT = DEAD,
 	)
 

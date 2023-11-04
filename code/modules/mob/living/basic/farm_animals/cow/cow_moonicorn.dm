@@ -44,7 +44,7 @@
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/allow_items/moonicorn),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/allow_items/moonicorn),
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
 	)

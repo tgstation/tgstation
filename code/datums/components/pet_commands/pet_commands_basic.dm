@@ -191,7 +191,7 @@
 	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT])
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
-	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_targeting_strategy)
+	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETING_STRATEGY)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim)

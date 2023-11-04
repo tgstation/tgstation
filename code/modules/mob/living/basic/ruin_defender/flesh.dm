@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/living_limb_flesh
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 

@@ -9,7 +9,7 @@
 /datum/ai_controller/basic_controller/living_floor
 	max_target_distance = 2
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -61,7 +61,7 @@
 	if(!istype(victim) || istype(victim, /mob/living/basic/living_floor) || victim.stat == DEAD)
 		return
 	if(victim.loc == loc) //guaranteed bite
-		var/datum/targeting_strategy/basic/targetting = ai_controller.blackboard[BB_targeting_strategy]
+		var/datum/targeting_strategy/basic/targetting = ai_controller.blackboard[BB_TARGETING_STRATEGY]
 		if(targetting.can_attack(src, victim))
 			melee_attack(victim)
 	icon_state = icon_aggro

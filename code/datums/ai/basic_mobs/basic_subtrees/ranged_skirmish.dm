@@ -14,7 +14,7 @@
 	. = ..()
 	if(!controller.blackboard_key_exists(target_key))
 		return
-	controller.queue_behavior(attack_behavior, target_key, BB_targeting_strategy, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, max_range, min_range)
+	controller.queue_behavior(attack_behavior, target_key, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, max_range, min_range)
 
 /// How often will we try to perform our ranged attack?
 /datum/ai_behavior/ranged_skirmish

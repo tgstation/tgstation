@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/mega_arachnid
 	blackboard = list(
-		BB_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 		BB_BASIC_MOB_FLEE_DISTANCE = 5,
 	)
 

@@ -12,7 +12,7 @@
 		var/mob/living/pawn = controller.pawn
 		if (LAZYLEN(pawn.do_afters))
 			return
-	controller.queue_behavior(melee_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_targeting_strategy, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(melee_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
 /// Attack something which is already adjacent to us without moving
 /datum/ai_behavior/basic_melee_attack/opportunistic

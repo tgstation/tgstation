@@ -39,7 +39,7 @@
 
 	var/spell_targetting = controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING]
 	if (!spell_targetting)
-		controller.queue_behavior(/datum/ai_behavior/find_potential_targets/nearest/magicarp, BB_MAGICARP_SPELL_TARGET, BB_targeting_strategy, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+		controller.queue_behavior(/datum/ai_behavior/find_potential_targets/nearest/magicarp, BB_MAGICARP_SPELL_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 		return
 
 	switch(spell_targetting)

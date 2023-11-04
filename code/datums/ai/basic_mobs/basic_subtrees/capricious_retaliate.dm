@@ -1,7 +1,7 @@
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_planning_subtree/capricious_retaliate
 	/// Blackboard key which tells us how to select valid targets
-	var/targeting_strategy_key = BB_targeting_strategy
+	var/targeting_strategy_key = BB_TARGETING_STRATEGY
 	/// Whether we should skip checking faction for our decision
 	var/ignore_faction = TRUE
 

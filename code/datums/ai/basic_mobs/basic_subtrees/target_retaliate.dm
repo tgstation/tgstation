@@ -2,7 +2,7 @@
 /datum/ai_planning_subtree/target_retaliate
 	operational_datums = list(/datum/element/ai_retaliate, /datum/component/ai_retaliate_advanced)
 	/// Blackboard key which tells us how to select valid targets
-	var/targeting_strategy_key = BB_targeting_strategy
+	var/targeting_strategy_key = BB_TARGETING_STRATEGY
 	/// Blackboard key in which to store selected target
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// Blackboard key in which to store selected target's hiding place

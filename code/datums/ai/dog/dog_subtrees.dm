@@ -4,12 +4,12 @@
 /datum/ai_planning_subtree/dog_harassment/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!SPT_PROB(10, seconds_per_tick))
 		return
-	controller.queue_behavior(/datum/ai_behavior/find_hated_dog_target, BB_DOG_HARASS_TARGET, BB_PET_targeting_strategy)
+	controller.queue_behavior(/datum/ai_behavior/find_hated_dog_target, BB_DOG_HARASS_TARGET, BB_PET_TARGETING_STRATEGY)
 	var/atom/harass_target = controller.blackboard[BB_DOG_HARASS_TARGET]
 	if (isnull(harass_target))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/dog, BB_DOG_HARASS_TARGET, BB_PET_targeting_strategy)
+	controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/dog, BB_DOG_HARASS_TARGET, BB_PET_TARGETING_STRATEGY)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/find_hated_dog_target
