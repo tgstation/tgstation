@@ -451,7 +451,7 @@
 	holiday_pattern = PATTERN_VERTICAL_STRIPE
 
 /datum/holiday/france/getStationPrefix()
-	return pick("Francais","Fromage", "Zut", "Merde", "Sacrebleu")
+	return pick("Francais", "Fromage", "Zut", "Merde", "Sacrebleu")
 
 /datum/holiday/france/greet()
 	return "Do you hear the people sing?"
@@ -704,9 +704,7 @@
 	mail_holiday = TRUE
 	holiday_colors = list(
 		COLOR_CHRISTMAS_GREEN,
-		COLOR_WHITE,
 		COLOR_CHRISTMAS_RED,
-		COLOR_WHITE,
 	)
 
 /datum/holiday/xmas/getStationPrefix()
