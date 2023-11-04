@@ -358,7 +358,7 @@ multiple modular subtrees with behaviors
 	if(!LAZYLEN(current_behaviors))
 		return
 	// Reverse to avoid constantly rescheduling timers
-	for(var/datum/ai_behavior/current_behavior as anything in reverse(current_behaviors.Copy()))
+	for(var/datum/ai_behavior/current_behavior as anything in reverse_range(current_behaviors.Copy()))
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[current_behavior.type]
 		if(stored_arguments)
@@ -443,8 +443,8 @@ multiple modular subtrees with behaviors
 			REMOVE_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
 			if(!HAS_TRAIT(_tracked_datum, TRAIT_AI_TRACKING)) { \
 				UnregisterSignal(_tracked_datum, COMSIG_QDELETING); \
-			}; \
-		}
+			} \
+		} \
 	} \
 } while(FALSE)
 

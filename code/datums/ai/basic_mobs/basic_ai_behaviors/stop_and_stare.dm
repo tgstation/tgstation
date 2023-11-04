@@ -8,7 +8,7 @@
 	return ismovable(target) && isturf(target.loc) && ismob(controller.pawn)
 
 /datum/ai_behavior/stop_and_stare/get_cooldown(datum/ai_controller/cooldown_for)
-	return controller.blackboard[BB_STATIONARY_COOLDOWN]
+	return cooldown_for.blackboard[BB_STATIONARY_COOLDOWN]
 
 /datum/ai_behavior/stop_and_stare/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
