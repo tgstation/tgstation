@@ -6,8 +6,8 @@
  */
 /datum/ai_controller/basic_controller/artificer
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/same_faction/construct,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/same_faction/construct),
+		BB_FLEE_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_TARGET_WOUNDED_ONLY = TRUE,
 	)
 
@@ -27,7 +27,7 @@
  */
 /datum/ai_controller/basic_controller/juggernaut
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -46,9 +46,9 @@
  */
 /datum/ai_controller/basic_controller/proteon
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_FLEE_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -68,7 +68,7 @@
  */
 /datum/ai_controller/basic_controller/wraith
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 

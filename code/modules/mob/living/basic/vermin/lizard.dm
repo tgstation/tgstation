@@ -55,7 +55,7 @@
 
 /datum/ai_controller/basic_controller/lizard
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/allow_items),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

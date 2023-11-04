@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/eyeball
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/eyeball,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/eyeball),
 		BB_EYE_DAMAGE_THRESHOLD = 10,
 	)
 

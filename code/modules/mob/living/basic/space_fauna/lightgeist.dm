@@ -78,7 +78,7 @@
 
 /datum/ai_controller/basic_controller/lightgeist
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/lightgeist,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/lightgeist),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

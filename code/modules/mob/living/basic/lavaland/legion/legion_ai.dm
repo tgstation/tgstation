@@ -1,7 +1,7 @@
 /// Keep away and launch skulls at every opportunity, prioritising injured allies
 /datum/ai_controller/basic_controller/legion
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/legion,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/legion),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_AGGRO_RANGE = 5, // Unobservant
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
@@ -19,7 +19,7 @@
 /// Chase and attack whatever we are targetting, if it's friendly we will heal them
 /datum/ai_controller/basic_controller/legion_brood
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/legion,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/legion),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 

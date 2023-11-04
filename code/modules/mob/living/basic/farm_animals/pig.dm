@@ -47,7 +47,7 @@
 
 /datum/ai_controller/basic_controller/pig
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

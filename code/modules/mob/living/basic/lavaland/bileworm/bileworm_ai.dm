@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/bileworm
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/bileworm(),
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/bileworm),
 	)
 
 	planning_subtrees = list(

@@ -4,7 +4,7 @@
  */
 /datum/ai_controller/basic_controller/blobbernaut
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -21,7 +21,7 @@
  */
 /datum/ai_controller/basic_controller/blob_zombie
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -39,7 +39,7 @@
  */
 /datum/ai_controller/basic_controller/blob_spore
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 

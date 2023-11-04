@@ -48,7 +48,7 @@
 
 /datum/ai_controller/basic_controller/paper_wizard
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
 		BB_WRITING_LIST = list(
 			"I can turn the paper into gold and ink into diamonds!",
 			"Your fate is written and sealed!",
