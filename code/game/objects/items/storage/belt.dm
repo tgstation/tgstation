@@ -708,6 +708,9 @@
 	atom_storage.max_slots = 18
 	atom_storage.max_total_storage = 18
 	atom_storage.numerical_stacking = TRUE
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.allow_quick_empty = TRUE
+	atom_storage.numerical_stacking = TRUE
 	atom_storage.set_holdable(list(
 		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
