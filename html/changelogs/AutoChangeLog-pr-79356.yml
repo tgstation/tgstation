@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - qol: "Character preferences now have descriptions as tooltips - hover over their names to see them"
