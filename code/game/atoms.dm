@@ -2271,12 +2271,12 @@
 	RecalculateInvisibility()
 
 /// Removes the specified invisibility source from the tracker
-/atom/proc/RemoveInvisibility(source_id)
+/atom/proc/RemoveInvisibility(id)
 	if(!invisibility_sources)
 		return
 
-	var/list/priority_data = invisibility_sources[source_id]
-	invisibility_sources -= source_id
+	var/list/priority_data = invisibility_sources[id]
+	invisibility_sources -= id
 
 	if(length(invisibility_sources) == 0)
 		invisibility_sources = null

@@ -53298,9 +53298,6 @@
 /obj/machinery/computer/message_monitor{
 	dir = 4
 	},
-/obj/machinery/computer/message_monitor{
-	dir = 4
-	},
 /obj/machinery/camera/directional/west{
 	name = "Telecomms - Control";
 	network = list("ss13","engine")

@@ -30,7 +30,7 @@
 
 // This is split into a seperate proc mostly to make errors that happen not break things too much
 /proc/_debug_variable_value(name, value, level, datum/owner, sanitize, display_flags)
-	. = "<font color='red'>DISPLAY_ERROR</font>"
+	. = "<font color='red'>DISPLAY_ERROR:</font> ([value] [REF(value)])" // Make sure this line can never runtime
 
 	if(isnull(value))
 		return "<span class='value'>null</span>"
@@ -64,13 +64,13 @@
 		var/datum/datum_value = value
 		return datum_value.debug_variable_value(name, level, owner, sanitize, display_flags)
 
-	if(islist(value) || GLOB.vv_special_lists[name]) // Some special lists arent detectable as a list through istype
+	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists arent detectable as a list through istype
 		var/list/list_value = value
 		var/list/items = list()
 
 		// This is becuse some lists either dont count as lists or a locate on their ref will return null
 		var/link_vars = "Vars=[REF(value)]"
-		if(GLOB.vv_special_lists[name])
+		if(name in GLOB.vv_special_lists)
 			link_vars = "Vars=[REF(owner)];special_varname=[name]"
 
 		if (!(display_flags & VV_ALWAYS_CONTRACT_LIST) && list_value.len > 0 && list_value.len <= (IS_NORMAL_LIST(list_value) ? VV_NORMAL_LIST_NO_EXPAND_THRESHOLD : VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD))

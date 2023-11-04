@@ -380,6 +380,7 @@ export const PreferenceList = (props: {
               <LabeledList.Item
                 key={featureId}
                 label={feature.name}
+                tooltip={feature.description}
                 verticalAlign="middle">
                 <Stack fill>
                   {randomSetting && (
