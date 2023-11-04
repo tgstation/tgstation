@@ -133,7 +133,8 @@
 	name = "Moonlight Amulette"
 	desc = "Allows you to transmute 2 sheets of glass, a pair of eyes, a brain and a tie \
 			if the item is used on someone with low sanity they go berserk attacking everyone \
-			, if their sanity isnt low enough it decreases their mood."
+			, if their sanity isnt low enough it decreases their mood. \
+			Optionally you can add a poppy in the ritual to further decrease their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 	next_knowledge = list(/datum/heretic_knowledge/blade_upgrade/moon)
 	required_atoms = list(
@@ -143,6 +144,10 @@
 		/obj/item/clothing/neck/tie = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette)
+	optional_atoms = list(
+		/obj/item/food/grown/poppy = 1,
+	)
+	optional_result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulette/upgraded)
 	cost = 1
 	route = PATH_MOON
 

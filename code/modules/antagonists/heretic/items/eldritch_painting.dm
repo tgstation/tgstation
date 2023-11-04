@@ -139,13 +139,13 @@
 /obj/item/wallframe/painting/eldritch/desire
 	name = "The First Desire"
 	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_desire"
 	result_path = /obj/structure/sign/painting/eldritch/desire
 
 /obj/structure/sign/painting/eldritch/desire
 	name = "The First Desire"
 	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_desire"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/desire
 
 // Moodlets used to track hunger and provide feedback

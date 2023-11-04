@@ -59,6 +59,8 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
+	// How much damage does this item do to the targets sanity?
+	var/sanity_damage = 20
 
 /obj/item/clothing/neck/heretic_focus/moon_amulette/attack(mob/living/target, mob/living/user, params)
 	var/mob/living/carbon/human/hit = target
@@ -68,7 +70,7 @@
 				if(SANITY_LEVEL_GREAT, SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_DISTURBED)
 					user.balloon_alert(user, "Their mind is too strong!")
 					hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
-					hit.mob_mood.set_sanity(hit.mob_mood.sanity - 20)
+					hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)
 				if(SANITY_LEVEL_CRAZY, SANITY_LEVEL_INSANE)
 					user.balloon_alert(user, "Their mind bends to see the truth!")
 					to_chat(hit, span_notice("<span class='warning'>THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>"))
@@ -81,3 +83,7 @@
 		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
 	. = ..()
 
+// Functionally identical but deals more sanity damage
+/obj/item/clothing/neck/heretic_focus/moon_amulette/upgraded
+	name="Shining Moonlight Amulette"
+	sanity_damage = 40
