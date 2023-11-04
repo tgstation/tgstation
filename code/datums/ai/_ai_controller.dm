@@ -23,8 +23,6 @@ multiple modular subtrees with behaviors
 	var/list/planned_behaviors
 	///Current actions being performed by the AI -> time to wait until running
 	var/list/current_behaviors
-	///Timerid of the next behavior to run
-	var/next_behavior_id
 	///Current status of AI (OFF/ON)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
@@ -62,6 +60,9 @@ multiple modular subtrees with behaviors
 	/// Make sure you hook update_able_to_run() in setup_able_to_run() to whatever parameters changing that you added
 	/// Otherwise we will not pay attention to them changing
 	var/able_to_run = FALSE
+
+	/// When was the last time we ran an action?
+	var/last_action_ran = 0
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -117,7 +118,7 @@ multiple modular subtrees with behaviors
 
 			if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
 				ai_movement.stop_moving_towards(src)
-			return
+			continue
 
 		else if(ai_movement.moving_controllers[src] != current_movement_target) //We're too far, if we're not already moving start doing it.
 			ai_movement.start_moving_towards(src, current_movement_target, current_behavior.required_distance) //Then start moving
@@ -221,12 +222,14 @@ multiple modular subtrees with behaviors
 	able_to_run = get_able_to_run()
 	if(!able_to_run)
 		SSmove_manager.stop_looping(pawn) //stop moving, since we can't run the controller rn
-		deltimer(next_behavior_id, SSai_behaviors)
+		for(var/datum/ai_behavior/fall_asleep as anything in current_behaviors)
+			var/id = current_behaviors[fall_asleep]
+			current_behaviors[fall_asleep] = world.time + timeleft(id, SSai_behaviors)
+			deltimer(id, SSai_behaviors)
 	else
-		var/datum/ai_behavior/next = LAZYACCESS(current_behaviors, 1)
-		if(!next)
-			return
-		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), next), LAZYACCESS(current_behaviors, next), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		for(var/datum/ai_behavior/restart as anything in current_behaviors)
+			var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), restart), world.time - current_behaviors[restart], TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+			current_behaviors[restart] = id
 
 ///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
 /datum/ai_controller/proc/get_able_to_run()
@@ -238,6 +241,12 @@ multiple modular subtrees with behaviors
 
 /// Handles a scheduled ai behavior
 /datum/ai_controller/proc/handle_behavior(datum/ai_behavior/current_behavior)
+	// Only one action per tick
+	if(world.time == last_action_ran)
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), current_behavior), 1 TICKS, TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		LAZYSET(current_behaviors, current_behavior, id)
+		return
+
 	// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 	// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
 	// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
@@ -338,8 +347,13 @@ multiple modular subtrees with behaviors
 	// If we were on idle and we are no longer, then stop yeah?
 	if(!LAZYLEN(current_behaviors))
 		STOP_PROCESSING(SSai_idle, src)
-		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-	LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown(src))
+
+	if(able_to_run)
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		LAZYSET(current_behaviors, behavior, id)
+	else
+		LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown())
+
 	LAZYSET(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
@@ -349,15 +363,16 @@ multiple modular subtrees with behaviors
 	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
+	last_action_ran = world.time
 	var/list/arguments = list(seconds_per_tick, src)
 	var/list/stored_arguments = behavior_args[behavior.type]
 	if(stored_arguments)
 		arguments += stored_arguments
 	behavior.perform(arglist(arguments))
 	// If we're still a behavior, requeue our timer
-	if(LAZYACCESS(current_behaviors, 1) == behavior)
-		next_behavior_id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		LAZYSET(current_behaviors, behavior, world.time + behavior.get_cooldown(src))
+	if(LAZYACCESS(current_behaviors, behavior))
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		LAZYSET(current_behaviors, behavior, id)
 
 /datum/ai_controller/proc/CancelActions()
 	if(!LAZYLEN(current_behaviors))
