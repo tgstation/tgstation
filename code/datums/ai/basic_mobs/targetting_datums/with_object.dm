@@ -1,29 +1,19 @@
 /**
- * Find mobs who are holding the configurable object type
+ * Find mobs who are holding the bb configurable object type
  *
  * This is an extension of basic targeting behaviour, that allows you to
  * only target the mob if they have a specific item in their hand.
  *
  */
 /datum/targetting_datum/basic/holding_object
-	// We will find mobs who are holding this object in their hands
-	var/object_type_path = null
-
-/**
- * Create an instance of the holding object targeting datum
- *
- * * object_type_path Pass an object type path, this will be compared to the items
- *   in targets hands to filter the target list.
- */
-/datum/targetting_datum/basic/holding_object/New(object_type_path)
-	if (!ispath(object_type_path))
-		stack_trace("trying to create an item targeting datum with no valid typepath")
-		// Leaving object type as null will make this basically a noop
-		return
-	src.object_type_path = object_type_path
+	/// BB key that holds the target typepath to use
+	var/target_item_key = BB_TARGET_HELD_ITEM
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targetting_datum/basic/holding_object/can_attack(mob/living/living_mob, atom/target, vision_range)
+	var/datum/ai_controller/controller = living_mob.ai_controller
+	var/object_type_path = controller.blackboard[target_item_key]
+	
 	if (object_type_path == null)
 		return FALSE // no op
 	if(!ismob(target))
