@@ -65,12 +65,16 @@
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags |= WAG_WAGGING
 	accessory.wagging = TRUE
+	if(owner)
+		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(stop_wag))
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/stop_wag()
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
+	if(owner)
+		UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 
 ///Tail parent type, with wagging functionality
 /datum/bodypart_overlay/mutant/tail
