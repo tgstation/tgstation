@@ -70,6 +70,8 @@
 	var/mutable_appearance/extra_effect
 	///the fault we picked from the listed ones
 	var/datum/artifact_fault/chosen_fault
+	///the amount of freebies we get
+	var/freebies = 3
 
 /datum/component/artifact/Initialize(forced_origin = null)
 	. = ..()
@@ -195,6 +197,9 @@
 	for(var/datum/artifact_activator/listed_activator in activators)
 		if(!(listed_activator.required_stimuli & stimuli))
 			if(!triggers_faults)
+				continue
+			if(freebies >= 1)
+				freebies--
 				continue
 			if(checked_fault)
 				continue

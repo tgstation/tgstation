@@ -5,10 +5,12 @@
 
 
 /datum/artifact_fault/death/on_trigger(datum/component/artifact/component)
-
+	var/list/mobs = list()
+	var/mob/living/carbon/human
 	for(var/mob/living/carbon/human in range(rand(3, 4), component.holder))
-		var/obj/item/organ/internal/brain/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-		if(brain)
-			brain.forceMove(get_turf(human))
-		human.gib()
-		break
+		mobs += human
+	human = pick(mobs)
+	var/obj/item/organ/internal/brain/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.forceMove(get_turf(human))
+	human.gib()
