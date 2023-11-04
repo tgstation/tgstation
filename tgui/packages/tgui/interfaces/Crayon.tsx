@@ -45,8 +45,11 @@ export const Crayon = (props, context) => {
                 />
               </LabeledList.Item>
               <ColorItem />
-              <LabeledList.Item label="Custom color">
-                <Button content="Select" onClick={() => act('custom_color')} />
+              <LabeledList.Item>
+                <Button
+                  content="Custom color"
+                  onClick={() => act('custom_color')}
+                />
               </LabeledList.Item>
             </LabeledList>
           </Section>
