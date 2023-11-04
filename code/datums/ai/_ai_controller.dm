@@ -413,14 +413,14 @@ multiple modular subtrees with behaviors
 		var/datum/weakref/_bad_weakref = tracked_datum; \
 		stack_trace("Weakref (Actual datum: [_bad_weakref.resolve()]) found in ai datum blackboard! \
 			This is an outdated method of ai reference handling, please remove it."); \
-	}; \
+	} \
 	else if(isdatum(tracked_datum)) { \
 		var/datum/_tracked_datum = tracked_datum; \
 		if(!HAS_TRAIT_FROM(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]")) { \
 			RegisterSignal(_tracked_datum, COMSIG_QDELETING, PROC_REF(sig_remove_from_blackboard), override = TRUE); \
 			ADD_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
-		}; \
-	}; \
+		} \
+	} \
 } while(FALSE)
 
 /**
@@ -435,8 +435,16 @@ multiple modular subtrees with behaviors
 		REMOVE_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
 		if(!HAS_TRAIT(_tracked_datum, TRAIT_AI_TRACKING)) { \
 			UnregisterSignal(_tracked_datum, COMSIG_QDELETING); \
-		}; \
-	}; \
+		} \
+	} else if (islist(tracked_datum)) { \
+		for(var/_tracked_entry in tracked_datum) { \
+			var/datum/_tracked_datum = tracked_datum; \
+			REMOVE_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
+			if(!HAS_TRAIT(_tracked_datum, TRAIT_AI_TRACKING)) { \
+				UnregisterSignal(_tracked_datum, COMSIG_QDELETING); \
+			}; \
+		}
+	} \
 } while(FALSE)
 
 /// Used for above to track all the keys that have registered a signal
