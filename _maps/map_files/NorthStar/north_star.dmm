@@ -11559,7 +11559,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "aft_vator";
 	pixel_x = 24;
-	preset_destination_names = list("2" = "Supply-Engi        Floor", "3" = "Med-Sci        Floor", "4" = "Service        Floor")
+	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/aft)
@@ -15029,31 +15029,31 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
+	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
 	name = "strange pill";
 	pixel_x = 9
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
+	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
 	name = "strange pill"
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
+	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
 	name = "strange pill";
 	pixel_x = -9;
 	pixel_y = -8
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
+	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
 	name = "strange pill";
 	pixel_y = -8
 	},
 /obj/item/reagent_containers/pill/happinesspsych{
 	desc = "A mysterious unlabelled pill. You're not sure what it is, but it's probably a synthetic drug.";
-	list_reagents = list(/datum/reagent/drug/happiness = 5, /datum/reagent/drug/space_drugs = 10, /datum/reagent/drug/mushroomhallucinogen = 10);
+	list_reagents = list(/datum/reagent/drug/happiness=5,/datum/reagent/drug/space_drugs=10,/datum/reagent/drug/mushroomhallucinogen=10);
 	name = "strange pill";
 	pixel_x = -9
 	},
@@ -39828,7 +39828,7 @@
 /obj/machinery/elevator_control_panel/directional/east{
 	linked_elevator_id = "com_vator";
 	pixel_x = 24;
-	preset_destination_names = list("3" = "Medsci", "4" = "Service", "5" = "Command")
+	preset_destination_names = list("3"="Medsci","4"="Service","5"="Command")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor2/fore)
@@ -56727,17 +56727,17 @@
 "oMm" = (
 /obj/structure/table/reinforced,
 /obj/item/food/butter{
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/drug/space_drugs = 10);
+	food_reagents = list(/datum/reagent/consumable/nutriment=5,/datum/reagent/drug/space_drugs=10);
 	name = "stick of 'medicated' butter";
 	pixel_y = 8
 	},
 /obj/item/food/butter{
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/drug/space_drugs = 10);
+	food_reagents = list(/datum/reagent/consumable/nutriment=5,/datum/reagent/drug/space_drugs=10);
 	name = "stick of 'medicated' butter";
 	pixel_y = 3
 	},
 /obj/item/food/butter{
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/drug/space_drugs = 10);
+	food_reagents = list(/datum/reagent/consumable/nutriment=5,/datum/reagent/drug/space_drugs=10);
 	name = "stick of 'medicated' butter";
 	pixel_y = -2
 	},
@@ -56941,6 +56941,7 @@
 "oOW" = (
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun/dragnet,
+/obj/item/portable_recharger/loaded,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "oOY" = (
@@ -63504,7 +63505,7 @@
 /obj/machinery/elevator_control_panel/directional/west{
 	linked_elevator_id = "fore_vator";
 	pixel_x = -24;
-	preset_destination_names = list("2" = "Supply-Engi        Floor", "3" = "Med-Sci        Floor", "4" = "Service        Floor")
+	preset_destination_names = list("2"="Supply-Engi        Floor","3"="Med-Sci        Floor","4"="Service        Floor")
 	},
 /obj/machinery/lift_indicator/directional/west{
 	linked_elevator_id = "fore_vator";
@@ -80809,11 +80810,11 @@
 "viv" = (
 /obj/structure/table/reinforced,
 /obj/item/food/cake/chocolate{
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/drug/space_drugs = 10);
+	food_reagents = list(/datum/reagent/consumable/nutriment=20,/datum/reagent/drug/space_drugs=10);
 	name = "large pot brownie"
 	},
 /obj/item/food/cake/chocolate{
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/drug/space_drugs = 10);
+	food_reagents = list(/datum/reagent/consumable/nutriment=20,/datum/reagent/drug/space_drugs=10);
 	name = "large pot brownie";
 	pixel_y = 6
 	},

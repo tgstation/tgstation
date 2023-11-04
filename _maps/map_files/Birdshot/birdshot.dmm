@@ -6932,6 +6932,7 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/portable_recharger/loaded,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "cHC" = (
