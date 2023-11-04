@@ -6,7 +6,7 @@
 	var/behavior_flags = NONE
 	///Cooldown between actions performances, defaults to the value of CLICK_CD_MELEE because that seemed like a nice standard for the speed of AI behavior
 	///Do not read directly or mutate, instead use get_cooldown()
-	VAR_PRIVATE/action_cooldown = CLICK_CD_MELEE
+	VAR_PROTECTED/action_cooldown = CLICK_CD_MELEE
 
 /// Returns the delay to use for this behavior in the moment
 /// Override to return a conditional delay
@@ -29,7 +29,7 @@
 		// Queue the next behavior, otherwise send it to idle
 		if(LAZYLEN(controller.current_behaviors) > 1)
 			var/datum/ai_behavior/next_behavior = controller.current_behaviors[2]
-			controller.next_behavior_id = addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/ai_controller, handle_behavior), next_behavior), next_behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+			controller.next_behavior_id = addtimer(CALLBACK(controller, TYPE_PROC_REF(/datum/ai_controller, handle_behavior), next_behavior), next_behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
 		else
 			START_PROCESSING(SSai_idle, controller)
 
