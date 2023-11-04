@@ -10,6 +10,8 @@
 	for(var/mob/living/carbon/human in range(rand(3, 4), component.holder))
 		mobs += human
 	human = pick(mobs)
+	if(!human)
+		continue
 	var/obj/item/organ/internal/brain/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.forceMove(get_turf(human))
