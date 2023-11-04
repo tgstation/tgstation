@@ -7,7 +7,7 @@
 	icon = 'icons/obj/signs.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_weeping"
 	result_path = /obj/structure/sign/painting/eldritch
 	pixel_shift = 30
 
@@ -15,7 +15,7 @@
 	name = "The sister and He Who Wept"
 	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_weeping"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
@@ -301,13 +301,13 @@
 /obj/item/wallframe/painting/eldritch/beauty
 	name = "Lady out of gates"
 	desc = "A painting depicting a perfect lady, and I must be perfect like her..."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_beauty"
 	result_path = /obj/structure/sign/painting/eldritch/beauty
 
 /obj/structure/sign/painting/eldritch/beauty
 	name = "Lady out of gates"
 	desc = "A painting depicting a perfect lady, and I must be perfect like her. Destroyable with wirecutters."
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_beauty"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/beauty
 	// Set to mutadone by default to remove mutations
 	var/list/reagents_to_add = list(/datum/reagent/medicine/mutadone)
