@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscdel: "Remove duplicate lighting from beach bar domain"

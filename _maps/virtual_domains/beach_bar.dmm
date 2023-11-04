@@ -392,7 +392,6 @@
 /area/virtual_domain/fullbright)
 "uc" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/virtual_domain/fullbright)
 "ug" = (
