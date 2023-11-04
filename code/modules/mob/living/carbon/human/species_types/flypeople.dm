@@ -3,7 +3,6 @@
 	plural_form = "Flypeople"
 	id = SPECIES_FLYPERSON
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_FRAIL_ATTACKER,
 		TRAIT_ANTENNAE,
 	)
@@ -12,7 +11,6 @@
 	mutanteyes = /obj/item/organ/internal/eyes/fly
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
-	wing_types = list(/obj/item/organ/external/wings/functional/fly)
 	payday_modifier = 1.0
 
 	mutanttongue = /obj/item/organ/internal/tongue/fly

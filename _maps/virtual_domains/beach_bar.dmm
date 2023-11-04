@@ -159,9 +159,9 @@
 	pixel_x = -8;
 	pixel_y = -1
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_y = 8;
-	pixel_x = 5
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
+	pixel_y = 5;
+	pixel_x = 6
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
@@ -300,6 +300,9 @@
 /obj/item/food/meat/slab/rawcrab,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
+"no" = (
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/virtual_domain/powered)
 "nP" = (
 /obj/item/stack/sheet/iron/fifty,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -424,10 +427,10 @@
 /area/virtual_domain/powered)
 "uq" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_x = -4;
-	pixel_y = 8
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
@@ -878,11 +881,11 @@
 /area/virtual_domain/powered)
 "Mp" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain{
-	pixel_y = 7;
-	pixel_x = 4
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada{
+	pixel_x = 5;
+	pixel_y = 5
 	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain,
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/pina_colada,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "Mw" = (
@@ -2116,7 +2119,7 @@ iz
 (23,1,1) = {"
 iz
 Al
-xb
+no
 Fn
 Cb
 wD
@@ -2159,7 +2162,7 @@ xW
 (24,1,1) = {"
 iz
 Al
-xb
+no
 Fn
 wD
 Gz
@@ -2202,7 +2205,7 @@ xW
 (25,1,1) = {"
 iz
 Al
-xb
+no
 Fn
 OK
 Gz
@@ -2245,7 +2248,7 @@ xW
 (26,1,1) = {"
 iz
 Al
-xb
+no
 Fn
 Sg
 wD
