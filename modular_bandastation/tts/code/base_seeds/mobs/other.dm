@@ -6,7 +6,7 @@
 /obj/item/nullrod/scythe/talking
 	tts_seed = "Sylvanas"
 
-/mob/living/simple_animal/shade
+/mob/living/basic/shade
 	tts_seed = "Kelthuzad"
 
 /mob/living/simple_animal/bot

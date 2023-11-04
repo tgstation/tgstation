@@ -15,7 +15,7 @@
 /mob/living/basic/pet/dog
 	tts_seed = "Stetmann"
 
-/mob/living/simple_animal/hostile/retaliate/goat
+/mob/living/basic/goat
 	tts_seed = "Muradin"
 
 /mob/living/basic/cow
@@ -54,7 +54,7 @@
 /mob/living/basic/pet/penguin
 	tts_seed = "Narrator"
 
-/mob/living/simple_animal/sloth
+/mob/living/basic/sloth
 	tts_seed = "Peon"
 
 /mob/living/basic/butterfly

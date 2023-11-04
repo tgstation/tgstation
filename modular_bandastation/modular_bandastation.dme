@@ -7,11 +7,11 @@
 #include "ai_laws/_ai_laws.dme"
 #include "barsigns/_barsigns.dme"
 #include "communication/_communication.dme"
-#include "crawl_speed/_crawl_speed.dme"
+//#include "crawl_speed/_crawl_speed.dme" // NO RP SPEED FOR MAIN SERVER
 #include "cyrillic_fixes/_cyrillic_fixes.dme"
 #include "discord/_discord.dme"
-//#include "emote_panel/_emote_panel.dme"
-#include "events/_events.dme"
+//#include "emote_panel/_emote_panel.dme" // Waiting for upstream merge
+//#include "events/_events.dme" // Going for pure TG right now...
 #include "examine_panel/_examine_panel.dme"
 #include "gunhud/_gunhud.dme"
 #include "keybindings/_keybindings.dme"

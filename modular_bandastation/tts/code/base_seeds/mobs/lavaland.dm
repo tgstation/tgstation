@@ -6,22 +6,19 @@
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner
 	tts_seed = "Chen"
 
-/mob/living/simple_animal/hostile/asteroid/basilisk
+/mob/living/basic/mining/basilisk
 	tts_seed = "Antimage"
 
 /mob/living/basic/mining/goliath/ancient
 	tts_seed = "Bloodseeker"
 
-/mob/living/simple_animal/hostile/asteroid/hivelord
+/mob/living/basic/mining/hivelord
 	tts_seed = "Ladyvashj"
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood
-	tts_seed = "Ladyvashj"
-
-/mob/living/simple_animal/hostile/asteroid/hivelord/legion
+/mob/living/basic/mining/legion
 	tts_seed = "Bloodseeker"
 
-/mob/living/simple_animal/hostile/big_legion
+/mob/living/basic/mining/legion/big
 	tts_seed = "Mannoroth"
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother

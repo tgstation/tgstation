@@ -178,8 +178,7 @@
 		)
 	return "Я буду [translation[picked_serving]] [initial(reagent_type.name)]"
 
-
-/mob/living/simple_animal/robot_customer/Initialize(mapload, datum/customer_data/customer_data, datum/venue/attending_venue)
+/mob/living/basic/robot_customer/Initialize(mapload, datum/customer_data/customer_data, datum/venue/attending_venue)
 	. = ..()
 	var/datum/customer_data/customer_info = SSrestaurant.all_customers[customer_data]
 	if(customer_info)

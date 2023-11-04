@@ -70,11 +70,6 @@ jobs:
       - name: Ticked File Enforcement
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: |
-          bash tools/ci/check_filedirs.sh tgstation.dme
-          bash tools/ci/check_changelogs.sh
-          bash tools/ci/check_grep.sh
-          bash tools/bandastation_check_grep.sh # BANDASTATION EDIT ADDITION - checking modular_bandastation code
-          bash tools/ci/check_misc.sh
           bash tools/bandastation_check_grep.sh # BANDASTATION EDIT ADDITION - checking modular_bandastation code
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json

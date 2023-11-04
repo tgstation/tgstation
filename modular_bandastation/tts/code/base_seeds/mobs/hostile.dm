@@ -1,6 +1,6 @@
 //Hostile mobs
 
-/mob/living/simple_animal/hostile/blob
+/mob/living/basic/blob_minion
 	tts_seed = "Earth"
 
 /mob/living/basic/clockwork_marauder
@@ -9,25 +9,25 @@
 /mob/living/basic/cortical_borer
 	tts_seed = "Gman_e2"
 
-/mob/living/simple_animal/hostile/morph
+/mob/living/basic/morph
 	tts_seed = "Treant"
 
-/mob/living/simple_animal/revenant
+/mob/living/basic/revenant
 	tts_seed = "Sylvanas"
 
-/mob/living/simple_animal/hostile/imp/slaughter
+/mob/living/basic/demon
 	tts_seed = "Mannoroth"
 
-/mob/living/simple_animal/hostile/construct
+/mob/living/basic/construct
 	tts_seed = "Acolyte"
 
-/mob/living/simple_animal/hostile/construct/wraith
+/mob/living/basic/construct/wraith
 	tts_seed = "Kelthuzad"
 
-/mob/living/simple_animal/hostile/retaliate/snake
+/mob/living/basic/snake
 	tts_seed = "Ladyvashj"
 
-/mob/living/simple_animal/hostile/bear
+/mob/living/basic/bear
 	tts_seed = "Shaker"
 
 /mob/living/basic/carp
