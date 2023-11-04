@@ -21,7 +21,7 @@
 /// Can use a different targetting datum than you use to select attack targets
 /// Not required if fleeing is the only target behaviour or uses the same target datum
 /datum/ai_planning_subtree/target_retaliate/to_flee
-	targeting_strategy_key = BB_FLEE_targeting_strategy
+	targeting_strategy_key = BB_FLEE_TARGETING_STRATEGY
 	target_key = BB_BASIC_MOB_FLEE_TARGET
 	hiding_place_key = BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION
 

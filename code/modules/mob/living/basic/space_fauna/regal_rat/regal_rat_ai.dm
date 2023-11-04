@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/regal_rat
 	blackboard = list(
 		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
-		BB_FLEE_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_FLEE_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

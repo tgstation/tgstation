@@ -79,7 +79,7 @@
 	blackboard = list(
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
 		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/of_size/ours_or_smaller),
-		BB_FLEE_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_FLEE_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

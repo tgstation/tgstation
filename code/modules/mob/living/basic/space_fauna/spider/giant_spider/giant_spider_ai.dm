@@ -44,7 +44,7 @@
 /datum/ai_controller/basic_controller/giant_spider/pest
 	blackboard = list(
 		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/of_size/ours_or_smaller), // Hunt mobs our size
-		BB_FLEE_targeting_strategy = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/of_size/larger), // Run away from mobs bigger than we are
+		BB_FLEE_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/of_size/larger), // Run away from mobs bigger than we are
 	)
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
