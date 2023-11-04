@@ -52,7 +52,7 @@
 		return
 
 	if(start)
-		if(start_wag() && stop_after)
+		if(start_wag(organ_owner) && stop_after)
 			addtimer(CALLBACK(src, PROC_REF(wag), organ_owner, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
 		stop_wag()
