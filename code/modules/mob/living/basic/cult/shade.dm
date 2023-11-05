@@ -1,4 +1,4 @@
-/mob/living/simple_animal/shade
+/mob/living/basic/shade
 	name = "Shade"
 	real_name = "Shade"
 	desc = "A bound spirit."
@@ -10,45 +10,60 @@
 	maxHealth = 40
 	health = 40
 	speak_emote = list("hisses")
-	emote_hear = list("wails.","screeches.")
 	response_help_continuous = "puts their hand through"
 	response_help_simple = "put your hand through"
 	response_disarm_continuous = "flails at"
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	speak_chance = 1
 	melee_damage_lower = 5
 	melee_damage_upper = 12
 	attack_verb_continuous = "metaphysically strikes"
 	attack_verb_simple = "metaphysically strike"
-	minbodytemp = 0
-	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	speed = -1 //they don't have to lug a body made of runed metal around
-	stop_automated_movement = 1
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
+	unsuitable_atmos_damage = 0
+	speed = -1
 	faction = list(FACTION_CULT)
-	status_flags = CANPUSH
-	loot = list(/obj/item/ectoplasm)
-	del_on_death = TRUE
+	basic_mob_flags = DEL_ON_DEATH
 	initial_language_holder = /datum/language_holder/construct
+	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
+	var/theme = THEME_CULT
+	/// The different flavors of goop shades can drop, depending on theme.
+	var/static/list/remains_by_theme = list(
+		THEME_CULT = list(/obj/item/ectoplasm/construct),
+		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
+		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
+	)
 
-/mob/living/simple_animal/shade/Initialize(mapload)
+/mob/living/basic/shade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+	if(isnull(theme))
+		return
+	icon_state = "shade_[theme]"
+	var/list/remains = string_list(remains_by_theme[theme])
+	if(length(remains))
+		AddElement(/datum/element/death_drops, remains)
 
-/mob/living/simple_animal/shade/death()
+/mob/living/basic/shade/update_icon_state()
+	. = ..()
+	if(!isnull(theme))
+		icon_state = "shade_[theme]"
+	icon_living = icon_state
+
+/mob/living/basic/shade/death()
 	if(death_message == initial(death_message))
 		death_message = "lets out a contented sigh as [p_their()] form unwinds."
 	..()
 
-/mob/living/simple_animal/shade/can_suicide()
+/mob/living/basic/shade/can_suicide()
 	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/shade/attackby(obj/item/item, mob/user, params)  //Marker -Agouri
+/mob/living/basic/shade/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/soulstone))
 		var/obj/item/soulstone/stone = item
 		stone.capture_shade(src, user)

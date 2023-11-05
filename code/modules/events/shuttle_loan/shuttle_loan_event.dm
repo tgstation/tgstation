@@ -43,7 +43,7 @@
 	SSshuttle.shuttle_loan = src
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by CentCom.")
+	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by [command_name()].")
 
 	dispatched = TRUE
 	var/datum/bank_account/dep_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
