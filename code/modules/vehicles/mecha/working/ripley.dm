@@ -123,8 +123,6 @@
 	var/mutable_appearance/sirenlights
 	///Looping sound datum for the Siren audio
 	var/datum/looping_sound/siren/weewooloop
-	///Referece to the action button for the Siren
-	var/datum/action/vehicle/sealed/mecha/siren/sirenbutton
 
 /datum/armor/mecha_paddy
 	melee = 40
@@ -155,15 +153,14 @@
 	if(force_off || siren)
 		weewooloop.stop()
 		siren = FALSE
-		sirenbutton?.button_icon_state = "mech_siren_off"
-		sirenbutton.build_all_button_icons()
-		balloon_alert(occupant, "siren disabled")
 	else
 		weewooloop.start()
 		siren = TRUE
-		sirenbutton?.button_icon_state = "mech_siren_on"
-		sirenbutton.build_all_button_icons()
-		balloon_alert(occupant, "siren activated")
+	for(var/mob/occupant as anything in occupants)
+		balloon_alert(occupant, "siren [siren ? "activated" : "disabled"]")
+		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/siren) in occupant.actions
+		act.button_icon_state = "mech_siren_[siren ? "on" : "off"]"
+		act.build_all_button_icons()
 	update_overlays()
 
 /obj/vehicle/sealed/mecha/ripley/paddy/update_overlays()
@@ -187,7 +184,7 @@
 /datum/action/vehicle/sealed/mecha/siren/New()
 	. = ..()
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
-	secmech.sirenbutton = src
+	button_icon_state = "mech_siren_[secmech.siren ? "on" : "off"]"
 
 /datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis

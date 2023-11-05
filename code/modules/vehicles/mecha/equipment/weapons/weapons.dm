@@ -580,7 +580,7 @@
 			return
 
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_danger("[chassis] grips you with [src] and prepares to load you into a holding cell!"))
+		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [cargo_holder]!"))
 		if(!do_after_cooldown(mobtarget, source))
 			return
 		mobtarget.forceMove(cargo_holder)
