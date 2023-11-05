@@ -42,7 +42,7 @@
 
 /datum/ai_controller/basic_controller/killer_tomato
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

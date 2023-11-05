@@ -2,7 +2,7 @@
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_dog
@@ -19,9 +19,9 @@
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		// Find nearby mobs ...
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/holding_object
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/holding_object,
 		// With tongs in hand!
 		BB_TARGET_HELD_ITEM = /obj/item/kitchen/tongs,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/pet/dog),

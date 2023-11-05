@@ -35,7 +35,7 @@
 /datum/ai_controller/basic_controller/deer
 	blackboard = list(
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance

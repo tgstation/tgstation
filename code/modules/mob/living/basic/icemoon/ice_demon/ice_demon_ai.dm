@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/ice_demon
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_LIST_SCARY_ITEMS = list(
 			/obj/item/weldingtool,
 			/obj/item/flashlight/flare,
