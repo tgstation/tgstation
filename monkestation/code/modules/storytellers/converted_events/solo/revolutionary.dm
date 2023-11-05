@@ -63,3 +63,11 @@
 		return
 	finished = TRUE
 	revolution.round_result(finished)
+
+/datum/round_event/antagonist/solo/revolutionary/tick()
+	var/winner = revolution.process_victory()
+	if (isnull(winner))
+		return
+
+	finished = winner
+	revolution.round_result(finished)
