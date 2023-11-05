@@ -120,7 +120,7 @@
 		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/multitool = 1,
 	)
-	result_atoms = list(/obj/item/heretic_lintel)
+	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
 	next_knowledge = list(/datum/heretic_knowledge/mark/knock_mark)
 	cost = 1
 	route = PATH_LOCK

@@ -1,5 +1,5 @@
 /obj/effect/forcefield/wizard/heretic
-	name = "consecrated lintel"
+	name = "labyrinth pages"
 	desc = "A field of papers flying in the air, repulsing heathens with impossible force."
 	icon_state = "lintel"
 	initial_duration = 8 SECONDS
@@ -13,11 +13,11 @@
 	visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
 
 ///A heretic item that spawns a barrier at the clicked turf, 3 uses
-/obj/item/heretic_lintel
-	name = "consecrated book"
-	desc = "Some kind of book, its contents make your head hurt. The material is not known to you and it seems to shift and twist unnaturally."
+/obj/item/heretic_labyrinth_handbook
+	name = "labyrinth handbook"
+	desc = "A book containing the laws and regulations of the Locked Labyrinth, penned on an unknown substance. Its pages squirm and strain, looking to lash out and escape."
 	icon = 'icons/obj/service/library.dmi'
-	icon_state = "hereticlintel"
+	icon_state = "heretichandbook"
 	force = 10
 	damtype = BURN
 	worn_icon_state = "book"
@@ -34,14 +34,14 @@
 	///how many uses do we have left
 	var/uses = 3
 
-/obj/item/heretic_lintel/examine(mob/user)
+/obj/item/heretic_labyrinth_handbook/examine(mob/user)
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
 	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
 	. += span_hypnophrase("It has <b>[uses]</b> uses left.")
 
-/obj/item/heretic_lintel/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/heretic_labyrinth_handbook/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(IS_HERETIC(user))
 		var/turf/turf_target = get_turf(target)
