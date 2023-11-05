@@ -40,7 +40,6 @@
 		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector) in chassis.equip_by_category[MECHA_UTILITY]
 		if(!cargo_holder) //We did try
 			CRASH("Mech [chassis] has a clamp device, but no internal storage. This should be impossible.")
-			return
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		var/have_ammo

@@ -571,7 +571,6 @@
 		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector/seccage) in chassis.equip_by_category[MECHA_UTILITY]
 		if(!cargo_holder) //We did try
 			CRASH("Mech [chassis] has a claw device, but no internal storage. This should be impossible.")
-			return
 	if(ismob(target))
 		var/mob/living/mobtarget = target
 		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
