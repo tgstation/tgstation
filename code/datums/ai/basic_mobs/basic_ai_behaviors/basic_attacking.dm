@@ -22,7 +22,7 @@
 
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
-	//targetting datum will kill the action if not real anymore
+	//targeting strategy will kill the action if not real anymore
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
@@ -63,7 +63,7 @@
 
 /datum/ai_behavior/basic_ranged_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/basic/basic_mob = controller.pawn
-	//targetting datum will kill the action if not real anymore
+	//targeting strategy will kill the action if not real anymore
 	var/atom/target = controller.blackboard[target_key]
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 

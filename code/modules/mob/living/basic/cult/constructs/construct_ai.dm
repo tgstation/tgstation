@@ -80,7 +80,7 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
-/// Targetting datum that will only allow mobs that constructs can heal.
+/// Targeting strategy that will only allow mobs that constructs can heal.
 /datum/targeting_strategy/basic/same_faction/construct
 	target_wounded_key = BB_TARGET_WOUNDED_ONLY
 

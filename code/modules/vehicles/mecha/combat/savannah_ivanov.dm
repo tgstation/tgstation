@@ -292,7 +292,7 @@
 /**
  * ## end_missile_targeting
  *
- * Called by the ivanov strike datum action or other actions that would end targetting
+ * Called by the ivanov strike datum action or other actions that would end targeting
  * Unhooks signals into clicking to call drop_missile plus other flavor like the overlay
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/end_missile_targeting()

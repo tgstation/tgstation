@@ -1,7 +1,7 @@
 ///commands the chief can pick from
 GLOBAL_LIST_INIT(mook_commands, list(
-	new /datum/pet_command/point_targetting/attack,
-	new /datum/pet_command/point_targetting/fetch,
+	new /datum/pet_command/point_targeting/attack,
+	new /datum/pet_command/point_targeting/fetch,
 ))
 
 /datum/ai_controller/basic_controller/mook
@@ -349,7 +349,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(!locate(/mob/living/basic/mining/mook) in oview(command_distance, controller.pawn))
 		return
 	if(controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targetting/attack)
+		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targeting/attack)
 		return
 
 	var/atom/ore_target = controller.blackboard[BB_ORE_TARGET]
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(get_dist(ore_target, living_pawn) <= 1)
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/point_targetting/fetch)
+	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/point_targeting/fetch)
 
 /datum/ai_behavior/issue_commands
 	action_cooldown = 5 SECONDS

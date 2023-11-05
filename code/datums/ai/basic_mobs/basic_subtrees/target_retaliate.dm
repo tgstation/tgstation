@@ -18,7 +18,7 @@
 	check_faction = TRUE
 
 /// Places a mob which you can see and who has recently attacked you into some 'run away from this' AI keys
-/// Can use a different targetting datum than you use to select attack targets
+/// Can use a different targeting strategy than you use to select attack targets
 /// Not required if fleeing is the only target behaviour or uses the same target datum
 /datum/ai_planning_subtree/target_retaliate/to_flee
 	targeting_strategy_key = BB_FLEE_TARGETING_STRATEGY

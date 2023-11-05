@@ -225,7 +225,7 @@
 		heal_brute = 15,\
 		heal_burn = 15,\
 		heal_time = 3 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
@@ -275,7 +275,7 @@
 		heal_brute = 50,\
 		heal_burn = 50,\
 		heal_time = 5 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tank, /mob/living/basic/spider/giant/tank)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\

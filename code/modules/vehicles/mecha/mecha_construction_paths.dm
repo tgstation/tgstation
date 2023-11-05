@@ -503,7 +503,7 @@
 		list(
 			"key" = /obj/item/circuitboard/mecha/honker/targeting,
 			"action" = ITEM_DELETE,
-			"desc" = "Prank <b>targetting board</b> can be added!",
+			"desc" = "Prank <b>targeting board</b> can be added!",
 			"forward_message" = "added prank"
 		),
 		list(

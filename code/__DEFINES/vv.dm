@@ -57,7 +57,7 @@
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"
-#define VV_HK_VARNAME "targetvar" //name or index of var for 1 variable targetting hrefs.
+#define VV_HK_VARNAME "targetvar" //name or index of var for 1 variable targeting hrefs.
 
 // vv_do_list() keys
 #define VV_HK_LIST_ADD "listadd"

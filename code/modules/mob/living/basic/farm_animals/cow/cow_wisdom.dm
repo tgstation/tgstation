@@ -22,7 +22,7 @@
 	return //cannot tame me! and I don't care about eatin' nothing, neither!
 
 /datum/ai_controller/basic_controller/cow/wisdom
-	//don't give a targetting datum
+	//don't give a targeting strategy
 	blackboard = list(
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,

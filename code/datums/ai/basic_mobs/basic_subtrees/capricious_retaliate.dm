@@ -35,7 +35,7 @@
 	var/aggro_range = controller.blackboard[BB_AGGRO_RANGE] || 9
 	var/list/potential_targets = hearers(aggro_range, get_turf(pawn)) - pawn
 	if (!length(potential_targets))
-		failed_targetting(controller, pawn, ignore_faction)
+		failed_targeting(controller, pawn, ignore_faction)
 		return
 
 	var/datum/targeting_strategy/target_helper = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
@@ -49,7 +49,7 @@
 			final_target = test_target
 
 	if (isnull(final_target))
-		failed_targetting(controller, pawn, ignore_faction)
+		failed_targeting(controller, pawn, ignore_faction)
 		return
 
 	controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target)
@@ -57,7 +57,7 @@
 	finish_action(controller, TRUE, ignore_faction)
 
 /// Called if we try but fail to target something
-/datum/ai_behavior/capricious_retaliate/proc/failed_targetting(datum/ai_controller/controller, atom/pawn, ignore_faction)
+/datum/ai_behavior/capricious_retaliate/proc/failed_targeting(datum/ai_controller/controller, atom/pawn, ignore_faction)
 	finish_action(controller, FALSE, ignore_faction)
 	pawn.visible_message(span_notice("[pawn] grumbles.")) // We're pissed off but with no outlet to vent our frustration upon
 

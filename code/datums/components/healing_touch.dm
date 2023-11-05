@@ -26,8 +26,8 @@
 	var/valid_biotypes
 	/// Which kinds of carbon limbs can we heal, has no effect on non-carbon mobs. Set to null if you don't care about excluding prosthetics.
 	var/required_bodytype
-	/// How targetting yourself works, expects one of HEALING_TOUCH_ANYONE, HEALING_TOUCH_NOT_SELF, or HEALING_TOUCH_SELF_ONLY
-	var/self_targetting
+	/// How targeting yourself works, expects one of HEALING_TOUCH_ANYONE, HEALING_TOUCH_NOT_SELF, or HEALING_TOUCH_SELF_ONLY
+	var/self_targeting
 	/// Text to print when action starts, replaces %SOURCE% with healer and %TARGET% with healed mob
 	var/action_text
 	/// Text to print when action completes, replaces %SOURCE% with healer and %TARGET% with healed mob
@@ -47,7 +47,7 @@
 	list/valid_targets_typecache = list(),
 	valid_biotypes = MOB_ORGANIC | MOB_MINERAL,
 	required_bodytype = BODYTYPE_ORGANIC,
-	self_targetting = HEALING_TOUCH_NOT_SELF,
+	self_targeting = HEALING_TOUCH_NOT_SELF,
 	action_text = "%SOURCE% begins healing %TARGET%",
 	complete_text = "%SOURCE% finishes healing %TARGET%",
 	show_health = FALSE,
@@ -65,7 +65,7 @@
 	src.valid_targets_typecache = valid_targets_typecache.Copy()
 	src.valid_biotypes = valid_biotypes
 	src.required_bodytype = required_bodytype
-	src.self_targetting = self_targetting
+	src.self_targeting = self_targeting
 	src.action_text = action_text
 	src.complete_text = complete_text
 	src.show_health = show_health
@@ -98,7 +98,7 @@
 		healer.balloon_alert(healer, "busy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	switch (self_targetting)
+	switch (self_targeting)
 		if (HEALING_TOUCH_NOT_SELF)
 			if (target == healer)
 				healer.balloon_alert(healer, "can't heal yourself!")

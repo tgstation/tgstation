@@ -21,7 +21,7 @@
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.ability = ability
-	src.targeting = targetting
+	src.targeting = targeting
 	src.min_range = min_range
 	src.max_range = max_range
 	src.target_self = target_self

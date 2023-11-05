@@ -16,7 +16,7 @@
 		/datum/ai_planning_subtree/flee_target/legion,
 	)
 
-/// Chase and attack whatever we are targetting, if it's friendly we will heal them
+/// Chase and attack whatever we are targeting, if it's friendly we will heal them
 /datum/ai_controller/basic_controller/legion_brood
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion

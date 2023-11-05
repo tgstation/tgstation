@@ -40,7 +40,7 @@
 
 ///Basic Mob Keys
 
-///Targetting subtrees
+///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETING_STRATEGY "targeting_strategy"
@@ -52,13 +52,13 @@
 #define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
 /// Flag for whether to target only wounded mobs
 #define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
-/// What typepath the holding object targeting datum should look for
+/// What typepath the holding object targeting strategy should look for
 #define BB_TARGET_HELD_ITEM "BB_target_held_item"
 
-/// Blackboard key storing how long your targetting datum has held a particular target
+/// Blackboard key storing how long your targeting strategy has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
 
-///Targetting keys for something to run away from, if you need to store this separately from current target
+///Targeting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
 #define BB_FLEE_TARGETING_STRATEGY "flee_targeting_strategy"
@@ -117,9 +117,9 @@
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
 
-///should we skip the faction check for the targetting datum?
+///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
-///are we in some kind of temporary state of ignoring factions when targetting? can result in volatile results if multiple behaviours touch this
+///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this
 #define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
 ///currently only used by clowns, a list of what can the mob speak randomly

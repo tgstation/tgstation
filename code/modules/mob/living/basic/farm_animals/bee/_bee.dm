@@ -61,7 +61,7 @@
 		/datum/pet_command/beehive/enter,
 		/datum/pet_command/beehive/exit,
 		/datum/pet_command/follow/bee,
-		/datum/pet_command/point_targetting/attack/swirl,
+		/datum/pet_command/point_targeting/attack/swirl,
 		/datum/pet_command/scatter,
 	)
 
