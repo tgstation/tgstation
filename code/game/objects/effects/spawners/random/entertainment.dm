@@ -267,6 +267,7 @@
 		/obj/item/toy/plush/beeplushie = 5,
 		/obj/item/toy/plush/moth = 5,
 		/obj/item/toy/plush/pkplush = 5,
+		/obj/item/toy/plush/cleanbot = 5,
 		// rare plushies
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,

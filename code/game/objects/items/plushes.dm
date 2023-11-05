@@ -786,3 +786,11 @@
 	inhand_icon_state = "blahaj"
 	attack_verb_continuous = list("gnaws", "gnashes", "chews")
 	attack_verb_simple = list("gnaw", "gnash", "chew")
+
+/obj/item/toy/plush/cleanbot
+	name = "cleanbot plushie"
+	desc = "a plushie version of a cleanbot"
+	icon_state = "Plushie_Cleanbot"
+	attack_verb_continuous = list("scrubs", "cleans", "polishes")
+	attack_verb_simple = list("scrub", "clean", "polish")
+	squeak_override = list('sound/effects/bubbles2.ogg' = 1)
