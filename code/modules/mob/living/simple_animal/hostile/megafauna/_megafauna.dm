@@ -59,9 +59,7 @@
 		AddComponent(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE), MEGAFAUNA_TRAIT)
-	for(var/action_type in attack_action_types)
-		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
-		attack_action.Grant(src)
+	grant_actions_by_list(attack_action_types)
 
 /mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	//Safety check
