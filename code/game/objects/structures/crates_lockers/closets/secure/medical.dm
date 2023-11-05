@@ -124,7 +124,11 @@
 	new /obj/item/storage/box/medigels(src)
 	new /obj/item/ph_booklet(src)
 	new /obj/item/reagent_containers/dropper(src)
+	//MONKESTATION REMOVAL START - FermiChem/pH chem is disabled, so having buffer bottles in the chemist lockers is a complete waste of time, space and processing power.
+	/*
 	new /obj/item/reagent_containers/cup/bottle/acidic_buffer(src) //hopefully they get the hint
+	*/
+	//MONKESTATION REMOVAL END
 
 /obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
 	name = "advanced chemical closet"
