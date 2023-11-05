@@ -1,0 +1,5 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - rscadd: "New Space Marine helmet, thanks to Odie_boy!"
+  - bugfix: "Pets that died and had no sprite should now be fixed. Lazarus Injections will work properly too."
