@@ -208,14 +208,19 @@
 		owner.balloon_alert(owner, "base not suitable!")
 		return FALSE
 	new /obj/effect/temp_visual/leaper_crush(target_turf)
+	ADD_TRAIT(owner, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
+	for(var/mob/living/rider in owner.buckled_mobs)
+		ADD_TRAIT(rider, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 	owner.throw_at(target = target_turf, range = 7, speed = 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(flop_on_turf), target_turf))
 	StartCooldown()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/belly_flop/proc/flop_on_turf(turf/target, original_pixel_y)
 	playsound(get_turf(owner), 'sound/effects/meteorimpact.ogg', 200, TRUE)
+	REMOVE_TRAIT(owner, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 	for(var/mob/living/victim in oview(1, owner))
 		if(victim in owner.buckled_mobs)
+			REMOVE_TRAIT(victim, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 			continue
 		victim.apply_damage(35)
 		if(QDELETED(victim)) // Some mobs are deleted on death
