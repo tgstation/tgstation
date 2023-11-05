@@ -77,7 +77,7 @@
 		return
 
 	// If we're going to the same place and the cooldown hasn't subsided, we're probably on the same path as before
-	if (destination == old_dest && TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME))
+	if (destination == old_dest && TIMER_COOLDOWN_RUNNING(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME))
 
 		// Check if the current turf is the same as the current turf we're supposed to be in. If so, then we set the next step as the next turf on the list
 		if(current_turf == next_turf)
@@ -92,7 +92,7 @@
 
 	else // Either we're not going to the same place or the cooldown is over. Either way, we need a new path
 
-		if(destination != old_dest && TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF))
+		if(destination != old_dest && TIMER_COOLDOWN_RUNNING(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF))
 			failed.set_output(COMPONENT_SIGNAL)
 			reason_failed.set_output("Cooldown still active!")
 			return

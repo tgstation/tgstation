@@ -138,7 +138,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/cut_summoner(different_person = FALSE)
 	if(is_deployed())
 		recall_effects()
-	forceMove(get_turf(src))
+	var/summoner_turf = get_turf(src)
+	if (!isnull(summoner_turf))
+		forceMove(summoner_turf)
 	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if(different_person)
 		summoner.faction -= "[REF(src)]"
@@ -311,7 +313,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	SIGNAL_HANDLER
 
 	cut_summoner()
-	forceMove(source.loc)
+	if (!isnull(source.loc))
+		forceMove(source.loc)
 	to_chat(src, span_danger("Your summoner has died!"))
 	visible_message(span_bolddanger("\The [src] dies along with its user!"))
 	source.visible_message(span_bolddanger("[source]'s body is completely consumed by the strain of sustaining [src]!"))
@@ -346,12 +349,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
 	visible_message(span_danger("\The [src] jumps back to its user."))
-	if(istype(summoner.loc, /obj/effect))
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
+	if(istype(summoner.loc, /obj/effect) || isnull(summoner.loc))
 		recall(forced = TRUE)
-	else
-		new /obj/effect/temp_visual/guardian/phase/out(loc)
-		forceMove(summoner.loc)
-		new /obj/effect/temp_visual/guardian/phase(loc)
+		return
+	forceMove(summoner.loc)
+	new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/can_suicide()
 	return FALSE
@@ -469,7 +472,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
 /mob/living/simple_animal/hostile/guardian/proc/manifest(forced)
-	if(is_deployed() || istype(summoner.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
+	if(is_deployed() || isnull(summoner.loc) || istype(summoner.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
 		return FALSE
 	forceMove(summoner.loc)
 	new /obj/effect/temp_visual/guardian/phase(loc)
