@@ -7,8 +7,8 @@
 /datum/artifact_fault/death/on_trigger(datum/component/artifact/component)
 	var/list/mobs = list()
 	var/mob/living/carbon/human
-	for(var/mob/living/carbon/human in range(rand(3, 4), component.holder))
-		mobs += human
+	for(var/mob/living/carbon/mobs in range(rand(3, 4), component.holder))
+		mobs += mobs
 	human = pick(mobs)
 	if(!human)
 		continue
