@@ -275,12 +275,13 @@
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
-	if(isnull(alert_overlay) && source)
-		alert_overlay = get_small_overlay(source)
+	if(source)
+		if(isnull(alert_overlay))
+			alert_overlay = get_small_overlay(source)
 
-	alert_overlay.appearance_flags |= TILE_BOUND
-	alert_overlay.layer = FLOAT_LAYER
-	alert_overlay.plane = FLOAT_PLANE
+		alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.layer = FLOAT_LAYER
+		alert_overlay.plane = FLOAT_PLANE
 
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
