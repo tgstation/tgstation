@@ -144,3 +144,7 @@
 
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"
+
+/// Keys used by one and only one behavior
+/// Used to hold state without making bigass lists
+#define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
