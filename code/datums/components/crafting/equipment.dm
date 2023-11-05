@@ -212,6 +212,17 @@
 	result = /obj/item/clothing/gloves/tackler/offbrand
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/badasscharger
+	name = "Badass Belt Recharger"
+	result = /obj/item/portable_recharger/belt/badass
+	time = 30
+	reqs = list(
+		/obj/item/portable_recharger/belt = 1,
+		/obj/item/storage/belt/holster = 1,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+
 /**
  * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
  */

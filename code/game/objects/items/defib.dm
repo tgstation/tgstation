@@ -108,7 +108,6 @@
 		. += "[nocell_state]"
 	if(!safety && emagged_state)
 		. += emagged_state
-		.
 
 
 /obj/item/defibrillator/CheckParts(list/parts_list)

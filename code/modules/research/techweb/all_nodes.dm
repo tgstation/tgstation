@@ -1601,10 +1601,10 @@
 	description = "Our researchers have found new ways to weaponize just about everything now."
 	prereq_ids = list("engineering")
 	design_ids = list(
+		"backpack_recharger",
 		"pin_testing",
 		"tele_shield",
 		"lasershell",
-		"backpack_recharger",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000)
@@ -1615,8 +1615,8 @@
 	description = "Our weapons are breaking the rules of reality by now."
 	prereq_ids = list("adv_engi", "weaponry")
 	design_ids = list(
-		"pin_loyalty",
 		"belt_recharger",
+		"pin_loyalty",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 

@@ -12,10 +12,11 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	///Our power cell
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/cell/cell
 	///What item is being charged currently?
 	var/obj/item/charging = null
-	var/using_power = FALSE //Did we put power into "charging" last process()?
+	///Did we put power into "charging" last process()?
+	var/using_power = FALSE
 	///Did we finish recharging the currently inserted item?
 	var/finished_recharging = FALSE
 	///The sound that it makes while charging
@@ -37,12 +38,13 @@
 
 /obj/item/portable_recharger/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/drag_pickup)
 	soundloop = new(src)
 	update_appearance()
 
 /obj/item/portable_recharger/loaded/Initialize(mapload)
 	. = ..()
-	cell = new(src)
+	cell = new /obj/item/stock_parts/cell/high(src)
 
 /obj/item/portable_recharger/Destroy()
 	QDEL_NULL(soundloop)
@@ -50,10 +52,11 @@
 
 /obj/item/portable_recharger/equipped(mob/user, slot, initial)
 	. = ..()
-	if((slot & ITEM_SLOT_BACK) || (slot & ITEM_SLOT_BELT))
+	if(slot & (ITEM_SLOT_BACK|ITEM_SLOT_BELT))
 		RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_attacked))
 	else
 		UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
+		return
 
 /obj/item/portable_recharger/dropped(mob/user, silent)
 	. = ..()
@@ -121,6 +124,8 @@
 		using_power = FALSE
 		soundloop.stop()
 		update_appearance()
+	if(gone == cell)
+		cell = null
 	return ..()
 
 /obj/item/portable_recharger/attackby(obj/item/attacking_item, mob/user, params)
@@ -129,14 +134,14 @@
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(cell)
-			to_chat(user, span_warning("[src] already has a cell!"))
+			balloon_alert(user, "already loaded!")
 		else
 			if(!user.transferItemToLoc(attacking_item, src))
 				return TRUE
 			cell = attacking_item
-			to_chat(user, span_notice("You install a cell in [src]."))
+			balloon_alert(user, "installed")
 
-	if(!cell)
+	if(isnull(cell))
 		balloon_alert(user, "no cell!")
 		return ..()
 
@@ -147,13 +152,13 @@
 		return TRUE
 
 	if(!cell.charge)
-		to_chat(user, span_notice("[src] blinks red as you try to insert [attacking_item]."))
+		balloon_alert(user, "no charge!")
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = attacking_item
 		if(!energy_gun.can_charge)
-			to_chat(user, span_notice("Your gun has no external power connector."))
+			balloon_alert(user, "not rechargable!")
 			return TRUE
 	user.transferItemToLoc(attacking_item, src)
 	return TRUE
@@ -173,29 +178,14 @@
 
 /obj/item/portable_recharger/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
-		if(slot_flags & ITEM_SLOT_BACK)
-			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
-				take_charging_out(user)
-			else
-				to_chat(user, span_warning("Put the [src] on your back first!"))
-
-		else if(slot_flags & ITEM_SLOT_BELT)
-			if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
-				take_charging_out(user)
-			else
-				to_chat(user, span_warning("Strap the [src] on first!"))
-		return
+		if(user.get_slot_by_item(src) & slot_flags)
+			take_charging_out(user)
+		else
+			balloon_alert(user, "equip it first!")
+		return TRUE
 
 	add_fingerprint(user)
 	return ..()
-
-/obj/item/portable_recharger/MouseDrop(obj/over_object)
-	. = ..()
-	if(ismob(loc))
-		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 ///Takes charging item out if there is one
 /obj/item/portable_recharger/proc/take_charging_out(mob/user)
@@ -216,8 +206,7 @@
 
 	cell.explode()
 
-	if(charging)
-		charging.forceMove(drop_location())
+	charging?.forceMove(drop_location())
 	qdel(src)
 
 ///Makes the recharger blow up after some time
@@ -230,12 +219,12 @@
 	else
 		user.log_message("[src] power cell detonated by a EMP", LOG_GAME)
 
-	user.visible_message(span_danger("[src] on [user] starts to fuss and blare alarms violently!"))
+	user.audible_message(span_danger("[src] on [user] starts to fuss and blare alarms violently!"))
 	to_chat(user, span_userdanger("[src] starts to heat up!"))
 	playsound(src, 'sound/effects/fuse.ogg', 80, TRUE)
 	playsound(src, 'sound/machines/terminal_alert.ogg', 40, FALSE)
 	hit = TRUE
-	addtimer(CALLBACK(src, PROC_REF(detonate)), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(detonate)), 5 SECONDS)
 	soundloop.stop()
 	update_appearance()
 
@@ -287,29 +276,27 @@
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
-		if(prob(malf_chance))
+		if(prob(malf_chance) || !EMP_PROTECT_SELF)
 			malfunction(holder)
 			return
 
-	if(cell)
-		cell.emp_act(severity)
+	cell?.emp_act(severity)
 
 	if(istype(charging, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = charging
-		if(energy_gun.cell)
-			energy_gun.cell.emp_act(severity)
+		energy_gun?.cell.emp_act(severity)
 
 	else if(istype(charging, /obj/item/melee/baton/security))
 		var/obj/item/melee/baton/security/batong = charging
-		if(batong.cell)
-			batong.cell.charge = 0
+		batong?.cell.charge = 0
 
 /obj/item/portable_recharger/update_overlays()
 	. = ..()
 
 	var/icon_to_use = "[base_icon_state]-[isnull(charging) ? "empty" : (using_power ? "charging" : "full")]"
 	if(hit)
-		. += emissive_appearance(icon, "[base_icon_state]-hit", src)
+		. += mutable_appearance(icon, "[base_icon_state]-hit", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-hit", src, alpha = src.alpha)
 		return
 	. += mutable_appearance(icon, icon_to_use, alpha = src.alpha)
 	. += emissive_appearance(icon, icon_to_use, src, alpha = src.alpha)
@@ -327,4 +314,24 @@
 
 /obj/item/portable_recharger/belt/loaded/Initialize(mapload)
 	. = ..()
-	cell = new(src)
+	cell = new /obj/item/stock_parts/cell/high(src)
+
+/obj/item/portable_recharger/belt/badass
+	name = "badass belt recharger"
+	icon_state = "badasscharger"
+	base_icon_state = "badasscharger"
+	desc = "A portable belt charging dock for energy based weaponry, PDAs, and other devices. This one will allow you to spin your guns."
+	inhand_icon_state = "badasscharger"
+	alternate_worn_layer = UNDER_SUIT_LAYER
+
+/obj/item/portable_recharger/belt/badass/equipped(mob/user, slot, initial)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+
+/obj/item/portable_recharger/belt/badass/dropped(mob/user, silent)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+
+/obj/item/portable_recharger/belt/badass/loaded/Initialize(mapload)
+	. = ..()
+	cell = new /obj/item/stock_parts/cell/high(src)
