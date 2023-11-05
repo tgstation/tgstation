@@ -64,13 +64,12 @@
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)
 
-	var/datum/action/cooldown/mob_cooldown/domain/domain = new(src)
-	domain.Grant(src)
-	ai_controller.set_blackboard_key(BB_DOMAIN_ABILITY, domain)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/domain = BB_DOMAIN_ABILITY,
+		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
+	)
 
-	var/datum/action/cooldown/mob_cooldown/riot/riot = new(src)
-	riot.Grant(src)
-	ai_controller.set_blackboard_key(BB_RAISE_HORDE_ABILITY, riot)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
@@ -82,7 +81,7 @@
 		return
 
 	if(ismouse(user))
-		if(user.faction_check_mob(src, exact_match = TRUE))
+		if(user.faction_check_atom(src, exact_match = TRUE))
 			. += span_notice("This is your king. Long live [p_their()] majesty!")
 		else
 			. += span_warning("This is a false king! Strike [p_them()] down!")
@@ -192,7 +191,7 @@
 		balloon_alert(src, "already dead!")
 		return FALSE
 
-	if(living_target.faction_check_mob(src, exact_match = TRUE))
+	if(living_target.faction_check_atom(src, exact_match = TRUE))
 		balloon_alert(src, "one of your soldiers!")
 		return FALSE
 

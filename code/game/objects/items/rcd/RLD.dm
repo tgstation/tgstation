@@ -192,7 +192,7 @@
 			G.color = color_choice
 			G.set_light_color(G.color)
 			G.throw_at(A, 9, 3, user)
-			G.on = TRUE
+			G.light_on = TRUE
 			G.update_brightness()
 
 			return TRUE

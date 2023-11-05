@@ -29,15 +29,13 @@
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
-	for(var/action_type in attack_action_types)
-		var/datum/action/innate/elite_attack/attack_action = new action_type()
-		attack_action.Grant(src)
+	grant_actions_by_list(attack_action_types)
 
 //Prevents elites from attacking members of their faction (can't hurt themselves either) and lets them mine rock with an attack despite not being able to smash walls.
-/mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget()
+/mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget(atom/attacked_target)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/M = target
-		if(faction_check_mob(M))
+		if(faction_check_atom(M))
 			return FALSE
 	if(istype(target, /obj/structure/elite_tumor))
 		var/obj/structure/elite_tumor/T = target

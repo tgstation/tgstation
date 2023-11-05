@@ -171,7 +171,7 @@
 	// Some rituals may remove atoms from the selected_atoms list, and not consume them.
 	var/list/initial_selected_atoms = selected_atoms.Copy()
 	for(var/atom/to_disappear as anything in selected_atoms)
-		to_disappear.invisibility = INVISIBILITY_ABSTRACT
+		to_disappear.SetInvisibility(INVISIBILITY_ABSTRACT, id=type)
 
 	// All the components have been invisibled, time to actually do the ritual. Call on_finished_recipe
 	// (Note: on_finished_recipe may sleep in the case of some rituals like summons, which expect ghost candidates.)
@@ -185,7 +185,7 @@
 	for(var/atom/to_appear as anything in initial_selected_atoms)
 		if(QDELETED(to_appear))
 			continue
-		to_appear.invisibility = initial(to_appear.invisibility)
+		to_appear.RemoveInvisibility(type)
 
 	// And finally, give some user feedback
 	// No feedback is given on failure here -

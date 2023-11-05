@@ -75,7 +75,7 @@
 	if(!demand_connects || !reagents)
 		return PROCESS_KILL
 
-	if(reagents.total_volume < reagents.maximum_volume)
+	if(!reagents.holder_full())
 		for(var/D in GLOB.cardinals)
 			if(D & demand_connects)
 				send_request(D)
@@ -394,6 +394,10 @@
 	demand_connects = NORTH
 	supply_connects = SOUTH
 
+/datum/component/plumbing/iv_drip
+	demand_connects = SOUTH
+	supply_connects = NORTH
+
 /datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
 	return
 
@@ -414,3 +418,8 @@
 	return (buffer.mode == READY) ? ..() : FALSE
 
 #undef READY
+
+///Lazily demand from any direction. Overlays won't look good, and the aquarium sprite occupies about the entire 32x32 area anyway.
+/datum/component/plumbing/aquarium
+	demand_connects = SOUTH|NORTH|EAST|WEST
+	use_overlays = FALSE

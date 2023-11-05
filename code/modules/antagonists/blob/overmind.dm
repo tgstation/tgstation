@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
 			check_area.icon_state = "blob_shield"
 			check_area.layer = BELOW_MOB_LAYER
-			check_area.invisibility = 0
+			check_area.SetInvisibility(INVISIBILITY_NONE)
 			check_area.blend_mode = 0
 
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)

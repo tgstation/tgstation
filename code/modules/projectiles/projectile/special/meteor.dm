@@ -9,7 +9,7 @@
 	damage_type = BRUTE
 	armor_flag = BULLET
 
-/obj/projectile/meteor/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/meteor/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(. == BULLET_ACT_HIT && isliving(target))
 		explosion(target, devastation_range = -1, light_impact_range = 2, flame_range = 0, flash_range = 1, adminlog = FALSE)

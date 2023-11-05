@@ -80,7 +80,7 @@
 /turf/open/openspace/zAirOut()
 	return TRUE
 
-/turf/open/openspace/zPassIn(atom/movable/A, direction, turf/source)
+/turf/open/openspace/zPassIn(direction)
 	if(direction == DOWN)
 		for(var/obj/contained_object in contents)
 			if(contained_object.obj_flags & BLOCK_Z_IN_DOWN)
@@ -93,9 +93,7 @@
 		return TRUE
 	return FALSE
 
-/turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination, allow_anchored_movement)
-	if(A.anchored && !allow_anchored_movement)
-		return FALSE
+/turf/open/openspace/zPassOut(direction)
 	if(direction == DOWN)
 		for(var/obj/contained_object in contents)
 			if(contained_object.obj_flags & BLOCK_Z_OUT_DOWN)
@@ -122,6 +120,10 @@
 		build_with_rods(C, user)
 	else if(istype(C, /obj/item/stack/tile/iron))
 		build_with_floor_tiles(C, user)
+	else if(istype(C, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(C, user)
+	else if(istype(C, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(C, user)
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())
@@ -150,8 +152,9 @@
 /turf/open/openspace/rust_heretic_act()
 	return FALSE
 
-/turf/open/openspace/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	if(caller && !caller.can_z_move(DOWN, src, null , ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
+/turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	var/atom/movable/our_movable = pass_info.caller_ref.resolve()
+	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
 	return FALSE
 
@@ -162,6 +165,9 @@
 	// Create plating under tiled floor we try to create directly onto the air
 	PlaceOnTop(/turf/open/floor/plating, flags = flags)
 	PlaceOnTop(new_floor_path, flags = flags)
+
+/turf/open/openspace/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"

@@ -15,6 +15,14 @@
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
 ///from base of atom/bullet_act(): (/obj/projectile, def_zone)
+#define COMSIG_ATOM_PRE_BULLET_ACT "pre_atom_bullet_act"
+	/// All this does is prevent default bullet on_hit from being called, [BULLET_ACT_HIT] being return is implied
+	#define COMPONENT_BULLET_ACTED (1<<0)
+	/// Forces bullet act to return [BULLET_ACT_BLOCK], takes priority over above
+	#define COMPONENT_BULLET_BLOCKED (1<<1)
+	/// Forces bullet act to return [BULLET_ACT_FORCE_PIERCE], takes priority over above
+	#define COMPONENT_BULLET_PIERCED (1<<2)
+///from base of atom/bullet_act(): (/obj/projectile, def_zone)
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
 ///from base of atom/CheckParts(): (list/parts_list, datum/crafting_recipe/R)
 #define COMSIG_ATOM_CHECKPARTS "atom_checkparts"

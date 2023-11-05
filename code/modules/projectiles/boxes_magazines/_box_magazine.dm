@@ -19,6 +19,8 @@
 	var/list/stored_ammo = list()
 	///type that the magazine will be searching for, rejects if not a subtype of
 	var/ammo_type = /obj/item/ammo_casing
+	/// wording used for individual units of ammo, e.g. cartridges (regular ammo), shells (shotgun shells)
+	var/casing_phrasing = "cartridge"
 	///maximum amount of ammo in the magazine
 	var/max_ammo = 7
 	///Controls how sprites are updated for the ammo box; see defines in combat.dm: AMMO_BOX_ONE_SPRITE; AMMO_BOX_PER_BULLET; AMMO_BOX_FULL_EMPTY
@@ -66,7 +68,7 @@
 	var/list/readout = list()
 
 	if(caliber && max_ammo) // Text references a 'magazine' as only magazines generally have the caliber variable initialized
-		readout += "Up to [span_warning("[max_ammo] [caliber] rounds")] can be found within this magazine. \
+		readout += "Up to [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] can be found within this magazine. \
 		\nAccidentally discharging any of these projectiles may void your insurance contract."
 
 	var/obj/item/ammo_casing/mag_ammo = get_round(TRUE)
@@ -158,7 +160,7 @@
 
 	if(num_loaded)
 		if(!silent)
-			to_chat(user, span_notice("You load [num_loaded] shell\s into \the [src]!"))
+			to_chat(user, span_notice("You load [num_loaded > 1 ? "[num_loaded] [casing_phrasing]s" : "a [casing_phrasing]"] into \the [src]!"))
 			playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		update_appearance()
 
@@ -173,13 +175,23 @@
 	if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 		A.bounce_away(FALSE, NONE)
 	playsound(src, 'sound/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-	to_chat(user, span_notice("You remove a round from [src]!"))
+	to_chat(user, span_notice("You remove a [casing_phrasing] from [src]!"))
 	update_appearance()
+
+/obj/item/ammo_box/examine(mob/user)
+	. = ..()
+	var/top_round = get_round()
+	if(!top_round)
+		return
+	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
+	// intended for people who have like three mislabeled magazines
+	. += span_notice("The [top_round] is ready in [src].")
+
 
 /obj/item/ammo_box/update_desc(updates)
 	. = ..()
 	var/shells_left = LAZYLEN(stored_ammo)
-	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
+	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] [casing_phrasing]\s left!"
 
 /obj/item/ammo_box/update_icon_state()
 	. = ..()

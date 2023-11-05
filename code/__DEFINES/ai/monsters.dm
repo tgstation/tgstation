@@ -45,6 +45,8 @@
 #define BB_CURRENT_HOME "BB_current_home"
 ///the hydro we will pollinate
 #define BB_TARGET_HYDRO "BB_target_hydro"
+///key to swarm around
+#define BB_SWARM_TARGET "BB_swarm_target"
 
 // bear keys
 ///the hive with honey that we will steal from
@@ -158,10 +160,8 @@
 #define BB_DEMON_CLONE_ABILITY "demon_clone_ability"
 ///our slippery ice ability
 #define BB_DEMON_SLIP_ABILITY "demon_slip_ability"
-///the turf we are escaping too
+///the turf we are escaping to
 #define BB_ESCAPE_DESTINATION "escape_destination"
-///how far away we will be from our target before teleporting
-#define BB_MINIMUM_DISTANCE_RANGE "minimum_distance_range"
 
 /// Corpse we have consumed
 #define BB_LEGION_CORPSE "legion_corpse"
@@ -189,3 +189,13 @@
 #define BB_MOOK_MUSIC_AUDIENCE "music_audience"
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
+
+//Wizard AI keys
+/// Key where we store our main targeted spell
+#define BB_WIZARD_TARGETED_SPELL "BB_wizard_targeted_spell"
+/// Key where we store our secondary, untargeted spell
+#define BB_WIZARD_SECONDARY_SPELL "BB_wizard_secondary_spell"
+/// Key where we store our blink spell
+#define BB_WIZARD_BLINK_SPELL "BB_wizard_blink_spell"
+/// Key for the next time we can cast a spell
+#define BB_WIZARD_SPELL_COOLDOWN "BB_wizard_spell_cooldown"

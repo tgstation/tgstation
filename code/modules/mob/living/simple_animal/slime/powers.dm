@@ -64,6 +64,10 @@
 	if(issilicon(meal) || meal.mob_biotypes & MOB_ROBOTIC)
 		return FALSE
 
+	if(meal.flags_1 & HOLOGRAM_1)
+		meal.balloon_alert(src, "no life energy!")
+		return FALSE
+
 	if(isanimal(meal))
 		var/mob/living/simple_animal/simple_meal = meal
 		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
@@ -160,8 +164,7 @@
 			amount_grown = 0
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
-			var/datum/action/innate/slime/reproduce/reproduce_action = new
-			reproduce_action.Grant(src)
+			GRANT_ACTION(/datum/action/innate/slime/reproduce)
 			regenerate_icons()
 			update_name()
 		else
