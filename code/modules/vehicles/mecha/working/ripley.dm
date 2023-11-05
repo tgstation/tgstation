@@ -156,10 +156,14 @@
 		weewooloop.stop()
 		siren = FALSE
 		sirenbutton?.button_icon_state = "mech_siren_off"
+		sirenbutton.build_all_button_icons()
+		balloon_alert(occupant, "siren disabled")
 	else
 		weewooloop.start()
 		siren = TRUE
 		sirenbutton?.button_icon_state = "mech_siren_on"
+		sirenbutton.build_all_button_icons()
+		balloon_alert(occupant, "siren activated")
 	update_overlays()
 
 /obj/vehicle/sealed/mecha/ripley/paddy/update_overlays()
@@ -177,7 +181,7 @@
 	return ..()
 
 /datum/action/vehicle/sealed/mecha/siren
-	name = "Toggle the external siren and lights."
+	name = "Toggle External Siren and Lights"
 	button_icon_state = "mech_siren_off"
 
 /datum/action/vehicle/sealed/mecha/siren/New()
