@@ -141,7 +141,7 @@
 
 /datum/ai_controller/basic_controller/statue
 	blackboard = list(
-		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 

@@ -125,7 +125,7 @@
 
 /datum/ai_controller/basic_controller/garden_gnome
 	blackboard = list(
-		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

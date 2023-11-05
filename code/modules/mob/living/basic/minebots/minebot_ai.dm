@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/minebot
 	blackboard = list(
-		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic),
-		BB_PET_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite),
 		BB_AUTOMATED_MINING = FALSE,
 	)
