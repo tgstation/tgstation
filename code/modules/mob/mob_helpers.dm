@@ -275,7 +275,7 @@
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
-	if(isnull(alert_overlay))
+	if(isnull(alert_overlay) && source)
 		alert_overlay = get_alert_icon(source)
 
 	alert_overlay.appearance_flags |= TILE_BOUND
