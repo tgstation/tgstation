@@ -111,7 +111,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
 	if(beard_dresser.physique == FEMALE)
 		if(beard_dresser.facial_hairstyle == "Shaved")
-			to_chat(beard_dresser, span_notice("You don't have any hair to shave off!"))
+			balloon_alert(beard_dresser, "nothing to shave!")
 			return TRUE
 		var/shave_beard = tgui_alert(beard_dresser, "Shave your beard?", "Grooming", list("Yes", "No"))
 		if(shave_beard == "Yes")
