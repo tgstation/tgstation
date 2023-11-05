@@ -66,9 +66,9 @@
 
 /datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/poisoned_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(volume < 10)
+	if(volume <= 5)
 		return
-	if(poisoned_mob.adjustToxLoss(5 * REM * seconds_per_tick, updating_health = FALSE))
+	if(poisoned_mob.adjustToxLoss(2.5 * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 // bubble ability structure
