@@ -274,7 +274,7 @@
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
 	icon_state = "lightspear"
 	damage = 45
-	armour_penetration = 50
+	armour_penetration = 10
 	wound_bonus = 5
 	bare_wound_bonus = 60
 	wound_falloff_tile = 0
