@@ -135,7 +135,7 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/ripley/paddy/Initialize()
+/obj/vehicle/sealed/mecha/ripley/paddy/Initialize(mapload)
 	. = ..()
 	weewooloop = new(src, FALSE, FALSE)
 	weewooloop.volume = 100
@@ -355,7 +355,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	desc = "Holds suspects loaded with a hydraulic claw."
 	cargo_capacity = 4
 
-/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Initialize()
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOB_REMOVING_CUFFS, PROC_REF(stop_cuff_removal))
 
