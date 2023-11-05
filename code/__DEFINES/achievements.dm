@@ -46,7 +46,7 @@
 #define MEDAL_VOID_ASCENSION "Void"
 #define MEDAL_BLADE_ASCENSION "Blade"
 #define MEDAL_COSMOS_ASCENSION "Cosmos"
-#define MEDAL_KNOCK_ASCENSION "Knock"
+#define MEDAL_LOCK_ASCENSION "Knock"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"

@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	ambience_index = AMBIENCE_REEBE
 	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE
 
-/area/centcom/heretic_sacrifice/lnock
+/area/centcom/heretic_sacrifice/lock
 	name = "Mansus Lock Gate"
 	ambience_index = AMBIENCE_DANGER
 	sound_environment = SOUND_ENVIRONMENT_PSYCHOTIC
