@@ -12,3 +12,4 @@
 /datum/artifact_fault/explosion/proc/payload(datum/component/artifact/component)
 	explosion(component.holder, light_impact_range = 2, explosion_cause = src)
 	qdel(component.holder)
+  

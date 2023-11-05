@@ -7,11 +7,11 @@
 /datum/artifact_fault/death/on_trigger(datum/component/artifact/component)
 	var/list/mobs = list()
 	var/mob/living/carbon/human
-	for(var/mob/living/carbon/mobs in range(rand(3, 4), component.holder))
-		mobs += mobs
+	for(var/mob/living/carbon/mob in range(rand(3, 4), component.holder))
+		mobs += mob
 	human = pick(mobs)
 	if(!human)
-		continue
+		return
 	component.holder.Beam(human, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	var/obj/item/organ/internal/brain/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
