@@ -5,8 +5,8 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
-	/// list of ability buttons
-	var/list/shared_action_buttons = list()
+	/// list of blacklisted abilities that cant be shared
+	var/list/blacklist_abilities = list()
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	if(!isliving(parent))
@@ -168,6 +168,8 @@
 	var/mob/living/ridden_creature = parent
 
 	for(var/datum/action/action as anything in ridden_creature.actions)
+		if(is_type_in_list(action, blacklist_abilities))
+			continue
 		action.GiveAction(rider)
 
 /// Takes away the riding parent's abilities from the rider
@@ -492,6 +494,7 @@
 /datum/component/riding/creature/leaper
 	can_force_unbuckle = FALSE
 	can_use_abilities = TRUE
+	blacklist_abilities = list(/datum/action/cooldown/toggle_seethrough)
 	ride_check_flags = JUST_FRIEND_RIDERS
 
 /datum/component/riding/creature/leaper/handle_specials()
