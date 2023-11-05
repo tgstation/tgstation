@@ -1,0 +1,4 @@
+author: "Senri"
+delete-after: True
+changes:
+  - bugfix: "Fixed patreon monkecoin boost to work properly"
