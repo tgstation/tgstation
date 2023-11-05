@@ -210,7 +210,7 @@
 
 /datum/supply_order/disposable/Destroy(force, ...)
 	QDEL_NULL(pack)
-	. = ..()
+	return ..()
 
 /// Custom material order to append cargo crate value to the final order cost
 /datum/supply_order/disposable/materials
