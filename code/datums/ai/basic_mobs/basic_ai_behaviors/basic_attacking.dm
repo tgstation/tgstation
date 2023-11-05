@@ -4,7 +4,7 @@
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
-	if(!controller.blackboard_key_exists(targeting_strategy_key))
+	if(!controller.blackboard[targeting_strategy_key])
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
 	//Hiding location is priority
