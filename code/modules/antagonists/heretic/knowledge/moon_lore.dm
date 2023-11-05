@@ -241,6 +241,7 @@
 		center = get_turf(source),
 		radius = 7,
 		hallucination_duration = 20 SECONDS)
+
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
 		carbon_view.adjust_confusion(2 SECONDS)
