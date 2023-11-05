@@ -232,8 +232,8 @@
 
 /// Hallucination used by the path of moon heretic to turn everyone into a lunar mass
 /datum/hallucination/delusion/preset/moon
-	delusion_icon_file = 'icons/mob/simple/mob.dmi'
-	delusion_icon_state = "ghost"
+	delusion_icon_file = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
+	delusion_icon_state = "moon_mass"
 	delusion_name = "moon"
 	duration = 15 SECONDS
 	affects_others = TRUE
