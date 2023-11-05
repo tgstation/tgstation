@@ -273,7 +273,7 @@
 	name = "hardlight spear"
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
 	icon_state = "lightspear"
-	damage = 45
+	damage = 40
 	armour_penetration = 10
 	wound_bonus = 5
 	bare_wound_bonus = 60
@@ -283,7 +283,7 @@
 	shrapnel_type = /obj/item/shrapnel/bullet/spear
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_wall = 'sound/weapons/parry.ogg'
-	embedding = list(embed_chance=100, fall_chance=2, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embedding = list(embed_chance=100, fall_chance=2, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.5, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 
 /obj/item/shrapnel/bullet/spear
 	name = "hardlight spear"
