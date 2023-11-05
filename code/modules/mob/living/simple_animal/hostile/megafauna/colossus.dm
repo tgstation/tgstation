@@ -512,7 +512,13 @@
 	if(..() && !ready_to_deploy)
 		SSpoints_of_interest.make_point_of_interest(src)
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_PLAY, header = "Anomalous crystal activated")
+		notify_ghosts(
+			"An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.",
+			ghost_sound = 'sound/effects/ghost2.ogg',
+			source = src,
+			action = NOTIFY_PLAY,
+			header = "Anomalous crystal activated",
+		)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()

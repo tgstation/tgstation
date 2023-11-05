@@ -262,7 +262,13 @@
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
-	notify_ghosts("[owner] is blacking out!", source = owner, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bro I'm not even drunk right now")
+	notify_ghosts(
+		"[owner] is blacking out!",
+		source = owner,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "Bro I'm not even drunk right now",
+	)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
