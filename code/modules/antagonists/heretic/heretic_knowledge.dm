@@ -154,9 +154,10 @@
 		return FALSE
 
 	// List comparison
-	if(length(optional_selected_atoms)==length(optional_atoms))
-		for(var/optional_result in optional_result_atoms)
-			new optional_result(loc)
+	if(length(optional_selected_atoms))
+		if(length(optional_selected_atoms)==length(optional_atoms))
+			for(var/optional_result in optional_result_atoms)
+				new optional_result(loc)
 	else
 		for(var/result in result_atoms)
 			new result(loc)

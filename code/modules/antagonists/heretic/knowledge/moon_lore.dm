@@ -199,11 +199,11 @@
 	adds_sidepath_points = 1
 	route = PATH_MOON
 
-/datum/heretic_knowledge/ultimate/moon_final/recipe_snowflake_check(mob/living/carbon/human/sacrifice, mob/living/user)
+/datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
+	var/brain_damage = sacrifice.get_organ_loss(ORGAN_SLOT_BRAIN)
 	// Checks if our target has enough brain damage
-	if(sacrifice.get_organ_loss(ORGAN_SLOT_BRAIN)<50)
-		user.balloon_alert(user, "They don't have enough brain damage!")
+	if(brain_damage<50)
 		return FALSE
 
 	return ..()
