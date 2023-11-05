@@ -82,7 +82,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(. || !ishuman(user) || broken)
 		return TRUE
 
-	if(istype(src, /obj/structure/mirror/magic) && !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	!if(istype(src, /obj/structure/mirror/magic) && !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE //no tele-grooming (if nonmagical)
 
 	return display_radial_menu(user)
