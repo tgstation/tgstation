@@ -1156,6 +1156,24 @@
 	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
 
 /*
+*	MASKS
+*/
+
+// BANDANAS
+
+/datum/greyscale_config/bandana_worn/snouted
+	name = "Worn Bandana"
+	icon_file = SNOUTED_MASK_FILE
+
+/datum/greyscale_config/bandstriped_worn/snouted
+	name = "Worn Striped Bandana"
+	icon_file = SNOUTED_MASK_FILE
+
+/datum/greyscale_config/bandskull_worn/snouted
+	name = "Worn Skull Bandana"
+	icon_file = SNOUTED_MASK_FILE
+
+/*
 *	SUITS
 */
 
