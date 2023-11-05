@@ -388,7 +388,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/reality_pierce,
 		/obj/projectile/curse_hand,
 		/obj/structure/destructible/eldritch_crucible,
-		/obj/structure/knock_tear,
+		/obj/structure/lock_tear,
 	)),
 	"insects" = typecacheof(list(
 		/obj/item/clothing/mask/animal/small/bee,
