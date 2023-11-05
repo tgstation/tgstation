@@ -18196,6 +18196,9 @@
 /area/station/maintenance/starboard/fore)
 "fAH" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "fAV" = (
@@ -33745,6 +33748,7 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/security/mechbay)
 "kqK" = (
@@ -36944,6 +36948,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "lmY" = (
@@ -37081,10 +37087,12 @@
 "loy" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/machinery/button/door/directional/east{
-	name = "Security Mech Garage Door Controls";
 	id = "secmechbay";
+	name = "Security Mech Garage Door Controls";
 	req_access = list("security")
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "loG" = (
@@ -38317,6 +38325,7 @@
 	name = "Security Mech Garage Door Controls";
 	req_access = list("security")
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "lIk" = (
@@ -47518,6 +47527,9 @@
 /area/station/security/prison/safe)
 "oyL" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "oyV" = (
@@ -50495,6 +50507,8 @@
 	},
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/mechbay)
 "ptd" = (
@@ -73473,6 +73487,8 @@
 "wAT" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "wAW" = (
