@@ -48,8 +48,12 @@
 
 ///Runs the consumption code, can be overriden for special effects
 /obj/item/reagent_containers/pill/proc/on_consumption(mob/M, mob/user)
-	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
+	if(icon_state == "pill4") //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
+		if(M.GetComponent(/datum/component/avatar_connection) && isliving(M))
+			var/mob/living/neo = M
+			SEND_SIGNAL(neo, COMSIG_BITRUNNER_ALERT_SEVER) //if your bitrunning avatar somehow manages to acquire and consume a red pill, they will be ejected from the Matrix
+		else if(prob(100)) //the other kind of red pill
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
 	if(apply_type == INGEST)
 		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = M, feeder = user)
 	if(reagents.total_volume)
