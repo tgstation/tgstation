@@ -66,7 +66,7 @@
 			heal_brute = 5,\
 			heal_burn = 0,\
 			heal_time = 0,\
-			valid_targets_typecache = typecacheof(list(/mob/living/basic/construct, /mob/living/simple_animal/shade)),\
+			valid_targets_typecache = typecacheof(list(/mob/living/basic/construct, /mob/living/basic/shade)),\
 			valid_biotypes = MOB_MINERAL | MOB_SPIRIT,\
 			self_targetting = can_repair_self ? HEALING_TOUCH_ANYONE : HEALING_TOUCH_NOT_SELF,\
 			action_text = "%SOURCE% begins repairing %TARGET%'s dents.",\

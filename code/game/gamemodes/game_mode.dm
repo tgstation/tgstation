@@ -129,7 +129,7 @@
 			for(var/dead_dudes_job in reopened_jobs)
 				reopened_job_report_positions = "[reopened_job_report_positions ? "[reopened_job_report_positions]\n":""][dead_dudes_job]"
 
-			var/suicide_command_report = "<font size = 3><b>Central Command Human Resources Board</b><br>\
+			var/suicide_command_report = "<font size = 3><b>[command_name()] Human Resources Board</b><br>\
 								Notice of Personnel Change</font><hr>\
 								To personnel management staff aboard [station_name()]:<br><br>\
 								Our medical staff have detected a series of anomalies in the vital sensors \
