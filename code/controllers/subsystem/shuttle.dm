@@ -100,9 +100,6 @@ SUBSYSTEM_DEF(shuttle)
 	/// Wishlist items made by crew for cargo to purchase at their leisure.
 	var/list/request_list = list()
 
-	/// A listing of previously delivered supply packs.
-	var/list/order_history = list()
-
 	/// A list of job accesses that are able to purchase any shuttles.
 	var/list/has_purchase_shuttle_access
 
@@ -729,8 +726,6 @@ SUBSYSTEM_DEF(shuttle)
 		shopping_list = SSshuttle.shopping_list
 	if (istype(SSshuttle.request_list))
 		request_list = SSshuttle.request_list
-	if (istype(SSshuttle.order_history))
-		order_history = SSshuttle.order_history
 
 	if (istype(SSshuttle.shuttle_loan))
 		shuttle_loan = SSshuttle.shuttle_loan

@@ -52,10 +52,6 @@ SUBSYSTEM_DEF(economy)
 	 */
 	var/list/audit_log = list()
 
-	/// Total value of exported materials.
-	var/export_total = 0
-	/// Total value of imported goods.
-	var/import_total = 0
 	/// Number of mail items generated.
 	var/mail_waiting = 0
 	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.

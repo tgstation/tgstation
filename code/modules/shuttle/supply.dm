@@ -202,9 +202,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
 		value += pack_cost
-		SSshuttle.shopping_list -= spawning_order
-		SSshuttle.order_history += spawning_order
-		QDEL_NULL(spawning_order.applied_coupon)
 
 		if(!spawning_order.pack.goody) //we handle goody crates below
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
@@ -218,6 +215,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(spawning_order.pack.dangerous)
 			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
+
+		SSshuttle.shopping_list -= spawning_order
+		qdel(spawning_order)
 
 	//clear out all rejected uncancellable orders
 	for(var/datum/supply_order/rejected_order in rejected_orders)
@@ -255,7 +255,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		order.generateCombo(miscboxes[miscbox], miscbox, misc_contents[miscbox], misc_costs[miscbox])
 		qdel(order)
 
-	SSeconomy.import_total += value
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
@@ -290,7 +289,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		msg += export_text + "\n"
 		cargo_budget.adjust_money(report.total_value[exported_datum])
 
-	SSeconomy.export_total += (cargo_budget.account_balance - presale_points)
 	SSshuttle.centcom_message = msg
 	investigate_log("contents sold for [cargo_budget.account_balance - presale_points] credits. Contents: [report.exported_atoms ? report.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
