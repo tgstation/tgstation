@@ -13,7 +13,4 @@
 	if(!human)
 		return
 	component.holder.Beam(human, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-	var/obj/item/organ/internal/brain/brain = human.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(brain)
-		brain.forceMove(get_turf(human))
-	human.gib()
+	human.death(FALSE)
