@@ -65,3 +65,4 @@
 	name = "German Shepherd"
 	default_name = "German Shepherd"
 	donator_pet = 	/mob/living/basic/pet/dog/germanshepherd
+
