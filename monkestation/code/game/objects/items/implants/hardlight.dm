@@ -34,7 +34,6 @@
 		if(!existing.level_spell())
 			to_chat(target, span_boldnotice("The implant is unable to upgrade your hardlight spear further"))
 			return FALSE
-		existing.level_spell()
 		timerid = QDEL_IN_STOPPABLE(src, deltime)
 		return TRUE
 	spell_inside = TRUE
