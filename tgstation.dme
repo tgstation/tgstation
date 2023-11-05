@@ -5682,7 +5682,7 @@
 #include "monkestation\code\modules\antagonists\slasher\abilities\slasher_regenerate.dm"
 #include "monkestation\code\modules\antagonists\slasher\abilities\soul_steal.dm"
 #include "monkestation\code\modules\antagonists\slasher\abilities\stalk_target.dm"
-#include "monkestation\code\modules\antagonists\slasher\abilities\terror.dm"
+#include "monkestation\code\modules\antagonists\slasher\abilities\terror_screech.dm"
 #include "monkestation\code\modules\antagonists\slasher\components\team_monitor.dm"
 #include "monkestation\code\modules\antagonists\slasher\slasher_outfit\slasher_footwear.dm"
 #include "monkestation\code\modules\antagonists\slasher\slasher_outfit\slasher_headgear.dm"

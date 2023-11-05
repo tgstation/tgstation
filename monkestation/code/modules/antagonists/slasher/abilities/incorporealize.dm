@@ -6,27 +6,34 @@
 
 	var/flipped = FALSE
 
-/datum/action/cooldown/slasher/incorporealize/PreActivate(atom/target)
-	. = ..()
-	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
-	if(!slasherdatum)
-		return FALSE
-	if(slasherdatum.soul_punishment >= 2)
-		return FALSE
-	if(!flipped)
-		for(var/mob/living/watchers in view(9, target) - target)
-			target.balloon_alert(owner, "you can only vanish unseen.")
-			return FALSE
-
-	if(!do_after(target, 1.5 SECONDS, get_turf(target)))
-		break_corp()
-		return FALSE
-	return TRUE
-
 /datum/action/cooldown/slasher/incorporealize/Activate(atom/target)
 	. = ..()
 	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
+
+	/**
+	 * Here we start our checks
+	 * We cant do it in PreActivate() since that for some reason does not work
+	 */
+
 	if(!slasherdatum)
+		to_chat(owner, span_warning("You should not have this ability or your slasher antagonist datum was deleted, please contact coders"))
+		return
+
+	if(slasherdatum.soul_punishment >= 2)
+		to_chat(owner, span_boldwarning("The souls you have stolen are preventing you from going incorporeal!"))
+		return
+
+	if(!flipped)
+		for(var/mob/living/watchers in view(9, target) - target)
+			target.balloon_alert(owner, "you can only vanish unseen.")
+			return
+
+	/**
+	 * All good? then lets continue
+	 */
+
+	if(!do_after(target, 1.5 SECONDS, get_turf(target)))
+		break_corp()
 		return
 
 	flipped = !flipped
@@ -45,7 +52,7 @@
 			ADD_TRAIT(owner_mob, TRAIT_HANDS_BLOCKED, "slasher")
 	else
 		name = "Incorporealize"
-		desc = " Become incorporeal, capable of moving through walls and being completely invisible, but unable to interact with the world. Can only be used when corporeal and when not in view of any human being. "
+		desc = "Become incorporeal, capable of moving through walls and being completely invisible, but unable to interact with the world. Can only be used when corporeal and when not in view of any human being. "
 		button_icon_state = "incorporealize"
 		if(isliving(owner))
 			var/mob/living/owner_mob = owner

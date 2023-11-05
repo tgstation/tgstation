@@ -5,15 +5,24 @@
 
 	cooldown_time = 45 SECONDS
 
-/datum/action/cooldown/slasher/terror/PreActivate(atom/target)
-	. = ..()
-	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
-	if(!slasherdatum || !slasherdatum.corporeal)
-		return FALSE
-
 
 /datum/action/cooldown/slasher/terror/Activate(atom/target)
 	. = ..()
+	var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
+
+	if(!slasherdatum)
+		to_chat(owner, span_warning("You should not have this ability or your slasher antagonist datum was deleted, please contact coders"))
+		return
+
+	if(!slasherdatum.corporeal) // if he is incorporeal, dont stun people
+		for(var/mob/living/carbon/human/human in view(7, owner))
+			if(human == owner)
+				continue
+			to_chat(human, span_warning("You hear a distant screech... this cant possibly be good"))
+			playsound(owner, 'monkestation/sound/voice/terror.ogg', 10, falloff_exponent = 0, use_reverb = FALSE)
+			human.Shake(duration = 1 SECONDS)
+		return
+
 	playsound(owner, 'monkestation/sound/voice/terror.ogg', 100, falloff_exponent = 0, use_reverb = FALSE)
 	for(var/mob/living/carbon/human/human in view(7, owner))
 		if(human == owner)
