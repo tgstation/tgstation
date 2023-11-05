@@ -55,5 +55,5 @@
 //ttnt
 /obj/item/effect_granter/donator/spycrab
 	name = "Spycrab transformation"
-	icon_state = "spycrab"
+	icon_state = "crab_red"
 	animal_transformation = /mob/living/basic/crab/spycrab

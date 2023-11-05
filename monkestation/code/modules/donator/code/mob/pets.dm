@@ -24,6 +24,7 @@
 	. = ..()
 	var/random_icon = pick("crab_red","crab_blue")
 	icon_state = random_icon
+	icon_living = random_icon
 	icon_dead = "[random_icon]_dead"
 	gold_core_spawnable = NO_SPAWN
 
