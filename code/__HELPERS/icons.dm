@@ -1527,3 +1527,25 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		var/icon/my_icon = icon(icon_path)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
+
+/// Fikou's fix for making toast icons look nice - resets offsets, transforms to fit
+/proc/get_alert_overlay(atom/source)
+	var/mutable_appearance/alert_overlay = new(source)
+	alert_overlay.pixel_x = 0
+	alert_overlay.pixel_y = 0
+	var/icon/size_check = icon(source.icon, source.icon_state)
+	var/scale = 1
+	var/width = size_check.Width()
+	var/height = size_check.Height()
+	if(width > world.icon_size)
+		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
+	if(height > world.icon_size)
+		alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
+	if(width > world.icon_size || height > world.icon_size)
+		if(width >= height)
+			scale = world.icon_size / width
+		else
+			scale = world.icon_size / height
+	alert_overlay.transform = alert_overlay.transform.Scale(scale)
+
+	return alert_overlay
