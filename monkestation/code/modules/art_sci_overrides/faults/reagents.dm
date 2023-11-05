@@ -9,7 +9,7 @@
 	if(!length(reagents))
 		return
 	for(var/mob/living/carbon/living in range(rand(3, 5), component.parent))
-		living.reagents.add_reagent(pick(reagents), rand(15, 20))
+		living.reagents.add_reagent(pick(reagents), rand(1, 5))
 		to_chat(living, span_warning("You feel a soft prick."))
 
 /datum/artifact_fault/reagent/poison
