@@ -36,6 +36,7 @@
 	mix_message = "You smell something good coming from the steaming pot of soup."
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
 	reaction_flags = REACTION_NON_INSTANT
+	var/Nonsouprecipe = FALSE
 
 	// General soup guideline:
 	// - Soups should produce 60-90 units (3-4 servings)
@@ -188,14 +189,14 @@
 			continue
 
 		// Things that had reagents or ingredients in the soup will get deleted
-		if((!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients)) && !is_type_in_list(ingredient, outputted_ingredients))
+		if((!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients)) && !is_type_in_list(ingredient, outputted_ingredients) && !Nonsouprecipe) //monkeedit
 			// Send everything left behind
 			transfer_ingredient_reagents(ingredient, holder)
 			// Delete, it's done
 			qdel(ingredient)
 
 		// Everything else will just get fried
-		else
+		if (!Nonsouprecipe) //monkeedit
 			ingredient.AddElement(/datum/element/fried_item, 30)
 
 	//LAZYNULL(pot.added_ingredients)
