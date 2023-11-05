@@ -388,6 +388,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "Drink till you puke and/or break the laws of reality!"
 	neon_color = "#00cc33"
 
+/datum/barsign/therune
+	name = "The Rune"
+	icon = "therune"
+	desc = "Your mind melts and shatters after looking at it too long. You should probably stop staring at screens anyway."
+	neon_color = "#00CB88"
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns
