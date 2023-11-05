@@ -103,7 +103,7 @@
 		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
 		source = src,
 		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "Sentient Rat Created",
 	)
 
