@@ -276,7 +276,7 @@
 		return
 
 	if(isnull(alert_overlay) && source)
-		alert_overlay = get_alert_icon(source)
+		alert_overlay = get_small_overlay(source)
 
 	alert_overlay.appearance_flags |= TILE_BOUND
 	alert_overlay.layer = FLOAT_LAYER
