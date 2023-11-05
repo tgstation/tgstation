@@ -67,6 +67,7 @@
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return .
 	target_holosign = new holosign_type(get_turf(target), src)
+	target_holosign.add_hiddenprint(user)
 	if(color)
 		target_holosign.color = color
 	return .

@@ -84,7 +84,6 @@
 			CRASH("limbs is empty and the chest is blacklisted. this may not be intended!")
 	return (((chest_blacklisted && !base_zone) || even_weights) ? pick_weight(limbs) : ran_zone(base_zone, base_probability, limbs))
 
-
 ///Would this zone be above the neck
 /proc/above_neck(zone)
 	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
@@ -268,7 +267,7 @@
 	flashwindow = TRUE,
 	ignore_mapload = TRUE,
 	ignore_key,
-	header,
+	header = "",
 	notify_suiciders = TRUE,
 	notify_volume = 100
 )
@@ -276,20 +275,26 @@
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
-	var/list/viewers = list()
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 
-		viewers += ghost // This mob will see the alert
-
 		if(flashwindow)
 			window_flash(ghost.client)
 
+		if(ghost_sound)
+			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
+
 		if(isnull(source))
+			to_chat(ghost, span_ghostalert(message))
 			continue
+
+		var/custom_link = enter_link ? " [enter_link]" : ""
+		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+
+		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
 
 		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
 			category = "[REF(source)]_notify_action",
@@ -300,14 +305,6 @@
 		toast.desc = "Click to [action]."
 		toast.name = header
 		toast.target = source
-
-	var/orbit_link
-	if(source && action == NOTIFY_ORBIT)
-		orbit_link = " <a href='?src=[REF(usr)];follow=[REF(source)]'>(Orbit)</a>"
-
-	var/text = "[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"
-
-	minor_announce(text, title = header, players = viewers, html_encode = FALSE, sound_override = ghost_sound, color_override = "purple")
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
@@ -563,3 +560,21 @@
 		raw_lines += recent_speech[key]
 
 	return raw_lines
+
+/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key) and handles granting the action and adding it to the mob's AI controller blackboard.
+/// This is only useful in instances where you don't want to store the reference to the action on a variable on the mob.
+/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
+/// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
+/mob/proc/grant_actions_by_list(list/input)
+	if(length(input) <= 0)
+		return
+
+	for(var/action in input)
+		var/datum/action/ability = new action(src)
+		ability.Grant(src)
+
+		var/blackboard_key = input[action]
+		if(isnull(blackboard_key))
+			continue
+
+		ai_controller?.set_blackboard_key(blackboard_key, ability)

@@ -36,16 +36,16 @@
 
 /mob/living/basic/mega_arachnid/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/seethrough_mob)
-	var/datum/action/cooldown/spell/pointed/projectile/flesh_restraints/restrain = new(src)
-	var/datum/action/cooldown/mob_cooldown/secrete_acid/acid_spray = new(src)
-	acid_spray.Grant(src)
-	restrain.Grant(src)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/secrete_acid = BB_ARACHNID_SLIP,
+		/datum/action/cooldown/spell/pointed/projectile/flesh_restraints = BB_ARACHNID_RESTRAIN,
+	)
+	grant_actions_by_list(innate_actions)
+
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGA_ARACHNID, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddComponent(/datum/component/seethrough_mob)
 	AddComponent(/datum/component/appearance_on_aggro, alpha_on_aggro = 255, alpha_on_deaggro = alpha)
 	AddComponent(/datum/component/tree_climber, climbing_distance = 15)
-	ai_controller.set_blackboard_key(BB_ARACHNID_RESTRAIN, restrain)
-	ai_controller.set_blackboard_key(BB_ARACHNID_SLIP, acid_spray)
 
 /mob/living/basic/mega_arachnid/Login()
 	. = ..()

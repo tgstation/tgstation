@@ -42,7 +42,7 @@
 		G.arm_grenade()
 	else if(istype(I, /obj/item/flashlight))
 		var/obj/item/flashlight/F = I
-		F.on = TRUE
+		F.set_light_on(TRUE)
 		F.update_brightness()
 
 /obj/item/vending_refill/security

@@ -80,10 +80,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
 	. = ..()
-	fire_cone = new /datum/action/cooldown/mob_cooldown/fire_breath/cone()
-	meteors = new /datum/action/cooldown/mob_cooldown/meteors()
-	mass_fire = new /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire()
-	lava_swoop = new /datum/action/cooldown/mob_cooldown/lava_swoop()
+	fire_cone = new(src)
+	meteors = new(src)
+	mass_fire = new(src)
+	lava_swoop = new(src)
 	fire_cone.Grant(src)
 	meteors.Grant(src)
 	mass_fire.Grant(src)
@@ -95,10 +95,10 @@
 	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
-	QDEL_NULL(fire_cone)
-	QDEL_NULL(meteors)
-	QDEL_NULL(mass_fire)
-	QDEL_NULL(lava_swoop)
+	fire_cone = null
+	meteors = null
+	mass_fire = null
+	lava_swoop = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
@@ -322,7 +322,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	lava_swoop.enraged = FALSE
+	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
