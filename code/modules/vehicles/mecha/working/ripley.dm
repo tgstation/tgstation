@@ -37,8 +37,6 @@
 	var/hides = 0
 	/// List of all things in Ripley's Cargo Compartment
 	var/list/cargo
-	/// How much things Ripley can carry in their Cargo Compartment
-	var/cargo_capacity = 15
 	/// How fast the mech is in low pressure
 	var/fast_pressure_step_in = 1.5
 	/// How fast the mech is in normal pressure
@@ -110,9 +108,23 @@
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_paddy
-	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
+	wreckage = /obj/structure/mecha_wreckage/ripley/paddy
 	silicon_icon_state = "paddy-empty"
-	cargo_capacity = 4
+	equip_by_category = list(
+		MECHA_L_ARM = null,
+		MECHA_R_ARM = null,
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector/seccage),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
+	)
+	///Siren Lights/Sound State
+	var/siren = FALSE
+	///Overlay for Siren Lights
+	var/mutable_appearance/sirenlights
+	///Looping sound datum for the Siren audio
+	var/datum/looping_sound/siren/weewooloop
+	///Referece to the action button for the Siren
+	var/datum/action/vehicle/sealed/mecha/siren/sirenbutton
 
 /datum/armor/mecha_paddy
 	melee = 40
@@ -123,11 +135,59 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/ripley/paddy/Exit(atom/movable/leaving, direction)
-	if(!(leaving in cargo))
-		for(var/contained in cargo)
-			forceMove(contained, loc)
+/obj/vehicle/sealed/mecha/ripley/paddy/Initialize()
+	. = ..()
+	weewooloop = new(src, FALSE, FALSE)
+	weewooloop.volume = 100
+
+/obj/vehicle/sealed/mecha/ripley/paddy/generate_actions()
+	. = ..()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/siren)
+
+/obj/vehicle/sealed/mecha/ripley/paddy/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
+	var/obj/item/mecha_parts/mecha_equipment/ejector/seccage/cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector/seccage) in equip_by_category[MECHA_UTILITY]
+	for(var/mob/contained in cargo_holder)
+		cargo_holder.cheese_it(contained)
+	togglesiren(force_off = TRUE)
 	return ..()
+
+/obj/vehicle/sealed/mecha/ripley/paddy/proc/togglesiren(force_off = FALSE)
+	if(force_off || siren)
+		weewooloop.stop()
+		siren = FALSE
+		sirenbutton?.button_icon_state = "mech_siren_off"
+	else
+		weewooloop.start()
+		siren = TRUE
+		sirenbutton?.button_icon_state = "mech_siren_on"
+	update_overlays()
+
+/obj/vehicle/sealed/mecha/ripley/paddy/update_overlays()
+	cut_overlays()
+	. = ..()
+	if(siren)
+		sirenlights = new()
+		sirenlights.icon = icon
+		sirenlights.icon_state = "paddy_sirens"
+		SET_PLANE_EXPLICIT(sirenlights, ABOVE_LIGHTING_PLANE, src)
+		add_overlay(sirenlights)
+
+/obj/vehicle/sealed/mecha/ripley/paddy/Destroy()
+	QDEL_NULL(weewooloop)
+	return ..()
+
+/datum/action/vehicle/sealed/mecha/siren
+	name = "Toggle the external siren and lights."
+	button_icon_state = "mech_siren_off"
+
+/datum/action/vehicle/sealed/mecha/siren/New()
+	. = ..()
+	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
+	secmech.sirenbutton = src
+
+/datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
+	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
+	secmech.togglesiren()
 
 /obj/vehicle/sealed/mecha/ripley/paddy/preset
 	accesses = list(ACCESS_SECURITY)
@@ -135,7 +195,7 @@
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector),
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/ejector/seccage),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
@@ -253,15 +313,21 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
+	///Number of atoms we can store
+	var/cargo_capacity = 15
+
+/obj/item/mecha_parts/mecha_equipment/ejector/Destroy()
+	for(var/atom/stored in contents)
+		forceMove(stored, get_turf(src))
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/get_snowflake_data()
-	var/obj/vehicle/sealed/mecha/ripley/miner = chassis
 	var/list/data = list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_EJECTOR,
-		"cargo_capacity" = miner.cargo_capacity,
+		"cargo_capacity" = cargo_capacity,
 		"cargo" = list()
 		)
-	for(var/atom/entry in miner.cargo)
+	for(var/atom/entry in contents)
 		data["cargo"] += list(list(
 			"name" = entry.name,
 			"ref" = REF(entry),
@@ -273,18 +339,79 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	if(.)
 		return TRUE
 	if(action == "eject")
-		var/obj/vehicle/sealed/mecha/ripley/miner = chassis
-		var/obj/crate = locate(params["cargoref"]) in miner.cargo
+		var/obj/crate = locate(params["cargoref"]) in contents
 		if(!crate)
 			return FALSE
-		to_chat(miner.occupants, "[icon2html(src,  miner.occupants)][span_notice("You unload [crate].")]")
+		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [crate].")]")
 		crate.forceMove(drop_location())
-		LAZYREMOVE(miner.cargo, crate)
-		if(crate == miner.ore_box)
-			miner.ore_box = null
+		if(crate == chassis.ore_box)
+			chassis.ore_box = null
 		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
-		log_message("Unloaded [crate]. Cargo compartment capacity: [miner.cargo_capacity - LAZYLEN(miner.cargo)]", LOG_MECHA)
+		log_message("Unloaded [crate]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage
+	name = "holding cell"
+	desc = "Holds suspects loaded with a hydraulic claw."
+	cargo_capacity = 4
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Initialize()
+	RegisterSignal(src, COMSIG_MOB_REMOVING_CUFFS, PROC_REF(stop_cuff_removal))
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Destroy()
+	UnregisterSignal(src, COMSIG_MOB_REMOVING_CUFFS)
+	for(var/mob/freebird in contents) //Let's not qdel people iside the mech kthx
+		cheese_it(freebird)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/proc/stop_cuff_removal(datum/source, obj/item/cuffs)
+	SIGNAL_HANDLER
+	to_chat(source, span_warning("You don't have the room to remove [cuffs]!"))
+	return COMSIG_MOB_BLOCK_CUFF_REMOVAL
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params)
+	if(action == "eject")
+		var/mob/passenger = locate(params["cargoref"]) in contents
+		if(!passenger)
+			return FALSE
+		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
+		passenger.forceMove(get_turf(src))
+		addtimer(CALLBACK(passenger, TYPE_PROC_REF(/atom/movable, forceMove), get_step(chassis, chassis.dir)), 1) //That's right, one tick. Just enough to cause the tile move animation.
+		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
+		return TRUE
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/container_resist_act(mob/living/user)
+	to_chat(user, span_notice("You begin attempting a breakout. (This will take around 45 seconds and [chassis] need to remain stationary.)"))
+	if(do_after(user, 1 MINUTES, target = chassis))
+		to_chat(user, span_notice("You break out of the [src]."))
+		playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)
+		cheese_it(user)
+		for(var/mob/freebird in contents)
+			if(user != freebird)
+				to_chat(freebird, span_warning("[user] has managed to open the hatch, and you fall out with him. You're free!"))
+				cheese_it(freebird)
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/proc/cheese_it(mob/living/escapee)
+	var/range = rand(1, 3)
+	var/variance = rand(-45, 45)
+	var/angle = 180
+	var/turf/current_turf = get_turf(src)
+	switch (chassis?.dir)
+		if(NORTH)
+			angle = 270
+		if(EAST)
+			angle = 180
+		if(SOUTH)
+			angle = 90
+		if(WEST)
+			angle = 0
+	var/target_x = round(range * cos(angle + variance), 1) + current_turf.x
+	var/target_y = round(range * sin(angle + variance), 1) + current_turf.y
+	escapee.Knockdown(1) //Otherwise everyone hits eachother while being thrown
+	escapee.forceMove(get_turf(src))
+	escapee.throw_at(locate(target_x, target_y, current_turf.z), range, 1)
 
 /obj/vehicle/sealed/mecha/ripley/relay_container_resist_act(mob/living/user, obj/O)
 	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))

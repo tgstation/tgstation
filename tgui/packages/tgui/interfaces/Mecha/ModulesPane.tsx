@@ -902,7 +902,7 @@ const SnowflakeLawClaw = (props, context) => {
         <Button
           content={'Toggle'}
           color={autocuff ? 'green' : 'blue'}
-          icon={'fill'}
+          icon={'handcuffs'}
           onClick={() =>
             act('equip_act', {
               ref: ref,

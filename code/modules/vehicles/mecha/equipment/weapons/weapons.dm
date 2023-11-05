@@ -552,8 +552,8 @@
 	range = MECHA_MELEE
 	toolspeed = 0.8
 	mech_flags = EXOSUIT_MODULE_PADDY
-	///Var for the chassis we are attached to, needed to access ripley contents and such
-	var/obj/vehicle/sealed/mecha/ripley/paddy/cargo_holder
+	///Var for the container object inside the mech
+	var/obj/item/mecha_parts/mecha_equipment/ejector/seccage/cargo_holder
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 	///Var for the cuff type. Basically stole how cuffing works from secbots
@@ -564,24 +564,31 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
 	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley/paddy))
-		cargo_holder = chassis
+		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector/seccage) in chassis.equip_by_category[MECHA_UTILITY]
 
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/living/source, atom/target, list/modifiers)
+	if(!cargo_holder)
+		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector/seccage) in chassis.equip_by_category[MECHA_UTILITY]
+		if(!cargo_holder) //We did try
+			CRASH("Mech [chassis] has a claw device, but no internal storage. This should be impossible.")
+			return
 	if(ismob(target))
 		var/mob/living/mobtarget = target
-		if(LAZYLEN(cargo_holder.cargo) >= cargo_holder.cargo_capacity)
+		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
+			to_chat(source, "[span_warning("[src] is unable to lift [mobtarget].")]")
+		if(cargo_holder.contents.len >= cargo_holder.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
 
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		chassis.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."))
+		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_danger("[chassis] grips you with [src] and prepares to load you into a holding cell!"))
 		if(!do_after_cooldown(mobtarget, source))
 			return
-		LAZYADD(cargo_holder.cargo, mobtarget)
-		mobtarget.forceMove(chassis)
-		log_message("Loaded [mobtarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
+		mobtarget.forceMove(cargo_holder)
+		log_message("Loaded [mobtarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.contents.len]", LOG_MECHA)
 		to_chat(source, "[icon2html(src, source)][span_notice("[mobtarget] successfully loaded.")]")
-		if(iscarbon(target) && autocuff)
+		to_chat(mobtarget, "[span_warning("You have been moved into [cargo_holder]. You can attempt to resist out if you wish.")]")
+		if(autocuff && iscarbon(target))
 			var/mob/living/carbon/carbontarget = target
 			carbontarget.set_handcuffed(new cuff_type(carbontarget))
 			carbontarget.update_handcuffed()

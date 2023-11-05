@@ -17,15 +17,15 @@
 	var/killer_clamp = FALSE
 	///How much base damage this clamp does
 	var/clamp_damage = 20
-	///Var for the chassis we are attached to, needed to access ripley contents and such
-	var/obj/vehicle/sealed/mecha/ripley/cargo_holder
+	///Var for the container object inside the mech
+	var/obj/item/mecha_parts/mecha_equipment/ejector/cargo_holder
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
 	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))
-		cargo_holder = chassis
+		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector) in chassis.equip_by_category[MECHA_UTILITY]
 	ADD_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto)
@@ -37,11 +37,14 @@
 	if(!action_checks(target))
 		return
 	if(!cargo_holder)
-		return
+		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector) in chassis.equip_by_category[MECHA_UTILITY]
+		if(!cargo_holder) //We did try
+			CRASH("Mech [chassis] has a clamp device, but no internal storage. This should be impossible.")
+			return
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		var/have_ammo
-		for(var/obj/item/mecha_ammo/box in cargo_holder.cargo)
+		for(var/obj/item/mecha_ammo/box in cargo_holder.contents)
 			if(istype(box, /obj/item/mecha_ammo) && box.rounds)
 				have_ammo = TRUE
 				if(M.ammo_resupply(box, source, TRUE))
@@ -66,7 +69,7 @@
 		if(clamptarget.anchored)
 			to_chat(source, "[icon2html(src, source)][span_warning("[target] is firmly secured!")]")
 			return
-		if(LAZYLEN(cargo_holder.cargo) >= cargo_holder.cargo_capacity)
+		if(cargo_holder.contents.len >= cargo_holder.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
 		playsound(chassis, clampsound, 50, FALSE, -6)
@@ -75,13 +78,12 @@
 		if(!do_after_cooldown(target, source))
 			clamptarget.set_anchored(initial(clamptarget.anchored))
 			return
-		LAZYADD(cargo_holder.cargo, clamptarget)
-		clamptarget.forceMove(chassis)
+		clamptarget.forceMove(cargo_holder)
 		clamptarget.set_anchored(FALSE)
-		if(!cargo_holder.ore_box && istype(clamptarget, /obj/structure/ore_box))
-			cargo_holder.ore_box = clamptarget
+		if(!chassis.ore_box && istype(clamptarget, /obj/structure/ore_box))
+			chassis.ore_box = clamptarget
 		to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded.")]")
-		log_message("Loaded [clamptarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
+		log_message("Loaded [clamptarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.contents.len]", LOG_MECHA)
 
 	else if(isliving(target))
 		var/mob/living/M = target
