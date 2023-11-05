@@ -11,7 +11,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
-		BB_PET_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends)
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -38,7 +38,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_STOP_FLEEING = TRUE,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_PET_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/not_friends)
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(
