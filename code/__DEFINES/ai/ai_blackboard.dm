@@ -52,6 +52,8 @@
 #define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
 /// Flag for whether to target only wounded mobs
 #define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
+/// What typepath the holding object targeting datum should look for
+#define BB_TARGET_HELD_ITEM "BB_target_held_item"
 
 /// Blackboard key storing how long your targetting datum has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
@@ -132,3 +134,7 @@
 #define BB_BASIC_MOB_REINFORCEMENT_TARGET "BB_basic_mob_reinforcement_target"
 /// The next time at which this mob can call for reinforcements
 #define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"
+
+/// Keys used by one and only one behavior
+/// Used to hold state without making bigass lists
+#define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
