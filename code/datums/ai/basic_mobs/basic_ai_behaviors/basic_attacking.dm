@@ -24,7 +24,7 @@
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore
 	var/atom/target = controller.blackboard[target_key]
-	var/datum/targeting_strategy/targeting_strategy = controller.blackboard[targeting_strategy_key]
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	if(!targeting_strategy.can_attack(basic_mob, target))
 		finish_action(controller, FALSE, target_key)
@@ -65,7 +65,7 @@
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore
 	var/atom/target = controller.blackboard[target_key]
-	var/datum/targeting_strategy/targeting_strategy = controller.blackboard[targeting_strategy_key]
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	if(!targeting_strategy.can_attack(basic_mob, target, chase_range))
 		finish_action(controller, FALSE, target_key)

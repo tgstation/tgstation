@@ -17,7 +17,7 @@
 /datum/ai_behavior/find_hated_dog_target/setup(datum/ai_controller/controller, target_key, targeting_strategy_key)
 	. = ..()
 	var/mob/living/dog = controller.pawn
-	var/datum/targeting_strategy/targeting_strategy = controller.blackboard[targeting_strategy_key]
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	for(var/mob/living/iter_living in oview(2, dog))
 		if(iter_living.stat != CONSCIOUS || !HAS_TRAIT(iter_living, TRAIT_HATED_BY_DOGS))
 			continue

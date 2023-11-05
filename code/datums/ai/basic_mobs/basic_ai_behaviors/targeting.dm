@@ -10,7 +10,7 @@
 /datum/ai_behavior/find_potential_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	var/mob/living/living_mob = controller.pawn
-	var/datum/targeting_strategy/targeting_strategy = controller.blackboard[targeting_strategy_key]
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	if(!targeting_strategy)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")

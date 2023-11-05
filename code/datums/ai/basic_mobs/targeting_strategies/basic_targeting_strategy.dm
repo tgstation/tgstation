@@ -1,4 +1,5 @@
 ///Datum for basic mobs to define what they can attack.
+///Global, just like ai_behaviors
 /datum/targeting_strategy
 
 ///Returns true or false depending on if the target can be attacked by the mob

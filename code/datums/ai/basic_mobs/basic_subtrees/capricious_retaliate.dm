@@ -38,7 +38,7 @@
 		failed_targetting(controller, pawn, ignore_faction)
 		return
 
-	var/datum/targeting_strategy/target_helper = controller.blackboard[targeting_strategy_key]
+	var/datum/targeting_strategy/target_helper = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	var/mob/living/final_target = null
 	if (ignore_faction)

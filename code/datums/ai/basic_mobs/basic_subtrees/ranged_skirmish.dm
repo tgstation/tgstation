@@ -32,7 +32,7 @@
 		finish_action(controller, succeeded = FALSE)
 		return
 
-	var/datum/targeting_strategy/targeting_strategy = controller.blackboard[targeting_strategy_key]
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 	if(!targeting_strategy.can_attack(controller.pawn, target))
 		finish_action(controller, succeeded = FALSE)
 		return

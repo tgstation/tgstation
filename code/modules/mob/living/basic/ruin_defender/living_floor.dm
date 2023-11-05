@@ -61,7 +61,7 @@
 	if(!istype(victim) || istype(victim, /mob/living/basic/living_floor) || victim.stat == DEAD)
 		return
 	if(victim.loc == loc) //guaranteed bite
-		var/datum/targeting_strategy/basic/targetting = ai_controller.blackboard[BB_TARGETING_STRATEGY]
+		var/datum/targeting_strategy/basic/targetting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
 		if(targetting.can_attack(src, victim))
 			melee_attack(victim)
 	icon_state = icon_aggro
