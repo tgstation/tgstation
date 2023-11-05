@@ -46,8 +46,14 @@
 	animal_transformation = /mob/living/basic/mothroach/void
 
 
-//Random
+//ruby
 /obj/item/effect_granter/donator/blahaj
 	name = "Blahaj transformation"
 	icon_state = "blahaj"
 	animal_transformation = /mob/living/basic/pet/blahaj
+
+//ttnt
+/obj/item/effect_granter/donator/spycrab
+	name = "Spycrab transformation"
+	icon_state = "crab_red"
+	animal_transformation = /mob/living/basic/crab/spycrab
