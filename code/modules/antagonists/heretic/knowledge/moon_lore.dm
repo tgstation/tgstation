@@ -7,7 +7,7 @@
  * Grasp of Lunacy
  * Smile of the moon
  * > Sidepaths:
- *   Mind Gate§
+ *   Mind Gate
  *   Ashen Eyes
  *
  * Mark of Moon
@@ -15,14 +15,14 @@
  * Lunar Parade
  * Moonlight Amulette
  * > Sidepaths:
- *   Space Phase
- *   Curse of Paralysis
+ *   Curse of Paralasys
+ *   Unfathomable Curio
+ * 	 Unsealed Arts
  *
  * Moonlight blade
  * Ringleaders Rise
  * > Sidepaths:
  *   Ashen Ritual
- *   Eldritch Coin
  *
  * Last Act
  */
@@ -247,10 +247,10 @@
 		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_sanity-5)
 		if(carbon_sanity<30)
-			carbon_view.balloon_alert(carbon_view, "You feel your mind begining to rend!")
+			carbon_view.balloon_alert(carbon_view, "you feel your mind begining to rend!")
 			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 		if(carbon_sanity<10)
-			carbon_view.balloon_alert(carbon_view, "IT ECHOES THROUGH YOU!!")
+			carbon_view.balloon_alert(carbon_view, "it echoes through you!")
 			visible_hallucination_pulse(
 			center = get_turf(carbon_view),
 			radius = 7,

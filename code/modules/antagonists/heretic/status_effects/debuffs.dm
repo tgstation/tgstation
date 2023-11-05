@@ -250,7 +250,7 @@
 	// Healing based on how low their sanity is
 	owner.adjustBruteLoss(-150+owner.mob_mood.sanity)
 	owner.adjustFireLoss(-150+owner.mob_mood.sanity)
-	owner.balloon_alert(owner, "THEY LIE, THEY ALL LIE!!!")
+	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, type)
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
