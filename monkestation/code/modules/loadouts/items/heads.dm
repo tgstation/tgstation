@@ -187,6 +187,14 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Tragic Mime Headpiece"
 	item_path = /obj/item/clothing/head/tragic
 
+/datum/loadout_item/head/pharaoh
+	name = "Pharaoh's Hat"
+	item_path = /obj/item/clothing/head/costume/pharaoh
+
+/datum/loadout_item/head/nemes
+	name = "Headdress of Nemes"
+	item_path = /obj/item/clothing/head/costume/nemes
+
 /*
 *	CHRISTMAS
 */
