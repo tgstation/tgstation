@@ -335,21 +335,23 @@
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 10
 
 /datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
-	if(istype(parent, /obj/machinery/hydroponics/constructable))
-		var/obj/machinery/hydroponics/constructable/basin = parent
-		if(basin.waterlevel <= 0)
-			return "There's no water in [parent] to fish in."
-		if(basin.myseed)
-			return "There's a plant growing in [parent]."
+	if(!istype(parent, /obj/machinery/hydroponics/constructable))
+		return ..()
+
+	var/obj/machinery/hydroponics/constructable/basin = parent
+	if(basin.waterlevel <= 0)
+		return "There's no water in [parent] to fish in."
+	if(basin.myseed)
+		return "There's a plant growing in [parent]."
 
 	return ..()
 
 /datum/fish_source/hydro_tray/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
 	if(reward_path != RANDOM_SEED)
-		var/atom/movable/created_reward = ..()
-		if(ismob(created_reward))
+		var/mob/living/created_reward = ..()
+		if(istype(created_reward))
 			created_reward.name = "small [created_reward.name]"
-			created_reward.transform = created_reward.transform.Scale(0.75)
+			created_reward.update_transform(0.75)
 		return created_reward
 
 	var/static/list/seeds_to_draw_from
