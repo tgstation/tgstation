@@ -1533,11 +1533,12 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/mutable_appearance/alert_overlay = new(source)
 	alert_overlay.pixel_x = 0
 	alert_overlay.pixel_y = 0
-	var/icon/size_check = icon(source.icon, source.icon_state)
+
 	var/scale = 1
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)
 	var/width = icon_dimensions["width"]
 	var/height = icon_dimensions["height"]
+	
 	if(width > world.icon_size)
 		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
 	if(height > world.icon_size)
