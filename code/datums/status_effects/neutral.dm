@@ -152,6 +152,13 @@
 	desc = "You're currently pointing a gun at someone."
 	icon_state = "aimed"
 
+/atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	var/datum/component/gunpoint/gunpoint = owner.GetComponent(/datum/component/gunpoint)
+	gunpoint?.cancel()
+
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
 	id = "offering"
