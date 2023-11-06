@@ -26,7 +26,12 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 12
 	atom_storage.max_slots = 6
-	atom_storage.set_holdable(/obj/item/reagent_containers/cup/soda_cans)
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/cup/soda_cans,
+		/obj/item/reagent_containers/cup/glass/bottle/beer,
+		/obj/item/reagent_containers/cup/glass/bottle/ale,
+		/obj/item/reagent_containers/cup/glass/waterbottle
+		))
 
 /obj/item/storage/cans/sixsoda
 	name = "soda bottle ring"
@@ -37,9 +42,9 @@
 		new /obj/item/reagent_containers/cup/soda_cans/cola(src)
 
 /obj/item/storage/cans/sixbeer
-	name = "beer can ring"
-	desc = "Holds six beer cans. Remember to recycle when you're done!"
+	name = "beer bottle ring"
+	desc = "Holds six beer bottles. Remember to recycle when you're done!"
 
 /obj/item/storage/cans/sixbeer/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/cup/soda_cans/beer(src)
+		new /obj/item/reagent_containers/cup/glass/bottle/beer(src)
