@@ -296,10 +296,9 @@
 	owner.balloon_alert(owner, "you feel able to once again strike!")
 
 /datum/status_effect/eldritch/moon/on_effect()
-	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.adjust_confusion(30 SECONDS)
-	carbon_owner.emote(pick("giggle", "laugh"))
-	carbon_owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	owner.adjust_confusion(30 SECONDS)
+	owner.emote(pick("giggle", "laugh"))
+	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	return ..()
 
 /datum/status_effect/eldritch/moon/on_remove()
