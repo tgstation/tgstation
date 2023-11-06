@@ -18,6 +18,12 @@
 	///The weight action we give to people that buckle themselves to us.
 	var/datum/action/push_weights/weight_action
 
+	///the most drunk you can be to safely use the machine
+	var/safe_drunk_level = 39
+
+	///message when drunk user fails to use the machine
+	var/drunk_message = "You try for a new record and pull through! Through a muscle that is."
+
 	///List of messages picked when using the machine.
 	var/static/list/more_weight = list(
 		"pushing it to the limit!",
@@ -110,6 +116,14 @@
 			end_workout()
 			return
 
+		// awlways a chance for a person not to fail horribly when drunk
+		if(user.get_drunk_amount() > safe_drunk_level && prob(min(user.get_drunk_amount(), 99)))
+			playsound(src,'sound/effects/bang.ogg', 50, TRUE)
+			to_chat(user, span_warning(drunk_message))
+			user.take_bodypart_damage(rand(5, 10), wound_bonus = 10)
+			end_workout()
+			return
+
 		if(issilicon(user))
 			user.balloon_alert(user, pick(finished_silicon_message))
 		else
@@ -156,6 +170,8 @@
 	base_icon_state = "benchpress"
 
 	pixel_shift_y = 5
+
+	drunk_message = "You raise the bar over you trying to balance it with one hand, keyword tried."
 
 #undef WORKOUT_XP
 #undef EXERCISE_STATUS_DURATION
