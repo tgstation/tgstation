@@ -216,4 +216,4 @@
 		if("orange")
 			. = "#ffc905"
 		if("green")
-			. = "#A8E61D"
+			. = "#a8e61d"
