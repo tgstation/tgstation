@@ -1,0 +1,15 @@
+2023-11-06:
+  DexeeXI:
+  - rscadd: Dagoth Ur wishes you all to behave yourselves and pray well, lest you
+      invoke his anger.
+  Gboster-0:
+  - rscdel: Deleted wendigo's impossible attack
+  Salted-Zen:
+  - bugfix: Un-fries your boiled spagetti
+  Senri:
+  - bugfix: Fixed patreon monkecoin boost to work properly
+  - balance: rebalanced Throwing Arm quirk
+  lmenvs:
+  - rscadd: New Space Marine helmet, thanks to Odie_boy!
+  - bugfix: Pets that died and had no sprite should now be fixed. Lazarus Injections
+      will work properly too.
