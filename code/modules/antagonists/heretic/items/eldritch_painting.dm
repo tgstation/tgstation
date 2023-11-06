@@ -21,8 +21,6 @@
 	buildable_sign = FALSE
 	// The list of canvas types accepted by this frame, set to zero here
 	accepted_canvas_types = list()
-	// This stops people hiding their sneaky posters behind signs
-	layer = CORGI_ASS_PIN_LAYER
 	// A basic proximity sensor
 	var/datum/proximity_monitor/painting_proximity_sensor
 	// For changing sensor types on subtypes
