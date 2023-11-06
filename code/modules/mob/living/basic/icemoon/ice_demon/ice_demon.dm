@@ -31,7 +31,7 @@
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/slippery_ice_floors = BB_DEMON_SLIP_ABILITY,
 		/datum/action/cooldown/mob_cooldown/ice_demon_teleport = BB_DEMON_TELEPORT_ABILITY,
-		/datum/action/cooldown/spell/conjure/create_afterimages = BB_DEMON_CLONE_ABILITY,
+		/datum/action/cooldown/spell/conjure/limit_summons/create_afterimages = BB_DEMON_CLONE_ABILITY,
 	)
 	grant_actions_by_list(innate_actions)
 
