@@ -110,7 +110,7 @@
 			TGS_DEBUG_LOG("RequireInitialBridgeResponse: Starting sleep")
 			logged = TRUE
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	TGS_DEBUG_LOG("RequireInitialBridgeResponse: Passed")
 
