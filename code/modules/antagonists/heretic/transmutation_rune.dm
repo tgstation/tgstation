@@ -108,7 +108,7 @@
 		// Go through all of our required atoms
 		for(var/req_type in requirements_list)
 			// We already have enough of this type, skip
-			if(requirements_list [req_type] <= 0)
+			if(requirements_list[req_type] <= 0)
 				continue
 			// If req_type is a list of types, check all of them for one match.
 			if(islist(req_type))

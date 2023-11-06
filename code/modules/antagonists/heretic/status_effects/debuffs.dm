@@ -246,7 +246,7 @@
 	return ..()
 
 /datum/status_effect/moon_converted/on_apply()
-	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	// Healing based on how low their sanity is
 	owner.adjustBruteLoss(-150+owner.mob_mood.sanity)
 	owner.adjustFireLoss(-150+owner.mob_mood.sanity)
@@ -278,7 +278,7 @@
 	if (damage_sustained<75)
 		return
 	// Remove the status effect
-	owner.remove_status_effect(src)
+	qdel(src)
 
 /datum/status_effect/moon_converted/proc/update_owner_overlay(atom/source, list/overlays)
 	SIGNAL_HANDLER

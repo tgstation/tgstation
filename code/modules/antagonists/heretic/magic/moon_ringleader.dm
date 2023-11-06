@@ -19,7 +19,7 @@
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
 	. = list()
-	for(var/atom/nearby in orange(center, radius_override ? radius_override : aoe_radius))
+	for(var/atom/nearby in orange(center, radius_override || aoe_radius))
 		if(nearby == owner || nearby == center || isarea(nearby))
 			continue
 		if(!ismob(nearby))

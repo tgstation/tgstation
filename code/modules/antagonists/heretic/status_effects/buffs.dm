@@ -302,13 +302,12 @@
 	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
 
 /datum/status_effect/moon_grasp_hide/on_apply()
-	owner.add_traits(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS)
+	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 	owner.update_name()
 	return TRUE
 
 /datum/status_effect/moon_grasp_hide/on_remove()
-	owner.remove_traits(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS)
-	owner.update_name()
+	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 
 /atom/movable/screen/alert/status_effect/moon_grasp_hide
 	name = "Blessing of The Moon"

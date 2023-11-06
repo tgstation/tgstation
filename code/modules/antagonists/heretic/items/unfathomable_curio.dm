@@ -34,7 +34,7 @@
 
 /obj/item/storage/belt/unfathomable_curio/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(!slot || slot & ITEM_SLOT_HANDS)
+	if(!(slot & slot_flags))
 		return
 	if(!IS_HERETIC(user))
 		return
@@ -51,11 +51,12 @@
 
 
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
+	. = ..()
 	if(IS_HERETIC(user))
 		return
 
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 160)
 	user.adjust_temp_blindness(5 SECONDS)
-	. += span_notice(" It. It looked. IT WRAPS ITSELF AROUND ME.")
+	. += span_hypnophrase("It. It looked. IT WRAPS ITSELF AROUND ME.")
 
 

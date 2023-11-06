@@ -197,7 +197,7 @@
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
 			// Same as above, but with an additional to check to see if we actually got the optional_result atoms
-			if(length(optional_atoms & selected_atoms)==length(optional_atoms))
+			if(length(optional_atoms & selected_atoms) == length(optional_atoms))
 				for(var/optional in optional_atoms)
 					if(!istype(sacrificed, optional) && !islist(optional))
 						continue

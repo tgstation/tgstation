@@ -85,5 +85,5 @@
 
 // Functionally identical but deals more sanity damage
 /obj/item/clothing/neck/heretic_focus/moon_amulette/upgraded
-	name="Shining Moonlight Amulette"
+	name = "Shining Moonlight Amulette"
 	sanity_damage = 40
