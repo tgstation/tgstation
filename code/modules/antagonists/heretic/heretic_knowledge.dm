@@ -155,7 +155,7 @@
 
 	// List comparison
 	if(length(optional_selected_atoms))
-		if(length(optional_selected_atoms)==length(optional_atoms))
+		if(length(optional_selected_atoms) == length(optional_atoms))
 			for(var/optional_result in optional_result_atoms)
 				new optional_result(loc)
 	else
