@@ -19,8 +19,8 @@
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 10
 	construct_spells = list(
-		/datum/action/cooldown/spell/forcewall/cult,
 		/datum/action/cooldown/spell/basic_projectile/juggernaut,
+		/datum/action/cooldown/spell/forcewall/cult,
 		/datum/action/innate/cult/create_rune/wall,
 	)
 	playstyle_string = span_bold("You are a Juggernaut. Though slow, your shell can withstand heavy punishment, create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.")
