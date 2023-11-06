@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/pointed/mind_gate
 	name = "Mind Gate"
-	desc = "Opens your mind, and theirs."
+	desc = "Deals you 20 brain damage and the target suffers a hallucination, \
+			is left confused for 10 seconds, and suffers oxygen loss and brain damage."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -32,7 +33,7 @@
 		return FALSE
 
 	cast_on.adjust_confusion(10 SECONDS)
-	cast_on.adjustOxyLoss(50)
+	cast_on.adjustOxyLoss(20)
 	cast_on.cause_hallucination(\
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"Mind gate, cast by [owner]", \
