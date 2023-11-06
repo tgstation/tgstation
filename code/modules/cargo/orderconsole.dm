@@ -152,7 +152,7 @@
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
 			"reason" = order.reason,
-			"id" = order.id
+			"id" = order.id,
 		))
 	data["amount_by_name"] = amount_by_name
 
@@ -177,7 +177,7 @@
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
-			"access" = P.access
+			"access" = P.access,
 		))
 	return data
 
@@ -266,7 +266,7 @@
 			orderer_ckey = ckey,
 			reason = reason,
 			paying_account = account,
-			coupon = applied_coupon
+			coupon = applied_coupon,
 		)
 		working_list += order
 
