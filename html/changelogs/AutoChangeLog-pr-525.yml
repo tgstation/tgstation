@@ -1,0 +1,4 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - rscdel: "Removed buffer bottles from Chemist job starting gear and the Chemist lockers."
