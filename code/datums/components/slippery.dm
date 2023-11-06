@@ -225,7 +225,7 @@
  *
  * Arguments:
  * * source - the source of the signal
- * * AM - the atom/movable that slipped on us.
+ * * arrived - the atom/movable that slipped on us.
  */
 /datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
