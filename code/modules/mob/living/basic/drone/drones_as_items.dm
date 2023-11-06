@@ -26,7 +26,13 @@
 	. = ..()
 	var/area/area = get_area(src)
 	if(area)
-		notify_ghosts("A drone shell has been created in \the [area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_DRONE, notify_suiciders = FALSE)
+		notify_ghosts(
+			"A drone shell has been created in \the [area.name].",
+			source = src,
+			action = NOTIFY_PLAY,
+			notify_flags = (GHOST_NOTIFY_IGNORE_MAPLOAD),
+			ignore_key = POLL_IGNORE_DRONE,
+		)
 
 /obj/effect/mob_spawn/ghost_role/drone/allow_spawn(mob/user, silent = FALSE)
 	var/client/user_client = user.client

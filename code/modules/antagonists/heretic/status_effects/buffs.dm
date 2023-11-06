@@ -242,7 +242,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = -1
 	alert_type = null
-	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN)
+	var/static/list/caretaking_traits = list(TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
 /datum/status_effect/caretaker_refuge/on_apply()
 	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
@@ -252,6 +252,7 @@
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
+	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
 	return TRUE
 
 /datum/status_effect/caretaker_refuge/on_remove()
@@ -262,6 +263,7 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING))
 	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
 	UnregisterSignal(owner, COMSIG_ATOM_HOLYATTACK)
+	UnregisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED)
 	owner.visible_message(
 		span_warning("The haze around [owner] disappears, leaving them materialized!"),
 		span_notice("You exit the refuge."),
@@ -286,3 +288,7 @@
 	if(!istype(spell, /datum/action/cooldown/spell/caretaker))
 		owner.balloon_alert(owner, "may not cast spells in refuge!")
 		return SPELL_CANCEL_CAST
+
+/datum/status_effect/caretaker_refuge/proc/prevent_cuff(datum/source, mob/attemptee)
+	SIGNAL_HANDLER
+	return COMSIG_CARBON_CUFF_PREVENT

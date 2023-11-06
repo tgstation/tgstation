@@ -9,17 +9,21 @@
 /datum/hallucination/station_message/blob_alert
 
 /datum/hallucination/station_message/blob_alert/start()
-	to_chat(hallucinator, span_priorityannounce("Biohazard Alert"))
-	to_chat(hallucinator, span_priorityalert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak."))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_OUTBREAK5]))
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", \
+		"Biohazard Alert", ANNOUNCER_OUTBREAK5, players = list(hallucinator))
 	return ..()
 
 /datum/hallucination/station_message/shuttle_dock
 
 /datum/hallucination/station_message/shuttle_dock/start()
-	to_chat(hallucinator, span_priorityannounce("Priority Announcement"))
-	to_chat(hallucinator, span_priorityalert("[SSshuttle.emergency || "The Emergency Shuttle"] has docked with the station. You have 3 minutes to board the Emergency Shuttle."))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_SHUTTLEDOCK]))
+	priority_announce(
+					text = "[SSshuttle.emergency] has docked with the station. You have [DisplayTimeText(SSshuttle.emergency_dock_time)] to board the emergency shuttle.",
+					title = "Emergency Shuttle Arrival",
+					sound = ANNOUNCER_SHUTTLEDOCK,
+					sender_override = "Emergency Shuttle Uplink Alert",
+					players = list(hallucinator),
+					color_override = "orange",
+				)
 	return ..()
 
 /datum/hallucination/station_message/malf_ai
@@ -28,9 +32,8 @@
 	if(!(locate(/mob/living/silicon/ai) in GLOB.silicon_mobs))
 		return FALSE
 
-	to_chat(hallucinator, span_priorityannounce("Anomaly Alert"))
-	to_chat(hallucinator, span_priorityalert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core."))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_AIMALF]))
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", \
+		"Anomaly Alert", ANNOUNCER_AIMALF, players = list(hallucinator))
 	return ..()
 
 /datum/hallucination/station_message/heretic
@@ -52,10 +55,13 @@
 
 	var/message_with_name = pick(ascension_bodies)
 	message_with_name = replacetext(message_with_name, "%FAKENAME%", totally_real_heretic.real_name)
-
-	to_chat(hallucinator, span_priorityannounce("[generate_heretic_text()]"))
-	to_chat(hallucinator, span_priorityalert("[generate_heretic_text()] [message_with_name] [generate_heretic_text()]"))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_SPANOMALIES]))
+	priority_announce(
+		text = "[generate_heretic_text()] [message_with_name] [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		players = list(hallucinator),
+		color_override = "pink",
+	)
 	return ..()
 
 /datum/hallucination/station_message/cult_summon
@@ -71,20 +77,20 @@
 	var/area/fake_summon_area_type = pick(GLOB.the_station_areas - hallucinator_area.type)
 	var/area/fake_summon_area = GLOB.areas_by_type[fake_summon_area_type]
 
-	to_chat(hallucinator, span_priorityannounce("Central Command Higher Dimensional Affairs"))
-	to_chat(hallucinator, span_priorityalert("Figments from an eldritch god are being summoned by [totally_real_cult_leader.real_name] \
-		into [fake_summon_area] from an unknown dimension. Disrupt the ritual at all costs!"))
-
-	SEND_SOUND(hallucinator, 'sound/ambience/antag/bloodcult/bloodcult_scribe.ogg')
+	priority_announce(
+		text = "Figments from an eldritch god are being summoned by [totally_real_cult_leader.real_name] into [fake_summon_area] from an unknown dimension. Disrupt the ritual at all costs!",
+		title = "[command_name()] Higher Dimensional Affairs",
+		sound = 'sound/ambience/antag/bloodcult/bloodcult_scribe.ogg',
+		has_important_message = TRUE,
+		players = list(hallucinator),
+	)
 	return ..()
 
 /datum/hallucination/station_message/meteors
 	random_hallucination_weight = 2
 
 /datum/hallucination/station_message/meteors/start()
-	to_chat(hallucinator, span_priorityannounce("Meteor Alert"))
-	to_chat(hallucinator, span_priorityalert("Meteors have been detected on collision course with the station."))
-	SEND_SOUND(hallucinator, sound(SSstation.announcer.event_sounds[ANNOUNCER_METEORS]))
+	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS, players = list(hallucinator))
 	return ..()
 
 /datum/hallucination/station_message/supermatter_delam

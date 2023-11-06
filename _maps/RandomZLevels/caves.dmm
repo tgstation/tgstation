@@ -283,7 +283,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "bD" = (
-/mob/living/simple_animal/hostile/skeleton,
+/mob/living/basic/skeleton,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -360,7 +360,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "bY" = (
-/mob/living/simple_animal/hostile/skeleton,
+/mob/living/basic/skeleton,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -2000,7 +2000,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "YZ" = (
-/mob/living/simple_animal/hostile/skeleton,
+/mob/living/basic/skeleton,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

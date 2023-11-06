@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"security" = typecacheof(list(/mob/living/simple_animal/bot/secbot)),
 	"spiders" = typecacheof(list(/mob/living/basic/spider/giant)),
-	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
+	"skeletons" = typecacheof(list(/mob/living/basic/skeleton)),
 	"snakes" = typecacheof(list(/mob/living/basic/snake)),
 	"the supernatural" = typecacheof(list(
 		/mob/dead/observer,
@@ -97,13 +97,12 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/ghost,
 		/mob/living/basic/heretic_summon,
 		/mob/living/basic/revenant,
+		/mob/living/basic/shade,
+		/mob/living/basic/skeleton,
+		/mob/living/basic/wizard,
 		/mob/living/simple_animal/bot/mulebot/paranormal,
-		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
-		/mob/living/simple_animal/hostile/skeleton,
-		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,
-		/mob/living/simple_animal/shade,
 	)),
 ))
 
