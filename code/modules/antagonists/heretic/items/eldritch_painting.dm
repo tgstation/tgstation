@@ -176,7 +176,7 @@
 			/obj/item/bodypart/leg/right
 		)
 		var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
-		new organ_or_bodypart_to_spawn(src.loc)
+		new organ_or_bodypart_to_spawn(drop_location())
 		to_chat(user, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 		// Adds a negative mood event to our heretic
 		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
