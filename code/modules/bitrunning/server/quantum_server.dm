@@ -16,12 +16,8 @@
 	var/datum/lazy_template/virtual_domain/generated_domain
 	/// The loaded safehouse, map_template/safehouse
 	var/datum/map_template/safehouse/generated_safehouse
-	/// The connected console
-	var/datum/weakref/console_ref
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
-	/// If any threats were spawned, adds to rewards
-	var/domain_threats = 0
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// List of available domains
@@ -56,9 +52,6 @@
 
 /obj/machinery/quantum_server/LateInitialize()
 	. = ..()
-
-	if(isnull(console_ref))
-		find_console()
 
 	radio = new(src)
 	radio.set_frequency(FREQ_SUPPLY)
@@ -146,4 +139,3 @@
 
 	servo_bonus = servo_rating
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SERVER_UPGRADED, servo_rating)
