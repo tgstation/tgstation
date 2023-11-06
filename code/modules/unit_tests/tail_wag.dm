@@ -36,6 +36,18 @@
 	if(!(dummy_tail.wag_flags & WAG_WAGGING))
 		TEST_FAIL("Tail did not start wagging when it should have!")
 
+	// TESTING STOP_AFTER
+
+	// start wagging, stop after 0.1 seconds
+	SEND_SIGNAL(dummy, COMSIG_ORGAN_WAG_TAIL, TRUE, 0.1 SECONDS)
+	if(!(dummy_tail.wag_flags & WAG_WAGGING))
+		TEST_FAIL("Tail did not start wagging when it should have!")
+
+	sleep(0.1 SECONDS) // wait for it...
+
+	if(dummy_tail.wag_flags & WAG_WAGGING)
+		TEST_FAIL("Tail was supposed to stop wagging on its own after 0.1 seconds but it did not!")
+
 	// TESTING TAIL REMOVAL
 
 	// remove the tail
