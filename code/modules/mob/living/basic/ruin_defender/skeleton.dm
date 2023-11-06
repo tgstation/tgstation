@@ -85,7 +85,7 @@
 	maxHealth = 150
 	health = 150
 	speed = 2
-	force_threshold = 10 //trying to simulate actually having armor
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //trying to simulate actually having armor
 	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 30
@@ -101,7 +101,6 @@
 		/obj/item/claymore/weak{name = "holy sword"}
 	)
 	outfit = /datum/outfit/templar
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //trying to simulate actually having armor
 
 /datum/outfit/templar
 	name = "Templar"

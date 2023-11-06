@@ -91,27 +91,22 @@
 	. = ..()
 	if(.)
 		return TRUE
-	if(check_martial_art_block())
-		return TRUE
 
 	var/block_chance_modifier = round(damage / -3)
 	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE) + held_items)
-		// Things that are supposed to be worn being held in hand - don't count
-		if(isclothing(worn_thing) && (worn_thing in held_items))
-			continue
+		// Things that are supposed to be worn, being held = cannot block
+		if(isclothing(worn_thing))
+			if(worn_thing in held_items)
+				continue
+		// Things that are supposed to be held, being worn = cannot block
+		else
+			if(!(worn_thing in held_items))
+				continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
 		if(worn_thing.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
 			return TRUE
 
-	return FALSE
-
-/// This can be signallized
-/mob/living/carbon/human/proc/check_martial_art_block()
-	if(isnull(mind?.martial_art))
-		return FALSE
-	if(prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && throw_mode && !incapacitated(IGNORE_GRAB))
-		return TRUE
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)

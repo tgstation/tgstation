@@ -5,7 +5,6 @@
 	var/max_streak_length = 6
 	var/current_target
 	var/datum/martial_art/base // The permanent style. This will be null unless the martial art is temporary
-	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/help_verb
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 	var/smashes_tables = FALSE //If the martial art smashes tables when performing table slams and head smashes

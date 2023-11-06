@@ -180,8 +180,6 @@
 	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
 		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
-	if(check_martial_counter(human_target, user))
-		return TRUE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))

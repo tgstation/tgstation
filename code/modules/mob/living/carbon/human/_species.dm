@@ -1121,11 +1121,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	user.do_cpr(target)
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_martial_art_block())
-		target.visible_message(span_warning("[target] blocks [user]'s grab!"), \
-						span_userdanger("You block [user]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your grab at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.grab_act(user, target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	target.grabbedby(user)
@@ -1135,11 +1130,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
-	if(target.check_martial_art_block())
-		target.visible_message(span_warning("[target] blocks [user]'s attack!"), \
-						span_userdanger("You block [user]'s attack!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your attack at [target] was blocked!"))
 		return FALSE
 	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
@@ -1216,11 +1206,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			log_combat(user, target, "got a stun punch with their previous punch")
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_martial_art_block())
-		target.visible_message(span_warning("[user]'s shove is blocked by [target]!"), \
-						span_danger("You block [user]'s shove!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your shove at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	if(user.body_position != STANDING_UP)

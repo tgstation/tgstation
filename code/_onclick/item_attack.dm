@@ -296,7 +296,7 @@
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
 
-	if(!damage)
+	if(damage <= 0)
 		return FALSE
 
 	var/damage_done = apply_damage(
