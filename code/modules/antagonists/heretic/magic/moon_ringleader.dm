@@ -40,7 +40,7 @@
 		return
 	var/victim_sanity = victim.mob_mood.sanity
 
-	new /obj/effect/temp_visual/knockblast(get_turf(victim))
+	new /obj/effect/temp_visual/moon_ringleader(get_turf(victim))
 	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100-victim_sanity, 160)
 	repeat_string((120-victim_sanity)/10,victim.cause_hallucination( \
 		get_random_valid_hallucination_subtype(/datum/hallucination/body), \
@@ -52,8 +52,8 @@
 		victim.gain_trauma(trauma_type, TRAUMA_RESILIENCE_ABSOLUTE)
 	victim.mob_mood.set_sanity(victim_sanity*0.5)
 
-/obj/effect/temp_visual/knockblast
+/obj/effect/temp_visual/moon_ringleader
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-flash"
 	alpha = 180
-	duration = 5 SECONDS
+	duration = 3 SECONDS

@@ -270,7 +270,7 @@
 
 /datum/status_effect/eldritch/moon/on_apply()
 	.=..()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "moon mark")
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
@@ -307,4 +307,4 @@
 	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// Incase the trait was not removed earlier
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "moon mark")
