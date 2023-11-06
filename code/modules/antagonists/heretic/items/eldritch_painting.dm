@@ -195,7 +195,7 @@
 		user.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 		to_chat(user, span_notice("You feel less hungry, but more empty somehow?"))
 		user.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
-
+	return ..()
 
 // Specific proximity monitor for The First Desire or /obj/item/wallframe/painting/eldritch/desire
 /datum/proximity_monitor/advanced/eldritch_painting/desire
@@ -292,6 +292,7 @@
 	else
 		new /datum/spacevine_controller(get_turf(user), mutations, 0, 10)
 		to_chat(user, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
+	return ..()
 
 
 
@@ -320,6 +321,7 @@
 	if(user.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
 		to_chat(user, "You feel changed, more perfect....")
 		user.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
+	return ..()
 
 
 // Specific proximity monitor for Lady out of gates or /obj/item/wallframe/painting/eldritch/beauty
@@ -390,6 +392,7 @@
 	if(user.has_trauma_type(/datum/brain_trauma/severe/rusting))
 		to_chat(user, "It can wait...")
 		user.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
+	return ..()
 
 
 // Specific proximity monitor for Climb over the rusted mountain or /obj/item/wallframe/painting/eldritch/rust
