@@ -142,7 +142,13 @@
 /datum/ai_behavior/find_and_set/conscious_person
 
 /datum/ai_behavior/find_and_set/conscious_person/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/list/customers = list()
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(IS_DEAD_OR_INCAP(target) || !target.mind)
 			continue
-		return target
+		customers += target
+
+	if(customers.len)
+		return pick(customers)
+
+	return null
