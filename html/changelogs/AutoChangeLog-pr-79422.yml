@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - code_imp: "added some trailing commas in lists that were missing them, fixed a typo in comments"
