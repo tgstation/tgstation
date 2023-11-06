@@ -491,8 +491,10 @@
 		show_message = 0
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	var/harmies = max(carbies.getBruteLoss(), carbies.adjustBruteLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype)*-1)
-	var/burnies = max(carbies.getFireLoss(), carbies.adjustFireLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype)*-1)
+	var/current_bruteloss = carbies.getBruteLoss() // because this will be changed after calling adjustBruteLoss()
+	var/current_fireloss = carbies.getFireLoss() // because this will be changed after calling adjustFireLoss()
+	var/harmies = clamp(carbies.adjustBruteLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
+	var/burnies = clamp(carbies.adjustFireLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
