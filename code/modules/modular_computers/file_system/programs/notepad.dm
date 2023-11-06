@@ -7,7 +7,7 @@
 	size = 2
 	tgui_id = "NtosNotepad"
 	program_icon = "book"
-	usage_flags = PROGRAM_TABLET
+	usage_flags = PROGRAM_ALL
 
 	var/written_note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, \
 		bringing you the best in electronics and software since 2467!\n\

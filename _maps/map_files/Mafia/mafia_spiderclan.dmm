@@ -94,11 +94,15 @@
 /obj/structure/showcase/katana,
 /turf/open/misc/beach/sand,
 /area/centcom/mafia)
+"Q" = (
+/turf/template_noop,
+/area/template_noop)
 "S" = (
 /turf/closed/wall/mineral/wood,
 /area/centcom/mafia)
 
 (1,1,1) = {"
+Q
 a
 a
 a
@@ -120,10 +124,10 @@ a
 a
 a
 a
-a
-a
+Q
 "}
 (2,1,1) = {"
+Q
 a
 S
 S
@@ -144,14 +148,13 @@ S
 S
 S
 S
-S
-S
 a
+Q
 "}
 (3,1,1) = {"
+Q
 a
 S
-S
 c
 c
 c
@@ -169,13 +172,13 @@ c
 c
 c
 c
-S
 S
 a
+Q
 "}
 (4,1,1) = {"
+Q
 a
-S
 S
 c
 g
@@ -195,12 +198,12 @@ h
 k
 c
 S
-S
 a
+Q
 "}
 (5,1,1) = {"
 a
-S
+a
 S
 c
 h
@@ -220,7 +223,7 @@ i
 h
 c
 S
-S
+a
 a
 "}
 (6,1,1) = {"
@@ -550,7 +553,7 @@ a
 "}
 (19,1,1) = {"
 a
-S
+a
 S
 c
 h
@@ -570,12 +573,12 @@ d
 h
 c
 S
-S
+a
 a
 "}
 (20,1,1) = {"
+Q
 a
-S
 S
 c
 k
@@ -595,13 +598,13 @@ h
 v
 c
 S
-S
 a
+Q
 "}
 (21,1,1) = {"
+Q
 a
 S
-S
 c
 c
 c
@@ -619,11 +622,12 @@ c
 c
 c
 c
-S
 S
 a
+Q
 "}
 (22,1,1) = {"
+Q
 a
 S
 S
@@ -644,11 +648,11 @@ S
 S
 S
 S
-S
-S
 a
+Q
 "}
 (23,1,1) = {"
+Q
 a
 a
 a
@@ -670,6 +674,5 @@ a
 a
 a
 a
-a
-a
+Q
 "}

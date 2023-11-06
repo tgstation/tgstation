@@ -482,7 +482,7 @@
 			if(3)
 				new /mob/living/basic/construct/artificer/hostile(get_turf(src))
 			if(4)
-				new /mob/living/simple_animal/hostile/construct/proteon/hostile(get_turf(src))
+				new /mob/living/basic/construct/proteon/hostile(get_turf(src))
 	spawn_dust()
 	investigate_log("has been gibbed by Nar'Sie.", INVESTIGATE_DEATHS)
 	gib()

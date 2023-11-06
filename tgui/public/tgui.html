@@ -510,9 +510,6 @@ window.replaceHtml = function (inline_html) {
       + "<!-- tgui:inline-html-end -->"
   );
 };
-
-// Signal tgui that we're ready to receive updates
-Byond.sendMessage('ready');
 </script>
 
 <style>
@@ -657,5 +654,10 @@ Thank you for your cooperation.
   </div>
 </noscript>
 
+<script>
+// Signal tgui that we're ready to receive updates
+Byond.sendMessage('ready');
+</script>
+  
 </body>
 </html>

@@ -1,0 +1,4 @@
+author: "cnleth"
+delete-after: True
+changes:
+  - bugfix: "Reagent lookup in chem dispensers now shows correct reagent metabolization rates"
