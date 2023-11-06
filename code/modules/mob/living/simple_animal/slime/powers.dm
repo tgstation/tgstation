@@ -189,7 +189,7 @@
 		balloon_alert(src, "need to be conscious to split!")
 		return
 
-	if(!isturf(loc))
+	if(!isopenturf(loc))
 		balloon_alert(src, "can't reproduce here!")
 
 	if(!is_adult)
