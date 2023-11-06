@@ -41,7 +41,7 @@
 	route = PATH_MOON
 
 /datum/heretic_knowledge/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	add_traits(TRAIT_EMPATH, our_heretic)
+	add_traits(user ,TRAIT_EMPATH, "heretic")
 
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
