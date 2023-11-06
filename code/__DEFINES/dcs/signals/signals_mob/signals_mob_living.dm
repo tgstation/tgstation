@@ -221,7 +221,7 @@
 
 ///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
 #define COMSIG_LIVING_CHECK_BLOCK "human_check_block"
-	#define SHIELD_BLOCK (1<<0)
+	#define SUCCESSFUL_BLOCK (1<<0)
 
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"

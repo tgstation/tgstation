@@ -63,7 +63,7 @@
 			span_danger("[cqc_user] blocks [attack_text]!"),
 			span_userdanger("You block [attack_text]!"),
 		)
-	return SHIELD_BLOCK
+	return SUCCESSFUL_BLOCK
 
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)

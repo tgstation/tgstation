@@ -46,6 +46,6 @@
 			COMBAT_MESSAGE_RANGE,
 		)
 		playsound(source, 'sound/weapons/tap.ogg', tap_vol, TRUE, -1)
-		return SHIELD_BLOCK
+		return SUCCESSFUL_BLOCK
 
 	return NONE
