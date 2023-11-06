@@ -85,9 +85,6 @@
 	var/applied_trauma = /datum/brain_trauma/severe/weeping
 	var/text_to_display = "Oh what arts! She is so fair, and he...HE WEEPS!!!"
 
-/datum/proximity_monitor/advanced/eldritch_painting/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
-	. = ..()
-
 /datum/proximity_monitor/advanced/eldritch_painting/field_turf_crossed(atom/movable/crossed, turf/location)
 	if (!isliving(crossed) || !can_see(crossed, host, current_range))
 		return
@@ -181,7 +178,7 @@
 			/obj/item/bodypart/leg/right
 		)
 		var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
-		new organ_or_bodypart_to_spawn(src.drop_location())
+		new organ_or_bodypart_to_spawn(drop_location())
 		to_chat(user, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 		// Adds a negative mood event to our heretic
 		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
