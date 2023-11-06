@@ -21,7 +21,7 @@
 	// TESTING WAG_ABLE FLAG
 
 	// flip the wag flag to unwaggable
-	dummy_tail.wag_flags & ~WAG_ABLE
+	dummy_tail.wag_flags &= ~WAG_ABLE
 
 	// try to wag it again
 	SEND_SIGNAL(dummy, COMSIG_ORGAN_WAG_TAIL, TRUE)
