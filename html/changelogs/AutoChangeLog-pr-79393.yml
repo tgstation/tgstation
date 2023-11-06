@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix light eater affecting lava, space, openspace, and transparent turfs"
