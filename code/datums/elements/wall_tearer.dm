@@ -20,7 +20,7 @@
 	/// What interaction key do we use for our interaction
 	var/do_after_key
 
-/datum/element/wall_tearer/Attach(datum/target, allow_reinforced = TRUE, tear_time = 4 SECONDS, reinforced_multiplier = 3, do_after_key = null)
+/datum/element/wall_tearer/Attach(datum/target, allow_reinforced = TRUE, tear_time = 2 SECONDS, reinforced_multiplier = 2, do_after_key = null)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
@@ -62,6 +62,7 @@
 	var/is_valid = validate_target(target, tearer)
 	if (is_valid != WALL_TEAR_ALLOWED)
 		return
+	tearer.do_attack_animation(target)
 	target.AddComponent(/datum/component/torn_wall)
 	is_valid = validate_target(target, tearer) // And now we might have just destroyed it
 	if (is_valid == WALL_TEAR_ALLOWED)
