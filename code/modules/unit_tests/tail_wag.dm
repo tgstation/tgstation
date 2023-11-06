@@ -1,5 +1,7 @@
 /// Tests to make sure tail wagging behaves as expected
 /datum/unit_test/tail_wag
+	// used by the stop_after test
+	var/timer_finished = FALSE
 
 /datum/unit_test/tail_wag/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
@@ -38,12 +40,19 @@
 
 	// TESTING STOP_AFTER
 
+	// stop wagging
+	SEND_SIGNAL(dummy, COMSIG_ORGAN_WAG_TAIL, FALSE)
+	if(dummy_tail.wag_flags & WAG_WAGGING)
+		TEST_FAIL("Tail did not stop wagging when it should have!")
+
 	// start wagging, stop after 0.1 seconds
 	SEND_SIGNAL(dummy, COMSIG_ORGAN_WAG_TAIL, TRUE, 0.1 SECONDS)
+	// because timers are a pain
+	addtimer(VARSET_CALLBACK(src, timer_finished, TRUE), 0.2 SECONDS)
 	if(!(dummy_tail.wag_flags & WAG_WAGGING))
 		TEST_FAIL("Tail did not start wagging when it should have!")
 
-	sleep(0.2 SECONDS) // wait for it...
+	UNTIL(timer_finished) // wait a little bit
 
 	if(dummy_tail.wag_flags & WAG_WAGGING)
 		TEST_FAIL("Tail was supposed to stop wagging on its own after 0.1 seconds but it did not!")
