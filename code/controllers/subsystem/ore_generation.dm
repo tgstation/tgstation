@@ -30,6 +30,11 @@ SUBSYSTEM_DEF(ore_generation)
 		/datum/material/bluespace = 3,
 		/datum/material/plastic = 1,
 	)
+	var/list/ore_vent_sizes = list(
+		"large" = 3,
+		"medium" = 5,
+		"small" = 7,
+	)
 	var/list/post_ore_r = list(
 		"1" = 0,
 		"2" = 0,

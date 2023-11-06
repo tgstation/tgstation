@@ -1,14 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
+/turf/template_noop,
+/area/template_noop)
 "l" = (
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "L" = (
 /obj/structure/ore_vent/random/icebox,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 
 (1,1,1) = {"
 a

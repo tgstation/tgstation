@@ -421,6 +421,7 @@
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
 	ore_vent_options = list(
+		"small",
 		"medium",
 		"large",
 	)
