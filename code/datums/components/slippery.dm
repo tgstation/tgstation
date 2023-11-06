@@ -150,7 +150,7 @@
  *
  * Arguments
  * * source - the source of the signal
- * * AM - the atom/movable that is being slipped.
+ * * arrived - the atom/movable that is being slipped.
  */
 /datum/component/slippery/proc/Slip(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
