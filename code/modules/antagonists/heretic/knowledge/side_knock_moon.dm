@@ -20,7 +20,7 @@
 			, a belt that can hold blades and items for rituals. Whilst worn will also \
 			veil you, allowing you to take 5 hits without suffering damage, this veil will recharge very slowly \
 			outside of combat. When examined the examiner will suffer brain damage and blindness."
-	gain_text = "The manus holds many a curio, some are not meant for the mortal eye."
+	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
 		/datum/heretic_knowledge/spell/moon_parade,
