@@ -187,7 +187,7 @@
 		if(isstack(sacrificed))
 			var/obj/item/stack/sac_stack = sacrificed
 			var/how_much_to_use = 0
-			for(var/requirement in required_atoms )
+			for(var/requirement in required_atoms)
 				// If it's not requirement type and type is not a list, skip over this check
 				if(!istype(sacrificed, requirement) && !islist(requirement))
 					continue
