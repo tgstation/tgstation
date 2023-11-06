@@ -73,7 +73,7 @@
 	if(cached_json["apiValidateOnly"])
 		TGS_INFO_LOG("Validating API and exiting...")
 		Export(TGS4_COMM_VALIDATE, list(TGS4_PARAMETER_DATA = "[minimum_required_security_level]"))
-		del(world)
+		TerminateWorld()
 
 	security_level = cached_json["securityLevel"]
 	chat_channels_json_path = cached_json["chatChannelsJson"]
@@ -188,7 +188,7 @@
 		requesting_new_port = TRUE
 		if(!world.OpenPort(0)) //open any port
 			TGS_ERROR_LOG("Unable to open random port to retrieve new port![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 
 		//request a new port
 		export_lock = FALSE
@@ -196,16 +196,16 @@
 
 		if(!new_port_json)
 			TGS_ERROR_LOG("No new port response from server![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 
 		var/new_port = new_port_json[TGS4_PARAMETER_DATA]
 		if(!isnum(new_port) || new_port <= 0)
 			TGS_ERROR_LOG("Malformed new port json ([json_encode(new_port_json)])![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 
 		if(new_port != world.port && !world.OpenPort(new_port))
 			TGS_ERROR_LOG("Unable to open port [new_port]![TGS4_PORT_CRITFAIL_MESSAGE]")
-			del(world)
+			TerminateWorld()
 		requesting_new_port = FALSE
 
 	while(export_lock)
