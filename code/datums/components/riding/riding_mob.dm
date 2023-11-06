@@ -5,7 +5,8 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
-	var/list/shared_action_buttons = list()
+	/// list of blacklisted abilities that cant be shared
+	var/list/blacklist_abilities = list()
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	if(!isliving(parent))
@@ -59,6 +60,8 @@
 		. = FALSE
 	// for fireman carries, check if the ridden is stunned/restrained
 	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
+		. = FALSE
+	else if((ride_check_flags & JUST_FRIEND_RIDERS) && !(living_parent.faction.Find(REF(rider))))
 		. = FALSE
 
 	if(. || !consequences)
@@ -156,6 +159,7 @@
 	for(var/mob/yeet_mob in user.buckled_mobs)
 		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
 
+
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
 	if(!isliving(parent))
@@ -164,6 +168,8 @@
 	var/mob/living/ridden_creature = parent
 
 	for(var/datum/action/action as anything in ridden_creature.actions)
+		if(is_type_in_list(action, blacklist_abilities))
+			continue
 		action.GiveAction(rider)
 
 /// Takes away the riding parent's abilities from the rider
@@ -484,3 +490,35 @@
 	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/leaper
+	can_force_unbuckle = FALSE
+	can_use_abilities = TRUE
+	blacklist_abilities = list(/datum/action/cooldown/toggle_seethrough)
+	ride_check_flags = JUST_FRIEND_RIDERS
+
+/datum/component/riding/creature/leaper/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(17, 46), TEXT_SOUTH = list(17,51), TEXT_EAST = list(27, 46), TEXT_WEST = list(6, 46)))
+	set_rider_dir_plane(SOUTH, GAME_PLANE_UPPER)
+	set_rider_dir_plane(NORTH, GAME_PLANE)
+	set_rider_dir_plane(EAST, GAME_PLANE_UPPER)
+	set_rider_dir_plane(WEST, GAME_PLANE_UPPER)
+
+/datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
+	. = ..()
+	RegisterSignal(riding_mob, COMSIG_MOB_POINTED, PROC_REF(attack_pointed))
+
+/datum/component/riding/creature/leaper/proc/attack_pointed(mob/living/rider, atom/pointed)
+	SIGNAL_HANDLER
+	if(!isclosedturf(pointed))
+		return
+	var/mob/living/basic/basic_parent = parent
+	if(!basic_parent.CanReach(pointed))
+		return
+	basic_parent.melee_attack(pointed)
+
+
+/datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
+	. = ..()
+	UnregisterSignal(rider,  COMSIG_MOB_POINTED)

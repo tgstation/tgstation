@@ -58,8 +58,10 @@
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
 
 //Used in holder.dm/equlibrium.dm to set values and volume limits
-///the minimum volume of reagents than can be operated on.
+///The minimum volume of reagents than can be operated on.
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001
+///Sanity check limit to clamp chems to sane amounts and prevent rounding errors during transfer.
+#define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
 ///Minimum pH attainable by a solution
