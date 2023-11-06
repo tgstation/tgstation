@@ -100,6 +100,7 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
+	apply_wibbly_filters(src)
 
 /obj/effect/portal/singularity_pull()
 	return
