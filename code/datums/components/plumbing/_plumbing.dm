@@ -100,7 +100,7 @@
 	//find the duct to take from
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
-		return
+		return FALSE
 	net = ducts[num2text(dir)]
 
 	//find all valid suppliers in the duct
@@ -110,7 +110,7 @@
 			valid_suppliers += supplier
 	var/suppliersLeft = valid_suppliers.len
 	if(!suppliersLeft)
-		return
+		return FALSE
 
 	//take an equal amount from each supplier
 	var/currentRequest
@@ -119,6 +119,7 @@
 		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
 		give.transfer_to(src, currentRequest, reagent, net)
 		suppliersLeft--
+	return TRUE
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
@@ -393,6 +394,10 @@
 /datum/component/plumbing/manifold
 	demand_connects = NORTH
 	supply_connects = SOUTH
+
+/datum/component/plumbing/iv_drip
+	demand_connects = SOUTH
+	supply_connects = NORTH
 
 /datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
 	return
