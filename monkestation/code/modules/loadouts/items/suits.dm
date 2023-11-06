@@ -331,6 +331,10 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 	name = "driscoll poncho"
 	item_path = /obj/item/clothing/suit/driscoll
 
+/datum/loadout_item/suit/dinojammies
+	name = "Dinosaur Pajamas"
+	item_path = /obj/item/clothing/suit/hooded/dinojammies
+
 /*
 *	DONATOR
 */
