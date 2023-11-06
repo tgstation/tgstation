@@ -388,6 +388,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "Drink till you puke and/or break the laws of reality!"
 	neon_color = "#00cc33"
 
+/datum/barsign/maltroach
+	name = "Maltroach"
+	icon = "maltroach"
+	desc = "Mothroaches politely greet you into the bar, or are they greeting eachother?"
+	neon_color = "#649e8a"
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns

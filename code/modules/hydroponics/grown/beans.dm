@@ -39,7 +39,7 @@
 	potency = 10
 	mutatelist = null
 	reagents_add = list(/datum/reagent/toxin/carpotoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/food/grown/koibeans
 	seed = /obj/item/seeds/soya/koi
@@ -96,7 +96,7 @@
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/ants = 0.1) //IRL jumping beans contain insect larve, hence the ants
 	graft_gene = /datum/plant_gene/trait/stable_stats
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/food/grown/jumpingbeans
 	seed = /obj/item/seeds/greenbean/jump
@@ -105,4 +105,3 @@
 	icon_state = "jumpingbean"
 	foodtypes = FRUIT | BUGS
 	tastes = list("bugs" = 1)
-
