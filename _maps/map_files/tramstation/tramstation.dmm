@@ -44178,6 +44178,12 @@
 /obj/machinery/space_heater,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"oLw" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/station/cargo/miningdock/cafeteria)
 "oMc" = (
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
@@ -118029,7 +118035,7 @@ vIZ
 cEn
 bCO
 vDS
-unl
+oLw
 unl
 unl
 unl

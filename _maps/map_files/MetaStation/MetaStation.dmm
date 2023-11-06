@@ -32340,7 +32340,7 @@
 /obj/structure/railing/corner/end,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/rubble,
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/iron,
