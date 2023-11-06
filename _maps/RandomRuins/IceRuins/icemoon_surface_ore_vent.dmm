@@ -6,7 +6,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "L" = (
-/obj/structure/ore_vent/random/icebox/lower,
+/obj/structure/ore_vent/random/icebox,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 

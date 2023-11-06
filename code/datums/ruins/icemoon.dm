@@ -189,3 +189,13 @@
 	cost = 0
 	mineral_cost = 1
 	always_place = TRUE
+
+/datum/map_template/ruin/icemoon/ruin/vent
+	name = "Surface Icemoon Ore Vent"
+	id = "ore_vent_i"
+	description = "A vent that spews out ore. Seems to be a natural phenomenon. Smaller than the underground ones."
+	suffix = "icemoon_surface_ore_vent.dmm"
+	allow_duplicates = TRUE
+	cost = 0
+	mineral_cost = 1
+	always_place = TRUE

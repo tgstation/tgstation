@@ -35,6 +35,12 @@
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
 	/// String of ores that this vent can produce.
 	var/ore_string = ""
+	/// Associated list of vent size weights to pick from.
+	var/list/ore_vent_options = list(
+		"large",
+		"medium",
+		"small",
+	)
 
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
@@ -372,7 +378,7 @@
 	if(!unique_vent && !mapload)
 		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
-	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
+	var/string_boulder_size = pick_weight(ore_vent_options)
 	name = "[string_boulder_size] ore vent"
 	switch(string_boulder_size)
 		if("large")
@@ -390,7 +396,7 @@
 
 
 
-/obj/structure/ore_vent/random/icebox
+/obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
 	icon_state = "ore_vent_ice"
 	icon_state_tapped = "ore_vent_ice_active"
 	defending_mobs = list(
@@ -401,6 +407,24 @@
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
+	ore_vent_options = list(
+		"small",
+	)
+
+/obj/structure/ore_vent/random/icebox/lower
+	defending_mobs = list(
+		/mob/living/basic/mining/ice_whelp,
+		/mob/living/basic/mining/lobstrosity,
+		/mob/living/basic/mining/legion/snow/spawner_made,
+		/mob/living/basic/mining/ice_demon,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/simple_animal/hostile/asteroid/wolf,
+	)
+	ore_vent_options = list(
+		"medium",
+		"large",
+	)
+
 
 /obj/structure/ore_vent/boss
 	name = "menacing ore vent"
