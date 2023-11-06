@@ -59,7 +59,7 @@
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag(mob/living/carbon/organ_owner)
-	if(organ_owner.stat == DEAD || organ_owner != owner) // no wagging when owner is dead dead or tail has been disembodied
+	if(organ_owner.stat == DEAD || organ_owner != owner) // no wagging when owner is dead or tail has been disembodied
 		return FALSE
 
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
