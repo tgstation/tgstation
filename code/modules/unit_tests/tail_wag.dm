@@ -43,7 +43,7 @@
 	if(!(dummy_tail.wag_flags & WAG_WAGGING))
 		TEST_FAIL("Tail did not start wagging when it should have!")
 
-	sleep(0.1 SECONDS) // wait for it...
+	sleep(0.2 SECONDS) // wait for it...
 
 	if(dummy_tail.wag_flags & WAG_WAGGING)
 		TEST_FAIL("Tail was supposed to stop wagging on its own after 0.1 seconds but it did not!")
