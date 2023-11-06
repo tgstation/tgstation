@@ -36,6 +36,10 @@
 			if(100 to INFINITY)
 				. += span_info("These eggs are plump, teeming with life. Any moment now...")
 
+/obj/structure/spider/eggcluster/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
+
 /obj/structure/spider/eggcluster/enriched
 	name = "enriched egg cluster"
 	color = rgb(148, 0, 211)
@@ -103,7 +107,16 @@
 	amount_grown += rand(5, 15) * seconds_per_tick
 	if(amount_grown >= 100 && !ready)
 		ready = TRUE
-		notify_ghosts("[src] is ready to hatch!", null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = src, action = NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER, flashwindow = flash_window)
+		var/notify_flags_to_pass = NOTIFY_CATEGORY_NOFLASH
+		if(flash_window)
+			notify_flags_to_pass &= GHOST_NOTIFY_FLASH_WINDOW
+		notify_ghosts(
+			"[src] is ready to hatch!",
+			source = src,
+			action = NOTIFY_PLAY,
+			ignore_key = POLL_IGNORE_SPIDER,
+			notify_flags = notify_flags_to_pass,
+		)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/mob_spawn/ghost_role/spider/Topic(href, href_list)
@@ -133,6 +146,16 @@
 	QDEL_NULL(egg)
 	var/datum/antagonist/spider/spider_antag = new granted_datum(directive)
 	spawned_mob.mind.add_antag_datum(spider_antag)
+
+/obj/effect/mob_spawn/ghost_role/spider/abnormal
+	name = "abnormal egg cluster"
+	color = rgb(0, 148, 211)
+	cluster_type = /obj/structure/spider/eggcluster/abnormal
+	potentialspawns = list(
+		/mob/living/basic/spider/growing/spiderling/tank,
+		/mob/living/basic/spider/growing/spiderling/breacher,
+	)
+	flash_window = TRUE
 
 /obj/effect/mob_spawn/ghost_role/spider/enriched
 	name = "enriched egg cluster"
@@ -168,7 +191,7 @@
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(
-		/mob/living/basic/spider/giant/midwife, // We don't want the event to end instantly because of a 2 hp spiderling dying
+		/mob/living/basic/spider/growing/spiderling/midwife, // We don't want the event to end instantly because broodmothers got a bad spawn
 	)
 	flash_window = TRUE
 
