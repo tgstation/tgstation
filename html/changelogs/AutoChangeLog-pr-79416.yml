@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "Light switches have tooltips, and may now be deconstructed with right click using a screwdriver."
