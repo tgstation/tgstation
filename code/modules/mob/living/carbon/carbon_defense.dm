@@ -224,8 +224,16 @@
 					updatehealth()
 		return 1
 
+/**
+ * Really weird proc that attempts to dismebmer the passed zone if it is at max damage
+ * Unless the attacker is an NPC, in which case it disregards the zone and picks a random one
+ *
+ * Cannot dismember heads
+ *
+ * Returns a falsy value (null) on success, and a truthy value (the hit zone) on failure
+ */
 /mob/living/proc/dismembering_strike(mob/living/attacker, dam_zone)
-	return
+	return dam_zone
 
 /mob/living/carbon/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)
@@ -235,18 +243,17 @@
 		affecting = get_bodypart(get_random_valid_zone(dam_zone))
 	else
 		var/list/things_to_ruin = shuffle(bodyparts.Copy())
-		for(var/B in things_to_ruin)
-			var/obj/item/bodypart/bodypart = B
+		for(var/obj/item/bodypart/bodypart as anything in things_to_ruin)
 			if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
 				continue
 			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
 				affecting = bodypart
+
 	if(affecting)
 		dam_zone = affecting.body_zone
-		if(affecting.get_damage() >= affecting.max_damage)
-			affecting.dismember()
+		if(affecting.get_damage() >= affecting.max_damage && affecting.dismember())
 			return null
-		return affecting.body_zone
+
 	return dam_zone
 
 /**
