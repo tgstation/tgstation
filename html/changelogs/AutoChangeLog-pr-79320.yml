@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - code_imp: "The notify_ghosts proc has been cleaned up. Please report any abnormal changes in deadchat notification behavior."
-  - qol: "The on-screen deadchat popups now contain the notification blurb when hovered with your mouse again."
