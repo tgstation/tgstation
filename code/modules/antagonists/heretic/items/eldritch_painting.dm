@@ -57,7 +57,7 @@
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-	to_chat(user, span_notice("Laughter echoes through your mind..."))
+	to_chat(user, span_notice("Laughter echoes through your mind...."))
 	QDEL_NULL(painting_proximity_sensor)
 	qdel(src)
 
@@ -78,6 +78,7 @@
 		user.mob_mood.mood_events.Remove("eldritch_weeping")
 		// Add a mood event that causes the hallucinations to not trigger anymore
 		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
+	return ..()
 
 // Applies an affect on view
 /datum/proximity_monitor/advanced/eldritch_painting
@@ -112,6 +113,7 @@
 	scan_desc = "H_E##%%%WEEP6%11S!!,)()"
 	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
 	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
+	random_gain = FALSE
 
 /datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
@@ -179,7 +181,7 @@
 			/obj/item/bodypart/leg/right
 		)
 		var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
-		new organ_or_bodypart_to_spawn(src.loc)
+		new organ_or_bodypart_to_spawn(src.drop_location())
 		to_chat(user, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 		// Adds a negative mood event to our heretic
 		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
@@ -213,15 +215,16 @@
 	scan_desc = "H_(82882)G3E:__))9R"
 	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
 	lose_text = span_notice("Your stomach no longer craves flesh, and your tongue feels duller.")
+	random_gain = FALSE
 	/// How much faster we loose hunger
 	var/hunger_rate = 15
 
 /datum/brain_trauma/severe/flesh_desire/on_gain()
 	// Allows them to eat faster, mainly for flavor
-	owner.add_traits(TRAIT_VORACIOUS)
+	ADD_TRAIT(owner, TRAIT_VORACIOUS, "The Desire for Flesh")
 	// We don't want this to be bypassed by Aguesia so if they have it, remove it
 	if(HAS_TRAIT(owner, TRAIT_AGEUSIA))
-		owner.remove_traits(TRAIT_AGEUSIA)
+		REMOVE_TRAIT(owner, TRAIT_AGEUSIA, "The Desire for Flesh")
 	// If they have a tongue, make it crave meat
 	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue)
@@ -236,9 +239,9 @@
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
 /datum/brain_trauma/severe/flesh_desire/on_lose()
-	owner.remove_traits(TRAIT_VORACIOUS)
+	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, "The Desire for Flesh")
 	// After loosing this trauma you also loose the ability to taste, sad!
-	owner.add_traits(TRAIT_AGEUSIA)
+	ADD_TRAIT(owner, TRAIT_AGEUSIA, "The Desire for Flesh")
 	..()
 
 
@@ -287,7 +290,7 @@
 		var/item_to_spawn = pick(items_to_spawn)
 		to_chat(user, span_notice("You picture yourself in the thicket picking flowers.."))
 		// Spawns one of two flowers that often are used by heretics
-		new item_to_spawn(user.loc)
+		new item_to_spawn(user.drop_location())
 		user.add_mood_event("heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
 	else
 		new /datum/spacevine_controller(get_turf(user), mutations, 0, 10)
@@ -328,11 +331,12 @@
 	text_to_display = "Her flesh glows in the pale light, and mine can too...If it wasnt for these imperfections...."
 
 /datum/brain_trauma/severe/eldritch_beauty
-	name = "The Pursuit of perfection"
+	name = "The Pursuit of Perfection"
 	desc = "Patient seems to furiously scratch at their body, the only way to make them cease is for them to remove their jumpsuit."
 	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
 	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
 	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
+	random_gain = FALSE
 	/// How much damage we deal with each scratch
 	var/scratch_damage = 0.5
 
@@ -343,11 +347,13 @@
 
 	// Scratching code
 	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
-	if(bodypart && IS_ORGANIC_LIMB(bodypart) && !(bodypart.bodypart_flags & BODYPART_PSEUDOPART))
-		if(!owner.incapacitated())
-			bodypart.receive_damage(scratch_damage)
-			if(prob(2))
-				to_chat(owner, span_notice("You scratch furiously at [bodypart] to rid its imperfections!"))
+	if(!(bodypart && IS_ORGANIC_LIMB(bodypart)) && bodypart.bodypart_flags & BODYPART_PSEUDOPART)
+		return
+	if(owner.incapacitated())
+		return
+	bodypart.receive_damage(scratch_damage)
+	if(prob(2))
+		to_chat(owner, span_notice("You scratch furiously at [bodypart] to rid its imperfections!"))
 
 
 
@@ -404,6 +410,7 @@
 	scan_desc = "C_)L(#_I_##M;B"
 	gain_text = span_warning("The rusted climb shall finish at the peak")
 	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
+	random_gain = FALSE
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
 	var/atom/tile = get_turf(owner)

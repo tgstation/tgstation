@@ -46,7 +46,7 @@
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
 	desc = "Your Mansus Grasp will cause them to hallucinate everyone as lunar mass, \
-		and hides your identity for a short duration."
+		and hides your identity for a short dur	ation."
 	gain_text = "The troupe on the side of the moon showed me truth, and I took it."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
 	cost = 1
@@ -201,9 +201,11 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
-	if(sacrifice.get_organ_loss(ORGAN_SLOT_BRAIN) < 50)
+	var/brain_damage = sacrifice.get_organ_loss(ORGAN_SLOT_BRAIN)
+	// Checks if our target has enough brain damage
+	if(brain_damage<50)
 		return FALSE
-		
+
 	return ..()
 
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
@@ -211,14 +213,14 @@
 	priority_announce("[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! The truth shall finally devour the lie! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
 	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
-	user.add_traits(TRAIT_MADNESS_IMMUNE, MAGIC_TRAIT)
+	user.add_traits(TRAIT_MADNESS_IMMUNE)
 
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	var/datum/action/cooldown/spell/pointed/moon_smile/smile = locate() in user.actions
 	if(smile)
 		smile.cooldown_time *= 0.66 // Lower cooldown
-		smile.cast_range += 6 // Longer cast range
+		smile.cast_range +=6 // Longer cast range
 
 	var/datum/action/cooldown/spell/pointed/projectile/moon_parade/lunar_parade = locate() in user.actions
 	if(lunar_parade)
@@ -227,7 +229,7 @@
 	var/datum/action/cooldown/spell/aoe/moon_ringleader/ringleader_rise = locate() in user.actions
 	if(ringleader_rise)
 		ringleader_rise.cooldown_time *= 0.66 // Lower cooldown
-		ringleader_rise.aoe_radius += 3 // Bigger AoE
+		ringleader_rise.aoe_radius +=3 // Bigger AoE
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER

@@ -303,7 +303,6 @@
 
 /datum/status_effect/moon_grasp_hide/on_apply()
 	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
-	owner.update_name()
 	return TRUE
 
 /datum/status_effect/moon_grasp_hide/on_remove()

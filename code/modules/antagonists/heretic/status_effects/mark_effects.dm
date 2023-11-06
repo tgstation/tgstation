@@ -269,11 +269,11 @@
 	var/damage_sustained = 0
 
 /datum/status_effect/eldritch/moon/on_apply()
-	. = ..()
+	.=..()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, type)
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
-	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	return TRUE
 
 /// Signal proc for [COMSIG_MOB_APPLY_DAMAGE], being damaged past a threshold will remove the PACIFISM trait
@@ -296,16 +296,15 @@
 	owner.balloon_alert(owner, "you feel able to once again strike!")
 
 /datum/status_effect/eldritch/moon/on_effect()
-	if(ishuman(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.adjust_confusion(30 SECONDS)
-		carbon_owner.emote(pick("giggle", "laugh"))
-		carbon_owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	var/mob/living/carbon/carbon_owner = owner
+	carbon_owner.adjust_confusion(30 SECONDS)
+	carbon_owner.emote(pick("giggle", "laugh"))
+	carbon_owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	return ..()
 
 /datum/status_effect/eldritch/moon/on_remove()
 	.=..()
-	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// Incase the trait was not removed earlier
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, type)
