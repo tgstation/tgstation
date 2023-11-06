@@ -109,23 +109,6 @@
 
 	return FALSE
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	var/obj/item/I
-	var/damage_type = BRUTE
-	var/throwpower = 30
-	if(isitem(AM))
-		I = AM
-		if(I.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
-			return ..()
-		throwpower = I.throwforce
-		damage_type = I.damtype
-	if(check_block(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, 0, damage_type))
-		hitpush = FALSE
-		skipcatch = TRUE
-		blocked = TRUE
-
-	return ..()
-
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)

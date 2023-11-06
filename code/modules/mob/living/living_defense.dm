@@ -159,35 +159,49 @@
 		SEND_SOUND(src, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25)) //Slightly modified version of the above
 
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(isitem(AM))
-		var/obj/item/thrown_item = AM
-		var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-		var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
-		if(nosell_hit)
+	if(!isitem(AM))
+		// Filled with made up numbers for non-items.
+		if(check_block(AM, 30, "\the [AM.name]", THROWN_PROJECTILE_ATTACK, 0, BRUTE))
+			hitpush = FALSE
 			skipcatch = TRUE
-			hitpush = FALSE
-
-		if(blocked)
-			return TRUE
-
-		var/mob/thrown_by = thrown_item.thrownby?.resolve()
-		if(thrown_by)
-			log_combat(thrown_by, src, "threw and hit", thrown_item)
-		if(nosell_hit)
-			return ..()
-		visible_message(span_danger("[src] is hit by [thrown_item]!"), \
-						span_userdanger("You're hit by [thrown_item]!"))
-		if(!thrown_item.throwforce)
-			return
-		var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
-		apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
-		if(QDELETED(src)) //Damage can delete the mob.
-			return
-		if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
-			hitpush = FALSE
+			blocked = TRUE
+		else
+			playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 		return ..()
 
-	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+	var/obj/item/thrown_item = AM
+	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
+		return ..()
+
+	if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
+		hitpush = FALSE
+		skipcatch = TRUE
+		blocked = TRUE
+
+	var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
+	var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+	if(nosell_hit)
+		skipcatch = TRUE
+		hitpush = FALSE
+
+	if(blocked)
+		return TRUE
+
+	var/mob/thrown_by = thrown_item.thrownby?.resolve()
+	if(thrown_by)
+		log_combat(thrown_by, src, "threw and hit", thrown_item)
+	if(nosell_hit)
+		return ..()
+	visible_message(span_danger("[src] is hit by [thrown_item]!"), \
+					span_userdanger("You're hit by [thrown_item]!"))
+	if(!thrown_item.throwforce)
+		return
+	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
+	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+	if(QDELETED(src)) //Damage can delete the mob.
+		return
+	if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
+		hitpush = FALSE
 	return ..()
 
 /mob/living/fire_act()
@@ -315,8 +329,8 @@
 		to_chat(user, span_warning("You don't want to hurt anyone!"))
 		return FALSE
 
-	var/damage_done = rand(user.melee_damage_lower, user.melee_damage_upper)
-	if(check_block(user, damage_done, "[user]'s [user.attack_verb_simple]", MELEE_ATTACK/*or UNARMED_ATTACK?*/, user.armour_penetration, user.melee_damage_type))
+	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+	if(check_block(user, damage, "[user]'s [user.attack_verb_simple]", MELEE_ATTACK/*or UNARMED_ATTACK?*/, user.armour_penetration, user.melee_damage_type))
 		return FALSE
 
 	if(user.attack_sound)
@@ -340,7 +354,7 @@
 	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
 	log_combat(user, src, "attacked")
 	var/damage_done = apply_damage(
-		damage = damage_done,
+		damage = damage,
 		damagetype = user.melee_damage_type,
 		def_zone = user.zone_selected,
 		blocked = armor_block,

@@ -63,7 +63,7 @@
 	var/mob/living/hit_mob = hit_atom
 	if(ishuman(hit_mob))
 		var/mob/living/carbon/human/hit_human = hit_mob
-		if(hit_human.check_block(src, charge_damage, name, attack_type = THROWN_PROJECTILE_ATTACK))
+		if(hit_human.check_block(src, charge_damage, name, attack_type = LEAP_ATTACK))
 			return
 	hit_mob.drop_all_held_items()
 	hit_mob.visible_message(span_danger("[src] slams into [hit_mob]!"), span_userdanger("[src] slams into you!"))

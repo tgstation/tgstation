@@ -258,8 +258,6 @@
 
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
 
-	send_item_attack_message(attacking_item, user)
-
 	var/targeting = check_zone(user.zone_selected)
 	if(user != src)
 		var/zone_hit_chance = 80
@@ -267,6 +265,8 @@
 			zone_hit_chance += 10
 		targeting = get_random_valid_zone(targeting, zone_hit_chance)
 	var/targeting_human_readable = parse_zone(targeting)
+
+	send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
 
 	var/armor_block = min(run_armor_check(
 			def_zone = targeting,
@@ -292,12 +292,12 @@
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
-	if(ishuman(src) || client)
-		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
-		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
-
 	if(damage <= 0)
 		return FALSE
+
+	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
+		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
+		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
 
 	var/damage_done = apply_damage(
 		damage = damage,
@@ -457,7 +457,7 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
+/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, def_zone)
 	if(!I.force && !length(I.attack_verb_simple) && !length(I.attack_verb_continuous))
 		return
 	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"

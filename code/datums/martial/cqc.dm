@@ -42,7 +42,7 @@
 	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/martial_art/cqc/proc/check_block(mob/living/cqc_user, atom/movable/hitby, attack_text, ...)
+/datum/martial_art/cqc/proc/check_block(mob/living/cqc_user, atom/movable/hitby, damage, attack_text, ...)
 	SIGNAL_HANDLER
 
 	if(!can_use(cqc_user) || !cqc_user.throw_mode || cqc_user.incapacitated(IGNORE_GRAB))

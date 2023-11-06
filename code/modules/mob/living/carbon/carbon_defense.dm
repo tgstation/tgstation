@@ -90,9 +90,13 @@
 			return TRUE
 	return ..()
 
-/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
+/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, def_zone)
 	if(!I.force && !length(I.attack_verb_simple) && !length(I.attack_verb_continuous))
 		return
+	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
+	if(isnull(hit_bodypart)) // ??
+		return ..()
+
 	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"
 	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
 
