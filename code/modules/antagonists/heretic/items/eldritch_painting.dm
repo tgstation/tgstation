@@ -84,9 +84,6 @@
 	var/applied_trauma = /datum/brain_trauma/severe/weeping
 	var/text_to_display = "Oh what arts! She is so fair, and he...HE WEEPS!!!"
 
-/datum/proximity_monitor/advanced/eldritch_painting/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
-	. = ..()
-
 /datum/proximity_monitor/advanced/eldritch_painting/field_turf_crossed(atom/movable/crossed, turf/location)
 	if (!isliving(crossed) || !can_see(crossed, host, current_range))
 		return
