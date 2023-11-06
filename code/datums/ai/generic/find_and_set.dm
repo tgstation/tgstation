@@ -150,3 +150,5 @@
 
 	if(customers.len)
 		return pick(customers)
+
+	return null
