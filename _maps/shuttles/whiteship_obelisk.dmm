@@ -122,7 +122,7 @@
 /area/shuttle/abandoned/engine)
 "gw" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "rune4";
 	paint_colour = "#DC143C"
@@ -134,7 +134,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/shuttle/abandoned/engine)
 "hg" = (
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /turf/open/floor/mineral/titanium/white,
@@ -166,7 +166,7 @@
 /area/shuttle/abandoned/engine)
 "ji" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -438,7 +438,7 @@
 /area/shuttle/abandoned/crew)
 "yo" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "rune4";
 	paint_colour = "#DC143C"
@@ -616,7 +616,7 @@
 /area/shuttle/abandoned)
 "IH" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -781,7 +781,7 @@
 /area/shuttle/abandoned/medbay)
 "SE" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "rune4";
 	paint_colour = "#DC143C"

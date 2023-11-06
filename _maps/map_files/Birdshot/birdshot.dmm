@@ -4616,13 +4616,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
-"bNI" = (
-/obj/machinery/computer/quantum_console{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
 "bNJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom/directional/north,
@@ -14857,18 +14850,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/hallway/abandoned_recreation)
-"fyo" = (
-/obj/structure/table,
-/obj/machinery/light/small/directional/east,
-/obj/machinery/coffeemaker{
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/cup/coffeepot{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/turf/open/floor/iron/kitchen/small,
-/area/station/security/breakroom)
 "fyr" = (
 /turf/closed/wall/rust,
 /area/station/command/heads_quarters/ce)
@@ -19481,20 +19462,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
-"hbM" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/records/medical/laptop{
-	dir = 4;
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/machinery/button/curtain{
-	pixel_x = -24;
-	name = "Curtains";
-	id = "detpriv"
-	},
-/turf/open/floor/wood,
-/area/station/security/detectives_office)
 "hbN" = (
 /obj/structure/frame/machine,
 /obj/effect/spawner/random/maintenance,
@@ -22408,22 +22375,6 @@
 /obj/item/emptysandbag,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
-"ibl" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/machinery/light_switch/directional/east,
-/obj/item/stack/conveyor/thirty,
-/obj/item/boulder_beacon{
-	pixel_x = -6
-	},
-/obj/item/conveyor_switch_construct{
-	pixel_x = 9
-	},
-/obj/structure/rack,
-/turf/open/floor/iron,
-/area/station/cargo/miningoffice)
 "ibo" = (
 /obj/structure/bed,
 /obj/item/bedsheet/centcom,
@@ -34025,15 +33976,6 @@
 /obj/machinery/pdapainter/medbay,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
-"mbt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/curtain/cloth/fancy/mechanical{
-	id = "detpriv";
-	name = "Curtains"
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/security/detectives_office)
 "mbK" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -38254,6 +38196,13 @@
 /obj/structure/falsewall,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"nEl" = (
+/obj/machinery/computer/quantum_console{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/bitrunning/den)
 "nEo" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -45267,6 +45216,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"pZO" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/light_switch/directional/east,
+/obj/item/stack/conveyor/thirty,
+/obj/item/boulder_beacon{
+	pixel_x = -6
+	},
+/obj/item/conveyor_switch_construct{
+	pixel_x = 9
+	},
+/obj/structure/rack,
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "qaA" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -59140,6 +59105,14 @@
 "uvA" = (
 /turf/closed/wall/r_wall,
 /area/station/command/gateway)
+"uwk" = (
+/obj/structure/table,
+/obj/machinery/light/small/directional/east,
+/obj/machinery/coffeemaker{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/station/security/breakroom)
 "uwl" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
@@ -63454,6 +63427,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/auxiliary)
+"vOP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "detpriv";
+	name = "Curtains"
+	},
+/turf/open/floor/iron/dark/small,
+/area/station/security/detectives_office)
 "vPa" = (
 /obj/effect/turf_decal/siding{
 	dir = 5
@@ -65781,6 +65763,20 @@
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/security/breakroom)
+"wAj" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 4;
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/machinery/button/curtain{
+	pixel_x = -24;
+	name = "Curtains";
+	id = "detpriv"
+	},
+/turf/open/floor/wood,
+/area/station/security/detectives_office)
 "wAn" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -83740,7 +83736,7 @@ hNZ
 thM
 kuy
 lOj
-ibl
+pZO
 jir
 lPi
 uzJ
@@ -84253,7 +84249,7 @@ nFo
 ach
 lKH
 ylH
-bNI
+nEl
 ejq
 tvN
 lRc
@@ -87403,7 +87399,7 @@ vBK
 xsf
 dEu
 nCY
-fyo
+uwk
 wAb
 xsf
 cmX
@@ -88146,7 +88142,7 @@ xle
 xle
 slZ
 nGd
-hbM
+wAj
 xle
 qvQ
 guY
@@ -88914,7 +88910,7 @@ wWT
 jjS
 xZg
 lBN
-mbt
+vOP
 ixl
 qyx
 vXr
