@@ -391,8 +391,7 @@
 
 /mob/living/basic/clown/mutant/glutton/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/regurgitate/spit = new(src)
-	spit.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/regurgitate)
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
@@ -541,22 +540,15 @@
 		BB_EMOTE_SEE = list("bites into the banana", "plucks a banana off its head", "photosynthesizes"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'),
 	)
-	///Our peel dropping ability
-	var/datum/action/cooldown/rustle/banana_rustle
-	///Our banana bunch spawning ability
-	var/datum/action/cooldown/exquisite_bunch/banana_bunch
 
 /mob/living/basic/clown/banana/Initialize(mapload)
 	. = ..()
-	banana_rustle = new()
-	banana_rustle.Grant(src)
-	banana_bunch = new()
-	banana_bunch.Grant(src)
 
-/mob/living/basic/clown/banana/Destroy()
-	. = ..()
-	QDEL_NULL(banana_rustle)
-	QDEL_NULL(banana_bunch)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/exquisite_bunch,
+		/datum/action/cooldown/rustle,
+	)
+	grant_actions_by_list(innate_actions)
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle
