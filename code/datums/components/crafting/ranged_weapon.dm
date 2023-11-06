@@ -218,6 +218,17 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
 
+/datum/crafting_recipe/rebarxbowforced
+	name = "Forced Rebar Crossbow"
+	desc = "Get an extra shot in your crossbow... for a chance of shooting yourself when you fire it."
+	result = /obj/item/gun/ballistic/rifle/rebarxbow/forced
+	reqs = list(
+		/obj/item/gun/ballistic/rifle/rebarxbow = 1,
+	)
+	tool_behaviors = list(TOOL_CROWBAR)
+	time = 1 SECONDS
+	category = CAT_WEAPON_RANGED
+
 /datum/crafting_recipe/pipegun_prime
 	name = "Regal Pipegun"
 	always_available = FALSE
