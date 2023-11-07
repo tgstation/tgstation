@@ -149,7 +149,7 @@
 	command_desc = "Command your pet to attempt to breed with a partner."
 	radial_icon = 'icons/mob/simple/animal.dmi'
 	radial_icon_state = "heart"
-	speech_commands = list("breed", "consumate")
+	speech_commands = list("breed", "consummate")
 
 /datum/pet_command/point_targetting/breed/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !isliving(target))

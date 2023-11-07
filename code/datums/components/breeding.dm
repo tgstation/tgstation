@@ -27,7 +27,7 @@
 		return
 
 	src.can_breed_with = can_breed_with
-	src.breed_timer = 40 SECONDS
+	src.breed_timer = breed_timer
 	src.baby_path = baby_path
 	src.post_birth = post_birth
 
@@ -65,8 +65,7 @@
 	toggle_status(source)
 
 	addtimer(CALLBACK(src, PROC_REF(toggle_status), source), breed_timer)
-	if(post_birth)
-		post_birth.Invoke(baby, target)
+	post_birth?.Invoke(baby, target)
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /datum/component/breed/proc/toggle_status(mob/living/source)

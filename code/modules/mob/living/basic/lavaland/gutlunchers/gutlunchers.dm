@@ -118,7 +118,7 @@
 	. = ..()
 	roll_stats(melee_damage_lower, speed, maxHealth)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	AddElement(/datum/element/wall_tearer)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/ai_retaliate)
 
 /mob/living/basic/mining/gutlunch/milk/update_overlays(new_udder_volume, max_udder_volume)
