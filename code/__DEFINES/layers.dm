@@ -28,6 +28,7 @@
 #define FLOOR_PLANE -11
 
 #define WALL_PLANE -10
+#define WALL_RENDER_TARGET "*WALL_PLANE" //monkestation edit
 #define GAME_PLANE -9
 #define GAME_PLANE_FOV_HIDDEN -8
 #define GAME_PLANE_UPPER -7
@@ -84,6 +85,9 @@
 #define ABOVE_LIGHTING_PLANE 17
 
 ///---------------- MISC -----------------------
+
+/// Shadowcasting
+#define SHADOWCASTING_PLANE 18 // monkestation edit
 
 ///Pipecrawling images
 #define PIPECRAWL_IMAGES_PLANE 20

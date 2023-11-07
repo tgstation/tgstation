@@ -129,6 +129,11 @@
 	if(!new_area.lighting_effects && old_area.lighting_effects && space_lit)
 		overlays += GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
 
+	//This, is also very expensive
+	for(var/turf/turf in range(world.view, src))
+		turf.check_shadowcasting_update()
+
+
 /turf/proc/generate_missing_corners()
 	if (!lighting_corner_NE)
 		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
