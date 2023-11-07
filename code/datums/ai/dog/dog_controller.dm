@@ -37,6 +37,22 @@
 		/datum/ai_planning_subtree/flee_target,
 	)
 
+/datum/ai_controller/basic_controller/dog/corgi/puppy
+	blackboard = list(
+		BB_DOG_HARASS_HARM = TRUE,
+		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/holding_object(/obj/item/kitchen/tongs),
+	)
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/dog,
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/dog_harassment,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/flee_target,
+	)
+
 /datum/ai_controller/basic_controller/dog/corgi/get_access()
 	var/mob/living/basic/pet/dog/corgi/corgi_pawn = pawn
 	if(!istype(corgi_pawn))
