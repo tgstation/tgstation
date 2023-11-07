@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(research)
 	if (!verify_techweb_nodes()) //Verify all nodes have ids and such.
 		stack_trace("Invalid techweb nodes detected")
 	calculate_techweb_nodes()
-	calculate_techweb_boost_list()
+	calculate_techweb_item_unlocking_requirements()
 	if (!verify_techweb_nodes()) //Verify nodes and designs have been crosslinked properly.
 		CRASH("Invalid techweb nodes detected")
 
@@ -271,7 +271,7 @@ SUBSYSTEM_DEF(research)
 			var/datum/techweb_node/prereq_node = techweb_node_by_id(prereq_id)
 			prereq_node.unlock_ids[node.id] = node
 
-/datum/controller/subsystem/research/proc/calculate_techweb_boost_list()
+/datum/controller/subsystem/research/proc/calculate_techweb_item_unlocking_requirements()
 	for(var/node_id in techweb_nodes)
 		var/datum/techweb_node/node = techweb_nodes[node_id]
 		for(var/path in node.required_items_to_unlock)
