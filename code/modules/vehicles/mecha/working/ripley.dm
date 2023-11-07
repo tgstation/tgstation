@@ -378,7 +378,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 			return FALSE
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
 		passenger.forceMove(get_turf(src))
-		addtimer(CALLBACK(passenger, TYPE_PROC_REF(/atom/movable, forceMove), get_step(chassis, chassis.dir)), 1) //That's right, one tick. Just enough to cause the tile move animation.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
 		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE
