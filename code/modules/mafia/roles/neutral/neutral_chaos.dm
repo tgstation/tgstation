@@ -1,6 +1,6 @@
 /datum/mafia_role/obsessed
 	name = "Obsessed"
-	desc = "You're completely lost in your own mind. You win by lynching your obsession before you get killed in this mess. Obsession assigned on the first night!"
+	desc = "Lynch your obsession before you get killed at all costs!"
 	win_condition = "lynch their obsession."
 	revealed_outfit = /datum/outfit/mafia/obsessed
 	team = MAFIA_TEAM_SOLO
@@ -15,6 +15,7 @@
 
 /datum/mafia_role/obsessed/New(datum/mafia_controller/game) //note: obsession is always a townie
 	. = ..()
+	desc = initial(desc) + " Obsession assigned on the first night."
 	RegisterSignal(game, COMSIG_MAFIA_SUNDOWN, PROC_REF(find_obsession))
 
 /datum/mafia_role/obsessed/proc/find_obsession(datum/mafia_controller/game)
@@ -27,8 +28,13 @@
 			break
 	if(!obsession)
 		obsession = pick(all_roles_shuffle) //okay no town just pick anyone here
-	//if you still don't have an obsession you're playing a single player game like i can't help your dumb ass
-	to_chat(body, span_userdanger("Your obsession is [obsession.body.real_name]! Get them lynched to win!"))
+	desc = initial(desc) + " Target: [obsession.body.real_name]"
+	var/obj/item/modular_computer/modpc = player_pda
+	if(modpc)
+		modpc.update_static_data_for_all_viewers()
+	else
+		game.update_static_data(body)
+	send_message_to_player(span_userdanger("Your obsession is [obsession.body.real_name]! Get them lynched to win!"))
 	RegisterSignal(obsession, COMSIG_MAFIA_ON_KILL, PROC_REF(check_victory))
 	UnregisterSignal(game, COMSIG_MAFIA_SUNDOWN)
 
