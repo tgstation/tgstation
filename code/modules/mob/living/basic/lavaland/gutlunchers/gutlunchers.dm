@@ -1,4 +1,3 @@
-#define MAX_SIZE_CLAMP 1.1
 #define MAX_ATTACK_DIFFERENCE 3
 #define MAX_LOWER_ATTACK 15
 #define MINIMUM_POSSIBLE_SPEED 1
@@ -25,19 +24,17 @@
 	friendly_verb_simple = "pinch"
 	gold_core_spawnable = FRIENDLY_SPAWN
 	death_message = "is pulped into bugmash."
-	///our size
-	var/size_scale
+	greyscale_config = /datum/greyscale_config/gutlunch
 	///possible colors we can have
-	var/list/possible_colors
+	var/list/possible_colors = list(COLOR_WHITE)
 	///can we breed?
 	var/can_breed = TRUE
 
 /mob/living/basic/mining/gutlunch/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	add_atom_colour(pick(possible_colors), FIXED_COLOUR_PRIORITY)
-	var/final_size = rand(size_scale, size_scale * MAX_SIZE_CLAMP)
-	transform = transform.Scale(final_size * 0.01)
+	if(greyscale_config)
+		set_greyscale(colors = list(pick(possible_colors)))
 	if(!can_breed)
 		return
 	AddComponent(\
@@ -79,7 +76,6 @@
 /mob/living/basic/mining/gutlunch/milk
 	name = "gubbuck"
 	gender = FEMALE
-	size_scale = 85
 	possible_colors = list("#E39FBB","#817178","#9d667d")
 	ai_controller = /datum/ai_controller/basic_controller/gutlunch/gutlunch_milk
 	///overlay we display when our udder is full!
@@ -100,7 +96,6 @@
 /mob/living/basic/mining/gutlunch/warrior
 	name = "gunther"
 	gender = MALE
-	size_scale = 100
 	melee_damage_lower = 8
 	melee_damage_upper = 13
 	speed = 5
@@ -134,7 +129,6 @@
 
 /mob/living/basic/mining/gutlunch/grub
 	name = "grublunch"
-	size_scale = 60
 	possible_colors = list("#cc9797", "#b74c4c")
 	can_breed = FALSE
 	gender = NEUTER
@@ -144,6 +138,7 @@
 
 /mob/living/basic/mining/gutlunch/grub/Initialize(mapload)
 	. = ..()
+	transform = transform.Scale(0.6, 0.6)
 	AddComponent(\
 		/datum/component/growth_and_differentiation,\
 		growth_time = 3 MINUTES,\
@@ -165,7 +160,6 @@
 		grown_mob.roll_stats(inherited_stats.attack, inherited_stats.speed, inherited_stats.health)
 	qdel(src)
 
-#undef MAX_SIZE_CLAMP
 #undef MAX_ATTACK_DIFFERENCE
 #undef MAX_LOWER_ATTACK
 #undef MINIMUM_POSSIBLE_SPEED
