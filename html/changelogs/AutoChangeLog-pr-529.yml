@@ -1,0 +1,4 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - bugfix: "cargo, zoomba and kerfus borgs should no longer go invisible when reset"
