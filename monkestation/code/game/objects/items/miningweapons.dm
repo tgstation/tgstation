@@ -290,15 +290,16 @@
 	can_bayonet = FALSE
 	max_mod_capacity = 60
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/grappling
+/obj/item/gun/energy/recharge/kinetic_accelerator/grapple
 	name = "Miner Zip Hook"
 	desc = "During the pizza party for the Mining Research and Development team, the Mining Research Director went outside, and played with his favorite ball.\
 	Unfortunetly he accidently tossed it to the other side of a massive lavalake. Out of pure spite he decided that instead of getting an RCD like any sane individual\
 	he would create a brand new PKA type using the meathook he kept in his office. Thus the grappleing hook was (finally) created. The Proto-Kinetic grapple hook\
 	allows quick traversal over pits, chasms, and lava, by firing a high speed grapple hook and yanking the user towards it. Dont worry about the inertia, the nerds\
 	in RND took care of that problem (after six test subjects)."
-	icon_state = "kineticgun"
-	base_icon_state = "kineticgun"
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon_state = "kineticgrapple"
+	base_icon_state = "kineticgrapple"
 	inhand_icon_state = "kineticgun"
 	recharge_time = 5 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hook)
