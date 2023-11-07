@@ -294,7 +294,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /datum/barsign/le_cafe_silencieux
 	name = "Le Café Silencieux"
-	icon = "le_cafe_silencieux"
+	icon_state = "le_cafe_silencieux"
 	desc = "..."
 	neon_color = "#ffffff"
 
