@@ -234,30 +234,27 @@
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	for(var/mob/living/carbon/carbon_view in view(7, source))
-		var/carbon_sanity=carbon_view.mob_mood.sanity
-
-		visible_hallucination_pulse(
+	visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,
-		hallucination_duration = 20 SECONDS)
+		hallucination_duration = 60 SECONDS)
 
+	for(var/mob/living/carbon/carbon_view in view(7, source))
+		var/carbon_sanity=carbon_view.mob_mood.sanity
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
 		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_sanity-5)
 		if(carbon_sanity<30)
-			carbon_view.balloon_alert(carbon_view, "you feel your mind begining to rend!")
-			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+			to_chat(carbon_view, span_warning("you feel your mind begining to rend!"))
+			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 160)
 		if(carbon_sanity<10)
-			carbon_view.balloon_alert(carbon_view, "it echoes through you!")
+			to_chat(carbon_view, span_warning("it echoes through you!"))
 			visible_hallucination_pulse(
 			center = get_turf(carbon_view),
 			radius = 7,
 			hallucination_duration = 50 SECONDS)
 			carbon_view.adjust_temp_blindness(5 SECONDS)
-
-
 
 
 
