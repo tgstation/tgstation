@@ -1,6 +1,6 @@
 #define WORKOUT_XP 5
 #define EXERCISE_STATUS_DURATION 20 SECONDS
-#define SAFE_DRUNK_LEVEL 39 
+#define SAFE_DRUNK_LEVEL 39
 
 /obj/structure/weightmachine
 	name = "chest press machine"
@@ -128,7 +128,6 @@
 			user.balloon_alert(user, pick(finished_message))
 
 		user.adjust_nutrition(-3) // feel the burn
-		user.add_mood_event("exercise", /datum/mood_event/exercise)
 
 		// remember the real xp gain is from sleeping after working out
 		user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP)
