@@ -1,0 +1,4 @@
+author: "Isratosh"
+delete-after: True
+changes:
+  - bugfix: "Nuclear operative induction implants now work correctly on antagonists and fail on non-antagonists"
