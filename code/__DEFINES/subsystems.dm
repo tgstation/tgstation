@@ -179,7 +179,8 @@
 #define INIT_ORDER_STICKY_BAN -10
 #define INIT_ORDER_LIGHTING -20
 #define INIT_ORDER_OUTDOOR_EFFECTS -21 //monkestation addition
-#define INIT_ORDER_SHUTTLE -22 //monkestation edit -21 > -22
+#define INIT_ORDER_SHADOWCASTING -22 // monkestation addition
+#define INIT_ORDER_SHUTTLE -23 //monkestation edit -21 > -23
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69

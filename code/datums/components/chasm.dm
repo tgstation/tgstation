@@ -8,6 +8,7 @@
 	/// List of refs to falling objects -> how many levels deep we've fallen
 	var/static/list/falling_atoms = list()
 	var/static/list/forbidden_types = typecacheof(list(
+		/atom/movable/shadowcasting_holder,
 		/obj/singularity,
 		/obj/energy_ball,
 		/obj/narsie,

@@ -3,6 +3,8 @@
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
 
+	shadow_caster = TRUE
+
 	hud_type = /datum/hud/living
 
 	///Badminnery resize

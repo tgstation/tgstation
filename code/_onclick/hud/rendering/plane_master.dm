@@ -368,6 +368,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Wall"
 	documentation = "Holds all walls. We render this onto the game world. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
 	plane = WALL_PLANE
+	render_target = WALL_RENDER_TARGET // monkestation edit
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, LIGHT_MASK_PLANE)
 
 /atom/movable/screen/plane_master/wall/Initialize(mapload, datum/plane_master_group/home, offset)
@@ -660,3 +661,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 	allows_offsetting = FALSE
+
+/atom/movable/screen/plane_master/shadowcasting
+	name = "Shadowcasting"
+	documentation = "Holds shadowcasting images so you can see fancy shadows where your vision can't reach."
+	plane = SHADOWCASTING_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	start_hidden = TRUE
+
+/atom/movable/screen/plane_master/shadowcasting/show_to(mob/mymob)
+	. = ..()
+	alpha = 96
+	add_filter("wall_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WALL_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	var/blurriness = 3
+	add_filter("blur", 2, gauss_blur_filter(size = blurriness))
+
