@@ -165,26 +165,28 @@
 
 /datum/status_effect/exercised
 	id = "Exercised"
-	duration = 30 SECONDS
+	duration = 10 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = /atom/movable/screen/alert/status_effect/exercised
 	/// Having any of these reagents in your system extends the duration
 	var/static/list/supplementary_reagents_bonus = list(
-		/datum/reagent/consumable/ethanol/protein_blend = 30 SECONDS, // protein shakes are very robust
-		/datum/reagent/consumable/eggwhite = 20 SECONDS,
-		/datum/reagent/consumable/eggyolk = 15 SECONDS,
-		/datum/reagent/consumable/nutriment/protein = 15 SECONDS,
-		/datum/reagent/consumable/nutriment/vitamin = 10 SECONDS,
-		/datum/reagent/consumable/rice = 10 SECONDS,
-		/datum/reagent/consumable/milk = 10 SECONDS,
-		/datum/reagent/consumable/soymilk = 5 SECONDS, // darn vegans!
-		/datum/reagent/consumable/nutraslop = 5 SECONDS, // prison food to bulk up with
+		/datum/reagent/consumable/ethanol/protein_blend = 10 SECONDS, // protein shakes are very robust
+		/datum/reagent/consumable/nutriment/protein = 5 SECONDS,
+		/datum/reagent/consumable/nutriment/vitamin = 4 SECONDS,
+		/datum/reagent/consumable/milk = 4 SECONDS,
+		/datum/reagent/consumable/rice = 3 SECONDS,
+		// keep in mind you can eat a raw egg to acquire both these reagents at the same time
+		/datum/reagent/consumable/eggwhite = 3 SECONDS,
+		/datum/reagent/consumable/eggyolk = 2 SECONDS,
+		// weak workout food
+		/datum/reagent/consumable/nutraslop = 2 SECONDS, // prison food to bulk up with
+		/datum/reagent/consumable/soymilk = 1 SECONDS, // darn vegans!
 		// time for the bad stuff
-		/datum/reagent/consumable/sugar = -5 SECONDS,
-		/datum/reagent/consumable/monkey_energy = -5 SECONDS,
-		/datum/reagent/consumable/nutriment/fat = -5 SECONDS,
+		/datum/reagent/consumable/sugar = -3 SECONDS,
+		/datum/reagent/consumable/monkey_energy = -3 SECONDS,
+		/datum/reagent/consumable/nutriment/fat = -3 SECONDS,
 	)
 
 /datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)

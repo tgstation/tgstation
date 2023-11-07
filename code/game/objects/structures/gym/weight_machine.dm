@@ -1,5 +1,5 @@
 #define WORKOUT_XP 5
-#define EXERCISE_STATUS_DURATION 20 SECONDS
+#define EXERCISE_STATUS_DURATION 10 SECONDS
 #define SAFE_DRUNK_LEVEL 39
 
 /obj/structure/weightmachine
