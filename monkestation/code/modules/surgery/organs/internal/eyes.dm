@@ -15,3 +15,10 @@
 	low_light_cutoff = list(20, 15, 0)
 	medium_light_cutoff = list(35, 30, 0)
 	high_light_cutoff = list(50, 40, 0)
+
+/obj/item/organ/internal/eyes/floran
+	name = "phytoid eyes"
+	desc = "They look like big berries..."
+	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
+	eye_icon_state = "floraneyes"
+	icon_state = "floran_eyeballs"
