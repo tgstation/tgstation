@@ -41,35 +41,47 @@
 	soundloop = new(src,  TRUE)
 	. = ..()
 
-/obj/projectile/moon_parade/on_hit(atom/target, blocked=0, pierce_hit)
+/obj/projectile/moon_parade/prehit_pierce(atom/A)
 	. = ..()
-	if(isliving(target) && isliving(firer))
+
+	// So we don't hit any corpses as they will be dragged along
+	if(isliving(A) && isliving(firer))
+
 		var/mob/living/caster = firer
-		var/mob/living/victim = target
+		var/mob/living/victim = A
+
+		// The caster shouldn't hit themselves
 		if(caster == victim)
 			return PROJECTILE_PIERCE_PHASE
 
+		// Also shouldn't hit any heretic monsters we are masters over
 		if(caster.mind)
 			var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
 			if(monster?.master == caster.mind)
 				return PROJECTILE_PIERCE_PHASE
 
+		// Anti-magic destroys the projectile
 		if(victim.can_block_magic(MAGIC_RESISTANCE))
 			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
-
-		//Registers a signal that triggers when the client sends an input to move
-		RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move))
-		//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
-		victim.AddComponent(/datum/component/leash, src, distance = 1)
-		victim.balloon_alert(victim,"you feel unable to move away from the parade!")
-		victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
-		victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
-		//Lowers sanity
-		victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 	else
 		return PROJECTILE_PIERCE_PHASE
 
+/obj/projectile/moon_parade/on_hit(atom/target, blocked=0, pierce_hit)
+	. = ..()
+	var/mob/living/victim = target
+
+	//Registers a signal that triggers when the client sends an input to move
+	RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move))
+
+	//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
+	victim.AddComponent(/datum/component/leash, src, distance = 1)
+	victim.balloon_alert(victim,"you feel unable to move away from the parade!")
+	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
+	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
+
+	//Lowers sanity
+	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 
 /obj/projectile/moon_parade/Destroy(atom/hit)
 	var/mob/living/victim = hit
