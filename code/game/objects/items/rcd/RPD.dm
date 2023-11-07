@@ -408,18 +408,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return ..()
 
 	if(istype(atom_to_attack, /obj/item/rpd_upgrade))
-		var/obj/item/rpd_upgrade/rpd_up = atom_to_attack
-
-		//already installed
-		if(rpd_up.upgrade_flags & upgrade_flags)
-			balloon_alert(user, "already installed!")
-			return TRUE
-
-		//install & delete upgrade
-		upgrade_flags |= rpd_up.upgrade_flags
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		balloon_alert(user, "upgrade installed")
-		qdel(rpd_up)
+		install_upgrade(atom_to_attack, user)
 		return TRUE
 
 	var/atom/attack_target = atom_to_attack
@@ -627,6 +616,23 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			else
 				return ..()
 
+/obj/item/pipe_dispenser/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/rpd_upgrade))
+		install_upgrade(item, user)
+		return TRUE
+	return ..()
+
+/// Installs an upgrade into the RPD after checking if it is already installed
+/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_disk, mob/user)
+	// Check if the upgrade's already present
+	if(rpd_disk.upgrade_flags & upgrade_flags)
+		balloon_alert(user, "already installed!")
+		return
+	// Adds the upgrade from the disk and then deletes the disk
+	upgrade_flags |= rpd_disk.upgrade_flags
+	playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
+	balloon_alert(user, "upgrade installed")
+	qdel(rpd_disk)
 
 ///Changes the piping layer when the mousewheel is scrolled up or down.
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)

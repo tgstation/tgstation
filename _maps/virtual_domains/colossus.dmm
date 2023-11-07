@@ -30,7 +30,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "p" = (
-/mob/living/simple_animal/hostile/megafauna/colossus/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/colossus,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "q" = (
@@ -41,7 +41,7 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "s" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)

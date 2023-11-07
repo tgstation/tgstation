@@ -464,6 +464,7 @@ GLOBAL_VAR(station_nuke_source)
 		source = src,
 		header = "Nuke Armed",
 		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 	update_appearance()
 

@@ -33,7 +33,6 @@
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
