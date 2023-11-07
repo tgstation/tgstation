@@ -1,5 +1,6 @@
 #define WORKOUT_XP 5
 #define EXERCISE_STATUS_DURATION 20 SECONDS
+#define SAFE_DRUNK_LEVEL 39 
 
 /obj/structure/weightmachine
 	name = "chest press machine"
@@ -17,6 +18,9 @@
 
 	///The weight action we give to people that buckle themselves to us.
 	var/datum/action/push_weights/weight_action
+
+	///message when drunk user fails to use the machine
+	var/drunk_message = "You try for a new record and pull through! Through a muscle that is."
 
 	///List of messages picked when using the machine.
 	var/static/list/more_weight = list(
@@ -110,6 +114,14 @@
 			end_workout()
 			return
 
+		// awlways a chance for a person not to fail horribly when drunk
+		if(user.get_drunk_amount() > SAFE_DRUNK_LEVEL && prob(min(user.get_drunk_amount(), 99)))
+			playsound(src,'sound/effects/bang.ogg', 50, TRUE)
+			to_chat(user, span_warning(drunk_message))
+			user.take_bodypart_damage(rand(5, 10), wound_bonus = 10)
+			end_workout()
+			return
+
 		if(issilicon(user))
 			user.balloon_alert(user, pick(finished_silicon_message))
 		else
@@ -157,5 +169,8 @@
 
 	pixel_shift_y = 5
 
+	drunk_message = "You raise the bar over you trying to balance it with one hand, keyword tried."
+
 #undef WORKOUT_XP
 #undef EXERCISE_STATUS_DURATION
+#undef SAFE_DRUNK_LEVEL
