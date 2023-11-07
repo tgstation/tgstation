@@ -11,11 +11,7 @@
 		stack_trace("humans only for this position")
 		return
 
-	var/mob/living/carbon/human/player = owner.current
-
-	player.AddElement(/datum/element/service_style)
-	player.equipOutfit(/datum/outfit/cyber_police/tactical)
-	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
+	convert_agent(owner.current)
 
 /datum/outfit/cyber_police/tactical
 	name = ROLE_CYBER_TAC

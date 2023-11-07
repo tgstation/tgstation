@@ -251,11 +251,6 @@
 /obj/structure/alien/egg/burst,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"Y" = (
-/obj/structure/alien/weeds,
-/obj/effect/landmark/bitrunning/mob_segment,
-/turf/open/space/basic,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "Z" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -1132,7 +1127,7 @@ E
 E
 G
 t
-Y
+h
 e
 z
 z

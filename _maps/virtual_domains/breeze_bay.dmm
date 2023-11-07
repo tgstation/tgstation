@@ -17,6 +17,10 @@
 /obj/item/toy/beach_ball/branded,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
+"h" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "i" = (
 /turf/open/water/beach,
 /area/virtual_domain/fullbright)
@@ -105,6 +109,12 @@
 /obj/item/fishing_hook,
 /obj/structure/closet/crate,
 /obj/item/bait_can/worm,
+/obj/item/bait_can/worm,
+/obj/item/bait_can/worm,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"N" = (
+/obj/machinery/light/small/directional/north,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "O" = (
@@ -147,12 +157,20 @@
 /obj/structure/flora/tree/jungle/style_3,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
+"T" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "U" = (
 /obj/structure/flora/tree/palm/style_random,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "X" = (
 /turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"Y" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Z" = (
 /obj/effect/baseturf_helper/virtual_domain,
@@ -192,12 +210,12 @@ K
 G
 y
 J
+T
 J
 J
 J
 J
-J
-J
+T
 z
 P
 i
@@ -218,14 +236,14 @@ a
 J
 O
 J
-J
+h
 I
 I
 I
 I
 I
 v
-J
+N
 P
 Q
 i
@@ -380,14 +398,14 @@ a
 G
 y
 J
-J
+h
 I
 I
 I
 I
 I
 I
-J
+N
 P
 i
 i
@@ -408,12 +426,12 @@ o
 J
 J
 J
+Y
 J
 J
 J
 J
-J
-J
+Y
 J
 P
 i
