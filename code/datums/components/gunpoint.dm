@@ -36,7 +36,8 @@
 	target = targ
 	weapon = wep
 
-	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND,
+	RegisterSignals(targ, list(
+		COMSIG_MOB_ATTACK_HAND,
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOB_FIRED_GUN,
