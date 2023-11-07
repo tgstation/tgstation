@@ -258,7 +258,6 @@
 #define DEFAULT_HEX_COLOR_LEN 6
 
 // Color filters
-#define CHECK_LIGHT_OCCLUSION(turf) (turf.directional_opacity || turf.opacity)
 /// Icon filter that creates ambient occlusion
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, color="#04080FAA")
 /// Icon filter that creates gaussian blur

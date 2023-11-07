@@ -72,9 +72,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Lazylist of movable atoms providing opacity sources.
 	var/list/atom/movable/opacity_sources
 
-	///Image used for shadowcasting
-	var/image/shadowcasting_image
-
 	///the holodeck can load onto this turf if TRUE
 	var/holodeck_compatible = FALSE
 
