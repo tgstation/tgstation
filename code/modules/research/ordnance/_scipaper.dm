@@ -287,21 +287,20 @@
 	/// List of ordnance experiments that our partner is willing to accept. If this list is not filled it means the partner will accept everything.
 	var/list/accepted_experiments = list()
 	/// Associative list of which technology the partner might be able to boost and by how much.
-	var/list/boosted_nodes = list()
-
+	var/list/boostable_nodes = list()
 
 /datum/scientific_partner/proc/purchase_boost(datum/techweb/purchasing_techweb, datum/techweb_node/node)
 	if(!allowed_to_boost(purchasing_techweb, node.id))
 		return FALSE
-	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC=boosted_nodes[node.id]))
-	purchasing_techweb.scientific_cooperation[type] -= boosted_nodes[node.id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
+	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC = boostable_nodes[node.id]))
+	purchasing_techweb.scientific_cooperation[type] -= boostable_nodes[node.id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
 	return TRUE
 
 /datum/scientific_partner/proc/allowed_to_boost(datum/techweb/purchasing_techweb, node_id)
-	if(purchasing_techweb.scientific_cooperation[type] < (boosted_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
+	if(purchasing_techweb.scientific_cooperation[type] < (boostable_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
 		return FALSE
 	if(!(node_id in purchasing_techweb.get_available_nodes())) // Not currently available
 		return FALSE
-	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boosted_nodes[node_id])) // Already bought or we have a bigger discount
+	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
 		return FALSE
 	return TRUE

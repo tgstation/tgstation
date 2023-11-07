@@ -1,9 +1,5 @@
-#define RDSCREEN_NOBREAK "<NO_HTML_BREAK>"
-
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
-
-#define RESEARCH_MATERIAL_DESTROY_ID "__destroy"
 
 //! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"

@@ -3,7 +3,7 @@
 	flufftext = "A local group of miners are looking for ways to improve their mining output. They are interested in smaller scale explosives."
 	accepted_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.75, SCIPAPER_FUNDING_INDEX = 0.75)
-	boosted_nodes = list(
+	boostable_nodes = list(
 		"bluespace_basic" = 2000,
 		"NVGtech" = 1500,
 		"practical_bluespace" = 2500,
@@ -16,7 +16,7 @@
 	name = "Ghost Writing"
 	flufftext = "A nearby research station ran by a very wealthy captain seems to be struggling with their scientific output. They might reward us handsomely if we ghostwrite for them."
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.25, SCIPAPER_FUNDING_INDEX = 2)
-	boosted_nodes = list(
+	boostable_nodes = list(
 		"comp_recordkeeping" = 500,
 		"computer_data_disks" = 500,
 	)
@@ -29,7 +29,7 @@
 		/datum/experiment/ordnance/explosive/pressurebomb,
 		/datum/experiment/ordnance/explosive/hydrogenbomb,
 	)
-	boosted_nodes = list(
+	boostable_nodes = list(
 		"adv_weaponry" = 5000,
 		"weaponry" = 2500,
 		"sec_basic" = 1250,
@@ -47,7 +47,7 @@
 		/datum/experiment/ordnance/gaseous/nitrous_oxide,
 		/datum/experiment/ordnance/gaseous/bz,
 	)
-	boosted_nodes = list(
+	boostable_nodes = list(
 		"cyber_organs" = 750,
 		"cyber_organs_upgraded" = 1000,
 		"genetics" = 500,
@@ -63,7 +63,7 @@
 		/datum/experiment/ordnance/gaseous/noblium,
 		/datum/experiment/ordnance/explosive/nobliumbomb,
 	)
-	boosted_nodes = list(
+	boostable_nodes = list(
 		"engineering" = 5000,
 		"adv_engi" = 5000,
 		"emp_super" = 3000,
