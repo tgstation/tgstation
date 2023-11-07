@@ -31,6 +31,8 @@
 	src.baby_path = baby_path
 	src.post_birth = post_birth
 
+	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+
 /datum/component/breed/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(breed_with_partner))
 	ADD_TRAIT(parent, TRAIT_MOB_BREEDER, REF(src))
