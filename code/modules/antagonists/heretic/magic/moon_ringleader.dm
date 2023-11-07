@@ -18,12 +18,12 @@
 	aoe_radius = 7
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
-	. = list()
+	var/list/stuff = list()
 	for(var/atom/nearby in orange(center, radius_override || aoe_radius))
 		if(nearby == owner || nearby == center || isarea(nearby))
 			continue
 		if(ismob(nearby))
-			. += nearby
+			stuff += nearby
 			continue
 		var/mob/living/nearby_mob = nearby
 		if(!isturf(nearby_mob.loc))
@@ -32,12 +32,13 @@
 			continue
 		if(nearby_mob.can_block_magic(antimagic_flags))
 			continue
-
-		. += nearby_mob
+		stuff += nearby_mob
+	return stuff
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/human/victim, atom/caster)
 	if(!ismob(victim))
 		return
+
 	var/victim_sanity = victim.mob_mood.sanity
 
 	new /obj/effect/temp_visual/moon_ringleader(get_turf(victim))

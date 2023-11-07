@@ -73,7 +73,7 @@
 	var/mob/living/victim = target
 
 	//Registers a signal that triggers when the client sends an input to move
-	RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move))
+	RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move), override=TRUE)
 
 	//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
 	victim.AddComponent(/datum/component/leash, src, distance = 1)
