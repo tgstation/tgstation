@@ -1,4 +1,0 @@
-author: "vvvv-vvvv"
-delete-after: True
-changes:
-  - bugfix: "Fix refresh button in log viewer"

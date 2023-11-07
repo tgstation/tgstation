@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tramstation floor tiles will correctly get custom station colors when they exist"
