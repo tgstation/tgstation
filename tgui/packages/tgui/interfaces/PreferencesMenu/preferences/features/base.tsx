@@ -18,6 +18,7 @@ export type Feature<
   component: FeatureValue<TReceiving, TSending, TServerData>;
   category?: string;
   description?: string;
+  sortingPrefix?: string;
 };
 
 /**
