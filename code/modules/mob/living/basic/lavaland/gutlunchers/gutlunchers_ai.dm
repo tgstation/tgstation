@@ -52,7 +52,7 @@
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
 	)
@@ -62,8 +62,8 @@
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
 	)
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/look_for_adult,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/food_trough
 	)
 

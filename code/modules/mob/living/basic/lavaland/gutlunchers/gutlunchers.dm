@@ -8,6 +8,7 @@
 	desc = "A scavenger that eats raw ores, often found alongside ash walkers. Produces a thick, nutritious milk."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "gutlunch"
+	combat_mode = FALSE
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -35,6 +36,7 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	if(greyscale_config)
 		set_greyscale(colors = list(pick(possible_colors)))
+	AddElement(/datum/element/ai_retaliate)
 	if(!can_breed)
 		return
 	AddComponent(\
@@ -60,8 +62,8 @@
 	return COMPONENT_HOSTILE_NO_ATTACK
 
 /mob/living/basic/mining/gutlunch/proc/after_birth(mob/living/basic/mining/gutlunch/grub/baby, mob/living/partner)
-	var/our_color = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_GRAY
-	var/partner_color = partner.atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_GRAY
+	var/our_color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_GRAY
+	var/partner_color = LAZYACCESS(partner.atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_GRAY
 	baby.add_atom_colour(BlendRGB(our_color, partner_color, 1), FIXED_COLOUR_PRIORITY)
 	var/atom/male_parent = (gender == MALE) ? src : partner
 	baby.inherited_stats = new(male_parent)
@@ -91,7 +93,7 @@
 		on_generate_callback = milking_callback,\
 	)
 	full_udder = mutable_appearance(icon, "gl_full")
-	full_udder.color = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_GRAY
+	full_udder.color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY) || COLOR_GRAY
 
 /mob/living/basic/mining/gutlunch/warrior
 	name = "gunther"
@@ -119,7 +121,6 @@
 	roll_stats(melee_damage_lower, speed, maxHealth)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
-	AddElement(/datum/element/ai_retaliate)
 
 /mob/living/basic/mining/gutlunch/milk/update_overlays(new_udder_volume, max_udder_volume)
 	. = ..()

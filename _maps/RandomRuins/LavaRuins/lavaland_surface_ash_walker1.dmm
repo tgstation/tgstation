@@ -679,6 +679,12 @@
 /obj/item/flashlight/flare/torch,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
+"fM" = (
+/obj/effect/mapping_helpers/no_lava,
+/mob/living/basic/mining/gutlunch/warrior,
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "gi" = (
 /obj/structure/table/optable,
 /obj/structure/stone_tile{
@@ -1399,6 +1405,11 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"TC" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "TO" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -1937,10 +1948,10 @@ ah
 ah
 Gv
 al
-PA
+fM
 Gv
 Gv
-Gv
+TC
 Gv
 qH
 KQ
@@ -2049,7 +2060,7 @@ Gv
 al
 Gv
 Gv
-Gv
+TC
 Gv
 Gv
 qH
@@ -2113,11 +2124,11 @@ aa
 ah
 Gv
 al
-Gv
+TC
 Gv
 PA
 Gv
-Gv
+TC
 qH
 Gv
 mo
