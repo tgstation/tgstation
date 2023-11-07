@@ -13,3 +13,9 @@
   - rscadd: New Space Marine helmet, thanks to Odie_boy!
   - bugfix: Pets that died and had no sprite should now be fixed. Lazarus Injections
       will work properly too.
+2023-11-07:
+  DexeeXI:
+  - rscdel: Removed buffer bottles from Chemist job starting gear and the Chemist
+      lockers.
+  NicoDeLuna:
+  - rscadd: Added Edgerunner Hairstyle for Roundstart
