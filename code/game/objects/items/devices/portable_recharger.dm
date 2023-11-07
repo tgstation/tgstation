@@ -52,11 +52,10 @@
 
 /obj/item/portable_recharger/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot & (ITEM_SLOT_BACK|ITEM_SLOT_BELT))
+	if(slot & slot_flags)
 		RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_attacked))
 	else
 		UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
-		return
 
 /obj/item/portable_recharger/dropped(mob/user, silent)
 	. = ..()
@@ -167,14 +166,12 @@
 	if(!cell || charging || hit)
 		return FALSE
 
-	if(do_after(user, 3 SECONDS, target = src))
-		cell.update_appearance()
-		cell.forceMove(get_turf(src))
-		balloon_alert(user, "removed [cell]")
-		cell = null
-		tool.play_tool_sound(src, 50)
-		return TRUE
-	return FALSE
+	cell.update_appearance()
+	cell.forceMove(get_turf(src))
+	balloon_alert(user, "removed [cell]")
+	cell = null
+	tool.play_tool_sound(src, 50)
+	return TRUE
 
 /obj/item/portable_recharger/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
@@ -185,6 +182,10 @@
 		return TRUE
 
 	add_fingerprint(user)
+	return ..()
+
+/obj/item/portable_recharger/deconstruct(dissassembled)
+	charging?.forceMove(drop_location())
 	return ..()
 
 ///Takes charging item out if there is one
@@ -205,9 +206,7 @@
 		return
 
 	cell.explode()
-
-	charging?.forceMove(drop_location())
-	qdel(src)
+	deconstruct()
 
 ///Makes the recharger blow up after some time
 /obj/item/portable_recharger/proc/malfunction/(mob/living/carbon/user, atom/movable/hitby)
