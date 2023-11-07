@@ -1,4 +1,0 @@
-author: "lessthnthree"
-delete-after: True
-changes:
-  - admin: "Holobarrier creation now adds player fingerprint data"

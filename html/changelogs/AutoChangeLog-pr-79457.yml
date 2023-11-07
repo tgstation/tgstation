@@ -1,4 +1,0 @@
-author: "D4C-420"
-delete-after: True
-changes:
-  - bugfix: "lab coats no longer have directional sprites when thrown"
