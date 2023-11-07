@@ -15,13 +15,13 @@
 
 /datum/mafia_role/obsessed/New(datum/mafia_controller/game) //note: obsession is always a townie
 	. = ..()
-	desc = initial(desc) + " Obsession assigned on the first night."
+	desc = initial(desc) + " Obsessions are assigned on the first night."
 	RegisterSignal(game, COMSIG_MAFIA_SUNDOWN, PROC_REF(find_obsession))
 
 /datum/mafia_role/obsessed/proc/find_obsession(datum/mafia_controller/game)
 	SIGNAL_HANDLER
 
-	var/list/all_roles_shuffle = shuffle(game.living_roles)
+	var/list/all_roles_shuffle = shuffle(game.living_roles) - src
 	for(var/datum/mafia_role/possible as anything in all_roles_shuffle)
 		if(possible.team == MAFIA_TEAM_TOWN)
 			obsession = possible

@@ -2,7 +2,7 @@
 /datum/mafia_controller/ui_static_data(atom/user)
 	var/list/data = list()
 
-	if(usr.client?.holder)
+	if(usr?.client?.holder)
 		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
 	data["is_observer"] = isobserver(user)
 	data["all_roles"] = current_setup_text
