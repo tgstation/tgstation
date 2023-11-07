@@ -119,23 +119,22 @@
 				var/input_amount = text2num(params["amount"])
 				if(!isnull(input_amount))
 					required_reagents[input_reagent] = input_amount
-					return TRUE
-
-			return FALSE
+					. = TRUE
+			return
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
-				return TRUE
-			return FALSE
+				. = TRUE
+			return
 
 		if("temperature")
 			var/target = text2num(params["target"])
 			if(!isnull(target))
 				target_temperature = clamp(target, 0, 1000)
-				return TRUE
-			return FALSE
+				. = TRUE
+			return
 
 	var/result = handle_ui_act(action, params, ui, state)
 	if(isnull(result))
