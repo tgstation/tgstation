@@ -1,13 +1,14 @@
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, Box, Section, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
-  server_connected: boolean;
+  server_connected: BooleanLike;
   loaded_item: string;
   item_icon: string;
-  indestructible: boolean;
-  already_deconstructed: boolean;
+  indestructible: BooleanLike;
+  already_deconstructed: BooleanLike;
   recoverable_points: string;
   node_data: NodeData[];
   research_point_id: string;
@@ -16,7 +17,7 @@ type Data = {
 type NodeData = {
   node_name: string;
   node_id: string;
-  node_hidden: boolean;
+  node_hidden: BooleanLike;
 };
 
 export const DestructiveAnalyzer = (props, context) => {
@@ -29,14 +30,14 @@ export const DestructiveAnalyzer = (props, context) => {
     already_deconstructed,
     recoverable_points,
     research_point_id,
-    node_data,
+    node_data = [],
   } = data;
   if (!server_connected) {
     return (
       <Window width={400} height={260} title="Destructive Analyzer">
         <Window.Content>
           <NoticeBox textAlign="center" danger>
-            Not connected to a Server. Please sync one using a multitool.
+            Not connected to a server. Please sync one using a multitool.
           </NoticeBox>
         </Window.Content>
       </Window>
