@@ -106,7 +106,7 @@
 	var/has_split = FALSE
 	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
 		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
-		if(adjusted_vol <= CHEMICAL_QUANTISATION_LEVEL) //If we're inverse or FALSE cancel addition
+		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
 			return amount
 			/* We return true here because of #63301
 			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
@@ -120,6 +120,8 @@
 	if(cached_total + amount > maximum_volume)
 		amount = maximum_volume - cached_total //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
 	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
+	if(amount <= 0)
+		return FALSE
 
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
@@ -539,8 +541,8 @@
 	var/cached_amount = amount
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount <= 0)
 		return
 
 	//Set up new reagents to inherit the old ongoing reactions
@@ -632,8 +634,8 @@
 		return
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount, available_volume, holder.maximum_volume - holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(min(amount, available_volume, holder.maximum_volume - holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount <= 0)
 		return
 
 	var/list/cached_reagents = reagent_list
@@ -688,8 +690,8 @@
 		target_holder = target.reagents
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount <= 0)
 		return
 
 	var/list/cached_reagents = reagent_list
@@ -1314,7 +1316,7 @@
 		. += reagent_volume
 		total_ph += (reagent.ph * reagent_volume)
 
-		//reasign floored value
+		//reasign rounded value
 		reagent.volume = reagent_volume
 
 	//assign the final values, rounding up can sometimes cause overflow so bring it down
