@@ -10,7 +10,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/glasses/regular) // extra pair if orginal one gets broken by somebody mean
 
-/datum/quirk_static_data/nearsighted
+/datum/quirk_constant_data/nearsighted
 	associated_typepath = /datum/quirk/item_quirk/nearsighted
 	customization_options = list(/datum/preference/choiced/glasses)
 

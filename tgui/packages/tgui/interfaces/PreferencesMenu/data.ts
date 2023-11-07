@@ -83,7 +83,7 @@ export type Quirk = {
   name: string;
   value: number;
   customizable: boolean;
-  customization_options: string[];
+  customization_options?: string[];
 };
 
 export type QuirkInfo = {
@@ -128,7 +128,6 @@ export type PreferencesMenuData = {
   character_profiles: (string | null)[];
 
   character_preferences: {
-    all_preferences: Record<string, string>;
     clothing: Record<string, string>;
     features: Record<string, string>;
     game_preferences: Record<string, unknown>;
@@ -138,6 +137,7 @@ export type PreferencesMenuData = {
     };
     secondary_features: Record<string, unknown>;
     supplemental_features: Record<string, unknown>;
+    manually_rendered_features: Record<string, string>;
 
     names: Record<string, string>;
 

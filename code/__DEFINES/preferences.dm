@@ -131,8 +131,8 @@
 /// such as hair color being affixed to hair.
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
 
-/// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered.
-#define PREFERENCE_CATEGORY_NON_APPLICABLE "non_applicable"
+/// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered. Used for quirks, currently.
+#define PREFERENCE_CATEGORY_MANUALLY_RENDERED "manually_rendered_features"
 
 // Playtime is tracked in minutes
 /// The time needed to unlock hardcore random mode in preferences

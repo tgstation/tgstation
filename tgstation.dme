@@ -1568,7 +1568,7 @@
 #include "code\datums\proximity_monitor\fields\projectile_dampener.dm"
 #include "code\datums\proximity_monitor\fields\timestop.dm"
 #include "code\datums\quirks\_quirk.dm"
-#include "code\datums\quirks\_quirk_static_data.dm"
+#include "code\datums\quirks\_quirk_constant_data.dm"
 #include "code\datums\quirks\negative_quirks\allergic.dm"
 #include "code\datums\quirks\negative_quirks\bad_back.dm"
 #include "code\datums\quirks\negative_quirks\bad_touch.dm"

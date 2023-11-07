@@ -6,7 +6,7 @@
 	medical_record_text = "Patient has an irrational fear of something."
 	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/storage/pill_bottle/psicodine)
 
-/datum/quirk_static_data/phobia
+/datum/quirk_constant_data/phobia
 	associated_typepath = /datum/quirk/phobia
 	customization_options = list(/datum/preference/choiced/phobia)
 

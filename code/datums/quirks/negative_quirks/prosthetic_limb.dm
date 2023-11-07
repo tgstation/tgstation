@@ -11,7 +11,7 @@
 	/// the original limb from before the prosthetic was applied
 	var/obj/item/bodypart/old_limb
 
-/datum/quirk_static_data/prosthetic_limb
+/datum/quirk_constant_data/prosthetic_limb
 	associated_typepath = /datum/quirk/prosthetic_limb
 	customization_options = list(/datum/preference/choiced/prosthetic)
 

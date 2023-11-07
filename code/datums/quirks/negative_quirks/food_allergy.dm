@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(possible_food_allergies, list(
 	/// Footype flags that will trigger the allergy
 	var/target_foodtypes = NONE
 
-/datum/quirk_static_data/food_allergy
+/datum/quirk_constant_data/food_allergy
 	associated_typepath = /datum/quirk/item_quirk/food_allergic
 	customization_options = list(/datum/preference/choiced/food_allergy)
 

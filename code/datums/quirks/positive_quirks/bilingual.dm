@@ -8,7 +8,7 @@
 	medical_record_text = "Patient speaks multiple languages."
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
 
-/datum/quirk_static_data/bilingual
+/datum/quirk_constant_data/bilingual
 	associated_typepath = /datum/quirk/bilingual
 	customization_options = list(/datum/preference/choiced/language)
 
