@@ -67,15 +67,15 @@
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
 	return severity > EXPLODE_LIGHT ? ..() : FALSE
 
-/obj/item/storage/portable_chem_mixer/attackby(obj/item/I, mob/user, params)
+/obj/item/storage/portable_chem_mixer/attackby(obj/item/weapon, mob/user, params)
 	if (!atom_storage.locked  || \
-		(I.item_flags & ABSTRACT) || \
-		!is_reagent_container(I) || \
-		!I.is_open_container() \
+		(weapon.item_flags & ABSTRACT) || \
+		!is_reagent_container(weapon) || \
+		!weapon.is_open_container() \
 	)
 		return ..()
 
-	replace_beaker(user, I)
+	replace_beaker(user, weapon)
 	update_appearance()
 	return TRUE
 
@@ -208,7 +208,7 @@
 		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
 		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
 		var/list/beakerContents = list()
-		if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+		if(length(beaker?.reagents.reagent_list))
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
 				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
 		beaker_data["contents"] = beakerContents
@@ -226,7 +226,7 @@
 
 		if("dispense")
 			var/datum/reagent/reagent = GLOB.name2reagent[params["reagent"]]
-			if(!reagent)
+			if(isnull(reagent))
 				return
 
 			if(!QDELETED(beaker))
