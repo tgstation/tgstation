@@ -157,7 +157,7 @@
 	var/list/point_value = techweb_item_point_check(thing)
 	if(point_value && !stored_research.deconstructed_items[thing.type])
 		stored_research.deconstructed_items[thing.type] = TRUE
-		stored_research.research_points += point_value
+		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = point_value))
 	qdel(thing)
 
 /**

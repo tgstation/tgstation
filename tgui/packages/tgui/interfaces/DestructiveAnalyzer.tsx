@@ -96,7 +96,7 @@ export const DestructiveAnalyzer = (props, context) => {
                   <Box>{recoverable_points}</Box>
                 </>
               )}
-              <Button
+              <Button.Confirm
                 content="Deconstruct"
                 icon="hammer"
                 tooltip={
@@ -111,7 +111,7 @@ export const DestructiveAnalyzer = (props, context) => {
             </>
           )}
           {node_data.map((node) => (
-            <Button
+            <Button.Confirm
               content={node.node_name}
               icon="cash-register"
               mt={1}
