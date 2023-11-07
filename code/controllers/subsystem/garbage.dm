@@ -342,23 +342,35 @@ SUBSYSTEM_DEF(garbage)
 
 /// Qdel Item: Holds statistics on each type that passes thru qdel
 /datum/qdel_item
-	var/name = "" //!Holds the type as a string for this type
-	var/qdels = 0 //!Total number of times it's passed thru qdel.
-	var/destroy_time = 0 //!Total amount of milliseconds spent processing this type's Destroy()
-	var/failures = 0 //!Times it was queued for soft deletion but failed to soft delete.
-	var/hard_deletes = 0 //!Different from failures because it also includes QDEL_HINT_HARDDEL deletions
-	var/hard_delete_time = 0 //!Total amount of milliseconds spent hard deleting this type.
-	var/hard_delete_max = 0 //!Highest time spent hard_deleting this in ms.
-	var/hard_deletes_over_threshold = 0 //!Number of times hard deletes took longer than the configured threshold
-	var/no_respect_force = 0 //!Number of times it's not respected force=TRUE
-	var/no_hint = 0 //!Number of times it's not even bother to give a qdel hint
-	var/slept_destroy = 0 //!Number of times it's slept in its destroy
-	var/qdel_flags = 0 //!Flags related to this type's trip thru qdel.
-	var/list/extra_details //!Lazylist of string metadata about the deleted objects
+	/// Holds the type as a string for this type
+	var/name = ""
+	/// Total number of times it's passed thru qdel.
+	var/qdels = 0
+	/// Total amount of milliseconds spent processing this type's Destroy()
+	var/destroy_time = 0
+	///Times it was queued for soft deletion but failed to soft delete.
+	var/failures = 0
+	/// Different from failures because it also includes QDEL_HINT_HARDDEL deletions
+	var/hard_deletes = 0
+	/// Total amount of milliseconds spent hard deleting this type.
+	var/hard_delete_time = 0
+	/// Highest time spent hard_deleting this in ms.
+	var/hard_delete_max = 0
+	/// Number of times hard deletes took longer than the configured threshold
+	var/hard_deletes_over_threshold = 0
+	/// Number of times it's not respected force=TRUE
+	var/no_respect_force = 0
+	/// Number of times it's not even bother to give a qdel hint
+	var/no_hint = 0
+	/// Number of times it's slept in its destroy
+	var/slept_destroy = 0
+	/// Flags related to this type's trip thru qdel.
+	var/qdel_flags = 0
+	/// Lazylist of string metadata about the deleted objects
+	var/list/extra_details
 
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
-
 
 /// Should be treated as a replacement for the 'del' keyword.
 ///
