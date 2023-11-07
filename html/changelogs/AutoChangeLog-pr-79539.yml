@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - config: "The bitrunner job now has a default config for server owners."

@@ -1,0 +1,4 @@
+author: "D4C-420"
+delete-after: True
+changes:
+  - rscadd: "Being sufficiently drunk now has a chance to cause working out to fail and harm you"

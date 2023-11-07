@@ -1,8 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "The plasma river is about as deadly for animals as it is for humans."
-  - bugfix: "Golems can now wade in the plasma river unscathed."
-  - bugfix: "Undismemberable limbs will no longer be dismembered by the plasma river."
-  - balance: "Golems and plasmamen cannot become husked."
-  - image: "Robotic and Skeletal parts will remain distinct while the rest of the body is husked."
