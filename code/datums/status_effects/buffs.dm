@@ -224,6 +224,14 @@
 
 /datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
+	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/fitness))
+
+/datum/status_effect/exercised/on_apply()
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/fitness))
+	return ..()
+
+/datum/status_effect/exercised/on_remove()
+	owner.clear_mood_event("exercise")
 
 /atom/movable/screen/alert/status_effect/exercised
 	name = "Exercise"
