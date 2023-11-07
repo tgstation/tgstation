@@ -215,8 +215,11 @@
 
 	STOP_PROCESSING(SSplumbing, src)
 
-	for(var/duct_dir in ducts)
-		var/datum/ductnet/duct = ducts[duct_dir]
+	//remove_plumber() can remove all ducts at once if they all belong to the same pipenet
+	//for e.g. in case of circular connections
+	//so we check if we have ducts to remove after each iteration
+	while(ducts.len)
+		var/datum/ductnet/duct = ducts[ducts[1]] //for maps index 1 will return the 1st key
 		duct.remove_plumber(src)
 
 	active = FALSE
