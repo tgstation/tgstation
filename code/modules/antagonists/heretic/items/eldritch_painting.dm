@@ -231,7 +231,7 @@
 /datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
 	// Causes them to need to eat at 10x the normal rate
 	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
-	if(prob(2))
+	if(SPT_PROB(50, seconds_per_tick))
 		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
@@ -351,7 +351,7 @@
 	if(owner.incapacitated())
 		return
 	bodypart.receive_damage(scratch_damage)
-	if(prob(2))
+	if(SPT_PROB(50, seconds_per_tick))
 		to_chat(owner, span_notice("You scratch furiously at [bodypart] to rid its imperfections!"))
 
 
@@ -418,6 +418,6 @@
 	if("rusted_examine" in owner.mob_mood.mood_events)
 		return
 
-	if(prob(2))
+	if(SPT_PROB(50, seconds_per_tick))
 		to_chat(owner, span_notice("You feel eldritch energies pulse from your body!"))
 		tile.rust_heretic_act()

@@ -9,7 +9,7 @@
 
 	sound = 'sound/magic/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 20 SECONDS
+	cooldown_time = 30 SECONDS
 
 	invocation = "L'N'R P'RAD"
 	invocation_type = INVOCATION_SHOUT
@@ -27,7 +27,7 @@
 	damage = 0
 	damage_type = BURN
 	speed = 1
-	range = 80
+	range = 75
 	ricochets_max = 40
 	ricochet_chance = 500
 	ricochet_incidence_leeway = 0
