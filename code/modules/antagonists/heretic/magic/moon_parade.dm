@@ -35,7 +35,8 @@
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	///looping sound datum for our projectile.
 	var/datum/looping_sound/moon_parade/soundloop
-
+	// A list of the people we hit
+	var/list/mobs_hit = list()
 
 /obj/projectile/moon_parade/Initialize(mapload)
 	soundloop = new(src,  TRUE)
@@ -67,7 +68,7 @@
 	else
 		return PROJECTILE_PIERCE_PHASE
 
-/obj/projectile/moon_parade/on_hit(atom/target, blocked=0, pierce_hit)
+/obj/projectile/moon_parade/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/mob/living/victim = target
 
@@ -83,9 +84,13 @@
 	//Lowers sanity
 	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 
-/obj/projectile/moon_parade/Destroy(atom/hit)
-	var/mob/living/victim = hit
-	UnregisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
+	// The victim got hit, add them to our mobs_hit list
+	victim |= mobs_hit
+
+/obj/projectile/moon_parade/Destroy()
+	// Unregister the signal blocking movement on those we hit
+	for(var/mob/living/mobs in mobs_hit)
+		UnregisterSignal(mobs, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	soundloop.stop()
 	return ..()
 
