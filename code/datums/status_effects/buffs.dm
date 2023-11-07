@@ -165,7 +165,7 @@
 
 /datum/status_effect/exercised
 	id = "Exercised"
-	duration = 10 SECONDS
+	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
@@ -184,9 +184,9 @@
 		/datum/reagent/consumable/nutraslop = 2 SECONDS, // prison food to bulk up with
 		/datum/reagent/consumable/soymilk = 1 SECONDS, // darn vegans!
 		// time for the bad stuff
-		/datum/reagent/consumable/sugar = -3 SECONDS,
-		/datum/reagent/consumable/monkey_energy = -3 SECONDS,
-		/datum/reagent/consumable/nutriment/fat = -3 SECONDS,
+		/datum/reagent/consumable/sugar = -1 SECONDS,
+		/datum/reagent/consumable/monkey_energy = -1 SECONDS, // the marketing was a lie
+		/datum/reagent/consumable/nutriment/fat = -1 SECONDS,
 	)
 
 /datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)
@@ -208,7 +208,7 @@
 		if(new_owner.reagents.has_reagent(workout_reagent))
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 5 SECONDS
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 2 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
 	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER) + world.time

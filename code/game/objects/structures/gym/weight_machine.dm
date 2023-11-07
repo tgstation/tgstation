@@ -1,5 +1,5 @@
 #define WORKOUT_XP 5
-#define EXERCISE_STATUS_DURATION 10 SECONDS
+#define EXERCISE_STATUS_DURATION 15 SECONDS
 #define SAFE_DRUNK_LEVEL 39
 
 /obj/structure/weightmachine
@@ -127,7 +127,7 @@
 		else
 			user.balloon_alert(user, pick(finished_message))
 
-		user.adjust_nutrition(-3) // feel the burn
+		user.adjust_nutrition(-5) // feel the burn
 
 		// remember the real xp gain is from sleeping after working out
 		user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP)
