@@ -218,9 +218,6 @@
 
 	return bonus_time
 
-/datum/status_effect/exercised/tick(seconds_between_ticks)
-	owner.reagents.metabolize(owner, seconds_between_ticks * SSMOBS_DT, 0) // doubles the metabolization rate
-
 /datum/status_effect/exercised/on_creation(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
 	return ..()
