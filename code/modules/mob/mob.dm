@@ -102,7 +102,6 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	update_shadowcasting()
 	log_mob_tag("CREATED: [key_name(src)] \[[type]\]")
 
 /**
