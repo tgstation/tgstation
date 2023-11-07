@@ -105,6 +105,10 @@
 		ui = new(user, src, "MatMarket", name)
 		ui.open()
 
+/obj/machinery/materials_market/ui_static_data(mob/user)
+	. = list()
+	.["CARGO_CRATE_VALUE"] = CARGO_CRATE_VALUE
+
 /obj/machinery/materials_market/ui_data(mob/user)
 	. = list()
 
