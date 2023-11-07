@@ -59,7 +59,7 @@
 	description = "Working out releases those endorphins!"
 	mood_change = 1
 
-/datum/mood_event/pet_animal/add_effects(fitness_level)
+/datum/mood_event/exercise/add_effects(fitness_level)
 	mood_change = fitness_level // the more fit you are, the more you like to work out
 	return ..()
 
