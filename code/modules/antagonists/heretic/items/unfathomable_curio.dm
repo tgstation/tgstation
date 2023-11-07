@@ -31,17 +31,11 @@
 	))
 
 
-
-/obj/item/storage/belt/unfathomable_curio/equipped(mob/living/carbon/human/user, slot)
+/obj/item/storage/belt/unfathomable_curio/Initialize(mapload)
 	. = ..()
-	if(!(slot & slot_flags))
-		return
-	if(!IS_HERETIC(user))
-		return
-
 	//Vars used for the shield component
 	var/heretic_shield_icon = "unfathomable_shield"
-	var/max_charges = 5
+	var/max_charges = 1
 	var/recharge_start_delay = 60 SECONDS
 	var/charge_increment_delay = 60 SECONDS
 	var/charge_recovery = 1
@@ -50,13 +44,24 @@
 	charge_recovery = charge_recovery, shield_icon = heretic_shield_icon)
 
 
+/obj/item/storage/belt/unfathomable_curio/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!(slot & slot_flags))
+		return
+	if(!IS_HERETIC(user))
+		to_chat(user, span_warning("I wouldn't do that..."))
+		user.dropItemToGround(src, TRUE)
+		return
+
+
+
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	. = ..()
 	if(IS_HERETIC(user))
 		return
 
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 160)
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 	user.adjust_temp_blindness(5 SECONDS)
-	. += span_hypnophrase("It. It looked. IT WRAPS ITSELF AROUND ME.")
+	. += span_notice("It. It looked. IT WRAPS ITSELF AROUND ME.")
 
 
