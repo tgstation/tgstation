@@ -109,30 +109,33 @@
 		if("add")
 			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.chemical_name_list)
 			if(!selected_reagent)
-				return TRUE
+				return FALSE
 
 			var/input_reagent = get_chem_id(selected_reagent)
 			if(!input_reagent)
-				return TRUE
+				return FALSE
 
 			if(!required_reagents.Find(input_reagent))
 				var/input_amount = text2num(params["amount"])
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
+				return TRUE
 
-			return TRUE
+			return FALSE
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
-			return TRUE
+				return TRUE
+			return FALSE
 
 		if("temperature")
 			var/target = text2num(params["target"])
-			if(target != null)
+			if(!isnull(target))
 				target_temperature = clamp(target, 0, 1000)
-			return TRUE
+				return TRUE
+			return FALSE
 
 	var/result = handle_ui_act(action, params, ui, state)
 	if(isnull(result))
