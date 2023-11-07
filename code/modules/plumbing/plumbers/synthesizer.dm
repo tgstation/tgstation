@@ -53,8 +53,9 @@
 		return
 
 	//otherwise we get leftovers, and we need this to be precise
-	if(reagents.total_volume < amount)
-		reagents.add_reagent(reagent_id, amount)
+	if(reagents.total_volume >= amount)
+		return
+	reagents.add_reagent(reagent_id, amount)
 
 	use_power(active_power_usage)
 
