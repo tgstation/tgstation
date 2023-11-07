@@ -117,9 +117,9 @@
 
 			if(!required_reagents.Find(input_reagent))
 				var/input_amount = text2num(params["amount"])
-				if(input_amount)
+				if(!isnull(input_amount))
 					required_reagents[input_reagent] = input_amount
-				return TRUE
+					return TRUE
 
 			return FALSE
 
