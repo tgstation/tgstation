@@ -13,11 +13,14 @@
 		qdel(src)
 		return
 
-	gas_connector.dir = direction
+	gas_connector.dir = connected_machine.dir
 	gas_connector.airs[1].volume = gas_volume
 
 	SSair.start_processing_machine(connected_machine)
 	register_with_machine()
+	gas_connector.set_init_directions()
+	gas_connector.atmos_init()
+	SSair.add_to_rebuild_queue(gas_connector)
 
 /datum/gas_machine_connector/Destroy()
 	connected_machine = null
