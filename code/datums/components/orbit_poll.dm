@@ -47,13 +47,14 @@
 
 	var/message = custom_message || "[capitalize(src.title)] is looking for volunteers"
 
-	notify_ghosts("[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].\n", \
-		action = NOTIFY_ORBIT, \
-		enter_link = "<a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
-		flashwindow = FALSE, \
-		header = "Volunteers requested", \
-		ignore_key = ignore_key, \
-		source = parent \
+	notify_ghosts(
+		"[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].\n",
+		action = NOTIFY_ORBIT,
+		enter_link = "<a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "Volunteers requested",
+		ignore_key = ignore_key,
+		source = parent,
 	)
 
 	addtimer(CALLBACK(src, PROC_REF(end_poll)), timeout, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)

@@ -251,10 +251,8 @@
  * * source The source of the notification
  * * alert_overlay The alert overlay to show in the alert message
  * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
- * * flashwindow Flash the byond client window
  * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
  * * header The header of the notifiaction
- * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
  * * notify_volume How loud the sound should be to spook the user
  */
 /proc/notify_ghosts(
@@ -264,24 +262,30 @@
 	atom/source,
 	mutable_appearance/alert_overlay,
 	action = NOTIFY_JUMP,
-	flashwindow = TRUE,
-	ignore_mapload = TRUE,
+	notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	ignore_key,
 	header = "",
-	notify_suiciders = TRUE,
 	notify_volume = 100
 )
 
-	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
+	if(notify_flags & GHOST_NOTIFY_IGNORE_MAPLOAD && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
+	if(source)
+		if(isnull(alert_overlay))
+			alert_overlay = get_small_overlay(source)
+
+		alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.layer = FLOAT_LAYER
+		alert_overlay.plane = FLOAT_PLANE
+
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
+		if(!(notify_flags & GHOST_NOTIFY_NOTIFY_SUICIDERS) && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 
-		if(flashwindow)
+		if(notify_flags & GHOST_NOTIFY_FLASH_WINDOW)
 			window_flash(ghost.client)
 
 		if(ghost_sound)
@@ -299,10 +303,10 @@
 		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
 			category = "[REF(source)]_notify_action",
 			type = /atom/movable/screen/alert/notify_action,
-			new_master = source,
 		)
 		toast.action = action
-		toast.desc = "Click to [action]."
+		toast.add_overlay(alert_overlay)
+		toast.desc = "[message] -- Click to [action]."
 		toast.name = header
 		toast.target = source
 
@@ -560,3 +564,21 @@
 		raw_lines += recent_speech[key]
 
 	return raw_lines
+
+/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key) and handles granting the action and adding it to the mob's AI controller blackboard.
+/// This is only useful in instances where you don't want to store the reference to the action on a variable on the mob.
+/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
+/// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
+/mob/proc/grant_actions_by_list(list/input)
+	if(length(input) <= 0)
+		return
+
+	for(var/action in input)
+		var/datum/action/ability = new action(src)
+		ability.Grant(src)
+
+		var/blackboard_key = input[action]
+		if(isnull(blackboard_key))
+			continue
+
+		ai_controller?.set_blackboard_key(blackboard_key, ability)

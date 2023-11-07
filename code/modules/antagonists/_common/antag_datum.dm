@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	/// The typepath for the outfit to show in the preview for the preferences menu.
 	var/preview_outfit
 	/// Flags for antags to turn on or off and check!
-	var/antag_flags = FLAG_FAKE_ANTAG
+	var/antag_flags = NONE
 	/// If true, this antagonist can assign themself a new objective
 	var/can_assign_self_objectives = FALSE
 	/// Default to fill in when entering a custom objective.

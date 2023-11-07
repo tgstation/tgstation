@@ -375,7 +375,7 @@
 			cyborg.cell.use(5)
 		next_repair = world.time + repair_cooldown * 10 // Multiply by 10 since world.time is in deciseconds
 
-		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BORG_SELF_REPAIR))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BORG_SELF_REPAIR))
 			TIMER_COOLDOWN_START(src, COOLDOWN_BORG_SELF_REPAIR, 200 SECONDS)
 			var/msgmode = "standby"
 			if(cyborg.health < 0)
