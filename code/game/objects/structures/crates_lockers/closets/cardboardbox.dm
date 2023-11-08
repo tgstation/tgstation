@@ -81,7 +81,7 @@
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
-	var/mutable_appearance/alert = mutable_appearance('icons/obj/storage/closet.dmi', "cardboard_special")
+	var/mutable_appearance/alert = mutable_appearance('icons/obj/structures/closet.dmi', "cardboard_special")
 	SET_PLANE_EXPLICIT(alert, ABOVE_LIGHTING_PLANE, src)
 	var/atom/movable/flick_visual/exclamation = flick_overlay_view(alert, 1 SECONDS)
 	exclamation.alpha = 0

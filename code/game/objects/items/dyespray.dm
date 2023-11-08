@@ -2,7 +2,7 @@
 	name = "hair dye spray"
 	desc = "A spray to dye your hair any gradients you'd like."
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/obj/cosmetic.dmi'
+	icon = 'icons/obj/service/cosmetic.dmi'
 	icon_state = "dyespray"
 
 /obj/item/dyespray/attack_self(mob/user)

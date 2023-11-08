@@ -83,7 +83,7 @@
 /datum/grand_finale/usurp
 	name = "Usurpation"
 	desc = "The ultimate use of your gathered power! Rewrite time such that you have been Captain of this station the whole time."
-	icon = 'icons/obj/card.dmi'
+	icon = 'icons/obj/service/card.dmi'
 	icon_state = "card_gold"
 
 /datum/grand_finale/usurp/trigger(mob/living/carbon/human/invoker)

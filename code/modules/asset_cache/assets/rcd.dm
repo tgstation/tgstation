@@ -13,7 +13,7 @@
 		'icons/obj/structures/bed.dmi' = list("bed"),
 		'icons/obj/structures/smooth/catwalk.dmi' = list("catwalk-0"),
 		'icons/ui/hud/radial.dmi' = list("cnorth", "csouth", "ceast", "cwest", "chair", "secure_windoor", "stool", "wallfloor", "windowsize", "windowtype", "windoor"),
-		'icons/obj/structures.dmi' = list("glass_table", "rack", "rwindow0", "reflector_base", "table", "window0", "girder"),
+		'icons/obj/structures/structures.dmi' = list("glass_table", "rack", "rwindow0", "reflector_base", "table", "window0", "girder"),
 	)
 
 	var/icon/icon
@@ -21,7 +21,7 @@
 		for(var/icon_state as anything in essentials[icon_file])
 			icon = icon(icon = icon_file, icon_state = icon_state)
 			if(icon_state == "window0" || icon_state == "rwindow0")
-				icon.Blend(icon(icon = 'icons/obj/structures.dmi', icon_state = "grille"), ICON_UNDERLAY)
+				icon.Blend(icon(icon = 'icons/obj/structures/structures.dmi', icon_state = "grille"), ICON_UNDERLAY)
 			Insert(sprite_name = sanitize_css_class_name(icon_state), I = icon)
 
 	//for each airlock type we create its overlayed version with the suffix Glass in the sprite name

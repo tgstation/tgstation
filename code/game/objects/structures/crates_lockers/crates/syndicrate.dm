@@ -68,7 +68,7 @@
 /obj/item/syndicrate_key
 	name = "syndicrate key"
 	desc = "A device bearing a serpentine emblem, capable of splitting itself into two keys. Can be used to open one syndicrate."
-	icon = 'icons/obj/storage/crates.dmi'
+	icon = 'icons/obj/structures/crates.dmi'
 	icon_state = "syndicrate_key"
 	w_class = WEIGHT_CLASS_TINY
 

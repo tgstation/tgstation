@@ -1,7 +1,7 @@
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "mirror"
 	movement_type = FLOATING
 	density = FALSE
@@ -11,7 +11,7 @@
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
-	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('icons/obj/watercloset.dmi', "mirror_mask"))
+	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('icons/objstructures/watercloset.dmi', "mirror_mask"))
 	var/static/matrix/reflection_matrix = matrix(0.75, 0, 0, 0, 0.75, 0)
 	var/datum/callback/can_reflect = CALLBACK(src, PROC_REF(can_reflect))
 	var/list/update_signals = list(COMSIG_ATOM_BREAK)
@@ -146,7 +146,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/item/wallframe/mirror
 	name = "mirror"
 	desc = "An unmounted mirror. Attach it to a wall to use."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "mirror"
 	custom_materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,

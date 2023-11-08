@@ -739,7 +739,7 @@
 	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
 	anchored = TRUE
 	density = FALSE
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "wall_safe_locked"
 	var/unlocked = FALSE
 

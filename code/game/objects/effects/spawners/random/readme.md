@@ -281,7 +281,7 @@ Also Good:
 
 ```dm
 /obj/effect/spawner/random/structure/crate_abandoned
-	icon = 'icons/effects/landmarks_static.dmi'
+	icon = 'icons/mapping/landmarks_static.dmi'
 	icon_state = "loot_site"
 	spawn_loot_chance = 20
 	loot = list(/obj/structure/closet/crate/secure/loot)

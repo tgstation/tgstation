@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 // Yes, the gold standard makes a come-back!
 // This is the only way to make coins that are possible to produce on station actually worth anything.
 /obj/item/coin
-	icon = 'icons/obj/economy.dmi'
+	icon = 'icons/obj/service/economy.dmi'
 	name = "coin"
 	icon_state = "coin"
 	flags_1 = CONDUCT_1

@@ -321,6 +321,6 @@
 
 /obj/structure/tramwall/material/proc/update_transparency_underlays()
 	underlays.Cut()
-	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = LOW_OBJ_LAYER-0.01)
+	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures/structures.dmi', "girder", layer = LOW_OBJ_LAYER-0.01)
 	girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
 	underlays += girder_underlay

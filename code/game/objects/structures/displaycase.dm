@@ -1,6 +1,6 @@
 /obj/structure/displaycase
 	name = "display case"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/structures.dmi'
 	icon_state = "glassbox"
 	desc = "A display case for prized possessions."
 	density = TRUE
@@ -226,7 +226,7 @@
 /obj/structure/displaycase_chassis
 	name = "display case chassis"
 	desc = "The wooden base of a display case."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/structures.dmi'
 	icon_state = "glassbox_chassis"
 	resistance_flags = FLAMMABLE
 	anchored = TRUE

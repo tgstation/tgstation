@@ -431,7 +431,7 @@
 /obj/item/storage/bag/chemistry
 	name = "chemistry bag"
 	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "bag"
+	icon_state = "chembag"
 	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
 	resistance_flags = FLAMMABLE

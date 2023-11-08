@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
-	icon = 'icons/obj/storage/book.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bible"
 	worn_icon_state = "bible"
 	inhand_icon_state = "bible"
@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	var/list/skins = list()
 	for(var/i in 1 to GLOB.biblestates.len)
-		var/image/bible_image = image(icon = 'icons/obj/storage/book.dmi', icon_state = GLOB.biblestates[i])
+		var/image/bible_image = image(icon = 'icons/obj/service/library.dmi', icon_state = GLOB.biblestates[i])
 		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
 	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)

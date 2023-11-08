@@ -59,7 +59,7 @@
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
 	desc = "An automated ore box management device."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	icon_state = "bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE

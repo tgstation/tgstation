@@ -602,7 +602,7 @@ LINEN BINS
 /obj/structure/bedsheetbin
 	name = "linen bin"
 	desc = "It looks rather cosy."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = TRUE
 	resistance_flags = FLAMMABLE

@@ -16,7 +16,7 @@ again.
 //normal windows
 
 /obj/effect/spawner/structure/window
-	icon = 'icons/obj/structures_spawners.dmi'
+	icon = 'icons/mapping/structures_spawners.dmi'
 	icon_state = "window_spawner"
 	name = "window spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/fulltile)
@@ -372,6 +372,6 @@ again.
 
 /obj/effect/spawner/structure/electrified_grille
 	name = "electrified grill spawner"
-	icon = 'icons/obj/structures_spawners.dmi'
+	icon = 'icons/mapping/structures_spawners.dmi'
 	icon_state = "electrified_grille"
 	spawn_list = list(/obj/structure/grille, /obj/structure/cable)

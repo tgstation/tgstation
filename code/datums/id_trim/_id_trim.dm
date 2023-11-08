@@ -1,7 +1,7 @@
 /// Simple datum that holds the basic information associated with an ID card trim.
 /datum/id_trim
 	/// Icon file for this trim.
-	var/trim_icon = 'icons/obj/card.dmi'
+	var/trim_icon = 'icons/obj/service/card.dmi'
 	/// Icon state for this trim. Overlayed on advanced ID cards.
 	var/trim_state
 	/// Department color for this trim. Displayed in the box under the trim_state.

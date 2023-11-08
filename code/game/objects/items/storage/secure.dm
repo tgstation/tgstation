@@ -168,7 +168,7 @@
 ///Secure Safe
 /obj/item/storage/secure/safe
 	name = "secure safe"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures/wallmounts.dmi'
 	icon_state = "wall_safe"
 	desc = "Excellent for securing things away from grubby hands."
 	w_class = WEIGHT_CLASS_GIGANTIC

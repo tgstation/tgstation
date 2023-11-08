@@ -11,7 +11,7 @@
 /obj/item/storage/medkit
 	name = "medkit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
-	icon = 'icons/obj/storage/medkit.dmi'
+	icon = 'icons/obj/medical/medkit.dmi'
 	icon_state = "medkit"
 	inhand_icon_state = "medkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -342,7 +342,7 @@
 /obj/item/storage/medkit/coroner
 	name = "compact coroner's medkit"
 	desc = "A smaller medical kit designed primarily for assisting in dissecting the deceased, rather than treating the living."
-	icon = 'icons/obj/storage/medkit.dmi'
+	icon = 'icons/obj/medical/medkit.dmi'
 	icon_state = "compact_coronerkit"
 	inhand_icon_state = "coronerkit"
 

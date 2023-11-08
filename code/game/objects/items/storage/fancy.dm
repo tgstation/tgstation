@@ -162,7 +162,7 @@
 /obj/item/storage/fancy/candle_box
 	name = "candle pack"
 	desc = "A pack of red candles."
-	icon = 'icons/obj/candle.dmi'
+	icon = 'icons/obj/service/candle.dmi'
 	icon_state = "candlebox5"
 	base_icon_state = "candlebox"
 	inhand_icon_state = null

@@ -1,7 +1,7 @@
 /obj/item/holochip
 	name = "credit holochip"
 	desc = "A hard-light chip encoded with an amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and viceversa. Keep away from magnets."
-	icon = 'icons/obj/economy.dmi'
+	icon = 'icons/obj/service/economy.dmi'
 	icon_state = "holochip"
 	base_icon_state = "holochip"
 	throwforce = 0
@@ -72,7 +72,7 @@
 		if(500 to INFINITY)
 			overlay_color = "#2C2C2C"
 
-	var/mutable_appearance/holochip_overlay = mutable_appearance('icons/obj/economy.dmi', "[icon_state]-color")
+	var/mutable_appearance/holochip_overlay = mutable_appearance('icons/obj/service/economy.dmi', "[icon_state]-color")
 	holochip_overlay.color = overlay_color
 	. += holochip_overlay
 

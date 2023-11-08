@@ -4,7 +4,7 @@
 	name = "coupon"
 	desc = "It doesn't matter if you didn't want it before, what matters now is that you've got a coupon for it!"
 	icon_state = "data_1"
-	icon = 'icons/obj/card.dmi'
+	icon = 'icons/obj/service/card.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 	var/datum/supply_pack/discounted_pack

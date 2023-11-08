@@ -421,7 +421,7 @@
 	cut_overlay(crack_overlay)
 	if(ratio > 75)
 		return
-	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
+	crack_overlay = mutable_appearance('icons/obj/structures/structures.dmi', "damage[ratio]", -(layer+0.1))
 	. += crack_overlay
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

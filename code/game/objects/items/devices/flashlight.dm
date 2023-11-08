@@ -476,7 +476,7 @@
 	name = "red candle"
 	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
 		humankind. The jewelry he kept for himself."
-	icon = 'icons/obj/candle.dmi'
+	icon = 'icons/obj/service/candle.dmi'
 	icon_state = "candle1"
 	inhand_icon_state = "candle"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

@@ -4,7 +4,7 @@
 /obj/structure/grille
 	desc = "A flimsy framework of iron rods."
 	name = "grille"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/structures.dmi'
 	icon_state = "grille"
 	base_icon_state = "grille"
 	density = TRUE

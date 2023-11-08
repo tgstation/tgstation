@@ -1,7 +1,7 @@
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
-	icon = 'icons/obj/storage/crates.dmi'
+	icon = 'icons/obj/structures/crates.dmi'
 	icon_state = "crate"
 	base_icon_state = "crate"
 	req_access = null
@@ -21,7 +21,7 @@
 	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 	/// Where the Icons for lids are located.
-	var/lid_icon = 'icons/obj/storage/crates.dmi'
+	var/lid_icon = 'icons/obj/structures/crates.dmi'
 	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
 	var/lid_icon_state
 	/// Controls the X value of the lid, allowing left and right pixel movement.

@@ -1,7 +1,7 @@
 /obj/item/stack/spacecash  //Don't use base space cash stacks. Any other space cash stack can merge with them, and could cause potential money duping exploits.
 	name = "space cash"
 	singular_name = "bill"
-	icon = 'icons/obj/economy.dmi'
+	icon = 'icons/obj/service/economy.dmi'
 	icon_state = null
 	worn_icon_state = "nothing"
 	amount = 1

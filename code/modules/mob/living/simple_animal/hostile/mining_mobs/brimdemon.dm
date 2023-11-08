@@ -204,7 +204,7 @@
 	name = "brimdust"
 	desc = "Dust from a brimdemon. It is considered valuable for its' botanical abilities."
 	icon_state = "brimdust"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	layer = FLOOR_CLEAN_LAYER
 	mergeable_decal = FALSE
 
@@ -216,7 +216,7 @@
 	name = "ore sensor"
 	desc = "Using demonic frequencies, this ear-mounted tool detects ores in the nearby terrain."
 	icon_state = "oresensor"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	slot_flags = ITEM_SLOT_EARS
 	var/range = 5
 	var/cooldown = 4 SECONDS //between the standard and the advanced ore scanner in strength

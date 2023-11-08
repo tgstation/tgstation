@@ -1035,7 +1035,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/ranged/emag
 	name = "Targetted Safeties Override"
 	desc = "Allows you to effectively emag anything you click on."
-	button_icon = 'icons/obj/card.dmi'
+	button_icon = 'icons/obj/service/card.dmi'
 	button_icon_state = "emag"
 	uses = 7
 	auto_use_uses = FALSE

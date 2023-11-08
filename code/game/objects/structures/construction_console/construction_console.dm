@@ -99,7 +99,7 @@
 	name = "construction holo-drone"
 	//Allows any curious crew to watch the base after it leaves. (This is safe as the base cannot be modified once it leaves)
 	move_on_shuttle = TRUE
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	icon_state = "construction_drone"
 	///Reference to the camera console controlling this drone
 	var/obj/machinery/computer/camera_advanced/base_construction/linked_console

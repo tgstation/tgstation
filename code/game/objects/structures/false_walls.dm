@@ -424,6 +424,6 @@
 		girder_icon_state += "_[density ? "opening" : "closing"]"
 	else if(!density)
 		girder_icon_state += "_open"
-	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', girder_icon_state, layer = LOW_OBJ_LAYER-0.01)
+	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures/structures.dmi', girder_icon_state, layer = LOW_OBJ_LAYER-0.01)
 	girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
 	underlays += girder_underlay

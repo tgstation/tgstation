@@ -1,7 +1,7 @@
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "toilet00"
 	density = FALSE
 	anchored = TRUE
@@ -154,7 +154,7 @@
 /obj/structure/urinal
 	name = "urinal"
 	desc = "The HU-452, an experimental urinal. Comes complete with experimental urinal cake."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
@@ -234,7 +234,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/wallframe/urinal
 	name = "urinal frame"
 	desc = "An unmounted urinal. Attach it to a wall to use."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "urinal"
 	result_path = /obj/structure/urinal
 	pixel_shift = 32
@@ -265,7 +265,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~" //thanks doohl
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "rubberducky"
 	inhand_icon_state = "rubberducky"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -275,7 +275,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/sink
 	name = "sink"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. Passively reclaims water over time."
 	anchored = TRUE
@@ -534,7 +534,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 
 /obj/structure/sinkframe
 	name = "sink frame"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "sink_frame"
 	desc = "A sink frame, that needs a water recycler to finish construction."
 	anchored = FALSE
@@ -583,7 +583,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
 	name = "Water Source"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face. This one seems to be infinite!"
 	anchored = TRUE
@@ -730,7 +730,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/structure/curtain
 	name = "curtain"
 	desc = "Contains less than 1% mercury."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "bathroom-open"
 	var/icon_type = "bathroom"//used in making the icon state
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.

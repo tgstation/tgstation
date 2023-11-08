@@ -194,7 +194,7 @@
 /obj/item/borg/apparatus/organ_storage
 	name = "organ storage bag"
 	desc = "A container for holding body parts."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "evidenceobj"
 	item_flags = SURGICAL_TOOL
 	storable = list(/obj/item/organ,

@@ -2,7 +2,7 @@
 	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
-	icon = 'icons/obj/cosmetic.dmi'
+	icon = 'icons/obj/service/cosmetic.dmi'
 	icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
@@ -139,7 +139,7 @@
 /obj/item/razor
 	name = "electric razor"
 	desc = "The latest and greatest power razor born from the science of shaving."
-	icon = 'icons/obj/cosmetic.dmi'
+	icon = 'icons/obj/service/cosmetic.dmi'
 	icon_state = "razor"
 	inhand_icon_state = "razor"
 	flags_1 = CONDUCT_1

@@ -81,7 +81,7 @@
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
 	desc = "A bubbling pool of oil. This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
 	pixel_shift = 0
@@ -129,7 +129,7 @@
 /obj/structure/closet/crate/grave
 	name = "burial mound"
 	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
-	icon = 'icons/obj/storage/crates.dmi'
+	icon = 'icons/obj/structures/crates.dmi'
 	icon_state = "grave"
 	base_icon_state = "grave"
 	dense_when_open = TRUE
@@ -274,7 +274,7 @@
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
 	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
-	icon = 'icons/obj/storage/crates.dmi'
+	icon = 'icons/obj/structures/crates.dmi'
 	icon_state = "grave_lead"
 	lead_tomb = TRUE
 	first_open = TRUE

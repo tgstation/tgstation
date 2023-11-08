@@ -14,7 +14,7 @@
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
-	icon = 'icons/obj/cosmetic.dmi'
+	icon = 'icons/obj/service/cosmetic.dmi'
 	icon_state = "soap"
 	inhand_icon_state = "soap"
 	worn_icon_state = "soap"

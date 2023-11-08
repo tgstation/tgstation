@@ -1,7 +1,7 @@
 /*****************Pickaxes & Drills & Shovels****************/
 /obj/item/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	icon_state = "pickaxe"
 	inhand_icon_state = "pickaxe"
 	flags_1 = CONDUCT_1
@@ -118,7 +118,7 @@
 /obj/item/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	icon_state = "shovel"
 	inhand_icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -167,7 +167,7 @@
 	name = "serrated bone shovel"
 	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs. \
 		It seems less capable of harming inorganic creatures. Who knows why."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	icon_state = "shovel_bone"
 	worn_icon_state = "shovel_serr"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -203,7 +203,7 @@
 /obj/item/trench_tool
 	name = "entrenching tool"
 	desc = "The multi-purpose tool you always needed."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipement.dmi'
 	icon_state = "trench_tool"
 	inhand_icon_state = "trench_tool"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'

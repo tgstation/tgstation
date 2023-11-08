@@ -1,7 +1,7 @@
 /obj/structure/toiletbong
 	name = "toilet bong"
 	desc = "A repurposed toilet with re-arranged piping and an attached flamethrower. Why would anyone build this?"
-	icon = 'icons/obj/watercloset.dmi'
+	icon = 'icons/objstructures/watercloset.dmi'
 	icon_state = "toiletbong"
 	density = FALSE
 	anchored = TRUE
@@ -16,7 +16,7 @@
 	atom_storage.set_holdable(list(/obj/item/food/))
 	atom_storage.max_total_storage = 100
 	atom_storage.max_slots = 12
-	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "toiletbong_overlay")
+	weed_overlay = mutable_appearance('icons/objstructures/watercloset.dmi', "toiletbong_overlay")
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/toiletbong/update_icon()

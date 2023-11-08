@@ -582,7 +582,7 @@
 /obj/item/jacobs_ladder
 	name = "jacob's ladder"
 	desc = "A celestial ladder that violates the laws of physics."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/structures.dmi'
 	icon_state = "ladder00"
 
 /obj/item/jacobs_ladder/attack_self(mob/user)

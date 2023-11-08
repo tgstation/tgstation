@@ -314,7 +314,7 @@
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
-	icon = 'icons/obj/service/bureaucracy.dmi'
+	icon = 'icons/obj/clothing/filtered_bags.dmi'
 	icon_state = "mailbag"
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE

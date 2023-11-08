@@ -262,7 +262,7 @@
 /obj/item/bounty_cube
 	name = "bounty cube"
 	desc = "A bundle of compressed hardlight data, containing a completed bounty. Sell this on the cargo shuttle to claim it!"
-	icon = 'icons/obj/economy.dmi'
+	icon = 'icons/obj/service/economy.dmi'
 	icon_state = "bounty_cube"
 	///Value of the bounty that this bounty cube sells for.
 	var/bounty_value = 0

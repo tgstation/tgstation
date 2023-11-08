@@ -105,7 +105,7 @@
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
-	icon = 'icons/effects/landmarks_static.dmi'
+	icon = 'icons/mapping/landmarks_static.dmi'
 	icon_state = "random_loot"
 	var/spawner_to_test = /obj/effect/spawner/random/maintenance //what lootdrop spawner to use the loot pool of
 	var/loot_count = 180 //180 is about how much maint loot spawns per map as of 11/14/2019

@@ -1,7 +1,7 @@
 /obj/structure/holopay
 	name = "holographic pay stand"
 	desc = "an unregistered pay stand"
-	icon = 'icons/obj/economy.dmi'
+	icon = 'icons/obj/service/economy.dmi'
 	icon_state = "card_scanner"
 	alpha = 150
 	anchored = TRUE

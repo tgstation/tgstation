@@ -2,7 +2,7 @@
 	name = "strange tile"
 	desc = "A weird tile that beckons you towards it. Maybe it can help you get out of this mess..."
 	verb_say = "intones"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/structures/structures.dmi'
 	icon_state = "speaking_tile"
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -120,7 +120,7 @@
 /obj/item/rupee
 	name = "weird crystal"
 	desc = "Your excitement boils away as you realize it's just colored glass. Why would someone hoard these things?"
-	icon = 'icons/obj/economy.dmi'
+	icon = 'icons/obj/service/economy.dmi'
 	icon_state = "rupee"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
