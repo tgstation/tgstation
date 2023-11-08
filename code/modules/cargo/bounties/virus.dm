@@ -16,14 +16,14 @@
 /datum/bounty/virus/can_claim()
 	return ..() && shipped
 
-/datum/bounty/virus/applies_to(obj/shipped)
+/datum/bounty/virus/applies_to(obj/export)
 	if(shipped)
 		return FALSE
-	if(shipped.flags_1 & HOLOGRAM_1)
+	if(export.flags_1 & HOLOGRAM_1)
 		return FALSE
-	if(!istype(shipped, /obj/item/reagent_containers || !shipped.reagents || !shipped.reagents.reagent_list))
+	if(!istype(export, /obj/item/reagent_containers || !export.reagents || !export.reagents.reagent_list))
 		return FALSE
-	var/datum/reagent/blood/blud = locate() in shipped.reagents.reagent_list
+	var/datum/reagent/blood/blud = locate() in export.reagents.reagent_list
 	if(!blud)
 		return FALSE
 	for(var/datum/disease/advance/virus in blud.get_diseases())
@@ -31,8 +31,8 @@
 			return TRUE
 	return FALSE
 
-/datum/bounty/virus/ship(obj/shipped)
-	if(!applies_to(shipped))
+/datum/bounty/virus/ship(obj/export)
+	if(!applies_to(export))
 		return FALSE
 	shipped = TRUE
 	return TRUE

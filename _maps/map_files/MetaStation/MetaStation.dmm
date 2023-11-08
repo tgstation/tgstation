@@ -4415,7 +4415,6 @@
 /area/station/commons/dorms)
 "bAI" = (
 /obj/machinery/disposal/bin,
-/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -16239,6 +16238,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "fYC" = (
@@ -20281,7 +20283,6 @@
 "hyn" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/spawner/random/vending/snackvend,
-/obj/machinery/airalarm/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
@@ -26436,7 +26437,6 @@
 /area/station/service/kitchen)
 "jAd" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
@@ -30985,12 +30985,10 @@
 /obj/structure/bed/medical{
 	dir = 8
 	},
-/obj/item/clothing/suit/jacket/straight_jacket,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/mask/muzzle,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
 "lgl" = (
@@ -40066,11 +40064,15 @@
 "ouj" = (
 /obj/structure/bed/medical/emergency,
 /obj/structure/bed/medical/emergency,
-/obj/machinery/iv_drip,
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/item/clothing/mask/muzzle,
+/obj/item/clothing/mask/muzzle,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
 "ouk" = (
@@ -41914,6 +41916,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "pdX" = (
@@ -44632,13 +44635,11 @@
 /obj/structure/bed/medical{
 	dir = 4
 	},
-/obj/item/clothing/suit/jacket/straight_jacket,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/mask/muzzle,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
 /area/station/security/execution/transfer)
 "qby" = (

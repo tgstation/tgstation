@@ -99,6 +99,22 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
+ * # Pet Command: Use ability
+ * Use an an ability that does not require any targets
+ */
+/datum/pet_command/untargetted_ability
+	///untargetted ability we will use
+	var/ability_key
+
+/datum/pet_command/untargetted_ability/execute_action(datum/ai_controller/controller)
+	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
+	if(!ability?.IsAvailable())
+		return
+	controller.queue_behavior(/datum/ai_behavior/use_mob_ability, ability_key)
+	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/**
  * # Pet Command: Attack
  * Tells a pet to chase and bite the next thing you point at
  */

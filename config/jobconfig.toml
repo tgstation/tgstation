@@ -46,6 +46,13 @@
 "# Spawn Positions" = 1
 "# Total Positions" = 1
 
+[BITRUNNER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 3
+"# Total Positions" = 3
+
 [BOTANIST]
 "# Playtime Requirements" = 0
 "# Required Account Age" = 0
