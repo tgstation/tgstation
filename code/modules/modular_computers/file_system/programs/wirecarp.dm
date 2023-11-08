@@ -6,7 +6,7 @@
 	extended_desc = "This program monitors stationwide NTNet network, provides access to logging systems, and allows for configuration changes"
 	size = 12
 	requires_ntnet = TRUE
-	required_access = list(ACCESS_NETWORK) //NETWORK CONTROL IS A MORE SECURE PROGRAM.
+	run_access = list(ACCESS_NETWORK) //NETWORK CONTROL IS A MORE SECURE PROGRAM.
 	available_on_ntnet = TRUE
 	tgui_id = "NtosNetMonitor"
 	program_icon = "network-wired"
@@ -20,7 +20,7 @@
 			SSmodular_computers.intrusion_detection_enabled = !SSmodular_computers.intrusion_detection_enabled
 			return TRUE
 		if("toggle_relay")
-			var/obj/machinery/ntnet_relay/target_relay = locate(params["ref"]) in GLOB.ntnet_relays
+			var/obj/machinery/ntnet_relay/target_relay = locate(params["ref"]) in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay)
 			if(!istype(target_relay))
 				return
 			target_relay.set_relay_enabled(!target_relay.relay_enabled)
@@ -39,7 +39,7 @@
 	var/list/data = list()
 
 	data["ntnetrelays"] = list()
-	for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+	for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))
 		var/list/relay_data = list()
 		relay_data["is_operational"] = !!relays.is_operational
 		relay_data["name"] = relays.name
