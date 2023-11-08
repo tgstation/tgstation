@@ -3,35 +3,41 @@
 /// The size of the window that the wiki books open in.
 #define BOOK_WINDOW_BROWSE_SIZE "970x710"
 /// This macro will resolve to code that will open up the associated wiki page in the window.
-#define WIKI_PAGE_IFRAME(wikiurl, link_identifier) \
-		"<html>\
-		<head>\
-		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>\
-		<style>\
-			iframe {\
-				display: none;\
-			}\
-		</style>\
-		</head>\
-		<body>\
-		<script type="text/javascript">\
-			function pageloaded(myframe) {\
-				document.getElementById("loading").style.display = "none";\
-				myframe.style.display = "inline";\
-		}\
-		</script>\
-		<p id='loading'>You start skimming through the manual...</p>\
-		<iframe width='100%' height='97%' onload="pageloaded(this)" src="[##wikiurl]/[##link_identifier]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>\
-		</body>\
-		</html>"
+#define WIKI_PAGE_IFRAME(wikiurl, link_identifier) {"
+	<html>
+	<head>
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+	<style>
+		iframe {
+			display: none;
+		}
+	</style>
+	</head>
+	<body>
+	<script type="text/javascript">
+		function pageloaded(myframe) {
+			document.getElementById("loading").style.display = "none";
+			myframe.style.display = "inline";
+	}
+	</script>
+	<p id='loading'>You start skimming through the manual...</p>
+	<iframe width='100%' height='97%' onload="pageloaded(this)" src="[##wikiurl]/[##link_identifier]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+	</body>
+	</html>
+	"}
 
 // A book that links to the wiki
 /obj/item/book/manual/wiki
-	starting_content = "Nanotrasen presently does not have any resources on this topic. If you would like to know more, contact your local Central Command representative."
+	starting_content = "Nanotrasen presently does not have any resources on this topic. If you would like to know more, contact your local Central Command representative." // safety
 	/// The ending URL of the page that we link to.
 	var/page_link = ""
 
 /obj/item/book/manual/wiki/display_content(mob/living/user)
+	var/wiki_url = CONFIG_GET(string/wikiurl)
+	if(!wiki_url)
+		user.balloon_alert(user, "this book is empty!")
+		return
+
 	credit_book_to_reader(user)
 	DIRECT_OUTPUT(user, browse(WIKI_PAGE_IFRAME(wiki_url, page_link), "window=manual;size=[BOOK_WINDOW_BROWSE_SIZE]")) // if you change this GUARANTEE that it works.
 
