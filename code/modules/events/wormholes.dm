@@ -54,6 +54,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	icon_state = "anom"
 	mech_sized = TRUE
 	light_on = FALSE
+	wibbles = FALSE
 
 /obj/effect/portal/wormhole/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
 	. = ..()
