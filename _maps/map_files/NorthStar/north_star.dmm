@@ -23360,7 +23360,7 @@
 /area/station/hallway/floor3/aft)
 "ghQ" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
@@ -42054,7 +42054,7 @@
 /area/station/engineering/atmos/hfr_room)
 "kZi" = (
 /obj/structure/rack,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/restraints/handcuffs,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/directional/east{
@@ -66905,7 +66905,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -74657,7 +74657,7 @@
 /area/station/maintenance/floor4/starboard)
 "tBe" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "tBh" = (

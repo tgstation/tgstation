@@ -1,12 +1,8 @@
-/*
- * Absorbs /obj/item/secstorage.
- * Reimplements it only slightly to use existing storage functionality.
- *
- * Contains:
- * Secure Briefcase
- * Wall Safe
+/**
+ * Wall safes
+ * Holds items and uses the lockable storage component
+ * to allow people to lock items up.
  */
-
 ///Generic Safe
 /obj/item/storage/secure
 	name = "secstorage"
@@ -18,54 +14,6 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_total_storage = 14
 	AddComponent(/datum/component/lockable_storage)
-
-///Secure Briefcase
-/obj/item/storage/secure/briefcase
-	name = "secure briefcase"
-	icon = 'icons/obj/storage/case.dmi'
-	icon_state = "secure"
-	base_icon_state = "secure"
-	inhand_icon_state = "sec-case"
-	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	desc = "A large briefcase with a digital locking system."
-	force = 8
-	hitsound = SFX_SWING_HIT
-	throw_speed = 2
-	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
-	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
-
-/obj/item/storage/secure/briefcase/PopulateContents()
-	new /obj/item/paper(src)
-	new /obj/item/pen(src)
-
-/obj/item/storage/secure/briefcase/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 21
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-
-///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
-/obj/item/storage/secure/briefcase/syndie
-	force = 15
-
-/obj/item/storage/secure/briefcase/syndie/PopulateContents()
-	..()
-	for(var/iterator in 1 to 5)
-		new /obj/item/stack/spacecash/c1000(src)
-
-/// A briefcase that contains various sought-after spoils
-/obj/item/storage/secure/briefcase/riches
-
-/obj/item/storage/secure/briefcase/riches/PopulateContents()
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/gun/ballistic/automatic/pistol(src)
-	new /obj/item/suppressor(src)
-	new /obj/item/melee/baton/telescopic(src)
-	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/soap/nanotrasen(src)
 
 ///Secure Safe
 /obj/item/storage/secure/safe
@@ -83,7 +31,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 /obj/item/storage/secure/safe/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
+	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/briefcase/secure))
 	find_and_hang_on_wall()
 
 /obj/item/storage/secure/safe/PopulateContents()
@@ -127,9 +75,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 	. = ..()
 	atom_storage.set_holdable(can_hold_list = list(/obj/item/card/id))
 	atom_storage.locked = STORAGE_FULLY_LOCKED
-	AddComponent(/datum/component/lockable_storage,
+	AddComponent(/datum/component/lockable_storage, \
 		lock_code = SSid_access.spare_id_safe_code, \
-		lock_set = TRUE, \
 		can_hack_open = FALSE, \
 	)
 

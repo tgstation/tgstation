@@ -3358,7 +3358,7 @@
 /area/awaymission/moonoutpost19/research)
 "vu" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/taperecorder{
 	pixel_x = -3
 	},

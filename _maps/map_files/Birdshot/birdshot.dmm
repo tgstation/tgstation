@@ -2545,7 +2545,7 @@
 "aZP" = (
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_y = -10
 	},
 /obj/item/paper_bin{
@@ -17335,7 +17335,7 @@
 /area/station/command/heads_quarters/ce)
 "gpK" = (
 /obj/structure/closet/secure_closet/engineering_chief,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/lighter,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/grimy,
@@ -18337,7 +18337,7 @@
 /area/station/medical/chemistry)
 "gIG" = (
 /obj/structure/table/glass,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
 "gIH" = (
@@ -61227,7 +61227,7 @@
 /area/station/maintenance/department/science/xenobiology)
 "vgC" = (
 /obj/structure/closet/secure_closet/chief_medical,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 5
 	},
@@ -71966,11 +71966,11 @@
 "yhk" = (
 /obj/structure/table,
 /obj/machinery/light_switch/directional/north,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 12
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -1;
 	pixel_y = 8
 	},

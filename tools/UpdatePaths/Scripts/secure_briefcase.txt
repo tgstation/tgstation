@@ -1,0 +1,4 @@
+# turns the old briefcase secure item into a regular briefcase
+
+/obj/item/storage/secure/briefcase : /obj/item/storage/briefcase/secure{@OLD}
+/obj/item/storage/secure/briefcase/@SUBTYPES : /obj/item/storage/briefcase/secure/@SUBTYPES{@OLD}

@@ -1062,6 +1062,7 @@
 #include "code\datums\components\light_eater.dm"
 #include "code\datums\components\ling_decoy_brain.dm"
 #include "code\datums\components\lock_on_cursor.dm"
+#include "code\datums\components\lockable_storage.dm"
 #include "code\datums\components\magnet.dm"
 #include "code\datums\components\manual_blinking.dm"
 #include "code\datums\components\manual_breathing.dm"
