@@ -1,28 +1,35 @@
 import { sortBy } from 'common/collections';
-import { toTitleCase } from 'common/string';
+import { Beaker } from './ChemDispenser';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
+type DispensableReagent = {
+  title: string;
+  id: string;
+  volume: number;
+  pH: number;
+};
+
+type Data = {
+  amount: number;
+  chemicals: DispensableReagent[];
+  beaker: Beaker;
+};
+
 export const PortableChemMixer = (props, context) => {
-  const { act, data } = useBackend(context);
-  const recording = !!data.recordingRecipe;
-  const beakerTransferAmounts = data.beakerTransferAmounts || [];
-  const beakerContents =
-    (recording &&
-      Object.keys(data.recordingRecipe).map((id) => ({
-        id,
-        name: toTitleCase(id.replace(/_/, ' ')),
-        volume: data.recordingRecipe[id],
-      }))) ||
-    data.beakerContents ||
-    [];
-  const chemicals = sortBy((chem) => chem.title)(data.chemicals);
+  const { act, data } = useBackend<Data>(context);
+  const { beaker } = data;
+  const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
+  const beakerContents = beaker ? beaker.contents : [];
+  const chemicals = sortBy((chem: DispensableReagent) => chem.id)(
+    data.chemicals
+  );
   return (
-    <Window width={465} height={550}>
+    <Window width={500} height={500}>
       <Window.Content scrollable>
         <Section
-          title="Dispense"
+          title="Dispense Controls"
           buttons={beakerTransferAmounts.map((amount) => (
             <Button
               key={amount}
@@ -55,12 +62,11 @@ export const PortableChemMixer = (props, context) => {
           </Box>
         </Section>
         <Section
-          title="Disposal controls"
+          title="Disposal Controls"
           buttons={beakerTransferAmounts.map((amount) => (
             <Button
               key={amount}
               icon="minus"
-              disabled={recording}
               content={amount}
               onClick={() => act('remove', { amount })}
             />
@@ -69,30 +75,25 @@ export const PortableChemMixer = (props, context) => {
             <LabeledList.Item
               label="Beaker"
               buttons={
-                !!data.isBeakerLoaded && (
+                !!beaker && (
                   <Button
                     icon="eject"
                     content="Eject"
-                    disabled={!data.isBeakerLoaded}
                     onClick={() => act('eject')}
                   />
                 )
               }>
-              {(recording && 'Virtual beaker') ||
-                (data.isBeakerLoaded && (
-                  <>
-                    <AnimatedNumber
-                      initial={0}
-                      value={data.beakerCurrentVolume}
-                    />
-                    /{data.beakerMaxVolume} units
-                  </>
-                )) ||
+              {(!!beaker && (
+                <>
+                  <AnimatedNumber initial={0} value={beaker.currentVolume} />/
+                  {beaker.maxVolume} units
+                </>
+              )) ||
                 'No beaker'}
             </LabeledList.Item>
             <LabeledList.Item label="Contents">
               <Box color="label">
-                {(!data.isBeakerLoaded && !recording && 'N/A') ||
+                {(!beaker && 'N/A') ||
                   (beakerContents.length === 0 && 'Nothing')}
               </Box>
               {beakerContents.map((chemical) => (
@@ -101,10 +102,10 @@ export const PortableChemMixer = (props, context) => {
                   of {chemical.name}
                 </Box>
               ))}
-              {beakerContents.length > 0 && !!data.showpH && (
+              {beakerContents.length > 0 && (
                 <Box>
                   pH:
-                  <AnimatedNumber value={data.beakerCurrentpH} />
+                  <AnimatedNumber value={beaker.pH} />
                 </Box>
               )}
             </LabeledList.Item>
