@@ -33,11 +33,6 @@
 	. = ..()
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 
-/obj/item/organ/internal/heart/Initialize(mapload)
-	. = ..()
-	// Ensures hearts spawned into the map don't magically beat forever
-	addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 2 SECONDS)
-
 /obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
 	. = ..()
 	if(!special)
@@ -45,6 +40,8 @@
 
 /obj/item/organ/internal/heart/proc/stop_if_unowned()
 	if(QDELETED(src))
+		return
+	if(IS_ROBOTIC_ORGAN(src))
 		return
 	if(isnull(owner))
 		Stop()
