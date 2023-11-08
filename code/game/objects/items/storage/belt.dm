@@ -425,6 +425,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/skeleton_key,
 	))
 
 
@@ -670,6 +671,7 @@
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	atom_storage.set_holdable(list(
+		/obj/item/access_key,
 		/obj/item/assembly/mousetrap,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight,

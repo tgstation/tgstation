@@ -32,6 +32,8 @@
 	var/datum/worn_feature_offset/worn_suit_offset
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
+	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
+	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
 	if(owner.stat < HARD_CRIT || !get_organs())
@@ -81,6 +83,7 @@
 	bodypart_flags = BODYPART_UNREMOVABLE
 	max_damage = 500
 	acceptable_bodytype = BODYTYPE_HUMANOID
+	wing_types = NONE
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -93,6 +96,7 @@
 	max_damage = 50
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
+	wing_types = NONE
 
 /// Parent Type for arms, should not appear in game.
 /obj/item/bodypart/arm
@@ -113,6 +117,8 @@
 	var/datum/worn_feature_offset/worn_glove_offset
 	/// Datum describing how to offset things held in the hands of this arm, the x offset IS functional here
 	var/datum/worn_feature_offset/held_hand_offset
+	/// The noun to use when referring to this arm's appendage, e.g. "hand" or "paw"
+	var/appendage_noun = "hand"
 
 	biological_state = BIO_STANDARD_JOINTED
 
@@ -211,6 +217,7 @@
 	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+	appendage_noun = "paw"
 
 /obj/item/bodypart/arm/left/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -224,6 +231,7 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	should_draw_greyscale = FALSE
+	appendage_noun = "scythe-like hand"
 
 
 /obj/item/bodypart/arm/right
@@ -314,6 +322,7 @@
 	unarmed_damage_low = 1
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
+	appendage_noun = "paw"
 
 /obj/item/bodypart/arm/right/alien
 	icon = 'icons/mob/human/species/alien/bodyparts.dmi'
@@ -327,6 +336,7 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	should_draw_greyscale = FALSE
+	appendage_noun = "scythe-like hand"
 
 /// Parent Type for legs, should not appear in game.
 /obj/item/bodypart/leg

@@ -4,6 +4,11 @@
 	var/datum/callback/tool_act_callback
 	///Callback used by the SM to get the damage and matter power increase/decrease
 	var/datum/callback/consume_callback
+	// A whitelist of items that can interact with the SM without dusting the user
+	var/static/list/sm_item_whitelist = typecacheof(list(
+		/obj/item/melee/roastingstick,
+		/obj/item/toy/crayon/spraycan
+	))
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
 
@@ -15,6 +20,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_hit))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_hit))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), PROC_REF(tool_hit))
+	RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WRENCH), PROC_REF(tool_hit))
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(bumped_hit))
 	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, PROC_REF(intercept_z_fall))
 	RegisterSignal(parent, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(on_z_impact))
@@ -37,6 +43,7 @@
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
+		COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WRENCH),
 		COMSIG_ATOM_BUMPED,
 		COMSIG_ATOM_INTERCEPT_Z_FALL,
 		COMSIG_ATOM_ON_Z_IMPACT,
@@ -152,9 +159,7 @@
 	var/atom/atom_source = source
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
 		return
-	if(istype(item, /obj/item/melee/roastingstick))
-		return FALSE
-	if(istype(item, /obj/item/toy/crayon/spraycan))
+	if(is_type_in_typecache(item, sm_item_whitelist))
 		return FALSE
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
@@ -297,7 +302,12 @@
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
 		if(istype(consumed_mob, /mob/living/simple_animal/parrot/poly)) // Dusting Poly creates a power surge
 			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
-			notify_ghosts("[consumed_mob] has been dusted by [atom_source]!", source = atom_source, action = NOTIFY_JUMP, header = "Polytechnical Difficulties")
+			notify_ghosts(
+				"[consumed_mob] has been dusted by [atom_source]!",
+				source = atom_source,
+				header = "Polytechnical Difficulties",
+				notify_flags = NOTIFY_CATEGORY_DEFAULT,
+			)
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))

@@ -42,6 +42,21 @@
 
 // ~~ Weapon Categories ~~
 
+// Core Gear Box: This contains all the 'fundamental' equipment that most nuclear operatives probably should be buying. It isn't cheaper, but it is a quick and convenient method of acquiring all the gear necessary immediately.
+// Only allows one purchase, and doesn't prevent the purchase of the contained items. Focused on newer players to help them understand what items they need to succeed, and to help older players quickly purchase the baseline gear they need.
+
+/datum/uplink_item/weapon_kits/core
+	name = "Core Equipment Box (Essential)"
+	desc = "This box contains an airlock authentification override card, a C-4 explosive charge, a freedom implant and a stimpack injector. \
+		The most important support items for most operatives to succeed in their mission, bundled together. It is highly recommend you buy this kit. \
+		Note: This bundle is not at a discount. You can purchase all of these items separately. You do not NEED these items, but most operatives fail WITHOUT at \
+		least SOME of these items. More experienced operatives can do without."
+	item = /obj/item/storage/box/syndie_kit/core_gear
+	cost = 14 //freedom 5, doormag 3, c-4 1, stimpack 5
+	limited_stock = 1
+	cant_discount = TRUE
+	purchasable_from = UPLINK_NUKE_OPS
+
 //Low-cost firearms: Around 8 TC each. Meant for easy squad weapon purchases
 
 /datum/uplink_item/weapon_kits/low_cost
@@ -153,13 +168,20 @@
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
 
-// ~~ Energy Sword and Shield ~~
+// ~~ Energy Sword and Shield & CQC ~~
 
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
 	desc = "A case containing an energy sword and energy shield. The shield is capable of deflecting \
 		energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
+
+/datum/uplink_item/weapon_kits/medium_cost/cqc
+	name = "CQC Equipment Case (Very Hard)"
+	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant, a pack of smokes and a snazzy bandana (use it with the hat stabilizers in your MODsuit)."
+	item = /obj/item/storage/toolbox/guncase/cqc
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	surplus = 0
 
 // ~~ Syndicate Revolver ~~
 // Nuclear operatives get a special deal on their revolver purchase compared to traitors.
@@ -331,13 +353,6 @@
 		Blast your enemies with instant shots! Just watch out for the rebound..."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
-/datum/uplink_item/weapon_kits/high_cost/cqc
-	name = "CQC Equipment Case (Very Hard)"
-	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant and a snazzy bandana (and a hat stabilizer to go with it)."
-	item = /obj/item/storage/toolbox/guncase/cqc
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	surplus = 0
-
 /datum/uplink_item/weapon_kits/high_cost/doublesword
 	name = "Double-Energy Sword Case (Very Hard)"
 	desc = "A case containing a double-energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
@@ -496,6 +511,16 @@
 		*NOT* for usage with Reinforcements, and does not brainwash the target!"
 	item = /obj/item/storage/box/syndie_kit/induction_kit
 	cost = 10
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/bundles_tc/cowboy
+	name = "Syndicate Outlaw Kit"
+	desc = "There've been high tales of an outlaw 'round these parts. A fella so ruthless and efficient no ranger could ever capture 'em. \
+	Now you can be just like 'em! \
+	This kit contains armor-lined cowboy equipment, a custom revolver and holster, and a horse with a complimentary apple to tame. \
+	A lighter is also included, though you must supply your own smokes."
+	item = /obj/item/storage/box/syndie_kit/cowboy
+	cost = 18
 	purchasable_from = UPLINK_NUKE_OPS
 
 // Mech related gear
@@ -793,7 +818,7 @@
 
 /datum/uplink_item/badass/hats
 	name = "Hat Crate"
-	desc = "Hat crate! Contains hats, along with hat stabilizers to wear your hats while you're in your suit! HATS!!!"
+	desc = "Hat crate! Contains hats! HATS!!!"
 	item = /obj/structure/closet/crate/large/hats
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS

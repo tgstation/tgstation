@@ -102,6 +102,7 @@
 	mech_sized = TRUE //save your ripley
 	innate_accuracy_penalty = 6
 	light_on = FALSE
+	wibbles = FALSE
 
 /obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
 	. = ..()

@@ -11,6 +11,8 @@
 	var/initialized = FALSE //to prevent personalities deleting themselves while we wait for ghosts
 	var/mob/living/split_personality/stranger_backseat //there's two so they can swap without overwriting
 	var/mob/living/split_personality/owner_backseat
+	///The role to display when polling ghost
+	var/poll_role = "split personality"
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/M = owner
@@ -30,17 +32,26 @@
 	var/datum/action/cooldown/spell/personality_commune/owner_spell = new(src)
 	owner_spell.Grant(owner_backseat)
 
-
+/// Attempts to get a ghost to play the personality
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s split personality?", ROLE_PAI, null, 7.5 SECONDS, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		stranger_backseat.key = C.key
-		stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
-	else
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(schism))
+	owner.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_SPLITPERSONALITY, \
+		job_bans = ROLE_PAI, \
+		title = "[owner.real_name]'s [poll_role]", \
+		to_call = to_call, \
+	)
+
+/// Ghost poll has concluded
+/datum/brain_trauma/severe/split_personality/proc/schism(mob/dead/observer/ghost)
+	if(isnull(ghost))
 		qdel(src)
+		return
+
+	stranger_backseat.key = ghost.key
+	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
+
 
 /datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick, times_fired)
 	if(owner.stat == DEAD)
@@ -237,6 +248,76 @@
 	to_chat(src, span_notice("Your activation codeword is: <b>[codeword]</b>"))
 	if(objective)
 		to_chat(src, span_notice("Your master left you an objective: <b>[objective]</b>. Follow it at all costs when in control."))
+
+/datum/brain_trauma/severe/split_personality/blackout
+	name = "Alcohol-Induced CNS Impairment"
+	desc = "Patient's CNS has been temporarily impaired by imbibed alcohol, blocking memory formation, and causing reduced cognition and stupefaction."
+	scan_desc = "alcohol-induced CNS impairment"
+	gain_text = span_warning("Crap, that was one drink too many. You black out...")
+	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
+	poll_role = "blacked out drunkard"
+	random_gain = FALSE
+	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
+	var/duration_in_seconds = 180
+
+/datum/brain_trauma/severe/split_personality/blackout/on_gain()
+	. = ..()
+	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
+	notify_ghosts(
+		"[owner] is blacking out!",
+		source = owner,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "Bro I'm not even drunk right now",
+	)
+
+/datum/brain_trauma/severe/split_personality/blackout/on_lose()
+	. = ..()
+	owner.add_mood_event("hang_over", /datum/mood_event/hang_over)
+	UnregisterSignal(owner, COMSIG_ATOM_SPLASHED)
+
+/datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
+	SIGNAL_HANDLER
+	if(prob(20))//we don't want every single splash to wake them up now do we
+		qdel(src)
+
+/datum/brain_trauma/severe/split_personality/blackout/on_life(seconds_per_tick, times_fired)
+	if(current_controller == OWNER && stranger_backseat)//we should only start transitioning after the other personality has entered
+		owner.overlay_fullscreen("fade_to_black", /atom/movable/screen/fullscreen/blind)
+		owner.clear_fullscreen("fade_to_black", animated = 4 SECONDS)
+		switch_personalities()
+	if(owner.stat == DEAD)
+		if(current_controller != OWNER)
+			switch_personalities(TRUE)
+		qdel(src)
+		return
+	if(duration_in_seconds <= 0)
+		qdel(src)
+		return
+	else if(duration_in_seconds <= 50)
+		to_chat(owner, span_warning("You have 50 seconds left before sobering up!"))
+	if(prob(10) && !HAS_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER))
+		ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
+		owner.balloon_alert(owner, "dexterity reduced temporarily!")
+		//We then send a callback to automatically re-add the trait
+		addtimer(TRAIT_CALLBACK_REMOVE(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT), 10 SECONDS)
+		addtimer(CALLBACK(owner, TYPE_PROC_REF(/atom, balloon_alert), owner, "dexterity regained!"), 10 SECONDS)
+	if(prob(15))
+		playsound(owner,'sound/effects/sf_hiccup_male_01.ogg', 50)
+		owner.emote("hiccup")
+	owner.adjustStaminaLoss(-5) //too drunk to feel anything
+	duration_in_seconds -= seconds_per_tick
+
+/mob/living/split_personality/blackout
+	name = "blacked-out drunkard"
+	real_name = "drunken consciousness"
+
+/mob/living/split_personality/blackout/Login()
+	. = ..()
+	if(!. || !client)
+		return FALSE
+	to_chat(src, span_notice("You're the incredibly inebriated leftovers of your host's consciousness! Make sure to act the part and leave a trail of confusion and chaos in your wake."))
+	to_chat(src, span_boldwarning("Do not commit suicide or put the body in danger, you have a minor liscense to grief just like a clown, do not kill anyone or create a situation leading to the body being in danger or in harm ways. While you're drunk, you're not suicidal."))
 
 #undef OWNER
 #undef STRANGER

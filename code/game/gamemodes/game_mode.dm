@@ -129,7 +129,7 @@
 			for(var/dead_dudes_job in reopened_jobs)
 				reopened_job_report_positions = "[reopened_job_report_positions ? "[reopened_job_report_positions]\n":""][dead_dudes_job]"
 
-			var/suicide_command_report = "<font size = 3><b>Central Command Human Resources Board</b><br>\
+			var/suicide_command_report = "<font size = 3><b>[command_name()] Human Resources Board</b><br>\
 								Notice of Personnel Change</font><hr>\
 								To personnel management staff aboard [station_name()]:<br><br>\
 								Our medical staff have detected a series of anomalies in the vital sensors \
@@ -200,10 +200,10 @@
 /datum/game_mode/proc/generate_station_goals(greenshift)
 	var/goal_budget = greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
+	// Remove all goals that require space if space is not present
 	if(SSmapping.is_planetary())
-		for(var/datum/station_goal/goal in possible)
-			if(goal.requires_space)
-				///Removes all goals that require space if space is not present
+		for(var/datum/station_goal/goal as anything in possible)
+			if(initial(goal.requires_space))
 				possible -= goal
 	var/goal_weights = 0
 	while(possible.len && goal_weights < goal_budget)

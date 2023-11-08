@@ -139,7 +139,7 @@
 	return
 
 ///Lets you stop the process with enough brute damage
-/obj/item/organ/internal/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone)
+/obj/item/organ/internal/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BRUTE)
 		return

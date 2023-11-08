@@ -11,6 +11,16 @@
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 
+/// Store a single or list of emotes at this key
+#define BB_EMOTE_KEY "BB_emotes"
+/// Chance to perform an emote per second
+#define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
+
+/// Something the mob will say when calling reinforcements
+#define BB_REINFORCEMENTS_SAY "BB_reinforcements_say"
+/// Something the mob will remote when calling reinforcements
+#define BB_REINFORCEMENTS_EMOTE "BB_reinforcements_emote"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 
@@ -38,6 +48,10 @@
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
+/// Key for the minimum status at which we want to target mobs (does not need to be specified if CONSCIOUS)
+#define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
+/// Flag for whether to target only wounded mobs
+#define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
 
 /// Blackboard key storing how long your targetting datum has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
@@ -53,6 +67,9 @@
 #define BB_TARGETTED_ACTION "BB_targetted_action"
 /// Generic key for a non-specific action
 #define BB_GENERIC_ACTION "BB_generic_action"
+
+/// Generic key for a shapeshifting action
+#define BB_SHAPESHIFT_ACTION "BB_shapeshift_action"
 
 ///How long have we spent with no target?
 #define BB_TARGETLESS_TIME "BB_targetless_time"
@@ -77,8 +94,13 @@
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
-/// Flag to set on or off if you want your mob to prioritise running away
-#define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
+/// Chance to randomly acquire a new target
+#define BB_RANDOM_AGGRO_CHANCE "BB_random_aggro_chance"
+/// Chance to randomly drop all of our targets
+#define BB_RANDOM_DEAGGRO_CHANCE "BB_random_deaggro_chance"
+
+/// Flag to set on if you want your mob to STOP running away
+#define BB_BASIC_MOB_STOP_FLEEING "BB_basic_stop_fleeing"
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
@@ -94,7 +116,9 @@
 #define MOD_AI_RANGE 200
 
 ///should we skip the faction check for the targetting datum?
-#define BB_BASIC_MOB_SKIP_FACTION_CHECK "BB_basic_mob_skip_faction_check"
+#define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
+///are we in some kind of temporary state of ignoring factions when targetting? can result in volatile results if multiple behaviours touch this
+#define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
 ///currently only used by clowns, a list of what can the mob speak randomly
 #define BB_BASIC_MOB_SPEAK_LINES "BB_speech_lines"
@@ -102,4 +126,9 @@
 #define BB_EMOTE_HEAR "emote_hear"
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
-#define BB_EMOTE_CHANCE "emote_chance"
+#define BB_SPEAK_CHANCE "emote_chance"
+
+/// A target that has called this mob for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENT_TARGET "BB_basic_mob_reinforcement_target"
+/// The next time at which this mob can call for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"

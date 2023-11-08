@@ -588,7 +588,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, max_distance=250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, max_distance=250, access=access_card.GetAccess(), exclude=avoid, diagonal_handling=DIAGONAL_REMOVE_ALL)
 
 // sets the current destination
 // signals all beacons matching the delivery code

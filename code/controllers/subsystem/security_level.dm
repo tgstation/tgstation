@@ -39,7 +39,10 @@ SUBSYSTEM_DEF(security_level)
 	if(!selected_level)
 		CRASH("set_level was called with an invalid security level([new_level])")
 
-	announce_security_level(selected_level) // We want to announce BEFORE updating to the new level
+	if(SSnightshift.can_fire && (selected_level.number_level >= SEC_LEVEL_RED || current_security_level.number_level >= SEC_LEVEL_RED))
+		SSnightshift.next_fire = world.time + 7 SECONDS // Fire nightshift after the security level announcement is complete
+
+	level_announce(selected_level, current_security_level.number_level) // We want to announce BEFORE updating to the new level
 
 	SSsecurity_level.current_security_level = selected_level
 
@@ -53,20 +56,7 @@ SUBSYSTEM_DEF(security_level)
 		SSshuttle.emergency.alert_coeff_change(selected_level.shuttle_call_time_mod)
 
 	SEND_SIGNAL(src, COMSIG_SECURITY_LEVEL_CHANGED, selected_level.number_level)
-	SSnightshift.check_nightshift()
 	SSblackbox.record_feedback("tally", "security_level_changes", 1, selected_level.name)
-
-/**
- * Handles announcements of the newly set security level
- *
- * Arguments:
- * * selected_level - The new security level that has been set
- */
-/datum/controller/subsystem/security_level/proc/announce_security_level(datum/security_level/selected_level)
-	if(selected_level.number_level > current_security_level.number_level) // We are elevating to this level.
-		minor_announce(selected_level.elevating_to_announcemnt, "Attention! Security level elevated to [selected_level.name]:", sound_override = selected_level.sound)
-	else // Going down
-		minor_announce(selected_level.lowering_to_announcement, "Attention! Security level lowered to [selected_level.name]:", sound_override = selected_level.sound)
 
 /**
  * Returns the current security level as a number

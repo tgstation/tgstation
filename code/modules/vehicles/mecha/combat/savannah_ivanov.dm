@@ -86,7 +86,7 @@
 	if(chassis.phasing)
 		to_chat(owner, span_warning("You're already airborne!"))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_SKYFALL))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_SKYFALL))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_SKYFALL)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
 		return
@@ -212,7 +212,7 @@
 			to_chat(crushed_victim, span_userdanger("[chassis] crashes down on you from above!"))
 			if(crushed_victim.stat != CONSCIOUS)
 				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
-				crushed_victim.gib(FALSE, FALSE, FALSE)
+				crushed_victim.gib(DROP_ALL_REMAINS)
 				continue
 			crushed_victim.adjustBruteLoss(80)
 
@@ -254,7 +254,7 @@
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_MISSILE_STRIKE)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike."))
 		return

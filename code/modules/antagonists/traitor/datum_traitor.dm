@@ -18,6 +18,8 @@
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
 	var/give_objectives = TRUE
+	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
+	var/give_secondary_objectives = TRUE
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
@@ -45,6 +47,16 @@
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
 
+/datum/antagonist/traitor/infiltrator
+	// Used to denote traitors who have joined midround and therefore have no access to secondary objectives.
+	// Progression elements are best left to the roundstart antagonists
+	// There will still be a timelock on uplink items
+	name = "\improper Infiltrator"
+	give_secondary_objectives = FALSE
+
+/datum/antagonist/traitor/infiltrator/sleeper_agent
+	name = "\improper Syndicate Sleeper Agent"
+
 /datum/antagonist/traitor/New(give_objectives = TRUE)
 	. = ..()
 	src.give_objectives = give_objectives
@@ -67,8 +79,9 @@
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
-		uplink_handler.has_objectives = TRUE
-		uplink_handler.generate_objectives()
+		if(give_secondary_objectives)
+			uplink_handler.has_objectives = TRUE
+			uplink_handler.generate_objectives()
 
 		uplink_handler.can_replace_objectives = CALLBACK(src, PROC_REF(can_change_objectives))
 		uplink_handler.replace_objectives = CALLBACK(src, PROC_REF(submit_player_objective))
@@ -369,6 +382,7 @@
 	mask = /obj/item/clothing/mask/gas
 	l_hand = /obj/item/melee/energy/sword
 	r_hand = /obj/item/gun/energy/recharge/ebow
+	shoes = /obj/item/clothing/shoes/magboots/advance
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items

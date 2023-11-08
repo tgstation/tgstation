@@ -80,13 +80,13 @@
 			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
 
 
-/mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.combat_mode)
+/mob/living/silicon/attack_drone(mob/living/basic/drone/user)
+	if(user.combat_mode)
 		return
 	return ..()
 
-/mob/living/silicon/attack_drone_secondary(mob/living/simple_animal/drone/M)
-	if(M.combat_mode)
+/mob/living/silicon/attack_drone_secondary(mob/living/basic/drone/user)
+	if(user.combat_mode)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
@@ -115,21 +115,22 @@
 			M.visible_message(span_boldwarning("[M] is thrown off of [src]!"))
 	flash_act(affect_silicon = 1)
 
-/mob/living/silicon/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
-	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, Proj, def_zone)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		adjustBruteLoss(Proj.damage)
-		if(prob(Proj.damage*1.5))
-			for(var/mob/living/M in buckled_mobs)
-				M.visible_message(span_boldwarning("[M] is knocked off of [src]!"))
-				unbuckle_mob(M)
-				M.Paralyze(40)
-	if(Proj.stun || Proj.knockdown || Proj.paralyze)
-		for(var/mob/living/M in buckled_mobs)
-			unbuckle_mob(M)
-			M.visible_message(span_boldwarning("[M] is knocked off of [src] by the [Proj]!"))
-	Proj.on_hit(src, 0, piercing_hit)
-	return BULLET_ACT_HIT
+/mob/living/silicon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	. = ..()
+	if(. != BULLET_ACT_HIT)
+		return .
+
+	var/prob_of_knocking_dudes_off = 0
+	if(hitting_projectile.damage_type == BRUTE || hitting_projectile.damage_type == BURN)
+		prob_of_knocking_dudes_off = hitting_projectile.damage * 1.5
+	if(hitting_projectile.stun || hitting_projectile.knockdown || hitting_projectile.paralyze)
+		prob_of_knocking_dudes_off = 100
+
+	if(prob(prob_of_knocking_dudes_off))
+		for(var/mob/living/buckled in buckled_mobs)
+			buckled.visible_message(span_boldwarning("[buckled] is knocked off of [src] by [hitting_projectile]!"))
+			unbuckle_mob(buckled)
+			buckled.Paralyze(4 SECONDS)
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash/static, length = 25)
 	if(affect_silicon)

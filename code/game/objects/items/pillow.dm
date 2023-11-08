@@ -32,6 +32,15 @@
 		force_wielded = 10, \
 	)
 
+	var/static/list/slapcraft_recipe_list = list(\
+		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
+		)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/pillow/Destroy(force)
 	. = ..()
 	QDEL_NULL(pillow_trophy)

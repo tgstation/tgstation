@@ -429,9 +429,9 @@
 		return
 	var/list/result = new
 	if(skiprep)
-		for(var/e in first)
-			if(!(e in result) && !(e in second))
-				UNTYPED_LIST_ADD(result, e)
+		for(var/entry in first)
+			if(!(entry in result) && !(entry in second))
+				UNTYPED_LIST_ADD(result, entry)
 	else
 		result = first - second
 	return result
@@ -765,9 +765,9 @@
 			inserted_list.Cut(to_index, to_index + 1)
 	else
 		if(to_index > from_index)
-			var/a = to_index
+			var/temp = to_index
 			to_index = from_index
-			from_index = a
+			from_index = temp
 
 		for(var/i in 1 to len)
 			inserted_list.Swap(from_index++, to_index++)
@@ -896,6 +896,13 @@
 		if(value?.locked)
 			continue
 		UNTYPED_LIST_ADD(keys, key)
+	return keys
+
+///Gets the total amount of everything in the associative list.
+/proc/assoc_value_sum(list/input)
+	var/list/keys = list()
+	for(var/key in input)
+		keys += input[key]
 	return keys
 
 ///compare two lists, returns TRUE if they are the same

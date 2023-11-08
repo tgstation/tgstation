@@ -150,7 +150,6 @@
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. \
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
@@ -159,7 +158,6 @@
 	name = "Box of Gorilla Cubes"
 	desc = "A box with three Waffle Co. brand gorilla cubes. Eat big to get big. \
 			Caution: Product may rehydrate when exposed to water."
-	progression_minimum = 15 MINUTES
 	item = /obj/item/storage/box/gorillacubes
 	cost = 6
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
@@ -209,7 +207,8 @@
 	name = "Kinetic Accelerator Pressure Mod"
 	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. \
 			Occupies 35% mod capacity."
-	progression_minimum = 30 MINUTES
+	// While less deadly than a revolver it does have infinite ammo
+	progression_minimum = 15 MINUTES
 	item = /obj/item/borg/upgrade/modkit/indoors
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
@@ -220,7 +219,6 @@
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. \
 			Obviously only works for Mimes."
-	progression_minimum = 20 MINUTES
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list(JOB_MIME)
@@ -238,7 +236,7 @@
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
 	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 90u of reagents."
-	progression_minimum = 20 MINUTES
+	progression_minimum = 15 MINUTES
 	item = /obj/item/gun/chem
 	cost = 12
 	restricted_roles = list(JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BOTANIST)
@@ -246,7 +244,6 @@
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
-	progression_minimum = 10 MINUTES
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	restricted_roles = list(JOB_CLOWN)
@@ -276,9 +273,6 @@
 			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
 			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
 			Premium features can be unlocked with a cryptographic sequencer!"
-	// It has a low progression cost because it's the sort of item that only works well early in the round
-	// Plus, it costs all your TC, and it's not an instant kill tool.
-	progression_minimum = 5 MINUTES
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
 	restricted_roles = list(JOB_CLOWN)
@@ -290,9 +284,6 @@
 	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
 	However, if left alone for long enough, He will fall back to slumber. \
 	To activate His Grace, simply unlatch Him."
-	// It has a low progression cost because it's the sort of item that only works well early in the round
-	// Plus, it costs all your TC and will lock your uplink.
-	progression_minimum = 5 MINUTES
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
 	item = /obj/item/his_grace
@@ -342,3 +333,32 @@
 	item = /obj/item/seeds/seedling/evil
 	cost = 8
 	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/bee_smoker
+	name = "Bee Smoker"
+	desc = "A device that runs on cannabis, turning it into a gas that can hypnotize bees to follow our commands."
+	item = /obj/item/bee_smoker
+	cost = 4
+	restricted_roles = list(JOB_BOTANIST)
+
+/datum/uplink_item/role_restricted/monkey_agent
+	name = "Simian Agent Reinforcements"
+	desc = "Call in an extremely well trained monkey secret agent from our Syndicate Banana Department. \
+		They've been trained to operate machinery and can read, but they can't speak Common. \
+		Please note that these are free-range monkeys that don't react with Mutadone."
+	item = /obj/item/antag_spawner/loadout/monkey_man
+	cost = 6
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_GENETICIST, JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted = TRUE
+	refundable = TRUE
+
+/datum/uplink_item/role_restricted/monkey_supplies
+	name = "Simian Agent Supplies"
+	desc = "Sometimes you need a bit more firepower than a rabid monkey. Such as a rabid, armed monkey! \
+		Monkeys can unpack this kit to recieve a bag with a bargain-bin gun, ammunition, and some miscellaneous supplies."
+	item = /obj/item/storage/toolbox/guncase/monkeycase
+	cost = 4
+	limited_stock = 3
+	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
+	restricted = TRUE
+	refundable = FALSE

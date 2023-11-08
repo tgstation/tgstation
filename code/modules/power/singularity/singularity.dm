@@ -80,10 +80,10 @@
 			ghost_notification_message,
 			source = src,
 			action = NOTIFY_ORBIT,
-			flashwindow = FALSE,
+			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
 			header = ghost_notification_message,
-			notify_volume = 75
+			notify_volume = 75,
 		)
 
 
@@ -266,6 +266,11 @@
 			new_grav_pull = 15
 			new_consume_range = 5
 			dissipate = FALSE
+
+	if(temp_allowed_size == STAGE_SIX)
+		AddComponent(/datum/component/vision_hurting)
+	else
+		qdel(GetComponent(/datum/component/vision_hurting))
 
 	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
 	if (!isnull(resolved_singularity))

@@ -324,11 +324,11 @@
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
-	else if (delta_chem_factor < CHEMICAL_VOLUME_MINIMUM)
-		delta_chem_factor = CHEMICAL_VOLUME_MINIMUM
+	else if (delta_chem_factor < CHEMICAL_VOLUME_ROUNDING)
+		delta_chem_factor = CHEMICAL_VOLUME_ROUNDING
 	//Normalise to multiproducts
 	delta_chem_factor /= product_ratio
-	//delta_chem_factor = round(delta_chem_factor, CHEMICAL_QUANTISATION_LEVEL) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
+	delta_chem_factor = round(delta_chem_factor, CHEMICAL_VOLUME_ROUNDING) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)

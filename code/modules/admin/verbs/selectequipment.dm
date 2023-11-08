@@ -209,7 +209,7 @@
 	else
 		human_target = target
 		if(human_target.l_store || human_target.r_store || human_target.s_store) //saves a lot of time for admins and coders alike
-			if(tgui_alert(usr,"Drop Items in Pockets? No will delete them.", "Robust quick dress shop", list("Yes", "No")) == "No")
+			if(tgui_alert(usr,"Do you need the items in your pockets?", "Pocket Items", list("Delete Them", "Drop Them")) == "Delete Them")
 				delete_pocket = TRUE
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
