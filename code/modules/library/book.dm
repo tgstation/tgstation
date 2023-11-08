@@ -51,15 +51,15 @@
 	return data
 
 /obj/item/book/ui_interact(mob/living/user, datum/tgui/ui)
-	if(!can_read_book(user))
-		return
-
-	credit_book_to_reader(user)
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MarkdownViewer", name)
 		ui.open()
+
+/// Proc that handles sending the book information to the user, as well as some housekeeping stuff.
+/obj/item/book/proc/display_content(mob/living/user)
+	credit_book_to_reader(user)
+	ui_interact(user)
 
 /// Proc that checks if the user is capable of reading the book, for UI interactions and otherwise. Returns TRUE if they can, FALSE if they can't.
 /obj/item/book/proc/can_read_book(mob/living/user)
@@ -97,7 +97,7 @@
 		return
 
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
-	ui_interact(user)
+	display_content(user)
 
 /obj/item/book/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))

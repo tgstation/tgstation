@@ -240,10 +240,12 @@
 	var/page_link = ""
 	window_size = "970x710"
 
-/obj/item/book/manual/wiki/attack_self()
-	if(!book_data.content)
+/obj/item/book/manual/wiki/display_content(mob/living/user)
+	if(isnull(book_data.content))
 		initialize_wikibook()
-	return ..()
+
+	credit_book_to_reader(user)
+	DIRECT_OUTPUT(user, browse(book_data, "window=[name];size=[window_size]")) // if you change this GUARANTEE that it works.
 
 /obj/item/book/manual/wiki/proc/initialize_wikibook()
 	var/wikiurl = CONFIG_GET(string/wikiurl)
