@@ -238,7 +238,7 @@
 				if(!heart)//sanity check, ensure the patient actually has a heart
 					render_list += "<span class='danger ml-1'>[M] doesn't have a heart!</span>\n"
 				else
-					if(!heart.beating || carbon_patient.stat == DEAD)
+					if(!heart.is_beating() || carbon_patient.stat == DEAD)
 						render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
 					else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
 						render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
@@ -293,7 +293,7 @@
 			if(!heart)//sanity check, ensure the patient actually has a heart
 				render_list += "<span class='danger ml-1'>[M] doesn't have a heart!</span>\n"
 			else
-				if(!heart.beating || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
+				if(!heart.is_beating() || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
 					render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
 				else
 					if(heart.damage > 10)
