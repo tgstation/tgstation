@@ -215,7 +215,7 @@
 		/obj/item/inducer =  1,
 	)
 	blacklist = list(
-	/obj/item/inducer/sci,
+		/obj/item/inducer/sci,
 	)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
