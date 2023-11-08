@@ -44,7 +44,7 @@ const getCutterPath = () => {
   const ver = dependencies.CUTTER_VERSION;
   const suffix = process.platform === 'win32' ? '.exe' : '';
   const file_ver = ver.split('.').join('-');
-  return `tools/icon_cutter/hypnagogic${file_ver}${suffix}`;
+  return `tools/icon_cutter/cache/hypnagogic${file_ver}${suffix}`;
 };
 
 const cutter_path = getCutterPath();
@@ -61,9 +61,14 @@ export const PortParameter = new Juke.Parameter({
 
 export const DmVersionParameter = new Juke.Parameter({
   type: 'string',
-})
+});
 
 export const CiParameter = new Juke.Parameter({ type: 'boolean' });
+
+export const ForceRecutParameter = new Juke.Parameter({
+  type: 'boolean',
+  name: "force_recut",
+});
 
 export const WarningParameter = new Juke.Parameter({
   type: 'string[]',
@@ -123,6 +128,7 @@ async function download_file(url, file) {
 }
 
 export const IconCutterTarget = new Juke.Target({
+  parameters: [ForceRecutParameter],
   dependsOn: () => [
     CutterTarget,
   ],
@@ -130,17 +136,18 @@ export const IconCutterTarget = new Juke.Target({
     'icons/**/*.png',
     `icons/**/*${CUTTER_SUFFIX}`,
     `cutter_templates/**/*${CUTTER_SUFFIX}`,
-    getCutterPath(),
+    cutter_path,
   ],
   outputs: ({ get }) => {
+    if(get(ForceRecutParameter))
+      return [];
     const folders = [
       ...Juke.glob(`icons/**/*${CUTTER_SUFFIX}`),
     ];
     return folders
       .map((file) => file.replace(`${CUTTER_SUFFIX}`, '.dmi'));
   },
-  executes: async ({ get }) => {
-    Juke.logger.log(cutter_path);
+  executes: async () => {
     await Juke.exec(cutter_path, [
       '--dont-wait',
       '--templates',
