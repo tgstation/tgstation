@@ -81,7 +81,6 @@
 			source = src,
 			header = ghost_notification_message,
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
-			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 			notify_volume = 75,
 		)
 

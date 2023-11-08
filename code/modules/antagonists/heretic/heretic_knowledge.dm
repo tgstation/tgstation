@@ -734,7 +734,6 @@
 		"[user] has completed an ascension ritual!",
 		source = user,
 		header = "A Heretic is Ascending!",
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 	return TRUE
 

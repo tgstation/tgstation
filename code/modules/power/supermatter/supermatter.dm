@@ -538,7 +538,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		"[src] has begun the delamination process!",
 		source = src,
 		header = "Meltdown Incoming",
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 	var/datum/sm_delam/last_delamination_strategy = delamination_strategy

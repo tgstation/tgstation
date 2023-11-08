@@ -51,7 +51,6 @@
 			"[spawner.name] has been activated!",
 			source = spawner,
 			header = "CTF has been activated",
-			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 		)
 
 /datum/ctf_controller/proc/stop_ctf()

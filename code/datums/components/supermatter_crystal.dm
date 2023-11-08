@@ -306,7 +306,6 @@
 				"[consumed_mob] has been dusted by [atom_source]!",
 				source = atom_source,
 				header = "Polytechnical Difficulties",
-				notify_flags = NOTIFY_CATEGORY_DEFAULT,
 			)
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size

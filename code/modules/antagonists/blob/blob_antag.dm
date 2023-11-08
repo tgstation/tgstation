@@ -143,7 +143,6 @@
 		ghost_sound = 'sound/ambience/antag/blobalert.ogg',
 		header = "Blob Awakening!",
 		notify_volume = 75,
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 /datum/antagonist/blob/antag_listing_status()
