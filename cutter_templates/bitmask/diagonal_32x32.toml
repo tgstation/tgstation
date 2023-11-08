@@ -1,0 +1,12 @@
+template = "bitmask/standard_32x32"
+
+mode = "BitmaskSlice"
+
+smooth_diagonally = true
+
+[positions]
+convex = 0
+concave = 1
+horizontal = 2
+vertical = 3
+flat = 4
