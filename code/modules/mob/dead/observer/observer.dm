@@ -756,7 +756,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 		if(href_list["play"])
 			var/atom/movable/target = locate(href_list["play"])
-			if(isnull(target) || target == src)\
+			if(isnull(target) || target == src)
 				return
 
 			target.attack_ghost(usr)
