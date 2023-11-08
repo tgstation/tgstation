@@ -207,7 +207,7 @@
 	sound = 'sound/items/bikehorn.ogg'
 
 /datum/dimension_theme/radioactive
-	icon = 'icons/obj/ore.dmi'
+	icon = 'icons/obj/mining_zones/ore.dmi'
 	icon_state = "Uranium ore"
 	material = /datum/material/uranium
 	sound = 'sound/items/welder.ogg'

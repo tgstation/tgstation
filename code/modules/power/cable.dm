@@ -505,14 +505,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!user)
 		return
 
-	var/image/restraints_icon = image(icon = 'icons/obj/restraints.dmi', icon_state = "cuff")
+	var/image/restraints_icon = image(icon = 'icons/obj/weapons/restraints.dmi', icon_state = "cuff")
 	restraints_icon.maptext = MAPTEXT("<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>")
 	restraints_icon.color = color
 
 	var/list/radial_menu = list(
-	"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
-	"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
-	"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
+	"Layer 1" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-red"),
+	"Layer 2" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-yellow"),
+	"Layer 3" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-blue"),
 	"Multilayer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cable_bridge"),
 	"Multi Z layer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
 	"Cable restraints" = restraints_icon
@@ -707,9 +707,9 @@ GLOBAL_LIST(hub_radial_layer_list)
 		return
 	if(!GLOB.hub_radial_layer_list)
 		GLOB.hub_radial_layer_list = list(
-			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
-			"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
-			"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue")
+			"Layer 1" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-red"),
+			"Layer 2" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-yellow"),
+			"Layer 3" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-blue")
 			)
 
 	var/layer_result = show_radial_menu(user, src, GLOB.hub_radial_layer_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)

@@ -8,7 +8,7 @@
 
 /obj/structure/stairs
 	name = "stairs"
-	icon = 'icons/obj/stairs.dmi'
+	icon = 'icons/obj/structures/stairs.dmi'
 	icon_state = "stairs"
 	anchored = TRUE
 	move_resist = INFINITY
@@ -161,7 +161,7 @@
 /obj/structure/stairs_frame
 	name = "stairs frame"
 	desc = "Everything you need to call something a staircase, aside from the stuff you actually step on."
-	icon = 'icons/obj/stairs.dmi'
+	icon = 'icons/obj/structures/stairs.dmi'
 	icon_state = "stairs_frame"
 	density = FALSE
 	anchored = FALSE

@@ -52,7 +52,7 @@
 /obj/structure/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_wall.dmi'
 	icon_state = "resin_wall-0"
 	base_icon_state = "resin_wall"
 	density = TRUE
@@ -82,7 +82,7 @@
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_wall.dmi'
 	icon_state = "resin_wall-0"
 	base_icon_state = "resin_wall"
 	resintype = "wall"
@@ -105,7 +105,7 @@
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
-	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
 	icon_state = "resin_membrane-0"
 	base_icon_state = "resin_membrane"
 	opacity = FALSE
@@ -137,7 +137,7 @@
 	density = FALSE
 	layer = MID_TURF_LAYER
 	plane = FLOOR_PLANE
-	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+	icon = 'icons/obj/structures/smooth/alien/weeds1.dmi'
 	icon_state = "weeds1-0"
 	base_icon_state = "weeds1"
 	max_integrity = 15
@@ -179,13 +179,13 @@
 	. = base_icon_state
 	switch(rand(1,3))
 		if(1)
-			icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
+			icon = 'icons/obj/structures/smooth/alien/weeds1.dmi'
 			base_icon_state = "weeds1"
 		if(2)
-			icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
+			icon = 'icons/obj/structures/smooth/alien/weeds2.dmi'
 			base_icon_state = "weeds2"
 		if(3)
-			icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
+			icon = 'icons/obj/structures/smooth/alien/weeds3.dmi'
 			base_icon_state = "weeds3"
 	set_smoothed_icon_state(smoothing_junction)
 
@@ -255,7 +255,7 @@
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
+	icon = 'icons/obj/structures/smooth/alien/weednode.dmi'
 	icon_state = "weednode-0"
 	base_icon_state = "weednode"
 	light_color = LIGHT_COLOR_BLUE

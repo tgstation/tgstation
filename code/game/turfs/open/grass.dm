@@ -14,7 +14,7 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_GRASS
 	canSmoothWith = SMOOTH_GROUP_FLOOR_GRASS + SMOOTH_GROUP_CLOSED_TURFS
 	layer = HIGH_TURF_LAYER
-	damaged_dmi = 'icons/turf/damaged.dmi'
+	damaged_dmi = 'icons/turf/floor_overlays/damaged.dmi'
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
 
 /turf/open/misc/grass/broken_states()

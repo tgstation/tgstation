@@ -51,7 +51,7 @@
 	name = "pirate remains"
 	desc = "Some inanimate bones. They feel like they could spring to life at any moment!"
 	density = FALSE
-	icon = 'icons/effects/blood.dmi'
+	icon = 'icons/turf/floor_overlays/viscera.dmi'
 	icon_state = "remains"
 	prompt_name = "a skeleton pirate"
 	mob_species = /datum/species/skeleton

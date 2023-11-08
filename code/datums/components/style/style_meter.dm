@@ -122,7 +122,7 @@
 
 /atom/movable/screen/style_meter_background
 	icon_state = "style_meter_background"
-	icon = 'icons/hud/style_meter.dmi'
+	icon = 'icons/ui/hud/style_meter.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "WEST,CENTER:16"
 	maptext_height = 120
@@ -134,6 +134,6 @@
 
 /atom/movable/screen/style_meter
 	icon_state = "style_meter"
-	icon = 'icons/hud/style_meter.dmi'
+	icon = 'icons/ui/hud/style_meter.dmi'
 	layer = SCREENTIP_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

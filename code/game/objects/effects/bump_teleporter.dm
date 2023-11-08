@@ -2,7 +2,7 @@
 /obj/effect/bump_teleporter
 	name = "bump teleporter (forceMove)"
 	desc = "Use me when you want to move every single mob without any exceptions."
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	icon_state = "x2"
 	invisibility = INVISIBILITY_ABSTRACT //nope, can't see this
 	anchored = TRUE

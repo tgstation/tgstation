@@ -45,7 +45,7 @@
 	else if(current_option == COMP_BAR_OVERLAY_VERTICAL)
 		number_clear = round(number_clear / 10) * 10
 
-	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = "[options_map[current_option]][number_clear]", layer = RIPPLE_LAYER)
+	var/image/cool_overlay = image(icon = 'icons/ui/hud/screen_bci.dmi', loc = target_atom, icon_state = "[options_map[current_option]][number_clear]", layer = RIPPLE_LAYER)
 	SET_PLANE_EXPLICIT(cool_overlay, ABOVE_LIGHTING_PLANE, target_atom)
 
 	if(image_pixel_x.value != null)

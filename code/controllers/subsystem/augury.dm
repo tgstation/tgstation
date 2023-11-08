@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(augury)
 
 /datum/action/innate/augury
 	name = "Auto Follow Debris"
-	button_icon = 'icons/obj/meteor.dmi'
+	button_icon = 'icons/effects/meteor.dmi'
 	button_icon_state = "flaming"
 
 /datum/action/innate/augury/Destroy()

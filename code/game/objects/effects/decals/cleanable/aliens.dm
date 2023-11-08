@@ -3,7 +3,7 @@
 /obj/effect/decal/cleanable/xenoblood
 	name = "xeno blood"
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
-	icon = 'icons/effects/blood.dmi'
+	icon = 'icons/turf/floor_overlays/viscera.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
@@ -21,7 +21,7 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs
 	name = "xeno gibs"
 	desc = "Gnarly..."
-	icon = 'icons/effects/blood.dmi'
+	icon = 'icons/turf/floor_overlays/viscera.dmi'
 	icon_state = "xgib1"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")

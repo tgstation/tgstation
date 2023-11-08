@@ -317,7 +317,7 @@
 	// After everything's been added to the radial, add an option
 	// that lets the user see the whole list of buildables
 	options[FULL_LIST] = image(
-		icon = 'icons/hud/radial.dmi',
+		icon = 'icons/ui/hud/radial.dmi',
 		icon_state = "radial_full_list",
 	)
 

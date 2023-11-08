@@ -54,7 +54,7 @@
 
 /obj/structure/pitgrate
 	name = "pit grate"
-	icon = 'icons/obj/smooth_structures/lattice.dmi'
+	icon = 'icons/obj/structures/smooth/lattice.dmi'
 	icon_state = "lattice-255"
 	plane = FLOOR_PLANE
 	anchored = TRUE

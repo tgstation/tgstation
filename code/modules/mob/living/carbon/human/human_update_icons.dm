@@ -165,10 +165,10 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	//Bloody hands begin
-	var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
+	var/mutable_appearance/bloody_overlay = mutable_appearance('icons/turf/floor_overlays/viscera.dmi', "bloodyhands", -GLOVES_LAYER)
 	cut_overlay(bloody_overlay)
 	if(!gloves && blood_in_hands && (num_hands > 0))
-		bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
+		bloody_overlay = mutable_appearance('icons/turf/floor_overlays/viscera.dmi', "bloodyhands", -GLOVES_LAYER)
 		if(num_hands < 2)
 			if(has_left_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_left"

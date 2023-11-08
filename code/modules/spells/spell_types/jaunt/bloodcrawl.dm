@@ -331,7 +331,7 @@
 /obj/item/bloodcrawl
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
-	icon = 'icons/effects/blood.dmi'
+	icon = 'icons/turf/floor_overlays/viscera.dmi'
 	item_flags = ABSTRACT | DROPDEL
 
 /obj/item/bloodcrawl/Initialize(mapload)

@@ -10,7 +10,7 @@
 	response_harm_simple = "kick"
 	faction = list(FACTION_GONDOLA)
 	turns_per_move = 10
-	icon = 'icons/obj/supplypods.dmi'
+	icon = 'icons/effects/supplypods.dmi'
 	icon_state = "gondola"
 	icon_living = "gondola"
 	SET_BASE_PIXEL(-16, -5) //2x2 sprite

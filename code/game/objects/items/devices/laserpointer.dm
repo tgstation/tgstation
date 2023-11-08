@@ -1,7 +1,7 @@
 /obj/item/laser_pointer
 	name = "laser pointer"
 	desc = "Don't shine it in your eyes!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "pointer"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"

@@ -1,6 +1,6 @@
 //unsorted miscellaneous temporary visuals
 /obj/effect/temp_visual/dir_setting/bloodsplatter
-	icon = 'icons/effects/blood.dmi'
+	icon = 'icons/turf/floor_overlays/viscera.dmi'
 	duration = 5
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER

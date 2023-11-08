@@ -14,7 +14,7 @@
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	var/obj/item/I = source
 	if(!_icon)
-		_icon = 'icons/effects/blood.dmi'
+		_icon = 'icons/turf/floor_overlays/viscera.dmi'
 	if(!_icon_state)
 		_icon_state = "itemblood"
 	var/icon = I.icon

@@ -108,7 +108,7 @@
 		return
 
 	var/client/firing_client = original_firer.client
-	crosshair_indicator = image('icons/obj/supplypods_32x32.dmi', target_turf, "LZ")
+	crosshair_indicator = image('icons/effects/supplypods_32x32.dmi', target_turf, "LZ")
 	firing_client.images += crosshair_indicator
 
 /obj/projectile/bullet/coin/Destroy()

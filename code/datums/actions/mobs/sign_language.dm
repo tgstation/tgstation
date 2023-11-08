@@ -7,11 +7,11 @@
  * D. If TRAIT_MUTE is then removed, then show the Action.
  *
  * * Credits:
- * - Action sprite created by @Wallemations (icons/hud/actions.dmi:sign_language)
+ * - Action sprite created by @Wallemations (icons/ui/hud/actions.dmi:sign_language)
 */
 /datum/action/innate/sign_language
 	name = "Sign Language"
-	button_icon = 'icons/hud/actions.dmi'
+	button_icon = 'icons/ui/hud/actions.dmi'
 	button_icon_state = "sign_language"
 	desc = "Allows you to communicate via sign language."
 	owner_has_control = FALSE

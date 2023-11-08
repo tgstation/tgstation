@@ -129,9 +129,9 @@
 	. = ..()
 	if(!radial_menu)
 		radial_menu = list(
-			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
-			"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
-			"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
+			"Layer 1" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-red"),
+			"Layer 2" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-yellow"),
+			"Layer 3" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "coil-blue"),
 		)
 
 	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)

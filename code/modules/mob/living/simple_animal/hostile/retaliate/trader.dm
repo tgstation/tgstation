@@ -160,11 +160,11 @@
 		return FALSE
 	var/list/npc_options = list()
 	if(products.len)
-		npc_options["Buy"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buy")
+		npc_options["Buy"] = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_buy")
 	if(length(say_phrases[TRADER_LORE_PHRASE]))
-		npc_options["Talk"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_talk")
+		npc_options["Talk"] = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_talk")
 	if(wanted_items.len)
-		npc_options["Sell"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_sell")
+		npc_options["Sell"] = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_sell")
 	if(!npc_options.len)
 		return FALSE
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
@@ -195,9 +195,9 @@
 ///Talk about what items are being sold/wanted by the trader and in what quantity or lore
 /mob/living/simple_animal/hostile/retaliate/trader/proc/discuss(mob/user)
 	var/list/npc_options = list(
-		"Lore" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_lore"),
-		"Selling?" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_selling"),
-		"Buying?" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_buying"),
+		"Lore" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_lore"),
+		"Selling?" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_selling"),
+		"Buying?" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_buying"),
 	)
 	var/pick = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	switch(pick)
@@ -255,7 +255,7 @@
 		var/image/item_image = image(icon = initial(thing.icon), icon_state = initial(thing.icon_state))
 		product_info = products[thing]
 		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //out of stock
-			item_image.overlays += image(icon = 'icons/hud/radial.dmi', icon_state = "radial_center")
+			item_image.overlays += image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_center")
 		items += list("[initial(thing.name)]" = item_image)
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!pick)
@@ -268,8 +268,8 @@
 		return
 	say("It will cost you [product_info[TRADER_PRODUCT_INFO_PRICE]] [currency_name] to buy \the [initial(item_to_buy.name)]. Are you sure you want to buy it?")
 	var/list/npc_options = list(
-		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
-		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no")
+		"Yes" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_yes"),
+		"No" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_no")
 	)
 	var/buyer_will_buy = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(buyer_will_buy != "Yes")
@@ -346,8 +346,8 @@
 	say(return_trader_phrase(INTERESTED_PHRASE))
 	say("You will receive [cost] [currency_name] for the [selling].")
 	var/list/npc_options = list(
-		"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_yes"),
-		"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_no"),
+		"Yes" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_yes"),
+		"No" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_no"),
 	)
 	face_atom(user)
 	var/npc_result = show_radial_menu(user, src, npc_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)

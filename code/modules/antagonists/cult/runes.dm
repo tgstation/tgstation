@@ -76,7 +76,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	. = ..()
 	if(set_keyword)
 		keyword = set_keyword
-	var/image/I = image(icon = 'icons/effects/blood.dmi', icon_state = null, loc = src)
+	var/image/I = image(icon = 'icons/turf/floor_overlays/viscera.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_runes", I)
 

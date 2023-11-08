@@ -167,11 +167,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt1, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt2, 32)
 
-/obj/structure/sign/departments/botany/botany/alt3
+/obj/structure/sign/departments/botany/alt3
 	sign_change_name = "Department - Botany (Tray) Alt"
 	icon_state = "botany"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3, 32)
+
+/obj/structure/sign/departments/bar
+	name = "\improper Bar sign"
+	sign_change_name = "Department - Bar (Wine Glass)"
+	desc = "A sign labelling an area where you can drink away your sorrows."
+	icon_state = "bar"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany, 32)
+
+/obj/structure/sign/departments/restaurant
+	name = "\improper Restaurant sign"
+	sign_change_name = "Department - Restaurant (Burger)"
+	desc = "A sign labelling an area where you can stuff yourself full."
+	icon_state = "restaurant"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany, 32)
 
 /obj/structure/sign/departments/custodian
 	name = "\improper Janitor sign"

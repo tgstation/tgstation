@@ -135,7 +135,7 @@
 	else
 		splatter_icon_state = "splatter[pick(3, 4, 5)]"
 
-	var/image/blood = image('icons/effects/blood.dmi', bleeding, splatter_icon_state, ABOVE_MOB_LAYER)
+	var/image/blood = image('icons/turf/floor_overlays/viscera.dmi', bleeding, splatter_icon_state, ABOVE_MOB_LAYER)
 	var/target_pixel_x = 0
 	var/target_pixel_y = 0
 	switch(set_dir)
@@ -175,7 +175,7 @@
 	if(!parent.hallucinator.client) // Purely visual, don't need to do this for clientless mobs
 		return
 
-	var/image/hit_effect = image('icons/effects/blood.dmi', hit_atom, is_wall ? hal_impact_effect_wall : hal_impact_effect, ABOVE_MOB_LAYER)
+	var/image/hit_effect = image('icons/turf/floor_overlays/viscera.dmi', hit_atom, is_wall ? hal_impact_effect_wall : hal_impact_effect, ABOVE_MOB_LAYER)
 	hit_effect.pixel_x = hit_atom.pixel_x + rand(-4,4)
 	hit_effect.pixel_y = hit_atom.pixel_y + rand(-4,4)
 	parent.hallucinator.client.images |= hit_effect

@@ -1,5 +1,5 @@
 /datum/hud/revenant
-	ui_style = 'icons/hud/screen_gen.dmi'
+	ui_style = 'icons/ui/hud/screen_gen.dmi'
 
 /datum/hud/revenant/New(mob/owner)
 	..()

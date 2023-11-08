@@ -6,7 +6,7 @@
 	var/list/essentials = list(
 		'icons/obj/medical/iv_drip.dmi' = list("plumb"),
 		'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi' = list("nduct"),
-		'icons/hud/radial.dmi' = list(
+		'icons/ui/hud/radial.dmi' = list(
 			"plumbing_layer1",
 			"plumbing_layer2",
 			"plumbing_layer4",

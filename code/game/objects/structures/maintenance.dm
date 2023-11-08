@@ -144,8 +144,8 @@ at the cost of risking a vicious bite.**/
 	if(.)
 		return
 	var/list/altar_options = list(
-		"Change Color" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_recolor"),
-		"Create Artefact" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_create")
+		"Change Color" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_recolor"),
+		"Create Artefact" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_create")
 	)
 	var/altar_result = show_radial_menu(user, src, altar_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	switch(altar_result)

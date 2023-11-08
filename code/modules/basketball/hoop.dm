@@ -69,25 +69,25 @@
 		if(WEST)
 			dir_offset_x = 32
 
-	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "basketball_scorecard")
+	var/mutable_appearance/scoreboard = mutable_appearance('icons/turf/wall_overlays/signs.dmi', "basketball_scorecard")
 	scoreboard.pixel_x = dir_offset_x
 	scoreboard.pixel_y = dir_offset_y
 	SET_PLANE_EXPLICIT(scoreboard, GAME_PLANE, src)
 	. += scoreboard
 
 	var/ones = total_score % 10
-	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]", layer + 0.01)
+	var/mutable_appearance/ones_overlay = mutable_appearance('icons/turf/wall_overlays/signs.dmi', "days_[ones]", layer + 0.01)
 	ones_overlay.pixel_x = 4
-	var/mutable_appearance/emissive_ones_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[ones]", src, alpha = src.alpha)
+	var/mutable_appearance/emissive_ones_overlay  = emissive_appearance('icons/turf/wall_overlays/signs.dmi', "days_[ones]", src, alpha = src.alpha)
 	emissive_ones_overlay.pixel_x = 4
 	scoreboard.add_overlay(ones_overlay)
 	scoreboard.add_overlay(emissive_ones_overlay)
 
 	var/tens = (total_score / 10) % 10
-	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]", layer + 0.01)
+	var/mutable_appearance/tens_overlay = mutable_appearance('icons/turf/wall_overlays/signs.dmi', "days_[tens]", layer + 0.01)
 	tens_overlay.pixel_x = -5
 
-	var/mutable_appearance/emissive_tens_overlay  = emissive_appearance('icons/obj/signs.dmi', "days_[tens]", src, alpha = src.alpha)
+	var/mutable_appearance/emissive_tens_overlay  = emissive_appearance('icons/turf/wall_overlays/signs.dmi', "days_[tens]", src, alpha = src.alpha)
 	emissive_tens_overlay.pixel_x = -5
 	scoreboard.add_overlay(tens_overlay)
 	scoreboard.add_overlay(emissive_tens_overlay)

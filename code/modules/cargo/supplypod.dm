@@ -3,7 +3,7 @@
 /obj/structure/closet/supplypod
 	name = "supply pod" //Names and descriptions are normally created with the setStyle() proc during initialization, but we have these default values here as a failsafe
 	desc = "A Nanotrasen supply drop pod."
-	icon = 'icons/obj/supplypods.dmi'
+	icon = 'icons/effects/supplypods.dmi'
 	icon_state = "pod" //This is a common base sprite shared by a number of pods
 	pixel_x = SUPPLYPOD_X_OFFSET //2x2 sprite
 	layer = BELOW_OBJ_LAYER //So that the crate inside doesn't appear underneath
@@ -507,7 +507,7 @@
 //------------------------------------TEMPORARY_VISUAL-------------------------------------//
 /obj/effect/supplypod_smoke //Falling pod smoke
 	name = ""
-	icon = 'icons/obj/supplypods_32x32.dmi'
+	icon = 'icons/effects/supplypods_32x32.dmi'
 	icon_state = "smoke"
 	desc = ""
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -516,7 +516,7 @@
 
 /obj/effect/engineglow //Falling pod smoke
 	name = ""
-	icon = 'icons/obj/supplypods.dmi'
+	icon = 'icons/effects/supplypods.dmi'
 	icon_state = "pod_glow_green"
 	desc = ""
 	layer = GASFIRE_LAYER
@@ -535,7 +535,7 @@
 /obj/effect/supplypod_rubble //This is the object that forceMoves the supplypod to it's location
 	name = "debris"
 	desc = "A small crater of rubble. Closer inspection reveals the debris to be made primarily of space-grade metal fragments. You're pretty sure that this will disperse before too long."
-	icon = 'icons/obj/supplypods.dmi'
+	icon = 'icons/effects/supplypods.dmi'
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER // We want this to go right below the layer of supplypods and supplypod_rubble's forground.
 	icon_state = "rubble_bg"
 	anchored = TRUE
@@ -544,7 +544,7 @@
 	var/verticle_offset = 0
 
 /obj/effect/supplypod_rubble/proc/getForeground(obj/structure/closet/supplypod/pod)
-	var/mutable_appearance/rubble_overlay = mutable_appearance('icons/obj/supplypods.dmi', foreground)
+	var/mutable_appearance/rubble_overlay = mutable_appearance('icons/effects/supplypods.dmi', foreground)
 	rubble_overlay.appearance_flags = KEEP_APART|RESET_TRANSFORM
 	rubble_overlay.transform = matrix().Translate(SUPPLYPOD_X_OFFSET - pod.pixel_x, verticle_offset)
 	return rubble_overlay
@@ -570,7 +570,7 @@
 /obj/effect/pod_landingzone_effect
 	name = ""
 	desc = ""
-	icon = 'icons/obj/supplypods_32x32.dmi'
+	icon = 'icons/effects/supplypods_32x32.dmi'
 	icon_state = "LZ_Slider"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 
@@ -585,7 +585,7 @@
 /obj/effect/pod_landingzone //This is the object that forceMoves the supplypod to it's location
 	name = "Landing Zone Indicator"
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
-	icon = 'icons/obj/supplypods_32x32.dmi'
+	icon = 'icons/effects/supplypods_32x32.dmi'
 	icon_state = "LZ"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	light_range = 2

@@ -269,7 +269,7 @@
 /datum/action/cooldown/golem_ore_sight
 	name = "Ore Resonance"
 	desc = "Causes nearby ores to vibrate, revealing their location."
-	button_icon = 'icons/obj/device.dmi'
+	button_icon = 'icons/obj/devices/device.dmi'
 	button_icon_state = "manual_mining"
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 10 SECONDS

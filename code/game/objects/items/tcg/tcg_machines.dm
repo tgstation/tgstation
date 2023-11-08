@@ -53,10 +53,10 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		var/list/choices = GLOB.tcgcard_machine_radial_choices
 		if(!length(choices))
 			choices = GLOB.tcgcard_machine_radial_choices = list(
-			"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
-			"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
-			"Mark" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mark"),
-			"Modify" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_modify"),
+			"Pickup" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_pickup"),
+			"Tap" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_tap"),
+			"Mark" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_mark"),
+			"Modify" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_modify"),
 			)
 		var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 		if(!check_menu(user))
@@ -334,9 +334,9 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 /obj/machinery/trading_card_button/proc/setup_radial()
 	var/radial_choices
 	radial_choices = GLOB.tcgcard_mana_bar_radial_choices = list(
-	"Set Mana" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_set_mana"),
-	"Set Mana Slots" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_set_slots"),
-	"Next Turn" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_next"),
+	"Set Mana" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_set_mana"),
+	"Set Mana Slots" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_set_slots"),
+	"Next Turn" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_next"),
 	)
 	return radial_choices
 
@@ -379,8 +379,8 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 /obj/machinery/trading_card_button/health/setup_radial()
 	var/radial_choices
 	radial_choices = GLOB.tcgcard_health_bar_radial_choices = list(
-	"Set Life" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_set_life"),
-	"Inflict Damage" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_damage"),
+	"Set Life" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_set_life"),
+	"Inflict Damage" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_damage"),
 	)
 	return radial_choices
 

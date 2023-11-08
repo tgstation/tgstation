@@ -94,7 +94,7 @@
 	return !isnull(alerts[category])
 
 /atom/movable/screen/alert
-	icon = 'icons/hud/screen_alert.dmi'
+	icon = 'icons/ui/hud/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
@@ -506,7 +506,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/bloodsense/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	narnar = new('icons/hud/screen_alert.dmi', "mini_nar")
+	narnar = new('icons/ui/hud/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
 
 /atom/movable/screen/alert/bloodsense/Destroy()

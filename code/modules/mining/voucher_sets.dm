@@ -29,7 +29,7 @@
 /datum/voucher_set/extraction_kit
 	name = "Extraction and Rescue Kit"
 	description = "Contains a fulton extraction pack and a beacon signaller, which allows you to send back home minerals, items and dead bodies without having to use the mining shuttle. And as a bonus, you get 30 marker beacons to help you better mark your path."
-	icon = 'icons/obj/fulton.dmi'
+	icon = 'icons/obj/mining_zones/fulton.dmi'
 	icon_state = "extraction_pack"
 	set_items = list(
 		/obj/item/extraction_pack,
@@ -71,7 +71,7 @@
 /datum/voucher_set/conscription_kit
 	name = "Mining Conscription Kit"
 	description = "Contains a whole new mining starter kit for one crewmember, consisting of a proto-kinetic accelerator, a survival knife, a seclite, an explorer's suit, a mesons, an automatic mining scanner, a mining satchel, a gas mask, a mining radio key and a special ID card with a basic mining access."
-	icon = 'icons/obj/storage/backpack.dmi'
+	icon = 'icons/obj/clothing/backpack.dmi'
 	icon_state = "duffel-explorer"
 	set_items = list(
 		/obj/item/storage/backpack/duffelbag/mining_conscript,

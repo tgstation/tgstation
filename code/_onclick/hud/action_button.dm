@@ -242,7 +242,7 @@
 
 /atom/movable/screen/button_palette
 	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click</b> this to reset all buttons"
-	icon = 'icons/hud/64x16_actions.dmi'
+	icon = 'icons/ui/hud/64x16_actions.dmi'
 	icon_state = "screen_gen_palette"
 	screen_loc = ui_action_palette
 	var/datum/hud/our_hud
@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 	closeToolTip(usr) //Our tooltips are now invalid, can't seem to update them in one frame, so here, just close them
 
 /atom/movable/screen/palette_scroll
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = ui_palette_scroll
 	/// How should we move the palette's actions?
 	/// Positive scrolls down the list, negative scrolls back
@@ -438,7 +438,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 /atom/movable/screen/action_landing
 	name = "Button Space"
 	desc = "<b>Drag and drop</b> a button into this spot<br>to add it to the group"
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	icon_state = "reserved"
 	// We want our whole 32x32 space to be clickable, so dropping's forgiving
 	mouse_opacity = MOUSE_OPACITY_OPAQUE

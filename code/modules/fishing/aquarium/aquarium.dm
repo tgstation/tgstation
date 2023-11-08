@@ -8,7 +8,7 @@
 	density = TRUE
 	anchored = TRUE
 
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/structures/aquarium.dmi'
 	icon_state = "aquarium_base"
 
 	integrity_failure = 0.3

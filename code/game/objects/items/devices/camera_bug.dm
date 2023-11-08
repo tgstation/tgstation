@@ -8,7 +8,7 @@
 /obj/item/camera_bug
 	name = "camera bug"
 	desc = "For illicit snooping through the camera network."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "camera_bug"
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "camera_bug"

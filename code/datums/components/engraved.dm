@@ -79,7 +79,7 @@
 /datum/component/engraved/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
-	overlays += mutable_appearance('icons/turf/wall_overlays.dmi', "engraving[icon_state_append]")
+	overlays += mutable_appearance('icons/turf/wall_overlays/scribbles.dmi', "engraving[icon_state_append]")
 
 ///signal called on parent being examined
 /datum/component/engraved/proc/on_examine(datum/source, mob/user, list/examine_list)

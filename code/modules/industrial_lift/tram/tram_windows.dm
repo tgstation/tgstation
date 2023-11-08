@@ -1,7 +1,7 @@
 /obj/structure/window/reinforced/tram
 	name = "tram window"
 	desc = "A window made out of a titanium-silicate alloy. It looks tough to break. Is that a challenge?"
-	icon = 'icons/obj/smooth_structures/tram_window.dmi'
+	icon = 'icons/obj/structures/smooth/tram_window.dmi'
 	icon_state = "tram_mid"
 	smoothing_flags = SMOOTH_BITMASK|SMOOTH_BORDER_OBJECT
 	canSmoothWith = SMOOTH_GROUP_WINDOW_DIRECTIONAL_TRAM

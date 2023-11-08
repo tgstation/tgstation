@@ -67,7 +67,7 @@
 	name = "Station Night Shutters"
 	},
 /turf/closed/indestructible/fakeglass{
-	icon = 'icons/obj/smooth_structures/paperframes.dmi';
+	icon = 'icons/obj/structures/smooth/paperframes.dmi';
 	icon_state = "paper"
 	},
 /area/centcom/mafia)

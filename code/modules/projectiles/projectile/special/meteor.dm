@@ -1,6 +1,6 @@
 /obj/projectile/meteor
 	name = "meteor"
-	icon = 'icons/obj/meteor.dmi'
+	icon = 'icons/effects/meteor.dmi'
 	icon_state = "small1"
 	damage = 90
 	paralyze = 100

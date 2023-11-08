@@ -20,7 +20,7 @@
 *
 * * Credits:
 * - Original Tongue Tied created by @Wallemations (https://github.com/tgstation/tgstation/pull/52907)
-* - Action sprite created by @Wallemations (icons/hud/actions.dmi:sign_language)
+* - Action sprite created by @Wallemations (icons/ui/hud/actions.dmi:sign_language)
 */
 /datum/component/sign_language
 	/// The tonal indicator shown when sign language users finish sending a message. If it's empty, none appears.

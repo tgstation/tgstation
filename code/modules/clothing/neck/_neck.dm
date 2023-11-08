@@ -15,7 +15,7 @@
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 		if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+			. += mutable_appearance('icons/turf/floor_overlays/viscera.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
 	name = "slick tie"

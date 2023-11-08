@@ -52,13 +52,13 @@
 /turf/closed/indestructible/weeb
 	name = "paper wall"
 	desc = "Reinforced paper walling. Someone really doesn't want you to leave."
-	icon = 'icons/obj/smooth_structures/paperframes.dmi'
+	icon = 'icons/obj/structures/smooth/paperframes.dmi'
 	icon_state = "paperframes-0"
 	base_icon_state = "paperframes"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_PAPERFRAME
 	canSmoothWith = SMOOTH_GROUP_PAPERFRAME
-	var/static/mutable_appearance/indestructible_paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = CLOSED_TURF_LAYER - 0.1)
+	var/static/mutable_appearance/indestructible_paper = mutable_appearance('icons/obj/structures/smooth/paperframes.dmi',icon_state = "paper", layer = CLOSED_TURF_LAYER - 0.1)
 
 /turf/closed/indestructible/weeb/Initialize(mapload)
 	. = ..()
@@ -211,7 +211,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/fakeglass
 	name = "window"
-	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
+	icon = 'icons/obj/structures/smooth/reinforced_window.dmi'
 	icon_state = "fake_window"
 	base_icon_state = "reinforced_window"
 	opacity = FALSE
@@ -226,7 +226,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
+	icon = 'icons/obj/structures/smooth/plastitanium_window.dmi'
 	icon_state = "plastitanium_window-0"
 	base_icon_state = "plastitanium_window"
 	opacity = FALSE
@@ -345,7 +345,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/resin
 	name = "resin wall"
-	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_wall.dmi'
 	icon_state = "resin_wall-0"
 	base_icon_state = "resin_wall"
 	smoothing_flags = SMOOTH_BITMASK
@@ -354,7 +354,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/resin/membrane
 	name = "resin membrane"
-	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
+	icon = 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
 	icon_state = "resin_membrane-0"
 	base_icon_state = "resin_membrane"
 	opacity = FALSE

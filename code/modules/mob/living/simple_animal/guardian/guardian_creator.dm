@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	for(var/mob/living/simple_animal/hostile/guardian/guardian_path as anything in subtypesof(/mob/living/simple_animal/hostile/guardian))
 		var/datum/radial_menu_choice/option = new()
 		option.name = initial(guardian_path.creator_name)
-		option.image = image(icon = 'icons/hud/guardian.dmi', icon_state = initial(guardian_path.creator_icon))
+		option.image = image(icon = 'icons/ui/hud/guardian.dmi', icon_state = initial(guardian_path.creator_icon))
 		option.info = span_boldnotice(initial(guardian_path.creator_desc))
 		.[guardian_path] = option
 

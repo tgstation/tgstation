@@ -5,7 +5,7 @@
  */
 /atom/movable/screen/background
 	name = "background"
-	icon = 'icons/hud/map_backgrounds.dmi'
+	icon = 'icons/ui/hud/map_backgrounds.dmi'
 	icon_state = "clear"
 	layer = GAME_PLANE
 	plane = GAME_PLANE

@@ -16,11 +16,11 @@
 	var/speed = 1
 	var/list/holdingitems
 
-	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
-	var/static/radial_eject = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_eject")
-	var/static/radial_grind = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
-	var/static/radial_juice = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
-	var/static/radial_mix = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mix")
+	var/static/radial_examine = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_examine")
+	var/static/radial_eject = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_eject")
+	var/static/radial_grind = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_grind")
+	var/static/radial_juice = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_juice")
+	var/static/radial_mix = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_mix")
 
 /obj/machinery/reagentgrinder/Initialize(mapload)
 	. = ..()

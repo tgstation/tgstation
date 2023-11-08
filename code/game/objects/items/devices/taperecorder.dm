@@ -1,7 +1,7 @@
 /obj/item/taperecorder
 	name = "universal recorder"
 	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "taperecorder_empty"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "analyzer"
@@ -23,7 +23,7 @@
 	var/open_panel = FALSE
 	var/canprint = TRUE
 	var/list/icons_available = list()
-	var/radial_icon_file = 'icons/hud/radial_taperecorder.dmi'
+	var/radial_icon_file = 'icons/ui/hud/radial_taperecorder.dmi'
 	///Whether we've warned during this recording session that the tape is almost up.
 	var/time_warned = FALSE
 	///Seconds under which to warn that the tape is almost up.
@@ -369,7 +369,7 @@
 	name = "tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
 	icon_state = "tape_white"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -393,7 +393,7 @@
 	var/list/timestamp_otherside = list()
 	var/unspooled = FALSE
 	var/list/icons_available = list()
-	var/radial_icon_file = 'icons/hud/radial_tape.dmi'
+	var/radial_icon_file = 'icons/ui/hud/radial_tape.dmi'
 
 /obj/item/tape/Initialize(mapload)
 	. = ..()

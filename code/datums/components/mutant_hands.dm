@@ -144,7 +144,7 @@
 /obj/item/mutant_hand
 	name = "mutant hand"
 	desc = "Won't somebody give me a hand?"
-	icon = 'icons/effects/blood.dmi'
+	icon = 'icons/turf/floor_overlays/viscera.dmi'
 	icon_state = "bloodhand_left"
 	base_icon_state = "bloodhand"
 	item_flags = ABSTRACT | DROPDEL | HAND_ITEM

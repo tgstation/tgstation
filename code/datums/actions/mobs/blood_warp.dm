@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_warp
 	name = "Blood Warp"
-	button_icon = 'icons/effects/blood.dmi'
+	button_icon = 'icons/turf/floor_overlays/viscera.dmi'
 	button_icon_state = "floor1"
 	desc = "Allows you to teleport to blood at a clicked position."
 	cooldown_time = 0

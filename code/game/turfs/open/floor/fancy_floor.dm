@@ -161,7 +161,7 @@
 	icon_state = "sand"
 	broken = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	damaged_dmi = 'icons/turf/damaged.dmi'
+	damaged_dmi = 'icons/turf/floor_overlays/damaged.dmi'
 
 /turf/open/floor/grass/lavaland/spawniconchange()
 	return

@@ -1,5 +1,5 @@
 /datum/hud/guardian
-	ui_style = 'icons/hud/guardian.dmi'
+	ui_style = 'icons/ui/hud/guardian.dmi'
 
 /datum/hud/guardian/New(mob/living/simple_animal/hostile/guardian/owner)
 	..()
@@ -100,7 +100,7 @@
 	..()
 
 /atom/movable/screen/guardian
-	icon = 'icons/hud/guardian.dmi'
+	icon = 'icons/ui/hud/guardian.dmi'
 
 /atom/movable/screen/guardian/manifest
 	icon_state = "manifest"

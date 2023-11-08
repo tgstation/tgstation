@@ -3,7 +3,7 @@
 /obj/effect/meteor
 	name = "\proper the concept of meteor"
 	desc = "You should probably run instead of gawking at this."
-	icon = 'icons/obj/meteor.dmi'
+	icon = 'icons/effects/meteor.dmi'
 	icon_state = "small"
 	density = TRUE
 	anchored = TRUE
@@ -457,7 +457,7 @@
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
-	icon = 'icons/obj/meteor_spooky.dmi'
+	icon = 'icons/effects/meteor_spooky.dmi'
 	icon_state = "pumpkin"
 	hits = 10
 	heavy = TRUE

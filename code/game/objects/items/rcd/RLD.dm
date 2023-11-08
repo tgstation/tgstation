@@ -31,7 +31,7 @@
 
 	///reference to thr original icons
 	var/list/original_options = list(
-		"Color Pick" = icon(icon = 'icons/hud/radial.dmi', icon_state = "omni"),
+		"Color Pick" = icon(icon = 'icons/ui/hud/radial.dmi', icon_state = "omni"),
 		"Glow Stick" = icon(icon = 'icons/obj/lighting.dmi', icon_state = "glowstick"),
 		"Deconstruct" = icon(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Light Fixture" = icon(icon = 'icons/obj/lighting.dmi', icon_state = "ltube"),

@@ -478,8 +478,8 @@
 				to_chat(user, span_warning("You are too tired to work!"))
 				return
 			var/list/choose_options = list(
-				"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
-				"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
+				"Grind" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_grind"),
+				"Juice" = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_juice")
 			)
 			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
 			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)

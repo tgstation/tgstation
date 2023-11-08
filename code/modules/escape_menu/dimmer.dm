@@ -1,5 +1,5 @@
 /atom/movable/screen/fullscreen/dimmer
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "black"
 	alpha = 200

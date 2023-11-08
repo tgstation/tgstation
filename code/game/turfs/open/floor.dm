@@ -20,7 +20,7 @@
 
 
 	overfloor_placed = TRUE
-	damaged_dmi = 'icons/turf/damaged.dmi'
+	damaged_dmi = 'icons/turf/floor_overlays/damaged.dmi'
 	/// Path of the tile that this floor drops
 	var/floor_tile = null
 	/// Determines if you can deconstruct this with a RCD

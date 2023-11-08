@@ -27,7 +27,7 @@
 
 /obj/structure/spawner/syndicate
 	name = "warp beacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
 	mob_types = list(/mob/living/basic/syndicate/ranged)
@@ -49,7 +49,7 @@
 	name = "Laughing Larry"
 	desc = "A laughing, jovial figure. Something seems stuck in his throat."
 	icon_state = "clownbeacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	max_integrity = 200
 	max_mobs = 15
 	spawn_time = 15 SECONDS

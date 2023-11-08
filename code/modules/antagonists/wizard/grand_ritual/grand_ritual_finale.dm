@@ -351,7 +351,7 @@
 	name = "Annihilation"
 	desc = "This crew have offended you beyond the realm of pranks. Make the ultimate sacrifice to teach them a lesson your elders can really respect. \
 		YOU WILL NOT SURVIVE THIS."
-	icon = 'icons/hud/screen_alert.dmi'
+	icon = 'icons/ui/hud/screen_alert.dmi'
 	icon_state = "wounded"
 	minimum_time = 90 MINUTES // This will probably immediately end the round if it gets finished.
 	ritual_invoke_time = 60 SECONDS // Really give the crew some time to interfere with this one.

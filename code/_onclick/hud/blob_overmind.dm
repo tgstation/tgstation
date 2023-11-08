@@ -1,6 +1,6 @@
 
 /atom/movable/screen/blob
-	icon = 'icons/hud/blob.dmi'
+	icon = 'icons/ui/hud/blob.dmi'
 
 /atom/movable/screen/blob/MouseEntered(location,control,params)
 	. = ..()

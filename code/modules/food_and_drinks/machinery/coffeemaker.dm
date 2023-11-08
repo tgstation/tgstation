@@ -30,14 +30,14 @@
 	var/creamer_packs = 10
 	var/max_creamer_packs = 10
 
-	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
-	var/static/radial_brew = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_brew")
-	var/static/radial_eject_pot = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_eject_pot")
-	var/static/radial_eject_cartridge = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_eject_cartridge")
-	var/static/radial_take_cup = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_take_cup")
-	var/static/radial_take_sugar = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_take_sugar")
-	var/static/radial_take_sweetener = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_take_sweetener")
-	var/static/radial_take_creamer = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_take_creamer")
+	var/static/radial_examine = image(icon = 'icons/ui/hud/radial.dmi', icon_state = "radial_examine")
+	var/static/radial_brew = image(icon = 'icons/ui/hud/radial_coffee.dmi', icon_state = "radial_brew")
+	var/static/radial_eject_pot = image(icon = 'icons/ui/hud/radial_coffee.dmi', icon_state = "radial_eject_pot")
+	var/static/radial_eject_cartridge = image(icon = 'icons/ui/hud/radial_coffee.dmi', icon_state = "radial_eject_cartridge")
+	var/static/radial_take_cup = image(icon = 'icons/ui/hud/radial_coffee.dmi', icon_state = "radial_take_cup")
+	var/static/radial_take_sugar = image(icon = 'icons/ui/hud/radial_coffee.dmi', icon_state = "radial_take_sugar")
+	var/static/radial_take_sweetener = image(icon = 'icons/ui/hud/radial_coffee.dmi', icon_state = "radial_take_sweetener")
+	var/static/radial_take_creamer = image(icon = 'icons/ui/hud/radial_coffee.dmi', icon_state = "radial_take_creamer")
 
 /obj/machinery/coffeemaker/Initialize(mapload)
 	. = ..()

@@ -1156,7 +1156,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/broken_floor
 	name = "broken floor"
-	icon = 'icons/turf/damaged.dmi'
+	icon = 'icons/turf/floor_overlays/damaged.dmi'
 	icon_state = "damaged1"
 	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -1172,7 +1172,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/burnt_floor
 	name = "burnt floor"
-	icon = 'icons/turf/damaged.dmi'
+	icon = 'icons/turf/floor_overlays/damaged.dmi'
 	icon_state = "floorscorched1"
 	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
@@ -1326,7 +1326,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/engraving
 	name = "engraving helper"
-	icon = 'icons/turf/wall_overlays.dmi'
+	icon = 'icons/turf/wall_overlays/scribbles.dmi'
 	icon_state = "engraving2"
 	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER

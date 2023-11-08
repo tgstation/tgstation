@@ -73,7 +73,7 @@
 			screen.plane = GET_NEW_PLANE(initial(screen.plane), offset)
 
 /atom/movable/screen/fullscreen
-	icon = 'icons/hud/screen_full.dmi'
+	icon = 'icons/ui/hud/screen_full.dmi'
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
@@ -139,27 +139,27 @@
 	icon_state = "impairedoverlay"
 
 /atom/movable/screen/fullscreen/flash
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 
 /atom/movable/screen/fullscreen/flash/black
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "black"
 
 /atom/movable/screen/fullscreen/flash/static
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "noise"
 
 /atom/movable/screen/fullscreen/high
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
 /atom/movable/screen/fullscreen/color_vision
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	alpha = 80
@@ -182,7 +182,7 @@
 	color = "#0000ff"
 
 /atom/movable/screen/fullscreen/cinematic_backdrop
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	plane = SPLASHSCREEN_PLANE
@@ -191,7 +191,7 @@
 	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/lighting_backdrop
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	icon_state = "flash"
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	plane = LIGHTING_PLANE

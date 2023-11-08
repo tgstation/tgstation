@@ -1,7 +1,7 @@
 /obj/item/storage/drone_tools
 	name = "built-in tools"
 	desc = "Access your built-in tools."
-	icon = 'icons/hud/screen_drone.dmi'
+	icon = 'icons/ui/hud/screen_drone.dmi'
 	icon_state = "tool_storage"
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

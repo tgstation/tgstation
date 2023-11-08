@@ -38,7 +38,7 @@
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 
 	/// This is the file for the icon that appears on the button
-	var/button_icon = 'icons/hud/actions.dmi'
+	var/button_icon = 'icons/ui/hud/actions.dmi'
 	/// This is the icon state for the icon that appears on the button
 	var/button_icon_state = "default"
 

@@ -11,7 +11,7 @@
 	infodisplay += alien_plasma_display
 
 /atom/movable/screen/ooze_nutrition_display
-	icon = 'icons/hud/screen_alien.dmi'
+	icon = 'icons/ui/hud/screen_alien.dmi'
 	icon_state = "power_display"
 	name = "nutrition"
 	screen_loc = ui_alienplasmadisplay

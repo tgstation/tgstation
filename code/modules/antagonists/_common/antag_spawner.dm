@@ -97,7 +97,7 @@
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "locator"
 	var/borg_to_spawn
 	/// The name of the special role given to the recruit
@@ -179,7 +179,7 @@
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "locator"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault

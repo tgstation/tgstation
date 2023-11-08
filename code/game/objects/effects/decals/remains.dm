@@ -1,7 +1,7 @@
 /obj/effect/decal/remains
 	name = "remains"
 	gender = PLURAL
-	icon = 'icons/effects/blood.dmi'
+	icon = 'icons/turf/floor_overlays/viscera.dmi'
 
 /obj/effect/decal/remains/acid_act()
 	visible_message(span_warning("[src] dissolve[gender == PLURAL?"":"s"] into a puddle of sizzling goop!"))

@@ -79,7 +79,7 @@
 		if(!option)
 			option = new
 		var/icon_state_to_use = hexcolor == selected_color ? "palette_selected" : "palette_element"
-		var/image/element = image(icon = 'icons/hud/radial.dmi', icon_state = icon_state_to_use)
+		var/image/element = image(icon = 'icons/ui/hud/radial.dmi', icon_state = icon_state_to_use)
 		element.color = hexcolor
 		option.image = element
 		// We want only the name/tooltip to show the hexcolor to avoid having multiple choices with same ids (identical colors).

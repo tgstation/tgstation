@@ -1,7 +1,7 @@
 /obj/item/rolling_table_dock
 	name = "rolling table dock"
 	desc = "A collapsed roller table that can be ejected for service on the go. Must be collected or replaced after use."
-	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
+	icon = 'icons/obj/structures/smooth/rollingtable.dmi'
 	icon_state = "rollingtable"
 	var/obj/structure/table/rolling/loaded = null
 

@@ -2,7 +2,7 @@
 	name = "airlock painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
 	desc_controls = "Alt-Click to remove the ink cartridge."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "paint_sprayer"
 	inhand_icon_state = "paint_sprayer"
 	worn_icon_state = "painter"
@@ -160,7 +160,7 @@
 	name = "decal painter"
 	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
 	desc_controls = "Alt-Click to remove the ink cartridge."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "decal_sprayer"
 	inhand_icon_state = "decal_sprayer"
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
@@ -235,7 +235,7 @@
  * * target - The turf being painted to
 */
 /obj/item/airlock_painter/decal/proc/paint_floor(turf/open/floor/target)
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/floor_overlays/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, FALSE, null)
 
 /**
  * Return the final icon_state for the given decal options
@@ -359,7 +359,7 @@
 	// Special case due to icon_state names
 	var/icon_state_color = color == "yellow" ? "" : color
 
-	var/icon/final = blend_preview_floor(icon('icons/turf/decals.dmi', "[decal][icon_state_color ? "_" : ""][icon_state_color]", dir))
+	var/icon/final = blend_preview_floor(icon('icons/turf/floor_overlays/decals.dmi', "[decal][icon_state_color ? "_" : ""][icon_state_color]", dir))
 	Insert("[decal]_[dir]_[color]", final)
 
 /datum/asset/spritesheet/decals/create_spritesheets()
@@ -440,7 +440,7 @@
 		decal_color = rgba_regex.group[1]
 		decal_alpha = text2num(rgba_regex.group[2], 16)
 
-	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, FALSE, null)
+	target.AddElement(/datum/element/decal, 'icons/turf/floor_overlays/decals.dmi', source_decal, source_dir, null, null, decal_alpha, decal_color, null, FALSE, null)
 
 /datum/asset/spritesheet/decals/tiles
 	name = "floor_tile_decals"
@@ -462,7 +462,7 @@
 		render_color = tile_type.rgba_regex.group[1]
 		render_alpha = text2num(tile_type.rgba_regex.group[2], 16)
 
-	var/icon/colored_icon = icon('icons/turf/decals.dmi', source_decal, dir=source_dir)
+	var/icon/colored_icon = icon('icons/turf/floor_overlays/decals.dmi', source_decal, dir=source_dir)
 	colored_icon.ChangeOpacity(render_alpha * 0.008)
 	if(color == "custom")
 		// Do a fun rainbow pattern to stand out while still being static.

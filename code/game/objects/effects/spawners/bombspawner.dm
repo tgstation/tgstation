@@ -4,7 +4,7 @@
  */
 /obj/effect/spawner/newbomb
 	name = "bomb"
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	icon_state = "x"
 	/* Gasmixes for tank_one and tank_two of the ttv respectively.
 	 * Populated on /obj/effect/spawner/newbomb/Initialize, depopulated right after by the children procs.

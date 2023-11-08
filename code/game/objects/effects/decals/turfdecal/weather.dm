@@ -14,7 +14,7 @@
 
 /obj/effect/turf_decal/weather/dirt
 	name = "dirt siding"
-	icon = 'icons/turf/decals.dmi'
+	icon = 'icons/turf/floor_overlays/decals.dmi'
 	icon_state = "dirt_side"
 
 /obj/effect/turf_decal/weather/sand

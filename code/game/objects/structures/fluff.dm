@@ -198,7 +198,7 @@
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
 	desc = "A towel decorated in various beach-themed designs."
-	icon = 'icons/obj/railings.dmi'
+	icon = 'icons/obj/structures/railings.dmi'
 	icon_state = "railing"
 	density = FALSE
 	anchored = TRUE

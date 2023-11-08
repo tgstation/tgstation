@@ -1,6 +1,6 @@
 /obj/effect/spawner/costume
 	name = "costume spawner"
-	icon = 'icons/hud/screen_gen.dmi'
+	icon = 'icons/ui/hud/screen_gen.dmi'
 	icon_state = "x2"
 	color = "#00FF00"
 

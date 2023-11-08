@@ -18,7 +18,7 @@
 	///Radio frequency to assign players with this outfit
 	var/team_radio_freq = FREQ_COMMON // they won't be able to use this on the centcom z-level, so ffa players cannot use radio
 	///Icon file for the class radial menu icons
-	var/icon = 'icons/hud/radial_ctf.dmi'
+	var/icon = 'icons/ui/hud/radial_ctf.dmi'
 	///Icon state for this class
 	var/icon_state = "ctf_rifleman"
 	///Do they get a headset?

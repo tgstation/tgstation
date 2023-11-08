@@ -55,7 +55,7 @@
 /obj/effect/powerup/health
 	name = "health pickup"
 	desc = "Blessing from the havens."
-	icon = 'icons/obj/storage/backpack.dmi'
+	icon = 'icons/obj/clothing/backpack.dmi'
 	icon_state = "backpack-medical"
 	respawn_time = 30 SECONDS
 	pickup_message = "Health restored!"

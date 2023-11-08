@@ -81,7 +81,7 @@
 	meter = new()
 	meter_image = new()
 	meter.vis_contents += meter_image
-	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
+	meter_image.add_filter("meter_mask", 1, list(type = "alpha", icon = icon('icons/ui/hud/style_meter.dmi', "style_meter"), flags = MASK_INVERSE))
 	meter.update_appearance()
 	meter_image.update_appearance()
 
