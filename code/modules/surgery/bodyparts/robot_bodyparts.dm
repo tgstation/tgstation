@@ -42,6 +42,7 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/arm/right/robot
 	name = "cyborg right arm"
@@ -75,6 +76,7 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot
 	name = "cyborg left leg"
@@ -108,6 +110,7 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot/emp_act(severity)
 	. = ..()
@@ -154,6 +157,7 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/right/robot/emp_act(severity)
 	. = ..()
@@ -197,11 +201,14 @@
 	biological_state = (BIO_ROBOTIC)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
+
+	robotic_emp_paralyze_damage_percent_threshold = 0.6
+
+	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
-
-	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
@@ -235,7 +242,45 @@
 
 /obj/item/bodypart/chest/robot/Destroy()
 	QDEL_NULL(cell)
+	UnregisterSignal(src, COMSIG_BODYPART_ATTACHED)
 	return ..()
+
+/obj/item/bodypart/chest/robot/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attached))
+	RegisterSignal(src, COMSIG_BODYPART_REMOVED, PROC_REF(on_detached))
+
+/obj/item/bodypart/chest/robot/proc/on_attached(obj/item/bodypart/chest/robot/this_bodypart, mob/living/carbon/human/new_owner)
+	SIGNAL_HANDLER
+
+	RegisterSignals(new_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB), PROC_REF(check_limbs))
+
+/obj/item/bodypart/chest/robot/proc/on_detached(obj/item/bodypart/chest/robot/this_bodypart, mob/living/carbon/human/old_owner)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(old_owner, list(COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
+
+/obj/item/bodypart/chest/robot/proc/check_limbs()
+	SIGNAL_HANDLER
+
+	var/all_robotic = TRUE
+	for(var/obj/item/bodypart/part in owner.bodyparts)
+		all_robotic = all_robotic && IS_ROBOTIC_LIMB(part)
+
+	if(all_robotic)
+		owner.add_traits(list(
+			TRAIT_RESISTCOLD,
+			TRAIT_RESISTHEAT,
+			TRAIT_RESISTLOWPRESSURE,
+			TRAIT_RESISTHIGHPRESSURE,
+			), AUGMENTATION_TRAIT)
+	else
+		owner.remove_traits(list(
+			TRAIT_RESISTCOLD,
+			TRAIT_RESISTHEAT,
+			TRAIT_RESISTLOWPRESSURE,
+			TRAIT_RESISTHIGHPRESSURE,
+			), AUGMENTATION_TRAIT)
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/stock_parts/cell))
@@ -332,6 +377,7 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 	head_flags = HEAD_EYESPRITES
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null

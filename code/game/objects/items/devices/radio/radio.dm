@@ -484,9 +484,9 @@
 	. = ..()
 	if(unscrewed)
 		return
-	if(broadcasting)
+	if(broadcasting && overlay_mic_idle)
 		. += overlay_mic_idle
-	if(listening)
+	if(listening && overlay_speaker_idle)
 		. += overlay_speaker_idle
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
@@ -531,6 +531,7 @@
 	subspace_transmission = TRUE
 	subspace_switchable = TRUE
 	dog_fashion = null
+	canhear_range = 0
 
 /obj/item/radio/borg/resetChannels()
 	. = ..()

@@ -23,6 +23,7 @@
 			target.set_light_power(0)
 			target.set_light_range(0)
 			target.set_light_on(FALSE)
+			target.update_icon()
 
 /datum/element/light_eaten/Detach(datum/source)
 	UnregisterSignal(source, list(
@@ -54,11 +55,9 @@
 /// Prevents the light from turning on while the light power is greater than 0.
 /datum/element/light_eaten/proc/block_light_on(atom/eaten_light, new_on)
 	SIGNAL_HANDLER
-	if(!new_on)
-		return NONE
-	if(eaten_light.light_power <= 0)
-		return NONE
-	return COMPONENT_BLOCK_LIGHT_UPDATE
+	if(new_on)
+		return COMPONENT_BLOCK_LIGHT_UPDATE
+	return NONE
 
 /// Signal handler for light eater flavortext
 /datum/element/light_eaten/proc/on_examine(atom/eaten_light, mob/examiner, list/examine_text)

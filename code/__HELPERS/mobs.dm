@@ -722,7 +722,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /mob/dview
 	name = "INTERNAL DVIEW MOB"
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	density = FALSE
 	move_resist = INFINITY
 	var/ready_to_die = FALSE

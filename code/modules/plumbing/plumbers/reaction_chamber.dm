@@ -3,6 +3,9 @@
 /// coefficient to convert temperature to joules. same lvl as acclimator
 #define HEATER_COEFFICIENT 0.05
 
+/// maximum number of attempts the reaction chamber will make to balance the ph(More means better results but higher tick usage)
+#define MAX_PH_ADJUSTMENTS 5
+
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
 	desc = "Keeps chemicals separated until given conditions are met."
@@ -43,7 +46,7 @@
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 
-	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
+	if(holder.total_volume <= CHEMICAL_VOLUME_ROUNDING && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
 	return NONE
@@ -53,9 +56,6 @@
 	var/power_usage = active_power_usage * 0.5
 
 	if(!emptying || reagents.is_reacting)
-		//do reactions and stuff
-		reagents.handle_reactions()
-
 		//adjust temperature of final solution
 		var/temp_diff = target_temperature - reagents.chem_temp
 		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
@@ -173,8 +173,15 @@
 	return ..()
 
 /obj/machinery/plumbing/reaction_chamber/chem/handle_reagents(seconds_per_tick)
-	while(reagents.ph < acidic_limit || reagents.ph > alkaline_limit)
+	var/ph_balance_attempts = 0
+	while(ph_balance_attempts < MAX_PH_ADJUSTMENTS && (reagents.ph < acidic_limit || reagents.ph > alkaline_limit))
+		//no power
 		if(machine_stat & NOPOWER)
+			return
+
+		//nothing to react with
+		var/num_of_reagents = length(reagents.reagent_list)
+		if(!num_of_reagents)
 			return
 
 		/**
@@ -186,13 +193,15 @@
 		if(!buffer.total_volume)
 			return
 
-		//transfer buffer and handle reactions, not a proven math but looks logical
-		var/transfer_amount = FLOOR((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)) * seconds_per_tick, CHEMICAL_QUANTISATION_LEVEL)
-		if(transfer_amount <= CHEMICAL_QUANTISATION_LEVEL || !buffer.trans_to(reagents, transfer_amount))
+		//transfer buffer and handle reactions
+		var/ph_change = (reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph))
+		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents))
+		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
 			return
 
-		//some power for accurate ph balancing
-		use_power(active_power_usage * 0.2 * seconds_per_tick)
+		//some power for accurate ph balancing & keep track of attempts made
+		use_power(active_power_usage * 0.03 * buffer_amount * seconds_per_tick)
+		ph_balance_attempts += 1
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -211,11 +220,11 @@
 
 	switch(action)
 		if("acidic")
-			acidic_limit = clamp(round(text2num(params["target"])), 0, alkaline_limit)
+			acidic_limit = clamp(round(text2num(params["target"])), CHEMICAL_MIN_PH, alkaline_limit - 1)
 		if("alkaline")
-			alkaline_limit = clamp(round(text2num(params["target"])), acidic_limit + 0.01, 14)
+			alkaline_limit = clamp(round(text2num(params["target"])), acidic_limit + 1, CHEMICAL_MAX_PH)
 		else
 			return FALSE
 
-
 #undef HEATER_COEFFICIENT
+#undef MAX_PH_ADJUSTMENTS

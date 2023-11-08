@@ -12,6 +12,8 @@
 	duration = 3 MINUTES // Given a default duration so no one gets to hold onto this buff forever by accident.
 	tick_interval = 1 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/unholy_determination
+	/// How much to heal every second
+	var/heal_per_second = 0.25
 
 /datum/status_effect/unholy_determination/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -27,7 +29,7 @@
 
 /datum/status_effect/unholy_determination/tick(seconds_between_ticks)
 	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.
-	var/healing_amount = (0.4 + (0.8 - owner.usable_legs))
+	var/healing_amount = (heal_per_second * seconds_between_ticks) + (heal_per_second * (2 - owner.usable_legs))
 
 	// In softcrit you're, strong enough to stay up.
 	if(owner.health <= owner.crit_threshold && owner.health >= owner.hardcrit_threshold)
@@ -49,8 +51,8 @@
 		playsound(owner, pick(GLOB.creepy_ambience), 50, TRUE)
 
 	adjust_all_damages(healing_amount, seconds_between_ticks)
-	adjust_temperature()
-	adjust_bleed_wounds()
+	adjust_temperature(seconds_between_ticks)
+	adjust_bleed_wounds(seconds_between_ticks)
 
 /*
  * Heals up all the owner a bit, fire stacks and losebreath included.
@@ -58,42 +60,42 @@
 /datum/status_effect/unholy_determination/proc/adjust_all_damages(amount, seconds_between_ticks)
 
 	owner.adjust_fire_stacks(-1)
-	owner.losebreath = max(owner.losebreath - 0.5, 0)
+	owner.losebreath = max(owner.losebreath - (0.5 * seconds_between_ticks), 0)
 
-	var/need_mob_update = FALSE
-	need_mob_update += owner.adjustToxLoss(-amount * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjustOxyLoss(-amount * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustBruteLoss(-amount * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustFireLoss(-amount * seconds_between_ticks, updating_health = FALSE)
-	if(need_mob_update)
+	var/damage_healed = 0
+	damage_healed += owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
+	damage_healed += owner.adjustOxyLoss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjustBruteLoss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjustFireLoss(-amount, updating_health = FALSE)
+	if(damage_healed > 0)
 		owner.updatehealth()
 
 /*
  * Adjust the owner's temperature up or down to standard body temperatures.
  */
-/datum/status_effect/unholy_determination/proc/adjust_temperature()
+/datum/status_effect/unholy_determination/proc/adjust_temperature(seconds_between_ticks)
 	var/target_temp = owner.get_body_temp_normal(apply_change = FALSE)
 	if(owner.bodytemperature > target_temp)
-		owner.adjust_bodytemperature(-50 * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
+		owner.adjust_bodytemperature(-50 * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_between_ticks, target_temp)
 	else if(owner.bodytemperature < (target_temp + 1))
-		owner.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
+		owner.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_between_ticks, target_temp)
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		if(human_owner.coretemperature > target_temp)
-			human_owner.adjust_coretemperature(-50 * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
+			human_owner.adjust_coretemperature(-50 * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_between_ticks, target_temp)
 		else if(human_owner.coretemperature < (target_temp + 1))
-			human_owner.adjust_coretemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
+			human_owner.adjust_coretemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_between_ticks, 0, target_temp)
 
 /*
  * Slow and stop any blood loss the owner's experiencing.
  */
-/datum/status_effect/unholy_determination/proc/adjust_bleed_wounds()
+/datum/status_effect/unholy_determination/proc/adjust_bleed_wounds(seconds_between_ticks)
 	if(!iscarbon(owner) || !owner.blood_volume)
 		return
 
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume = owner.blood_volume + 2
+		owner.blood_volume = owner.blood_volume + (2 * seconds_between_ticks)
 
 	var/mob/living/carbon/carbon_owner = owner
 	var/datum/wound/bloodiest_wound
@@ -104,4 +106,4 @@
 	if(!bloodiest_wound)
 		return
 
-	bloodiest_wound.adjust_blood_flow(-0.5)
+	bloodiest_wound.adjust_blood_flow(-0.5 * seconds_between_ticks)

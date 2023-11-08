@@ -16,6 +16,11 @@
 /// Chance to perform an emote per second
 #define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
 
+/// Something the mob will say when calling reinforcements
+#define BB_REINFORCEMENTS_SAY "BB_reinforcements_say"
+/// Something the mob will remote when calling reinforcements
+#define BB_REINFORCEMENTS_EMOTE "BB_reinforcements_emote"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 
@@ -43,6 +48,10 @@
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
+/// Key for the minimum status at which we want to target mobs (does not need to be specified if CONSCIOUS)
+#define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
+/// Flag for whether to target only wounded mobs
+#define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
 
 /// Blackboard key storing how long your targetting datum has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
@@ -118,3 +127,8 @@
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
 #define BB_SPEAK_CHANCE "emote_chance"
+
+/// A target that has called this mob for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENT_TARGET "BB_basic_mob_reinforcement_target"
+/// The next time at which this mob can call for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"

@@ -139,14 +139,13 @@
 	density = TRUE
 	max_integrity = 10
 	allow_walk = FALSE
+	armor_type = /datum/armor/structure_holosign/cyborg_barrier // Gets a special armor subtype which is extra good at defense.
 
-/obj/structure/holosign/barrier/cyborg/bullet_act(obj/projectile/P)
-	take_damage((P.damage / 5) , BRUTE, MELEE, 1) //Doesn't really matter what damage flag it is.
-	if(istype(P, /obj/projectile/energy/electrode))
-		take_damage(10, BRUTE, MELEE, 1) //Tasers aren't harmful.
-	if(istype(P, /obj/projectile/beam/disabler))
-		take_damage(5, BRUTE, MELEE, 1) //Disablers aren't harmful.
-	return BULLET_ACT_HIT
+/datum/armor/structure_holosign/cyborg_barrier
+	bullet = 80
+	laser = 80
+	energy = 80
+	melee = 20
 
 /obj/structure/holosign/barrier/medical
 	name = "\improper PENLITE holobarrier"
@@ -154,17 +153,10 @@
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
 	max_integrity = 1
-	var/force_allaccess = FALSE
 	var/buzzcd = 0
-
-/obj/structure/holosign/barrier/medical/examine(mob/user)
-	. = ..()
-	. += span_notice("The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.")
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(force_allaccess)
-		return TRUE
 	if(istype(mover, /obj/vehicle/ridden))
 		for(var/M in mover.buckled_mobs)
 			if(ishuman(M))
@@ -189,22 +181,12 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
-	if(!user.combat_mode && CanPass(user, get_dir(src, user)))
-		force_allaccess = !force_allaccess
-		to_chat(user, span_warning("You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.")) //warning spans because you can make the station sick!
-	else
-		return ..()
-
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it."
 	max_integrity = 20
+	armor_type = /datum/armor/structure_holosign //Yeah no this doesn't get projectile resistance.
 	var/shockcd = 0
-
-/obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/projectile/P)
-	take_damage(P.damage, BRUTE, MELEE, 1) //Yeah no this doesn't get projectile resistance.
-	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
 	shockcd = FALSE

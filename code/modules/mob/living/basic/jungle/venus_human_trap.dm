@@ -126,7 +126,7 @@
  * Akin to certain spiders, venus human traps can also be possessed and controlled by ghosts.
  *
  */
-	
+
 /mob/living/basic/venus_human_trap
 	name = "venus human trap"
 	desc = "Now you know how the fly feels."
@@ -174,9 +174,10 @@
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/lifesteal, 5)
-	var/datum/action/cooldown/vine_tangle/tangle = new(src)
-	tangle.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/vine_tangle = BB_TARGETTED_ACTION,
+	)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!combat_mode)
@@ -198,7 +199,7 @@
 	else if(vines_in_range)
 		alert_shown = FALSE
 
-	apply_damage(vines_in_range ? weed_heal : no_weed_damage, BRUTE) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+	adjustBruteLoss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/vine_tangle
 	name = "Tangle"

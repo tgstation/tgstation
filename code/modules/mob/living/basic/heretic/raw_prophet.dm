@@ -4,7 +4,7 @@
  * It can blind people to make a getaway, but also get stronger if it attacks the same target consecutively.
  */
 /mob/living/basic/heretic_summon/raw_prophet
-	name = "Raw Prophet"
+	name = "\improper Raw Prophet"
 	real_name = "Raw Prophet"
 	desc = "An abomination stitched together from a few severed arms and one swollen, orphaned eye."
 	icon_state = "raw_prophet"
@@ -15,8 +15,12 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	/// Some ability we use to make people go blind
-	var/blind_action_type = /datum/action/cooldown/spell/pointed/blind/eldritch
+	/// List of innate abilities we have to add.
+	var/static/list/innate_abilities = list(
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long = null,
+		/datum/action/cooldown/spell/list_target/telepathy/eldritch = null,
+		/datum/action/innate/expand_sight = null,
+	)
 
 /mob/living/basic/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
@@ -39,19 +43,13 @@
 		unlink_message = on_unlink_message, \
 	)
 
-	// We don't use these for AI so we can just repeat the same adding process
-	var/static/list/add_abilities = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
-		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
-		/datum/action/innate/expand_sight,
-	)
-	for (var/ability_type in add_abilities)
-		var/datum/action/new_action = new ability_type(src)
-		new_action.Grant(src)
+	grant_actions_by_list(get_innate_abilities())
 
-	var/datum/action/cooldown/blind = new blind_action_type(src)
-	blind.Grant(src)
-	ai_controller?.set_blackboard_key(BB_TARGETTED_ACTION, blind)
+/// Returns a list of abilities that we should add.
+/mob/living/basic/heretic_summon/raw_prophet/proc/get_innate_abilities()
+	var/list/returnable_list = innate_abilities.Copy()
+	returnable_list += list(/datum/action/cooldown/spell/pointed/blind/eldritch = BB_TARGETTED_ACTION)
+	return returnable_list
 
 /*
  * Callback for the mind_linker component.
@@ -78,7 +76,11 @@
 /// NPC variant with a less bullshit ability
 /mob/living/basic/heretic_summon/raw_prophet/ruins
 	ai_controller = /datum/ai_controller/basic_controller/raw_prophet
-	blind_action_type = /datum/action/cooldown/mob_cooldown/watcher_gaze
+
+/mob/living/basic/heretic_summon/raw_prophet/ruins/get_innate_abilities()
+	var/list/returnable_list = innate_abilities.Copy()
+	returnable_list += list(/datum/action/cooldown/mob_cooldown/watcher_gaze = BB_TARGETTED_ACTION)
+	return returnable_list
 
 /// Walk and attack people, blind them when we can
 /datum/ai_controller/basic_controller/raw_prophet
