@@ -37,6 +37,8 @@
 	. = ..()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS)
+	beat = BEAT_NONE
+	owner?.stop_sound_channel(CHANNEL_HEARTBEAT)
 
 /obj/item/organ/internal/heart/proc/stop_if_unowned()
 	if(QDELETED(src))
@@ -68,7 +70,7 @@
 	beating = FALSE
 	update_appearance()
 	beat = BEAT_NONE
-	owner.stop_sound_channel(CHANNEL_HEARTBEAT)
+	owner?.stop_sound_channel(CHANNEL_HEARTBEAT)
 	return TRUE
 
 /obj/item/organ/internal/heart/proc/Restart()
