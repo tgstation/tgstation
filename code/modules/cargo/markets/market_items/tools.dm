@@ -73,6 +73,7 @@
 
 /datum/market_item/tool/science_goggles
 	name = "Science Goggles"
+	flags_cover = GLASSESCOVERSEYES
 	desc = "These glasses scan the contents of containers and projects their contents to the user in an easy to read format."
 	item = /obj/item/clothing/glasses/science
 
