@@ -45,14 +45,14 @@
 		"ringleaders rise", \
 	) )
 
-	if(victim_sanity<20)
+	if(victim_sanity<15)
 		victim.apply_status_effect(/datum/status_effect/moon_converted)
 		caster.log_message("made [victim] insane.", LOG_GAME)
 		victim.log_message("was driven insane by [caster]")
 	victim.mob_mood.set_sanity(victim_sanity*0.5)
 
 /obj/effect/temp_visual/moon_ringleader
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "shield-flash"
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "ring_leader_effect"
 	alpha = 180
 	duration = 3 SECONDS
