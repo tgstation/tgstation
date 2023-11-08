@@ -67,7 +67,7 @@
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
 		PATH_KNOCK = "yellow",
-		PATH_MOON = "blue"
+		PATH_MOON = "blue",
 	)
 
 	var/static/list/path_to_rune_color = list(
