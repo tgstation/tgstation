@@ -291,9 +291,8 @@
 	proj.create_reagents(reagents.maximum_volume, reagents.flags)
 	reagents.trans_to(proj, reagents.total_volume, transferred_by = user)
 
-/obj/item/pen/sleepy/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
+/obj/item/pen/sleepy/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
 	. = ..()
-	var/obj/projectile/proj = dart.loaded_projectile
 	proj.reagents.trans_to(src, proj.reagents.total_volume, transferred_by = user)
 	QDEL_NULL(proj.reagents)
 
