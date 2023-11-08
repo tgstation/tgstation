@@ -1,0 +1,6 @@
+author: "xXPawnStarrXx"
+delete-after: True
+changes:
+  - rscadd: "Three new plants; Peppercorn, Saltcane and Butterbeans."
+  - rscadd: "Soysauce fermentation to soybeans."
+  - rscadd: "Saltcane can be dried into a replacement seaweedsheet for sushi."
