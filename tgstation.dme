@@ -5879,6 +5879,7 @@
 #include "code\modules\wiremod\datatypes\option.dm"
 #include "code\modules\wiremod\datatypes\signal.dm"
 #include "code\modules\wiremod\datatypes\string.dm"
+#include "code\modules\wiremod\datatypes\user.dm"
 #include "code\modules\wiremod\datatypes\composite\assoc_list.dm"
 #include "code\modules\wiremod\datatypes\composite\composite.dm"
 #include "code\modules\wiremod\datatypes\composite\list.dm"

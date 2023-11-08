@@ -244,3 +244,88 @@
       chemistry as a whole
   - bugfix: plumbing reaction chambers are more proactive. Will attempt to take in
       reagents more frequently
+2023-11-07:
+  ArcaneMusic:
+  - qol: Light switches have tooltips, and may now be deconstructed with right click
+      using a screwdriver.
+  Deadgebert:
+  - bugfix: walls built next to firelocks no longer hold onto their alarms
+  FlufflesTheDog:
+  - balance: paraplegic is no longer exclusive with spacer or settler or spacer. Broken
+      legs don't discriminate!
+  Ghommie:
+  - image: Several holidays now have themed floor and tram tiling.
+  Higgin:
+  - bugfix: fixes synthflesh not dealing and in fact healing toxin damage.
+  Jacquerel:
+  - bugfix: The plasma river is about as deadly for animals as it is for humans.
+  - bugfix: Golems can now wade in the plasma river unscathed.
+  - bugfix: Undismemberable limbs will no longer be dismembered by the plasma river.
+  - balance: Golems and plasmamen cannot become husked.
+  - image: Robotic and Skeletal parts will remain distinct while the rest of the body
+      is husked.
+  LT3:
+  - bugfix: Maximum smoothing turf groups now includes cliffs
+  - bugfix: Tramstation floor tiles will correctly get custom station colors when
+      they exist
+  Melbert:
+  - rscadd: Fishers can now try their luck at fishing out of hydroponics basins.
+  MoffNyan:
+  - rscadd: Maltroach bar sign!
+  NeonNik2245:
+  - qol: Make notepad available for everyone, who has only laptop or console.
+  Watermelon914:
+  - rscadd: Added a user type to integrated circuits
+  cnleth:
+  - bugfix: Reagent lookup in chem dispensers now shows correct reagent metabolization
+      rates
+  lizardqueenlexi:
+  - bugfix: You will now only become blackout drunk if you've actually been drinking.
+  - bugfix: Observers should stop being notified that a nameless entity is blacking
+      out.
+  san7890:
+  - bugfix: Both magic mirrors and regular mirrors are far better at respecting the
+      choice of the beard you wish to wear (within reason, of course).
+  spockye:
+  - bugfix: fixed a couple missing and misplaced disposals pipes on metastation
+  timothymtorres:
+  - qol: Improve the emote help verb to be more user friendly
+  - bugfix: Fix light eater affecting lava, space, openspace, and transparent turfs
+  vinylspiders:
+  - bugfix: tails will no longer keep wagging even in death
+  - code_imp: added some trailing commas in lists that were missing them, fixed a
+      typo in comments
+  vvvv-vvvv:
+  - bugfix: Fix refresh button in log viewer
+2023-11-08:
+  Ben10Omintrix:
+  - balance: sets the leaper move and pull forces to strong
+  Bumtickley00:
+  - spellcheck: You no longer hear weaponelding when deconstructing a closet.
+  D4C-420:
+  - rscadd: Being sufficiently drunk now has a chance to cause working out to fail
+      and harm you
+  Isratosh:
+  - bugfix: Nuclear operative induction implants now work correctly on antagonists
+      and fail on non-antagonists
+  jlsnow301:
+  - bugfix: The screen alert should no longer break ghost UI when it's huge
+  lizardqueenlexi:
+  - config: The bitrunner job now has a default config for server owners.
+  necromanceranne:
+  - balance: Harnessing Shoreline Quay (bluespace energy, probably), a mystical energy
+      (total bullshit) that permeates the Astral Waterways (bluespace quantum dimensions,
+      probably), Sleeping Carp users can now once against deflect projectiles with
+      their bare hands when focused in on battle (in combat mode).
+  - balance: The Keelhaul technique is now nonlethal (a philosophical acknowledgement
+      of the familial bond of sleep and death), but causes the target to become temporarily
+      blind and dizzy along with its previous effects.
+  - balance: Sleeping carp users, while in combat mode, deal Stamina damage with their
+      grabs and shoves. If the target of their grab has enough Stamina damage (80),
+      they are knocked unconscious from a well placed nerve pinch.
+  - balance: Sleeping carp users find it very hard to wake up once they fall asleep....
+  san7890:
+  - bugfix: Slimes now need to be on an open turf to reproduce and split into more
+      slimy slimes, instead of getting away with using phasing powers in pipes.
+  - bugfix: All vehicles (such as VIMs operated by a mouse or a lizard) will no longer
+      be able to phase through containment fields.

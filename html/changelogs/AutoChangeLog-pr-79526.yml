@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "You will now only become blackout drunk if you've actually been drinking."
-  - bugfix: "Observers should stop being notified that a nameless entity is blacking out."
