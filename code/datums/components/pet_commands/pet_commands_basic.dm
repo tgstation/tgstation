@@ -38,7 +38,7 @@
 /datum/pet_command/follow
 	command_name = "Follow"
 	command_desc = "Command your pet to accompany you."
-	radial_icon = 'icons/testing/turf_analysis.dmi'
+	radial_icon = 'icons/mapping/turf_analysis.dmi'
 	radial_icon_state = "red_arrow"
 	speech_commands = list("heel", "follow")
 

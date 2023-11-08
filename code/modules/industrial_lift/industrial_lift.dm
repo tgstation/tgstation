@@ -1,13 +1,13 @@
 GLOBAL_LIST_EMPTY(lifts)
 GLOBAL_LIST_INIT(all_radial_directions, list(
-	"NORTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
-	"NORTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHEAST),
-	"EAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = EAST),
-	"SOUTHEAST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHEAST),
-	"SOUTH" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH),
-	"SOUTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHWEST),
-	"WEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
-	"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
+	"NORTH" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+	"NORTHEAST" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHEAST),
+	"EAST" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = EAST),
+	"SOUTHEAST" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHEAST),
+	"SOUTH" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH),
+	"SOUTHWEST" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTHWEST),
+	"WEST" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST),
+	"NORTHWEST" = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTHWEST)
 ))
 
 /obj/structure/industrial_lift
@@ -611,14 +611,14 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 	if(lift_master_datum.Check_lift_move(UP))
 		var/static/image/up_arrow
 		if(!up_arrow)
-			up_arrow = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
+			up_arrow = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH)
 
 		possible_directions["Up"] = up_arrow
 
 	if(lift_master_datum.Check_lift_move(DOWN))
 		var/static/image/down_arrow
 		if(!down_arrow)
-			down_arrow = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+			down_arrow = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
 
 		possible_directions["Down"] = down_arrow
 

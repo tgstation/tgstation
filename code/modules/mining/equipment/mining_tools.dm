@@ -154,6 +154,7 @@
 /obj/item/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
+	icon = 'icons/obj/service/hydrophonics/equipment.dmi'
 	icon_state = "spade"
 	inhand_icon_state = "spade"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -166,6 +167,7 @@
 	name = "serrated bone shovel"
 	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs. \
 		It seems less capable of harming inorganic creatures. Who knows why."
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel_bone"
 	worn_icon_state = "shovel_serr"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'

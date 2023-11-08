@@ -230,7 +230,7 @@
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
 	desc = "The herpes of arts and crafts."
-	icon = 'icons/effects/atmospherics.dmi'
+	icon = 'icons/turf/floor_overlays/atmospherics.dmi'
 	icon_state = "plasma_old"
 	gender = NEUTER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

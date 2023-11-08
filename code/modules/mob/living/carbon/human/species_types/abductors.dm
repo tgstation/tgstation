@@ -15,7 +15,7 @@
 	mutantheart = null
 	mutantlungs = null
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	ass_image = 'icons/ass/assgrey.png'
+	ass_image = 'icons/ui/ass/assgrey.png'
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/abductor,

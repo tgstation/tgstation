@@ -3,7 +3,7 @@
 /obj/machinery/smoke_machine
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/machines/reagent.dmi'
 	icon_state = "smoke0"
 	base_icon_state = "smoke"
 	density = TRUE

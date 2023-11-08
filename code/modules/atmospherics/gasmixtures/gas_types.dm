@@ -50,7 +50,7 @@
 	var/id = ""
 	var/specific_heat = 0
 	var/name = ""
-	///icon_state in icons/effects/atmospherics.dmi
+	///icon_state in icons/turf/floor_overlays/atmospherics.dmi
 	var/gas_overlay = ""
 	var/moles_visible = null
 	///currently used by canisters
@@ -284,7 +284,7 @@
 	desc = "We still don't know what it does, but it sells for a lot."
 
 /obj/effect/overlay/gas
-	icon = 'icons/effects/atmospherics.dmi'
+	icon = 'icons/turf/floor_overlays/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE  // should only appear in vis_contents, but to be safe
 	layer = FLY_LAYER

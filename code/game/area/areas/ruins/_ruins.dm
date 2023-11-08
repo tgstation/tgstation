@@ -2,7 +2,7 @@
 
 /area/ruin
 	name = "\improper Unexplored Location"
-	icon = 'icons/area/areas_ruins.dmi'
+	icon = 'icons/mapping/areas_ruins.dmi'
 	icon_state = "ruins"
 	has_gravity = STANDARD_GRAVITY
 	area_flags = HIDDEN_AREA | BLOBS_ALLOWED | UNIQUE_AREA

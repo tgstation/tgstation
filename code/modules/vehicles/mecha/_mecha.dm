@@ -34,7 +34,7 @@
 	light_range = 8
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
-	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+	mouse_pointer = 'icons/ui/mouse_pointers/mecha_mouse.dmi'
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/normal_step_energy_drain = 10
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
@@ -374,9 +374,9 @@
 		mouse_pointer = ""
 	else
 		if(equipment_disabled)
-			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
+			mouse_pointer = 'icons/ui/mouse_pointers/mecha_mouse-disable.dmi'
 		else
-			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+			mouse_pointer = 'icons/ui/mouse_pointers/mecha_mouse.dmi'
 
 	for(var/mob/mob_occupant as anything in occupants)
 		mob_occupant.update_mouse_pointer()

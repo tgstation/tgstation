@@ -114,7 +114,7 @@
 /// Show the command radial menu
 /datum/ai_controller/hostile_friend/proc/command_radial(mob/living/clicker)
 	var/list/commands = list(
-		COMMAND_STOP = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow"),
+		COMMAND_STOP = image(icon = 'icons/mapping/turf_analysis.dmi', icon_state = "red_arrow"),
 		COMMAND_FOLLOW = image(icon = 'icons/mob/actions/actions_spells.dmi', icon_state = "summons"),
 		COMMAND_ATTACK = image(icon = 'icons/effects/effects.dmi', icon_state = "bite"),
 		)

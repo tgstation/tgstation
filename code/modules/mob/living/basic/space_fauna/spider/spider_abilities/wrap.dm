@@ -10,7 +10,7 @@
 	button_icon_state = "wrap_0"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
-	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/wrap_target.dmi'
 	/// The time it takes to wrap something.
 	var/wrap_time = 5 SECONDS
 

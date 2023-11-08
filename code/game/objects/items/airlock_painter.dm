@@ -466,7 +466,7 @@
 	colored_icon.ChangeOpacity(render_alpha * 0.008)
 	if(color == "custom")
 		// Do a fun rainbow pattern to stand out while still being static.
-		colored_icon.Blend(icon('icons/effects/random_spawners.dmi', "rainbow"), ICON_MULTIPLY)
+		colored_icon.Blend(icon('icons/mapping/random_spawners.dmi', "rainbow"), ICON_MULTIPLY)
 	else
 		colored_icon.Blend(render_color, ICON_MULTIPLY)
 

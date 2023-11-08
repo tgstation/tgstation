@@ -3,7 +3,7 @@
 	name = "PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/machines/reagent.dmi'
 	icon_state = "pandemic0"
 	icon_keyboard = null
 	icon_screen = null

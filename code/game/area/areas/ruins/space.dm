@@ -307,7 +307,7 @@
 
 /area/ruin/space/solars/ancientstation/charlie/solars
 	name = "\improper Charlie Station Solar Array"
-	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
+	icon = 'icons/mapping/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
@@ -661,7 +661,7 @@
 // Transit Booth
 /area/ruin/space/has_grav/transit_booth
 	name = "transit_booth"
-	icon = 'icons/area/areas_ruins.dmi'
+	icon = 'icons/mapping/areas_ruins.dmi'
 	icon_state = "ruins"
 	requires_power = FALSE
 	ambientsounds = list('sound/ambience/ambigen12.ogg','sound/ambience/ambigen13.ogg','sound/ambience/ambinice.ogg')

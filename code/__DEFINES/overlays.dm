@@ -9,7 +9,7 @@
 		stack_trace("Too many overlays on [changed_on.type] - [length(changed_on.overlays)], refusing to update and cutting.\
 			\n What follows is a printout of all existing overlays at the time of the overflow \n[text_lays]"); \
 		changed_on.overlays.Cut(); \
-		changed_on.add_overlay(mutable_appearance('icons/testing/greyscale_error.dmi')); \
+		changed_on.add_overlay(mutable_appearance('icons/mapping/greyscale_error.dmi')); \
 	} \
 
 

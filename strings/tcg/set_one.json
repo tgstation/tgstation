@@ -4,7 +4,7 @@
 			"template": "default",
 			"icon": "icons/runtime/tcg/default.dmi",
 			"series": "coreset2020",
-			"summon_icon_file": "icons/mob/landmarks.dmi",
+			"summon_icon_file": "icons/mapping/landmarks.dmi",
 			"summon_icon_state": "carp"
 		}
 	],

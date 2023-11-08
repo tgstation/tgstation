@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(chem_master_containers, list(
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/machines/reagent.dmi'
 	icon_state = "chemmaster"
 	base_icon_state = "chemmaster"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2

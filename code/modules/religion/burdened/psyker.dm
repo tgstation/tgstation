@@ -265,7 +265,7 @@
 /datum/action/cooldown/spell/pointed/psychic_projection
 	name = "Psychic Projection"
 	desc = "Project your psychics into a target to warp their view, and instill absolute terror that will cause them to fire their gun rapidly."
-	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/cult_target.dmi'
 	button_icon_state = "blind"
 	school = SCHOOL_PSYCHIC
 	cooldown_time = 1 MINUTES

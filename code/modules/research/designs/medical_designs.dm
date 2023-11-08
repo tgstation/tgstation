@@ -912,7 +912,7 @@
 	name = "Surgery Design"
 	desc = "what"
 	id = "surgery_parent"
-	research_icon = 'icons/obj/medical/surgery_ui.dmi'
+	research_icon = 'icons/ui/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
 

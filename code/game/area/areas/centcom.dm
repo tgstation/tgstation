@@ -3,7 +3,7 @@
 // CentCom itself
 /area/centcom
 	name = "CentCom"
-	icon = 'icons/area/areas_centcom.dmi'
+	icon = 'icons/mapping/areas_centcom.dmi'
 	icon_state = "centcom"
 	static_lighting = TRUE
 	requires_power = FALSE

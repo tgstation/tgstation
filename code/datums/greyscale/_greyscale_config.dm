@@ -263,7 +263,7 @@
 		generated_icon.GetPixel(1, 1)
 		generated_icons[icon_state] = generated_icon
 
-	var/icon/icon_bundle = generated_icons[""] || icon('icons/testing/greyscale_error.dmi')
+	var/icon/icon_bundle = generated_icons[""] || icon('icons/mapping/greyscale_error.dmi')
 	icon_bundle.Scale(width, height)
 	generated_icons -= ""
 

@@ -109,7 +109,7 @@
 /datum/component/scope/proc/start_zooming(mob/user)
 	if(!user.client)
 		return
-	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
+	user.client.mouse_override_icon = 'icons/ui/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)

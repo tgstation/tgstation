@@ -26,7 +26,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start
 	name = "start"
-	icon = 'icons/mob/landmarks.dmi'
+	icon = 'icons/mapping/landmarks.dmi'
 	icon_state = "x"
 	anchored = TRUE
 	layer = MOB_LAYER

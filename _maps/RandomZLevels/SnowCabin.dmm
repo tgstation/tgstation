@@ -1147,7 +1147,7 @@
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "No, I am not going through this.";
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "water";
 	name = "dirty water"
 	},
@@ -4463,7 +4463,7 @@
 /obj/structure/signpost/salvation{
 	density = 0;
 	desc = "An intercomm. Someone seems to be on the other end. I should use it.";
-	icon = 'icons/obj/devices/radio.dmi';
+	icon = 'icons/obj/machine/wallmounts.dmi';
 	icon_state = "intercom";
 	max_integrity = 99999;
 	name = "\proper Fun Jail intercom";

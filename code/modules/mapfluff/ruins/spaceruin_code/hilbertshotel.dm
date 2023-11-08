@@ -349,7 +349,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 // Despite using the ruins.dmi, hilbertshotel is not a ruin
 /area/misc/hilbertshotel
 	name = "Hilbert's Hotel Room"
-	icon = 'icons/area/areas_ruins.dmi'
+	icon = 'icons/mapping/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	has_gravity = TRUE
@@ -437,7 +437,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /area/misc/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage Room"
-	icon = 'icons/area/areas_ruins.dmi'
+	icon = 'icons/mapping/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA

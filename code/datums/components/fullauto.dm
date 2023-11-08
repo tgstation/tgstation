@@ -163,7 +163,7 @@
 		return
 	autofire_stat = AUTOFIRE_STAT_FIRING
 
-	clicker.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
+	clicker.mouse_override_icon = 'icons/ui/mouse_pointers/weapon_pointer.dmi'
 	clicker.mouse_pointer_icon = clicker.mouse_override_icon
 
 	if(mouse_status == AUTOFIRE_MOUSEUP) //See mouse_status definition for the reason for this.

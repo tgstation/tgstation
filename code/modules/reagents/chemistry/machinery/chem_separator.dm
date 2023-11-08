@@ -1,7 +1,7 @@
 /obj/structure/chem_separator
 	name = "distillation apparatus"
 	desc = "A device that performs chemical separation by distillation."
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/machines/reagent.dmi'
 	icon_state = "separator"
 	light_power = 1
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'

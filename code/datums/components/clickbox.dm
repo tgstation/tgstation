@@ -74,7 +74,7 @@
 	else if(abs_height && abs_height < min_scale)
 		clickbox_height = min_scale/height
 
-	clickbox_underlay = mutable_appearance('icons/misc/clickbox.dmi', clickbox_icon_state, CLICKBOX_LAYER, alpha = 1, appearance_flags = RESET_COLOR|RESET_ALPHA)
+	clickbox_underlay = mutable_appearance('icons/ui/clickbox.dmi', clickbox_icon_state, CLICKBOX_LAYER, alpha = 1, appearance_flags = RESET_COLOR|RESET_ALPHA)
 	clickbox_underlay.transform = clickbox_underlay.transform.Scale(clickbox_width, clickbox_height)
 	//Keeps the underlay more or less centered.
 	clickbox_underlay.pixel_x = x_offset * 1/clickbox_width

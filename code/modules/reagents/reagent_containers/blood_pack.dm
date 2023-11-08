@@ -39,7 +39,8 @@
 	name = "blood pack[blood_type ? " - [blood_type]" : null]"
 
 /obj/item/reagent_containers/blood/random
-	icon_state = "random_bloodpack"
+	icon = 'icons/mapping/random_spawners.dmi'
+	icon_state = "bloodpack"
 
 /obj/item/reagent_containers/blood/random/Initialize(mapload, vol)
 	icon_state = "bloodpack"
@@ -74,7 +75,7 @@
 /obj/item/reagent_containers/blood/snail
 	blood_type = "S"
 	unique_blood = /datum/reagent/lube
-	
+
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
 	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")

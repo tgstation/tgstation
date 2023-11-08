@@ -501,13 +501,13 @@
 /obj/structure/flora/coconuts
 	gender = PLURAL
 	name = "coconuts"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/turf/beach.dmi'
 	icon_state = "coconuts"
 
 /obj/structure/flora/tree/palm
 	name = "palm tree"
 	desc = "A tree straight from the tropics."
-	icon = 'icons/misc/beach2.dmi'
+	icon = 'icons/obj/fluff/beach2.dmi'
 	icon_state = "palm1"
 	pixel_x = 0
 

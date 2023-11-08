@@ -157,7 +157,7 @@
 	name = "Declare Evil"
 	desc = "If someone is so obviously an evil of this world you can spend a huge amount of favor to declare them guilty."
 	button_icon_state = "declaration"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/honorbound.dmi'
 
 	school = SCHOOL_HOLY
 	cooldown_time = 0

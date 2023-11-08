@@ -841,7 +841,7 @@
 
 	click_to_activate = TRUE
 	cooldown_time = 45 SECONDS
-	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/scan_target.dmi'
 
 /datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
 	return ..() && isliving(owner)

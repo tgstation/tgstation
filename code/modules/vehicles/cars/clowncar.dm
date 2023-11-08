@@ -276,7 +276,7 @@
 
 ///Finalizes canon activation
 /obj/vehicle/sealed/car/clowncar/proc/activate_cannon()
-	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+	mouse_pointer = 'icons/ui/mouse_pointers/mecha_mouse.dmi'
 	cannonmode = CLOWN_CANNON_READY
 	for(var/mob/living/driver as anything in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
 		driver.update_mouse_pointer()

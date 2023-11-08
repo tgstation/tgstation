@@ -58,7 +58,7 @@
 	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 
 /atom/movable/screen/lobby/background
-	icon = 'icons/ui/hud/lobby/background.dmi'
+	icon = 'icons/ui/lobby/background.dmi'
 	icon_state = "background"
 	screen_loc = "TOP,CENTER:-61"
 
@@ -129,7 +129,7 @@
 /atom/movable/screen/lobby/button/character_setup
 	name = "View Character Setup"
 	screen_loc = "TOP:-70,CENTER:-54"
-	icon = 'icons/ui/hud/lobby/character_setup.dmi'
+	icon = 'icons/ui/lobby/character_setup.dmi'
 	icon_state = "character_setup"
 	base_icon_state = "character_setup"
 
@@ -147,7 +147,7 @@
 /atom/movable/screen/lobby/button/ready
 	name = "Toggle Readiness"
 	screen_loc = "TOP:-8,CENTER:-65"
-	icon = 'icons/ui/hud/lobby/ready.dmi'
+	icon = 'icons/ui/lobby/ready.dmi'
 	icon_state = "not_ready"
 	base_icon_state = "not_ready"
 	///Whether we are readied up for the round or not
@@ -195,7 +195,7 @@
 /atom/movable/screen/lobby/button/join
 	name = "Join Game"
 	screen_loc = "TOP:-13,CENTER:-58"
-	icon = 'icons/ui/hud/lobby/join.dmi'
+	icon = 'icons/ui/lobby/join.dmi'
 	icon_state = "" //Default to not visible
 	base_icon_state = "join_game"
 	enabled = FALSE
@@ -266,7 +266,7 @@
 /atom/movable/screen/lobby/button/observe
 	name = "Observe"
 	screen_loc = "TOP:-40,CENTER:-54"
-	icon = 'icons/ui/hud/lobby/observe.dmi'
+	icon = 'icons/ui/lobby/observe.dmi'
 	icon_state = "observe_disabled"
 	base_icon_state = "observe"
 	enabled = FALSE
@@ -294,7 +294,7 @@
 //Subtype the bottom buttons away so the collapse/expand shutter goes behind them
 /atom/movable/screen/lobby/button/bottom
 	layer = LOBBY_BOTTOM_BUTTON_LAYER
-	icon = 'icons/ui/hud/lobby/bottom_buttons.dmi'
+	icon = 'icons/ui/lobby/bottom_buttons.dmi'
 
 /atom/movable/screen/lobby/button/bottom/settings
 	name = "View Game Preferences"
@@ -390,7 +390,7 @@
 /atom/movable/screen/lobby/button/bottom/poll/update_overlays()
 	. = ..()
 	if(new_poll)
-		. += mutable_appearance('icons/ui/hud/lobby/poll_overlay.dmi', "new_poll")
+		. += mutable_appearance('icons/ui/lobby/poll_overlay.dmi', "new_poll")
 
 /atom/movable/screen/lobby/button/bottom/poll/Click(location, control, params)
 	. = ..()
@@ -401,7 +401,7 @@
 
 /atom/movable/screen/lobby/button/collapse
 	name = "Collapse Lobby Menu"
-	icon = 'icons/ui/hud/lobby/collapse_expand.dmi'
+	icon = 'icons/ui/lobby/collapse_expand.dmi'
 	icon_state = "collapse"
 	base_icon_state = "collapse"
 	layer = LOBBY_BELOW_MENU_LAYER
@@ -506,7 +506,7 @@
 	animate(src, transform = matrix(), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_OUT)
 
 /atom/movable/screen/lobby/shutter
-	icon = 'icons/ui/hud/lobby/shutter.dmi'
+	icon = 'icons/ui/lobby/shutter.dmi'
 	icon_state = "shutter"
 	base_icon_state = "shutter"
 	screen_loc = "TOP:+143,CENTER:-73" //"home" position is off-screen

@@ -148,7 +148,7 @@
 	RegisterSignal(blood_target, COMSIG_QDELETING, PROC_REF(unset_blood_target_and_timer))
 	var/area/target_area = get_area(new_target)
 
-	blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', new_target, "glow", ABOVE_MOB_LAYER)
+	blood_target_image = image('icons/ui/mouse_pointers/cult_target.dmi', new_target, "glow", ABOVE_MOB_LAYER)
 	blood_target_image.appearance_flags = RESET_COLOR
 	blood_target_image.pixel_x = -new_target.pixel_x
 	blood_target_image.pixel_y = -new_target.pixel_y

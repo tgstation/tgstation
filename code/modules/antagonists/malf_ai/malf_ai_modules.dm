@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	desc = "Animates a targeted machine, causing it to attack anyone nearby."
 	button_icon_state = "override_machine"
 	uses = 4
-	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/override_machine_target.dmi'
 	enable_text = span_notice("You tap into the station's powernet. Click on a machine to animate it, or use the ability again to cancel.")
 	disable_text = span_notice("You release your hold on the powernet.")
 
@@ -512,7 +512,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	desc = "Overheats a machine, causing a small explosion after a short time."
 	button_icon_state = "overload_machine"
 	uses = 2
-	ranged_mousepointer = 'icons/effects/mouse_pointers/overload_machine_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/overload_machine_target.dmi'
 	enable_text = span_notice("You tap into the station's powernet. Click on a machine to detonate it, or use the ability again to cancel.")
 	disable_text = span_notice("You release your hold on the powernet.")
 
@@ -1041,7 +1041,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	auto_use_uses = FALSE
 	enable_text = span_notice("You load your syndicate software package to your most recent memory slot.")
 	disable_text = span_notice("You unload your syndicate software package.")
-	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/supplypod_target.dmi'
 
 /datum/action/innate/ai/ranged/emag/Destroy()
 	return ..()
@@ -1132,7 +1132,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	button_icon_state = "roll_over"
 	desc = "Allows you to roll over in the direction of your choosing, crushing anything in your way."
 	auto_use_uses = FALSE
-	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/supplypod_target.dmi'
 	uses = 20
 	COOLDOWN_DECLARE(time_til_next_tilt)
 	enable_text = span_notice("Your inner servos shift as you prepare to roll around. Click adjacent tiles to roll onto them!")
@@ -1223,7 +1223,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	name = "Remotely tilt vendor"
 	desc = "Use to remotely tilt a vendor in any direction you desire."
 	button_icon_state = "vendor_tilt"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/supplypod_target.dmi'
 	uses = VENDOR_TIPPING_USES
 	var/time_to_tilt = MALF_VENDOR_TIPPING_TIME
 	enable_text = span_notice("You prepare to wobble any vendors you see.")

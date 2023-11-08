@@ -7,7 +7,7 @@
 /datum/preference/choiced/glasses/init_possible_values()
 	var/list/values = list()
 
-	values["Random"] = icon('icons/effects/random_spawners.dmi', "questionmark")
+	values["Random"] = icon('icons/mapping/random_spawners.dmi', "questionmark")
 
 	for(var/glass_design in GLOB.nearsighted_glasses - "Random")
 		values[glass_design] = icon('icons/obj/clothing/glasses.dmi', "glasses_[lowertext(glass_design)]")

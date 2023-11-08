@@ -118,9 +118,9 @@
 /obj/item/storage/bag/ore
 	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "satchel"
-	worn_icon_state = "satchel"
+	icon = 'icons/obj/clothing/filtered_bag.dmi'
+	icon_state = "minebag"
+	worn_icon_state = "minebag"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
@@ -208,7 +208,7 @@
 /obj/item/storage/bag/ore/holding //miners, your messiah has arrived
 	name = "mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
-	icon_state = "satchel_bspace"
+	icon_state = "minebag_bspace"
 
 /obj/item/storage/bag/ore/holding/Initialize(mapload)
 	. = ..()
@@ -222,7 +222,7 @@
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
-	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon = 'icons/obj/clothing/filtered_bag.dmi'
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
@@ -279,7 +279,7 @@
 /obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/clothing/filtered_bag.dmi'
 	icon_state = "sheetsnatcher"
 	worn_icon_state = "satchel"
 
@@ -315,7 +315,7 @@
 /obj/item/storage/bag/books
 	name = "book bag"
 	desc = "A bag for books."
-	icon = 'icons/obj/service/library.dmi'
+	icon = 'icons/obj/clothing/filtered_bag.dmi'
 	icon_state = "bookbag"
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
@@ -458,7 +458,7 @@
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/clothing/filtered_bag.dmi'
 	icon_state = "biobag"
 	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
@@ -488,7 +488,7 @@
 
 /obj/item/storage/bag/xeno
 	name = "science bag"
-	icon = 'icons/obj/medical/chemical.dmi'
+	icon = 'icons/obj/clothing/filtered_bag.dmi'
 	icon_state = "xenobag"
 	worn_icon_state = "xenobag"
 	desc = "A bag for the storage and transport of anomalous materials."
@@ -519,7 +519,7 @@
 
 /obj/item/storage/bag/construction
 	name = "construction bag"
-	icon = 'icons/obj/tools.dmi'
+	icon = 'icons/obj/clothing/filtered_bag.dmi'
 	icon_state = "construction_bag"
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."

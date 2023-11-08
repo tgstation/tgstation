@@ -2,7 +2,7 @@
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
 	button_icon_state = "blind"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/blind_target.dmi'
 
 	sound = 'sound/magic/blind.ogg'
 	school = SCHOOL_TRANSMUTATION

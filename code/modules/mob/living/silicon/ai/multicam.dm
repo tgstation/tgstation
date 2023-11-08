@@ -24,7 +24,7 @@
 /atom/movable/screen/movable/pic_in_pic/ai/make_backgrounds()
 	..()
 	highlighted_background = new /mutable_appearance()
-	highlighted_background.icon = 'icons/misc/pic_in_pic.dmi'
+	highlighted_background.icon = 'icons/ui/multicamera_ai.dmi'
 	highlighted_background.icon_state = "background_highlight"
 	highlighted_background.layer = SPACE_LAYER
 
@@ -84,7 +84,7 @@
 
 /turf/open/ai_visible
 	name = ""
-	icon = 'icons/misc/pic_in_pic.dmi'
+	icon = 'icons/ui/multicamera_ai.dmi'
 	icon_state = "room_background"
 	flags_1 = NOJAUNT
 
@@ -111,7 +111,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 
 /obj/effect/landmark/ai_multicam_room
 	name = "ai camera room"
-	icon = 'icons/mob/landmarks.dmi'
+	icon = 'icons/mapping/landmarks.dmi'
 	icon_state = "x"
 
 /obj/effect/landmark/ai_multicam_room/Initialize(mapload)

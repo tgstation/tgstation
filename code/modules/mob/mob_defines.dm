@@ -60,7 +60,7 @@
 	/// List of action hud items the user has
 	var/list/datum/action/actions
 	///Cursor icon used when holding shift over things
-	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
+	var/examine_cursor_icon = 'icons/ui/mouse_pointers/examine_pointer.dmi'
 
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS

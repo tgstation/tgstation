@@ -60,7 +60,7 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 
-	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/mindswap_target.dmi'
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))

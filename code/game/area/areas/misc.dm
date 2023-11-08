@@ -43,5 +43,5 @@
 
 /area/misc/testroom/gateway_room
 	name = "Gateway Room"
-	icon = 'icons/area/areas_station.dmi'
+	icon = 'icons/mapping/areas_station.dmi'
 	icon_state = "gateway"

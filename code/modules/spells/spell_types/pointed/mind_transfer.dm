@@ -2,7 +2,7 @@
 	name = "Mind Swap"
 	desc = "This spell allows the user to switch bodies with a target next to him."
 	button_icon_state = "mindswap"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/mindswap_target.dmi'
 
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS

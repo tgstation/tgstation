@@ -55,7 +55,7 @@
 	cooldown_time = 12 SECONDS
 	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
-	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/supplypod_target.dmi'
 
 /datum/action/cooldown/tentacle_slap/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if(button.our_hud.mymob != owner)

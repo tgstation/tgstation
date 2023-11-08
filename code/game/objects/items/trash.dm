@@ -1,6 +1,6 @@
 //Added by Jack Rost
 /obj/item/trash
-	icon = 'icons/obj/service/janitor.dmi'
+	icon = 'icons/obj/service/food_waste.dmi'
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	desc = "This is rubbish."

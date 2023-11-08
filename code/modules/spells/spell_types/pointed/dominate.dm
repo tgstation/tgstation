@@ -7,7 +7,7 @@
 
 	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "dominate"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/cult_target.dmi'
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 1 MINUTES

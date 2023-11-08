@@ -57,7 +57,7 @@
 
 	person_icon = icon(person_icon, dir = SOUTH)//copy the image so we don't mess with the one in the record.
 	original_icon = icon(person_icon) //cache this incase it gets torn down
-	var/icon/the_icon = icon("icon" = 'icons/obj/poster_wanted.dmi', "icon_state" = background)
+	var/icon/the_icon = icon("icon" = 'icons/turf/wall_overlays/poster_wanted.dmi', "icon_state" = background)
 	person_icon.Shift(SOUTH, 7)
 	person_icon.Crop(7,4,26,30)
 	person_icon.Crop(-5,-2,26,29)
@@ -86,7 +86,7 @@
 	var/i
 	for(i=1; i <= textLen, i++)
 		var/letter = uppertext(text[i])
-		var/icon/letter_icon = icon("icon" = 'icons/misc/Font_Minimal.dmi', "icon_state" = letter)
+		var/icon/letter_icon = icon("icon" = 'icons/turf/wall_overlays/Font_Minimal.dmi', "icon_state" = letter)
 		letter_icon.Shift(EAST, startX) //16 - (2*n)
 		letter_icon.Shift(SOUTH, 2)
 		letter_icon.SwapColor(rgb(255,255,255), color)

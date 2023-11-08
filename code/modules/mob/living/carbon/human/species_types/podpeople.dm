@@ -29,7 +29,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
 	)
 
-	ass_image = 'icons/ass/asspodperson.png'
+	ass_image = 'icons/ui/ass/asspodperson.png'
 
 /datum/species/pod/on_species_gain(mob/living/carbon/new_podperson, datum/species/old_species, pref_load)
 	. = ..()

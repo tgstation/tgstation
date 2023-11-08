@@ -498,13 +498,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if(spec.ass_image)
 			temp_img = icon(spec.ass_image)
 		else
-			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
+			temp_img = icon(ass.gender == FEMALE ? 'icons/ui/ass/assfemale.png' : 'icons/ui/ass/assmale.png')
 	else if(isalienadult(ass)) //Xenos have their own asses, thanks to Pybro.
-		temp_img = icon('icons/ass/assalien.png')
+		temp_img = icon('icons/ui/ass/assalien.png')
 	else if(issilicon(ass))
-		temp_img = icon('icons/ass/assmachine.png')
+		temp_img = icon('icons/ui/ass/assmachine.png')
 	else if(isdrone(ass)) //Drones are hot
-		temp_img = icon('icons/ass/assdrone.png')
+		temp_img = icon('icons/ui/ass/assdrone.png')
 
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)

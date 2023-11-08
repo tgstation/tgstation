@@ -18,7 +18,7 @@
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
 
 	// if you are seeing someone speak popcorn language, then something is wrong.
-	var/icon = 'icons/misc/language.dmi'
+	var/icon = 'icons/ui/language.dmi'
 	var/icon_state = "popcorn"
 
 /datum/language/proc/display_icon(atom/movable/hearer)

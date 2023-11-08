@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/pointed/abyssal_gaze
 	name = "Abyssal Gaze"
 	desc = "This spell instills a deep terror in your target, temporarily chilling and blinding it."
-	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
+	ranged_mousepointer = 'icons/ui/mouse_pointers/cult_target.dmi'
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 

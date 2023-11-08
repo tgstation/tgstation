@@ -82,7 +82,8 @@
 
 
 /obj/structure/beebox/premade/random
-	icon_state = "random_beebox"
+	icon = 'icons/mapping/random_spawners.dmi'
+	icon_state = "beebox"
 	random_reagent = TRUE
 
 
