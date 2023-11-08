@@ -38,7 +38,7 @@
 		to_chat(user, span_notice("You insert [parent_item] into [dart]."))
 	else
 		parent_item.forceMove(dart_projectile)
-	ADD_TRAIT(dart, TRAIT_DART_HAS_INSERT, src)
+	ADD_TRAIT(dart, TRAIT_DART_HAS_INSERT, REF(src))
 	RegisterSignal(dart, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_dart_attack_self))
 	RegisterSignal(dart, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_dart_examine_more))
 	RegisterSignals(parent, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_leave_dart))
@@ -58,7 +58,7 @@
 	holder_projectile = null
 	if(istype(dart))
 		UnregisterSignal(dart, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ATOM_EXAMINE_MORE, COMSIG_ATOM_UPDATE_OVERLAYS))
-		REMOVE_TRAIT(dart, TRAIT_DART_HAS_INSERT, src)
+		REMOVE_TRAIT(dart, TRAIT_DART_HAS_INSERT, REF(src))
 		dart.update_appearance()
 	if(istype(projectile))
 		remove_var_modifiers(projectile)
