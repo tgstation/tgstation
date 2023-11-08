@@ -225,6 +225,10 @@
 	reqs = list(
 		/obj/item/gun/ballistic/rifle/rebarxbow = 1,
 	)
+	blacklist = list(
+	/obj/item/gun/ballistic/rifle/rebarxbow/forced,
+	/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
+	)
 	tool_behaviors = list(TOOL_CROWBAR)
 	time = 1 SECONDS
 	category = CAT_WEAPON_RANGED
