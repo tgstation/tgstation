@@ -49,7 +49,7 @@
 
 	// make sure we get the correct chosen_sign set
 	if(!istype(testing_sign.chosen_sign, emp_bar_sign))
-		TEST_FAIL("[testing_sign] got EMPed but did not get its chosen sign set correctly.")
+		TEST_FAIL("[testing_sign] got EMPed but did not get its chosen_sign set correctly.")
 
 	// make sure the sign's icon_state actually got set
 	var/expected_icon_state = initial(emp_bar_sign.icon_state)
