@@ -47,7 +47,13 @@
 	ctf_enabled = TRUE
 	for(var/team in teams)
 		var/obj/machinery/ctf/spawner/spawner = teams[team].spawner
-		notify_ghosts("[spawner.name] has been activated!", source = spawner, action = NOTIFY_ORBIT, header = "CTF has been activated")
+		notify_ghosts(
+			"[spawner.name] has been activated!",
+			source = spawner,
+			action = NOTIFY_ORBIT,
+			header = "CTF has been activated",
+			notify_flags = NOTIFY_CATEGORY_DEFAULT,
+		)
 
 /datum/ctf_controller/proc/stop_ctf()
 	ctf_enabled = FALSE

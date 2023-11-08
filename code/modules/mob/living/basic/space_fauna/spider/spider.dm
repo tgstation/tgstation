@@ -49,11 +49,12 @@
 
 /mob/living/basic/spider/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
+	add_traits(list(TRAIT_WEB_SURFER, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	AddElement(/datum/element/cliff_walking)
+	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 1.5)
 
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite)

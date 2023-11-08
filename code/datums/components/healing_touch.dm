@@ -32,6 +32,10 @@
 	var/action_text
 	/// Text to print when action completes, replaces %SOURCE% with healer and %TARGET% with healed mob
 	var/complete_text
+	/// Whether to print the target's remaining health after healing (for non-carbon targets only)
+	var/show_health
+	/// Color for the healing effect
+	var/heal_color
 
 /datum/component/healing_touch/Initialize(
 	heal_brute = 20,
@@ -46,6 +50,8 @@
 	self_targetting = HEALING_TOUCH_NOT_SELF,
 	action_text = "%SOURCE% begins healing %TARGET%",
 	complete_text = "%SOURCE% finishes healing %TARGET%",
+	show_health = FALSE,
+	heal_color = COLOR_HEALING_CYAN,
 )
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -62,6 +68,8 @@
 	src.self_targetting = self_targetting
 	src.action_text = action_text
 	src.complete_text = complete_text
+	src.show_health = show_health
+	src.heal_color = heal_color
 
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_healing)) // Players
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(try_healing)) // NPCs
@@ -147,7 +155,11 @@
 		healer.visible_message(span_notice("[format_string(complete_text, healer, target)]"))
 
 	target.heal_overall_damage(brute = heal_brute, burn = heal_burn, stamina = heal_stamina, required_bodytype = required_bodytype)
-	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
+	new /obj/effect/temp_visual/heal(get_turf(target), heal_color)
+
+	if(show_health && !iscarbon(target))
+		var/formatted_string = format_string("%TARGET% now has <b>[target.health]/[target.maxHealth] health.</b>", healer, target)
+		to_chat(healer, span_danger(formatted_string))
 
 /// Reformats the passed string with the replacetext keys
 /datum/component/healing_touch/proc/format_string(string, atom/source, atom/target)

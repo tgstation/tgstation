@@ -7,12 +7,14 @@
 
 [![resentment](.github/images/badges/built-with-resentment.svg)](.github/images/comics/131-bug-free.png) [![technical debt](.github/images/badges/contains-technical-debt.svg)](.github/images/comics/106-tech-debt-modified.png) [![forinfinityandbyond](.github/images/badges/made-in-byond.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-* **Website:** https://www.tgstation13.org
-* **Code:** https://github.com/tgstation/tgstation
-* **Wiki:** https://tgstation13.org/wiki/Main_Page
-* **Codedocs:** https://codedocs.tgstation13.org/
-* **/tg/station Discord:** https://tgstation13.org/phpBB/viewforum.php?f=60
-* **Coderbus Discord:** https://discord.gg/Vh8TJp9
+| Website                   | Link                                           |
+|---------------------------|------------------------------------------------|
+| Website                   | [https://www.tgstation13.org](https://www.tgstation13.org)          |
+| Code                      | [https://github.com/tgstation/tgstation](https://github.com/tgstation/tgstation)    |
+| Wiki                      | [https://tgstation13.org/wiki/Main_Page](https://tgstation13.org/wiki/Main_Page)   |
+| Codedocs                  | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)       |
+| /tg/station Discord       | [https://tgstation13.org/phpBB/viewforum.php?f=60](https://tgstation13.org/phpBB/viewforum.php?f=60) |
+| Coderbus Discord          | [https://discord.gg/Vh8TJp9](https://discord.gg/Vh8TJp9)               |
 
 This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 
@@ -21,7 +23,7 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 ## DOWNLOADING
 [Downloading](.github/guides/DOWNLOADING.md)
 
-[Running on the server](.github/guides/RUNNING_A_SERVER.md)
+[Running a server](.github/guides/RUNNING_A_SERVER.md)
 
 [Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
 

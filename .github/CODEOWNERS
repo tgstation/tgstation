@@ -75,12 +75,13 @@
 
 # ninjanomnom
 
-/code/__DEFINES/dcs/ @ninjanomnom
 /code/controllers/subsystem/dcs.dm @ninjanomnom
-/code/controllers/subsystem/shuttle.dm @ninjanomnom
-/code/datums/components/ @ninjanomnom
-/code/datums/elements/ @ninjanomnom
-/code/modules/shuttle/ @ninjanomnom
+/code/datums/signals.dm @ninjanomnom
+/code/datums/components/_component.dm @ninjanomnom
+/code/datums/elements/_element.dm @ninjanomnom
+/code/datums/greyscale/_greyscale_config.dm @ninjanomnom
+/code/datums/greyscale/json_reader.dm @ninjanomnom
+/code/datums/greyscale/layer.dm @ninjanomnom
 
 # Ryll-Ryll/Shaps
 
@@ -125,7 +126,6 @@
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
 /code/datums/ai @tralezab
-/code/modules/mob/living/basic/ @tralezab
 
 # Watermelon914
 
@@ -141,6 +141,7 @@
 /code/datums/armor/ @ZephyrTFA
 /code/modules/admin/verbs/ @ZephyrTFA
 /code/modules/logging/ @ZephyrTFA
+/tools/ci/check_grep.sh @ZephyrTFA
 
 
 # CONTRIBUTORS
@@ -185,19 +186,29 @@
 /SQL/ @Jordie0608 @MrStonedOne
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
+
 /icons/ @Imaginos16 @Krysonism @Twaticus @Wallemations
 /icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
+
 /code/__HELPERS/logging/ @dragomagol @ZephyrTFA
+
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
+
 /code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
 /code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
+
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+
+/code/modules/mob/living/basic/ @Jacquerel @san7890 @tralezab
+
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
+
 /tools/build/ @MrStonedOne @stylemistake
 /tools/tgs_scripts/ @Cyberboss @MrStonedOne
 

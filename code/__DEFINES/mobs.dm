@@ -120,6 +120,7 @@
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MONKEY_FREAK "monkey_freak"
+#define SPECIES_MONKEY_HOLODECK "monkey_holodeck"
 #define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
@@ -140,6 +141,7 @@
 #define BODYPART_ID_DIGITIGRADE "digitigrade"
 #define BODYPART_ID_LARVA "larva"
 #define BODYPART_ID_PSYKER "psyker"
+#define BODYPART_ID_MEAT "meat"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -478,9 +480,6 @@
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY 5
 #define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
-
-// /obj/item/bodypart on_mob_life() retval flag
-#define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
 
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180

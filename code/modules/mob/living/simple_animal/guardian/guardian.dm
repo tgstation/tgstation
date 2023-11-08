@@ -6,7 +6,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
 	gender = NEUTER
-	mob_biotypes = NONE
+	mob_biotypes = MOB_SPECIAL
+	sentience_type = SENTIENCE_HUMANOID
 	bubble_icon = "guardian"
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
@@ -89,6 +90,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites += src
 	update_theme(theme)
 	AddElement(/datum/element/simple_flying)
+	AddComponent(/datum/component/basic_inhands)
 	manifest_effects()
 
 /mob/living/simple_animal/hostile/guardian/Destroy() //if deleted by admins or something random, cut from the summoner
@@ -136,7 +138,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/cut_summoner(different_person = FALSE)
 	if(is_deployed())
 		recall_effects()
-	forceMove(get_turf(src))
+	var/summoner_turf = get_turf(src)
+	if (!isnull(summoner_turf))
+		forceMove(summoner_turf)
 	UnregisterSignal(summoner, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
 	if(different_person)
 		summoner.faction -= "[REF(src)]"
@@ -309,7 +313,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	SIGNAL_HANDLER
 
 	cut_summoner()
-	forceMove(source.loc)
+	if (!isnull(source.loc))
+		forceMove(source.loc)
 	to_chat(src, span_danger("Your summoner has died!"))
 	visible_message(span_bolddanger("\The [src] dies along with its user!"))
 	source.visible_message(span_bolddanger("[source]'s body is completely consumed by the strain of sustaining [src]!"))
@@ -344,12 +349,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
 	visible_message(span_danger("\The [src] jumps back to its user."))
-	if(istype(summoner.loc, /obj/effect))
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
+	if(istype(summoner.loc, /obj/effect) || isnull(summoner.loc))
 		recall(forced = TRUE)
-	else
-		new /obj/effect/temp_visual/guardian/phase/out(loc)
-		forceMove(summoner.loc)
-		new /obj/effect/temp_visual/guardian/phase(loc)
+		return
+	forceMove(summoner.loc)
+	new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/can_suicide()
 	return FALSE
@@ -461,39 +466,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		cut_overlay(overlay)
 		guardian_overlays[cache_index] = null
 
-/mob/living/simple_animal/hostile/guardian/update_held_items()
-	remove_overlay(GUARDIAN_HANDS_LAYER)
-	var/list/hands_overlays = list()
-	var/obj/item/l_hand = get_item_for_held_index(1)
-	var/obj/item/r_hand = get_item_for_held_index(2)
-
-	if(r_hand)
-		hands_overlays += r_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
-
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			SET_PLANE_EXPLICIT(r_hand, ABOVE_HUD_PLANE, src)
-			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
-			client.screen |= r_hand
-
-	if(l_hand)
-		hands_overlays += l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
-
-		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			SET_PLANE_EXPLICIT(l_hand, ABOVE_HUD_PLANE, src)
-			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
-			client.screen |= l_hand
-
-	if(length(hands_overlays))
-		guardian_overlays[GUARDIAN_HANDS_LAYER] = hands_overlays
-	apply_overlay(GUARDIAN_HANDS_LAYER)
-
 /mob/living/simple_animal/hostile/guardian/regenerate_icons()
 	update_held_items()
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
 /mob/living/simple_animal/hostile/guardian/proc/manifest(forced)
-	if(is_deployed() || istype(summoner.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
+	if(is_deployed() || isnull(summoner.loc) || istype(summoner.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
 		return FALSE
 	forceMove(summoner.loc)
 	new /obj/effect/temp_visual/guardian/phase(loc)

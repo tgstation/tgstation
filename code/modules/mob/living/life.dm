@@ -12,7 +12,10 @@
 /mob/living/proc/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
-	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick, times_fired)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick, times_fired)
+
+	if(signal_result & COMPONENT_LIVING_CANCEL_LIFE_PROCESSING) // mmm less work
+		return
 
 	if (client)
 		var/turf/T = get_turf(src)
@@ -114,7 +117,7 @@
 	for(var/bile in reagents.reagent_list)
 		var/datum/reagent/consumable/bits = bile
 		if(bits)
-			fullness += bits.get_nutriment_factor() * bits.volume / bits.metabolization_rate
+			fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**

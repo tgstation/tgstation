@@ -26,7 +26,6 @@
 	integrity_failure = 0.5
 	max_integrity = 200
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
-	var/magical_mirror = FALSE
 
 	///Flags this race must have to be selectable with this type of mirror.
 	var/race_flags = MIRROR_MAGIC
@@ -83,7 +82,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(. || !ishuman(user) || broken)
 		return TRUE
 
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH) && !magical_mirror)
+	if(!istype(src, /obj/structure/mirror/magic) && !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return TRUE //no tele-grooming (if nonmagical)
 
 	return display_radial_menu(user)
@@ -110,20 +109,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	return display_radial_menu(user)
 
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
-	if(beard_dresser.physique != FEMALE && !magical_mirror)
-		var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
-		if(isnull(new_style))
-			return TRUE
-		if(HAS_TRAIT(beard_dresser, TRAIT_SHAVED))
-			to_chat(beard_dresser, span_notice("If only growing back facial hair were that easy for you... The reminder makes you feel terrible."))
-			beard_dresser.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
-			return TRUE
-		beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
-	else
+	if(beard_dresser.physique == FEMALE)
 		if(beard_dresser.facial_hairstyle == "Shaved")
-			to_chat(beard_dresser, span_notice("You realize you don't have any facial hair."))
-			return
-		beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
+			balloon_alert(beard_dresser, "nothing to shave!")
+			return TRUE
+		var/shave_beard = tgui_alert(beard_dresser, "Shave your beard?", "Grooming", list("Yes", "No"))
+		if(shave_beard == "Yes")
+			beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
+		return TRUE
+
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+
+	if(isnull(new_style))
+		return TRUE
+
+	if(HAS_TRAIT(beard_dresser, TRAIT_SHAVED))
+		to_chat(beard_dresser, span_notice("If only growing back facial hair were that easy for you... The reminder makes you feel terrible."))
+		beard_dresser.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
+		return TRUE
+
+	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
 	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
@@ -152,10 +157,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/racechoice = tgui_input_list(race_changer, "What are we again?", "Race change", selectable_races)
 	if(isnull(racechoice))
 		return TRUE
-	if(!selectable_races[racechoice])
+
+	var/new_race_path = selectable_races[racechoice]
+	if(!ispath(new_race_path, /datum/species))
 		return TRUE
 
-	var/datum/species/newrace = selectable_races[racechoice]
+	var/datum/species/newrace = new new_race_path()
+	var/attributes_desc = newrace.get_physical_attributes()
+
+	var/answer = tgui_alert(race_changer, attributes_desc, "Become a [newrace]?", list("Yes", "No"))
+	if(answer != "Yes")
+		qdel(newrace)
+		change_race(race_changer) // try again
+		return
+
 	race_changer.set_species(newrace, icon_update = FALSE)
 	if(HAS_TRAIT(race_changer, TRAIT_USES_SKINTONES))
 		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
@@ -175,8 +190,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
 
-		race_changer.update_body(is_creating = TRUE)
-		race_changer.update_mutations_overlay() // no hulk lizard
+	race_changer.update_body(is_creating = TRUE)
+	race_changer.update_mutations_overlay() // no hulk lizard
 
 // possible Genders: MALE, FEMALE, PLURAL, NEUTER
 // possible Physique: MALE, FEMALE
@@ -205,8 +220,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		sexy.physique = (chosen_physique == "Warlock Physique") ? MALE : FEMALE
 
 	sexy.dna.update_ui_block(DNA_GENDER_BLOCK)
-	sexy.update_body()
+	sexy.update_body(is_creating = TRUE) // or else physique won't change properly
 	sexy.update_mutations_overlay() //(hulk male/female)
+	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender shaped clothing
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
@@ -231,7 +247,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
 		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
-		user.AddComponent(/datum/component/omen)
+		user.AddComponent(/datum/component/omen, incidents_left = 7)
 
 /obj/structure/mirror/bullet_act(obj/projectile/P)
 	if(broken || !isliving(P.firer) || !P.damage)
@@ -241,7 +257,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(broken) // breaking a mirror truly gets you bad luck!
 		var/mob/living/unlucky_dude = P.firer
 		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
-		unlucky_dude.AddComponent(/datum/component/omen)
+		unlucky_dude.AddComponent(/datum/component/omen, incidents_left = 7)
 
 /obj/structure/mirror/atom_break(damage_flag, mapload)
 	. = ..()
@@ -306,7 +322,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
-	magical_mirror = TRUE
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
@@ -318,8 +333,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			selectable_races[initial(species_type.name)] = species_type
 	selectable_races = sort_list(selectable_races)
 
+/obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
+	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+	if(isnull(new_style))
+		return TRUE
+	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
+	return TRUE
+
 //Magic mirrors can change hair color as well
-/obj/structure/mirror/magic/mirror/change_hair(mob/living/carbon/human/user)
+/obj/structure/mirror/magic/change_hair(mob/living/carbon/human/user)
 	var/hairchoice = tgui_alert(user, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
 	if(hairchoice == "Style") //So you just want to use a mirror then?
 		return ..()
@@ -335,6 +357,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 	user.update_body_parts()
+
+/obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if(.)
+		return TRUE
+
+	if(HAS_TRAIT(user, TRAIT_ADVANCEDTOOLUSER) && HAS_TRAIT(user, TRAIT_LITERATE))
+		return TRUE
+
+	to_chat(user, span_alert("You feel quite intelligent."))
+	// Prevents wizards from being soft locked out of everything
+	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain shit
+	user.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
+	return TRUE
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
 	// Roundstart species don't have a flag, so it has to be set on Initialize.
@@ -352,11 +388,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/magic/pride/attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(!.)
+	if(.)
 		return TRUE
 
-	user.visible_message(span_danger("<B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B>"), \
-	span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"))
+	user.visible_message(
+		span_bolddanger("The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!"),
+		span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"),
+	)
 
 	var/turf/user_turf = get_turf(user)
 	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)

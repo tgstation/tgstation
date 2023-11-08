@@ -64,6 +64,10 @@
 	if(issilicon(meal) || meal.mob_biotypes & MOB_ROBOTIC)
 		return FALSE
 
+	if(meal.flags_1 & HOLOGRAM_1)
+		meal.balloon_alert(src, "no life energy!")
+		return FALSE
+
 	if(isanimal(meal))
 		var/mob/living/simple_animal/simple_meal = meal
 		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
@@ -160,8 +164,7 @@
 			amount_grown = 0
 			for(var/datum/action/innate/slime/evolve/E in actions)
 				E.Remove(src)
-			var/datum/action/innate/slime/reproduce/reproduce_action = new
-			reproduce_action.Grant(src)
+			GRANT_ACTION(/datum/action/innate/slime/reproduce)
 			regenerate_icons()
 			update_name()
 		else
@@ -180,54 +183,62 @@
 
 /mob/living/simple_animal/slime/verb/Reproduce()
 	set category = "Slime"
-	set desc = "This will make you split into four Slimes."
+	set desc = "This will make you split into four slimes."
 
-	if(stat)
-		to_chat(src, "<i>I must be conscious to do this...</i>")
+	if(stat != CONSCIOUS)
+		balloon_alert(src, "need to be conscious to split!")
 		return
 
-	if(is_adult)
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			if(stat)
-				to_chat(src, "<i>I must be conscious to do this...</i>")
-				return
+	if(!isopenturf(loc))
+		balloon_alert(src, "can't reproduce here!")
 
-			var/list/babies = list()
-			var/new_nutrition = round(nutrition * 0.9)
-			var/new_powerlevel = round(powerlevel / 4)
-			var/turf/drop_loc = drop_location()
+	if(!is_adult)
+		balloon_alert(src, "not old enough to reproduce!")
+		return
 
-			for(var/i in 1 to 4)
-				var/child_colour
-				if(mutation_chance >= 100)
-					child_colour = SLIME_TYPE_RAINBOW
-				else if(prob(mutation_chance))
-					child_colour = slime_mutation[rand(1,4)]
-				else
-					child_colour = colour
-				var/mob/living/simple_animal/slime/M
-				M = new(drop_loc, child_colour)
-				if(ckey)
-					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
-				M.powerlevel = new_powerlevel
-				if(i != 1)
-					step_away(M,src)
-				M.set_friends(Friends)
-				babies += M
-				M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
-				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
+	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
+		to_chat(src, "<i>I need to grow myself more before I can reproduce...</i>")
+		return
 
-			var/mob/living/simple_animal/slime/new_slime = pick(babies)
-			new_slime.set_combat_mode(TRUE)
-			if(src.mind)
-				src.mind.transfer_to(new_slime)
-			else
-				new_slime.key = src.key
-			qdel(src)
+	var/list/babies = list()
+	var/new_nutrition = round(nutrition * 0.9)
+	var/new_powerlevel = round(powerlevel / 4)
+	var/turf/drop_loc = drop_location()
+
+	for(var/i in 1 to 4)
+		var/child_colour
+
+		if(mutation_chance >= 100)
+			child_colour = SLIME_TYPE_RAINBOW
+		else if(prob(mutation_chance))
+			child_colour = slime_mutation[rand(1,4)]
 		else
-			to_chat(src, "<i>I am not ready to reproduce yet...</i>")
+			child_colour = colour
+
+		var/mob/living/simple_animal/slime/baby
+		baby = new(drop_loc, child_colour)
+
+		if(ckey)
+			baby.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+
+		baby.powerlevel = new_powerlevel
+		if(i != 1)
+			step_away(baby, src)
+
+		baby.set_friends(Friends)
+		babies += baby
+		baby.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
+		SSblackbox.record_feedback("tally", "slime_babies_born", 1, baby.colour)
+
+	var/mob/living/simple_animal/slime/new_slime = pick(babies) // slime that the OG slime will move into.
+	new_slime.set_combat_mode(TRUE)
+
+	if(isnull(src.mind))
+		new_slime.key = src.key
 	else
-		to_chat(src, "<i>I am not old enough to reproduce yet...</i>")
+		src.mind.transfer_to(new_slime)
+
+	qdel(src)
 
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"
@@ -235,8 +246,8 @@
 	needs_growth = GROWTH_NEEDED
 
 /datum/action/innate/slime/reproduce/Activate()
-	var/mob/living/simple_animal/slime/S = owner
-	S.Reproduce()
+	var/mob/living/simple_animal/slime/slime_owner = owner
+	slime_owner.Reproduce()
 
 #undef SIZE_DOESNT_MATTER
 #undef BABIES_ONLY

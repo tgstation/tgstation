@@ -39,20 +39,20 @@
 
 /obj/item/circuit_component/assoc_literal/populate_ports()
 	AddComponent(/datum/component/circuit_component_add_port, \
-		port_list = entry_ports, \
-		add_action = "add", \
-		remove_action = "remove", \
-		port_type = PORT_TYPE_ANY, \
-		prefix = "Index", \
-		minimum_amount = 1, \
-		maximum_amount = 20 \
-	)
-	AddComponent(/datum/component/circuit_component_add_port, \
 		port_list = key_ports, \
 		add_action = "add", \
 		remove_action = "remove", \
 		port_type = PORT_TYPE_STRING, \
 		prefix = "Key", \
+		minimum_amount = 1, \
+		maximum_amount = 20 \
+	)
+	AddComponent(/datum/component/circuit_component_add_port, \
+		port_list = entry_ports, \
+		add_action = "add", \
+		remove_action = "remove", \
+		port_type = PORT_TYPE_ANY, \
+		prefix = "Value", \
 		minimum_amount = 1, \
 		maximum_amount = 20 \
 	)

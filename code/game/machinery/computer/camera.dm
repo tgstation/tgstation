@@ -50,6 +50,8 @@
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!user.can_perform_action(src, NEED_DEXTERITY)) //prevents monkeys from using camera consoles
+		return
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
@@ -82,17 +84,18 @@
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
+			ref = REF(active_camera),
 			status = active_camera.status,
 		)
 	return data
 
 /obj/machinery/computer/security/ui_static_data()
 	var/list/data = list()
+	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	var/list/cameras = get_camera_list(network)
 	data["cameras"] = list()
@@ -100,6 +103,7 @@
 		var/obj/machinery/camera/C = cameras[i]
 		data["cameras"] += list(list(
 			name = C.c_tag,
+			ref = REF(C),
 		))
 
 	return data
@@ -110,13 +114,11 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
-		var/list/cameras = get_camera_list(network)
-		var/obj/machinery/camera/selected_camera = cameras[c_tag]
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
 		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 
-		if(!selected_camera)
+		if(isnull(active_camera))
 			return TRUE
 
 		update_active_camera_screen()

@@ -14,14 +14,18 @@
 	invocation_type = INVOCATION_SHOUT
 
 	summon_radius = 2
-	summon_type = list(/mob/living/carbon/human/species/monkey/angry, /mob/living/carbon/human/species/monkey/angry, /mob/living/simple_animal/hostile/gorilla/lesser)
+	summon_type = list(
+		/mob/living/basic/gorilla/lesser,
+		/mob/living/carbon/human/species/monkey/angry,
+		/mob/living/carbon/human/species/monkey/angry, // Listed twice so it's twice as likely, this class doesn't use pick weight
+	)
 	summon_amount = 4
 
 /datum/action/cooldown/spell/conjure/simian/level_spell(bypass_cap)
 	. = ..()
 	summon_amount++ // MORE, MOOOOORE
 	if(spell_level == spell_max_level) // We reward the faithful.
-		summon_type = list(/mob/living/carbon/human/species/monkey/angry, /mob/living/simple_animal/hostile/gorilla)
+		summon_type = list(/mob/living/carbon/human/species/monkey/angry, /mob/living/basic/gorilla)
 		spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC // Max level lets you cast it naked, for monkey larp.
 		to_chat(owner, span_notice("Your simian power has reached maximum capacity! You can now cast this spell naked, and you will create adult Gorillas with each cast."))
 

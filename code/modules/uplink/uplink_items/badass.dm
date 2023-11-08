@@ -22,7 +22,12 @@
 	if(!.)
 		return
 
-	notify_ghosts("[user] has purchased a BADASS Syndicate Balloon!", source = src, action = NOTIFY_ORBIT, header = "What are they THINKING?")
+	notify_ghosts(
+		"[user] has purchased a BADASS Syndicate Balloon!",
+		source = src,
+		action = NOTIFY_ORBIT,
+		header = "What are they THINKING?",
+	)
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
@@ -48,7 +53,6 @@
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 3
-	progression_minimum = 5 MINUTES
 	restricted = TRUE
 	illegal_tech = FALSE
 

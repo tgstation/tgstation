@@ -21,7 +21,7 @@
 	changeling.chosen_sting = src
 
 	changeling.lingstingdisplay.icon_state = button_icon_state
-	changeling.lingstingdisplay.invisibility = 0
+	changeling.lingstingdisplay.SetInvisibility(0, id=type)
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
@@ -29,7 +29,7 @@
 	changeling.chosen_sting = null
 
 	changeling.lingstingdisplay.icon_state = null
-	changeling.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	changeling.lingstingdisplay.RemoveInvisibility(type)
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)
@@ -128,8 +128,8 @@
 		final_message = span_warning("Our genes cry out as we transform the lesser form of [target] into [selected_dna.dna.real_name] permanently!")
 
 	if(target.apply_status_effect(/datum/status_effect/temporary_transformation/trans_sting, final_duration, selected_dna.dna))
-		log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 		..()
+		log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 		to_chat(user, final_message)
 		return TRUE
 	return FALSE
@@ -158,13 +158,14 @@
 	return TRUE
 
 /datum/action/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
-	log_combat(user, target, "stung", object="false armblade sting")
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))
 		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, you cannot grow a false armblade over it!"))
 		return
+
 	..()
+	log_combat(user, target, "stung", object = "false armblade sting")
 	if(ismonkey(target))
 		to_chat(user, span_notice("Our genes cry out as we sting [target.name]!"))
 
@@ -200,6 +201,7 @@
 		return changeling.can_absorb_dna(target)
 
 /datum/action/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
+	..()
 	log_combat(user, target, "stung", "extraction sting")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!changeling.has_profile_with_dna(target.dna))
@@ -215,6 +217,7 @@
 	dna_cost = 2
 
 /datum/action/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
+	..()
 	log_combat(user, target, "stung", "mute sting")
 	target.adjust_silence(1 MINUTES)
 	return TRUE
@@ -237,6 +240,7 @@
 		user.balloon_alert(user, "robotic eyes!")
 		return FALSE
 
+	..()
 	log_combat(user, target, "stung", "blind sting")
 	to_chat(target, span_danger("Your eyes burn horrifically!"))
 	eyes.apply_organ_damage(eyes.maxHealth * 0.8)
@@ -254,6 +258,7 @@
 	dna_cost = 1
 
 /datum/action/changeling/sting/lsd/sting_action(mob/user, mob/living/carbon/target)
+	..()
 	log_combat(user, target, "stung", "LSD sting")
 	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
 	return TRUE
@@ -272,6 +277,7 @@
 	dna_cost = 2
 
 /datum/action/changeling/sting/cryo/sting_action(mob/user, mob/target)
+	..()
 	log_combat(user, target, "stung", "cryo sting")
 	if(target.reagents)
 		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)

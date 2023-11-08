@@ -33,6 +33,13 @@
 #define COLOR_HALF_TRANSPARENT_BLACK "#0000007A"
 
 #define COLOR_RED "#FF0000"
+#define COLOR_CHRISTMAS_RED "#D6001C"
+#define COLOR_OLD_GLORY_RED "#B22234"
+#define COLOR_FRENCH_RED "#EF4135"
+#define COLOR_ETHIOPIA_RED "#DA121A"
+#define COLOR_UNION_JACK_RED "#C8102E"
+#define COLOR_MEDIUM_DARK_RED "#CC0000"
+#define COLOR_PINK_RED "EF3340"
 #define COLOR_SYNDIE_RED "#F10303"
 #define COLOR_SYNDIE_RED_HEAD "#760500"
 #define COLOR_MOSTLY_PURE_RED "#FF3300"
@@ -46,10 +53,14 @@
 #define COLOR_SOFT_RED "#FA8282"
 #define COLOR_CULT_RED "#960000"
 #define COLOR_BUBBLEGUM_RED "#950A0A"
+#define COLOR_CARP_RIFT_RED "#ff330030"
 
 #define COLOR_YELLOW "#FFFF00"
 #define COLOR_VIVID_YELLOW "#FBFF23"
+#define COLOR_TANGERINE_YELLOW "#FFCC00"
 #define COLOR_VERY_SOFT_YELLOW "#FAE48E"
+#define COLOR_GOLD "#FFD700"
+#define COLOR_ETHIOPIA_YELLOW "#FCDD09"
 
 #define COLOR_OLIVE "#808000"
 #define COLOR_ASSISTANT_OLIVE "#828163"
@@ -62,6 +73,9 @@
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
 #define COLOR_VERY_DARK_LIME_GREEN "#003300"
 #define COLOR_GREEN "#008000"
+#define COLOR_CHRISTMAS_GREEN "#00873E"
+#define COLOR_IRISH_GREEN "#169B62"
+#define COLOR_ETHIOPIA_GREEN "#078930"
 #define COLOR_DARK_MODERATE_LIME_GREEN "#44964A"
 #define COLOR_PAI_GREEN "#00FF88"
 #define COLOR_PALE_GREEN "#20e28e"
@@ -71,12 +85,18 @@
 #define COLOR_DARK_CYAN "#00A2FF"
 #define COLOR_TEAL "#008080"
 #define COLOR_BLUE "#0000FF"
+#define COLOR_OLD_GLORY_BLUE "#3C3B6E"
+#define COLOR_FRENCH_BLUE "#0055A4"
+#define COLOR_UNION_JACK_BLUE "#012169"
+#define COLOR_TRUE_BLUE "#0066CC"
 #define COLOR_STRONG_BLUE "#1919c8"
 #define COLOR_CENTCOM_BLUE "#134975"
 #define COLOR_BRIGHT_BLUE "#2CB2E8"
 #define COLOR_COMMAND_BLUE "#1B67A5"
 #define COLOR_MEDICAL_BLUE "#5B97BC"
 #define COLOR_MODERATE_BLUE "#555CC2"
+#define COLOR_TRAM_BLUE "#6160A8"
+#define COLOR_TRAM_LIGHT_BLUE "#A8A7DA"
 #define COLOR_AMETHYST "#822BFF"
 #define COLOR_BLUE_LIGHT "#33CCFF"
 #define COLOR_NAVY "#000080"
@@ -98,6 +118,7 @@
 #define COLOR_DARK_PURPLE "#551A8B"
 
 #define COLOR_ORANGE "#FF9900"
+#define COLOR_IRISH_ORANGE "#FF883E"
 #define COLOR_ENGINEERING_ORANGE "#FFA62B"
 #define COLOR_MOSTLY_PURE_ORANGE "#ff8000"
 #define COLOR_TAN_ORANGE "#FF7B00"
@@ -218,6 +239,8 @@
 #define LIGHT_COLOR_BLUEGREEN "#7DE1AF"
 /// Diluted cyan. rgb(125, 225, 225)
 #define LIGHT_COLOR_CYAN "#7DE1E1"
+/// Faint cyan. rgb(200, 240, 255)
+#define LIGHT_COLOR_FAINT_CYAN "#CAF0FF"
 /// Baby Blue rgb(0, 170, 220)
 #define LIGHT_COLOR_BABY_BLUE "#00AADC"
 /// Electric cyan rgb(0, 255, 255)
@@ -279,6 +302,15 @@
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
 
+/// Colors for status/tram/incident displays
+#define COLOR_DISPLAY_RED "#BE3455"
+#define COLOR_DISPLAY_ORANGE "#FF9900"
+#define COLOR_DISPLAY_YELLOW "#FFF743"
+#define COLOR_DISPLAY_GREEN "#3CF046"
+#define COLOR_DISPLAY_CYAN "#22FFCC"
+#define COLOR_DISPLAY_BLUE "#22CCFF"
+#define COLOR_DISPLAY_PURPLE "#5D5DFC"
+
 /// The default color for admin say, used as a fallback when the preference is not enabled
 #define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
 
@@ -290,6 +322,7 @@
 /// Icon filter that creates gaussian blur
 #define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
 
+// Colors related to items used in construction
 #define CABLE_COLOR_BLUE "blue"
 	#define CABLE_HEX_COLOR_BLUE COLOR_STRONG_BLUE
 #define CABLE_COLOR_BROWN "brown"
@@ -308,6 +341,9 @@
 	#define CABLE_HEX_COLOR_WHITE COLOR_WHITE
 #define CABLE_COLOR_YELLOW "yellow"
 	#define CABLE_HEX_COLOR_YELLOW COLOR_YELLOW
+//windows affected by Nar'Sie turn this color.
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
 
 #define COLOR_CARP_PURPLE "#aba2ff"
 #define COLOR_CARP_PINK "#da77a8"

@@ -804,13 +804,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 					if(!opened)
 						return
 					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."),
-									span_hear("You hear weaponelding."))
+									span_notice("You cut \the [src] apart with \the [weapon]."),
+									span_hear("You hear welding."))
 					deconstruct(TRUE)
 				return
 			else // for example cardboard box is cut with wirecutters
 				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."))
+									span_notice("You cut \the [src] apart with \the [weapon]."))
 				deconstruct(TRUE)
 				return
 		if (user.combat_mode)

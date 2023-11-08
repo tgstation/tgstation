@@ -14,17 +14,24 @@
 	if (!user)
 		user = usr
 	if(!length(items))
-		return
+		return null
 	if (!istype(user))
 		if (istype(user, /client))
 			var/client/client = user
 			user = client.mob
 		else
-			return
+			return null
+
+	if(isnull(user.client))
+		return null
+
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title, default) as null|anything in items
 	var/datum/tgui_list_input/input = new(user, message, title, items, default, timeout, ui_state)
+	if(input.invalid)
+		qdel(input)
+		return
 	input.ui_interact(user)
 	input.wait()
 	if (input)
@@ -58,6 +65,8 @@
 	var/closed
 	/// The TGUI UI state that will be returned in ui_state(). Default: always_state
 	var/datum/ui_state/state
+	/// Whether the tgui list input is invalid or not (i.e. due to all list entries being null)
+	var/invalid = FALSE
 
 /datum/tgui_list_input/New(mob/user, message, title, list/items, default, timeout, ui_state)
 	src.title = title
@@ -77,6 +86,9 @@
 		string_key = avoid_assoc_duplicate_keys(string_key, repeat_items)
 		src.items += string_key
 		src.items_map[string_key] = i
+
+	if(length(src.items) == 0)
+		invalid = TRUE
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time

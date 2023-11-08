@@ -1,9 +1,8 @@
 /datum/ai_controller/basic_controller/goldgrub
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
+		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
 		BB_ORE_IGNORE_TYPES = list(/obj/item/stack/ore/iron, /obj/item/stack/ore/glass),
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
 	)
 
@@ -14,9 +13,9 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/dig_away_from_danger,
 		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/find_and_hunt_target/consume_ores,
+		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores,
 		/datum/ai_planning_subtree/find_and_hunt_target/baby_egg,
-		/datum/ai_planning_subtree/grub_mine,
+		/datum/ai_planning_subtree/mine_walls,
 	)
 
 /datum/ai_controller/basic_controller/babygrub
@@ -25,7 +24,6 @@
 		BB_ORE_IGNORE_TYPES = list(/obj/item/stack/ore/glass),
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/goldgrub),
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/goldgrub/baby),
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STORM_APPROACHING = FALSE,
 	)
 
@@ -34,29 +32,29 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/dig_away_from_danger,
-		/datum/ai_planning_subtree/find_and_hunt_target/consume_ores,
+		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/look_for_adult,
 	)
 
 ///consume food!
-/datum/ai_planning_subtree/find_and_hunt_target/consume_ores
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores
 	target_key = BB_ORE_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores
-	finding_behavior = /datum/ai_behavior/find_hunt_target/consume_ores
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/hunt_ores
+	finding_behavior = /datum/ai_behavior/find_hunt_target/hunt_ores
 	hunt_targets = list(/obj/item/stack/ore)
 	hunt_chance = 75
 	hunt_range = 9
 
-/datum/ai_behavior/find_hunt_target/consume_ores
+/datum/ai_behavior/find_hunt_target/hunt_ores
 
-/datum/ai_behavior/find_hunt_target/consume_ores/valid_dinner(mob/living/basic/source, obj/item/stack/ore/target, radius)
+/datum/ai_behavior/find_hunt_target/hunt_ores/valid_dinner(mob/living/basic/source, obj/item/stack/ore/target, radius)
 	var/list/forbidden_ore = source.ai_controller.blackboard[BB_ORE_IGNORE_TYPES]
 
 	if(is_type_in_list(target, forbidden_ore))
 		return FALSE
 
-	if(target in source)
+	if(!isturf(target.loc))
 		return FALSE
 
 	var/obj/item/pet_target = source.ai_controller.blackboard[BB_CURRENT_PET_TARGET]
@@ -65,7 +63,7 @@
 
 	return can_see(source, target, radius)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores
+/datum/ai_behavior/hunt_target/unarmed_attack_target/hunt_ores
 	always_reset_target = TRUE
 
 ///find our child's egg and pull it!
@@ -122,45 +120,6 @@
 
 /datum/ai_behavior/use_mob_ability/burrow
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-///mine walls to look for food!
-/datum/ai_planning_subtree/grub_mine
-
-/datum/ai_planning_subtree/grub_mine/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard_key_exists(BB_TARGET_MINERAL_WALL))
-		controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_TARGET_MINERAL_WALL)
-		return SUBTREE_RETURN_FINISH_PLANNING
-	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_TARGET_MINERAL_WALL)
-
-/datum/ai_behavior/mine_wall
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 15 SECONDS
-
-/datum/ai_behavior/mine_wall/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/turf/target = controller.blackboard[target_key]
-	if(isnull(target))
-		return FALSE
-	set_movement_target(controller, target)
-
-/datum/ai_behavior/mine_wall/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-	var/mob/living/basic/living_pawn = controller.pawn
-	var/turf/closed/mineral/target = controller.blackboard[target_key]
-	var/is_gibtonite_turf = istype(target, /turf/closed/mineral/gibtonite)
-	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
-	living_pawn.melee_attack(target)
-	if(is_gibtonite_turf)
-		living_pawn.manual_emote("sighs...") //accept whats about to happen to us
-
-	finish_action(controller, TRUE, target_key)
-	return
-
-/datum/ai_behavior/mine_wall/finish_action(datum/ai_controller/controller, success, target_key)
-	. = ..()
-	controller.clear_blackboard_key(target_key)
 
 /datum/pet_command/grub_spit
 	command_name = "Spit"

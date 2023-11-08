@@ -12,9 +12,12 @@
 		TRAIT_NOFIRE,
 		TRAIT_NO_AUGMENTS,
 		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_PLASMA_TRANSFORM,
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
+		TRAIT_SNOWSTORM_IMMUNE, // Shared with plasma river... but I guess if you can survive a plasma river a blizzard isn't a big deal
+		TRAIT_UNHUSKABLE,
 	)
 	mutantheart = null
 	mutantlungs = null
@@ -55,6 +58,10 @@
 	if (prob(human_surname_chance))
 		name += " [pick(GLOB.last_names)]"
 	return name
+
+/datum/species/golem/get_physical_attributes()
+	return "Golems are hardy creatures made out of stone, which are thus naturally resistant to many dangers, including asphyxiation, fire, radiation, electricity, and viruses.\
+		They gain special abilities depending on the type of material consumed, but they need to consume material to keep their body animated."
 
 /datum/species/golem/create_pref_unique_perks()
 	var/list/to_add = list()
