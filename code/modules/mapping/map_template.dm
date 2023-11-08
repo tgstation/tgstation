@@ -29,6 +29,8 @@
 	var/list/ceiling_baseturfs = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	if(path)
 		mappath = path
 	if(mappath)

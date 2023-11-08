@@ -684,30 +684,6 @@
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/basic/butterfly = 3)
 
-/datum/micro_organism/cell_line/leaper
-	desc = "atypical amphibian cells"
-	required_reagents = list(
-		/datum/reagent/consumable/nutriment/protein,
-		/datum/reagent/ants,
-		/datum/reagent/consumable/eggyolk,
-		/datum/reagent/medicine/c2/synthflesh)
-
-	supplementary_reagents = list(
-		/datum/reagent/growthserum = 4,
-		/datum/reagent/drug/blastoff = 3,
-		/datum/reagent/drug/space_drugs = 2,
-		/datum/reagent/consumable/ethanol/eggnog = 2,
-		/datum/reagent/consumable/vanilla = 2,
-		/datum/reagent/consumable/banana = 1,
-		/datum/reagent/consumable/nutriment/vitamin = 1)
-
-	suppressive_reagents = list(
-		/datum/reagent/toxin/cyanide = -5,
-		/datum/reagent/consumable/mold = -2,
-		/datum/reagent/toxin/spore = -1)
-
-	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/leaper = 1)
-
 /datum/micro_organism/cell_line/mega_arachnid
 	desc = "pseudoarachnoid cells"
 	required_reagents = list(

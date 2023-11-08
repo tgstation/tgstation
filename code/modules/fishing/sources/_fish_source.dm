@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 	return
 
 /// Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go
-/datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	return rod.reason_we_cant_fish(src)
 
 /**
