@@ -1007,6 +1007,7 @@
 #include "code\datums\components\curse_of_polymorph.dm"
 #include "code\datums\components\customizable_reagent_holder.dm"
 #include "code\datums\components\damage_aura.dm"
+#include "code\datums\components\dart_insert.dm"
 #include "code\datums\components\deadchat_control.dm"
 #include "code\datums\components\death_linked.dm"
 #include "code\datums\components\dejavu.dm"

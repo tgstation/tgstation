@@ -73,6 +73,7 @@
 		unembedded()
 
 /obj/item/hardened_spike/embedded(atom/target)
+	. = ..()
 	if(isbodypart(target))
 		missed = FALSE
 
@@ -121,6 +122,7 @@
 	var/embedded_once_alread = FALSE
 
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
+	. = ..()
 	if(embedded_once_alread)
 		return
 	embedded_once_alread = TRUE

@@ -387,6 +387,9 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_FIRE_CASING "fire_casing"
 
+///from the base of /obj/item/ammo_casing/ready_proj() : (atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+#define COMSIG_CASING_READY_PROJECTILE "casing_ready_projectile"
+
 ///sent to the projectile after an item is spawned by the projectile_drop element: (new_item)
 #define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 ///sent to the projectile when spawning the item (shrapnel) that may be embedded: (new_item)
@@ -448,6 +451,12 @@
 #define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
+///from base of obj/item/embedded(): (atom/target, obj/item/bodypart/part)
+#define COMSIG_ITEM_EMBEDDED "item_embedded"
+///from base of datum/component/embedded/safeRemove(): (mob/living/carbon/victim)
+#define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
+/// from base of obj/item/failedEmbed()
+#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
 
 ///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
@@ -481,3 +490,12 @@
 
 /// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
 #define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"
+
+/// from /datum/component/dart_insert/add_to_dart() : (obj/item/ammo_casing, mob/user)
+#define COMSIG_DART_INSERT_ADDED "dart_insert_added"
+
+/// from /datum/component/dart_insert/remove_from_dart() : (obj/ammo_casing/dart, mob/user)
+#define COMSIG_DART_INSERT_REMOVED "dart_insert_removed"
+
+/// from /datum/component/dart_insert/get_dart_var_modifiers() : (list/out_modifiers)
+#define COMSIG_DART_INSERT_GET_VAR_MODIFIERS "dart_insert_get_var_modifiers"
