@@ -1,10 +1,24 @@
+/**
+ * Component for allowing items to be inserted into foam darts.
+ * The parent can register signal handlers for `COMSIG_DART_INSERT_ADDED`,
+ * `COMSIG_DART_INSERT_REMOVED` to define custom behavior for when the item
+ * is added to/removed from a dart, and `COMSIG_DART_INSERT_GET_VAR_MODIFIERS`
+ * to define the modifications the item makes to the vars of the fired projectile.
+ */
 /datum/component/dart_insert
+	/// List for tracking the modifications this component has made to the vars of the containing projectile
 	var/list/var_modifiers
+	/// A reference to the ammo casing this component's parent was inserted into
 	var/obj/item/ammo_casing/holder_casing
+	/// A reference to the projectile this component's parent was inserted into
 	var/obj/projectile/holder_projectile
+	/// The icon file used for the overlay applied over the containing ammo casing
 	var/casing_overlay_icon
+	/// The icon state used for the overlay applied over the containing ammo casing
 	var/casing_overlay_icon_state
+	/// The icon file used for the overlay applied over the containing projectile
 	var/projectile_overlay_icon
+	/// The icon state used for the overlay applied over the containing projectile
 	var/projectile_overlay_icon_state
 
 /datum/component/dart_insert/Initialize(_casing_overlay_icon, _casing_overlay_icon_state, _projectile_overlay_icon, _projectile_overlay_icon_state)
@@ -17,6 +31,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
 
 /datum/component/dart_insert/proc/on_preattack(datum/source, atom/target, mob/user, params)
+	SIGNAL_HANDLER
 	var/obj/item/ammo_casing/foam_dart/dart = target
 	if(!istype(dart))
 		return
