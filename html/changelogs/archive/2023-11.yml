@@ -19,3 +19,8 @@
       lockers.
   NicoDeLuna:
   - rscadd: Added Edgerunner Hairstyle for Roundstart
+2023-11-08:
+  Glyphee:
+  - rscadd: Florans
+  KoboldCommando:
+  - bugfix: cargo, zoomba and kerfus borgs should no longer go invisible when reset
