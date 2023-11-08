@@ -288,14 +288,19 @@
 /obj/item/pen/sleepy/on_inserted_into_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
 	. = ..()
 	var/obj/projectile/proj = dart.loaded_projectile
-	proj.create_reagents(reagents.maximum_volume, reagents.flags)
-	reagents.trans_to(proj, reagents.total_volume, transferred_by = user)
+	RegisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_dart_hit))
 
 /obj/item/pen/sleepy/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
 	. = ..()
-	proj.reagents.trans_to(src, proj.reagents.total_volume, transferred_by = user)
-	QDEL_NULL(proj.reagents)
+	UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
 
+/obj/item/pen/sleepy/proc/on_dart_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb, blocked)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/carbon_target = target
+	if(!istype(carbon_target) || blocked == 100)
+		return
+	if(carbon_target.can_inject(target_zone = hit_limb))
+		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = firer, methods = INJECT)
 /*
  * (Alan) Edaggers
  */
