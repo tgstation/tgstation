@@ -1,6 +1,6 @@
 /obj/item/organ/internal/heart/ethereal
 	name = "crystal core"
-	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.
+	icon_state = "ethereal_heart-on" //Welp. At least it's more unique in functionaliy.
 	base_icon_state = "ethereal_heart"
 	visual = TRUE //This is used by the ethereal species for color
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
@@ -19,6 +19,7 @@
 /obj/item/organ/internal/heart/ethereal/Initialize(mapload)
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
+	update_appearance()
 
 /obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
