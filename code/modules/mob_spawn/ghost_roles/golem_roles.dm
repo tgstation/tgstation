@@ -26,9 +26,10 @@
 		notify_ghosts(
 			"\A golem shell has been completed in \the [init_area.name].",
 			source = src,
-			action = NOTIFY_PLAY,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Golem Shell",
+			click_interact = TRUE,
 			ignore_key = POLL_IGNORE_GOLEM,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/name_mob(mob/living/spawned_mob, forced_name)

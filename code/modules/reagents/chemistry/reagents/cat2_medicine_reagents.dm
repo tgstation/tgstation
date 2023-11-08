@@ -48,7 +48,6 @@
 		notify_ghosts(
 			"[affected_mob] has entered a game of rock-paper-scissors with death!",
 			source = affected_mob,
-			action = NOTIFY_ORBIT,
 			header = "Who Will Win?",
 			notify_flags = NOTIFY_CATEGORY_DEFAULT,
 		)

@@ -103,7 +103,6 @@
 			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
 			source = src,
 			header = "Gruesome!",
-			action = NOTIFY_ORBIT,
 		)
 
 	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more

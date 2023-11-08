@@ -215,9 +215,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		notify_ghosts(
 			"\A [mychild] has been awakened in \the [get_area(src)]!",
 			source = mychild,
-			action = NOTIFY_ORBIT,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 			header = "Lavaland Elite awakened",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")
 	icon_state = "tumor_popped"
@@ -235,9 +234,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		notify_ghosts(
 			"\A [mychild] has been challenged in \the [get_area(src)]!",
 			source = mychild,
-			action = NOTIFY_ORBIT,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 			header = "Lavaland Elite challenged",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 	mychild.log_message("has been challenged by [key_name(activator)]!", LOG_GAME, color="#960000")
 

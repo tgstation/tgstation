@@ -782,27 +782,25 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	timeout = 30 SECONDS
 	/// The target to use the action on
 	var/atom/target
-	/// Which on click action to use
-	var/action = NOTIFY_JUMP
+	/// If we want to interact on click rather than jump/orbit
+	var/click_interact = FALSE
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
-	if(isnull(target))
+	if(isnull(target) || !isobserver(owner) || target == owner)
 		return
 
 	var/mob/dead/observer/ghost_owner = owner
-	if(!istype(ghost_owner))
+
+	if(click_interact)
+		target.attack_ghost(ghost_owner)
 		return
 
-	switch(action)
-		if(NOTIFY_PLAY)
-			target.attack_ghost(ghost_owner)
-		if(NOTIFY_JUMP)
-			var/turf/target_turf = get_turf(target)
-			if(target_turf && isturf(target_turf))
-				ghost_owner.abstract_move(target_turf)
-		if(NOTIFY_ORBIT)
-			ghost_owner.ManualFollow(target)
+	if(isturf(target))
+		ghost_owner.abstract_move(target)
+		return
+
+	ghost_owner.ManualFollow(target)
 
 //OBJECT-BASED
 

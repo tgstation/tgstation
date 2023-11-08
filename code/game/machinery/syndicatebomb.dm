@@ -254,7 +254,6 @@
 	notify_ghosts(
 		"\A [src] has been activated at [get_area(src)]!",
 		source = src,
-		action = NOTIFY_ORBIT,
 		header = "Bomb Planted",
 	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)

@@ -421,7 +421,6 @@
 		"The [src] has begun melting down!",
 		source = src,
 		header = "Meltdown Incoming",
-		action = NOTIFY_ORBIT,
 		ghost_sound = 'sound/machines/warning-buzzer.ogg',
 		notify_volume = 75,
 		notify_flags = NOTIFY_CATEGORY_DEFAULT,

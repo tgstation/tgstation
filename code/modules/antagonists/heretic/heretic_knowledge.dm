@@ -733,7 +733,6 @@
 	notify_ghosts(
 		"[user] has completed an ascension ritual!",
 		source = user,
-		action = NOTIFY_ORBIT,
 		header = "A Heretic is Ascending!",
 		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
