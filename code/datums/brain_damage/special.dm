@@ -107,6 +107,10 @@
 	. = ..()
 	QDEL_IN(src, 30 SECONDS)
 
+/obj/effect/client_image_holder/bluespace_stream/generate_image()
+	. = ..()
+	apply_wibbly_filters(.)
+
 /obj/effect/client_image_holder/bluespace_stream/Destroy()
 	if(!QDELETED(linked_to))
 		qdel(linked_to)

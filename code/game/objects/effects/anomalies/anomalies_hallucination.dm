@@ -15,6 +15,10 @@
 		span_warning("You are going insane!"),
 	)
 
+/obj/effect/anomaly/hallucination/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/anomaly/hallucination/anomalyEffect(seconds_per_tick)
 	. = ..()
 	ticks += seconds_per_tick

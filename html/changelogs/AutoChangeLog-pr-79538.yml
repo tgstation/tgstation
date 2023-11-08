@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "The screen alert should no longer break ghost UI when it's huge"
