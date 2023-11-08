@@ -235,17 +235,20 @@
 
 // Wiki books that are linked to the configured wiki link.
 
+#define BOOK_WINDOW_BROWSE_SIZE "970x710"
+
 // A book that links to the wiki
 /obj/item/book/manual/wiki
+	/// The ending URL of the page that we link to.
 	var/page_link = ""
-	window_size = "970x710"
 
 /obj/item/book/manual/wiki/display_content(mob/living/user)
 	if(isnull(book_data.content))
 		initialize_wikibook()
 
 	credit_book_to_reader(user)
-	DIRECT_OUTPUT(user, browse(book_data, "window=manual;size=[window_size]")) // if you change this GUARANTEE that it works.
+	var/book_content = book_data.get_content(trusted = TRUE) // legitimately one of the only times you should be using this argument
+	DIRECT_OUTPUT(user, browse(book_content, "window=manual;size=[BOOK_WINDOW_BROWSE_SIZE]")) // if you change this GUARANTEE that it works.
 
 /obj/item/book/manual/wiki/proc/initialize_wikibook()
 	var/wikiurl = CONFIG_GET(string/wikiurl)
@@ -459,3 +462,5 @@
 	starting_author = "Nanotrasen Edu-tainment Division"
 	starting_title = "Tactical Game Cards - Player's Handbook"
 	page_link = "Tactical_Game_Cards"
+
+#undef BOOK_WINDOW_BROWSE_SIZE

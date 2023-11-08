@@ -49,7 +49,10 @@
 
 	content = trim(html_encode(raw_content), MAX_PAPER_LENGTH)
 
-/datum/book_info/proc/get_content(default="N/A")
+/datum/book_info/proc/get_content(trusted = FALSE, default="N/A")
+	if(trusted)
+		return content // you better know what the hell you're doing, this absolutely should not be used trivially.
+
 	return html_decode(content) || "N/A"
 
 ///Returns a copy of the book_info datum
