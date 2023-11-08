@@ -2644,7 +2644,7 @@
 /turf/open/floor/iron/textured_large,
 /area/station/medical/virology)
 "bmx" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/security/brig)
 "bmH" = (
@@ -6093,7 +6093,7 @@
 /area/station/engineering/main)
 "cFa" = (
 /obj/structure/table,
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/service/kitchen)
 "cFb" = (
@@ -6112,7 +6112,7 @@
 /turf/open/floor/iron/dark,
 /area/space)
 "cFw" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "EngineeringElevator";
 	preset_destination_names = list("2"="Lower      Engine","3"="Upper      Atmos.")
@@ -6142,9 +6142,10 @@
 /turf/closed/wall,
 /area/station/science/ordnance/storage)
 "cFH" = (
-/obj/structure/industrial_lift,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "RoboticsLift"
+/obj/structure/transport/linear,
+/obj/effect/landmark/transport/transport_id{
+	 = None;
+	specific_transport_id = "RoboticsLift"
 	},
 /turf/open/openspace,
 /area/station/science/robotics/lab)
@@ -6337,10 +6338,11 @@
 /turf/open/floor/iron/textured_large,
 /area/station/medical/virology)
 "cIF" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/effect/landmark/start/ai,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "AIElevator"
+/obj/effect/landmark/transport/transport_id{
+	 = None;
+	specific_transport_id = "AIElevator"
 	},
 /turf/open/openspace,
 /area/station/ai_monitored/turret_protected/ai)
@@ -9131,10 +9133,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
-"dTB" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
-/turf/open/openspace/airless,
-/area/space)
 "dTJ" = (
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -9150,7 +9148,6 @@
 /turf/open/openspace,
 /area/station/maintenance/department/engine)
 "dTX" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured,
@@ -11650,7 +11647,6 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/lesser)
 "eWG" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured,
 /area/space)
@@ -23431,10 +23427,11 @@
 /turf/open/floor/iron/white,
 /area/space)
 "jSY" = (
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "PermaVator"
+/obj/effect/landmark/transport/transport_id{
+	 = None;
+	specific_transport_id = "PermaVator"
 	},
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/machinery/elevator_control_panel/directional/north{
 	linked_elevator_id = "PermaVator";
 	preset_destination_names = list("2"="Lower        Deck","3"="Upper        Deck")
@@ -24092,7 +24089,7 @@
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
 	name = "\improper APLU \";
-	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -25440,9 +25437,9 @@
 /turf/open/floor/iron/white/textured,
 /area/station/science/research)
 "kMr" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/poster/contraband/cc64k_ad/directional/east,
+/obj/machinery/byteforge,
 /turf/open/floor/iron/dark/textured,
 /area/station/bitrunning/den)
 "kMI" = (
@@ -45256,10 +45253,11 @@
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
 "tjU" = (
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "EngineeringElevator"
+/obj/effect/landmark/transport/transport_id{
+	 = None;
+	specific_transport_id = "EngineeringElevator"
 	},
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
 "tkh" = (
@@ -47652,9 +47650,11 @@
 /turf/open/floor/wood,
 /area/station/service/library/printer)
 "umq" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/east,
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
+	},
+/obj/item/folder,
 /turf/open/floor/iron/dark/textured,
 /area/station/bitrunning/den)
 "umw" = (
@@ -47801,7 +47801,7 @@
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/captain/private)
 "uoG" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
@@ -49677,9 +49677,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "ves" = (
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
+/mob/living/basic/goat/pete,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/tlv_cold_room,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -49750,7 +49748,7 @@
 /area/station/service/chapel)
 "vgh" = (
 /obj/structure/table,
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/effect/landmark/event_spawn,
 /turf/open/openspace,
 /area/station/service/kitchen)
@@ -50238,11 +50236,11 @@
 /turf/open/floor/carpet,
 /area/space)
 "vpz" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/science/robotics/lab)
 "vqa" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
 "vqc" = (
@@ -51636,7 +51634,7 @@
 /turf/open/floor/wood,
 /area/station/service/chapel)
 "vUx" = (
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /obj/structure/railing/corner/end/flip{
 	dir = 8
 	},
@@ -56040,10 +56038,11 @@
 /area/station/medical/abandoned)
 "xJt" = (
 /obj/structure/table,
-/obj/effect/landmark/lift_id{
-	specific_lift_id = "publicElevator"
+/obj/effect/landmark/transport/transport_id{
+	 = None;
+	specific_transport_id = "publicElevator"
 	},
-/obj/structure/industrial_lift,
+/obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/service/kitchen)
 "xJV" = (
@@ -178987,8 +178986,8 @@ nlm
 nlm
 nlm
 nlm
-dTB
-dTB
+nlm
+nlm
 nlm
 nlm
 aCL
