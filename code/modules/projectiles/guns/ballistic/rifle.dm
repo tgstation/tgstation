@@ -179,7 +179,7 @@
 	inhand_icon_state = "rebarxbow"
 	worn_icon_state = "rebarxbow"
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
-	must_hold_to_load = FALSE
+	must_hold_to_load = TRUE
 	mag_display = FALSE
 	empty_indicator = TRUE
 	bolt_type = BOLT_TYPE_LOCKING
@@ -191,6 +191,7 @@
 	magazine_wording = "rod"
 	cartridge_wording = "rod"
 	misfire_probability = 25
+	weapon_weight = WEAPON_HEAVY
 	initial_caliber = CALIBER_REBAR
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
 	fire_sound = 'sound/items/syringeproj.ogg'
