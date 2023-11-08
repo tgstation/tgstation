@@ -73,7 +73,6 @@
 					hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)
 				if(SANITY_LEVEL_CRAZY, SANITY_LEVEL_INSANE)
 					user.balloon_alert(user, "their mind bends to see the truth!")
-					to_chat(hit, span_warning(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
 					hit.apply_status_effect(/datum/status_effect/moon_converted)
 					user.log_message("made [target] insane.", LOG_GAME)
 					hit.log_message("was driven insane by [user]")

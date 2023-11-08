@@ -250,6 +250,7 @@
 	// Healing based on how low their sanity is
 	owner.adjustBruteLoss(-150+owner.mob_mood.sanity)
 	owner.adjustFireLoss(-150+owner.mob_mood.sanity)
+	to_chat(owner, span_warning(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
 	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, "moon converted")
