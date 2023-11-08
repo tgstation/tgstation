@@ -516,7 +516,6 @@
 	if(isAI(user) && (machine_stat & NOPOWER))
 		return
 
-	user.set_machine(src)
 	switch(choice)
 		if("eject")
 			eject()
