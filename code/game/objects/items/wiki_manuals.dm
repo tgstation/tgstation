@@ -225,3 +225,4 @@
 	page_link = "Tactical_Game_Cards"
 
 #undef BOOK_WINDOW_BROWSE_SIZE
+#undef WIKI_PAGE_IFRAME
