@@ -43,7 +43,7 @@
 
 /datum/unit_test/barsigns_emp/Run()
 	var/obj/machinery/barsign/testing_sign = allocate(/obj/machinery/barsign)
-	var/datum/barsign/emp_bar_sign = /datum/barsign/hiddensigns/empbarsign
+	var/datum/barsign/hiddensigns/empbarsign/emp_bar_sign = /datum/barsign/hiddensigns/empbarsign
 
 	testing_sign.emp_act(EMP_HEAVY)
 
