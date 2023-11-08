@@ -541,7 +541,7 @@
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned, poll_ignore_define)
 	if(!LAZYLEN(candidates))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		animate(summoned, 0.5 SECONDS, alpha = 0)
@@ -730,7 +730,13 @@
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
-	notify_ghosts("[user] has completed an ascension ritual!", source = user, action = NOTIFY_ORBIT, header = "A Heretic is Ascending!")
+	notify_ghosts(
+		"[user] has completed an ascension ritual!",
+		source = user,
+		action = NOTIFY_ORBIT,
+		header = "A Heretic is Ascending!",
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

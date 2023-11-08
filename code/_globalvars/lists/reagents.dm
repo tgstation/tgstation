@@ -1,3 +1,42 @@
+//Pills & Patches
+/// List of containers the Chem Master machine can print
+GLOBAL_LIST_INIT(reagent_containers, list(
+	CAT_CONDIMENTS = list(
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/condiment/flour,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/condiment/rice,
+		/obj/item/reagent_containers/condiment/cornmeal,
+		/obj/item/reagent_containers/condiment/milk,
+		/obj/item/reagent_containers/condiment/soymilk,
+		/obj/item/reagent_containers/condiment/yoghurt,
+		/obj/item/reagent_containers/condiment/saltshaker,
+		/obj/item/reagent_containers/condiment/peppermill,
+		/obj/item/reagent_containers/condiment/soysauce,
+		/obj/item/reagent_containers/condiment/bbqsauce,
+		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/reagent_containers/condiment/hotsauce,
+		/obj/item/reagent_containers/condiment/coldsauce,
+		/obj/item/reagent_containers/condiment/mayonnaise,
+		/obj/item/reagent_containers/condiment/ketchup,
+		/obj/item/reagent_containers/condiment/olive_oil,
+		/obj/item/reagent_containers/condiment/vegetable_oil,
+		/obj/item/reagent_containers/condiment/peanut_butter,
+		/obj/item/reagent_containers/condiment/cherryjelly,
+		/obj/item/reagent_containers/condiment/honey,
+		/obj/item/reagent_containers/condiment/pack,
+	),
+	CAT_TUBES = list(
+		/obj/item/reagent_containers/cup/tube
+	),
+	CAT_PILLS = typecacheof(list(
+		/obj/item/reagent_containers/pill/style
+	)),
+	CAT_PATCHES = typecacheof(list(
+		/obj/item/reagent_containers/pill/patch/style
+	)),
+))
+
 /// list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
 GLOBAL_LIST(chemical_reactions_list)
 /// list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types

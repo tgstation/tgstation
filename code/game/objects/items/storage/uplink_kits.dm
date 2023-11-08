@@ -610,7 +610,16 @@
 	new /obj/item/storage/belt/grenade/full(src)
 	if(prob(1))
 		new /obj/item/clothing/head/hats/hos/shako(src)
-		new /obj/item/mod/module/hat_stabilizer(src)
+
+/obj/item/storage/box/syndie_kit/core_gear
+	name = "core equipment box"
+	desc = "Contains all the necessary gear for success for any nuclear operative unsure of what is needed for success in the field. Everything here WILL help you."
+
+/obj/item/storage/box/syndie_kit/core_gear/PopulateContents()
+	new /obj/item/implanter/freedom (src)
+	new /obj/item/card/emag/doorjack (src)
+	new /obj/item/reagent_containers/hypospray/medipen/stimulants (src)
+	new /obj/item/grenade/c4 (src)
 
 /// Surplus Ammo Box
 
@@ -747,13 +756,13 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If all the antag datums are 'fake', disallow induction! No self-antagging.
+	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
 	var/faker
 	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
 		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
 			faker = TRUE
 
-	if(faker) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE

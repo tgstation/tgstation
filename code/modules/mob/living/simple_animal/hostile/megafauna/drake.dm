@@ -80,10 +80,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
 	. = ..()
-	fire_cone = new /datum/action/cooldown/mob_cooldown/fire_breath/cone()
-	meteors = new /datum/action/cooldown/mob_cooldown/meteors()
-	mass_fire = new /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire()
-	lava_swoop = new /datum/action/cooldown/mob_cooldown/lava_swoop()
+	fire_cone = new(src)
+	meteors = new(src)
+	mass_fire = new(src)
+	lava_swoop = new(src)
 	fire_cone.Grant(src)
 	meteors.Grant(src)
 	mass_fire.Grant(src)
@@ -92,22 +92,13 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(finished_attack))
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, PROC_REF(swoop_invulnerability_started))
 	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, PROC_REF(on_arena_fail))
+	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
-	QDEL_NULL(fire_cone)
-	QDEL_NULL(meteors)
-	QDEL_NULL(mass_fire)
-	QDEL_NULL(lava_swoop)
-	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
-	. = ..()
-	if(!.)
-		return
-	pull_force = MOVE_FORCE_OVERPOWERING
-
-/mob/living/simple_animal/hostile/megafauna/dragon/death(gibbed)
-	move_force = MOVE_FORCE_DEFAULT
+	fire_cone = null
+	meteors = null
+	mass_fire = null
+	lava_swoop = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
@@ -188,7 +179,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget(atom/attacked_target)
 	if(!swooping)
 		return ..()
 
@@ -331,7 +322,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	lava_swoop.enraged = FALSE
+	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return

@@ -254,7 +254,7 @@
 	yield = 4
 	potency = 15
 	growthstages = 3
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	species = "polypore" // silence unit test
 	genes = list(/datum/plant_gene/trait/fire_resistance)
