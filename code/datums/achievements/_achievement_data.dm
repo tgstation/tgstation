@@ -116,7 +116,7 @@
 			"icon_class" = assets.icon_class_name(award.icon),
 			"value" = data[achievement_type],
 			)
-		award_data += award.get_ui_data()
+		award_data += award.get_ui_data(user.ckey)
 		.["achievements"] += list(award_data)
 
 	for(var/score in SSachievements.scores)
