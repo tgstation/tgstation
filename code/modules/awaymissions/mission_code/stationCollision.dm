@@ -126,10 +126,10 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /*
  * Captain's safe
  */
-/obj/item/storage/secure/safe/sc_ssafe
+/obj/structure/secure_safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/storage/secure/safe/sc_ssafe/Initialize(mapload)
+/obj/structure/secure_safe/sc_ssafe/Initialize(mapload)
 	. = ..()
 	var/lock_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
 	AddComponent(/datum/component/lockable_storage, \
@@ -137,7 +137,7 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 		can_hack_open = FALSE, \
 	)
 
-/obj/item/storage/secure/safe/sc_ssafe/PopulateContents()
+/obj/structure/secure_safe/sc_ssafe/PopulateContents()
 	. = ..()
 	new /obj/item/gun/energy/mindflayer(src)
 	new /obj/item/soulstone(src)

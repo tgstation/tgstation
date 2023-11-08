@@ -22,26 +22,30 @@
 
 	var/atom/atom_parent = parent
 	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-	atom_parent.update_appearance()
 
 	src.lock_code = lock_code
 	if(lock_code)
 		lock_set = TRUE
 	src.can_hack_open = can_hack_open
 
+	atom_parent.update_appearance()
+
 /datum/component/lockable_storage/RegisterWithParent()
 	. = ..()
 	if(can_hack_open)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
+
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 
-	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ITEM_ATTACK_SELF), PROC_REF(on_interact))
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_interact))
+	else
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_interact))
 
 /datum/component/lockable_storage/UnregisterFromParent()
-	. = ..()
 	if(can_hack_open)
 		UnregisterSignal(parent, list(
 			COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
@@ -51,9 +55,13 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_ICON_STATE,
-		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_ITEM_ATTACK_SELF,
 	))
+
+	if(isitem(parent))
+		UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	else
+		UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
+	return ..()
 
 /**
  * Adds context screentips to the locked item.
@@ -133,7 +141,7 @@
 /datum/component/lockable_storage/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "LockedSafe", "Safe")
+		ui = new(user, src, "LockedSafe", parent)
 		ui.open()
 
 /datum/component/lockable_storage/ui_data(mob/user)

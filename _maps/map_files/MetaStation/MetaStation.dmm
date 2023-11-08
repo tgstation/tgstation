@@ -1611,7 +1611,7 @@
 "aEP" = (
 /obj/machinery/light_switch/directional/east,
 /obj/structure/dresser,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "aEW" = (
@@ -15769,7 +15769,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/range)
 "fOn" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Chief Engineer's Office"
 	},
@@ -27199,7 +27199,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Evidence Storage"
 	},
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "evidence safe"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -28873,7 +28873,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "krP" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -29005,7 +29005,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "ktY" = (
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
 /turf/open/floor/iron/dark,
@@ -40183,7 +40183,7 @@
 /area/station/engineering/atmos/storage/gas)
 "ovz" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv{
 	pixel_x = 3;
 	pixel_y = 2
@@ -41040,7 +41040,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "oLL" = (
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
@@ -54641,7 +54641,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
 	pixel_x = -12;
@@ -66756,7 +66756,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table/glass,
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},

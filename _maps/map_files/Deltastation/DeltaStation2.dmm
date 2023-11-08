@@ -817,7 +817,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/eva/abandoned)
 "ajG" = (
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
@@ -11535,7 +11535,7 @@
 /area/station/service/theater)
 "cNy" = (
 /obj/item/kirbyplants/random,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
 "cNH" = (
@@ -16545,7 +16545,7 @@
 "eaL" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/machinery/airalarm/directional/east,
@@ -25259,7 +25259,7 @@
 /area/station/medical/paramedic)
 "gjG" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 32
 	},
 /obj/machinery/light_switch/directional/north,
@@ -31642,7 +31642,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "hQJ" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
@@ -45444,7 +45444,7 @@
 "lmI" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/records/medical/laptop,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -56682,7 +56682,7 @@
 "oit" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/north,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/item/storage/lockbox/loyalty,
 /obj/item/storage/backpack/satchel/leather/withwallet{
 	pixel_y = 6
@@ -84861,7 +84861,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/science/breakroom)
 "vhx" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -88112,7 +88112,7 @@
 "vZw" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

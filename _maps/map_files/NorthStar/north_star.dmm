@@ -7560,7 +7560,7 @@
 /area/station/maintenance/floor1/port)
 "bSJ" = (
 /obj/structure/rack,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/spawner/random/armory/bulletproof_armor,
 /obj/effect/spawner/random/armory/bulletproof_helmet,
@@ -57354,7 +57354,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "oTF" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
@@ -72353,7 +72353,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms/apartment2)
 "sXl" = (
-/obj/item/storage/secure/safe/caps_spare/directional/south,
+/obj/structure/secure_safe/caps_spare/directional/south,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -82178,7 +82178,7 @@
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
 "vyv" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/floor2/starboard/aft)
 "vyz" = (
@@ -92219,7 +92219,7 @@
 /turf/open/misc/beach/sand,
 /area/station/hallway/floor2/fore)
 "yaY" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "yba" = (

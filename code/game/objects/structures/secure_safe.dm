@@ -3,42 +3,34 @@
  * Holds items and uses the lockable storage component
  * to allow people to lock items up.
  */
-///Generic Safe
-/obj/item/storage/secure
-	name = "secstorage"
-	desc = "This shouldn't exist. If it does, create an issue report."
-	w_class = WEIGHT_CLASS_NORMAL
-
-/obj/item/storage/secure/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_total_storage = 14
-	AddComponent(/datum/component/lockable_storage)
-
-///Secure Safe
-/obj/item/storage/secure/safe
+/obj/structure/secure_safe
 	name = "secure safe"
+	desc = "Excellent for securing things away from grubby hands."
 	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "wall_safe"
 	base_icon_state = "wall_safe"
-	desc = "Excellent for securing things away from grubby hands."
-	w_class = WEIGHT_CLASS_GIGANTIC
 	anchored = TRUE
 	density = FALSE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 
-/obj/item/storage/secure/safe/Initialize(mapload)
+/obj/structure/secure_safe/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/briefcase/secure))
+	create_storage(
+		max_specific_storage = WEIGHT_CLASS_GIGANTIC,
+		max_total_storage = 14,
+		canthold = list(/obj/item/storage/briefcase/secure),
+	)
+	PopulateContents()
+
+	AddComponent(/datum/component/lockable_storage)
 	find_and_hang_on_wall()
 
-/obj/item/storage/secure/safe/PopulateContents()
+/obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
-/obj/item/storage/secure/safe/hos
+/obj/structure/secure_safe/hos
 	name = "head of security's safe"
 
 /**
@@ -50,7 +42,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
  * The safe is also weak to explosions, so spending some early TC could allow an antag to blow it upen if they can
  * get access to it.
  */
-/obj/item/storage/secure/safe/caps_spare
+/obj/structure/secure_safe/caps_spare
 	name = "captain's spare ID safe"
 	desc = "In case of emergency, do not break glass. All Captains and Acting Captains are provided with codes to access this safe. \
 		It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
@@ -60,7 +52,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 	max_integrity = 300
 	color = "#ffdd33"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
 
 /datum/armor/safe_caps_spare
 	melee = 100
@@ -71,7 +63,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 	fire = 80
 	acid = 70
 
-/obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
+/obj/structure/secure_safe/caps_spare/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(can_hold_list = list(/obj/item/card/id))
 	atom_storage.locked = STORAGE_FULLY_LOCKED
@@ -80,8 +72,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 		can_hack_open = FALSE, \
 	)
 
-/obj/item/storage/secure/safe/caps_spare/PopulateContents()
+/obj/structure/secure_safe/caps_spare/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)
 
-/obj/item/storage/secure/safe/caps_spare/rust_heretic_act()
+/obj/structure/secure_safe/caps_spare/rust_heretic_act()
 	take_damage(damage_amount = 100, damage_type = BRUTE, damage_flag = MELEE, armour_penetration = 100)

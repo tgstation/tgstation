@@ -405,7 +405,7 @@
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 1
 	},
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	pixel_y = 45
 	},
 /obj/structure/sink/kitchen/directional/south{
