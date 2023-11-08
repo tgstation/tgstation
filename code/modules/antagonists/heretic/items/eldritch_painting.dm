@@ -62,6 +62,7 @@
 	qdel(src)
 
 /obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
+	..()
 	if(IS_HERETIC(user))
 		// If they already have the positive moodlet return
 		if("heretic_eldritch_painting" in user.mob_mood.mood_events)
@@ -78,7 +79,6 @@
 		user.mob_mood.mood_events.Remove("eldritch_weeping")
 		// Add a mood event that causes the hallucinations to not trigger anymore
 		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
-	return ..()
 
 // Applies an affect on view
 /datum/proximity_monitor/advanced/eldritch_painting
@@ -158,6 +158,7 @@
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/desire/examine(mob/living/carbon/user)
+	..()
 	if(IS_HERETIC(user))
 		// If they already have the negative moodlet return
 		if("heretic_eldritch_hunger" in user.mob_mood.mood_events)
@@ -218,7 +219,7 @@
 
 /datum/brain_trauma/severe/flesh_desire/on_gain()
 	// Allows them to eat faster, mainly for flavor
-	ADD_TRAIT(owner, TRAIT_VORACIOUS, "The Desire for Flesh")
+	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
 	// We don't want this to be bypassed by Aguesia so if they have it, remove it
 	if(HAS_TRAIT(owner, TRAIT_AGEUSIA))
 		REMOVE_TRAIT(owner, TRAIT_AGEUSIA, "The Desire for Flesh")
@@ -236,9 +237,9 @@
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
 /datum/brain_trauma/severe/flesh_desire/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, "The Desire for Flesh")
+	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
 	// After loosing this trauma you also loose the ability to taste, sad!
-	ADD_TRAIT(owner, TRAIT_AGEUSIA, "The Desire for Flesh")
+	ADD_TRAIT(owner, TRAIT_AGEUSIA, REF(src))
 	..()
 
 
@@ -269,7 +270,6 @@
 		/obj/item/food/grown/harebell,
 	)
 
-// Moodlets used to prevent rust
 /datum/mood_event/eldritch_painting/heretic_vines
 	description = "Oh what a lovely flower!"
 	mood_change = 3
@@ -280,6 +280,7 @@
 	return ..()
 
 /obj/structure/sign/painting/eldritch/vines/examine(mob/living/carbon/user)
+	..()
 	if("heretic_vines" in user.mob_mood.mood_events)
 		return
 
@@ -292,7 +293,6 @@
 	else
 		new /datum/spacevine_controller(get_turf(user), mutations, 0, 10)
 		to_chat(user, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
-	return ..()
 
 
 
@@ -313,6 +313,7 @@
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/beauty/examine(mob/living/carbon/human/user)
+	..()
 	if(IS_HERETIC(user))
 		to_chat(user, "Your imperfections shed and you are restored.")
 		user.reagents.add_reagent(reagents_to_add, 5)
@@ -321,7 +322,6 @@
 	if(user.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
 		to_chat(user, "You feel changed, more perfect....")
 		user.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
-	return ..()
 
 
 // Specific proximity monitor for Lady out of gates or /obj/item/wallframe/painting/eldritch/beauty
@@ -382,6 +382,7 @@
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/rust/examine(mob/living/carbon/human/user)
+	..()
 	if("rusted_examine" in user.mob_mood.mood_events)
 		return
 
@@ -392,7 +393,6 @@
 	if(user.has_trauma_type(/datum/brain_trauma/severe/rusting))
 		to_chat(user, "It can wait...")
 		user.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
-	return ..()
 
 
 // Specific proximity monitor for Climb over the rusted mountain or /obj/item/wallframe/painting/eldritch/rust

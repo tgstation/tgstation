@@ -41,7 +41,7 @@
 	route = PATH_MOON
 
 /datum/heretic_knowledge/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	add_traits(user ,TRAIT_EMPATH, "heretic")
+	add_traits(user ,TRAIT_EMPATH, REF(src))
 
 /datum/heretic_knowledge/moon_grasp
 	name = "Grasp of Lunacy"
@@ -213,7 +213,7 @@
 	priority_announce("[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! The truth shall finally devour the lie! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
 	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
-	user.add_traits(TRAIT_MADNESS_IMMUNE)
+	ADD_TRAIT(owner, TRAIT_MADNESS_IMMUNE, REF(src))
 
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
