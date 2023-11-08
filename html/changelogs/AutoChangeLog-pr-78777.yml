@@ -1,0 +1,6 @@
+author: "KingkumaArt"
+delete-after: True
+changes:
+  - rscadd: "Enginenering rebar crossbows + tot kit"
+  - rscadd: "Added a bunch of ammos and crafting junk to make the ammo exist"
+  - image: "added icond for all the above"

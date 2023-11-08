@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Material market buy buttons greys out correctly and thus prevent you from placing orders that exceeds the available budget."
