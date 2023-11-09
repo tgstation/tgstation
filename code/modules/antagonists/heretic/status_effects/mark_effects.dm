@@ -303,7 +303,7 @@
 
 /datum/status_effect/eldritch/moon/on_remove()
 	.=..()
-	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// Incase the trait was not removed earlier
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
