@@ -1,7 +1,7 @@
 import { sortBy } from 'common/collections';
 import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
+import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
 
 type DispensableReagent = {
