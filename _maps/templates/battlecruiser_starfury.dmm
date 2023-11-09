@@ -119,7 +119,6 @@
 "as" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},

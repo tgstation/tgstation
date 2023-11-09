@@ -240,6 +240,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NUKEIMMUNE "nuke_immunity"
 /// Can't be given viruses
 #define TRAIT_VIRUSIMMUNE "virus_immunity"
+/// Won't become a husk under any circumstances
+#define TRAIT_UNHUSKABLE "trait_unhuskable"
 /// Reduces the chance viruses will spread to this mob, and if the mob has a virus, slows its advancement
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
 #define TRAIT_GENELESS "geneless"
@@ -497,8 +499,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOODSHOT_EYES "bloodshot_eyes"
 /// This mob should never close UI even if it doesn't have a client
 #define TRAIT_PRESERVE_UI_WITHOUT_CLIENT "preserve_ui_without_client"
-/// Lets the mob use flight potions
-#define TRAIT_CAN_USE_FLIGHT_POTION "can_use_flight_potion"
 /// This mob overrides certian SSlag_switch measures with this special trait
 #define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
 /// Someone can safely be attacked with honorbound with ONLY a combat mode check, the trait is assuring holding a weapon and hitting won't hurt them..
@@ -653,6 +653,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOVE_PHASING "move_phasing"
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
+
+/// Cannot be turned into a funny skeleton by the plasma river
+#define TRAIT_NO_PLASMA_TRANSFORM "no_plasma_transform"
 
 /// Weather immunities, also protect mobs inside them.
 #define TRAIT_LAVA_IMMUNE "lava_immune" //Used by lava turfs and The Floor Is Lava.
@@ -869,6 +872,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied when an integrated circuit/module becomes undupable
 #define TRAIT_CIRCUIT_UNDUPABLE "circuit_undupable"
+
+/// Trait applied when an integrated circuit opens a UI on a player (see list pick component)
+#define TRAIT_CIRCUIT_UI_OPEN "circuit_ui_open"
 
 /// Hearing trait that is from the hearing component
 #define CIRCUIT_HEAR_TRAIT "circuit_hear"
@@ -1336,9 +1342,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
 
+///Trait given to limb by /mob/living/basic/living_limb_flesh
+#define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored"
+
 /// Trait given while using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET "wing_buffet"
 /// Trait given while tired after using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET_TIRED "wing_buffet_tired"
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
+
+/// Trait given to mobs that we do not want to mindswap
+#define TRAIT_NO_MINDSWAP "no_mindswap"

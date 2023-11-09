@@ -160,10 +160,8 @@
 #define BB_DEMON_CLONE_ABILITY "demon_clone_ability"
 ///our slippery ice ability
 #define BB_DEMON_SLIP_ABILITY "demon_slip_ability"
-///the turf we are escaping too
+///the turf we are escaping to
 #define BB_ESCAPE_DESTINATION "escape_destination"
-///how far away we will be from our target before teleporting
-#define BB_MINIMUM_DISTANCE_RANGE "minimum_distance_range"
 
 /// Corpse we have consumed
 #define BB_LEGION_CORPSE "legion_corpse"
@@ -191,3 +189,30 @@
 #define BB_MOOK_MUSIC_AUDIENCE "music_audience"
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
+
+//leaper keys
+///key holds our volley ability
+#define BB_LEAPER_VOLLEY "leaper_volley"
+///key holds our flop ability
+#define BB_LEAPER_FLOP "leaper_flop"
+///key holds our bubble ability
+#define BB_LEAPER_BUBBLE "leaper_bubble"
+///key holds our summon ability
+#define BB_LEAPER_SUMMON "leaper_summon"
+///key holds the world timer for swimming
+#define BB_KEY_SWIM_TIME "key_swim_time"
+///key holds the water or land target turf
+#define BB_SWIM_ALTERNATE_TURF "swim_alternate_turf"
+///key holds our state of swimming
+#define BB_CURRENTLY_SWIMMING "currently_swimming"
+///key holds how long we will be swimming for
+#define BB_KEY_SWIMMER_COOLDOWN "key_swimmer_cooldown"
+//Wizard AI keys
+/// Key where we store our main targeted spell
+#define BB_WIZARD_TARGETED_SPELL "BB_wizard_targeted_spell"
+/// Key where we store our secondary, untargeted spell
+#define BB_WIZARD_SECONDARY_SPELL "BB_wizard_secondary_spell"
+/// Key where we store our blink spell
+#define BB_WIZARD_BLINK_SPELL "BB_wizard_blink_spell"
+/// Key for the next time we can cast a spell
+#define BB_WIZARD_SPELL_COOLDOWN "BB_wizard_spell_cooldown"

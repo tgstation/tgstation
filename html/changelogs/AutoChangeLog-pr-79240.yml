@@ -1,5 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Light-Eaten objects can no longer emit light after being turned off and then back on."
-  - code_imp: "Flashlights now use light_on instead of defining their own variable. Please report buggy behavior."

@@ -3,36 +3,47 @@ import { Section, Stack, Button, Modal } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
-
-type Data = {
-  orderingPrive: BooleanLike; // you will need to import this
-  canOrderCargo: BooleanLike;
-  creditBalance: number;
-  materials: Material[];
-  catastrophe: BooleanLike;
-};
+import { formatMoney } from '../format';
 
 type Material = {
   name: string;
   quantity: number;
-  id: string; // correct this if its a number
   trend: string;
   price: number;
   color: string;
+  requested: number;
+};
+
+type Data = {
+  orderingPrive: BooleanLike;
+  canOrderCargo: BooleanLike;
+  creditBalance: number;
+  orderBalance: number;
+  materials: Material[];
+  catastrophe: BooleanLike;
+  CARGO_CRATE_VALUE: number;
 };
 
 export const MatMarket = (props, context) => {
-  const { act, data } = useBackend<Data>(context); // this will tell your editor that data is the type listed above
+  const { act, data } = useBackend<Data>(context);
 
   const {
     orderingPrive,
     canOrderCargo,
     creditBalance,
+    orderBalance,
     materials = [],
     catastrophe,
-  } = data; // better to destructure here (style nit)
+    CARGO_CRATE_VALUE,
+  } = data;
+
+  // offset cost with crate value if there is currently nothing in the order
+  const total_order_cost = orderBalance || CARGO_CRATE_VALUE;
+  // multiplier of 1.1 for private orders
+  const multiplier = orderingPrive ? 1.1 : 1;
+
   return (
-    <Window width={700} height={400}>
+    <Window width={980} height={630}>
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
@@ -63,11 +74,27 @@ export const MatMarket = (props, context) => {
           All new purchases will <b>include the cost of the shipped crate</b>,
           which may be recycled afterwards.
           <Section>
-            Current credit balance: <b>{creditBalance || 'zero'}</b> cr.
+            <Stack>
+              <Stack.Item width="232px">
+                Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
+              </Stack.Item>
+              <Stack.Item width="232px">
+                Current Order Cost: <b>{formatMoney(orderBalance)}</b> cr.
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="times"
+                  color="transparent"
+                  content="Clear"
+                  ml={66}
+                  onClick={() => act('clear')}
+                />
+              </Stack.Item>
+            </Stack>
           </Section>
         </Section>
-        {materials.map((material) => (
-          <Section key={material.id}>
+        {materials.map((material, i) => (
+          <Section key={i}>
             <Stack fill>
               <Stack.Item width="75%">
                 <Stack>
@@ -80,12 +107,13 @@ export const MatMarket = (props, context) => {
                   </Stack.Item>
 
                   <Stack.Item width="15%" pr="2%">
-                    Trading at <b>{material.price}</b> cr.
+                    Trading at <b>{formatMoney(material.price)}</b> cr.
                   </Stack.Item>
 
-                  <Stack.Item width="33%">
-                    <b>{material.quantity}</b> sheets of <b>{material.name}</b>{' '}
-                    trading.
+                  <Stack.Item width="33%" ml={2}>
+                    <b>{material.quantity || 'zero'}</b> sheets of{' '}
+                    <b>{material.name}</b> trading.{' '}
+                    {material.requested || 'zero'} sheets ordered.
                   </Stack.Item>
                   <Stack.Item
                     width="40%"
@@ -103,61 +131,94 @@ export const MatMarket = (props, context) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    creditBalance - total_order_cost <
+                      material.price * multiplier ||
+                    material.requested + 1 > material.quantity
+                  }
                   tooltip={material.price * 1}
+                  content="Buy 1"
                   onClick={() =>
                     act('buy', {
                       quantity: 1,
                       material: material.name,
                     })
-                  }>
-                  Buy 1
-                </Button>
+                  }
+                />
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    creditBalance - total_order_cost <
+                      material.price * 5 * multiplier ||
+                    material.requested + 5 > material.quantity
+                  }
                   tooltip={material.price * 5}
+                  content="5"
                   onClick={() =>
                     act('buy', {
                       quantity: 5,
                       material: material.name,
                     })
-                  }>
-                  5
-                </Button>
+                  }
+                />
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    creditBalance - total_order_cost <
+                      material.price * 10 * multiplier ||
+                    material.requested + 10 > material.quantity
+                  }
                   tooltip={material.price * 10}
+                  content="10"
                   onClick={() =>
                     act('buy', {
                       quantity: 10,
                       material: material.name,
                     })
-                  }>
-                  10
-                </Button>
+                  }
+                />
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    creditBalance - total_order_cost <
+                      material.price * 25 * multiplier ||
+                    material.requested + 25 > material.quantity
+                  }
                   tooltip={material.price * 25}
+                  content="25"
                   onClick={() =>
                     act('buy', {
                       quantity: 25,
                       material: material.name,
                     })
-                  }>
-                  25
-                </Button>
+                  }
+                />
                 <Button
-                  disabled={catastrophe === 1 || material.price <= 0}
+                  disabled={
+                    catastrophe === 1 ||
+                    material.price <= 0 ||
+                    creditBalance - total_order_cost <
+                      material.price * 50 * multiplier ||
+                    material.requested + 50 > material.quantity
+                  }
                   tooltip={material.price * 50}
+                  content="50"
                   onClick={() =>
                     act('buy', {
                       quantity: 50,
                       material: material.name,
                     })
-                  }>
-                  50
-                </Button>
+                  }
+                />
               </Stack.Item>
+              {material.requested > 0 && (
+                <Stack.Item ml={2}>x {material.requested}</Stack.Item>
+              )}
             </Stack>
           </Section>
         ))}
@@ -167,7 +228,6 @@ export const MatMarket = (props, context) => {
 };
 
 const MarketCrashModal = (props, context) => {
-  const { act, data } = useBackend(context);
   return (
     <Modal textAlign="center" mr={1.5}>
       ATTENTION! THE MARKET HAS CRASHED
