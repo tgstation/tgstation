@@ -131,3 +131,5 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 		WRITE_LOG_NO_FORMAT(file, "[to_readable_text(format = TRUE)]\n")
 	else
 		WRITE_LOG(file, "[to_readable_text(format = FALSE)]")
+
+#undef CHECK_AND_TRY_FILE_ERROR_RECOVERY
