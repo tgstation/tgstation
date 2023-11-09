@@ -47,14 +47,14 @@
 	src.lifetime = lifetime
 	source_object = parent
 
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSactualfastprocess, src)
 
 	if(lifetime)
 		addtimer(CALLBACK(src, PROC_REF(kill_it_with_fire)), lifetime)
 
 /datum/component/particle_spewer/Destroy(force, silent)
 	. = ..()
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSactualfastprocess, src)
 	for(var/atom/listed_atom as anything in living_particles + dead_particles)
 		qdel(listed_atom)
 	living_particles = null
@@ -69,7 +69,7 @@
 	
 	for(var/i = 0 to burst_amount)
 		//create and assign particle its stuff
-		var/obj/effect/abstract/particle/spawned = new(source_object.loc)
+		var/obj/effect/abstract/particle/spawned = new(get_turf(source_object))
 		spawned.pixel_x = offset_x
 		spawned.pixel_y = offset_y 
 		spawned.icon = icon_file  
