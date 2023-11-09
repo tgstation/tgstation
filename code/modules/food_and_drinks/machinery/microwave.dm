@@ -218,7 +218,7 @@
 	. = ..()
 
 	// All of these will use a full icon state instead
-	if(panel_open || dirty == MAX_MICROWAVE_DIRTINESS || broken || dirty_anim_playing)
+	if(panel_open || dirty >= MAX_MICROWAVE_DIRTINESS || broken || dirty_anim_playing)
 		return .
 
 	var/ingredient_count = 0
@@ -296,7 +296,7 @@
 		icon_state = "[base_icon_state]mwb"
 	else if(dirty_anim_playing)
 		icon_state = "[base_icon_state]mwbloody1"
-	else if(dirty == MAX_MICROWAVE_DIRTINESS)
+	else if(dirty >= MAX_MICROWAVE_DIRTINESS)
 		icon_state = open ? "[base_icon_state]mwbloodyo" : "[base_icon_state]mwbloody"
 	else if(operating)
 		icon_state = "[base_icon_state]back_on"
@@ -310,80 +310,83 @@
 	return ..()
 
 /obj/machinery/microwave/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(dirty >= MAX_MICROWAVE_DIRTINESS)
-		return FALSE
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
-	if(operating)
-		return
 	if(!default_deconstruction_crowbar(tool))
 		return
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/microwave/wirecutter_act(mob/living/user, obj/item/tool)
+	if(broken != REALLY_BROKEN)
+		return
+
+	user.visible_message(
+		span_notice("[user] starts to fix part of [src]."),
+		span_notice("You start to fix part of [src]..."),
+	)
+
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return TOOL_ACT_SIGNAL_BLOCKING
+
+	user.visible_message(
+		span_notice("[user] fixes part of [src]."),
+		span_notice("You fix part of [src]."),
+	)
+	broken = KINDA_BROKEN // Fix it a bit
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/microwave/welder_act(mob/living/user, obj/item/tool)
+	if(broken != KINDA_BROKEN)
+		return
+
+	user.visible_message(
+		span_notice("[user] starts to fix part of [src]."),
+		span_notice("You start to fix part of [src]..."),
+	)
+
+	if(!tool.use_tool(src, user, 2 SECONDS, amount = 1, volume = 50))
+		return TOOL_ACT_SIGNAL_BLOCKING
+
+	user.visible_message(
+		span_notice("[user] fixes [src]."),
+		span_notice("You fix [src]."),
+	)
+	broken = NOT_BROKEN
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/microwave/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(operating)
 		return
 	if(dirty >= MAX_MICROWAVE_DIRTINESS)
 		return
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	. = ..()
+	if(. & TOOL_ACT_MELEE_CHAIN_BLOCKING)
+		return
+
+	if(panel_open && is_wire_tool(tool))
+		wires.interact(user)
+		return TOOL_ACT_SIGNAL_BLOCKING
 
 /obj/machinery/microwave/attackby(obj/item/item, mob/living/user, params)
 	if(operating)
 		return
 
-	if(panel_open && is_wire_tool(item))
-		wires.interact(user)
-		return TRUE
-
 	if(broken > NOT_BROKEN)
-		if(broken == REALLY_BROKEN && item.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a TOOL_WIRECUTTER
-			user.visible_message(span_notice("[user] starts to fix part of \the [src]."), span_notice("You start to fix part of \the [src]..."))
-			if(item.use_tool(src, user, 20))
-				user.visible_message(span_notice("[user] fixes part of \the [src]."), span_notice("You fix part of \the [src]."))
-				broken = KINDA_BROKEN // Fix it a bit
-		else if(broken == KINDA_BROKEN && item.tool_behaviour == TOOL_WELDER) // If it's broken and they're doing the wrench
-			user.visible_message(span_notice("[user] starts to fix part of \the [src]."), span_notice("You start to fix part of \the [src]..."))
-			if(item.use_tool(src, user, 20))
-				user.visible_message(span_notice("[user] fixes \the [src]."), span_notice("You fix \the [src]."))
-				broken = NOT_BROKEN
-				update_appearance()
-				return FALSE //to use some fuel
-		else
+		if(IS_EDIBLE(item))
 			balloon_alert(user, "it's broken!")
 			return TRUE
-		return
-
-	if(istype(item, /obj/item/reagent_containers/spray))
-		var/obj/item/reagent_containers/spray/clean_spray = item
-		open(autoclose = 2 SECONDS)
-		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
-			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
-			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
-			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
-			dirty = 0
-			update_appearance()
-		else
-			to_chat(user, span_warning("You need more space cleaner!"))
-		return TRUE
-
-	if(istype(item, /obj/item/soap) || istype(item, /obj/item/reagent_containers/cup/rag))
-		var/cleanspeed = 50
-		if(istype(item, /obj/item/soap))
-			var/obj/item/soap/used_soap = item
-			cleanspeed = used_soap.cleanspeed
-		user.visible_message(span_notice("[user] starts to clean \the [src]."), span_notice("You start to clean \the [src]..."))
-		open(autoclose = cleanspeed + 1 SECONDS)
-		if(do_after(user, cleanspeed, target = src))
-			user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
-			dirty = 0
-			update_appearance()
-		return TRUE
+		return ..()
 
 	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
 		var/swapped = FALSE
@@ -402,12 +405,16 @@
 		return TRUE
 
 	if(!anchored)
-		balloon_alert(user, "not secured!")
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "not secured!")
+			return TRUE
 		return ..()
 
 	if(dirty >= MAX_MICROWAVE_DIRTINESS) // The microwave is all dirty so can't be used!
-		balloon_alert(user, "it's too dirty!")
-		return TRUE
+		if(IS_EDIBLE(item))
+			balloon_alert(user, "it's too dirty!")
+			return TRUE
+		return ..()
 
 	if(vampire_charging_capable && istype(item, /obj/item/modular_computer/pda) && ingredients.len > 0)
 		balloon_alert(user, "max 1 pda!")
@@ -522,6 +529,15 @@
 		if("examine")
 			examine(user)
 
+/obj/machinery/microwave/wash(clean_types)
+	. = ..()
+	if(operating || !(clean_types & CLEAN_SCRUB))
+		return .
+
+	dirty = 0
+	update_appearance()
+	return . || TRUE
+
 /obj/machinery/microwave/proc/eject()
 	var/atom/drop_loc = drop_location()
 	for(var/atom/movable/movable_ingredient as anything in ingredients)
@@ -578,7 +594,12 @@
 			non_food_ingedients--
 		if(istype(potential_fooditem, /obj/item/modular_computer/pda) && prob(75))
 			pda_failure = TRUE
-			notify_ghosts("[cooker] has overheated their PDA!", source = src, action = NOTIFY_JUMP, flashwindow = FALSE, header = "Hunger Games: Catching Fire")
+			notify_ghosts(
+				"[cooker] has overheated their PDA!",
+				source = src,
+				notify_flags = NOTIFY_CATEGORY_NOFLASH,
+				header = "Hunger Games: Catching Fire",
+			)
 
 	// If we're cooking non-food items we can fail randomly
 	if(length(non_food_ingedients) && prob(min(dirty * 5, 100)))

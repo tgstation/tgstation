@@ -104,5 +104,4 @@
 		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
 		if(nearby_server)
 			server_ref = WEAKREF(nearby_server)
-			nearby_server.console_ref = WEAKREF(src)
 			return nearby_server

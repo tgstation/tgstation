@@ -22,7 +22,12 @@
 	if(!.)
 		return
 
-	notify_ghosts("[user] has purchased a BADASS Syndicate Balloon!", source = src, action = NOTIFY_ORBIT, header = "What are they THINKING?")
+	notify_ghosts(
+		"[user] has purchased a BADASS Syndicate Balloon!",
+		source = src,
+		action = NOTIFY_ORBIT,
+		header = "What are they THINKING?",
+	)
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
