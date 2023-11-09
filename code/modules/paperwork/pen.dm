@@ -475,7 +475,7 @@
 
 /obj/item/pen/survival/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
 	. = ..()
-	if(istype(projectile))
+	if(istype(proj))
 		UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
 
 /obj/item/pen/survival/proc/on_dart_hit(obj/projectile/source, atom/movable/firer, atom/target)
