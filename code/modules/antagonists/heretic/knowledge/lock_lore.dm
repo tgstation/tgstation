@@ -98,7 +98,7 @@
 		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
 		You can use it in-hand to change its form to a card you fused. \
 		Does not preserve the card used in the ritual."
-	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desire them.\""
+	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
 	adds_sidepath_points = 1
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
@@ -143,7 +143,7 @@
 	name = "Burglar's Finesse"
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
-	gain_text = "Learning from Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
+	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/apetra_vulnera,
@@ -184,7 +184,7 @@
 	desc = "The ascension ritual of the Path of Knock. \
 		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
 		When completed, you gain the ability to transform into empowered eldritch creatures \
-		and in addition, create a tear to the Labyrinth's core; \
+		and in addition, create a tear to the Labyrinth's heart; \
 		a tear in reality located at the site of this ritual. \
 		Eldritch creatures will endlessly pour from this rift \
 		who are bound to obey your instructions."
