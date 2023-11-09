@@ -166,14 +166,18 @@
 	effectiveness = 115, \
 	)
 	//the pen is mightier than the sword
+	RegisterSignal(src, COMSIG_DART_INSERT_PARENT_RESKINNED, PROC_REF(reskin_dart_insert))
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
 	if(current_skin)
 		desc = "It's an expensive [current_skin] fountain pen. The nib is quite sharp."
-		var/datum/component/dart_insert/insert_comp = GetComponent(/datum/component/dart_insert)
-		insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
-		insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
+
+/obj/item/pen/foundain/captain/proc/reskin_dart_insert(datum/component/dart_insert/insert_comp)
+	if(!istype(insert_comp)) //You really shouldn't be sending this signal from anything other than a dart_insert component
+		return
+	insert_comp.casing_overlay_icon_state = overlay_reskin[current_skin]
+	insert_comp.projectile_overlay_icon_state = "[overlay_reskin[current_skin]]_proj"
 
 /obj/item/pen/attack_self(mob/living/carbon/user)
 	. = ..()

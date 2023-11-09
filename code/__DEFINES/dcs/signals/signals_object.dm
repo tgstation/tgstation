@@ -12,6 +12,8 @@
 /// from /obj/item/toy/crayon/spraycan/afterattack: (user, spraycan, color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
 	#define DONT_USE_SPRAYCAN_CHARGES (1<<0)
+/// from /obj/obj_reskin: (mob/user, skin)
+#define COMSIG_OBJ_RESKIN "obj_reskin"
 
 // /obj/machinery signals
 
@@ -510,3 +512,6 @@
  * - `embedding`: list with embedding params
  */
 #define COMSIG_DART_INSERT_GET_VAR_MODIFIERS "dart_insert_get_var_modifiers"
+
+/// from /datum/component/dart_insert/on_reskin()
+#define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"

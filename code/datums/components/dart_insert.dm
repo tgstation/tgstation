@@ -28,7 +28,20 @@
 	casing_overlay_icon_state = _casing_overlay_icon_state
 	projectile_overlay_icon = _projectile_overlay_icon
 	projectile_overlay_icon_state = _projectile_overlay_icon_state
+
+/datum/component/dart_insert/RegisterWithParent()
+	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
+	RegisterSignal(parent, COMSIG_OBJ_RESKIN, PROC_REF(on_reskin))
+
+/datum/component/dart_insert/UnregisterFromParent()
+	. = ..()
+	var/obj/item/parent_item = parent
+	var/parent_loc = parent_item.loc
+	if(parent_loc && (parent_loc == holder_casing || parent_loc == holder_projectile))
+		parent_item.forceMove(get_turf(parent_item))
+	remove_from_dart(holder_casing, holder_projectile)
+	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK)
 
 /datum/component/dart_insert/proc/on_preattack(datum/source, atom/target, mob/user, params)
 	SIGNAL_HANDLER
@@ -43,6 +56,10 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	add_to_dart(dart, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/component/dart_insert/proc/on_reskin(datum/source, mob/user, skin)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(parent, COMSIG_DART_INSERT_PARENT_RESKINNED)
 
 /datum/component/dart_insert/proc/add_to_dart(obj/item/ammo_casing/dart, mob/user)
 	var/obj/projectile/dart_projectile = dart.loaded_projectile
