@@ -13,8 +13,8 @@
 	return TRUE
 
 ///Called by the AI controller when this action is performed
+///Returns a set of flags defined in [code/__DEFINES/ai/ai.dm]
 /datum/ai_behavior/proc/perform(seconds_per_tick, datum/ai_controller/controller, ...)
-	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	return
 
 ///Called when the action is finished. This needs the same args as perform besides the default ones

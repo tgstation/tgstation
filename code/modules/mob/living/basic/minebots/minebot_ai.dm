@@ -86,15 +86,13 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/repair_drone/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.say("REPAIRING [target]!")
 	living_pawn.UnarmedAttack(target)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/repair_drone/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -119,20 +117,17 @@
 	action_cooldown = 2 MINUTES
 
 /datum/ai_behavior/send_sos_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/carbon/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 	if(QDELETED(target) || is_station_level(target.z))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/turf/target_turf = get_turf(target)
 	var/obj/item/implant/radio/radio_implant = locate(/obj/item/implant/radio) in living_pawn.contents
 	if(!radio_implant)
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/message = "ALERT, [target] in need of help at coordinates: [target_turf.x], [target_turf.y], [target_turf.z]!"
 	radio_implant.radio.talk_into(living_pawn, message, RADIO_CHANNEL_SUPPLY)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/send_sos_message/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -182,11 +177,10 @@
 	minimum_distance = controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE] ?  controller.blackboard[BB_MINIMUM_SHOOTING_DISTANCE] : initial(minimum_distance)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
-		finish_action(controller, target_key, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/living_pawn = controller.pawn
 	if(get_dist(living_pawn, target) <= minimum_distance)
-		finish_action(controller, target_key, TRUE)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 ///mine walls if we are on automated mining mode
 /datum/ai_planning_subtree/minebot_mining/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -220,24 +214,20 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/minebot_mine_turf/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/turf/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(check_obstacles_in_path(controller, target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(!living_pawn.combat_mode)
 		living_pawn.set_combat_mode(TRUE)
 
 	living_pawn.RangedAttack(target)
-	finish_action(controller, TRUE, target_key)
-	return
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/minebot_mine_turf/proc/check_obstacles_in_path(datum/ai_controller/controller, turf/target)
 	var/mob/living/source = controller.pawn

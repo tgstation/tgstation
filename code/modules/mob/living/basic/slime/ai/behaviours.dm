@@ -1,10 +1,9 @@
 /datum/ai_behavior/perform_change_slime_face
 
 /datum/ai_behavior/perform_change_slime_face/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	if(!istype(slime_pawn))
-		return
+		return AI_BEHAVIOR_DELAY
 
 	var/current_mood = slime_pawn.current_mood
 
@@ -23,7 +22,7 @@
 		slime_pawn.current_mood = new_mood
 		slime_pawn.regenerate_icons()
 
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_hunt_target/find_slime_food
 
