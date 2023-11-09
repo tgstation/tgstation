@@ -394,6 +394,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "Mothroaches politely greet you into the bar, or are they greeting eachother?"
 	neon_color = "#649e8a"
 
+/datum/barsign/orangejuice
+	name = "Oranges' Juicery"
+	icon_state = "orangejuice"
+	desc = "For those who wish to be optimally tactful to the non-alcoholic population."
+	neon_color = COLOR_ORANGE
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns
