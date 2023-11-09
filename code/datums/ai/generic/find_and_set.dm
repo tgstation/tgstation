@@ -68,11 +68,8 @@
 /datum/ai_behavior/find_and_set/in_list
 
 /datum/ai_behavior/find_and_set/in_list/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
-	var/list/found = list()
-	for(var/locate_path in locate_paths)
-		var/single_locate = ..(controller, locate_path, search_range)
-		if(single_locate)
-			found += single_locate
+	var/list/look_for_list = typecacheof(locate_paths)
+	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), look_for_list)
 	if(found.len)
 		return pick(found)
 
