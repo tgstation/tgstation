@@ -106,6 +106,8 @@
 		burst_shots = burst_shots,\
 		cooldown_time = ranged_cooldown,\
 	)
+	if (ranged_cooldown <= 1 SECONDS)
+		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(

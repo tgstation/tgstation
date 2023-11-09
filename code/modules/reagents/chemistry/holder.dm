@@ -93,11 +93,6 @@
 	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent_type, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
-		return FALSE
-
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent_type]
 	if(!glob_reagent)
 		stack_trace("[my_atom] attempted to add a reagent called '[reagent_type]' which doesn't exist. ([usr])")
@@ -110,8 +105,8 @@
 	//Split up the reagent if it's in a mob
 	var/has_split = FALSE
 	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
-		var/adjusted_vol = FLOOR(process_mob_reagent_purity(glob_reagent, amount, added_purity), CHEMICAL_QUANTISATION_LEVEL)
-		if(adjusted_vol <= 0) //If we're inverse or FALSE cancel addition
+		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
+		if(adjusted_vol <= CHEMICAL_QUANTISATION_LEVEL) //If we're inverse or FALSE cancel addition
 			return amount
 			/* We return true here because of #63301
 			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
@@ -123,9 +118,8 @@
 	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
-		amount = FLOOR(maximum_volume - cached_total, CHEMICAL_QUANTISATION_LEVEL) //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
-		if(amount <= 0)
-			return FALSE
+		amount = maximum_volume - cached_total //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 
 	var/cached_temp = chem_temp
 	var/list/cached_reagents = reagent_list
@@ -143,8 +137,8 @@
 				added_ph = iter_reagent.ph
 			iter_reagent.purity = ((iter_reagent.creation_purity * iter_reagent.volume) + (added_purity * amount)) /(iter_reagent.volume + amount) //This should add the purity to the product
 			iter_reagent.creation_purity = iter_reagent.purity
-			iter_reagent.ph = ((iter_reagent.ph*(iter_reagent.volume))+(added_ph*amount))/(iter_reagent.volume+amount)
-			iter_reagent.volume = FLOOR(iter_reagent.volume + amount, CHEMICAL_QUANTISATION_LEVEL)
+			iter_reagent.ph = ((iter_reagent.ph * (iter_reagent.volume)) + (added_ph * amount)) / (iter_reagent.volume + amount)
+			iter_reagent.volume += amount
 			update_total()
 
 			iter_reagent.on_merge(data, amount)
@@ -219,21 +213,23 @@
 		stack_trace("non finite amount passed to remove reagent [amount] [reagent_type]")
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type == reagent_type)
-			cached_reagent.volume = FLOOR(max(cached_reagent.volume - amount, 0), CHEMICAL_QUANTISATION_LEVEL)
+			cached_reagent.volume -= amount
+
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
+
 			SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(cached_reagent) ? reagent_type : cached_reagent, amount)
 
 			return TRUE
+
 	return FALSE
 
 /**
@@ -247,7 +243,7 @@
 		stack_trace("non finite amount passed to remove any reagent [amount]")
 		return FALSE
 
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
 
@@ -274,7 +270,6 @@
 
 		current_list_element++
 		total_removed += remove_amt
-		update_total()
 
 	handle_reactions()
 	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
@@ -295,8 +290,7 @@
 		stack_trace("non finite amount passed to remove all reagents [amount]")
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
 
@@ -306,12 +300,12 @@
 	var/removed_amount = 0
 
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		remove_amount = FLOOR(reagent.volume * part, CHEMICAL_QUANTISATION_LEVEL)
+		remove_amount = reagent.volume * part
 		remove_reagent(reagent.type, remove_amount)
 		removed_amount += remove_amount
 
 	handle_reactions()
-	return removed_amount
+	return round(removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Removes all reagent of X type
@@ -330,8 +324,7 @@
 		stack_trace("non finite amount passed to remove all type reagent [amount] [reagent_type]")
 		return FALSE
 
-	// Prevents small amount problems, as well as zero and below zero amounts.
-	amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+	amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
 		return FALSE
 
@@ -531,7 +524,7 @@
 			var/mob/living/carbon/eater = target
 			var/obj/item/organ/internal/stomach/belly = eater.get_organ_slot(ORGAN_SLOT_STOMACH)
 			if(!belly)
-				var/expel_amount = FLOOR(amount, CHEMICAL_QUANTISATION_LEVEL)
+				var/expel_amount = round(amount, CHEMICAL_QUANTISATION_LEVEL)
 				if(expel_amount > 0 )
 					eater.expel_ingested(my_atom, expel_amount)
 				return
@@ -547,8 +540,8 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
-		return FALSE
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
+		return
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
@@ -602,7 +595,8 @@
 	if(!no_react)
 		target_holder.handle_reactions()
 		src.handle_reactions()
-	return FLOOR(total_transfered_amount, CHEMICAL_QUANTISATION_LEVEL)
+
+	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Transfer a specific reagent id to the target object
@@ -639,7 +633,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(min(amount, available_volume, holder.maximum_volume - holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return
 
 	var/list/cached_reagents = reagent_list
@@ -695,7 +689,7 @@
 
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = FLOOR(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
-	if(amount <= 0)
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return
 
 	var/list/cached_reagents = reagent_list
@@ -721,7 +715,7 @@
 		target_holder.update_total()
 		target_holder.handle_reactions()
 
-	return FLOOR(total_transfered_amount, CHEMICAL_QUANTISATION_LEVEL)
+	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Multiplies the reagents inside this holder by a specific amount
@@ -809,7 +803,7 @@
 			var/datum/reagent/toxin/toxin = reagent
 			var/amount = toxin.volume
 			if(belly)
-				amount = FLOOR(amount + belly.reagents.get_reagent_amount(toxin.type), CHEMICAL_QUANTISATION_LEVEL)
+				amount += belly.reagents.get_reagent_amount(toxin.type)
 
 			if(amount <= liver_tolerance)
 				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * seconds_per_tick)
@@ -1143,9 +1137,6 @@
 /datum/reagents/proc/finish_reacting()
 	STOP_PROCESSING(SSreagents, src)
 	is_reacting = FALSE
-	//Cap off values
-	for(var/datum/reagent/reagent as anything in reagent_list)
-		reagent.volume = FLOOR(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)//To prevent runaways.
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
 	if(!QDELING(src))
@@ -1245,9 +1236,9 @@
 	var/datum/cached_my_atom = my_atom
 	var/multiplier = INFINITY
 	for(var/reagent in cached_required_reagents)
-		multiplier = FLOOR(min(multiplier, get_reagent_amount(reagent) / cached_required_reagents[reagent]), CHEMICAL_QUANTISATION_LEVEL)
+		multiplier = round(min(multiplier, get_reagent_amount(reagent) / cached_required_reagents[reagent]))
 
-	if(multiplier == 0)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
+	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
 		return FALSE
 	var/sum_purity = 0
 	for(var/_reagent in cached_required_reagents)//this is not an object
@@ -1290,6 +1281,7 @@
 	var/chem_index = 1
 	var/num_reagents = length(cached_reagents)
 	var/total_ph = 0
+	var/reagent_volume = 0
 	. = 0
 
 	//responsible for removing reagents and computing total ph & volume
@@ -1297,9 +1289,10 @@
 	while(chem_index <= num_reagents)
 		var/datum/reagent/reagent = cached_reagents[chem_index]
 		chem_index += 1
+		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
-		if((reagent.volume <= 0.05 && !is_reacting) || reagent.volume <= CHEMICAL_QUANTISATION_LEVEL)
+		if((reagent_volume <= 0.05 && !is_reacting) || reagent_volume <= CHEMICAL_QUANTISATION_LEVEL)
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
@@ -1318,11 +1311,14 @@
 			continue
 
 		//compute volume & ph like we would normally
-		. += reagent.volume
-		total_ph += (reagent.ph * reagent.volume)
+		. += reagent_volume
+		total_ph += (reagent.ph * reagent_volume)
 
-	//assign the final values
-	total_volume = .
+		//reasign floored value
+		reagent.volume = reagent_volume
+
+	//assign the final values, rounding up can sometimes cause overflow so bring it down
+	total_volume = min(round(., CHEMICAL_VOLUME_ROUNDING), maximum_volume)
 	if(!.)
 		ph = CHEMICAL_NORMAL_PH
 	else
@@ -1375,7 +1371,7 @@
 
 /// Is this holder full or not
 /datum/reagents/proc/holder_full()
-	return total_volume + 0.01 >= maximum_volume
+	return total_volume >= maximum_volume
 
 /**
  * Get the amount of this reagent or the sum of all its subtypes if specified
@@ -1394,7 +1390,7 @@
 		if((!include_subtypes && cached_reagent.type == reagent) || (include_subtypes && ispath(cached_reagent.type, reagent)))
 			total_amount += cached_reagent.volume
 
-	return FLOOR(total_amount, CHEMICAL_QUANTISATION_LEVEL)
+	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Gets the sum of volumes of all reagent type paths present in the list
@@ -1406,8 +1402,9 @@
 	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type in reagents)
-			total_amount += FLOOR(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
-	return total_amount
+			total_amount += cached_reagent.volume
+
+	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
 
 /**
  * Get the purity of this reagent
@@ -1423,6 +1420,7 @@
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type == reagent)
 			return round(cached_reagent.purity, 0.01)
+
 	return 0
 
 /**
@@ -1624,7 +1622,7 @@
 
 	for(var/reagent_type in external_list)
 		var/list/qualities = external_list[reagent_type]
-		data += "[reagent_type] ([FLOOR(qualities[REAGENT_TRANSFER_AMOUNT], CHEMICAL_QUANTISATION_LEVEL)]u, [qualities[REAGENT_PURITY]] purity)"
+		data += "[reagent_type] ([round(qualities[REAGENT_TRANSFER_AMOUNT], CHEMICAL_QUANTISATION_LEVEL)]u, [qualities[REAGENT_PURITY]] purity)"
 
 	return english_list(data)
 
@@ -1636,7 +1634,7 @@
 	var/list/data = list()
 
 	for(var/datum/reagent/reagent as anything in reagent_list)
-		data += "[reagent.type] ([FLOOR(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)]u, [reagent.purity] purity)"
+		data += "[reagent.type] ([round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL)]u, [reagent.purity] purity)"
 
 	return english_list(data)
 
@@ -1810,7 +1808,7 @@
 			to_chat(user, "Could not find reagent!")
 			ui_reagent_id = null
 		else
-			data["reagent_mode_reagent"] = list("name" = reagent.name, "id" = reagent.type, "desc" = reagent.description, "reagentCol" = reagent.color, "pH" = reagent.ph, "pHCol" = convert_ph_to_readable_color(reagent.ph), "metaRate" = (reagent.metabolization_rate/2), "OD" = reagent.overdose_threshold)
+			data["reagent_mode_reagent"] = list("name" = reagent.name, "id" = reagent.type, "desc" = reagent.description, "reagentCol" = reagent.color, "pH" = reagent.ph, "pHCol" = convert_ph_to_readable_color(reagent.ph), "metaRate" = reagent.metabolization_rate, "OD" = reagent.overdose_threshold)
 			data["reagent_mode_reagent"]["addictions"] = list()
 			data["reagent_mode_reagent"]["addictions"] = parse_addictions(reagent)
 

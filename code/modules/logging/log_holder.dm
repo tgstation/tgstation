@@ -107,7 +107,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		return
 
 	switch(action)
-		if("re-render")
+		if("refresh")
 			cache_ui_data()
 			SStgui.update_uis(src)
 			return TRUE
@@ -121,7 +121,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		CRASH("Attempted to call init_logging twice!")
 
 	round_id = GLOB.round_id
-	logging_start_timestamp = unix_timestamp_string()
+	logging_start_timestamp = rustg_unix_timestamp()
 	log_categories = list()
 	disabled_categories = list()
 
@@ -243,13 +243,10 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 	if(human_readable_enabled)
 		rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", category_instance.get_output_file(null, "log"))
 
-/datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
-	return RUSTG_CALL(RUST_G, "unix_timestamp")()
-
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
 	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
 	// now we grab the millis from the rustg timestamp
-	var/rustg_stamp = unix_timestamp_string()
+	var/rustg_stamp = rustg_unix_timestamp()
 	var/list/timestamp = splittext(rustg_stamp, ".")
 #ifdef UNIT_TESTS
 	if(length(timestamp) != 2)

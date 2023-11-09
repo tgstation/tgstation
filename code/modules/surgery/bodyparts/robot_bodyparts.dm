@@ -42,6 +42,7 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/arm/right/robot
 	name = "cyborg right arm"
@@ -75,6 +76,7 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot
 	name = "cyborg left leg"
@@ -108,6 +110,7 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot/emp_act(severity)
 	. = ..()
@@ -154,6 +157,7 @@
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/right/robot/emp_act(severity)
 	. = ..()
@@ -197,13 +201,14 @@
 	biological_state = (BIO_ROBOTIC)
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
-
-	var/wired = FALSE
-	var/obj/item/stock_parts/cell/cell = null
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
 	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
+
+	var/wired = FALSE
+	var/obj/item/stock_parts/cell/cell = null
 
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
@@ -372,6 +377,7 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 
 	head_flags = HEAD_EYESPRITES
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
