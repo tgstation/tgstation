@@ -9,7 +9,7 @@
 	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/crawl_through_vents/get_cooldown(datum/ai_controller/cooldown_for)
-	return controller.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
+	return cooldown_for.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
 
 /datum/ai_behavior/crawl_through_vents/setup(datum/ai_controller/controller, target_key)
 	. = ..()
