@@ -91,6 +91,7 @@
 	// Unregister the signal blocking movement on those we hit
 	for(var/mob/living/mobs in mobs_hit)
 		UnregisterSignal(mobs, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
+	mobs.Cut()
 	soundloop.stop()
 	return ..()
 
