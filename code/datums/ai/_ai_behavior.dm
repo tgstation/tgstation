@@ -29,6 +29,7 @@
 	controller.behavior_args -= type
 	if(src == controller.currently_queued_behavior)
 		deltimer(controller.currently_queued_id, SSai_behaviors)
+		controller.currently_queued_id = TIMER_ID_NULL
 		controller.decide_on_behavior()
 
 	// Send it to idle

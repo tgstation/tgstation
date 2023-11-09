@@ -253,6 +253,7 @@ multiple modular subtrees with behaviors
 
 /// Handles a scheduled ai behavior
 /datum/ai_controller/proc/handle_behavior(datum/ai_behavior/current_behavior)
+	currently_queued_id = TIMER_ID_NULL
 	// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 	// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
 	// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
@@ -341,9 +342,15 @@ multiple modular subtrees with behaviors
 	update_able_to_run()
 	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time, timer_subsystem = SSai_behaviors)
 
+/datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
+	if(currently_queued_id)
+		deltimer(currently_queued_id)
+	behavior_cooldowns[behavior.type] = new_cooldown
+	decide_on_behavior()
+
 /// Decides on the behavior to run next, if you find one run it
 /datum/ai_controller/proc/decide_on_behavior()
-	if(!able_to_run || !length(current_behaviors))
+	if(!able_to_run || !length(current_behaviors) || currently_queued_id != TIMER_ID_NULL)
 		return
 
 	var/datum/ai_behavior/next_behavior
@@ -372,6 +379,8 @@ multiple modular subtrees with behaviors
 		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), next_behavior), max(lowest_delay - world.time, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
 		currently_queued_id = id
 		currently_queued_behavior = next_behavior
+	else
+		currently_queued_behavior = null
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)

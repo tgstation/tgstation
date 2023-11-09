@@ -7,6 +7,11 @@
 	/// Static typecache list of things we are interested in
 	var/static/list/interesting_atoms = typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
+/datum/ai_behavior/find_potential_targets/get_cooldown(datum/ai_controller/cooldown_for)
+	if(cooldown_for.blackboard[BB_FIND_TARGETS_FIELD(type)])
+		return 60 SECONDS
+	return ..()
+
 /datum/ai_behavior/find_potential_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
@@ -95,6 +100,8 @@
 	// If we found any one thing we "could" attack, then run the full search again so we can select from the best possible canidate
 	var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 	qdel(field) // autoclears so it's fine
+	// Fire instantly, you should find something I hope
+	controller.modify_cooldown(src, world.time)
 
 /datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targetting_datum/targetting_datum, mob/pawn)
 	if(checking == pawn)
