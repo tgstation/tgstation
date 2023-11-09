@@ -32,10 +32,6 @@
 
 GENERAL_PROTECT_DATUM(/datum/log_category)
 
-/// Backup log category to catch attempts to log to a category that doesn't exist
-/datum/log_category/backup_category_not_found
-	category = LOG_CATEGORY_NOT_FOUND
-
 /// Add an entry to this category. It is very important that any data you provide doesn't hold references to anything!
 /datum/log_category/proc/create_entry(message, list/data, list/semver_store)
 	var/datum/log_entry/entry = new(
