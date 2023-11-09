@@ -99,7 +99,7 @@
 ///Transfers the organ to the limb, and to the limb's owner, if it has one.
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	if(owner)
-		Remove(owner, moving = TRUE)
+		Remove(owner, special = TRUE)
 	else if(ownerlimb)
 		remove_from_limb()
 
@@ -282,7 +282,7 @@
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
 
-/obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(organ_owner)
 		UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))

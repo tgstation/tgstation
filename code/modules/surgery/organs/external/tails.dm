@@ -126,7 +126,7 @@
 		paired_spines = ownerlimb.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 		paired_spines?.paired_tail = src
 
-/obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	if(paired_spines)
 		paired_spines.paired_tail = null

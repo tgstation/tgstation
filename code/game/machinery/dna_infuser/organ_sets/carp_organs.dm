@@ -73,7 +73,6 @@
 		return
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
-	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 
 /obj/item/organ/internal/tongue/carp/on_limb_remove(obj/item/bodypart/limb)
 	. = ..()

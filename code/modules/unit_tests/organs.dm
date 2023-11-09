@@ -25,14 +25,10 @@
 	))
 
 /datum/unit_test/organ_sanity/Run()
-	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ))
+	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - test_organ_blacklist)
 		organ_test_insert(organ_type)
 
 /datum/unit_test/organ_sanity/proc/organ_test_insert(obj/item/organ/organ_type)
-	// Skip prototypes.
-	if(test_organ_blacklist[organ_type])
-		return
-
 	// Appropriate mob (Human) which will receive organ.
 	var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/test_organ = new organ_type()

@@ -18,6 +18,8 @@
 	mob_insert(receiver, special, drop_if_replaced)
 	limb_insert(limb_owner = receiver)
 
+	return TRUE
+
 /*
  * Remove the organ from the select mob.
  *
@@ -167,7 +169,7 @@
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
 
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! remove_from_limb moves the organ, so we unregister before we move them physically
-	remove_from_limb(special)
+	remove_from_limb()
 
 	on_limb_remove(limb)
 

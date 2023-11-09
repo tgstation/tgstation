@@ -380,15 +380,6 @@
 	if(!.)
 		return
 
-	if(brain)
-		brain = null
-	if(tongue)
-		tongue = null
-	if(ears)
-		ears = null
-	if(eyes)
-		eyes = null
-
 	if(old_real_name)
 		new_head_owner.real_name = old_real_name
 	real_name = new_head_owner.real_name
