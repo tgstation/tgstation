@@ -552,8 +552,8 @@
 	range = MECHA_MELEE
 	toolspeed = 0.8
 	mech_flags = EXOSUIT_MODULE_PADDY
-	///Var for the container object inside the mech
-	var/obj/item/mecha_parts/mecha_equipment/ejector/seccage/cargo_holder
+	///Chassis but typed for the cargo_hold var
+	var/obj/vehicle/sealed/mecha/ripley/secmech
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 	///Var for the cuff type. Basically stole how cuffing works from secbots
@@ -561,48 +561,46 @@
 	///Var for autocuff, can be toggled in the mech interface.
 	var/autocuff = TRUE
 
+
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
-	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley/paddy))
-		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector/seccage) in chassis.equip_by_category[MECHA_UTILITY]
+	secmech = chassis
+
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/detach(atom/moveto)
+	secmech = null
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/living/source, atom/target, list/modifiers)
-	if(!cargo_holder)
-		cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector/seccage) in chassis.equip_by_category[MECHA_UTILITY]
-		if(!cargo_holder) //We did try
-			CRASH("Mech [chassis] has a claw device, but no internal storage. This should be impossible.")
+	if(!secmech.cargo_hold) //We did try
+		CRASH("Mech [chassis] has a claw device, but no internal storage. This should be impossible.")
 	if(ismob(target))
 		var/mob/living/mobtarget = target
 		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
 			to_chat(source, "[span_warning("[src] is unable to lift [mobtarget].")]")
-		if(cargo_holder.contents.len >= cargo_holder.cargo_capacity)
+			return
+		if(secmech.cargo_hold.contents.len >= secmech.cargo_hold.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
 
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [cargo_holder]!"))
+		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [secmech.cargo_hold]!"))
 		if(!do_after_cooldown(mobtarget, source))
 			return
-		mobtarget.forceMove(cargo_holder)
-		log_message("Loaded [mobtarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.contents.len]", LOG_MECHA)
+		mobtarget.forceMove(secmech.cargo_hold)
+		log_message("Loaded [mobtarget]. Cargo compartment capacity: [secmech.cargo_hold.cargo_capacity - secmech.cargo_hold.contents.len]", LOG_MECHA)
 		to_chat(source, "[icon2html(src, source)][span_notice("[mobtarget] successfully loaded.")]")
-		to_chat(mobtarget, "[span_warning("You have been moved into [cargo_holder]. You can attempt to resist out if you wish.")]")
+		to_chat(mobtarget, "[span_warning("You have been moved into [secmech.cargo_hold]. You can attempt to resist out if you wish.")]")
 		if(autocuff && iscarbon(target))
 			var/mob/living/carbon/carbontarget = target
 			carbontarget.set_handcuffed(new cuff_type(carbontarget))
 			carbontarget.update_handcuffed()
 		return
 
-	if(istype(target, /obj/machinery/door/firedoor))
-		var/obj/machinery/door/firedoor/targetfiredoor = target
-		playsound(chassis, clampsound, 50, FALSE, -6)
-		targetfiredoor.try_to_crowbar(src, source)
+	if(!istype(target, /obj/machinery/door))
 		return
-	if(istype(target, /obj/machinery/door/airlock/))
-		var/obj/machinery/door/airlock/targetairlock = target
-		playsound(chassis, clampsound, 50, FALSE, -6)
-		targetairlock.try_to_crowbar(src, source)
-		return
+	var/obj/machinery/door/target_door = target
+	playsound(chassis, clampsound, 50, FALSE, -6)
+	target_door.try_to_crowbar(src, source)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/get_snowflake_data()
 	return list(

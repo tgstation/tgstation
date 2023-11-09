@@ -36,9 +36,9 @@
 			tracker_ref = REF(MT)
 		)
 		if(istype(M, /obj/vehicle/sealed/mecha/ripley))
-			var/obj/item/mecha_parts/mecha_equipment/ejector/cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector) in M.equip_by_category[MECHA_UTILITY]
+			var/obj/vehicle/sealed/mecha/ripley/workmech = M
 			mech_data += list(
-				cargo_space = round(cargo_holder.contents.len / cargo_holder.cargo_capacity * 100)
+				cargo_space = round(workmech.cargo_hold.contents.len / workmech.cargo_hold.cargo_capacity * 100)
 		)
 
 		data["mechs"] += list(mech_data)

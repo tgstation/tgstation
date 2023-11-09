@@ -784,7 +784,11 @@
 	id = "paddyupgrade"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
-	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/glass=SHEET_MATERIAL_AMOUNT*5,/datum/material/titanium=SHEET_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT *5,
+	)
 	construction_time = 100
 	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,

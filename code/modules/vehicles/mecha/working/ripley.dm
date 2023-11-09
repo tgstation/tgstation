@@ -35,8 +35,8 @@
 	)
 	/// Amount of Goliath hides attached to the mech
 	var/hides = 0
-	/// List of all things in Ripley's Cargo Compartment
-	var/list/cargo
+	/// Reference to the Cargo Hold equipment.
+	var/obj/item/mecha_parts/mecha_equipment/ejector/cargo_hold
 	/// How fast the mech is in low pressure
 	var/fast_pressure_step_in = 1.5
 	/// How fast the mech is in normal pressure
@@ -63,13 +63,6 @@
 	melee = 10
 	bullet = 5
 	laser = 5
-
-/obj/vehicle/sealed/mecha/ripley/Destroy()
-	for(var/atom/movable/A in cargo)
-		A.forceMove(drop_location())
-		step_rand(A)
-	QDEL_LIST(cargo)
-	return ..()
 
 /obj/vehicle/sealed/mecha/ripley/mk2
 	desc = "Autonomous Power Loader Unit MK-II. This prototype Ripley is refitted with a pressurized cabin, trading its prior speed for atmospheric protection and armor."
@@ -161,17 +154,17 @@
 		var/datum/action/act = locate(/datum/action/vehicle/sealed/mecha/siren) in occupant.actions
 		act.button_icon_state = "mech_siren_[siren ? "on" : "off"]"
 		act.build_all_button_icons()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/vehicle/sealed/mecha/ripley/paddy/update_overlays()
-	cut_overlays()
 	. = ..()
-	if(siren)
-		sirenlights = new()
-		sirenlights.icon = icon
-		sirenlights.icon_state = "paddy_sirens"
-		SET_PLANE_EXPLICIT(sirenlights, ABOVE_LIGHTING_PLANE, src)
-		add_overlay(sirenlights)
+	if(!siren)
+		return
+	sirenlights = new()
+	sirenlights.icon = icon
+	sirenlights.icon_state = "paddy_sirens"
+	SET_PLANE_EXPLICIT(sirenlights, ABOVE_LIGHTING_PLANE, src)
+	. += sirenlights
 
 /obj/vehicle/sealed/mecha/ripley/paddy/Destroy()
 	QDEL_NULL(weewooloop)
@@ -184,7 +177,7 @@
 /datum/action/vehicle/sealed/mecha/siren/New()
 	. = ..()
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
-	button_icon_state = "mech_siren_[secmech.siren ? "on" : "off"]"
+	button_icon_state = "mech_siren_[secmech?.siren ? "on" : "off"]"
 
 /datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
@@ -295,21 +288,8 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	servo = new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
-/obj/vehicle/sealed/mecha/ripley/Exit(atom/movable/leaving, direction)
-	if(leaving in cargo)
-		return FALSE
-	return ..()
-
-/obj/vehicle/sealed/mecha/ripley/contents_explosion(severity, target)
-	for(var/i in cargo)
-		var/obj/cargoobj = i
-		if(prob(10 * severity))
-			LAZYREMOVE(cargo, cargoobj)
-			cargoobj.forceMove(drop_location())
-	return ..()
-
 /obj/item/mecha_parts/mecha_equipment/ejector
-	name = "Cargo compartment"
+	name = "cargo compartment"
 	desc = "Holds cargo loaded with a hydraulic clamp."
 	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
@@ -317,10 +297,34 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	///Number of atoms we can store
 	var/cargo_capacity = 15
 
+/obj/item/mecha_parts/mecha_equipment/ejector/attach()
+	. = ..()
+	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
+	workmech.cargo_hold = src
+
+
 /obj/item/mecha_parts/mecha_equipment/ejector/Destroy()
 	for(var/atom/stored in contents)
-		forceMove(stored, get_turf(src))
+		forceMove(stored, drop_location())
+		step_rand(stored)
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/contents_explosion(severity, target)
+	for(var/obj/stored in contents)
+		if(prob(10 * severity))
+			stored.forceMove(drop_location())
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/relay_container_resist_act(mob/living/user, obj/container)
+	to_chat(user, span_notice("You lean on the back of [container] and start pushing so it falls out of [src]."))
+	if(do_after(user, 300, target = container))
+		if(!user || user.stat != CONSCIOUS || user.loc != src || container.loc != src )
+			return
+		to_chat(user, span_notice("You successfully pushed [container] out of [src]!"))
+		container.forceMove(drop_location())
+	else
+		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
+			to_chat(user, span_warning("You fail to push [container] out of [src]!"))
 
 /obj/item/mecha_parts/mecha_equipment/ejector/get_snowflake_data()
 	var/list/data = list(
@@ -366,6 +370,14 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		cheese_it(freebird)
 	return ..()
 
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	RegisterSignal(arrived, COMSIG_MOB_REMOVING_CUFFS, PROC_REF(stop_cuff_removal))
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/Exited(atom/movable/gone, direction)
+	UnregisterSignal(gone, COMSIG_MOB_REMOVING_CUFFS)
+	return ..()
+
 /obj/item/mecha_parts/mecha_equipment/ejector/seccage/proc/stop_cuff_removal(datum/source, obj/item/cuffs)
 	SIGNAL_HANDLER
 	to_chat(source, span_warning("You don't have the room to remove [cuffs]!"))
@@ -377,7 +389,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		if(!passenger)
 			return FALSE
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
-		passenger.forceMove(get_turf(src))
+		passenger.forceMove(drop_location())
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
 		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
@@ -386,14 +398,15 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/item/mecha_parts/mecha_equipment/ejector/seccage/container_resist_act(mob/living/user)
 	to_chat(user, span_notice("You begin attempting a breakout. (This will take around 45 seconds and [chassis] need to remain stationary.)"))
-	if(do_after(user, 1 MINUTES, target = chassis))
-		to_chat(user, span_notice("You break out of the [src]."))
-		playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)
-		cheese_it(user)
-		for(var/mob/freebird in contents)
-			if(user != freebird)
-				to_chat(freebird, span_warning("[user] has managed to open the hatch, and you fall out with him. You're free!"))
-				cheese_it(freebird)
+	if(!do_after(user, 1 MINUTES, target = chassis))
+		return
+	to_chat(user, span_notice("You break out of the [src]."))
+	playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)
+	cheese_it(user)
+	for(var/mob/freebird in contents)
+		if(user != freebird)
+			to_chat(freebird, span_warning("[user] has managed to open the hatch, and you fall out with him. You're free!"))
+			cheese_it(freebird)
 
 /obj/item/mecha_parts/mecha_equipment/ejector/seccage/proc/cheese_it(mob/living/escapee)
 	var/range = rand(1, 3)
@@ -412,20 +425,8 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	var/target_x = round(range * cos(angle + variance), 1) + current_turf.x
 	var/target_y = round(range * sin(angle + variance), 1) + current_turf.y
 	escapee.Knockdown(1) //Otherwise everyone hits eachother while being thrown
-	escapee.forceMove(get_turf(src))
+	escapee.forceMove(drop_location())
 	escapee.throw_at(locate(target_x, target_y, current_turf.z), range, 1)
-
-/obj/vehicle/sealed/mecha/ripley/relay_container_resist_act(mob/living/user, obj/O)
-	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))
-	if(do_after(user, 300, target = O))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
-			return
-		to_chat(user, span_notice("You successfully pushed [O] out of [src]!"))
-		O.forceMove(drop_location())
-		LAZYREMOVE(cargo, O)
-	else
-		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, span_warning("You fail to push [O] out of [src]!"))
 
 /**
  * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.
