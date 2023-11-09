@@ -396,9 +396,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /datum/barsign/bargonia
     name = "Bargonia"
-    icon_state = "bargonia"
+    icon = "bargonia"
     desc = "The warehouse yearns for a higher calling... so Supply has declared BARGONIA!"
-    neon_color = COLOR_WHITE
+    neon_color = "COLOR_WHITE"
 
 // Hidden signs list below this point
 
