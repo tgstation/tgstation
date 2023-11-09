@@ -1,0 +1,5 @@
+author: "starrm4nn"
+delete-after: True
+changes:
+  - qol: "Bandolier can quick gather items now."
+  - balance: "Bandolier capacity increased to 24 and can carry .357 ammo now."
