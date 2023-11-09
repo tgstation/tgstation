@@ -27,34 +27,47 @@
 /datum/proximity_monitor/advanced/proc/cleanup_field()
 	for(var/turf/turf as anything in edge_turfs)
 		cleanup_edge_turf(turf)
+	edge_turfs = list()
 	for(var/turf/turf as anything in field_turfs)
 		cleanup_field_turf(turf)
+	field_turfs = list()
 
 //Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
-/datum/proximity_monitor/advanced/proc/recalculate_field()
+/datum/proximity_monitor/advanced/proc/recalculate_field(full_recalc = FALSE)
 	var/list/new_turfs = update_new_turfs()
 
-	var/list/new_field_turfs = new_turfs[FIELD_TURFS_KEY]
-	var/list/new_edge_turfs = new_turfs[EDGE_TURFS_KEY]
+	var/list/old_field_turfs = field_turfs
+	var/list/old_edge_turfs = edge_turfs
+	field_turfs = new_turfs[FIELD_TURFS_KEY]
+	edge_turfs = new_turfs[EDGE_TURFS_KEY]
+	if(!full_recalc)
+		field_turfs = list()
+		edge_turfs = list()
 
-	for(var/turf/old_turf as anything in field_turfs - new_field_turfs)
+	for(var/turf/old_turf as anything in old_field_turfs - field_turfs)
 		if(QDELETED(src))
 			return
 		cleanup_field_turf(old_turf)
-	for(var/turf/old_turf as anything in edge_turfs)
+	for(var/turf/old_turf as anything in old_edge_turfs - edge_turfs)
 		if(QDELETED(src))
 			return
 		cleanup_edge_turf(old_turf)
 
-	for(var/turf/new_turf as anything in new_field_turfs)
+	if(full_recalc)
+		old_field_turfs = list()
+		old_edge_turfs = list()
+		field_turfs = new_turfs[FIELD_TURFS_KEY]
+		edge_turfs = new_turfs[EDGE_TURFS_KEY]
+
+	for(var/turf/new_turf as anything in field_turfs - old_field_turfs)
 		if(QDELETED(src))
 			return
-		field_turfs |= new_turf
+		field_turfs += new_turf
 		setup_field_turf(new_turf)
-	for(var/turf/new_turf as anything in new_edge_turfs)
+	for(var/turf/new_turf as anything in edge_turfs - old_edge_turfs)
 		if(QDELETED(src))
 			return
-		edge_turfs |= new_turf
+		edge_turfs += new_turf
 		setup_edge_turf(new_turf)
 
 /datum/proximity_monitor/advanced/on_initialized(turf/location, atom/created, init_flags)
@@ -79,7 +92,7 @@
 			if(isturf(old_loc))
 				cleanup_field()
 			return
-	recalculate_field()
+	recalculate_field(full_recalc = FALSE)
 
 /datum/proximity_monitor/advanced/on_uncrossed(turf/source, atom/movable/gone, direction)
 	if(get_dist(source, host) == current_range)
@@ -92,8 +105,9 @@
 	return
 
 /// Called when a turf in the field of the monitor is unlinked
+/// Do NOT call this manually, requires management of the field_turfs list
 /datum/proximity_monitor/advanced/proc/cleanup_field_turf(turf/target)
-	field_turfs -= target
+	return
 
 /// Called when a turf in the edge of the monitor is linked
 /datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/target)
@@ -101,21 +115,22 @@
 		setup_field_turf(target)
 
 /// Called when a turf in the edge of the monitor is unlinked
+/// Do NOT call this manually, requires management of the edge_turfs list
 /datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/target)
 	if(edge_is_a_field) // If the edge is considered a field, clean it up like one
 		cleanup_field_turf(target)
-	edge_turfs -= target
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
-	. = list(FIELD_TURFS_KEY = list(), EDGE_TURFS_KEY = list())
+	var/list/local_field_turfs = list()
+	var/list/local_edge_turfs = list()
+	. = list(FIELD_TURFS_KEY = local_field_turfs, EDGE_TURFS_KEY = local_edge_turfs)
 	if(ignore_if_not_on_turf && !isturf(host.loc))
 		return
 	var/turf/center = get_turf(host)
-	for(var/turf/target in RANGE_TURFS(current_range, center))
-		if(get_dist(center, target) == current_range)
-			.[EDGE_TURFS_KEY] += target
-		else
-			.[FIELD_TURFS_KEY] += target
+	if(current_range > 0)
+		local_field_turfs = RANGE_TURFS(current_range - 1, center)
+	if(current_range > 1)
+		local_edge_turfs = local_field_turfs - RANGE_TURFS(current_range, center)
 
 //Gets edge direction/corner, only works with square radius/WDH fields!
 /datum/proximity_monitor/advanced/proc/get_edgeturf_direction(turf/T, turf/center_override = null)
@@ -164,7 +179,7 @@
 	current = new(src, 5, FALSE)
 	current.set_fieldturf_color = "#aaffff"
 	current.set_edgeturf_color = "#ffaaff"
-	current.recalculate_field()
+	current.recalculate_field(full_recalc = TRUE)
 
 /obj/item/multitool/field_debug/attack_self(mob/user)
 	operating = !operating

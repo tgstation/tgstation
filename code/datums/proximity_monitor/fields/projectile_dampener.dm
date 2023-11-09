@@ -19,7 +19,7 @@
 /datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	..()
 	RegisterSignal(projector, COMSIG_QDELETING, PROC_REF(on_projector_del))
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/projectile_dampener/Destroy()
@@ -49,7 +49,7 @@
 	LAZYSET(edgeturf_effects, target, effect)
 
 /datum/proximity_monitor/advanced/projectile_dampener/on_z_change(datum/source)
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/projectile_dampener/cleanup_edge_turf(turf/target)
 	. = ..()

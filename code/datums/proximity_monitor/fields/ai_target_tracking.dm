@@ -34,7 +34,7 @@
 	RegisterSignal(controller, AI_CONTROLLER_BEHAVIOR_QUEUED(owning_behavior.type), PROC_REF(behavior_requeued))
 	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_SET(targetting_datum_key), PROC_REF(targeting_datum_changed))
 	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_CLEARED(targetting_datum_key), PROC_REF(targeting_datum_cleared))
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/ai_target_tracking/Destroy()
 	. = ..()
@@ -45,7 +45,7 @@
 	hiding_location_key = null
 	filter = null
 
-/datum/proximity_monitor/advanced/ai_target_tracking/recalculate_field()
+/datum/proximity_monitor/advanced/ai_target_tracking/recalculate_field(full_recalc = FALSE)
 	. = ..()
 	first_build = FALSE
 
