@@ -568,6 +568,8 @@
 /obj/item/surgical_drapes,
 /obj/item/razor,
 /obj/item/hemostat,
+/obj/item/bonesetter,
+/obj/item/stack/medical/bone_gel,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
