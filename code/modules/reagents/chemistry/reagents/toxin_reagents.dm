@@ -1283,6 +1283,44 @@
 		to_chat(affected_mob, span_notice("Ah, what was that? You thought you heard something..."))
 		affected_mob.adjust_confusion(5 SECONDS)
 
+/datum/reagent/toxin/spider
+	name = "Spider Toxin"
+	description = "Hello! I am a bugged reagent. Please report me for my crimes. Thank you!!"
+	toxpwr = 0
+
+/datum/reagent/toxin/spider/exhaustion
+	name = "Exhaustion Spider Toxin"
+	description = "A toxic chemical produced by spiders to weaken prey."
+
+/datum/reagent/toxin/spider/exhuastion/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.adjustStaminaLoss((volume/3) * REM * seconds_per_tick, updating_stamina = FALSE))
+		return UPDATE_MOB_HEALTH
+
+/datum/reagent/toxin/spider/paralysis
+	name = "Paralysis Spider Toxin"
+	description = "A toxic chemical produced by spiders to incapacitate prey."
+
+/datum/reagent/toxin/spider/paralysis/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(10, seconds_per_tick))
+		affected_mob.drop_all_held_items()
+		to_chat(affected_mob, span_notice("You cant feel your hands!"))
+	if(current_cycle > 5)
+		if(SPT_PROB((volume/3), seconds_per_tick))
+			var/paralyzed_limb = pick_paralyzed_limb()
+			ADD_TRAIT(affected_mob, paralyzed_limb, type)
+
+/datum/reagent/toxin/spider/paralysis/proc/pick_paralyzed_limb()
+	return (pick(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_R_LEG, TRAIT_PARALYSIS_L_LEG))
+
+/datum/reagent/toxin/spider/paralysis/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	REMOVE_TRAIT(affected_mob, TRAIT_PARALYSIS_L_ARM, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_PARALYSIS_R_ARM, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_PARALYSIS_R_LEG, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_PARALYSIS_L_LEG, type)
+
 /datum/reagent/toxin/hunterspider
 	name = "Spider Toxin"
 	description = "A toxic chemical produced by spiders to weaken prey."
