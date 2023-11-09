@@ -212,9 +212,9 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack,
-		/datum/pet_command/point_targetting/use_ability/solarbeam,
-		/datum/pet_command/point_targetting/use_ability/rapidseeds,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/use_ability/solarbeam,
+		/datum/pet_command/point_targeting/use_ability/rapidseeds,
 	)
 
 //abilities
