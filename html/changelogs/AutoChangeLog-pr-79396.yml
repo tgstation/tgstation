@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - balance: "Flightpotion wings will no longer make health analyzers list you as nonhuman."
