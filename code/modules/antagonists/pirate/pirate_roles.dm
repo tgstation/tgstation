@@ -96,7 +96,7 @@
 	rank = "Top-drawer"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne
-	name = "Interdyne sleeper"
+	name = "\improper Interdyne sleeper"
 	desc = "A surprisingly clean cryogenic sleeper. You can see your reflection on the sides!"
 	density = FALSE
 	you_are_text = "You are an Ex-Interdyne pharmacyst now turned space pirate."
@@ -127,7 +127,7 @@
 	rank = "Pharmacist"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey
-	name = "Assistant sleeper"
+	name = "\improper Assistant sleeper"
 	desc = "A very dirty cryogenic sleeper. You're not sure if it even works."
 	density = FALSE
 	you_are_text = "You used to be a Nanotrasen assistant, until a riot gone awry. Now you wander space, ransacking any ships you come across!"
@@ -142,7 +142,7 @@
 	rank = "Tidemaster"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs
-	name = "Space IRS sleeper"
+	name = "\improper Space IRS sleeper"
 	desc = "A surprisingly clean cryogenic sleeper. You can see your reflection on the sides!"
 	density = FALSE
 	you_are_text = "You are an agent working for the space IRS"
