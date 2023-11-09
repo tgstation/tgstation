@@ -74,8 +74,6 @@
 		/mob/living/simple_animal/hostile/illusion,
 		/mob/living/simple_animal/hostile/illusion/escape,
 		/mob/living/simple_animal/hostile/illusion/mirage,
-		/mob/living/simple_animal/hostile/jungle,
-		/mob/living/simple_animal/hostile/jungle/leaper,
 		/mob/living/simple_animal/hostile/megafauna,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
 		/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom,

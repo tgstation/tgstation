@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "reagent volumes should be consistent & non breaking across plumbing & chemistry as a whole"
-  - bugfix: "plumbing reaction chambers are more proactive. Will attempt to take in reagents more frequently"
