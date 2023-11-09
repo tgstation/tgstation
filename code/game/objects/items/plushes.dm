@@ -789,8 +789,16 @@
 
 /obj/item/toy/plush/cleanbot
 	name = "cleanbot plushie"
-	desc = "a plushie version of a cleanbot"
+	desc = "a plushie version of a cleanbot, it has an exited expression!"
 	icon_state = "Plushie_Cleanbot"
 	attack_verb_continuous = list("scrubs", "cleans", "polishes")
 	attack_verb_simple = list("scrub", "clean", "polish")
 	squeak_override = list('sound/effects/bubbles2.ogg' = 1)
+
+/obj/item/toy/plush/medibot
+	name = "medibot plushie"
+	desc = "a plushie version of a medibot, it has an underwhelming expression."
+	icon_state = "Plushie_Medibot"
+	attack_verb_continuous = list("heals", "patches", "fixes")
+	attack_verb_simple = list("heal", "patch", "fix")
+	squeak_override = list('sound/voice/medbot/coming.ogg' = 1, 'sound/voice/medbot/injured.ogg' = 1, 'sound/voice/medbot/feelbetter.ogg' = 1, 'sound/voice/medbot/flies.ogg' = 1, 'sound/voice/medbot/catch.ogg' = 1)
