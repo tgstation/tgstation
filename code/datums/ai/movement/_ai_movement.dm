@@ -31,11 +31,16 @@
 	source.delay = controller.movement_delay
 
 	var/can_move = TRUE
-	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby) //Need to store more state. Annoying.
+	if((controller.ai_traits & STOP_MOVING_WHEN_PULLED) && pawn.pulledby) //Need to store more state. Annoying.
 		can_move = FALSE
 
 	if(!isturf(pawn.loc)) //No moving if not on a turf
 		can_move = FALSE
+
+	if(isliving(pawn))
+		var/mob/living/pawn_mob = pawn
+		if(!(pawn_mob & MOBILITY_MOVE))
+			can_move = FALSE
 
 	// Check if this controller can actually run, so we don't chase people with corpses
 	if(!controller.able_to_run())
