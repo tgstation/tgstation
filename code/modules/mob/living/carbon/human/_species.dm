@@ -265,7 +265,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/randname
 	if(first_name)
-		randname += " [first_name]"
+		randname += "[first_name]"
 	else
 		if(gender == MALE)
 			randname = pick(GLOB.first_names_male)
