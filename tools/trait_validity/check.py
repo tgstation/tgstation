@@ -45,12 +45,31 @@ if not os.path.isfile(globalvars_file):
 
 defines_to_search_for = []
 missing_defines = []
+scannable_lines = []
 
-with open(defines_file, "r") as file:
-    defines_file_contents = file.read()
-    for define in define_regex.finditer(defines_file_contents):
-        number_of_defines += 1
-        defines_to_search_for.append(define.group(2))
+with open(defines_file, 'r') as file:
+    reading = False
+
+    for line in file:
+        line = line.strip()
+
+        if line == "// BEGIN TRAIT DEFINES":
+            reading = True
+            continue
+        elif line == "// END TRAIT DEFINES":
+            break
+        elif not reading:
+            continue
+
+        scannable_lines.append(line)
+
+for potential_define in scannable_lines:
+    match = define_regex.match(potential_define)
+    if not match:
+        continue
+
+    number_of_defines += 1
+    defines_to_search_for.append(match.group(2))
 
 if number_of_defines == 0:
     print(red("No defines found! This is likely an error."))

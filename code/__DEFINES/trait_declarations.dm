@@ -10,8 +10,6 @@
 /// Trait applied by element
 #define ELEMENT_TRAIT(source) "element_trait_[source]"
 
-
-
 // BEGIN TRAIT DEFINES
 
 /*
@@ -1013,4 +1011,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
 
-// END TRAIT_DEFINES
+// END TRAIT DEFINES
