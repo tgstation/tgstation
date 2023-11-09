@@ -120,6 +120,7 @@ GLOBAL_VAR(basketball_game)
 		ghost_sound = 'sound/effects/ghost2.ogg',
 		notify_volume = 75,
 		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 	create_bodies(ready_players)

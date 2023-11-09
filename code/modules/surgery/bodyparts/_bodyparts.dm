@@ -175,8 +175,8 @@
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Damage at which attacks from this bodypart will stun
-	var/unarmed_stun_threshold = 2
+	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	var/unarmed_effectiveness = 10
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
 
@@ -878,7 +878,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(IS_ORGANIC_LIMB(src))
-		if(owner && HAS_TRAIT(owner, TRAIT_HUSK))
+		if(!(bodypart_flags & BODYPART_UNHUSKABLE) && owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
 			is_husked = TRUE
 		else if(owner && HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))

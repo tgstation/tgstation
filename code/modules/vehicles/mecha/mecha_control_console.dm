@@ -36,9 +36,9 @@
 			tracker_ref = REF(MT)
 		)
 		if(istype(M, /obj/vehicle/sealed/mecha/ripley))
-			var/obj/vehicle/sealed/mecha/ripley/RM = M
+			var/obj/vehicle/sealed/mecha/ripley/workmech = M
 			mech_data += list(
-				cargo_space = round((LAZYLEN(RM.cargo) / RM.cargo_capacity) * 100)
+				cargo_space = round(workmech.cargo_hold.contents.len / workmech.cargo_hold.cargo_capacity * 100)
 		)
 
 		data["mechs"] += list(mech_data)
@@ -101,8 +101,8 @@
 				<b>Pilot:</b> [english_list(chassis.return_drivers(), nothing_text = "None")]<br>
 				<b>Location:</b> [get_area_name(chassis, TRUE) || "Unknown"]"}
 	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))
-		var/obj/vehicle/sealed/mecha/ripley/RM = chassis
-		answer += "<br><b>Used Cargo Space:</b> [round((LAZYLEN(RM.cargo) / RM.cargo_capacity * 100), 0.01)]%"
+		var/obj/item/mecha_parts/mecha_equipment/ejector/cargo_holder = locate(/obj/item/mecha_parts/mecha_equipment/ejector) in chassis.equip_by_category[MECHA_UTILITY]
+		answer += "<br><b>Used Cargo Space:</b> [round((cargo_holder.contents.len / cargo_holder.cargo_capacity * 100), 0.01)]%"
 
 	return answer
 

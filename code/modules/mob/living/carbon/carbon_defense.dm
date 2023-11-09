@@ -356,6 +356,7 @@
 
 	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
 		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+		target.emote("sway")
 		if(target_held_item)
 			append_message = "loosening [target.p_their()] grip on [target_held_item]"
 			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing

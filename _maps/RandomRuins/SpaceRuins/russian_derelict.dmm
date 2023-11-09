@@ -743,7 +743,6 @@
 /area/ruin/space/ks13/engineering/singulo)
 "jD" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/dorms)
 "jV" = (
@@ -3632,7 +3631,6 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/wallframe/apc,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "Ce" = (
@@ -4077,7 +4075,6 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/rnd)
 "EC" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -6056,7 +6053,6 @@
 "Ps" = (
 /obj/item/circuitboard/machine/smes,
 /obj/structure/table,
-/obj/machinery/light/small/directional/east,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,

@@ -28,7 +28,7 @@
 	product = /obj/item/grown/log/steel
 	mutatelist = null
 	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/grown/log
 	seed = /obj/item/seeds/tower

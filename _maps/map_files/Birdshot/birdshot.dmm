@@ -7850,8 +7850,8 @@
 /obj/structure/sink/kitchen/directional/east,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/button/door/directional/west{
-	pixel_y = 8;
-	id = "custodialshutters"
+	id = "custodialshutters";
+	pixel_y = 8
 	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
@@ -10724,8 +10724,8 @@
 /area/station/security/prison/shower)
 "dZT" = (
 /obj/machinery/button/transport/tram/directional/south{
-	specific_transport_id = "bird_2";
-	id = 2
+	id = 2;
+	specific_transport_id = "bird_2"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
@@ -14855,10 +14855,6 @@
 /obj/machinery/light/small/directional/east,
 /obj/machinery/coffeemaker{
 	pixel_y = 12
-	},
-/obj/item/reagent_containers/cup/coffeepot{
-	pixel_x = 3;
-	pixel_y = -5
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/security/breakroom)
@@ -20014,8 +20010,8 @@
 	pixel_y = 11
 	},
 /obj/item/mod/module/signlang_radio{
-	pixel_y = 2;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/small,
 /area/station/security/office)
@@ -36004,8 +36000,8 @@
 "mNG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/transport/tram/directional/south{
-	specific_transport_id = "bird_2";
-	id = 1
+	id = 1;
+	specific_transport_id = "bird_2"
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
@@ -38218,15 +38214,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "nEl" = (
-/obj/machinery/computer/quantum_console{
-	dir = 4
-	},
-/obj/machinery/computer/quantum_console{
-	dir = 4
-	},
-/obj/machinery/computer/quantum_console{
-	dir = 4
-	},
 /obj/machinery/computer/quantum_console{
 	dir = 4
 	},
@@ -46826,8 +46813,8 @@
 "qzp" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/button/transport/tram/directional/north{
-	specific_transport_id = "bird_1";
-	id = 1
+	id = 1;
+	specific_transport_id = "bird_1"
 	},
 /obj/machinery/transport/destination_sign/indicator/directional/north,
 /turf/open/floor/noslip,
@@ -49889,8 +49876,8 @@
 /obj/structure/table,
 /obj/machinery/airalarm/directional/south,
 /obj/item/storage/box/bandages{
-	pixel_y = 6;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/clipboard{
 	pixel_x = 4;
@@ -56721,8 +56708,8 @@
 "tGv" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/button/transport/tram/directional/north{
-	specific_transport_id = "bird_1";
-	id = 2
+	id = 2;
+	specific_transport_id = "bird_1"
 	},
 /obj/machinery/transport/destination_sign/indicator/directional/north,
 /turf/open/floor/noslip,
@@ -61679,6 +61666,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/light/small/directional/north,
+/obj/vehicle/sealed/mecha/ripley/paddy/preset,
 /turf/open/floor/iron,
 /area/station/security/tram)
 "vmX" = (
@@ -63436,6 +63424,10 @@
 "vOP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/curtain/cloth/fancy/mechanical{
+	id = "detpriv";
+	name = "Curtains"
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/security/detectives_office)
 "vPa" = (
@@ -65772,9 +65764,10 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/machinery/button/door/directional/west{
-	id = "detpriv";
-	name = "Curtains"
+/obj/machinery/button/curtain{
+	pixel_x = -24;
+	name = "Curtains";
+	id = "detpriv"
 	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
@@ -66937,8 +66930,8 @@
 /obj/item/radio/intercom/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/item/storage/box/bandages{
-	pixel_y = 6;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/stack/medical/gauze{
 	pixel_x = -2;
@@ -94790,7 +94783,7 @@ tgw
 lqt
 ghD
 aZP
-wPf
+xQw
 mvT
 vrn
 kvT

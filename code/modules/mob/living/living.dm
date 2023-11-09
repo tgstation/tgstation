@@ -1113,7 +1113,8 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we've been shoved and we have some amount of stamina loss, we must resist
+	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || has_movespeed_modifier(/datum/movespeed_modifier/shove) && getStaminaLoss() >= 30)
 		var/altered_grab_state = pulledby.grab_state
 		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
@@ -1539,9 +1540,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return fire_status.ignite(silent)
 
 /mob/living/proc/update_fire()
-	var/datum/status_effect/fire_handler/fire_handler = has_status_effect(/datum/status_effect/fire_handler)
-	if(fire_handler)
-		fire_handler.update_overlay()
+	var/datum/status_effect/fire_handler/fire_stacks/fire_stacks = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+	if(fire_stacks)
+		fire_stacks.update_overlay()
 
 /**
  * Extinguish all fire on the mob

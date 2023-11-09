@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - qol: "Adds the capability for some player-controlled mobs with ranged attacks to repeatedly fire their natural weapons by holding down the mouse button."
