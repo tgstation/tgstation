@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "plumbing factories should not rarely/randomly brick at volumes like 0.9999(when in fact it should have been 1)"
