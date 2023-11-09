@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Cargo will remove/cancel orders from its cart if that order exceeds the available budget (both private or cargo) and the player cannot cancel this order manually. All order costs are rounded up to integer values"
+  - bugfix: "Galactic material market will deny appending stacks to your existing order if it exceeds the available (private or cargo depending on the mode of ordering) budget & if it exceeds the available materials on the market. Galactic material market UI is overall improved."

@@ -1,0 +1,4 @@
+author: "Data_"
+delete-after: True
+changes:
+  - bugfix: "The detective's curtains can be closed again in Birdshot."

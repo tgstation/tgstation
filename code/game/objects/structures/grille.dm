@@ -52,9 +52,12 @@
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+
 	if(anchored)
 		. += span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")
-	if(!anchored)
+	else
 		. += span_notice("The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.")
 
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -186,6 +189,8 @@
 	add_fingerprint(user)
 	if(shock(user, 100))
 		return
+	if(flags_1 & NODECONSTRUCT_1)
+		return FALSE
 	tool.play_tool_sound(src, 100)
 	deconstruct()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -195,6 +200,8 @@
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
+		return FALSE
+	if(flags_1 & NODECONSTRUCT_1)
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE

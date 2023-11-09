@@ -1,5 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - code_imp: "Added support to the wet_floor component to make it so the wet overlay could not be applied to certain turfs if desired."
-  - bugfix: "Ice turfs no longer look tiled, and instead look smooth when placed next to one-another."

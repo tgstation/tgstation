@@ -434,6 +434,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 			"server_name" = CONFIG_GET(string/serversqlname),
 			"forced_threat_level" = GLOB.dynamic_forced_threat_level,
 			"threat_level" = threat_level,
+			"max_threat" = (SSticker.totalPlayersReady < low_pop_player_threshold) ? LERP(low_pop_maximum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold) : max_threat_level,
+			"player_count" = SSticker.totalPlayersReady,
 			"round_start_budget" = round_start_budget,
 			"parameters" = list(
 				"threat_curve_centre" = threat_curve_centre,

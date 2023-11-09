@@ -127,3 +127,5 @@
 #define COMSIG_ATOM_GERM_UNEXPOSED "atom_germ_unexposed"
 /// when atom is washed
 #define COMSIG_ATOM_WASHED "atom_washed"
+/// signal sent to puzzle pieces by activator
+#define COMSIG_PUZZLE_COMPLETED "puzzle_completed"

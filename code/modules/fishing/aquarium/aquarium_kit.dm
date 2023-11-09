@@ -35,6 +35,7 @@
 	var/fish_type = get_fish_type()
 	if(fish_type)
 		var/obj/item/fish/spawned_fish = new fish_type(null)
+		ADD_TRAIT(spawned_fish, TRAIT_FISH_FROM_CASE, TRAIT_GENERIC)
 		spawned_fish.forceMove(src) // trigger storage.handle_entered
 
 /obj/item/storage/fish_case/proc/get_fish_type()
