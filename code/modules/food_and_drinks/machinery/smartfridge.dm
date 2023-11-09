@@ -225,7 +225,7 @@
 
 /// Returns the number of items visible in the fridge. Faster than subtracting 2 lists
 /obj/machinery/smartfridge/proc/visible_items()
-	var/component_part_count = component_parts.len
+	var/component_part_count = 0
 	for(var/datum/stock_part/datum_part in component_parts)
 		component_part_count -= 1
 	return contents.len - component_part_count
@@ -453,6 +453,10 @@
 
 	//so we don't drop any of the parent smart fridge parts upon deconstruction
 	clear_components()
+
+/// We cleared out the components in initialize so we can optimize this
+/obj/machinery/smartfridge/drying_rack/visible_items()
+	return contents.len
 
 /obj/machinery/smartfridge/drying_rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
