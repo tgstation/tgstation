@@ -213,7 +213,7 @@
 	priority_announce("[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! The truth shall finally devour the lie! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
 	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
-	ADD_TRAIT(owner, TRAIT_MADNESS_IMMUNE, REF(src))
+	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, REF(src))
 
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 

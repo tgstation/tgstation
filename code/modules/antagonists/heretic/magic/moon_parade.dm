@@ -84,13 +84,14 @@
 	//Lowers sanity
 	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 
-	// The victim got hit, add them to our mobs_hit list
-	victim |= mobs_hit
+	// The victim got hit, add them to our mobs_hit list. Weakref to prevent qdeleting them
+	mobs_hit |= WEAKREF(victim)
 
 /obj/projectile/moon_parade/Destroy()
 	// Unregister the signal blocking movement on those we hit
-	for(var/mob/living/mobs in mobs_hit)
-		UnregisterSignal(mobs, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
+	for(var/datum/weakref/mob_ref in mobs_hit)
+		var/mob/real_mob = mob_ref.resolve()
+		UnregisterSignal(real_mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	soundloop.stop()
 	return ..()
 
