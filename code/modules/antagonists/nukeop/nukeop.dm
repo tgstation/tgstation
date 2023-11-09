@@ -43,7 +43,7 @@
 	if(isnull(operative.client) || operative.client.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
 		operative.set_species(/datum/species/human)
 
-	operative.equip_species_outfit(nukeop_outfit)
+	operative.equip_species_outfit(nukeop_outfit) //TODO -- PUT THE READ_PREF HERE
 
 	return TRUE
 
