@@ -843,13 +843,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolization_rate = 0.08 * REM
 	tox_damage = 0
 
-/datum/reagent/inverse/salbutamol/on_mob_metabolize(mob/living/L)
+/datum/reagent/inverse/salbutamol/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_EASYBLEED ,type)
+	ADD_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
 
-/datum/reagent/inverse/salbutamol/on_mob_end_metabolize(mob/living/M)
+/datum/reagent/inverse/salbutamol/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(M, TRAIT_EASYBLEED ,type)
+	REMOVE_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
 
 /datum/reagent/inverse/pen_acid
 	name = "Pendetide"
@@ -896,7 +896,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/atropine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS,ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_TONGUE),2 * seconds_per_tick)
+	var/static/list/possible_organs = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_TONGUE,
+	)
+	affected_mob.adjustOrganLoss(pick(possible_organs) ,2 * seconds_per_tick)
 	affected_mob.reagents.remove_reagent(type, 1 * REM * seconds_per_tick)
 
 /datum/reagent/inverse/ammoniated_mercury
