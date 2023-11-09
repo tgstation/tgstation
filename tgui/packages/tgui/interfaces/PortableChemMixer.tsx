@@ -70,7 +70,7 @@ export const PortableChemMixer = (props, context) => {
               onClick={() => act('remove', { amount })}
             />
           ))}>
-          <BeakerDisplay beaker={beaker} allow_eject showpH />
+          <BeakerDisplay beaker={beaker} showpH />
         </Section>
       </Window.Content>
     </Window>

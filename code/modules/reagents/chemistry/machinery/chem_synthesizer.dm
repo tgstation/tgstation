@@ -20,18 +20,8 @@
 		ui = new(user, src, "ChemDebugSynthesizer", name)
 		ui.open()
 
-/obj/machinery/chem_dispenser/chem_synthesizer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-
+/obj/machinery/chem_dispenser/chem_synthesizer/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
-		if("ejectBeaker")
-			if(beaker)
-				try_put_in_hand(beaker, usr)
-				beaker = null
-				return TRUE
-
 		if("input")
 			if(QDELETED(beaker))
 				return FALSE
@@ -58,11 +48,13 @@
 			var/input = text2num(params["amount"])
 			if(input)
 				amount = input
+			return FALSE
 
 		if("purity")
 			var/input = text2num(params["amount"])
 			if(input)
 				purity = input
+			return FALSE
 
 	update_appearance()
 

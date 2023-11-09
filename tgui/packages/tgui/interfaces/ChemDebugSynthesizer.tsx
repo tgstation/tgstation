@@ -21,11 +21,6 @@ export const ChemDebugSynthesizer = (props, context) => {
           buttons={
             beaker ? (
               <>
-                <Button
-                  icon="eject"
-                  content="Eject"
-                  onClick={() => act('ejectBeaker')}
-                />
                 <NumberInput
                   value={amount}
                   unit="u"

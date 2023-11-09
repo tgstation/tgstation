@@ -19,13 +19,12 @@ export type BeakerProps = {
   beaker: Beaker;
   replace_contents?: BeakerReagent[];
   title_label?: string;
-  allow_eject?: BooleanLike;
   showpH?: BooleanLike;
 };
 
 export const BeakerDisplay = (props: BeakerProps, context) => {
   const { act } = useBackend(context);
-  const { beaker, replace_contents, title_label, allow_eject, showpH } = props;
+  const { beaker, replace_contents, title_label, showpH } = props;
   const beakerContents = replace_contents || beaker?.contents || [];
 
   return (
@@ -33,8 +32,7 @@ export const BeakerDisplay = (props: BeakerProps, context) => {
       <LabeledList.Item
         label="Beaker"
         buttons={
-          !!beaker &&
-          !!allow_eject && (
+          !!beaker && (
             <Button icon="eject" content="Eject" onClick={() => act('eject')} />
           )
         }>

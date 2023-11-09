@@ -373,6 +373,15 @@
 			if(beaker)
 				beaker.reagents.ui_interact(ui.user)
 
+	var/result = handle_ui_act(action, params, ui, state)
+	if(isnull(result))
+		result = FALSE
+	return result
+
+/// Same as ui_act() but to be used by subtypes exclusively
+/obj/machinery/chem_dispenser/proc/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	return null
+
 /obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)

@@ -195,7 +195,6 @@ export const ChemDispenser = (props, context) => {
             beaker={beaker}
             title_label={recording && 'Virtual beaker'}
             replace_contents={recordedContents}
-            allow_eject
             showpH={data.showpH}
           />
         </Section>
