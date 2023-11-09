@@ -18,7 +18,7 @@
 	/// Maximum number of items that can be loaded into the machine
 	var/max_n_of_items = 1500
 	/// The overlay for this fridge when it is filled with stuff
-	var/contents_icon_state = "smartfridge"
+	var/contents_icon_state = "plant"
 	/// List of items that the machine starts with upon spawn
 	var/list/initial_contents
 	/// If the machine shows an approximate number of its contents on its sprite
@@ -442,7 +442,6 @@
 	idle_power_usage = 0
 	has_emissive = FALSE
 	can_atmos_pass = ATMOS_PASS_YES
-	contents_icon_state = "plant"
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
 
@@ -480,7 +479,8 @@
 /obj/machinery/smartfridge/drying_rack/welder_act_secondary(mob/living/user, obj/item/tool)
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
-/obj/machinery/smartfridge/drying_rack/spawn_frame()
+/obj/machinery/smartfridge/drying_rack/on_deconstruction()
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 /obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
 	. = TOOL_ACT_TOOLTYPE_SUCCESS
 
