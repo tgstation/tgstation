@@ -12,7 +12,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	//wow, lore
 	desc = "A hefty lead pipe.\nLead is an uncommon sight in this sector after being phased out due to employee health concerns. \
-	\nThose of a more cynical disposition have claimed that the NT lead ban is a scheme to prevent divertion to Syndicate ammunition factories."
+	\nThose of a more cynical disposition have claimed that the NT lead ban is a scheme to prevent diversion to Syndicate ammunition factories."
 	force = 15
 	throwforce = 12
 	throw_range = 4
