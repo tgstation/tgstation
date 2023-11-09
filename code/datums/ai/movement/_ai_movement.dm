@@ -39,7 +39,7 @@
 
 	if(isliving(pawn))
 		var/mob/living/pawn_mob = pawn
-		if(!(pawn_mob & MOBILITY_MOVE))
+		if(!(pawn_mob.mobility_flags & MOBILITY_MOVE))
 			can_move = FALSE
 
 	// Check if this controller can actually run, so we don't chase people with corpses
