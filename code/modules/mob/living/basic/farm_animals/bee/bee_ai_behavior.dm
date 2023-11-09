@@ -25,7 +25,6 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/enter_exit_hive/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
-	. = ..()
 	var/obj/structure/beebox/current_home = controller.blackboard[target_key]
 	var/mob/living/bee_pawn = controller.pawn
 	var/atom/attack_target = controller.blackboard[attack_key]
@@ -35,7 +34,7 @@
 
 	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), current_home)
 	callback.Invoke()
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/inhabit_hive
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
@@ -48,17 +47,15 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/inhabit_hive/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/obj/structure/beebox/potential_home = controller.blackboard[target_key]
 	var/mob/living/bee_pawn = controller.pawn
 
 	if(!potential_home.habitable(bee_pawn)) //the house become full before we get to it
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), potential_home)
 	callback.Invoke()
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/inhabit_hive/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -158,19 +155,18 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/swirl_around_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 
 	if(QDELETED(target))
-		finish_action(controller, TRUE)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 	if(get_dist(target, living_pawn) > 1)
 		set_movement_target(controller, target)
-		return
+		return AI_BEHAVIOR_DELAY
 
 	if(!SPT_PROB(swirl_chance, seconds_per_tick))
-		return
+		return AI_BEHAVIOR_DELAY
 
 	var/list/possible_turfs = list()
 
@@ -180,10 +176,11 @@
 		possible_turfs += possible_turf
 
 	if(!length(possible_turfs))
-		return
+		return AI_BEHAVIOR_DELAY
 
 	if(isnull(controller.movement_target_source) || controller.movement_target_source == type)
 		set_movement_target(controller, pick(possible_turfs))
+	return AI_BEHAVIOR_DELAY
 
 
 /datum/pet_command/beehive

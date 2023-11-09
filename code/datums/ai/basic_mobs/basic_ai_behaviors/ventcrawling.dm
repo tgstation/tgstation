@@ -17,26 +17,23 @@
 	return istype(target) && isliving(controller.pawn) // only mobs can vent crawl in the current framework
 
 /datum/ai_behavior/crawl_through_vents/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
 	var/mob/living/cached_pawn = controller.pawn
 	if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING) || !controller.blackboard[BB_CURRENTLY_TARGETTING_VENT] || !is_vent_valid(entry_vent))
-		return
+		return AI_BEHAVIOR_DELAY
 
 	if(!cached_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE)) // we're an AI we scoff at feedback
-		finish_action(controller, FALSE, target_key) // "never enter a hole you can't get out of"
-		return
+		// "never enter a hole you can't get out of"
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/vent_we_exit_out_of = calculate_exit_vent(controller, target_key)
 	if(isnull(vent_we_exit_out_of)) // don't get into the vents if we can't get out of them, that's SILLY.
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(BB_CURRENTLY_TARGETTING_VENT, FALSE) // must be done here because we have a do_after sleep in handle_ventcrawl unfortunately and double dipping could lead to erroneous suicide pill calls.
 	cached_pawn.handle_ventcrawl(entry_vent)
 	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) //something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go! odd.
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(BB_EXIT_VENT_TARGET, vent_we_exit_out_of)
 
@@ -51,6 +48,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), rand(lower_vent_time_limit, upper_vent_time_limit))
 	controller.set_blackboard_key(BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID, addtimer(CALLBACK(src, PROC_REF(suicide_pill), controller), controller.blackboard[BB_TIME_TO_GIVE_UP_ON_VENT_PATHING], TIMER_STOPPABLE))
+	return AI_BEHAVIOR_DELAY
 
 /// Figure out an exit vent that we should head towards. If we don't have one, default to the entry vent. If they're all kaput, we die.
 /datum/ai_behavior/crawl_through_vents/proc/calculate_exit_vent(datum/ai_controller/controller, target_key)

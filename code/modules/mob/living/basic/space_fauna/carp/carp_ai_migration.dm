@@ -50,11 +50,10 @@
 		var/turf/potential_destination = popleft(potential_migration_points)
 		if (!isnull(potential_destination) && get_dist(controller.pawn, potential_destination) > CARP_DESTINATION_SEARCH_RANGE)
 			controller.set_blackboard_key(target_key, potential_destination)
-			finish_action(controller, succeeded = TRUE)
-			return
+			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 		controller.set_blackboard_key(path_key, potential_migration_points.Copy())
 
-	finish_action(controller, succeeded = FALSE)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 #undef CARP_DESTINATION_SEARCH_RANGE
 #undef CARP_PORTAL_SEARCH_RANGE

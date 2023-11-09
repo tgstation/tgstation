@@ -21,8 +21,17 @@ multiple modular subtrees with behaviors
 	var/ai_traits = NONE
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors
-	///Current actions being performed by the AI -> (timerid if active, otherwise desired execute time)
-	var/list/current_behaviors
+	///Current actions being performed by the AI -> TRUE
+	var/list/current_behaviors = list()
+	///Behavior types -> when we want to execute them next
+	var/list/behavior_cooldowns = list()
+	/// timer ID of the currently queued ai_behavior's callback
+	/// Corresponds to the first behavior in the current_behaviors list
+	var/currently_queued_id = TIMER_ID_NULL
+	/// The behavior we have queued currently
+	var/datum/ai_behavior/currently_queued_behavior
+	/// How many behaviors we have that demand no planning
+	var/no_planning_sources = 0
 	///Current status of AI (OFF/ON)
 	var/ai_status
 	///Current movement target of the AI, generally set by decision making.
@@ -61,8 +70,9 @@ multiple modular subtrees with behaviors
 	/// Otherwise we will not pay attention to them changing
 	var/able_to_run = FALSE
 
-	/// When was the last time we ran an action?
-	var/last_action_ran = 0
+	/// If we have a behavior that wants to fire next tick, we'll do it via process() rather then timers
+	/// (lower cost)
+	var/fire_on_process = FALSE
 
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
@@ -222,14 +232,16 @@ multiple modular subtrees with behaviors
 	able_to_run = get_able_to_run()
 	if(!able_to_run)
 		SSmove_manager.stop_looping(pawn) //stop moving, since we can't run the controller rn
-		for(var/datum/ai_behavior/fall_asleep as anything in current_behaviors)
-			var/id = current_behaviors[fall_asleep]
-			current_behaviors[fall_asleep] = world.time + timeleft(id, SSai_behaviors)
-			deltimer(id, SSai_behaviors)
+		if(currently_queued_id != TIMER_ID_NULL)
+			deltimer(currently_queued_id, SSai_behaviors)
+		currently_queued_id = TIMER_ID_NULL
 	else
-		for(var/datum/ai_behavior/restart as anything in current_behaviors)
-			var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), restart), world.time - current_behaviors[restart], TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-			current_behaviors[restart] = id
+		if(!length(current_behaviors))
+			return
+		if(currently_queued_id != TIMER_ID_NULL)
+			stack_trace("Tried to restart behaviors but one was already running!")
+			return
+		decide_on_behavior()
 
 ///Returns TRUE if the ai controller can actually run at the moment, FALSE otherwise
 /datum/ai_controller/proc/get_able_to_run()
@@ -241,12 +253,6 @@ multiple modular subtrees with behaviors
 
 /// Handles a scheduled ai behavior
 /datum/ai_controller/proc/handle_behavior(datum/ai_behavior/current_behavior)
-	// Only one action per tick
-	if(world.time == last_action_ran)
-		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), current_behavior), 1 TICKS, TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		current_behaviors[current_behavior] = id
-		return
-
 	// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 	// Then pick the max of this and the seconds_per_tick passed to ai_controller.process()
 	// Action cooldowns cannot happen faster than seconds_per_tick, so seconds_per_tick should be the value used in this scenario.
@@ -257,6 +263,7 @@ multiple modular subtrees with behaviors
 
 	if(!current_movement_target)
 		stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
+		decide_on_behavior()
 		return //This can cause issues, so don't let these slide.
 	///Stops pawns from performing such actions that should require the target to be adjacent.
 	var/atom/movable/moving_pawn = pawn
@@ -273,18 +280,23 @@ multiple modular subtrees with behaviors
 
 	if(current_behavior.behavior_flags & AI_BEHAVIOR_MOVE_AND_PERFORM) //If we can move and perform then do so.
 		ProcessBehavior(action_seconds_per_tick, current_behavior)
+		return
+
+	decide_on_behavior()
 
 ///Handles idle behavior, called every ds so it's part of a processing subsystem
 /datum/ai_controller/process(seconds_per_tick)
+	if(fire_on_process && currently_queued_behavior)
+		handle_behavior(currently_queued_behavior)
+		return
 	if(idle_behavior && !length(current_behaviors))
 		idle_behavior.perform_idle_behavior(seconds_per_tick, src) //Do some stupid shit while we have nothing to do
 		return
 
 ///Determines whether the AI can currently make a new plan
 /datum/ai_controller/proc/able_to_plan()
-	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //We have a behavior that blocks planning
-			return FALSE
+	if(no_planning_sources > 0) //We have a behavior that blocks planning
+		return FALSE
 	return TRUE
 
 ///This is where you decide what actions are taken by the AI.
@@ -302,7 +314,7 @@ multiple modular subtrees with behaviors
 				break
 
 	/// We reverse this just to avoid constant requeuing
-	for(var/datum/ai_behavior/forgotten_behavior as anything in reverse_range(current_behaviors - planned_behaviors))
+	for(var/datum/ai_behavior/forgotten_behavior as anything in current_behaviors - planned_behaviors)
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[forgotten_behavior.type]
 		if(stored_arguments)
@@ -329,6 +341,38 @@ multiple modular subtrees with behaviors
 	update_able_to_run()
 	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time, timer_subsystem = SSai_behaviors)
 
+/// Decides on the behavior to run next, if you find one run it
+/datum/ai_controller/proc/decide_on_behavior()
+	if(!able_to_run || !length(current_behaviors))
+		return
+
+	var/datum/ai_behavior/next_behavior
+	var/lowest_delay = INFINITY
+	for(var/datum/ai_behavior/potential as anything in current_behaviors)
+		var/delay = behavior_cooldowns[potential.type]
+		if(delay >= lowest_delay)
+			continue
+		lowest_delay = delay
+		next_behavior = potential
+		// If we've found something that wants to run NOW
+		// Then it takes priority and runs immediately
+		if(lowest_delay <= world.time)
+			break
+
+	if(lowest_delay <= world.time + world.tick_lag)
+		fire_on_process = TRUE
+		START_PROCESSING(SSai_idle, src)
+		currently_queued_behavior = next_behavior
+		return
+
+	if(fire_on_process)
+		STOP_PROCESSING(SSai_idle, src)
+		fire_on_process = FALSE
+	if(next_behavior)
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), next_behavior), max(lowest_delay - world.time, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		currently_queued_id = id
+		currently_queued_behavior = next_behavior
+
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
 	var/datum/ai_behavior/behavior = GET_AI_BEHAVIOR(behavior_type)
@@ -343,16 +387,36 @@ multiple modular subtrees with behaviors
 
 	if(!behavior.setup(arglist(arguments)))
 		return
-	// If we were on idle and we are no longer, then stop yeah?
-	if(!length(current_behaviors))
-		STOP_PROCESSING(SSai_idle, src)
 
-	if(able_to_run)
-		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		current_behaviors[behavior] = id
+	var/cooldown
+	if(behavior_cooldowns[behavior_type])
+		cooldown = behavior_cooldowns[behavior_type]
 	else
-		current_behaviors[behavior] = world.time + behavior.get_cooldown()
+		cooldown = world.time
+		behavior_cooldowns[behavior_type] = cooldown
 
+	var/current_queue_time = -INFINITY
+	if(currently_queued_behavior)
+		current_queue_time = behavior_cooldowns[currently_queued_behavior.type]
+ 	// If we were on idle and we are no longer, then stop yeah?
+	if(!length(current_behaviors) && able_to_run)
+		STOP_PROCESSING(SSai_idle, src)
+		// First behavior gets a timer, none else
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), max(world.time - cooldown, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		currently_queued_id = id
+		currently_queued_behavior = behavior
+	// If we queue with a delay lower then anything else (and everything else is delayed) then we can safely queue
+	else if(cooldown < current_queue_time && current_queue_time >= world.time && able_to_run)
+		deltimer(currently_queued_id, SSai_behaviors)
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), max(world.time - cooldown, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		currently_queued_id = id
+		currently_queued_behavior = behavior
+	// Implied, if we're trying to run then we go based off insert order, and we'd always lose anyway
+
+	if(!(behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION))
+		no_planning_sources += 1
+
+	current_behaviors[behavior] = TRUE
 	planned_behaviors[behavior] = TRUE
 	arguments.Cut(1, 2)
 	if(length(arguments))
@@ -362,22 +426,30 @@ multiple modular subtrees with behaviors
 	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/ProcessBehavior(seconds_per_tick, datum/ai_behavior/behavior)
-	last_action_ran = world.time
 	var/list/arguments = list(seconds_per_tick, src)
 	var/list/stored_arguments = behavior_args[behavior.type]
 	if(stored_arguments)
 		arguments += stored_arguments
-	behavior.perform(arglist(arguments))
-	// If we're still a behavior, requeue our timer
-	if(current_behaviors[behavior])
-		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), behavior.get_cooldown(src), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
-		current_behaviors[behavior] = id
+
+	var/process_flags = behavior.perform(arglist(arguments))
+	if(process_flags & AI_BEHAVIOR_DELAY)
+		behavior_cooldowns[behavior.type] = world.time + behavior.get_cooldown(src)
+	if(process_flags & AI_BEHAVIOR_FAILED)
+		arguments[1] = src
+		arguments[2] = FALSE
+		behavior.finish_action(arglist(arguments))
+	else if (process_flags & AI_BEHAVIOR_SUCCEEDED)
+		arguments[1] = src
+		arguments[2] = TRUE
+		behavior.finish_action(arglist(arguments))
+	else
+		decide_on_behavior()
 
 /datum/ai_controller/proc/CancelActions()
 	if(!length(current_behaviors))
 		return
 	// Reverse to avoid constantly rescheduling timers
-	for(var/datum/ai_behavior/current_behavior as anything in reverse_range(current_behaviors.Copy()))
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		var/list/arguments = list(src, FALSE)
 		var/list/stored_arguments = behavior_args[current_behavior.type]
 		if(stored_arguments)
