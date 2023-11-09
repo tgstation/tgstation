@@ -340,6 +340,14 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	name = "Boxed Rebar Crossbow"
+	desc = "Now features instruction manual for making ammo."
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
+	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
+	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
+
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."

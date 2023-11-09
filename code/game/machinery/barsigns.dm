@@ -400,6 +400,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "When it feels like you're stuck in a pit, might as well have a drink."
 	neon_color = "#aa2811"
 
+/datum/barsign/orangejuice
+	name = "Oranges' Juicery"
+	icon_state = "orangejuice"
+	desc = "For those who wish to be optimally tactful to the non-alcoholic population."
+	neon_color = COLOR_ORANGE
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns
