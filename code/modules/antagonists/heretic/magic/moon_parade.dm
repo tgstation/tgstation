@@ -92,7 +92,7 @@
 	for(var/datum/weakref/mob_ref in mobs_hit)
 		var/mob/real_mob = mob_ref.resolve()
 		UnregisterSignal(real_mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
-	mobs.Cut()
+		mobs.Cut()
 	soundloop.stop()
 	return ..()
 
