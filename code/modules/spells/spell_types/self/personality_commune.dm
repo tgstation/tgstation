@@ -2,7 +2,10 @@
 /datum/action/personality_commune
 	name = "Personality Commune"
 	desc = "Sends thoughts to your alternate consciousness."
+	background_icon_state = "bg_spell"
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "telepathy"
+	overlay_icon_state = "bg_spell_border"
 
 	/// Fluff text shown when a message is sent to the pair
 	var/fluff_text = span_boldnotice("You hear an echoing voice in the back of your head...")
