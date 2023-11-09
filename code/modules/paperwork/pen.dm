@@ -299,7 +299,8 @@
 
 /obj/item/pen/sleepy/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
 	. = ..()
-	UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
+	if(istype(proj))
+		UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
 
 /obj/item/pen/sleepy/proc/on_dart_hit(datum/source, atom/movable/firer, atom/target, angle, hit_limb, blocked)
 	SIGNAL_HANDLER
