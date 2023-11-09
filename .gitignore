@@ -234,6 +234,9 @@ Tracy.exe
 # From /tools/define_sanity/check.py - potential output file that we load onto the user's machine that we don't want to have committed.
 define_sanity_output.txt
 
+# From /tools/trait_validity/check.py - potential output file that we load onto the user's machine that we don't want to have committed.
+trait_validity_output.txt
+
 # ezdb
 /db/
 /config/ezdb.txt
