@@ -92,7 +92,7 @@
 #define LOG_CATEGORY_RESET_FILE_MARKER "{\"LOG ENTRY RESET | SEE NEXT FILE\"}"
 
 // Internal categories
-#define LOG_CATEGORY_INTERAL_CATEGORY_NOT_FOUND "internal-category-not-found"
+#define LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND "internal-category-not-found"
 #define LOG_CATEGORY_INTERNAL_ERROR "internal-error"
 
 // Misc categories
