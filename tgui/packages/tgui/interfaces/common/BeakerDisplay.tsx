@@ -17,10 +17,10 @@ export type Beaker = {
 
 export type BeakerProps = {
   beaker: Beaker;
-  replace_contents: BeakerReagent[];
-  title_label: string;
-  allow_eject: BooleanLike;
-  showpH: BooleanLike;
+  replace_contents?: BeakerReagent[];
+  title_label?: string;
+  allow_eject?: BooleanLike;
+  showpH?: BooleanLike;
 };
 
 export const BeakerDisplay = (props: BeakerProps, context) => {
