@@ -1,14 +1,5 @@
-// WARNING: The sections here actually matter in this file as it's tested by CI. Please do not toy with the sections.
-
-// This section is only for macroized trait defines that generate a unique string to serve as either the trait or source.
-/// The item is magically cursed
-#define CURSED_ITEM_TRAIT(item_type) "cursed_item_[item_type]"
-/// A trait given by a specific status effect (not sure why we need both but whatever!)
-#define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
-/// Trait given by mech equipment
-#define TRAIT_MECH_EQUIPMENT(equipment_type) "mech_equipment_[equipment_type]"
-/// Trait applied by element
-#define ELEMENT_TRAIT(source) "element_trait_[source]"
+// This file contains all of the "static" define strings that tie to a trait.
+// WARNING: The sections here actually matter in this file as it's tested by CI. Please do not toy with the sections."
 
 // BEGIN TRAIT DEFINES
 
