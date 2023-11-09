@@ -141,20 +141,23 @@
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
-	unique_reskin = list("Oak" = "pen-fountain-o",
-						"Gold" = "pen-fountain-g",
-						"Rosewood" = "pen-fountain-r",
-						"Black and Silver" = "pen-fountain-b",
-						"Command Blue" = "pen-fountain-cb"
-						)
+	unique_reskin = list(
+		"Oak" = "pen-fountain-o",
+		"Gold" = "pen-fountain-g",
+		"Rosewood" = "pen-fountain-r",
+		"Black and Silver" = "pen-fountain-b",
+		"Command Blue" = "pen-fountain-cb"
+	)
 	embedding = list("embed_chance" = 75)
 	dart_insert_casing_icon_state = "overlay_fountainpen_gold"
 	dart_insert_projectile_icon_state = "overlay_fountainpen_gold_proj"
-	var/list/overlay_reskin = list("Oak" = "overlay_fountainpen_gold",
-								"Gold" = "overlay_fountainpen_gold",
-								"Rosewood" = "overlay_fountainpen_gold",
-								"Black and Silver" = "overlay_fountainpen",
-								"Command Blue" = "overlay_fountainpen_gold")
+	var/list/overlay_reskin = list(
+		"Oak" = "overlay_fountainpen_gold",
+		"Gold" = "overlay_fountainpen_gold",
+		"Rosewood" = "overlay_fountainpen_gold",
+		"Black and Silver" = "overlay_fountainpen",
+		"Command Blue" = "overlay_fountainpen_gold"
+	)
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
@@ -390,7 +393,12 @@
 	SIGNAL_HANDLER
 	playsound(source, 'sound/weapons/saberoff.ogg', 5, TRUE)
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
-	victim.visible_message(span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"), span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from you!"), blind_message = span_warning("You hear an energy blade retract!"), vision_distance = 1)
+	victim.visible_message(
+		message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"),
+		self_message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from you!"),
+		blind_message = span_warning("You hear an energy blade retract!"),
+		vision_distance = 1
+	)
 
 /obj/item/pen/edagger/suicide_act(mob/living/user)
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
