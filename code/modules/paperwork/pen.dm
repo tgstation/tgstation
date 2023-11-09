@@ -362,7 +362,8 @@
 	. = ..()
 	if(istype(dart))
 		UnregisterSignal(dart, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
-	UnregisterSignal(projectile, list(COMSIG_PROJECTILE_FIRE, COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED))
+	if(istype(projectile))
+		UnregisterSignal(projectile, list(COMSIG_PROJECTILE_FIRE, COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED))
 
 /obj/item/pen/edagger/get_dart_var_modifiers(datum/source, list/modifiers)
 	. = ..()
@@ -474,7 +475,8 @@
 
 /obj/item/pen/survival/on_removed_from_dart(datum/source, obj/item/ammo_casing/dart, obj/projectile/proj, mob/user)
 	. = ..()
-	UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
+	if(istype(projectile))
+		UnregisterSignal(proj, COMSIG_PROJECTILE_SELF_ON_HIT)
 
 /obj/item/pen/survival/proc/on_dart_hit(obj/projectile/source, atom/movable/firer, atom/target)
 	var/turf/target_turf = get_turf(target)
