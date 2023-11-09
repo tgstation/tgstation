@@ -320,6 +320,10 @@
 "dI" = (
 /obj/structure/dresser,
 /obj/structure/noticeboard/directional/south,
+/obj/item/dyespray{
+	pixel_x = -3;
+	pixel_y = 13
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -852,6 +856,10 @@
 "jq" = (
 /obj/structure/dresser,
 /obj/structure/noticeboard/directional/north,
+/obj/item/dyespray{
+	pixel_x = -2;
+	pixel_y = 15
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
