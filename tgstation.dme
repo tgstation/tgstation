@@ -1093,6 +1093,7 @@
 #include "code\datums\components\radioactive_emitter.dm"
 #include "code\datums\components\radioactive_exposure.dm"
 #include "code\datums\components\ranged_attacks.dm"
+#include "code\datums\components\ranged_mob_full_auto.dm"
 #include "code\datums\components\reagent_refiller.dm"
 #include "code\datums\components\recharging_attacks.dm"
 #include "code\datums\components\redirect_attack_hand_from_turf.dm"
