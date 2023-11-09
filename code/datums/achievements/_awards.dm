@@ -186,10 +186,11 @@
 	if(!get_unlocked_count.Execute(async = TRUE))
 		qdel(get_unlocked_count)
 		.["value"] = default_value
-		return
+		return .
 	if(get_unlocked_count.NextRow())
 		.["value"] = text2num(get_unlocked_count.item[1])
 	qdel(get_unlocked_count)
+	return .
 
 /datum/award/score/achievements_score/LoadHighScores()
 	var/datum/db_query/get_unlocked_highscore = SSdbcore.NewQuery(
