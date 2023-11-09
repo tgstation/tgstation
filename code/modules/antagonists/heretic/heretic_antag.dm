@@ -66,7 +66,7 @@
 		PATH_VOID = "blue",
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
-		PATH_KNOCK = "yellow",
+		PATH_LOCK = "yellow",
 		PATH_MOON = "blue",
 	)
 
@@ -78,7 +78,7 @@
 		PATH_VOID = COLOR_CYAN,
 		PATH_BLADE = COLOR_SILVER,
 		PATH_COSMIC = COLOR_PURPLE,
-		PATH_KNOCK = COLOR_YELLOW,
+		PATH_LOCK = COLOR_YELLOW,
 		PATH_MOON = COLOR_BLUE_LIGHT,
 	)
 

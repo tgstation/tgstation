@@ -1,12 +1,12 @@
 ///commands the chief can pick from
 GLOBAL_LIST_INIT(mook_commands, list(
-	new /datum/pet_command/point_targetting/attack,
-	new /datum/pet_command/point_targetting/fetch,
+	new /datum/pet_command/point_targeting/attack,
+	new /datum/pet_command/point_targeting/fetch,
 ))
 
 /datum/ai_controller/basic_controller/mook
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite, /turf/closed/mineral/strong),
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 7,
 		BB_STORM_APPROACHING = FALSE,
@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	)
 
 ///check for faction if not a ash walker, otherwise just attack
-/datum/targetting_datum/basic/mook/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+/datum/targeting_strategy/basic/mook/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if(FACTION_ASHWALKER in living_mob.faction)
 		return FALSE
 
@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///bard mook plays nice music for the village
 /datum/ai_controller/basic_controller/mook/bard
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
 		BB_STORM_APPROACHING = FALSE,
 		BB_SONG_LINES = MOOK_SONG,
@@ -264,10 +264,10 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///healer mooks guard the village from intruders and heal the miner mooks when they come home
 /datum/ai_controller/basic_controller/mook/support
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_MAXIMUM_DISTANCE_TO_VILLAGE = 10,
 		BB_STORM_APPROACHING = FALSE,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
 	planning_subtrees = list(
@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///the chief would rather command his mooks to attack people than attack them himself
 /datum/ai_controller/basic_controller/mook/tribal_chief
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/mook,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mook,
 		BB_STORM_APPROACHING = FALSE,
 	)
 	idle_behavior = /datum/idle_behavior/walk_near_target/mook_village
@@ -349,7 +349,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(!locate(/mob/living/basic/mining/mook) in oview(command_distance, controller.pawn))
 		return
 	if(controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targetting/attack)
+		controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_BASIC_MOB_CURRENT_TARGET, /datum/pet_command/point_targeting/attack)
 		return
 
 	var/atom/ore_target = controller.blackboard[BB_ORE_TARGET]
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	if(get_dist(ore_target, living_pawn) <= 1)
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/point_targetting/fetch)
+	controller.queue_behavior(/datum/ai_behavior/issue_commands, BB_ORE_TARGET, /datum/pet_command/point_targeting/fetch)
 
 /datum/ai_behavior/issue_commands
 	action_cooldown = 5 SECONDS
