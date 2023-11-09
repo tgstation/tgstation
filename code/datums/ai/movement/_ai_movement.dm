@@ -24,7 +24,7 @@
 	if(controller.pathing_attempts >= max_pathing_attempts)
 		controller.CancelActions()
 
-///Should the movement be allowed to happen? could_move is if default behavior would allow it to move.
+///Should the movement be allowed to happen?
 /datum/ai_movement/proc/allowed_to_move(datum/move_loop/source)
 	SHOULD_BE_PURE(TRUE)
 
