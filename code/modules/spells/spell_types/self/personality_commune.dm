@@ -17,6 +17,9 @@
 		stack_trace("[type] was created on a target that isn't a /datum/brain_trauma/severe/split_personality, this doesn't work.")
 		qdel(src)
 
+/datum/action/cooldown/spell/personality_commune/get_caster_from_target(atom/target)
+	return target
+
 /datum/action/cooldown/spell/personality_commune/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
