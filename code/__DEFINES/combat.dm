@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //The define for base unarmed miss chance
 #define UNARMED_MISS_CHANCE_BASE 20
-#define UNARMED_MISS_CHANCE_MAX 20
+#define UNARMED_MISS_CHANCE_MAX 80
 
 //Combat object defines
 
