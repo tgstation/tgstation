@@ -573,7 +573,7 @@
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/weapon)
 	//not an item or valid container
-	if(weapon.item_flags & ABSTRACT || !is_reagent_container(weapon))
+	if(!is_reagent_container(weapon))
 		return FALSE
 
 	//an bowl or something that has no reagents
