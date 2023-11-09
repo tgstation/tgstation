@@ -72,7 +72,7 @@ if len(missing_defines):
     for missing_define in missing_defines:
         if not on_github:
             post_error(missing_define)
-            string_list.append(f"{define_name} is defined in {defines_file} but not added to {globalvars_file}!")
+            string_list.append(f"{missing_define} is defined in {defines_file} but not added to {globalvars_file}!")
         else:
             post_error(missing_define)
 
