@@ -1,3 +1,9 @@
+/**
+ * ##lockable_storage
+ * Adds a UI to the object that triggers when you use it in hand (if item) or attack (everything else).
+ * The UI is a lock that, when unlocked, allows you to access the contents inside of it.
+ * When using this, make sure you have icons for `on_update_icon_state`.
+ */
 /datum/component/lockable_storage
 	///Boolean on whether the panel has been hacked open with a screwdriver.
 	var/panel_open = FALSE
@@ -66,10 +72,10 @@
 /**
  * Adds context screentips to the locked item.
  * Arguments:
- * * source - refers to item that will display its screentip
- * * context - refers to, in this case, an item that can be used to hack the storage item open.
- * * held_item - refers to the item in your hand, which is hopefully an ingredient
- * * user - refers to user who will see the screentip when the proper context and tool are there
+ * * source - The item that will display its screentip
+ * * context - The list of context that will be displayed. We add onto this list for it to show up.
+ * * held_item - The item in your hand, which in this case should be a screwdriver or multitool, if necessary.
+ * * user - The user who is going to see the screentips.
  */
 /datum/component/lockable_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
