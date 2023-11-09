@@ -71,7 +71,8 @@
 
 /// Create directional subtypes for a path to simplify mapping.
 
-#define MAPPING_DIRECTIONAL_HELPERS(path, offset) ##path/directional/north {\
+#define MAPPING_DIRECTIONAL_HELPERS(path, offset) \
+##path/directional/north {\
 	dir = NORTH; \
 	MAP_SWITCH(pixel_z, pixel_y) = offset; \
 } \
@@ -86,4 +87,18 @@
 ##path/directional/west {\
 	dir = WEST; \
 	pixel_x = -offset; \
+}
+
+#define MAPPING_DIRECTIONAL_HELPERS_EMPTY(path) \
+##path/directional/north {\
+	dir = NORTH; \
+} \
+##path/directional/south {\
+	dir = SOUTH; \
+} \
+##path/directional/east {\
+	dir = EAST; \
+} \
+##path/directional/west {\
+	dir = WEST; \
 }

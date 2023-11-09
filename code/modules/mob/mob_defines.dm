@@ -7,6 +7,7 @@
  * Has a lot of the creature game world logic, such as health etc
  */
 /mob
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	density = TRUE
 	layer = MOB_LAYER
 	animate_movement = SLIDE_STEPS
@@ -19,9 +20,6 @@
 	// we never want to hide a turf because it's not lit
 	// We can rely on the lighting plane to handle that for us
 	see_in_dark = 1e6
-	// Wallening todo: is this really a good idea?
-	// Is there a better way of handling this?
-	SET_BASE_VISUAL_PIXEL(0, 12)
 	var/shift_to_open_context_menu = TRUE
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed

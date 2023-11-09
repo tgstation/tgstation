@@ -25,6 +25,7 @@ DEFINE_BITFIELD(turret_flags, list(
 ))
 
 /obj/machinery/porta_turret
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "turret"
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "turretCover"

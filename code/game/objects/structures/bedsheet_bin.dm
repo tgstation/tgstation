@@ -37,7 +37,7 @@ LINEN BINS
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
-	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
+	AddElement(/datum/element/bed_tuckable, 0, 12, 0)
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
@@ -67,6 +67,7 @@ LINEN BINS
 		return ..()
 
 	forceMove(get_turf(target))
+	pixel_z = target.pixel_z
 	balloon_alert(user, "covered")
 	coverup(target)
 	add_fingerprint(user)
@@ -88,6 +89,7 @@ LINEN BINS
 	layer = ABOVE_MOB_LAYER
 	pixel_x = 0
 	pixel_y = 0
+	pixel_z = sleeper.pixel_z
 	balloon_alert(sleeper, "covered")
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob

@@ -47,8 +47,8 @@
 /obj/structure/broken_flooring/plating
 	icon_state = "plating"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/singular, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/pile, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/side, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/corner, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/broken_flooring/plating, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/singular)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/pile)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/side)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/corner)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/broken_flooring/plating)

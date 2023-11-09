@@ -1,4 +1,5 @@
 /obj/structure/reagent_dispensers
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "Dispenser"
 	desc = "..."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
@@ -306,6 +307,7 @@
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	anchored = TRUE
 	density = FALSE
 	can_be_tanked = FALSE

@@ -71,6 +71,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/party_poppers = 2))
 
 /obj/machinery/computer/arcade
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"

@@ -59,6 +59,7 @@
 #define EMISSIVE_FLOOR_LAYER 2
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
+#define EMISSIVE_FRILL_LAYER 5
 
 #define RENDER_PLANE_LIGHTING 15
 
@@ -323,3 +324,5 @@
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
 #define MAX_EXPECTED_Z_DEPTH 3
+
+#define WALLENING_OFFSET 12

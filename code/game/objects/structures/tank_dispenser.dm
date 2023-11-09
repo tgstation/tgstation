@@ -1,6 +1,7 @@
 #define TANK_DISPENSER_CAPACITY 10
 
 /obj/structure/tank_dispenser
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "tank dispenser"
 	desc = "A simple yet bulky storage device for gas tanks. Holds up to 10 oxygen tanks and 10 plasma tanks."
 	icon = 'icons/obj/structures.dmi'

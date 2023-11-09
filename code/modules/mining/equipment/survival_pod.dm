@@ -100,7 +100,7 @@
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/windows/pod_thindow.dmi'
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/window/reinforced/survival_pod/spawner)
 
 //Door
 /obj/machinery/door/airlock/survival_pod

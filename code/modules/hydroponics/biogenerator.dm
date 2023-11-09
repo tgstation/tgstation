@@ -5,6 +5,7 @@
 
 
 /obj/machinery/biogenerator
+	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
 	icon = 'icons/obj/machines/biogenerator.dmi'
