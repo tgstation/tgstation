@@ -8,6 +8,7 @@ import { BooleanLike, classes, pureComponentHooks } from 'common/react';
 import { InfernoNode } from 'inferno';
 import { Box, unit } from './Box';
 import { Divider } from './Divider';
+import { Tooltip } from './Tooltip';
 
 type LabeledListProps = {
   children?: any;
@@ -20,19 +21,20 @@ export const LabeledList = (props: LabeledListProps) => {
 
 LabeledList.defaultHooks = pureComponentHooks;
 
-type LabeledListItemProps = {
-  className?: string | BooleanLike;
-  label?: string | InfernoNode | BooleanLike;
-  labelColor?: string | BooleanLike;
-  labelWrap?: boolean;
-  color?: string | BooleanLike;
-  textAlign?: string | BooleanLike;
-  buttons?: InfernoNode;
+type LabeledListItemProps = Partial<{
+  className: string | BooleanLike;
+  label: string | InfernoNode | BooleanLike;
+  labelColor: string | BooleanLike;
+  labelWrap: boolean;
+  color: string | BooleanLike;
+  textAlign: string | BooleanLike;
+  buttons: InfernoNode;
   /** @deprecated */
-  content?: any;
-  children?: InfernoNode;
-  verticalAlign?: string;
-};
+  content: any;
+  children: InfernoNode;
+  verticalAlign: string;
+  tooltip: string;
+}>;
 
 const LabeledListItem = (props: LabeledListItemProps) => {
   const {
@@ -46,20 +48,46 @@ const LabeledListItem = (props: LabeledListItemProps) => {
     content,
     children,
     verticalAlign = 'baseline',
+    tooltip,
   } = props;
+
+  let innerLabel;
+  if (label) {
+    innerLabel = label;
+    if (typeof label === 'string') innerLabel += ':';
+  }
+
+  if (tooltip !== undefined) {
+    innerLabel = (
+      <Tooltip content={tooltip}>
+        <Box
+          as="span"
+          style={{
+            'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
+          }}>
+          {innerLabel}
+        </Box>
+      </Tooltip>
+    );
+  }
+
+  let labelChild = (
+    <Box
+      as="td"
+      color={labelColor}
+      className={classes([
+        'LabeledList__cell',
+        // Kinda flipped because we want nowrap as default. Cleaner CSS this way though.
+        !labelWrap && 'LabeledList__label--nowrap',
+      ])}
+      verticalAlign={verticalAlign}>
+      {innerLabel}
+    </Box>
+  );
+
   return (
     <tr className={classes(['LabeledList__row', className])}>
-      <Box
-        as="td"
-        color={labelColor}
-        className={classes([
-          'LabeledList__cell',
-          // Kinda flipped because we want nowrap as default. Cleaner CSS this way though.
-          !labelWrap && 'LabeledList__label--nowrap',
-        ])}
-        verticalAlign={verticalAlign}>
-        {label ? (typeof label === 'string' ? label + ':' : label) : null}
-      </Box>
+      {labelChild}
       <Box
         as="td"
         color={color}

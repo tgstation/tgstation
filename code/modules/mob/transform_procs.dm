@@ -390,7 +390,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/mushroom))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/shade))
+	if(ispath(MP, /mob/living/basic/shade))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/killer_tomato))
 		return TRUE

@@ -58,7 +58,7 @@
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored/virtual_domain)
 "H" = (
-/mob/living/simple_animal/hostile/megafauna/wendigo/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/wendigo,
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

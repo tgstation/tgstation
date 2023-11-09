@@ -41,6 +41,8 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 
+	grant_actions_by_list(get_innate_actions())
+
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!eat_atom(I, TRUE))
 		return ..()
@@ -70,6 +72,10 @@
 
 	if(ooze_nutrition <= 0)
 		adjustBruteLoss(0.25 * seconds_per_tick)
+
+/// Returns an applicable list of actions to grant to the mob. Will return a list or null.
+/mob/living/simple_animal/hostile/ooze/proc/get_innate_actions()
+	return null
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
 /mob/living/simple_animal/hostile/ooze/proc/adjust_ooze_nutrition(amount)
@@ -106,23 +112,20 @@
 	armour_penetration = 15
 	obj_damage = 20
 	death_message = "collapses into a pile of goo!"
-	///The ability to give yourself a metabolic speed boost which raises heat
-	var/datum/action/cooldown/metabolicboost/boost
 	///The ability to consume mobs
 	var/datum/action/consume/consume
 
 ///Initializes the mobs abilities and gives them to the mob
 /mob/living/simple_animal/hostile/ooze/gelatinous/Initialize(mapload)
 	. = ..()
-	boost = new
-	boost.Grant(src)
 	consume = new
 	consume.Grant(src)
 
-/mob/living/simple_animal/hostile/ooze/gelatinous/Destroy()
-	. = ..()
-	QDEL_NULL(boost)
-	QDEL_NULL(consume)
+/mob/living/simple_animal/hostile/ooze/gelatinous/get_innate_actions()
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/metabolicboost,
+	)
+	return innate_actions
 
 ///If this mob gets resisted by something, its trying to escape consumption.
 /mob/living/simple_animal/hostile/ooze/gelatinous/container_resist_act(mob/living/user)
@@ -285,12 +288,12 @@
 	death_message = "deflates and spills its vital juices!"
 	edible_food_types = MEAT | VEGETABLES
 
-/mob/living/simple_animal/hostile/ooze/grapes/Initialize(mapload)
-	. = ..()
-	var/datum/action/cooldown/globules/glob_shooter = new(src)
-	glob_shooter.Grant(src)
-	var/datum/action/cooldown/gel_cocoon/gel_cocoon = new(src)
-	gel_cocoon.Grant(src)
+/mob/living/simple_animal/hostile/ooze/grapes/get_innate_actions()
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/globules,
+		/datum/action/cooldown/gel_cocoon,
+	)
+	return innate_actions
 
 /mob/living/simple_animal/hostile/ooze/grapes/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

@@ -47,13 +47,13 @@
 	else
 		can_lay_eggs = FALSE
 
-	var/datum/action/cooldown/mob_cooldown/spit_ore/spit = new(src)
-	var/datum/action/cooldown/mob_cooldown/burrow/burrow = new(src)
-	spit.Grant(src)
-	burrow.Grant(src)
-	ai_controller.set_blackboard_key(BB_SPIT_ABILITY, spit)
-	ai_controller.set_blackboard_key(BB_BURROW_ABILITY, burrow)
-	AddElement(/datum/element/wall_smasher)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/spit_ore = BB_SPIT_ABILITY,
+		/datum/action/cooldown/mob_cooldown/burrow = BB_BURROW_ABILITY,
+	)
+	grant_actions_by_list(innate_actions)
+
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
 		/datum/component/appearance_on_aggro,\

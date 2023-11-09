@@ -36,20 +36,15 @@
 	AddElement(/datum/element/effect_trail, /obj/effect/temp_visual/paper_scatter)
 
 /mob/living/basic/paper_wizard/proc/grant_abilities()
-	summon = new(src)
-	summon.Grant(src)
-	ai_controller.set_blackboard_key(BB_WIZARD_SUMMON_MINIONS, summon)
-	mimic = new(src)
-	mimic.Grant(src)
-	ai_controller.set_blackboard_key(BB_WIZARD_MIMICS, mimic)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/spell/conjure/wizard_summon_minions = BB_WIZARD_SUMMON_MINIONS,
+		/datum/action/cooldown/spell/pointed/wizard_mimic = BB_WIZARD_MIMICS,
+	)
+
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/paper_wizard/proc/grant_loot()
 	AddElement(/datum/element/death_drops, dropped_loot)
-
-/mob/living/basic/paper_wizard/Destroy()
-	QDEL_NULL(summon)
-	QDEL_NULL(mimic)
-	return ..()
 
 /datum/ai_controller/basic_controller/paper_wizard
 	blackboard = list(
