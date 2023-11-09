@@ -340,6 +340,14 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	name = "Boxed Rebar Crossbow"
+	desc = "Now features instruction manual for making ammo."
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
+	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
+	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
+
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
@@ -756,13 +764,13 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If all the antag datums are 'fake', disallow induction! No self-antagging.
+	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
 	var/faker
 	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
 		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
 			faker = TRUE
 
-	if(faker) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE

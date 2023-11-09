@@ -46,6 +46,7 @@
 #define MECHA_SNOWFLAKE_ID_AIR_TANK "air_tank_snowflake"
 #define MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC "ballistic_weapon_snowflake"
 #define MECHA_SNOWFLAKE_ID_GENERATOR "generator_snowflake"
+#define MECHA_SNOWFLAKE_ID_CLAW "lawclaw_snowflake"
 
 #define MECHA_AMMO_INCENDIARY "Incendiary bullet"
 #define MECHA_AMMO_BUCKSHOT "Buckshot shell"
