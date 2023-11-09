@@ -508,6 +508,11 @@
 	to_chat(user, span_warning("You can't grind this!"))
 
 /obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
+	if(item.flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to grind [item], but it fades away!"))
+		qdel(item)
+		return
+
 	if(!item.grind(reagents, user))
 		if(isstack(item))
 			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
@@ -519,6 +524,11 @@
 	QDEL_NULL(item)
 
 /obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
+	if(item.flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to juice [item], but it fades away!"))
+		qdel(item)
+		return
+
 	if(!item.juice(reagents, user))
 		to_chat(user, span_notice("You fail to juice [item]."))
 		return
