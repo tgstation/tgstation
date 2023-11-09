@@ -329,3 +329,46 @@
       slimy slimes, instead of getting away with using phasing powers in pipes.
   - bugfix: All vehicles (such as VIMs operated by a mouse or a lizard) will no longer
       be able to phase through containment fields.
+2023-11-09:
+  GPeckman:
+  - balance: Flightpotion wings will no longer make health analyzers list you as nonhuman.
+  KingkumaArt:
+  - rscadd: Enginenering rebar crossbows + tot kit
+  - rscadd: Added a bunch of ammos and crafting junk to make the ammo exist
+  - image: added icond for all the above
+  Melbert:
+  - rscadd: Anomalies, portals, and bluespace rifts will now wibble a bit.
+  SyncIt21:
+  - bugfix: Material market buy buttons greys out correctly and thus prevent you from
+      placing orders that exceeds the available budget.
+  - qol: machines/devices that ask you to pick a reagent name from an input list have
+      their names sorted alphabetically & preserves white space between words making
+      them more readable.
+  - qol: improves performance of plumbing reaction chamber furthur
+  - code_imp: cleaned up code for portable chem mixer & chem dispenser. converted
+      their ui to typescript
+  Toastgoats:
+  - balance: Venus human traps now take 12.5 damage per second instead of 20 while
+      off kudzu.
+  necromanceranne:
+  - rscadd: With the flood of Chi within the Spinward Sector receding, various masters
+      of The Tunnel Arts, colloquially known as 'Maint-fu Masters', have started to
+      refine the basics of their martial techniques. New forms have started to develop
+      within Spacestation 13's hidden maintenance dojos.
+  - rscadd: Someone shoved off-balance makes them vulnerable to more guaranteed unarmed
+      strikes, knockdowns from a successful punch, and more difficult to escape grabs.
+  - rscadd: Grabbing someone (as well as kicking them while they're on the floor)
+      makes them more vulnerable to taking unarmed attack damage, even if they have
+      armor.
+  - balance: Unarmed strikes made with human-equivalent limbs have higher damage floors,
+      meaning you overall do more damage on average while not increasing the overall
+      damage potential. It's more consistent!
+  - refactor: Significantly changed how punching accuracy and knockdowns are calculated.
+  - balance: Golem and mushroom limbs are a lot more effective at punching as a result
+      of these various changes. As they should be.
+  xXPawnStarrXx:
+  - rscadd: Three new plants; Peppercorn, Saltcane and Butterbeans.
+  - rscadd: Soysauce fermentation to soybeans.
+  - rscadd: Saltcane can be dried into a replacement seaweedsheet for sushi.
+  zergspower:
+  - balance: NPC Syndicate Shotgunners range requirement returned

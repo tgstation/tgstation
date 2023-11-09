@@ -1,9 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "With the flood of Chi within the Spinward Sector receding, various masters of The Tunnel Arts, colloquially known as 'Maint-fu Masters', have started to refine the basics of their martial techniques. New forms have started to develop within Spacestation 13's hidden maintenance dojos."
-  - rscadd: "Someone shoved off-balance makes them vulnerable to more guaranteed unarmed strikes, knockdowns from a successful punch, and more difficult to escape grabs."
-  - rscadd: "Grabbing someone (as well as kicking them while they're on the floor) makes them more vulnerable to taking unarmed attack damage, even if they have armor."
-  - balance: "Unarmed strikes made with human-equivalent limbs have higher damage floors, meaning you overall do more damage on average while not increasing the overall damage potential. It's more consistent!"
-  - refactor: "Significantly changed how punching accuracy and knockdowns are calculated."
-  - balance: "Golem and mushroom limbs are a lot more effective at punching as a result of these various changes. As they should be."
