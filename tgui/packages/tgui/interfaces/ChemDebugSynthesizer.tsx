@@ -1,6 +1,6 @@
-import { Beaker } from './ChemDispenser';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, NumberInput, LabeledList, Section } from '../components';
+import { Button, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -12,7 +12,6 @@ type Data = {
 export const ChemDebugSynthesizer = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { amount, purity, beaker } = data;
-  const beakerContents = beaker?.contents || [];
 
   return (
     <Window width={390} height={330}>
@@ -67,37 +66,7 @@ export const ChemDebugSynthesizer = (props, context) => {
               />
             )
           }>
-          {
-            <LabeledList>
-              <LabeledList.Item label="Beaker">
-                {(!!beaker && (
-                  <>
-                    <AnimatedNumber initial={0} value={beaker.currentVolume} />/
-                    {beaker.maxVolume} units
-                  </>
-                )) ||
-                  'No beaker'}
-              </LabeledList.Item>
-              <LabeledList.Item label="Contents">
-                <Box color="label">
-                  {(!beaker && 'N/A') ||
-                    (beakerContents.length === 0 && 'Nothing')}
-                </Box>
-                {beakerContents.map((chemical) => (
-                  <Box key={chemical.name} color="label">
-                    <AnimatedNumber initial={0} value={chemical.volume} /> units
-                    of {chemical.name}
-                  </Box>
-                ))}
-                {beakerContents.length > 0 && (
-                  <Box>
-                    pH:
-                    <AnimatedNumber value={beaker.pH} />
-                  </Box>
-                )}
-              </LabeledList.Item>
-            </LabeledList>
-          }
+          <BeakerDisplay beaker={beaker} showpH />
         </Section>
       </Window.Content>
     </Window>
