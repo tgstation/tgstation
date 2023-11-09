@@ -7,7 +7,7 @@
 /datum/proximity_monitor/advanced/gravity/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, gravity)
 	. = ..()
 	gravity_value = gravity
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/gravity/setup_field_turf(turf/target)
 	. = ..()

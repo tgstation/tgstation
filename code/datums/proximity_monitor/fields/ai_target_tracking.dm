@@ -12,9 +12,26 @@
 	. = ..()
 	src.on_new_turf = on_new_turf
 	src.on_new_movable = on_new_movable
-	RegisterSignal(controller, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, PROC_REF(controller_think))
 	src.behavior_type = behavior_type
-	recalculate_field()
+	RegisterSignal(controller, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, PROC_REF(controller_think))
+	RegisterSignal(controller, COMSIG_AI_CONTROLLER_POSSESSED_PAWN, PROC_REF(pawn_changed))
+	RegisterSignal(controller, AI_CONTROLLER_BEHAVIOR_QUEUED(owning_behavior.type), PROC_REF(behavior_requeued))
+	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_SET(targetting_datum_key), PROC_REF(targeting_datum_changed))
+	RegisterSignal(controller, COMSIG_AI_BLACKBOARD_KEY_CLEARED(targetting_datum_key), PROC_REF(targeting_datum_cleared))
+	recalculate_field(full_recalc = TRUE)
+
+/datum/proximity_monitor/advanced/ai_target_tracking/Destroy()
+	. = ..()
+	owning_behavior = null
+	controller = null
+	target_key = null
+	targetting_datum_key = null
+	hiding_location_key = null
+	filter = null
+
+/datum/proximity_monitor/advanced/ai_target_tracking/recalculate_field(full_recalc = FALSE)
+	. = ..()
+	first_build = FALSE
 
 /datum/proximity_monitor/advanced/ai_target_tracking/setup_field_turf(turf/target)
 	. = ..()

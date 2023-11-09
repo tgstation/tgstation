@@ -82,7 +82,7 @@
 	src.immune = immune
 	src.antimagic_flags = antimagic_flags
 	src.channelled = channelled
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
