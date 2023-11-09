@@ -21,7 +21,7 @@ def blue(text):
 # simple way to check if we're running on github actions, or on a local machine
 on_github = os.getenv("GITHUB_ACTIONS") == "true"
 
-defines_file = "code/__DEFINES/trait_declarations.dm"
+defines_file = "code/__DEFINES/traits/declarations.dm"
 globalvars_file = "code/_globalvars/traits.dm"
 
 def post_error(define_name):
