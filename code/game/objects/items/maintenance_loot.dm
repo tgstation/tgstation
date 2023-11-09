@@ -25,7 +25,7 @@
 //Add lead material to this once implemented.
 /obj/item/stock_parts/cell/lead
 	name = "lead-acid battery"
-	desc = "A type of primitive battery. It is quite large and feels unexpectedly heavy."
+	desc = "A primitive battery. It is quite large and feels unexpectedly heavy."
 	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "lead_battery"
 	throwforce = 10
