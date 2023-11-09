@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "removed order history, import & export value from cargo & economy subsystems. Allow supply packs to be properly deleted. In general memory savings"

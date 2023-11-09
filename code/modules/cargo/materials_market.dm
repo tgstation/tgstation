@@ -293,7 +293,7 @@
 				cost = cost, \
 				contains = things_to_order, \
 			)
-			var/datum/supply_order/materials/new_order = new(
+			var/datum/supply_order/disposable/materials/new_order = new(
 				pack = mineral_pack,
 				orderer = living_user,
 				orderer_rank = GALATIC_MATERIAL_ORDER,
