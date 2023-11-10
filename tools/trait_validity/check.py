@@ -4,7 +4,6 @@ import sys
 
 define_regex = re.compile(r"(\s+)?#define\s?([A-Z0-9_]+)\(?(.+)\)?")
 
-output_file_name = "trait_validity_output.txt"
 how_to_fix_message = "Please ensure that all traits in the code/__DEFINES/trait_declarations.dm file are added in the code/_globalvars/traits.dm file."
 
 def green(text):
@@ -12,9 +11,6 @@ def green(text):
 
 def red(text):
 	return "\033[31m" + str(text) + "\033[0m"
-
-def blue(text):
-	return "\033[34m" + str(text) + "\033[0m"
 
 # simple way to check if we're running on github actions, or on a local machine
 on_github = os.getenv("GITHUB_ACTIONS") == "true"
@@ -29,9 +25,6 @@ def post_error(define_name):
 		print(red(f"- Failure: {define_name} is defined in {defines_file} but not added to {globalvars_file}!"))
 
 number_of_defines = 0
-
-if not on_github:
-	print(blue(f"Running define sanity check outside of Github Actions.\nFor assistance, a '{output_file_name}' file will be generated at the root of your directory if any errors are detected."))
 
 if not os.path.isfile(defines_file):
 	print(red(f"Could not find the defines file '{defines_file}'!"))
@@ -85,18 +78,8 @@ with open(globalvars_file, "r") as file:
 			missing_defines.append(define_name)
 
 if len(missing_defines):
-	string_list = []
 	for missing_define in missing_defines:
-		if not on_github:
-			post_error(missing_define)
-			string_list.append(f"{missing_define} is defined in {defines_file} but not added to {globalvars_file}!")
-		else:
-			post_error(missing_define)
-
-	if len(string_list):
-		with open(output_file_name, "w") as output_file:
-			output_file.write("\n".join(string_list))
-			output_file.write("\n\n" + how_to_fix_message)
+		post_error(missing_define)
 
 	print(red(how_to_fix_message))
 	sys.exit(1)
