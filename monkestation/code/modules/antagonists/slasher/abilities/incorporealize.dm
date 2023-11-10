@@ -2,7 +2,7 @@
 	name = "Incorporealize"
 	desc = "Become incorporeal, capable of moving through walls and being completely invisible, but unable to interact with the world. Can only be used when corporeal and when not in view of any human being."
 	button_icon_state = "incorporealize"
-	cooldown_time = 1 SECONDS
+	cooldown_time = 20 SECONDS
 
 	var/jaunt_type = /obj/effect/dummy/phased_mob
 
