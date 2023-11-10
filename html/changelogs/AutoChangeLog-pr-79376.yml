@@ -1,5 +1,0 @@
-author: "Zxaber, DrDiasyl, Maurukas"
-delete-after: True
-changes:
-  - rscadd: "A new security-focused combat mech, the Paddy, has been added, intended to be particularly helpful for lone sec officers. You will find one in the Security main office, and a replacement can be built with late-game mech research."
-  - bugfix: "Ripley MK-I and MK-II mechs no longer qdel their stored items when destroyed."
