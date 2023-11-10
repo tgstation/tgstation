@@ -226,7 +226,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "IA" = (
 /obj/item/flashlight/glowstick/red{
-	on = 1
+	start_on = 1
 	},
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -271,7 +271,7 @@
 "Qi" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/item/flashlight/glowstick/red{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -305,7 +305,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "Wk" = (
 /obj/item/flashlight/glowstick/red{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)

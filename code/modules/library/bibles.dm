@@ -323,13 +323,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/stone in sword.contents)
 				stone.required_role = null
-				for(var/mob/living/simple_animal/shade/shade in stone)
+				for(var/mob/living/basic/shade/shade in stone)
 					var/datum/antagonist/cult/cultist = shade.mind.has_antag_datum(/datum/antagonist/cult)
 					if(cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()
-					shade.icon_state = "shade_holy"
-					shade.name = "Purified [shade.name]"
+					shade.theme = THEME_HOLY
+					shade.name = "Purified [shade.real_name]"
+					shade.update_appearance(UPDATE_ICON_STATE)
 				stone.release_shades(user)
 				qdel(stone)
 			new /obj/item/nullrod/claymore(get_turf(sword))

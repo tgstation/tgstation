@@ -877,7 +877,7 @@
 /turf/open/floor/eighties,
 /area/awaymission/beach)
 "lb" = (
-/obj/structure/railing/corner/end{
+/obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -1758,7 +1758,7 @@
 	pixel_y = -8;
 	pixel_x = -3
 	},
-/obj/structure/railing/corner/end{
+/obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -2619,7 +2619,7 @@
 	pixel_y = -6;
 	pixel_x = -12
 	},
-/obj/structure/railing/corner/end{
+/obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,

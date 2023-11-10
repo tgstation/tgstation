@@ -26,7 +26,7 @@
 /area/template_noop)
 "ah" = (
 /obj/structure/lattice/catwalk,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/template_noop,
@@ -587,7 +587,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/airless,
@@ -736,7 +736,7 @@
 /area/ruin/space/has_grav)
 "Fr" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/plating/airless,
@@ -941,7 +941,7 @@
 "Nm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
+/mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/airless,
