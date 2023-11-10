@@ -1,7 +1,7 @@
 /atom/movable/screen/fullscreen/lootbox_overlay
 	icon =  'goon/icons/effects/320x320.dmi'
 	icon_state = "lootb0"
-	screen_loc = "CENTER-3, CENTER-3"
+	screen_loc = "CENTER-2, CENTER-2"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	plane = HUD_PLANE
 	show_when_dead = TRUE
@@ -17,6 +17,7 @@
 /atom/movable/screen/fullscreen/lootbox_overlay/item_preview
 	icon_state = "nuthin" // we set this ourselves
 	layer = FULLSCREEN_LAYER + 0.3
+	screen_loc = "CENTER+3:25, CENTER+3"
 	
 /atom/movable/screen/fullscreen/lootbox_overlay/main
 	///have we already opened? prevents spam clicks
@@ -72,6 +73,10 @@
 	var/mob/user = usr
 	user.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
 
+/mob/proc/trigger_lootbox_on_self()
+	src.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
+
 /proc/return_rolled() //global because its easier long term
-	var/obj/item/clothing/head/costume/chicken/snow_unusual/temp = new()
+	var/obj/item/clothing/head/costume/chicken/galaxies_unusual/temp = new()
+	temp.name = "Unusual Galactic Chicken Costume Head"
 	return temp
