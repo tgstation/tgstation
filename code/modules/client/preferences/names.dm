@@ -172,7 +172,7 @@
 		return FALSE
 
 	// If one of the roles is ticked in the antag prefs menu, this option will show.
-	var/static/list/ops_roles = list(ROLE_OPERATIVE, ROLE_LONE_OPERATIVE, ROLE_OPERATIVE_MIDROUND, ROLE_CLOWN_OPERATIVE) //note -- make sure the clown names arent messed with somehow
+	var/static/list/ops_roles = list(ROLE_OPERATIVE, ROLE_LONE_OPERATIVE, ROLE_OPERATIVE_MIDROUND, ROLE_CLOWN_OPERATIVE)
 	if(length(ops_roles & preferences.be_special))
 		return TRUE
 
