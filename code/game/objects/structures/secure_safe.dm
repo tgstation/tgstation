@@ -16,15 +16,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 
 /obj/structure/secure_safe/Initialize(mapload)
 	. = ..()
-	create_storage(
-		max_specific_storage = WEIGHT_CLASS_GIGANTIC,
-		max_total_storage = 14,
-		canthold = list(/obj/item/storage/briefcase/secure),
-	)
-	PopulateContents()
-
 	AddComponent(/datum/component/lockable_storage)
 	find_and_hang_on_wall()
+	PopulateContents()
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)

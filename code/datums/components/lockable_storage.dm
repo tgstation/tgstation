@@ -13,8 +13,6 @@
 	///The code that will open this safe, set by usually players.
 	///Importantly, can be null if there's no password.
 	var/lock_code
-	///Does this lock have a code set?
-	var/lock_set
 	///Boolean on whether the storage can be hacked open with a multitool.
 	var/can_hack_open
 
@@ -29,9 +27,15 @@
 	var/atom/atom_parent = parent
 	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
+	if(!atom_parent.atom_storage)
+		atom_parent.create_storage(
+			max_specific_storage = WEIGHT_CLASS_GIGANTIC,
+			max_total_storage = 14,
+			canthold = list(/obj/item/storage/briefcase/secure),
+		)
+
+
 	src.lock_code = lock_code
-	if(lock_code)
-		lock_set = TRUE
 	src.can_hack_open = can_hack_open
 
 	atom_parent.update_appearance()
@@ -132,7 +136,7 @@
 	if(!tool.use_tool(parent, user, 40 SECONDS))
 		return
 	source.balloon_alert(user, "hacked")
-	lock_set = FALSE
+	lock_code = null
 
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)
@@ -155,8 +159,7 @@
 	var/atom/source = parent
 	data["input_code"] = numeric_input || "*****"
 	data["locked"] = source.atom_storage.locked
-	data["lock_code"] = lock_code
-	data["lock_set"] = lock_set
+	data["lock_code"] = !!lock_code //we just need to know if it has one.
 	return data
 
 /datum/component/lockable_storage/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -183,7 +186,6 @@
 				if(length(numeric_input) != 5)
 					return TRUE
 				lock_code = numeric_input
-				lock_set = TRUE
 				numeric_input = ""
 				return TRUE
 			//unlocking the current code.

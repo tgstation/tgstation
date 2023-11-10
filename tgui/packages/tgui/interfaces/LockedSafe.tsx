@@ -8,11 +8,12 @@ type Data = {
   input_code: string;
   locked: BooleanLike;
   lock_set: BooleanLike;
+  lock_code: BooleanLike;
 };
 
 export const LockedSafe = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { input_code, locked, lock_set } = data;
+  const { input_code, locked, lock_code } = data;
   return (
     <Window width={300} height={400} theme="ntos">
       <Window.Content>
@@ -21,8 +22,8 @@ export const LockedSafe = (props, context) => {
             {input_code}
           </Box>
           <Box className="NuclearBomb__displayBox">
-            {!lock_set && 'No password set.'}
-            {!!lock_set && (!locked ? 'Unlocked' : 'Locked')}
+            {!lock_code && 'No password set.'}
+            {!!lock_code && (!locked ? 'Unlocked' : 'Locked')}
           </Box>
           <Flex ml="3px">
             <Flex.Item>
