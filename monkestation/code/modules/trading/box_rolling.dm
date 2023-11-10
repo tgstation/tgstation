@@ -1,0 +1,71 @@
+/atom/movable/screen/fullscreen/lootbox_overlay
+	icon =  'goon/icons/effects/320x320.dmi'
+	icon_state = "lootb0"
+	screen_loc = "CENTER-3, CENTER-3"
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	plane = HUD_PLANE
+	show_when_dead = TRUE
+
+/atom/movable/screen/fullscreen/lootbox_overlay/sparks
+	icon_state = "sparks"
+	layer = FULLSCREEN_LAYER + 0.2
+
+/atom/movable/screen/fullscreen/lootbox_overlay/background
+	icon_state = "background"
+	layer = FULLSCREEN_LAYER + 0.1
+
+/atom/movable/screen/fullscreen/lootbox_overlay/item_preview
+	icon_state = "nuthin" // we set this ourselves
+	layer = FULLSCREEN_LAYER + 0.3
+	
+/atom/movable/screen/fullscreen/lootbox_overlay/main
+	///have we already opened? prevents spam clicks
+	var/opened = FALSE
+
+/atom/movable/screen/fullscreen/lootbox_overlay/main/Click(location, control, params)
+	if(opened)
+		return
+	opened = TRUE
+	playsound(usr, pick('goon/sounds/misc/openlootcrate.ogg', 'goon/sounds/misc/openlootcrate2.ogg'), 100, 0)
+	icon_state = "lootb2"
+	flick("lootb1", src)
+	addtimer(CALLBACK(src, PROC_REF(after_open), usr), 2 SECONDS)
+
+/atom/movable/screen/fullscreen/lootbox_overlay/main/proc/after_open(mob/user)
+	if(!user) // uh
+		return
+	
+	//now we add
+	user.overlay_fullscreen("lb_spark", /atom/movable/screen/fullscreen/lootbox_overlay/sparks)
+	user.overlay_fullscreen("lb_bg", /atom/movable/screen/fullscreen/lootbox_overlay/background)
+	var/atom/movable/screen/fullscreen/lootbox_overlay/item_preview/preview = user.overlay_fullscreen("lb_preview", /atom/movable/screen/fullscreen/lootbox_overlay/item_preview)
+
+	var/obj/item/rolled_item = return_rolled()
+	preview.icon_state = rolled_item.icon_state
+	preview.icon =  rolled_item.icon
+	preview.scale_to(10, 10)
+	preview.update_for_view(user.client?.view)
+	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
+	if(isliving(user))
+		if(!user.put_in_hands(rolled_item))
+			rolled_item.forceMove(get_turf(user))
+
+	addtimer(CALLBACK(src, PROC_REF(cleanup), user), 3 SECONDS)
+
+/atom/movable/screen/fullscreen/lootbox_overlay/main/proc/cleanup(mob/user)
+	if(!user)
+		return
+	user.clear_fullscreen("lb_spark", 1 SECONDS)
+	user.clear_fullscreen("lb_bg", 1 SECONDS)
+	user.clear_fullscreen("lb_preview", 1 SECONDS)
+	user.clear_fullscreen("lb_main", 1 SECONDS)
+	qdel(src)
+
+
+/proc/testing_trigger_lootbox()
+	var/mob/user = usr
+	user.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
+
+/proc/return_rolled() //global because its easier long term
+	var/obj/item/clothing/head/costume/chicken/snow_unusual/temp = new()
+	return temp
