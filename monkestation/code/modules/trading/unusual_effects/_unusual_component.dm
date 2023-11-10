@@ -1,7 +1,7 @@
 /datum/component/unusual_handler
 	var/atom/source_object
 	///the description added to the unusual.
-	var/unusual_description = ""
+	var/unusual_description = "Not Implemented Yet Teehee"
 	///the round the unusual was created at
 	var/round_id = 0
 	///the particle spewer component path
@@ -23,6 +23,17 @@
 	source_object = parent
 
 	source_object.AddComponent(particle_path)
+	
+	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
+
+/datum/component/unusual_handler/Destroy(force, silent)
+	. = ..()
+	UnregisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC)
+/datum/component/unusual_handler/proc/append_unusual(atom/source, updates)
+	SIGNAL_HANDLER
+	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
+	source_object.desc += span_notice("\n Unboxed on: [round_id]")
+	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
 
 /datum/component/unusual_handler/proc/setup_from_list(list/parsed_results)
 	return
