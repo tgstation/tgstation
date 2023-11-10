@@ -50,16 +50,16 @@
 		to_chat(owner, span_warning("You can only suck the souls of humans"))
 		return
 
-	if(human_target.stat != DEAD) // are they trying to suck the person in anasthesia?
-		to_chat(owner, span_notice("This human is not dead. You can't steal their soul."))
+	if(!human_target.mind) // are they trying to suck a monkey?
+		to_chat(owner, span_warning("This target doesn't seem to have a soul to suck."))
 		return
 
 	if(human_target.soul_sucked) // are they trying to suck the person being revived 5 times?
 		to_chat(owner, span_warning("Their soul has already been sucked."))
 		return
 
-	if(!human_target.mind) // are they trying to suck a monkey?
-		to_chat(owner, span_warning("This target doesn't seem to have a soul to suck."))
+	if(human_target.stat != DEAD) // are they trying to suck the person in anasthesia?
+		to_chat(owner, span_notice("This human is not dead. You can't steal their soul."))
 		return
 
 	if(quick_eater) // you cant speedrun sucking, take it slow
