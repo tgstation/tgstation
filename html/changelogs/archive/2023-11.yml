@@ -372,3 +372,38 @@
   - rscadd: Saltcane can be dried into a replacement seaweedsheet for sushi.
   zergspower:
   - balance: NPC Syndicate Shotgunners range requirement returned
+2023-11-10:
+  Jacquerel:
+  - qol: Adds the capability for some player-controlled mobs with ranged attacks to
+      repeatedly fire their natural weapons by holding down the mouse button.
+  Profakos:
+  - spellcheck: Renamed Knock to Locks, and changed most of the flavor text of knowledge
+      gain, and renamed some items and knowledges from the path.
+  SyncIt21:
+  - bugfix: Examining circuit boards now displays their detailed names(tier included)
+      correctly if required.
+  - bugfix: plumbing factories should not rarely/randomly brick at volumes like 0.9999(when
+      in fact it should have been 1)
+  - code_imp: removed order history, import & export value from cargo & economy subsystems.
+      Allow supply packs to be properly deleted. In general memory savings
+  Thunder12345:
+  - rscadd: New Oranges' Juicery bar sign for the OJ connoisseurs.
+  TwistedSilicon:
+  - bugfix: Cryo cells now use their direction to orient their initial connection
+      instead of defaulting to South.
+  Zxaber, DrDiasyl, Maurukas:
+  - rscadd: A new security-focused combat mech, the Paddy, has been added, intended
+      to be particularly helpful for lone sec officers. You will find one in the Security
+      main office, and a replacement can be built with late-game mech research.
+  - bugfix: Ripley MK-I and MK-II mechs no longer qdel their stored items when destroyed.
+  san7890:
+  - bugfix: Nanotrasen has clarified an issue with their manual publishers, and these
+      guides should now contain actual user-pertinent content.
+  starrm4nn:
+  - qol: Bandolier can quick gather items now.
+  - balance: Bandolier capacity increased to 24 and can carry .357 ammo now.
+  timothymtorres:
+  - bugfix: Fix holodeck items from being juiced or grinded with a biogenerator or
+      pestle and mortar
+  - rscdel: Removed duplicate shutter from HoP office in birdboat, air alarm in northstar
+      maint, and portable air pump in northstar maint.
