@@ -32,9 +32,9 @@ export const SmartVend = (props, context) => {
               </Button>
             )
           }>
-          {(contents.length === 0 && (
+          {contents.length === 0 ? (
             <NoticeBox>Unfortunately, this {data.name} is empty.</NoticeBox>
-          )) || (
+          ) : (
             <Table>
               <Table.Row header>
                 <Table.Cell>Item</Table.Cell>
