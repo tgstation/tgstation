@@ -4232,14 +4232,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "aCM" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 5
-	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "aCR" = (
@@ -13075,7 +13075,12 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 1
 	},
-/turf/closed/wall,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
 "dvc" = (
 /obj/effect/decal/cleanable/dirt,
@@ -14671,6 +14676,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
+"dXH" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/station/cargo/sorting)
 "dXM" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -20682,7 +20691,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
@@ -25493,6 +25501,13 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/monastery)
+"ifI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit)
 "ifN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30017,6 +30032,10 @@
 	id = "cargoupperbelt"
 	},
 /obj/structure/plasticflaps,
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "jKg" = (
@@ -36492,7 +36511,8 @@
 /obj/structure/disposalpipe/sorting/wrap/flip{
 	dir = 1
 	},
-/turf/closed/wall,
+/obj/structure/falsewall,
+/turf/open/floor/plating,
 /area/station/cargo/sorting)
 "lTc" = (
 /obj/effect/turf_decal/stripes/line,
@@ -62260,6 +62280,12 @@
 	},
 /turf/open/space/openspace,
 /area/station/solars/port)
+"uXN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating,
+/area/station/cargo/sorting)
 "uYa" = (
 /obj/machinery/skill_station,
 /turf/open/floor/iron/grimy,
@@ -185280,8 +185306,8 @@ skX
 fpU
 fpU
 jKb
-fpU
-eos
+dXH
+uXN
 lSQ
 duO
 goC
@@ -185541,7 +185567,7 @@ uno
 uno
 uno
 lCy
-vPB
+ifI
 uCO
 aDK
 bMb
