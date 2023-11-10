@@ -165,6 +165,10 @@
 	name = "\improper Ripley MK-II wreckage"
 	icon_state = "ripleymkii-broken"
 
+/obj/structure/mecha_wreckage/ripley/paddy
+	name = "\improper Paddy wreckage"
+	icon_state = "paddy-broken"
+
 /obj/structure/mecha_wreckage/clarke
 	name = "\improper Clarke wreckage"
 	icon_state = "clarke-broken"

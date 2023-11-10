@@ -118,7 +118,7 @@
  * # Pet Command: Attack
  * Tells a pet to chase and bite the next thing you point at
  */
-/datum/pet_command/point_targetting/attack
+/datum/pet_command/point_targeting/attack
 	command_name = "Attack"
 	command_desc = "Command your pet to attack things that you point out to it."
 	radial_icon = 'icons/effects/effects.dmi'
@@ -133,13 +133,13 @@
 	var/attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Refuse to target things we can't target, chiefly other friends
-/datum/pet_command/point_targetting/attack/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/point_targeting/attack/set_command_target(mob/living/parent, atom/target)
 	if (!target)
 		return
 	var/mob/living/living_parent = parent
 	if (!living_parent.ai_controller)
 		return
-	var/datum/targetting_datum/targeter = living_parent.ai_controller.blackboard[targetting_datum_key]
+	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(living_parent.ai_controller.blackboard[targeting_strategy_key])
 	if (!targeter)
 		return
 	if (!targeter.can_attack(living_parent, target))
@@ -147,21 +147,21 @@
 		return
 	return ..()
 
-/// Display feedback about not targetting something
-/datum/pet_command/point_targetting/attack/proc/refuse_target(mob/living/parent, atom/target)
+/// Display feedback about not targeting something
+/datum/pet_command/point_targeting/attack/proc/refuse_target(mob/living/parent, atom/target)
 	var/mob/living/living_parent = parent
 	living_parent.balloon_alert_to_viewers("[refuse_reaction]")
 	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
 
-/datum/pet_command/point_targetting/attack/execute_action(datum/ai_controller/controller)
-	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targetting_datum_key)
+/datum/pet_command/point_targeting/attack/execute_action(datum/ai_controller/controller)
+	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targeting_strategy_key)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
  * # Pet Command: Targetted Ability
  * Tells a pet to use some kind of ability on the next thing you point at
  */
-/datum/pet_command/point_targetting/use_ability
+/datum/pet_command/point_targeting/use_ability
 	command_name = "Use ability"
 	command_desc = "Command your pet to use one of its special skills on something that you point out to it."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
@@ -172,7 +172,7 @@
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
 
-/datum/pet_command/point_targetting/use_ability/execute_action(datum/ai_controller/controller)
+/datum/pet_command/point_targeting/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
 		return
 	var/datum/action/cooldown/using_action = controller.blackboard[pet_ability_key]
@@ -207,7 +207,7 @@
 	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT])
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
-	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETTING_DATUM)
+	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETING_STRATEGY)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim)

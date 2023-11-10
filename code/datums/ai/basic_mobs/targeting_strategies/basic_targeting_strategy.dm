@@ -1,18 +1,19 @@
-///Datum for basic mobs to define what they can attack.
-/datum/targetting_datum
+///Datum for basic mobs to define what they can attack.GET_TARGETING_STRATEGY\((/[^,]*)\),
+///Global, just like ai_behaviors
+/datum/targeting_strategy
 
 ///Returns true or false depending on if the target can be attacked by the mob
-/datum/targetting_datum/proc/can_attack(mob/living/living_mob, atom/target, vision_range)
+/datum/targeting_strategy/proc/can_attack(mob/living/living_mob, atom/target, vision_range)
 	return
 
 ///Returns something the target might be hiding inside of
-/datum/targetting_datum/proc/find_hidden_mobs(mob/living/living_mob, atom/target)
+/datum/targeting_strategy/proc/find_hidden_mobs(mob/living/living_mob, atom/target)
 	var/atom/target_hiding_location
 	if(istype(target.loc, /obj/structure/closet) || istype(target.loc, /obj/machinery/disposal) || istype(target.loc, /obj/machinery/sleeper))
 		target_hiding_location = target.loc
 	return target_hiding_location
 
-/datum/targetting_datum/basic
+/datum/targeting_strategy/basic
 	/// When we do our basic faction check, do we look for exact faction matches?
 	var/check_factions_exactly = FALSE
 	/// Whether we care for seeing the target or not
@@ -22,7 +23,7 @@
 	/// If this blackboard key is TRUE, makes us only target wounded mobs
 	var/target_wounded_key
 
-/datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/basic_controller/our_controller = living_mob.ai_controller
 
 	if(isnull(our_controller))
@@ -82,29 +83,29 @@
 	return FALSE
 
 /// Returns true if the mob and target share factions
-/datum/targetting_datum/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+/datum/targeting_strategy/basic/proc/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (controller.blackboard[BB_ALWAYS_IGNORE_FACTION] || controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION])
 		return FALSE
 	return living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly)
 
 /// Subtype more forgiving for items.
 /// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
-/datum/targetting_datum/basic/allow_items
+/datum/targeting_strategy/basic/allow_items
 
-/datum/targetting_datum/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if(isitem(the_target))
 		// trust fall exercise
 		return TRUE
 
 /// Subtype which searches for mobs of a size relative to ours
-/datum/targetting_datum/basic/of_size
+/datum/targeting_strategy/basic/of_size
 	/// If true, we will return mobs which are smaller than us. If false, larger.
 	var/find_smaller = TRUE
 	/// If true, we will return mobs which are the same size as us.
 	var/inclusive = TRUE
 
-/datum/targetting_datum/basic/of_size/can_attack(mob/living/owner, atom/target, vision_range)
+/datum/targeting_strategy/basic/of_size/can_attack(mob/living/owner, atom/target, vision_range)
 	if(!isliving(target))
 		return FALSE
 	. = ..()
@@ -119,14 +120,14 @@
 	return !find_smaller
 
 // This is just using the default values but the subtype makes it clearer
-/datum/targetting_datum/basic/of_size/ours_or_smaller
+/datum/targeting_strategy/basic/of_size/ours_or_smaller
 
-/datum/targetting_datum/basic/of_size/larger
+/datum/targeting_strategy/basic/of_size/larger
 	find_smaller = FALSE
 	inclusive = FALSE
 
 /// Makes the mob only attack their own faction. Useful mostly if their attacks do something helpful (e.g. healing touch).
-/datum/targetting_datum/basic/same_faction
+/datum/targeting_strategy/basic/same_faction
 
-/datum/targetting_datum/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
+/datum/targeting_strategy/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
 	return !..() // inverts logic to ONLY target mobs that share a faction
