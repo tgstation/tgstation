@@ -39,6 +39,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, volume = 0.2) // they're small but you can hear 'em
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/spiderling_web)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 
 	// keep in mind we have infinite range (the entire pipenet is our playground, it's just a matter of random choice as to where we end up) so lower and upper both have their gives and takes.
 	// but, also remember the more time we aren't in a vent, the more susceptible we are to dying to anything and everything.

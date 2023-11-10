@@ -66,7 +66,7 @@
 		deltimer(regeneration_start_timer)
 
 /// When you take damage, reset the cooldown and start processing
-/datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype)
+/datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 
 	if (damagetype in ignore_damage_types)

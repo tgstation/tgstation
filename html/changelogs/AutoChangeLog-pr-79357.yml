@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - code_imp: "mod reskins now properly shows their icon when skins loaded from different .dmi"

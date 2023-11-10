@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "The fire visual on mobs should no longer persist after the fire has been extinguished."

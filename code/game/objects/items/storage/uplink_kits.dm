@@ -610,7 +610,16 @@
 	new /obj/item/storage/belt/grenade/full(src)
 	if(prob(1))
 		new /obj/item/clothing/head/hats/hos/shako(src)
-		new /obj/item/mod/module/hat_stabilizer(src)
+
+/obj/item/storage/box/syndie_kit/core_gear
+	name = "core equipment box"
+	desc = "Contains all the necessary gear for success for any nuclear operative unsure of what is needed for success in the field. Everything here WILL help you."
+
+/obj/item/storage/box/syndie_kit/core_gear/PopulateContents()
+	new /obj/item/implanter/freedom (src)
+	new /obj/item/card/emag/doorjack (src)
+	new /obj/item/reagent_containers/hypospray/medipen/stimulants (src)
+	new /obj/item/grenade/c4 (src)
 
 /// Surplus Ammo Box
 

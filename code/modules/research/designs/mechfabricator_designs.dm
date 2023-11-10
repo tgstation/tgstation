@@ -1183,7 +1183,7 @@
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
 	)
-	
+
 /datum/design/borg_upgrade_service_apparatus
 	name = "Service Apparatus"
 	id = "borg_upgrade_service_apparatus"

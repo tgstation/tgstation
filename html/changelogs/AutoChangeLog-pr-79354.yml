@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Clicking on an adjacent dense object (or mob) with Spray Cleaner will now spritz it rather than doing nothing. This means you can use Spray Cleaner to clean bloodied windows, as the janitor gods intended. It also means you can fill a spray bottle with Napalm, I guess."
+  - refactor: "Any cleaning object can now clean a microwave."

@@ -94,6 +94,9 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	if(client)
 		return
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD) //don't go out of our way to fire our disintegrating attacks at corpses
+		return
 
 	var/easy_attack = prob(80 - enraged * 40)
 	chosen_attack = rand(1, 3)

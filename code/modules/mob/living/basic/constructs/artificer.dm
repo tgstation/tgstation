@@ -43,6 +43,7 @@
 /mob/living/basic/construct/artificer/hostile
 	ai_controller = /datum/ai_controller/basic_controller/artificer
 	smashes_walls = FALSE
+	melee_attack_cooldown = 2 SECONDS
 
 // Alternate artificer themes
 /mob/living/basic/construct/artificer/angelic

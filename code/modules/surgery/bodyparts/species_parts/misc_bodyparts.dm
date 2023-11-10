@@ -558,3 +558,45 @@
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
 	unarmed_stun_threshold = 11
+
+///flesh
+
+/obj/item/bodypart/arm/left/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+
+/obj/item/bodypart/arm/right/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+
+/obj/item/bodypart/leg/left/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/left/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)
+
+/obj/item/bodypart/leg/right/flesh
+	limb_id = BODYPART_ID_MEAT
+	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/leg/right/flesh/Initialize(mapload, dont_spawn_flesh = FALSE)
+	. = ..()
+	if(!dont_spawn_flesh)
+		new /mob/living/basic/living_limb_flesh(src, src)
+	ADD_TRAIT(src, TRAIT_IGNORED_BY_LIVING_FLESH, BODYPART_TRAIT)

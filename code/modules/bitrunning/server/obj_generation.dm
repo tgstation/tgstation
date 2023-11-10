@@ -8,14 +8,20 @@
 	to_wear.belt = /obj/item/bitrunning_host_monitor
 	to_wear.glasses = null
 	to_wear.gloves = null
-	to_wear.l_hand = null
 	to_wear.l_pocket = null
-	to_wear.r_hand = null
 	to_wear.r_pocket = null
 	to_wear.suit = null
 	to_wear.suit_store = null
 
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
+
+	var/obj/item/clothing/under/jumpsuit = avatar.w_uniform
+	if(istype(jumpsuit))
+		jumpsuit.set_armor(/datum/armor/clothing_under)
+
+	var/obj/item/clothing/head/hat = avatar.get_clothing_on_part(HEAD)
+	if(istype(hat))
+		hat.set_armor(null)
 
 	var/thing = avatar.get_active_held_item()
 	if(!isnull(thing))

@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes:
+  - bugfix: "Obsessed's moodlets (Both positive and negative) go away when the trauma is cured or the antag status is removed."

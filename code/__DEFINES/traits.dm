@@ -928,6 +928,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
+///It comes from a fish case. Relevant for bounties so far.
+#define TRAIT_FISH_FROM_CASE "fish_from_case"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1334,9 +1336,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
 
+///Trait given to limb by /mob/living/basic/living_limb_flesh
+#define TRAIT_IGNORED_BY_LIVING_FLESH "livingflesh_ignored"
+
 /// Trait given while using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET "wing_buffet"
 /// Trait given while tired after using /datum/action/cooldown/mob_cooldown/wing_buffet
 #define TRAIT_WING_BUFFET_TIRED "wing_buffet_tired"
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
+
+/// Trait given to mobs that we do not want to mindswap
+#define TRAIT_NO_MINDSWAP "no_mindswap"

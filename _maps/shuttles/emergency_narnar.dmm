@@ -166,7 +166,7 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "H" = (
-/mob/living/simple_animal/hostile/construct/wraith,
+/mob/living/basic/construct/wraith,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "I" = (

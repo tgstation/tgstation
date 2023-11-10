@@ -222,6 +222,13 @@
 	nutriment_factor = 10
 	default_container = /obj/item/reagent_containers/condiment/olive_oil
 
+/datum/reagent/consumable/nutriment/fat/oil/corn
+	name = "Corn Oil"
+	description = "An oil derived from various types of corn."
+	color = "#302000" // rgb: 48, 32, 0
+	taste_description = "slime"
+	nutriment_factor = 5 //it's a very cheap oil
+
 /datum/reagent/consumable/nutriment/organ_tissue
 	name = "Organ Tissue"
 	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
