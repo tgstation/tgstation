@@ -401,7 +401,7 @@
 	/// base icon state for eye overlays
 	var/base_eye_state = "eyes_glow_gs"
 	/// Whether or not to match the eye color to the light or use a custom selection
-	var/eye_color_mode = MATCH_LIGHT_COLOR
+	var/eye_color_mode = USE_CUSTOM_COLOR
 	/// The selected color for the light beam itself
 	var/light_color_string = "#ffffff"
 	/// The custom selected eye color for the left eye. Defaults to the mob's natural eye color
@@ -433,7 +433,6 @@
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_recipient)
 	. = ..()
 	deactivate(close_ui = TRUE)
-	set_beam_color(light_color_string)
 	eye.forceMove(eye_recipient)
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
