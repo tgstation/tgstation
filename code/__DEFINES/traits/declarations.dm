@@ -839,7 +839,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
 /// changelings with this trait can no longer talk over the hivemind
-#define TRAIT_TRAIT_CHANGELING_HIVEMIND_MUTE "ling_mute"
+#define TRAIT_CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define TRAIT_HULK "hulk"
 
 /// Isn't attacked harmfully by blob structures
@@ -883,9 +883,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
-
-/// this mob is under the effects of the power chord
-#define TRAIT_POWER_CHORD "power_chord"
 
 // Radiation defines
 
