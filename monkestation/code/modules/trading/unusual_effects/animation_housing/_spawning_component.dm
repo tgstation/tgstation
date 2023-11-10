@@ -42,6 +42,8 @@
 	var/added_y = 0
 	/// do we do random amounts of particle bursts?
 	var/random_bursts = FALSE
+	///should we offset
+	var/offsets = TRUE
 
 /datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0, random_bursts = 0)
 	. = ..()
@@ -101,8 +103,9 @@
 	for(var/i = 0 to burstees)
 		//create and assign particle its stuff
 		var/obj/effect/abstract/particle/spawned = new(get_turf(source_object))
-		spawned.pixel_x = offset_x
-		spawned.pixel_y = offset_y 
+		if(offsets)
+			spawned.pixel_x = offset_x
+			spawned.pixel_y = offset_y 
 		spawned.icon = icon_file  
 		spawned.icon_state = particle_state
 
