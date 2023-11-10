@@ -54,7 +54,7 @@
 /area/lavaland/surface/outdoors)
 "m" = (
 /obj/item/flashlight/lantern{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/wood/lavaland,
 /area/lavaland/surface/outdoors)
@@ -174,7 +174,7 @@
 /area/lavaland/surface/outdoors)
 "S" = (
 /obj/item/flashlight/lantern{
-	on = 1
+	start_on = 1
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

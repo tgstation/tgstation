@@ -96,7 +96,7 @@
 	switch(action)
 		if("signal")
 			if(cooldown_length > 0)
-				if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+				if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SIGNALLER_SEND))
 					balloon_alert(ui.user, "recharging!")
 					return
 				TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, cooldown_length)
@@ -135,7 +135,7 @@
 		return
 	if(!ishuman(user))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SIGNALLER_SEND))
 		balloon_alert(user, "still recharging...")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)

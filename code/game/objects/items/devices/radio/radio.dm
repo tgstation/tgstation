@@ -531,6 +531,7 @@
 	subspace_transmission = TRUE
 	subspace_switchable = TRUE
 	dog_fashion = null
+	canhear_range = 0
 
 /obj/item/radio/borg/resetChannels()
 	. = ..()
