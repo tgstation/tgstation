@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Examining circuit boards now displays their detailed names(tier included) correctly if required."
