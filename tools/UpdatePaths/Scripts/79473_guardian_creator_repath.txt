@@ -1,5 +1,3 @@
-/mob/living/simple_animal/hostile/pirate/@SUBTYPES : /mob/living/basic/trooper/pirate/@SUBTYPES{@OLD}
-
 /obj/item/guardiancreator/choose/wizard : /obj/item/guardian_creator/wizard{@OLD}
 /obj/item/guardiancreator/tech/@SUBTYPES : /obj/item/guardian_creator/tech/@SUBTYPES{@OLD}
 /obj/item/guardiancreator/carp/@SUBTYPES : /obj/item/guardian_creator/carp/@SUBTYPES{@OLD}
