@@ -1,0 +1,4 @@
+author: "KingkumaArt"
+delete-after: True
+changes:
+  - bugfix: "fixed engi crossbow being able to be used onehanded + ability to craft with sci inducers"

@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - image: "Adds yet another bar sign, this one mining themed"
