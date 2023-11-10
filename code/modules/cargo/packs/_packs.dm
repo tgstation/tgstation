@@ -127,9 +127,10 @@
 	. = ..()
 	//Remove our material sheets from SSstock_market's materials_quantity equal to the quantity within the crate.
 	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
-		if(!istype(possible_stack))
+		if(!ispath(possible_stack, /obj/item/stack/sheet))
 			continue
 		if(possible_stack.material_type)
 			if(!SSstock_market.materials_quantity[possible_stack.material_type])
 				continue
 			SSstock_market.materials_quantity[possible_stack.material_type] -= possible_stack.amount
+			SSstock_market.materials_prices[possible_stack.material_type] += round((SSstock_market.materials_prices[possible_stack.material_type]) * (possible_stack.amount / (SSstock_market.materials_quantity[possible_stack.material_type] - possible_stack.amount)))

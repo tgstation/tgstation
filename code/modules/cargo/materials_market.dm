@@ -105,45 +105,6 @@
 		ui = new(user, src, "MatMarket", name)
 		ui.open()
 
-/obj/machinery/materials_market/ui_data(mob/user)
-	var/data = list()
-	var/material_data
-	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
-		var/trend_string = ""
-		if(SSstock_market.materials_trends[traded_mat] == 0)
-			trend_string = "neutral"
-		else if(SSstock_market.materials_trends[traded_mat] == 1)
-			trend_string = "up"
-		else if(SSstock_market.materials_trends[traded_mat] == -1)
-			trend_string = "down"
-		var/color_string = ""
-		if (initial(traded_mat.greyscale_colors))
-			color_string = splicetext(initial(traded_mat.greyscale_colors), 7, length(initial(traded_mat.greyscale_colors)), "") //slice it to a standard 6 char hex
-		else if(initial(traded_mat.color))
-			color_string = initial(traded_mat.color)
-
-		var/sheet_running_total = 0
-		// Get counts for every material in all open orders
-		for(var/datum/supply_order/order in SSshuttle.shopping_list)
-			// Must be a Galactic Materials Market order and payed by the null account(if ordered via cargo budget) or by correct user for private purchase
-			if(order.orderer_rank == "Galactic Materials Market" && ( \
-				(!ordering_private && order.paying_account == null) || \
-				(ordering_private && order.paying_account != null && order.orderer == user) \
-			))
-				for(var/obj/item/stack/sheet/nu_sheet as anything in order.pack.contains)
-					if(nu_sheet.material_type == traded_mat)
-						sheet_running_total += order.pack.contains[nu_sheet]
-
-		material_data += list(list(
-			"name" = initial(traded_mat.name),
-			"price" = SSstock_market.materials_prices[traded_mat],
-			"quantity" = SSstock_market.materials_quantity[traded_mat],
-			"trend" = trend_string,
-			"color" = color_string,
-			"ordered" = sheet_running_total
-			))
-
-
 /obj/machinery/materials_market/ui_static_data(mob/user)
 	. = list()
 	.["CARGO_CRATE_VALUE"] = CARGO_CRATE_VALUE
@@ -258,21 +219,6 @@
 
 	switch(action)
 		if("buy")
-			//if multiple users open the UI some of them may not have the required access so we recheck
-			var/is_ordering_private = ordering_private
-			if(!(ACCESS_CARGO in used_id_card.GetAccess())) //no cargo access then force private purchase
-				is_ordering_private = TRUE
-			var/datum/bank_account/account_payable // Handle account payable first
-			if(is_ordering_private)
-				account_payable = used_id_card.registered_account
-			else if(can_buy_via_budget)
-				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if(!account_payable)
-				say("No bank account detected!")
-				return
-
-
-
 			var/material_str = params["material"]
 			var/quantity = text2num(params["quantity"])
 
