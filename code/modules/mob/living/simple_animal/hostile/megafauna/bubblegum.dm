@@ -86,10 +86,10 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	triple_charge = new /datum/action/cooldown/mob_cooldown/charge/triple_charge()
-	hallucination_charge = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge()
-	hallucination_charge_surround = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround()
-	blood_warp = new /datum/action/cooldown/mob_cooldown/blood_warp()
+	triple_charge = new(src)
+	hallucination_charge = new(src)
+	hallucination_charge_surround = new(src)
+	blood_warp = new(src)
 	triple_charge.Grant(src)
 	hallucination_charge.Grant(src)
 	hallucination_charge_surround.Grant(src)
@@ -105,10 +105,10 @@ Difficulty: Hard
 			sound_volume = 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
-	QDEL_NULL(triple_charge)
-	QDEL_NULL(hallucination_charge)
-	QDEL_NULL(hallucination_charge_surround)
-	QDEL_NULL(blood_warp)
+	triple_charge = null
+	hallucination_charge = null
+	hallucination_charge_surround = null
+	blood_warp = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)

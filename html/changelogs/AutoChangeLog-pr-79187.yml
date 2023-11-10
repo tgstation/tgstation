@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - refactor: "Traders are basic mobs now. Please alert us of any strange behaviours!"
-  - code_imp: "If there is only one option, radial lists will autopick it. This behaviour can be turned off via a new argument."

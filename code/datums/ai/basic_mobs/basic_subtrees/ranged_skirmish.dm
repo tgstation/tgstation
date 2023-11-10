@@ -14,30 +14,30 @@
 	. = ..()
 	if(!controller.blackboard_key_exists(target_key))
 		return
-	controller.queue_behavior(attack_behavior, target_key, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, max_range, min_range)
+	controller.queue_behavior(attack_behavior, target_key, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, max_range, min_range)
 
 /// How often will we try to perform our ranged attack?
 /datum/ai_behavior/ranged_skirmish
 	action_cooldown = 1 SECONDS
 
-/datum/ai_behavior/ranged_skirmish/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, max_range, min_range)
+/datum/ai_behavior/ranged_skirmish/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, max_range, min_range)
 	. = ..()
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	return !QDELETED(target)
 
-/datum/ai_behavior/ranged_skirmish/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, max_range, min_range)
+/datum/ai_behavior/ranged_skirmish/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, max_range, min_range)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if (QDELETED(target))
 		finish_action(controller, succeeded = FALSE)
 		return
 
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
-	if(!targetting_datum.can_attack(controller.pawn, target))
+	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if(!targeting_strategy.can_attack(controller.pawn, target))
 		finish_action(controller, succeeded = FALSE)
 		return
 
-	var/hiding_target = targetting_datum.find_hidden_mobs(controller.pawn, target)
+	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target)
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
 	target = hiding_target || target

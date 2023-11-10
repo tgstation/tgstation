@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix mapping linter not identifying duplicate blacklisted objects on a turf"
+  - code_imp: "Add a mapping linter to check for stacked machinery"

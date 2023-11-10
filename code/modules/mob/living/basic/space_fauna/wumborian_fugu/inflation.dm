@@ -58,7 +58,7 @@
 	RegisterSignal(fugu, COMSIG_MOB_STATCHANGE, PROC_REF(check_death))
 	fugu.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/inflated)
 	ADD_TRAIT(fugu, TRAIT_FUGU_GLANDED, TRAIT_STATUS_EFFECT(id))
-	fugu.AddElement(/datum/element/wall_smasher)
+	fugu.AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	fugu.mob_size = MOB_SIZE_LARGE
 	fugu.icon_state = "Fugu1"
 	fugu.melee_damage_lower = 15
@@ -76,7 +76,7 @@
 	UnregisterSignal(fugu, COMSIG_MOB_STATCHANGE)
 	fugu.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/inflated)
 	REMOVE_TRAIT(fugu, TRAIT_FUGU_GLANDED, TRAIT_STATUS_EFFECT(id))
-	fugu.RemoveElement(/datum/element/wall_smasher)
+	fugu.RemoveElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	fugu.mob_size = MOB_SIZE_SMALL
 	fugu.melee_damage_lower = 0
 	fugu.melee_damage_upper = 0
