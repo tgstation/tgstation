@@ -44,7 +44,13 @@
 	preview.icon_state = rolled_item.icon_state
 	preview.icon =  rolled_item.icon
 	preview.scale_to(10, 10)
-	preview.update_for_view(user.client?.view)
+	user.reload_fullscreen()
+
+	maptext = "[rolled_item.name]"
+	maptext_width = 360
+	maptext_x += 120
+	maptext_y += 60
+
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
 	if(isliving(user))
 		if(!user.put_in_hands(rolled_item))
