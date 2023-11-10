@@ -185,26 +185,21 @@ const QuirkList = (props: {
                               )}
                           </Box>
                         }>
-                        <Button
-                          disabled={!props.selected}
-                          selected={customizationExpanded}
-                          icon="cog"
-                          tooltip={
-                            props.selected
-                              ? customizationExpanded
-                                ? 'Click this button to close the customization menu!'
-                                : 'This quirk is customizable! Click this button to open a customization menu!'
-                              : 'You must take this quirk before you can customize it!'
-                          }
-                          onClick={(e) => {
-                            e.stopPropagation();
+                        {props.selected && (
+                          <Button
+                            selected={customizationExpanded}
+                            icon="cog"
+                            tooltip="Customize"
+                            onClick={(e) => {
+                              e.stopPropagation();
 
-                            setCustomizationExpanded(!customizationExpanded);
-                          }}
-                          style={{
-                            'float': 'right',
-                          }}
-                        />
+                              setCustomizationExpanded(!customizationExpanded);
+                            }}
+                            style={{
+                              'float': 'right',
+                            }}
+                          />
+                        )}
                       </Popper>
                     )}
                   </Stack.Item>
