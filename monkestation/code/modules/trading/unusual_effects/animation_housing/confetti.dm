@@ -1,3 +1,7 @@
+/datum/component/particle_spewer/confetti
+	duration = 2 SECONDS
+	burst_amount = 5
+
 /datum/component/particle_spewer/confetti/animate_particle(obj/effect/abstract/particle/spawned)
 	var/matrix/first = matrix()
 	var/matrix/second = matrix()
@@ -14,7 +18,8 @@
 
 	animate(spawned, transform = first, time = 0.4 SECONDS, pixel_y = rand(-32, 32) + spawned.pixel_y, pixel_x = rand(-32, 32) + spawned.pixel_x, easing = LINEAR_EASING)
 	animate(transform = second, time = 0.5 SECONDS, alpha = 0, pixel_y = spawned.pixel_y - 5, easing = LINEAR_EASING|EASE_OUT)
+	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)
 
 /obj/item/debug_confetti/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/particle_spewer/confetti, 10 SECONDS, burst_amount = 5)
+	AddComponent(/datum/component/particle_spewer/confetti)

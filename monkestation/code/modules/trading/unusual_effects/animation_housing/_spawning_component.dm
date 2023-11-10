@@ -8,6 +8,8 @@
 
 /datum/component/particle_spewer
 	var/atom/source_object
+	//the worn mob
+	var/mob/worn_mob
 	///the duration we last
 	var/duration = 0
 	///the spawn intervals in game ticks
@@ -27,33 +29,51 @@
 	///current process count
 	var/count = 0
 	///equipped offset ie hats go to 32 if set to 32 will also reset to height changes
-	var/equipped_offset = 32
+	var/equipped_offset = 0
 	///per burst spawn amount
 	var/burst_amount = 1
 	///the actual lifetime of this component before we die [ 0 = infinite]
 	var/lifetime = 0
+	///kept track of for removal sake
+	var/added_x = 0
+	var/added_y = 0
 
-
-/datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 1, offset_x = 0, offset_y = 0, icon_file = 'monkestation/code/modules/trading/icons/particles.dmi', particle_state = "none", equipped_offset = 32, burst_amount = 1, lifetime = 0)
+/datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0)
 	. = ..()
-	src.icon_file = icon_file
-	src.particle_state = particle_state
-	src.offset_x = offset_x + rand(-8, 8)
-	src.offset_y = offset_y + rand(-4, 4)
-	src.spawn_interval = spawn_interval
-	src.duration = duration
-	src.equipped_offset = equipped_offset
-	src.burst_amount = burst_amount
-	src.lifetime = lifetime
+	if(icon_file)
+		src.icon_file = icon_file
+	if(particle_state)
+		src.particle_state = particle_state
+	if(offset_x)
+		src.offset_x = offset_x + rand(-8, 8)
+	if(offset_y)
+		src.offset_y = offset_y + rand(-4, 4)
+	if(spawn_interval)
+		src.spawn_interval = spawn_interval
+	if(duration)
+		src.duration = duration
+	if(equipped_offset)
+		src.equipped_offset = equipped_offset
+	if(burst_amount)
+		src.burst_amount = burst_amount
+	if(lifetime)
+		src.lifetime = lifetime
 	source_object = parent
 
 	START_PROCESSING(SSactualfastprocess, src)
-
+	RegisterSignal(source_object, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_equip_offsets))
+	RegisterSignal(source_object, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(reset_offsets))
+	
 	if(lifetime)
 		addtimer(CALLBACK(src, PROC_REF(kill_it_with_fire)), lifetime)
 
 /datum/component/particle_spewer/Destroy(force, silent)
 	. = ..()
+	UnregisterSignal(source_object, list(
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_POST_UNEQUIP,
+	))
+
 	STOP_PROCESSING(SSactualfastprocess, src)
 	for(var/atom/listed_atom as anything in living_particles + dead_particles)
 		qdel(listed_atom)
@@ -92,6 +112,32 @@
 
 /datum/component/particle_spewer/proc/kill_it_with_fire()
 	qdel(src)
+
+/datum/component/particle_spewer/proc/handle_equip_offsets(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+	offset_x -= added_x
+	offset_y -= added_y
+	added_x = 0
+	added_y = 0
+	worn_mob = equipper
+
+	switch(slot)
+		if(ITEM_SLOT_HEAD)
+			added_y = 16
+		else
+			added_y = 0
+			added_x = 0
+
+	offset_y += added_y
+	offset_x += added_x
+
+/datum/component/particle_spewer/proc/reset_offsets()
+	SIGNAL_HANDLER
+	offset_x -= added_x
+	offset_y -= added_y
+	added_x = 0
+	added_y = 0
+	worn_mob = null
 
 /obj/item/debug_particle_holder/Initialize(mapload)
 	. = ..()
