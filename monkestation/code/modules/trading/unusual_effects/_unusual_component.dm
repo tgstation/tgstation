@@ -51,3 +51,7 @@
 	. = ..()
 	AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/snow)
 
+/obj/item/clothing/head/costume/chicken/galaxies_unusual/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/galaxies)
+
