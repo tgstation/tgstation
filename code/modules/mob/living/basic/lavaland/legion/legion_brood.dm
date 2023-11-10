@@ -95,5 +95,9 @@
 	icon_living = "snowlegion_head"
 	icon_dead = "snowlegion_head"
 
+/mob/living/basic/legion_brood/snow/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+
 /mob/living/basic/legion_brood/snow/get_legion_type(mob/living/target)
 	return /mob/living/basic/mining/legion/snow

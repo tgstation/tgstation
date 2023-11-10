@@ -516,7 +516,6 @@
 	if(isAI(user) && (machine_stat & NOPOWER))
 		return
 
-	user.set_machine(src)
 	switch(choice)
 		if("eject")
 			eject()
@@ -594,7 +593,12 @@
 			non_food_ingedients--
 		if(istype(potential_fooditem, /obj/item/modular_computer/pda) && prob(75))
 			pda_failure = TRUE
-			notify_ghosts("[cooker] has overheated their PDA!", source = src, action = NOTIFY_JUMP, flashwindow = FALSE, header = "Hunger Games: Catching Fire")
+			notify_ghosts(
+				"[cooker] has overheated their PDA!",
+				source = src,
+				notify_flags = NOTIFY_CATEGORY_NOFLASH,
+				header = "Hunger Games: Catching Fire",
+			)
 
 	// If we're cooking non-food items we can fail randomly
 	if(length(non_food_ingedients) && prob(min(dirty * 5, 100)))

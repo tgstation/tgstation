@@ -7,7 +7,7 @@
 	///bool on if this component is currently polling for observers to inhabit the item
 	var/attempting_awakening = FALSE
 	///mob contained in the item.
-	var/mob/living/simple_animal/shade/bound_spirit
+	var/mob/living/basic/shade/bound_spirit
 
 /datum/component/spirit_holding/Initialize()
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
