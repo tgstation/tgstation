@@ -72,7 +72,7 @@
 	if(length(optional_selected_atoms))
 		for(var/optional_type in optional_selected_atoms)
 			if(istype(optional_type, /obj/item/organ/internal/eyes))
-				new /obj/item/wallframe/painting/eldritch(loc)
+				new /obj/item/wallframe/painting/eldritch/weeping(loc)
 				continue
 			if(istype(optional_type, /obj/item/bodypart))
 				new /obj/item/wallframe/painting/eldritch/desire(loc)

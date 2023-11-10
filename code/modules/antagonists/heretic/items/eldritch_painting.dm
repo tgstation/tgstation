@@ -1,21 +1,19 @@
-
-// The sister and He Who Wept eldritch painting
-// All eldritch paintings are based on this one, with some light changes
+// The basic eldritch painting
 /obj/item/wallframe/painting/eldritch
-	name = "The sister and He Who Wept"
-	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
+	name = "The debug and a coder who slept"
+	desc = "This shouldn't be shown..."
 	icon = 'icons/obj/signs.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
-	icon_state = "eldritch_painting_weeping"
+	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/painting/eldritch
 	pixel_shift = 30
 
 /obj/structure/sign/painting/eldritch
-	name = "The sister and He Who Wept"
-	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
+	name = "The debug and a coder who slept"
+	desc = "This shouldn't be shown..."
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "eldritch_painting_weeping"
+	icon_state = "frame-empty"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
@@ -29,11 +27,61 @@
 	persistence_id = FALSE
 
 // Mood applied for ripping the painting
-// These moods are here to check hallucinations and provide easier user feedback
 /datum/mood_event/eldritch_painting
 	description = "YOU, I SHOULD NOT HAVE DONE THAT!!!"
 	mood_change = -6
 	timeout = 3 MINUTES
+
+/obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
+	if(sensor_type)
+		painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
+	return ..()
+
+/obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
+	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
+	to_chat(user, span_notice("Laughter echoes through your mind...."))
+	QDEL_NULL(painting_proximity_sensor)
+	qdel(src)
+
+// Applies an affect on view
+/datum/proximity_monitor/advanced/eldritch_painting
+	var/applied_trauma = /datum/brain_trauma/severe/paralysis
+	var/text_to_display = "I should not be seeing this..."
+
+/datum/proximity_monitor/advanced/eldritch_painting/field_turf_crossed(atom/movable/crossed, turf/location)
+	if (!isliving(crossed) || !can_see(crossed, host, current_range))
+		return
+	on_seen(crossed)
+
+/datum/proximity_monitor/advanced/eldritch_painting/proc/on_seen(mob/living/carbon/human/viewer)
+	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
+		return
+	if (viewer.has_trauma_type(applied_trauma))
+		return
+	if(IS_HERETIC(viewer))
+		return
+	to_chat(viewer, span_notice(text_to_display))
+	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+	viewer.emote("scream")
+	to_chat(viewer, span_warning("As you gaze upon the painting your mind rends to its truth!"))
+
+
+
+
+// The sister and He Who Wept eldritch painting
+/obj/item/wallframe/painting/eldritch/weeping
+	name = "The sister and He Who Wept"
+	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN."
+	icon_state = "eldritch_painting_weeping"
+	result_path = /obj/structure/sign/painting/eldritch/weeping
+
+/obj/structure/sign/painting/eldritch/weeping
+	name = "The sister and He Who Wept"
+	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
+	icon_state = "eldritch_painting_weeping"
+	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/weeping
+
+// These moods are here to check hallucinations and provide easier user feedback
 
 /datum/mood_event/eldritch_painting/weeping
 	description = "HE IS HERE, AND HE WEEPS!"
@@ -50,18 +98,7 @@
 	mood_change = 1
 	timeout = 5 MINUTES
 
-/obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
-	if(sensor_type)
-		painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
-	return ..()
-
-/obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
-	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-	to_chat(user, span_notice("Laughter echoes through your mind...."))
-	QDEL_NULL(painting_proximity_sensor)
-	qdel(src)
-
-/obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
+/obj/structure/sign/painting/eldritch/weeping/examine(mob/living/carbon/user)
 	..()
 	if(IS_HERETIC(user))
 		// If they already have the positive moodlet return
@@ -80,27 +117,10 @@
 		// Add a mood event that causes the hallucinations to not trigger anymore
 		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
 
-// Applies an affect on view
-/datum/proximity_monitor/advanced/eldritch_painting
-	var/applied_trauma = /datum/brain_trauma/severe/weeping
-	var/text_to_display = "Oh what arts! She is so fair, and he...HE WEEPS!!!"
-
-/datum/proximity_monitor/advanced/eldritch_painting/field_turf_crossed(atom/movable/crossed, turf/location)
-	if (!isliving(crossed) || !can_see(crossed, host, current_range))
-		return
-	on_seen(crossed)
-
-/datum/proximity_monitor/advanced/eldritch_painting/proc/on_seen(mob/living/carbon/human/viewer)
-	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
-		return
-	if (viewer.has_trauma_type(applied_trauma))
-		return
-	if(IS_HERETIC(viewer))
-		return
-	to_chat(viewer, span_notice(text_to_display))
-	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
-	viewer.emote("scream")
-	to_chat(viewer, span_warning("As you gaze upon the painting your mind rends to its truth!"))
+// proximity sensor for it
+/datum/proximity_monitor/advanced/eldritch_painting/weeping
+	applied_trauma = /datum/brain_trauma/severe/weeping
+	text_to_display = "Oh what arts! She is so fair, and he...HE WEEPS!!!"
 
 /*
  * A brain trauma that this eldritch paintings apply
@@ -234,7 +254,7 @@
 /datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
 	// Causes them to need to eat at 10x the normal rate
 	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
-	if(SPT_PROB(50, seconds_per_tick))
+	if(SPT_PROB(20, seconds_per_tick))
 		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
@@ -353,7 +373,7 @@
 	if(owner.incapacitated())
 		return
 	bodypart.receive_damage(scratch_damage)
-	if(SPT_PROB(50, seconds_per_tick))
+	if(SPT_PROB(33, seconds_per_tick))
 		to_chat(owner, span_notice("You scratch furiously at [bodypart] to rid its imperfections!"))
 
 
