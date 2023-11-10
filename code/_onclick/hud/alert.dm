@@ -793,14 +793,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/dead/observer/ghost_owner = owner
 
 	if(click_interact)
-		target.attack_ghost(ghost_owner)
+		ghost_owner.jump_to_interact(target)
 		return
 
-	if(isturf(target))
-		ghost_owner.abstract_move(target)
-		return
-
-	ghost_owner.ManualFollow(target)
+	ghost_owner.observer_view(target)
 
 //OBJECT-BASED
 
