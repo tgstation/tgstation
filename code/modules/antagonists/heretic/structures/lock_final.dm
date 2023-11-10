@@ -1,4 +1,4 @@
-/obj/structure/knock_tear
+/obj/structure/lock_tear
 	name = "???"
 	desc = "It stares back. Theres no reason to remain. Run."
 	max_integrity = INFINITE
@@ -24,7 +24,7 @@
 		/mob/living/basic/heretic_summon/star_gazer,
 	)
 
-/obj/structure/knock_tear/Initialize(mapload, datum/mind/ascendant_mind)
+/obj/structure/lock_tear/Initialize(mapload, datum/mind/ascendant_mind)
 	. = ..()
 	transform *= 3
 	if(isnull(monster_types))
@@ -36,7 +36,7 @@
 	INVOKE_ASYNC(src, PROC_REF(poll_ghosts))
 
 /// Ask ghosts if they want to make some noise
-/obj/structure/knock_tear/proc/poll_ghosts()
+/obj/structure/lock_tear/proc/poll_ghosts()
 	var/list/candidates = poll_ghost_candidates("Would you like to be a random eldritch monster attacking the crew?", ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, POLL_IGNORE_HERETIC_MONSTER)
 	while(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick_n_take(candidates)
@@ -44,7 +44,7 @@
 	gathering_candidates = FALSE
 
 /// Destroy the rift if you kill the heretic
-/obj/structure/knock_tear/proc/end_madness(datum/former_master)
+/obj/structure/lock_tear/proc/end_madness(datum/former_master)
 	SIGNAL_HANDLER
 	var/turf/our_turf = get_turf(src)
 	playsound(our_turf, 'sound/magic/castsummon.ogg', vol = 100, vary = TRUE)
@@ -53,20 +53,20 @@
 	new /obj/effect/temp_visual/destabilising_tear(our_turf)
 	qdel(src)
 
-/obj/structure/knock_tear/attack_ghost(mob/user)
+/obj/structure/lock_tear/attack_ghost(mob/user)
 	. = ..()
 	if(. || gathering_candidates)
 		return
 	ghost_to_monster(user)
 
-/obj/structure/knock_tear/examine(mob/user)
+/obj/structure/lock_tear/examine(mob/user)
 	. = ..()
 	if (!isobserver(user) || gathering_candidates)
 		return
 	. += span_notice("You can use this to enter the world as a foul monster.")
 
 /// Turn a ghost into an 'orrible beast
-/obj/structure/knock_tear/proc/ghost_to_monster(mob/dead/observer/user, should_ask = TRUE)
+/obj/structure/lock_tear/proc/ghost_to_monster(mob/dead/observer/user, should_ask = TRUE)
 	if(should_ask)
 		var/ask = tgui_alert(user, "Become a monster?", "Ascended Rift", list("Yes", "No"))
 		if(ask != "Yes" || QDELETED(src) || QDELETED(user))
@@ -86,10 +86,10 @@
 	kill_all_your_friends.completed = TRUE
 	woohoo_free_antag.objectives += kill_all_your_friends
 
-/obj/structure/knock_tear/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
+/obj/structure/lock_tear/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
 
-/obj/structure/knock_tear/Destroy(force)
+/obj/structure/lock_tear/Destroy(force)
 	if(ascendee)
 		ascendee = null
 	return ..()

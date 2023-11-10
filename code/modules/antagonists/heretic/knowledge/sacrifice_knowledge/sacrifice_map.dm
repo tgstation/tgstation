@@ -34,9 +34,9 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	name = "rust heretic sacrifice landmark"
 	for_heretic_path = PATH_RUST
 
-/obj/effect/landmark/heretic/knock
-	name = "knock heretic sacrifice landmark"
-	for_heretic_path = PATH_KNOCK
+/obj/effect/landmark/heretic/lock
+	name = "lock heretic sacrifice landmark"
+	for_heretic_path = PATH_LOCK
 
 // A fluff signpost object that doesn't teleport you somewhere when you touch it.
 /obj/structure/no_effect_signpost
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	ambience_index = AMBIENCE_REEBE
 	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE
 
-/area/centcom/heretic_sacrifice/knock
-	name = "Mansus Knock Gate"
+/area/centcom/heretic_sacrifice/lock
+	name = "Mansus Lock Gate"
 	ambience_index = AMBIENCE_DANGER
 	sound_environment = SOUND_ENVIRONMENT_PSYCHOTIC
