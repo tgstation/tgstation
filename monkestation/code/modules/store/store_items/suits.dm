@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(store_suits, generate_store_items(/datum/store_item/suit))
 /datum/store_item/suit/dinojammies
 	name = "Dinosaur Pajamas"
 	item_path = /obj/item/clothing/suit/hooded/dinojammies
-	item_cost = 1000
+	item_cost = 10000
 
 /*
 *	MISC
