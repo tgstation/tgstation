@@ -190,6 +190,23 @@
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
 
+//leaper keys
+///key holds our volley ability
+#define BB_LEAPER_VOLLEY "leaper_volley"
+///key holds our flop ability
+#define BB_LEAPER_FLOP "leaper_flop"
+///key holds our bubble ability
+#define BB_LEAPER_BUBBLE "leaper_bubble"
+///key holds our summon ability
+#define BB_LEAPER_SUMMON "leaper_summon"
+///key holds the world timer for swimming
+#define BB_KEY_SWIM_TIME "key_swim_time"
+///key holds the water or land target turf
+#define BB_SWIM_ALTERNATE_TURF "swim_alternate_turf"
+///key holds our state of swimming
+#define BB_CURRENTLY_SWIMMING "currently_swimming"
+///key holds how long we will be swimming for
+#define BB_KEY_SWIMMER_COOLDOWN "key_swimmer_cooldown"
 //Wizard AI keys
 /// Key where we store our main targeted spell
 #define BB_WIZARD_TARGETED_SPELL "BB_wizard_targeted_spell"

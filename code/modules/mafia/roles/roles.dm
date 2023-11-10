@@ -27,6 +27,9 @@
 	var/mob/living/carbon/human/body
 	var/obj/effect/landmark/mafia/assigned_landmark
 
+	///The Mafia innate action panel that allows players to view the game's state.
+	var/datum/action/innate/mafia_panel/mafia_panel
+
 	///how many votes submitted when you vote. used in voting and deciding victory.
 	var/vote_power = 1
 	///what they get equipped with when they are revealed
@@ -49,6 +52,7 @@
 
 /datum/mafia_role/New(datum/mafia_controller/game)
 	. = ..()
+	mafia_panel = new(null, game)
 	for(var/datum/mafia_ability/abilities as anything in role_unique_actions + /datum/mafia_ability/voting)
 		role_unique_actions += new abilities(game, src)
 		role_unique_actions -= abilities
@@ -56,14 +60,21 @@
 /datum/mafia_role/Destroy(force, ...)
 	UnregisterSignal(body, COMSIG_MOB_SAY)
 	QDEL_NULL(mafia_alert)
-	QDEL_NULL(body)
+	QDEL_NULL(mafia_panel)
 	QDEL_LIST(role_unique_actions)
-	role_messages = null
+	//we null these instead of qdel because Mafia controller's mapdeleter deletes it all.
+	assigned_landmark = null
+	body = null
+	role_messages.Cut()
 	return ..()
 
 /datum/mafia_role/proc/register_body(mob/living/carbon/human/new_body)
+	if(body)
+		UnregisterSignal(new_body, COMSIG_MOB_SAY)
+		mafia_panel.Remove(body)
 	body = new_body
 	RegisterSignal(new_body, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	mafia_panel.Grant(new_body)
 
 /**
  * send_message_to_player
@@ -118,14 +129,15 @@
  *
  * Does not count as visiting, see visit proc.
  */
-/datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch=FALSE)
+/datum/mafia_role/proc/kill(datum/mafia_controller/game, datum/mafia_role/attacker, lynch = FALSE)
+	if(game_status == MAFIA_DEAD)
+		return FALSE
 	if(attacker && (attacker.role_flags & ROLE_ROLEBLOCKED))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MAFIA_ON_KILL, game, attacker, lynch) & MAFIA_PREVENT_KILL)
 		return FALSE
-	if(game_status != MAFIA_DEAD)
-		game_status = MAFIA_DEAD
-		body.death()
+	game_status = MAFIA_DEAD
+	body.death()
 	if(lynch)
 		reveal_role(game, verbose = TRUE)
 	game.living_roles -= src
