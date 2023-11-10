@@ -528,7 +528,7 @@
 		if(!wall_area.always_unpowered)
 			return wall_area
 
-	 // couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
+	// couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
 	return machine_area
 
 ///makes this machine draw power from its area according to which use_power mode it is set to
