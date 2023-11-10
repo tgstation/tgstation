@@ -12,7 +12,9 @@
 
 /datum/export/analyzed_artifact/get_cost(obj/object)
 	var/datum/component/artifact/art = object.GetComponent(/datum/component/artifact)
-	if(!art || !art.analysis)
+	if(!art)
+		return 0
+	if(!art.analysis)
 		return -CARGO_CRATE_VALUE
 	return art.analysis.get_export_value(art)
 
