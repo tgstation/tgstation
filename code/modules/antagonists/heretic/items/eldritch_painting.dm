@@ -99,6 +99,8 @@
 		return
 	to_chat(viewer, span_notice(text_to_display))
 	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+	viewer.emote("scream")
+	to_chat(viewer, span_warning("As you gaze upon the painting your mind rends to its truth!"))
 
 /*
  * A brain trauma that this eldritch paintings apply
