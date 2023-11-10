@@ -4,8 +4,6 @@ import sys
 
 define_regex = re.compile(r"(\s+)?#define\s?([A-Z0-9_]+)\(?(.+)\)?")
 
-how_to_fix_message = "Please ensure that all traits in the code/__DEFINES/trait_declarations.dm file are added in the code/_globalvars/traits.dm file."
-
 def green(text):
 	return "\033[32m" + str(text) + "\033[0m"
 
@@ -17,6 +15,8 @@ on_github = os.getenv("GITHUB_ACTIONS") == "true"
 
 defines_file = "code/__DEFINES/traits/declarations.dm"
 globalvars_file = "code/_globalvars/traits.dm"
+
+how_to_fix_message = "Please ensure that all traits in the {defines_file} file are added in the {globalvars_file} file."
 
 def post_error(define_name):
 	if on_github:
