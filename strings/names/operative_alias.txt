@@ -36,6 +36,8 @@ Drowning
 Dude
 Dwarf
 Echo
+Emo
+Eva
 Finger
 Fish
 Fitzgerald
@@ -84,6 +86,7 @@ Private
 Psycho
 Pyro
 Red
+Revenant
 Rocker
 Ronin
 Sack
@@ -94,6 +97,7 @@ Scout
 Scream
 Scum
 Serenity
+Shade
 Shadow
 Shark
 Shocker
@@ -120,7 +124,3 @@ Vixen
 White
 Wilson
 Winters
-Shade
-Revenant
-Emo
-Eva
