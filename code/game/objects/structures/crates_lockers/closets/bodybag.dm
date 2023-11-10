@@ -186,14 +186,13 @@
 	contents_thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental
 	/// The list of weathers we protect from.
-	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_VOIDSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
+	var/static/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_VOIDSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
 	/// The contents of the gas to be distributed to an occupant. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
 /obj/structure/closet/body_bag/environmental/Initialize(mapload)
 	. = ..()
-	for(var/trait in weather_protection)
-		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
+	add_traits(weather_protection, INNATE_TRAIT)
 	refresh_air()
 
 /obj/structure/closet/body_bag/environmental/Destroy()
