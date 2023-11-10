@@ -9,6 +9,8 @@
 
 /datum/component/particle_spewer
 	var/atom/source_object
+	///the unusual_description grabbed into the actual handler itself only needed when used as an unusual
+	var/unusual_description = "teehee"
 	//the worn mob
 	var/mob/worn_mob
 	///the duration we last

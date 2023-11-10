@@ -1,7 +1,7 @@
 /atom/movable/screen/fullscreen/lootbox_overlay
 	icon =  'goon/icons/effects/320x320.dmi'
 	icon_state = "lootb0"
-	screen_loc = "CENTER-2, CENTER-2"
+	screen_loc = "CENTER-3, CENTER-3"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	plane = HUD_PLANE
 	show_when_dead = TRUE
@@ -17,7 +17,7 @@
 /atom/movable/screen/fullscreen/lootbox_overlay/item_preview
 	icon_state = "nuthin" // we set this ourselves
 	layer = FULLSCREEN_LAYER + 0.3
-	screen_loc = "CENTER+3:25, CENTER+3"
+	screen_loc = "CENTER+2:1, CENTER+2"
 	
 /atom/movable/screen/fullscreen/lootbox_overlay/main
 	///have we already opened? prevents spam clicks
@@ -44,12 +44,14 @@
 	var/obj/item/rolled_item = return_rolled()
 	preview.icon_state = rolled_item.icon_state
 	preview.icon =  rolled_item.icon
+	preview.appearance = rolled_item.appearance
 	preview.scale_to(10, 10)
 	user.reload_fullscreen()
+	preview.plane = ABOVE_HUD_PLANE
 
 	maptext = "[rolled_item.name]"
 	maptext_width = 360
-	maptext_x += 120
+	maptext_x += 120 - length(rolled_item.name)
 	maptext_y += 60
 
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
@@ -75,8 +77,3 @@
 
 /mob/proc/trigger_lootbox_on_self()
 	src.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
-
-/proc/return_rolled() //global because its easier long term
-	var/obj/item/clothing/head/costume/chicken/galaxies_unusual/temp = new()
-	temp.name = "Unusual Galactic Chicken Costume Head"
-	return temp

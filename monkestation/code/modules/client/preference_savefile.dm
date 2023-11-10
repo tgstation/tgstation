@@ -44,6 +44,7 @@
 	write_jobxp_preferences()
 	savefile.set_entry("channel_volume", channel_volume)
 	savefile.set_entry("saved_tokens", saved_tokens)
+	savefile.set_entry("extra_stat_inventory", extra_stat_inventory)
 	if(token_month)
 		savefile.set_entry("token_month", token_month)
 
@@ -54,6 +55,9 @@
 
 	saved_tokens = savefile.get_entry("saved_tokens", saved_tokens)
 	saved_tokens = SANITIZE_LIST(saved_tokens)
+
+	extra_stat_inventory = savefile.get_entry("extra_stat_inventory", extra_stat_inventory)
+	extra_stat_inventory = SANITIZE_LIST(extra_stat_inventory)
 
 	token_month = savefile.get_entry("token_month", token_month)
 

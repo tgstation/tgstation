@@ -1,4 +1,5 @@
 /datum/component/particle_spewer/confetti
+	unusual_description = "partytime"
 	duration = 2 SECONDS
 	burst_amount = 5
 

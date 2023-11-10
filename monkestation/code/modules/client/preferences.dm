@@ -30,3 +30,9 @@
 	var/list/alt_job_titles = list()
 	/// the month we used our last donator token on
 	var/token_month = 0
+	/// these are inventory items that require external data to load correctly
+	var/list/extra_stat_inventory = list(
+		"unusual" = list(),
+		"single-use" = list(),
+		"generic" = list(),
+		)

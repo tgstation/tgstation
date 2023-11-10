@@ -6342,6 +6342,8 @@
 #include "monkestation\code\modules\surgery\organs\internal\stomach.dm"
 #include "monkestation\code\modules\surgery\organs\internal\tongue.dm"
 #include "monkestation\code\modules\trading\box_rolling.dm"
+#include "monkestation\code\modules\trading\lootbox_odds.dm"
+#include "monkestation\code\modules\trading\save_unusual_preference.dm"
 #include "monkestation\code\modules\trading\unusual_effects\_unusual_component.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\_spawning_component.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\confetti.dm"

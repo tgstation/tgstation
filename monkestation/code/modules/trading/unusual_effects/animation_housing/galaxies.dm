@@ -1,4 +1,5 @@
 /datum/component/particle_spewer/galaxies
+	unusual_description = "galactic"
 	duration = 10 SECONDS
 	spawn_interval = 0.5 SECONDS
 	burst_amount = 6

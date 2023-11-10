@@ -10,23 +10,32 @@
 	var/original_owner_ckey = "dwasint"
 	/// the slot this item goes in used when creating the particle itself
 	var/unusual_equip_slot = ITEM_SLOT_HEAD
+	/// the icon_state of the overlay given to unusals
+	var/unusal_overlay = "none"
 
 //this init is handled far differently than others. it parses data from the DB for information about the unusual itself
 //it than loads this info into the component itself, the particle_path is purely for spawning temporary ones in round
-/datum/component/unusual_handler/Initialize(list/parsed_variables = list(), particle_path = /datum/component/particle_spewer/confetti)
+/datum/component/unusual_handler/Initialize(list/parsed_variables = list(), particle_path = /datum/component/particle_spewer/confetti, fresh_unusual = FALSE, client_ckey = "dwasint")
 	. = ..()
 	if(!length(parsed_variables))
 		src.particle_path = particle_path
+		var/datum/component/particle_spewer/created = source_object.GetComponent(/datum/component/particle_spewer)
+		unusual_description = created.unusual_description
 	else
 		setup_from_list(parsed_variables)
 
+	if(fresh_unusual)
+		original_owner_ckey = client_ckey
+		round_id = GLOB.round_id
 	source_object = parent
 
 	source_object.AddComponent(particle_path)
-	
+
 	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
 	source_object.desc += span_notice("\n Unboxed on round: [round_id]")
 	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
+
+	source_object.name = "unusual [unusual_description] [source_object.name]"
 
 	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
 
