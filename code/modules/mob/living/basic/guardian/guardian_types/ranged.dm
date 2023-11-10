@@ -23,6 +23,7 @@
 		projectile_sound = 'sound/effects/hit_on_shattered_glass.ogg',\
 		cooldown_time = 0.1 SECONDS, \
 	)
+	AddComponent(/datum/component/ranged_mob_full_auto, autofire_shot_delay = 0.1 SECONDS)
 	var/datum/action/cooldown/mob_cooldown/guardian_alarm_snare/snare = new (src)
 	snare.Grant(src)
 
