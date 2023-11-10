@@ -16,38 +16,41 @@
 		stack_trace("[type] was created on a target that isn't a /datum/brain_trauma/severe/split_personality, this doesn't work.")
 		qdel(src)
 
+/datum/action/personality_commune/Grant(mob/grant_to)
+	if(!istype(grant_to, /mob/living/split_personality))
+		return
+
+	return ..()
+
 /datum/action/personality_commune/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	var/datum/brain_trauma/severe/split_personality/trauma = target
-	if(!istype(trauma))
-		CRASH("Personality Commune was triggered on a target that isn't a /datum/brain_trauma/severe/split_personality.")
+	var/mob/living/split_personality/non_controller = usr
+	var/client/non_controller_client = non_controller.client
 
-	var/mob/living/split_personality/person = usr
-	if(!istype(person))
-		CRASH("Personality Commune was triggered by a usr that isn't /mob/living/split_personality.")
-
-	var/client/sender_client = person.client
-	var/to_send = tgui_input_text(person, "What would you like to tell your other self?", "Commune")
+	var/to_send = tgui_input_text(non_controller, "What would you like to tell your other self?", "Commune")
 	if(QDELETED(src) || QDELETED(trauma) || !to_send)
 		return FALSE
-	if(trauma.owner.client == sender_client) // We took control
+
+	var/mob/living/carbon/human/personality_body = trauma.owner
+	if(personality_body.client == non_controller_client) // We took control
 		return FALSE
 
 	var/user_message = span_boldnotice("You concentrate and send thoughts to your other self:")
 	var/user_message_body = span_notice("[to_send]")
 
-	to_chat(person, "[user_message] [user_message_body]")
+	to_chat(non_controller, "[user_message] [user_message_body]")
 
-	trauma.owner.balloon_alert(trauma.owner, "you hear a voice")
-	to_chat(trauma.owner, "[fluff_text] [user_message_body]")
+	personality_body.balloon_alert(personality_body, "you hear a voice")
+	to_chat(personality_body, "[fluff_text] [user_message_body]")
 
-	log_directed_talk(person, trauma.owner, to_send, LOG_SAY, "[name]")
+	log_directed_talk(non_controller, personality_body, to_send, LOG_SAY, "[name]")
 	for(var/dead_mob in GLOB.dead_mob_list)
 		if(!isobserver(dead_mob))
 			continue
-		to_chat(dead_mob, "[FOLLOW_LINK(dead_mob, person)] [span_boldnotice("[person] [name]:")] [span_notice("\"[to_send]\" to")] [span_name("[trauma]")]")
+		to_chat(dead_mob, "[FOLLOW_LINK(dead_mob, non_controller)] [span_boldnotice("[non_controller] [name]:")] [span_notice("\"[to_send]\" to")] [span_name("[trauma]")]")
 
 	return TRUE
