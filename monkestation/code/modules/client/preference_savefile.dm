@@ -22,8 +22,17 @@
 			loadout = _text2path(loadout)
 		save_loadout[loadout] = entry
 
+	var/list/special_save_loadout = SANITIZE_LIST(save_data["special_loadout_list"])
+	for(var/loadout in special_save_loadout["unusual"])
+		save_loadout -= loadout
+
+		if(istext(loadout))
+			loadout = _text2num(loadout)
+		special_save_loadout["unusual"] += loadout
+
 	alt_job_titles = save_data["alt_job_titles"]
 	loadout_list = sanitize_loadout_list(save_loadout)
+	special_loadout_list = special_save_loadout
 
 	if(needs_update >= 0)
 		update_character_monkestation(needs_update, save_data) // needs_update == savefile_version if we need an update (positive integer)
@@ -37,6 +46,7 @@
 /// Saves the modular customizations of a character on the savefile
 /datum/preferences/proc/save_character_monkestation(list/save_data)
 	save_data["loadout_list"] = loadout_list
+	save_data["special_loadout_list"] = special_loadout_list
 	save_data["modular_version"] = MODULAR_SAVEFILE_VERSION_MAX
 	save_data["alt_job_titles"] = alt_job_titles
 

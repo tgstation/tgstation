@@ -19,8 +19,6 @@
 	. = ..()
 	if(!length(parsed_variables))
 		src.particle_path = particle_path
-		var/datum/component/particle_spewer/created = source_object.GetComponent(/datum/component/particle_spewer)
-		unusual_description = created.unusual_description
 	else
 		setup_from_list(parsed_variables)
 
@@ -29,7 +27,11 @@
 		round_id = GLOB.round_id
 	source_object = parent
 
-	source_object.AddComponent(particle_path)
+	source_object.AddComponent(src.particle_path)
+
+	if(!length(parsed_variables))
+		var/datum/component/particle_spewer/created = source_object.GetComponent(/datum/component/particle_spewer)
+		unusual_description = created.unusual_description
 
 	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
 	source_object.desc += span_notice("\n Unboxed on round: [round_id]")
@@ -50,7 +52,12 @@
 	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
 
 /datum/component/unusual_handler/proc/setup_from_list(list/parsed_results)
-	return
+	particle_path = text2path(parsed_results["type"])
+	round_id = text2num(parsed_results["round"])
+	original_owner_ckey = parsed_results["original_owner"]
+	unusual_description = parsed_results["description"]
+	unusual_equip_slot = text2num(parsed_results["equipslot"])
+	unusal_overlay = parsed_results["item_overlay"]
 
 /obj/item/clothing/head/costume/chicken/confetti_unusual/Initialize(mapload)
 	. = ..()

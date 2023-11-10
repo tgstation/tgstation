@@ -1,7 +1,12 @@
 /datum/preferences
 	/// Loadout prefs. Assoc list of [typepaths] to [associated list of item info].
 	var/list/loadout_list
-
+	///list of specially handled loadout items as array indexes for the extra_stat_inventory
+	var/list/special_loadout_list = list(
+		"unusual" = list(),
+		"single-use" = list(),
+		"generic" = list(),
+	)
 	var/needs_update = TRUE
 
 	///list of all items in inventory
