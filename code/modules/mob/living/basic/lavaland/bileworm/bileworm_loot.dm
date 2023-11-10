@@ -9,6 +9,7 @@
 	icon_state = "sheet-bileworm"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/bileworm
+	grind_results = list(/datum/reagent/toxin/acid/nitracid = 5)
 
 //trophy
 

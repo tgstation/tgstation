@@ -13,6 +13,7 @@
 	desc = "A lobstrosity's engorged adrenal gland. You can squeeze it to get a rush of energy on demand."
 	desc_preserved = "A lobstrosity's engorged adrenal gland. It is preserved, allowing you to use it for a burst of speed whenever you need it."
 	desc_inert = "A lobstrosity's adrenal gland. It is all shrivelled up."
+	grind_results = list(/datum/reagent/medicine/muscle_stimulant = 5)
 	user_status = /datum/status_effect/lobster_rush
 	actions_types = list(/datum/action/cooldown/monster_core_action/adrenal_boost)
 

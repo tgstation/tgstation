@@ -19,6 +19,7 @@
 	icon_state_inert = "brim_sac_decayed"
 	desc_preserved = "A strange organ from a brimdemon. It is preserved, allowing you to coat yourself in its explosive contents at your leisure."
 	desc_inert = "A decayed brimdemon organ. There's nothing usable left inside it."
+	grind_results = list(/datum/reagent/gunpowder = 5)
 	user_status = /datum/status_effect/stacking/brimdust_coating
 	actions_types = list(/datum/action/cooldown/monster_core_action/exhale_brimdust)
 	/// You will gain a stack of the buff every x seconds

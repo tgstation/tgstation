@@ -7,6 +7,7 @@
 	desc = "All that remains of a hivelord. It can be used to help keep your body going, but it will rapidly decay into uselessness."
 	desc_preserved = "All that remains of a hivelord. It is preserved, allowing you to use it to heal completely without danger of decay."
 	desc_inert = "All that remains of a hivelord. It has decayed, and is completely useless."
+	grind_results = list(/datum/reagent/medicine/omnizine = 5)
 	user_status = /datum/status_effect/regenerative_core
 	actions_types = list(/datum/action/cooldown/monster_core_action/regenerative_core)
 	icon_state = "hivelord_core"
