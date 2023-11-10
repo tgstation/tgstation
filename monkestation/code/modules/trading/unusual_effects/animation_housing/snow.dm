@@ -16,8 +16,8 @@
 		else
 			spawned.icon_state = "snow_1"
 
-	spawned.pixel_x += rand(-3, 3)
-	spawned.pixel_y += rand(-3, 3)
+	spawned.pixel_x += rand(-12, 12)
+	spawned.pixel_y += rand(-5, 5)
 
 	animate(spawned, pixel_y = spawned.pixel_y - 32, time = 2 SECONDS)
 	animate(spawned, alpha = 25, time = 1.5 SECONDS)

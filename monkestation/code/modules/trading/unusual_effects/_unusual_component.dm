@@ -10,9 +10,6 @@
 	var/original_owner_ckey = "dwasint"
 	/// the slot this item goes in used when creating the particle itself
 	var/unusual_equip_slot = ITEM_SLOT_HEAD
-	
-/datum/component/unusual_handler/snow
-	particle_path = /datum/component/particle_spewer/snow
 
 //this init is handled far differently than others. it parses data from the DB for information about the unusual itself
 //it than loads this info into the component itself, the particle_path is purely for spawning temporary ones in round
@@ -26,6 +23,10 @@
 	source_object = parent
 
 	source_object.AddComponent(particle_path)
+	
+	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
+	source_object.desc += span_notice("\n Unboxed on: [round_id]")
+	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
 	
 	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
 
@@ -48,5 +49,5 @@
 
 /obj/item/clothing/head/costume/chicken/snow_unusual/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/unusual_handler/snow)
+	AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/snow)
 

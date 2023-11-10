@@ -18,7 +18,7 @@
 
 /datum/round_event/antagonist/solo/obsessed
 
-/datum/round_event/antagonist/solo/clockcult/add_datum_to_mind(datum/mind/antag_mind)
+/datum/round_event/antagonist/solo/obsessed/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.add_antag_datum(antag_datum)
 	var/mob/living/carbon/human/current = antag_mind.current
 	current.gain_trauma(/datum/brain_trauma/special/obsessed)
