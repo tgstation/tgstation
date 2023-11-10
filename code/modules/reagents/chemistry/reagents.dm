@@ -154,10 +154,10 @@
  *
  */
 /datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	return
+	SHOULD_CALL_PARENT(TRUE)
 
 ///Metabolizes a portion of the reagent after on_mob_life() is called
-/datum/reagent/proc/metabolize_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(reagent_removal_skip_list))
 		return
 	if(isnull(holder))
@@ -211,14 +211,7 @@ Primarily used in reagents/reaction_agents
  * Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
  */
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
-	return
-
-///Metabolizes a portion of the reagent after on_mob_dead() is called
-/datum/reagent/proc/metabolize_dead(mob/living/carbon/affected_mob, seconds_per_tick)
-	if(length(reagent_removal_skip_list))
-		return
-	if(holder)
-		holder.remove_reagent(type, metabolization_rate * affected_mob.metabolism_efficiency * seconds_per_tick)
+	SHOULD_CALL_PARENT(TRUE)
 
 /// Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)

@@ -15,7 +15,6 @@
 	var/liver_damage = 0.5
 
 /datum/reagent/impurity/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	var/need_mob_update
@@ -41,7 +40,6 @@
 
 
 /datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	if(affected_mob.adjustToxLoss(tox_damage * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
@@ -118,7 +116,7 @@
 	if(!cube || affected_mob.loc != cube)
 		metabolization_rate += 0.01
 
-/datum/reagent/inverse/cryostylane/metabolize_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(current_cycle >= 60)
 		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
 		return

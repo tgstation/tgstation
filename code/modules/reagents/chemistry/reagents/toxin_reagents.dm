@@ -22,7 +22,6 @@
 	mytray.adjust_toxic(round(volume * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	if(toxpwr && affected_mob.health > health_required)
 		if(affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))

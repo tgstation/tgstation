@@ -25,7 +25,6 @@
 	chemical_flags |= REAGENT_UNAFFECTED_BY_METABOLISM
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	if(!ishuman(affected_mob) || HAS_TRAIT(affected_mob, TRAIT_NOHUNGER))
 		return
@@ -66,7 +65,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	var/brute_heal = 1
 	var/burn_heal = 0

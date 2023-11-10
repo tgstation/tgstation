@@ -18,6 +18,7 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 10) //4 per 2 seconds
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.set_drugginess(30 SECONDS * REM * seconds_per_tick)
 	if(isturf(affected_mob.loc) && !isspaceturf(affected_mob.loc) && !HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && SPT_PROB(5, seconds_per_tick))
 		step(affected_mob, pick(GLOB.cardinals))
@@ -45,6 +46,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/cannabis/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.apply_status_effect(/datum/status_effect/stoned)
 	if(SPT_PROB(1, seconds_per_tick))
 		var/smoke_message = pick("You feel relaxed.","You feel calmed.","Your mouth feels dry.","You could use some water.","Your heart beats quickly.","You feel clumsy.","You crave junk food.","You notice you've been moving more slowly.")
@@ -78,6 +80,7 @@
 	mytray.adjust_pestlevel(-rand(1, 2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(SPT_PROB(0.5, seconds_per_tick))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(affected_mob, span_notice("[smoke_message]"))
@@ -110,6 +113,7 @@
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
@@ -167,6 +171,7 @@
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/methamphetamine)
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
@@ -228,6 +233,7 @@
 		QDEL_NULL(rage)
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
@@ -262,6 +268,7 @@
 	addiction_types = list(/datum/addiction/stimulants = 8)
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
@@ -295,6 +302,7 @@
 	affected_mob.clear_mood_event("happiness_drug")
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	affected_mob.remove_status_effect(/datum/status_effect/confusion)
 	affected_mob.disgust = 0
@@ -341,6 +349,7 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -397,6 +406,7 @@
 	addiction_types = list(/datum/addiction/maintenance_drugs = 14)
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	// 5x if you want to OD, you can potentially go higher, but good luck managing the brain damage.
 	var/amt = max(round(volume/3, 0.1), 1)
@@ -428,6 +438,7 @@
 	ADD_TRAIT(affected_mob,TRAIT_HARDLY_WOUNDED,type)
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(affected_mob.adjustToxLoss(0.5 * REM * seconds_per_tick, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
@@ -459,6 +470,7 @@
 	addiction_types = list(/datum/addiction/maintenance_drugs = 5)
 
 /datum/reagent/drug/maint/tar/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.AdjustStun(-10 * REM * seconds_per_tick)
 	affected_mob.AdjustKnockdown(-10 * REM * seconds_per_tick)
 	affected_mob.AdjustUnconscious(-10 * REM * seconds_per_tick)
@@ -487,6 +499,7 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 12)
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, seconds_per_tick, times_fired)
+	. = ..()
 	psychonaut.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
 
 	switch(current_cycle)
@@ -611,6 +624,7 @@
 	dancer.sound_environment_override = NONE
 
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/dancer, seconds_per_tick, times_fired)
+	. = ..()
 	if(dancer.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH
 	dancer.AdjustKnockdown(-20)
@@ -683,6 +697,7 @@
 	addiction_types = list(/datum/addiction/maintenance_drugs = 20)
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, seconds_per_tick, times_fired)
+	. = ..()
 	if(invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
@@ -802,6 +817,7 @@
 	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
+	. = ..()
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
 	if(kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH

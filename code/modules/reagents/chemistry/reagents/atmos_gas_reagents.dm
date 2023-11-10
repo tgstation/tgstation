@@ -48,6 +48,7 @@
 	breather.SetSleeping(1 SECONDS)
 
 /datum/reagent/healium/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
+	. = ..()
 	breather.SetSleeping(30 SECONDS)
 	var/need_mob_update
 	need_mob_update = breather.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -66,6 +67,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+	. = ..()
 	if(isplasmaman(breather))
 		breather.set_timed_status_effect(10 SECONDS * REM * seconds_per_tick, /datum/status_effect/hypernob_protection)
 
@@ -89,6 +91,7 @@
 	REMOVE_TRAIT(breather, TRAIT_SLEEPIMMUNE, type)
 
 /datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+	. = ..()
 	var/need_mob_update
 	need_mob_update = breather.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	need_mob_update += breather.adjustToxLoss(0.1 * (current_cycle-1) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) // 1 toxin damage per cycle at cycle 10
@@ -123,6 +126,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, times_fired)
+	. = ..()
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
 		return
 
@@ -145,6 +149,7 @@
 	affected_respiration_type = ALL
 
 /datum/reagent/zauker/on_mob_life(mob/living/breather, seconds_per_tick, times_fired)
+	. = ..()
 	var/need_mob_update
 	need_mob_update = breather.adjustBruteLoss(6 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += breather.adjustOxyLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
