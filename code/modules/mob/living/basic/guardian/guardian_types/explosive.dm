@@ -51,7 +51,6 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/explosive_booby_trap/Activate(atom/target)
-	target.balloon_alert(owner, "bomb planted")
 	var/glow_colour = COLOR_RED
 	var/mob/living/basic/guardian/guardian_owner = owner
 	if (istype(guardian_owner))
@@ -64,6 +63,7 @@
 		explosive_checks = CALLBACK(src, PROC_REF(validate_target)), \
 		triggering_signals = boom_signals, \
 	)
+	target.balloon_alert(owner, "bomb planted")
 	StartCooldown()
 	return TRUE
 

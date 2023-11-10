@@ -1,6 +1,6 @@
 /// Pop out into the realm of the living.
 /mob/living/basic/guardian/proc/manifest(forced)
-	if (is_deployed() || isnull(summoner?.loc) || istype(summoner?.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
+	if (is_deployed() || isnull(summoner) || isnull(summoner.loc) || istype(summoner.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
 		return FALSE
 	forceMove(summoner.loc)
 	new /obj/effect/temp_visual/guardian/phase(loc)
@@ -168,13 +168,15 @@
 	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>'s personality..."))
 	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", ROLE_PAI, FALSE, 100)
 	if (!LAZYLEN(ghost_candidates))
-		to_chat(owner, span_holoparasite("There were no ghosts willing to take control of <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>. Looks like you're stuck with it for now."))
+		to_chat(owner, span_holoparasite("Your attempt to reset the personality of \
+			<font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font> appears to have failed... \
+			Looks like you're stuck with it for now."))
 		StartCooldown()
 		return FALSE
 
 	var/mob/dead/observer/candidate = pick(ghost_candidates)
 	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-	to_chat(owner, span_boldholoparasite("Your <font color=\"[chosen_guardian.guardian_colour]\">[chosen_guardian.theme.name]</font> has been successfully reset."))
+	to_chat(owner, span_boldholoparasite("The personality of <font color=\"[chosen_guardian.guardian_colour]\">[chosen_guardian.theme.name]</font> has been successfully reset."))
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
 	chosen_guardian.key = candidate.key

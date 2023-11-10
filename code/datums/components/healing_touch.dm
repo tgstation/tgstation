@@ -93,7 +93,7 @@
 
 // Let's populate this list as we actually use it, this thing has too many args
 /datum/component/healing_touch/InheritComponent(
-	datum/component/C,
+	datum/component/new_component,
 	i_am_original,
 	heal_color,
 )

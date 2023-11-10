@@ -158,7 +158,7 @@
 	if (!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Invalid name, please try again."))
 		return guardian_rename()
-	to_chat(src, span_notice("Your new name [span_name("[new_name]")] anchors itself in your mind."))
+	to_chat(src, span_notice("Your new name [span_name(new_name)] anchors itself in your mind."))
 	fully_replace_character_name(null, new_name)
 
 /// Picks a random name as a suggestion
