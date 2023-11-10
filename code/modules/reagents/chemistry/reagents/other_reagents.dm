@@ -2535,11 +2535,11 @@
 
 /datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
 	. = ..()
-	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+	ADD_TRAIT(ling, TRAIT_CHANGELING_HIVEMIND_MUTE, type)
 
 /datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
 	. = ..()
-	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+	REMOVE_TRAIT(ling, TRAIT_CHANGELING_HIVEMIND_MUTE, type)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
 	. = ..()

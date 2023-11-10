@@ -243,4 +243,28 @@
 ///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
 
+/// Sources for TRAIT_IGNORING_GRAVITY
+#define IGNORING_GRAVITY_NEGATION "ignoring_gravity_negation"
 
+/// Hearing trait that is from the hearing component
+#define CIRCUIT_HEAR_TRAIT "circuit_hear"
+
+/**
+* Trait granted by [/mob/living/carbon/Initialize] and
+* granted/removed by [/obj/item/organ/internal/tongue]
+* Used for ensuring that carbons without tongues cannot taste anything
+* so it is added in Initialize, and then removed when a tongue is inserted
+* and readded when a tongue is removed.
+*/
+#define NO_TONGUE_TRAIT "no_tongue_trait"
+
+/// Trait granted by [/mob/living/silicon/robot]
+/// Traits applied to a silicon mob by their model.
+#define MODEL_TRAIT "model_trait"
+
+/// Trait granted by [mob/living/silicon/ai]
+/// Applied when the ai anchors itself
+#define AI_ANCHOR_TRAIT "ai_anchor"
+
+/// Trait from [/datum/antagonist/nukeop/clownop]
+#define CLOWNOP_TRAIT "clownop"

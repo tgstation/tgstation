@@ -189,8 +189,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get overlays from being in critical.
 #define TRAIT_NOCRITOVERLAY "no_crit_overlay"
-/// Gets a mood boost from being in the hideout.
-#define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
 /// The mob is holy and resistance to cult magic
@@ -261,8 +259,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// We are ignoring gravity
 #define TRAIT_IGNORING_GRAVITY "ignores_gravity"
-/// Sources for TRAIT_IGNORING_GRAVITY
-#define IGNORING_GRAVITY_NEGATION "ignoring_gravity_negation"
 /// We have some form of forced gravity acting on us
 #define TRAIT_FORCED_GRAVITY "forced_gravity"
 /// Makes whispers clearly heard from seven tiles away, the full hearing range
@@ -642,7 +638,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GOOD_QUALITY_BAIT "good_quality_bait"
 #define TRAIT_GREAT_QUALITY_BAIT "great_quality_bait"
 /// Baits with this trait will ignore bait preferences and related fish traits.
-#define OMNI_BAIT_TRAIT "omni_bait"
+#define TRAIT_OMNI_BAIT "omni_bait"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
@@ -758,9 +754,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied when an integrated circuit opens a UI on a player (see list pick component)
 #define TRAIT_CIRCUIT_UI_OPEN "circuit_ui_open"
 
-/// Hearing trait that is from the hearing component
-#define CIRCUIT_HEAR_TRAIT "circuit_hear"
-
 /// PDA Traits. This one makes PDAs explode if the user opens the messages menu
 #define TRAIT_PDA_MESSAGE_MENU_RIGGED "pda_message_menu_rigged"
 /// This one denotes a PDA has received a rigged message and will explode when the user tries to reply to a rigged PDA message
@@ -845,36 +838,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
-
-
 /// changelings with this trait can no longer talk over the hivemind
-#define CHANGELING_HIVEMIND_MUTE "ling_mute"
+#define TRAIT_TRAIT_CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define TRAIT_HULK "hulk"
-
-
-
 
 /// Isn't attacked harmfully by blob structures
 #define TRAIT_BLOB_ALLY "blob_ally"
-
-/**
-* Trait granted by [/mob/living/carbon/Initialize] and
-* granted/removed by [/obj/item/organ/internal/tongue]
-* Used for ensuring that carbons without tongues cannot taste anything
-* so it is added in Initialize, and then removed when a tongue is inserted
-* and readded when a tongue is removed.
-*/
-#define NO_TONGUE_TRAIT "no_tongue_trait"
-
-/// Trait granted by [/mob/living/silicon/robot]
-/// Traits applied to a silicon mob by their model.
-#define MODEL_TRAIT "model_trait"
-
-/// Trait granted by [mob/living/silicon/ai]
-/// Applied when the ai anchors itself
-#define AI_ANCHOR_TRAIT "ai_anchor"
-/// Trait from [/datum/antagonist/nukeop/clownop]
-#define CLOWNOP_TRAIT "clownop"
 
 ///Traits given by station traits
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
