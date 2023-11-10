@@ -8,4 +8,4 @@
 /// Trait given by mech equipment
 #define TRAIT_MECH_EQUIPMENT(equipment_type) "mech_equipment_[equipment_type]"
 /// Trait applied by element
-#define ELEMENT_TRAIT(source) "element_trait_[source]
+#define ELEMENT_TRAIT(source) "element_trait_[source]"
