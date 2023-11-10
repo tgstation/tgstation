@@ -321,6 +321,7 @@
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
 	head_flags = NONE
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/chest/skeleton
 	biological_state = BIO_BONE
@@ -328,6 +329,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	bodypart_flags = BODYPART_UNHUSKABLE
 	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 
 /obj/item/bodypart/arm/left/skeleton
@@ -335,24 +337,28 @@
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/arm/right/skeleton
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/skeleton
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/right/skeleton
 	biological_state = (BIO_BONE|BIO_JOINTED)
 	limb_id = SPECIES_SKELETON
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 ///MUSHROOM
 /obj/item/bodypart/head/mushroom
@@ -372,21 +378,21 @@
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 6
 	unarmed_damage_high = 14
-	unarmed_stun_threshold = 14
+	unarmed_effectiveness = 15
 	burn_modifier = 1.25
 
 /obj/item/bodypart/arm/right/mushroom
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 6
 	unarmed_damage_high = 14
-	unarmed_stun_threshold = 14
+	unarmed_effectiveness = 15
 	burn_modifier = 1.25
 
 /obj/item/bodypart/leg/left/mushroom
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 9
 	unarmed_damage_high = 21
-	unarmed_stun_threshold = 14
+	unarmed_effectiveness = 20
 	burn_modifier = 1.25
 	speed_modifier = 0.75 //big big fungus
 
@@ -394,7 +400,7 @@
 	limb_id = SPECIES_MUSHROOM
 	unarmed_damage_low = 9
 	unarmed_damage_high = 21
-	unarmed_stun_threshold = 14
+	unarmed_effectiveness = 20
 	burn_modifier = 1.25
 	speed_modifier = 0.75 //big fungus big fungus
 
@@ -489,7 +495,7 @@
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
-	unarmed_stun_threshold = 11
+	unarmed_effectiveness = 20
 
 /obj/item/bodypart/arm/left/golem/Initialize(mapload)
 	held_hand_offset =  new(
@@ -523,7 +529,7 @@
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
-	unarmed_stun_threshold = 11
+	unarmed_effectiveness = 20
 
 /obj/item/bodypart/arm/right/golem/Initialize(mapload)
 	held_hand_offset =  new(
@@ -556,7 +562,7 @@
 	dmg_overlay_type = null
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
-	unarmed_stun_threshold = 11
+	unarmed_effectiveness = 25
 
 /obj/item/bodypart/leg/right/golem
 	icon = 'icons/mob/human/species/golems.dmi'
@@ -569,7 +575,7 @@
 	dmg_overlay_type = null
 	unarmed_damage_low = 7
 	unarmed_damage_high = 21
-	unarmed_stun_threshold = 11
+	unarmed_effectiveness = 25
 
 ///flesh
 

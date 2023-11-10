@@ -41,7 +41,13 @@
 	new_rift.dragon = dragon
 	dragon.rift_list += new_rift
 	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
-	notify_ghosts("The Space Dragon has opened a rift!", source = new_rift, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
+	notify_ghosts(
+		"The Space Dragon has opened a rift!",
+		source = new_rift,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "Carp Rift Opened",
+	)
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
 	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
 
@@ -189,14 +195,20 @@
 		if(light_color != LIGHT_COLOR_PURPLE)
 			set_light_color(LIGHT_COLOR_PURPLE)
 			update_light()
-		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
+		notify_ghosts(
+			"The carp rift can summon an additional carp!",
+			source = src,
+			action = NOTIFY_ORBIT,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Carp Spawn Available",
+		)
 		last_carp_inc -= carp_interval
 
 	// Is the rift now fully charged?
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations", has_important_message = TRUE)
+		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -216,7 +228,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "Central Command Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "[command_name()] Wildlife Observations", ANNOUNCER_SPANOMALIES)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.

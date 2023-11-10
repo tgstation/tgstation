@@ -7,6 +7,10 @@
 	var/releasedelay = 10
 	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
+/obj/effect/anomaly/pyro/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/anomaly/pyro/anomalyEffect(seconds_per_tick)
 	..()
 	ticks += seconds_per_tick
