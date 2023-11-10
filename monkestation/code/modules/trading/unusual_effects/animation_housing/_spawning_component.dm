@@ -1,6 +1,7 @@
 
 /obj/effect/abstract/particle
 	name = ""
+	plane = GAME_PLANE_FOV_HIDDEN
 	appearance_flags = RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'monkestation/code/modules/trading/icons/particles.dmi'
@@ -37,8 +38,10 @@
 	///kept track of for removal sake
 	var/added_x = 0
 	var/added_y = 0
+	/// do we do random amounts of particle bursts?
+	var/random_bursts = FALSE
 
-/datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0)
+/datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0, random_bursts = 0)
 	. = ..()
 	if(icon_file)
 		src.icon_file = icon_file
@@ -58,6 +61,8 @@
 		src.burst_amount = burst_amount
 	if(lifetime)
 		src.lifetime = lifetime
+	if(random_bursts)
+		src.random_bursts = random_bursts
 	source_object = parent
 
 	START_PROCESSING(SSactualfastprocess, src)
@@ -86,8 +91,12 @@
 		count++
 		if(count < spawn_interval)
 			return
-	
-	for(var/i = 0 to burst_amount)
+	count = 0
+	var/burstees = burst_amount
+	if(random_bursts)
+		burstees = rand(1, burst_amount)
+
+	for(var/i = 0 to burstees)
 		//create and assign particle its stuff
 		var/obj/effect/abstract/particle/spawned = new(get_turf(source_object))
 		spawned.pixel_x = offset_x

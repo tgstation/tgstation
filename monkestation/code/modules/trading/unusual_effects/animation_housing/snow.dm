@@ -1,8 +1,10 @@
 /datum/component/particle_spewer/snow
 	icon_file = 'monkestation/code/modules/outdoors/icons/effects/particles/particle.dmi'
 	particle_state = "cross"
-	burst_amount = 4
+	burst_amount = 8
 	duration = 2 SECONDS
+	random_bursts = TRUE
+	spawn_interval = 0.3 SECONDS
 
 /datum/component/particle_spewer/snow/animate_particle(obj/effect/abstract/particle/spawned)
 	var/chance = rand(1, 10)
@@ -16,6 +18,8 @@
 		else
 			spawned.icon_state = "snow_1"
 
+	if(prob(35))
+		spawned.layer = ABOVE_MOB_LAYER
 	spawned.pixel_x += rand(-12, 12)
 	spawned.pixel_y += rand(-5, 5)
 

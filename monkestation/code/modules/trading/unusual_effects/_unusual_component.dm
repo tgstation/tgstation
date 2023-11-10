@@ -25,9 +25,9 @@
 	source_object.AddComponent(particle_path)
 	
 	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
-	source_object.desc += span_notice("\n Unboxed on: [round_id]")
+	source_object.desc += span_notice("\n Unboxed on round: [round_id]")
 	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
-	
+
 	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
 
 /datum/component/unusual_handler/Destroy(force, silent)
