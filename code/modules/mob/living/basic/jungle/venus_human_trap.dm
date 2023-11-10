@@ -165,7 +165,7 @@
 	melee_attack_cooldown = 1.2 SECONDS
 	ai_controller = /datum/ai_controller/basic_controller/human_trap
 	///how much damage we take out of weeds
-	var/no_weed_damage = 20
+	var/no_weed_damage = 12.5
 	///how much do we heal in weeds
 	var/weed_heal = 10
 	///if the balloon alert was shown atleast once, reset after healing in weeds
@@ -255,7 +255,7 @@
 
 /datum/ai_controller/basic_controller/human_trap
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

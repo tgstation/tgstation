@@ -315,6 +315,11 @@
 		if(!food_to_convert)
 			break
 
+		if(food_to_convert.flags_1 & HOLOGRAM_1)
+			qdel(food_to_convert)
+			current_item_count = max(current_item_count - 1, 0)
+			continue
+
 		convert_to_biomass(food_to_convert)
 
 	use_power(active_power_usage * seconds_per_tick)
