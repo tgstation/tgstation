@@ -9,6 +9,12 @@
 	custom_premium_price = PAYCHECK_CREW * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
+	//Vars used for the shield component
+	var/heretic_shield_icon = "unfathomable_shield"
+	var/max_charges = 1
+	var/recharge_start_delay = 60 SECONDS
+	var/charge_increment_delay = 60 SECONDS
+	var/charge_recovery = 1
 
 /obj/item/storage/belt/unfathomable_curio/Initialize(mapload)
 	. = ..()
@@ -30,30 +36,35 @@
 		/obj/item/stack/sheet/glass, // Glass is often used by moon heretics
 	))
 
-
-/obj/item/storage/belt/unfathomable_curio/Initialize(mapload)
-	. = ..()
-	//Vars used for the shield component
-	var/heretic_shield_icon = "unfathomable_shield"
-	var/max_charges = 1
-	var/recharge_start_delay = 60 SECONDS
-	var/charge_increment_delay = 60 SECONDS
-	var/charge_recovery = 1
-
 	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, shield_icon = heretic_shield_icon)
+	charge_recovery = charge_recovery, shield_icon = heretic_shield_icon, run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
 
 
 /obj/item/storage/belt/unfathomable_curio/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot & slot_flags))
 		return
+
 	if(!IS_HERETIC(user))
-		to_chat(user, span_warning("I wouldn't do that..."))
-		user.dropItemToGround(src, TRUE)
+		to_chat(user, span_warning("The curio wraps around you, and you feel the beating of something dark inside it..."))
+
+
+// Our on hit effect
+/obj/item/storage/belt/unfathomable_curio/proc/shield_damaged(mob/living/carbon/wearer, attack_text, new_current_charges)
+	var/list/brain_traumas = list(
+		/datum/brain_trauma/severe/mute,
+		/datum/brain_trauma/severe/flesh_desire,
+		/datum/brain_trauma/severe/eldritch_beauty,
+		/datum/brain_trauma/severe/paralysis,
+		/datum/brain_trauma/severe/monophobia
+	)
+	wearer.visible_message(span_danger("[wearer]'s veil makes [attack_text] miss, but the force behind the blow causes it to disperse!"))
+	if(!IS_HERETIC(wearer))
+		to_chat(wearer, span_warning("Laughter echoes in your mind...."))
+		wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
+		wearer.dropItemToGround(src, TRUE)
+		wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
 		return
-
-
 
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	. = ..()

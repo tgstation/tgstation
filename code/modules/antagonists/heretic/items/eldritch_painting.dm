@@ -45,7 +45,7 @@
 
 // Applies an affect on view
 /datum/proximity_monitor/advanced/eldritch_painting
-	var/applied_trauma = /datum/brain_trauma/severe/paralysis
+	var/applied_trauma = /datum/brain_trauma/severe/pacifism
 	var/text_to_display = "I should not be seeing this..."
 
 /datum/proximity_monitor/advanced/eldritch_painting/field_turf_crossed(atom/movable/crossed, turf/location)
@@ -61,7 +61,7 @@
 	if(IS_HERETIC(viewer))
 		return
 	to_chat(viewer, span_notice(text_to_display))
-	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_SURGERY)
 	viewer.emote("scream")
 	to_chat(viewer, span_warning("As you gaze upon the painting your mind rends to its truth!"))
 
