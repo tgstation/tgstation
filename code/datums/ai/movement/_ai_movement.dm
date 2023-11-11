@@ -32,11 +32,16 @@
 	var/datum/ai_controller/controller = source.extra_info
 
 	var/can_move = TRUE
-	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby) //Need to store more state. Annoying.
+	if((controller.ai_traits & STOP_MOVING_WHEN_PULLED) && pawn.pulledby) //Need to store more state. Annoying.
 		can_move = FALSE
 
 	if(!isturf(pawn.loc)) //No moving if not on a turf
 		can_move = FALSE
+
+	if(isliving(pawn))
+		var/mob/living/pawn_mob = pawn
+		if(!(pawn_mob.mobility_flags & MOBILITY_MOVE))
+			can_move = FALSE
 
 	return can_move
 
