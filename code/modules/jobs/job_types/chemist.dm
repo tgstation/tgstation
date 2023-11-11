@@ -49,7 +49,11 @@
 	ears = /obj/item/radio/headset/headset_med
 	glasses = /obj/item/clothing/glasses/science
 	shoes = /obj/item/clothing/shoes/sneakers/white
+	//MONKESTATION REMOVAL START - FermiChem/pH chem is disabled, so having buffer bottles in the chemists starting loadout is a complete waste of time, space and processing power.
+	/*
 	l_pocket = /obj/item/reagent_containers/cup/bottle/random_buffer
+	*/
+	//MONKESTATION REMOVAL END
 	r_pocket = /obj/item/reagent_containers/dropper
 
 	backpack = /obj/item/storage/backpack/chemistry

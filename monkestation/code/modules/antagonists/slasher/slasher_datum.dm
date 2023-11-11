@@ -15,8 +15,11 @@
 	show_name_in_check_antagonists = TRUE
 	hud_icon = 'monkestation/icons/mob/slasher.dmi'
 	preview_outfit = /datum/outfit/slasher
+	show_to_ghosts = TRUE
 
+	///the linked machette that the slasher can summon even if destroyed and is unique to them
 	var/obj/item/slasher_machette/linked_machette
+	///toggles false/true if we are visible in order to breathe out or in
 	var/breath_out = FALSE
 	///rallys the amount of souls effects are based on this
 	var/souls_sucked = 0

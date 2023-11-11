@@ -41,7 +41,6 @@
 	excute_round_end_reports = TRUE
 	end_when = 60000 /// we will end on our own when revs win
 	var/static/datum/team/nuclear/nuke_team
-	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	var/set_leader = FALSE
 	var/required_role = ROLE_CLOWN_OPERATIVE
 
@@ -71,8 +70,9 @@
 
 	if(!set_leader)
 		set_leader = TRUE
-		var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
-		nuke_team = leader.nuke_team
+		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
+		nuke_team = leader_antag_datum.nuke_team
+		most_experienced.add_antag_datum(leader_antag_datum)
 
 	if(antag_mind == most_experienced)
 		return
