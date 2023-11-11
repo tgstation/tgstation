@@ -91,10 +91,12 @@ export const CutterTarget = new Juke.Target({
     const suffix = process.platform === 'win32' ? '.exe' : '';
     const download_from = `https://github.com/${repo}/releases/download/${ver}/hypnagogic${suffix}`
     await download_file(download_from, cutter_path);
-    await Juke.exec("chmod", [
-      '+x',
-      cutter_path,
-    ]);
+    if(process.platform !== 'win32') {
+      await Juke.exec("chmod", [
+        '+x',
+        cutter_path,
+      ]);
+    }
   },
 });
 
