@@ -44,6 +44,8 @@
 	var/random_bursts = FALSE
 	///should we offset
 	var/offsets = TRUE
+	/// do we process?
+	var/processes = TRUE
 
 /datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0, random_bursts = 0)
 	. = ..()
@@ -69,7 +71,8 @@
 		src.random_bursts = random_bursts
 	source_object = parent
 
-	START_PROCESSING(SSactualfastprocess, src)
+	if(processes)
+		START_PROCESSING(SSactualfastprocess, src)
 	RegisterSignal(source_object, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_equip_offsets))
 	RegisterSignal(source_object, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(reset_offsets))
 	
@@ -96,6 +99,9 @@
 		if(count < spawn_interval)
 			return
 	count = 0
+	spawn_particles()
+
+/datum/component/particle_spewer/proc/spawn_particles(datum/source, atom/oldloc, dir, forced)
 	var/burstees = burst_amount
 	if(random_bursts)
 		burstees = rand(1, burst_amount)
@@ -129,6 +135,7 @@
 
 /datum/component/particle_spewer/proc/handle_equip_offsets(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
+
 	offset_x -= added_x
 	offset_y -= added_y
 	added_x = 0
