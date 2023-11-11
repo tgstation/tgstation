@@ -8,6 +8,12 @@
 	weight = 8
 	station_name = "Tramstation"
 
+/datum/map_template/random_room/random_bar/tramstation_base/ocean
+	name = "Ocean Tram Bar"
+	room_id = "tram_bar_ocean"
+	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_ocean.dmm"
+	weight = 6
+
 /datum/map_template/random_room/random_bar/tramstation_base/beachside
 	name = "Beachside Tram Bar"
 	room_id = "tram_bar_beach"
@@ -31,4 +37,3 @@
 	room_id = "tram_bar_cult"
 	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_cult.dmm"
 	weight = 4 // has a rune that summons booze across the station, lets keep it a bit more rare than other bars
-
