@@ -1,6 +1,6 @@
 /datum/action/cooldown/slasher
 	name = "Slasher Possession"
-	desc = "You've been possessed by the Slasher"
+	desc = "You've been possessed by the Slasher... not actually, please report this to coders"
 	background_icon = 'goon/icons/mob/slasher.dmi'
 	background_icon_state = "slasher_background"
 	button_icon = 'goon/icons/mob/slasher.dmi'
