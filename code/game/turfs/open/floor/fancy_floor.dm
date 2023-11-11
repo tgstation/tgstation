@@ -115,19 +115,23 @@
 
 /turf/open/floor/bamboo/tatami
 	desc = "A traditional Japanese floor mat."
-	icon_state = "tatami_green"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "bamboo-green"
 	floor_tile = /obj/item/stack/tile/bamboo/tatami
 	smoothing_flags = NONE
 
 /turf/open/floor/bamboo/tatami/broken_states()
+	// This state doesn't exist why is it here?
 	return list("tatami-damaged")
 
 /turf/open/floor/bamboo/tatami/purple
-	icon_state = "tatami_purple"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "bamboo-purple"
 	floor_tile = /obj/item/stack/tile/bamboo/tatami/purple
 
 /turf/open/floor/bamboo/tatami/black
-	icon_state = "tatami_black"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "bamboo-black"
 	floor_tile = /obj/item/stack/tile/bamboo/tatami/black
 
 /turf/open/floor/grass
@@ -271,12 +275,14 @@
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/lone
-	icon_state = "carpetsymbol"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "carpet-symbol"
 	smoothing_flags = NONE
 	floor_tile = /obj/item/stack/tile/carpet/symbol
 
 /turf/open/floor/carpet/lone/star
-	icon_state = "carpetstar"
+	icon = 'icons/turf/floors/floor_variations.dmi'
+	icon_state = "carpet-star"
 	floor_tile = /obj/item/stack/tile/carpet/star
 
 /turf/open/floor/carpet/black
