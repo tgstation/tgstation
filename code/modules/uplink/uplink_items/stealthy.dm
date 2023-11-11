@@ -76,7 +76,7 @@
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
-	cost = 13
+	cost = 17
 	surplus = 0
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
