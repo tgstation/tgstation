@@ -480,17 +480,20 @@
 
 /turf/open/floor/carpet/neon/simple
 	name = "simple neon carpet"
-	icon = 'icons/turf/floors/carpet_neon_simple.dmi'
+	icon = 'icons/turf/floors/carpet_neon_base.dmi'
 	icon_state = "base-255"
 	base_icon_state = "base"
+	icon = 'icons/turf/floors/carpet_neon_light.dmi'
 	neon_icon_state = "light"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON
 
 /turf/open/floor/carpet/neon/simple/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_NODOTS
@@ -505,8 +508,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE
 
 /turf/open/floor/carpet/neon/simple/white/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/white/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_WHITE_NODOTS
@@ -515,6 +520,7 @@
 /turf/open/floor/carpet/neon/simple/black
 	name = "simple black neon carpet"
 	desc = "A rubbery mat with a inset pattern of black phosphorescent dye."
+	neon_icon = 'icons/turf/floors/carpet_neon_glow.dmi'
 	neon_icon_state = "glow" // This one also lights up the edges of the lines.
 	neon_color = COLOR_BLACK
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/black
@@ -522,8 +528,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLACK
 
 /turf/open/floor/carpet/neon/simple/black/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_glow_nodots.dmi'
 	neon_icon_state = "glow-nodots"
 	neon_color = COLOR_BLACK
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/black/nodots
@@ -539,8 +547,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED
 
 /turf/open/floor/carpet/neon/simple/red/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/red/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_RED_NODOTS
@@ -555,8 +565,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE
 
 /turf/open/floor/carpet/neon/simple/orange/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/orange/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_ORANGE_NODOTS
@@ -571,8 +583,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW
 
 /turf/open/floor/carpet/neon/simple/yellow/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/yellow/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_YELLOW_NODOTS
@@ -587,8 +601,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME
 
 /turf/open/floor/carpet/neon/simple/lime/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/lime/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_LIME_NODOTS
@@ -603,8 +619,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN
 
 /turf/open/floor/carpet/neon/simple/green/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/green/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_GREEN_NODOTS
@@ -619,8 +637,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL
 
 /turf/open/floor/carpet/neon/simple/teal/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/teal/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_TEAL_NODOTS
@@ -635,8 +655,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN
 
 /turf/open/floor/carpet/neon/simple/cyan/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/cyan/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_CYAN_NODOTS
@@ -651,8 +673,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE
 
 /turf/open/floor/carpet/neon/simple/blue/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/blue/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_BLUE_NODOTS
@@ -667,8 +691,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE
 
 /turf/open/floor/carpet/neon/simple/purple/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/purple/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_PURPLE_NODOTS
@@ -683,8 +709,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET
 
 /turf/open/floor/carpet/neon/simple/violet/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/violet/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_VIOLET_NODOTS
@@ -699,8 +727,10 @@
 	canSmoothWith = SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK
 
 /turf/open/floor/carpet/neon/simple/pink/nodots
+	icon = 'icons/turf/floors/carpet_neon_base_nodots.dmi'
 	icon_state = "base-nodots-255"
 	base_icon_state = "base-nodots"
+	neon_icon = 'icons/turf/floors/carpet_neon_light_nodots.dmi'
 	neon_icon_state = "light-nodots"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple/pink/nodots
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON_PINK_NODOTS
