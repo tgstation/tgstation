@@ -60,6 +60,8 @@
 		return
 	if(IS_HERETIC(viewer))
 		return
+	if(viewer.can_block_magic(MAGIC_RESISTANCE))
+		return
 	to_chat(viewer, span_notice(text_to_display))
 	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_SURGERY)
 	viewer.emote("scream")

@@ -282,8 +282,8 @@
 /datum/antagonist/heretic/acolyte_moon
 	name = "\improper Acolyte of Moon"
 	hijack_speed = 0
-	//antagpanel_category = ANTAG_GROUP_HORRORS
-	//show_in_antagpanel = FALSE
+	antagpanel_category = ANTAG_GROUP_HORRORS
+	show_in_antagpanel = FALSE
 	suicide_cry = "THE MOON GAZES UPON THEE!!"
 	preview_outfit = /datum/outfit/heretic
 	antag_moodlet = /datum/mood_event/heretics/moon_acolyte
