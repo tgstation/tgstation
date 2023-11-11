@@ -1,5 +1,5 @@
 output_name = "snow_turf"
-template = "bitmask/standard_32x32.toml"
+template = "bitmask/diagonal_32x32.toml"
 
 [icon_size]
 x = 32

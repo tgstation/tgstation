@@ -48,7 +48,7 @@ else:
 for output_name in output_hash:
     if output_hash[output_name] == hash_file(output_name):
         continue
-    print(f"::error template={cutter_template}, resource={resource_name} and output={output_name} all exist but were not comitted fully compiled")
+    print(f"::error output={output_name} and its templates all exist but were not comitted fully compiled")
     failed = True
 
 if failed:
