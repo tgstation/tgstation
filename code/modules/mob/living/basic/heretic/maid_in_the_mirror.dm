@@ -1,6 +1,6 @@
 /// Scout and assassin who can appear and disappear from glass surfaces. Damaged by being examined.
 /mob/living/basic/heretic_summon/maid_in_the_mirror
-	name = "Maid in the Mirror"
+	name = "\improper Maid in the Mirror"
 	real_name = "Maid in the Mirror"
 	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
 	icon = 'icons/mob/simple/mob.dmi'
@@ -32,8 +32,7 @@
 		/obj/item/shard,
 	)
 	AddElement(/datum/element/death_drops, loot)
-	var/datum/action/cooldown/spell/jaunt/mirror_walk/jaunt = new (src)
-	jaunt.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/mirror_walk)
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
 	var/turf/death_turf = get_turf(src)

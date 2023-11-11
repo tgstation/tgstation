@@ -55,7 +55,7 @@
 	var/list/airlocks = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock)
 	for(var/i in 1 to run_distance)
 		var/turf/test_destination = get_ranged_target_turf_direct(source, target, range = i, offset = angle)
-		if(test_destination.is_blocked_turf(exclude_mobs = !source.density, source_atom = source, ignore_atoms = airlocks))
+		if(test_destination.is_blocked_turf(source_atom = source, ignore_atoms = airlocks))
 			break
 		return_turf = test_destination
 	return return_turf

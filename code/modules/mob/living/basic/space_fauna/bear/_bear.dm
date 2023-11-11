@@ -130,7 +130,7 @@
 
 	AddComponent(/datum/component/regenerator,\
 		regeneration_delay = 1 SECONDS,\
-		health_per_second = 5,\
+		brute_per_second = 5,\
 		outline_colour = COLOR_YELLOW,\
 	)
 
@@ -167,4 +167,3 @@
 	victim.Knockdown(20)
 	playsound(loc, 'sound/misc/slip.ogg', 15)
 	victim.visible_message(span_danger("[victim] slips on [src]'s butter!"))
-

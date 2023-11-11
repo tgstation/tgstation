@@ -16,6 +16,11 @@
 /// Chance to perform an emote per second
 #define BB_EMOTE_CHANCE "BB_EMOTE_CHANCE"
 
+/// Something the mob will say when calling reinforcements
+#define BB_REINFORCEMENTS_SAY "BB_reinforcements_say"
+/// Something the mob will remote when calling reinforcements
+#define BB_REINFORCEMENTS_EMOTE "BB_reinforcements_emote"
+
 ///Turf we want a mob to move to
 #define BB_TRAVEL_DESTINATION "BB_travel_destination"
 
@@ -35,22 +40,28 @@
 
 ///Basic Mob Keys
 
-///Targetting subtrees
+///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
-#define BB_TARGETTING_DATUM "targetting_datum"
+#define BB_TARGETING_STRATEGY "targeting_strategy"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
-#define BB_OBSTACLE_TARGETTING_WHITELIST "BB_targetting_whitelist"
+#define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"
+/// Key for the minimum status at which we want to target mobs (does not need to be specified if CONSCIOUS)
+#define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
+/// Flag for whether to target only wounded mobs
+#define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
+/// What typepath the holding object targeting strategy should look for
+#define BB_TARGET_HELD_ITEM "BB_target_held_item"
 
-/// Blackboard key storing how long your targetting datum has held a particular target
+/// Blackboard key storing how long your targeting strategy has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
 
-///Targetting keys for something to run away from, if you need to store this separately from current target
+///Targeting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
 #define BB_BASIC_MOB_FLEE_TARGET_HIDING_LOCATION "BB_basic_flee_target_hiding_location"
-#define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
+#define BB_FLEE_TARGETING_STRATEGY "flee_targeting_strategy"
 #define BB_BASIC_MOB_FLEE_DISTANCE "BB_basic_flee_distance"
 #define DEFAULT_BASIC_FLEE_DISTANCE 9
 
@@ -106,9 +117,9 @@
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
 
-///should we skip the faction check for the targetting datum?
+///should we skip the faction check for the targeting strategy?
 #define BB_ALWAYS_IGNORE_FACTION "BB_always_ignore_factions"
-///are we in some kind of temporary state of ignoring factions when targetting? can result in volatile results if multiple behaviours touch this
+///are we in some kind of temporary state of ignoring factions when targeting? can result in volatile results if multiple behaviours touch this
 #define BB_TEMPORARILY_IGNORE_FACTION "BB_temporarily_ignore_factions"
 
 ///currently only used by clowns, a list of what can the mob speak randomly
@@ -118,3 +129,8 @@
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
 #define BB_SPEAK_CHANCE "emote_chance"
+
+/// A target that has called this mob for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENT_TARGET "BB_basic_mob_reinforcement_target"
+/// The next time at which this mob can call for reinforcements
+#define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"

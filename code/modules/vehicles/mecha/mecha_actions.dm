@@ -152,6 +152,5 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	chassis.toggle_overclock(forced_state)
-	chassis.balloon_alert(owner, chassis.overclock_mode ? "started overclocking" : "stopped overclocking")
 	button_icon_state = "mech_overload_[chassis.overclock_mode ? "on" : "off"]"
 	build_all_button_icons()

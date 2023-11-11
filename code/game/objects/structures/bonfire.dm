@@ -187,6 +187,11 @@
 
 /obj/structure/bonfire/prelit/Initialize(mapload)
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+// Late init so that we can wait for air to exist in lazyloaded templates
+/obj/structure/bonfire/prelit/LateInitialize()
+	. = ..()
 	start_burning()
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

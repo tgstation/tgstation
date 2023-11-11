@@ -14,6 +14,10 @@
 		to_chat(src, span_revenwarning("You are already siphoning the essence of a soul!"))
 		return FALSE
 
+	if(target.flags_1 & HOLOGRAM_1)
+		target.balloon_alert(src, "doesn't possess a soul!") // it's a machine generated visual
+		return
+
 	draining = TRUE
 	var/value_to_return = harvest_soul(target)
 	if(!value_to_return)

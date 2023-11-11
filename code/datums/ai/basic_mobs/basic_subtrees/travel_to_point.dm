@@ -16,3 +16,6 @@
 
 /datum/ai_planning_subtree/travel_to_point/and_clear_target
 	travel_behaviour = /datum/ai_behavior/travel_towards/stop_on_arrival
+
+/datum/ai_planning_subtree/travel_to_point/and_clear_target/reinforce
+	location_key = BB_BASIC_MOB_REINFORCEMENT_TARGET

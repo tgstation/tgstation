@@ -28,26 +28,29 @@
 	finding_candidate = FALSE
 	return TRUE
 
+/// Sets up the ghost poll
 /obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
 	var/datum/antagonist/nukeop/op_datum = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(isnull(op_datum))
 		balloon_alert(user, "invalid access!")
 		return
-	var/list/nuke_candidates = poll_ghost_candidates(
-		question = "Do you want to play as a nuclear operative MODsuit AI?",
-		jobban_type = ROLE_OPERATIVE,
-		be_special_flag = ROLE_OPERATIVE_MIDROUND,
-		poll_time = 15 SECONDS,
-		ignore_category = POLL_IGNORE_SYNDICATE,
+
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), user, op_datum)
+	AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_SYNDICATE, \
+		job_bans = ROLE_OPERATIVE, \
+		to_call = to_call, \
+		title = "Nuclear Operative Modsuit AI" \
 	)
-	if(QDELETED(src))
-		return
-	if(!LAZYLEN(nuke_candidates))
+
+/// Poll has concluded with a ghost, create the AI
+/obj/item/aicard/syndie/loaded/proc/on_poll_concluded(mob/user, datum/antagonist/nukeop/op_datum, mob/dead/observer/ghost)
+	if(isnull(ghost))
 		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))
 		return
+
 	// pick ghost, create AI and transfer
-	var/mob/dead/observer/ghos = pick(nuke_candidates)
-	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(get_turf(src), new /datum/ai_laws/syndicate_override, ghos)
+	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(get_turf(src), new /datum/ai_laws/syndicate_override, ghost)
 	// create and apply syndie datum
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE

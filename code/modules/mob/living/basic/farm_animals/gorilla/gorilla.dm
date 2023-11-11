@@ -23,6 +23,7 @@
 	response_harm_continuous = "thumps"
 	response_harm_simple = "thump"
 	speed = 0.5
+	melee_attack_cooldown = CLICK_CD_MELEE
 	melee_damage_lower = 15
 	melee_damage_upper = 18
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
@@ -53,7 +54,7 @@
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/dextrous)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)

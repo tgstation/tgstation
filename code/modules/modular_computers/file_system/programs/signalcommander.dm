@@ -14,6 +14,10 @@
 	var/signal_code = DEFAULT_SIGNALER_CODE
 	/// Radio connection datum used by signalers.
 	var/datum/radio_frequency/radio_connection
+	/// How long do we cooldown before we can send another signal?
+	var/signal_cooldown_time =  1 SECONDS
+	/// Cooldown store
+	COOLDOWN_DECLARE(signal_cooldown)
 
 /datum/computer_file/program/signal_commander/on_start(mob/living/user)
 	. = ..()
@@ -26,6 +30,7 @@
 /datum/computer_file/program/signal_commander/ui_data(mob/user)
 	var/list/data = list()
 	data["frequency"] = signal_frequency
+	data["cooldown"] = signal_cooldown_time
 	data["code"] = signal_code
 	data["minFrequency"] = MIN_FREE_FREQ
 	data["maxFrequency"] = MAX_FREE_FREQ
@@ -55,13 +60,18 @@
 	if(!radio_connection)
 		return
 
+	if(!COOLDOWN_FINISHED(src, signal_cooldown))
+		computer.balloon_alert(usr, "cooling down!")
+		return
+
+	COOLDOWN_START(src, signal_cooldown, signal_cooldown_time)
+	computer.balloon_alert(usr, "signaled")
+
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(computer)
 
-	var/logging_data
-	if(usr)
-		logging_data = "[time] <B>:</B> [usr.key] used [computer] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(signal_frequency)]/[signal_code]"
-		GLOB.lastsignalers.Add(logging_data)
+	var/logging_data = "[time] <B>:</B> [key_name(usr)] used the computer '[initial(computer.name)]' @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(signal_frequency)]/[signal_code]"
+	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = signal_code), logging_data = logging_data)
 	radio_connection.post_signal(computer, signal)
@@ -70,4 +80,3 @@
 	SSradio.remove_object(computer, signal_frequency)
 	signal_frequency = new_frequency
 	radio_connection = SSradio.add_object(computer, signal_frequency, RADIO_SIGNALER)
-	return

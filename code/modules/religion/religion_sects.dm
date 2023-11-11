@@ -168,7 +168,7 @@
 		eth_stomach.adjust_charge(60)
 		did_we_charge = TRUE
 
-	//if we're not targetting a robot part we stop early
+	//if we're not targeting a robot part we stop early
 	var/obj/item/bodypart/bodypart = blessed.get_bodypart(chap.zone_selected)
 	if(IS_ORGANIC_LIMB(bodypart))
 		if(!did_we_charge)
@@ -228,7 +228,7 @@
 /datum/religion_sect/pyre/on_sacrifice(obj/item/flashlight/flare/candle/offering, mob/living/user)
 	if(!istype(offering))
 		return
-	if(!offering.on)
+	if(!offering.light_on)
 		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
 		return
 	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))

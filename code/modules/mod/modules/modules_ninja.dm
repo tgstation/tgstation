@@ -374,7 +374,7 @@
 		line = firer.Beam(src, "net_beam", 'icons/obj/clothing/modsuit/mod_modules.dmi')
 	return ..()
 
-/obj/projectile/energy_net/on_hit(mob/living/target)
+/obj/projectile/energy_net/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!istype(target))
 		return

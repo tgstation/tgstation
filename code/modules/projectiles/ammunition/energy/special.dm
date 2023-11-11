@@ -2,6 +2,7 @@
 	projectile_type = /obj/projectile/ion
 	select_name = "ion"
 	fire_sound = 'sound/weapons/ionrifle.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak
@@ -20,15 +21,15 @@
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/flora/yield
-	projectile_type = /obj/projectile/energy/florayield
+	projectile_type = /obj/projectile/energy/flora/yield
 	select_name = "yield"
 
 /obj/item/ammo_casing/energy/flora/mut
-	projectile_type = /obj/projectile/energy/floramut
+	projectile_type = /obj/projectile/energy/flora/mut
 	select_name = "mutation"
 
 /obj/item/ammo_casing/energy/flora/revolution
-	projectile_type = /obj/projectile/energy/florarevolution
+	projectile_type = /obj/projectile/energy/flora/evolution
 	select_name = "revolution"
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 
@@ -37,10 +38,12 @@
 	select_name = "freeze"
 	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE * 10)
 	fire_sound = 'sound/weapons/pulse3.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/temp/hot
 	projectile_type = /obj/projectile/temp/hot
 	select_name = "bake"
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/ammo_casing/energy/meteor
 	projectile_type = /obj/projectile/meteor
@@ -63,6 +66,7 @@
 	e_cost = LASER_SHOTS(33, STANDARD_CELL_CHARGE)
 	select_name = "shock"
 	projectile_type = /obj/projectile/energy/tesla_cannon
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/shrink
 	projectile_type = /obj/projectile/beam/shrink

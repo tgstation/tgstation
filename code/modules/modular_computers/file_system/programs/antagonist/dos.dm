@@ -19,11 +19,11 @@
 /datum/computer_file/program/ntnet_dos/process_tick(seconds_per_tick)
 	dos_speed = 0
 	switch(ntnet_status)
-		if(1)
+		if(NTNET_LOW_SIGNAL)
 			dos_speed = NTNETSPEED_LOWSIGNAL * 10
-		if(2)
+		if(NTNET_GOOD_SIGNAL)
 			dos_speed = NTNETSPEED_HIGHSIGNAL * 10
-		if(3)
+		if(NTNET_ETHERNET_SIGNAL)
 			dos_speed = NTNETSPEED_ETHERNET * 10
 	if(target && executed)
 		target.dos_overload += dos_speed

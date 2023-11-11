@@ -194,3 +194,7 @@
 	var/datum/award/award_a = SSachievements.awards[type_a]
 	var/datum/award/award_b = SSachievements.awards[type_b]
 	return award_b?.load_priority - award_a?.load_priority
+
+/// Orders mobs by health
+/proc/cmp_mob_health(mob/living/mob_a, mob/living/mob_b)
+	return mob_b.health - mob_a.health

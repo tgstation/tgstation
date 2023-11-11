@@ -812,7 +812,7 @@
 /turf/open/floor/engine/vacuum,
 /area/ruin/planetengi)
 "yF" = (
-/mob/living/simple_animal/hostile/construct/proteon,
+/mob/living/basic/construct/proteon,
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "Ai" = (
@@ -823,7 +823,7 @@
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)
 "Iy" = (
-/mob/living/simple_animal/hostile/construct/proteon,
+/mob/living/basic/construct/proteon,
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/icemoon,
 /area/ruin/planetengi)

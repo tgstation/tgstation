@@ -107,7 +107,7 @@
 #define HAND_RIGHT (1<<10)
 #define HANDS (HAND_LEFT | HAND_RIGHT)
 #define NECK (1<<11)
-#define FULL_BODY (~0)
+#define FULL_BODY ALL
 
 //defines for the index of hands
 #define LEFT_HANDS 1
@@ -165,8 +165,6 @@
 //Allowed equipment lists for security vests.
 
 GLOBAL_LIST_INIT(detective_vest_allowed, list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
 	/obj/item/detective_scanner,
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
@@ -186,8 +184,6 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 ))
 
 GLOBAL_LIST_INIT(security_vest_allowed, list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
@@ -201,11 +197,10 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/pen/red/security,
 ))
 
 GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/melee/baton,

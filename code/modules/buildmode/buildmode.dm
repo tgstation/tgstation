@@ -135,17 +135,7 @@
 	preview.name = initial(typepath.name)
 
 	// Scale the preview if it's bigger than one tile
-	var/mutable_appearance/preview_overlay = new(typepath)
-	var/list/icon_dimensions = get_icon_dimensions(initial(typepath.icon))
-	var/width = icon_dimensions["width"]
-	var/height = icon_dimensions["height"]
-	var/scale = 1
-	if(width > world.icon_size || height > world.icon_size)
-		if(width >= height)
-			scale = world.icon_size / width
-		else
-			scale = world.icon_size / height
-	preview_overlay.transform = preview_overlay.transform.Scale(scale)
+	var/mutable_appearance/preview_overlay = get_small_overlay(new typepath)
 	preview_overlay.appearance_flags |= TILE_BOUND
 	preview_overlay.layer = FLOAT_LAYER
 	preview_overlay.plane = FLOAT_PLANE

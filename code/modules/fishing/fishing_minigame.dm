@@ -245,7 +245,7 @@
 	SIGNAL_HANDLER
 	fishing_line = null
 	///The lure may be out of sight if the user has moed around a corner, so the message should be displayed over him instead.
-	user.balloon_alert(user.is_holding(used_rod) ? "line snapped" : "rod dropped")
+	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
 	interrupt()
 
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)

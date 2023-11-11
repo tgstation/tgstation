@@ -20,14 +20,14 @@
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(burrower))
 	burrower.status_flags |= GODMODE
-	burrower.invisibility = INVISIBILITY_MAXIMUM
+	burrower.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
 	burrower.forceMove(unburrow_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), burrower)
 	playsound(burrower, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(unburrow_turf)
 	burrower.status_flags &= ~GODMODE
-	burrower.invisibility = 0
+	burrower.RemoveInvisibility(type)
 
 /datum/action/cooldown/mob_cooldown/resurface/proc/get_unburrow_turf(mob/living/burrower, atom/target)
 	//we want the worm to try guaranteeing a hit on a living target if it thinks it can
@@ -105,14 +105,14 @@
 	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(devourer))
 	devourer.status_flags |= GODMODE
-	devourer.invisibility = INVISIBILITY_MAXIMUM
+	devourer.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
 	devourer.forceMove(devour_turf)
 	//not that it's gonna die with godmode but still
 	SLEEP_CHECK_DEATH(rand(0.7 SECONDS, 1.2 SECONDS), devourer)
 	playsound(devourer, 'sound/effects/break_stone.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(devour_turf)
 	devourer.status_flags &= ~GODMODE
-	devourer.invisibility = 0
+	devourer.RemoveInvisibility(type)
 	if(!(target in devour_turf))
 		to_chat(devourer, span_warning("Someone stole your dinner!"))
 		return

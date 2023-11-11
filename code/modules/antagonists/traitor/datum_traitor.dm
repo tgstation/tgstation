@@ -382,6 +382,7 @@
 	mask = /obj/item/clothing/mask/gas
 	l_hand = /obj/item/melee/energy/sword
 	r_hand = /obj/item/gun/energy/recharge/ebow
+	shoes = /obj/item/clothing/shoes/magboots/advance
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items

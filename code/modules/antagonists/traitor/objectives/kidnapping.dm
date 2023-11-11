@@ -5,7 +5,7 @@
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
 
-	/// The jobs that this objective is targetting.
+	/// The jobs that this objective is targeting.
 	var/list/target_jobs
 	/// Area that the target needs to be delivered to
 	var/area/dropoff_area

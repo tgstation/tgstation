@@ -412,7 +412,7 @@
 	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
 		return NONE
 	if(!source.can_unarmed_attack())
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_SKIP_ATTACK
 
 	var/mob/living/living_target = target
 	source.changeNext_move(CLICK_CD_MELEE)

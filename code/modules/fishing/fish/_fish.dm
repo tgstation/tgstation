@@ -314,6 +314,8 @@
 		last_feeding = world.time
 	else
 		var/datum/reagent/wrong_reagent = pick(fed_reagents.reagent_list)
+		if(!wrong_reagent)
+			return
 		fed_reagent_type = wrong_reagent.type
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)

@@ -1,5 +1,3 @@
-#define REGENERATION_DELAY 6 SECONDS  // After taking damage, how long it takes for automatic regeneration to begin
-
 /datum/species/zombie
 	// 1spooky
 	name = "High-Functioning Zombie"
@@ -133,13 +131,11 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie/infectious,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie/infectious,
 	)
-	/// The rate the zombies regenerate at
-	var/heal_rate = 0.5
-	/// The cooldown before the zombie can start regenerating
-	COOLDOWN_DECLARE(regen_cooldown)
 
 /datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
 	. = ..()
+	new_zombie.set_combat_mode(TRUE)
+
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
 	// because it persists through species transitions
@@ -148,42 +144,35 @@
 		infection = new()
 		infection.Insert(new_zombie)
 
-	new_zombie.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/zombie)
+	new_zombie.AddComponent( \
+		/datum/component/mutant_hands, \
+		mutant_hand_path = /obj/item/mutant_hand/zombie, \
+	)
+	new_zombie.AddComponent( \
+		/datum/component/regenerator, \
+		regeneration_delay = 6 SECONDS, \
+		brute_per_second = 0.5, \
+		burn_per_second = 0.5, \
+		tox_per_second = 0.5, \
+		oxy_per_second = 0.25, \
+		heals_wounds = TRUE, \
+	)
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
+	qdel(was_zombie.GetComponent(/datum/component/regenerator))
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
-	. = min(20, amount)
-
-/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, spread_damage = FALSE, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	. = ..()
-	if(.)
-		COOLDOWN_START(src, regen_cooldown, REGENERATION_DELAY)
+	return min(2 SECONDS, amount)
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick, times_fired)
 	. = ..()
 	carbon_mob.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
 
-	//Zombies never actually die, they just fall down until they regenerate enough to rise back up.
-	//They must be restrained, beheaded or gibbed to stop being a threat.
-	if(COOLDOWN_FINISHED(src, regen_cooldown))
-		var/heal_amt = heal_rate
-		if(HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION))
-			heal_amt *= 2
-		var/need_mob_update = FALSE
-		need_mob_update += carbon_mob.heal_overall_damage(heal_amt * seconds_per_tick, heal_amt * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += carbon_mob.adjustToxLoss(-heal_amt * seconds_per_tick, updating_health = FALSE)
-		if(need_mob_update)
-			carbon_mob.updatehealth()
-		for(var/i in carbon_mob.all_wounds)
-			var/datum/wound/iter_wound = i
-			if(SPT_PROB(2-(iter_wound.severity/2), seconds_per_tick))
-				iter_wound.remove_wound()
 	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
 		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 
@@ -202,5 +191,3 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
-
-#undef REGENERATION_DELAY

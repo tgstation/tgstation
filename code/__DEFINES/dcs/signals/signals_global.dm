@@ -90,7 +90,13 @@
 /// Global signal when light debugging is canceled
 #define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"
 
+/// Global signal when starlight color is changed (old_star, new_star)
+#define COMSIG_STARLIGHT_COLOR_CHANGED "!starlight_color_changed"
+
 /// Global signal sent when a religious sect is chosen
 #define COMSIG_RELIGIOUS_SECT_CHANGED "!religious_sect_changed"
 /// Global signal sent when a religious sect is reset
 #define COMSIG_RELIGIOUS_SECT_RESET "!religious_sect_reset"
+
+/// Global signal sent when narsie summon count is updated: (new count)
+#define COMSIG_NARSIE_SUMMON_UPDATE "!narsie_summon_update"

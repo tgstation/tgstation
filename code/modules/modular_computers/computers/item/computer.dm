@@ -500,7 +500,7 @@
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
-	loc.visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
+	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
@@ -517,7 +517,6 @@
 	var/list/data = list()
 
 	data["PC_device_theme"] = device_theme
-	data["PC_showbatteryicon"] = !!internal_cell
 
 	if(internal_cell)
 		switch(internal_cell.percent())
@@ -535,8 +534,8 @@
 				data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
 	else
-		data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "N/C"
+		data["PC_batteryicon"] = null
+		data["PC_batterypercent"] = null
 
 	switch(get_ntnet_status())
 		if(NTNET_NO_SIGNAL)

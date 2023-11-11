@@ -1,3 +1,42 @@
+//Pills & Patches
+/// List of containers the Chem Master machine can print
+GLOBAL_LIST_INIT(reagent_containers, list(
+	CAT_CONDIMENTS = list(
+		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/condiment/flour,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/condiment/rice,
+		/obj/item/reagent_containers/condiment/cornmeal,
+		/obj/item/reagent_containers/condiment/milk,
+		/obj/item/reagent_containers/condiment/soymilk,
+		/obj/item/reagent_containers/condiment/yoghurt,
+		/obj/item/reagent_containers/condiment/saltshaker,
+		/obj/item/reagent_containers/condiment/peppermill,
+		/obj/item/reagent_containers/condiment/soysauce,
+		/obj/item/reagent_containers/condiment/bbqsauce,
+		/obj/item/reagent_containers/condiment/enzyme,
+		/obj/item/reagent_containers/condiment/hotsauce,
+		/obj/item/reagent_containers/condiment/coldsauce,
+		/obj/item/reagent_containers/condiment/mayonnaise,
+		/obj/item/reagent_containers/condiment/ketchup,
+		/obj/item/reagent_containers/condiment/olive_oil,
+		/obj/item/reagent_containers/condiment/vegetable_oil,
+		/obj/item/reagent_containers/condiment/peanut_butter,
+		/obj/item/reagent_containers/condiment/cherryjelly,
+		/obj/item/reagent_containers/condiment/honey,
+		/obj/item/reagent_containers/condiment/pack,
+	),
+	CAT_TUBES = list(
+		/obj/item/reagent_containers/cup/tube
+	),
+	CAT_PILLS = typecacheof(list(
+		/obj/item/reagent_containers/pill/style
+	)),
+	CAT_PATCHES = typecacheof(list(
+		/obj/item/reagent_containers/pill/patch/style
+	)),
+))
+
 /// list of all /datum/chemical_reaction datums indexed by their typepath. Use this for general lookup stuff
 GLOBAL_LIST(chemical_reactions_list)
 /// list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
@@ -15,8 +54,6 @@ GLOBAL_LIST_INIT(blacklisted_metalgen_types, typecacheof(list(
 	/turf/closed/indestructible, //indestructible turfs should be indestructible, metalgen transmutation to plasma allows them to be destroyed
 	/turf/open/indestructible
 )))
-/// Names of human readable reagents used by plumbing UI.
-GLOBAL_LIST_INIT(chemical_name_list, init_chemical_name_list())
 /// Map of reagent names to its datum path
 GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 
@@ -32,16 +69,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 		reagent_list[path] = target_object
 
 	return reagent_list
-
-/// Creates an list which is indexed by reagent name . used by plumbing reaction chamber and chemical filter UI
-/proc/init_chemical_name_list()
-	var/list/name_list = list()
-
-	for(var/X in GLOB.chemical_reagents_list)
-		var/datum/reagent/Reagent = GLOB.chemical_reagents_list[X]
-		name_list += Reagent.name
-
-	return sort_list(name_list)
 
 /**
  * Chemical Reactions - Initialises all /datum/chemical_reaction into a list
@@ -148,7 +175,19 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagentlist())
 /// Builds map of reagent name to its datum path
 /proc/build_name2reagentlist()
 	. = list()
-	for (var/datum/reagent/R as anything in subtypesof(/datum/reagent))
-		var/name = initial(R.name)
+
+	//build map with keys stored seperatly
+	var/list/name_to_reagent = list()
+	var/list/only_names = list()
+	for (var/datum/reagent/reagent as anything in GLOB.chemical_reagents_list)
+		var/name = initial(reagent.name)
 		if (length(name))
-			.[ckey(name)] = R
+			name_to_reagent[name] = reagent
+			only_names += name
+
+	//sort keys
+	only_names = sort_list(only_names)
+
+	//build map with sorted keys
+	for(var/name as anything in only_names)
+		.[name] = name_to_reagent[name]

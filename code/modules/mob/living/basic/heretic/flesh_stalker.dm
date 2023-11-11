@@ -1,6 +1,6 @@
 /// Durable ambush mob with an EMP ability
 /mob/living/basic/heretic_summon/stalker
-	name = "Flesh Stalker"
+	name = "\improper Flesh Stalker"
 	real_name = "Flesh Stalker"
 	desc = "An abomination cobbled together from varied remains. Its appearance changes slightly every time you blink."
 	icon_state = "stalker"
@@ -11,7 +11,7 @@
 	melee_damage_upper = 20
 	sight = SEE_MOBS
 	ai_controller = /datum/ai_controller/basic_controller/stalker
-	/// Associative list of action types we would like to have, and what blackboard key (if any) to put it in
+	/// Actions to grant on spawn
 	var/static/list/actions_to_add = list(
 		/datum/action/cooldown/spell/emp/eldritch = BB_GENERIC_ACTION,
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash = null,
@@ -21,18 +21,13 @@
 /mob/living/basic/heretic_summon/stalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ai_target_timer)
-	for (var/action_type in actions_to_add)
-		var/datum/action/new_action = new action_type(src)
-		new_action.Grant(src)
-		var/blackboard_key = actions_to_add[action_type]
-		if (!isnull(blackboard_key))
-			ai_controller?.set_blackboard_key(blackboard_key, new_action)
+	grant_actions_by_list(actions_to_add)
 
 /// Changes shape and lies in wait when it has no target, uses EMP and attacks once it does
 /datum/ai_controller/basic_controller/stalker
 	ai_traits = CAN_ACT_IN_STASIS
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

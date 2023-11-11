@@ -365,6 +365,10 @@
 			add_experiments(unlocked_node.discount_experiments)
 		update_node_status(unlocked_node)
 
+	// Gain more new experiments
+	if (node.experiments_to_unlock.len)
+		add_experiments(node.experiments_to_unlock)
+
 	// Unlock what the research actually unlocks
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
