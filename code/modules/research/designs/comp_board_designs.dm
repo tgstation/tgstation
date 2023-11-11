@@ -56,17 +56,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/aiupload
-	name = "AI Upload Board"
-	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
-	id = "aiupload"
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/circuitboard/computer/aiupload
-	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/borgupload
 	name = "Cyborg Upload Board"
 	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
