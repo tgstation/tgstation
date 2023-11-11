@@ -13,7 +13,7 @@ chop_extension = re.compile(r"^(.*)\..+?$", re.M)
 
 def get_file_hash(path):
     path_suffix = re.sub(chop_filename, r"\1", path, count = 1)
-    if path_suffix == ".dmi":
+    if path_suffix == ".dmi" or path_suffix == ".png":
         return hash_dmi(path)
     else:
         return hash_file(path)
