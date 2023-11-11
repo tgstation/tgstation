@@ -965,6 +965,9 @@
 "Ot" = (
 /obj/machinery/light/dim/directional/south,
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
+/obj/structure/chair/sofa/left/maroon{
+	dir = 8
+	},
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/allamericandiner)
 "OE" = (

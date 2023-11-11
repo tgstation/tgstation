@@ -11,6 +11,7 @@
 
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
+	atom_storage.numerical_stacking = TRUE
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	atom_storage.max_slots = 40
 	atom_storage.max_total_storage = 100
@@ -22,9 +23,6 @@
 	. = ..()
 	for(var/i in 1 to 10)
 		new arrow_path(src)
-
-/obj/item/storage/bag/quiver/despawning
-	arrow_path = /obj/item/ammo_casing/arrow/despawning
 
 /obj/item/storage/bag/quiver/holy
 	name = "divine quiver"

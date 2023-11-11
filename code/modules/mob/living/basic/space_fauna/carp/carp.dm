@@ -32,6 +32,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
+	melee_attack_cooldown = 1.5 SECONDS
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -57,7 +58,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/carp
+		/datum/pet_command/point_targetting/attack
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -104,15 +105,10 @@
 	ai_controller.set_blackboard_key(BB_CARP_RIFT, teleport)
 	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETTING_WHITELIST, allowed_obstacle_targets)
 
-
-/mob/living/basic/carp/Destroy()
-	QDEL_NULL(teleport)
-	return ..()
-
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
-	AddElement(/datum/element/basic_eating, 10, 0, null, desired_food)
-	AddElement(/datum/element/basic_eating, 0, 10, BRUTE, desired_trash) // We are killing our planet
+	AddElement(/datum/element/basic_eating, food_types = desired_food)
+	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 10, damage_type = BRUTE, food_types = desired_trash) // We are killing our planet
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, desired_food + desired_trash)
 
 /// Set a random colour on the carp, override to do something else
@@ -251,6 +247,7 @@
 
 /mob/living/basic/carp/advanced
 	health = 40
+	maxHealth = 40
 	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE

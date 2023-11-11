@@ -430,6 +430,39 @@
 		log_admin("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
 		message_admins("[key_name(usr)] removed [rule] from the forced roundstart rulesets.", 1)
 
+	else if (href_list["f_dynamic_ruleset_manage"])
+		if(!check_rights(R_ADMIN))
+			return
+		dynamic_ruleset_manager(usr)
+	else if (href_list["f_dynamic_ruleset_force_all_on"])
+		if(!check_rights(R_ADMIN))
+			return
+		force_all_rulesets(usr, RULESET_FORCE_ENABLED)
+	else if (href_list["f_dynamic_ruleset_force_all_off"])
+		if(!check_rights(R_ADMIN))
+			return
+		force_all_rulesets(usr, RULESET_FORCE_DISABLED)
+	else if (href_list["f_dynamic_ruleset_force_all_reset"])
+		if(!check_rights(R_ADMIN))
+			return
+		force_all_rulesets(usr, RULESET_NOT_FORCED)
+	else if (href_list["f_dynamic_ruleset_force_on"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_on"]), RULESET_FORCE_ENABLED)
+	else if (href_list["f_dynamic_ruleset_force_off"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_off"]), RULESET_FORCE_DISABLED)
+	else if (href_list["f_dynamic_ruleset_force_reset"])
+		if(!check_rights(R_ADMIN))
+			return
+		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_reset"]), RULESET_NOT_FORCED)
+	else if (href_list["f_inspect_ruleset"])
+		if(!check_rights(R_ADMIN))
+			return
+		usr.client.debug_variables(locate(href_list["f_inspect_ruleset"]))
+
 	else if (href_list["f_dynamic_options"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1267,16 +1300,16 @@
 			new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)
-			log_admin("[key_name(usr)] created a [english_list(paths)]")
+			log_admin("[key_name(usr)] created an instance of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created a [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created an instance of [english_list(paths)]")
 					break
 		else
-			log_admin("[key_name(usr)] created [number]ea [english_list(paths)]")
+			log_admin("[key_name(usr)] created [number] instances of [english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created [number] instances of [english_list(paths)]")
 					break
 		return
 

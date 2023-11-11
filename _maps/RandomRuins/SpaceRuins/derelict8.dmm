@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bY" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/structure/lattice,
 /turf/template_noop,
 /area/template_noop)
@@ -20,7 +20,7 @@
 /area/ruin/space/has_grav)
 "dL" = (
 /obj/structure/lattice,
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/template_noop,
 /area/template_noop)
 "dS" = (
@@ -133,12 +133,12 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav)
 "zc" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/item/stack/rods,
 /turf/template_noop,
 /area/template_noop)
 "zh" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/template_noop,
 /area/template_noop)
 "zt" = (

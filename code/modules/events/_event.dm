@@ -1,5 +1,4 @@
 #define RANDOM_EVENT_ADMIN_INTERVENTION_TIME (10 SECONDS)
-#define NEVER_TRIGGERED_BY_WIZARDS -1
 
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
@@ -312,4 +311,3 @@ Runs the event
 	return ..()
 
 #undef RANDOM_EVENT_ADMIN_INTERVENTION_TIME
-#undef NEVER_TRIGGERED_BY_WIZARDS

@@ -122,6 +122,7 @@
 "N" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/carbine/practice,
 /obj/item/clothing/ears/earmuffs,
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /turf/open/floor/holofloor,

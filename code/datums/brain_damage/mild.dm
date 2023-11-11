@@ -89,7 +89,7 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		switch(rand(1,11))
 			if(1)
-				owner.vomit()
+				owner.vomit(VOMIT_CATEGORY_DEFAULT)
 			if(2,3)
 				owner.adjust_dizzy(20 SECONDS)
 			if(4,5)
@@ -133,7 +133,7 @@
 
 /datum/brain_trauma/mild/muscle_weakness/on_life(seconds_per_tick, times_fired)
 	var/fall_chance = 1
-	if(owner.m_intent == MOVE_INTENT_RUN)
+	if(owner.move_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
 	if(SPT_PROB(0.5 * fall_chance, seconds_per_tick) && owner.body_position == STANDING_UP)
 		to_chat(owner, span_warning("Your leg gives out!"))

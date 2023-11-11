@@ -24,27 +24,6 @@
 	To see an example of a diagonal wall, see '/turf/closed/wall/mineral/titanium' and its subtypes.
 */
 
-//Redefinitions of the diagonal directions so they can be stored in one var without conflicts
-#define NORTH_JUNCTION NORTH //(1<<0)
-#define SOUTH_JUNCTION SOUTH //(1<<1)
-#define EAST_JUNCTION EAST  //(1<<2)
-#define WEST_JUNCTION WEST  //(1<<3)
-#define NORTHEAST_JUNCTION (1<<4)
-#define SOUTHEAST_JUNCTION (1<<5)
-#define SOUTHWEST_JUNCTION (1<<6)
-#define NORTHWEST_JUNCTION (1<<7)
-
-DEFINE_BITFIELD(smoothing_junction, list(
-	"NORTH_JUNCTION" = NORTH_JUNCTION,
-	"SOUTH_JUNCTION" = SOUTH_JUNCTION,
-	"EAST_JUNCTION" = EAST_JUNCTION,
-	"WEST_JUNCTION" = WEST_JUNCTION,
-	"NORTHEAST_JUNCTION" = NORTHEAST_JUNCTION,
-	"SOUTHEAST_JUNCTION" = SOUTHEAST_JUNCTION,
-	"SOUTHWEST_JUNCTION" = SOUTHWEST_JUNCTION,
-	"NORTHWEST_JUNCTION" = NORTHWEST_JUNCTION,
-))
-
 #define NO_ADJ_FOUND 0
 #define ADJ_FOUND 1
 #define NULLTURF_BORDER 2
@@ -55,13 +34,13 @@ GLOBAL_LIST_INIT(adjacent_direction_lookup, generate_adjacent_directions())
  * Each 3x3 grid is a tile, with each X representing a direction a border object could be in IN said grid
  * Directions marked with A are acceptable smoothing targets, M is the example direction
  * The example given here is of a northfacing border object
-xxx xxx xxx
 xxx AxA xxx
-xxx xAx xxx
+xxx AxA xxx
+xxx AxA xxx
 
-xAx xMx xAx
+AAA MMM AAA
 xxx AxA xxx
-xxx xxx xxx
+xxx AxA xxx
 
 xxx xxx xxx
 xxx xxx xxx
@@ -96,21 +75,20 @@ xxx xxx xxx
 			// We'll do the two dirs to our left and right
 			// They connect.. "below" us and on their side
 			if(connectable_dir == NONE)
-				smoothable_dirs[left] = opposite | left
-				smoothable_dirs[right] = opposite | right
+				smoothable_dirs[left] = dir_to_junction(opposite | left)
+				smoothable_dirs[right] = dir_to_junction(opposite | right)
 			// If it's to our right or left we'll include just the dir matching ours
 			// Left edge touches only our left side, and so on
 			else if (connectable_dir == left)
 				smoothable_dirs[dir] = left
 			else if (connectable_dir == right)
 				smoothable_dirs[dir] = right
-			// If it's straight on we'll include all cardinals but us, since all 3 bits would touch us
-			// Turf opposite gets just our dir as the connection, the other two get our dir + theirs
-			// Since they touch the edges
+			// If it's straight on we'll include our direction as a link
+			// Then include the two edges on the other side as diagonals
 			else if(connectable_dir == dir)
 				smoothable_dirs[opposite] = dir
-				smoothable_dirs[left] = dir | left
-				smoothable_dirs[right] = dir | right
+				smoothable_dirs[left] = dir_to_junction(dir | left)
+				smoothable_dirs[right] = dir_to_junction(dir | right)
 			// otherwise, go HOME, I don't want to encode anything for you
 			else
 				continue
@@ -594,6 +572,39 @@ xxx xxx xxx
 
 	add_overlay(new_overlays)
 
+/// Takes a direction, turns it into all the junctions that contain it
+/proc/dir_to_all_junctions(dir)
+	var/handback = NONE
+	if(dir & NORTH)
+		handback |= NORTH_JUNCTION | NORTHEAST_JUNCTION | NORTHWEST_JUNCTION
+	if(dir & SOUTH)
+		handback |= SOUTH_JUNCTION | SOUTHEAST_JUNCTION | SOUTHWEST_JUNCTION
+	if(dir & EAST)
+		handback |= EAST_JUNCTION | SOUTHEAST_JUNCTION | NORTHEAST_JUNCTION
+	if(dir & WEST)
+		handback |= WEST_JUNCTION | NORTHWEST_JUNCTION | SOUTHWEST_JUNCTION
+	return handback
+
+/proc/dir_to_junction(dir)
+	switch(dir)
+		if(NORTH)
+			return NORTH_JUNCTION
+		if(SOUTH)
+			return SOUTH_JUNCTION
+		if(WEST)
+			return WEST_JUNCTION
+		if(EAST)
+			return EAST_JUNCTION
+		if(NORTHWEST)
+			return NORTHWEST_JUNCTION
+		if(NORTHEAST)
+			return NORTHEAST_JUNCTION
+		if(SOUTHEAST)
+			return SOUTHEAST_JUNCTION
+		if(SOUTHWEST)
+			return SOUTHWEST_JUNCTION
+		else
+			return NONE
 
 /proc/reverse_ndir(ndir)
 	switch(ndir)

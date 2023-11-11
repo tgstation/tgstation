@@ -15,6 +15,8 @@
 		/obj/item/storage/pill_bottle/ondansetron,
 		/obj/item/reagent_containers/pill/gravitum,
 	)
+	/// How high spacers get bumped up to
+	var/modded_height = HUMAN_HEIGHT_TALLER
 	/// How long on a planet before we get averse effects
 	var/planet_period = 3 MINUTES
 	/// TimerID for time spend on a planet
@@ -44,7 +46,7 @@
 	quirk_holder.inertia_move_delay *= 0.8
 
 	var/mob/living/carbon/human/human_quirker = quirk_holder
-	human_quirker.set_mob_height(HUMAN_HEIGHT_TALLEST)
+	human_quirker.set_mob_height(modded_height)
 	human_quirker.physiology.pressure_mod *= 0.8
 	human_quirker.physiology.cold_mod *= 0.8
 

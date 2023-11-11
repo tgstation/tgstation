@@ -1,4 +1,4 @@
 #this changes a762 toolbox into a child of ammobox
 
-/obj/item/storage/toolbox/a762 : /obj/item/storage/toolbox/ammobox/a762{@OLD}
-/obj/item/storage/toolbox/a762/surplus : /obj/item/storage/toolbox/ammobox/a762/surplus{@OLD}
+/obj/item/storage/toolbox/strilka310 : /obj/item/storage/toolbox/ammobox/a762{@OLD}
+/obj/item/storage/toolbox/strilka310/surplus : /obj/item/storage/toolbox/ammobox/a762/surplus{@OLD}

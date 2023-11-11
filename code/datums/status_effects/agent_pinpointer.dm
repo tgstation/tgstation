@@ -24,7 +24,7 @@
 	///The target we are pointing towards, refreshes every tick.
 	var/mob/scan_target
 
-/datum/status_effect/agent_pinpointer/tick()
+/datum/status_effect/agent_pinpointer/tick(seconds_between_ticks)
 	if(!owner)
 		qdel(src)
 		return

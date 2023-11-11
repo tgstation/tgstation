@@ -174,3 +174,6 @@
 	results = list(/datum/reagent/consumable/mississippi_queen = 50)
 	required_reagents = list(/datum/reagent/consumable/tomatojuice = 15, /datum/reagent/consumable/mayonnaise = 10, /datum/reagent/consumable/soysauce = 5, /datum/reagent/consumable/vinegar = 2, /datum/reagent/consumable/capsaicin = 10, /datum/reagent/consumable/coco = 2)
 
+/datum/chemical_reaction/drink/t_letter
+	results = list(/datum/reagent/consumable/t_letter = 2)
+	required_reagents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/tea = 1)

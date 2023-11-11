@@ -25,9 +25,9 @@
 	exposed_mob.apply_damage(0.7*reac_volume, TOX)
 
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
-	metabolizer.adjustToxLoss(1 * REM * seconds_per_tick)
-	..()
-	return TRUE
+	. = ..()
+	if(metabolizer.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/blob/regenerative_materia/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()

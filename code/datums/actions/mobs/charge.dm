@@ -51,6 +51,7 @@
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump), TRUE)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move), TRUE)
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), TRUE)
+	RegisterSignal(charger, COMSIG_LIVING_DEATH, PROC_REF(charge_end))
 	charger.setDir(dir)
 	do_charge_indicator(charger, target)
 
@@ -80,10 +81,13 @@
 	SIGNAL_HANDLER
 	actively_moving = FALSE
 
-/datum/action/cooldown/mob_cooldown/charge/proc/charge_end(datum/move_loop/source)
+/datum/action/cooldown/mob_cooldown/charge/proc/charge_end(datum/source)
 	SIGNAL_HANDLER
-	var/atom/movable/charger = source.moving
-	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
+	var/atom/movable/charger = source
+	if(istype(source, /datum/move_loop))
+		var/datum/move_loop/move_loop_source = source
+		charger = move_loop_source.moving
+	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	actively_moving = FALSE
 	charging -= charger

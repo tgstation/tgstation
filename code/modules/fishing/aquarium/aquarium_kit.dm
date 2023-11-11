@@ -35,6 +35,7 @@
 	var/fish_type = get_fish_type()
 	if(fish_type)
 		var/obj/item/fish/spawned_fish = new fish_type(null)
+		ADD_TRAIT(spawned_fish, TRAIT_FISH_FROM_CASE, TRAIT_GENERIC)
 		spawned_fish.forceMove(src) // trigger storage.handle_entered
 
 /obj/item/storage/fish_case/proc/get_fish_type()
@@ -45,7 +46,7 @@
 	var/fluid_type
 
 /obj/item/storage/fish_case/random/get_fish_type()
-	return random_fish_type(required_fluid = fluid_type)
+	return random_fish_type(fluid_type)
 
 /obj/item/storage/fish_case/random/freshwater
 	fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -96,9 +97,9 @@
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/aquarium_kit/attack_self(mob/user)
+/obj/item/aquarium_kit/Initialize(mapload)
 	. = ..()
-	to_chat(user,span_notice("There's instruction and tools necessary to build aquarium inside. All you need is to start crafting."))
+	AddComponent(/datum/component/slapcrafting, /datum/crafting_recipe/aquarium)
 
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"

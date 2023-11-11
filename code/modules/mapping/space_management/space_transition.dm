@@ -123,6 +123,9 @@
 	var/list/x_pos_transition = list(1, 1, TRANSITIONEDGE + 2, inner_max_x - 1) //values of x for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective x value later in the code
 	var/list/y_pos_transition = list(TRANSITIONEDGE + 2, inner_max_y - 1, 1, 1) //values of y for the transition from respective blocks on the side of zlevel, 1 is being translated into turfs respective y value later in the code
 
+	// Cache the range passed to the mirage border element, to reduce world var access in the thousands
+	var/range_cached = world.view
+
 	for(var/datum/space_level/level as anything in cached_z_list)
 		if(!level.neigbours.len)
 			continue
@@ -156,6 +159,6 @@
 					continue
 
 				var/turf/place = locate(S.destination_x, S.destination_y, zdestination)
-				S.AddComponent(/datum/component/mirage_border, place, mirage_dir)
+				S.AddElement(/datum/element/mirage_border, place, mirage_dir, range_cached)
 
 #undef CHORDS_TO_1D

@@ -40,7 +40,7 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][atom_storage?.locked ? "_locked" : null]"
 
-/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
+/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(can_hack_open && atom_storage.locked)
 		return ..()
 	else
@@ -181,6 +181,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 	. = ..()
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/storage/secure/briefcase))
 	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	find_and_hang_on_wall()
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)

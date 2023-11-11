@@ -60,6 +60,12 @@
 	if(prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,6)]"
 
+/turf/open/misc/asteroid/basalt/wasteland/basin
+	icon_state = "wasteland_dug"
+	base_icon_state = "wasteland_dug"
+	floor_variance = 0
+	dug = TRUE
+
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
 	color = "#B5651D"
@@ -132,13 +138,13 @@
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave"
 	base_icon_state = "grave"
-	dense_when_open = TRUE
+	density = FALSE
 	material_drop = /obj/item/stack/ore/glass/basalt
 	material_drop_amount = 5
 	anchorable = FALSE
 	anchored = TRUE
 	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
-	breakout_time = 90 SECONDS
+	breakout_time = 2 MINUTES
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	can_install_electronics = FALSE
@@ -162,6 +168,11 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
+
+/obj/structure/closet/crate/grave/close(mob/living/user)
+	. = ..()
+	// So that graves stay undense
+	set_density(FALSE)
 
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
@@ -270,6 +281,29 @@
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
 		return TRUE
+
+/obj/structure/closet/crate/grave/container_resist_act(mob/living/user)
+	if(opened)
+		return
+	// The player is trying to dig themselves out of an early grave
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message(
+		span_warning("[src]'s dirt begins to shift and rumble!"),
+		span_notice("You desperately begin to claw at the dirt around you, trying to force yourself upwards through the soil... (this will take about [DisplayTimeText(breakout_time)].)"),
+		span_hear("You hear the sound of shifting dirt from [src]."),
+	)
+	if(do_after(user, breakout_time, target = src))
+		if(opened)
+			return
+		user.visible_message(
+			span_danger("[user] emerges from [src], scattering dirt everywhere!"),
+			span_notice("You triumphantly surface out of [src], scattering dirt all around the grave!"),
+		)
+		bust_open()
+	else
+		if(user.loc == src)
+			to_chat(user, span_warning("You fail to dig yourself out of [src]!"))
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"

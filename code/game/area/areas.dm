@@ -557,3 +557,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(name == initial(name))
 		return name
 	return "[name] ([initial(name)])"
+
+/**
+ * A blank area subtype solely used by the golem area editor for the purpose of
+ * allowing golems to create new areas without suffering from the hazard_area debuffs.
+ */
+/area/golem
+	name = "Golem Territory"

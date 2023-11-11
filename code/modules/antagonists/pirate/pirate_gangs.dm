@@ -47,6 +47,8 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	/// Have the pirates been paid off?
 	var/paid_off = FALSE
+	/// The colour of their announcements when sent to players
+	var/announcement_color = "red"
 
 /datum/pirate_gang/New()
 	. = ..()
@@ -118,10 +120,10 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 ///Expirienced formed employes of Interdyne Pharmaceutics now in a path of thievery and reckoning
 /datum/pirate_gang/interdyne
-	name = "Expharmacist Unrest"
+	name = "Restless Ex-Pharmacists"
 
 	is_heavy_threat = TRUE
-	ship_template_id = "interdyne"
+	ship_template_id = "ex_interdyne"
 	ship_name_pool = "interdyne_names"
 
 	threat_title = "Funding for Research"
@@ -133,6 +135,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "Thank you for your generosity. Your money will not be wasted."
 	response_too_late = "We hope you like skin cancer!"
 	response_not_enough = "This is not nearly enough for our operations. I'm afraid we'll have to borrow some."
+	announcement_color = "purple"
 
 ///Previous Nanotrasen Assitant workers fired for many reasons now looking for revenge and your bank account.
 /datum/pirate_gang/grey
@@ -150,10 +153,11 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "Wait, you ACTUALLY gave us the money? Thanks, but we're coming for the rest anyways!"
 	response_too_late = "Nothing, huh? Looks like the Tide's coming aboard!"
 	response_not_enough = "You trying to cheat us? That's fine, we'll take your station as collateral."
+	announcement_color = "yellow"
 
 ///Agents from the space I.R.S. heavily armed to stea- I mean, collect the station's tax dues
 /datum/pirate_gang/irs
-	name = "Space IRS"
+	name = "Space IRS Agents"
 
 	is_heavy_threat = TRUE
 	ship_template_id = "irs"
@@ -172,6 +176,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_too_late = "Too late, A team has already been sent out resolve this matter directly."
 	response_not_enough = "You filed your taxes incorrectly, A team has been sent to assist in liquidating assets and arrest you for tax fraud. \
 		Nothing personel kid."
+	announcement_color = "yellow"
 
 //Mutated Ethereals who have adopted bluespace technology in all the wrong ways.
 /datum/pirate_gang/lustrous
@@ -190,3 +195,4 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "An excellent haul, the synthesis shall resume."
 	response_too_late = "You were not ready then, and now that time has passed. We can only go forward, never back."
 	response_not_enough = "You have insulted us, but there shall be no feud, only swift justice!"
+	announcement_color = "purple"

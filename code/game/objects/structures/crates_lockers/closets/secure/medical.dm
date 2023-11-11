@@ -56,6 +56,7 @@
 /obj/structure/closet/secure_closet/psychology/PopulateContents()
 	..()
 	new /obj/item/clothing/under/costume/buttondown/slacks/service(src)
+	new /obj/item/clothing/under/costume/buttondown/skirt/service(src)
 	new /obj/item/clothing/neck/tie/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/storage/backpack/medic(src)

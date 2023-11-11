@@ -18,13 +18,13 @@
 /obj/item/clothing/shoes/gunboots/equipped(mob/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_FEET)
-		RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(check_kick))
+		RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(check_kick))
 	else
-		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+		UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 
 /obj/item/clothing/shoes/gunboots/dropped(mob/user)
 	if(user)
-		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+		UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
 
 /// After each step, check if we randomly fire a shot
@@ -38,8 +38,8 @@
 /// Stomping on someone while wearing gunboots shoots them point blank
 /obj/item/clothing/shoes/gunboots/proc/check_kick(mob/living/carbon/human/kicking_person, atom/attacked_atom, proximity)
 	SIGNAL_HANDLER
-	if(!isliving(attacked_atom))
-		return
+	if(!proximity || !isliving(attacked_atom))
+		return NONE
 	var/mob/living/attacked_living = attacked_atom
 	if(attacked_living.body_position == LYING_DOWN)
 		INVOKE_ASYNC(src, PROC_REF(fire_shot), attacked_living)

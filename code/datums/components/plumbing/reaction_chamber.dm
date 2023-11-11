@@ -10,7 +10,7 @@
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
 	. = ..()
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
-	if(!. || !reaction_chamber.emptying || reagents.is_reacting == TRUE)
+	if(!. || !reaction_chamber.emptying || reagents.is_reacting)
 		return FALSE
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
@@ -18,16 +18,20 @@
 	if(chamber.emptying)
 		return
 
+	var/present_amount
+	var/diff
 	for(var/required_reagent in chamber.required_reagents)
-		var/has_reagent = FALSE
+		//find how much amount is already present if at all
+		present_amount = 0
 		for(var/datum/reagent/containg_reagent as anything in reagents.reagent_list)
 			if(required_reagent == containg_reagent.type)
-				has_reagent = TRUE
-				if(containg_reagent.volume + CHEMICAL_QUANTISATION_LEVEL < chamber.required_reagents[required_reagent])
-					process_request(min(chamber.required_reagents[required_reagent] - containg_reagent.volume, MACHINE_REAGENT_TRANSFER) , required_reagent, dir)
-					return
-		if(!has_reagent)
-			process_request(min(chamber.required_reagents[required_reagent], MACHINE_REAGENT_TRANSFER), required_reagent, dir)
+				present_amount = containg_reagent.volume
+				break
+
+		//compute how much more is needed and round it
+		diff = chamber.required_reagents[required_reagent] - present_amount
+		if(diff >= 0.01)
+			process_request(min(diff, MACHINE_REAGENT_TRANSFER), required_reagent, dir)
 			return
 
 	reagents.flags &= ~NO_REACT
@@ -45,16 +49,15 @@
 	ducting_layer = SECOND_DUCT_LAYER
 
 /datum/component/plumbing/acidic_input/send_request(dir)
-	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/acidic_buffer, dir = dir)
+	process_request(reagent = /datum/reagent/reaction_agent/acidic_buffer, dir = dir)
 
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal base container
 /datum/component/plumbing/alkaline_input
 	demand_connects = EAST
 	demand_color = COLOR_VIBRANT_LIME
-
 	ducting_layer = FOURTH_DUCT_LAYER
 
 /datum/component/plumbing/alkaline_input/send_request(dir)
-	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)
+	process_request(reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)
 
 

@@ -121,3 +121,12 @@
 	stock_min = 3
 	stock_max = 8
 	availability_prob = 90
+
+/datum/market_item/misc/giant_wrench_parts
+	name = "Big Slappy parts"
+	desc = "Cheap illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
+	item = /obj/item/weaponcrafting/giant_wrench
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 1
+	availability_prob = 25

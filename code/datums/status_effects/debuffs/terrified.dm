@@ -38,7 +38,7 @@
 	UnregisterSignal(owner, COMSIG_CARBON_HELPED)
 	owner.remove_fov_trait(id, FOV_270_DEGREES)
 
-/datum/status_effect/terrified/tick(seconds_per_tick, times_fired)
+/datum/status_effect/terrified/tick(seconds_between_ticks)
 	if(check_surrounding_darkness())
 		if(terror_buildup < DARKNESS_TERROR_CAP)
 			terror_buildup += DARKNESS_TERROR_AMOUNT
@@ -50,14 +50,14 @@
 		return
 
 	if(terror_buildup >= TERROR_FEAR_THRESHOLD) //The onset, minor effects of terror buildup
-		owner.adjust_dizzy_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
-		owner.adjust_stutter_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
-		owner.adjust_jitter_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
+		owner.adjust_dizzy_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
+		owner.adjust_stutter_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
+		owner.adjust_jitter_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		owner.add_fov_trait(id, FOV_270_DEGREES) //Terror induced tunnel vision
-		owner.adjust_eye_blur_up_to(10 SECONDS * seconds_per_tick, 10 SECONDS)
+		owner.adjust_eye_blur_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
 		if(prob(5)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
 			owner.visible_message(

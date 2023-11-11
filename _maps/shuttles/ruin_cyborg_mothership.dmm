@@ -12,8 +12,7 @@
 	id = "mothership_main"
 	},
 /obj/machinery/recycler{
-	dir = 1;
-	eat_dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
@@ -360,7 +359,7 @@
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "rJ" = (
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/basic/hivebot,
 /obj/structure/spacevine,
 /obj/machinery/conveyor{
 	id = "mothership_main"
@@ -481,7 +480,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/ruin/cyborg_mothership)
 "yG" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/basic/hivebot/range,
 /turf/open/floor/circuit/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "yQ" = (
@@ -581,7 +580,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "FQ" = (
 /obj/structure/lattice,
-/mob/living/simple_animal/hostile/hivebot/range,
+/mob/living/basic/hivebot/range,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Ge" = (
@@ -610,7 +609,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "HK" = (
-/mob/living/simple_animal/hostile/hivebot,
+/mob/living/basic/hivebot,
 /obj/item/circuitboard/aicore,
 /obj/structure/cable,
 /turf/open/floor/circuit/green/airless,
@@ -641,7 +640,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "JJ" = (
 /obj/structure/lattice,
-/mob/living/simple_animal/hostile/hivebot/mechanic,
+/mob/living/basic/hivebot/mechanic,
 /turf/template_noop,
 /area/shuttle/ruin/cyborg_mothership)
 "Ks" = (
@@ -714,7 +713,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "Oq" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /obj/effect/turf_decal/bot,
 /obj/structure/sink/directional/east,
 /obj/item/toy/figure/borg{

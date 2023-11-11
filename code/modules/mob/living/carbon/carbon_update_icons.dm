@@ -75,12 +75,14 @@
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	if((. = overlays_standing[cache_index]))
 		add_overlay(.)
+	SEND_SIGNAL(src, COMSIG_CARBON_APPLY_OVERLAY, cache_index, .)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
 	var/I = overlays_standing[cache_index]
 	if(I)
 		cut_overlay(I)
 		overlays_standing[cache_index] = null
+	SEND_SIGNAL(src, COMSIG_CARBON_REMOVE_OVERLAY, cache_index, I)
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
@@ -270,8 +272,8 @@
 #undef NEXT_PARENT_COMMAND
 
 /mob/living/carbon/regenerate_icons()
-	if(notransform)
-		return 1
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
 	icon_render_keys = list() //Clear this bad larry out
 	update_held_items()
 	update_worn_handcuffs()
@@ -280,11 +282,17 @@
 	update_body()
 
 /mob/living/carbon/update_held_items()
+	. = ..()
 	remove_overlay(HANDS_LAYER)
 	if (handcuffed)
 		drop_all_held_items()
 		return
 
+	overlays_standing[HANDS_LAYER] = get_held_overlays()
+	apply_overlay(HANDS_LAYER)
+
+/// Generate held item overlays
+/mob/living/carbon/proc/get_held_overlays()
 	var/list/hands = list()
 	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
@@ -305,9 +313,7 @@
 			icon_file = I.righthand_file
 
 		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
-
-	overlays_standing[HANDS_LAYER] = hands
-	apply_overlay(HANDS_LAYER)
+	return hands
 
 /mob/living/carbon/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
 	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"][suffix]"

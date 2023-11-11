@@ -49,7 +49,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
 	AddComponent(\
 		/datum/component/egg_layer,\
-		/obj/item/food/egg,\
+		/obj/item/food/egg/organic,\
 		list(/obj/item/food/grown/wheat),\
 		feed_messages = list("She clucks contently."),\
 		lay_messages = EGG_LAYING_MESSAGES,\
@@ -88,8 +88,6 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/chicken,
 	)
 

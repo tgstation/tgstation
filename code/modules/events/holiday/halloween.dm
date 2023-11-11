@@ -31,12 +31,14 @@
 	desc = "Spooky! It's got delicious calcium flavouring!"
 	icon = 'icons/obj/holiday/halloween_items.dmi'
 	icon_state = "skeletoncookie"
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cookie/sugar/spookycoffin
 	name = "coffin cookie"
 	desc = "Spooky! It's got delicious coffee flavouring!"
 	icon = 'icons/obj/holiday/halloween_items.dmi'
 	icon_state = "coffincookie"
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 //spooky items
 

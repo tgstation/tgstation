@@ -1,4 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - spellcheck: "Fixed a typo in progressbar.dm and the file name for the progress bar sprites."

@@ -113,7 +113,8 @@
 /area/shuttle/arrival)
 "P" = (
 /obj/machinery/requests_console/directional/north{
-	department = "Arrivals shuttle"
+	department = "Arrivals shuttle";
+	name = "Arrival Shuttle Requests Console"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)

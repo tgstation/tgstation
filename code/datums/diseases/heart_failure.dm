@@ -48,7 +48,7 @@
 			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a sharp pain in your chest!"))
 				if(prob(25))
-					affected_mob.vomit(95)
+					affected_mob.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95)
 				affected_mob.emote("cough")
 				affected_mob.Paralyze(40)
 				affected_mob.losebreath += 4

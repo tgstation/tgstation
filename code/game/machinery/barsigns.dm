@@ -24,6 +24,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /obj/machinery/barsign/Initialize(mapload)
 	. = ..()
 	set_sign(new /datum/barsign/hiddensigns/signoff)
+	find_and_hang_on_wall()
 
 /obj/machinery/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))

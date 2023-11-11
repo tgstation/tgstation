@@ -149,7 +149,7 @@
 #ifdef DOCKING_PORT_HIGHLIGHT
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color = "#f00")
-	invisibility = 0
+	SetInvisibility(INVISIBILITY_NONE)
 	SET_PLANE_IMPLICIT(src, GHOST_PLANE)
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
@@ -238,6 +238,9 @@
 	if(mapload)
 		for(var/turf/T in return_turfs())
 			T.turf_flags |= NO_RUINS
+
+	if(SSshuttle.initialized)
+		INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
@@ -382,8 +385,17 @@
 /// This should be a unit test, but too much of our other code breaks during shuttle movement, so not yet, not yet.
 /proc/test_whiteship_sizes()
 	var/obj/docking_port/stationary/port_type = /obj/docking_port/stationary/picked/whiteship
-	var/datum/turf_reservation/docking_yard = SSmapping.RequestBlockReservation(initial(port_type.width), initial(port_type.height))
-	var/turf/spawnpoint = locate(docking_yard.bottom_left_coords[1] + initial(port_type.dwidth), docking_yard.bottom_left_coords[2] + initial(port_type.dheight), docking_yard.bottom_left_coords[3])
+	var/datum/turf_reservation/docking_yard = SSmapping.request_turf_block_reservation(
+		initial(port_type.width),
+		initial(port_type.height),
+		1,
+	)
+	var/turf/bottom_left = docking_yard.bottom_left_turfs[1]
+	var/turf/spawnpoint = locate(
+		bottom_left.x + initial(port_type.dwidth),
+		bottom_left.y + initial(port_type.dheight),
+		bottom_left.z,
+	)
 
 	var/obj/docking_port/stationary/picked/whiteship/port = new(spawnpoint)
 	var/list/ids = port.shuttlekeys
@@ -439,7 +451,8 @@
 	var/current_engine_power = 0
 	///How much engine power (thrust) the shuttle starts with at mapload.
 	var/initial_engine_power = 0
-
+	///Speed multiplier based on station alert level
+	var/alert_coeff = ALERT_COEFF_BLUE
 	///used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/timer
 	var/last_timer_length
@@ -787,7 +800,7 @@
 			if(sunset_mobs.mind && !istype(get_area(sunset_mobs), /area/shuttle/escape/brig))
 				sunset_mobs.mind.force_escaped = TRUE
 			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
-			sunset_mobs.notransform = TRUE
+			ADD_TRAIT(sunset_mobs, TRAIT_NO_TRANSFORM, REF(src))
 			sunset_mobs.ghostize(FALSE)
 			sunset_mobs.moveToNullspace()
 
@@ -925,6 +938,20 @@
 		return
 	time_remaining *= multiple
 	last_timer_length *= multiple
+	setTimer(time_remaining)
+
+/obj/docking_port/mobile/proc/alert_coeff_change(new_coeff)
+	if(isnull(new_coeff))
+		return
+
+	var/time_multiplier = new_coeff / alert_coeff
+	var/time_remaining = timer - world.time
+	if(time_remaining < 0 || !last_timer_length)
+		return
+
+	time_remaining *= time_multiplier
+	last_timer_length *= time_multiplier
+	alert_coeff = new_coeff
 	setTimer(time_remaining)
 
 /obj/docking_port/mobile/proc/invertTimer()

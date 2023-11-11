@@ -90,11 +90,6 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDCUFFED)
 
-/obj/item/clothing/shoes/sneakers/orange/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == attached_cuffs)
-		moveToNullspace(attached_cuffs)
-	return ..()
-
 /obj/item/clothing/shoes/sneakers/orange/Destroy()
 	QDEL_NULL(attached_cuffs)
 	return ..()

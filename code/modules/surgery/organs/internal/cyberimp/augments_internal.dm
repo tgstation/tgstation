@@ -4,6 +4,7 @@
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
 	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
@@ -167,15 +168,8 @@
 	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
-	var/list/boxed = list(
-		/obj/item/autosurgeon/syndicate/thermal_eyes,
-		/obj/item/autosurgeon/syndicate/xray_eyes,
-		/obj/item/autosurgeon/syndicate/anti_stun,
-		/obj/item/autosurgeon/syndicate/reviver)
-	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()
-	var/implant
-	while(contents.len <= amount)
-		implant = pick(boxed)
-		new implant(src)
+	new /obj/item/autosurgeon/syndicate/xray_eyes(src)
+	new /obj/item/autosurgeon/syndicate/anti_stun(src)
+	new /obj/item/autosurgeon/syndicate/reviver(src)

@@ -92,7 +92,7 @@
 	)
 
 /mob/living/simple_animal/bot/cleanbot/autopatrol
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
@@ -128,10 +128,12 @@
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(gone == build_bucket)
 		build_bucket = null
-	return ..()
-
+	if(gone == weapon)
+		weapon = null
+		update_appearance(UPDATE_ICON)
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	QDEL_NULL(build_bucket)
@@ -248,12 +250,6 @@
 	if(is_type_in_typecache(scan_target, target_types))
 		return scan_target
 
-/mob/living/simple_animal/bot/cleanbot/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == weapon)
-		weapon = null
-		update_appearance(UPDATE_ICON)
-	return ..()
-
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()
 	. = ..()
 	if(!.)
@@ -295,7 +291,7 @@
 				return
 
 		if(target && path.len == 0 && (get_dist(src,target) > 1))
-			path = get_path_to(src, target, max_distance=30, mintargetdist=1, id=access_card)
+			path = get_path_to(src, target, max_distance=30, mintargetdist=1, access=access_card.GetAccess())
 			mode = BOT_MOVING
 			if(length(path) == 0)
 				add_to_ignore(target)

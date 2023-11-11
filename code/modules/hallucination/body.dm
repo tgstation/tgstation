@@ -58,7 +58,7 @@
 
 /datum/hallucination/body/husk
 	random_hallucination_weight = 8
-	body_image_file = 'icons/mob/species/human/human.dmi'
+	body_image_file = 'icons/mob/human/human.dmi'
 	body_image_state = "husk"
 
 /datum/hallucination/body/husk/sideways
@@ -151,11 +151,11 @@
 	body_floats = TRUE
 
 /datum/hallucination/body/weird/faceless
-	body_image_file = 'icons/mob/simple/traders.dmi'
+	body_image_file = 'icons/obj/trader_signs.dmi'
 	body_image_state = "faceless"
 
 /datum/hallucination/body/weird/bones
-	body_image_file = 'icons/mob/simple/traders.dmi'
+	body_image_file = 'icons/obj/trader_signs.dmi'
 	body_image_state = "mrbones"
 
 /datum/hallucination/body/weird/freezer

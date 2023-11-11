@@ -84,6 +84,10 @@
 	var/obj/item/mod/module/selected_module
 	/// AI or pAI mob inhabiting the MOD.
 	var/mob/living/silicon/ai_assistant
+	/// The MODlink datum, letting us call people from the suit.
+	var/datum/mod_link/mod_link
+	/// The starting MODlink frequency, overridden on subtypes that want it to be something.
+	var/starting_frequency = null
 	/// Delay between moves as AI.
 	var/static/movedelay = 0
 	/// Cooldown for AI moves.
@@ -141,10 +145,10 @@
 	for(var/obj/item/mod/module/module as anything in theme.inbuilt_modules)
 		module = new module(src)
 		install(module)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mod/control/Destroy()
-	if(active)
-		STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module, deleting = TRUE)
 	for(var/obj/item/part as anything in mod_parts)
@@ -173,6 +177,7 @@
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(wires)
+	QDEL_NULL(mod_link)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -217,6 +222,7 @@
 			. += span_notice("You could install an AI or pAI using their <b>storage card</b>.")
 		else if(isAI(ai_assistant))
 			. += span_notice("You could remove [ai_assistant] with an <b>intellicard</b>.")
+	. += span_notice("You could copy/set link frequency with a <b>multitool</b>.")
 	. += span_notice("<i>You could examine it more thoroughly...</i>")
 
 /obj/item/mod/control/examine_more(mob/user)
@@ -226,13 +232,17 @@
 /obj/item/mod/control/process(seconds_per_tick)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
+	if(mod_link.link_call)
+		subtract_charge((DEFAULT_CHARGE_DRAIN * 0.25) * seconds_per_tick)
+	if(!active)
+		return
 	if(!get_charge() && active && !activating)
 		power_off()
-		return PROCESS_KILL
+		return
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
-	subtract_charge((charge_drain + malfunctioning_charge_drain)*seconds_per_tick)
+	subtract_charge((charge_drain + malfunctioning_charge_drain) * seconds_per_tick)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && SPT_PROB(5, seconds_per_tick))
@@ -493,6 +503,7 @@
 		retract(null, part)
 	if(active)
 		finish_activation(on = FALSE)
+		mod_link?.end_call()
 	var/mob/old_wearer = wearer
 	unset_wearer()
 	old_wearer.temporarilyRemoveItemFromInventory(src)
@@ -586,6 +597,10 @@
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
+
+/// Intended for callbacks, don't use normally, just get wearer by itself.
+/obj/item/mod/control/proc/get_wearer()
+	return wearer
 
 /obj/item/mod/control/proc/update_access(mob/user, obj/item/card/id/card)
 	if(!allowed(user))

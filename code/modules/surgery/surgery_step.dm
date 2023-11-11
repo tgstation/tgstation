@@ -87,7 +87,7 @@
 	if(tool)
 		speed_mod = tool.toolspeed
 
-	if(HAS_TRAIT(target, TRAIT_DISSECTED))
+	if(HAS_TRAIT(target, TRAIT_SURGICALLY_ANALYZED))
 		speed_mod *= SURGERY_SPEED_DISSECTION_MODIFIER
 
 	if(check_morbid_curiosity(user, tool, surgery))
@@ -129,7 +129,7 @@
 				surgery.complete(user)
 
 	if(target.stat == DEAD && was_sleeping && user.client)
-		user.client.give_award(/datum/award/achievement/misc/sandman, user)
+		user.client.give_award(/datum/award/achievement/jobs/sandman, user)
 
 	surgery.step_in_progress = FALSE
 	return advance

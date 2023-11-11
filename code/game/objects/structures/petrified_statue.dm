@@ -44,8 +44,9 @@
 /obj/structure/statue/petrified/contents_explosion(severity, target)
 	return
 
-/obj/structure/statue/petrified/handle_atom_del(atom/A)
-	if(A == petrified_mob)
+/obj/structure/statue/petrified/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == petrified_mob)
 		petrified_mob = null
 
 /obj/structure/statue/petrified/Destroy()
@@ -65,12 +66,11 @@
 
 	if(petrified_mob)
 		petrified_mob.status_flags &= ~GODMODE
-		petrified_mob.forceMove(loc)
 		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
 		REMOVE_TRAIT(petrified_mob, TRAIT_NOBLOOD, MAGIC_TRAIT)
-		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transfered to the mob
+		petrified_mob.take_overall_damage((petrified_mob.health - atom_integrity + 100)) //any new damage the statue incurred is transferred to the mob
 		petrified_mob.faction -= FACTION_MIMIC
-		petrified_mob = null
+		petrified_mob.forceMove(loc)
 	return ..()
 
 /obj/structure/statue/petrified/deconstruct(disassembled = TRUE)
@@ -94,7 +94,7 @@
 
 /mob/proc/petrify(statue_timer)
 
-/mob/living/carbon/human/petrify(statue_timer, save_brain)
+/mob/living/carbon/human/petrify(statue_timer, save_brain, colorlist)
 	if(!isturf(loc))
 		return FALSE
 	var/obj/structure/statue/petrified/S = new(loc, src, statue_timer, save_brain)
@@ -102,6 +102,8 @@
 	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
 	S.copy_overlays(src)
 	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	if(colorlist)
+		newcolor = colorlist
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return TRUE
 

@@ -23,6 +23,8 @@
 	var/light_range
 	/// The colour of the light, string, decomposed by parse_light_color()
 	var/light_color
+	/// The height of the light. The larger this is, the dimmer we'll start
+	var/light_height
 
 	// Variables for keeping track of the colour.
 	var/lum_r
@@ -77,7 +79,8 @@
 
 	if (needs_update)
 		SSlighting.sources_queue -= src
-
+		SSlighting.current_sources -= src
+		
 	top_atom = null
 	source_atom = null
 	source_turf = null
@@ -216,20 +219,20 @@
 /datum/light_source/proc/get_sheet(multiz = FALSE)
 	var/list/static/key_to_sheet = list()
 	var/range = max(1, light_range);
-	var/key = "[range]-[visual_offset]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[multiz]"
+	var/key = "[range]-[visual_offset]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[light_height]-[multiz]"
 	var/list/hand_back = key_to_sheet[key]
 	if(!hand_back)
 		if(multiz)
-			hand_back = generate_sheet_multiz(range, visual_offset, offset_x, offset_y, light_dir, light_angle)
+			hand_back = generate_sheet_multiz(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
 		else
-			hand_back = generate_sheet(range, visual_offset, offset_x, offset_y, light_dir, light_angle)
+			hand_back = generate_sheet(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
 		key_to_sheet[key] = hand_back
 	return hand_back
 
 /// Returns a list of lists that encodes the light falloff of our source
 /// Takes anything that impacts our generation as input
 /// This function should be "pure", no side effects or reads from the source object
-/datum/light_source/proc/generate_sheet(range, visual_offset, x_offset, y_offset, center_dir, angle, z_level = 0)
+/datum/light_source/proc/generate_sheet(range, visual_offset, x_offset, y_offset, center_dir, angle, height, z_level = 0)
 	var/list/encode = list()
 	// How far away the turfs we get are, and how many there are are often not the same calculation
 	// So we need to include the visual offset, so we can ensure our sheet is large enough to accept all the distance differences
@@ -240,30 +243,30 @@
 	for(var/x in (-(bound_range) + x_offset - 0.5) to (bound_range + x_offset + 0.5))
 		var/list/row = list()
 		for(var/y in (-(bound_range) + y_offset - 0.5) to (bound_range + y_offset + 0.5))
-			row += falloff_at_coord(x, y, z_level, range, center_dir, light_angle)
+			row += falloff_at_coord(x, y, z_level, range, center_dir, angle, height)
 		encode += list(row)
 	return encode
 
 /// Returns a THREE dimensional list of lists that encodes the lighting falloff of our source
 /// Takes anything that impacts our generation as input
 /// This function should be "pure", no side effects or reads from the passed object
-/datum/light_source/proc/generate_sheet_multiz(range, visual_offset, x_offset, y_offset, center_dir, angle)
+/datum/light_source/proc/generate_sheet_multiz(range, visual_offset, x_offset, y_offset, center_dir, angle, height)
 	var/list/encode = list()
 	var/z_range = SSmapping.max_plane_offset // Let's just be safe yeah?
 	for(var/z in -z_range to z_range)
-		var/list/sheet = generate_sheet(range, visual_offset, x_offset, y_offset, center_dir, angle, z)
+		var/list/sheet = generate_sheet(range, visual_offset, x_offset, y_offset, center_dir, angle, height, z)
 		encode += list(sheet)
 	return encode
 
 /// Takes x y and z offsets from the source as input, alongside our source's range
 /// Returns a value between 0 and 1, 0 being dark on that tile, 1 being fully lit
-/datum/light_source/proc/falloff_at_coord(x, y, z, range, center_dir, angle)
+/datum/light_source/proc/falloff_at_coord(x, y, z, range, center_dir, angle, height)
 	var/range_divisor = max(1, range)
 
 	// You may notice we use squares here even though there are three components
 	// Because z diffs are so functionally small, cubes and cube roots are too aggressive
 	// The larger the distance is, the less bright our light will be
-	var/multiplier = 1 - CLAMP01(sqrt(x ** 2 + y ** 2 + z ** 2 + LIGHTING_HEIGHT) / range_divisor)
+	var/multiplier = 1 - CLAMP01(sqrt(x ** 2 + y ** 2 + z ** 2 + height) / range_divisor)
 	if(angle >= 360 || angle <= 0)
 		return multiplier
 
@@ -426,6 +429,10 @@
 
 	if (source_atom.light_angle != light_angle)
 		light_angle = source_atom.light_angle
+		update = TRUE
+
+	if(source_atom.light_height != light_height)
+		light_height = source_atom.light_height
 		update = TRUE
 
 	var/list/visual_offsets = calculate_light_offset(visual_source)

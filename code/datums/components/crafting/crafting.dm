@@ -108,7 +108,6 @@
 			continue
 		. += AM
 
-
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
 	.["tool_behaviour"] = list()
@@ -123,14 +122,15 @@
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
-			else if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
-				var/obj/item/reagent_containers/container = item
-				for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
-					.["other"][reagent.type] += reagent.volume
-			else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
-				if(item.tool_behaviour)
-					.["tool_behaviour"] += item.tool_behaviour
+			else
 				.["other"][item.type] += 1
+				if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
+					var/obj/item/reagent_containers/container = item
+					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
+						.["other"][reagent.type] += reagent.volume
+				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
+					if(item.tool_behaviour)
+						.["tool_behaviour"] += item.tool_behaviour
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 		else if (isstructure(object))
@@ -178,36 +178,44 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
-	var/list/contents = get_surroundings(a,R.blacklist)
+/datum/component/personal_crafting/proc/construct_item(atom/crafter, datum/crafting_recipe/recipe)
+	if(!crafter)
+		return ", unknown error!" // This should never happen, but in the event that it does...
+
+	if(!recipe)
+		return ", invalid recipe!" // This can happen, I can't really explain why, but it can. Better safe than sorry.
+
+	var/list/contents = get_surroundings(crafter, recipe.blacklist)
 	var/send_feedback = 1
-	if(check_contents(a, R, contents))
-		if(check_tools(a, R, contents))
-			if(R.one_per_turf)
-				for(var/content in get_turf(a))
-					if(istype(content, R.result))
+	if(check_contents(crafter, recipe, contents))
+		if(check_tools(crafter, recipe, contents))
+			if(recipe.one_per_turf)
+				for(var/content in get_turf(crafter))
+					if(istype(content, recipe.result))
 						return ", object already present."
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time, target = a))
+			if(ismob(crafter) && !do_after(crafter, recipe.time, target = crafter))
 				return "."
-			contents = get_surroundings(a,R.blacklist)
-			if(!check_contents(a, R, contents))
+			contents = get_surroundings(crafter, recipe.blacklist)
+			if(!check_contents(crafter, recipe, contents))
 				return ", missing component."
-			if(!check_tools(a, R, contents))
+			if(!check_tools(crafter, recipe, contents))
 				return ", missing tool."
-			var/list/parts = del_reqs(R, a)
-			var/atom/movable/I
-			if(ispath(R.result, /obj/item/stack))
-				I = new R.result (get_turf(a.loc), R.result_amount || 1)
+			var/list/parts = del_reqs(recipe, crafter)
+			var/atom/movable/result
+			if(ispath(recipe.result, /obj/item/stack))
+				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
 			else
-				I = new R.result (get_turf(a.loc))
-				if(I.atom_storage && R.delete_contents)
-					for(var/obj/item/thing in I)
+				result = new recipe.result(get_turf(crafter.loc))
+				if(result.atom_storage && recipe.delete_contents)
+					for(var/obj/item/thing in result)
 						qdel(thing)
-			I.CheckParts(parts, R)
+			if (IsEdible(result))
+				result.reagents?.clear_reagents()
+			result.CheckParts(parts, recipe)
 			if(send_feedback)
-				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
-			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
+				SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
+			return result //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 		return ", missing tool."
 	return ", missing component."
 
@@ -462,7 +470,7 @@
 				else
 					if(!istype(result, /obj/effect/spawner))
 						result.forceMove(user.drop_location())
-				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
+				to_chat(user, span_notice("[crafting_recipe.name] crafted."))
 				user.investigate_log("crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)
 			else
@@ -514,7 +522,7 @@
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = recipe.name || initial(atom.name)
+	data["name"] = recipe.name
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result

@@ -18,6 +18,7 @@
 	has_closed_overlay = FALSE
 	can_install_electronics = FALSE
 	paint_jobs = null
+	can_weld_shut = FALSE
 
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null

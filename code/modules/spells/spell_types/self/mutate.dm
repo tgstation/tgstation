@@ -38,7 +38,7 @@
 
 /datum/action/cooldown/spell/apply_mutations/mutate
 	name = "Mutate"
-	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
+	desc = "This spell causes you to turn into a gigantic hulk and gain laser vision for a short while. Unlike the lesser nonmagical version, it works on non-humans and mantains hand dexterity as well!"
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 	spell_max_level = 3
@@ -46,5 +46,18 @@
 	invocation = "BIRUZ BENNAR"
 	invocation_type = INVOCATION_SHOUT
 
-	mutations_to_add = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk)
+	mutations_to_add = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk/wizardly, /datum/mutation/human/gigantism)
 	mutation_duration = 30 SECONDS
+
+/datum/action/cooldown/spell/apply_mutations/mutate/cast(mob/living/carbon/human/cast_on)
+	..()
+	if(HAS_TRAIT(cast_on, TRAIT_USES_SKINTONES) || HAS_TRAIT(cast_on, TRAIT_MUTANT_COLORS))
+		return
+	// Our caster has a species that doesn't greenify when hulked, so we will do it manually.
+	cast_on.add_atom_colour("#00FF00", TEMPORARY_COLOUR_PRIORITY)
+
+/datum/action/cooldown/spell/apply_mutations/mutate/remove_mutations(mob/living/carbon/human/cast_on)
+	if(QDELETED(cast_on) || !is_valid_target(cast_on))
+		return
+
+	cast_on.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)

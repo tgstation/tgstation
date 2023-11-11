@@ -44,95 +44,95 @@ Recurring extracts:
 
 /obj/item/slimecross/recurring/grey
 	extract_type = /obj/item/slime_extract/grey
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 
 /obj/item/slimecross/recurring/orange
 	extract_type = /obj/item/slime_extract/orange
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 
 /obj/item/slimecross/recurring/purple
 	extract_type = /obj/item/slime_extract/purple
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 
 /obj/item/slimecross/recurring/blue
 	extract_type = /obj/item/slime_extract/blue
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 
 /obj/item/slimecross/recurring/metal
 	extract_type = /obj/item/slime_extract/metal
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 	max_cooldown = 20
 
 /obj/item/slimecross/recurring/yellow
 	extract_type = /obj/item/slime_extract/yellow
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 	max_cooldown = 20
 
 /obj/item/slimecross/recurring/darkpurple
 	extract_type = /obj/item/slime_extract/darkpurple
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 	max_cooldown = 20
 
 /obj/item/slimecross/recurring/darkblue
 	extract_type = /obj/item/slime_extract/darkblue
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 
 /obj/item/slimecross/recurring/silver
 	extract_type = /obj/item/slime_extract/silver
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 
 /obj/item/slimecross/recurring/bluespace
 	extract_type = /obj/item/slime_extract/bluespace
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 
 /obj/item/slimecross/recurring/sepia
 	extract_type = /obj/item/slime_extract/sepia
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 	max_cooldown = 36 //No infinite timestop for you!
 
 /obj/item/slimecross/recurring/cerulean
 	extract_type = /obj/item/slime_extract/cerulean
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 
 /obj/item/slimecross/recurring/pyrite
 	extract_type = /obj/item/slime_extract/pyrite
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 
 /obj/item/slimecross/recurring/red
 	extract_type = /obj/item/slime_extract/red
-	colour = "red"
+	colour = SLIME_TYPE_RED
 
 /obj/item/slimecross/recurring/green
 	extract_type = /obj/item/slime_extract/green
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 
 /obj/item/slimecross/recurring/pink
 	extract_type = /obj/item/slime_extract/pink
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 
 /obj/item/slimecross/recurring/gold
 	extract_type = /obj/item/slime_extract/gold
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 	max_cooldown = 30
 
 /obj/item/slimecross/recurring/oil
 	extract_type = /obj/item/slime_extract/oil
-	colour = "oil" //Why would you want this?
+	colour = SLIME_TYPE_OIL //Why would you want this?
 
 /obj/item/slimecross/recurring/black
 	extract_type = /obj/item/slime_extract/black
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 
 /obj/item/slimecross/recurring/lightpink
 	extract_type = /obj/item/slime_extract/lightpink
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 
 /obj/item/slimecross/recurring/adamantine
 	extract_type = /obj/item/slime_extract/adamantine
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 	max_cooldown = 20
 
 /obj/item/slimecross/recurring/rainbow
 	extract_type = /obj/item/slime_extract/rainbow
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW
 	max_cooldown = 40 //It's pretty powerful.

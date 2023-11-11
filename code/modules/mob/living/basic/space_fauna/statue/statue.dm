@@ -27,6 +27,7 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
+	melee_attack_cooldown = 1 SECONDS
 
 	faction = list(FACTION_STATUE)
 	speak_emote = list("screams")
@@ -55,14 +56,14 @@
 
 /mob/living/basic/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
-	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
 	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
+	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
 
-	// Give spells
-	var/datum/action/cooldown/spell/aoe/flicker_lights/flicker = new(src)
-	flicker.Grant(src)
-	var/datum/action/cooldown/spell/aoe/blindness/blind = new(src)
-	blind.Grant(src)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/spell/aoe/blindness,
+		/datum/action/cooldown/spell/aoe/flicker_lights,
+	)
+	grant_actions_by_list(innate_actions)
 
 	// Set creator
 	if(creator)
@@ -147,15 +148,9 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/statue,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/statue
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/statue
-
-/datum/ai_behavior/basic_melee_attack/statue
-	action_cooldown = 1 SECONDS
 
 /mob/living/basic/statue/frosty
 	name = "Frosty"
@@ -167,7 +162,7 @@
 	maxHealth = 5000
 	melee_damage_lower = 65
 	melee_damage_upper = 65
-	faction = list("statue","mining")
+	faction = list(FACTION_STATUE,FACTION_MINING)
 
 /mob/living/basic/statue/frosty/Initialize(mapload)
 	. = ..()

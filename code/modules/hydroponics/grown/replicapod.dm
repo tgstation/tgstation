@@ -37,7 +37,7 @@
 	plant_icon_offset = 2
 	species = "replicapod"
 	plantname = "Replica Pod"
-	product = /mob/living/carbon/human //verrry special -- Urist
+	product = null // the human mob is spawned in harvest()
 	lifespan = 50
 	endurance = 8
 	maturation = 10
@@ -155,7 +155,7 @@
 		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
 		if(mind || ckey)
 			var/choice = tgui_alert(usr,"The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
-			if(choice == "Cancel")
+			if(choice != "Harvest Seeds")
 				return result
 
 		// If this plant has already been harvested, return early.

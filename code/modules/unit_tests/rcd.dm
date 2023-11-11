@@ -15,7 +15,7 @@
 
 	engineer.put_in_hands(rcd, forced = TRUE)
 
-	rcd.mode = RCD_MACHINE
+	rcd.mode = RCD_STRUCTURE
 
 	var/list/adjacent_turfs = get_adjacent_open_turfs(engineer)
 
@@ -24,7 +24,7 @@
 	var/turf/adjacent_turf = adjacent_turfs[1]
 
 	for(var/i in 1 to 10)
-		adjacent_turf.rcd_act(engineer, rcd, rcd.mode)
+		adjacent_turf.rcd_act(engineer, rcd, list("[RCD_DESIGN_MODE]" = rcd.mode, "[RCD_DESIGN_PATH]" = /obj/structure/frame/machine/secured))
 
 	var/frame_count = 0
 	for(var/obj/structure/frame/machine_frame in adjacent_turf.contents)

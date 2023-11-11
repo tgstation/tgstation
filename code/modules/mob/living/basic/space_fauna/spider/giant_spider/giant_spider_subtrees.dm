@@ -62,12 +62,9 @@
 	var/target_key = BB_SPIDER_WEB_TARGET
 
 /datum/ai_planning_subtree/spin_web/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/using_action = controller.blackboard[action_key]
-	var/turf/target_turf = controller.blackboard[target_key]
-	if (QDELETED(using_action) || QDELETED(target_turf))
-		return
-	controller.queue_behavior(/datum/ai_behavior/spin_web, action_key, target_key)
-	return SUBTREE_RETURN_FINISH_PLANNING
+	if (controller.blackboard_key_exists(action_key) && controller.blackboard_key_exists(target_key))
+		controller.queue_behavior(/datum/ai_behavior/spin_web, action_key, target_key)
+		return SUBTREE_RETURN_FINISH_PLANNING
 
 /// Move to an unwebbed nearby turf and web it up
 /datum/ai_behavior/spin_web

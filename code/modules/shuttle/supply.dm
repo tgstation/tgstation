@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/swapper,
 		/obj/docking_port,
 		/obj/machinery/launchpad,
+		/obj/machinery/exodrone_launcher,
 		/obj/machinery/disposal,
 		/obj/structure/disposalpipe,
 		/obj/item/mail,
@@ -60,16 +61,60 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
-		for(var/turf/shuttle_turf in shuttle_area)
+		for(var/turf/shuttle_turf in shuttle_area.get_contained_turfs())
 			for(var/atom/passenger in shuttle_turf.get_all_contents())
 				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
 					return FALSE
 	return TRUE
 
+/// Returns anything on the cargo blacklist found within areas_to_check back to the turf of the home docking port via Centcom branded supply pod.
+/obj/docking_port/mobile/supply/proc/return_blacklisted_things_home(list/area/areas_to_check, obj/docking_port/stationary/home)
+	var/list/stuff_to_send_home = list()
+	for(var/area/shuttle_area as anything in areas_to_check)
+		for(var/turf/shuttle_turf in shuttle_area.get_contained_turfs())
+			for(var/atom/passenger in shuttle_turf.get_all_contents())
+				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
+					stuff_to_send_home += passenger
+
+	if(!length(stuff_to_send_home))
+		return FALSE
+
+	var/obj/structure/closet/supplypod/centcompod/et_go_home = new()
+
+	for(var/atom/movable/et as anything in stuff_to_send_home)
+		et.forceMove(et_go_home)
+
+	new /obj/effect/pod_landingzone(get_turf(home), et_go_home)
+
+	return stuff_to_send_home
+
 /obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)
 	if(mode != SHUTTLE_IDLE)
 		return 2
 	return ..()
+
+/obj/docking_port/mobile/supply/check_dock(obj/docking_port/stationary/S, silent)
+	. = ..()
+
+	if(!.)
+		return
+
+	// If we're not trying to dock at Centcom, we don't care.
+	if(S.shuttle_id != "cargo_away")
+		return
+
+	// Else we are docking at Centcom, check the blacklist to make sure no contraband was put onto the shuttle mid-transit.
+	// If there's anything contrabandy, send these items back to the origin docking port.
+	// This is a sort of catch-all Centcom exploit check.
+	var/list/stuff_sent_home = return_blacklisted_things_home(shuttle_areas, previous)
+	if(!length(stuff_sent_home))
+		return
+
+	for(var/atom/thing_sent_home as anything in stuff_sent_home)
+		investigate_log("Blacklisted item found on in-transit Cargo Shuttle: [thing_sent_home] ([thing_sent_home.type])", INVESTIGATE_CARGO)
+
+	message_admins("Blacklisted item found on in-transit Cargo Shuttle. See cargo logs for more details.")
+	SSshuttle.centcom_message = "Contraband found on Cargo Shuttle. This has been returned via drop pod."
 
 /obj/docking_port/mobile/supply/initiate_docking()
 	if(getDockedId() == "cargo_away") // Buy when we leave home.
@@ -112,37 +157,39 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/value = 0
 	var/purchases = 0
+	var/price
+	var/pack_cost
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
+	var/list/rejected_orders = list() //list of all orders that exceeded the available budget and are uncancelable
 
 	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
-		var/price = spawning_order.pack.get_cost()
-		if(spawning_order.applied_coupon)
-			price *= (1 - spawning_order.applied_coupon.discount_pct_off)
-
-		var/datum/bank_account/paying_for_this
+		price = spawning_order.get_final_cost()
 
 		//department orders EARN money for cargo, not the other way around
+		var/datum/bank_account/paying_for_this
 		if(!spawning_order.department_destination && spawning_order.charge_on_purchase)
 			if(spawning_order.paying_account) //Someone paid out of pocket
 				paying_for_this = spawning_order.paying_account
-				var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account] // so we can access the length a few lines down
-				if(!spawning_order.pack.goody)
-					price *= 1.1 //TODO make this customizable by the quartermaster
-
 				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
-				else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
-					price += CRATE_TAX
-					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
+				if(spawning_order.pack.goody)
+					var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account]
+					if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
+						price = round(price + CRATE_TAX)
+						paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
 			else
 				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
+
 			if(paying_for_this)
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
 						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
+					if(!spawning_order.can_be_cancelled) //only if it absolutly cannot be canceled by the player do we cancel it for them
+						rejected_orders += spawning_order
 					continue
 
+		pack_cost = spawning_order.pack.get_cost()
 		if(spawning_order.paying_account)
 			paying_for_this = spawning_order.paying_account
 			if(spawning_order.pack.goody)
@@ -153,8 +200,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			paying_for_this.bank_card_talk(reciever_message)
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
-		value += spawning_order.pack.get_cost()
+			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
+		value += pack_cost
 		SSshuttle.shopping_list -= spawning_order
 		SSshuttle.order_history += spawning_order
 		QDEL_NULL(spawning_order.applied_coupon)
@@ -171,6 +218,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(spawning_order.pack.dangerous)
 			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
+
+	//clear out all rejected uncancellable orders
+	for(var/datum/supply_order/rejected_order in rejected_orders)
+		SSshuttle.shopping_list -= rejected_order
+		qdel(rejected_order)
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
 	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case

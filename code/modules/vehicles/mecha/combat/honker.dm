@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/mecha/honker
 	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
 	name = "\improper H.O.N.K"
+	ui_theme = "neutral"
 	icon_state = "honker"
 	base_icon_state = "honker"
 	movedelay = 3
@@ -10,13 +11,14 @@
 	max_temperature = 25000
 	destruction_sleep_duration = 40
 	exit_delay = 40
-	operation_req_access = list(ACCESS_THEATRE)
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	wreckage = /obj/structure/mecha_wreckage/honker
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	mech_type = EXOSUIT_MODULE_HONK
 	max_equip_by_category = list(
-		MECHA_UTILITY = 2,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 4,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 0,
 	)
@@ -38,15 +40,18 @@
 /obj/vehicle/sealed/mecha/honker/dark
 	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. This one has been painted black for maximum fun. HONK!"
 	name = "\improper Dark H.O.N.K"
+	ui_theme = "syndicate"
 	icon_state = "darkhonker"
 	max_integrity = 300
 	armor_type = /datum/armor/honker_dark
 	max_temperature = 35000
-	operation_req_access = list(ACCESS_SYNDICATE)
-	internals_req_access = list(ACCESS_SYNDICATE)
+	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
+	mecha_flags = ID_LOCK_ON | CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)
@@ -55,7 +60,7 @@
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/honker,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana,
-		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/thrusters/ion),
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(),
 	)
@@ -69,14 +74,12 @@
 	fire = 100
 	acid = 100
 
-/obj/vehicle/sealed/mecha/honker/dark/add_cell()
+/obj/vehicle/sealed/mecha/honker/dark/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/cell/hyper(src)
-
-/obj/vehicle/sealed/mecha/honker/dark/add_scanmod()
 	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
-
-/obj/vehicle/sealed/mecha/honker/dark/add_capacitor()
 	capacitor = new /obj/item/stock_parts/capacitor/super(src)
+	servo = new /obj/item/stock_parts/servo/pico(src)
+	update_part_values()
 
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"

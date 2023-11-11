@@ -97,6 +97,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	possible_items = list(
 		/datum/objective_item/steal/traitor/cargo_budget,
 		/datum/objective_item/steal/traitor/clown_shoes,
+		/datum/objective_item/steal/traitor/lawyers_badge,
+		/datum/objective_item/steal/traitor/chef_moustache,
+		/datum/objective_item/steal/traitor/pka,
 	)
 
 /datum/traitor_objective/steal_item/somewhat_risky

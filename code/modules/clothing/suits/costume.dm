@@ -84,21 +84,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/fancy/cigarettes, /obj/item/stack/spacecash)
 
-/obj/item/clothing/suit/apron/overalls
-	name = "coveralls"
-	desc = "A set of denim overalls."
-	icon_state = "overalls"
-	inhand_icon_state = "overalls"
-	body_parts_covered = CHEST|GROIN|LEGS
-	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/suit/apron/purple_bartender
-	name = "purple bartender apron"
-	desc = "A fancy purple apron for a stylish person."
-	icon_state = "purplebartenderapron"
-	inhand_icon_state = null
-	body_parts_covered = CHEST|GROIN
-
 /obj/item/clothing/suit/syndicatefake
 	name = "black and red space suit replica"
 	icon_state = "syndicate-black-red"

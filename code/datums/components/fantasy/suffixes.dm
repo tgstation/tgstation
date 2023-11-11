@@ -103,30 +103,35 @@
 	. = ..()
 	// This is set up to be easy to add to these lists as I expect it will need modifications
 	var/static/list/possible_mobtypes
-	if(!possible_mobtypes)
-		// The base list of allowed mob/species types
-		possible_mobtypes = zebra_typecacheof(list(
-			/mob/living/simple_animal = TRUE,
-			/mob/living/carbon = TRUE,
-			/datum/species = TRUE,
-			// Some types to remove them and their subtypes
-			/mob/living/carbon/human/species = FALSE,
-			/mob/living/simple_animal/hostile/asteroid/elite = FALSE,
-			/mob/living/simple_animal/hostile/megafauna = FALSE,
-		))
-		// Some particular types to disallow if they're too broad/abstract
-		// Not in the above typecache generator because it includes subtypes and this doesn't.
-		possible_mobtypes -= list(
-			/mob/living/simple_animal/hostile,
+	if(isnull(possible_mobtypes))
+		possible_mobtypes = list()
+		var/list/mob_subtype_whitelist = list(
+			/mob/living/basic,
+			/mob/living/carbon,
+			/mob/living/simple_animal,
 		)
+		for(var/type in mob_subtype_whitelist)
+			possible_mobtypes += subtypesof(type)
+
+		var/list/mob_subtype_blacklist = list(
+			/mob/living/simple_animal/hostile/asteroid/elite,
+			/mob/living/simple_animal/hostile/megafauna,
+		)
+		for(var/type in mob_subtype_blacklist)
+			possible_mobtypes -= subtypesof(type)
+
+		possible_mobtypes -= GLOB.abstract_mob_types
 
 	var/mob/picked_mobtype = pick(possible_mobtypes)
-	// This works even with the species picks since we're only accessing the name
-
 	var/obj/item/master = comp.parent
-	var/max_mobs = max(CEILING(comp.quality/2, 1), 1)
-	var/spawn_delay = 300 - 30 * comp.quality
-	comp.appliedComponents += master.AddComponent(/datum/component/summoning, list(picked_mobtype), 100, max_mobs, spawn_delay)
+	var/max_mobs = max(CEILING(comp.quality / 2, 1), 1)
+	var/spawn_delay = 30 SECONDS - (3 SECONDS * comp.quality)
+	comp.appliedComponents += master.AddComponent(\
+		/datum/component/summoning,\
+		mob_types = list(picked_mobtype),\
+		max_mobs = max_mobs,\
+		spawn_delay = spawn_delay,\
+	)
 	return "[newName] of [initial(picked_mobtype.name)] summoning"
 
 /datum/fantasy_affix/shrapnel

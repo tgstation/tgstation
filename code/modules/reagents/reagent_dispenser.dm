@@ -1,3 +1,5 @@
+#define REAGENT_SPILL_DIVISOR 200
+
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
@@ -172,11 +174,11 @@
 		visible_message(span_danger("\The [src] explodes!"))
 		// old code for reference:
 		// standard fuel tank = 1000 units = heavy_impact_range = 1, light_impact_range = 5, flame_range = 5
-		// big fuel tank =SHEET_MATERIAL_AMOUNT * 2.5 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
+		// big fuel tank = 5000 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
 		// It did not account for how much fuel was actually in the tank at all, just the size of the tank.
 		// I encourage others to better scale these numbers in the future.
 		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
-		switch(volatiles.volume)
+		switch(fuel_amt)
 			if(25 to 150)
 				explosion(src, light_impact_range = 1, flame_range = 2)
 			if(150 to 300)
@@ -202,6 +204,15 @@
 		reagents.remove_reagent(reagent_id, amount_to_leak)
 		return TRUE
 	return FALSE
+
+/obj/structure/reagent_dispensers/proc/knock_down()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new ()
+	var/range = reagents.total_volume / REAGENT_SPILL_DIVISOR
+	smoke.attach(drop_location())
+	smoke.set_up(round(range), holder = drop_location(), location = drop_location(), carry = reagents, silent = FALSE)
+	smoke.start(log = TRUE)
+	reagents.clear_reagents()
+	qdel(src)
 
 /obj/structure/reagent_dispensers/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -286,7 +297,7 @@
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, span_warning("Your [W.name] is already full!"))
 				return
-			reagents.trans_to(W, W.max_fuel, transfered_by = user)
+			reagents.trans_to(W, W.max_fuel, transferred_by = user)
 			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_appearance()
@@ -302,7 +313,7 @@
 	name = "high capacity fuel tank"
 	desc = "A tank full of a high quantity of welding fuel. Keep away from open flames."
 	icon_state = "fuel_high"
-	tank_volume =SHEET_MATERIAL_AMOUNT * 2.5
+	tank_volume = 5000
 
 /// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
 /obj/structure/reagent_dispensers/wall
@@ -322,6 +333,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
+	find_and_hang_on_wall()
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
@@ -373,12 +385,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
 
+/obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
+	. = ..()
+	find_and_hang_on_wall()
+
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
 	anchored = TRUE
-	reagent_id = /datum/reagent/consumable/cooking_oil
+	reagent_id = /datum/reagent/consumable/nutriment/fat/oil
 	openable = TRUE
 
 /obj/structure/reagent_dispensers/servingdish
@@ -435,3 +451,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A stationary, plumbed, fuel tank."
 	reagent_id = /datum/reagent/fuel
 	accepts_rig = TRUE
+
+#undef REAGENT_SPILL_DIVISOR

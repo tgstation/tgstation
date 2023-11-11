@@ -57,10 +57,10 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "dT" = (
-/obj/item/ammo_box/a762{
+/obj/item/ammo_box/strilka310{
 	pixel_y = 2
 	},
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
 /obj/item/grenade/c4{
 	pixel_x = -13
 	},
@@ -789,8 +789,8 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762{
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310{
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/bot,

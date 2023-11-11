@@ -94,6 +94,10 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/check_completion()
 	return completed
 
+/// Provides a string describing what a good job you did or did not do
+/datum/objective/proc/get_roundend_success_suffix()
+	return check_completion() ? span_greentext("Success!") : span_redtext("Fail.")
+
 /datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
 	if(!islist(dupe_search_range))
 		stack_trace("Non-list passed as duplicate objective search range")
@@ -222,17 +226,45 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
+#define DISCONNECT_GRACE_TIME (2 MINUTES)
+#define DISCONNECT_GRACE_WARNING_TIME (1 MINUTES)
+
 /datum/objective/mutiny
 	name = "mutiny"
 	martyr_compatible = 1
 	var/target_role_type = FALSE
+	/// Not primarily used as a cooldown but a timer to give a little bit more of a chance for the player to reconnect.
+	COOLDOWN_DECLARE(disconnect_timer)
+	/// Whether admins have been warned about the potentially AFK player
+	var/warned_admins = FALSE
 
+/datum/objective/mutiny/proc/warn_admins()
+	message_admins("[ADMIN_LOOKUPFLW(target.current)] has gone AFK with a mutiny objective that involves them. They only have [COOLDOWN_TIMELEFT(src, disconnect_timer) / 10] seconds remaining before they are treated as if they were dead.")
 
 /datum/objective/mutiny/check_completion()
-	if(!target || !considered_alive(target) || considered_afk(target) || considered_exiled(target))
+	if(!target || !considered_alive(target) || considered_exiled(target))
 		return TRUE
+
+	if(considered_afk(target))
+		if(!COOLDOWN_STARTED(src, disconnect_timer))
+			COOLDOWN_START(src, disconnect_timer, DISCONNECT_GRACE_TIME)
+			warn_admins()
+		else if(COOLDOWN_FINISHED(src, disconnect_timer))
+			return TRUE
+		else if(COOLDOWN_TIMELEFT(src, disconnect_timer) <= DISCONNECT_GRACE_WARNING_TIME && !warned_admins)
+			warned_admins = TRUE
+			warn_admins()
+	else
+		COOLDOWN_RESET(src, disconnect_timer)
+		warned_admins = FALSE
+
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
+
+#undef DISCONNECT_GRACE_TIME
+#undef DISCONNECT_GRACE_WARNING_TIME
+
+
 
 /datum/objective/mutiny/update_explanation_text()
 	..()
@@ -577,12 +609,6 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/get_target()
 	return steal_target
-
-/datum/objective/steal/New()
-	..()
-	if(!GLOB.possible_items.len)//Only need to fill the list when it's needed.
-		for(var/I in subtypesof(/datum/objective_item/steal))
-			new I
 
 /datum/objective/steal/find_target(dupe_search_range, list/blacklist)
 	var/list/datum/mind/owners = get_owners()
@@ -948,6 +974,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
 	if(expl)
 		explanation_text = expl
+
+/datum/objective/custom/get_roundend_success_suffix()
+	return "" // Just print the objective with no success/fail evaluation, as it has no mechanical backing
 
 //Ideally this would be all of them but laziness and unusual subtypes
 /proc/generate_admin_objective_list()

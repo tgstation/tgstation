@@ -133,21 +133,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "team leader headset"
 	command = TRUE
 
-/obj/item/radio/headset/syndicate/alt/psyker
-	name = "psychic headset"
-	desc = "A headset designed to boost psychic waves. Protects ears from flashbangs."
-	icon_state = "psyker_headset"
-	worn_icon_state = "syndie_headset"
-
-/obj/item/radio/headset/syndicate/alt/psyker/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot_flags & slot)
-		ADD_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
-
-/obj/item/radio/headset/syndicate/alt/psyker/dropped(mob/user, silent)
-	. = ..()
-	REMOVE_CLOTHING_TRAIT(user, TRAIT_ECHOLOCATION_EXTRA_RANGE)
-
 /obj/item/radio/headset/binary
 	keyslot = /obj/item/encryptionkey/binary
 
@@ -355,6 +340,15 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
+
+/obj/item/radio/headset/silicon/ai/evil
+	name = "\proper Evil Integrated Subspace Transceiver "
+	keyslot2 = new /obj/item/encryptionkey/ai/evil
+	command = FALSE
+
+/obj/item/radio/headset/silicon/ai/evil/Initialize(mapload)
+	. = ..()
+	make_syndie()
 
 /obj/item/radio/headset/screwdriver_act(mob/living/user, obj/item/tool)
 	user.set_machine(src)

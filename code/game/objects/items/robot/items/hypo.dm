@@ -73,7 +73,7 @@
 	/datum/reagent/consumable/blackpepper,\
 	/datum/reagent/consumable/coco,\
 	/datum/reagent/consumable/cornmeal,\
-	/datum/reagent/consumable/cornoil,\
+	/datum/reagent/consumable/nutriment/fat/oil,\
 	/datum/reagent/consumable/corn_starch,\
 	/datum/reagent/consumable/eggwhite,\
 	/datum/reagent/consumable/eggyolk,\
@@ -190,7 +190,7 @@
 		to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
 
 		if(injectee.reagents)
-			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
+			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
 			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
 			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
 	else
@@ -382,10 +382,10 @@
 		stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
 		shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
 
-		shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+		shaker.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
 	return .
-	
+
 /obj/item/reagent_containers/borghypo/condiment_synthesizer // Solids! Condiments! The borger uprising!
 	name = "Condiment Synthesizer"
 	desc = "An advanced condiment synthesizer"
@@ -395,7 +395,7 @@
 	// Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	charge_cost = 40 //Costs double the power of the borgshaker due to synthesizing solids
 	recharge_time = 6 //Double the recharge time too, for the same reason.
-	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP 
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	default_reagent_types = EXPANDED_SERVICE_REAGENTS
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/ui_interact(mob/user, datum/tgui/ui)
@@ -421,9 +421,9 @@
 	data["reagents"] = condiments
 	data["selectedReagent"] = selected_reagent?.name
 	return data
-		
+
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/M, mob/user)
-	return 
+	return
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/afterattack(obj/target, mob/user, proximity)
 	. = ..()
@@ -446,9 +446,9 @@
 	var/datum/reagents/shaker = new()
 	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
 	shaker.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
-	shaker.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+	shaker.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 	balloon_alert(user, "[amount_per_transfer_from_this] unit\s poured")
-	
+
 
 /obj/item/reagent_containers/borghypo/borgshaker/hacked
 	name = "cyborg shaker"

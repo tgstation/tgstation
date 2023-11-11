@@ -14,7 +14,7 @@
 
 ///affixes expects an initialized list
 /datum/component/fantasy/Initialize(quality, list/affixes = list(), canFail=FALSE, announce=FALSE)
-	if(!isitem(parent))
+	if(!isitem(parent) || HAS_TRAIT(parent, TRAIT_INNATELY_FANTASTICAL_ITEM))
 		return COMPONENT_INCOMPATIBLE
 
 	src.quality = quality

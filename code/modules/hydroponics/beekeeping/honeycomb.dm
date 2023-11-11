@@ -7,7 +7,7 @@
 	food_reagents = list(/datum/reagent/consumable/honey = 5)
 	tastes = list("honey" = 1)
 	preserved_food = TRUE
-
+	starting_reagent_purity = 1
 	var/honey_color = ""
 
 /obj/item/food/honeycomb/Initialize(mapload)

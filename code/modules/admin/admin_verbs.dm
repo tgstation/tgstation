@@ -46,6 +46,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/view_all_circuits,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 	/datum/admins/proc/change_shuttle_events, //allows us to change the shuttle events
+	/datum/admins/proc/reset_tram, //tram related admin actions
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/
 	/client/proc/admin_cancel_shuttle, /*allows us to cancel the emergency shuttle, sending it back to centcom*/
@@ -53,6 +54,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/admin_enable_shuttle,  /*undoes the above*/
 	/client/proc/admin_ghost, /*allows us to ghost/reenter body at will*/
 	/client/proc/admin_hostile_environment, /*Allows admins to prevent the emergency shuttle from leaving, also lets admins clear hostile environments if theres one stuck*/
+	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
+	/client/proc/check_ai_laws, /*shows AI and borg laws*/
+	/client/proc/check_antagonists, /*shows all antags*/
 	/client/proc/cmd_admin_check_contents, /*displays the contents of an instance*/
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/cmd_admin_create_centcom_report,
@@ -63,9 +67,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_subtle_message, /*send a message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
 	/client/proc/cmd_change_command_name,
-	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
-	/client/proc/check_ai_laws, /*shows AI and borg laws*/
-	/client/proc/check_antagonists, /*shows all antags*/
+	/client/proc/create_mob_worm,
 	/client/proc/fax_panel, /*send a paper to fax*/
 	/client/proc/force_load_lazy_template,
 	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
@@ -85,6 +87,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_fingerprints,
 	/client/proc/list_law_changes,
 	/client/proc/list_signalers,
+	/client/proc/manage_sect, /*manage chaplain religious sect*/
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
 	/client/proc/respawn_character,
 	/client/proc/show_manifest,
@@ -104,7 +107,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/datum/admins/proc/station_traits_panel,
 // Client procs
 	/client/proc/admin_away,
-	/client/proc/add_mob_ability,
+	/client/proc/add_marked_mob_ability,
 	/client/proc/admin_change_sec_level,
 	/client/proc/cinematic,
 	/client/proc/cmd_admin_add_freeform_ai_law,
@@ -119,7 +122,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_zombie_infection,
 	/client/proc/object_say,
 	/client/proc/polymorph_all,
-	/client/proc/remove_mob_ability,
+	/client/proc/remove_marked_mob_ability,
 	/client/proc/reset_ooc,
 	/client/proc/run_weather,
 	/client/proc/set_dynex_scale,
@@ -228,6 +231,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/unload_ctf,
 	/client/proc/validate_cards,
 	/client/proc/validate_puzzgrids,
+	/client/proc/GeneratePipeSpritesheet,
 	/client/proc/view_runtimes,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
@@ -261,7 +265,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 			add_verb(src, GLOB.admin_verbs_permissions)
 		if(rights & R_STEALTH)
 			add_verb(src, /client/proc/stealth)
-		if(rights & R_ADMIN)
+		if(rights & R_POLL)
 			add_verb(src, GLOB.admin_verbs_poll)
 		if(rights & R_SOUND)
 			add_verb(src, GLOB.admin_verbs_sounds)
@@ -351,16 +355,16 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Invisimin"
 	set category = "Admin.Game"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
-	if(holder && mob)
-		if(initial(mob.invisibility) == INVISIBILITY_OBSERVER)
-			to_chat(mob, span_boldannounce("Invisimin toggle failed. You are already an invisible mob like a ghost."), confidential = TRUE)
-			return
-		if(mob.invisibility == INVISIBILITY_OBSERVER)
-			mob.invisibility = initial(mob.invisibility)
-			to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
-		else
-			mob.invisibility = INVISIBILITY_OBSERVER
-			to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
+	if(isnull(holder) || isnull(mob))
+		return
+	if(mob.invisimin)
+		mob.invisimin = FALSE
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
+		to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
+	else
+		mob.invisimin = TRUE
+		mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+		to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"
@@ -506,7 +510,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	holder.fakekey = new_key
 	createStealthKey()
 	if(isobserver(mob))
-		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_STEALTHMODE, INVISIBILITY_PRIORITY_ADMIN)
 		mob.alpha = 0 //JUUUUST IN CASE
 		mob.name = " "
 		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -520,7 +524,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 /client/proc/disable_stealth_mode()
 	holder.fakekey = null
 	if(isobserver(mob))
-		mob.invisibility = initial(mob.invisibility)
+		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
 		mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)
@@ -681,6 +685,80 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set category = "Debug"
 	SStrading_card_game.printAllCards()
 
+/client/proc/give_mob_action(mob/ability_recipient in GLOB.mob_list)
+	set category = "Admin.Fun"
+	set name = "Give Mob Action"
+	set desc = "Gives a mob ability to a mob."
+
+	var/static/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
+	var/static/list/actions_by_name = list()
+	if (!length(actions_by_name))
+		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
+			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
+
+	var/ability = tgui_input_list(usr, "Choose an ability", "Ability", actions_by_name)
+	if(isnull(ability))
+		return
+
+	var/ability_type = actions_by_name[ability]
+	var/datum/action/cooldown/mob_cooldown/add_ability
+
+	var/make_sequence = tgui_alert(usr, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
+	if(make_sequence == "Yes")
+		add_ability = new /datum/action/cooldown/mob_cooldown(ability_recipient)
+		add_ability.sequence_actions = list()
+		while(!isnull(ability_type))
+			var/ability_delay = tgui_input_number(usr, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
+			if(isnull(ability_delay) || ability_delay < 0)
+				ability_delay = 0
+			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
+			ability = tgui_input_list(usr, "Choose a new sequence ability", "Sequence Ability", actions_by_name)
+			ability_type = actions_by_name[ability]
+		var/ability_cooldown = tgui_input_number(usr, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
+		if(isnull(ability_cooldown) || ability_cooldown < 0)
+			ability_cooldown = 2
+		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
+		var/ability_melee_cooldown = tgui_input_number(usr, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
+		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
+			ability_melee_cooldown = 2
+		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
+		add_ability.name = tgui_input_text(usr, "Choose ability name", "Ability name", "Generic Ability")
+		add_ability.create_sequence_actions()
+	else
+		add_ability = new ability_type(ability_recipient)
+
+	if(isnull(ability_recipient))
+		return
+	add_ability.Grant(ability_recipient)
+
+	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [ability_recipient].")
+	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [ability_recipient].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
+/client/proc/remove_mob_action(mob/removal_target in GLOB.mob_list)
+	set category = "Admin.Fun"
+	set name = "Remove Mob Action"
+	set desc = "Remove a special ability from the selected mob."
+
+	var/list/target_abilities = list()
+	for(var/datum/action/cooldown/mob_cooldown/ability in removal_target.actions)
+		target_abilities[ability.name] = ability
+
+	if(!length(target_abilities))
+		return
+
+	var/chosen_ability = tgui_input_list(usr, "Choose the spell to remove from [removal_target]", "Depower", sort_list(target_abilities))
+	if(isnull(chosen_ability))
+		return
+	var/datum/action/cooldown/mob_cooldown/to_remove = target_abilities[chosen_ability]
+	if(!istype(to_remove))
+		return
+
+	qdel(to_remove)
+	log_admin("[key_name(usr)] removed the ability [chosen_ability] from [key_name(removal_target)].")
+	message_admins("[key_name_admin(usr)] removed the ability [chosen_ability] from [key_name_admin(removal_target)].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
 /client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
 	set category = "Admin.Fun"
 	set name = "Give Spell"
@@ -796,6 +874,33 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set category = "Admin.Game"
 	if(holder)
 		src.holder.output_ai_laws()
+
+/client/proc/manage_sect()
+	set name = "Manage Religious Sect"
+	set category = "Admin.Game"
+
+	if (!isnull(GLOB.religious_sect))
+		var/you_sure = tgui_alert(
+			usr,
+			"The Chaplain has already chosen [GLOB.religious_sect.name], override their selection?",
+			"Replace God?",
+			list("Yes", "Cancel"),
+		)
+		if (you_sure != "Yes")
+			return
+
+	var/static/list/choices = list()
+	if (!length(choices))
+		choices["nothing"] = null
+		for(var/datum/religion_sect/sect as anything in subtypesof(/datum/religion_sect))
+			choices[initial(sect.name)] = sect
+	var/choice = tgui_input_list(usr, "Set new Chaplain sect", "God Picker", choices)
+	if(isnull(choice))
+		return
+	if(choice == "nothing")
+		reset_religious_sect()
+		return
+	set_new_religious_sect(choices[choice], reset_existing = TRUE)
 
 /client/proc/deadmin()
 	set name = "Deadmin"
@@ -972,8 +1077,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		var/reqs = initial(spell.spell_requirements)
 		if(reqs & SPELL_CASTABLE_AS_BRAIN)
 			real_reqs += "Castable as brain"
-		if(reqs & SPELL_CASTABLE_WHILE_PHASED)
-			real_reqs += "Castable phased"
 		if(reqs & SPELL_REQUIRES_HUMAN)
 			real_reqs += "Must be human"
 		if(reqs & SPELL_REQUIRES_MIME_VOW)
@@ -1023,7 +1126,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 	if(!isobserver(usr))
 		admin_ghost()
-	usr.forceMove(coords2turf(reservation.bottom_left_coords))
+	usr.forceMove(reservation.bottom_left_turfs[1])
 
 	message_admins("[key_name_admin(usr)] has loaded lazy template '[choice]'")
 	to_chat(usr, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
@@ -1038,3 +1141,48 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		holder.library_manager = new()
 	holder.library_manager.ui_interact(usr)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Library Management") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+
+/client/proc/create_mob_worm()
+	set category = "Admin.Fun"
+	set name = "Create Mob Worm"
+	set desc = "Attached a linked list of mobs to a marked mob"
+	if (!check_rights(R_FUN))
+		return
+	if(isnull(holder))
+		return
+	if(!isliving(holder.marked_datum))
+		to_chat(usr, span_warning("Error: Please mark a mob to attach mobs to."))
+		return
+	var/mob/living/head = holder.marked_datum
+
+	var/attempted_target_path = tgui_input_text(
+		usr,
+		"Enter typepath of a mob you'd like to make your chain from.",
+		"Typepath",
+		"[/mob/living/basic/pet/dog/corgi/ian]",
+	)
+
+	if (isnull(attempted_target_path))
+		return //The user pressed "Cancel"
+
+	var/desired_mob = text2path(attempted_target_path)
+	if(!ispath(desired_mob))
+		var/static/list/mob_paths = make_types_fancy(subtypesof(/mob/living))
+		desired_mob = pick_closest_path(attempted_target_path, mob_paths)
+	if(isnull(desired_mob) || !ispath(desired_mob) || QDELETED(head))
+		return //The user pressed "Cancel"
+
+	var/amount = tgui_input_number(usr, "How long should our tail be?", "Worm Configurator", default = 3, min_value = 1)
+	if (isnull(amount) || amount < 1 || QDELETED(head))
+		return
+	head.AddComponent(/datum/component/mob_chain)
+	var/mob/living/previous = head
+	for (var/i in 1 to amount)
+		var/mob/living/segment = new desired_mob(head.drop_location())
+		if (QDELETED(segment)) // ffs mobs which replace themselves with other mobs
+			i--
+			continue
+		ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
+		QDEL_NULL(segment.ai_controller)
+		segment.AddComponent(/datum/component/mob_chain, front = previous)
+		previous = segment

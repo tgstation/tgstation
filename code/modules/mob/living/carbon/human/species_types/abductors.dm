@@ -9,6 +9,8 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
 		TRAIT_CHUNKYFINGERS_IGNORE_BATON,
+		TRAIT_NODISMEMBER,
+		TRAIT_NEVER_WOUNDED
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/abductor
 	mutantstomach = null
@@ -25,6 +27,11 @@
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/abductor,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/abductor,
 	)
+
+
+/datum/species/abductor/get_physical_attributes()
+	return "Abductors do not need to breathe, eat, do not have blood, a heart, stomach, or lungs and cannot be infected by human viruses. \
+		Their hardy physique prevents their skin from being wounded or dismembered, but their chunky tridactyl hands make it hard to operate human equipment."
 
 /datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

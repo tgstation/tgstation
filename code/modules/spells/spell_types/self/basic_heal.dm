@@ -17,11 +17,17 @@
 	/// Amount of burn to heal to the spell caster on cast
 	var/burn_to_heal = 10
 
+/datum/action/cooldown/spell/basic_heal/is_valid_target(atom/cast_on)
+	return isliving(cast_on)
+
 /datum/action/cooldown/spell/basic_heal/cast(mob/living/cast_on)
 	. = ..()
 	cast_on.visible_message(
 		span_warning("A wreath of gentle light passes over [cast_on]!"),
 		span_notice("You wreath yourself in healing light!"),
 	)
-	cast_on.adjustBruteLoss(-brute_to_heal, FALSE)
-	cast_on.adjustFireLoss(-burn_to_heal)
+	var/need_mob_update = FALSE
+	need_mob_update += cast_on.adjustBruteLoss(-brute_to_heal, updating_health = FALSE)
+	need_mob_update += cast_on.adjustFireLoss(-burn_to_heal, updating_health = FALSE)
+	if(need_mob_update)
+		cast_on.updatehealth()

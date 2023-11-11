@@ -68,7 +68,6 @@
 	new /obj/item/stack/rods(Tsec, 2)
 	if(tank)
 		tank.forceMove(Tsec)
-		after_detach_tank()
 	qdel(src)
 
 /obj/structure/tank_holder/attack_paw(mob/user, list/modifiers)
@@ -83,12 +82,11 @@
 	add_fingerprint(user)
 	tank.add_fingerprint(user)
 	user.put_in_hands(tank)
-	after_detach_tank()
 
-/obj/structure/tank_holder/handle_atom_del(atom/A)
-	if(A == tank)
+/obj/structure/tank_holder/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == tank)
 		after_detach_tank()
-	return ..()
 
 /obj/structure/tank_holder/contents_explosion(severity, target)
 	if(!tank)

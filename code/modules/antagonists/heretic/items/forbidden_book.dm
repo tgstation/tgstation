@@ -9,8 +9,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
-	/// id for timer
-	var/timer_id
 
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
@@ -31,6 +29,7 @@
 
 	. += span_notice("Can be used to tap influences for additional knowledge points.")
 	. += span_notice("Can also be used to draw or remove transmutation runes with ease.")
+	. += span_notice("Additionally, it can work as a focus for your spells in a pinch, though a more specialized relic is recommended, as this may get dropped in combat.")
 
 /obj/item/codex_cicatrix/attack_self(mob/user, modifiers)
 	. = ..()
@@ -39,8 +38,12 @@
 
 	if(book_open)
 		close_animation()
+		RemoveElement(/datum/element/heretic_focus)
+		w_class = WEIGHT_CLASS_SMALL
 	else
 		open_animation()
+		AddElement(/datum/element/heretic_focus)
+		w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/codex_cicatrix/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -52,7 +55,7 @@
 		return
 
 	if(isopenturf(target))
-		heretic_datum.try_draw_rune(user, target, drawing_time = 12 SECONDS)
+		heretic_datum.try_draw_rune(user, target, drawing_time = 8 SECONDS)
 		return TRUE
 
 /// Plays a little animation that shows the book opening and closing.
@@ -61,12 +64,8 @@
 	flick("[base_icon_state]_opening", src)
 	book_open = TRUE
 
-	timer_id = addtimer(CALLBACK(src, PROC_REF(close_animation)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
-
 /// Plays a closing animation and resets the icon state.
 /obj/item/codex_cicatrix/proc/close_animation()
 	icon_state = base_icon_state
 	flick("[base_icon_state]_closing", src)
 	book_open = FALSE
-
-	deltimer(timer_id)

@@ -85,7 +85,7 @@
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
+	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
 	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	if(!iscarbon(target_mob))
@@ -123,8 +123,8 @@
 			to_chat(user, span_warning("[target] is full."))
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
+		to_chat(user, span_notice("You transfer [round(trans, 0.01)] unit\s of the solution to [target]."))
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
@@ -135,8 +135,8 @@
 			to_chat(user, span_warning("[src] is full."))
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+		to_chat(user, span_notice("You fill [src] with [round(trans, 0.01)] unit\s of the contents of [target]."))
 
 	target.update_appearance()
 
@@ -156,8 +156,8 @@
 			to_chat(user, span_warning("[src] is full."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+		to_chat(user, span_notice("You fill [src] with [round(trans, 0.01)] unit\s of the contents of [target]."))
 
 	target.update_appearance()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -192,7 +192,7 @@
 			to_chat(user, span_notice("[src] is full."))
 		else
 			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
 			qdel(attacking_egg)
 		return
 
@@ -407,7 +407,7 @@
 		if(reagents.total_volume < 1)
 			user.balloon_alert(user, "empty!")
 		else
-			reagents.trans_to(O, 5, transfered_by = user)
+			reagents.trans_to(O, 5, transferred_by = user)
 			user.balloon_alert(user, "doused [O]")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
@@ -487,36 +487,10 @@
 				if(do_after(user, 25, target = src))
 					user.adjustStaminaLoss(40)
 					switch(picked_option)
-						if("Juice") //prioritize juicing
-							if(grinded.juice_results)
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
-								QDEL_NULL(grinded)
-								return
+						if("Juice")
+							return juice_item(grinded, user)
 						if("Grind")
-							if(grinded.grind_results)
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You break [grinded] into powder."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
+							return grind_item(grinded, user)
 						else
 							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
 							return
@@ -527,11 +501,30 @@
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
 		return
-	if(I.juice_results || I.grind_results)
+	if(I.juice_typepath || I.grind_results)
 		I.forceMove(src)
 		grinded = I
 		return
 	to_chat(user, span_warning("You can't grind this!"))
+
+/obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
+	if(!item.grind(reagents, user))
+		if(isstack(item))
+			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
+		else
+			to_chat(user, span_danger("You fail to grind [item]."))
+		return
+	to_chat(user, span_notice("You grind [item] into a nice powder."))
+	grinded = null
+	QDEL_NULL(item)
+
+/obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
+	if(!item.juice(reagents, user))
+		to_chat(user, span_notice("You fail to juice [item]."))
+		return
+	to_chat(user, span_notice("You juice [item] into a fine liquid."))
+	grinded = null
+	QDEL_NULL(item)
 
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
 /obj/item/reagent_containers/cup/coffeepot

@@ -52,8 +52,15 @@
 		return
 
 	players_listening_refs += new_ref
+	RegisterSignal(new_target, COMSIG_LIVING_DEATH, PROC_REF(on_mob_death))
 	music_callbacks += addtimer(CALLBACK(src, PROC_REF(clear_target), new_ref), track_duration, TIMER_STOPPABLE)
 	new_target.playsound_local(new_target, boss_track, 200, FALSE, channel = CHANNEL_BOSS_MUSIC, pressure_affected = FALSE, use_reverb = FALSE)
+
+///Called when a mob listening to boss music dies- ends their music early.
+/datum/component/boss_music/proc/on_mob_death(mob/living/source)
+	SIGNAL_HANDLER
+	var/datum/weakref/player_ref = WEAKREF(source)
+	clear_target(player_ref)
 
 ///Removes `old_target` from the list of players listening, and stops their music if it is still playing.
 ///This allows them to have music played again if they re-enter combat with this fauna.
@@ -62,4 +69,5 @@
 
 	var/mob/old_target = old_ref?.resolve()
 	if(old_target)
+		UnregisterSignal(old_target, COMSIG_LIVING_DEATH)
 		old_target.stop_sound_channel(CHANNEL_BOSS_MUSIC)

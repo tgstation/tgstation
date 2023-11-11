@@ -67,13 +67,15 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	find_and_hang_on_wall()
 
 /obj/structure/camera_assembly/update_icon_state()
 	icon_state = "[xray_module ? "xray" : null][initial(icon_state)]"
 	return ..()
 
-/obj/structure/camera_assembly/handle_atom_del(atom/A)
-	if(A == xray_module)
+/obj/structure/camera_assembly/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == xray_module)
 		xray_module = null
 		update_appearance()
 		if(malf_xray_firmware_present)
@@ -82,7 +84,7 @@
 			var/obj/machinery/camera/contained_camera = loc
 			contained_camera.removeXRay(malf_xray_firmware_present) //make sure we don't remove MALF upgrades.
 
-	else if(A == emp_module)
+	else if(gone == emp_module)
 		emp_module = null
 		if(malf_emp_firmware_present)
 			malf_emp_firmware_active = malf_emp_firmware_present //re-enable firmware based upgrades after the part is removed.
@@ -90,13 +92,11 @@
 			var/obj/machinery/camera/contained_camera = loc
 			contained_camera.removeEmpProof(malf_emp_firmware_present) //make sure we don't remove MALF upgrades
 
-	else if(A == proxy_module)
+	else if(gone == proxy_module)
 		emp_module = null
 		if(istype(loc, /obj/machinery/camera))
 			var/obj/machinery/camera/contained_camera = loc
 			contained_camera.removeMotion()
-
-	return ..()
 
 
 /obj/structure/camera_assembly/Destroy()

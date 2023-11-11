@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/carp,
+		/datum/pet_command/point_targetting/attack,
 		/datum/pet_command/point_targetting/use_ability/magicarp,
 	)
 	/// List of all projectiles we can fire.

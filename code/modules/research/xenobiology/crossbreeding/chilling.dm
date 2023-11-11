@@ -28,7 +28,7 @@ Chilling extracts:
 	return
 
 /obj/item/slimecross/chilling/grey
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 	effect_desc = "Creates some slime barrier cubes. When used they create slimy barricades."
 
 /obj/item/slimecross/chilling/grey/do_effect(mob/user)
@@ -38,7 +38,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/orange
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 	effect_desc = "Creates a ring of fire one tile away from the user."
 
 /obj/item/slimecross/chilling/orange/do_effect(mob/user)
@@ -49,7 +49,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/purple
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 	effect_desc = "Injects everyone in the area with some regenerative jelly."
 
 /obj/item/slimecross/chilling/purple/do_effect(mob/user)
@@ -63,7 +63,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/blue
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 	effect_desc = "Creates a rebreather, a tankless mask."
 
 /obj/item/slimecross/chilling/blue/do_effect(mob/user)
@@ -72,7 +72,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/metal
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 	effect_desc = "Temporarily surrounds the user with unbreakable walls."
 
 /obj/item/slimecross/chilling/metal/do_effect(mob/user)
@@ -83,7 +83,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/yellow
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 	effect_desc = "Recharges the room's APC by 50%."
 
 /obj/item/slimecross/chilling/yellow/do_effect(mob/user)
@@ -95,7 +95,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/darkpurple
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 	effect_desc = "Removes all plasma gas in the area."
 
 /obj/item/slimecross/chilling/darkpurple/do_effect(mob/user)
@@ -119,7 +119,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/darkblue
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 	effect_desc = "Seals the user in a protective block of ice."
 
 /obj/item/slimecross/chilling/darkblue/do_effect(mob/user)
@@ -130,7 +130,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/silver
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 	effect_desc = "Creates several ration packs."
 
 /obj/item/slimecross/chilling/silver/do_effect(mob/user)
@@ -141,7 +141,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/bluespace
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 	effect_desc = "Touching people with this extract adds them to a list, when it is activated it teleports everyone on that list to the user."
 	var/list/allies = list()
 	var/active = FALSE
@@ -184,7 +184,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/sepia
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 	effect_desc = "Touching someone with it adds/removes them from a list. Activating the extract stops time for 30 seconds, and everyone on the list is immune, except the user."
 	var/list/allies = list()
 
@@ -206,7 +206,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/cerulean
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 	effect_desc = "Creates a flimsy copy of the user, that they control."
 
 /obj/item/slimecross/chilling/cerulean/do_effect(mob/user)
@@ -217,7 +217,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/pyrite
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 	effect_desc = "Creates a pair of Prism Glasses, which allow the wearer to place colored light crystals."
 
 /obj/item/slimecross/chilling/pyrite/do_effect(mob/user)
@@ -226,7 +226,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/red
-	colour = "red"
+	colour = SLIME_TYPE_RED
 	effect_desc = "Pacifies every slime in your vacinity."
 
 /obj/item/slimecross/chilling/red/do_effect(mob/user)
@@ -241,7 +241,7 @@ Chilling extracts:
 	return ..()
 
 /obj/item/slimecross/chilling/green
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 	effect_desc = "Creates a bone gun in the hand it is used in, which uses blood as ammo."
 
 /obj/item/slimecross/chilling/green/do_effect(mob/user)
@@ -264,7 +264,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/pink
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 	effect_desc = "Creates a slime corgi puppy."
 
 /obj/item/slimecross/chilling/pink/do_effect(mob/user)
@@ -273,7 +273,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/gold
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 	effect_desc = "Produces a golden capture device"
 
 /obj/item/slimecross/chilling/gold/do_effect(mob/user)
@@ -282,7 +282,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/oil
-	colour = "oil"
+	colour = SLIME_TYPE_OIL
 	effect_desc = "It creates a weak, but wide-ranged explosion."
 
 /obj/item/slimecross/chilling/oil/do_effect(mob/user)
@@ -294,7 +294,7 @@ Chilling extracts:
 	qdel(src)
 
 /obj/item/slimecross/chilling/black
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 	effect_desc = "Transforms the user into a golem."
 
 /obj/item/slimecross/chilling/black/do_effect(mob/user)
@@ -305,7 +305,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/lightpink
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 	effect_desc = "Creates a Heroine Bud, a special flower that pacifies whoever wears it on their head. They will not be able to take it off without help."
 
 /obj/item/slimecross/chilling/lightpink/do_effect(mob/user)
@@ -314,7 +314,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/adamantine
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 	effect_desc = "Solidifies into a set of adamantine armor."
 
 /obj/item/slimecross/chilling/adamantine/do_effect(mob/user)
@@ -323,7 +323,7 @@ Chilling extracts:
 	..()
 
 /obj/item/slimecross/chilling/rainbow
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW
 	effect_desc = "Makes an unpassable wall in every door in the area."
 
 /obj/item/slimecross/chilling/rainbow/do_effect(mob/user)

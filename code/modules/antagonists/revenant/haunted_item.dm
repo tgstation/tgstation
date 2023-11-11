@@ -34,7 +34,7 @@
 	if(istype(haunted_item.ai_controller, /datum/ai_controller/haunted)) // already spooky
 		return COMPONENT_INCOMPATIBLE
 
-	haunted_item.AddElement(/datum/element/haunted, haunt_color)
+	haunted_item.make_haunted(MAGIC_TRAIT, haunt_color)
 	if(isnull(haunted_item.ai_controller)) // failed to make spooky! don't go on
 		return COMPONENT_INCOMPATIBLE
 
@@ -71,7 +71,7 @@
 	// because we want to make sure they always get dealt with no matter how the component is removed
 	if(!isnull(pre_haunt_throwforce))
 		haunted_item.throwforce = pre_haunt_throwforce
-	haunted_item.RemoveElement(/datum/element/haunted)
+	haunted_item.remove_haunted(MAGIC_TRAIT)
 	return ..()
 
 /datum/component/haunted_item/RegisterWithParent()

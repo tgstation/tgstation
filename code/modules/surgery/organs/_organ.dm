@@ -8,6 +8,8 @@
 	var/mob/living/carbon/owner = null
 	/// Reference to the limb we're inside of
 	var/obj/item/bodypart/ownerlimb
+	/// The cached info about the blood this organ belongs to
+	var/list/blood_dna_info = list("Synthetic DNA" = "O+") // not every organ spawns inside a person
 	/// The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
 	/**
@@ -16,7 +18,7 @@
 	 */
 	var/slot
 	/// Random flags that describe this organ
-	var/organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
+	var/organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN
 	/// Maximum damage the organ can take, ever.
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	/**
@@ -59,6 +61,8 @@
 	var/list/organ_traits
 	/// Status Effects that are given to the holder of the organ.
 	var/list/organ_effects
+	/// String displayed when the organ has decayed.
+	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -110,6 +114,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
+/obj/item/organ/wash(clean_types)
+	. = ..()
+
+	// always add the original dna to the organ after it's washed
+	if(!IS_ROBOTIC_ORGAN(src) && (clean_types & CLEAN_TYPE_BLOOD))
+		add_blood_DNA(blood_dna_info)
+
 /obj/item/organ/process(seconds_per_tick, times_fired)
 	return
 
@@ -125,10 +136,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	. += span_notice("It should be inserted in the [parse_zone(zone)].")
 
 	if(organ_flags & ORGAN_FAILING)
-		if(IS_ROBOTIC_ORGAN(src))
-			. += span_warning("[src] seems to be broken.")
-			return
-		. += span_warning("[src] has decayed for too long, and has turned a sickly color. It probably won't work without repairs.")
+		. += span_warning("[src] [failing_desc]")
 		return
 
 	if(damage > high_threshold)
@@ -151,17 +159,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
-///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage
+///Adjusts an organ's damage by the amount "damage_amount", up to a maximum amount, which is by default max damage. Returns the net change in organ damage.
 /obj/item/organ/proc/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
-		return
+		return FALSE
 	maximum = clamp(maximum, 0, maxHealth) // the logical max is, our max
 	if(maximum < damage)
-		return
+		return FALSE
 	if(required_organ_flag && !(organ_flags & required_organ_flag))
-		return
+		return FALSE
 	damage = clamp(damage + damage_amount, 0, maximum)
-	var/mess = check_damage_thresholds(owner)
+	. = (prev_damage - damage) // return net damage
+	var/message = check_damage_thresholds(owner)
 	prev_damage = damage
 
 	if(damage >= maxHealth)
@@ -169,8 +178,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	else
 		organ_flags &= ~ORGAN_FAILING
 
-	if(mess && owner && owner.stat <= SOFT_CRIT)
-		to_chat(owner, mess)
+	if(message && owner && owner.stat <= SOFT_CRIT)
+		to_chat(owner, message)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/set_organ_damage(damage_amount, required_organ_flag = NONE) //use mostly for admin heals
@@ -307,4 +316,4 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Tries to replace the existing organ on the passed mob with this one, with special handling for replacing a brain without ghosting target
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
-	Insert(new_owner, special = TRUE, drop_if_replaced = FALSE)
+	return Insert(new_owner, special = TRUE, drop_if_replaced = FALSE)

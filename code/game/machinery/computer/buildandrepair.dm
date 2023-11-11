@@ -199,19 +199,7 @@
 				if(istype(new_machine, /obj/machinery/computer))
 					var/obj/machinery/computer/new_computer = new_machine
 
-					// Machines will init with a set of default components.
-					// Triggering handle_atom_del will make the machine realise it has lost a component_parts and then deconstruct.
-					// Move to nullspace so we don't trigger handle_atom_del, then qdel.
-					// Finally, replace new machine's parts with this frame's parts.
-					if(new_computer.circuit)
-						// Move to nullspace and delete.
-						new_computer.circuit.moveToNullspace()
-						QDEL_NULL(new_computer.circuit)
-					for(var/old_part in new_computer.component_parts)
-						var/atom/movable/movable_part = old_part
-						// Move to nullspace and delete.
-						movable_part.moveToNullspace()
-						qdel(movable_part)
+					new_machine.clear_components()
 
 					// Set anchor state and move the frame's parts over to the new machine.
 					// Then refresh parts and call on_construction().
@@ -246,3 +234,37 @@
 		if(state >= 3)
 			new /obj/item/stack/cable_coil(drop_location(), 5)
 	..()
+
+/// Helpers for rcd
+/obj/structure/frame/computer/rcd
+	icon = 'icons/hud/radial.dmi'
+	icon_state = "cnorth"
+
+/obj/structure/frame/computer/rcd/Initialize(mapload)
+	name = "computer frame"
+	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon_state = "0"
+
+	. = ..()
+
+	set_anchored(TRUE)
+
+/obj/structure/frame/computer/rcd/north
+	dir = NORTH
+	name = "Computer North"
+	icon_state = "cnorth"
+
+/obj/structure/frame/computer/rcd/south
+	dir = SOUTH
+	name = "Computer South"
+	icon_state = "csouth"
+
+/obj/structure/frame/computer/rcd/east
+	dir = EAST
+	name = "Computer East"
+	icon_state = "ceast"
+
+/obj/structure/frame/computer/rcd/west
+	dir = WEST
+	name = "Computer West"
+	icon_state = "cwest"

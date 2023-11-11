@@ -137,9 +137,10 @@
 	if(!istype(location))
 		return FALSE
 
+	var/datum/can_pass_info/info = new(no_id = TRUE)
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
-		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, no_id = TRUE))
+		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
 			continue
 
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
@@ -458,6 +459,20 @@
 	name = "dirty foam"
 	allow_duplicate_results = FALSE
 	result_type = /obj/effect/decal/cleanable/dirt
+
+/obj/effect/spawner/foam_starter
+	var/datum/effect_system/fluid_spread/foam/foam_type = /datum/effect_system/fluid_spread/foam
+	var/foam_size = 4
+
+/obj/effect/spawner/foam_starter/Initialize(mapload)
+	. = ..()
+
+	var/datum/effect_system/fluid_spread/foam/foam = new foam_type()
+	foam.set_up(foam_size, holder = src, location = loc)
+	foam.start()
+
+/obj/effect/spawner/foam_starter/small
+	foam_size = 2
 
 #undef MINIMUM_FOAM_DILUTION_RANGE
 #undef MINIMUM_FOAM_DILUTION

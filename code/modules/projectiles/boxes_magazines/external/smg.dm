@@ -90,6 +90,10 @@
 	name = "SMG magazine (Armour Piercing .45)"
 	ammo_type = /obj/item/ammo_casing/c45/ap
 
+/obj/item/ammo_box/magazine/smgm45/hp
+	name = "SMG magazine (Hollow Point .45)"
+	ammo_type = /obj/item/ammo_casing/c45/hp
+
 /obj/item/ammo_box/magazine/smgm45/incen
 	name = "SMG magazine (Incendiary .45)"
 	ammo_type = /obj/item/ammo_casing/c45/inc

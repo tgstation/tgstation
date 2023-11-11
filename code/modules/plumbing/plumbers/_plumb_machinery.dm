@@ -14,8 +14,6 @@
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
-	///category for plumbing RCD
-	var/category = ""
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
@@ -61,8 +59,6 @@
 	icon_state = "pipe_input"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | REFILLABLE
-	///category for plumbing RCD
-	category="Distribution"
 
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
@@ -76,9 +72,6 @@
 	icon_state = "pipe_output"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | DRAINABLE
-	///category for plumbing service rcd
-	category="Distribution"
-
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -88,21 +81,16 @@
 	name = "drinking tap"
 	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
 	icon_state = "tap_output"
-	///category for plumbing RCD
-	category = "Distribution"
 
 /obj/machinery/plumbing/tank
 	name = "chemical tank"
 	desc = "A massive chemical holding tank."
 	icon_state = "tank"
 	buffer = 400
-	///category for plumbing RCD
-	category="Storage"
 
 /obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/tank, bolt, layer)
-
 
 ///Layer manifold machine that connects a bunch of layers
 /obj/machinery/plumbing/layer_manifold
@@ -110,8 +98,6 @@
 	desc = "A plumbing manifold for layers."
 	icon_state = "manifold"
 	density = FALSE
-	///category for plumbing service rcd
-	category="Distribution"
 
 /obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
 	. = ..()
