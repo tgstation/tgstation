@@ -197,9 +197,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/golem_ship)
-"mE" = (
-/turf/open/water/jungle,
-/area/ruin/powered/golem_ship)
 "mU" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
@@ -980,8 +977,8 @@ wN
 (10,1,1) = {"
 wN
 wN
-mE
-mE
+wN
+wN
 Df
 Df
 Df
@@ -997,8 +994,8 @@ wN
 "}
 (11,1,1) = {"
 wN
-mE
-mE
+wN
+wN
 Df
 Df
 vr
@@ -1015,8 +1012,8 @@ Df
 "}
 (12,1,1) = {"
 wN
-mE
-mE
+wN
+wN
 Df
 bO
 XR
@@ -1034,7 +1031,7 @@ Df
 (13,1,1) = {"
 wN
 wN
-mE
+wN
 lF
 bO
 ir
