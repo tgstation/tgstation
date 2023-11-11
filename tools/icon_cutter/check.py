@@ -23,8 +23,7 @@ def hash_file(path):
 failed = False
 chop_extension = re.compile(r"^(.*)\..+?$", re.M)
 output_hash = {}
-for cutter_template in glob.glob("..\\..\\icons\\**.toml"):
-    print(cutter_template)
+for cutter_template in glob.glob("..\\..\\icons\\**\*.toml", recursive = True):
     resource_name = re.sub(chop_extension, r"\1", cutter_template, count = 1)
     if not os.path.isfile(resource_name):
         print(f"::error template={cutter_template} exists but lacks a matching resource file ({resource_name})")
