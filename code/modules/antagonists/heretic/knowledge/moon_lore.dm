@@ -192,7 +192,8 @@
 		Bring 3 corpses with more than 50 brain damage to a transmutation rune to complete the ritual. \
 		When completed, you become a harbinger of madness, all your spells will get a lower cooldown \
 		and become stronger. You will also passivly release hallucinations, decrease sanity, and increase \
-		confusion. If their sanity is low they will start taking brain damage and go blind."
+		confusion. If their sanity is low they will start taking brain damage and go blind. 1/5th of the crew \
+		will aid you as acolytes and follow your command, they will all recieve moonlight amulettes."
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
