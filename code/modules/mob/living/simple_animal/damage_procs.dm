@@ -18,6 +18,12 @@
 	if(AIStatus == AI_IDLE)
 		toggle_ai(AI_ON)
 
+/mob/living/simple_animal/get_damage_mod(damage_type)
+	var/modifier = ..()
+	if (damage_type in damage_coeff)
+		return modifier * damage_coeff[damage_type]
+	return modifier
+
 /mob/living/simple_animal/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return 0

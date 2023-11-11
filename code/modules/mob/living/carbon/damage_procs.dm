@@ -4,16 +4,53 @@
 	if(!damage || (!forced && hit_percent <= 0))
 		return 0
 
-	var/obj/item/bodypart/BP = null
-	if(!spread_damage)
-		if(isbodypart(def_zone)) //we specified a bodypart object
-			BP = def_zone
-		else
-			if(!def_zone)
-				def_zone = get_random_valid_zone(def_zone)
-			BP = get_bodypart(check_zone(def_zone))
-			if(!BP)
-				BP = bodyparts[1]
+	// Otherwise if def zone is null, we'll get a random bodypart / zone to hit.
+	// ALso we'll automatically covnert string def zones into bodyparts to pass into parent call.
+	else if(!isbodypart(def_zone))
+		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
+		def_zone = get_bodypart(random_zone) || bodyparts[1]
+
+	. = ..()
+	// Taking brute or burn to bodyparts gives a damage flash
+	if(def_zone && (damagetype == BRUTE || damagetype == BURN))
+		damageoverlaytemp += .
+
+	return .
+
+/mob/living/carbon/human/get_damage_mod(damage_type)
+	if (!dna?.species?.damage_modifier)
+		return ..()
+	var/species_mod = (100 - dna.species.damage_modifier) / 100
+	return ..() * species_mod
+
+/mob/living/carbon/human/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+
+	// Add relevant DR modifiers into blocked value to pass to parent
+	blocked += physiology?.damage_resistance
+	blocked += dna?.species?.damage_modifier
+	return ..()
+
+/mob/living/carbon/human/get_incoming_damage_modifier(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	var/final_mod = ..()
 
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
