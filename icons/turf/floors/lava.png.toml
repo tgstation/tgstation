@@ -1,0 +1,17 @@
+output_name = "lava"
+template = "bitmask/diagonal_32x32.toml"
+
+[animation]
+delays = [20, 20, 20, 20]
+
+[icon_size]
+x = 32
+y = 32
+
+[output_icon_size]
+x = 32
+y = 32
+
+[cut_pos]
+x = 16
+y = 16
