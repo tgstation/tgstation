@@ -6352,6 +6352,7 @@
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\holy_steps.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\music.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\shooting_stars.dm"
+#include "monkestation\code\modules\trading\unusual_effects\animation_housing\skull_rain.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\snow.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\weh.dm"
 #include "monkestation\code\modules\twitch_bits\admin_command.dm"
