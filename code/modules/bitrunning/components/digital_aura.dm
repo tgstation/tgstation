@@ -21,7 +21,6 @@
 			base_icon = 'icons/effects/bitrunning.dmi'
 		if(48)
 			base_icon = 'icons/effects/bitrunning_48.dmi'
-
 		if(64)
 			base_icon = 'icons/effects/bitrunning_64.dmi'
 
