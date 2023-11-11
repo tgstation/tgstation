@@ -224,7 +224,7 @@
 		if (IS_HERETIC(crewmate)) // Heretics shouldn't become acolytes
 			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are week willed. Their minds shall rend." ))
 			continue
-		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD)) // Mindshielded are immune against this effect
+		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD), crewmate.can_block_magic(MAGIC_RESISTANCE)) // Mindshielded and anti-magic folks are immune against this effect
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
 		if(prob(5))
