@@ -63,7 +63,8 @@
 			var/mob/living/creature = thing
 
 			if(ismegafauna(creature))
-				creature.AddElement(/datum/element/virtual_megafauna)
+				var/mob/living/simple_animal/hostile/megafauna/boss = creature
+				boss.make_virtual_megafauna()
 				continue
 
 			mutation_candidate_refs.Add(WEAKREF(creature))

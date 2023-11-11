@@ -12,7 +12,7 @@
 	typepath = /datum/round_event/ghost_role/bitrunning_glitch
 	weight = 100
 	/// List of servers on the station
-	var/list/active_servers = list()
+	var/list/datum/weakref/active_servers = list()
 
 /datum/round_event_control/bitrunning_glitch/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
@@ -31,7 +31,7 @@
 	active_servers.Cut()
 	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
 		if(server.validate_mutation_candidates())
-			active_servers.Add(server)
+			active_servers.Add(WEAKREF(server))
 
 	return length(active_servers) > 0
 
@@ -59,7 +59,11 @@
 	cyber_control.validate_servers()
 
 	var/total = 0
-	for(var/obj/machinery/quantum_server/server in cyber_control.active_servers)
+	for(var/datum/weakref/server_ref in cyber_control.active_servers)
+		var/obj/machinery/quantum_server/server = server_ref?.resolve()
+		if(isnull(server))
+			continue
+
 		total += length(server.mutation_candidate_refs)
 
 	return total
@@ -83,4 +87,3 @@
 	spawned_mobs = unlucky_server.setup_glitch(forced_role)
 
 	return SUCCESSFUL_SPAWN
-

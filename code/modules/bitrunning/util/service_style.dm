@@ -1,11 +1,5 @@
 /// Gives the appearance of being an agent
-/datum/element/service_style
-
-/datum/element/service_style/Attach(datum/target)
-	. = ..()
-	if(!ishuman(target))
-		return ELEMENT_INCOMPATIBLE
-
+/mob/living/carbon/human/proc/set_service_style()
 	var/static/list/approved_hair_colors = list(
 		"#4B3D28",
 		"#000000",
@@ -24,7 +18,6 @@
 	var/datum/sprite_accessory/hair/picked_hair = pick(approved_hairstyles)
 	var/picked_color = pick(approved_hair_colors)
 
-	var/mob/living/carbon/human/player = target
-	player.set_facial_hairstyle("Shaved", update = FALSE)
-	player.set_haircolor(picked_color, update = FALSE)
-	player.set_hairstyle(initial(picked_hair.name))
+	set_facial_hairstyle("Shaved", update = FALSE)
+	set_haircolor(picked_color, update = FALSE)
+	set_hairstyle(initial(picked_hair.name))

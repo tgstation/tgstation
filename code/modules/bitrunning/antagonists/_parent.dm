@@ -23,10 +23,11 @@
 	. = ..()
 
 	forge_objectives()
-	owner.current.AddElement(/datum/element/npc_friendly)
+	owner.current.AddComponent(/datum/component/npc_friendly)
 
 	if(iscarbon(owner.current))
-		owner.current.AddElement(/datum/element/virtual_mob)
+		var/mob/living/carbon/carbon_mob = owner.current
+		carbon_mob.make_virtual_mob()
 
 /datum/antagonist/bitrunning_glitch/forge_objectives()
 	var/datum/objective/bitrunning_glitch_fluff/objective = new()
@@ -53,16 +54,14 @@
 	return ..()
 
 /datum/objective/bitrunning_glitch_fluff/check_completion()
-	var/list/alive = GLOB.alive_player_list.Copy()
-
-	if(locate(/mob/living/carbon) in alive)
+	if(locate(/mob/living/carbon) in (GLOB.alive_player_list - owner.current))
 		return FALSE
 
 	return TRUE
 
 /// Sets up the agent so that they look like cyber police && don't have an account ID
 /datum/antagonist/bitrunning_glitch/proc/convert_agent(mob/living/carbon/human/player)
-	player.AddElement(/datum/element/service_style)
+	player.set_service_style()
 	player.equipOutfit(/datum/outfit/cyber_police/tactical)
 	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
 

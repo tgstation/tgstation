@@ -51,6 +51,10 @@
 
 		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
 
+/// Removes a specific threat - used when station spawning
+/obj/machinery/quantum_server/proc/remove_threat(mob/living/threat)
+	spawned_threat_refs.Remove(WEAKREF(threat))
+
 /// Selects the role and waits for a ghost orbiter
 /obj/machinery/quantum_server/proc/setup_glitch(datum/antagonist/bitrunning_glitch/forced_role)
 	if(!validate_mutation_candidates())
@@ -60,7 +64,8 @@
 	if(isnull(mutation_target))
 		CRASH("vdom: After two attempts, no valid mutation target was found.")
 
-	mutation_target.AddElement(/datum/element/digital_aura)
+	var/atom/thing = mutation_target
+	thing.create_digital_aura()
 
 	var/datum/antagonist/bitrunning_glitch/chosen_role = forced_role || get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
@@ -82,7 +87,8 @@
 		return
 
 	if(QDELETED(src) || isnull(ghost) || isnull(generated_domain) || !is_ready || !is_operational)
-		mutation_target.RemoveElement(/datum/element/digital_aura)
+		var/atom/thing = mutation_target
+		thing.remove_digital_aura()
 		return
 
 	var/role_name = initial(chosen_role.name)

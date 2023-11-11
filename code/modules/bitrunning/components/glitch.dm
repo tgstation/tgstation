@@ -11,7 +11,7 @@
 	forge_ref = WEAKREF(forge)
 
 	var/mob/living/owner = parent
-	server.spawned_threat_refs.Remove(WEAKREF(owner)) // so the server doesn't dust us
+	server.remove_threat(owner) // so the server doesn't dust us
 
 	owner.faction.Cut()
 	owner.faction += list(ROLE_GLITCH)
@@ -20,13 +20,8 @@
 	owner.maxHealth = clamp(current_max, 200, 500)
 	owner.fully_heal()
 
-	owner.AddElement(/datum/element/digital_aura)
-
-/datum/component/glitch/RegisterWithParent()
-	RegisterSignals(parent, list(COMSIG_LIVING_STATUS_UNCONSCIOUS, COMSIG_LIVING_DEATH), PROC_REF(on_death))
-
-/datum/component/glitch/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	var/atom/thing = owner
+	thing.create_digital_aura()
 
 /// Sakujo
 /datum/component/glitch/proc/dust_mob()
@@ -35,7 +30,6 @@
 
 	var/mob/living/owner = parent
 	owner.dust()
-	qdel(src)
 
 /// We don't want digital entities just lingering around as corpses.
 /datum/component/glitch/proc/on_death()
