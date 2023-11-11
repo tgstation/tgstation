@@ -3,6 +3,7 @@
  */
 
 /datum/component/shielded
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// The person currently wearing us
 	var/mob/living/wearer
 	/// How many charges we can have max, and how many we start with
