@@ -11,6 +11,8 @@
 	max_wizard_trigger_potency = 7
 	admin_setup = list(/datum/event_admin_setup/listed_options/stray_meteor)
 	map_flags = EVENT_SPACE_ONLY
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_SPACE)
 
 /datum/round_event/stray_meteor
 	announce_when = 1

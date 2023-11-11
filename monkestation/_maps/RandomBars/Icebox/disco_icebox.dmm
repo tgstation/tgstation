@@ -99,6 +99,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/eighties/red,
 /area/station/commons/lounge)
 "jI" = (
@@ -277,6 +278,7 @@
 "BO" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "BS" = (

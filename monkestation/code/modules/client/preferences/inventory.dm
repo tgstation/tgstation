@@ -44,9 +44,9 @@
 			if(ACCESS_COMMAND_RANK)
 				amount *= 1.5
 			if(ACCESS_TRAITOR_RANK)
-				amount *= 1.75
-			if(ACCESS_NUKIE_RANK)
 				amount *= 2
+			if(ACCESS_NUKIE_RANK)
+				amount *= 3
 
 	if(respects_roundcap)
 		if(max_round_coins <= amount)

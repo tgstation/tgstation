@@ -67,6 +67,7 @@
 #define ROLE_LAVALAND "Lavaland"
 #define ROLE_LAZARUS_BAD "Slaved Revived Mob"
 #define ROLE_LAZARUS_GOOD "Friendly Revived Mob"
+#define ROLE_SLASHER "Slasher"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -106,7 +107,6 @@
 #define ROLE_ZOMBIE "Zombie"
 #define ROLE_SYNDICATE_DRONE "Syndicate Drone"
 #define ROLE_VENUSHUMANTRAP "Venus Human Trap"
-
 
 
 /// This defines the antagonists you can operate with in the settings.

@@ -265,7 +265,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			empty_turfs += shuttle_floor
 
-	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+	var/obj/structure/closet/crate/mail/economy/new_create = new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		SSeconomy.mail_crate = new_create
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

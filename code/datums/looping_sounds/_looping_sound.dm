@@ -160,7 +160,8 @@
 			ignore_walls = ignore_walls,
 			falloff_distance = falloff_distance,
 			use_reverb = use_reverb,
-			channel = channel //monkestation edit
+			channel = channel, //monkestation edit
+			mixer_channel = channel
 		)
 
 /// Returns the sound we should now be playing.

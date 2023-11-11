@@ -38,7 +38,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "fx" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "fN" = (
@@ -195,6 +195,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"nB" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "ob" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -208,7 +215,7 @@
 "oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/plasma,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "or" = (
@@ -220,14 +227,13 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "oN" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Departures Lounge";
-	name = "shuttle camera"
-	},
 /obj/machinery/light/blacklight/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/camera/emp_proof/directional/west{
+	c_tag = "Singularity Engine #2"
+	},
 /turf/open/floor/iron,
 /turf/open/floor/iron,
 /turf/open/floor/iron,
@@ -298,9 +304,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "th" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Departures Lounge";
-	name = "shuttle camera"
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Singularity Engine #3"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
@@ -471,6 +476,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"Ga" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable/layer1,
+/obj/structure/cable,
+/obj/machinery/camera/emp_proof/directional/west{
+	c_tag = "Singularity Engine #4"
+	},
+/turf/open/space/basic,
+/area/station/engineering/supermatter/room)
 "Hs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
@@ -535,13 +549,12 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "LD" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Departures Lounge";
-	name = "shuttle camera"
-	},
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Singularity Engine #1"
+	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "LZ" = (
@@ -592,6 +605,7 @@
 "NS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/directions/ptl/directional/east,
+/obj/machinery/light/blacklight/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "OT" = (
@@ -987,7 +1001,7 @@ IJ
 cY
 cY
 cY
-vF
+Ga
 vF
 XV
 cY
@@ -1206,8 +1220,8 @@ LD
 oK
 xG
 xG
+nB
 kI
-re
 NS
 oe
 RN
@@ -1229,8 +1243,8 @@ rW
 Qn
 nb
 dq
+nb
 mS
-zs
 zs
 fx
 Ar

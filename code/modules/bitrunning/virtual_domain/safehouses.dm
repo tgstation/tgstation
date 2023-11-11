@@ -46,6 +46,9 @@
 /datum/map_template/safehouse/ice
 	filename = "ice.dmm"
 
+/datum/map_template/safehouse/bathroom
+	filename = "bathroom.dmm"
+
 /**
  * Your safehouse here
  * /datum/map_template/safehouse/your_type

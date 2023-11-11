@@ -83,7 +83,9 @@
 	},
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ll" = (
-/obj/structure/sign/poster/contraband/clown/directional/north,
+/obj/structure/sign/poster/contraband/clown{
+	pixel_y = 34
+	},
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "lu" = (
@@ -168,7 +170,7 @@
 	},
 /area/ruin/space/has_grav/powered/virtual_domain)
 "HA" = (
-/turf/open/floor/holofloor/beach/coast,
+/turf/open/floor/holofloor/beach/coast_t,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "HV" = (
 /obj/structure/chair/comfy/black{

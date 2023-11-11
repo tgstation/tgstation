@@ -80,6 +80,14 @@
 #define JOB_LAWYER "Lawyer"
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
+//Spooktober
+#define JOB_SPOOKTOBER_GHOST "Ghost"
+#define JOB_SPOOKTOBER_GODZILLA "Discount Godzilla"
+#define JOB_SPOOKTOBER_WIZARD "Diet Wizard"
+#define JOB_SPOOKTOBER_YELLOWCLOWN "Yellow Clown"
+#define JOB_SPOOKTOBER_SKELETON "Skeleton"
+#define JOB_SPOOKTOBER_CANDYSALESMAN "Candy Salesman"
+#define JOB_SPOOKTOBER_GORILLA "Gorilla"
 //ERTs
 #define JOB_ERT_DEATHSQUAD "Death Commando"
 #define JOB_ERT_COMMANDER "Emergency Response Team Commander"
@@ -164,6 +172,8 @@
 #define DEPARTMENT_ASSISTANT "Assistant"
 #define DEPARTMENT_BITFLAG_CAPTAIN (1<<9)
 #define DEPARTMENT_CAPTAIN "Captain"
+#define DEPARTMENT_BITFLAG_SPOOKTOBER (1<<10)
+#define DEPARTMENT_SPOOKTOBER "Spooktober"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.
@@ -184,6 +194,8 @@
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
+/// Whether this job is enabled/disabled by the spooktober config
+#define JOB_SPOOKTOBER (1<<9)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

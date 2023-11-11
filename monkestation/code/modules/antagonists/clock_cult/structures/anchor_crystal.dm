@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 #define SHIELD_DEFLECT "deflect" //the shield is currently in its deflecting animation
 #define SHIELD_BREAK "break" //the shield is currently in its breaking animation
 #define SHIELD_BROKEN "broken" //the shield is currently broken
+#define SERVANT_CAPACITY_TO_GIVE 2 //how many extra server slots do we give on first charged crystal
 /obj/structure/destructible/clockwork/anchoring_crystal
 	name = "Anchoring Crystal"
 	desc = "A strange crystal that you cant quite seem to focus on."
@@ -152,6 +153,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 
 //do all the stuff for finishing charging
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/finish_charging()
+	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [anchoring_crystal_charge_message(TRUE)]")))
 	charge_state = FULLY_CHARGED
 	resistance_flags += INDESTRUCTIBLE
 	atom_integrity = INFINITY
@@ -161,7 +163,6 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 						  "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 
 	GLOB.max_clock_power += 1000
-	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [anchoring_crystal_charge_message(TRUE)]")))
 	SSshuttle.clearHostileEnvironment(src)
 	var/datum/scripture/create_structure/anchoring_crystal/creation_scripture = /datum/scripture/create_structure/anchoring_crystal
 	if(locate(creation_scripture) in GLOB.clock_scriptures_by_type)
@@ -169,8 +170,8 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 		creation_scripture.update_info()
 
 	switch(get_charged_anchor_crystals())
-		if(1) //add 4 more max servants
-			GLOB.main_clock_cult.max_human_servants += 4
+		if(1) //add 2 more max servants and increase replica fabricator build speed
+			GLOB.main_clock_cult.max_human_servants += SERVANT_CAPACITY_TO_GIVE
 		if(2) //create a steam helios on reebe
 			if(GLOB.abscond_markers.len)
 				var/turf/created_at = get_turf(pick(GLOB.abscond_markers))
@@ -205,13 +206,13 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 
 ///return a message based off of what this anchoring crystal did/will do for the cult
 /proc/anchoring_crystal_charge_message(completed = FALSE)
-	var/message
+	var/message = ""
 	switch(get_charged_anchor_crystals())
+		if(0)
+			message = "[completed ? "We can now" : "We will be able to"] support 2 more servants, gain faster buildspeed with replica fabricators on reebe, and the ark can be opened."
 		if(1)
-			message = "[completed ? "We can now" : "We will be able to"] support 4 more servants and the ark can be opened."
-		if(2)
 			message = "The Steam Helios, a strong 2 pilot mech, [completed ? "has been" : "will be"] summoned to reebe."
-		if(3)
+		if(2)
 			message = "Humaniod servants [completed ? "may now" : "will be able to"] ascend their form to that of a clockwork golem, giving them innate armor, environmental immunity, \
 					   and faster invoking for most scriptures."
 	return message
@@ -233,3 +234,4 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 #undef SHIELD_DEFLECT
 #undef SHIELD_BREAK
 #undef SHIELD_BROKEN
+#undef SERVANT_CAPACITY_TO_GIVE

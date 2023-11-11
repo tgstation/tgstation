@@ -5,6 +5,8 @@
 	weight = 5
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "Randomly opens and closes job slots, along with changing the overflow role."
+	track = EVENT_TRACK_MAJOR // if you've ever dealt with 10 mimes you understand why.
+	tags = list(TAG_COMMUNAL)
 
 /datum/round_event/bureaucratic_error
 	announce_when = 1
@@ -22,10 +24,11 @@
 			var/datum/job/current = job
 			if(!current.allow_bureaucratic_error)
 				continue
-			current.total_positions = 0
+			var/ran = rand(-2,4)
+			current.total_positions = max(current.total_positions + ran, 1)
 	else // Adds/removes a random amount of job slots from all jobs.
 		for(var/datum/job/current as anything in jobs)
 			if(!current.allow_bureaucratic_error)
 				continue
 			var/ran = rand(-2,4)
-			current.total_positions = max(current.total_positions + ran, 0)
+			current.total_positions = max(current.total_positions + ran, 1)

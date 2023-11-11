@@ -108,10 +108,6 @@
 /obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"V" = (
-/obj/structure/flora/coconuts,
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "W" = (
 /obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
@@ -504,7 +500,7 @@ C
 C
 C
 C
-V
+C
 C
 C
 C
@@ -543,7 +539,7 @@ C
 W
 C
 C
-V
+C
 C
 C
 q
@@ -636,7 +632,7 @@ C
 g
 C
 C
-V
+C
 C
 z
 C
@@ -994,7 +990,7 @@ h
 C
 C
 q
-V
+C
 C
 C
 C
@@ -1164,7 +1160,7 @@ h
 h
 C
 C
-V
+C
 C
 C
 C
@@ -1317,7 +1313,7 @@ C
 q
 C
 C
-V
+C
 C
 h
 h
@@ -1488,7 +1484,7 @@ C
 C
 C
 C
-V
+C
 C
 C
 C

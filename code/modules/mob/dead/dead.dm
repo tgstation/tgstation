@@ -42,8 +42,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		. += "Time To Start: SOON"
 
 	. += "Players: [LAZYLEN(GLOB.clients)]"
+	. += "Players Ready: [SSticker.totalPlayersReady]"
 	if(client.holder)
-		. += "Players Ready: [SSticker.totalPlayersReady]"
 		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 
 /mob/dead/proc/server_hop()

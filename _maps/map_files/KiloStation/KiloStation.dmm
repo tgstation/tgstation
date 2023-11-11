@@ -29517,6 +29517,9 @@
 /obj/machinery/firealarm/directional/west,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/pdapainter/supply,
+/obj/machinery/byteforge{
+	pixel_y = 14
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "jGt" = (
@@ -69161,7 +69164,6 @@
 	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/bot,
-/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wGD" = (

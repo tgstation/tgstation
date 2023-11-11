@@ -1,60 +1,34 @@
-import { sortBy } from 'common/collections';
-import { Box, Stack } from '../../../../../../components';
-import { Feature, FeatureChoicedServerData, FeatureValueProps, StandardizedDropdown } from '../../base';
+import { Feature, FeatureValueProps, StandardizedPalette } from '../../base';
 
-type HexValue = {
-  lightness: number;
-  value: string;
+const furPresets = {
+  // these need to be short color (3 byte) compatible
+  '#ffffff': 'Albino',
+  '#ffb089': 'Chimp',
+  '#aeafb3': 'Grey',
+  '#bfd0ca': 'Snow',
+  '#ce7d54': 'Orange',
+  '#c47373': 'Red',
+  '#f4e2d5': 'Cream',
 };
 
-type FurServerData = FeatureChoicedServerData & {
-  display_names: NonNullable<FeatureChoicedServerData['display_names']>;
-  to_hex: Record<string, HexValue>;
-};
-
-const sortHexValues = sortBy<[string, HexValue]>(
-  ([_, hexValue]) => -hexValue.lightness
-);
-
-export const fur: Feature<string, string, FurServerData> = {
-  name: 'Fur coloring',
-  component: (props: FeatureValueProps<string, string, FurServerData>) => {
-    const { handleSetValue, serverData, value } = props;
-
-    if (!serverData) {
-      return null;
-    }
+export const fur: Feature<string> = {
+  name: 'Fur Color',
+  small_supplemental: false,
+  predictable: false,
+  component: (props: FeatureValueProps<string>) => {
+    const { handleSetValue, value, featureId, act } = props;
 
     return (
-      <StandardizedDropdown
-        choices={sortHexValues(Object.entries(serverData.to_hex)).map(
-          ([key]) => key
-        )}
-        displayNames={Object.fromEntries(
-          Object.entries(serverData.display_names).map(([key, displayName]) => {
-            const hexColor = serverData.to_hex[key];
-
-            return [
-              key,
-              <Stack align="center" fill key={key}>
-                <Stack.Item>
-                  <Box
-                    style={{
-                      background: hexColor.value,
-                      'box-sizing': 'content-box',
-                      'height': '11px',
-                      'width': '11px',
-                    }}
-                  />
-                </Stack.Item>
-
-                <Stack.Item grow>{displayName}</Stack.Item>
-              </Stack>,
-            ];
-          })
-        )}
+      <StandardizedPalette
+        choices={Object.keys(furPresets)}
+        displayNames={furPresets}
         onSetValue={handleSetValue}
         value={value}
+        hex_values
+        featureId={featureId}
+        act={act}
+        maxWidth="100%"
+        includeHex
       />
     );
   },

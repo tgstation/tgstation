@@ -8,12 +8,12 @@
 	map_name = "beach_bar"
 	safehouse_path = /datum/map_template/safehouse/mine
 
-/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain
 	name = "pina colada"
 	desc = "Whose drink is this? Not yours, that's for sure. Well, it's not like they're going to miss it."
 	list_reagents = list(/datum/reagent/consumable/ethanol/pina_colada = 30)
 
-/obj/item/reagent_containers/cup/glass/drinkingglass/virtual_domain/Initialize(mapload, vol)
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/virtual_domain/Initialize(mapload, vol)
 	. = ..()
 
 	AddComponent(/datum/component/bitrunning_points, \

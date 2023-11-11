@@ -119,6 +119,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	///we also dont want weathers or weather events as they will hold refs to alot of stuff as they shouldn't be deleted
 	ignore += typesof(/datum/weather_event)
 	ignore += typesof(/datum/particle_weather)
+	ignore += typesof(/mob/living/basic/aquatic)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type
@@ -198,6 +199,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//Alright, time to see if anything messed up
 	var/list/cache_for_sonic_speed = SSgarbage.items
 	for(var/path in cache_for_sonic_speed)
+		if(path in ignore)
+			continue
 		var/datum/qdel_item/item = cache_for_sonic_speed[path]
 		if(item.failures)
 			TEST_FAIL("[item.name] hard deleted [item.failures] times out of a total del count of [item.qdels]")

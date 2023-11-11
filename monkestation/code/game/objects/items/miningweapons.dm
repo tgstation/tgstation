@@ -11,7 +11,7 @@
 	the same technology into a smaller more portable package. The machete design was chosen as to make a much easier to handle and less cumbersome frame. Of course \
 	the smaller package means that the power is not as high as the original crusher design, but the different shell makes it capable of blocking basic attacks."
 	force = 15
-	block_chance = 50
+	block_chance = 25
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 5
@@ -22,10 +22,10 @@
 	attack_verb_continuous = list("slashes", "cuts", "cleaves", "chops", "swipes")
 	attack_verb_simple = list("cleave", "chop", "cut", "swipe", "slash")
 	sharpness = SHARP_EDGED
-	actions_types = NONE
+	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = NONE
-	light_system = NONE
-	light_outer_range = 0
+	light_system = MOVABLE_LIGHT
+	light_outer_range = 5
 	light_on = FALSE
 	charged = TRUE
 	charge_time = 10
@@ -65,10 +65,10 @@
 	attack_verb_continuous = list("pierces", "stabs", "impales", "pokes", "jabs")
 	attack_verb_simple = list("imaple", "stab", "pierce", "jab", "poke")
 	sharpness = SHARP_EDGED
-	actions_types = NONE
+	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
-	light_system = NONE
-	light_outer_range = 0
+	light_system = MOVABLE_LIGHT
+	light_outer_range = 8
 	light_on = FALSE
 	charged = TRUE
 	charge_time = 15
@@ -114,7 +114,7 @@
 	attack_verb_continuous = list("slams", "crushes", "smashes", "flattens", "pounds")
 	attack_verb_simple = list("slam", "crush", "smash", "flatten", "pound")
 	sharpness = NONE
-	actions_types = NONE
+	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
 	light_system = MOVABLE_LIGHT
 	light_outer_range = 5
@@ -167,10 +167,10 @@
 	attack_verb_continuous = list("swipes", "slashes", "cuts", "slaps")
 	attack_verb_simple = list("swipe", "slash", "cut", "slap")
 	sharpness = SHARP_POINTY
-	actions_types = NONE
+	actions_types = list(/datum/action/item_action/toggle_light)
 	obj_flags = UNIQUE_RENAME
 	light_system = MOVABLE_LIGHT
-	light_outer_range = 5
+	light_outer_range = 4
 	light_on = FALSE
 	charged = TRUE
 	charge_time = 2

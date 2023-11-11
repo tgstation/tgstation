@@ -229,7 +229,8 @@
 
 /obj/item/gun/ballistic/bow/clockwork
 	name = "brass bow"
-	desc = "A bow made from brass and other components that you can't quite understand. It glows with a deep energy and frabricates arrows by itself."
+	desc = "A bow made from brass and other components that you can't quite understand. It glows with a deep energy and frabricates arrows by itself. \
+			It's bolts destabilize hit structures, making them lose additional integrity."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
 	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
@@ -318,6 +319,20 @@
 	icon_state = "arrow_energy"
 	damage = 25
 	damage_type = BURN
+
+//double damage to non clockwork structures and machines
+/obj/projectile/energy/clockbolt/on_hit(atom/target, blocked, pierce_hit)
+	if(ismob(target))
+		var/mob/mob_target = target
+		if(IS_CLOCK(mob_target)) //friendly fire is bad
+			return
+
+	. = ..()
+	if(!.)
+		return
+
+	if(!QDELETED(target) && (istype(target, /obj/structure) || istype(target, /obj/machinery)) && !istype(target, /obj/structure/destructible/clockwork))
+		target.update_integrity(target.get_integrity() - 25)
 
 #undef HAMMER_FLING_DISTANCE
 #undef HAMMER_THROW_FLING_DISTANCE

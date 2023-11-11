@@ -1,0 +1,13 @@
+{
+	"/datum/round_event_control":
+	{
+		"weight" : 10,
+		"min_players" : 0,
+		"max_occurrences" : 100,
+		"earliest_start" : 20,
+		"track" : "Moderate",
+		"cost" : 1,
+		"reoccurence_penalty_multiplier" : 1,
+		"shared_occurence_type" : null
+	}
+}

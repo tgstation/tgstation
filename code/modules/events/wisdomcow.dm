@@ -10,6 +10,8 @@
 		/datum/event_admin_setup/listed_options/wisdom_cow,
 		/datum/event_admin_setup/input_number/wisdom_cow,
 	)
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_COMMUNAL, TAG_POSITIVE)
 
 /datum/round_event/wisdomcow
 	///Location override that, if set causes the cow to spawn in a pre-determined locaction instead of randomly.
@@ -56,5 +58,5 @@
 
 /datum/event_admin_setup/input_number/wisdom_cow/apply_to_event(datum/round_event/wisdomcow/event)
 	event.selected_experience = chosen_value
-	
-	
+
+

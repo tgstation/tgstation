@@ -1485,7 +1485,6 @@
 		"seclite",
 		"zipties",
 		"inspector",
-		"mag_autorifle",
 		"rubber_c35", //monkestation edit: taco sec
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
@@ -1526,7 +1525,8 @@
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
-		"lethal_c35", //monkestation edit: taco sec
+		"lethal_c35", //monkestation edit: paco sec
+		"mag_autorifle_rub", //monkestation edit: autorifles
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 5000)
@@ -1538,6 +1538,8 @@
 	prereq_ids = list("adv_engi", "weaponry")
 	design_ids = list(
 		"pin_loyalty",
+		"mag_autorifle", //monkestation edit: autorifles
+		"mag_autorifle_salt", //monkestation edit: autorifles
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
@@ -1605,8 +1607,6 @@
 		"c38_hotshot",
 		"c38_iceblox",
 		"techshotshell",
-		"mag_autorifle_ap",
-		"mag_autorifle_ic",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

@@ -9,11 +9,9 @@
 	description = "The crew will either pay up, or face a pirate assault."
 	admin_setup = list(/datum/event_admin_setup/listed_options/pirates)
 	map_flags = EVENT_SPACE_ONLY
-
-/datum/round_event_control/pirates/preRunEvent()
-	if (!SSmapping.is_planetary())
-		return EVENT_CANT_RUN
-	return ..()
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMBAT, TAG_COMMUNAL)
+	checks_antag_cap = TRUE
 
 /datum/round_event/pirates
 	///admin chosen pirate team

@@ -1,7 +1,7 @@
 GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 
-//this is effectively 4 higher due to the first anchoring crystal always allowing 4 more servants
-#define DEFAULT_MAX_HUMAN_SERVANTS 8
+//this is effectively 2 higher due to the first anchoring crystal always allowing 2 more servants
+#define DEFAULT_MAX_HUMAN_SERVANTS 10
 #define CONVERSION_WARNING_NONE 0
 #define CONVERSION_WARNING_HALFWAY 1
 #define CONVERSION_WARNING_THREEQUARTERS 2

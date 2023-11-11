@@ -8,7 +8,7 @@
 	icon_state = "stargazer"
 	base_icon_state = "stargazer"
 	anchored = TRUE
-	break_message = "<span class='warning'>The stargazer collapses.</span>"
+	break_message = span_warning("The stargazer collapses.")
 	///ref to our visual effect, migtht be able to make this just be an overlay
 	var/obj/effect/stargazer_light/light_effect
 	///cooldown for enchanting items

@@ -5,6 +5,9 @@
 	max_occurrences = 1
 	category = EVENT_CATEGORY_INVASION
 	description = "A single nuclear operative assaults the station."
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT)
+	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/operative
 	minimum_required = 1
@@ -30,6 +33,10 @@
 	Mind.special_role = ROLE_LONE_OPERATIVE
 	Mind.active = TRUE
 	Mind.transfer_to(operative)
+	if(!operative.client?.prefs.read_preference(/datum/preference/toggle/nuke_ops_species))
+		var/species_type = operative.client.prefs.read_preference(/datum/preference/choiced/species)
+		operative.set_species(species_type) //Apply the preferred species to our freshly-made body.
+
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into lone operative by an event.")

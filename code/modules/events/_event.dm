@@ -42,6 +42,21 @@
 	/// Flags dictating whether this event should be run on certain kinds of map
 	var/map_flags = NONE
 
+	//monkestation vars starts
+	var/roundstart = FALSE
+	var/cost = 1
+	var/reoccurence_penalty_multiplier = 0.75
+	var/shared_occurence_type
+	var/track = EVENT_TRACK_MODERATE
+	/// Last calculated weight that the storyteller assigned this event
+	var/calculated_weight = 0
+	var/tags = list() 	/// Tags of the event
+	/// List of the shared occurence types.
+	var/static/list/shared_occurences = list()
+	/// Whether a roundstart event can happen post roundstart. Very important for events which override job assignments.
+	var/can_run_post_roundstart = TRUE
+	//monkestation vars end
+
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
 		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
@@ -71,8 +86,10 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES || (SSgamemode.ran_roundstart && !fake_check)))
+		return FALSE
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
@@ -88,13 +105,21 @@
 	if(ispath(typepath, /datum/round_event/ghost_role) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
 		return FALSE
 
+	//monkestation edit start - STORYTELLERS
+	if(checks_antag_cap)
+		if(!roundstart && !SSgamemode.can_inject_antags())
+			return FALSE
+	if(!check_enemies())
+		return FALSE
+	//monkestation edit end - STORYTELLERS
+
 	var/datum/game_mode/dynamic/dynamic = SSticker.mode
 	if (istype(dynamic) && dynamic_should_hijack && dynamic.random_event_hijacked != HIJACKED_NOTHING)
 		return FALSE
 
 	return TRUE
 
-/datum/round_event_control/proc/preRunEvent()
+/datum/round_event_control/proc/preRunEvent(forced = FALSE)
 	if(!ispath(typepath, /datum/round_event))
 		return EVENT_CANT_RUN
 
@@ -106,11 +131,14 @@
 	// We sleep HERE, in pre-event setup (because there's no sense doing it in runEvent() since the event is already running!) for the given amount of time to make an admin has enough time to cancel an event un-fitting of the present round.
 	if(alert_observers)
 		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
-		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
+		if(!roundstart)
+			sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-		if(!can_spawn_event(players_amt))
+		if(!can_spawn_event(players_amt, fake_check = TRUE) && !forced)
 			message_admins("Second pre-condition check for [name] failed, skipping...")
 			return EVENT_INTERRUPTED
+		if(!can_spawn_event(players_amt, fake_check = TRUE) && forced)
+			message_admins("Second pre-condition check for [name] failed, but event forced, running event regardless this may have issues...")
 
 	if(!triggering)
 		return EVENT_CANCELLED //admin cancelled
@@ -203,8 +231,14 @@ Runs the event
 	var/fakeable = TRUE
 	/// Whether a admin wants this event to be cancelled
 	var/cancel_event = FALSE
+	//monkestation vars starts
 	///canceled on oshan
 	var/oshan_blocked = FALSE
+	/// Whether the event called its start() yet or not.
+	var/has_started = FALSE
+	///have we finished setup?
+	var/setup = FALSE
+	//monkestation vars end
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -215,6 +249,7 @@ Runs the event
 //This is really only for setting defaults which can be overridden later when New() finishes.
 /datum/round_event/proc/setup()
 	SHOULD_CALL_PARENT(FALSE)
+	setup = TRUE
 	return
 
 ///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
@@ -227,6 +262,80 @@ Runs the event
 /datum/round_event/proc/start()
 	SHOULD_CALL_PARENT(FALSE)
 	return
+
+//monkestation addition starts - STORYTELLERS
+/// This section of event processing is in a proc because roundstart events may get their start invoked.
+/datum/round_event/proc/try_start()
+	if(has_started)
+		return
+	has_started = TRUE
+	processing = FALSE
+	start()
+	processing = TRUE
+
+/datum/round_event_control/roundstart
+	roundstart = TRUE
+	earliest_start = 0
+
+///Adds an occurence. Has to use the setter to properly handle shared occurences
+/datum/round_event_control/proc/add_occurence()
+	if(shared_occurence_type)
+		if(!shared_occurences[shared_occurence_type])
+			shared_occurences[shared_occurence_type] = 0
+		shared_occurences[shared_occurence_type]++
+	occurrences++
+
+///Subtracts an occurence. Has to use the setter to properly handle shared occurences
+/datum/round_event_control/proc/subtract_occurence()
+	if(shared_occurence_type)
+		if(!shared_occurences[shared_occurence_type])
+			shared_occurences[shared_occurence_type] = 0
+		shared_occurences[shared_occurence_type]--
+	occurrences--
+
+///Gets occurences. Has to use the getter to properly handle shared occurences
+/datum/round_event_control/proc/get_occurences()
+	if(shared_occurence_type)
+		if(!shared_occurences[shared_occurence_type])
+			shared_occurences[shared_occurence_type] = 0
+		return shared_occurences[shared_occurence_type]
+	return occurrences
+
+/// Prints the action buttons for this event.
+/datum/round_event_control/proc/get_href_actions()
+	if(SSticker.HasRoundStarted())
+		if(roundstart)
+			if(!can_run_post_roundstart)
+				return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a>"
+			return "<a href='?src=[REF(src)];action=fire'>Fire</a> <a href='?src=[REF(src)];action=schedule'>Schedule</a>"
+		else
+			return "<a href='?src=[REF(src)];action=fire'>Fire</a> <a href='?src=[REF(src)];action=schedule'>Schedule</a> <a href='?src=[REF(src)];action=force_next'>Force Next</a>"
+	else
+		if(roundstart)
+			return "<a href='?src=[REF(src)];action=schedule'>Add Roundstart</a> <a href='?src=[REF(src)];action=force_next'>Force Roundstart</a>"
+		else
+			return "<a class='linkOff'>Fire</a> <a class='linkOff'>Schedule</a> <a class='linkOff'>Force Next</a>"
+
+
+/datum/round_event_control/Topic(href, href_list)
+	. = ..()
+	if(QDELETED(src))
+		return
+	switch(href_list["action"])
+		if("schedule")
+			message_admins("[key_name_admin(usr)] scheduled event [src.name].")
+			log_admin_private("[key_name(usr)] scheduled [src.name].")
+			SSgamemode.storyteller.buy_event(src, src.track)
+		if("force_next")
+			if(length(src.admin_setup))
+				for(var/datum/event_admin_setup/admin_setup_datum in src.admin_setup)
+					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
+						return
+			message_admins("[key_name_admin(usr)] force scheduled event [src.name].")
+			log_admin_private("[key_name(usr)] force scheduled event [src.name].")
+			SSgamemode.forced_next_events[src.track] += src
+
+//monkestation addition ends - STORYTELLERS
 
 //Called after something followable has been spawned by an event
 //Provides ghosts a follow link to an atom if possible
@@ -265,6 +374,8 @@ Runs the event
 //This proc will handle the calls to the appropiate procs.
 /datum/round_event/process()
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!setup)
+		return
 	if(!processing)
 		return
 
