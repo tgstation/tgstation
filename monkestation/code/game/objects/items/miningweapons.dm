@@ -195,7 +195,7 @@
 	name = "proto-kinetic railgun"
 	desc = "Before the nice streamlined and modern day Proto-Kinetic Accelerator was created, multiple designs were drafted by the Mining Research and Development \
 	team. Many were failures, including this one, which came out too bulky and too ineffective. Well recently the MR&D Team got drunk and said 'fuck it we ball' and \
-	went back to the bulky design, overclocked it, and made it functional, turning it into what is essentially a literal man portable particle accelerator.\
+	went back to the bulky design, overclocked it, and made it functional, turning it into what is essentially a literal man portable particle accelerator. \
 	The design results in a massive hard to control blast of kinetic energy, with the power to punch right through creatures and cause massive damage. The \
 	only problem with the design is that it is so bulky you need to carry it with two hands, and the technology has no optimization for a pressured enviorment, \
 	resulting in a near zero force value in pressurized areas."
@@ -217,9 +217,9 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/repeater
 	name = "proto-kinetic repeater"
-	desc = "During the pizza party celebrating the release of the new crusher designs, the Mining Research and Development team members were only allowed one slice.\
-	One member exclaimed 'I wish we could have more than one slice' and another replied 'I wish we could shoot the accelerator more than once' and thus, the repeater\
-	on the spot. The repeater trades a bit of power for the ability to fire three shots before becoming empty, while retaining the ability to fully recharge in one\
+	desc = "During the pizza party celebrating the release of the new crusher designs, the Mining Research and Development team members were only allowed one slice. \
+	One member exclaimed 'I wish we could have more than one slice' and another replied 'I wish we could shoot the accelerator more than once' and thus, the repeater \
+	on the spot. The repeater trades a bit of power for the ability to fire three shots before becoming empty, while retaining the ability to fully recharge in one \
 	go. The extra technology packed inside to make this possible unfortunately reduces mod space meaning you cnat carry as many mods compared to a regular accelerator."
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "kineticrepeater"
@@ -237,9 +237,9 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/shotgun
 	name = "proto-kinetic shotgun"
-	desc = "During the crusher design pizza party, one member of the Mining Research and Development team brought out a real riot shotgun, and killed three\
-	other research members with one blast. The MR&D Director immedietly thought of a genuis idea, creating the proto-kinetic shotgun moments later, which he\
-	immedietly used to execute the research member who brought the real shotgun. The proto-kinetic shotgun trades off some mod capacity and cooldown in favor\
+	desc = "During the crusher design pizza party, one member of the Mining Research and Development team brought out a real riot shotgun, and killed three \
+	other research members with one blast. The MR&D Director immedietly thought of a genuis idea, creating the proto-kinetic shotgun moments later, which he \
+	immedietly used to execute the research member who brought the real shotgun. The proto-kinetic shotgun trades off some mod capacity and cooldown in favor \
 	of firing three shots at once with reduce range and power. The total damage of all three shots is higher than a regular PKA but the individual shots are weaker."
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "kineticshotgun"
@@ -257,9 +257,9 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/glock
 	name = "proto-kinetic pistol"
-	desc = "During the pizza party for the Mining Research and Development team, one special snowflake researcher wanted a mini murphy instead of a regular\
-	pizza slice, so reluctantly the Director bought him his mini murphy, which the dumbass immedietly dropped ontop of a PKA. Suddenly the idea to create\
-	a 'build your own PKA' design was created. The proto-kinetic pistol is arguably worse than the base PKA, sporting lower damage and range. But this lack\
+	desc = "During the pizza party for the Mining Research and Development team, one special snowflake researcher wanted a mini murphy instead of a regular \
+	pizza slice, so reluctantly the Director bought him his mini murphy, which the dumbass immedietly dropped ontop of a PKA. Suddenly the idea to create \
+	a 'build your own PKA' design was created. The proto-kinetic pistol is arguably worse than the base PKA, sporting lower damage and range. But this lack \
 	of base efficiency allows room for nearly double the mods, making it truely 'your own PKA'."
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "kineticpistol"
@@ -292,10 +292,10 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/grapple
 	name = "Miner Zip Hook"
-	desc = "During the pizza party for the Mining Research and Development team, the Mining Research Director went outside, and played with his favorite ball.\
-	Unfortunetly he accidently tossed it to the other side of a massive lavalake. Out of pure spite he decided that instead of getting an RCD like any sane individual\
-	he would create a brand new PKA type using the meathook he kept in his office. Thus the grappleing hook was (finally) created. The Proto-Kinetic grapple hook\
-	allows quick traversal over pits, chasms, and lava, by firing a high speed grapple hook and yanking the user towards it. Dont worry about the inertia, the nerds\
+	desc = "During the pizza party for the Mining Research and Development team, the Mining Research Director went outside, and played with his favorite ball. \
+	Unfortunetly he accidently tossed it to the other side of a massive lavalake. Out of pure spite he decided that instead of getting an RCD like any sane individual \
+	he would create a brand new PKA type using the meathook he kept in his office. Thus the grappleing hook was (finally) created. The Proto-Kinetic grapple hook \
+	allows quick traversal over pits, chasms, and lava, by firing a high speed grapple hook and yanking the user towards it. Dont worry about the inertia, the nerds \
 	in RND took care of that problem (after six test subjects)."
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "kineticgrapple"
@@ -417,7 +417,7 @@
 	knockdown_time = (0 SECONDS)
 	disablepull = TRUE
 	range = 10
-	speed = 0.1
+	speed = 0.5
 
 //Procs for mining grapplehook
 
@@ -425,10 +425,7 @@
 	. = ..()
 	var/atom/A = target
 	A.visible_message(span_danger("[firer] zips towards [A] as the hook latches on!"))
-	ADD_TRAIT(firer, TRAIT_MOVE_FLYING, null)
-	new /datum/forced_movement(firer, A, 10, TRUE)
-	sleep(0.5 SECONDS)
-	REMOVE_TRAIT(firer, TRAIT_MOVE_FLYING, null)
+	firer.forceMove(get_turf(src))
 
 //ADMIN ONLY MEMES
 /obj/item/gun/energy/recharge/kinetic_accelerator/meme
