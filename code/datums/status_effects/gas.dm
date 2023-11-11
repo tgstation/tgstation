@@ -33,7 +33,7 @@
 
 /datum/status_effect/freon/proc/do_resist()
 	to_chat(owner, span_notice("You start breaking out of the ice cube..."))
-	if(do_after(owner, 4 SECONDS, owner))
+	if(do_after(owner, 4 SECONDS, target = owner))
 		to_chat(owner, span_notice("You break out of the ice cube!"))
 		qdel(src)
 
