@@ -25,6 +25,8 @@
 	response_harm_continuous = "squashes"
 	response_harm_simple = "squash"
 
+	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/bee = 1 )
+
 	mob_size = MOB_SIZE_LARGE
 	pixel_x = -16
 	base_pixel_x = -16
@@ -44,7 +46,6 @@
 	held_w_class = WEIGHT_CLASS_TINY
 	environment_smash  = ENVIRONMENT_SMASH_NONE
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/bee
 	///the reagent the bee has
 	var/datum/reagent/beegent = null
@@ -99,6 +100,8 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	if(flags_1 & HOLOGRAM_1 || gibbed)
+		return ..()
 	var/obj/item/food/pollensac/sac = new(loc) //monkestation edit, bee update
 	sac.pixel_x = pixel_x
 	sac.pixel_y = pixel_y
@@ -109,9 +112,6 @@
 		sac.reagents.add_reagent(beegent.type, 5)
 		sac.color = beegent.color
 	sac.update_appearance()
-	if(flags_1 & HOLOGRAM_1 || gibbed)
-		return ..()
-	new /obj/item/trash/bee(loc, src)
 	return ..()
 
 /mob/living/basic/bee/proc/pre_attack(mob/living/puncher, atom/target)

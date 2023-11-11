@@ -97,6 +97,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
+	var/list/team_finder_arrows = list()
+
 /datum/hud/New(mob/owner)
 	mymob = owner
 
@@ -209,6 +211,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	QDEL_NULL(module_store_icon)
 	QDEL_LIST(static_inventory)
+	QDEL_LIST(team_finder_arrows)
 
 	inv_slots.Cut()
 	action_intent = null
@@ -317,6 +320,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
+			if(team_finder_arrows.len)
+				screenmob.client.screen += team_finder_arrows
 			if(always_visible_inventory.len)
 				screenmob.client.screen += always_visible_inventory
 
@@ -329,12 +334,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			hud_shown = FALSE //Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen -= static_inventory
+			if(team_finder_arrows.len)
+				screenmob.client.screen += team_finder_arrows
 			if(toggleable_inventory.len)
 				screenmob.client.screen -= toggleable_inventory
 			if(hotkeybuttons.len)
 				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
+			if(team_finder_arrows.len)
+				screenmob.client.screen -= team_finder_arrows
 			if(always_visible_inventory.len)
 				screenmob.client.screen += always_visible_inventory
 

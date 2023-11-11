@@ -274,25 +274,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 			qdel(objective)
 			for(var/datum/mind/mind in objective.team.members)
 				to_chat(mind.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
+				message_admins("[mob_occupant] is being despawned when they are an objective of [mind.current].")
 				mind.announce_objectives()
 		else if(istype(objective.target) && objective.target == mob_occupant.mind)
 			var/old_target = objective.target
 			objective.target = null
 			if(!objective)
 				return
-			objective.find_target()
 			if(!objective.target && objective.owner)
 				to_chat(objective.owner.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
+				message_admins("[mob_occupant] is being despawned when they are an objective of [objective.owner.current].")
 				for(var/datum/antagonist/antag in objective.owner.antag_datums)
 					antag.objectives -= objective
 			if (!objective.team)
 				objective.update_explanation_text()
 				objective.owner.announce_objectives()
 				to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
+				message_admins("[mob_occupant] is being despawned when they are an objective of [objective.owner.current].")
 			else
 				var/list/objectivestoupdate
 				for(var/datum/mind/objective_owner in objective.get_owners())
 					to_chat(objective_owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
+					message_admins("[mob_occupant] is being despawned when they are an objective of [objective_owner.current].")
 					for(var/datum/objective/update_target_objective in objective_owner.get_all_objectives())
 						LAZYADD(objectivestoupdate, update_target_objective)
 				objectivestoupdate += objective.team.objectives
@@ -302,6 +305,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 					update_objective.target = objective.target
 					update_objective.update_explanation_text()
 					to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
+					message_admins("[mob_occupant] is being despawned when they are an objective of [objective.owner.current].")
 					update_objective.owner.announce_objectives()
 			qdel(objective)
 

@@ -125,8 +125,9 @@
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	// REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	// owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
+	//We're leaving the size traits permanent until someone wants to separate the mutation from customization aspects
+	//REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	//owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
@@ -370,27 +371,25 @@
 			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
 
 /datum/mutation/human/gigantism
-	name = "Gigantism"//negative version of dwarfism
+	name = "Gigantism"
 	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
 	conflicts = list(/datum/mutation/human/dwarfism)
+	locked = TRUE
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	owner.resize = 1.25
-	owner.update_transform()
-	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
+	//handled in init_signals.dm
 
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	// REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	// owner.resize = 0.8
-	// owner.update_transform()
-	// owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
+	//We're leaving the size traits permanent until someone wants to separate the mutation from customization aspects
+	//REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	//handled in init_signals.dm
 
 /datum/mutation/human/spastic
 	name = "Spastic"

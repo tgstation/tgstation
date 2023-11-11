@@ -106,6 +106,30 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/rollerbed
+	name = "Roller Bed"
+	desc = "For the modern coma patient on the go!  Much better than dragging a bleeding person along the floor."
+	id = "rollerbed"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 3000)
+	build_path = /obj/item/roller/
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/bodybag
+	name = "Body Bag"
+	desc = "A bag for a body. For when the doctors couldn't get to them, or after they're done."
+	id = "bodybag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/bodybag
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/bluespacebodybag
 	name = "Bluespace Body Bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."

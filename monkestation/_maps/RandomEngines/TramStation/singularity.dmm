@@ -156,9 +156,8 @@
 /area/station/engineering/supermatter/room)
 "qR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/directional/north{
-	c_tag = "Engineering - Engine Room North-West";
-	network = list("ss13","engine","engineering")
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Singularity Engine #2"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -355,11 +354,10 @@
 /area/space/nearstation)
 "OY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/camera/directional/north{
-	c_tag = "Engineering - Engine Room North-West";
-	network = list("ss13","engine","engineering")
-	},
 /obj/machinery/power/energy_accumulator/grounding_rod,
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Singularity Engine #1"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Pi" = (
@@ -491,6 +489,12 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"ZX" = (
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Singularity Engine #3"
+	},
+/turf/open/space/basic,
+/area/station/engineering/supermatter/room)
 
 (1,1,1) = {"
 TZ
@@ -942,7 +946,7 @@ Gn
 Ho
 Ho
 Ho
-Zh
+ZX
 Zh
 jS
 zz

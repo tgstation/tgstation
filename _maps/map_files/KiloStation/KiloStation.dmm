@@ -15025,6 +15025,7 @@
 /area/station/hallway/primary/aft)
 "fhv" = (
 /obj/structure/table/wood,
+/obj/machinery/cassette/adv_cassette_deck,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
 "fhw" = (
@@ -23090,7 +23091,6 @@
 /area/station/medical/virology)
 "hGC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/rnd/bepis,
 /obj/effect/turf_decal/box/white,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
@@ -25998,6 +25998,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/cassette/mailbox,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "ixO" = (
@@ -29516,6 +29517,9 @@
 /obj/machinery/firealarm/directional/west,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/pdapainter/supply,
+/obj/machinery/byteforge{
+	pixel_y = 14
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "jGt" = (
@@ -38544,10 +38548,11 @@
 /turf/open/floor/engine,
 /area/station/ai_monitored/command/storage/satellite)
 "mHe" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/cassette/dj_station{
+	pixel_y = 12
+	},
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "mHf" = (
@@ -65643,13 +65648,71 @@
 /area/station/medical/medbay/central)
 "vFD" = (
 /obj/structure/table/wood,
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
 	},
-/obj/item/flashlight/lamp/green,
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/walkman{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/blank,
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/friday{
+	pixel_y = 2;
+	pixel_x = 9
+	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "vFH" = (
@@ -69101,7 +69164,6 @@
 	},
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/bot,
-/obj/machinery/infuser,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "wGD" = (

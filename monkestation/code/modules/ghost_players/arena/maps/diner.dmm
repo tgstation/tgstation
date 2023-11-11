@@ -1,0 +1,648 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aQ" = (
+/obj/item/kirbyplants/potty,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"bl" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"cc" = (
+/obj/structure/table,
+/obj/item/storage/fancy/egg_box,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"cp" = (
+/obj/structure/table/wood/poker,
+/obj/item/dice/d6/ebony,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"go" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"hm" = (
+/obj/structure/table/reinforced,
+/obj/item/food/pizza/pineapple,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"ih" = (
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"ix" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-18"
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"iS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"jL" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"lt" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"lO" = (
+/obj/structure/table/wood/poker,
+/obj/item/clothing/head/fedora,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"mi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"mo" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"mv" = (
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"mG" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"oa" = (
+/obj/structure/table,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"ol" = (
+/obj/structure/table/wood,
+/obj/item/knife/plastic{
+	pixel_x = 6
+	},
+/obj/item/kitchen/fork/plastic{
+	pixel_x = -6
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"oU" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"oW" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"pD" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"pQ" = (
+/obj/structure/table/reinforced,
+/obj/item/food/burrito{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/food/burrito,
+/obj/item/food/burrito{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"qB" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"rX" = (
+/obj/structure/table,
+/obj/machinery/processor{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"tY" = (
+/obj/structure/table/wood,
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/obj/item/plate,
+/obj/item/food/spaghetti/pastatomato{
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"um" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"uD" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"va" = (
+/obj/structure/table/wood/poker,
+/obj/item/clothing/mask/cigarette/pipe,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"vl" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"wa" = (
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"xl" = (
+/obj/structure/table/reinforced,
+/obj/structure/desk_bell,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"yB" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"zi" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"zl" = (
+/turf/closed/wall,
+/area/centcom/tdome/arena/actual)
+"zT" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21";
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"Ac" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Ah" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"By" = (
+/obj/machinery/disposal/bin,
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"ET" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-14"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"EZ" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"Fh" = (
+/obj/machinery/button/door/directional/north{
+	id = "kitchen_arena";
+	name = "Counter Shutters Control";
+	pixel_y = 30
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Fp" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"FF" = (
+/obj/structure/table/reinforced,
+/obj/item/food/spaghetti/beefnoodle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"FM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Gi" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"GL" = (
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"HK" = (
+/obj/structure/table,
+/obj/item/reagent_containers/condiment/enzyme{
+	layer = 5;
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/item/storage/bag/tray,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Ju" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"JO" = (
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"Mp" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"NQ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"Pb" = (
+/obj/structure/table/reinforced,
+/obj/item/food/bbqribs,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Pd" = (
+/obj/machinery/vending/coffee,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"Pk" = (
+/obj/structure/table/reinforced,
+/obj/item/food/cake/bscc,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Re" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Rn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"RD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Se" = (
+/obj/structure/table/reinforced,
+/obj/item/food/beef_wellington,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Ty" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_arena"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Um" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Vj" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/machinery/light/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Wc" = (
+/obj/structure/table,
+/obj/item/kitchen/rollingpin,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"WK" = (
+/obj/structure/table/wood/poker,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/carpet,
+/area/centcom/tdome/arena/actual)
+"WQ" = (
+/obj/machinery/gibber,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"Xt" = (
+/obj/structure/table,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+"XU" = (
+/obj/machinery/computer/slot_machine{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"ZN" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/cafeteria,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+XU
+GL
+GL
+GL
+GL
+GL
+GL
+GL
+GL
+GL
+"}
+(2,1,1) = {"
+aQ
+Mp
+NQ
+GL
+GL
+Mp
+GL
+JO
+Mp
+NQ
+"}
+(3,1,1) = {"
+uD
+GL
+GL
+GL
+mG
+NQ
+GL
+ol
+GL
+GL
+"}
+(4,1,1) = {"
+zl
+Ty
+Ty
+Ty
+zl
+By
+GL
+pD
+GL
+GL
+"}
+(5,1,1) = {"
+um
+mo
+ih
+Ah
+jL
+Um
+GL
+GL
+Mp
+ET
+"}
+(6,1,1) = {"
+Vj
+ih
+WQ
+mi
+Pb
+bl
+GL
+NQ
+GL
+qB
+"}
+(7,1,1) = {"
+Ac
+ih
+rX
+mi
+Pk
+oW
+GL
+wa
+wa
+GL
+"}
+(8,1,1) = {"
+yB
+ih
+HK
+RD
+pQ
+oW
+GL
+vl
+Ju
+GL
+"}
+(9,1,1) = {"
+Xt
+Fh
+ih
+mi
+xl
+lt
+GL
+lO
+WK
+GL
+"}
+(10,1,1) = {"
+ZN
+ih
+Wc
+mi
+FF
+oW
+GL
+va
+cp
+GL
+"}
+(11,1,1) = {"
+Re
+ih
+oa
+mi
+Se
+oW
+GL
+EZ
+EZ
+GL
+"}
+(12,1,1) = {"
+Gi
+ih
+cc
+zi
+hm
+oU
+GL
+GL
+GL
+qB
+"}
+(13,1,1) = {"
+go
+mo
+ih
+FM
+jL
+iS
+NQ
+GL
+Rn
+zT
+"}
+(14,1,1) = {"
+zl
+Ty
+Ty
+Ty
+zl
+mv
+GL
+JO
+NQ
+GL
+"}
+(15,1,1) = {"
+Pd
+GL
+GL
+GL
+Fp
+GL
+GL
+tY
+GL
+GL
+"}
+(16,1,1) = {"
+ix
+Mp
+GL
+GL
+GL
+Mp
+GL
+pD
+Mp
+GL
+"}
+(17,1,1) = {"
+XU
+GL
+GL
+GL
+NQ
+GL
+GL
+GL
+NQ
+GL
+"}

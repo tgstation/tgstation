@@ -1,7 +1,7 @@
 GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 
-//this is effectively 4 higher due to the first anchoring crystal always allowing 4 more servants
-#define DEFAULT_MAX_HUMAN_SERVANTS 8
+//this is effectively 2 higher due to the first anchoring crystal always allowing 2 more servants
+#define DEFAULT_MAX_HUMAN_SERVANTS 10
 #define CONVERSION_WARNING_NONE 0
 #define CONVERSION_WARNING_HALFWAY 1
 #define CONVERSION_WARNING_THREEQUARTERS 2
@@ -67,7 +67,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 ///check how many human members we have and anything that goes with that
 /datum/team/clock_cult/proc/check_member_count()
 	check_member_distribution()
-	max_human_servants = round(max((get_active_player_count() / 6) + 6, max_human_servants))
+	max_human_servants = round(max((get_active_player_count() / 7) + 5, max_human_servants))
 	var/human_servant_count = length(human_servants)
 	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Rat'var\
 						[get_charged_anchor_crystals() ? "." : "and an Anchoring Crystal is summoned and protected on the station."]"

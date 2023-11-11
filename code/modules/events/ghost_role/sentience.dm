@@ -22,6 +22,8 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	description = "An animal or robot becomes sentient!"
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_COMMUNAL, TAG_SPOOKY)
 
 
 /datum/round_event/ghost_role/sentience

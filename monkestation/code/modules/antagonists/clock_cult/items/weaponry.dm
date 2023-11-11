@@ -22,14 +22,14 @@
 	var/static/list/effect_turf_typecache = typecacheof(list(/turf/open/floor/bronze, /turf/open/indestructible/reebe_flooring))
 
 
-/obj/item/clockwork/weapon/attack(mob/living/target, mob/living/user)
+/obj/item/clockwork/weapon/afterattack(mob/living/target, mob/living/user)
 	. = ..()
 	var/turf/gotten_turf = get_turf(user)
 
 	if(!is_type_in_typecache(gotten_turf, effect_turf_typecache))
 		return
 
-	if(!QDELETED(target) && target.stat != DEAD && !IS_CLOCK(target) && !target.can_block_magic(MAGIC_RESISTANCE_HOLY))
+	if((!QDELETED(target) && (!ismob(target) || (ismob(target) && target.stat != DEAD && !IS_CLOCK(target) && !target.can_block_magic(MAGIC_RESISTANCE_HOLY)))))
 		hit_effect(target, user)
 
 
@@ -102,7 +102,7 @@
 	overlay_icon_state = ""
 	active_background_icon_state = "bg_clock_active"
 	invocation_type = INVOCATION_NONE
-	cooldown_time = 10 SECONDS
+	cooldown_time = 15 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	///ref to the spear we summon
 	var/obj/item/clockwork/weapon/brass_spear/recalled_spear
@@ -166,7 +166,7 @@
 
 
 /obj/item/clockwork/weapon/brass_battlehammer/hit_effect(mob/living/target, mob/living/user, thrown = FALSE)
-	if(!thrown && !HAS_TRAIT(src, TRAIT_WIELDED))
+	if((!thrown && !HAS_TRAIT(src, TRAIT_WIELDED)) || !istype(target))
 		return
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
@@ -229,7 +229,8 @@
 
 /obj/item/gun/ballistic/bow/clockwork
 	name = "brass bow"
-	desc = "A bow made from brass and other components that you can't quite understand. It glows with a deep energy and frabricates arrows by itself."
+	desc = "A bow made from brass and other components that you can't quite understand. It glows with a deep energy and frabricates arrows by itself. \
+			It's bolts destabilize hit structures, making them lose additional integrity."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_weapons.dmi'
 	lefthand_file = 'monkestation/icons/mob/clock_cult/clockwork_lefthand.dmi'
 	righthand_file = 'monkestation/icons/mob/clock_cult/clockwork_righthand.dmi'
@@ -318,6 +319,20 @@
 	icon_state = "arrow_energy"
 	damage = 25
 	damage_type = BURN
+
+//double damage to non clockwork structures and machines
+/obj/projectile/energy/clockbolt/on_hit(atom/target, blocked, pierce_hit)
+	if(ismob(target))
+		var/mob/mob_target = target
+		if(IS_CLOCK(mob_target)) //friendly fire is bad
+			return
+
+	. = ..()
+	if(!.)
+		return
+
+	if(!QDELETED(target) && (istype(target, /obj/structure) || istype(target, /obj/machinery)) && !istype(target, /obj/structure/destructible/clockwork))
+		target.update_integrity(target.get_integrity() - 25)
 
 #undef HAMMER_FLING_DISTANCE
 #undef HAMMER_THROW_FLING_DISTANCE

@@ -456,10 +456,6 @@
 	if(!current_turf)
 		return FALSE
 
-	// Syndicate base is loaded in a reserved level. If not reserved, we don't care.
-	if(!is_reserved_level(current_turf.z))
-		return FALSE
-
 	var/static/list/syndie_typecache = typecacheof(list(
 		/area/centcom/syndicate_mothership, // syndicate base itself
 		/area/shuttle/assault_pod, // steel rain

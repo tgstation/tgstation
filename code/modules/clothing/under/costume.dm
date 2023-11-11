@@ -90,7 +90,7 @@
 
 /obj/item/clothing/under/costume/kilt/highlander/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 /obj/item/clothing/under/costume/gladiator
 	name = "gladiator uniform"
@@ -220,6 +220,7 @@
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+	alternative_screams = list('monkestation/sound/voice/screams/skeleton/scream_skeleton.ogg')
 
 /obj/item/clothing/under/costume/mech_suit
 	name = "mech pilot's suit"

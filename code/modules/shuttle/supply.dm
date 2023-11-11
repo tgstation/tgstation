@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		return 2
 	return ..()
 
-/obj/docking_port/mobile/supply/initiate_docking()
+/obj/docking_port/mobile/supply/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	if(getDockedId() == "cargo_away") // Buy when we leave home.
 		buy()
 		create_mail()
@@ -139,7 +139,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					price += CRATE_TAX
 					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
 			else
-				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
+				paying_for_this = SSeconomy.get_dep_account(spawning_order.account_to_charge)
+				if(spawning_order.account_to_charge != ACCOUNT_CAR)
+					var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+					cargo.adjust_money(spawning_order.pack.get_cost() * 0.1) // give some back for actually getting the crates
 			if(paying_for_this)
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
@@ -262,7 +265,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			empty_turfs += shuttle_floor
 
-	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+	var/obj/structure/closet/crate/mail/economy/new_create = new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+
+	if(length(SSmapping.levels_by_trait(ZTRAIT_OSHAN)))
+		SSeconomy.mail_crate = new_create
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

@@ -6,6 +6,8 @@
 	description = "A crewmember gains a random trauma."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
+	track = EVENT_TRACK_MUNDANE
+	tags = list(TAG_TARGETED)
 
 /datum/round_event/brain_trauma
 	fakeable = FALSE

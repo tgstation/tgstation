@@ -1,4 +1,4 @@
-#define OCULAR_WARDEN_PLACE_RANGE 3
+#define OCULAR_WARDEN_PLACE_RANGE 4
 
 /datum/scripture/create_structure/ocular_warden
 	name = "Ocular Warden"

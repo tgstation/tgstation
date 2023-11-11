@@ -326,6 +326,8 @@
 		return
 	if(!T)
 		T = get_turf(src)
+	if(isclosedturf(T) || (isgroundlessturf(T) && !GET_TURF_BELOW(T)))
+		return
 
 	var/datum/reagent/blood_type = get_blood_id()
 	var/list/temp_blood_DNA

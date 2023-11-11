@@ -175,8 +175,22 @@
 	copy_seed.desc = desc
 	copy_seed.productdesc = productdesc
 
-	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
+	copy_seed.reagents_add = reagents_add.Copy() // Fastetr than grabbing the list from genes.
 	copy_seed.harvest_age = harvest_age
+
+	copy_seed.species = species
+	copy_seed.icon_grow = icon_grow
+	copy_seed.icon_harvest = icon_harvest
+	copy_seed.icon_dead = icon_dead
+	copy_seed.growthstages = growthstages
+	copy_seed.growing_icon = growing_icon
+	copy_seed.seed_offset = seed_offset
+	copy_seed.traits_in_progress = traits_in_progress
+
+	if(istype(src, /obj/item/seeds/spliced))
+		var/obj/item/seeds/spliced/spliced_seed = src
+		var/obj/item/seeds/spliced/new_spliced_seed = copy_seed
+		new_spliced_seed.produce_list += spliced_seed.produce_list
 
 	return copy_seed
 

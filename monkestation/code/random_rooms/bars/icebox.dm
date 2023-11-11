@@ -10,13 +10,13 @@
 	station_name = "Ice Box Station"
 
 
-/datum/map_template/random_room/random_bar/icebox_abductor
+/datum/map_template/random_room/random_bar/icebox_base/abductor
 	name = "Abductor Icebox Bar"
 	room_id = "icebox_bar_abductor"
 	mappath = "monkestation/_maps/RandomBars/Icebox/icebox_bar_abductor.dmm"
 	weight = 16
 
-/datum/map_template/random_room/random_bar/icebox_arcade
+/datum/map_template/random_room/random_bar/icebox_base/arcade
 	name = "Arcade Icebox Bar"
 	room_id = "icebox_bar_arcade"
 	mappath = "monkestation/_maps/RandomBars/Icebox/icebox_bar_arcade.dmm"
@@ -26,6 +26,7 @@
 	name = "Magbar"
 	room_id = "Magbar"
 	mappath = "monkestation/_maps/RandomBars/Icebox/Magbar.dmm"
+	weight = 10
 
 /datum/map_template/random_room/random_bar/icebox_base/green_bar_disco
 	name = "green_bar_disco"

@@ -49,63 +49,64 @@
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/stack/rods) && attachment_holes)
-		if(broken || burnt)
-			if(!iscyborg(user))
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
-			else
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.")) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
-			return
-		var/obj/item/stack/rods/R = C
-		if (R.get_amount() < 2)
-			to_chat(user, span_warning("You need two rods to make a reinforced floor!"))
-			return
-		else
-			to_chat(user, span_notice("You begin reinforcing the floor..."))
-			if(do_after(user, 30, target = src))
-				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
-					PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
-					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
-					R.use(2)
-					to_chat(user, span_notice("You reinforce the floor."))
+	if(!overwrites_attack_by)
+		if(istype(C, /obj/item/stack/rods) && attachment_holes)
+			if(broken || burnt)
+				if(!iscyborg(user))
+					to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+				else
+					to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.")) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
 				return
-	else if(istype(C, /obj/item/stack/tile))
-		if(!broken && !burnt)
-			for(var/obj/O in src)
-				for(var/M in O.buckled_mobs)
-					to_chat(user, span_warning("Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way."))
+			var/obj/item/stack/rods/R = C
+			if (R.get_amount() < 2)
+				to_chat(user, span_warning("You need two rods to make a reinforced floor!"))
+				return
+			else
+				to_chat(user, span_notice("You begin reinforcing the floor..."))
+				if(do_after(user, 30, target = src))
+					if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
+						PlaceOnTop(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
+						playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+						R.use(2)
+						to_chat(user, span_notice("You reinforce the floor."))
 					return
-			var/obj/item/stack/tile/tile = C
-			tile.place_tile(src, user)
-		else
-			if(!iscyborg(user))
-				balloon_alert(user, "too damaged, use a welding tool!")
+		else if(istype(C, /obj/item/stack/tile))
+			if(!broken && !burnt)
+				for(var/obj/O in src)
+					for(var/M in O.buckled_mobs)
+						to_chat(user, span_warning("Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way."))
+						return
+				var/obj/item/stack/tile/tile = C
+				tile.place_tile(src, user)
 			else
-				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
-	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
-		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
-			to_chat(user, span_danger("You fix some dents on the broken plating."))
-			icon_state = base_icon_state
-			burnt = FALSE
-			broken = FALSE
-			update_appearance()
-	else if(istype(C, /obj/item/stack/sheet/plasteel) && upgradable) //Reinforcement!
-		if(!broken && !burnt)
-			var/obj/item/stack/sheet/sheets = C
-			if(sheets.get_amount() < PLATE_REINFORCE_COST)
-				return
-			balloon_alert(user, "reinforcing plating...")
-			if(do_after(user, 12 SECONDS, target = src))
+				if(!iscyborg(user))
+					balloon_alert(user, "too damaged, use a welding tool!")
+				else
+					balloon_alert(user, "too damaged, use a welding or plating repair tool!")
+		else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
+			if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
+				to_chat(user, span_danger("You fix some dents on the broken plating."))
+				icon_state = base_icon_state
+				burnt = FALSE
+				broken = FALSE
+				update_appearance()
+		else if(istype(C, /obj/item/stack/sheet/plasteel) && upgradable) //Reinforcement!
+			if(!broken && !burnt)
+				var/obj/item/stack/sheet/sheets = C
 				if(sheets.get_amount() < PLATE_REINFORCE_COST)
 					return
-				sheets.use(PLATE_REINFORCE_COST)
-				playsound(src, 'sound/machines/creak.ogg', 100, vary = TRUE)
-				PlaceOnTop(/turf/open/floor/plating/reinforced)
-		else
-			if(!iscyborg(user))
-				balloon_alert(user, "too damaged, use a welding tool!")
+				balloon_alert(user, "reinforcing plating...")
+				if(do_after(user, 12 SECONDS, target = src))
+					if(sheets.get_amount() < PLATE_REINFORCE_COST)
+						return
+					sheets.use(PLATE_REINFORCE_COST)
+					playsound(src, 'sound/machines/creak.ogg', 100, vary = TRUE)
+					PlaceOnTop(/turf/open/floor/plating/reinforced)
 			else
-				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
+				if(!iscyborg(user))
+					balloon_alert(user, "too damaged, use a welding tool!")
+				else
+					balloon_alert(user, "too damaged, use a welding or plating repair tool!")
 
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)

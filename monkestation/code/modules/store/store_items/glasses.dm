@@ -60,6 +60,10 @@ GLOBAL_LIST_INIT(store_glasses, generate_store_items(/datum/store_item/glasses))
 	name = "Eyepatch"
 	item_path = /obj/item/clothing/glasses/eyepatch
 
+/datum/store_item/glasses/eyepatch_medical
+	name = "Medical Eyepatch"
+	item_path = /obj/item/clothing/glasses/eyepatch/medical
+
 /datum/store_item/glasses/blindfold
 	name = "Blindfold"
 	item_path = /obj/item/clothing/glasses/blindfold

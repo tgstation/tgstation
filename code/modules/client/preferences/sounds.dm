@@ -48,7 +48,7 @@
 	if (value && isnewplayer(client.mob))
 		client.playtitlemusic()
 	else
-		client.mob.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		client.media.stop_music()
 
 /// Controls hearing admin music
 /datum/preference/toggle/sound_midi

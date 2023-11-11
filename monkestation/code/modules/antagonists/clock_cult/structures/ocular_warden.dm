@@ -1,7 +1,7 @@
 #define FIRE_DELAY (2 SECONDS)
 #define FIRE_RANGE 4
-#define BASE_DAMAGE 10
-#define MINIMUM_DAMAGE 5
+#define BASE_DAMAGE 8
+#define MINIMUM_DAMAGE 4
 #define DAMAGE_FALLOFF 1
 #define SHOOT_POWER_USE 5
 
@@ -62,7 +62,7 @@
 
 	// Apply 10 damage (- 1 for each tile away they are), or 5, whichever is larger
 	target.apply_damage(max(BASE_DAMAGE - (get_dist(src, target) * DAMAGE_FALLOFF), MINIMUM_DAMAGE) * delta_time, BURN)
-	to_chat(target, span_warning("You feel as though your soul is being burned!"))
+	to_chat(target, span_boldwarning("You feel as though your soul is being burned!"))
 
 	new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 	new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(src))

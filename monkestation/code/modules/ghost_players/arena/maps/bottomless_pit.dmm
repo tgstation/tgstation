@@ -1,0 +1,410 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"b" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"f" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"i" = (
+/obj/structure/flora/bush/grassy/style_3,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"l" = (
+/obj/effect/decal/fakelattice,
+/obj/effect/turf_decal/sand{
+	density = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/pod/light{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"n" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"p" = (
+/obj/structure/mecha_wreckage/ripley/mk2{
+	anchored = 1
+	},
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"q" = (
+/obj/structure/flora/bush/style_4,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"t" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/railing,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"w" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"z" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"A" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"C" = (
+/obj/structure/chair,
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"D" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/sign/bottomless,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"E" = (
+/turf/open/chasm,
+/area/centcom/tdome/arena/actual)
+"I" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"J" = (
+/obj/structure/flora/bush/leafy,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"L" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"M" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"O" = (
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"P" = (
+/obj/structure/mecha_wreckage/clarke{
+	anchored = 1
+	},
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"Q" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/item/card/id/away{
+	name = "Bottomless Pit Supervisor";
+	desc = "Sure hope nobody puts a bottom in it."
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"R" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/iron/stairs/old,
+/area/centcom/tdome/arena/actual)
+"T" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"U" = (
+/obj/structure/flora/rock/icy/style_2,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+"W" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"X" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_y = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/tdome/arena/actual)
+"Y" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/stairs/old,
+/area/centcom/tdome/arena/actual)
+"Z" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/asteroid,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+U
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+q
+a
+f
+a
+a
+f
+i
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+i
+a
+J
+a
+a
+a
+p
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+O
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+I
+M
+M
+Z
+a
+a
+a
+"}
+(8,1,1) = {"
+z
+b
+R
+t
+E
+E
+Q
+a
+a
+a
+"}
+(9,1,1) = {"
+W
+C
+l
+t
+E
+E
+D
+a
+a
+a
+"}
+(10,1,1) = {"
+X
+w
+Y
+t
+E
+E
+A
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+L
+n
+n
+T
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+q
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+P
+"}
+(14,1,1) = {"
+a
+a
+i
+i
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+f
+a
+a
+f
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+q
+a
+U
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

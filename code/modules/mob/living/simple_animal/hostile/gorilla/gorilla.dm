@@ -114,6 +114,23 @@
 		oogas = rand(2,6)
 		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 
+/mob/living/simple_animal/hostile/gorilla/lesser
+	name = "lesser Gorilla"
+	desc = "An adolescent Gorilla. It may not be fully grown but, much like a banana, that just means it's sturdier and harder to chew!"
+	speak_chance = 100 // compensating for something
+	maxHealth = 120
+	health = 120
+	butcher_results = list(/obj/item/food/meat/slab/gorilla = 2)
+	speed = 0.35
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	obj_damage = 15
+	stat_attack = SOFT_CRIT
+	unique_name = TRUE
+
+/mob/living/simple_animal/hostile/gorilla/lesser/Initialize(mapload)
+	. = ..()
+	transform *= 0.75 // smolrilla
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic
 	name = "Cargorilla" // Overriden, normally

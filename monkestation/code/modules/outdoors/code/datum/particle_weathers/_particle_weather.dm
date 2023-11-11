@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			color_animating = pick(affecting_value)
 			animate_flags = ELASTIC_EASING | EASE_IN | EASE_OUT
 			spawn(duration - rand(0, duration*10)/10)
-				playsound_z(SSmapping.levels_by_trait(ZTRAIT_STATION), pick(sound_effects), 50)
+				playsound_z(SSmapping.levels_by_trait(ZTRAIT_STATION), pick(sound_effects), 50, _mixer_channel = CHANNEL_WEATHER)
 		if(GLE_STAGE_THIRD)
 			color_animating = SSoutdoor_effects.current_color
 			animate_flags = CIRCULAR_EASING | EASE_IN
@@ -201,6 +201,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 			weather_additional_ongoing_events += new str(src)
 
 /datum/particle_weather/Destroy()
+	messaged_mobs = null
 	for(var/S in current_sounds)
 		var/datum/looping_sound/looping_sound = current_sounds[S]
 		looping_sound.stop()
@@ -269,7 +270,9 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /datum/particle_weather/proc/can_weather(mob/living/mob_to_check)
 	var/turf/mob_turf = get_turf(mob_to_check)
-
+	var/area/mob_area = get_area(mob_turf)
+	if(istype(mob_area, /area/shuttle))
+		return
 	if(!mob_turf)
 		return
 
@@ -372,7 +375,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 				message += weather_message
 			for(var/mob/living/carbon/human/affected_human in GLOB.alive_mob_list)
 				if(!affected_human.stat && affected_human.client && (affected_human.z in affected_zlevels))
-					affected_human.playsound_local('monkestation/code/modules/outdoors/sound/effects/radiostatic.ogg', affected_human.loc, 25, FALSE)
+					affected_human.playsound_local('monkestation/code/modules/outdoors/sound/effects/radiostatic.ogg', affected_human.loc, 25, FALSE, mixer_channel = CHANNEL_MACHINERY)
 					affected_human.play_screen_text("<span class='langchat' style=font-size:16pt;text-align:center valign='top'><u>Weather Alert:</u></span><br>" + message["human"], /atom/movable/screen/text/screen_text/command_order, rgb(103, 214, 146))
     return FALSE
 
@@ -423,7 +426,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	var/sound = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg'
 
 /obj/machinery/siren/proc/siren_warning(var/msg = "WARNING, bla bla bla bluh.", var/sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
-	playsound(loc, sound_ch, 50, 0)
+	playsound(loc, sound_ch, 50, 0, mixer_channel = CHANNEL_MACHINERY)
 	visible_message(span_danger("[src] make signal. [msg]."))
 
 /obj/machinery/siren/proc/siren_warning_start(var/msg, var/sound_ch = 'monkestation/code/modules/outdoors/sound/effects/weather_warning.ogg')
@@ -438,7 +441,7 @@ GLOBAL_LIST_EMPTY(siren_objects)
 
 /obj/machinery/siren/process()
 	if(prob(2))
-		playsound(loc, sound, 80, 0)
+		playsound(loc, sound, 80, 0, mixer_channel = CHANNEL_MACHINERY)
 		visible_message(span_danger("[src] make signal. [message]."))
 
 

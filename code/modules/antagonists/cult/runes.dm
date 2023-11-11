@@ -72,6 +72,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	/// The actual keyword for the rune
 	var/keyword
 
+	/// can non-cultists use this rune? used for the tramstation beer rune. Monkestation - addition
+	var/cult_override = FALSE
+
 /obj/effect/rune/Initialize(mapload, set_keyword)
 	. = ..()
 	if(set_keyword)
@@ -96,7 +99,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	. = ..()
 	if(.)
 		return
-	if(!IS_CULTIST(user))
+//	if(!IS_CULTIST(user)) // monkestation change, original code
+	if(!IS_CULTIST(user) && !cult_override) // monkestation change, cult override added
 		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
 		return
 	var/list/invokers = can_invoke(user)

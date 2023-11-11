@@ -1,0 +1,516 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bl" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/centcom/tdome/arena/actual)
+"cc" = (
+/obj/structure/fermenting_barrel{
+	anchored = 1
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"cp" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/machinery/hydroponics/soil{
+	pixel_y = 7;
+	color = " #DCDCDC"
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/dirt,
+/area/centcom/tdome/arena/actual)
+"go" = (
+/obj/structure/dresser,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"hm" = (
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 12
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/diagonal,
+/area/centcom/tdome/arena/actual)
+"ih" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/centcom/tdome/arena/actual)
+"ix" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"iS" = (
+/obj/structure/barricade/wooden/snowed,
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"lt" = (
+/obj/structure/window/reinforced/fulltile/ice,
+/obj/structure/barricade/wooden/crude/snow,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/space/basic,
+/area/centcom/tdome/arena/actual)
+"lO" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"mi" = (
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"mv" = (
+/obj/structure/flora/tree/dead/style_4,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"mG" = (
+/turf/closed/indestructible/wood,
+/area/centcom/tdome/arena/actual)
+"oa" = (
+/obj/structure/flora/tree/dead/style_5,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"ol" = (
+/obj/structure/fence/door/opened{
+	dir = 8
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"oU" = (
+/obj/item/stack/sheet/mineral/wood/fifty,
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"pD" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/centcom/tdome/arena/actual)
+"pQ" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"qB" = (
+/obj/structure/fence/cut/large,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"rJ" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"rX" = (
+/obj/structure/loom,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"tY" = (
+/obj/structure/fence/door/opened{
+	dir = 4
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"um" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"uD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/centcom/tdome/arena/actual)
+"va" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/machinery/hydroponics/soil{
+	pixel_y = 7;
+	color = " #DCDCDC"
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/dirt,
+/area/centcom/tdome/arena/actual)
+"vl" = (
+/obj/structure/fence,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"xl" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"yB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/centcom/tdome/arena/actual)
+"zi" = (
+/obj/structure/bookcase/random/fiction,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"zl" = (
+/obj/item/wallframe/painting/large,
+/turf/closed/indestructible/wood,
+/area/centcom/tdome/arena/actual)
+"Ah" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/diagonal,
+/area/centcom/tdome/arena/actual)
+"By" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/centcom/tdome/arena/actual)
+"ET" = (
+/obj/structure/flora/tree/stump{
+	dir = 1
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"EZ" = (
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"Fh" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/centcom/tdome/arena/actual)
+"FF" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"FM" = (
+/obj/structure/railing{
+	color = "#8a7453";
+	dir = 8
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"Gi" = (
+/obj/item/flashlight/lantern,
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"GL" = (
+/obj/structure/fence/cut/large{
+	dir = 1
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"HK" = (
+/obj/structure/fence/post,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"Ju" = (
+/obj/structure/railing{
+	color = "#8a7453";
+	dir = 4
+	},
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"NA" = (
+/obj/structure/window/reinforced/fulltile/ice,
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/space/basic,
+/area/centcom/tdome/arena/actual)
+"Pb" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Re" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/machinery/hydroponics/soil{
+	pixel_y = 7;
+	color = " #DCDCDC"
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/misc/dirt,
+/area/centcom/tdome/arena/actual)
+"RD" = (
+/obj/structure/fluff/fokoff_sign,
+/turf/open/misc/snow/actually_safe,
+/area/centcom/tdome/arena/actual)
+"SH" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Tr" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/centcom/tdome/arena/actual)
+"Ty" = (
+/obj/item/wallframe/picture{
+	pixel_x = -30
+	},
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Vj" = (
+/obj/item/storage/book/bible{
+	pixel_y = 5
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"WQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/large,
+/area/centcom/tdome/arena/actual)
+"Xt" = (
+/obj/structure/fireplace,
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/centcom/tdome/arena/actual)
+"ZN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+EZ
+pD
+EZ
+EZ
+EZ
+EZ
+EZ
+EZ
+EZ
+EZ
+"}
+(2,1,1) = {"
+Tr
+By
+pD
+EZ
+EZ
+mv
+EZ
+EZ
+ET
+EZ
+"}
+(3,1,1) = {"
+mG
+ix
+mG
+mG
+mG
+mG
+vl
+ol
+HK
+qB
+"}
+(4,1,1) = {"
+zi
+SH
+Ty
+rX
+cc
+mG
+rJ
+pD
+EZ
+rJ
+"}
+(5,1,1) = {"
+um
+mi
+Pb
+mi
+mi
+iS
+EZ
+EZ
+EZ
+EZ
+"}
+(6,1,1) = {"
+Vj
+mi
+WQ
+mi
+Pb
+oU
+pD
+EZ
+pD
+EZ
+"}
+(7,1,1) = {"
+Pb
+Pb
+mi
+mi
+SH
+mG
+Ju
+EZ
+EZ
+EZ
+"}
+(8,1,1) = {"
+yB
+ih
+mi
+mi
+pQ
+NA
+va
+EZ
+EZ
+EZ
+"}
+(9,1,1) = {"
+Xt
+Fh
+mi
+Pb
+xl
+lt
+Re
+EZ
+EZ
+EZ
+"}
+(10,1,1) = {"
+ZN
+uD
+mi
+mi
+FF
+NA
+cp
+EZ
+pD
+pD
+"}
+(11,1,1) = {"
+mi
+Pb
+mi
+mi
+SH
+mG
+FM
+EZ
+EZ
+EZ
+"}
+(12,1,1) = {"
+Gi
+mi
+mi
+mi
+Pb
+oU
+EZ
+EZ
+EZ
+EZ
+"}
+(13,1,1) = {"
+go
+mi
+Pb
+Pb
+mi
+iS
+EZ
+EZ
+EZ
+pD
+"}
+(14,1,1) = {"
+zl
+SH
+mi
+hm
+Ah
+mG
+Tr
+EZ
+EZ
+rJ
+"}
+(15,1,1) = {"
+mG
+lO
+mG
+mG
+mG
+mG
+vl
+tY
+HK
+GL
+"}
+(16,1,1) = {"
+Tr
+bl
+pD
+EZ
+EZ
+oa
+EZ
+EZ
+RD
+EZ
+"}
+(17,1,1) = {"
+EZ
+pD
+EZ
+EZ
+EZ
+EZ
+EZ
+EZ
+EZ
+EZ
+"}

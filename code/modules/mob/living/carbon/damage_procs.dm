@@ -55,6 +55,11 @@
 	return amount
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	var/area/target_area = get_area(src)
+	if(target_area)
+		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+			return FALSE
+
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
@@ -73,6 +78,11 @@
 	adjustBruteLoss(diff, updating_health, forced, required_bodytype)
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	var/area/target_area = get_area(src)
+	if(target_area)
+		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+			return FALSE
+
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
@@ -91,6 +101,11 @@
 	adjustFireLoss(diff, updating_health, forced, required_bodytype)
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = MOB_ORGANIC)
+	var/area/target_area = get_area(src)
+	if(target_area)
+		if((target_area.area_flags & PASSIVE_AREA) && amount > 0)
+			return FALSE
+
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && !(mob_biotypes & required_biotype))
