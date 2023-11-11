@@ -112,7 +112,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Compile Maps
     needs: [collect_data]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     concurrency:
       group: compile_all_maps-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
@@ -137,7 +137,7 @@ jobs:
   collect_data:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Collect data for other tasks
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
@@ -203,7 +203,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]' )
     name: Check Alternate Tests
     needs: [run_alternate_tests]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - run: echo Alternate tests passed.
 
@@ -211,7 +211,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && (success() || failure()) )
     needs: [run_all_tests, run_alternate_tests]
     name: Compare Screenshot Tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       # If we ever add more artifacts, this is going to break, but it'll be obvious.
