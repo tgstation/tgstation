@@ -500,6 +500,10 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered/golem_ship)
+"Cx" = (
+/obj/machinery/fishing_portal_generator,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered/golem_ship)
 "CI" = (
 /obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
 /obj/structure/sink/directional/west,
@@ -1000,7 +1004,7 @@ Df
 Df
 vr
 QX
-sS
+Cx
 sS
 sS
 At
