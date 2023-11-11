@@ -111,7 +111,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "drawbridge";
-	color = #5c4300
+	color = "#5c4300"
 	},
 /turf/open/floor/iron/stairs/old,
 /area/station/commons/lounge)
@@ -700,7 +700,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
 	id = "drawbridge";
-	color = #5c4300
+	color = "#5c4300"
 	},
 /turf/open/floor/iron/stairs/old,
 /area/station/commons/lounge)
