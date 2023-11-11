@@ -217,6 +217,25 @@
 
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
+	// Roughly 1/5th of the station will rise up as acolytes to the heretic
+	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
+		if (isnull(crewmate.mind))
+			return
+		if (IS_HERETIC(crewmate)) // Heretics shouldn't become acolytes
+			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are week willed. Their minds shall rend." ))
+			continue
+		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD)) // Mindshielded are immune against this effect
+			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
+			continue
+		if(prob(5))
+			var/datum/antagonist/heretic/acolyte_moon/acolyte = crewmate.mind.add_antag_datum(/datum/antagonist/heretic/acolyte_moon)
+			acolyte.set_master(user.real_name)
+			crewmate.put_in_active_hand(/obj/item/clothing/neck/heretic_focus/moon_amulette)
+			crewmate.emote("laugh")
+		else
+			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you." ))
+
+	// Spells get a lower cooldown
 	var/datum/action/cooldown/spell/pointed/moon_smile/smile = locate() in user.actions
 	if(smile)
 		smile.cooldown_time *= 0.66 // Lower cooldown
@@ -230,6 +249,7 @@
 	if(ringleader_rise)
 		ringleader_rise.cooldown_time *= 0.66 // Lower cooldown
 		ringleader_rise.aoe_radius +=3 // Bigger AoE
+
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
@@ -257,7 +277,37 @@
 			carbon_view.adjust_temp_blindness(5 SECONDS)
 
 
+// A type of heretic antagonist created by the moon ascension
+// They are unable to ascend
+/datum/antagonist/heretic/acolyte_moon
+	name = "\improper Acolyte of Moon"
+	hijack_speed = 0
+	//antagpanel_category = ANTAG_GROUP_HORRORS
+	//show_in_antagpanel = FALSE
+	suicide_cry = "THE MOON GAZES UPON THEE!!"
+	preview_outfit = /datum/outfit/heretic
+	antag_moodlet = /datum/mood_event/heretics/moon_acolyte
+	can_assign_self_objectives = FALSE
+	hardcore_random_bonus = FALSE
+	knowledge_points = 3
+	living_heart_organ_slot = ORGAN_SLOT_HEART
+	// The mind of the ascended heretic who created us
+	var/mob/ascended_heretic
 
+// Runs when the moon heretic creates us
+/datum/antagonist/heretic/acolyte_moon/proc/set_master(mob/master)
+	src.ascended_heretic = master
+	to_chat(owner, span_boldnotice("You are one who saw the truth when [master] sung it."))
 
+/datum/antagonist/heretic/acolyte_moon/forge_primary_objectives()
+	objectives += "Assist the ringleader [ascended_heretic] and reveal all truths!"
+	owner.announce_objectives()
 
+/datum/antagonist/heretic/acolyte_moon/can_ascend()
+	// Moon acolytes are unable to ascend at all
+	return FALSE
 
+// Mood event given to moon acolytes
+/datum/mood_event/heretics/moon_acolyte
+	description = "THE TRUTH REVEALED, THE LIE SLAIN."
+	mood_change = 15
