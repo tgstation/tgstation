@@ -6,7 +6,7 @@ smooth_diagonally = true
 
 [positions]
 convex = 0
-concave = 1
+vertical = 1
 horizontal = 2
-vertical = 3
+concave = 3
 flat = 4

@@ -17,9 +17,9 @@ y = 32
 
 [positions]
 convex = 0
-concave = 1
-horizontal = 2
-vertical = 3
+horizontal = 1
+vertical = 2
+concave = 3
 
 [cut_pos]
 x = 16
