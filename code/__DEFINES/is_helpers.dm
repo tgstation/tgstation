@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
-#define issimian(A) (is_species(A, /datum/species/simian))
+#define issimian(A) (is_species(A, /datum/species/simian)) //Monkestation Addition
 #define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
@@ -97,7 +97,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
 #define isipc(A) (is_species(A, /datum/species/ipc))
-#define isgoblin(A) (is_species(A, /datum/species/goblin))//monkestation addition
+#define isgoblin(A) (is_species(A, /datum/species/goblin)) //Monkestation Addition
+#define isfloran(A) (is_species(A, /datum/species/floran)) //Monkestation Addition
 
 
 //More carbon mobs

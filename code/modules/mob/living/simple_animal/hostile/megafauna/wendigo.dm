@@ -10,6 +10,8 @@
 
 Difficulty: Hard
 
+Warning the icebox version is being overridden in monkestation/code/modules/mob/living/simple_animal/megafauna/wendigo.dm
+
 */
 
 /mob/living/simple_animal/hostile/megafauna/wendigo
@@ -57,13 +59,13 @@ Difficulty: Hard
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves
-	var/stomp_range = 0
+	var/stomp_range = 1
 	/// Stores directions the mob is moving, then calls that a move has fully ended when these directions are removed in moved
 	var/stored_move_dirs = 0
 	/// If the wendigo is allowed to move
 	var/can_move = TRUE
 	/// Time before the wendigo can scream again
-	var/scream_cooldown_time = 5 SECONDS
+	var/scream_cooldown_time = 10 SECONDS
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
 

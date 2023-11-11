@@ -1,0 +1,10 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - qol: "slashers now get told preciselly how long their soul sucking will last"
+  - qol: "you wont get spam messages whilst clicking walls/floors as slasher with the soul suck ability on"
+  - qol: "slasher now shows up on the ghost orbit panel"
+  - balance: "you can no longer screech whilst incorporeal, instead your targets will hear a distant screech"
+  - bugfix: "abilities once again properly check for all conditions"
+  - bugfix: "slasher's incorporeal ability is now a proper jaunt, due to this it no longer allows you to destroy glass tables for free"
+  - bugfix: "due to the slashers new incorporeal ability you also cant now grab, examine or shove them whilst they are incorporeal"

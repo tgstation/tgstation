@@ -20,60 +20,60 @@ export type Rank = {
 export const ranks: Rank[] = [
   {
     minutesLessThan: 5,
-    title: 'Obscure',
+    title: 'None',
     gradient: badGradient,
   },
   {
     minutesLessThan: 10,
-    title: 'Insignificant',
+    title: 'Miniscule',
     gradient: normalGradient,
   },
   {
     minutesLessThan: 20,
-    title: 'Noteworthy',
+    title: 'Insignificant',
     gradient: normalGradient,
   },
   {
     minutesLessThan: 30,
-    title: 'Reputable',
+    title: 'Low',
     gradient: goodGradient,
   },
   {
     minutesLessThan: 50,
-    title: 'Well-known',
+    title: 'Standard',
     gradient: goodGradient,
   },
   {
     minutesLessThan: 70,
-    title: 'Significant',
+    title: 'Moderate',
     gradient: veryGoodGradient,
   },
   {
     minutesLessThan: 90,
-    title: 'Famous',
+    title: 'Significant',
     gradient: veryGoodGradient,
   },
   {
     minutesLessThan: 110,
-    title: 'Glorious',
+    title: 'High',
     gradient: ultraGoodGradient,
   },
   {
     minutesLessThan: 140,
-    title: 'Fabled',
+    title: 'Extreme',
     gradient: ultraGoodGradient,
   },
   {
     minutesLessThan: -1,
-    title: 'Legendary',
+    title: 'Pinnacle',
     gradient: bestGradient,
   },
 ];
 
-export const reputationDefault = 50 * 600;
+export const dangerDefault = 50 * 600;
 
 let lastMinutesThan = -1;
-export const reputationLevelsTooltip = (
+export const dangerLevelsTooltip = (
   <Box preserveWhitespace>
     <Flex direction="column" mt={1}>
       {ranks.map((value) => {
@@ -104,7 +104,7 @@ export const reputationLevelsTooltip = (
   </Box>
 );
 
-export const getReputation = (progression_points: number) => {
+export const getDangerLevel = (progression_points: number) => {
   const minutes = progression_points / 600;
 
   for (let index = 0; index < ranks.length; index++) {
@@ -117,31 +117,31 @@ export const getReputation = (progression_points: number) => {
   return ranks[ranks.length - 1];
 };
 
-export const calculateReputationLevel = (
+export const calculateDangerLevel = (
   progression_points: number,
   textOnly: boolean
 ) => {
   const minutes = progression_points / 600;
   const displayedProgression = calculateProgression(progression_points);
-  const reputation = getReputation(progression_points);
+  const dangerLevel = getDangerLevel(progression_points);
   if (textOnly) {
     return (
       <Box as="span">
-        {reputation.title} ({displayedProgression})
+        {dangerLevel.title} ({displayedProgression})
       </Box>
     );
   }
   return (
     <Box
       color="white"
-      className={reputation.gradient}
+      className={dangerLevel.gradient}
       style={{
         'border-radius': '5px',
         'display': 'inline-block',
       }}
       px={0.8}
       py={0.6}>
-      {reputation.title} ({displayedProgression})
+      {dangerLevel.title} ({displayedProgression})
     </Box>
   );
 };
