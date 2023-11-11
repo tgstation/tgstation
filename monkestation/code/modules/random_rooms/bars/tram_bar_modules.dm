@@ -77,7 +77,6 @@
 	baseturfs = /turf/open/floor/fake_seafloor
 	turf_type = /turf/open/floor/fake_seafloor
 	color = "#58606b"
-	floor_tile = /obj/item/stack/tile/fakesand
 
 ////////////
 //CULT BAR//
