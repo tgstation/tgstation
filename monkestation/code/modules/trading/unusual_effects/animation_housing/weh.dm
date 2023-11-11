@@ -1,6 +1,6 @@
 /datum/component/particle_spewer/movement/weh
 	unusual_description = "weh"
-	duration = 10 SECONDS
+	duration = 5 SECONDS
 	burst_amount = 3
 
 	particle_state = "map_plushie_lizard"
@@ -19,7 +19,7 @@
 
 	spawned.color = rgb(rand(1, 255), rand(1, 255), rand(1, 255))
 
-	animate(spawned, transform = first, time = 0.4 SECONDS, pixel_y = rand(-1, 48) + spawned.pixel_y, pixel_x = rand(-32, 32) + spawned.pixel_x)
+	animate(spawned, transform = first, time = 0.4 SECONDS, pixel_y = rand(-1, 12) + spawned.pixel_y, pixel_x = rand(-32, 32) + spawned.pixel_x)
 	animate(transform = second, time = 0.5 SECONDS, pixel_y = spawned.pixel_y - 32)
 	animate(spawned, alpha = 0, time = duration)
 	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)

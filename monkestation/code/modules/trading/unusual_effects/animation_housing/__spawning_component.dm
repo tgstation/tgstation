@@ -101,7 +101,7 @@
 	count = 0
 	spawn_particles()
 
-/datum/component/particle_spewer/proc/spawn_particles(datum/source, atom/oldloc, dir, forced)
+/datum/component/particle_spewer/proc/spawn_particles(atom/movable/mover, turf/target)
 	var/burstees = burst_amount
 	if(random_bursts)
 		burstees = rand(1, burst_amount)

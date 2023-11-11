@@ -9,8 +9,9 @@
 	//has a chance to randomly change on animate
 	var/direction = NORTH
 
-/datum/component/particle_spewer/movement/shooting_star/spawn_particles(datum/source, atom/oldloc, dir, forced)
+/datum/component/particle_spewer/movement/shooting_star/spawn_particles(atom/movable/mover, turf/target)
 	. = ..()
+	var/dir = get_dir(mover, target)
 	direction = dir
 
 /datum/component/particle_spewer/movement/shooting_star/animate_particle(obj/effect/abstract/particle/spawned)
