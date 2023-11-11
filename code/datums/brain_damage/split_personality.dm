@@ -25,11 +25,11 @@
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/stranger_spell = new(src)
+	var/datum/action/personality_commune/stranger_spell = new(src)
 	stranger_spell.Grant(stranger_backseat)
 
 	owner_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/owner_spell = new(src)
+	var/datum/action/personality_commune/owner_spell = new(src)
 	owner_spell.Grant(owner_backseat)
 
 /// Attempts to get a ghost to play the personality
@@ -256,6 +256,7 @@
 	gain_text = span_warning("Crap, that was one drink too many. You black out...")
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
+	random_gain = FALSE
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
 	var/duration_in_seconds = 180
 

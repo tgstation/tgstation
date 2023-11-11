@@ -73,6 +73,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define iscliffturf(A) (istype(A, /turf/open/cliff))
 
+#define iswaterturf(A) (istype(A, /turf/open/water))
+
 GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 	/turf/closed/mineral,
 	/turf/open/misc/asteroid,
@@ -186,7 +188,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isregalrat(A) (istype(A, /mob/living/basic/regal_rat))
 
-#define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
+#define isguardian(A) (istype(A, /mob/living/basic/guardian))
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 

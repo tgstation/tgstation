@@ -123,7 +123,7 @@
 	toggle_suit = add_input_port("Toggle Suit", PORT_TYPE_SIGNAL)
 	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
 	// States
-	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
+	wearer = add_output_port("Wearer", PORT_TYPE_USER)
 	deployed = add_output_port("Deployed", PORT_TYPE_NUMBER)
 	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)

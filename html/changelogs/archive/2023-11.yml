@@ -226,3 +226,204 @@
   - rscdel: Remove duplicate lighting from beach bar domain
   timothymtorres, Rahlzel:
   - sound: Port salute emote sound from Colonial Marines SS13 attributed to Rahlzel
+2023-11-06:
+  JohnFulpWillard:
+  - bugfix: Mafia games can now start properly.
+  LT3:
+  - qol: Holobarriers will match the spray paint colour of their projector
+  - code_imp: Emergency shuttle announcements no longer use hardcoded values
+  - code_imp: Central Command announcements now correctly use its new name when changed
+  - spellcheck: Consistency pass on event announcements
+  Rhials:
+  - code_imp: The notify_ghosts proc has been cleaned up. Please report any abnormal
+      changes in deadchat notification behavior.
+  - qol: The on-screen deadchat popups now contain the notification blurb when hovered
+      with your mouse again.
+  SyncIt21:
+  - bugfix: reagent volumes should be consistent & non breaking across plumbing &
+      chemistry as a whole
+  - bugfix: plumbing reaction chambers are more proactive. Will attempt to take in
+      reagents more frequently
+2023-11-07:
+  ArcaneMusic:
+  - qol: Light switches have tooltips, and may now be deconstructed with right click
+      using a screwdriver.
+  Deadgebert:
+  - bugfix: walls built next to firelocks no longer hold onto their alarms
+  FlufflesTheDog:
+  - balance: paraplegic is no longer exclusive with spacer or settler or spacer. Broken
+      legs don't discriminate!
+  Ghommie:
+  - image: Several holidays now have themed floor and tram tiling.
+  Higgin:
+  - bugfix: fixes synthflesh not dealing and in fact healing toxin damage.
+  Jacquerel:
+  - bugfix: The plasma river is about as deadly for animals as it is for humans.
+  - bugfix: Golems can now wade in the plasma river unscathed.
+  - bugfix: Undismemberable limbs will no longer be dismembered by the plasma river.
+  - balance: Golems and plasmamen cannot become husked.
+  - image: Robotic and Skeletal parts will remain distinct while the rest of the body
+      is husked.
+  LT3:
+  - bugfix: Maximum smoothing turf groups now includes cliffs
+  - bugfix: Tramstation floor tiles will correctly get custom station colors when
+      they exist
+  Melbert:
+  - rscadd: Fishers can now try their luck at fishing out of hydroponics basins.
+  MoffNyan:
+  - rscadd: Maltroach bar sign!
+  NeonNik2245:
+  - qol: Make notepad available for everyone, who has only laptop or console.
+  Watermelon914:
+  - rscadd: Added a user type to integrated circuits
+  cnleth:
+  - bugfix: Reagent lookup in chem dispensers now shows correct reagent metabolization
+      rates
+  lizardqueenlexi:
+  - bugfix: You will now only become blackout drunk if you've actually been drinking.
+  - bugfix: Observers should stop being notified that a nameless entity is blacking
+      out.
+  san7890:
+  - bugfix: Both magic mirrors and regular mirrors are far better at respecting the
+      choice of the beard you wish to wear (within reason, of course).
+  spockye:
+  - bugfix: fixed a couple missing and misplaced disposals pipes on metastation
+  timothymtorres:
+  - qol: Improve the emote help verb to be more user friendly
+  - bugfix: Fix light eater affecting lava, space, openspace, and transparent turfs
+  vinylspiders:
+  - bugfix: tails will no longer keep wagging even in death
+  - code_imp: added some trailing commas in lists that were missing them, fixed a
+      typo in comments
+  vvvv-vvvv:
+  - bugfix: Fix refresh button in log viewer
+2023-11-08:
+  Ben10Omintrix:
+  - balance: sets the leaper move and pull forces to strong
+  Bumtickley00:
+  - spellcheck: You no longer hear weaponelding when deconstructing a closet.
+  D4C-420:
+  - rscadd: Being sufficiently drunk now has a chance to cause working out to fail
+      and harm you
+  Isratosh:
+  - bugfix: Nuclear operative induction implants now work correctly on antagonists
+      and fail on non-antagonists
+  jlsnow301:
+  - bugfix: The screen alert should no longer break ghost UI when it's huge
+  lizardqueenlexi:
+  - config: The bitrunner job now has a default config for server owners.
+  necromanceranne:
+  - balance: Harnessing Shoreline Quay (bluespace energy, probably), a mystical energy
+      (total bullshit) that permeates the Astral Waterways (bluespace quantum dimensions,
+      probably), Sleeping Carp users can now once against deflect projectiles with
+      their bare hands when focused in on battle (in combat mode).
+  - balance: The Keelhaul technique is now nonlethal (a philosophical acknowledgement
+      of the familial bond of sleep and death), but causes the target to become temporarily
+      blind and dizzy along with its previous effects.
+  - balance: Sleeping carp users, while in combat mode, deal Stamina damage with their
+      grabs and shoves. If the target of their grab has enough Stamina damage (80),
+      they are knocked unconscious from a well placed nerve pinch.
+  - balance: Sleeping carp users find it very hard to wake up once they fall asleep....
+  san7890:
+  - bugfix: Slimes now need to be on an open turf to reproduce and split into more
+      slimy slimes, instead of getting away with using phasing powers in pipes.
+  - bugfix: All vehicles (such as VIMs operated by a mouse or a lizard) will no longer
+      be able to phase through containment fields.
+2023-11-09:
+  GPeckman:
+  - balance: Flightpotion wings will no longer make health analyzers list you as nonhuman.
+  KingkumaArt:
+  - rscadd: Enginenering rebar crossbows + tot kit
+  - rscadd: Added a bunch of ammos and crafting junk to make the ammo exist
+  - image: added icond for all the above
+  Melbert:
+  - rscadd: Anomalies, portals, and bluespace rifts will now wibble a bit.
+  SyncIt21:
+  - bugfix: Material market buy buttons greys out correctly and thus prevent you from
+      placing orders that exceeds the available budget.
+  - qol: machines/devices that ask you to pick a reagent name from an input list have
+      their names sorted alphabetically & preserves white space between words making
+      them more readable.
+  - qol: improves performance of plumbing reaction chamber furthur
+  - code_imp: cleaned up code for portable chem mixer & chem dispenser. converted
+      their ui to typescript
+  Toastgoats:
+  - balance: Venus human traps now take 12.5 damage per second instead of 20 while
+      off kudzu.
+  necromanceranne:
+  - rscadd: With the flood of Chi within the Spinward Sector receding, various masters
+      of The Tunnel Arts, colloquially known as 'Maint-fu Masters', have started to
+      refine the basics of their martial techniques. New forms have started to develop
+      within Spacestation 13's hidden maintenance dojos.
+  - rscadd: Someone shoved off-balance makes them vulnerable to more guaranteed unarmed
+      strikes, knockdowns from a successful punch, and more difficult to escape grabs.
+  - rscadd: Grabbing someone (as well as kicking them while they're on the floor)
+      makes them more vulnerable to taking unarmed attack damage, even if they have
+      armor.
+  - balance: Unarmed strikes made with human-equivalent limbs have higher damage floors,
+      meaning you overall do more damage on average while not increasing the overall
+      damage potential. It's more consistent!
+  - refactor: Significantly changed how punching accuracy and knockdowns are calculated.
+  - balance: Golem and mushroom limbs are a lot more effective at punching as a result
+      of these various changes. As they should be.
+  xXPawnStarrXx:
+  - rscadd: Three new plants; Peppercorn, Saltcane and Butterbeans.
+  - rscadd: Soysauce fermentation to soybeans.
+  - rscadd: Saltcane can be dried into a replacement seaweedsheet for sushi.
+  zergspower:
+  - balance: NPC Syndicate Shotgunners range requirement returned
+2023-11-10:
+  Jacquerel:
+  - qol: Adds the capability for some player-controlled mobs with ranged attacks to
+      repeatedly fire their natural weapons by holding down the mouse button.
+  Profakos:
+  - spellcheck: Renamed Knock to Locks, and changed most of the flavor text of knowledge
+      gain, and renamed some items and knowledges from the path.
+  SyncIt21:
+  - bugfix: Examining circuit boards now displays their detailed names(tier included)
+      correctly if required.
+  - bugfix: plumbing factories should not rarely/randomly brick at volumes like 0.9999(when
+      in fact it should have been 1)
+  - code_imp: removed order history, import & export value from cargo & economy subsystems.
+      Allow supply packs to be properly deleted. In general memory savings
+  Thunder12345:
+  - rscadd: New Oranges' Juicery bar sign for the OJ connoisseurs.
+  TwistedSilicon:
+  - bugfix: Cryo cells now use their direction to orient their initial connection
+      instead of defaulting to South.
+  Zxaber, DrDiasyl, Maurukas:
+  - rscadd: A new security-focused combat mech, the Paddy, has been added, intended
+      to be particularly helpful for lone sec officers. You will find one in the Security
+      main office, and a replacement can be built with late-game mech research.
+  - bugfix: Ripley MK-I and MK-II mechs no longer qdel their stored items when destroyed.
+  san7890:
+  - bugfix: Nanotrasen has clarified an issue with their manual publishers, and these
+      guides should now contain actual user-pertinent content.
+  starrm4nn:
+  - qol: Bandolier can quick gather items now.
+  - balance: Bandolier capacity increased to 24 and can carry .357 ammo now.
+  timothymtorres:
+  - bugfix: Fix holodeck items from being juiced or grinded with a biogenerator or
+      pestle and mortar
+  - rscdel: Removed duplicate shutter from HoP office in birdboat, air alarm in northstar
+      maint, and portable air pump in northstar maint.
+2023-11-11:
+  DaCoolBoss:
+  - rscadd: 4 new space ruins
+  Jacquerel:
+  - image: Adds yet another bar sign, this one mining themed
+  KingkumaArt:
+  - bugfix: fixed engi crossbow being able to be used onehanded + ability to craft
+      with sci inducers
+  MTandi:
+  - qol: Ordnance burn, freezing and supermatter chamber air alarms now show the air
+      contents on the tile of the connected sensor inside the chamber.
+  nikothedude:
+  - balance: Snails no longer receive blunt wounds, meaning sharp weapons can dismember
+      them more easily
+  - balance: Slimes can no longer receive dislocations
+  timothymtorres:
+  - bugfix: Fix mapping linter not identifying duplicate blacklisted objects on a
+      turf
+  - code_imp: Add a mapping linter to check for stacked machinery
+  - rscdel: Remove duplicate windows from birdshot, delta, and anomaly research ruin.

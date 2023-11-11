@@ -123,7 +123,7 @@
 	if(isliving(mover))
 		shock(mover)
 		return
-	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
+	if(ismachinery(mover) || isstructure(mover) || isvehicle(mover))
 		bump_field(mover)
 		return
 

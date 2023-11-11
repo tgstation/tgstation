@@ -9,7 +9,7 @@
 /datum/ai_controller/basic_controller/living_floor
 	max_target_distance = 2
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -46,7 +46,7 @@
 	attack_verb_simple = "bite"
 	ai_controller = /datum/ai_controller/basic_controller/living_floor
 	melee_attack_cooldown = 0.5 SECONDS // get real
-	
+
 	var/icon_aggro = "floor-hostile"
 	var/desc_aggro = "This flooring is alive and filled with teeth, better not step on that. Being covered in plating, it is immune to damage. Seems vulnerable to prying though."
 
@@ -61,8 +61,8 @@
 	if(!istype(victim) || istype(victim, /mob/living/basic/living_floor) || victim.stat == DEAD)
 		return
 	if(victim.loc == loc) //guaranteed bite
-		var/datum/targetting_datum/basic/targetting = ai_controller.blackboard[BB_TARGETTING_DATUM]
-		if(targetting.can_attack(src, victim)) 
+		var/datum/targeting_strategy/basic/targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
+		if(targeting.can_attack(src, victim))
 			melee_attack(victim)
 	icon_state = icon_aggro
 	desc = desc_aggro
