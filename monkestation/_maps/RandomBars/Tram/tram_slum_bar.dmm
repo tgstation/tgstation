@@ -686,10 +686,6 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/obj/modular_map_root/tramstation{
-	key = "barcargoupper";
-	name = "barcargoupper"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1067,18 +1063,12 @@
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
 "Pl" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /turf/open/floor/stone,
 /area/station/service/theater)
 "Pp" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
