@@ -183,11 +183,6 @@
 		if(deployed_shields.len && SPT_PROB(2.5, seconds_per_tick))
 			qdel(pick(deployed_shields))
 
-
-/obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	atom_break()
-	locked = pick(0,1)
-
 /obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
 	if(.)
