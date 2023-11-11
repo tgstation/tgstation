@@ -26,7 +26,7 @@
 
 
 	var/list/turf/nearby = list()
-	for(var/turf/tile as anything in  RANGE_TURFS(2, origin))
+	for(var/turf/tile as anything in RANGE_TURFS(2, origin))
 		if(!tile.is_blocked_turf())
 			nearby += tile
 
