@@ -24,10 +24,11 @@
 
 	shuffle_inplace(mobs)
 
-	var/turf/nearby = RANGE_TURFS(2, origin)
-	for(var/turf/tile in nearby)
-		if(tile.is_blocked_turf())
-			nearby -= tile
+
+	var/list/turf/nearby = list()
+	for(var/turf/tile as anything in  RANGE_TURFS(2, origin))
+		if(!tile.is_blocked_turf())
+			nearby += tile
 
 	if(!length(nearby))
 		stack_trace("Couldn't find any valid turfs to spawn on")
