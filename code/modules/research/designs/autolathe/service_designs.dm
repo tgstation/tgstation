@@ -527,6 +527,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/fish_case
+	name = "Stasis Fish Case"
+	id = "fish_case"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/storage/fish_case
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
 /datum/design/ticket_machine
 	name = "Ticket Machine Frame"
 	id = "ticket_machine"

@@ -60,8 +60,6 @@
 	..()
 	for (var/i in 1 to 5)
 		new /obj/effect/spawner/random/clothing/funny_hats(src)
-	for (var/i in 1 to 5)
-		new /obj/item/mod/module/hat_stabilizer(src)
 	if(prob(1))
 		var/our_contents = list()
 		for(var/obj/item/clothing/head/any_hat in contents)

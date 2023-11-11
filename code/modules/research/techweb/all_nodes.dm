@@ -48,6 +48,7 @@
 		"experimentor",
 		"extinguisher",
 		"fax",
+		"fish_case",
 		"fishing_rod",
 		"fishing_portal_generator",
 		"flashlight",
@@ -97,6 +98,7 @@
 		"sec_dart",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -297,6 +299,7 @@
 		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
+		"penlight",
 		"retractor",
 		"scalpel",
 		"stethoscope",
@@ -415,6 +418,7 @@
 		"medigel",
 		"medipen_refiller",
 		"pandemic",
+		"penlight_paramedic",
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -1872,6 +1876,18 @@
 		"clarke_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/paddy
+	id = "mech_paddy"
+	display_name = "EXOSUIT: APLU \"Paddy\""
+	description = "Paddy exosuit designs"
+	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	design_ids = list(
+		"paddyupgrade",
+		"mech_hydraulic_claw"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 5000)
 
 /datum/techweb_node/gygax
 	id = "mech_gygax"

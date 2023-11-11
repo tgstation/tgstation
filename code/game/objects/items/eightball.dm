@@ -158,7 +158,12 @@
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = last_message
-	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source = src, action = NOTIFY_PLAY, header = "Magic eightball")
+	notify_ghosts(
+		"[user] is shaking [src], hoping to get an answer to \"[selected_message]\"",
+		source = src,
+		action = NOTIFY_PLAY,
+		header = "Magic eightball",
+	)
 
 /obj/item/toy/eightball/haunted/get_answer()
 	var/top_amount = 0

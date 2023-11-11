@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Dying when using (most) shapeshift spells will now kill you rather than having you pop out of the corpse of your previous form."
-  - bugfix: "Damage will now be accurately carried between forms rather than being slightly reduced upon each transformation."

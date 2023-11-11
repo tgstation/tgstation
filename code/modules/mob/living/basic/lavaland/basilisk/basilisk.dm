@@ -77,7 +77,7 @@
 
 /datum/ai_controller/basic_controller/basilisk
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 5,
 	)
 
