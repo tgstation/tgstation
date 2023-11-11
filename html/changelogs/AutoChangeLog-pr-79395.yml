@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "machines/devices that ask you to pick a reagent name from an input list have their names sorted alphabetically & preserves white space between words making them more readable."
-  - qol: "improves performance of plumbing reaction chamber furthur"
-  - code_imp: "cleaned up code for portable chem mixer & chem dispenser. converted their ui to typescript"

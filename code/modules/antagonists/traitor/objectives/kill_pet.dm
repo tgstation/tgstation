@@ -31,7 +31,7 @@
 			/mob/living/basic/sloth/paperwork,
 		)
 	)
-	/// The head that we are targetting
+	/// The head that we are targeting
 	var/datum/job/target
 	/// Whether or not we only take from the traitor's own department head or not.
 	var/limited_to_department_head = TRUE

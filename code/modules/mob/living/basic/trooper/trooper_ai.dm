@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/trooper
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_REINFORCEMENTS_SAY = "411 in progress, requesting backup!"
 	)
@@ -95,5 +95,5 @@
 
 /datum/ai_controller/basic_controller/trooper/viscerator
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
