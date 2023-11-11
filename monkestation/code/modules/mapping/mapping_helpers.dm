@@ -26,6 +26,6 @@
 /obj/effect/area_lighting_helper/max_alpha
 	set_alpha = 255
 
-/obj/effect/area_lighting_helper/max_alpha_blue //need to map this in
+/obj/effect/area_lighting_helper/max_alpha_blue
 	set_color = COLOR_BLUE_LIGHT
 	set_alpha = 255
