@@ -1,0 +1,9 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - refactor: "Guardians/Powerminers/Holoparasites now use the basic mob framework. Please report any unexpected changes or behaviour."
+  - qol: "The verbs used to communicate with, recall, or banish your Guardian are now action buttons."
+  - balance: "If (as a Guardian) your host moves slightly out of range you will now be dragged back into range if possible, rather than being instantly teleported to them."
+  - balance: "Protectors now have a shorter leash range rather than a longer one, in order to more easily take advantage of their ability to drag their charge out of danger."
+  - balance: "Ranged Guardians can now hold down the mouse button to fire automatically."
+  - balance: "People riding vehicles or other mobs now inherit all of their movement traits, so riding a flying mob (or vehicle, if we have any of those) will allow you to cross chasms and lava safely."

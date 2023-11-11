@@ -1,6 +1,6 @@
 /**
  * Simple behaviours which simply try to use an ability whenever it is available.
- * For something which wants a target try `targetted_mob_ability`.
+ * For something which wants a target try `targeted_mob_ability`.
  */
 /datum/ai_planning_subtree/use_mob_ability
 	/// Blackboard key for the ability

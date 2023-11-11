@@ -476,7 +476,7 @@
 	set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
 
 /datum/component/riding/creature/guardian/ride_check(mob/living/user, consequences = TRUE)
-	var/mob/living/simple_animal/hostile/guardian/charger = parent
+	var/mob/living/basic/guardian/charger = parent
 	if(!istype(charger))
 		return ..()
 	return charger.summoner == user
