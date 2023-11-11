@@ -110,7 +110,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = drawbridge;
+	id = "drawbridge";
 	color = #5c4300
 	},
 /turf/open/floor/iron/stairs/old,
@@ -332,7 +332,7 @@
 /area/station/service/theater)
 "mZ" = (
 /obj/machinery/button/door/directional/east{
-	id = drawbridge
+	id = "drawbridge"
 	},
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
@@ -699,7 +699,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = drawbridge;
+	id = "drawbridge";
 	color = #5c4300
 	},
 /turf/open/floor/iron/stairs/old,
@@ -1077,7 +1077,7 @@
 "Pt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/east{
-	id = drawbridge
+	id = "drawbridge"
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/bar/atrium)
