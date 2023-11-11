@@ -23,13 +23,13 @@
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/internal/zombie_infection/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/zombie_infection/on_mob_insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(!.)
 		return .
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/zombie_infection/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/internal/zombie_infection/on_mob_remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	if(iszombie(M) && old_species && !special && !QDELETED(src))
@@ -37,11 +37,11 @@
 	if(timer_id)
 		deltimer(timer_id)
 
-/obj/item/organ/internal/zombie_infection/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/zombie_infection/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(organ_owner_died))
 
-/obj/item/organ/internal/zombie_infection/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/zombie_infection/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_DEATH)
 

@@ -58,6 +58,14 @@
 		else
 			qdel(replaced)
 
+		if(!IS_ROBOTIC_ORGAN(src) && (organ_flags & ORGAN_VIRGIN))
+			blood_dna_info = receiver.get_blood_dna_list()
+			// need to remove the synethic blood DNA that is initialized
+			// wash also adds the blood dna again
+			wash(CLEAN_TYPE_BLOOD)
+			organ_flags &= ~ORGAN_VIRGIN
+
+
 	receiver.organs |= src
 	receiver.organs_slot[slot] = src
 	owner = receiver
@@ -177,6 +185,9 @@
 /obj/item/organ/proc/on_limb_remove(obj/item/bodypart/limb)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
+		AddElement(/datum/element/decal/blood)
+
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()
 	SIGNAL_HANDLER
@@ -195,3 +206,4 @@
 /obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
+	RemoveElement(/datum/element/decal/blood)
