@@ -333,6 +333,15 @@
 			if(iter_part.burnstate)
 				damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
 
+	var/mob/living/carbon/human/human = src
+	if(human)
+		var/height = human.get_mob_height()
+		if(height == HUMAN_HEIGHT_DWARF)
+			height += 2
+		height = num2text(height)
+		var/offsets = GLOB.human_heights_to_offsets[height]
+		damage_overlay.pixel_y += offsets[1]
+
 	apply_overlay(DAMAGE_LAYER)
 
 /mob/living/carbon/update_wound_overlays()
@@ -344,6 +353,15 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
+
+	var/mob/living/carbon/human/human = src
+	if(human)
+		var/height = human.get_mob_height()
+		if(height == HUMAN_HEIGHT_DWARF)
+			height += 2
+		height = num2text(height)
+		var/offsets = GLOB.human_heights_to_offsets[height]
+		wound_overlay.pixel_y += offsets[1]
 
 	apply_overlay(WOUND_LAYER)
 
@@ -412,7 +430,7 @@
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/simple/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
-		if(handcuffed.blocks_emissive)
+		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
@@ -453,7 +471,7 @@
 	RETURN_TYPE(/list)
 
 	. = list()
-	if(blocks_emissive)
+	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		. += emissive_blocker(standing.icon, standing.icon_state, src, alpha = standing.alpha)
 	SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAYS, ., standing, isinhands, icon_file)
 

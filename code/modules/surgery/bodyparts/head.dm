@@ -203,7 +203,7 @@
 					. += facial_overlay
 
 			if(!eyes)
-				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
+				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -FACE_LAYER, SOUTH)
 
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
@@ -229,18 +229,25 @@
 
 		// lipstick
 		if(lip_style)
-			var/image/lips_overlay = image('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, SOUTH)
+			var/image/lips_overlay = image('icons/mob/species/human/human_face.dmi', "lips_[lip_style]", -FACE_LAYER, SOUTH)
 			lips_overlay.color = lip_color
 			. += lips_overlay
 
 		// eyes
 		if(eyes) // This is a bit of copy/paste code from eyes.dm:generate_body_overlay
-			var/image/eye_left = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
-			var/image/eye_right = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
+			var/image/eye_left = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_l", -FACE_LAYER, SOUTH)
+			var/image/eye_right = image('icons/mob/species/human/human_face.dmi', "[eyes.eye_icon_state]_r", -FACE_LAYER, SOUTH)
 			if(eyes.eye_color_left)
 				eye_left.color = eyes.eye_color_left
 			if(eyes.eye_color_right)
 				eye_right.color = eyes.eye_color_right
+			if(eyes.overlay_ignore_lighting)
+				eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha)
+				eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha)
+			else if(blocks_emissive != EMISSIVE_BLOCK_NONE)
+				var/atom/location = loc || owner || src
+				eye_left.overlays += emissive_blocker(eye_left.icon, eye_left.icon_state, location, alpha = eye_left.alpha)
+				eye_right.overlays += emissive_blocker(eye_right.icon, eye_right.icon_state, location, alpha = eye_right.alpha)
 			. += eye_left
 			. += eye_right
 	else

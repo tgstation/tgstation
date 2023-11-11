@@ -1,0 +1,775 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"aG" = (
+/obj/structure/fluff/tram_rail,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"bs" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "s";
+	pixel_y = 32;
+	pixel_x = -10;
+	color = "#ff66ff"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "x";
+	pixel_y = 32;
+	pixel_x = 8;
+	color = "#66ff33"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "u";
+	pixel_y = 32;
+	color = "#3399ff";
+	pixel_x = -2
+	},
+/obj/item/clothing/gloves/color/rainbow,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"cj" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"cC" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
+/area/centcom/tdome/arena/actual)
+"cK" = (
+/turf/open/floor/iron/smooth_corner,
+/area/centcom/tdome/arena/actual)
+"cS" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"cT" = (
+/obj/structure/rack,
+/obj/item/wallframe/extinguisher_cabinet{
+	pixel_x = -32;
+	anchored = 1
+	},
+/obj/item/reagent_containers/cup/bucket,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"ez" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/glass,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"fs" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/tdome/arena/actual)
+"fP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"hA" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/glass/waterbottle/large/empty,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"hL" = (
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/iron/textured_large,
+/area/centcom/tdome/arena/actual)
+"ic" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_corner{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"ih" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"jA" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "s";
+	pixel_y = 32;
+	pixel_x = -8;
+	color = "#da0000"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "e";
+	pixel_y = 32;
+	pixel_x = 2;
+	color = "#da0000"
+	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "c";
+	pixel_y = 31;
+	pixel_x = 9;
+	color = "#da0000"
+	},
+/obj/item/toy/crayon/white,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"lz" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"mv" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"mI" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/generic,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"nb" = (
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"nt" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"of" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"pQ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"qb" = (
+/obj/structure/sign/poster/ripped{
+	pixel_x = -34;
+	pixel_y = -4
+	},
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"rl" = (
+/turf/open/floor/iron/stairs/right,
+/area/centcom/tdome/arena/actual)
+"rW" = (
+/obj/item/clothing/mask/gas,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"wZ" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/effect/decal/cleanable/blood/gibs/limb{
+	icon_state = "gibarm";
+	random_icon_states = list("gibarm")
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"xD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"yt" = (
+/obj/effect/decal/cleanable/crayon{
+	pixel_x = -32;
+	icon_state = "revolution";
+	color = "#ff0000";
+	pixel_y = -4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"yy" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"zr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"zW" = (
+/obj/effect/decal/cleanable/blood/splatter/over_window{
+	pixel_x = 32
+	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"Aa" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"BT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"BY" = (
+/obj/structure/fluff/tram_rail,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Cb" = (
+/obj/structure/fluff/bus{
+	density = 0;
+	alpha = 240;
+	pixel_x = -28
+	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"Cs" = (
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"CL" = (
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"EP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Fc" = (
+/turf/open/floor/iron/stairs/left,
+/area/centcom/tdome/arena/actual)
+"Fp" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/centcom/tdome/arena/actual)
+"Fz" = (
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/turf/open/floor/iron/textured_large,
+/area/centcom/tdome/arena/actual)
+"Hl" = (
+/turf/closed/wall/mineral/iron,
+/area/centcom/tdome/arena/actual)
+"HN" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/item/wallframe/camera,
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"Ih" = (
+/obj/structure/fluff/tram_rail,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Jk" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"Kf" = (
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/textured_large,
+/area/centcom/tdome/arena/actual)
+"KY" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Lu" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/tile/dark/full,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Lw" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = 32
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_x = 4;
+	pixel_y = 15
+	},
+/obj/item/broken_bottle{
+	pixel_x = 9;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"Mj" = (
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/textured_large,
+/area/centcom/tdome/arena/actual)
+"MZ" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/camera_assembly{
+	anchored = 1
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Na" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"Pg" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"PS" = (
+/obj/structure/sign/poster/contraband/missing_gloves{
+	pixel_x = 34;
+	pixel_y = -4
+	},
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"TX" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"UD" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/tile/dark/full,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"VD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/centcom/tdome/arena/actual)
+"VF" = (
+/turf/open/floor/iron/stairs/medium,
+/area/centcom/tdome/arena/actual)
+"Wh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille/broken,
+/obj/item/stack/rods{
+	throwforce = 5
+	},
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+"Xp" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/tile/dark/full,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Yb" = (
+/obj/structure/fluff/tram_rail,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"Yf" = (
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"Yq" = (
+/obj/structure/fluff/tram_rail,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"YF" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail/end,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/full,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4;
+	layer = 4.1
+	},
+/turf/open/floor/plating{
+	density = 1
+	},
+/area/centcom/tdome/arena/actual)
+"YL" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/centcom/tdome/arena/actual)
+"YW" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "clown";
+	pixel_y = 32;
+	color = "#ff99ff"
+	},
+/turf/open/floor/iron/smooth_edge,
+/area/centcom/tdome/arena/actual)
+"Zu" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+Cs
+Cs
+Cs
+TX
+Yq
+UD
+YL
+Cs
+BT
+Cs
+"}
+(2,1,1) = {"
+Jk
+Na
+BT
+TX
+Yb
+KY
+YL
+Cs
+Cs
+zr
+"}
+(3,1,1) = {"
+Cs
+Hl
+Hl
+YW
+Yq
+UD
+YL
+Hl
+Hl
+jA
+"}
+(4,1,1) = {"
+Cs
+Hl
+Hl
+TX
+Yq
+Xp
+MZ
+Hl
+Hl
+bs
+"}
+(5,1,1) = {"
+Cs
+Pg
+cT
+TX
+Yb
+KY
+YL
+qb
+Wh
+Cs
+"}
+(6,1,1) = {"
+Cs
+Cs
+BT
+TX
+Yq
+KY
+YL
+Cs
+Cs
+Cs
+"}
+(7,1,1) = {"
+Cs
+Zu
+cK
+mI
+YF
+mv
+yy
+cC
+fP
+Na
+"}
+(8,1,1) = {"
+BT
+VD
+CL
+Fc
+Kf
+Kf
+ih
+Yf
+VD
+Cs
+"}
+(9,1,1) = {"
+Cs
+VD
+EP
+VF
+Fz
+hL
+ae
+xD
+VD
+Cs
+"}
+(10,1,1) = {"
+Na
+VD
+CL
+rl
+Mj
+Mj
+nt
+Yf
+fs
+Cs
+"}
+(11,1,1) = {"
+Cs
+fP
+Fp
+cS
+BY
+Lu
+ez
+ic
+of
+BT
+"}
+(12,1,1) = {"
+Cs
+Cs
+Na
+TX
+aG
+Xp
+YL
+BT
+Cs
+pQ
+"}
+(13,1,1) = {"
+Cs
+PS
+hA
+TX
+Yq
+KY
+YL
+zW
+Lw
+BT
+"}
+(14,1,1) = {"
+Cs
+Hl
+Hl
+HN
+Yq
+UD
+YL
+Hl
+Hl
+Cs
+"}
+(15,1,1) = {"
+rW
+Hl
+Hl
+TX
+Yq
+UD
+YL
+Hl
+Hl
+Cs
+"}
+(16,1,1) = {"
+wZ
+yt
+Cs
+lz
+Ih
+KY
+Aa
+Cb
+Cs
+nb
+"}
+(17,1,1) = {"
+cj
+Cs
+Na
+TX
+Yq
+Xp
+YL
+Cs
+BT
+Cs
+"}

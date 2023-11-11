@@ -193,7 +193,7 @@ export class Changelog extends Component {
         </p>
         <p>
           {'You can also join our discord '}
-          <a href="https://discord.gg/wB2FCGVV">here</a>.
+          <a href="https://discord.gg/Mg9J2hkx">here</a>.
         </p>
         {dateDropdown}
       </Section>

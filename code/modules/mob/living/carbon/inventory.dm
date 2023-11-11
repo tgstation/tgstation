@@ -115,6 +115,11 @@
 		if(ITEM_SLOT_HANDS)
 			put_in_hands(I)
 			update_held_items()
+		//monkestation edit start
+		if(ITEM_SLOT_EARS)
+			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_EARS, I)
+			not_handled = TRUE
+		//monkestation edit end
 		if(ITEM_SLOT_BACKPACK)
 			if(!back || !back.atom_storage?.attempt_insert(I, src, override = TRUE))
 				not_handled = TRUE
@@ -165,6 +170,11 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
+
+	//monkestation edit start
+	if(I == ears)
+		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_EARS, I, force, newloc, no_move, invdrop, silent)
+	//monkestation edit end
 
 	// Not an else-if because we're probably equipped in another slot
 	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))

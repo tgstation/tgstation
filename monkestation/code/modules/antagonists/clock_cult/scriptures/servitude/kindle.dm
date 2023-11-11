@@ -90,7 +90,7 @@
 		carbon_hit.adjust_silence(EFFECT_TIME * 2) //enough time to cuff and remove their radio, or just go back to reebe where their comms wont work
 		carbon_hit.AdjustKnockdown(EFFECT_TIME * 1.5)
 
-		carbon_hit.Stun(EFFECT_TIME * (on_reebe(carbon_hit) ? 0.1 : 1)) //pretty much 0 stun if your on reebe, still good for knockdown though
+		carbon_hit.Stun(EFFECT_TIME * ((on_reebe(carbon_hit) && GLOB.clock_ark?.current_state) ? 0.1 : 1)) //pretty much 0 stun if your on reebe, still good for knockdown though
 
 	if(hit_mob.client)
 		var/client_color = hit_mob.client.color

@@ -1322,6 +1322,7 @@
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	..()
+	metabolizer.exit_stamina_stun()
 	metabolizer.AdjustAllImmobility(-20 * REM * seconds_per_tick)
 	metabolizer.stamina.adjust(10 * REM * seconds_per_tick, 0)
 	metabolizer.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)

@@ -111,11 +111,17 @@
 		/datum/pet_command/point_targetting/fetch,
 		/datum/pet_command/play_dead,
 	)
-
+	///how much extra fertile we are
+	var/fertility_boosting = 0
+	///extra chance of mutation
+	var/instability = 0
+	///modifier to the egg laying cooldown
+	var/egg_laying_boosting = 0
 
 #undef DEFAULT_CHICKEN_ABILITY_COOLDOWN
 
 /obj/item/food/egg
+	name = "White Egg"
 	///the amount the chicken is grown
 	var/amount_grown = 0
 	///the type of chicken that laid this egg
@@ -142,7 +148,6 @@
 	var/list/faction_holder = list()
 	///our stored_glass_egg_reagents from the parent
 	var/list/glass_egg_reagents = list()
-
 
 /datum/action/cooldown/mob_cooldown/chicken
 	melee_cooldown_time =  1 // dumb

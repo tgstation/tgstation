@@ -85,3 +85,18 @@
 	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
 	name = "Mullet"
 	icon_state = "hair_mullet"
+
+/datum/sprite_accessory/hair/long_messy
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Long and Messy"
+	icon_state = "long_messy"
+
+/datum/sprite_accessory/hair/monkeyking
+	icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+	name = "Monkey king"
+	icon_state = "monkey_king"
+
+/datum/sprite_accessory/hair/edgerunner
+    icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
+    name = "Edgerunner"
+    icon_state = "edgerunner"

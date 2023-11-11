@@ -1147,6 +1147,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"er" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/computer/quantum_console,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "es" = (
 /obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -1871,6 +1878,10 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/station/construction)
+"ip" = (
+/obj/machinery/byteforge,
+/turf/open/floor/circuit/green,
+/area/station/bitrunning/den)
 "is" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
 /turf/open/floor/iron,
@@ -1928,6 +1939,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"lT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "lX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -1939,6 +1955,16 @@
 /obj/machinery/chem_mass_spec,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"mU" = (
+/obj/machinery/door/airlock,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
+"nk" = (
+/obj/machinery/netpod,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "nn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1973,6 +1999,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"pl" = (
+/turf/closed/wall/r_wall,
+/area/station/bitrunning/den)
 "pv" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -2017,11 +2046,23 @@
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
 /area/station/construction)
+"su" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "sH" = (
 /obj/structure/table,
 /obj/item/storage/box/shipping,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"tB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "tE" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
@@ -2134,12 +2175,22 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
+"yl" = (
+/obj/machinery/quantum_server,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
 	},
 /turf/open/space/basic,
 /area/space)
+"yG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "yK" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2213,6 +2264,10 @@
 /obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"Dy" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "DW" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 1
@@ -2302,6 +2357,9 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"Lq" = (
+/turf/open/floor/circuit/green,
+/area/station/bitrunning/den)
 "Ly" = (
 /obj/machinery/chem_dispenser/chem_synthesizer,
 /turf/open/floor/iron/dark,
@@ -2373,6 +2431,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"Qr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/bitrunning/den)
 "Qt" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -2396,6 +2458,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"Rl" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/entry)
 "RM" = (
 /obj/structure/closet/secure_closet/hop{
 	locked = 0
@@ -2403,6 +2470,9 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"RW" = (
+/turf/open/floor/iron,
+/area/station/bitrunning/den)
 "Sj" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue{
@@ -3060,12 +3130,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+pl
+pl
+pl
+pl
+pl
+pl
 aa
 aa
 aa
@@ -3152,12 +3222,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+pl
+Lq
+Lq
+RW
+nk
+pl
 aa
 aa
 aa
@@ -3244,12 +3314,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+pl
+Lq
+ip
+RW
+nk
+pl
 aa
 aa
 aa
@@ -3336,12 +3406,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+pl
+yl
+RW
+su
+nk
+pl
 aa
 aa
 aa
@@ -3428,12 +3498,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+pl
+er
+Dy
+lT
+tB
+pl
 aa
 aa
 aa
@@ -3520,12 +3590,12 @@ em
 em
 em
 em
-em
-em
-em
-dY
-en
-dY
+pl
+pl
+pl
+mU
+Qr
+pl
 Tj
 Tj
 Tj
@@ -3615,7 +3685,7 @@ rK
 rK
 vy
 em
-eh
+Rl
 eh
 LW
 lc
@@ -3707,7 +3777,7 @@ qQ
 qQ
 ME
 em
-eh
+Rl
 eh
 LW
 lc
@@ -3799,7 +3869,7 @@ qQ
 qQ
 ME
 em
-eh
+Rl
 eh
 LW
 lc
@@ -3891,7 +3961,7 @@ qQ
 qQ
 CQ
 em
-eh
+yG
 eh
 LW
 lc
@@ -3983,7 +4053,7 @@ qQ
 qQ
 ME
 em
-eh
+Rl
 eh
 LW
 lc
@@ -4075,7 +4145,7 @@ qQ
 qQ
 YL
 em
-eh
+Rl
 eh
 LW
 lc
@@ -4167,7 +4237,7 @@ II
 gl
 gD
 kj
-wM
+Rl
 wM
 LW
 lc

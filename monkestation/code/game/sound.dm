@@ -67,6 +67,10 @@
 	return GLOB.always_state
 
 /datum/ui_module/volume_mixer/proc/set_channel_volume(channel, vol, mob/user)
+	if(channel == CHANNEL_LOBBYMUSIC)
+		if(isnewplayer(user))
+			user.client.media.update_volume(0.5 + (vol * 0.05))
+
 	var/sound/S = sound(null, channel = channel, volume = vol)
 	S.status = SOUND_UPDATE
 	SEND_SOUND(usr, S)

@@ -44,8 +44,10 @@
 
 /datum/antagonist/clock_cultist/greet()
 	. = ..()
-	to_chat(owner.current, span_notice("Dont forget, your structures are by default off and must be clicked on to be turned on. Structures that are turned on have passive power use."))
-	to_chat(owner.current, span_brass("The bottom right corner of your clockwork slab UI has a more in depth guide."))
+	to_chat(owner.current, span_boldwarning("Dont forget, your structures are by default off and must be clicked on to be turned on. Structures that are turned on have passive power use."))
+	to_chat(owner.current, span_userdanger("HEY"))
+	to_chat(owner.current, span_boldwarning("YOUR CLOCKWORK SLAB UI HAS A MORE IN DEPTH GUIDE IN ITS BOTTOM RIGHT HAND SIDE. \
+											YOU CAN HOVER YOUR MOUSE POINTER OVER SCRIPTURE BUTTONS FOR EXTRA INFO."))
 
 //given_clock_team is provided by conversion methods, although we never use it due to wanting to just set their team to the main clock cult
 /datum/antagonist/clock_cultist/create_team(datum/team/clock_cult/given_clock_team)
@@ -187,7 +189,7 @@
 
 	else if(iscyborg(converted_silicon))
 		var/mob/living/silicon/robot/converted_borg = converted_silicon
-		converted_borg.set_connected_ai(null)
+		converted_borg.UnlinkSelf()
 		converted_borg.set_clockwork(TRUE)
 
 	if(converted_silicon.laws && istype(converted_silicon.laws, /datum/ai_laws/ratvar))

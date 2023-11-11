@@ -43,7 +43,7 @@
 	var/static/list/spell_list = list(/datum/action/cooldown/spell/rod_form, /datum/action/cooldown/spell/aoe/magic_missile,
 									  /datum/action/cooldown/spell/emp/disable_tech, /datum/action/cooldown/spell/aoe/repulse/wizard,
 								      /datum/action/cooldown/spell/timestop, /datum/action/cooldown/spell/forcewall, /datum/action/cooldown/spell/conjure/the_traps,
-								      /datum/action/cooldown/spell/conjure/bee, /datum/action/cooldown/spell/conjure/lesser_summonapes,
+								      /datum/action/cooldown/spell/conjure/bee, /datum/action/cooldown/spell/conjure/simian,
 								      /datum/action/cooldown/spell/teleport/radius_turf/blink)
 
 	COOLDOWN_DECLARE(armor_cooldown) //unsure if I should use a world.time instead of this

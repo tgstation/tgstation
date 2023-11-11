@@ -14,6 +14,9 @@
 		/datum/event_admin_setup/input_number/spacevine_potency,
 		/datum/event_admin_setup/input_number/spacevine_production,
 	)
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMMUNAL, TAG_COMBAT)
+	checks_antag_cap = TRUE
 
 /datum/round_event/spacevine
 	fakeable = FALSE
@@ -64,7 +67,7 @@
 
 /datum/event_admin_setup/set_location/spacevine/apply_to_event(datum/round_event/spacevine/event)
 	event.override_turf = chosen_turf
-	
+
 /datum/event_admin_setup/multiple_choice/spacevine
 	input_text = "Select starting mutations."
 	min_choices = 0
@@ -88,7 +91,7 @@
 		type_choices += text2path(choice)
 	event.mutations_overridden = TRUE
 	event.override_mutations = type_choices
-	
+
 /datum/event_admin_setup/input_number/spacevine_potency
 	input_text = "Set vine's potency (effects mutation frequency + max severity)"
 	max_value = 100

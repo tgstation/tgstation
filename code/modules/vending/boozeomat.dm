@@ -60,8 +60,21 @@
 				/obj/item/reagent_containers/cup/glass/flask = 3,
 				/obj/item/reagent_containers/cup/glass/bottle = 15,
 				/obj/item/reagent_containers/cup/glass/bottle/small = 15,
+				/obj/item/reagent_containers/cup/glass/modglass/small = 10,
+				/obj/item/reagent_containers/cup/glass/modglass = 10,
+				/obj/item/reagent_containers/cup/glass/modglass/large = 10,
 			),
 		),
+		list(
+			"name" = "Garnishes",
+			"icon" = "fa-umbrella",
+			"products" = list(
+				/obj/item/garnish/olives = 10,
+				/obj/item/garnish/umbrellared = 10,
+				/obj/item/garnish/umbrellablue = 10,
+				/obj/item/garnish/umbrellagreen = 10
+			)
+		)
 	)
 
 	contraband = list(

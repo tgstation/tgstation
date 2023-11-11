@@ -164,6 +164,7 @@
 /obj/machinery/Initialize(mapload)
 	. = ..()
 	GLOB.machines += src
+	SSmachines.register_machine(src)
 
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
@@ -195,6 +196,7 @@
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
+	SSmachines.unregister_machine(src)
 	end_processing()
 	dump_inventory_contents()
 

@@ -31,6 +31,7 @@
 	deployed = TRUE
 	START_PROCESSING(SSmachines, src)
 	update_appearance()
+	return_dousing()
 
 /obj/item/dousing_rod/proc/undeploy()
 	deployed = FALSE
@@ -44,17 +45,20 @@
 		processes++
 		return
 	processes = 0
+	return_dousing()
+
+/obj/item/dousing_rod/proc/return_dousing()
 	set_heat()
 	update_appearance()
-
 	if(current_heat == 0)
 		return
 
 	var/last_distance = INFINITY
 	var/centered = FALSE
 	var/turf/source_turf = get_turf(src)
+	var/turf/center_turf
 	for(var/datum/hotspot/listed_hotspot in SShotspots.retrieve_hotspot_list(get_turf(src)))
-		var/turf/center_turf = listed_hotspot.center.return_turf()
+		center_turf = listed_hotspot.center.return_turf()
 
 		if(source_turf == center_turf)
 			centered = TRUE
@@ -66,12 +70,11 @@
 
 	if(centered)
 		say("Directly centered with one or more hotspots.")
+		return
+
 	else if(closest_hotspot && last_distance != INFINITY)
-		if(last_distance < 4)
-			say("Estimated Position is: X:[closest_hotspot.center.x], Y:[closest_hotspot.center.y]")
-		else
-			var/dir_string = dir2text(closest_hotspot.drift_direction)
-			say("Estimated Position is:[max((last_distance - rand(1,3)), 1)]M [dir_string]")
+		var/dir_string = dir2text(get_dir(source_turf, center_turf))
+		say("Estimated Position is:[max((last_distance - rand(1,3)), 1)]M [dir_string]")
 	else
 		say("ERROR: No hotspots in readable range.")
 

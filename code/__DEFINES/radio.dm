@@ -1,6 +1,8 @@
 // Radios use a large variety of predefined frequencies.
 
 //say based modes like binary are in living/say.dm
+#define RADIO_CHANNEL_RADIO "Radio"
+#define RADIO_KEY_RADIO ":="
 
 #define RADIO_CHANNEL_COMMON "Common"
 #define RADIO_KEY_COMMON ";"
@@ -81,6 +83,7 @@
 // Only the 1441 to 1489 range is freely available for general conversation.
 // This represents 1/8th of the available spectrum.
 
+#define FREQ_RADIO 1443 //monkestation edit
 #define FREQ_AI_PRIVATE 1447 // AI private comms frequency, magenta
 #define FREQ_PRESSURE_PLATE 1447
 #define FREQ_ELECTROPACK 1449
@@ -88,7 +91,6 @@
 #define FREQ_LOCATOR_IMPLANT 1451
 #define FREQ_SIGNALER 1457 // the default for new signalers
 #define FREQ_COMMON 1459 // Common comms frequency, dark green
-
 #define MIN_UNUSED_FREQ 1461 // Prevents rolling AI Private or Common
 
 #define MAX_FREQ 1489 // ------------------------------------------------------

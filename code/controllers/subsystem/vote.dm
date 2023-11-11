@@ -285,12 +285,16 @@ SUBSYSTEM_DEF(vote)
 			"message" = vote.message,
 		)
 
+		if(vote.has_desc)
+			vote_data += list("desc" = vote.return_desc(vote_name))
+
 		if(vote == current_vote)
 			var/list/choices = list()
 			for(var/key in current_vote.choices)
 				choices += list(list(
 					"name" = key,
 					"votes" = current_vote.choices[key],
+					"desc" = current_vote.return_desc(key)
 				))
 
 			data["currentVote"] = list(

@@ -1,0 +1,649 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ay" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"bs" = (
+/turf/closed/indestructible/reinforced,
+/area/centcom/tdome/arena/actual)
+"bx" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"bE" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"dq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"fi" = (
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"fq" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"ge" = (
+/obj/machinery/conveyor/auto{
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"gw" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"hA" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"hL" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"if" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"ih" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/end{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"ko" = (
+/obj/machinery/shower{
+	pixel_y = 14
+	},
+/obj/effect/turf_decal/trimline/yellow/end,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"nn" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"nt" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/item/hand_labeler,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"of" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"os" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"qb" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"qg" = (
+/obj/machinery/conveyor/auto{
+	dir = 6;
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"qk" = (
+/obj/machinery/conveyor/auto{
+	dir = 10;
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"qv" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"rl" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"rW" = (
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"se" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 9
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"uz" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"uT" = (
+/obj/machinery/conveyor/auto{
+	dir = 8;
+	use_power = 0
+	},
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"wl" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"xi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"yr" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"yJ" = (
+/obj/machinery/conveyor/auto{
+	dir = 1;
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"yW" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Bi" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"BT" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Dc" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"Dh" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"Ed" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"FD" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"FS" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Gc" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 10
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"Hl" = (
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"IF" = (
+/obj/machinery/conveyor/auto{
+	dir = 9;
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"JE" = (
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"Mj" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Ms" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"MQ" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 6
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"MZ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave/hell,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"PM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"PS" = (
+/obj/machinery/conveyor/auto{
+	dir = 5;
+	use_power = 0
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"Rj" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/item/food/chips,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Uc" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Uz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"UQ" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/item/food/chips,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Vl" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_cw{
+	dir = 5
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"VF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted,
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Wh" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"Xo" = (
+/obj/machinery/power/emitter/energycannon{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"XF" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"Ye" = (
+/obj/machinery/conveyor/auto{
+	dir = 4;
+	use_power = 0
+	},
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"Yr" = (
+/obj/machinery/shower{
+	pixel_y = 14
+	},
+/obj/effect/turf_decal/trimline/yellow/end,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/arena/actual)
+"YF" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/light/floor/has_bulb,
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"YL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/centcom/tdome/arena/actual)
+"Zu" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box,
+/obj/item/radio/off{
+	pixel_x = 6
+	},
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+"ZH" = (
+/obj/machinery/power/emitter/energycannon,
+/turf/open/floor/engine,
+/area/centcom/tdome/arena/actual)
+"ZV" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena/actual)
+
+(1,1,1) = {"
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+"}
+(2,1,1) = {"
+rW
+qb
+hL
+hL
+hL
+hL
+hL
+qv
+Uc
+rW
+"}
+(3,1,1) = {"
+rW
+Rj
+Hl
+bE
+Ed
+of
+YF
+Hl
+nt
+rW
+"}
+(4,1,1) = {"
+Wh
+MZ
+Hl
+bs
+Yr
+fq
+bs
+Hl
+FS
+hA
+"}
+(5,1,1) = {"
+rW
+Zu
+Hl
+Bi
+YL
+YL
+Dh
+Hl
+uz
+rW
+"}
+(6,1,1) = {"
+rW
+if
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+BT
+rW
+"}
+(7,1,1) = {"
+fi
+ZV
+PS
+yJ
+yJ
+yJ
+yJ
+IF
+VF
+fi
+"}
+(8,1,1) = {"
+bs
+Dc
+wl
+se
+rl
+rl
+Gc
+nn
+Dc
+bs
+"}
+(9,1,1) = {"
+ZH
+yr
+Ye
+bs
+os
+gw
+bs
+uT
+Uz
+Xo
+"}
+(10,1,1) = {"
+bs
+Dc
+wl
+Vl
+bx
+bx
+MQ
+nn
+Dc
+bs
+"}
+(11,1,1) = {"
+JE
+ZV
+qg
+ge
+ge
+ge
+ge
+qk
+xi
+JE
+"}
+(12,1,1) = {"
+rW
+Mj
+PM
+PM
+PM
+PM
+PM
+dq
+ay
+rW
+"}
+(13,1,1) = {"
+rW
+Zu
+Hl
+bE
+of
+of
+YF
+Hl
+uz
+rW
+"}
+(14,1,1) = {"
+Wh
+MZ
+Hl
+bs
+ko
+ih
+bs
+Hl
+FS
+hA
+"}
+(15,1,1) = {"
+rW
+UQ
+Hl
+Bi
+YL
+YL
+Dh
+Hl
+nt
+rW
+"}
+(16,1,1) = {"
+rW
+XF
+FD
+FD
+FD
+FD
+FD
+FD
+yW
+rW
+"}
+(17,1,1) = {"
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+"}

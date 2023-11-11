@@ -14,23 +14,23 @@
 	"space_empty_levels": 2,
 	"traits": [
 		{
-			"Up": 1,
+			"Up": true,
 			"Linkage": "Cross"
 		},
 		{
-			"Up": 1,
-			"Down": -1,
+			"Up": true,
+			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		},
 		{
-			"Up": 1,
-			"Down": -1,
+			"Up": true,
+			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		},
 		{
-			"Down": -1,
+			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		}

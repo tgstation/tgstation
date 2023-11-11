@@ -1,3 +1,5 @@
+//MONKESTATION FILE REMOVAL: REPLACED WITH THE /datum/traitor_objective/ultimate/wizard OBJECTIVE
+/*
 /datum/traitor_objective/ultimate/space_dragon
 	name = "Find a Space Carp and mutate their DNA with your own using a DNA harvester we will drop pod at %AREA%"
 	description = "Go to %AREA%, and recieve the Carp DNA scanner. Use it on any Space Carp to harvest its DNA. \
@@ -47,4 +49,4 @@
 				"target" = get_turf(user),
 				"style" = STYLE_SYNDICATE,
 				"spawn" = /obj/item/storage/box/syndie_kit/space_dragon,
-			))
+			))*/

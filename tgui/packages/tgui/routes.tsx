@@ -4,12 +4,11 @@
  * @license MIT
  */
 
-import { Icon, Section, Stack } from './components';
-
 import { Store } from 'common/redux';
 import { Window } from './layouts';
 import { selectBackend } from './backend';
 import { selectDebug } from './debug/selectors';
+import { LoadingScreen } from './interfaces/common/LoadingToolbox';
 
 const requireInterface = require.context('./interfaces');
 
@@ -47,14 +46,7 @@ const RefreshingWindow = () => {
   return (
     <Window title="Loading">
       <Window.Content>
-        <Section fill>
-          <Stack align="center" fill justify="center" vertical>
-            <Stack.Item>
-              <Icon color="blue" name="toolbox" spin size={4} />
-            </Stack.Item>
-            <Stack.Item>Please wait...</Stack.Item>
-          </Stack>
-        </Section>
+        <LoadingScreen />
       </Window.Content>
     </Window>
   );

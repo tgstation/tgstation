@@ -7,15 +7,15 @@
 	turf_type = /turf/open/floor/plating/ocean/dark
 	flora_types = list(/obj/effect/spawner/ocean_curio, /obj/structure/flora/rock/pile, /obj/structure/flora/ocean/glowweed, /obj/structure/flora/ocean/seaweed, /obj/structure/flora/ocean/longseaweed, /obj/structure/flora/ocean/coral)
 	flora_density = 25
-	fauna_density = 0.03
-	fauna_types = list(/mob/living/basic/carp)
+	fauna_density = 0.1
+	fauna_types = list(/mob/living/basic/aquatic/fish, /mob/living/basic/aquatic/fish/gupper, /mob/living/basic/aquatic/fish/cod)
 
 /datum/biome/ocean_redsand
 	turf_type = /turf/open/floor/plating/ocean/dark/ironsand
 	flora_types = list(/obj/effect/spawner/ocean_curio, /obj/structure/flora/rock/pile, /obj/structure/flora/ocean/glowweed, /obj/structure/flora/ocean/seaweed, /obj/structure/flora/ocean/longseaweed, /obj/structure/flora/ocean/coral)
 	flora_density = 40
-	fauna_density = 0.06
-	fauna_types = list(/mob/living/basic/carp)
+	fauna_density = 0.1
+	fauna_types = list(/mob/living/basic/aquatic/fish, /mob/living/basic/aquatic/fish/gupper, /mob/living/basic/aquatic/fish/cod)
 
 /datum/biome/ocean_rocklight
 	turf_type = /turf/open/floor/plating/ocean/dark/rock
@@ -47,15 +47,15 @@
 	turf_type = /turf/open/floor/plating/ocean
 	flora_types = list(/obj/effect/spawner/ocean_curio, /obj/structure/flora/rock/pile, /obj/structure/flora/ocean/glowweed, /obj/structure/flora/ocean/seaweed, /obj/structure/flora/ocean/longseaweed, /obj/structure/flora/ocean/coral)
 	flora_density = 25
-	fauna_density = 0.03
-	fauna_types = list(/mob/living/basic/carp)
+	fauna_density = 1.5
+	fauna_types = list(/mob/living/basic/aquatic/fish, /mob/living/basic/aquatic/fish/gupper, /mob/living/basic/aquatic/fish/cod)
 
 /datum/biome/ocean_redsand/above
 	turf_type = /turf/open/floor/plating/ocean/ironsand
 	flora_types = list(/obj/effect/spawner/ocean_curio, /obj/structure/flora/rock/pile, /obj/structure/flora/ocean/glowweed, /obj/structure/flora/ocean/seaweed, /obj/structure/flora/ocean/longseaweed, /obj/structure/flora/ocean/coral)
 	flora_density = 40
-	fauna_density = 0.06
-	fauna_types = list(/mob/living/basic/carp)
+	fauna_density = 1.5
+	fauna_types = list(/mob/living/basic/aquatic/fish, /mob/living/basic/aquatic/fish/gupper, /mob/living/basic/aquatic/fish/cod)
 
 /datum/biome/ocean_rocklight/above
 	turf_type = /turf/open/floor/plating/ocean/rock

@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 		reebe_loaded = FALSE
 		CRASH("Reebe Z level not in SSmapping.reservation_ready.")
 
-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(101, 101, reebe_z.z_value)
+	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(101, 101, z_reservation = reebe_z.z_value)
 	if(!reservation)
 		reebe_loaded = FALSE
 		CRASH("Failed to reserve a block for Reebe.")
@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 		reebe_loaded = FALSE
 		CRASH("Failed to cache template for loading Reebe.")
 
-	if(!reebe_template.load(coords2turf(reservation.bottom_left_coords)))
+	if(!reebe_template.load(reservation.bottom_left_turfs[1]))
 		reebe_loaded = FALSE
 		CRASH("Failed to load the Reebe template.")
 	return TRUE

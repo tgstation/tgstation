@@ -56,11 +56,11 @@ export const Biogenerator = (props, context) => {
     categories.find((category) => category.name === selectedCategory)?.items ||
     [];
   return (
-    <Window width={400} height={500}>
+    <Window width={400} height={525}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Section fill>
+            <Section fill minHeight="80px">
               <LabeledList>
                 <LabeledList.Item
                   label="Biomass"

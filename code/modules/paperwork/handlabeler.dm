@@ -1,6 +1,6 @@
 /obj/item/hand_labeler
 	name = "hand labeler"
-	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use."
+	desc = "A combined label printer, applicator, and remover, all in a single portable device. Designed to be easy to operate and use.\nUse while powered off to remove existing labels."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	inhand_icon_state = null
@@ -54,9 +54,6 @@
 		return
 	if(length(A.name) + length(label) > 64)
 		to_chat(user, span_warning("Label too big!"))
-		return
-	if(ismob(A))
-		to_chat(user, span_warning("You can't label creatures!")) // use a collar
 		return
 
 	user.visible_message(span_notice("[user] labels [A] with \"[label]\"."), \

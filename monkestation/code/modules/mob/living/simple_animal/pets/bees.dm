@@ -1,7 +1,6 @@
 /mob/living/basic/bee/friendly
 	name = "friendly maintenance bee"
 	desc = "He wants to bee friends!"
-	faction = list(FACTION_NEUTRAL)
 	response_help_continuous = "hugs"
 	response_help_simple = "hug"
 	attack_verb_continuous = "nuzzles"
@@ -20,7 +19,7 @@
 /obj/item/stack/sheet/animalhide/bee
 	name = "bee fuzz"
 	desc = "How could you do this."
-	singular_name = "a piece of bee fuzz"
+	singular_name = "bee fuzz piece"
 	icon = 'monkestation/icons/mob/simple/bees.dmi'
 	icon_state = "sheet-bee_fuzz"
 	inhand_icon_state = null

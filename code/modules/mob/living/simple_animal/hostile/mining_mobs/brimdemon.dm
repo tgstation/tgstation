@@ -15,7 +15,7 @@
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	stat_attack = HARD_CRIT
 	ranged_cooldown_time = 5 SECONDS
-	vision_range = 9
+	vision_range = 6
 	retreat_distance = 2
 	speed = 3
 	move_to_delay = 5

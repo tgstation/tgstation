@@ -1,79 +1,179 @@
-//shows a list of clients we could send PMs to, then forwards our choice to cmd_Mentor_pm
-/client/proc/cmd_mentor_pm_panel()
-	set category = "Mentor"
-	set name = "Mentor PM"
-	if(!is_mentor())
-		to_chat(src, "<font color='red'>Error: Mentor-PM-Panel: Only Mentors and Admins may use this command.</font>")
-		return
-	var/list/client/targets[0]
-	for(var/client/T)
-		targets["[T]"] = T
-
-	var/list/sorted = sort_list(targets)
-	var/target = input(src,"To whom shall we send a message?","Mentor PM",null) in sorted|null
-	cmd_mentor_pm(targets[target],null)
-	SSblackbox.record_feedback("tally", "Mentor_verb", 1, "APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-//takes input from cmd_mentor_pm_context, cmd_Mentor_pm_panel or /client/Topic and sends them a PM.
-//Fetching a message if needed. src is the sender and C is the target client
+/// Takes input from /client/Topic and sends them a PM, fetching messages if needed. src is the sender and chosen_client is the target client
 /client/proc/cmd_mentor_pm(whom, msg)
-	var/client/C
+	var/client/chosen_client
 	if(ismob(whom))
-		var/mob/M = whom
-		C = M.client
+		var/mob/potential_mobs = whom
+		chosen_client = potential_mobs.client
 	else if(istext(whom))
-		C = GLOB.directory[whom]
-	else if(istype(whom,/client))
-		C = whom
-	if(!C)
-		if(is_mentor())	to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
-		else		mentorhelp(msg)	//Mentor we are replying to left. Mentorhelp instead(check below)
+		chosen_client = GLOB.directory[whom]
+	else if(istype(whom, /client))
+		chosen_client = whom
+	if(chosen_client?.prefs.muted & MUTE_ADMINHELP)
+		to_chat(src,
+			type = MESSAGE_TYPE_MODCHAT,
+			html = "<span class='danger'>Error: MentorPM: You are muted from Mentorhelps. (muted).</span>",
+			confidential = TRUE)
+		return
+	if(!chosen_client)
+		if(is_mentor())
+			if(findtext(whom, "Discord"))
+				if(!msg)
+					msg = input(src,"Message:", "Private message") as text|null
+
+					if(!msg)
+						return
+				to_chat(src,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(whom, TRUE, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
+
+				var/id = "None"
+				var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
+				if(request)
+					id = "[request.id]"
+
+				var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
+				if(regular_webhook_url)
+					var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
+					if(!embed)
+						return
+					send2mentorchat_webhook(embed, key)
+
+				return
+			to_chat(src,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='red'>Error: Mentor-PM: Client not found.</font>",
+				confidential = TRUE)
+		else
+			if(findtext(whom, "Discord"))
+				if(!msg)
+					msg = input(src,"Message:", "Private message") as text|null
+
+					if(!msg)
+						return
+				to_chat(src,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(whom, TRUE, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
+
+				var/id = "None"
+				var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
+				if(request)
+					id = "[request.id]"
+
+				var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
+				if(regular_webhook_url)
+					var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
+					if(!embed)
+						return
+					send2mentorchat_webhook(embed, key)
+
+				return
+			/// Mentor we are replying to left. Mentorhelp instead.
+			mentorhelp(msg)
 		return
 
-	//get message text, limit it's length.and clean/escape html
+	/// Get message text, limit it's length.and clean/escape html
 	if(!msg)
 		msg = input(src,"Message:", "Private message") as text|null
 
 		if(!msg)
 			return
 
-		if(!C)
+		if(!chosen_client)
 			if(is_mentor())
-				to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
+				to_chat(src,
+					type = MESSAGE_TYPE_MODCHAT,
+					html = "<font color='red'>Error: Mentor-PM: Client not found.</font>",
+					confidential = TRUE)
 			else
-				mentorhelp(msg)	//Mentor we are replying to has vanished, Mentorhelp instead (how the fuck does this work?let's hope it works,shrug)
+				/// Mentor we are replying to has vanished, Mentorhelp instead
+				mentorhelp(msg)
 				return
 
-		// Neither party is a mentor, they shouldn't be PMing!
-		if (!C.is_mentor() && !is_mentor())
+		/// Neither party is a mentor, they shouldn't be PMing!
+		if(!chosen_client.is_mentor() && !is_mentor())
 			return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
+	if(!msg)
+		return
 
-	log_mentor("Mentor PM: [key_name(src)]->[key_name(C)]: [msg]")
+	log_mentor("Mentor PM: [key_name(src)]->[key_name(chosen_client)]: [msg]")
 
 	msg = emoji_parse(msg)
-	C << 'sound/items/bikehorn.ogg'
-	var/show_char = CONFIG_GET(flag/mentors_mobname_only)
-	if(C.is_mentor())
-		if(is_mentor())//both are mentors
-			to_chat(C, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>")
-			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
-
-		else		//recipient is an mentor but sender is not
-			to_chat(C, "<font color='purple'>Reply PM from-<b>[key_name_mentor(src, C, 1, 0, show_char)]</b>: [msg]</font>")
-			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>")
+	chosen_client << 'sound/items/bikehorn.ogg'
+	if(chosen_client.is_mentor())
+		if(is_mentor())
+			/// Both are Mentors
+			to_chat(chosen_client,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
+			to_chat(src,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
+		else
+			/// Sender is a Non-Mentor
+			to_chat(chosen_client,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='purple'>Reply PM from-<b>[key_name_mentor(src, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
+			to_chat(src,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
 
 	else
-		if(is_mentor())	//sender is an mentor but recipient is not.
-			to_chat(C, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>")
-			to_chat(src, "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, show_char)]</b>: [msg]</font>")
+		if(is_mentor())
+			/// Reciever is a Non-Mentor - Left unsorted so people that Mentorhelp with Mod chat off will still get it, otherwise they'll complain.
+			to_chat(chosen_client, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, chosen_client, TRUE, FALSE, FALSE)]</b>: [msg]</font>")
+			to_chat(src,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<font color='green'>Mentor PM to-<b>[key_name_mentor(chosen_client, chosen_client, TRUE, FALSE)]</b>: <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
 
-	//we don't use message_Mentors here because the sender/receiver might get it too
-	var/show_char_sender = !is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
-	var/show_char_recip = !C.is_mentor() && CONFIG_GET(flag/mentors_mobname_only)
-	for(var/client/X in GLOB.mentors | GLOB.admins)
-		if(X.key!=key && X.key!=C.key)	//check client/X is an Mentor and isn't the sender or recipient
-			to_chat(X, "<B><font color='green'>Mentor PM: [key_name_mentor(src, X, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, X, 0, 0, show_char_recip)]:</B> <font color ='blue'> [msg]</font>") //inform X
+
+	var/id = "None"
+
+	if(!is_mentor())
+		var/datum/request/request = GLOB.mentor_requests.requests[ckey][length(GLOB.mentor_requests.requests[ckey])]
+		if(request)
+			id = "[request.id]"
+	else
+		var/datum/request/request = GLOB.mentor_requests.requests[chosen_client.ckey][length(GLOB.mentor_requests.requests[chosen_client.ckey])]
+		if(request)
+			id = "[request.id]"
+
+	if(is_mentor() && chosen_client.is_mentor())
+		id = "Both Mentors, ID Retrival may be wrong: [id]"
+
+	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
+	if(regular_webhook_url)
+		var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, ckey)
+		if(!embed)
+			return
+		send2mentorchat_webhook(embed, key)
+
+	/// We don't use message_Mentors here because the sender/receiver might get it too
+	for(var/client/honked_clients in GLOB.mentors | GLOB.admins)
+		/// Check client/honked_clients is an Mentor and isn't the Sender/Recipient
+		if(honked_clients.key!=key && honked_clients.key!=chosen_client.key)
+			to_chat(honked_clients,
+				type = MESSAGE_TYPE_MODCHAT,
+				html = "<B><font color='green'>Mentor PM: [key_name_mentor(src, honked_clients, FALSE, FALSE)]-&gt;[key_name_mentor(chosen_client, honked_clients, FALSE, FALSE)]:</B> <font color = #5c00e6> <span class='message linkify'>[msg]</span></font>",
+				confidential = TRUE)
+
+/proc/format_mhelp_embed_simple(msg, id, ckey)
+	if(!msg)
+		return
+	var/datum/discord_embed/embed = new()
+	embed.title = "Mentor Reply"
+	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
+	embed.fields = list(
+		"MENTOR ID" = id,
+		"From:" = ckey,
+		"Contents" = msg,
+	)
+	return embed

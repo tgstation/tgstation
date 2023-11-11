@@ -1,5 +1,6 @@
 /datum/ai_controller/chicken
 	movement_delay = 0.4 SECONDS
+	ai_movement = /datum/ai_movement/basic_avoidance
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_target/low_health,

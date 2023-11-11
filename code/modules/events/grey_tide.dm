@@ -8,6 +8,8 @@
 	description = "Bolts open all doors in one or more departments."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 7
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_SPOOKY)
 
 /datum/round_event/grey_tide
 	announce_when = 50
@@ -21,6 +23,7 @@
 	announce_when = rand(50, 60)
 	end_when = rand(20, 30)
 	severity = rand(1,3)
+	setup = TRUE
 
 	var/list/potential_areas = list(/area/station/command,
 		/area/station/engineering,

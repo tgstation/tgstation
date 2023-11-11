@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(oozeling_last_names, world.file2list("strings/names/ooze_last.t
 GLOBAL_LIST_INIT(simian_last_names, world.file2list("monkestation/strings/names/simian_last.txt"))
 GLOBAL_LIST_INIT(simian_names_female, world.file2list("monkestation/strings/names/simian_female_first.txt"))
 GLOBAL_LIST_INIT(simian_names_male, world.file2list("monkestation/strings/names/simian_male_first.txt"))
+GLOBAL_LIST_INIT(cyberauth_names, world.file2list("strings/names/cyberauth.txt"))
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
 GLOBAL_LIST_INIT(ing_verbs, world.file2list("strings/names/ing_verbs.txt"))

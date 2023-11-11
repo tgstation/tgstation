@@ -460,8 +460,9 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "re" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = 30
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -488,10 +489,8 @@
 /turf/open/floor/circuit/red,
 /area/station/engineering/supermatter/room)
 "sz" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "sF" = (
@@ -508,7 +507,6 @@
 /area/station/engineering/supermatter/room)
 "sY" = (
 /obj/effect/turf_decal/loading_area,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "th" = (
@@ -538,6 +536,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/warning/no_smoking{
+	pixel_x = 30
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "uc" = (
@@ -605,6 +606,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/structure/cable,
 /turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
+"vz" = (
+/obj/structure/cable,
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/circuit/red,
 /area/station/engineering/supermatter/room)
 "vD" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -1446,10 +1452,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "Wo" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
@@ -1493,10 +1495,6 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "Yu" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
@@ -2012,7 +2010,7 @@ LO
 rW
 Qn
 dq
-Ar
+vz
 Ee
 fx
 Ar

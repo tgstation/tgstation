@@ -93,6 +93,8 @@
 
 	///Range that they can listen from different than canhear_range
 	var/listening_range
+	///can we radio host
+	var/radio_host = FALSE
 
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
@@ -164,6 +166,7 @@
 		add_radio(src, GLOB.radiochannels[channel_name])
 
 	add_radio(src, FREQ_COMMON)
+	add_radio(src, FREQ_RADIO) //monkestation edit
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -279,6 +282,9 @@
 	if(!talking_movable.try_speak(message))
 		return
 
+	if(channel == FREQ_RADIO && !radio_host)
+		return
+
 	if(use_command)
 		spans |= SPAN_COMMAND
 
@@ -388,6 +394,9 @@
 	// allow checks: are we listening on that frequency?
 	if (input_frequency == frequency)
 		return TRUE
+	if (input_frequency == FREQ_RADIO)
+		return TRUE
+
 	for(var/ch_name in channels)
 		if(channels[ch_name] & FREQ_LISTENING)
 			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)

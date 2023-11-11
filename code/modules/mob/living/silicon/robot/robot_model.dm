@@ -21,6 +21,8 @@
 	var/model_select_icon = "nomod"
 	///Produces the icon for the borg and, if no special_light_key is set, the lights
 	var/cyborg_base_icon = "robot"
+	///Keeps track of alternate icon files for the borg
+	var/cyborg_base_icon_file = 'icons/mob/silicon/robots.dmi'
 	///If we want specific lights, use this instead of copying lights in the dmi
 	var/special_light_key
 	///Holds all the usable modules (tools)
@@ -238,6 +240,7 @@
 	cyborg.diag_hud_set_status()
 	cyborg.diag_hud_set_borgcell()
 	cyborg.diag_hud_set_aishell()
+	cyborg.update_icons()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
 	INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
@@ -829,6 +832,7 @@
 		"Kent" = list(SKIN_ICON_STATE = "kent", SKIN_LIGHT_KEY = "medical", SKIN_HAT_OFFSET = 3),
 		"Tophat" = list(SKIN_ICON_STATE = "tophat", SKIN_LIGHT_KEY = NONE, SKIN_HAT_OFFSET = INFINITY),
 		"Waitress" = list(SKIN_ICON_STATE = "service_f"),
+		"Kerfus" = list(SKIN_ICON_STATE = "kerfus_service", SKIN_LIGHT_KEY = NONE, SKIN_ICON = CYBORG_ICON_CARGO),
 	)
 
 /obj/item/robot_model/service/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
@@ -951,7 +955,7 @@
 	robot.equip_module_to_slot(locate(/obj/item/claymore/highlander/robot) in basic_modules, 1)
 	robot.equip_module_to_slot(locate(/obj/item/pinpointer/nuke) in basic_modules, 2)
 	robot.place_on_head(new /obj/item/clothing/head/beret/highlander(robot)) //THE ONLY PART MORE IMPORTANT THAN THE SWORD IS THE HAT
-	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER)
+	ADD_TRAIT(robot.hat, TRAIT_NODROP, HIGHLANDER_TRAIT)
 
 
 // ------------------------------------------ Storages

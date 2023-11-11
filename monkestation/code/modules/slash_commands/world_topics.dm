@@ -54,3 +54,33 @@
 	var/datum/http_request/request = new()
 	request.prepare(RUSTG_HTTP_METHOD_POST, webhook_url, json_encode(webhook_info), headers, "tmp/response.json")
 	request.begin_async()
+
+/datum/world_topic/reply_mentor
+	keyword = "mentor_reply"
+	require_comms_key = TRUE
+
+/datum/world_topic/reply_mentor/Run(list/input)
+	var/id = input["ID"]
+	if(!id)
+		return
+	var/datum/request/retrieved = GLOB.mentor_requests.requests_by_id[text2num(id)]
+	if(!retrieved)
+		return
+	var/mob/M = retrieved.owner?.mob
+	webhook_mentor_pm(M, input["from"], id, input["reply_contents"])
+
+/datum/world_topic/reply_mentor/proc/webhook_mentor_pm(mob/reply, from, id, msg)
+	if(!reply)
+		return
+	var/client/chosen_client = reply.client
+	if(!chosen_client)
+		return
+
+	to_chat(chosen_client, "<font color='purple'>Mentor PM from-<b>[key_name_mentor(from, chosen_client, TRUE, FALSE, FALSE)]</b>: [msg]</font>")
+
+	var/regular_webhook_url = CONFIG_GET(string/regular_mentorhelp_webhook_url)
+	if(regular_webhook_url)
+		var/datum/discord_embed/embed = format_mhelp_embed_simple(msg, id, from)
+		if(!embed)
+			return
+		send2mentorchat_webhook(embed, from)
