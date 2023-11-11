@@ -407,3 +407,23 @@
       pestle and mortar
   - rscdel: Removed duplicate shutter from HoP office in birdboat, air alarm in northstar
       maint, and portable air pump in northstar maint.
+2023-11-11:
+  DaCoolBoss:
+  - rscadd: 4 new space ruins
+  Jacquerel:
+  - image: Adds yet another bar sign, this one mining themed
+  KingkumaArt:
+  - bugfix: fixed engi crossbow being able to be used onehanded + ability to craft
+      with sci inducers
+  MTandi:
+  - qol: Ordnance burn, freezing and supermatter chamber air alarms now show the air
+      contents on the tile of the connected sensor inside the chamber.
+  nikothedude:
+  - balance: Snails no longer receive blunt wounds, meaning sharp weapons can dismember
+      them more easily
+  - balance: Slimes can no longer receive dislocations
+  timothymtorres:
+  - bugfix: Fix mapping linter not identifying duplicate blacklisted objects on a
+      turf
+  - code_imp: Add a mapping linter to check for stacked machinery
+  - rscdel: Remove duplicate windows from birdshot, delta, and anomaly research ruin.
