@@ -40,9 +40,9 @@ for cutter_template in glob.glob("..\\..\\icons\\**\*.toml", recursive = True):
 
 # Execute cutter
 if platform.system() == "Windows":
-    subprocess.run("..\\build\\build.bat --force-recut --ci icon-cutter")
+    subprocess.run("../build/build.bat --force-recut --ci icon-cutter")
 else:
-    subprocess.run("..\\build\\build --force-recut --ci icon-cutter")
+    subprocess.run("../build/build --force-recut --ci icon-cutter", shell = True)
 
 
 for output_name in output_hash:
