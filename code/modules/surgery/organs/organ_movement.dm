@@ -99,7 +99,11 @@
 	if(limb_owner)
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
 
-	add_to_limb(limb_owner.get_bodypart(deprecise_zone(zone)))
+	// The true movement
+	forceMove(bodypart)
+	bodypart.contents |= src
+	ownerlimb = bodypart
+
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(forced_removal))
 
 	// Apply unique side-effects. Return value does not matter.
@@ -176,8 +180,12 @@
 	if(limb_owner)
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
 
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! remove_from_limb moves the organ, so we unregister before we move them physically
-	remove_from_limb()
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! we moves the organ right after, so we unregister before we move them physically
+
+	// The true movement is here
+	moveToNullspace()
+	ownerlimb.contents -= src
+	ownerlimb = null
 
 	on_limb_remove(limb)
 

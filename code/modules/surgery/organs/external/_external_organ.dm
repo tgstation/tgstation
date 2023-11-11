@@ -53,22 +53,9 @@
 	if(restyle_flags)
 		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
-/obj/item/organ/external/Destroy()
-	if(owner)
-		Remove(owner, special=TRUE)
-	else if(ownerlimb)
-		remove_from_limb()
-
-	return ..()
-
-/obj/item/organ/external/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/on_mob_insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	if(!should_external_organ_apply_to(type, receiver))
 		stack_trace("adding a [type] to a [receiver.type] when it shouldn't be!")
-
-	var/obj/item/bodypart/limb = receiver.get_bodypart(deprecise_zone(zone))
-
-	if(!limb)
-		return FALSE
 
 	. = ..()
 
@@ -82,9 +69,6 @@
 		bodypart_overlay.set_appearance_from_name(feature_name)
 		bodypart_overlay.imprint_on_next_insertion = FALSE
 
-	ownerlimb = limb
-	add_to_limb(ownerlimb)
-
 	if(external_bodytypes)
 		receiver.synchronize_bodytypes()
 
@@ -92,36 +76,20 @@
 
 /obj/item/organ/external/on_mob_remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
+	organ_owner.synchronize_bodytypes()
 	organ_owner.update_body_parts()
 
-/obj/item/organ/external/on_limb_remove(mob/living/carbon/organ_owner, special)
-	. = ..()
-	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
-
-///Transfers the organ to the limb, and to the limb's owner, if it has one.
-/obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
-	if(owner)
-		Remove(owner, special = TRUE)
-	else if(ownerlimb)
-		remove_from_limb()
-
-	if(bodypart_owner)
-		Insert(bodypart_owner, TRUE)
-	else
-		add_to_limb(bodypart)
-
-/obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
+/obj/item/organ/external/on_limb_insert(obj/item/bodypart/bodypart)
 	bodypart.add_bodypart_overlay(bodypart_overlay)
 	return ..()
 
-/obj/item/organ/external/remove_from_limb(special = FALSE)
-	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
-	if(ownerlimb.owner && external_bodytypes)
-		ownerlimb.owner.synchronize_bodytypes()
+/obj/item/organ/external/on_limb_remove(obj/item/bodypart/bodypart)
+	bodypart.remove_bodypart_overlay(bodypart_overlay)
 
-	if(!special && use_mob_sprite_as_obj_sprite) //so we're being taken out and dropped
+	if(use_mob_sprite_as_obj_sprite)
 		update_appearance(UPDATE_OVERLAYS)
 
+	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
 	return ..()
 
 /proc/should_external_organ_apply_to(obj/item/organ/external/organpath, mob/living/carbon/target)

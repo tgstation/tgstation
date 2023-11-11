@@ -120,12 +120,6 @@
 					to_chat(phantom_owner, span_warning("You feel your [mutation] deactivating from the loss of your [body_zone]!"))
 					phantom_owner.dna.force_lose(mutation)
 
-		for(var/obj/item/organ/organ as anything in phantom_owner.organs) //internal organs inside the dismembered limb are dropped.
-			var/org_zone = check_zone(organ.zone)
-			if(org_zone != body_zone)
-				continue
-			organ.transfer_to_limb(src, phantom_owner)
-
 	update_icon_dropped()
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
@@ -191,57 +185,34 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-///Transfers the organ to the limb, and to the limb's owner, if it has one. This is done on drop_limb().
-/obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
-	Remove(bodypart_owner)
-	add_to_limb(bodypart)
-
-///Adds the organ to a bodypart, used in transfer_to_limb()
-/obj/item/organ/proc/add_to_limb(obj/item/bodypart/bodypart)
-	forceMove(bodypart)
-	bodypart.contents |= src
-	ownerlimb = bodypart
-
 /// Removes the organ from the limb, placing it into nullspace.
 /obj/item/organ/proc/remove_from_limb()
 	moveToNullspace()
 	ownerlimb.contents -= src
 	ownerlimb = null
 
-/obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
-	..()
-
-	head.brain = src
-	if(brainmob)
-		head.brainmob = brainmob
-		brainmob = null
-		head.brainmob.forceMove(head)
-		head.brainmob.set_stat(DEAD)
-
-/obj/item/organ/internal/eyes/add_to_limb(obj/item/bodypart/head/head)
+/obj/item/organ/internal/eyes/on_limb_insert(obj/item/bodypart/head/head)
+	. = ..()
 	head.eyes = src
 	..()
 
-/obj/item/organ/internal/ears/add_to_limb(obj/item/bodypart/head/head)
+/obj/item/organ/internal/ears/on_limb_insert(obj/item/bodypart/head/head)
 	head.ears = src
 	..()
 
-/obj/item/organ/internal/tongue/add_to_limb(obj/item/bodypart/head/head)
+/obj/item/organ/internal/tongue/on_limb_insert(obj/item/bodypart/head/head)
 	head.tongue = src
 	..()
 
-/obj/item/organ/internal/eyes/remove_from_limb()
-	var/obj/item/bodypart/head/head = ownerlimb
+/obj/item/organ/internal/eyes/on_limb_remove(obj/item/bodypart/head/limb)
 	head.eyes = src
 	..()
 
-/obj/item/organ/internal/ears/remove_from_limb()
-	var/obj/item/bodypart/head/head = ownerlimb
+/obj/item/organ/internal/ears/on_limb_remove(obj/item/bodypart/head/limb)
 	head.ears = src
 	..()
 
-/obj/item/organ/internal/tongue/remove_from_limb()
-	var/obj/item/bodypart/head/head = ownerlimb
+/obj/item/organ/internal/tongue/on_limb_remove(obj/item/bodypart/head/limb)
 	head.tongue = src
 	..()
 
