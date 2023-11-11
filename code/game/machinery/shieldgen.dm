@@ -3,6 +3,7 @@
 	desc = "An energy shield used to contain hull breaches."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
+	integrity_failure = 0.5
 	density = TRUE
 	move_resist = INFINITY
 	opacity = FALSE
