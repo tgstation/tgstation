@@ -48,7 +48,7 @@
 /datum/component/breed/proc/breed_with_partner(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	if(source.combat_mode)
+	if(source.istate & ISTATE_HARM)
 		return
 
 	if(!is_type_in_typecache(target, can_breed_with))

@@ -66,7 +66,7 @@
 				return BULLET_ACT_HIT
 			bullet.reflect(src)
 
-				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
+			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 	if(check_shields(bullet, bullet.damage, "the [bullet.name]", PROJECTILE_ATTACK, bullet.armour_penetration, bullet.damage_type))
 		bullet.on_hit(src, 100, def_zone, piercing_hit)

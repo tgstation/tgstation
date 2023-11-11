@@ -163,6 +163,10 @@
 		return TRUE
 	if (target.getToxLoss() > 0 && heal_tox)
 		return TRUE
+	if (target.getOxyLoss() > 0 && heal_oxy)
+		return TRUE
+	if (target.getToxLoss() > 0 && heal_tox)
+		return TRUE
 	if (!iscarbon(target))
 		return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn)
 	var/mob/living/carbon/carbon_target = target
