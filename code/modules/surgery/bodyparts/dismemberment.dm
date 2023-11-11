@@ -188,31 +188,31 @@
 /// Removes the organ from the limb, placing it into nullspace.
 /obj/item/organ/proc/remove_from_limb()
 	moveToNullspace()
-	ownerlimb.contents -= src
-	ownerlimb = null
+	bodypart_owner.contents -= src
+	bodypart_owner = null
 
-/obj/item/organ/internal/eyes/on_limb_insert(obj/item/bodypart/head/head)
+/obj/item/organ/internal/eyes/on_bodypart_insert(obj/item/bodypart/head/head)
 	. = ..()
 	head.eyes = src
 	..()
 
-/obj/item/organ/internal/ears/on_limb_insert(obj/item/bodypart/head/head)
+/obj/item/organ/internal/ears/on_bodypart_insert(obj/item/bodypart/head/head)
 	head.ears = src
 	..()
 
-/obj/item/organ/internal/tongue/on_limb_insert(obj/item/bodypart/head/head)
+/obj/item/organ/internal/tongue/on_bodypart_insert(obj/item/bodypart/head/head)
 	head.tongue = src
 	..()
 
-/obj/item/organ/internal/eyes/on_limb_remove(obj/item/bodypart/head/limb)
+/obj/item/organ/internal/eyes/on_bodypart_remove(obj/item/bodypart/head/head)
 	head.eyes = src
 	..()
 
-/obj/item/organ/internal/ears/on_limb_remove(obj/item/bodypart/head/limb)
+/obj/item/organ/internal/ears/on_bodypart_remove(obj/item/bodypart/head/head)
 	head.ears = src
 	..()
 
-/obj/item/organ/internal/tongue/on_limb_remove(obj/item/bodypart/head/limb)
+/obj/item/organ/internal/tongue/on_bodypart_remove(obj/item/bodypart/head/head)
 	head.tongue = src
 	..()
 

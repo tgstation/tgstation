@@ -58,7 +58,7 @@
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
 
-/obj/item/organ/internal/tongue/carp/on_limb_insert(obj/item/bodypart/limb)
+/obj/item/organ/internal/tongue/carp/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
 	limb.unarmed_damage_low = 10
 	limb.unarmed_damage_high = 15
@@ -74,7 +74,7 @@
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
 
-/obj/item/organ/internal/tongue/carp/on_limb_remove(obj/item/bodypart/limb)
+/obj/item/organ/internal/tongue/carp/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
 	limb.unarmed_damage_low = initial(limb.unarmed_damage_low)
 	limb.unarmed_damage_high = initial(limb.unarmed_damage_high)

@@ -15,14 +15,14 @@
 		TEST_ASSERT(!(organ in hollow_boy.organs), "Organ '[organ.name] remained inside human after forceMove into nullspace.")
 		TEST_ASSERT(organ.loc == null, "Organ '[organ.name] did not move to nullspace after being forced to.")
 		TEST_ASSERT(!(organ.owner), "Organ '[organ.name] kept reference to human after forceMove into nullspace.")
-		TEST_ASSERT(!(organ.ownerlimb), "Organ '[organ.name] kept reference to bodypart after forceMove into nullspace.")
+		TEST_ASSERT(!(organ.bodypart_owner), "Organ '[organ.name] kept reference to bodypart after forceMove into nullspace.")
 
 	for(var/obj/item/bodypart/bodypart as anything in hollow_boy.bodyparts)
 		bodypart = new bodypart.type() //fresh, duplice bodypart with no insides
 		for(var/obj/item/organ/organ as anything in removed_organs)
 			if(bodypart.body_zone != organ.zone)
 				continue
-			organ.limb_insert(bodypart) // Put all the old organs back in
+			organ.bodypart_insert(bodypart) // Put all the old organs back in
 
 		bodypart.replace_limb(hollow_boy) //so stick new bodyparts on them with their old organs
 

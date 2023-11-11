@@ -7,7 +7,7 @@
 	/// The mob that owns this organ.
 	var/mob/living/carbon/owner = null
 	/// Reference to the limb we're inside of
-	var/obj/item/bodypart/ownerlimb
+	var/obj/item/bodypart/bodypart_owner
 	/// The cached info about the blood this organ belongs to
 	var/list/blood_dna_info = list("Synthetic DNA" = "O+") // not every organ spawns inside a person
 	/// The body zone this organ is supposed to inhabit.

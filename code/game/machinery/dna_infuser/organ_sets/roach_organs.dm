@@ -82,7 +82,7 @@
 	RegisterSignal(human_owner, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(do_block_effect))
 	human_owner.physiology.knockdown_mod *= 3
 
-/obj/item/organ/internal/heart/roach/on_limb_insert(obj/item/bodypart/limb)
+/obj/item/organ/internal/heart/roach/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
 	limb.add_bodypart_overlay(roach_shell)
 
@@ -96,7 +96,7 @@
 	UnregisterSignal(human_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))
 	human_owner.physiology.knockdown_mod /= 3
 
-/obj/item/organ/internal/heart/roach/on_limb_remove(obj/item/bodypart/limb)
+/obj/item/organ/internal/heart/roach/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
 
 	limb.remove_bodypart_overlay(roach_shell)

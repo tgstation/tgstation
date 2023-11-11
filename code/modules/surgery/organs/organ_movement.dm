@@ -16,7 +16,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	mob_insert(receiver, special, drop_if_replaced)
-	limb_insert(limb_owner = receiver)
+	bodypart_insert(limb_owner = receiver)
 
 	return TRUE
 
@@ -30,7 +30,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	mob_remove(organ_owner, special)
-	limb_remove(limb_owner = organ_owner)
+	bodypart_remove(limb_owner = organ_owner)
 
 /*
  * Insert the organ into the select mob.
@@ -72,6 +72,8 @@
 
 	on_mob_insert(receiver, special)
 
+	return TRUE
+
 /// Called after the organ is inserted into a mob.
 /// Adds Traits, Actions, and Status Effects on the mob in which the organ is impanted.
 /// Override this proc to create unique side-effects for inserting your organ. Must be called by overrides.
@@ -93,24 +95,26 @@
 
 /// Insert an organ into a limb, assume the limb as always detached and include no owner operations here (except the get_bodypart helper here I guess)
 /// Give EITHER a limb OR a limb owner
-/obj/item/organ/proc/limb_insert(obj/item/bodypart/limb, mob/living/carbon/limb_owner)
+/obj/item/organ/proc/bodypart_insert(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(limb_owner)
-		limb = limb_owner.get_bodypart(deprecise_zone(zone))
+		bodypart = limb_owner.get_bodypart(deprecise_zone(zone))
 
 	// The true movement
 	forceMove(bodypart)
 	bodypart.contents |= src
-	ownerlimb = bodypart
+	bodypart_owner = bodypart
 
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(forced_removal))
 
 	// Apply unique side-effects. Return value does not matter.
-	on_limb_insert()
+	on_bodypart_insert(bodypart)
+
+	return TRUE
 
 /// Add any limb specific effects you might want here
-/obj/item/organ/proc/on_limb_insert(obj/item/bodypart/limb)
+/obj/item/organ/proc/on_bodypart_insert(obj/item/bodypart/limb)
 	SHOULD_CALL_PARENT(TRUE)
 
 /*
@@ -130,6 +134,8 @@
 	owner = null
 
 	on_mob_remove(organ_owner, special)
+
+	return TRUE
 
 /// Called after the organ is removed from a mob.
 /// Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
@@ -174,7 +180,7 @@
 
 /// Called to remove an organ from a limb. Do not put any mob operations here (except the bodypart_getter at the start)
 /// Give EITHER a limb OR a limb_owner
-/obj/item/organ/proc/limb_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner)
+/obj/item/organ/proc/bodypart_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(limb_owner)
@@ -184,13 +190,15 @@
 
 	// The true movement is here
 	moveToNullspace()
-	ownerlimb.contents -= src
-	ownerlimb = null
+	bodypart_owner.contents -= src
+	bodypart_owner = null
 
-	on_limb_remove(limb)
+	on_bodypart_remove(limb)
+
+	return TRUE
 
 /// Called on limb removal to remove limb specific limb effects or statusses
-/obj/item/organ/proc/on_limb_remove(obj/item/bodypart/limb)
+/obj/item/organ/proc/on_bodypart_remove(obj/item/bodypart/limb)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
@@ -202,8 +210,8 @@
 
 	if(owner)
 		Remove(owner)
-	else if(ownerlimb)
-		limb_remove(limb_owner = owner)
+	else if(bodypart_owner)
+		bodypart_remove(limb_owner = owner)
 	else
 		stack_trace("Force removed an already removed organ!")
 
