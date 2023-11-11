@@ -1,4 +1,4 @@
-/datum/component/particle_spewer/weh
+/datum/component/particle_spewer/shooting_star
 	icon_file = 'goon/icons/effects/particles.dmi'
 	particle_state = "starsmall"
 
@@ -9,7 +9,7 @@
 	//has a chance to randomly change on animate
 	var/direction = NORTH
 
-/datum/component/particle_spewer/weh/animate_particle(obj/effect/abstract/particle/spawned)
+/datum/component/particle_spewer/shooting_star/animate_particle(obj/effect/abstract/particle/spawned)
 	if(prob(10))
 		direction = pick(NORTH, SOUTH, EAST, WEST)
 	
