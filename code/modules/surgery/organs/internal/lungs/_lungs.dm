@@ -64,6 +64,8 @@
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
 
+	/// All incoming breaths will have their pressure multiplied against this. Higher values allow more air to be breathed at once,
+	/// while lower values can cause suffocation.
 	var/received_pressure_mult = 1
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
