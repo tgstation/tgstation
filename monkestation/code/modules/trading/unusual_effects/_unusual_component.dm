@@ -24,7 +24,7 @@
 
 	if(fresh_unusual)
 		original_owner_ckey = client_ckey
-		round_id = GLOB.round_id
+		round_id = text2num(GLOB.round_id)
 	source_object = parent
 
 	source_object.AddComponent(src.particle_path)
