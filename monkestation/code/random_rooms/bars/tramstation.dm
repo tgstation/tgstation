@@ -8,6 +8,12 @@
 	weight = 8
 	station_name = "Tramstation"
 
+/datum/map_template/random_room/random_bar/tramstation_base/slum_bar
+    name = "Slum Tram Bar"
+    room_id = "tram_slum_bar"
+    mappath = "monkestation/_maps/RandomBars/Tram/tram_slum_bar.dmm"
+    weight = 6
+
 /datum/map_template/random_room/random_bar/tramstation_base/ocean
 	name = "Ocean Tram Bar"
 	room_id = "tram_bar_ocean"
