@@ -25,7 +25,7 @@
 
 /obj/item/paper/fluff/beachside_bar
 	name = "lighting system ad"
-	default_raw_text = {"With the new Nanotrasen(tm) Magilight Syteme(tm) you too can have perfect lighting at all times of orbit!"}
+	default_raw_text = {"With the new Nanotrasen(tm) Magilight System(tm) you too can have perfect lighting at all times of orbit!"}
 
 /obj/item/stack/tile/fakesand
 	name = "fake sand tiles"
