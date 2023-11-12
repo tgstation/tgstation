@@ -6468,7 +6468,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/medical/virology)
 "bfa" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -59593,7 +59593,7 @@
 	dir = 4;
 	name = "Plaguebearer"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/medical/virology)
 "ukj" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
