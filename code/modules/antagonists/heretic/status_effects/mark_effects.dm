@@ -247,16 +247,16 @@
 	owner.Paralyze(2 SECONDS)
 	return ..()
 
-// MARK OF LOCK
+// MARK OF KNOCK
 
-/datum/status_effect/eldritch/lock
+/datum/status_effect/eldritch/knock
 	effect_icon_state = "emark7"
 	duration = 10 SECONDS
 
-/datum/status_effect/eldritch/lock/on_apply()
+/datum/status_effect/eldritch/knock/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
 
-/datum/status_effect/eldritch/lock/on_remove()
+/datum/status_effect/eldritch/knock/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ALWAYS_NO_ACCESS, STATUS_EFFECT_TRAIT)
 	return ..()

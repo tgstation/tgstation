@@ -90,9 +90,9 @@
 		return
 
 	//Do pause/unpause/nothing for the hyperloop
-	if(should_loop && hyperloop.status & MOVELOOP_STATUS_PAUSED)
+	if(should_loop && hyperloop.paused)
 		hyperloop.resume_loop()
-	else if(!should_loop && !(hyperloop.status & MOVELOOP_STATUS_PAUSED))
+	else if(!should_loop && !hyperloop.paused)
 		hyperloop.pause_loop()
 
 ///Check if we're "holding on" to the shuttle

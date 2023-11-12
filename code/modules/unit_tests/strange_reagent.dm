@@ -97,8 +97,6 @@
 /datum/unit_test/strange_reagent/proc/test_death_no_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
 	target.death()
-	if(QDELETED(target))
-		return
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
 	TEST_ASSERT_NOTEQUAL(target.stat, DEAD, "Strange Reagent did not revive a dead target type [target.type].")
@@ -109,8 +107,6 @@
 		return
 
 	target.death()
-	if(QDELETED(target))
-		return
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
 	TEST_ASSERT_NOTEQUAL(target.stat, DEAD, "Strange Reagent did not revive a dead target type [target.type].")
@@ -130,8 +126,6 @@
 		return
 
 	target.death()
-	if(QDELETED(target))
-		return
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_full_heal)
 	TEST_ASSERT_EQUAL(target_max_health, get_target_organic_health_manual(target), "Strange Reagent did not fully heal a dead target type [target.type] with the expected amount.")
@@ -139,8 +133,6 @@
 /datum/unit_test/strange_reagent/proc/test_death_from_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
 	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 0.9)) // 10% under the damage cap
-		return
-	if(QDELETED(target))
 		return
 
 	update_amounts(target)
@@ -151,9 +143,7 @@
 	var/mob/living/target = allocate_new_target(target_type)
 	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 1.1)) // 10% over the damage cap
 		return
-	if(QDELETED(target))
-		return
-		
+
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Strange Reagent revived a target type [target.type] with more than double their max health in damage.")

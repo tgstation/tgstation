@@ -1,4 +1,4 @@
-import { BooleanLike, classes } from 'common/react';
+import { classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
@@ -16,7 +16,6 @@ type RoleInfo = {
 
 type PlayerInfo = {
   name: string;
-  is_you: BooleanLike;
   ref: string;
   alive: string;
   possible_actions: ActionInfo[];
@@ -432,8 +431,7 @@ const MafiaPlayers = (props, context) => {
           <Flex.Item className="Section__title candystripe" key={player.ref}>
             <Stack align="center">
               <Stack.Item grow color={!player.alive && 'red'}>
-                {player.name}
-                {player.is_you && ' (YOU)'} {!player.alive && '(DEAD)'}
+                {player.name} {!player.alive && '(DEAD)'}
               </Stack.Item>
               <Stack.Item>
                 {player.votes !== undefined &&

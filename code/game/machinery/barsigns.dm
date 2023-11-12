@@ -37,7 +37,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	update_appearance()
 
 /obj/machinery/barsign/update_icon_state()
-	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
+	if(!(machine_stat & (NOPOWER|BROKEN)) && chosen_sign && chosen_sign.icon_state)
 		icon_state = chosen_sign.icon_state
 	else
 		icon_state = "empty"
@@ -60,7 +60,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /obj/machinery/barsign/update_overlays()
 	. = ..()
 
-	if(((machine_stat & NOPOWER) && !(machine_stat & EMPED)) || (machine_stat & BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
 	if(chosen_sign && chosen_sign.light_mask)
@@ -292,12 +292,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "Honk."
 	neon_color = "#FF998A"
 
-/datum/barsign/le_cafe_silencieux
-	name = "Le Café Silencieux"
-	icon_state = "le_cafe_silencieux"
-	desc = "..."
-	neon_color = "#ffffff"
-
 /datum/barsign/thenest
 	name = "The Nest"
 	icon_state = "thenest"
@@ -399,12 +393,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	icon_state = "maltroach"
 	desc = "Mothroaches politely greet you into the bar, or are they greeting eachother?"
 	neon_color = "#649e8a"
-
-/datum/barsign/rock_bottom
-	name = "Rock Bottom"
-	icon_state = "rock-bottom"
-	desc = "When it feels like you're stuck in a pit, might as well have a drink."
-	neon_color = "#aa2811"
 
 /datum/barsign/orangejuice
 	name = "Oranges' Juicery"

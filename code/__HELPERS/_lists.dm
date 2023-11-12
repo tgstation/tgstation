@@ -900,7 +900,7 @@
 
 ///Gets the total amount of everything in the associative list.
 /proc/assoc_value_sum(list/input)
-	var/keys = 0
+	var/list/keys = list()
 	for(var/key in input)
 		keys += input[key]
 	return keys
