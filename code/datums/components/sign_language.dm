@@ -23,13 +23,6 @@
 * - Action sprite created by @Wallemations (icons/hud/actions.dmi:sign_language)
 */
 /datum/component/sign_language
-	/** Tonal indicator isn't working and I'm not fixing it (I tried)
- 	/// The tonal indicator shown when sign language users finish sending a message. If it's empty, none appears.
-	var/tonal_indicator = null
-	/// The timerid for our sign language tonal indicator.
-	var/tonal_timerid
-	*/
-
 	/// Any symbols to sanitize from signed messages.
 	var/regex/omissions = new ("\[!?\]", "g")
 	/// The action for toggling sign language.
@@ -86,7 +79,7 @@
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(on_treat_living_message))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
-	// Not needed:  RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
+	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
 	RegisterSignal(carbon_parent, COMSIG_MOB_TRY_INVOKE_SPELL, PROC_REF(can_cast_spell))
 	return TRUE
 
@@ -113,7 +106,7 @@
 		COMSIG_LIVING_TREAT_MESSAGE,
 		COMSIG_MOVABLE_USING_RADIO,
 		COMSIG_MOVABLE_SAY_QUOTE,
-		// Not needed:	COMSIG_MOB_SAY,
+		COMSIG_MOB_SAY,
 		COMSIG_MOB_TRY_INVOKE_SPELL,
 	))
 	return TRUE
@@ -235,28 +228,11 @@
 	message_args[TREAT_TTS_MESSAGE_ARG] = ""
 
 /// Signal proc for [COMSIG_MOVABLE_SAY_QUOTE]
-/// Removes exclamation/question marks and handles eyebrows.
+/// Removes exclamation/question marks.
 /datum/component/sign_language/proc/on_say_quote(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
-	// Now redundant: message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
-
-	// The original message
-	var/message = message_args[SPEECH_MESSAGE]
-	// Is there a !
-	var/exclamation_found = findtext(message, "!")
-	// Is there a ?
-	var/question_found = findtext(message, "?")
-
-	// Prioritize questions
-	if(question_found)
-		source.visible_message(span_notice("[source] lowers [source.p_their()] eyebrows."))
-	else if(exclamation_found)
-		source.visible_message(span_notice("[source] raises [source.p_their()] eyebrows."))
-
-	// remove the ! and ? symbols from message, replacing them with periods
-	message = sanitize_message(message)
-	message_args[SPEECH_MESSAGE] = message
+	message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
 
 /// Signal proc for [COMSIG_MOVABLE_USING_RADIO]
 /// Disallows us from speaking on comms if we don't have the special trait.
@@ -265,8 +241,7 @@
 
 	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
 
-/** This doesn't work and has been moved.
- /// Replaces emphatic punctuation with periods. Changes tonal indicator and emotes eyebrow movement based on what is typed.
+/// Replaces emphatic punctuation with periods. Emotes eyebrow movement based on what is typed.
 /datum/component/sign_language/proc/on_say(mob/living/carbon/carbon_parent, list/speech_args)
 	SIGNAL_HANDLER
 
@@ -277,36 +252,15 @@
 	// Is there a ?
 	var/question_found = findtext(message, "?")
 
-	// Cut our last overlay before we replace it
-	if(timeleft(tonal_timerid) > 0)
-		remove_tonal_indicator()
-		deltimer(tonal_timerid)
 	// Prioritize questions
 	if(question_found)
-		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang1", TYPING_LAYER)
 		carbon_parent.visible_message(span_notice("[carbon_parent] lowers [carbon_parent.p_their()] eyebrows."))
 	else if(exclamation_found)
-		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang2", TYPING_LAYER)
 		carbon_parent.visible_message(span_notice("[carbon_parent] raises [carbon_parent.p_their()] eyebrows."))
-	// If either an exclamation or question are found
-	if(!isnull(tonal_indicator) && carbon_parent.client?.typing_indicators)
-		carbon_parent.add_overlay(tonal_indicator)
-		tonal_timerid = addtimer(CALLBACK(src, PROC_REF(remove_tonal_indicator)), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
-	else // If we're not gonna use it, just be sure we get rid of it
-		tonal_indicator = null
 
 	// remove the ! and ? symbols from message at the end
 	message = sanitize_message(message)
 	speech_args[SPEECH_MESSAGE] = message
-
-/// Removes the tonal indicator overlay completely
-/datum/component/sign_language/proc/remove_tonal_indicator()
-	if(isnull(tonal_indicator))
-		return
-	var/mob/living/carbon/carbon_parent = parent
-	carbon_parent.cut_overlay(tonal_indicator)
-	tonal_indicator = null
-*/
 
 #undef SIGN_OKAY
 #undef SIGN_ONE_HAND
