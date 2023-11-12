@@ -407,7 +407,12 @@
 	for(var/obj/item/organ/bodypart_organ in contents)
 		if(bodypart_organ.organ_flags & ORGAN_UNREMOVABLE)
 			continue
-		bodypart_organ.Remove(bodypart_organ.owner)
+		if(owner)
+			bodypart_organ.Remove(bodypart_organ.owner)
+		else
+			if(bodypart_organ.bodypart_remove(src))
+				bodypart_organ.forceMove(get_turf(src))
+
 	for(var/atom/movable/movable as anything in src)
 		movable.forceMove(drop_loc)
 
