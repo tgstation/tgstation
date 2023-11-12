@@ -29,9 +29,9 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/moon_parade.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
 	var/datum/action/cooldown/track_target/lunatic/moon_track = new/datum/action/cooldown/track_target/lunatic()
-	var/datum/action/cooldown/spell/touch/mansus_grasp/mansus_grasp = new/datum/action/cooldown/spell/touch/mansus_grasp()
+	var/datum/action/cooldown/spell/touch/mad_touch/mad_touch = new/datum/action/cooldown/spell/touch/mad_touch()
 
-	mansus_grasp.Grant(owner)
+	mad_touch.Grant(owner)
 	moon_track.Grant(owner)
 	return ..()
 

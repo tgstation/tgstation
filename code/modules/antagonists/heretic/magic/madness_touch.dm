@@ -1,7 +1,7 @@
-// Currently unused.
+// Used by Lunatics to lower sanity. Also applies a knockdown like the mansus grasp.
 /datum/action/cooldown/spell/touch/mad_touch
 	name = "Touch of Madness"
-	desc = "A touch spell that drains your enemy's sanity."
+	desc = "A touch spell that drains your enemy's sanity and knocks them down."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -30,4 +30,5 @@
 /datum/action/cooldown/spell/touch/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/human/victim, mob/living/carbon/caster)
 	to_chat(caster, span_warning("[victim.name] has been cursed!"))
 	victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	victim.Knockdown(2 SECONDS)
 	return TRUE
