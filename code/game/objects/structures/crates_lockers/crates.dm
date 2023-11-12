@@ -37,12 +37,17 @@
 	if(isnull(crate_paint_jobs))
 		crate_paint_jobs = list(
 		"Internals" = list("icon_state" = "o2crate"),
-		"Medical" = list("icon_state" = "medicalcrate"),
+		"Medical" = list("icon_state" = "medical"),
+		"Medical Plus" = list("icon_state" = "medicalcrate"),
 		"Radiation" = list("icon_state" = "radiation"),
 		"Hydrophonics" = list("icon_state" = "hydrocrate"),
 		"Science" = list("icon_state" = "scicrate"),
+		"Robotics" = list("icon_state" = "robo"),
 		"Solar" = list("icon_state" = "engi_e_crate"),
-		"Engineering" = list("icon_state" = "engi_crate")
+		"Engineering" = list("icon_state" = "engi_crate"),
+		"Atmospherics" = list("icon_state" = "atmos"),
+		"Cargo" = list("icon_state" = "cargo"),
+		"Command" = list("icon_state" = "centcom")
 	)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
