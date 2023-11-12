@@ -119,4 +119,3 @@
 #undef NO_ANSWER
 #undef POSITIVE_ANSWER
 #undef NEGATIVE_ANSWER
-
