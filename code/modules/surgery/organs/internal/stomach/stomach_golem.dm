@@ -74,7 +74,7 @@
 	return TRUE
 
 /datum/status_effect/golem_statued/get_examine_text()
-	return span_warning("[owner.p_They()] are as still as a statue!")
+	return span_warning("[owner.p_They()] [owner.p_are()] as still as a statue!")
 
 /datum/status_effect/golem_statued/on_remove()
 	owner.visible_message(span_notice("[owner] slowly stirs back into motion!"), span_notice("You have gathered enough strength to move your body once more."))

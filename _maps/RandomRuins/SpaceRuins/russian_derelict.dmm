@@ -519,6 +519,10 @@
 "fU" = (
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
+"gd" = (
+/obj/machinery/portable_atmospherics/canister/plasma,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/singulo)
 "ge" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -741,11 +745,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"jD" = (
-/obj/machinery/light/small/directional/east,
-/obj/structure/closet/emcloset,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/dorms)
 "jV" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -3625,15 +3624,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/cell)
-"Cd" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/table_frame,
-/obj/item/wallframe/apc{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/tech_storage)
 "Ce" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/airalarm/directional/north,
@@ -4075,10 +4065,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/rnd)
-"EC" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "ED" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access"
@@ -4248,11 +4234,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
-"Fy" = (
-/obj/machinery/light/small/directional/west,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "FB" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/closet,
@@ -4549,6 +4530,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/command/bridge)
+"GW" = (
+/obj/item/circuitboard/machine/smes,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/secure_storage)
 "GY" = (
 /obj/structure/cable,
 /turf/open/floor/iron/chapel{
@@ -4888,6 +4876,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
+"IZ" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/singulo)
 "Jc" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
@@ -4930,11 +4922,6 @@
 /obj/item/wallframe/firealarm,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"Jm" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "Jp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -6061,14 +6048,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
-"Ps" = (
-/obj/machinery/light/small/directional/east,
-/obj/item/circuitboard/machine/smes,
-/obj/structure/table,
-/obj/effect/spawner/random/maintenance,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/secure_storage)
 "Pt" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -6731,6 +6710,10 @@
 /obj/structure/chair,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/court_hall)
+"SI" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/dorms)
 "SJ" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -7596,6 +7579,15 @@
 "Xa" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/corridor)
+"Xb" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/table_frame,
+/obj/item/wallframe/apc{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/tech_storage)
 "Xd" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
@@ -9601,7 +9593,7 @@ Fq
 yq
 rm
 uf
-jD
+SI
 oU
 sm
 wc
@@ -10939,7 +10931,7 @@ rk
 QG
 QG
 Xt
-Cd
+Xb
 DT
 QG
 QG
@@ -11381,7 +11373,7 @@ rk
 rk
 sU
 sU
-EC
+gd
 CX
 PI
 PI
@@ -11726,7 +11718,7 @@ PI
 Ex
 pi
 FI
-Fy
+IZ
 FI
 FI
 zv
@@ -12856,7 +12848,7 @@ fg
 Jc
 gB
 PI
-Jm
+zv
 zv
 zv
 HX
@@ -13651,7 +13643,7 @@ rk
 rr
 rr
 ab
-Ps
+GW
 DL
 rr
 rr

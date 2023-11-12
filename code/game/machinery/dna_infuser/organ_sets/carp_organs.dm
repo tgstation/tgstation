@@ -62,7 +62,7 @@
 	. = ..()
 	limb.unarmed_damage_low = 10
 	limb.unarmed_damage_high = 15
-	limb.unarmed_stun_threshold = 15
+	limb.unarmed_effectiveness = 15
 
 /obj/item/organ/internal/tongue/carp/on_mob_remove(mob/living/carbon/tongue_owner)
 	. = ..()
@@ -74,11 +74,12 @@
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
 
-/obj/item/organ/internal/tongue/carp/on_bodypart_remove(obj/item/bodypart/limb)
+/obj/item/organ/internal/tongue/carp/on_bodypart_remove(obj/item/bodypart/head)
 	. = ..()
-	limb.unarmed_damage_low = initial(limb.unarmed_damage_low)
-	limb.unarmed_damage_high = initial(limb.unarmed_damage_high)
-	limb.unarmed_stun_threshold = initial(limb.unarmed_stun_threshold)
+
+	head.unarmed_damage_low = initial(head.unarmed_damage_low)
+	head.unarmed_damage_high = initial(head.unarmed_damage_high)
+	head.unarmed_effectiveness = initial(head.unarmed_effectiveness)
 
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()

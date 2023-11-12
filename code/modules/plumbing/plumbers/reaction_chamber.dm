@@ -4,7 +4,7 @@
 #define HEATER_COEFFICIENT 0.05
 
 /// maximum number of attempts the reaction chamber will make to balance the ph(More means better results but higher tick usage)
-#define MAX_PH_ADJUSTMENTS 5
+#define MAX_PH_ADJUSTMENTS 3
 
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
@@ -46,7 +46,7 @@
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 
-	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
+	if(holder.total_volume <= CHEMICAL_VOLUME_ROUNDING && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
 	return NONE
@@ -107,32 +107,34 @@
 
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
 			if(!selected_reagent)
-				return TRUE
+				return FALSE
 
-			var/input_reagent = get_chem_id(selected_reagent)
+			var/datum/reagent/input_reagent = GLOB.name2reagent[selected_reagent]
 			if(!input_reagent)
-				return TRUE
+				return FALSE
 
 			if(!required_reagents.Find(input_reagent))
 				var/input_amount = text2num(params["amount"])
-				if(input_amount)
+				if(!isnull(input_amount))
 					required_reagents[input_reagent] = input_amount
-
-			return TRUE
+					return TRUE
+			return FALSE
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
-			return TRUE
+				return TRUE
+			return FALSE
 
 		if("temperature")
 			var/target = text2num(params["target"])
-			if(target != null)
+			if(!isnull(target))
 				target_temperature = clamp(target, 0, 1000)
-			return TRUE
+				return TRUE
+			return FALSE
 
 	var/result = handle_ui_act(action, params, ui, state)
 	if(isnull(result))
@@ -194,13 +196,15 @@
 			return
 
 		//transfer buffer and handle reactions
-		var/ph_change = (reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph))
-		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents))
-		if(!buffer.trans_to(reagents, buffer_amount * seconds_per_tick))
+		var/ph_change = max((reagents.ph > alkaline_limit ? (reagents.ph - alkaline_limit) : (acidic_limit - reagents.ph)), 0.25)
+		if(ph_change <= 0.7) //make big jumps towards the end so we can end our work quickly
+			ph_change *= 2
+		var/buffer_amount = ((ph_change * reagents.total_volume) / (BUFFER_IONIZING_STRENGTH * num_of_reagents)) * seconds_per_tick
+		if(!buffer.trans_to(reagents, buffer_amount))
 			return
 
 		//some power for accurate ph balancing & keep track of attempts made
-		use_power(active_power_usage * 0.03 * buffer_amount * seconds_per_tick)
+		use_power(active_power_usage * 0.03 * buffer_amount)
 		ph_balance_attempts += 1
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
