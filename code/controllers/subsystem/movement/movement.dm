@@ -53,9 +53,10 @@ SUBSYSTEM_DEF(movement)
 		var/datum/move_loop/loop = processing[processing.len]
 		processing.len--
 		// No longer queued since we just got removed from the loop
-		loop.queued_time = -1
+		loop.queued_time = null
 		loop.process() //This shouldn't get nulls, if it does, runtime
-		if(!QDELETED(loop)) //Re-Insert the loop
+		if(!QDELETED(loop) && loop.status & MOVELOOP_STATUS_QUEUED) //Re-Insert the loop
+			loop.status &= ~MOVELOOP_STATUS_QUEUED
 			loop.timer = world.time + loop.delay
 			queue_loop(loop)
 		if (MC_TICK_CHECK)
@@ -88,10 +89,11 @@ SUBSYSTEM_DEF(movement)
 	buckets -= "[bucket_time]"
 
 /datum/controller/subsystem/movement/proc/queue_loop(datum/move_loop/loop)
-	if(loop.queued_time != -1)
-		stack_trace("just tried to add a loop at the time ([loop.timer]) that already has a queued time ([loop.queued_time]), what'd you do?")
+	if(loop.status & MOVELOOP_STATUS_QUEUED)
+		stack_trace("A move loop attempted to queue while already queued")
 		return
 	loop.queued_time = loop.timer
+	loop.status |= MOVELOOP_STATUS_QUEUED
 	var/list/our_bucket = buckets["[loop.queued_time]"]
 	// If there's no bucket for this, lets set them up
 	if(!our_bucket)
@@ -106,19 +108,23 @@ SUBSYSTEM_DEF(movement)
 
 /datum/controller/subsystem/movement/proc/dequeue_loop(datum/move_loop/loop)
 	// Go home, you're not here anyway
-	if(loop.queued_time == -1)
+	if(!(loop.status & MOVELOOP_STATUS_QUEUED))
 		return
-	if(loop.queued_time != loop.timer)
-		stack_trace("We just would have failed to remove a loop, our timer was ([loop.timer]) but our queued time was ([loop.queued_time]) why?")
+	if(isnull(loop.queued_time)) // This happens if a moveloop is dequeued while handling process()
+		loop.status &= ~MOVELOOP_STATUS_QUEUED
+		return
 	var/list/our_entries = buckets["[loop.queued_time]"]
 	our_entries -= loop
 	if(!length(our_entries))
 		smash_bucket(bucket_time = loop.queued_time) // We can't pass an index in for context because we don't know our position
-	loop.queued_time = -1
+	loop.queued_time = null
+	loop.status &= ~MOVELOOP_STATUS_QUEUED
 
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
+	if(add.status & MOVELOOP_STATUS_QUEUED)
+		CRASH("Loop being added that is already queued.")
 	add.loop_started()
-	if(QDELETED(add))
+	if(QDELETED(add) || add.status & MOVELOOP_STATUS_QUEUED)
 		return
 	queue_loop(add)
 
