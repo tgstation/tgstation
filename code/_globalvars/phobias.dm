@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/carbon/alien,
 		/mob/living/simple_animal/slime,
 	)),
-	"anime" = typecacheof(list(/mob/living/simple_animal/hostile/guardian)),
+	"anime" = typecacheof(list(/mob/living/basic/guardian)),
 	"birds" = typecacheof(list(
 		/mob/living/basic/chick,
 		/mob/living/basic/chicken,
