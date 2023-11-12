@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
-=======
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
->>>>>>> b35209d7fa3830872e418799fe186e9e42cafe7a
 "ac" = (
 /obj/item/trash/semki/healthy,
 /turf/open/floor/plating/dumpsterair,
