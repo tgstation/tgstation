@@ -601,7 +601,7 @@
 	if(!no_react)
 		target_holder.handle_reactions()
 		src.handle_reactions()
-	var/final_total = round(total_transfered_amount, CHEMICAL_QUANTISATION_LEVEL)
+	var/final_total = round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
 	SEND_SIGNAL(target, COMSIG_ATOM_REAGENTS_TRANSFERRED_TO, src, reagents_to_remove, final_total, transferred_by, methods, ignore_stomach)
 
 	return final_total
