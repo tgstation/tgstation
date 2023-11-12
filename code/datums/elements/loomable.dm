@@ -71,24 +71,25 @@
 
 /// If a do_after of the specified loom_time passes, will create a new one of resulting_atom and either delete the item, or .use the required amount if its a stack
 /datum/element/loomable/proc/loom_me(obj/item/source, mob/living/user, atom/target)
-	if(!do_after(user, loom_time, target))
-		user.balloon_alert(user, "interrupted!")
-		return
-
 	//this allows us to count the amount of times it has successfully used the stack's required amount
 	var/spawning_amount = 0
 	if(isstack(source))
 		var/obj/item/stack/stack_we_use = source
 		while(stack_we_use.amount >= required_amount)
+			if(!do_after(user, loom_time, target))
+				break
+
 			if(!stack_we_use.use(required_amount))
 				user.balloon_alert(user, "need [required_amount] of [source]!")
 				break
 
 			spawning_amount++
-			if(!do_after(user, loom_time, target))
-				break
 
 	else
+		if(!do_after(user, loom_time, target))
+			user.balloon_alert(user, "interrupted!")
+			return
+
 		qdel(source)
 		spawning_amount++
 
