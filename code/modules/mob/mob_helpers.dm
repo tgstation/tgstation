@@ -308,7 +308,7 @@
 		toast.click_interact = click_interact
 		toast.desc = "Click to [click_interact ? "play" : "view"]."
 		toast.name = header
-		toast.target = source
+		toast.target_ref = WEAKREF(source)
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)

@@ -60,7 +60,7 @@
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = 10
 	head.unarmed_damage_high = 15
-	head.unarmed_stun_threshold = 15
+	head.unarmed_effectiveness = 15
 
 /obj/item/organ/internal/tongue/carp/on_remove(mob/living/carbon/tongue_owner)
 	. = ..()
@@ -74,7 +74,7 @@
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
-	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
+	head.unarmed_effectiveness = initial(head.unarmed_effectiveness)
 
 /obj/item/organ/internal/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
