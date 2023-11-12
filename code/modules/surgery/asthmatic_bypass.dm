@@ -26,8 +26,8 @@
 	name = "force open windpipe (retractor)"
 	implements = list(
 		TOOL_RETRACTOR = 80,
-		TOOL_WIRECUTTER = 45
-		)
+		TOOL_WIRECUTTER = 45,
+	)
 	time = 8 SECONDS
 	repeatable = TRUE
 	preop_sound = 'sound/surgery/retractor1.ogg'

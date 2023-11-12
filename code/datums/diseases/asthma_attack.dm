@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 	/datum/disease/asthma_attack/minor = 500,
 	/datum/disease/asthma_attack/moderate = 400,
 	/datum/disease/asthma_attack/severe = 50,
-	/datum/disease/asthma_attack/critical = 5 // very rare
+	/datum/disease/asthma_attack/critical = 5, // very rare
 ))
 
 /datum/disease/asthma_attack
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 
 	stage_to_inflammation_per_second = list(
 		"2" = 0.1,
-		"3" = 0.5
+		"3" = 0.5,
 	)
 
 /datum/disease/asthma_attack/minor/stage_act(seconds_per_tick, times_fired)
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 	stage_to_inflammation_per_second = list(
 		"2" = 1,
 		"3" = 2,
-		"4" = 4
+		"4" = 4,
 	)
 
 /datum/disease/asthma_attack/moderate/stage_act(seconds_per_tick, times_fired)
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 		"2" = 1,
 		"3" = 3,
 		"4" = 6,
-		"5" = 8
+		"5" = 8,
 	)
 
 	visibility_flags = HIDDEN_SCANNER
@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 		"3" = 7,
 		"4" = 10,
 		"5" = 20,
-		"6" = 500 // youre fucked frankly
+		"6" = 500, // youre fucked frankly
 	)
 
 	var/warned_user = FALSE
