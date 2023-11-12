@@ -33,16 +33,12 @@
 
 	for (var/quirk_name in quirks)
 		var/datum/quirk/quirk = quirks[quirk_name]
-		var/datum/quirk_static_data/static_data = GLOB.all_quirk_static_data[quirk]
-		var/list/datum/preference/customization_options = static_data?.get_customization_data() || list()
 
 		quirk_info[sanitize_css_class_name(quirk_name)] = list(
 			"description" = initial(quirk.desc),
 			"icon" = initial(quirk.icon),
 			"name" = quirk_name,
 			"value" = initial(quirk.value),
-			"customizable" = initial(quirk.customizable),
-			"customization_options" = customization_options
 		)
 
 	return list(

@@ -1,10 +1,8 @@
 import { StatelessComponent } from 'inferno';
-import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
-import { PreferencesMenuData, Quirk, ServerData } from './data';
+import { Box, Icon, Stack, Tooltip } from '../../components';
+import { PreferencesMenuData, Quirk } from './data';
 import { useBackend, useLocalState } from '../../backend';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { filterMap } from 'common/collections';
-import { getRandomization, PreferenceList } from './MainPage';
 
 const getValueClass = (value: number): string => {
   if (value > 0) {
@@ -16,21 +14,6 @@ const getValueClass = (value: number): string => {
   }
 };
 
-const getCorrespondingPreferences = (
-  customization_options: string[],
-  all_preferences: Record<string, string>
-): Record<string, unknown> => {
-  return Object.fromEntries(
-    filterMap(Object.keys(all_preferences), (key) => {
-      if (!customization_options.includes(key)) {
-        return undefined;
-      }
-
-      return [key, all_preferences[key]];
-    })
-  );
-};
-
 const QuirkList = (props: {
   quirks: [
     string,
@@ -39,31 +22,12 @@ const QuirkList = (props: {
     }
   ][];
   onClick: (quirkName: string, quirk: Quirk) => void;
-  selected: boolean;
-  serverData: ServerData;
-  randomBodyEnabled: boolean;
-  context;
 }) => {
-  const { act, data } = useBackend<PreferencesMenuData>(props.context);
-
   return (
     // Stack is not used here for a variety of IE flex bugs
     <Box className="PreferencesMenu__Quirks__QuirkList">
       {props.quirks.map(([quirkKey, quirk]) => {
-        const [customization_expanded, toggle_customization] =
-          useLocalState<boolean>(
-            props.context,
-            quirk.name + ' customization',
-            false
-          );
-
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
-
-        const hasExpandableCustomization =
-          quirk.customizable &&
-          props.selected &&
-          customization_expanded &&
-          Object.entries(quirk.customization_options).length > 0;
 
         const child = (
           <Box
@@ -131,26 +95,6 @@ const QuirkList = (props: {
                       'padding': '3px',
                     }}>
                     {quirk.description}
-                    {!!quirk.customizable && (
-                      <Button
-                        disabled={!props.selected}
-                        selected={customization_expanded}
-                        icon="cog"
-                        tooltip={
-                          props.selected
-                            ? 'This quirk is customizable! Click this button to open a customization menu!'
-                            : 'You must take this quirk before you can customize it!'
-                        }
-                        onClick={(e) => {
-                          e.stopPropagation();
-
-                          toggle_customization(!customization_expanded);
-                        }}
-                        style={{
-                          'float': 'right',
-                        }}
-                      />
-                    )}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -161,45 +105,7 @@ const QuirkList = (props: {
         if (quirk.failTooltip) {
           return <Tooltip content={quirk.failTooltip}>{child}</Tooltip>;
         } else {
-          if (hasExpandableCustomization) {
-            return (
-              <Popper
-                options={{
-                  placement: 'bottom-end',
-                }}
-                popperContent={
-                  <Stack
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                    maxWidth="300px"
-                    backgroundColor="black">
-                    <Stack.Item>
-                      <PreferenceList
-                        act={act}
-                        preferences={getCorrespondingPreferences(
-                          quirk.customization_options,
-                          data.character_preferences.all_preferences
-                        )}
-                        randomizations={getRandomization(
-                          getCorrespondingPreferences(
-                            quirk.customization_options,
-                            data.character_preferences.all_preferences
-                          ),
-                          props.serverData,
-                          props.randomBodyEnabled,
-                          props.context
-                        )}
-                      />
-                    </Stack.Item>
-                  </Stack>
-                }>
-                {child}
-              </Popper>
-            );
-          } else {
-            return child;
-          }
+          return child;
         }
       })}
     </Box>
@@ -223,12 +129,6 @@ const StatDisplay: StatelessComponent<{}> = (props) => {
 export const QuirksPage = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
 
-  const randomToggleEnabled = false;
-
-  const randomBodyEnabled = false;
-  /* data.character_preferences.non_contextual.random_body !==
-      RandomSetting.Disabled || randomToggleEnabled;*/
-
   const [selectedQuirks, setSelectedQuirks] = useLocalState(
     context,
     `selectedQuirks_${data.active_slot}`,
@@ -237,8 +137,8 @@ export const QuirksPage = (props, context) => {
 
   return (
     <ServerPreferencesFetcher
-      render={(server_data) => {
-        if (!server_data) {
+      render={(data) => {
+        if (!data) {
           return <Box>Loading quirks...</Box>;
         }
 
@@ -246,7 +146,7 @@ export const QuirksPage = (props, context) => {
           max_positive_quirks: maxPositiveQuirks,
           quirk_blacklist: quirkBlacklist,
           quirk_info: quirkInfo,
-        } = server_data.quirks;
+        } = data.quirks;
 
         const quirks = Object.entries(quirkInfo);
         quirks.sort(([_, quirkA], [__, quirkB]) => {
@@ -338,7 +238,6 @@ export const QuirksPage = (props, context) => {
 
                 <Stack.Item grow width="100%">
                   <QuirkList
-                    selected={false}
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotAdd(quirkName) !== undefined) {
                         return;
@@ -361,9 +260,6 @@ export const QuirksPage = (props, context) => {
                           },
                         ];
                       })}
-                    serverData={server_data}
-                    randomBodyEnabled={randomBodyEnabled}
-                    context={context}
                   />
                 </Stack.Item>
               </Stack>
@@ -391,7 +287,6 @@ export const QuirksPage = (props, context) => {
 
                 <Stack.Item grow width="100%">
                   <QuirkList
-                    selected
                     onClick={(quirkName, quirk) => {
                       if (getReasonToNotRemove(quirkName) !== undefined) {
                         return;
@@ -418,9 +313,6 @@ export const QuirksPage = (props, context) => {
                           },
                         ];
                       })}
-                    serverData={server_data}
-                    randomBodyEnabled={randomBodyEnabled}
-                    context={context}
                   />
                 </Stack.Item>
               </Stack>

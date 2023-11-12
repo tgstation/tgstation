@@ -82,9 +82,6 @@ export type Quirk = {
   icon: string;
   name: string;
   value: number;
-  customizable: boolean;
-  customization_options: string[];
-  customization_expanded: BooleanLike;
 };
 
 export type QuirkInfo = {
@@ -129,7 +126,6 @@ export type PreferencesMenuData = {
   character_profiles: (string | null)[];
 
   character_preferences: {
-    all_preferences: Record<string, string>;
     clothing: Record<string, string>;
     features: Record<string, string>;
     game_preferences: Record<string, unknown>;
