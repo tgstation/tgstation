@@ -522,7 +522,6 @@
 		target_holder = target
 		target_atom = target_holder.my_atom
 	else
-
 		if (iscarbon(target))
 			var/mob/living/carbon/carbon_target = target
 			if(!ignore_stomach && (methods & INGEST))
