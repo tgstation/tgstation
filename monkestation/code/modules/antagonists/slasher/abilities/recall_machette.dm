@@ -1,6 +1,6 @@
 /datum/action/cooldown/slasher/summon_machette
 	name = "Summon Machette"
-	desc = "Summon your machete to your active hand, or create one if it doesn't exist. This machete deals 15 BRUTE on hit, and stuns on throw."
+	desc = "Summon your machete to your active hand, or create one if it doesn't exist. This machete deals 15 BRUTE on hit increasing by 2.5 for every soul you own, and stuns on throw."
 
 	button_icon_state = "summon_machete"
 

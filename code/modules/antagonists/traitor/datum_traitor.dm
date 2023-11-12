@@ -15,6 +15,8 @@
 	suicide_cry = "FOR THE SYNDICATE!!"
 	preview_outfit = /datum/outfit/traitor
 	var/give_objectives = TRUE
+	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
+	var/give_secondary_objectives = TRUE
 	var/should_give_codewords = TRUE
 	///give this traitor an uplink?
 	var/give_uplink = TRUE
@@ -42,6 +44,16 @@
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
 
+/datum/antagonist/traitor/infiltrator
+	// Used to denote traitors who have joined midround and therefore have no access to secondary objectives.
+	// Progression elements are best left to the roundstart antagonists
+	// There will still be a timelock on uplink items
+	name = "\improper Infiltrator"
+	give_secondary_objectives = TRUE // Changed from FALSE to TRUE - MONKEYSTATION EDIT CHANGE
+
+/datum/antagonist/traitor/infiltrator/sleeper_agent
+	name = "\improper Syndicate Sleeper Agent"
+
 /datum/antagonist/traitor/New(give_objectives = TRUE)
 	. = ..()
 	src.give_objectives = give_objectives
@@ -64,8 +76,9 @@
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
-		uplink_handler.has_objectives = TRUE
-		uplink_handler.generate_objectives()
+		if(give_secondary_objectives)
+			uplink_handler.has_objectives = TRUE
+			uplink_handler.generate_objectives()
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
@@ -106,7 +119,7 @@
 	else
 		string += ", [to_display.telecrystal_reward] TC"
 		string += ", [to_display.progression_reward] PR"
-	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE)
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE && !istype(to_display, /datum/traitor_objective/ultimate))
 		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
 		string += " <a href='?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
 	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)

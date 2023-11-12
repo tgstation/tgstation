@@ -1,0 +1,54 @@
+2023-11-06:
+  DexeeXI:
+  - rscadd: Dagoth Ur wishes you all to behave yourselves and pray well, lest you
+      invoke his anger.
+  Gboster-0:
+  - rscdel: Deleted wendigo's impossible attack
+  Salted-Zen:
+  - bugfix: Un-fries your boiled spagetti
+  Senri:
+  - bugfix: Fixed patreon monkecoin boost to work properly
+  - balance: rebalanced Throwing Arm quirk
+  lmenvs:
+  - rscadd: New Space Marine helmet, thanks to Odie_boy!
+  - bugfix: Pets that died and had no sprite should now be fixed. Lazarus Injections
+      will work properly too.
+2023-11-07:
+  DexeeXI:
+  - rscdel: Removed buffer bottles from Chemist job starting gear and the Chemist
+      lockers.
+  NicoDeLuna:
+  - rscadd: Added Edgerunner Hairstyle for Roundstart
+2023-11-08:
+  Glyphee:
+  - rscadd: Florans
+  KoboldCommando:
+  - bugfix: cargo, zoomba and kerfus borgs should no longer go invisible when reset
+2023-11-12:
+  Coding-Grape:
+  - rscadd: Maints bar
+  DexeeXI:
+  - rscadd: The Dinosaur Pajamas are now available on the Loadout Shop for 10000 Monke
+      on the SUITS tab.
+  - rscadd: The Headdress of Nemes is now available on the Loadout Shop for 2000 Monke
+      on the HEADS tab.
+  - rscadd: The Pharaoh's Hat is now available on the Loadout Shop for 2000 Monke
+      on the HEADS tab.
+  Gboster-0:
+  - qol: slashers now get told preciselly how long their soul sucking will last
+  - qol: you wont get spam messages whilst clicking walls/floors as slasher with the
+      soul suck ability on
+  - qol: slasher now shows up on the ghost orbit panel
+  - balance: you can no longer screech whilst incorporeal, instead your targets will
+      hear a distant screech
+  - bugfix: abilities once again properly check for all conditions
+  - bugfix: slasher's incorporeal ability is now a proper jaunt, due to this it no
+      longer allows you to destroy glass tables for free
+  - bugfix: due to the slashers new incorporeal ability you also cant now grab, examine
+      or shove them whilst they are incorporeal
+  - rscadd: Added the winter tramstation random bar, how n-ice!
+  - rscadd: Added a cult bar, legends say it has a rune that can summon booze
+  lolc4n:
+  - rscadd: Added a new tramstation bar.
+  wraith-54321:
+  - rscadd: Added a new random bar
