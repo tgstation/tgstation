@@ -228,14 +228,14 @@
 		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE)) // Mindshielded and anti-magic folks are immune against this effect
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
-		//if(prob(5))
-		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
-		lunatic.set_master(user.mind, user)
-		var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
-		crewmate.put_in_active_hand(moon_amulette)
-		crewmate.emote("laugh")
-		//else
-			//to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you." ))
+		if(prob(5))
+			var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
+			lunatic.set_master(user.mind, user)
+			var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
+			crewmate.put_in_active_hand(moon_amulette)
+			crewmate.emote("laugh")
+		else
+			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you." ))
 
 	// Spells get a lower cooldown
 	var/datum/action/cooldown/spell/pointed/moon_smile/smile = locate() in user.actions
