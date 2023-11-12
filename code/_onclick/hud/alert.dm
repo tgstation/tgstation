@@ -778,14 +778,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "This can be clicked on to perform an action."
 	icon_state = "template"
 	timeout = 30 SECONDS
-	/// The target to use the action on
+	/// Weakref to the target atom to use the action on
 	var/datum/weakref/target_ref
 	/// If we want to interact on click rather than jump/orbit
 	var/click_interact = FALSE
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
-	
+
 	var/atom/target = target_ref?.resolve()
 	if(isnull(target) || !isobserver(owner) || target == owner)
 		return
