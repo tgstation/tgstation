@@ -106,14 +106,15 @@ for output_name in output_hash:
         current_op = None
         working = ""
         for index, op in enumerate(difflib.ndiff(old_metadata, new_metadata)):
-            if op[0]== ' ':
-                continue
+            in_nothing = False
             if current_op == None:
                 current_op = op[0]
             if current_op != op[0]:
                 events += f"{current_op*10}\n{working}\n"
                 current_op = op[0]
                 working = ""
+            if op[0]== ' ':
+                continue
             working += f"{op[-1]}"
         events += f"{current_op*10}\n{working}\n"
         print(events, end="")

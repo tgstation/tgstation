@@ -378,9 +378,9 @@
 /obj/structure/falsewall/material
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
-	fake_icon = 'icons/turf/walls/materialwall.dmi'
-	icon_state = "materialwall-open"
-	base_icon_state = "materialwall"
+	fake_icon = 'icons/turf/walls/material_wall.dmi'
+	icon_state = "material_wall-open"
+	base_icon_state = "material_wall"
 	walltype = /turf/closed/wall/material
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MATERIAL_WALLS
