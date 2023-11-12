@@ -23,10 +23,13 @@
 * - Action sprite created by @Wallemations (icons/hud/actions.dmi:sign_language)
 */
 /datum/component/sign_language
-	/// The tonal indicator shown when sign language users finish sending a message. If it's empty, none appears.
+	/** Tonal indicator isn't working and I'm not fixing it (I tried)
+ 	/// The tonal indicator shown when sign language users finish sending a message. If it's empty, none appears.
 	var/tonal_indicator = null
 	/// The timerid for our sign language tonal indicator.
 	var/tonal_timerid
+	*/
+
 	/// Any symbols to sanitize from signed messages.
 	var/regex/omissions = new ("\[!?\]", "g")
 	/// The action for toggling sign language.
@@ -83,7 +86,7 @@
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(on_treat_living_message))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
-	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
+	// Not needed:  RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
 	RegisterSignal(carbon_parent, COMSIG_MOB_TRY_INVOKE_SPELL, PROC_REF(can_cast_spell))
 	return TRUE
 
@@ -110,7 +113,7 @@
 		COMSIG_LIVING_TREAT_MESSAGE,
 		COMSIG_MOVABLE_USING_RADIO,
 		COMSIG_MOVABLE_SAY_QUOTE,
-		COMSIG_MOB_SAY,
+		// Not needed:	COMSIG_MOB_SAY,
 		COMSIG_MOB_TRY_INVOKE_SPELL,
 	))
 	return TRUE
@@ -232,11 +235,28 @@
 	message_args[TREAT_TTS_MESSAGE_ARG] = ""
 
 /// Signal proc for [COMSIG_MOVABLE_SAY_QUOTE]
-/// Removes exclamation/question marks.
+/// Removes exclamation/question marks and handles eyebrows.
 /datum/component/sign_language/proc/on_say_quote(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
-	message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
+	// Now redundant: message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
+
+	// The original message
+	var/message = message_args[SPEECH_MESSAGE]
+	// Is there a !
+	var/exclamation_found = findtext(message, "!")
+	// Is there a ?
+	var/question_found = findtext(message, "?")
+
+	// Prioritize questions
+	if(question_found)
+		source.visible_message(span_notice("[source] lowers [source.p_their()] eyebrows."))
+	else if(exclamation_found)
+		source.visible_message(span_notice("[source] raises [source.p_their()] eyebrows."))
+
+	// remove the ! and ? symbols from message, replacing them with periods
+	message = sanitize_message(message)
+	message_args[SPEECH_MESSAGE] = message
 
 /// Signal proc for [COMSIG_MOVABLE_USING_RADIO]
 /// Disallows us from speaking on comms if we don't have the special trait.
@@ -245,7 +265,8 @@
 
 	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
 
-/// Replaces emphatic punctuation with periods. Changes tonal indicator and emotes eyebrow movement based on what is typed.
+/** This doesn't work and has been moved.
+ /// Replaces emphatic punctuation with periods. Changes tonal indicator and emotes eyebrow movement based on what is typed.
 /datum/component/sign_language/proc/on_say(mob/living/carbon/carbon_parent, list/speech_args)
 	SIGNAL_HANDLER
 
@@ -285,6 +306,7 @@
 	var/mob/living/carbon/carbon_parent = parent
 	carbon_parent.cut_overlay(tonal_indicator)
 	tonal_indicator = null
+*/
 
 #undef SIGN_OKAY
 #undef SIGN_ONE_HAND
