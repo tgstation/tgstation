@@ -776,7 +776,13 @@
 	update_appearance()
 	if(actually_paints)
 		H.update_lips("spray_face", paint_color)
-	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
+	reagents.trans_to(
+		user,
+		used,
+		multiplier = volume_multiplier,
+		transferred_by = user,
+		methods = VAPOR
+	)
 	return OXYLOSS
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
