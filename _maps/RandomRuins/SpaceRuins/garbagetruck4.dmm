@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+=======
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+>>>>>>> b35209d7fa3830872e418799fe186e9e42cafe7a
 "aj" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,

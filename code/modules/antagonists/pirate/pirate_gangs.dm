@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 
 	response_received = "An excellent haul, the synthesis shall resume."
-	response_rejected = "Rude communication should lead to fitting in. We'll be there to find a proper compromise."
+	response_rejected = "The rudeness in your speech needs to be neutralized. And we can help you with that right now."
 	response_too_late = "You were not ready then, and now that time has passed. We can only go forward, never back."
 	response_not_enough = "You have insulted us, but there shall be no feud, only swift justice!"
 	announcement_color = "purple"

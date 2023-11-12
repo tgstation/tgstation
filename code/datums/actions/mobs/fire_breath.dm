@@ -37,7 +37,7 @@
 	var/list/turfs = get_line(owner, target_turf) - get_turf(owner)
 	INVOKE_ASYNC(src, PROC_REF(progressive_fire_line), turfs)
 
-/// Creates fire with a delay on the list of targetted turfs
+/// Creates fire with a delay on the list of targeted turfs
 /datum/action/cooldown/mob_cooldown/fire_breath/proc/progressive_fire_line(list/burn_turfs)
 	if (QDELETED(owner) || owner.stat == DEAD)
 		return
