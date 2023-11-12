@@ -145,6 +145,6 @@
 /obj/effect/spawner/random/contraband/qm_rocket
 	name = "QMs dud rocket spawner"
 	loot = list(
-		/obj/item/ammo_casing/rocket/reverse = 90,
-		/obj/item/ammo_casing/rocket/heap = 10,
+		/obj/item/ammo_casing/rocket/reverse = 85,
+		/obj/item/ammo_casing/rocket = 15,
 	)
