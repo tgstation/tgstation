@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "[Mafia] Obsessed now knows who their target is in their role description, and people playing on PDA are told in their chat."

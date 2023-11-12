@@ -7,7 +7,7 @@
 	///bool on if this component is currently polling for observers to inhabit the item
 	var/attempting_awakening = FALSE
 	///mob contained in the item.
-	var/mob/living/simple_animal/shade/bound_spirit
+	var/mob/living/basic/shade/bound_spirit
 
 /datum/component/spirit_holding/Initialize()
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
@@ -37,43 +37,39 @@
 ///signal fired on self attacking parent
 /datum/component/spirit_holding/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(attempt_spirit_awaken), user)
 
-/**
- * attempt_spirit_awaken: called from on_attack_self, polls ghosts to possess the item in the form
- * of a mob sitting inside the item itself
- *
- * Arguments:
- * * awakener: user who interacted with the blade
- */
-/datum/component/spirit_holding/proc/attempt_spirit_awaken(mob/awakener)
+	var/atom/thing = parent
+
 	if(attempting_awakening)
-		to_chat(awakener, span_warning("You are already trying to awaken [parent]!"))
+		thing.balloon_alert(user, "already channeling!")
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		to_chat(awakener, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
+		thing.balloon_alert(user, "spirits are unwilling!")
+		to_chat(user, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
 		return
 
 	attempting_awakening = TRUE
-	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
+	thing.balloon_alert(user, "channeling...")
 
-	var/datum/callback/to_call = CALLBACK(src, PROC_REF(affix_spirit), awakener)
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(affix_spirit), user)
 	parent.AddComponent(/datum/component/orbit_poll, \
 		ignore_key = POLL_IGNORE_POSSESSED_BLADE, \
 		job_bans = ROLE_PAI, \
 		to_call = to_call, \
-		title = "Spirit of [awakener.real_name]'s blade", \
+		title = "Spirit of [user.real_name]'s blade", \
 	)
-
-	//Immediately unregister to prevent making a new spirit
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 /// On conclusion of the ghost poll
 /datum/component/spirit_holding/proc/affix_spirit(mob/awakener, mob/dead/observer/ghost)
+	var/atom/thing = parent
+
 	if(isnull(ghost))
-		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
+		thing.balloon_alert(awakener, "silence...")
 		attempting_awakening = FALSE
 		return
+
+	// Immediately unregister to prevent making a new spirit
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
 		to_chat(ghost, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))

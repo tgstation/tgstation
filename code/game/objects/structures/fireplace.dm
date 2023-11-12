@@ -167,7 +167,17 @@
 	fuel_added = 0
 	update_appearance()
 	adjust_light()
-	particles = new /particles/smoke/burning/fireplace()
+	particles = new /particles/smoke/burning()
+
+	switch(dir)
+		if(SOUTH)
+			particles.position = list(0, 29, 0)
+		if(EAST)
+			particles.position = list(-20, 9, 0)
+		if(WEST)
+			particles.position = list(20, 9, 0)
+		if(NORTH) // there is no icon state for SOUTH
+			QDEL_NULL(particles)
 
 /obj/structure/fireplace/proc/put_out()
 	STOP_PROCESSING(SSobj, src)

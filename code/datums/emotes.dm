@@ -101,7 +101,7 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(user, tmp_sound, 50, vary)
 

@@ -382,6 +382,12 @@
 	name = "The Faceoff"
 	description = "What do you get when a meeting of the enemy corporations get crashed?"
 
+/datum/map_template/ruin/space/meatstation
+	id = "meatderelict"
+	suffix = "meatderelict.dmm"
+	name = "Bioresearch Outpost"
+	description = "A bioresearch experiment gone wrong."
+
 /datum/map_template/ruin/space/ghost_restaurant
 	id = "space_ghost_restaurant.dmm"
 	suffix = "space_ghost_restaurant.dmm"
@@ -477,3 +483,28 @@
 	suffix = "infested_frigate.dmm"
 	name = "SYN-C Brutus"
 	description = "This wasn't an outbreak, this was a repelled attack."
+
+/datum/map_template/ruin/space/garbagetruck1
+	id = "garbagetruck1"
+	suffix = "garbagetruck1.dmm"
+	name = "Decommissioned Garbage Truck NX1"
+	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of kitchen waste, and rodents."
+
+/datum/map_template/ruin/space/garbagetruck2
+	id = "garbagetruck2"
+	suffix = "garbagetruck2.dmm"
+	name = "Decommissioned Garbage Truck NX2"
+	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of medical waste, and a syndicate agent."
+
+/datum/map_template/ruin/space/garbagetruck3
+	id = "garbagetruck3"
+	suffix = "garbagetruck3.dmm"
+	name = "Decommissioned Garbage Truck NX3"
+	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of industrial garbage, and a russian drug den."
+
+/datum/map_template/ruin/space/garbagetruck4
+	id = "garbagetruck4"
+	suffix = "garbagetruck4.dmm"
+	name = "Decommissioned Garbage Truck NX4"
+	description = "An NX-760 interstellar transport barge. At the end of their life cycle, they are often filled with trash and launched into unexplored space to become someone else's problem. This one is full of commercial trash, and spiders."
+

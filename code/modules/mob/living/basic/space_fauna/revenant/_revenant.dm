@@ -97,9 +97,7 @@
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
 
-	for(var/ability in abilities)
-		var/datum/action/spell = new ability(src)
-		spell.Grant(src)
+	grant_actions_by_list(abilities)
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))

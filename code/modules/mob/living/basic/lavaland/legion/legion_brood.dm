@@ -57,7 +57,7 @@
 		return
 	return ..()
 
-/// Turn the targetted mob into one of us
+/// Turn the targeted mob into one of us
 /mob/living/basic/legion_brood/proc/infest(mob/living/target)
 	visible_message(span_warning("[name] burrows into the flesh of [target]!"))
 	var/spawn_type = get_legion_type(target)
@@ -94,6 +94,10 @@
 	icon_state = "snowlegion_head"
 	icon_living = "snowlegion_head"
 	icon_dead = "snowlegion_head"
+
+/mob/living/basic/legion_brood/snow/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
 
 /mob/living/basic/legion_brood/snow/get_legion_type(mob/living/target)
 	return /mob/living/basic/mining/legion/snow
