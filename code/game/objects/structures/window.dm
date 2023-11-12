@@ -79,6 +79,9 @@
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+
 	switch(state)
 		if(WINDOW_SCREWED_TO_FRAME)
 			. += span_notice("The window is <b>screwed</b> to the frame.")
@@ -480,6 +483,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..()
+
 	switch(state)
 		if(RWINDOW_SECURE)
 			if(tool.tool_behaviour == TOOL_WELDER)
@@ -558,6 +564,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
 	switch(state)
 		if(RWINDOW_SECURE)
 			. += span_notice("It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.")

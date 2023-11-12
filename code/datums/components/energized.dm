@@ -106,7 +106,12 @@
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
-	notify_ghosts("[future_tram_victim] has fallen in the path of an oncoming tram!", source = future_tram_victim, action = NOTIFY_ORBIT, header = "Electrifying!")
+	notify_ghosts(
+		"[future_tram_victim] has fallen in the path of an oncoming tram!",
+		source = future_tram_victim,
+		action = NOTIFY_ORBIT,
+		header = "Electrifying!",
+	)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))
 	to_chat(future_tram_victim, span_userdanger("You hear a loud electric crackle!"))

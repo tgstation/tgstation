@@ -107,7 +107,7 @@
 	if(get_integrity() <= 1)
 		to_chat(chassis.occupants, span_warning("Error -- Equipment critically damaged."))
 		return FALSE
-	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
+	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
 		return FALSE
 	return TRUE
 
@@ -121,7 +121,7 @@
  * Cooldown proc variant for using do_afters between activations instead of timers
  * Example of usage is mech drills, rcds
  * arguments:
- * * target: targetted atom for action activation
+ * * target: targeted atom for action activation
  * * user: occupant to display do after for
  * * interaction_key: interaction key to pass to [/proc/do_after]
  */

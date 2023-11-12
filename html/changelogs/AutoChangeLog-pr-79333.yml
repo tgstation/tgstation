@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Removed rare hard delete involving telecomms machines."

@@ -26,12 +26,16 @@
 	var/list/directional_vehicle_layers = list()
 	/// same as above but instead of layer you have a list(px, py)
 	var/list/directional_vehicle_offsets = list()
+	/// planes of the rider
+	var/list/directional_rider_planes = list()
 	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/list/allowed_turf_typecache
 	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/list/forbid_turf_typecache
 	/// We don't need roads where we're going if this is TRUE, allow normal movement in space tiles
 	var/override_allow_spacemove = FALSE
+	/// can anyone other than the rider unbuckle the rider?
+	var/can_force_unbuckle = TRUE
 
 	/**
 	 * Ride check flags defined for the specific riding component types, so we know if we need arms, legs, or whatever.
@@ -55,7 +59,6 @@
 	if(potion_boost)
 		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 
-
 /datum/component/riding/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(vehicle_turned))
@@ -64,6 +67,10 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(vehicle_moved))
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(vehicle_bump))
 	RegisterSignal(parent, COMSIG_BUCKLED_CAN_Z_MOVE, PROC_REF(riding_can_z_move))
+	RegisterSignals(parent, GLOB.movement_type_addtrait_signals, PROC_REF(on_movement_type_trait_gain))
+	RegisterSignals(parent, GLOB.movement_type_removetrait_signals, PROC_REF(on_movement_type_trait_loss))
+	if(!can_force_unbuckle)
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(force_unbuckle))
 
 /**
  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
@@ -79,11 +86,18 @@
 /datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/rider, force = FALSE)
 	SIGNAL_HANDLER
 
+	handle_unbuckle(rider)
+
+/datum/component/riding/proc/handle_unbuckle(mob/living/rider)
 	var/atom/movable/movable_parent = parent
 	restore_position(rider)
 	unequip_buckle_inhands(rider)
 	rider.updating_glide_size = TRUE
 	UnregisterSignal(rider, COMSIG_LIVING_TRY_PULL)
+	for (var/trait in GLOB.movement_type_trait_to_flag)
+		if (HAS_TRAIT(parent, trait))
+			REMOVE_TRAIT(rider, trait, REF(src))
+	REMOVE_TRAIT(rider, TRAIT_NO_FLOATING_ANIM, REF(src))
 	if(!movable_parent.has_buckled_mobs())
 		qdel(src)
 
@@ -94,10 +108,16 @@
 	var/atom/movable/movable_parent = parent
 	handle_vehicle_layer(movable_parent.dir)
 	handle_vehicle_offsets(movable_parent.dir)
+	handle_rider_plane(movable_parent.dir)
 
 	if(rider.pulling == source)
 		rider.stop_pulling()
 	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
+
+	for (var/trait in GLOB.movement_type_trait_to_flag)
+		if (HAS_TRAIT(parent, trait))
+			ADD_TRAIT(rider, trait, REF(src))
+	ADD_TRAIT(rider, TRAIT_NO_FLOATING_ANIM, REF(src))
 
 /// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
@@ -118,8 +138,19 @@
 		. = AM.layer
 	AM.layer = .
 
+/datum/component/riding/proc/handle_rider_plane(dir)
+	var/atom/movable/movable_parent = parent
+	var/target_plane = directional_rider_planes["[dir]"]
+	if(isnull(target_plane))
+		return
+	for(var/mob/buckled_mob in movable_parent.buckled_mobs)
+		SET_PLANE_EXPLICIT(buckled_mob, target_plane, movable_parent)
+
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
+
+/datum/component/riding/proc/set_rider_dir_plane(dir, plane)
+	directional_rider_planes["[dir]"] = plane
 
 /// This is called after the ridden atom is successfully moved and is used to handle icon stuff
 /datum/component/riding/proc/vehicle_moved(datum/source, oldloc, dir, forced)
@@ -135,6 +166,7 @@
 		return // runtimed with piggy's without this, look into this more
 	handle_vehicle_offsets(dir)
 	handle_vehicle_layer(dir)
+	handle_rider_plane(dir)
 
 /// Turning is like moving
 /datum/component/riding/proc/vehicle_turned(datum/source, _old_dir, new_dir)
@@ -222,11 +254,14 @@
 
 //BUCKLE HOOKS
 /datum/component/riding/proc/restore_position(mob/living/buckled_mob)
-	if(buckled_mob)
-		buckled_mob.pixel_x = buckled_mob.base_pixel_x
-		buckled_mob.pixel_y = buckled_mob.base_pixel_y
-		if(buckled_mob.client)
-			buckled_mob.client.view_size.resetToDefault()
+	if(isnull(buckled_mob))
+		return
+	buckled_mob.pixel_x = buckled_mob.base_pixel_x
+	buckled_mob.pixel_y = buckled_mob.base_pixel_y
+	var/atom/source = parent
+	SET_PLANE_EXPLICIT(buckled_mob, initial(buckled_mob.plane), source)
+	if(buckled_mob.client)
+		buckled_mob.client.view_size.resetToDefault()
 
 //MOVEMENT
 /datum/component/riding/proc/turf_check(turf/next, turf/current)
@@ -273,3 +308,24 @@
 /datum/component/riding/proc/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
 	SIGNAL_HANDLER
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
+
+/// Called when our vehicle gains a movement trait, so we can apply it to the riders
+/datum/component/riding/proc/on_movement_type_trait_gain(atom/movable/source, trait)
+	SIGNAL_HANDLER
+	var/atom/movable/movable_parent = parent
+	for (var/mob/rider in movable_parent.buckled_mobs)
+		ADD_TRAIT(rider, trait, REF(src))
+
+/// Called when our vehicle loses a movement trait, so we can remove it from the riders
+/datum/component/riding/proc/on_movement_type_trait_loss(atom/movable/source, trait)
+	SIGNAL_HANDLER
+	var/atom/movable/movable_parent = parent
+	for (var/mob/rider in movable_parent.buckled_mobs)
+		REMOVE_TRAIT(rider, trait, REF(src))
+
+/datum/component/riding/proc/force_unbuckle(atom/movable/source, mob/living/living_hitter)
+	SIGNAL_HANDLER
+
+	if((living_hitter in source.buckled_mobs))
+		return
+	return COMPONENT_CANCEL_ATTACK_CHAIN

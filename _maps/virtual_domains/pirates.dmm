@@ -161,7 +161,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/pirate/ranged/space,
+/mob/living/basic/trooper/pirate/ranged/space,
 /turf/open/floor/carpet/blue,
 /area/virtual_domain/powered)
 "iO" = (
@@ -293,7 +293,7 @@
 /area/virtual_domain/powered)
 "nX" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/pirate/melee/space,
+/mob/living/basic/trooper/pirate/melee/space,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain/powered)
 "oo" = (
@@ -342,7 +342,7 @@
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/pirate/ranged,
+/mob/living/basic/trooper/pirate/ranged,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "qN" = (
@@ -385,7 +385,7 @@
 /turf/open/misc/grass,
 /area/virtual_domain/powered)
 "to" = (
-/mob/living/simple_animal/hostile/pirate/melee,
+/mob/living/basic/trooper/pirate/melee,
 /turf/open/misc/grass,
 /area/virtual_domain/powered)
 "ub" = (
@@ -472,7 +472,7 @@
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain/powered)
 "yi" = (
-/mob/living/simple_animal/hostile/pirate/melee,
+/mob/living/basic/trooper/pirate/melee,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "yq" = (
@@ -481,7 +481,7 @@
 /area/virtual_domain/powered)
 "yw" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/mob/living/simple_animal/hostile/pirate/ranged,
+/mob/living/basic/trooper/pirate/ranged,
 /obj/structure/chair/wood,
 /turf/open/floor/wood{
 	icon_state = "wood_large"
@@ -616,7 +616,7 @@
 /area/virtual_domain/powered)
 "Hp" = (
 /obj/effect/turf_decal/siding/wood,
-/mob/living/simple_animal/hostile/pirate/ranged,
+/mob/living/basic/trooper/pirate/ranged,
 /turf/open/floor/wood,
 /area/virtual_domain/powered)
 "HY" = (

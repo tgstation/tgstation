@@ -95,7 +95,7 @@
 /obj/item/circuit_component/money_bot/populate_ports()
 	total_money = add_output_port("Total Money", PORT_TYPE_NUMBER)
 	money_input = add_output_port("Last Input Money", PORT_TYPE_NUMBER)
-	entity = add_output_port("User", PORT_TYPE_ATOM)
+	entity = add_output_port("User", PORT_TYPE_USER)
 	money_trigger = add_output_port("Money Input", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/money_bot/register_shell(atom/movable/shell)

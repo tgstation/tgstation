@@ -149,7 +149,7 @@
 
 
 		if("add")//Generate Supply Order first
-			if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_EXPRESSPOD_CONSOLE))
+			if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_EXPRESSPOD_CONSOLE))
 				say("Railgun recalibrating. Stand by.")
 				return
 			var/id = params["id"]

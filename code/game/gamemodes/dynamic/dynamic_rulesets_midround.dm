@@ -61,9 +61,6 @@
 		if (isnull(creature.client)) // Are they connected?
 			trimmed_list.Remove(creature)
 			continue
-		if (isnull(creature.mind))
-			trimmed_list.Remove(creature)
-			continue
 		if(creature.client.get_remaining_days(minimum_required_age) > 0)
 			trimmed_list.Remove(creature)
 			continue
@@ -73,6 +70,10 @@
 		if (is_banned_from(creature.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			trimmed_list.Remove(creature)
 			continue
+
+		if (isnull(creature.mind))
+			continue
+
 		if (restrict_ghost_roles && (creature.mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
 			trimmed_list.Remove(creature)
 			continue
@@ -176,7 +177,12 @@
 		if(makeBody)
 			new_character = generate_ruleset_body(applicant)
 		finish_setup(new_character, i)
-		notify_ghosts("[applicant.name] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
+		notify_ghosts(
+			"[applicant.name] has been picked for the ruleset [name]!",
+			source = new_character,
+			action = NOTIFY_ORBIT,
+			header = "Something Interesting!",
+		)
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = make_body(applicant)

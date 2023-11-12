@@ -276,6 +276,11 @@
 /obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
+"cU" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/singulo)
 "de" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
@@ -741,11 +746,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"jD" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/dorms)
 "jV" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -1765,6 +1765,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
+"sf" = (
+/obj/machinery/portable_atmospherics/canister/plasma,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/singulo)
 "sg" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
@@ -2383,6 +2387,24 @@
 /obj/structure/cable,
 /turf/template_noop,
 /area/ruin/space/solars/ks13/aft_solars)
+"vG" = (
+/obj/item/circuitboard/machine/smes,
+/obj/structure/table,
+/obj/machinery/light/small/directional/east,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/small/directional/east,
+/obj/item/circuitboard/machine/smes,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/secure_storage)
 "vI" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
@@ -3625,16 +3647,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/cell)
-"Cd" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/table_frame,
-/obj/item/wallframe/apc{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/wallframe/apc,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/tech_storage)
 "Ce" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/airalarm/directional/north,
@@ -4076,11 +4088,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/rnd)
-"EC" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
-/obj/machinery/portable_atmospherics/canister/plasma,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "ED" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access"
@@ -5577,6 +5584,18 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"MS" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light/small/directional/east,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/small/directional/east,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/dorms)
 "MT" = (
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/dirt,
@@ -6053,14 +6072,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
-"Ps" = (
-/obj/item/circuitboard/machine/smes,
-/obj/structure/table,
-/obj/machinery/light/small/directional/east,
-/obj/effect/spawner/random/maintenance,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/secure_storage)
 "Pt" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -7854,6 +7865,27 @@
 /obj/structure/fluff/oldturret,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
+"YD" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/table_frame,
+/obj/item/wallframe/apc{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/wallframe/apc,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/small/directional/west,
+/obj/structure/table_frame,
+/obj/item/wallframe/apc{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/tech_storage)
 "YE" = (
 /obj/structure/plaque/static_plaque/golden/commission/ks13,
 /obj/effect/decal/cleanable/dirt,
@@ -9593,7 +9625,7 @@ Fq
 yq
 rm
 uf
-jD
+MS
 oU
 sm
 wc
@@ -10931,7 +10963,7 @@ rk
 QG
 QG
 Xt
-Cd
+YD
 DT
 QG
 QG
@@ -11373,7 +11405,7 @@ rk
 rk
 sU
 sU
-EC
+sf
 CX
 PI
 PI
@@ -11718,7 +11750,7 @@ PI
 Ex
 pi
 FI
-FI
+cU
 FI
 FI
 zv
@@ -13643,7 +13675,7 @@ rk
 rr
 rr
 ab
-Ps
+vG
 DL
 rr
 rr

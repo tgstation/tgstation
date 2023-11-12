@@ -24,35 +24,48 @@
 	if(controller.pathing_attempts >= max_pathing_attempts)
 		controller.CancelActions()
 
-///Should the movement be allowed to happen? As of writing this, return TRUE if it can, FALSE otherwise
+///Should the movement be allowed to happen? return TRUE if it can, FALSE otherwise
 /datum/ai_movement/proc/allowed_to_move(datum/move_loop/source)
+	SHOULD_BE_PURE(TRUE)
+
 	var/atom/movable/pawn = source.moving
 	var/datum/ai_controller/controller = source.extra_info
-	source.delay = controller.movement_delay
 
 	var/can_move = TRUE
-	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby) //Need to store more state. Annoying.
+	if((controller.ai_traits & STOP_MOVING_WHEN_PULLED) && pawn.pulledby) //Need to store more state. Annoying.
 		can_move = FALSE
 
 	if(!isturf(pawn.loc)) //No moving if not on a turf
 		can_move = FALSE
 
-	// Check if this controller can actually run, so we don't chase people with corpses
-	if(!controller.able_to_run())
-		controller.CancelActions()
-		qdel(source) //stop moving
-		return FALSE
+	if(isliving(pawn))
+		var/mob/living/pawn_mob = pawn
+		if(!(pawn_mob.mobility_flags & MOBILITY_MOVE))
+			can_move = FALSE
 
-	if(can_move)
-		return TRUE
-	increment_pathing_failures(controller)
-	return FALSE
+	return can_move
 
 ///Anything to do before moving; any checks if the pawn should be able to move should be placed in allowed_to_move() and called by this proc
 /datum/ai_movement/proc/pre_move(datum/move_loop/source)
 	SIGNAL_HANDLER
-	if(!allowed_to_move(source))
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/datum/ai_controller/controller = source.extra_info
+
+	// Check if this controller can actually run, so we don't chase people with corpses
+	if(!controller.able_to_run())
+		controller.CancelActions()
+		qdel(source) //stop moving
 		return MOVELOOP_SKIP_STEP
+
+	source.delay = controller.movement_delay
+
+	// Why doesn't this return TRUE?
+	// MOVELOOP_SKIP_STEP is defined as (1<<0) and TRUE are defined as the same "1", returning TRUE would be the equivalent of skipping the move
+	if(allowed_to_move(source))
+		return MOVELOOP_SKIP_STEP
+	increment_pathing_failures(controller)
+	return NONE
 
 //Anything to do post movement
 /datum/ai_movement/proc/post_move(datum/move_loop/source, succeeded)
