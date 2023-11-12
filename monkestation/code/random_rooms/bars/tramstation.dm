@@ -35,7 +35,7 @@
 /datum/map_template/random_room/random_bar/tramstation_base/biodome
 	name = "Winter Biodome Tram Bar"
 	room_id = "biodome_tram_bar"
-	mappath = "monkestation/_maps/RandomBars/Tram/biodome_tram_bar.dmm"
+	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_biodome.dmm"
 	weight = 4
 
 /datum/map_template/random_room/random_bar/tramstation_base/cult
