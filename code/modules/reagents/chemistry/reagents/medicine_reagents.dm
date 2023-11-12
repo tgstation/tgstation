@@ -640,18 +640,16 @@
 		var/mob/living/carbon/carbon_mob = affected_mob
 		if (SPT_PROB(25, seconds_per_tick))
 			carbon_mob.adjust_jitter_up_to(2 SECONDS, 20 SECONDS)
-		if (SPT_PROB(20, seconds_per_tick))
-			carbon_mob.emote("wheeze")
 		if (SPT_PROB(35, seconds_per_tick))
 			if (prob(60))
 				carbon_mob.losebreath += 1
 				to_chat(affected_mob, span_danger("Your diaphram spasms and you find yourself unable to breathe!"))
 			else
-				carbon_mob.breathe(seconds_per_tick, times_fired) // this is probably a bad idea and i'll remove it later
+				carbon_mob.breathe(seconds_per_tick, times_fired)
 				to_chat(affected_mob, span_danger("Your diaphram spasms and you unintentionally take a breath!"))
 
 		if (current_cycle > secondary_overdose_effect_cycle_threshold)
-			if (SPT_PROB(5, seconds_per_tick))
+			if (SPT_PROB(30, seconds_per_tick))
 				carbon_mob.adjust_eye_blur_up_to(6 SECONDS, 30 SECONDS)
 			if (carbon_mob.getStaminaLoss() < maximum_od_stamina_damage)
 				carbon_mob.adjustStaminaLoss(seconds_per_tick)
