@@ -60,12 +60,10 @@
 
 	source.delay = controller.movement_delay
 
-	// Why doesn't this return TRUE?
-	// MOVELOOP_SKIP_STEP is defined as (1<<0) and TRUE are defined as the same "1", returning TRUE would be the equivalent of skipping the move
 	if(allowed_to_move(source))
-		return MOVELOOP_SKIP_STEP
+		return NONE
 	increment_pathing_failures(controller)
-	return NONE
+	return MOVELOOP_SKIP_STEP
 
 //Anything to do post movement
 /datum/ai_movement/proc/post_move(datum/move_loop/source, succeeded)
