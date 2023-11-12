@@ -1,0 +1,4 @@
+author: "YesterdaysPromise"
+delete-after: True
+changes:
+  - bugfix: "Replaces the jetpack in Interdyne pirates' suit storage with air tanks. They need to breath, and already got the suit for speed."

@@ -65,8 +65,8 @@
 #define BB_BASIC_MOB_FLEE_DISTANCE "BB_basic_flee_distance"
 #define DEFAULT_BASIC_FLEE_DISTANCE 9
 
-/// Generic key for a non-specific targetted action
-#define BB_TARGETTED_ACTION "BB_targetted_action"
+/// Generic key for a non-specific targeted action
+#define BB_TARGETED_ACTION "BB_TARGETED_action"
 /// Generic key for a non-specific action
 #define BB_GENERIC_ACTION "BB_generic_action"
 
