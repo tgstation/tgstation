@@ -400,8 +400,9 @@ There are several things that need to be remembered:
 
 		if(dna.species.bodytype & BODYTYPE_SNOUTED)
 			if(worn_item.supports_variations_flags & CLOTHING_SNOUTED_VARIATION)
-				icon_file = head.worn_icon_snouted || SNOUTED_HEAD_FILE
-				mutant_override = TRUE
+				if((icon_exists(head.worn_icon_snouted || SNOUTED_HEAD_FILE, RESOLVE_ICON_STATE(worn_item)))) //make sure the icon we're about to switch to exists
+					icon_file = head.worn_icon_snouted || SNOUTED_HEAD_FILE
+					mutant_override = TRUE
 		else if(dna.species.bodytype & BODYTYPE_CUSTOM)
 			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_HEAD, head)
 			if(species_icon_file)
