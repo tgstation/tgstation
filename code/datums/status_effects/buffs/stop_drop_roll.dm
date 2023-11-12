@@ -23,10 +23,12 @@
 	// Start with one weaker roll
 	owner.spin(spintime = actual_interval, speed = actual_interval / 4)
 	owner.adjust_fire_stacks(-0.5)
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, id) // they're busy!
 	return TRUE
 
 /datum/status_effect/stop_drop_roll/on_remove()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_SET_BODY_POSITION))
+	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, id)
 
 /datum/status_effect/stop_drop_roll/tick(seconds_between_ticks)
 	if(HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || HAS_TRAIT(owner, TRAIT_INCAPACITATED))
