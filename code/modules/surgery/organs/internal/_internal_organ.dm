@@ -5,15 +5,6 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/Destroy()
-	if(owner)
-		// The special flag is important, because otherwise mobs can die
-		// while undergoing transformation into different mobs.
-		Remove(owner, special=TRUE)
-	else
-		STOP_PROCESSING(SSobj, src)
-	return ..()
-
 /obj/item/organ/internal/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(!. || !owner)
@@ -25,7 +16,7 @@
 
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/Remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/internal/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
 	. = ..()
 
 	if(organ_owner)

@@ -984,6 +984,9 @@
 	bodyparts += new_bodypart
 	new_bodypart.update_owner(src)
 
+	for(var/obj/item/organ/organ in new_bodypart)
+		organ.mob_insert(src)
+
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs + 1)
@@ -1002,6 +1005,9 @@
 
 	old_bodypart.on_removal()
 	bodyparts -= old_bodypart
+
+	for(var/obj/item/organ/organ in old_bodypart)
+		organ.mob_remove(src)
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)

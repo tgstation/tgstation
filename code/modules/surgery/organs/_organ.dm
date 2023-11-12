@@ -79,6 +79,17 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 
+/obj/item/organ/Destroy()
+	if(bodypart_owner && !owner)
+		bodypart_remove(bodypart_owner)
+	else if(owner)
+		// The special flag is important, because otherwise mobs can die
+		// while undergoing transformation into different mobs.
+		Remove(owner, special=TRUE)
+	else
+		STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
 	LAZYADD(organ_traits, trait)

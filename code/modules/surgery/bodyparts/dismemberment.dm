@@ -185,11 +185,23 @@
 		var/datum/wound/loss/dismembering = new
 		return dismembering.apply_dismember(src, wounding_type)
 
-/// Removes the organ from the limb, placing it into nullspace.
-/obj/item/organ/proc/remove_from_limb()
-	moveToNullspace()
-	bodypart_owner.contents -= src
-	bodypart_owner = null
+/obj/item/organ/internal/brain/on_bodypart_insert(obj/item/bodypart/head/head)
+	. = ..()
+
+	head.brain = src
+	if(brainmob)
+		head.brainmob = brainmob //this code is obviously not ideal since moving brainmobs around is asking for problems
+		brainmob = null
+		head.brainmob.forceMove(head)
+
+/obj/item/organ/internal/brain/on_bodypart_remove(obj/item/bodypart/head/head)
+	. = ..()
+
+	head.brain = null
+	if(head.brainmob)
+		brainmob = head.brainmob
+		head.brainmob = null
+		brainmob.forceMove(src)
 
 /obj/item/organ/internal/eyes/on_bodypart_insert(obj/item/bodypart/head/head)
 	. = ..()
@@ -323,9 +335,6 @@
 				new_limb_owner.surgeries -= attach_surgery
 				qdel(attach_surgery)
 				break
-
-	for(var/obj/item/organ/limb_organ in contents)
-		limb_organ.Insert(new_limb_owner, TRUE)
 
 	for(var/datum/wound/wound as anything in wounds)
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
