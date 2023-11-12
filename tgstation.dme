@@ -2943,6 +2943,7 @@
 #include "code\modules\antagonists\heretic\heretic_monsters.dm"
 #include "code\modules\antagonists\heretic\influences.dm"
 #include "code\modules\antagonists\heretic\knife_effect.dm"
+#include "code\modules\antagonists\heretic\moon_lunatic.dm"
 #include "code\modules\antagonists\heretic\rust_effect.dm"
 #include "code\modules\antagonists\heretic\transmutation_rune.dm"
 #include "code\modules\antagonists\heretic\items\eldritch_flask.dm"

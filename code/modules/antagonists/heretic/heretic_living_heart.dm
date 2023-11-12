@@ -218,3 +218,39 @@
 		balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message
+
+
+// The tracking action given to moon acolytes to find their master
+/datum/action/cooldown/track_target/lunatic
+	desc = "LMB: See what your master looks like and track them. RMB: Repeat track."
+
+/datum/action/cooldown/track_target/lunatic/Grant(mob/granted)
+	if(!IS_LUNATIC(granted))
+		return
+
+	return ..()
+
+/datum/action/cooldown/track_target/Activate(atom/target)
+	var/datum/antagonist/lunatic/lunatic_datum = IS_LUNATIC(owner)
+	if(!LAZYLEN(lunatic_datum.ascended_heretic))
+		owner.balloon_alert(owner, "what cruel fate, your master is gone...")
+		StartCooldown(1 SECONDS)
+		return TRUE
+
+	var/mob/living/carbon/human/ascended_heretic = lunatic_datum.ascended_body
+	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	owner.balloon_alert(owner, get_balloon_message(ascended_heretic))
+	StartCooldown()
+	return TRUE
+
+/datum/action/cooldown/track_target/lunatic/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	if(!IS_LUNATIC(owner))
+		return FALSE
+	if(radial_open)
+		return FALSE
+
+	return TRUE
