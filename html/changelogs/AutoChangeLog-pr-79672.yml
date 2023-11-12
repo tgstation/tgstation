@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Goats will now calm down after getting grumpy without causing a runtime error."
