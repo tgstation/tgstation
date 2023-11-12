@@ -3,9 +3,6 @@
 /// coefficient to convert temperature to joules. same lvl as acclimator
 #define HEATER_COEFFICIENT 0.05
 
-/// maximum number of attempts the reaction chamber will make to balance the ph(More means better results but higher tick usage)
-#define MAX_PH_ADJUSTMENTS 3
-
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
 	desc = "Keeps chemicals separated until given conditions are met."
@@ -227,4 +224,3 @@
 			return FALSE
 
 #undef HEATER_COEFFICIENT
-#undef MAX_PH_ADJUSTMENTS
