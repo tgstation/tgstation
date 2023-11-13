@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "You can now eject blank IDs from modular computers"

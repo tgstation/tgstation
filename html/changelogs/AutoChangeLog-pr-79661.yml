@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Kronkaine's action speed buff now stops when metabolized out."
+  - bugfix: "Drug-related moodlets should now time out properly. They still linger after metabolization ends, but they no longer last forever."

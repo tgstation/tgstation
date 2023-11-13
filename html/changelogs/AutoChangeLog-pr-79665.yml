@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - image: "Crates got new sprites"
+  - image: "Added more crate styles"

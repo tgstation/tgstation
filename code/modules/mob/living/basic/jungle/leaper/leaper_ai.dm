@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/leaper
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -39,7 +39,7 @@
 	ability_key = BB_LEAPER_SUMMON
 	finish_planning = FALSE
 
-/datum/pet_command/point_targetting/use_ability/flop
+/datum/pet_command/point_targeting/use_ability/flop
 	command_name = "Flop"
 	command_desc = "Command your pet to belly flop your target!"
 	radial_icon = 'icons/mob/actions/actions_items.dmi'
@@ -47,7 +47,7 @@
 	speech_commands = list("flop", "crush")
 	pet_ability_key = BB_LEAPER_FLOP
 
-/datum/pet_command/point_targetting/use_ability/bubble
+/datum/pet_command/point_targeting/use_ability/bubble
 	command_name = "Poison Bubble"
 	command_desc = "Launch poisonous bubbles at your target!"
 	radial_icon = 'icons/obj/weapons/guns/projectiles.dmi'
@@ -55,7 +55,7 @@
 	speech_commands = list("bubble", "shoot")
 	pet_ability_key = BB_LEAPER_BUBBLE
 
-/datum/pet_command/untargetted_ability/blood_rain
+/datum/pet_command/untargeted_ability/blood_rain
 	command_name = "Blood Rain"
 	command_desc = "Let it rain poisonous blood!"
 	radial_icon = 'icons/effects/effects.dmi'
@@ -64,7 +64,7 @@
 	ability_key = BB_LEAPER_VOLLEY
 
 
-/datum/pet_command/untargetted_ability/summon_toad
+/datum/pet_command/untargeted_ability/summon_toad
 	command_name = "Summon Toads"
 	command_desc = "Summon crazy suicide frogs!"
 	radial_icon = 'icons/mob/simple/animal.dmi'
