@@ -4,3 +4,4 @@
 #include "code\obj\items\clothing\masks.dm"
 #include "code\modules\research.dm"
 #include "code\obj\structures\display_case.dm"
+#include "code\modules\antags\uplink_items.dm"
