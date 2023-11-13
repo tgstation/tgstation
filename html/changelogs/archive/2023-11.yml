@@ -453,3 +453,38 @@
       lungs. Now, it will simply say the target is lacking a pulse or not breathing.
   vinylspiders:
   - code_imp: gets rid of the rest of the instances of 'targetted' typo from code
+2023-11-13:
+  DATA_:
+  - spellcheck: The examine message for a carbon with an empty golem stomach now properly
+      matches said carbon's gender.
+  Jacquerel:
+  - bugfix: Goats will now calm down after getting grumpy without causing a runtime
+      error.
+  JohnFulpWillard:
+  - bugfix: '[Mafia] Obsessed now knows who their target is in their role description,
+      and people playing on PDA are told in their chat.'
+  Melbert:
+  - bugfix: Fix being unable to resist out of ice cubes
+  Momo8289:
+  - spellcheck: Made the remembrance day greeting message more tasteful.
+  SethLafuente:
+  - bugfix: fixes holodeck missing medical tools
+  Vishenka0704:
+  - bugfix: Now you can refuse the pirates request.
+  YesterdaysPromise:
+  - bugfix: Replaces the jetpack in Interdyne pirates' suit storage with air tanks.
+      They need to breath, and already got the suit for speed.
+  necromanceranne:
+  - bugfix: The Dread Disciples of Maint Khan, notorious Tunnel Arts practitioner
+      and maintenance warlord, have been driven from Nanotrasen stations within the
+      Spinward Sector. The average punch accuracy has been increased as a direct result,
+      with the most exhausted puncher now having a  max potential inaccuracy of 80%,
+      rather than the absurd 20% of the Disciples.
+  nikothedude:
+  - code_imp: Quirks are now customizable on the quirks page instead of on the character
+      prefs page
+  vinylspiders:
+  - bugfix: emped bar signs will now display the correct sprite
+  - image: added a more detailed lightmask for the emp bar sign sprite
+  zxaber:
+  - bugfix: Ashwalker Tendril Revives no longer ghost the player being revived.
