@@ -96,7 +96,7 @@
 
 		if(!ghost.client.prefs.read_preference(/datum/preference/toggle/ghost_roles))
 			continue
-		if(!isnull(candidate_mob.client.holder) && !candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin))
+		if(!isnull(ghost.client.holder) && !ghost.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin))
 			continue
 
 		candidates += ghost
@@ -109,7 +109,7 @@
 		phone_home()
 		return
 
-	var/mob/dead/observer/chosen = pick(candidates)
+	var/mob/dead/observer/chosen = pick(volunteers)
 
 	if(isnull(chosen))
 		phone_home()
