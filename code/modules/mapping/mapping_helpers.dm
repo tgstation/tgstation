@@ -39,7 +39,7 @@
 
 	if(length(thing.baseturfs))
 		var/turf/tile = thing.baseturfs[1]
-		if(tile.type == baseturf)
+		if(tile == baseturf)
 			return
 
 	thing.place_on_bottom(baseturf)
