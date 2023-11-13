@@ -160,7 +160,7 @@
 	access_view = ACCESS_MINING_STATION
 	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
-	crate_type = /obj/structure/closet/crate/secure/cargo
+	crate_type = /obj/structure/closet/crate/secure/cargo/mining
 
 /datum/supply_pack/service/survivalknives
 	name = "Survival Knives Crate"
@@ -169,7 +169,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/knife/combat/survival = 3)
 	crate_name = "survival knife crate"
-	crate_type = /obj/structure/closet/crate/cargo
+	crate_type = /obj/structure/closet/crate/cargo/mining
 
 /datum/supply_pack/service/wedding
 	name = "Wedding Crate"

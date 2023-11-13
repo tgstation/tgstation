@@ -81,13 +81,18 @@
 
 /obj/structure/closet/crate/secure/centcom
 	name = "secure centcom crate"
-	icon_state = "centcom"
-	base_icon_state = "centcom"
+	icon_state = "centcom_secure"
+	base_icon_state = "centcom_secure"
 
 /obj/structure/closet/crate/secure/cargo
 	name = "secure cargo crate"
 	icon_state = "cargo_secure"
 	base_icon_state = "cargo_secure"
+
+/obj/structure/closet/crate/secure/cargo/mining
+	name = "secure mining crate"
+	icon_state = "mining_secure"
+	base_icon_state = "mining_secure"
 
 /obj/structure/closet/crate/secure/radiation
 	name = "secure radioation crate"

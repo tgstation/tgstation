@@ -47,6 +47,7 @@
 		"Engineering" = list("icon_state" = "engi_crate"),
 		"Atmospherics" = list("icon_state" = "atmos"),
 		"Cargo" = list("icon_state" = "cargo"),
+		"Mining" = list("icon_state" = "mining"),
 		"Command" = list("icon_state" = "centcom")
 	)
 	if(paint_jobs)
@@ -285,10 +286,20 @@
 	icon_state = "hydrocrate"
 	base_icon_state = "hydrocrate"
 
+/obj/structure/closet/crate/centcom
+	name = "centcom crate"
+	icon_state = "centcom"
+	base_icon_state = "centcom"
+
 /obj/structure/closet/crate/cargo
 	name = "cargo crate"
 	icon_state = "cargo"
 	base_icon_state = "cargo"
+
+/obj/structure/closet/crate/cargo/mining
+	name = "mining crate"
+	icon_state = "mining"
+	base_icon_state = "mining"
 
 /obj/structure/closet/crate/engineering
 	name = "engineering crate"
