@@ -83,6 +83,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_behavior/hunt_target/unarmed_attack_target/material_stand
 	required_distance = 0
 	always_reset_target = TRUE
+	switch_combat_mode = TRUE
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
 ///try to face the counter when depositing ores

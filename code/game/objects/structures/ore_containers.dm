@@ -2,7 +2,7 @@
 /obj/structure/ore_container
 
 /obj/structure/ore_container/attackby(obj/item/ore, mob/living/carbon/human/user, list/modifiers)
-	if(istype(ore, /obj/item/stack/ore))
+	if(istype(ore, /obj/item/stack/ore) && !user.combat_mode)
 		ore.forceMove(src)
 		return
 	return ..()
