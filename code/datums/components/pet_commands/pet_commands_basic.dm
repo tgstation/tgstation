@@ -184,7 +184,7 @@
 /datum/pet_command/point_targeting/breed/execute_action(datum/ai_controller/controller)
 	if(is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
 		controller.queue_behavior(/datum/ai_behavior/make_babies, BB_CURRENT_PET_TARGET)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
