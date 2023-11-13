@@ -752,7 +752,7 @@
 
 /// Run all necessary procs to remove a limbs ownership and remove the appropriate signals and traits
 /obj/item/bodypart/proc/clear_ownership(mob/living/carbon/old_owner)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
 	owner = null
 
@@ -772,7 +772,7 @@
 
 /// Apply ownership of a limb to someone, giving the appropriate traits, updates and signals
 /obj/item/bodypart/proc/apply_ownership(mob/living/carbon/new_owner)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 
 	owner = new_owner
 

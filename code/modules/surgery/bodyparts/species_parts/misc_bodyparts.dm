@@ -512,16 +512,15 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/left/golem/update_owner(new_owner)
+/obj/item/bodypart/arm/left/golem/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
-	if (. == FALSE)
-		return
-	if (owner)
-		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
-	if (isnull(.))
-		return
-	var/mob/living/carbon/old_owner = .
+
 	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
+/obj/item/bodypart/arm/left/golem/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+
+	new_owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/arm/right/golem
 	icon = 'icons/mob/human/species/golems.dmi'
@@ -546,16 +545,15 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/right/golem/update_owner(new_owner)
+/obj/item/bodypart/arm/right/golem/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
-	if (. == FALSE)
-		return
-	if (owner)
-		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
-	if (isnull(.))
-		return
-	var/mob/living/carbon/old_owner = .
+
 	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
+/obj/item/bodypart/arm/right/golem/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+
+	new_owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/leg/left/golem
 	icon = 'icons/mob/human/species/golems.dmi'
