@@ -1,0 +1,4 @@
+author: "SethLafuente"
+delete-after: True
+changes:
+  - bugfix: "fixes half-covering glassware protecting eyes from chemicals"
