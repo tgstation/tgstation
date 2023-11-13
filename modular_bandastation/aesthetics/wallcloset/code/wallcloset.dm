@@ -1,1 +1,0 @@
-//TODO no wall lockers?
