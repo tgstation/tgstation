@@ -1,0 +1,5 @@
+author: "Danny Boy"
+delete-after: True
+changes:
+  - bugfix: "Fixed Signer eyebrow raising/lowering indicators and emotes"
+  - bugfix: "Fixed Signer RuneChat punctuation"

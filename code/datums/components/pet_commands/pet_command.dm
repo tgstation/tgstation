@@ -109,25 +109,25 @@
 	CRASH("Pet command execute action not implemented.")
 
 /**
- * # Point Targetting Pet Command
+ * # Point Targeting Pet Command
  * As above but also listens for you pointing at something and marks it as a target
  */
-/datum/pet_command/point_targetting
+/datum/pet_command/point_targeting
 	/// Text describing an action we perform upon receiving a new target
 	var/pointed_reaction
-	/// Blackboard key for targetting datum, this is likely going to need it
-	var/targetting_datum_key = BB_PET_TARGETTING_DATUM
+	/// Blackboard key for targeting strategy, this is likely going to need it
+	var/targeting_strategy_key = BB_PET_TARGETING_STRATEGY
 
-/datum/pet_command/point_targetting/add_new_friend(mob/living/tamer)
+/datum/pet_command/point_targeting/add_new_friend(mob/living/tamer)
 	. = ..()
 	RegisterSignal(tamer, COMSIG_MOB_POINTED, PROC_REF(look_for_target))
 
-/datum/pet_command/point_targetting/remove_friend(mob/living/unfriended)
+/datum/pet_command/point_targeting/remove_friend(mob/living/unfriended)
 	. = ..()
 	UnregisterSignal(unfriended, COMSIG_MOB_POINTED)
 
 /// Target the pointed atom for actions
-/datum/pet_command/point_targetting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
+/datum/pet_command/point_targeting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
 	SIGNAL_HANDLER
 
 	var/mob/living/parent = weak_parent.resolve()
