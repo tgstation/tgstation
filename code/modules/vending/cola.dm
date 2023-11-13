@@ -30,7 +30,6 @@
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 1,
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/rootbeer = 1,
-		/obj/item/reagent_containers/cup/soda_cans/kvass = 1,
 	)
 	refill_canister = /obj/item/vending_refill/cola
 	default_price = PAYCHECK_CREW * 0.7
