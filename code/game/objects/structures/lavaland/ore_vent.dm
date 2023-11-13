@@ -2,6 +2,9 @@
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
+#define LARGE_VENT_TYPE "large"
+#define MEDIUM_VENT_TYPE "medium"
+#define SMALL_VENT_TYPE "small"
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -37,9 +40,9 @@
 	var/ore_string = ""
 	/// Associated list of vent size weights to pick from.
 	var/list/ore_vent_options = list(
-		"large",
-		"medium",
-		"small",
+		LARGE_VENT_TYPE,
+		MEDIUM_VENT_TYPE,
+		SMALL_VENT_TYPE,
 	)
 
 	/// What string do we use to warn the player about the excavation event?
@@ -96,12 +99,13 @@
 	. = ..()
 	if(.)
 		return
-	if(is_type_in_list(attacking_item, scanning_equipment))
-		if(tapped)
-			balloon_alert_to_viewers("vent tapped!")
-			return TRUE
-		scan_and_confirm(user)
+	if(!is_type_in_list(attacking_item, scanning_equipment))
+		return
+	if(tapped)
+		balloon_alert_to_viewers("vent tapped!")
 		return TRUE
+	scan_and_confirm(user)
+	return TRUE
 
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -121,7 +125,7 @@
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 	return TRUE
 
-/obj/structure/ore_vent/buckle_mob(mob/living/M, force, check_loc)
+/obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
 	if(tapped)
 		return FALSE
@@ -160,7 +164,6 @@
 	return refined_list
 
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
-	say("spawned! [map_loading] called with [max_minerals]")
 	var/iterator = 1
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
@@ -225,10 +228,10 @@
  * Also gives xp and mining points to all nearby miners in equal measure.
  */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
-	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
+	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
 	particles = null
-	if(node && !QDELING(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
+	if(!QDELETED(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
 		balloon_alert_to_viewers("vent tapped!")
@@ -498,3 +501,6 @@
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
+#undef LARGE_VENT_TYPE
+#undef MEDIUM_VENT_TYPE
+#undef SMALL_VENT_TYPE

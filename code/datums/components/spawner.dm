@@ -32,7 +32,7 @@
 	src.spawn_distance_exclude = spawn_distance_exclude
 
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(stop_spawning))
-	RegisterSignal(parent, COMSIG_MINING_SPAWNER_STOP, PROC_REF(stop_spawning))
+	RegisterSignal(parent, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
 /datum/component/spawner/process()
@@ -118,23 +118,4 @@
 	spawned_things -= WEAKREF(source)
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE))
 
-/**
- * Behaves like the orange() proc, but only looks in the outer range of the function (The "peel" of the orange).
- * Can't think of a better place to put this.
- */
-/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
-	var/list/peel = list()
-	var/list/outer
-	var/list/inner
-	if(view_based)
-		outer = circle_view_turfs(center, outer_range)
-		inner = circle_view_turfs(center, inner_range)
-	else
-		outer = circle_range_turfs(center, outer_range)
-		inner = circle_range_turfs(center, inner_range)
-	for(var/turf/possible_spawn in outer)
-		if(possible_spawn in inner)
-			continue
-		peel += possible_spawn
-	return peel
 
