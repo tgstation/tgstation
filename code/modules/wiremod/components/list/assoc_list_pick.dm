@@ -15,7 +15,6 @@
 /obj/item/circuit_component/list_pick/assoc/make_list_port()
 	input_list = add_input_port("List", PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, PORT_TYPE_ANY))
 
-
 /obj/item/circuit_component/list_pick/assoc/pre_input_received(datum/port/input/port)
 	if(port == list_options)
 		var/new_type = list_options.value

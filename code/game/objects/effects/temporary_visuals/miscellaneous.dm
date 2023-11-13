@@ -287,6 +287,10 @@
 	icon_state = "bluestream_fade"
 	duration = 9
 
+/obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
