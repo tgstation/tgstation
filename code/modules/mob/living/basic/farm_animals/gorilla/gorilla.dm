@@ -158,6 +158,12 @@
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
 
+/mob/living/basic/gorilla/cargorilla/death(gibbed)
+	var/datum/component/potential_component = GetComponent(/datum/component/ghost_direct_control)
+	if(!QDELETED(potential_component))
+		qdel(potential_component)
+	return ..()
+
 /**
  * Poll ghosts for control of the gorilla. Not added in init because we only want to poll when the round starts.
  * Preferably in future we can replace this with a popup on the lobby to queue to become a gorilla.
