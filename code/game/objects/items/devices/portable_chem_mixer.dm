@@ -122,8 +122,10 @@
 	dispensable_reagents.Cut()
 	for (var/obj/item/reagent_containers/container in contents)
 		var/datum/reagent/key = container.reagents.get_master_reagent()
+		if(isnull(key)) //no reagent inside container
+			continue
 
-		var/key_type = key?.type
+		var/key_type = key.type
 		if (!(key_type in dispensable_reagents))
 			dispensable_reagents[key_type] = list()
 			dispensable_reagents[key_type]["reagents"] = list()
