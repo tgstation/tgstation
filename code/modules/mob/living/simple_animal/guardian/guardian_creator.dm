@@ -80,7 +80,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 			return
 	used = TRUE
 	to_chat(user, use_message)
-	RemoveElement(/datum/element/uplink_reimburse)
 	var/guardian_type_name = "a random"
 	if(!random)
 		guardian_type_name = "the " + lowertext(initial(guardian_path.creator_name))
