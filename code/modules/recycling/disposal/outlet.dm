@@ -73,7 +73,7 @@
 	if(playsound)
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 
-	if(!H)
+	if(QDELETED(H))
 		return
 
 	pipe_eject(H, dir, TRUE, target, eject_range, eject_speed)
