@@ -149,7 +149,7 @@
 
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
-	desc = "You're currently pointing a gun at someone."
+	desc = "You're currently pointing a gun at someone. Click to cancel."
 	icon_state = "aimed"
 
 /atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
