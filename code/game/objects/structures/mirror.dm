@@ -338,13 +338,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
 	// Roundstart species don't have a flag, so it has to be set on Initialize.
-	//selectable_races = get_selectable_species().Copy()
 	for(var/datum/species/species_type in subtypesof(/datum/species))
 		var/datum/species/species = species_type
 		if(species.check_roundstart_eligible())
 			selectable_races[initial(species_type.name)] = species_type
 	selectable_races = sort_list(selectable_races)
-
 	return ..()
 
 /obj/structure/mirror/magic/badmin
