@@ -17,9 +17,15 @@
 	for(var/obj/item/bodypart/bodypart in bunny.bodyparts)
 		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
 			bunny_multiplier++
-	playsound(cast_on, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
-	cast_on.visible_message(span_warning("[cast_on] hops with their genetically-engineered rabbit legs!"))
-	cast_on.balloon_alert_to_viewers("hops")
+	if(bunny.getStaminaLoss() > 0) // cannot reach maximum jump if you have any stamina loss
+		bunny_multiplier = min(bunny_multiplier, 5)
+		cast_on.visible_message(span_warning("[cast_on] weakly hops with their genetically-engineered rabbit legs, hampered by their lack of stamina!"))
+		cast_on.balloon_alert_to_viewers("weakly hops")
+	else
+		cast_on.visible_message(span_warning("[cast_on] hops with their genetically-engineered rabbit legs!"))
+		cast_on.balloon_alert_to_viewers("hops")
+ 	playsound(cast_on, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
+
 
 	cast_on.layer = ABOVE_MOB_LAYER
 	if(bunny_multiplier >= 6) // they have committed to the bit, so we will reward it
