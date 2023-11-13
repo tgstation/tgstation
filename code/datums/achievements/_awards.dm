@@ -15,9 +15,6 @@
 	//Value returned on db connection failure, in case we want to differ 0 and nonexistent later on
 	var/default_value = FALSE
 
-	///Whether the award has to be loaded before or after other awards on [/datum/achievement_data/load_all_achievements()]
-	var/load_priority = AWARD_PRIORITY_DEFAULT
-
 ///This proc loads the achievement data from the hub.
 /datum/award/proc/load(key)
 	if(!SSdbcore.Connect())
