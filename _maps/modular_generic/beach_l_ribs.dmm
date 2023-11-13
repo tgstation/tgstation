@@ -1,0 +1,828 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"av" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/structure/flora/ash/leaf_shroom{
+	icon_state = "s_mushroom4"
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 10
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"aJ" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"bT" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"bV" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/vehicle/ridden/atv{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"fi" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/effect/decal/cleanable/oil,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"fw" = (
+/obj/effect/turf_decal/trimline/dark/corner{
+	dir = 8
+	},
+/mob/living/basic/mining/goldgrub/baby,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"gP" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"gR" = (
+/obj/item/fuel_pellet{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"ic" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/item/stack/sheet/mineral/sandbags,
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 6
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid10"
+	},
+/area/template_noop)
+"iD" = (
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"jT" = (
+/obj/item/fish/boned,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
+/area/template_noop)
+"ky" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus_fruit";
+	pixel_x = -12
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 10
+	},
+/obj/item/flashlight/lantern{
+	icon_state = "floodlight"
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid11"
+	},
+/area/template_noop)
+"ml" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/structure/frame/machine/secured,
+/obj/item/stack/cable_coil/cut,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"mP" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"oX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/toolbox{
+	pixel_x = 5;
+	pixel_y = -14
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"ph" = (
+/obj/item/knife/combat/bone,
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 8
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
+/area/template_noop)
+"pk" = (
+/obj/structure/flora/rock/pile/style_3,
+/obj/effect/turf_decal/weather/sand,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"pr" = (
+/obj/effect/turf_decal/trimline/dark/corner{
+	dir = 4
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"pZ" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"qD" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"tr" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/structure/flora/ash/cap_shroom{
+	icon_state = "l_mushroom2p"
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 5
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"tA" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/effect/turf_decal/trimline/dark/warning,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"uf" = (
+/obj/structure/flora/rock/pile/style_2,
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"uy" = (
+/obj/item/stack/sheet/bone,
+/mob/living/basic/mining/goldgrub/baby,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
+/area/template_noop)
+"uS" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"wf" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus3p"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid7"
+	},
+/area/template_noop)
+"wy" = (
+/obj/item/chair/wood,
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid6"
+	},
+/area/template_noop)
+"wI" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/structure/holosign/barrier/engineering,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"xA" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/item/modular_computer/laptop{
+	icon_state = "laptop";
+	pixel_y = 16;
+	pixel_x = 4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"xG" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/structure/holosign/barrier/engineering,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"xS" = (
+/obj/effect/turf_decal/trimline/dark/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"xU" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"zh" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus2"
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid7"
+	},
+/area/template_noop)
+"zH" = (
+/turf/open/misc/asteroid{
+	icon_state = "asteroid2"
+	},
+/area/template_noop)
+"Cv" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus_fruit";
+	pixel_y = 24
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/machinery/exoscanner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Ds" = (
+/obj/structure/flora/ash/cacti,
+/obj/effect/turf_decal/trimline/dark/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"DX" = (
+/obj/structure/flora/rock/pile/style_2,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Eo" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus_fruit";
+	pixel_y = 24
+	},
+/obj/structure/water_source/puddle,
+/obj/structure/flora/bush/reed/style_random{
+	pixel_y = 6
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"ED" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 8
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"Ff" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/structure/holosign/barrier/engineering,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Fi" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/xenoblood{
+	icon_state = "xfloor4"
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid3"
+	},
+/area/template_noop)
+"Ft" = (
+/obj/structure/rack,
+/obj/item/shovel,
+/obj/item/shovel{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"FD" = (
+/obj/effect/turf_decal/weather/sand,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Gh" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus_fruit";
+	pixel_x = -12
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 5
+	},
+/obj/item/flashlight/lantern{
+	icon_state = "floodlight"
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid11"
+	},
+/area/template_noop)
+"Go" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/vehicle/ridden/atv{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Iw" = (
+/obj/item/fishing_hook/bone,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
+/area/template_noop)
+"Jy" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"JM" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 9
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
+/area/template_noop)
+"La" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus_fruit";
+	pixel_y = 24
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid10"
+	},
+/area/template_noop)
+"LD" = (
+/obj/effect/turf_decal/trimline/dark/corner,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"LK" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"Mg" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"NO" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/flashlight/lantern{
+	icon_state = "floodlight"
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid9"
+	},
+/area/template_noop)
+"Oi" = (
+/obj/structure/table_frame,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 5
+	},
+/obj/item/binoculars,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid5"
+	},
+/area/template_noop)
+"OJ" = (
+/obj/structure/statue/bone/rib,
+/obj/effect/decal/cleanable/xenoblood{
+	icon_state = "xfloor5"
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"OM" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"OW" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/vehicle/ridden/atv,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"PS" = (
+/obj/structure/statue/bone/rib,
+/obj/effect/decal/cleanable/xenoblood{
+	icon_state = "xfloor7"
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 1
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid8"
+	},
+/area/template_noop)
+"Rs" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"RG" = (
+/obj/structure/firepit{
+	icon_state = "firepit"
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/empty{
+	pixel_y = 11;
+	pixel_x = 11
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle/empty{
+	pixel_y = 16
+	},
+/obj/effect/decal/cleanable/ash{
+	pixel_x = -9
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/ash{
+	pixel_x = 7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid7"
+	},
+/area/template_noop)
+"SE" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/item/key/atv{
+	pixel_y = 4
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Tt" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus_fruit";
+	pixel_x = -12
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 5
+	},
+/obj/structure/holosign/barrier/engineering,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid9"
+	},
+/area/template_noop)
+"TL" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Ua" = (
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"UJ" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 10
+	},
+/mob/living/basic/mining/goldgrub,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"Vw" = (
+/obj/structure/flora/ash/cacti{
+	icon_state = "cactus4"
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"Wd" = (
+/obj/effect/turf_decal/weather/sand,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"WA" = (
+/obj/effect/turf_decal/trimline/dark/corner,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid8"
+	},
+/area/template_noop)
+"YD" = (
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/template_noop)
+"YK" = (
+/obj/item/chair/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 1
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid10"
+	},
+/area/template_noop)
+"YQ" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/sand{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/xenoblood{
+	icon_state = "xfloor5"
+	},
+/obj/effect/turf_decal/trimline/dark/warning{
+	dir = 6
+	},
+/turf/open/misc/asteroid{
+	icon_state = "asteroid0"
+	},
+/area/template_noop)
+"ZO" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+aJ
+"}
+(2,1,1) = {"
+ZO
+Ua
+gR
+bT
+Go
+Jy
+oX
+mP
+Ua
+Ua
+ZO
+"}
+(3,1,1) = {"
+ZO
+fi
+SE
+NO
+ED
+av
+ml
+xG
+bV
+TL
+ZO
+"}
+(4,1,1) = {"
+ZO
+Wd
+wI
+PS
+jT
+fw
+La
+ph
+ky
+gP
+ZO
+"}
+(5,1,1) = {"
+ZO
+DX
+UJ
+YK
+zh
+zH
+OJ
+Vw
+pk
+YD
+ZO
+"}
+(6,1,1) = {"
+ZO
+OW
+JM
+xS
+Eo
+RG
+uy
+WA
+LK
+xA
+ZO
+"}
+(7,1,1) = {"
+ZO
+Wd
+tr
+pr
+Fi
+xU
+wf
+tA
+Cv
+Ua
+ZO
+"}
+(8,1,1) = {"
+ZO
+OM
+uS
+Gh
+Ds
+Iw
+LD
+YQ
+wy
+Rs
+ZO
+"}
+(9,1,1) = {"
+ZO
+FD
+uf
+Ff
+Oi
+Ft
+ic
+qD
+Tt
+YD
+ZO
+"}
+(10,1,1) = {"
+ZO
+Ua
+pZ
+iD
+Mg
+pZ
+Mg
+Ua
+pZ
+Ua
+ZO
+"}
+(11,1,1) = {"
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+ZO
+"}

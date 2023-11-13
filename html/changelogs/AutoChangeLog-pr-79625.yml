@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - balance: "Mech overclock coefficient is down to 1.25 from the default 1.5 for Ripley and Clarke."
+  - balance: "Mech overclock heating now scales with movespeed, higher speed - faster overheat."
