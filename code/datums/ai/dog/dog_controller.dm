@@ -51,7 +51,9 @@
 		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_TARGETING_STRATEGY = new /datum/targeting_strategy/basic/holding_object(/obj/item/kitchen/tongs),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/holding_object,
+		// With tongs in hand!
+		BB_TARGET_HELD_ITEM = /obj/item/kitchen/tongs,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/dog,
