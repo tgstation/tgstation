@@ -86,3 +86,21 @@
 	)
 	infusion_desc = "domestic"
 	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/rabbit
+	name = "Rabbit"
+	infuse_mob_name = "rabbit"
+	desc = "Finally, something worth infusing for."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"enjoys carrots",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/rabbit,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/ears/cat/bunny/random,
+		/obj/item/organ/external/tail/cat/bunny,
+	)
+	infusion_desc = "domestic"
+	tier = DNA_MUTANT_TIER_ZERO

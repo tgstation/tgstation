@@ -17,6 +17,14 @@
 	var/wag_flags = NONE
 	///The original owner of this tail
 	var/original_owner //Yay, snowflake code!
+	///Do we have a specific sprite we should pull?
+	var/sprite_to_use
+
+/obj/item/organ/external/tail/Initialize(mapload, accessory_type)
+	. = ..()
+	if(sprite_to_use)
+		var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
+		accessory.sprite_datum = accessory.fetch_sprite_datum_from_name(sprite_to_use)
 
 /obj/item/organ/external/tail/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	. = ..()
@@ -104,6 +112,10 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/cat
 
 	wag_flags = WAG_ABLE
+	sprite_to_use = "Cat"
+
+/obj/item/organ/external/tail/cat/bunny
+	sprite_to_use = "Bunny"
 
 ///Cat tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/cat
