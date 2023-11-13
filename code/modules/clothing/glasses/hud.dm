@@ -295,4 +295,3 @@
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
-	flags_cover = GLASSESCOVERSEYES
