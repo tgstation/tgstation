@@ -3,3 +3,4 @@
 #include "code\obj\items\clothing\gloves.dm"
 #include "code\obj\items\clothing\masks.dm"
 #include "code\modules\research.dm"
+#include "code\obj\structures\display_case.dm"
