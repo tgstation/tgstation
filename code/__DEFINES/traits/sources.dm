@@ -268,3 +268,5 @@
 
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
+
+#define ANALYZER_TRAIT "analyzer_trait"
