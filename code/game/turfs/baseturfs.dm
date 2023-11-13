@@ -52,8 +52,8 @@
 
 	return ChangeTurf(added_layer, new_baseturfs, flags)
 
-/// Places a turf on top - for initialization only
-/turf/proc/place_on_top_init(turf/added_layer, flags)
+/// Places a turf on top - for map loading
+/turf/proc/load_on_top(turf/added_layer, flags)
 	var/area/our_area = get_area(src)
 	flags = our_area.PlaceOnTopReact(list(baseturfs), added_layer, flags)
 
@@ -74,7 +74,7 @@
 	newT.assemble_baseturfs(initial(added_layer.baseturfs)) // The baseturfs list is created like roundstart
 	if(!length(newT.baseturfs))
 		newT.baseturfs = list(baseturfs)
-		
+
 	// The old baseturfs are put underneath, and we sort out the unwanted ones
 	newT.baseturfs = baseturfs_string_list(old_baseturfs + (newT.baseturfs - GLOB.blacklisted_automated_baseturfs), newT)
 	return newT
