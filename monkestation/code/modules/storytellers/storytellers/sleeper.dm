@@ -1,4 +1,3 @@
-
 /datum/storyteller/sleeper
 	name = "The Sleeper"
 	desc = "The Sleeper will create less impactful events, especially ones involving combat or destruction. The chill experience."
