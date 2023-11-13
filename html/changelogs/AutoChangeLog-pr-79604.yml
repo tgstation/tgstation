@@ -1,0 +1,5 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - qol: "Fixed/improved feedback when failing to apply a direct law change to a cyborg."
+  - bugfix: "Borgs who are unsynced from a malf AI now lose the zeroth law as intended."
