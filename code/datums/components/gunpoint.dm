@@ -213,7 +213,7 @@
 ///Shows if the parent is holding someone at gunpoint
 /datum/component/gunpoint/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(user in viewers(parent))
+	if(user in viewers(target))
 		examine_list += span_boldwarning("[parent] [parent.p_are()] holding [target] at gunpoint with [weapon]!")
 
 ///Shows if the examine target is being held at gunpoint
