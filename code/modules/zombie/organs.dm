@@ -32,7 +32,7 @@
 /obj/item/organ/internal/zombie_infection/on_mob_remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	if(iszombie(M) && old_species && !special && !QDELETED(src))
+	if(iszombie(M) && old_species && !special)
 		M.set_species(old_species)
 	if(timer_id)
 		deltimer(timer_id)

@@ -185,8 +185,6 @@
 
 	if(limb_owner)
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
-	if(!limb) // UI humans can have organs in a mob without being in a limb *sigh*
-		return FALSE
 
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! we moves the organ right after, so we unregister before we move them physically
 
