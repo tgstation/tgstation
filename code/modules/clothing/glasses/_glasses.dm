@@ -680,7 +680,6 @@
 	desc = "Shows you know how to sew a lapel and center a back vent."
 	icon_state = "glasses_binoclard"
 	inhand_icon_state = null
-	flags_cover = GLASSESCOVERSEYES
 
 /obj/item/clothing/glasses/salesman
 	name = "colored glasses"
