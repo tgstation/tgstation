@@ -89,6 +89,15 @@
 			continue
 		if(is_banned_from(ghost.ckey, job_bans))
 			continue
+		var/ghost_prefs = ghost.client.prefs
+		if(isnull(ghost_prefs))
+			candidates += ghost // we'll assume they wanted to be picked despite prefs being null for whatever fucked up reason
+			continue
+
+		if(!ghost.client.prefs.read_preference(/datum/preference/toggle/ghost_roles))
+			continue
+		if(!isnull(candidate_mob.client.holder) && !candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin))
+			continue
 
 		candidates += ghost
 
