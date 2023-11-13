@@ -66,13 +66,7 @@ class BannedNeighbor:
 
     def matches(self, identified: Content, neighbor: Content):
         if self.identical:
-            if identified.path != neighbor.path:
-                return False
-
-            if identified.var_edits != neighbor.var_edits:
-                return False
-
-            return True
+            return neighbor == identified
 
         if self.typepath is not None:
             if self.typepath.matches_path(neighbor.path):

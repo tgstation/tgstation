@@ -83,6 +83,8 @@
 		return
 	if(!Adjacent(usr))
 		return
+	add_fingerprint(usr)
+	usr.set_machine(src)
 	switch(action)
 		if("removeall")
 			dump_box_contents()

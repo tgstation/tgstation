@@ -31,12 +31,12 @@
 	cost = CARGO_CRATE_VALUE * 40
 	unit_name = "lava planet artifact"
 	export_types = list(
-		/obj/item/dragons_blood,
-		/obj/item/guardian_creator/miner,
-		/obj/item/lava_staff,
-		/obj/item/melee/ghost_sword,
-		/obj/item/prisoncube,
+		/obj/item/guardiancreator/miner,
 		/obj/item/rod_of_asclepius,
+		/obj/item/dragons_blood,
+		/obj/item/melee/ghost_sword,
+		/obj/item/lava_staff,
+		/obj/item/prisoncube,
 	)
 
 //Megafauna loot, except for ash drakes

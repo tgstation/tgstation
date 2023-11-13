@@ -15,7 +15,7 @@
 	if(fugu_blacklist)
 		return
 	fugu_blacklist = typecacheof(list(
-		/mob/living/basic/guardian,
+		/mob/living/simple_animal/hostile/guardian,
 	))
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)

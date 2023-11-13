@@ -107,7 +107,10 @@
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
+	user.set_machine(src)
+
 	ui = SStgui.try_update_ui(user, src, ui)
+
 	if(!ui)
 		ui = new(user, src, "Fabricator")
 		ui.open()

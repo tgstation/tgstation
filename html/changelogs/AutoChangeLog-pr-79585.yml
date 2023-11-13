@@ -1,0 +1,4 @@
+author: "TwistedSilicon"
+delete-after: True
+changes:
+  - bugfix: "Cryo cells now use their direction to orient their initial connection instead of defaulting to South."

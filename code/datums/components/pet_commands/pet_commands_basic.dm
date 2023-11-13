@@ -102,11 +102,11 @@
  * # Pet Command: Use ability
  * Use an an ability that does not require any targets
  */
-/datum/pet_command/untargeted_ability
-	///untargeted ability we will use
+/datum/pet_command/untargetted_ability
+	///untargetted ability we will use
 	var/ability_key
 
-/datum/pet_command/untargeted_ability/execute_action(datum/ai_controller/controller)
+/datum/pet_command/untargetted_ability/execute_action(datum/ai_controller/controller)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	if(!ability?.IsAvailable())
 		return
