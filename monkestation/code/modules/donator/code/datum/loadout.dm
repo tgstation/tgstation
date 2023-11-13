@@ -43,6 +43,18 @@
 	item_path = /obj/item/effect_granter/donator/spycrab
 	requires_purchase = FALSE
 
+/datum/loadout_item/mask/krieg
+	name = "Krieg's Mask"
+	item_path = /obj/item/clothing/mask/krieg
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/krieg
+	name = "Krieg's attire"
+	item_path = /obj/item/clothing/under/costume/krieg
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //spinnermaster
 
 /datum/loadout_item/pocket_items/donator/void_mothroach
