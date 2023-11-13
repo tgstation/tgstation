@@ -61,14 +61,14 @@
 	inhand_icon_state = "shotgun_combat"
 	fire_delay = 5
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
-	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact shotgun"
 	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
 	icon_state = "cshotgunc"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
-	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
 
 //Dual Feed Shotgun
 
@@ -82,7 +82,6 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	worn_icon_state = "cshotgun"
-	w_class = WEIGHT_CLASS_HUGE
 	semi_auto = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	/// If defined, the secondary tube is this type, if you want different shell loads
