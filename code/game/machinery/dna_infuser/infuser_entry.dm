@@ -45,5 +45,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 	var/list/input_obj_or_mob
 	/// List of organs that the machine could spit out in relation
 	var/list/output_organs
+	/// List of limbs that the machine could spit out in relation.
+	var/list/output_limbs
 	///message the target gets while being infused
 	var/infusion_desc = "mutant-like"

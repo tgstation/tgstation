@@ -51,6 +51,9 @@
 	///The actual color a limb is drawn as, set by /proc/update_limb()
 	var/draw_color //NEVER. EVER. EDIT THIS VALUE OUTSIDE OF UPDATE_LIMB. I WILL FIND YOU. It ruins the limb icon pipeline.
 
+	///Should we use the current hair color of the mob?
+	var/use_hair_color = FALSE
+
 	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/body_zone
 	/// The body zone of this part in english ("chest", "left arm", etc) without the species attached to it
@@ -920,6 +923,9 @@
 	draw_color = variable_color
 	if(should_draw_greyscale) //Should the limb be colored?
 		draw_color ||= species_color || (skin_tone ? skintone2hex(skin_tone) : null)
+
+	if(use_hair_color)
+		draw_color = human_owner.hair_color
 
 	recolor_external_organs()
 	return TRUE

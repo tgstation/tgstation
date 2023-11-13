@@ -254,6 +254,14 @@
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
+	///Do we have a specific sprite we should pull?
+	var/sprite_to_use
+
+/obj/item/organ/external/snout/Initialize(mapload, accessory_type)
+	. = ..()
+	if(sprite_to_use)
+		var/datum/bodypart_overlay/mutant/snout/accessory = bodypart_overlay
+		accessory.sprite_datum = accessory.fetch_sprite_datum_from_name(sprite_to_use)
 
 /datum/bodypart_overlay/mutant/snout
 	layers = EXTERNAL_ADJACENT
@@ -266,6 +274,15 @@
 
 /datum/bodypart_overlay/mutant/snout/get_global_feature_list()
 	return GLOB.snouts_list
+
+/datum/bodypart_overlay/mutant/snout/bunny
+	color_source = ORGAN_COLOR_HAIR
+
+/obj/item/organ/external/snout/bunny
+	name = "bunny snout"
+	desc = "So fuzzy!"
+	sprite_to_use = "Bunny"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/snout/bunny
 
 ///A moth's antennae
 /obj/item/organ/external/antennae

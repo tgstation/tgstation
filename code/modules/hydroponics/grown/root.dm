@@ -21,7 +21,7 @@
 	desc = "It's good for the eyes!"
 	icon_state = "carrot"
 	bite_consumption_mod = 2
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES | CARROT
 	juice_typepath = /datum/reagent/consumable/carrotjuice
 	wine_power = 30
 

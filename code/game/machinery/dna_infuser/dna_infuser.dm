@@ -105,7 +105,7 @@
 	update_appearance()
 
 /obj/machinery/dna_infuser/proc/end_infuse(fail_reason, fail_title)
-	if(infuse_organ(occupant))
+	if(infuse_organ(occupant) || infuse_limb(occupant))
 		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE
 	infusing_into = null
@@ -137,6 +137,31 @@
 	new_organ.replace_into(target)
 	check_tier_progression(target)
 	return TRUE
+
+/obj/machinery/dna_infuser/proc/infuse_limb(mob/living/carbon/human/target)
+	if(!ishuman(target))
+		return FALSE
+	var/obj/item/bodypart/new_limb = pick_limb(target)
+	if(!new_limb)
+		return FALSE
+	new_limb = new new_limb()
+	target.del_and_replace_bodypart(new_limb, special = TRUE)
+	check_tier_progression(target)
+	return TRUE
+
+/obj/machinery/dna_infuser/proc/pick_limb(mob/living/carbon/human/target)
+	if(!infusing_into)
+		return FALSE
+	var/list/obj/item/organ/potential_new_limbs = infusing_into.output_limbs.Copy()
+	for(var/obj/item/bodypart/new_limb as anything in infusing_into.output_limbs)
+		var/obj/item/bodypart/old_limb = target.get_bodypart(initial(new_limb.body_zone))
+		if(old_limb)
+			if((old_limb.type != new_limb) && !IS_ROBOTIC_LIMB(old_limb))
+				continue
+		potential_new_limbs -= new_limb
+	if(length(potential_new_limbs))
+		return pick(potential_new_limbs)
+	return FALSE
 
 /// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
 /// Tries to return a typepath of a valid mutant organ if all of the following criteria are true:

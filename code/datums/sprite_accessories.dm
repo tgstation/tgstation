@@ -1863,6 +1863,11 @@
 	name = "Round + Light"
 	icon_state = "roundlight"
 
+/datum/sprite_accessory/snouts/bunny
+	name = "Bunny"
+	icon_state = "bunny"
+	locked = TRUE // too powerful for roundstart
+
 /datum/sprite_accessory/horns
 	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
