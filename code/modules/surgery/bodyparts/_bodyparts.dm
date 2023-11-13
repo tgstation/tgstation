@@ -245,6 +245,12 @@
 
 	return ..()
 
+/obj/item/bodypart/ex_act(severity, target)
+	if(owner) //trust me bro you dont want this
+		return FALSE
+	return  ..()
+
+
 /obj/item/bodypart/proc/on_forced_removal(atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
@@ -728,7 +734,7 @@
 
 /// Proc to change the value of the `owner` variable and react to the event of its change.
 /obj/item/bodypart/proc/update_owner(new_owner)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(owner == new_owner)
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
@@ -746,7 +752,7 @@
 
 /// Run all necessary procs to remove a limbs ownership and remove the appropriate signals and traits
 /obj/item/bodypart/proc/clear_ownership(mob/living/carbon/old_owner)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	owner = null
 
@@ -766,7 +772,7 @@
 
 /// Apply ownership of a limb to someone, giving the appropriate traits, updates and signals
 /obj/item/bodypart/proc/apply_ownership(mob/living/carbon/new_owner)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	owner = new_owner
 

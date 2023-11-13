@@ -204,7 +204,6 @@
 		brainmob.forceMove(src)
 
 /obj/item/organ/internal/eyes/on_bodypart_insert(obj/item/bodypart/head/head)
-	. = ..()
 	head.eyes = src
 	..()
 
