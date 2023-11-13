@@ -41,7 +41,7 @@
 	var/datum/action/cooldown/mob_cooldown/skull_launcher/skull_launcher = new(src)
 	skull_launcher.Grant(src)
 	skull_launcher.spawn_type = brood_type
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, skull_launcher)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, skull_launcher)
 
 /// Create what we want to drop on death, in proc form so we can always return a static list
 /mob/living/basic/mining/legion/proc/get_loot_list()
