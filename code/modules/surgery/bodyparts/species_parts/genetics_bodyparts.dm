@@ -213,3 +213,4 @@
 /obj/item/bodypart/arm/right/bunny/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
 	return ..()
+#undef BUNNY_HOP
