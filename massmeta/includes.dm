@@ -5,3 +5,4 @@
 #include "code\modules\research.dm"
 #include "code\obj\structures\display_case.dm"
 #include "code\modules\antags\uplink_items.dm"
+#include "code\obj\items\clothing\belt.dm"
