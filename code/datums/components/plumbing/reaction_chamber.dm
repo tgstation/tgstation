@@ -17,36 +17,23 @@
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
 	if(chamber.emptying)
 		return
-	var/required_amount = 0
-	var/total_present_amount = 0
-	var/total_required_amount = 0
 
 	//take in reagents
-	var/datum/reagent/present_reagent
 	var/present_amount
 	var/diff
 	for(var/required_reagent in chamber.required_reagents)
-		//compute total required amount from all reagents
-		required_amount = chamber.required_reagents[required_reagent]
-		total_required_amount += required_amount
-
 		//find how much amount is already present if at all and get the reagent reference
-		present_reagent = null
-		for(var/datum/reagent/containg_reagent as anything in reagents.reagent_list)
-			if(required_reagent == containg_reagent.type)
-				present_reagent = containg_reagent
+		present_amount = 0
+		for(var/datum/reagent/present_reagent as anything in reagents.reagent_list)
+			if(required_reagent == present_reagent.type)
+				present_amount = present_reagent.volume
 				break
-		present_amount = present_reagent ? present_reagent.volume : 0
 
-		//compute how much more is needed and round it. early return only if the request succeded
-		diff = min(required_amount - present_amount, MACHINE_REAGENT_TRANSFER)
-		if(diff >= CHEMICAL_VOLUME_ROUNDING && process_request(diff, required_reagent, dir))
+		//compute how much more is needed
+		diff = min(chamber.required_reagents[required_reagent] - present_amount, MACHINE_REAGENT_TRANSFER)
+		if(diff >= CHEMICAL_QUANTISATION_LEVEL) // the closest we can ask for so values like 0.9999 become 1
+			process_request(diff, required_reagent, dir)
 			return
-		total_present_amount += present_reagent ? present_reagent.volume : 0
-
-	//do we have close enough
-	if(total_required_amount - total_present_amount >= CHEMICAL_VOLUME_ROUNDING) //nope
-		return
 
 	reagents.flags &= ~NO_REACT
 	reagents.handle_reactions()

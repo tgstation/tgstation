@@ -35,3 +35,24 @@
 			TEST_FAIL("[sign_type] does not have a unique name.")
 
 		existing_names += sign.name
+
+/**
+ * Test that an emped barsign displays correctly
+ */
+/datum/unit_test/barsigns_emp
+
+/datum/unit_test/barsigns_emp/Run()
+	var/obj/machinery/barsign/testing_sign = allocate(/obj/machinery/barsign)
+	var/datum/barsign/hiddensigns/empbarsign/emp_bar_sign = /datum/barsign/hiddensigns/empbarsign
+
+	testing_sign.emp_act(EMP_HEAVY)
+
+	// make sure we get the correct chosen_sign set
+	if(!istype(testing_sign.chosen_sign, emp_bar_sign))
+		TEST_FAIL("[testing_sign] got EMPed but did not get its chosen_sign set correctly.")
+
+	// make sure the sign's icon_state actually got set
+	var/expected_icon_state = initial(emp_bar_sign.icon_state)
+	if(testing_sign.icon_state != expected_icon_state)
+		TEST_FAIL("[testing_sign]'s icon_state was [testing_sign.icon_state] when it should have been [expected_icon_state].")
+

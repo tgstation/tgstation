@@ -42,11 +42,11 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/untargetted_ability/blood_rain,
-		/datum/pet_command/untargetted_ability/summon_toad,
-		/datum/pet_command/point_targetting/attack,
-		/datum/pet_command/point_targetting/use_ability/flop,
-		/datum/pet_command/point_targetting/use_ability/bubble,
+		/datum/pet_command/untargeted_ability/blood_rain,
+		/datum/pet_command/untargeted_ability/summon_toad,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/use_ability/flop,
+		/datum/pet_command/point_targeting/use_ability/bubble,
 	)
 
 /mob/living/basic/leaper/Initialize(mapload)

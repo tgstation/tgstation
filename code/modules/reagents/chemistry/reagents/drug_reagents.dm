@@ -84,7 +84,7 @@
 	if(SPT_PROB(0.5, seconds_per_tick))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(affected_mob, span_notice("[smoke_message]"))
-	affected_mob.add_mood_event("smoked", /datum/mood_event/smoked, name)
+	affected_mob.add_mood_event("smoked", /datum/mood_event/smoked)
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	affected_mob.AdjustStun(-50 * REM * seconds_per_tick)
 	affected_mob.AdjustKnockdown(-50 * REM * seconds_per_tick)
@@ -117,7 +117,7 @@
 	var/high_message = pick("You feel calm.", "You feel collected.", "You feel like you need to relax.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
-	affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
+	affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy)
 	if(current_cycle == 36 && creation_purity <= 0.6)
 		if(!istype(affected_mob.dna.species, /datum/species/human/krokodil_addict))
 			to_chat(affected_mob, span_userdanger("Your skin falls off easily!"))
@@ -175,7 +175,7 @@
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
-	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
+	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
 	affected_mob.AdjustStun(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustKnockdown(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustUnconscious(-40 * REM * seconds_per_tick)
@@ -237,7 +237,7 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
-	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy, name)
+	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy)
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustStaminaLoss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
@@ -518,7 +518,7 @@
 /datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/psychonaut)
 	. = ..()
 
-	psychonaut.add_mood_event("tripping", /datum/mood_event/high, name)
+	psychonaut.add_mood_event("tripping", /datum/mood_event/high)
 	if(!psychonaut.hud_used)
 		return
 
@@ -579,7 +579,7 @@
 /datum/reagent/drug/blastoff/on_mob_metabolize(mob/living/dancer)
 	. = ..()
 
-	dancer.add_mood_event("vibing", /datum/mood_event/high, name)
+	dancer.add_mood_event("vibing", /datum/mood_event/high)
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 
@@ -819,7 +819,7 @@
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
 	. = ..() || TRUE
-	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium, name)
+	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
 	if(kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)

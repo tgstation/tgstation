@@ -43,7 +43,7 @@
 	)
 	charge = new(src)
 	charge.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, charge)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
@@ -68,7 +68,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
 	. = ..()
-	if(!isliving(target) || !isbasicmob(source))
+	if(!isbasicmob(source))
 		return
 	var/mob/living/basic/basic_source = source
 	var/mob/living/living_target = target
