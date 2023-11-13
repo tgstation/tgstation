@@ -179,8 +179,7 @@
 
 /// Merge two holder objects, used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
-	for(var/atom/movable/movable in other)
-		var/atom/movable/AM = A
+	for(var/atom/movable/movable as anything in other)
 		movable.forceMove(src) // move everything in other holder to this one
 		if(ismob(movable))
 			var/mob/mob = movable
