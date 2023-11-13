@@ -4,8 +4,8 @@
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,
@@ -28,7 +28,7 @@
 	action_cooldown = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/befriend_ashwalkers/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
+/datum/ai_behavior/befriend_ashwalkers/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/potential_friend in oview(9, living_pawn))
@@ -48,7 +48,7 @@
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
 	planning_subtrees = list(
@@ -59,7 +59,7 @@
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_milk
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,

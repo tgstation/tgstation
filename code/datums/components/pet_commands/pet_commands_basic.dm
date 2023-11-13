@@ -160,14 +160,14 @@
 /**
  * # Breed command. breed with a partner!
  */
-/datum/pet_command/point_targetting/breed
+/datum/pet_command/point_targeting/breed
 	command_name = "Breed"
 	command_desc = "Command your pet to attempt to breed with a partner."
 	radial_icon = 'icons/mob/simple/animal.dmi'
 	radial_icon_state = "heart"
 	speech_commands = list("breed", "consummate")
 
-/datum/pet_command/point_targetting/breed/set_command_target(mob/living/parent, atom/target)
+/datum/pet_command/point_targeting/breed/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !isliving(target))
 		return
 	if(!HAS_TRAIT(parent, TRAIT_MOB_BREEDER) || !HAS_TRAIT(target, TRAIT_MOB_BREEDER))
@@ -181,7 +181,7 @@
 		return
 	return ..()
 
-/datum/pet_command/point_targetting/breed/execute_action(datum/ai_controller/controller)
+/datum/pet_command/point_targeting/breed/execute_action(datum/ai_controller/controller)
 	if(is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
 		controller.queue_behavior(/datum/ai_behavior/make_babies, BB_CURRENT_PET_TARGET)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
