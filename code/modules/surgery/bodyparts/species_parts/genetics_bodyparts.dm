@@ -24,7 +24,7 @@
 	else
 		cast_on.visible_message(span_warning("[cast_on] hops with their genetically-engineered rabbit legs!"))
 		cast_on.balloon_alert_to_viewers("hops")
- 	playsound(cast_on, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
+	playsound(cast_on, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
 
 
 	cast_on.layer = ABOVE_MOB_LAYER
