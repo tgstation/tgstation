@@ -514,6 +514,44 @@
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
+// Advanced Limbs: More durable, high punching force
+
+/obj/item/bodypart/arm/left/robot/advanced
+	name = "advanced robotic left arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = 75
+	body_damage_coeff = 0.50
+
+/obj/item/bodypart/arm/right/robot/advanced
+	name = "advanced robotic right arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = 75
+	body_damage_coeff = 0.50
+
+/obj/item/bodypart/leg/left/robot/advanced
+	name = "advanced robotic left leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = 75
+	body_damage_coeff = 0.50
+
+/obj/item/bodypart/leg/right/robot/advanced
+	name = "heavy robotic right leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = 75
+	body_damage_coeff = 0.50
+
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG
 #undef ROBOTIC_HEAVY_BRUTE_MSG
