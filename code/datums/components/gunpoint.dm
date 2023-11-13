@@ -45,7 +45,7 @@
 		COMSIG_LIVING_START_PULL), PROC_REF(trigger_reaction))
 	RegisterSignal(targ, COMSIG_ATOM_EXAMINE, PROC_REF(examine_target))
 	RegisterSignal(targ, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(block_bumps_target))
-	RegisterSignal(targ, COMSIG_HUMAN_DISARM_HIT, PROC_REF(cancel))
+	RegisterSignals(targ, list(COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED), PROC_REF(cancel))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
 	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
