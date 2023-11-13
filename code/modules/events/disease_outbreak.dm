@@ -32,10 +32,8 @@
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
-	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_TARGETED)
 
-/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .
@@ -102,7 +100,7 @@
 
 /datum/round_event/disease_outbreak/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
@@ -258,7 +256,7 @@
 
 /datum/round_event/disease_outbreak/advance/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /**
  * Generate advanced virus

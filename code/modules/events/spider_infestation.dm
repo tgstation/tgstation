@@ -10,8 +10,6 @@
 	description = "Spawns spider eggs, ready to hatch."
 	min_wizard_trigger_potency = 5
 	max_wizard_trigger_potency = 7
-	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT)
 
 /datum/round_event/spider_infestation
 	announce_when = 400
@@ -19,7 +17,7 @@
 
 /datum/round_event/spider_infestation/setup()
 	announce_when = rand(announce_when, announce_when + 50)
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/spider_infestation/announce(fake)
 	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)

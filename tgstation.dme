@@ -6301,6 +6301,7 @@
 #include "monkestation\code\modules\storytellers\gamemode_subsystem.dm"
 #include "monkestation\code\modules\storytellers\scheduled_events.dm"
 #include "monkestation\code\modules\storytellers\converted_events\_base_event.dm"
+#include "monkestation\code\modules\storytellers\converted_events\event_overrides.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodcult.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\bloodsuckers.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\changeling.dm"

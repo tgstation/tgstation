@@ -5,8 +5,6 @@
 	min_players = 20
 	category = EVENT_CATEGORY_HEALTH
 	description = "A random crewmember becomes obsessed with another."
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_CREW_ANTAG, TAG_TARGETED)
 
 /datum/round_event/obsessed
 	fakeable = FALSE

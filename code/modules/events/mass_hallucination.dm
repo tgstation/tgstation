@@ -9,8 +9,6 @@
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 2
 	admin_setup = list(/datum/event_admin_setup/mass_hallucination)
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_COMMUNAL)
 
 /datum/round_event/mass_hallucination
 	fakeable = FALSE

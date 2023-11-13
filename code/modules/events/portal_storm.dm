@@ -3,12 +3,10 @@
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
 	weight = 2
 	min_players = 15
-	max_occurrences = 5
+	max_occurrences = 1 //MONKESTATION ADDITION
 	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Syndicate troops pour out of portals."
-	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT)
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/basic/syndicate/melee/space/stormtrooper = 2)
@@ -68,7 +66,7 @@
 		hostiles_spawn += get_random_station_turf()
 
 	next_boss_spawn = start_when + CEILING(2 * number_of_hostiles / number_of_bosses, 1)
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/portal_storm/announce(fake)
 	set waitfor = 0
