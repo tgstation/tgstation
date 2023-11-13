@@ -27,24 +27,36 @@
 	desc = "Helps you jump!"
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	base_limb_id = BODYPART_ID_RABBIT
-	use_hair_color = TRUE
 	var/datum/action/cooldown/spell/bunny_hop/jumping_power
 
 /obj/item/bodypart/leg/left/digitigrade/bunny/try_attach_limb(mob/living/carbon/new_head_owner, special)
 	. = ..()
 	if(!.)
 		return
-	jumping_power = new /datum/action/cooldown/spell/bunny_hop(src)
-	jumping_power.background_icon_state = "bg_tech_blue"
-	jumping_power.base_background_icon_state = jumping_power.background_icon_state
-	jumping_power.active_background_icon_state = "[jumping_power.base_background_icon_state]_active"
-	jumping_power.overlay_icon_state = "bg_tech_blue_border"
-	jumping_power.active_overlay_icon_state = null
-	jumping_power.panel = "Genetic"
-	jumping_power.Grant(new_head_owner)
+	var/potential_action = locate(/datum/action/cooldown/spell/bunny_hop) in new_head_owner.actions
+	if(potential_action)
+		jumping_power = potential_action
+	else
+		jumping_power = new /datum/action/cooldown/spell/bunny_hop(src)
+		jumping_power.background_icon_state = "bg_tech_blue"
+		jumping_power.base_background_icon_state = jumping_power.background_icon_state
+		jumping_power.active_background_icon_state = "[jumping_power.base_background_icon_state]_active"
+		jumping_power.overlay_icon_state = "bg_tech_blue_border"
+		jumping_power.active_overlay_icon_state = null
+		jumping_power.panel = "Genetic"
+		jumping_power.Grant(new_head_owner)
 
 /obj/item/bodypart/leg/left/digitigrade/bunny/on_removal()
-	jumping_power.Remove(owner)
+	var/mob/living/carbon/human/bnuuy = owner
+	var/has_rabbit_leg_still = FALSE
+	for(var/obj/item/bodypart/bodypart in bnuuy.bodyparts)
+		if(bodypart == src)
+			continue
+		if(istype(bodypart, /obj/item/bodypart/leg) && (bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE))
+			has_rabbit_leg_still = TRUE
+			break
+	if(!has_rabbit_leg_still)
+		jumping_power.Remove(owner)
 	. = ..()
 
 /obj/item/bodypart/leg/right/digitigrade/bunny
@@ -52,24 +64,36 @@
 	desc = "Helps you jump!"
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	base_limb_id = BODYPART_ID_RABBIT
-	use_hair_color = TRUE
 	var/datum/action/cooldown/spell/bunny_hop/jumping_power
 
 /obj/item/bodypart/leg/right/digitigrade/bunny/try_attach_limb(mob/living/carbon/new_head_owner, special)
 	. = ..()
 	if(!.)
 		return
-	jumping_power = new /datum/action/cooldown/spell/bunny_hop(src)
-	jumping_power.background_icon_state = "bg_tech_blue"
-	jumping_power.base_background_icon_state = jumping_power.background_icon_state
-	jumping_power.active_background_icon_state = "[jumping_power.base_background_icon_state]_active"
-	jumping_power.overlay_icon_state = "bg_tech_blue_border"
-	jumping_power.active_overlay_icon_state = null
-	jumping_power.panel = "Genetic"
-	jumping_power.Grant(new_head_owner)
+	var/potential_action = locate(/datum/action/cooldown/spell/bunny_hop) in new_head_owner.actions
+	if(potential_action)
+		jumping_power = potential_action
+	else
+		jumping_power = new /datum/action/cooldown/spell/bunny_hop(src)
+		jumping_power.background_icon_state = "bg_tech_blue"
+		jumping_power.base_background_icon_state = jumping_power.background_icon_state
+		jumping_power.active_background_icon_state = "[jumping_power.base_background_icon_state]_active"
+		jumping_power.overlay_icon_state = "bg_tech_blue_border"
+		jumping_power.active_overlay_icon_state = null
+		jumping_power.panel = "Genetic"
+		jumping_power.Grant(new_head_owner)
 
 /obj/item/bodypart/leg/right/digitigrade/bunny/on_removal()
-	jumping_power.Remove(owner)
+	var/mob/living/carbon/human/bnuuy = owner
+	var/has_rabbit_leg_still = FALSE
+	for(var/obj/item/bodypart/bodypart in bnuuy.bodyparts)
+		if(bodypart == src)
+			continue
+		if(istype(bodypart, /obj/item/bodypart/leg) && (bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE))
+			has_rabbit_leg_still = TRUE
+			break
+	if(!has_rabbit_leg_still)
+		jumping_power.Remove(owner)
 	. = ..()
 
 /obj/item/bodypart/head/bunny
@@ -78,19 +102,14 @@
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	is_dimorphic = TRUE
 	limb_id = BODYPART_ID_RABBIT
-	head_flags = HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
-	use_hair_color = TRUE
+	head_flags = HEAD_HAIR|HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN
 	var/datum/action/cooldown/spell/olfaction/sniffing_power
 
 /obj/item/bodypart/head/bunny/try_attach_limb(mob/living/carbon/new_head_owner, special)
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/organ/internal/ears/cat/bunny/random/bunny_ears = new
-	var/obj/item/organ/internal/tongue/bunny/bunny_tongue = new
 	var/obj/item/organ/external/snout/bunny/bunny_snout = new
-	bunny_ears.transfer_to_limb(src, new_head_owner)
-	bunny_tongue.transfer_to_limb(src, new_head_owner)
 	bunny_snout.transfer_to_limb(src, new_head_owner)
 
 	sniffing_power = new /datum/action/cooldown/spell/olfaction(src)
@@ -112,7 +131,6 @@
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	limb_id = BODYPART_ID_RABBIT
 	is_dimorphic = TRUE
-	use_hair_color = TRUE
 
 /obj/item/bodypart/chest/bunny/try_attach_limb(mob/living/carbon/new_limb_owner, special)
 	. = ..()
@@ -129,7 +147,6 @@
 	desc = "Ensures the fluffiest hugs are possible."
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	limb_id = BODYPART_ID_RABBIT
-	use_hair_color = TRUE
 
 /obj/item/bodypart/arm/left/bunny/try_attach_limb(mob/living/carbon/new_limb_owner, special)
 	. = ..()
@@ -146,7 +163,6 @@
 	desc = "Ensures the fluffiest hugs are possible."
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	limb_id = BODYPART_ID_RABBIT
-	use_hair_color = TRUE
 
 /obj/item/bodypart/arm/right/bunny/try_attach_limb(mob/living/carbon/new_limb_owner, special)
 	. = ..()

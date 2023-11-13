@@ -146,6 +146,9 @@
 		return FALSE
 	new_limb = new new_limb()
 	target.del_and_replace_bodypart(new_limb, special = TRUE)
+	new_limb.variable_color = target.hair_color
+	new_limb.update_limb(is_creating = TRUE)
+	target.updateappearance(mutcolor_update = TRUE)
 	check_tier_progression(target)
 	return TRUE
 
