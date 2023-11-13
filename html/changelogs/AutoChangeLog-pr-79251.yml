@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - code_imp: "Quirks are now customizable on the quirks page instead of on the character prefs page"

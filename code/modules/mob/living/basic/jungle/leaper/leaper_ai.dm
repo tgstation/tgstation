@@ -55,7 +55,7 @@
 	speech_commands = list("bubble", "shoot")
 	pet_ability_key = BB_LEAPER_BUBBLE
 
-/datum/pet_command/untargetted_ability/blood_rain
+/datum/pet_command/untargeted_ability/blood_rain
 	command_name = "Blood Rain"
 	command_desc = "Let it rain poisonous blood!"
 	radial_icon = 'icons/effects/effects.dmi'
@@ -64,7 +64,7 @@
 	ability_key = BB_LEAPER_VOLLEY
 
 
-/datum/pet_command/untargetted_ability/summon_toad
+/datum/pet_command/untargeted_ability/summon_toad
 	command_name = "Summon Toads"
 	command_desc = "Summon crazy suicide frogs!"
 	radial_icon = 'icons/mob/simple/animal.dmi'

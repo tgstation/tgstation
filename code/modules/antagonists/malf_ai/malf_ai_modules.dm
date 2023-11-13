@@ -1025,7 +1025,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			say_name = params["name"]
 
 /datum/ai_module/utility/emag
-	name = "Targetted Safeties Override"
+	name = "Targeted Safeties Override"
 	description = "Allows you to disable the safeties of any machinery on the station, provided you can access it."
 	cost = 20
 	power_type = /datum/action/innate/ai/ranged/emag
@@ -1033,7 +1033,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	unlock_sound = SFX_SPARKS
 
 /datum/action/innate/ai/ranged/emag
-	name = "Targetted Safeties Override"
+	name = "Targeted Safeties Override"
 	desc = "Allows you to effectively emag anything you click on."
 	button_icon = 'icons/obj/card.dmi'
 	button_icon_state = "emag"
