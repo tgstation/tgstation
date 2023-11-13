@@ -17,12 +17,22 @@
 /atom/movable/screen/fullscreen/lootbox_overlay/item_preview
 	icon_state = "nuthin" // we set this ourselves
 	layer = FULLSCREEN_LAYER + 0.3
-	screen_loc = "CENTER+2:1, CENTER+2"
+	screen_loc = "CENTER+1:35, CENTER+2"
+
+/atom/movable/screen/fullscreen/lootbox_overlay/duplicate
+	icon_state = "duplicate"
+	layer = FULLSCREEN_LAYER + 0.4
+	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/fullscreen/lootbox_overlay/main
 	///have we already opened? prevents spam clicks
 	var/opened = FALSE
+	///are we a guarenteed roll for lootboxes.
+	var/guarentee_unusual = FALSE
 
+/atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed
+	guarentee_unusual = TRUE
+	
 /atom/movable/screen/fullscreen/lootbox_overlay/main/Click(location, control, params)
 	if(opened)
 		return
@@ -40,8 +50,27 @@
 	user.overlay_fullscreen("lb_spark", /atom/movable/screen/fullscreen/lootbox_overlay/sparks)
 	user.overlay_fullscreen("lb_bg", /atom/movable/screen/fullscreen/lootbox_overlay/background)
 	var/atom/movable/screen/fullscreen/lootbox_overlay/item_preview/preview = user.overlay_fullscreen("lb_preview", /atom/movable/screen/fullscreen/lootbox_overlay/item_preview)
+	
+	var/type_rolled
+	if(!guarentee_unusual)
+		type_rolled = rand(1, 100)
+	else
+		type_rolled = 1
+	
+	var/type_string
+	switch(type_rolled)
+		if(1)
+			type_string = "Unusual"
+		if(2 to 3)
+			type_string = "High Tier"
+		if(4 to 8)
+			type_string = "Medium Tier"
+		if(9 to 15)
+			type_string = "Low Tier"
+		else
+			type_string = "Loadout Item"
 
-	var/obj/item/rolled_item = return_rolled()
+	var/obj/item/rolled_item = return_rolled(type_string, user)
 	preview.icon_state = rolled_item.icon_state
 	preview.icon =  rolled_item.icon
 	preview.appearance = rolled_item.appearance
@@ -68,12 +97,13 @@
 	user.clear_fullscreen("lb_bg", 1 SECONDS)
 	user.clear_fullscreen("lb_preview", 1 SECONDS)
 	user.clear_fullscreen("lb_main", 1 SECONDS)
+	user.clear_fullscreen("lb_duplicate", 1 SECONDS)
 	qdel(src)
 
 
 /proc/testing_trigger_lootbox()
 	var/mob/user = usr
-	user.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
+	user.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed)
 
 /mob/proc/trigger_lootbox_on_self()
 	src.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)

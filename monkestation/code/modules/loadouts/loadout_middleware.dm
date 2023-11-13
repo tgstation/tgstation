@@ -298,6 +298,7 @@
 
 /datum/preference_middleware/loadout/proc/clear_all_items()
 	LAZYNULL(preferences.loadout_list)
+	preferences.special_loadout_list["unusual"] = list()
 	preferences.character_preview_view.update_body()
 
 /datum/preference_middleware/loadout/proc/ckey_explain(list/params, mob/user)

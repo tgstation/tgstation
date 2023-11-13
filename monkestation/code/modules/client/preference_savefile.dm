@@ -24,7 +24,7 @@
 
 	var/list/special_save_loadout = SANITIZE_LIST(save_data["special_loadout_list"])
 	for(var/loadout in special_save_loadout["unusual"])
-		save_loadout -= loadout
+		special_save_loadout["unusual"] -= loadout
 
 		if(istext(loadout))
 			loadout = _text2num(loadout)

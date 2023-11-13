@@ -3,7 +3,7 @@
 	icon_file = 'goon/icons/effects/particles.dmi'
 	particle_state = "skull3"
 	burst_amount = 4
-	duration = 7 SECONDS
+	duration = 3.5 SECONDS
 	random_bursts = TRUE
 	spawn_interval = 0.4 SECONDS
 

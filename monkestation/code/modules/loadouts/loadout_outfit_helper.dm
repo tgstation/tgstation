@@ -49,8 +49,11 @@
 				continue
 
 			new item.item_path(briefcase)
-
+		var/list/numbers = list()
 		for(var/num as anything in preference_source?.special_loadout_list["unusual"])
+			if(num in numbers)
+				continue
+			numbers += text2num(num)
 			var/list/data = preference_source?.extra_stat_inventory["unusual"][num]
 			var/item_path = text2path(data["unusual_type"])
 			var/obj/item/new_item = new item_path(briefcase)
