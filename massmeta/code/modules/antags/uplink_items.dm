@@ -84,3 +84,13 @@
 
 /datum/uplink_item/suits/modsuit/elite_traitor
 	progression_minimum = 0 MINUTES
+
+/datum/uplink_item/bundles_tc/romerol
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
+			On death, these nodules take control of the dead body, causing limited revivification, \
+			along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/storage/box/syndie_kit/romerol
+	cost = 25
+	stock_key = UPLINK_SHARED_STOCK_KITS
+	purchasable_from = ALL
