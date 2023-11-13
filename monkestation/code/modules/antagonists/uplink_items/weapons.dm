@@ -4,7 +4,7 @@
 	Adding additional implants to your body will further refine the spear summoning process, allowing you to control up to 5 spears. \
 	Wait a minimum of three seconds between injections. Exact mechanism for spear summoning is classified under Aetherofusion NDA."
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear
-	cost = 10
+	cost = 7
 
 /datum/uplink_item/implants/hardlight/max
 	name = "Commanding Hardlight Spear Implant"
@@ -13,7 +13,7 @@
 	Aetherofusion is not responsable for any damages this may cause."
 	purchasable_from = UPLINK_NUKE_OPS
 	item = /obj/item/storage/box/syndie_kit/imp_hard_spear/max
-	cost = 50
+	cost = 40
 
 /datum/uplink_item/dangerous/laser_musket
 	name = "Syndicate Laser Musket"

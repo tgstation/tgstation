@@ -161,6 +161,7 @@
 
 /datum/action/cooldown/spell/conjure_item/hardlight_spear/max
 	name = "Commmanding Hardlight Spear"
+	cooldown_time = 10 SECONDS
 	spell_level = 7
 
 /datum/action/cooldown/spell/conjure_item/hardlight_spear/max/get_spell_title()
@@ -273,7 +274,7 @@
 	name = "hardlight spear"
 	icon = 'monkestation/icons/obj/guns/projectiles.dmi'
 	icon_state = "lightspear"
-	damage = 40
+	damage = 45
 	armour_penetration = 10
 	wound_bonus = 5
 	bare_wound_bonus = 60
