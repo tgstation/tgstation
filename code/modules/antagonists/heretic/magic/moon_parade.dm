@@ -65,6 +65,8 @@
 		if(victim.can_block_magic(MAGIC_RESISTANCE))
 			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
+	else if(istype(A, /turf/closed))
+		return PROJECTILE_PIERCE_NONE
 	else
 		return PROJECTILE_PIERCE_PHASE
 

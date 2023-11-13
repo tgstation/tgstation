@@ -38,8 +38,9 @@
 	return ..()
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
-	user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-	to_chat(user, span_notice("Laughter echoes through your mind...."))
+	if(!user.can_block_magic(MAGIC_RESISTANCE))
+		user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
+		to_chat(user, span_notice("Laughter echoes through your mind...."))
 	QDEL_NULL(painting_proximity_sensor)
 	qdel(src)
 

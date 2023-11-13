@@ -19,8 +19,8 @@
 	src.ascended_heretic = heretic_master
 	src.ascended_body = heretic_body
 
-	var/datum/objective/master_obj = new()
-	master_obj.explanation_text = "Assist your master [heretic_master]."
+	var/datum/objective/lunatic_obj = new()
+	lunatic_obj.explanation_text = "Assist your master [heretic_master]."
 
 	to_chat(owner, span_boldnotice("Ruin the lie, save the truth through obeying [heretic_master] the ringleader!"))
 
