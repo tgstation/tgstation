@@ -99,50 +99,75 @@
  *
  * Arguments:
  * - [butcher][/mob/living]: The mob doing the butchering
- * - [meat][/mob/living]: The mob being butchered
+ * - [target][/mob/living]: The mob being butchered
  */
-/datum/component/butchering/proc/on_butchering(atom/butcher, mob/living/meat)
+/datum/component/butchering/proc/on_butchering(atom/butcher, mob/living/target)
 	var/list/results = list()
-	var/turf/T = meat.drop_location()
-	var/final_effectiveness = effectiveness - meat.butcher_difficulty
+	var/turf/location = target.drop_location()
+	var/final_effectiveness = effectiveness - target.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
-	for(var/V in meat.butcher_results)
-		var/obj/bones = V
-		var/amount = meat.butcher_results[bones]
+
+	for(var/result_typepath in target.butcher_results)
+		var/obj/remains = result_typepath
+		var/amount = target.butcher_results[remains]
 		for(var/_i in 1 to amount)
 			if(!prob(final_effectiveness))
 				if(butcher)
-					to_chat(butcher, span_warning("You fail to harvest some of the [initial(bones.name)] from [meat]."))
+					to_chat(butcher, span_warning("You fail to harvest some of the [initial(remains.name)] from [target]."))
 				continue
 
 			if(prob(bonus_chance))
 				if(butcher)
-					to_chat(butcher, span_info("You harvest some extra [initial(bones.name)] from [meat]!"))
-				results += new bones (T)
-			results += new bones (T)
+					to_chat(butcher, span_info("You harvest some extra [initial(remains.name)] from [target]!"))
+				results += new remains (location)
+			results += new remains (location)
 
-		meat.butcher_results.Remove(bones) //in case you want to, say, have it drop its results on gib
+		target.butcher_results.Remove(remains) //in case you want to, say, have it drop its results on gib
 
-	for(var/V in meat.guaranteed_butcher_results)
-		var/obj/sinew = V
-		var/amount = meat.guaranteed_butcher_results[sinew]
+	for(var/guaranteed_result_typepath in target.guaranteed_butcher_results)
+		var/obj/guaranteed_remains = guaranteed_result_typepath
+		var/amount = target.guaranteed_butcher_results[guaranteed_remains]
 		for(var/i in 1 to amount)
-			results += new sinew (T)
-		meat.guaranteed_butcher_results.Remove(sinew)
+			results += new guaranteed_remains (location)
+		target.guaranteed_butcher_results.Remove(guaranteed_remains)
 
 	for(var/obj/item/carrion in results)
 		var/list/meat_mats = carrion.has_material_type(/datum/material/meat)
 		if(!length(meat_mats))
 			continue
-		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, meat) = counterlist_sum(meat_mats)))
+		carrion.set_custom_materials((carrion.custom_materials - meat_mats) + list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, target) = counterlist_sum(meat_mats)))
+
+	// transfer delicious reagents to meat
+	if(target.reagents)
+		var/meat_produced = 0
+		for(var/obj/item/food/meat/slab/target_meat in results)
+			meat_produced += 1
+		for(var/obj/item/food/meat/slab/target_meat in results)
+			target.reagents.trans_to(target_meat, target.reagents.total_volume / meat_produced, remove_blacklisted = TRUE)
+
+	// dont forget yummy diseases either!
+	if(iscarbon(target))
+		var/mob/living/carbon/host_target = target
+		var/list/diseases = host_target.get_static_viruses()
+		if(LAZYLEN(diseases))
+			var/list/datum/disease/diseases_to_add = list()
+			for(var/datum/disease/disease as anything in diseases)
+				// admin or special viruses that should not be reproduced
+				if(disease.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+					continue
+
+				diseases_to_add += disease
+			if(LAZYLEN(diseases_to_add))
+				for(var/obj/diseased_remains in results)
+					diseased_remains.AddComponent(/datum/component/infective, diseases_to_add)
 
 	if(butcher)
-		butcher.visible_message(span_notice("[butcher] butchers [meat]."), \
-								span_notice("You butcher [meat]."))
-	butcher_callback?.Invoke(butcher, meat)
-	meat.harvest(butcher)
-	meat.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
-	meat.gib(FALSE, FALSE, TRUE)
+		butcher.visible_message(span_notice("[butcher] butchers [target]."), \
+			span_notice("You butcher [target]."))
+	butcher_callback?.Invoke(butcher, target)
+	target.harvest(butcher)
+	target.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
+	target.gib(DROP_BRAIN|DROP_ORGANS)
 
 ///Enables the butchering mechanic for the mob who has equipped us.
 /datum/component/butchering/proc/enable_butchering(datum/source)
@@ -207,9 +232,9 @@
 	))
 
 ///When we are ready to drill through a mob
-/datum/component/butchering/mecha/proc/on_drill(datum/source, obj/vehicle/sealed/mecha/chassis, mob/living/meat)
+/datum/component/butchering/mecha/proc/on_drill(datum/source, obj/vehicle/sealed/mecha/chassis, mob/living/target)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(on_butchering), chassis, meat)
+	INVOKE_ASYNC(src, PROC_REF(on_butchering), chassis, target)
 
 /datum/component/butchering/wearable
 
@@ -232,16 +257,16 @@
 	if(!(slot & source.slot_flags))
 		return
 	butchering_enabled = TRUE
-	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(butcher_target))
+	RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(butcher_target))
 
 ///Same as disable_butchering but for worn items
 /datum/component/butchering/wearable/proc/worn_disable_butchering(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	butchering_enabled = FALSE
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK)
 
 /datum/component/butchering/wearable/proc/butcher_target(mob/user, atom/target, proximity)
 	SIGNAL_HANDLER
 	if(!isliving(target))
-		return
-	onItemAttack(parent, target, user)
+		return NONE
+	return onItemAttack(parent, target, user)

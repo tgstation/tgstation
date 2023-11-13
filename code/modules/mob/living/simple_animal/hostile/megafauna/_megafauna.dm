@@ -59,9 +59,7 @@
 		AddComponent(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE), MEGAFAUNA_TRAIT)
-	for(var/action_type in attack_action_types)
-		var/datum/action/innate/megafauna_attack/attack_action = new action_type()
-		attack_action.Grant(src)
+	grant_actions_by_list(attack_action_types)
 
 /mob/living/simple_animal/hostile/megafauna/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	//Safety check
@@ -70,7 +68,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
-	if(health > 0)
+	if(gibbed) // in case they've been force dusted
+		return ..()
+
+	if(health > 0) // prevents instakills
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
@@ -95,8 +96,8 @@
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
 		return
-	else
-		..()
+
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/singularity_act()
 	set_health(0)
@@ -105,10 +106,13 @@
 /mob/living/simple_animal/hostile/megafauna/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
 		return
-	else
-		..()
 
-/mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	crusher_loot.Cut()
+	loot.Cut()
+
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/AttackingTarget(atom/attacked_target)
 	if(recovery_time >= world.time)
 		return
 	. = ..()

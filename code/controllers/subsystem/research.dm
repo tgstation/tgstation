@@ -313,6 +313,8 @@ SUBSYSTEM_DEF(research)
  */
 /datum/controller/subsystem/research/proc/get_available_servers(turf/location)
 	var/list/local_servers = list()
+	if(!location)
+		return local_servers
 	for (var/datum/techweb/individual_techweb as anything in techwebs)
 		var/list/servers = find_valid_servers(location, individual_techweb)
 		if(length(servers))

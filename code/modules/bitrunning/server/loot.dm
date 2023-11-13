@@ -7,25 +7,24 @@
 
 	rewards_base += servo_bonus
 
-	rewards_base += (domain_threats * 2)
+	rewards_base += (length(spawned_threat_refs) * 2)
 
 	for(var/index in 2 to length(avatar_connection_refs))
 		rewards_base += multiplayer_bonus
 
 	return rewards_base
 
-/// Generates a reward based on the given domain
-/obj/machinery/quantum_server/proc/generate_loot()
-	if(!length(receive_turfs) && !locate_receive_turfs())
-		return FALSE
+/// Handles spawning the (new) crate and deleting the former
+/obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
+	for(var/mob/person in cache.contents)
+		SEND_SIGNAL(person, COMSIG_BITRUNNER_CACHE_SEVER)
+
+	spark_at_location(cache) // abracadabra!
+	qdel(cache) // and it's gone!
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, cache, generated_domain.reward_points)
 
 	points += generated_domain.reward_points
-	playsound(src, 'sound/machines/terminal_success.ogg', 30, 2)
-
-	var/turf/dest_turf = pick(receive_turfs)
-	if(isnull(dest_turf))
-		stack_trace("Failed to find a turf to spawn loot crate on.")
-		return FALSE
+	playsound(src, 'sound/machines/terminal_success.ogg', 30, vary = TRUE)
 
 	var/bonus = calculate_rewards()
 
@@ -34,11 +33,11 @@
 	certificate.name = "certificate of domain completion"
 	certificate.update_appearance()
 
-	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_crate = new(dest_turf, generated_domain, bonus)
-	reward_crate.manifest = certificate
-	reward_crate.update_appearance()
+	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new(src, generated_domain, bonus)
+	reward_cache.manifest = certificate
+	reward_cache.update_appearance()
 
-	spark_at_location(reward_crate)
+	chosen_forge.start_to_spawn(reward_cache)
 	return TRUE
 
 /// Returns the markdown text containing domain completion information
@@ -49,18 +48,20 @@
 
 	var/bonuses = calculate_rewards()
 
+	var/domain_threats = length(spawned_threat_refs)
+
 	var/time_difference = world.time - generated_domain.start_time
 
 	var/completion_time = "### Completion Time: [DisplayTimeText(time_difference)]\n"
 
-	var/grade = "\n---\n\n# Rating: [grade_completion(generated_domain.difficulty, domain_threats, base_points, domain_randomized, time_difference)]"
+	var/grade = "\n---\n\n# Rating: [grade_completion(time_difference)]"
 
 	var/text = "# Certificate of Domain Completion\n\n---\n\n"
 
 	text += "### [generated_domain.name][domain_randomized ? " (Randomized)" : ""]\n"
 	text += "- **Difficulty:** [generated_domain.difficulty]\n"
 	text += "- **Threats:** [domain_threats]\n"
-	text += "- **Base Points:** [base_points][domain_randomized ? " +1" : ""]\n\n"
+	text += "- **Base Reward:** [base_points][domain_randomized ? " +1" : ""]\n\n"
 	text += "- **Total Bonus:** [bonuses]x\n\n"
 
 	if(bonuses <= 1)
@@ -89,12 +90,11 @@
 	return text
 
 /// Grades the player's run based on several factors
-/obj/machinery/quantum_server/proc/grade_completion(difficulty, threats, points, randomized, completion_time)
-	var/score = threats * 5
-	score += points
-	score += randomized ? 1 : 0
+/obj/machinery/quantum_server/proc/grade_completion(completion_time)
+	var/score = length(spawned_threat_refs) * 5
+	score += generated_domain.reward_points
 
-	var/base = difficulty + 1
+	var/base = generated_domain.difficulty + 1
 	var/time_score = 1
 
 	if(completion_time <= 1 MINUTES)

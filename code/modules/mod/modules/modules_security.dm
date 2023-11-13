@@ -361,13 +361,97 @@
 /obj/item/mod/module/active_sonar
 	name = "MOD active sonar"
 	desc = "Ancient tech from the 20th century, this module uses sonic waves to detect living creatures within the user's radius. \
+		Its basic function slowly scans around the user for any bio-signatures, however it can be overclocked to scan everywhere at once.\
 		Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
 	icon_state = "active_sonar"
 	module_type = MODULE_USABLE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 4
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/active_sonar)
 	cooldown_time = 15 SECONDS
+	/// Time between us displaying radial scans
+	var/scan_cooldown_time = 0.5 SECONDS
+	/// The current slice we're going to scan
+	var/scanned_slice = 1
+	/// How many slices we make 360
+	var/radar_slices = 8 // 45 degrees each
+
+	/// A list of all creatures in range sorted by angle.
+	var/list/sorted_creatures = list()
+	/// A keyed list of all creatures
+	var/list/keyed_creatures = list()
+
+	/// Time between us displaying radial scans
+	COOLDOWN_DECLARE(scan_cooldown)
+
+/obj/item/mod/module/active_sonar/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to radar_slices)
+		sorted_creatures += list(list())
+
+/obj/item/mod/module/active_sonar/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(sort_all_creatures))
+
+/obj/item/mod/module/active_sonar/on_suit_deactivation(deleting = FALSE)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/// Detects all living creatures within world.view, and returns the amount.
+/obj/item/mod/module/active_sonar/proc/detect_living_creatures()
+	var/creatures_detected = 0
+	for(var/mob/living/creature in range(world.view, mod.wearer))
+		if(creature == mod.wearer || creature.stat == DEAD)
+			continue
+		if(keyed_creatures[creature])
+			creatures_detected++
+			continue
+		sort_creature_angle(creature)
+		RegisterSignal(creature, COMSIG_MOVABLE_MOVED, PROC_REF(sort_creature_angle))
+		creatures_detected++
+	return creatures_detected
+
+/// Swaps around where a creature is, when they move or when they're first detected
+/obj/item/mod/module/active_sonar/proc/sort_creature_angle(mob/living/creature, atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+	var/oldgroup = keyed_creatures[creature]
+	var/newgroup = round(get_angle(mod.wearer, creature) / (360 / radar_slices)) + 1
+	if(oldgroup)
+		if(creature.stat == DEAD || get_dist(get_turf(mod.wearer), get_turf(creature)) > world.view)
+			sorted_creatures[oldgroup] -= creature
+			keyed_creatures -= creature
+			UnregisterSignal(creature, COMSIG_MOVABLE_MOVED)
+			return
+
+		if(oldgroup == newgroup)
+			return
+			
+		sorted_creatures[oldgroup] -= creature
+
+	sorted_creatures[newgroup] += creature
+	keyed_creatures[creature] = newgroup
+
+/// Swaps all creatures when mod.wearer moves
+/obj/item/mod/module/active_sonar/proc/sort_all_creatures(mob/living/wearer, atom/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+
+	for(var/mob/living/creature as anything in keyed_creatures)
+		sort_creature_angle(creature) // Kinda spaghetti but it honestly seems like the shortest path to the same result
+
+/obj/item/mod/module/active_sonar/on_process(seconds_per_tick)
+	. = ..()
+	if(!.)
+		return
+	if(!COOLDOWN_FINISHED(src, cooldown_timer) || !COOLDOWN_FINISHED(src, scan_cooldown))
+		return
+	detect_living_creatures()
+	for(var/mob/living/creature as anything in sorted_creatures[scanned_slice])
+		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature, "sonar_ping_small", FALSE)
+	// Next slice!
+	scanned_slice++
+	// IT'S ENOUGH SLICES
+	if(scanned_slice > radar_slices)
+		scanned_slice = 1
+	COOLDOWN_START(src, scan_cooldown, scan_cooldown_time)
 
 /obj/item/mod/module/active_sonar/on_use()
 	. = ..()
@@ -377,14 +461,10 @@
 	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
 		return
-	var/creatures_detected = 0
-	for(var/mob/living/creature in range(9, mod.wearer))
-		if(creature == mod.wearer || creature.stat == DEAD)
-			continue
+	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the radius of the sonar
+	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [detect_living_creatures()] living beings nearby!"))
+	for(var/mob/living/creature as anything in keyed_creatures)
 		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
-		creatures_detected++
-	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
-	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))
 
 #define SHOOTING_ASSISTANT_OFF "Currently Off"
 #define STORMTROOPER_MODE "Quick Fire Stormtrooper"

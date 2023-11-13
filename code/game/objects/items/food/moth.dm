@@ -522,7 +522,7 @@
 	desc = "A salad with added cotton and a basic dressing. Presumably either moths are around, or the South's risen again."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "cotton_salad"
-	food_reagents = list(,
+	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
 		/datum/reagent/consumable/nutriment/vitamin = 14,
 	)

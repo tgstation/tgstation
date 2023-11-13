@@ -56,9 +56,11 @@
 	if(isnull(target_Y))
 		return
 
-	var/atom/path_id = id_card.value
-	if(path_id && !isidcard(path_id))
-		path_id = null
+	var/list/access = list()
+	if(isidcard(id_card.value))
+		var/obj/item/card/id/id = id_card.value
+		access = id.GetAccess()
+	else if (id_card.value)
 		failed.set_output(COMPONENT_SIGNAL)
 		reason_failed.set_output("Object marked is not an ID! Using no ID instead.")
 
@@ -75,7 +77,7 @@
 		return
 
 	// If we're going to the same place and the cooldown hasn't subsided, we're probably on the same path as before
-	if (destination == old_dest && TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME))
+	if (destination == old_dest && TIMER_COOLDOWN_RUNNING(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME))
 
 		// Check if the current turf is the same as the current turf we're supposed to be in. If so, then we set the next step as the next turf on the list
 		if(current_turf == next_turf)
@@ -90,7 +92,7 @@
 
 	else // Either we're not going to the same place or the cooldown is over. Either way, we need a new path
 
-		if(destination != old_dest && TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF))
+		if(destination != old_dest && TIMER_COOLDOWN_RUNNING(parent, COOLDOWN_CIRCUIT_PATHFIND_DIF))
 			failed.set_output(COMPONENT_SIGNAL)
 			reason_failed.set_output("Cooldown still active!")
 			return
@@ -98,7 +100,7 @@
 		TIMER_COOLDOWN_END(parent, COOLDOWN_CIRCUIT_PATHFIND_SAME)
 
 		old_dest = destination
-		path = get_path_to(src, destination, max_range, id=path_id)
+		path = get_path_to(src, destination, max_range, access=access)
 		if(length(path) == 0 || !path)// Check if we can even path there
 			next_turf = null
 			failed.set_output(COMPONENT_SIGNAL)

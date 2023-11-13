@@ -77,8 +77,8 @@
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
 	if(isdrone(user))
-		var/mob/living/simple_animal/drone/D = user
-		D.drone_chat(message)
+		var/mob/living/basic/drone/drone_user = user
+		drone_user.drone_chat(message)
 		return FALSE
 	if(user.binarycheck())
 		user.robot_talk(message)
@@ -96,17 +96,3 @@
 		AI.holopad_talk(message, language)
 		return FALSE
 	return TRUE
-
-/datum/saymode/mafia
-	key = "j"
-	mode = MODE_MAFIA
-
-/datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
-	var/datum/mafia_controller/MF = GLOB.mafia_game
-	if (!MF)
-		return TRUE
-	var/datum/mafia_role/R = MF.player_role_lookup[user]
-	if(!R || R.team != "mafia")
-		return TRUE
-	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"), "mafia")
-	return FALSE

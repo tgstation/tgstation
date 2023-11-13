@@ -127,9 +127,9 @@
  */
 /datum/record/locked
 	/// Mob's dna
-	var/datum/dna/dna_ref
+	var/datum/dna/locked_dna
 	/// Mind datum
-	var/datum/mind/mind_ref
+	var/datum/weakref/mind_ref
 	/// Typepath of species used by player, for usage in respawning via records
 	var/species_type
 
@@ -146,13 +146,13 @@
 	species = "Human",
 	trim = "Unassigned",
 	/// Locked specific
-	datum/dna/dna_ref,
+	datum/dna/locked_dna,
 	datum/mind/mind_ref,
 )
 	. = ..()
-	src.dna_ref = dna_ref
-	src.mind_ref = mind_ref
-	species_type = dna_ref.species.type
+	src.locked_dna = locked_dna
+	src.mind_ref = WEAKREF(mind_ref)
+	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src
 

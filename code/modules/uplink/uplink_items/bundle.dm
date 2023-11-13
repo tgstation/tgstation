@@ -58,7 +58,6 @@
 			These items are collectively worth more than 25 telecrystals, but you do not know which specialization \
 			you will receive. May contain discontinued and/or exotic items. \
 			The Syndicate will only provide one Syndi-Kit per agent."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
 	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
@@ -70,7 +69,6 @@
 			In Syndi-kit Special, you will receive items used by famous syndicate agents of the past. \
 			Collectively worth more than 25 telecrystals, the syndicate loves a good throwback. \
 			The Syndicate will only provide one Syndi-Kit per agent."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
 	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
@@ -149,7 +147,6 @@
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/structure/closet/crate/syndicrate
-	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	crate_tc_value = 80
 	crate_type = /obj/structure/closet/crate/syndicrate
@@ -173,6 +170,5 @@
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/item/syndicrate_key
-	progression_minimum = 30 MINUTES
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS

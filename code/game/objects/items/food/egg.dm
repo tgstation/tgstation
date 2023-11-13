@@ -28,6 +28,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
+	/// How likely is it that a chicken will come out of here if we throw it?
 	var/chick_throw_prob = 13
 
 /obj/item/food/egg/make_bakeable()
@@ -68,23 +69,24 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 	var/turf/hit_turf = get_turf(hit_atom)
 	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
-	//Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
-	if(GLOB.chicks_from_eggs < MAX_CHICKENS) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft, with a 1/256 (~0.39%) chance to make four chicks instead.
-		var/chance = rand(0, 255)
-		switch(chance)
-			if(0 to 30)
-				new /mob/living/basic/chick(hit_turf)
-				GLOB.chicks_from_eggs++
-				visible_message(span_notice("A chick comes out of the cracked egg!"))
-			if(31)
-				var/spawned_chickens = min(4, MAX_CHICKENS - GLOB.chicks_from_eggs) // We don't want to go over the limit
-				visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
-				for(var/i in 1 to spawned_chickens)
-					new /mob/living/basic/chick(hit_turf)
-					GLOB.chicks_from_eggs++
-
+	if (prob(chick_throw_prob))
+		spawn_impact_chick(hit_turf)
 	reagents.expose(hit_atom, TOUCH)
 	qdel(src)
+
+/// Spawn a baby chicken from throwing an egg
+/obj/item/food/egg/proc/spawn_impact_chick(turf/spawn_turf)
+	var/chickens_remaining = MAX_CHICKENS - GLOB.chicks_from_eggs
+	if (chickens_remaining < 1)
+		return
+	var/spawned_chickens = prob(97) ? 1 : min(4, chickens_remaining) // We don't want to go over the limit
+	if (spawned_chickens > 1) // Chicken jackpot!
+		visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
+	else
+		visible_message(span_notice("A chick comes out of the cracked egg!"))
+	for(var/i in 1 to spawned_chickens)
+		new /mob/living/basic/chick(spawn_turf)
+		GLOB.chicks_from_eggs++
 
 /obj/item/food/egg/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/toy/crayon))

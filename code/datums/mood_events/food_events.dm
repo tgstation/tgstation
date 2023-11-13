@@ -13,6 +13,11 @@
 	mood_change = -6
 	timeout = 4 MINUTES
 
+/datum/mood_event/allergic_food
+	description = "My throat itches."
+	mood_change = -2
+	timeout = 4 MINUTES
+
 /datum/mood_event/breakfast
 	description = "Nothing like a hearty breakfast to start the shift."
 	mood_change = 2

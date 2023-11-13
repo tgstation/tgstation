@@ -100,7 +100,7 @@ Striking a noncultist, however, will tear their flesh."}
 				span_cultlarge("\"You shouldn't play with sharp things. You'll poke someone's eye out.\""))
 		if(ishuman(user))
 			var/mob/living/carbon/human/miscreant = user
-			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			miscreant.apply_damage(rand(force/2, force), BRUTE, pick(GLOB.arm_zones))
 		else
 			user.adjustBruteLoss(rand(force/2,force))
 		return
@@ -628,8 +628,8 @@ Striking a noncultist, however, will tear their flesh."}
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
-	on = TRUE
 	var/charges = 5
+	start_on = TRUE
 
 /obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)

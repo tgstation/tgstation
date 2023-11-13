@@ -37,7 +37,7 @@
 
 /datum/wound/burn/flesh/handle_process(seconds_per_tick, times_fired)
 
-	if (!victim || IS_IN_STASIS(victim))
+	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	. = ..()
@@ -49,7 +49,7 @@
 
 	for(var/datum/reagent/reagent as anything in victim.reagents.reagent_list)
 		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
-			reagent.on_burn_wound_processing()
+			reagent.on_burn_wound_processing(src)
 
 	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
 		sanitization += 0.9

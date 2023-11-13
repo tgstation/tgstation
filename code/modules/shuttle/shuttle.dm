@@ -149,7 +149,7 @@
 #ifdef DOCKING_PORT_HIGHLIGHT
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color = "#f00")
-	invisibility = 0
+	SetInvisibility(INVISIBILITY_NONE)
 	SET_PLANE_IMPLICIT(src, GHOST_PLANE)
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
@@ -238,6 +238,9 @@
 	if(mapload)
 		for(var/turf/T in return_turfs())
 			T.turf_flags |= NO_RUINS
+
+	if(SSshuttle.initialized)
+		INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")

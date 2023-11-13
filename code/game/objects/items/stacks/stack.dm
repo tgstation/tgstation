@@ -493,19 +493,15 @@
 			builder.balloon_alert(builder, "won't fit here!")
 			return FALSE
 
-	if(recipe.on_tram)
-		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
-			builder.balloon_alert(builder, "must be made on a tram!")
-			return FALSE
-
 	if(recipe.on_solid_ground)
 		if(isclosedturf(dest_turf))
 			builder.balloon_alert(builder, "cannot be made on a wall!")
 			return FALSE
 
 		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
-			builder.balloon_alert(builder, "must be made on solid ground!")
-			return FALSE
+			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
+				builder.balloon_alert(builder, "must be made on solid ground!")
+				return FALSE
 
 	if(recipe.check_density)
 		for(var/obj/object in dest_turf)
@@ -525,6 +521,16 @@
 	if(recipe.placement_checks & STACK_CHECK_ADJACENT)
 		if(locate(recipe.result_type) in range(1, dest_turf))
 			builder.balloon_alert(builder, "can't be near another!")
+			return FALSE
+
+	if(recipe.placement_checks & STACK_CHECK_TRAM_FORBIDDEN)
+		if(locate(/obj/structure/transport/linear/tram) in dest_turf || locate(/obj/structure/thermoplastic) in dest_turf)
+			builder.balloon_alert(builder, "can't be on tram!")
+			return FALSE
+
+	if(recipe.placement_checks & STACK_CHECK_TRAM_EXCLUSIVE)
+		if(!locate(/obj/structure/transport/linear/tram) in dest_turf)
+			builder.balloon_alert(builder, "must be made on a tram!")
 			return FALSE
 
 	return TRUE

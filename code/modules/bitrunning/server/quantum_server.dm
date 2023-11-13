@@ -16,12 +16,8 @@
 	var/datum/lazy_template/virtual_domain/generated_domain
 	/// The loaded safehouse, map_template/safehouse
 	var/datum/map_template/safehouse/generated_safehouse
-	/// The connected console
-	var/datum/weakref/console_ref
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
-	/// If any threats were spawned, adds to rewards
-	var/domain_threats = 0
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// List of available domains
@@ -34,6 +30,8 @@
 	var/list/datum/weakref/spawned_threat_refs = list()
 	/// Scales loot with extra players
 	var/multiplayer_bonus = 1.1
+	///The radio the console can speak into
+	var/obj/item/radio/radio
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Keeps track of the number of times someone has built a hololadder
@@ -46,8 +44,6 @@
 	var/servo_bonus = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
-	/// The turfs on station where we generate loot.
-	var/turf/receive_turfs = list()
 
 /obj/machinery/quantum_server/Initialize(mapload)
 	. = ..()
@@ -57,8 +53,11 @@
 /obj/machinery/quantum_server/LateInitialize()
 	. = ..()
 
-	if(isnull(console_ref))
-		find_console()
+	radio = new(src)
+	radio.set_frequency(FREQ_SUPPLY)
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.recalculateChannels()
 
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
@@ -76,17 +75,17 @@
 	avatar_connection_refs.Cut()
 	spawned_threat_refs.Cut()
 	QDEL_NULL(exit_turfs)
-	QDEL_NULL(receive_turfs)
 	QDEL_NULL(generated_domain)
 	QDEL_NULL(generated_safehouse)
+	QDEL_NULL(radio)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
-		set_light(0)
+		set_light(l_on = FALSE)
 		return ..()
 
 	set_light_color(is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE)
-	set_light(2, 1.5)
+	set_light(l_range = 2, l_power = 1.5, l_on = TRUE)
 
 	return ..()
 
@@ -140,4 +139,3 @@
 
 	servo_bonus = servo_rating
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SERVER_UPGRADED, scanner_tier)

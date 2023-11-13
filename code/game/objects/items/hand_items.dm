@@ -266,6 +266,12 @@
 					span_notice("You slap [slapped] in the face!"),
 					span_hear("You hear a slap."),
 				)
+	else if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM)
+		user.visible_message(
+			span_danger("[user] gives [slapped] a slap on the wrist!"),
+			span_notice("You give [slapped] a slap on the wrist!"),
+			span_hear("You hear a slap."),
+		)
 	else
 		user.visible_message(
 			span_danger("[user] slaps [slapped]!"),

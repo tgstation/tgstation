@@ -29,7 +29,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging, /datum/plant_gene/trait/attack/nettle_attack/death, /datum/plant_gene/trait/backfire/nettle_burn/death)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	graft_gene = /datum/plant_gene/trait/stinging
 
 /obj/item/food/grown/nettle // "snack"

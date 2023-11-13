@@ -191,7 +191,7 @@
 
 			// 0  .. 9
 			if(48 to 57) //Numbers
-				if(last_char_group == NO_CHARS_DETECTED || !allow_numbers) //suppress at start of string
+				if(!allow_numbers) //allow name to start with number if AI/Borg
 					if(strict)
 						return
 					continue
@@ -1191,3 +1191,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		text2num(semver_regex.group[2]),
 		text2num(semver_regex.group[3]),
 	)
+
+/// Returns TRUE if the input_text ends with the ending
+/proc/endswith(input_text, ending)
+	var/input_length = LAZYLEN(ending)
+	return !!findtext(input_text, ending, -input_length)

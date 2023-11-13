@@ -98,7 +98,7 @@
 	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
 		return
 
-	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*disease.spreading_modifier) - 1))
+	if(((disease.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob(min((50*disease.spreading_modifier - 1), 50)))
 		ForceContractDisease(disease)
 
 /mob/living/carbon/AirborneContractDisease(datum/disease/disease, force_spread)

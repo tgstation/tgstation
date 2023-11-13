@@ -291,7 +291,7 @@
 				return
 
 		if(target && path.len == 0 && (get_dist(src,target) > 1))
-			path = get_path_to(src, target, max_distance=30, mintargetdist=1, id=access_card)
+			path = get_path_to(src, target, max_distance=30, mintargetdist=1, access=access_card.GetAccess())
 			mode = BOT_MOVING
 			if(length(path) == 0)
 				add_to_ignore(target)

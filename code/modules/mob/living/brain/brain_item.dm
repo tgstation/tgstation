@@ -552,7 +552,7 @@
 /obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	if(!owner)
-		return
+		return FALSE
 	if(damage >= 60)
 		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
 	else
@@ -571,4 +571,4 @@
 	var/obj/item/organ/internal/brain/old_brain = new_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	old_brain.Remove(new_owner, special = TRUE, no_id_transfer = TRUE)
 	qdel(old_brain)
-	Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+	return Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)

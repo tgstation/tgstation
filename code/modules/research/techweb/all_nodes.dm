@@ -48,7 +48,9 @@
 		"experimentor",
 		"extinguisher",
 		"fax",
+		"fish_case",
 		"fishing_rod",
+		"fishing_portal_generator",
 		"flashlight",
 		"fluid_ducts",
 		"foam_dart",
@@ -96,6 +98,7 @@
 		"sec_dart",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -114,6 +117,7 @@
 		"titaniumglass",
 		"toner_large",
 		"toner",
+		"tongs",
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",
@@ -125,6 +129,14 @@
 		"universal_scanner",
 		"voice_analyzer",
 		"watering_can",
+	)
+	experiments_to_unlock = list(
+		/datum/experiment/autopsy/nonhuman,
+		/datum/experiment/scanning/random/material/medium/one,
+		/datum/experiment/scanning/random/material/medium/three,
+		/datum/experiment/scanning/random/material/hard/one,
+		/datum/experiment/scanning/random/material/hard/two,
+		/datum/experiment/scanning/people/novel_organs,
 	)
 
 /datum/techweb_node/mmi
@@ -287,6 +299,7 @@
 		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
+		"penlight",
 		"retractor",
 		"scalpel",
 		"stethoscope",
@@ -405,6 +418,7 @@
 		"medigel",
 		"medipen_refiller",
 		"pandemic",
+		"penlight_paramedic",
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -474,6 +488,7 @@
 		"gibber",
 		"griddle",
 		"microwave",
+		"microwave_engineering",
 		"monkey_recycler",
 		"oven",
 		"processor",
@@ -627,6 +642,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
+	experiments_to_unlock = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
@@ -908,7 +924,7 @@
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
 	description = "Machines using actual neural networks to simulate human lives."
-	prereq_ids = list("neural_programming", "robotics")
+	prereq_ids = list("robotics")
 	design_ids = list(
 		"mmi_posi",
 	)
@@ -1240,6 +1256,19 @@
 		"s_treatment",
 	)
 
+/datum/techweb_node/tram
+	id = "tram"
+	display_name = "Tram Technology"
+	description = "Technology for linear induction transportation systems."
+	prereq_ids = list("telecomms")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+	design_ids = list(
+		"tram_controller",
+		"tram_display",
+		"crossing_signal",
+		"guideway_sensor",
+	)
+
 /datum/techweb_node/integrated_hud
 	id = "integrated_HUDs"
 	display_name = "Integrated HUDs"
@@ -1490,6 +1519,19 @@
 	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 3000)
 
+/datum/techweb_node/fishing
+	id = "fishing"
+	display_name = "Fishing Technology"
+	description = "Cutting edge fishing advancements."
+	prereq_ids = list("base")
+	design_ids = list(
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	required_experiments = list(/datum/experiment/scanning/fish)
+
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
 	display_name = "Experimental Tools"
@@ -1561,6 +1603,7 @@
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
+		"lasershell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000)
@@ -1833,6 +1876,18 @@
 		"clarke_torso",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/paddy
+	id = "mech_paddy"
+	display_name = "EXOSUIT: APLU \"Paddy\""
+	description = "Paddy exosuit designs"
+	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	design_ids = list(
+		"paddyupgrade",
+		"mech_hydraulic_claw"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 5000)
 
 /datum/techweb_node/gygax
 	id = "mech_gygax"
@@ -2349,20 +2404,6 @@
 		"mod_joint_torsion",
 		"mod_recycler",
 		"mod_shooting",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/fishing
-	id = "fishing"
-	display_name = "Fishing Technology"
-	description = "Cutting edge fishing advancements."
-	prereq_ids = list("base")
-	design_ids = list(
-		"fishing_rod_tech",
-		"stabilized_hook",
-		"fish_analyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

@@ -60,8 +60,8 @@
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(maxnutri, INJECTABLE)
 	if(mapload)
-		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
-		waterlevel = 100
+		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, max(maxnutri / 2, 10)) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
+		waterlevel = maxwater
 	. = ..()
 
 	var/static/list/hovering_item_typechecks = list(
@@ -161,6 +161,7 @@
 	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/plumbing/hydroponics)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
@@ -247,11 +248,7 @@
 		// So we'll let it leak in, and move the water over.
 		set_recipient_reagents_holder(nutri_reagents)
 		reagents = nutri_reagents
-		process_request(
-			amount = MACHINE_REAGENT_TRANSFER,
-			reagent = null,
-			dir = dir
-		)
+		process_request(dir = dir)
 
 		// Move the leaked water from nutrients to... water
 		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
@@ -285,11 +282,11 @@
 /obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
-	if(istype(Proj , /obj/projectile/energy/floramut))
+	if(istype(Proj , /obj/projectile/energy/flora/mut))
 		mutate()
-	else if(istype(Proj , /obj/projectile/energy/florayield))
+	else if(istype(Proj , /obj/projectile/energy/flora/yield))
 		return myseed.bullet_act(Proj)
-	else if(istype(Proj , /obj/projectile/energy/florarevolution))
+	else if(istype(Proj , /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)

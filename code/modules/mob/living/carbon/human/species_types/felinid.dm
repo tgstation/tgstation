@@ -11,7 +11,6 @@
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_USES_SKINTONES,
 	)
@@ -47,8 +46,9 @@
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
-	randomize_external_organs(human_mob)
-	return ..()
+	var/list/features = ..()
+	features["ears"] = pick("None", "Cat")
+	return features
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
@@ -136,6 +136,10 @@
 	if (cat_ears)
 		cat_ears.color = human_for_preview.hair_color
 		human_for_preview.update_body()
+
+/datum/species/human/felinid/get_physical_attributes()
+	return "Felinids are very similar to humans in almost all respects, with their biggest differences being the ability to lick their wounds, \
+		and an increased sensitivity to noise, which is often detrimental. They are also rather fond of eating oranges."
 
 /datum/species/human/felinid/get_species_description()
 	return "Felinids are one of the many types of bespoke genetic \

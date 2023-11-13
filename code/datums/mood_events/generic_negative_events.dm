@@ -167,6 +167,9 @@
 	mood_change = -4
 	timeout = 2 MINUTES
 
+/datum/mood_event/healsbadman/long_term
+	timeout = 10 MINUTES
+
 /datum/mood_event/jittery
 	description = "I'm nervous and on edge and I can't stand still!!"
 	mood_change = -2

@@ -127,6 +127,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "gH" = (
@@ -346,7 +347,7 @@
 /area/virtual_domain/powered)
 "uX" = (
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/virtual_domain/powered)
 "uY" = (
@@ -365,7 +366,7 @@
 "wz" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/virtual_domain/powered)
 "xt" = (

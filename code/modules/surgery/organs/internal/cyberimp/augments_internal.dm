@@ -4,6 +4,7 @@
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
 	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 

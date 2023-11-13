@@ -84,8 +84,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	. = ..()
 	GLOB.map_delamination_counters += src
 	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)
-	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
-		RegisterSignal(tram, COMSIG_TRAM_COLLISION, PROC_REF(update_tram_count))
+	RegisterSignal(SStransport, COMSIG_TRAM_COLLISION, PROC_REF(update_tram_count))
 
 	update_appearance()
 
@@ -190,22 +189,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	. = ..()
 	if(machine_stat & NOPOWER)
 		icon_state = "stat_display_blank"
-		set_light(0)
+		set_light(l_on = FALSE)
 		return
 
 	if(machine_stat & BROKEN)
 		icon_state = "stat_display_broken"
-		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_DARK_BLUE)
-		return
-
-	if(sign_features == (DISPLAY_DELAM + DISPLAY_TRAM))
+	else if(sign_features == (DISPLAY_DELAM + DISPLAY_TRAM))
 		icon_state = "stat_display_dual"
 	else if(sign_features == DISPLAY_DELAM)
 		icon_state = "stat_display_delam"
 	else if(sign_features == DISPLAY_TRAM)
 		icon_state = "stat_display_tram"
 
-	set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_FAINT_BLUE)
+	set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_FAINT_CYAN, l_on = TRUE)
 
 /obj/machinery/incident_display/update_overlays()
 	. = ..()
@@ -220,9 +216,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		var/delam_display_color
 		. += delam_base_emissive
 		if(!last_delam)
-			delam_display_color = LIGHT_COLOR_INTENSE_RED
+			delam_display_color = COLOR_DISPLAY_RED
 		else
-			delam_display_color = LIGHT_COLOR_HOLY_MAGIC
+			delam_display_color = COLOR_DISPLAY_YELLOW
 
 		var/delam_pos1 = last_delam % 10
 		var/mutable_appearance/delam_pos1_overlay = mutable_appearance(icon, "num_[delam_pos1]")
@@ -255,7 +251,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		if(last_delam == delam_record)
 			var/mutable_appearance/delam_trend_overlay = mutable_appearance(icon, TREND_RISING)
 			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = src.alpha)
-			delam_trend_overlay.color = LIGHT_COLOR_VIVID_GREEN
+			delam_trend_overlay.color = COLOR_DISPLAY_GREEN
 			delam_trend_overlay.pixel_w = 1
 			delam_trend_emissive.pixel_w = 1
 			delam_trend_overlay.pixel_z = 6
@@ -265,7 +261,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		else
 			var/mutable_appearance/delam_trend_overlay = mutable_appearance(icon, TREND_FALLING)
 			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = src.alpha)
-			delam_trend_overlay.color = LIGHT_COLOR_INTENSE_RED
+			delam_trend_overlay.color = COLOR_DISPLAY_RED
 			delam_trend_overlay.pixel_w = 1
 			delam_trend_emissive.pixel_w = 1
 			delam_trend_overlay.pixel_z = 6
@@ -275,7 +271,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 	if(sign_features & DISPLAY_TRAM)
 		var/mutable_appearance/tram_base_emissive = emissive_appearance(icon, "tram_base_emissive", src, alpha = src.alpha)
-		var/tram_display_color = LIGHT_COLOR_BABY_BLUE
+		var/tram_display_color = COLOR_DISPLAY_BLUE
 
 		var/tram_pos1 = hit_count % 10
 		var/mutable_appearance/tram_pos1_overlay = mutable_appearance(icon, "num_[tram_pos1]")
@@ -309,7 +305,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		if(hit_count > SSpersistence.tram_hits_last_round)
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_RISING)
 			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = src.alpha)
-			tram_trend_overlay.color = LIGHT_COLOR_INTENSE_RED
+			tram_trend_overlay.color = COLOR_DISPLAY_RED
 			tram_trend_overlay.pixel_w = 1
 			tram_trend_emissive.pixel_w = 1
 			tram_trend_overlay.pixel_z = -4
@@ -319,7 +315,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		else
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_FALLING)
 			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = src.alpha)
-			tram_trend_overlay.color = LIGHT_COLOR_VIVID_GREEN
+			tram_trend_overlay.color = COLOR_DISPLAY_GREEN
 			tram_trend_overlay.pixel_w = 1
 			tram_trend_emissive.pixel_w = 1
 			tram_trend_overlay.pixel_z = -4

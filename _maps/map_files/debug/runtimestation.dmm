@@ -646,6 +646,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/item/debug/human_spawner{
+	pixel_x = 6;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
@@ -935,6 +939,7 @@
 "dQ" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
+/obj/item/debug/human_spawner,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dR" = (
@@ -2184,7 +2189,7 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "FW" = (
-/obj/effect/landmark/bitrunning/station_reward_spawn,
+/obj/machinery/byteforge,
 /turf/open/floor/circuit/green,
 /area/station/bitrunning/den)
 "Ht" = (
@@ -3196,7 +3201,7 @@ aa
 aa
 aa
 uI
-FW
+hU
 hU
 jR
 Oq
@@ -3288,8 +3293,8 @@ aa
 aa
 aa
 uI
-FW
 hU
+FW
 jR
 Oq
 uI

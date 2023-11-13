@@ -69,7 +69,7 @@
 	name = "psyker navigation warper"
 	desc = "Uses amplified brainwaves to designate and map a precise transit location for the psyker shuttle."
 	icon_screen = "recharge_comp_on"
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //blind friendly
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON //blind friendly
 	x_offset = 0
 	y_offset = 11
 
@@ -138,6 +138,19 @@
 	. = ..()
 	if(gored)
 		name = gored.real_name
+
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 66.6,\
+		max_blood = INFINITY,\
+	)
+
+	AddComponent(/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("meaty DNA" = "MT-"),\
+		diseases = null,\
+	)
 
 /obj/structure/bouncy_castle/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

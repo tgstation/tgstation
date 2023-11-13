@@ -4,12 +4,13 @@
 	desc = "A spell that allows you to take on the form of another eldritch creature, gaining their abilities. \
 		You can change your choice at any time, and if your form dies, you dont die."
 	cooldown_time = 20 SECONDS
+	convert_damage = FALSE
 	die_with_shapeshifted_form = FALSE
 	possible_shapes = list(
-		/mob/living/simple_animal/hostile/heretic_summon/raw_prophet,
-		/mob/living/simple_animal/hostile/heretic_summon/rust_spirit,
-		/mob/living/simple_animal/hostile/heretic_summon/ash_spirit,
-		/mob/living/simple_animal/hostile/heretic_summon/stalker,
+		/mob/living/basic/heretic_summon/ash_spirit,
+		/mob/living/basic/heretic_summon/raw_prophet/ascended,
+		/mob/living/basic/heretic_summon/rust_walker,
+		/mob/living/basic/heretic_summon/stalker,
 	)
 
 /datum/action/cooldown/spell/shapeshift/eldritch/ascension/do_shapeshift(mob/living/caster)
@@ -25,7 +26,7 @@
 	monster.melee_damage_lower = max((monster.melee_damage_lower * 2), 40)
 	monster.melee_damage_upper = monster.melee_damage_upper / 2
 	monster.transform *= 1.5
-	monster.AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_RWALLS)
+	monster.AddElement(/datum/element/wall_tearer)
 
 /datum/action/cooldown/spell/shapeshift/eldritch/ascension/do_unshapeshift(mob/living/caster)
 	. = ..()

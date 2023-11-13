@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 
 // "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones
-// Exterior is soft shit, targetted by slashes and pierces (usually), protects exterior
+// Exterior is soft shit, targeted by slashes and pierces (usually), protects exterior
 // A limb needs both mangled interior and exterior to be dismembered, but slash/pierce must mangle exterior to attack the interior
 // Not having exterior/interior counts as mangled exterior/interior for the purposes of dismemberment
 /// The given biostate is on the "interior" of the limb - hard shit, protected by exterior
@@ -205,7 +205,7 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	WOUND_BURN = list(
 		WOUND_SERIES_FLESH_BURN_BASIC,
 	),
-	WOUND_PUNCTURE = list(
+	WOUND_PIERCE = list(
 		WOUND_SERIES_FLESH_PUNCTURE_BLEED
 	),
 ))
@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 		var/picked_severity
 		for (var/severity_text as anything in shuffle(GLOB.wound_severities_chronological))
 			var/severity = text2num(severity_text)
-			if (severity > severity_min || severity < severity_max)
+			if (!ISINRANGE(severity, severity_min, severity_max))
 				continue
 
 			if (isnull(picked_severity) || ((severity_pick_mode == WOUND_PICK_HIGHEST_SEVERITY && severity > picked_severity) || (severity_pick_mode == WOUND_PICK_LOWEST_SEVERITY && severity < picked_severity)))
