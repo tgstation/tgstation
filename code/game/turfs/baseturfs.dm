@@ -22,15 +22,10 @@
 
 /// Places the given turf on the bottom of the turf stack.
 /turf/proc/place_on_bottom(turf/bottom_turf)
-	var/list/turf/new_turfs = list()
-
-	new_turfs.Add(
-		initial(bottom_turf.baseturfs),
-		bottom_turf,
-		baseturfs,
+	baseturfs = baseturfs_string_list(
+		list(initial(bottom_turf.baseturfs), bottom_turf) + baseturfs,
+		src
 	)
-
-	baseturfs = baseturfs_string_list(new_turfs, src)
 
 // Make a new turf and put it on top
 // The args behave identical to PlaceOnBottom except they go on top
