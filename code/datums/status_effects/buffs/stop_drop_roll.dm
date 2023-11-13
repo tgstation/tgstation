@@ -15,6 +15,7 @@
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(stop_rolling))
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(body_position_changed))
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, id) // they're kinda busy!
 
 	owner.visible_message(
 		span_danger("[owner] rolls on the floor, trying to put [owner.p_them()]self out!"),
@@ -22,8 +23,7 @@
 	)
 	// Start with one weaker roll
 	owner.spin(spintime = actual_interval, speed = actual_interval / 4)
-	owner.adjust_fire_stacks(-0.5)
-	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, id) // they're busy!
+	owner.adjust_fire_stacks(-0.25)
 	return TRUE
 
 /datum/status_effect/stop_drop_roll/on_remove()
