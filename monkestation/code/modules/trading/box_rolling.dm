@@ -18,7 +18,7 @@
 	icon_state = "nuthin" // we set this ourselves
 	layer = FULLSCREEN_LAYER + 0.3
 	screen_loc = "CENTER+2:1, CENTER+2"
-	
+
 /atom/movable/screen/fullscreen/lootbox_overlay/main
 	///have we already opened? prevents spam clicks
 	var/opened = FALSE
@@ -35,7 +35,7 @@
 /atom/movable/screen/fullscreen/lootbox_overlay/main/proc/after_open(mob/user)
 	if(!user) // uh
 		return
-	
+
 	//now we add
 	user.overlay_fullscreen("lb_spark", /atom/movable/screen/fullscreen/lootbox_overlay/sparks)
 	user.overlay_fullscreen("lb_bg", /atom/movable/screen/fullscreen/lootbox_overlay/background)
@@ -77,3 +77,13 @@
 
 /mob/proc/trigger_lootbox_on_self()
 	src.overlay_fullscreen("lb_main", /atom/movable/screen/fullscreen/lootbox_overlay/main)
+
+/obj/item/lootbox
+	name = "lootbox"
+	icon = 'goon/icons/obj/large_storage.dmi'
+	icon_state = "attachecase-old"
+
+/obj/item/lootbox/attack_self(mob/user, modifiers)
+	. = ..()
+	user.trigger_lootbox_on_self()
+	qdel(src)
