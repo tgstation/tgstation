@@ -85,18 +85,22 @@
 		return
 
 	for(var/mob/dead/observer/ghost as anything in orbiter_comp.orbiter_list)
-		if(QDELETED(ghost) || isnull(ghost.client))
+		var/client/ghost_client = ghost.client
+
+		if(QDELETED(ghost) || isnull(ghost_client))
 			continue
+
 		if(is_banned_from(ghost.ckey, job_bans))
 			continue
-		var/ghost_prefs = ghost.client.prefs
+
+		var/datum/preferences/ghost_prefs = ghost_client.prefs
 		if(isnull(ghost_prefs))
 			candidates += ghost // we'll assume they wanted to be picked despite prefs being null for whatever fucked up reason
 			continue
 
-		if(!ghost.client.prefs.read_preference(/datum/preference/toggle/ghost_roles))
+		if(!ghost_prefs.read_preference(/datum/preference/toggle/ghost_roles))
 			continue
-		if(!isnull(ghost.client.holder) && !ghost.client.prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin))
+		if(!isnull(ghost_client.holder) && !ghost_prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin))
 			continue
 
 		candidates += ghost
