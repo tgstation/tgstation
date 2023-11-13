@@ -6,7 +6,7 @@
 	var/turf/target_turf = target || get_offset_target_turf(loc, rand(5) - rand(5), rand(5) - rand(5))
 
 	if(QDELETED(origin_turf))
-		stack_trace("pipe_eject() called on qdeleted turf! In order to avoid sending things to nullspace, we are going to send them directly to the target turf instead.")
+		stack_trace("pipe_eject() attempted to operate on a qdeleted turf! In order to avoid sending things to nullspace, we are going to send everything directly to the target turf instead.")
 		origin_turf = target_turf
 
 	for(var/atom/movable/thing in holder)
