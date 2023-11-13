@@ -458,6 +458,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
 	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
+	flags_cover = GLASSESCOVERSEYES
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"

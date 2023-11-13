@@ -1,0 +1,4 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - code_imp: "Atoms no longer break again after they are hit when broken, making them hopefully more stable in the future."

@@ -1,0 +1,6 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "fixed pipe painter not applying pipe color properly"
+  - qol: "made spraycans work also as pipe painters"
+  - qol: "spraycans now have basic color presets for quick selection"
