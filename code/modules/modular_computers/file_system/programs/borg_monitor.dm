@@ -6,7 +6,7 @@
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_ROBOTICS)
+	download_access = list(ACCESS_ROBOTICS)
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
@@ -155,7 +155,7 @@
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
-	transfer_access = list()
+	download_access = list()
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
 	if(!is_valid_z_level(get_turf(computer), get_turf(R)))

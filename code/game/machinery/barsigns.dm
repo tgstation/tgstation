@@ -37,7 +37,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	update_appearance()
 
 /obj/machinery/barsign/update_icon_state()
-	if(!(machine_stat & (NOPOWER|BROKEN)) && chosen_sign && chosen_sign.icon_state)
+	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
 		icon_state = chosen_sign.icon_state
 	else
 		icon_state = "empty"
@@ -60,7 +60,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /obj/machinery/barsign/update_overlays()
 	. = ..()
 
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(((machine_stat & NOPOWER) && !(machine_stat & EMPED)) || (machine_stat & BROKEN))
 		return
 
 	if(chosen_sign && chosen_sign.light_mask)
@@ -291,6 +291,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	icon_state = "honkednloaded"
 	desc = "Honk."
 	neon_color = "#FF998A"
+
+/datum/barsign/le_cafe_silencieux
+	name = "Le Café Silencieux"
+	icon_state = "le_cafe_silencieux"
+	desc = "..."
+	neon_color = "#ffffff"
 
 /datum/barsign/thenest
 	name = "The Nest"
