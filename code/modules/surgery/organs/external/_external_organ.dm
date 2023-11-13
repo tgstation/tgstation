@@ -254,7 +254,7 @@
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/snout
-	///Do we have a specific sprite we should pull?
+	/// The specific name of the sprite_accessory datum to use, if any.
 	var/sprite_to_use
 
 /obj/item/organ/external/snout/Initialize(mapload, accessory_type)

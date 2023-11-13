@@ -257,7 +257,11 @@
 			ability.initialized_actions = list()
 		addtimer(CALLBACK(ability, PROC_REF(Activate), target), total_delay)
 		total_delay += initialized_actions[ability]
-	StartCooldown()
+	StartCooldown(GetCooldown())
+
+/// Override this to conditionally modify the cooldown; defaults to null(which defaults to base cooldown)
+/datum/action/cooldown/proc/GetCooldown()
+	return null
 
 /// Cancels melee attacks if they are on cooldown.
 /datum/action/cooldown/proc/handle_melee_attack(mob/source, mob/target)

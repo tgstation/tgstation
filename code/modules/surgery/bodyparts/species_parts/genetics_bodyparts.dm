@@ -1,26 +1,60 @@
+#define BUNNY_HOP "bunny_hop"
+
 /datum/action/cooldown/spell/bunny_hop
 	name = "Bunny Hop"
 	desc = "Hop a distance with your bunny leg(s)! Go further the more bunny limbs you've got."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
-	cooldown_time = 10 SECONDS
+	cooldown_time = 7 SECONDS
 	spell_requirements = NONE
+	var/mob/living/carbon/human/last_caster
 
 /datum/action/cooldown/spell/bunny_hop/cast(mob/living/cast_on)
 	. = ..()
-	var/bnuuy_multiplier = 0
-	var/mob/living/carbon/human/bnuuy = cast_on
-	for(var/obj/item/bodypart/bodypart in bnuuy.bodyparts)
+	last_caster = cast_on
+	var/bunny_multiplier = 0
+	var/mob/living/carbon/human/bunny = cast_on
+	for(var/obj/item/bodypart/bodypart in bunny.bodyparts)
 		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
-			bnuuy_multiplier++
-	var/atom/target = get_edge_target_turf(cast_on, cast_on.dir)
+			bunny_multiplier++
+	playsound(cast_on, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
+	cast_on.visible_message(span_warning("[cast_on] hops with their genetically-engineered rabbit legs!"))
+	cast_on.balloon_alert_to_viewers("hops")
 
-	ADD_TRAIT(cast_on, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
-	if (cast_on.throw_at(target, 2 * bnuuy_multiplier, 1 * bnuuy_multiplier, spin = FALSE, diagonals_first = TRUE, callback = TRAIT_CALLBACK_REMOVE(cast_on, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)))
-		playsound(cast_on, 'sound/effects/arcade_jump.ogg', 50, TRUE, TRUE)
-		cast_on.visible_message(span_warning("[cast_on] hops forward with their genetically-engineered rabbit legs!"))
+	cast_on.layer = ABOVE_MOB_LAYER
+	if(bunny_multiplier >= 6) // they have committed to the bit, so we will reward it
+		cast_on.pass_flags |= PASSTABLE|PASSGRILLE|PASSGLASS|PASSMACHINE|PASSSTRUCTURE
 	else
-		to_chat(cast_on, span_warning("Something prevents you from hopping!"))
+		cast_on.pass_flags |= PASSTABLE
+	ADD_TRAIT(cast_on, TRAIT_SILENT_FOOTSTEPS, BUNNY_HOP)
+	ADD_TRAIT(cast_on, TRAIT_MOVE_FLYING, BUNNY_HOP)
+
+	cast_on.add_filter(BUNNY_HOP, 2, drop_shadow_filter(color = "#03020781", size = 0.9))
+	var/shadow_filter = cast_on.get_filter(BUNNY_HOP)
+	var/jump_height = 4 * bunny_multiplier
+	var/jump_duration = 0.25 SECONDS * bunny_multiplier
+	animate(cast_on, pixel_y = cast_on.pixel_y + jump_height, layer = ABOVE_MOB_LAYER, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(pixel_y = cast_on.pixel_y - jump_height, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
+
+	animate(shadow_filter, y = -jump_height, size = 4, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(y = 0, size = 0.9, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
+
+	addtimer(CALLBACK(src, PROC_REF(end_jump), cast_on), jump_duration)
+
+///Ends the jump
+/datum/action/cooldown/spell/bunny_hop/proc/end_jump(mob/living/jumper)
+	jumper.remove_filter(BUNNY_HOP)
+	jumper.layer = initial(jumper.layer)
+	jumper.pass_flags = initial(jumper.pass_flags)
+	REMOVE_TRAIT(jumper, TRAIT_SILENT_FOOTSTEPS, BUNNY_HOP)
+	REMOVE_TRAIT(jumper, TRAIT_MOVE_FLYING, BUNNY_HOP)
+
+/datum/action/cooldown/spell/bunny_hop/GetCooldown()
+	var/cooldown = 7 SECONDS
+	for(var/obj/item/bodypart/bodypart in last_caster.bodyparts)
+		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
+			cooldown -= 1 SECONDS
+	return cooldown
 
 /obj/item/bodypart/leg/left/digitigrade/bunny
 	name = "rabbit left leg"
@@ -37,7 +71,7 @@
 	if(potential_action)
 		jumping_power = potential_action
 	else
-		jumping_power = new /datum/action/cooldown/spell/bunny_hop(src)
+		jumping_power = new(src)
 		jumping_power.background_icon_state = "bg_tech_blue"
 		jumping_power.base_background_icon_state = jumping_power.background_icon_state
 		jumping_power.active_background_icon_state = "[jumping_power.base_background_icon_state]_active"
@@ -49,15 +83,15 @@
 /obj/item/bodypart/leg/left/digitigrade/bunny/on_removal()
 	var/mob/living/carbon/human/bnuuy = owner
 	var/has_rabbit_leg_still = FALSE
-	for(var/obj/item/bodypart/bodypart in bnuuy.bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in bnuuy.bodyparts)
 		if(bodypart == src)
 			continue
-		if(istype(bodypart, /obj/item/bodypart/leg) && (bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE))
+		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
 			has_rabbit_leg_still = TRUE
 			break
 	if(!has_rabbit_leg_still)
 		jumping_power.Remove(owner)
-	. = ..()
+	return ..()
 
 /obj/item/bodypart/leg/right/digitigrade/bunny
 	name = "rabbit right leg"
@@ -74,7 +108,7 @@
 	if(potential_action)
 		jumping_power = potential_action
 	else
-		jumping_power = new /datum/action/cooldown/spell/bunny_hop(src)
+		jumping_power = new(src)
 		jumping_power.background_icon_state = "bg_tech_blue"
 		jumping_power.base_background_icon_state = jumping_power.background_icon_state
 		jumping_power.active_background_icon_state = "[jumping_power.base_background_icon_state]_active"
@@ -86,15 +120,15 @@
 /obj/item/bodypart/leg/right/digitigrade/bunny/on_removal()
 	var/mob/living/carbon/human/bnuuy = owner
 	var/has_rabbit_leg_still = FALSE
-	for(var/obj/item/bodypart/bodypart in bnuuy.bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in bnuuy.bodyparts)
 		if(bodypart == src)
 			continue
-		if(istype(bodypart, /obj/item/bodypart/leg) && (bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE))
+		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
 			has_rabbit_leg_still = TRUE
 			break
 	if(!has_rabbit_leg_still)
 		jumping_power.Remove(owner)
-	. = ..()
+	return ..()
 
 /obj/item/bodypart/head/bunny
 	name = "rabbit head"
@@ -112,7 +146,7 @@
 	var/obj/item/organ/external/snout/bunny/bunny_snout = new
 	bunny_snout.transfer_to_limb(src, new_head_owner)
 
-	sniffing_power = new /datum/action/cooldown/spell/olfaction(src)
+	sniffing_power = new(src)
 	sniffing_power.background_icon_state = "bg_tech_blue"
 	sniffing_power.base_background_icon_state = sniffing_power.background_icon_state
 	sniffing_power.active_background_icon_state = "[sniffing_power.base_background_icon_state]_active"
@@ -123,7 +157,7 @@
 
 /obj/item/bodypart/head/bunny/on_removal()
 	sniffing_power.Remove(owner)
-	. = ..()
+	return ..()
 
 /obj/item/bodypart/chest/bunny
 	name = "rabbit chest"
@@ -140,7 +174,7 @@
 
 /obj/item/bodypart/chest/bunny/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-	. = ..()
+	return ..()
 
 /obj/item/bodypart/arm/left/bunny
 	name = "rabbit left arm"
@@ -156,7 +190,7 @@
 
 /obj/item/bodypart/arm/left/bunny/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-	. = ..()
+	return ..()
 
 /obj/item/bodypart/arm/right/bunny
 	name = "rabbit right arm"
@@ -172,4 +206,4 @@
 
 /obj/item/bodypart/arm/right/bunny/on_removal()
 	REMOVE_TRAIT(owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-	. = ..()
+	return ..()

@@ -87,9 +87,12 @@
 /obj/item/organ/internal/ears/cat/bunny
 	ear_to_use = "Bunny (Large)"
 
+/obj/item/organ/internal/ears/cat/bunny/random
+	var/list/random_ear_choices = list("Bunny (Large)", "Rabbit (Large)", "Bunny", "Rabbit")
+
 /obj/item/organ/internal/ears/cat/bunny/random/Initialize(mapload)
 	. = ..()
-	ear_to_use = pick(list("Bunny (Large)", "Rabbit (Large)", "Bunny", "Rabbit"))
+	ear_to_use = pick(random_ear_choices)
 
 /obj/item/organ/internal/ears/penguin
 	name = "penguin ears"
