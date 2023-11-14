@@ -196,6 +196,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	for(var/datum/mafia_role/roles as anything in all_roles)
 		var/obj/item/modular_computer/modpc = roles.player_pda
 		if(!modpc)
+			update_static_data(roles.body)
 			continue
 		modpc.update_static_data_for_all_viewers()
 
@@ -391,7 +392,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	if(!rewarded.player_pda)
 		return
 	for(var/datum/tgui/window as anything in rewarded.player_pda.open_uis)
-		window.user?.client?.give_award(award, rewarded.body)
+		window.user?.client?.give_award(award, window.user.client.mob)
 
 /**
  * The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.

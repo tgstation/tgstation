@@ -93,7 +93,11 @@
 	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report")
 
 /datum/round_event/earthquake/start()
-	notify_ghosts("The earthquake's epicenter has been located: [get_area_name(epicenter)]!", source = epicenter, header = "Rumble Rumble Rumble!")
+	notify_ghosts(
+		"The earthquake's epicenter has been located: [get_area_name(epicenter)]!",
+		source = epicenter,
+		header = "Rumble Rumble Rumble!",
+	)
 
 /datum/round_event/earthquake/tick()
 	if(ISMULTIPLE(activeFor, 5))

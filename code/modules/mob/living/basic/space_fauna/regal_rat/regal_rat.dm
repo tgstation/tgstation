@@ -71,6 +71,12 @@
 
 	grant_actions_by_list(innate_actions)
 
+/mob/living/basic/regal_rat/death(gibbed)
+	var/datum/component/potential_component = GetComponent(/datum/component/ghost_direct_control)
+	if(!QDELETED(potential_component))
+		qdel(potential_component)
+	return ..()
+
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
 	if(user == src)
@@ -103,7 +109,7 @@
 		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
 		source = src,
 		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "Sentient Rat Created",
 	)
 

@@ -107,7 +107,16 @@
 	amount_grown += rand(5, 15) * seconds_per_tick
 	if(amount_grown >= 100 && !ready)
 		ready = TRUE
-		notify_ghosts("[src] is ready to hatch!", null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to play)</a>", source = src, action = NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPIDER, flashwindow = flash_window)
+		var/notify_flags_to_pass = NOTIFY_CATEGORY_NOFLASH
+		if(flash_window)
+			notify_flags_to_pass &= GHOST_NOTIFY_FLASH_WINDOW
+		notify_ghosts(
+			"[src] is ready to hatch!",
+			source = src,
+			action = NOTIFY_PLAY,
+			ignore_key = POLL_IGNORE_SPIDER,
+			notify_flags = notify_flags_to_pass,
+		)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/mob_spawn/ghost_role/spider/Topic(href, href_list)

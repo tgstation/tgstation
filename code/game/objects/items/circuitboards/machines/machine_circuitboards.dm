@@ -255,7 +255,8 @@
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator"
@@ -960,7 +961,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/servo = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR"

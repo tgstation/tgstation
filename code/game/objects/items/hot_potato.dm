@@ -150,7 +150,12 @@
 		log_bomber(null, null, src, "was primed for detonation (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range])")
 	active = TRUE
 	if(detonate_explosion) //doesn't send a notification unless it's a genuine, exploding hot potato.
-		notify_ghosts("[user] has primed a Hot Potato!", source = src, action = NOTIFY_ORBIT, header = "Hot Hot Hot!")
+		notify_ghosts(
+			"[user] has primed a Hot Potato!",
+			source = src,
+			action = NOTIFY_ORBIT,
+			header = "Hot Hot Hot!",
+		)
 
 /obj/item/hot_potato/proc/deactivate()
 	update_appearance()
