@@ -44,6 +44,7 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown", "black", "white"), TRUE)
+	AddElement(/datum/element/waddling/hopping)
 	if(prob(20)) // bunny
 		name = "bunny"
 

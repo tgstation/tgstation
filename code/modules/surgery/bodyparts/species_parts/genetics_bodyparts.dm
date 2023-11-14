@@ -17,7 +17,7 @@
 	for(var/obj/item/bodypart/bodypart in bunny.bodyparts)
 		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
 			bunny_multiplier++
-	if(bunny.getStaminaLoss() > 0) // cannot reach maximum jump if you have any stamina loss
+	if(bunny.getStaminaLoss() > 0 || bunny.legcuffed) // cannot reach maximum jump if you have any stamina loss or are legcuffed(bola, bear trap, etc.)
 		bunny_multiplier = min(bunny_multiplier, 5)
 		cast_on.visible_message(span_warning("[cast_on] weakly hops with their genetically-engineered rabbit legs, hampered by their lack of stamina!"))
 		cast_on.balloon_alert_to_viewers("weakly hops")
@@ -30,23 +30,33 @@
 	cast_on.layer = ABOVE_MOB_LAYER
 	if(bunny_multiplier >= 6) // they have committed to the bit, so we will reward it
 		cast_on.pass_flags |= PASSTABLE|PASSGRILLE|PASSGLASS|PASSMACHINE|PASSSTRUCTURE
+		RegisterSignal(cast_on, COMSIG_MOVABLE_MOVED, PROC_REF(break_glass))
 	else
-		cast_on.pass_flags |= PASSTABLE
+		cast_on.pass_flags |= PASSTABLE|PASSGRILLE|PASSMACHINE|PASSSTRUCTURE
 	ADD_TRAIT(cast_on, TRAIT_SILENT_FOOTSTEPS, BUNNY_HOP)
 	ADD_TRAIT(cast_on, TRAIT_MOVE_FLYING, BUNNY_HOP)
 
 	cast_on.add_filter(BUNNY_HOP, 2, drop_shadow_filter(color = "#03020781", size = 0.9))
 	var/shadow_filter = cast_on.get_filter(BUNNY_HOP)
-	var/jump_height = 4 * bunny_multiplier
+	var/jump_height = 8 * bunny_multiplier
 	var/jump_duration = 0.25 SECONDS * bunny_multiplier
-	animate(cast_on, pixel_y = cast_on.pixel_y + jump_height, layer = ABOVE_MOB_LAYER, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
-	animate(pixel_y = cast_on.pixel_y - jump_height, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
+	new /obj/effect/temp_visual/mook_dust(get_turf(cast_on))
+	animate(cast_on, pixel_y = cast_on.pixel_y + jump_height, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
+	animate(pixel_y = initial(owner.pixel_y), time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
 
-	animate(shadow_filter, y = -jump_height, size = 4, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(shadow_filter, y = -jump_height, size = 4, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
 	animate(y = 0, size = 0.9, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
 
 	addtimer(CALLBACK(src, PROC_REF(end_jump), cast_on), jump_duration)
 
+/datum/action/cooldown/spell/bunny_hop/proc/break_glass(atom/movable/mover, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	for(var/obj/structure/window/window in get_turf(mover))
+		window.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		var/mob/living/carbon/human/bunny = mover
+		bunny.apply_damage(damage = rand(10,25), damagetype = BRUTE, spread_damage = TRUE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
+		new /obj/effect/decal/cleanable/glass(get_step(bunny, bunny.dir))
 ///Ends the jump
 /datum/action/cooldown/spell/bunny_hop/proc/end_jump(mob/living/jumper)
 	jumper.remove_filter(BUNNY_HOP)
@@ -54,6 +64,8 @@
 	jumper.pass_flags = initial(jumper.pass_flags)
 	REMOVE_TRAIT(jumper, TRAIT_SILENT_FOOTSTEPS, BUNNY_HOP)
 	REMOVE_TRAIT(jumper, TRAIT_MOVE_FLYING, BUNNY_HOP)
+	new /obj/effect/temp_visual/mook_dust(get_turf(jumper))
+	UnregisterSignal(jumper, COMSIG_MOVABLE_MOVED)
 
 /datum/action/cooldown/spell/bunny_hop/GetCooldown()
 	var/cooldown = 7 SECONDS
@@ -85,6 +97,7 @@
 		jumping_power.active_overlay_icon_state = null
 		jumping_power.panel = "Genetic"
 		jumping_power.Grant(new_head_owner)
+	new_head_owner.AddElement(/datum/element/waddling/hopping)
 
 /obj/item/bodypart/leg/left/digitigrade/bunny/on_removal()
 	var/mob/living/carbon/human/bnuuy = owner
@@ -97,6 +110,7 @@
 			break
 	if(!has_rabbit_leg_still)
 		jumping_power.Remove(owner)
+		owner.RemoveElement(/datum/element/waddling/hopping)
 	return ..()
 
 /obj/item/bodypart/leg/right/digitigrade/bunny
@@ -122,6 +136,7 @@
 		jumping_power.active_overlay_icon_state = null
 		jumping_power.panel = "Genetic"
 		jumping_power.Grant(new_head_owner)
+	new_head_owner.AddElement(/datum/element/waddling/hopping)
 
 /obj/item/bodypart/leg/right/digitigrade/bunny/on_removal()
 	var/mob/living/carbon/human/bnuuy = owner
@@ -134,6 +149,7 @@
 			break
 	if(!has_rabbit_leg_still)
 		jumping_power.Remove(owner)
+		owner.RemoveElement(/datum/element/waddling/hopping)
 	return ..()
 
 /obj/item/bodypart/head/bunny
