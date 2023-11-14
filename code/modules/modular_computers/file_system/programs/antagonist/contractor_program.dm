@@ -30,8 +30,8 @@
 	return temp
 
 /datum/computer_file/program/contract_uplink/Destroy(force)
-	. = ..()
 	traitor_data = null
+	return ..()
 
 /datum/computer_file/program/contract_uplink/ui_act(action, params)
 	. = ..()
