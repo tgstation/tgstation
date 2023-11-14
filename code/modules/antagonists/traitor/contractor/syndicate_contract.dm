@@ -1,13 +1,18 @@
 /datum/syndicate_contract
+	///The 'id' of this particular contract. Used to keep track of statuses from TGUI.
 	var/id
-
+	///The current status of the contract. Starts off by default.
 	var/status = CONTRACT_STATUS_INACTIVE
+	///The related Objective datum for the contract, holding the target and such.
 	var/datum/objective/contract/contract
+	///The job position of the target.
 	var/target_rank
+	///How much we will pay out upon completion. This is not the TC completion, it's typically credits.
 	var/ransom = 0
+	///The level of payout, which affects the TC we get paid on completion.
 	var/payout_type
+	///Flavortext wanted message for the person we're after.
 	var/wanted_message
-
 	///List of everything found on the victim at the time of contracting, used to return their stuff afterwards.
 	var/list/victim_belongings = list()
 
@@ -76,164 +81,186 @@
 /datum/syndicate_contract/proc/enter_check(datum/source, sent_mob)
 	SIGNAL_HANDLER
 
-	if (istype(source, /obj/structure/closet/supplypod/extractionpod))
-		if (isliving(sent_mob))
-			var/mob/living/M = sent_mob
-			var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
+	if(!istype(source, /obj/structure/closet/supplypod/extractionpod))
+		return
+	if(!isliving(sent_mob))
+		return
+	var/mob/living/person_sent = sent_mob
+	var/datum/antagonist/traitor/traitor_data = contract.owner.has_antag_datum(/datum/antagonist/traitor)
+	if(person_sent == contract.target.current)
+		traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem += contract.payout
+		traitor_data.uplink_handler.contractor_hub.contracts_completed++
+		if(person_sent.stat != DEAD)
+			traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem += contract.payout_bonus
+		status = CONTRACT_STATUS_COMPLETE
+		if(traitor_data.uplink_handler.contractor_hub.current_contract == src)
+			traitor_data.uplink_handler.contractor_hub.current_contract = null
+	else
+		status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting i
+		if(traitor_data.uplink_handler.contractor_hub.current_contract == src)
+			traitor_data.uplink_handler.contractor_hub.current_contract = null
 
-			if (M == contract.target.current)
-				traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem += contract.payout
-				traitor_data.uplink_handler.contractor_hub.contracts_completed += 1
+	if(iscarbon(person_sent))
+		for(var/obj/item/person_contents in person_sent.contents)
+			if(ishuman(person_sent))
+				var/mob/living/carbon/human/human_sent = person_sent
+				if(person_contents == human_sent.w_uniform)
+					continue //So all they're left with are shoes and uniform.
+				if(person_contents == human_sent.shoes)
+					continue
+			person_sent.transferItemToLoc(person_contents)
+			victim_belongings.Add(person_contents)
 
-				if (M.stat != DEAD)
-					traitor_data.uplink_handler.contractor_hub.contract_TC_to_redeem += contract.payout_bonus
+	var/obj/structure/closet/supplypod/extractionpod/pod = source
+	// Handle the pod returning
+	pod.startExitSequence(pod)
 
-				status = CONTRACT_STATUS_COMPLETE
+	if(ishuman(person_sent))
+		var/mob/living/carbon/human/target = person_sent
+		// After we remove items, at least give them what they need to live.
+		target.dna.species.give_important_for_life(target)
 
-				if (traitor_data.uplink_handler.contractor_hub.current_contract == src)
-					traitor_data.uplink_handler.contractor_hub.current_contract = null
+	//we'll start the effects in a few seconds since it takes a moment for the pod to leave.
+	addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), person_sent), 3 SECONDS)
 
-			else
-				status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
+	// This is slightly delayed because of the sleep calls above to handle the narrative.
+	// We don't want to tell the station instantly.
+	var/points_to_check
+	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(cargo_account)
+		points_to_check = cargo_account.account_balance
+	if(points_to_check >= ransom)
+		cargo_account.adjust_money(-ransom)
+	else
+		cargo_account.adjust_money(-points_to_check)
+	priority_announce(
+		text = "One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
+		As is policy we've taken a portion of the station's funds to offset the overall cost.",
+		sender_override = "Nanotrasen Asset Protection")
 
-				if (traitor_data.uplink_handler.contractor_hub.current_contract == src)
-					traitor_data.uplink_handler.contractor_hub.current_contract = null
-
-			if (iscarbon(M))
-				for(var/obj/item/W in M)
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(W == H.w_uniform)
-							continue //So all they're left with are shoes and uniform.
-						if(W == H.shoes)
-							continue
-
-
-					M.transferItemToLoc(W)
-					victim_belongings.Add(W)
-
-			var/obj/structure/closet/supplypod/extractionpod/pod = source
-
-			// Handle the pod returning
-			pod.startExitSequence(pod)
-
-			if (ishuman(M))
-				var/mob/living/carbon/human/target = M
-
-				// After we remove items, at least give them what they need to live.
-				target.dna.species.give_important_for_life(target)
-
-			// After pod is sent we start the victim narrative/heal.
-			INVOKE_ASYNC(src, PROC_REF(handleVictimExperience), M)
-
-			// This is slightly delayed because of the sleep calls above to handle the narrative.
-			// We don't want to tell the station instantly.
-			var/points_to_check
-			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			if(D)
-				points_to_check = D.account_balance
-			if(points_to_check >= ransom)
-				D.adjust_money(-ransom)
-			else
-				D.adjust_money(-points_to_check)
-
-			priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
-							As is policy we've taken a portion of the station's funds to offset the overall cost.", null, null, null, "Nanotrasen Asset Protection")
-
-			INVOKE_ASYNC(src, PROC_REF(finish_enter))
+	addtimer(CALLBACK(src, PROC_REF(finish_enter)), 3 SECONDS)
 
 /datum/syndicate_contract/proc/finish_enter()
-	sleep(30)
-
 	// Pay contractor their portion of ransom
-	if (status == CONTRACT_STATUS_COMPLETE)
-		var/obj/item/card/id/C = contract.owner.current?.get_idcard(TRUE)
+	if(status != CONTRACT_STATUS_COMPLETE)
+		return
+	var/obj/item/card/id/contractor_id = contract.owner.current?.get_idcard(TRUE)
+	if(!contractor_id || !contractor_id.registered_account)
+		return
+	contractor_id.registered_account.adjust_money(ransom * 0.35)
+	contractor_id.registered_account.bank_card_talk("We've processed the ransom, agent. \
+		Here's your cut - your balance is now [contractor_id.registered_account.account_balance] cr.", TRUE)
 
-		if(C?.registered_account)
-			C.registered_account.adjust_money(ransom * 0.35)
+#define VICTIM_EXPERIENCE_START 0
+#define VICTIM_EXPERIENCE_FIRST_HIT 1
+#define VICTIM_EXPERIENCE_SECOND_HIT 2
+#define VICTIM_EXPERIENCE_THIRD_HIT 3
+#define VICTIM_EXPERIENCE_LAST_HIT 4
 
-			C.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
-			[C.registered_account.account_balance] cr.", TRUE)
-
-// They're off to holding - handle the return timer and give some text about what's going on.
-/datum/syndicate_contract/proc/handleVictimExperience(mob/living/M)
+/**
+ * handle_victim_experience
+ *
+ * Handles the effects given to victims upon being contracted.
+ * We heal them up and cause them immersive effects, just for fun.
+ * Args:
+ * victim - The person we're harassing
+ * level - The current stage of harassement they are facing. This increases by itself, looping until finished.
+ */
+/datum/syndicate_contract/proc/handle_victim_experience(mob/living/victim, level = VICTIM_EXPERIENCE_START)
 	// Ship 'em back - dead or alive, 4 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, PROC_REF(returnVictim), M), (60 * 10) * 4)
+	addtimer(CALLBACK(src, PROC_REF(return_victim), victim), (60 * 10) * 4)
+	if(victim.stat == DEAD)
+		return
 
-	if (M.stat != DEAD)
-		// Heal them up - gets them out of crit/soft crit. If omnizine is removed in the future, this needs to be replaced with a
-		// method of healing them, consequence free, to a reasonable amount of health.
-		M.reagents.add_reagent(/datum/reagent/medicine/omnizine, 20)
+	var/time_until_next
+	switch(level)
+		if(VICTIM_EXPERIENCE_START)
+			// Heal them up - gets them out of crit/soft crit. If omnizine is removed in the future, this needs to be replaced with a
+			// method of healing them, consequence free, to a reasonable amount of health.
+			victim.reagents.add_reagent(/datum/reagent/medicine/omnizine, amount = 20)
+			victim.flash_act()
+			victim.adjust_confusion(1 SECONDS)
+			victim.adjust_eye_blur(5 SECONDS)
+			to_chat(victim, span_warning("You feel strange..."))
+			time_until_next = 6 SECONDS
+		if(VICTIM_EXPERIENCE_FIRST_HIT)
+			to_chat(victim, span_warning("That pod did something to you..."))
+			victim.adjust_dizzy(3.5 SECONDS)
+			time_until_next = 6.5 SECONDS
+		if(VICTIM_EXPERIENCE_SECOND_HIT)
+			to_chat(victim, span_warning("Your head pounds... It feels like it's going to burst out your skull!"))
+			victim.flash_act()
+			victim.adjust_confusion(2 SECONDS)
+			victim.adjust_eye_blur(3 SECONDS)
+			time_until_next = 3 SECONDS
+		if(VICTIM_EXPERIENCE_THIRD_HIT)
+			to_chat(victim, span_warning("Your head pounds..."))
+			time_until_next = 10 SECONDS
+		if(VICTIM_EXPERIENCE_LAST_HIT)
+			victim.flash_act()
+			victim.Unconscious(200)
+			to_chat(victim, span_hypnophrase("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
+				we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
+				so it's only a matter of time before we ship you back...\"</i>"))
+			victim.adjust_eye_blur(10 SECONDS)
+			victim.adjust_dizzy(1.5 SECONDS)
+			victim.adjust_confusion(2 SECONDS)
 
-		M.flash_act()
-		M.adjust_confusion(1 SECONDS)
-		M.adjust_eye_blur(5 SECONDS)
-		to_chat(M, span_warning("You feel strange..."))
-		sleep(60)
-		to_chat(M, span_warning("That pod did something to you..."))
-		M.adjust_dizzy(3.5 SECONDS)
-		sleep(65)
-		to_chat(M, span_warning("Your head pounds... It feels like it's going to burst out your skull!"))
-		M.flash_act()
-		M.adjust_confusion(2 SECONDS)
-		M.adjust_eye_blur(3 SECONDS)
-		sleep(30)
-		to_chat(M, span_warning("Your head pounds..."))
-		sleep(100)
-		M.flash_act()
-		M.Unconscious(200)
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
-					we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
-					so it's only a matter of time before we ship you back...\"</i></span>")
-		M.adjust_eye_blur(10 SECONDS)
-		M.adjust_dizzy(1.5 SECONDS)
-		M.adjust_confusion(2 SECONDS)
+	level++ //move onto the next level.
+	if(time_until_next)
+		addtimer(CALLBACK(src, PROC_REF(handle_victim_experience), victim, level), time_until_next)
+
+#undef VICTIM_EXPERIENCE_START
+#undef VICTIM_EXPERIENCE_FIRST_HIT
+#undef VICTIM_EXPERIENCE_SECOND_HIT
+#undef VICTIM_EXPERIENCE_THIRD_HIT
+#undef VICTIM_EXPERIENCE_LAST_HIT
 
 // We're returning the victim
-/datum/syndicate_contract/proc/returnVictim(mob/living/M)
+/datum/syndicate_contract/proc/return_victim(mob/living/victim)
 	var/list/possible_drop_loc = list()
 
-	for (var/turf/possible_drop in contract.dropoff.contents)
-		if (!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
-			if (!possible_drop.is_blocked_turf())
+	for(var/turf/possible_drop in contract.dropoff.contents)
+		if(!isspaceturf(possible_drop) && !isclosedturf(possible_drop))
+			if(!possible_drop.is_blocked_turf())
 				possible_drop_loc.Add(possible_drop)
 
-	if (possible_drop_loc.len > 0)
-		var/pod_rand_loc = rand(1, possible_drop_loc.len)
+	if(!possible_drop_loc.len)
+		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent here from won't \
+			be able to handle our pod... You will die here instead.\""))
+		if(iscarbon(victim))
+			var/mob/living/carbon/carbon_victim = victim
+			if(carbon_victim.can_heartattack())
+				carbon_victim.set_heartattack(TRUE)
+		return
 
-		var/obj/structure/closet/supplypod/return_pod = new()
-		return_pod.bluespace = TRUE
-		return_pod.explosionSize = list(0,0,0,0)
-		return_pod.style = STYLE_SYNDICATE
+	var/pod_rand_loc = rand(1, possible_drop_loc.len)
+	var/obj/structure/closet/supplypod/return_pod = new()
+	return_pod.bluespace = TRUE
+	return_pod.explosionSize = list(0,0,0,0)
+	return_pod.style = STYLE_SYNDICATE
 
-		do_sparks(8, FALSE, M)
-		M.visible_message(span_notice("[M] vanishes..."))
+	do_sparks(8, FALSE, victim)
+	victim.visible_message(span_notice("[victim] vanishes..."))
 
-		for(var/obj/item/W in M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(W == H.w_uniform)
-					continue //So all they're left with are shoes and uniform.
-				if(W == H.shoes)
-					continue
-			M.dropItemToGround(W)
+	for(var/obj/item/victim_contents in victim.contents)
+		if(ishuman(victim))
+			var/mob/living/carbon/human/human_victim = victim
+			if(victim_contents == human_victim.w_uniform)
+				continue //So all they're left with are shoes and uniform.
+			if(victim_contents == human_victim.shoes)
+				continue
+		victim.dropItemToGround(victim_contents)
 
-		for(var/obj/item/W in victim_belongings)
-			W.forceMove(return_pod)
+	for(var/obj/item/W in victim_belongings)
+		W.forceMove(return_pod)
 
-		M.forceMove(return_pod)
+	victim.forceMove(return_pod)
 
-		M.flash_act()
-		M.adjust_eye_blur(3 SECONDS)
-		M.adjust_dizzy(3.5 SECONDS)
-		M.adjust_confusion(2 SECONDS)
+	victim.flash_act()
+	victim.adjust_eye_blur(3 SECONDS)
+	victim.adjust_dizzy(3.5 SECONDS)
+	victim.adjust_confusion(2 SECONDS)
 
-		new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
-	else
-		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-					be able to handle our pod... You will die here instead.\"</i></span>")
-		if (iscarbon(M))
-			var/mob/living/carbon/C = M
-			if (C.can_heartattack())
-				C.set_heartattack(TRUE)
+	new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
