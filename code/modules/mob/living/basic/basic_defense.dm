@@ -11,20 +11,33 @@
 		var/shove_dir = get_dir(user, src)
 		if(!Move(get_step(src, shove_dir), shove_dir))
 			log_combat(user, src, "shoved", "failing to move it")
-			user.visible_message(span_danger("[user.name] [response_disarm_continuous] [src]!"),
-				span_danger("You [response_disarm_simple] [src]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
+			user.visible_message(
+				span_danger("[user.name] [response_disarm_continuous] [src]!"),
+				span_danger("You [response_disarm_simple] [src]!"),
+				span_hear("You hear aggressive shuffling!"),
+				COMBAT_MESSAGE_RANGE,
+				list(src),
+			)
 			to_chat(src, span_userdanger("You're shoved by [user.name]!"))
 			return TRUE
 		log_combat(user, src, "shoved", "pushing it")
-		user.visible_message(span_danger("[user.name] [response_disarm_continuous] [src], pushing [p_them()]!"),
-			span_danger("You [response_disarm_simple] [src], pushing [p_them()]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, list(src))
+		user.visible_message(
+			span_danger("[user.name] [response_disarm_continuous] [src], pushing [p_them()]!"),
+			span_danger("You [response_disarm_simple] [src], pushing [p_them()]!"),
+			span_hear("You hear aggressive shuffling!"),
+			COMBAT_MESSAGE_RANGE,
+			list(src),
+		)
 		to_chat(src, span_userdanger("You're pushed by [user.name]!"))
 		return TRUE
 
 	if(!user.combat_mode)
 		if (stat != DEAD)
-			visible_message(span_notice("[user] [response_help_continuous] [src]."), \
-							span_notice("[user] [response_help_continuous] you."), null, null, user)
+			visible_message(
+				span_notice("[user] [response_help_continuous] [src]."),
+				span_notice("[user] [response_help_continuous] you."),
+				ignored_mobs = user,
+			)
 			to_chat(user, span_notice("You [response_help_simple] [src]."))
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		return TRUE
@@ -37,8 +50,12 @@
 	if(check_block(user, damage, "[user]'s punch", UNARMED_ATTACK, 0, BRUTE))
 		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	visible_message(span_danger("[user] [response_harm_continuous] [src]!"),\
-					span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
+	visible_message(
+		span_danger("[user] [response_harm_continuous] [src]!"),
+		span_userdanger("[user] [response_harm_continuous] you!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+		ignored_mobs = user,
+	)
 	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
 	playsound(loc, attacked_sound, 25, TRUE, -1)
 	apply_damage(damage)
@@ -92,7 +109,7 @@
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
 		var/damage_done = apply_damage(rand(attacking_larva.melee_damage_lower, attacking_larva.melee_damage_upper), BRUTE)
-		if(damage_done)
+		if(damage_done > 0)
 			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage_done, attacking_larva.max_grown)
 
 /mob/living/basic/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)

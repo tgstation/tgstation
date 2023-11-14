@@ -88,7 +88,7 @@
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
 		var/damage_done = apply_damage(rand(L.melee_damage_lower, L.melee_damage_upper), BRUTE)
-		if(damage_done)
+		if(damage_done > 0)
 			L.amount_grown = min(L.amount_grown + damage_done, L.max_grown)
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)

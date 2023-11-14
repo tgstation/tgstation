@@ -316,11 +316,10 @@
 	if(user.melee_damage_upper == 0)
 		if(user != src)
 			visible_message(
-				span_notice("\The [user] [user.friendly_verb_continuous] [src]!"),
-				span_notice("\The [user] [user.friendly_verb_continuous] you!"),
-				null,
-				COMBAT_MESSAGE_RANGE,
-				user,
+				span_notice("[user] [user.friendly_verb_continuous] [src]!"),
+				span_notice("[user] [user.friendly_verb_continuous] you!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				ignored_mobs = user,
 			)
 			to_chat(user, span_notice("You [user.friendly_verb_simple] [src]!"))
 		return FALSE
