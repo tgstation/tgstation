@@ -152,6 +152,7 @@
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
 	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
 
+/// Returns if this mob is breathing at this moment. Fails if they cannot breathe period, or if they are dead.
 /mob/living/proc/currently_breathing()
 	if (!can_breathe())
 		return FALSE
@@ -159,12 +160,18 @@
 		return FALSE
 	return TRUE
 
+/// Returns if this mob can breathe at all. Fails if they have NOBREATH or do not have the breathing trait.
 /mob/living/proc/can_breathe()
+	if (!HAS_TRAIT(src, TRAIT_BREATHES))
+		return FALSE
 	if (HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
 
 	return TRUE
 
+/// Returns if this mob can breathe reagents that are attempting to enter their lungs, or whatever they use to breathe.
+/// Fails if they arent breathing at the moment.
+/// If consider_internals is TRUE, will fail if the mob is breathing from internals.
 /mob/living/proc/can_breathe_reagents(consider_internals = TRUE)
 	if (!currently_breathing())
 		return FALSE

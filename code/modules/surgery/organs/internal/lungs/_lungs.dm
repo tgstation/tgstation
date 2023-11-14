@@ -811,6 +811,7 @@
 			return FALSE
 	return TRUE
 
+/// Returns if these lungs are currently breathing. Fails if we have no owner, if the owner is dead, or we cant breathe period.
 /obj/item/organ/internal/lungs/proc/currently_breathing()
 	if (!owner)
 		return FALSE

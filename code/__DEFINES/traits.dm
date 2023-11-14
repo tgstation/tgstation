@@ -1354,3 +1354,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
+
+/// Trait given to mobs that require breathing to live by default
+#define TRAIT_BREATHES "must_breathe"

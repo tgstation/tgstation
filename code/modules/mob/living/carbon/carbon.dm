@@ -11,6 +11,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
+	ADD_TRAIT(src, TRAIT_BREATHES, INNATE_TRAIT)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
