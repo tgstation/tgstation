@@ -437,7 +437,7 @@
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	var/potential_damage = punch_damage
-	var/obj/item/bodypart/attacking_bodypart = source.get_bodypart(zone)
+	var/obj/item/bodypart/attacking_bodypart = hand
 	potential_damage += rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)

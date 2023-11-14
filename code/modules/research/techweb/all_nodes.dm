@@ -926,11 +926,11 @@
 	description = "Advanced synthetic neural networks and synaptic pathways allows for extraordinary leaps in cybernetic intelligence and interfacing."
 	prereq_ids = list("robotics")
 	design_ids = list(
-		"mmi_posi",
 		"advanced_l_arm",
 		"advanced_r_arm",
 		"advanced_l_leg",
 		"advanced_r_leg",
+		"mmi_posi",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
