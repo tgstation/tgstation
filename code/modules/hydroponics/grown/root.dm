@@ -29,8 +29,8 @@
 	if(I.get_sharpness())
 		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
 		var/Cblade
-		if(seed.potency > 25)
-			var/carrot_sword_chance = (seed.potency - 25) * 10
+		if(seed.potency > 30)
+			var/carrot_sword_chance = (seed.potency - 30) * 5
 			if (rand(1, 100) < carrot_sword_chance)
 				Cblade = new /obj/item/claymore/carrot
 			else

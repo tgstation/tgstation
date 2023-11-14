@@ -119,12 +119,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "carrot_sword"
 	inhand_icon_state = "carrot_sword"
 	worn_icon_state = "carrot_sword"
-	slot_flags = ITEM_SLOT_BACK
-	force = 30
-	throwforce = 20
+	force = 25
+	throwforce = 10
 	throw_speed = 3
-	throw_range = 5
+	throw_range = 7
 	armour_penetration = 5
+	block_chance = 10
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
