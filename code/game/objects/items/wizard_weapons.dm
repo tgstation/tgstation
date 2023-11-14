@@ -77,12 +77,12 @@
 	return .
 
 /obj/item/mjollnir
-	name = "Mjolnir"
+	name = "Mjollnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "mjollnir0"
 	base_icon_state = "mjollnir"
-	worn_icon_state = "mjolnir"
+	worn_icon_state = "mjollnir"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	flags_1 = CONDUCT_1
