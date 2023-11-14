@@ -398,3 +398,8 @@
 	mutates_from = list(/obj/item/seeds/lavaland/cactus)
 	created_product = /obj/item/food/grown/star_cactus
 	created_seed = /obj/item/seeds/star_cactus
+
+/datum/hydroponics/plant_mutation/kudzu_vines
+	mutates_from = list(/obj/item/seeds/shrub)
+	created_product = /obj/item/food/grown/kudzupod
+	created_seed = /obj/item/seeds/kudzu

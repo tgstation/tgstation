@@ -12,6 +12,7 @@
 	yield = 2
 	growthstages = 3
 	reagents_add = list()
+	possible_mutations = list(/datum/hydroponics/plant_mutation/kudzu_vines)
 
 /obj/item/grown/shrub
 	seed = /obj/item/seeds/shrub
