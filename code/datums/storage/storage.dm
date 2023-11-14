@@ -983,7 +983,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		resolve_parent.balloon_alert(to_show, "can't reach!")
 		return FALSE
 
-	if(!isliving(to_show) || to_show.incapacitated())
+	if(!isliving(to_show) || to_show.incapacitated(IGNORE_CRIT))
 		return FALSE
 
 	if(locked)

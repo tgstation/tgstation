@@ -106,7 +106,7 @@
 			CtrlClickOn(A)
 			return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_CRIT))
 		return
 
 	face_atom(A)
@@ -117,7 +117,7 @@
 	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
 		return
 
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && stat < SOFT_CRIT)
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		UnarmedAttack(A, FALSE)
 		return
