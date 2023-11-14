@@ -145,41 +145,6 @@
 	var/can_astar_pass = CANASTARPASS_DENSITY
 
 /**
- * Called when an atom is created in byond (built in engine proc)
- *
- * Not a lot happens here in SS13 code, as we offload most of the work to the
- * [Intialization][/atom/proc/Initialize] proc, mostly we run the preloader
- * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
- * result is that the Intialize proc is called.
- *
- */
-/atom/New(loc, ...)
-	//atom creation method that preloads variables at creation
-	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instanciated atom is creating other atoms in New()
-		world.preloader_load(src)
-
-	var/do_initialize = SSatoms.initialized
-	if(do_initialize != INITIALIZATION_INSSATOMS)
-		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		if(SSatoms.InitAtom(src, FALSE, args))
-			//we were deleted
-			return
-
-/**
- * Late Intialization, for code that should run after all atoms have run Intialization
- *
- * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
- *  proc must return the hint
- * [INITIALIZE_HINT_LATELOAD] otherwise it will never be called.
- *
- * useful for doing things like finding other machines on GLOB.machines because you can guarantee
- * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
- * code has been run
- */
-/atom/proc/LateInitialize()
-	set waitfor = FALSE
-
-/**
  * Top level of the destroy chain for most atoms
  *
  * Cleans up the following:
