@@ -42,11 +42,6 @@
 	///How much this atom resists explosions by, in the end
 	var/explosive_resistance = 0
 
-	/// a very temporary list of overlays to remove
-	var/list/remove_overlays
-	/// a very temporary list of overlays to add
-	var/list/add_overlays
-
 	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays.
 	var/list/managed_vis_overlays
 
