@@ -101,9 +101,9 @@
 	new_head_owner.AddElement(/datum/element/waddling/hopping)
 
 /obj/item/bodypart/leg/left/digitigrade/bunny/on_removal()
-	var/mob/living/carbon/human/bnuuy = owner
+	var/mob/living/carbon/human/bunny = owner
 	var/has_rabbit_leg_still = FALSE
-	for(var/obj/item/bodypart/leg/bodypart in bnuuy.bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in bunny.bodyparts)
 		if(bodypart == src)
 			continue
 		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
@@ -140,9 +140,9 @@
 	new_head_owner.AddElement(/datum/element/waddling/hopping)
 
 /obj/item/bodypart/leg/right/digitigrade/bunny/on_removal()
-	var/mob/living/carbon/human/bnuuy = owner
+	var/mob/living/carbon/human/bunny = owner
 	var/has_rabbit_leg_still = FALSE
-	for(var/obj/item/bodypart/leg/bodypart in bnuuy.bodyparts)
+	for(var/obj/item/bodypart/leg/bodypart in bunny.bodyparts)
 		if(bodypart == src)
 			continue
 		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
