@@ -67,8 +67,6 @@
 
 	var/datum/wires/wires = null
 
-	var/list/alternate_appearances
-
 	///Light systems, both shouldn't be active at the same time.
 	var/light_system = STATIC_LIGHT
 	///Range of the light in tiles. Zero means no light.
