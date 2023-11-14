@@ -220,3 +220,7 @@
 ///Return the values you get when an RCD eats you?
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE
+
+///This atom has been hit by a hulkified mob in hulk mode (user)
+/atom/proc/attack_hulk(mob/living/carbon/human/user)
+	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
