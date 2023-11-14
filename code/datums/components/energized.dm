@@ -1,5 +1,5 @@
 #define NORMAL_TOAST_PROB 3
-#define BROKEN_TOAST_PROB 70
+#define BROKEN_TOAST_PROB 33
 
 /datum/component/energized
 	can_transfer = FALSE
