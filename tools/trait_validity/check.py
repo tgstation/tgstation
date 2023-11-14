@@ -14,7 +14,7 @@ def red(text):
 on_github = os.getenv("GITHUB_ACTIONS") == "true"
 
 defines_file = "code/__DEFINES/traits/declarations.dm"
-globalvars_file = "code/_globalvars/traits.dm"
+globalvars_file = "code/_globalvars/traits/_traits.dm"
 
 how_to_fix_message = "Please ensure that all traits in the {defines_file} file are added in the {globalvars_file} file."
 
