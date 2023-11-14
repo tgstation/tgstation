@@ -961,7 +961,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/servo = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR"
