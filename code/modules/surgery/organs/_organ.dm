@@ -181,7 +181,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
-	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
+	// We don't need to readd things to the organ if it's getting deleted
+	if(QDELING(src))
+		return
+
+	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM))
 		AddElement(/datum/element/decal/blood)
 
 	var/list/diseases = organ_owner.get_static_viruses()

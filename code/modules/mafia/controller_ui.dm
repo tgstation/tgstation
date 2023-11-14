@@ -2,7 +2,7 @@
 /datum/mafia_controller/ui_static_data(atom/user)
 	var/list/data = list()
 
-	if(usr.client?.holder)
+	if(usr?.client?.holder)
 		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
 	data["is_observer"] = isobserver(user)
 	data["all_roles"] = current_setup_text
@@ -59,6 +59,7 @@
 		player_info["possible_actions"] = list()
 
 		if(user_role) //not observer
+			player_info["is_you"] = (role.body.real_name == user_role.body.real_name)
 			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
 				if(action.validate_action_target(src, potential_target = role, silent = TRUE))
 					player_info["possible_actions"] += list(list("name" = action, "ref" = REF(action)))

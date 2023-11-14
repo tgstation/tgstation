@@ -55,8 +55,7 @@
 
 	if(!beating)
 		user.visible_message(
-			span_notice("[user] squeezes [src] to \
-			make it beat again!"),
+			span_notice("[user] squeezes [src] to make it beat again!"),
 			span_notice("You squeeze [src] to make it beat again!"),
 		)
 		Restart()
@@ -98,7 +97,7 @@
 		return
 
 	// Handle "sudden" heart attack
-	if((organ_flags & ORGAN_FAILING) || !beating)
+	if(!beating || (organ_flags & ORGAN_FAILING))
 		if(owner.can_heartattack() && Stop())
 			if(owner.stat == CONSCIOUS)
 				owner.visible_message(span_danger("[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!"))
@@ -106,7 +105,7 @@
 		return
 
 	// Beyond deals with sound effects, so nothing needs to be done if no client
-	if(!owner.client)
+	if(isnull(owner.client))
 		return
 
 	if(owner.stat == SOFT_CRIT)
