@@ -1784,14 +1784,14 @@
 	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "rabbit"
 	color_src = HAIR_COLOR
-	locked = TRUE // the community is not ready for the bunnygirl future
+	locked = TRUE
 
 /datum/sprite_accessory/tails/human/bunny_alt
 	name = "Bunny 2"
 	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "rabbit_alt"
 	color_src = HAIR_COLOR
-	locked = TRUE // the community is not ready for the bunnygirl future
+	locked = TRUE
 
 /datum/sprite_accessory/tails/monkey
 	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
