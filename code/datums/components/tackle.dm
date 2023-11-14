@@ -174,7 +174,7 @@
 				hed.receive_damage(brute = 15, updating_health = TRUE, wound_bonus = CANT_WOUND)
 			user.gain_trauma(/datum/brain_trauma/mild/concussion)
 
-		if(-4 to -2) // glancing blow at best
+		if(-4 to -1) // glancing blow at best
 			user.visible_message(span_warning("[user] lands a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!"), span_userdanger("You land a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!"))
 
@@ -183,7 +183,7 @@
 				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
 				addtimer(CALLBACK(T, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
 
-		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
+		if(0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message(span_warning("[user] lands a passable [tackle_word] on [target], sending them both tumbling!"), span_userdanger("You land a passable [tackle_word] on [target], sending you both tumbling!"), ignored_mobs = target)
 			to_chat(target, span_userdanger("[user] lands a passable [tackle_word] on you, sending you both tumbling!"))
 
@@ -266,18 +266,28 @@
 	else if(target_drunkenness > 30)
 		defense_mod -= 1
 
+	//Arms contribute a great deal to potential tackling prowess and defense. Better arms = better bonus
+	var/obj/item/bodypart/arm/defender_arm = target.get_active_hand()
+
+	if(defender_arm) //the target may not actually have arms
+		defense_mod += (defender_arm.unarmed_effectiveness/10)
+	else //sucks to be you if you don't though haha
+		defense_mod -= 2
+
 	if(HAS_TRAIT(target, TRAIT_CLUMSY))
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_FAT)) // chonkers are harder to knock over
 		defense_mod += 1
 	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
 		defense_mod -= 2
-	if(HAS_TRAIT(target, TRAIT_DWARF))
+	if(HAS_TRAIT(target, TRAIT_DWARF) || HAS_TRAIT(target, TRAIT_SETTLER)) //WHO ARE YOU CALLING SHORT?
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_GIANT))
 		defense_mod += 2
 	if(target.get_organic_health() < 50)
 		defense_mod -= 1
+	if(target.check_block()) //CQC users, if they manage to block the tackle, gain a hefty defense bonus
+		defense_mod += 5
 
 	var/leg_wounds = 0 // -1 defense per 2 leg wounds
 	for(var/i in target.all_wounds)
@@ -295,9 +305,10 @@
 			defense_mod += 1
 		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
 			defense_mod += 5
-		if(tackle_target.is_holding_item_of_type(/obj/item/shield))
-			defense_mod += 2
 
+		var/mob/living/carbon/human/human_sacker = parent
+		if(tackle_target.check_shields(human_sacker, 0, human_sacker.name, attack_type = UNARMED_ATTACK)) //If we block, add a hefty defense bonus, but only if we roll a successful block
+			defense_mod += 5
 
 		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER) && !el_tail)
@@ -308,6 +319,15 @@
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
 	var/sacker_drunkenness = sacker.get_drunk_amount()
+
+	//Arms contribute a great deal to potential tackling prowess and defense. Better arms = better bonus
+	var/obj/item/bodypart/arm/sacker_arm = sacker.get_active_hand()
+
+	if(sacker_arm) //I have no idea how you would be tackling without hands, but just in case
+		attack_mod += (sacker_arm.unarmed_effectiveness/10)
+	else //I don't want to know how you got to this point but if you have, fuck you, good luck tackling without ARMS
+		attack_mod -= 4
+
 	if(sacker_drunkenness > 60) // you're far too drunk to hold back!
 		attack_mod += 1
 	else if(sacker_drunkenness > 30) // if you're only a bit drunk though, you're just sloppy
@@ -319,6 +339,8 @@
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
+	if(HAS_TRAIT(sacker, TRAIT_NOGUNS)) //Those dedicated to martial combat are particularly skilled tacklers
+		attack_mod += 2
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
 		var/obj/item/organ/external/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
@@ -329,15 +351,14 @@
 		attack_mod += 2
 
 	if(ishuman(target))
-		var/mob/living/carbon/human/S = sacker
+		var/mob/living/carbon/human/human_sacker = sacker
 
-		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot))) // tackling in riot armor is more effective, but tiring
+		if(human_sacker.is_shove_knockdown_blocked()) // tackling with riot specialized armor, like riot armor, is effective but tiring
 			attack_mod += 2
-			sacker.adjustStaminaLoss(20)
+			human_sacker.adjustStaminaLoss(20)
 
-	var/r = rand(-3, 3) - defense_mod + attack_mod + skill_mod
-	return r
+	var/randomized_tackle_roll = rand(-3, 3) - defense_mod + attack_mod + skill_mod
+	return randomized_tackle_roll
 
 
 /**
