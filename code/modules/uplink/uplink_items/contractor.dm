@@ -26,6 +26,12 @@
 	category = /datum/uplink_category/contractor
 	purchasable_from = NONE //they will be added to extra_purchasable
 
+//prevents buying contractor stuff before you make an account.
+/datum/uplink_item/contractor/can_be_bought(datum/uplink_handler/uplink_handler)
+	if(!uplink_handler.contractor_hub)
+		return FALSE
+	return ..()
+
 /datum/uplink_item/contractor/reroll
 	name = "Contract Reroll"
 	desc = "Request a reroll of your current contract list. Will generate a new target, \
@@ -35,8 +41,6 @@
 	cost = 0
 
 /datum/uplink_item/contractor/reroll/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	if(!uplink_handler.contractor_hub)
-		return
 	//We're not regenerating already completed/aborted/extracting contracts, but we don't want to repeat their targets.
 	var/list/new_target_list = list()
 	for(var/datum/syndicate_contract/contract_check in uplink_handler.contractor_hub.assigned_contracts)
@@ -55,7 +59,7 @@
 
 	//Set our target list with the new set we've generated.
 	uplink_handler.contractor_hub.assigned_targets = new_target_list
-	return //no log icon :(
+	return source //for log icon
 
 /datum/uplink_item/contractor/pinpointer
 	name = "Contractor Pinpointer"
