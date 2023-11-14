@@ -62,7 +62,7 @@
 			stack_trace("CHANGETURF_SKIP was used in a PlaceOnTop call for a turf that's initialized. This is a mistake. [src]([type])")
 		assemble_baseturfs()
 
-	var/turf/newT
+	var/turf/new_turf
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
 
@@ -70,14 +70,14 @@
 	if(!isclosedturf(src))
 		old_baseturfs += type
 
-	newT = ChangeTurf(added_layer, null, flags)
-	newT.assemble_baseturfs(initial(added_layer.baseturfs)) // The baseturfs list is created like roundstart
-	if(!length(newT.baseturfs))
-		newT.baseturfs = list(baseturfs)
+	new_turf = ChangeTurf(added_layer, null, flags)
+	new_turf.assemble_baseturfs(initial(added_layer.baseturfs)) // The baseturfs list is created like roundstart
+	if(!length(new_turf.baseturfs))
+		new_turf.baseturfs = list(baseturfs)
 
 	// The old baseturfs are put underneath, and we sort out the unwanted ones
-	newT.baseturfs = baseturfs_string_list(old_baseturfs + (newT.baseturfs - GLOB.blacklisted_automated_baseturfs), newT)
-	return newT
+	new_turf.baseturfs = baseturfs_string_list(old_baseturfs + (new_turf.baseturfs - GLOB.blacklisted_automated_baseturfs), new_turf)
+	return new_turf
 
 // Copy an existing turf and put it on top
 // Returns the new turf
