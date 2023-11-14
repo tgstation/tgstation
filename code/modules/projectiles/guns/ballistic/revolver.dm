@@ -212,10 +212,13 @@
 /obj/item/gun/ballistic/revolver/russian/fire_gun(atom/target, mob/living/user, flag, params)
 	. = ..(null, user, flag, params)
 
+	var/tk_controlled = FALSE
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
 			if(user.combat_mode) // Flogging action
 				return
+	else if (HAS_TRAIT(src, TRAIT_TELEKINESIS_CONTROLLED)) // if we're far away, you can still fire it at yourself if you have TK.
+		tk_controlled = TRUE
 
 	if(isliving(user))
 		if(!can_trigger_gun(user))
@@ -223,8 +226,9 @@
 	if(target != user)
 		playsound(src, dry_fire_sound, 30, TRUE)
 		user.visible_message(
-			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."), \
-			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"))
+			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."),
+			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"),
+		)
 		return
 
 	if(ishuman(user))
@@ -246,7 +250,8 @@
 				antagonist = src, \
 				rounds_loaded = loaded_rounds, \
 				aimed_at =  affecting.name, \
-				result = (chambered ? "lost" : "won"))
+				result = (chambered ? "lost" : "won"), \
+			)
 
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_CURSED)) // I cannot live, I cannot die, trapped in myself, body my holding cell.
@@ -257,6 +262,9 @@
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 				if(is_target_face)
 					shoot_self(user, affecting)
+				else if(tk_controlled) // the consequence of you doing the telekinesis stuff
+					to_chat(user, span_userdanger("As your mind concentrates on the revolver, you realize that it's pointing towards your head a little too late!"))
+					shoot_self(user, BODY_ZONE_HEAD)
 				else
 					user.visible_message(span_danger("[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!"), span_userdanger("You cowardly fire [src] at your [affecting.name]!"), span_hear("You hear a gunshot!"))
 				chambered = null
