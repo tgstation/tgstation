@@ -1,14 +1,41 @@
+import { BooleanLike } from 'common/react';
 import { scale, toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Stack, Icon, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
+import { createSearch } from 'common/string';
+import { Box, Button, Stack, Icon, Input, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { flow } from 'common/fp';
-import { filter, sortBy } from 'common/collections';
+import { filter } from 'common/collections';
 import { NtosWindow } from '../layouts';
 
+type NetDownloaderData = {
+  disk_size: number;
+  disk_used: number;
+  downloadcompletion: number;
+  downloading: BooleanLike;
+  downloadname: string;
+  downloadsize: number;
+  error: string;
+  emagged: BooleanLike;
+  categories: string;
+  programs: ProgramData[];
+};
+
+type ProgramData = {
+  icon: string;
+  filename: string;
+  filedesc: string;
+  fileinfo: string;
+  category: string;
+  installed: BooleanLike;
+  compatible: BooleanLike;
+  size: number;
+  access: BooleanLike;
+  verifiedsource: BooleanLike;
+};
+
 export const NtosNetDownloader = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<NetDownloaderData>(context);
   const {
-    PC_device_theme,
     disk_size,
     disk_used,
     downloadcompletion,
@@ -29,22 +56,20 @@ export const NtosNetDownloader = (props, context) => {
     'category',
     all_categories[0]
   );
+  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const search = createSearch(
+    searchItem,
+    (program: ProgramData) => program.filename
+  );
   const items = flow([
-    // This filters the list to only contain programs with category
+    // Check if we are in the 'all' category, and show respective programs.
     selectedCategory !== all_categories[0] &&
-      filter((program) => program.category === selectedCategory),
+      filter((program: ProgramData) => program.category === selectedCategory),
     // This filters the list to only contain verified programs
-    !emagged &&
-      PC_device_theme !== 'syndicate' &&
-      filter((program) => program.verifiedsource === 1),
-    // This sorts all programs in the lists by name and compatibility
-    sortBy(
-      (program) => -program.compatible,
-      (program) => program.filedesc
-    ),
+    !emagged && filter((program: ProgramData) => program.verifiedsource === 1),
   ])(programs);
   const disk_free_space = downloading
-    ? disk_size - toFixed(disk_used + downloadcompletion)
+    ? disk_size - Number(toFixed(disk_used + downloadcompletion))
     : disk_size - disk_used;
   return (
     <NtosWindow width={600} height={600}>
@@ -91,6 +116,19 @@ export const NtosNetDownloader = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
+        <Section>
+          <Input
+            autofocus
+            height="23px"
+            width="100%"
+            placeholder="Search program name..."
+            fluid
+            value={searchItem}
+            onInput={(e, value) => {
+              setSearchItem(value);
+            }}
+          />
+        </Section>
         <Stack>
           <Stack.Item minWidth="105px" shrink={0} basis={0}>
             <Tabs vertical>
@@ -117,14 +155,14 @@ export const NtosNetDownloader = (props, context) => {
 
 const Program = (props, context) => {
   const { program } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<NetDownloaderData>(context);
   const {
-    PC_device_theme,
     disk_size,
     disk_used,
     downloading,
     downloadname,
     downloadcompletion,
+    emagged,
   } = data;
   const disk_free = disk_size - disk_used;
   return (
@@ -197,7 +235,7 @@ const Program = (props, context) => {
       <Box mt={1} italic color="label">
         {program.fileinfo}
       </Box>
-      {!program.verifiedsource && PC_device_theme !== 'syndicate' && (
+      {!program.verifiedsource && (
         <NoticeBox mt={1} mb={0} danger fontSize="12px">
           Unverified source. Please note that Nanotrasen does not recommend
           download and usage of software from non-official servers.
