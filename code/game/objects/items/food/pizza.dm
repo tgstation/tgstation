@@ -165,7 +165,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("crust" = 1, "tomato" = 2, "cheese" = 1, "carrot" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY
+	foodtypes = GRAIN | VEGETABLES | DAIRY | CARROT
 	slice_type = /obj/item/food/pizzaslice/vegetable
 	boxtag = "Gourmet Vegetable"
 	venue_value = FOOD_PRICE_NORMAL

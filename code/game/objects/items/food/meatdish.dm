@@ -154,7 +154,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES | CARROT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 

@@ -474,6 +474,7 @@ DEFINE_BITFIELD(liked_foodtypes, list(
 	"BUGS" = BUGS,
 	"GORE" = GORE,
 	"STONE" = STONE,
+	"CARROT" = CARROT,
 ))
 
 DEFINE_BITFIELD(disliked_foodtypes, list(
@@ -498,6 +499,7 @@ DEFINE_BITFIELD(disliked_foodtypes, list(
 	"BUGS" = BUGS,
 	"GORE" = GORE,
 	"STONE" = STONE,
+	"CARROT" = CARROT,
 ))
 
 DEFINE_BITFIELD(toxic_foodtypes, list(
@@ -522,6 +524,7 @@ DEFINE_BITFIELD(toxic_foodtypes, list(
 	"BUGS" = BUGS,
 	"GORE" = GORE,
 	"STONE" = STONE,
+	"CARROT" = CARROT,
 ))
 
 DEFINE_BITFIELD(sharpness, list(

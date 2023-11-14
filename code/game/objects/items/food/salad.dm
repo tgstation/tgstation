@@ -290,7 +290,7 @@
 		/datum/reagent/consumable/nutriment = 12,
 	)
 	tastes = list("crisp greens" = 2, "olive dressing" = 2, "salt" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES | CARROT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/potato_salad

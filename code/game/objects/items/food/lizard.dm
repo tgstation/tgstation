@@ -298,7 +298,7 @@
 		/datum/reagent/consumable/nutriment = 2,
 	)
 	tastes = list("fish" = 2, "potatoes" = 1, "carrots" = 1)
-	foodtypes = SEAFOOD
+	foodtypes = SEAFOOD | CARROT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 

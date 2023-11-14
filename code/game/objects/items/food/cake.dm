@@ -57,7 +57,7 @@
 	desc = "A favorite desert of a certain wascally wabbit. Not a lie."
 	icon_state = "carrotcake"
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
-	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR
+	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR | CARROT
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/cakeslice/carrot
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -67,7 +67,7 @@
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
-	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR
+	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR | CARROT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cake/brain

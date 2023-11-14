@@ -1288,7 +1288,7 @@
 /datum/glass_style/has_foodtype/soup/chicken_noodle_soup
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/chicken_noodle_soup
 	icon_state = "chicken_noodle_soup"
-	drink_type = VEGETABLES | MEAT | GRAIN
+	drink_type = VEGETABLES | MEAT | GRAIN | CARROT
 
 /datum/chemical_reaction/food/soup/chicken_noodle_soup
 	required_reagents = list(/datum/reagent/water = 30)
