@@ -695,7 +695,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(!istext(trait_name))
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
 	if(!GLOB.global_trait_name_map)
-		GLOB.global_trait_name_map = generate_trait_name_map()
+		GLOB.global_trait_name_map = generate_global_trait_name_map()
 	if(!GLOB.global_trait_name_map.Find(trait_name))
 		stack_trace("Possibly wrong trait in [type] - [trait_name] is not a trait in the global trait list")
 	return TRUE
