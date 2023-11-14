@@ -1917,13 +1917,13 @@
 	name = "Bunny"
 	icon_state = "bunny"
 	color_src = HAIR_COLOR
-	locked = TRUE // the community is not ready for the bunnygirl future
+	locked = TRUE
 
 /datum/sprite_accessory/ears/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = HAIR_COLOR
-	locked = TRUE // the community is not ready for the bunnygirl future
+	locked = TRUE
 
 /datum/sprite_accessory/ears/bunny_large
 	name = "Bunny (Large)"
@@ -1932,7 +1932,7 @@
 	dimension_x = 32
 	dimension_y = 48
 	color_src = HAIR_COLOR
-	locked = TRUE // the community is not ready for the bunnygirl future
+	locked = TRUE
 
 /datum/sprite_accessory/ears/rabbit_large
 	name = "Rabbit (Large)"
@@ -1941,7 +1941,7 @@
 	dimension_x = 32
 	dimension_y = 48
 	color_src = HAIR_COLOR
-	locked = TRUE // the community is not ready for the bunnygirl future
+	locked = TRUE
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'
