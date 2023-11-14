@@ -131,9 +131,6 @@
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
 
-	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
-	var/list/datum/merger/mergers
-
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
@@ -2026,17 +2023,6 @@
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
 		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
-
-/// Gets a merger datum representing the connected blob of objects in the allowed_types argument
-/atom/proc/GetMergeGroup(id, list/allowed_types)
-	RETURN_TYPE(/datum/merger)
-	var/datum/merger/candidate
-	if(mergers)
-		candidate = mergers[id]
-	if(!candidate)
-		new /datum/merger(id, allowed_types, src)
-		candidate = mergers[id]
-	return candidate
 
 /**
  * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.
