@@ -6,11 +6,6 @@
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
-///the priority for which awards are orded on [/datum/achievement_data/load_all_achievements()]
-#define AWARD_PRIORITY_DEFAULT 100
-///the priority of the achievements score. NO achievement should have a priority equal or lower than this.
-#define AWARD_PRIORITY_LAST 0
-
 /// preferences for the sound played when unlocking an achievement
 #define CHEEVO_SOUND_TADA "Tada Fanfare"
 #define CHEEVO_SOUND_JINGLE "Beeps Jingle"
