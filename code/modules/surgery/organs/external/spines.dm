@@ -40,7 +40,7 @@
 	return GLOB.spines_list
 
 /datum/bodypart_overlay/mutant/spines/get_base_icon_state()
-	return (wagging ? "wagging" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
+	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging
 
 /datum/bodypart_overlay/mutant/spines/can_draw_on_bodypart(mob/living/carbon/human/human)
 	. = ..()
