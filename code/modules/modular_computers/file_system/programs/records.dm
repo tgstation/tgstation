@@ -2,7 +2,7 @@
 	filename = "ntrecords"
 	filedesc = "Records"
 	extended_desc = "Allows the user to view several basic records from the crew."
-	downloader_category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_SECURITY
 	program_icon = "clipboard"
 	program_open_overlay = "crew"
 	tgui_id = "NtosRecords"

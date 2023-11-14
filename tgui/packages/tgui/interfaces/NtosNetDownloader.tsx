@@ -4,7 +4,7 @@ import { useBackend, useLocalState } from '../backend';
 import { createSearch } from 'common/string';
 import { Box, Button, Stack, Icon, Input, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { flow } from 'common/fp';
-import { filter } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 import { NtosWindow } from '../layouts';
 
 type NetDownloaderData = {
@@ -57,14 +57,22 @@ export const NtosNetDownloader = (props, context) => {
     all_categories[0]
   );
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
-  const search = createSearch(
+  const search = createSearch<ProgramData>(
     searchItem,
-    (program: ProgramData) => program.filename
+    (program) => program.filedesc
   );
   const items = flow([
-    // Check if we are in the 'all' category, and show respective programs.
-    selectedCategory !== all_categories[0] &&
+    searchItem.length > 0
+      ? // If we have a query, search everything for it.
+      filter(search)
+      : // Otherwise, show respective programs for the category.
+      selectedCategory !== all_categories[0] &&
       filter((program: ProgramData) => program.category === selectedCategory),
+    // This sorts all programs in the lists by name and compatibility
+    sortBy(
+      (program: ProgramData) => !program.compatible,
+      (program: ProgramData) => program.filedesc
+    ),
     // This filters the list to only contain verified programs
     !emagged && filter((program: ProgramData) => program.verifiedsource === 1),
   ])(programs);

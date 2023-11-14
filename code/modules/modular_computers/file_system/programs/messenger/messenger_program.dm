@@ -8,7 +8,7 @@
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
-	downloader_category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "command"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0

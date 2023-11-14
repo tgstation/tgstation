@@ -12,7 +12,7 @@
 /datum/computer_file/program/portrait_printer
 	filename = "PortraitPrinter"
 	filedesc = "Marlowe Treeby's Art Galaxy"
-	downloader_category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "dummy"
 	extended_desc = "This program connects to a Spinward Sector community art site for viewing and printing art."
 	download_access = list(ACCESS_LIBRARY)

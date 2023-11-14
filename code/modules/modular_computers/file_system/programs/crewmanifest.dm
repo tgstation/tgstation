@@ -1,7 +1,7 @@
 /datum/computer_file/program/crew_manifest
 	filename = "plexagoncrew"
 	filedesc = "Plexagon Crew List"
-	downloader_category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_SECURITY
 	program_open_overlay = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
 	download_access = list(ACCESS_SECURITY, ACCESS_COMMAND)

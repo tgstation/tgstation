@@ -3,7 +3,7 @@
 /datum/computer_file/program/power_monitor
 	filename = "ampcheck"
 	filedesc = "AmpCheck"
-	downloader_category = PROGRAM_CATEGORY_ENGI
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
 	program_open_overlay = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"

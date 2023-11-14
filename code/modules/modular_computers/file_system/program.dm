@@ -19,7 +19,7 @@
 	/// Short description of this program's function.
 	var/extended_desc = "N/A"
 	///What category this program can be found in within NTNetDownloader.
-	var/downloader_category = PROGRAM_CATEGORY_MISC
+	var/downloader_category = PROGRAM_CATEGORY_DEVICE
 	///The overlay to add ontop of the ModPC running the app while it's open.
 	///This is taken from the same file as the ModPC, so you can use usage_flags to prevent
 	///the program from being used on devices that don't have sprites for it.

@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /datum/computer_file/program/job_management
 	filename = "plexagoncore"
 	filedesc = "Plexagon HR Core"
-	downloader_category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "id"
 	extended_desc = "Program for viewing and changing job slot availability."
 	download_access = list(ACCESS_COMMAND)

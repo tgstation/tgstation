@@ -7,7 +7,7 @@
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
 	filedesc = "Chat Client"
-	downloader_category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "command"
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8

@@ -22,11 +22,13 @@
 
 	///The list of categories to display in the UI, in order of which they appear.
 	var/static/list/show_categories = list(
-		PROGRAM_CATEGORY_CREW,
-		PROGRAM_CATEGORY_ENGI,
-		PROGRAM_CATEGORY_SCI,
-		PROGRAM_CATEGORY_SUPL,
-		PROGRAM_CATEGORY_MISC,
+		PROGRAM_CATEGORY_DEVICE,
+		PROGRAM_CATEGORY_EQUIPMENT,
+		PROGRAM_CATEGORY_GAMES,
+		PROGRAM_CATEGORY_SECURITY,
+		PROGRAM_CATEGORY_ENGINEERING,
+		PROGRAM_CATEGORY_SUPPLY,
+		PROGRAM_CATEGORY_SCIENCE,
 	)
 
 /datum/computer_file/program/ntnetdownload/kill_program(mob/user)

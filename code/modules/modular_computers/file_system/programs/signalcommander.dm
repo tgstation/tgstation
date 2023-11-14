@@ -1,7 +1,7 @@
 /datum/computer_file/program/signal_commander
 	filename = "signaler"
 	filedesc = "SignalCommander"
-	downloader_category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "signal"
 	extended_desc = "A small built-in frequency app that sends out signaller signals with the appropriate hardware."
 	size = 2

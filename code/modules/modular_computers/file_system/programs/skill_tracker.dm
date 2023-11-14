@@ -1,7 +1,7 @@
 /datum/computer_file/program/skill_tracker
 	filename = "skilltracker"
 	filedesc = "ExperTrak Skill Tracker"
-	downloader_category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "generic"
 	extended_desc = "Scan and view your current marketable job skills."
 	size = 2

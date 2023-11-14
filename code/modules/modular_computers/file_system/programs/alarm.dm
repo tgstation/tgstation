@@ -1,7 +1,7 @@
 /datum/computer_file/program/alarm_monitor
 	filename = "alarmmonitor"
 	filedesc = "Canary"
-	downloader_category = PROGRAM_CATEGORY_ENGI
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
 	ui_header = "alarm_green.gif"
 	program_open_overlay = "alert-green"
 	extended_desc = "This program provides visual interface for a station's alarm system."

@@ -1,7 +1,7 @@
 /datum/computer_file/program/scipaper_program
 	filename = "ntfrontier"
 	filedesc = "NT Frontier"
-	downloader_category = PROGRAM_CATEGORY_SCI
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	extended_desc = "Scientific paper publication and navigation software."
 	requires_ntnet = TRUE
 	size = 12

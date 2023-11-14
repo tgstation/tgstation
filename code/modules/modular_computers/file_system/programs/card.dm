@@ -1,7 +1,7 @@
 /datum/computer_file/program/card_mod
 	filename = "plexagonidwriter"
 	filedesc = "Plexagon Access Management"
-	downloader_category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	program_open_overlay = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	download_access = list(ACCESS_COMMAND)

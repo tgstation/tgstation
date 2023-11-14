@@ -2,7 +2,7 @@
 	filename = "camera_app"
 	filedesc = "Camera"
 	program_open_overlay = "camera"
-	downloader_category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "This program allows the taking of pictures."
 	size = 4
 	usage_flags = PROGRAM_TABLET
