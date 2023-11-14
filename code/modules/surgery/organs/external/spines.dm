@@ -21,6 +21,7 @@
 	. = ..()
 	if(.)
 		paired_tail = locate(/obj/item/organ/external/tail/lizard) in receiver.organs //We want specifically a lizard tail, so we don't use the slot.
+		paired_tail?.paired_spines = src
 
 /obj/item/organ/external/spines/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
