@@ -376,7 +376,7 @@
 
 /datum/hydroponics/plant_mutation/rose_carbon
 	mutates_from = list(/obj/item/seeds/rose)
-	created_product = /obj/item/grown/carbon_rose
+	created_product = /obj/item/food/grown/carbon_rose
 	created_seed = /obj/item/seeds/carbon_rose
 
 /datum/hydroponics/plant_mutation/peas_laughin

@@ -306,7 +306,7 @@
 	icon_state = "seed-carbonrose"
 	species = "carbonrose"
 	plantname = "Carbon Rose Flower"
-	product = /obj/item/grown/carbon_rose
+	product = /obj/item/food/grown/carbon_rose
 	endurance = 12
 	yield = 6
 	potency = 15
@@ -319,16 +319,14 @@
 	rarity = 10
 	graft_gene = /datum/plant_gene/reagent/preset/carbon
 
-/obj/item/grown/carbon_rose
+/obj/item/food/grown/carbon_rose
 	seed = /obj/item/seeds/carbon_rose
 	name = "carbon rose"
 	desc = "The all new fleur d'amour gris - the flower of love, modernized, with no harsh thorns."
 	icon_state = "carbonrose"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
-	force = 0
-	throwforce = 0
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
-	throw_speed = 1
-	throw_range = 3
+	bite_consumption_mod = 2
+	foodtypes = VEGETABLES | GROSS
