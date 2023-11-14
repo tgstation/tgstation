@@ -1,4 +1,3 @@
-
 /datum/storyteller/jester
 	name = "The Jester"
 	desc = "The Jester will create much more events, with higher possibilities of them repeating."
