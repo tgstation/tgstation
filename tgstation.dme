@@ -1855,6 +1855,7 @@
 #include "code\game\core_atom_systems\atom_materials.dm"
 #include "code\game\core_atom_systems\atom_merger.dm"
 #include "code\game\core_atom_systems\atom_tool_acts.dm"
+#include "code\game\core_atom_systems\atom_vv.dm"
 #include "code\game\core_atom_systems\atoms_initializing_EXPENSIVE.dm"
 #include "code\game\gamemodes\events.dm"
 #include "code\game\gamemodes\game_mode.dm"
