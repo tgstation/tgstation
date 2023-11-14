@@ -98,7 +98,7 @@
 		jumping_power.active_overlay_icon_state = null
 		jumping_power.panel = "Genetic"
 		jumping_power.Grant(new_head_owner)
-	new_head_owner.AddElement(/datum/element/waddling/hopping)
+	new_head_owner.AddElement(/datum/element/waddling, TRUE)
 
 /obj/item/bodypart/leg/left/digitigrade/bunny/on_removal()
 	var/mob/living/carbon/human/bunny = owner
@@ -111,7 +111,7 @@
 			break
 	if(!has_rabbit_leg_still)
 		jumping_power.Remove(owner)
-		owner.RemoveElement(/datum/element/waddling/hopping)
+		owner.RemoveElement(/datum/element/waddling)
 	return ..()
 
 /obj/item/bodypart/leg/right/digitigrade/bunny
@@ -137,7 +137,7 @@
 		jumping_power.active_overlay_icon_state = null
 		jumping_power.panel = "Genetic"
 		jumping_power.Grant(new_head_owner)
-	new_head_owner.AddElement(/datum/element/waddling/hopping)
+	new_head_owner.AddElement(/datum/element/waddling, TRUE)
 
 /obj/item/bodypart/leg/right/digitigrade/bunny/on_removal()
 	var/mob/living/carbon/human/bunny = owner
@@ -150,7 +150,7 @@
 			break
 	if(!has_rabbit_leg_still)
 		jumping_power.Remove(owner)
-		owner.RemoveElement(/datum/element/waddling/hopping)
+		owner.RemoveElement(/datum/element/waddling)
 	return ..()
 
 /obj/item/bodypart/head/bunny
