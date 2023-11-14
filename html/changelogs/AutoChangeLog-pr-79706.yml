@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed a small issue with disposal outlets leaving contents about to be ejected stuck inside the pipe beneath it if deleted."
