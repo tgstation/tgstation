@@ -1854,6 +1854,7 @@
 #include "code\game\core_atom_systems\atom_invisibility.dm"
 #include "code\game\core_atom_systems\atom_materials.dm"
 #include "code\game\core_atom_systems\atom_merger.dm"
+#include "code\game\core_atom_systems\atom_storage.dm"
 #include "code\game\core_atom_systems\atom_tool_acts.dm"
 #include "code\game\core_atom_systems\atom_vv.dm"
 #include "code\game\core_atom_systems\atoms_initializing_EXPENSIVE.dm"
