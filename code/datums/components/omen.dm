@@ -31,6 +31,8 @@
 	if(!isnull(damage_mod))
 		src.damage_mod = damage_mod
 
+	ADD_TRAIT(parent, TRAIT_CURSED, src)
+
 /**
  * This is a omen eat omen world! The stronger omen survives.
  */
@@ -50,6 +52,7 @@
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
+	REMOVE_TRAIT(person, TRAIT_CURSED, src)
 	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
 
 	if(vessel)
