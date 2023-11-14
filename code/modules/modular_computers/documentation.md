@@ -45,7 +45,7 @@ This is how the base program is setup. the rest is mostly tgui stuff. I'll use t
 	/// ditto but on emagged syndie net. Use this for antag programs
 	available_on_syndinet = 0
 
-	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination)
+	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_PDA combination)
 	/// or PROGRAM_ALL. Use this to limit what kind of machines can run the
 	/// program. For example, comms program should be limited to consoles and laptops.
 	usage_flags = PROGRAM_ALL
