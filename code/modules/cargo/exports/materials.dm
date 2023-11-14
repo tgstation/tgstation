@@ -134,7 +134,6 @@
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
 	. = ..()
 	var/amount = get_amount(sold_item)
-	var/price = get_cost(sold_item)
 	if(!amount)
 		return
 
