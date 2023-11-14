@@ -60,9 +60,9 @@
 	set category = "Object"
 	set desc = "Click to spin your revolver's chamber."
 
-	var/mob/M = usr
+	var/mob/user = usr
 
-	if(M.stat || !in_range(M,src))
+	if(user.stat || !in_range(user, src))
 		return
 
 	if (recent_spin > world.time)
@@ -71,8 +71,8 @@
 
 	if(do_spin())
 		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
-		usr.visible_message(span_notice("[usr] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
-		balloon_alert(M, "chamber spun")
+		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
+		balloon_alert(user, "chamber spun")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
 
