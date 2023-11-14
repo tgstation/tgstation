@@ -115,16 +115,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/claymore/carrot
 	name = "carrot sword"
-	desc = "A full-sized carrot sword. What else did you expect from a carrot that big?"
+	desc = "A full-sized carrot sword. Definetly \not\ good for the eyes, not anymore."
 	icon_state = "carrot_sword"
 	inhand_icon_state = "carrot_sword"
 	worn_icon_state = "carrot_sword"
-	force = 25
-	throwforce = 10
+	flags_1 = NONE
+	force = 19
+	throwforce = 7
 	throw_speed = 3
 	throw_range = 7
 	armour_penetration = 5
 	block_chance = 10
+	resistance_flags = NONE
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."

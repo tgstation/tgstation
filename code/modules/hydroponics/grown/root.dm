@@ -28,18 +28,15 @@
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness())
 		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
-		var/Cblade
-		if(seed.potency > 30)
-			var/carrot_sword_chance = (seed.potency - 30) * 5
-			if (rand(1, 100) < carrot_sword_chance)
-				Cblade = new /obj/item/claymore/carrot
-			else
-				Cblade = new /obj/item/knife/shiv/carrot
+		var/carrot_blade
+		var/carrot_sword_chance = 100 * (max(0, seed.potency - 50) / 50)
+		if (prob(carrot_sword_chance))
+			carrot_blade = new /obj/item/claymore/carrot
 		else
-			Cblade = new /obj/item/knife/shiv/carrot
+			carrot_blade = new /obj/item/knife/shiv/carrot
 		remove_item_from_storage(user)
 		qdel(src)
-		user.put_in_hands(Cblade)
+		user.put_in_hands(carrot_blade)
 	else
 		return ..()
 
