@@ -93,7 +93,7 @@
 		qdel(source)
 		spawning_amount++
 
-	if(!spawning_amount)
+	if(spawning_amount == 0)
 		return
 
 	var/new_thing
