@@ -1,0 +1,4 @@
+author: "Glyphee"
+delete-after: True
+changes:
+  - bugfix: "changed atmos on the dirt tiles to `\"o2=22;n2=82;TEMP=293.15\"`"
