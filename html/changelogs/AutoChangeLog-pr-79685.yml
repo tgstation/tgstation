@@ -1,4 +1,0 @@
-author: "Danny Boy"
-delete-after: True
-changes:
-  - bugfix: "Signers no longer sign with their species' tongue"
