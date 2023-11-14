@@ -3,8 +3,8 @@
 	gender = MALE
 
 /mob/living/basic/goat/pete/Initialize(mapload)
-	if(mapload && prob(40))
-		new /mob/living/basic/goat/pete/petricia // woaw time for some udder
+	if(mapload && prob(40) && gender == MALE)
+		new /mob/living/basic/goat/pete/petricia(loc) // woaw time for some udder
 		return INITIALIZE_HINT_QDEL
 
 	return ..()
