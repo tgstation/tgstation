@@ -42,14 +42,6 @@
 	///How much this atom resists explosions by, in the end
 	var/explosive_resistance = 0
 
-	/**
-	 * used to store the different colors on an atom
-	 *
-	 * its inherent color, the colored paint applied on it, special color effect etc...
-	 */
-	var/list/atom_colours
-
-
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
@@ -138,11 +130,6 @@
 	var/base_pixel_z = 0
 	///Used for changing icon states for different base sprites.
 	var/base_icon_state
-
-	///The config type to use for greyscaled sprites. Both this and greyscale_colors must be assigned to work.
-	var/greyscale_config
-	///A string of hex format colors to be used by greyscale sprites, ex: "#0054aa#badcff"
-	var/greyscale_colors
 
 	///Holds merger groups currently active on the atom. Do not access directly, use GetMergeGroup() instead.
 	var/list/datum/merger/mergers
@@ -851,31 +838,6 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_INHAND_ICON, target)
 
-/// Handles updates to greyscale value updates.
-/// The colors argument can be either a list or the full color string.
-/// Child procs should call parent last so the update happens after all changes.
-/atom/proc/set_greyscale(list/colors, new_config)
-	SHOULD_CALL_PARENT(TRUE)
-	if(istype(colors))
-		colors = colors.Join("")
-	if(!isnull(colors) && greyscale_colors != colors) // If you want to disable greyscale stuff then give a blank string
-		greyscale_colors = colors
-
-	if(!isnull(new_config) && greyscale_config != new_config)
-		greyscale_config = new_config
-
-	update_greyscale()
-
-/// Checks if this atom uses the GAGS system and if so updates the icon
-/atom/proc/update_greyscale()
-	SHOULD_CALL_PARENT(TRUE)
-	if(greyscale_colors && greyscale_config)
-		icon = SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors)
-	if(!smoothing_flags) // This is a bitfield but we're just checking that some sort of smoothing is happening
-		return
-	update_atom_colour()
-	QUEUE_SMOOTH(src)
-
 /**
  * An atom we are buckled or is contained within us has tried to move
  *
@@ -1146,73 +1108,6 @@
 /atom/proc/on_log(login)
 	if(loc)
 		loc.on_log(login)
-
-
-/*
-	Atom Colour Priority System
-	A System that gives finer control over which atom colour to colour the atom with.
-	The "highest priority" one is always displayed as opposed to the default of
-	"whichever was set last is displayed"
-*/
-
-
-///Adds an instance of colour_type to the atom's atom_colours list
-/atom/proc/add_atom_colour(coloration, colour_priority)
-	if(!atom_colours || !atom_colours.len)
-		atom_colours = list()
-		atom_colours.len = COLOUR_PRIORITY_AMOUNT //four priority levels currently.
-	if(!coloration)
-		return
-	if(colour_priority > atom_colours.len)
-		return
-	atom_colours[colour_priority] = coloration
-	update_atom_colour()
-
-
-///Removes an instance of colour_type from the atom's atom_colours list
-/atom/proc/remove_atom_colour(colour_priority, coloration)
-	if(!atom_colours)
-		return
-	if(colour_priority > atom_colours.len)
-		return
-	if(coloration && atom_colours[colour_priority] != coloration)
-		return //if we don't have the expected color (for a specific priority) to remove, do nothing
-	atom_colours[colour_priority] = null
-	update_atom_colour()
-
-/**
- * Checks if this atom has the passed color
- * Can optionally be supplied with a range of priorities, IE only checking "washable" or above
- */
-/atom/proc/is_atom_colour(looking_for_color, min_priority_index = 1, max_priority_index = COLOUR_PRIORITY_AMOUNT)
-	// make sure uppertext hex strings don't mess with lowertext hex strings
-	looking_for_color = lowertext(looking_for_color)
-
-	if(!LAZYLEN(atom_colours))
-		// no atom colors list has been set up, just check the color var
-		return lowertext(color) == looking_for_color
-
-	for(var/i in min_priority_index to max_priority_index)
-		if(lowertext(atom_colours[i]) == looking_for_color)
-			return TRUE
-
-	return FALSE
-
-///Resets the atom's color to null, and then sets it to the highest priority colour available
-/atom/proc/update_atom_colour()
-	color = null
-	if(!atom_colours)
-		return
-	for(var/checked_color in atom_colours)
-		if(islist(checked_color))
-			var/list/color_list = checked_color
-			if(color_list.len)
-				color = color_list
-				return
-		else if(checked_color)
-			color = checked_color
-			return
-
 
 /**
  * Wash this atom
