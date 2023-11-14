@@ -29,7 +29,7 @@
 
 	cast_on.layer = ABOVE_MOB_LAYER
 	if(bunny_multiplier >= 6) // they have committed to the bit, so we will reward it
-		cast_on.pass_flags |= PASSTABLE|PASSGRILLE|PASSGLASS|PASSMACHINE|PASSSTRUCTURE
+		cast_on.pass_flags |= PASSTABLE|PASSGRILLE|PASSWINDOW|PASSMACHINE|PASSSTRUCTURE
 		RegisterSignal(cast_on, COMSIG_MOVABLE_MOVED, PROC_REF(break_glass))
 	else
 		cast_on.pass_flags |= PASSTABLE|PASSGRILLE|PASSMACHINE|PASSSTRUCTURE
@@ -55,7 +55,7 @@
 		window.deconstruct(disassembled = FALSE)
 		mover.balloon_alert_to_viewers("smashed through!")
 		var/mob/living/carbon/human/bunny = mover
-		bunny.apply_damage(damage = rand(10,25), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
+		bunny.apply_damage(damage = rand(15,25), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
 		new /obj/effect/decal/cleanable/glass(get_step(bunny, bunny.dir))
 
 ///Ends the jump
