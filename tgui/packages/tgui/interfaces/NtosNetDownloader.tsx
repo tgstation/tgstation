@@ -16,7 +16,7 @@ type NetDownloaderData = {
   downloadsize: number;
   error: string;
   emagged: BooleanLike;
-  categories: string;
+  categories: string[];
   programs: ProgramData[];
 };
 
@@ -47,14 +47,14 @@ export const NtosNetDownloader = (props, context) => {
     categories,
     programs,
   } = data;
-  const all_categories = ['All'].concat(categories);
+  const all_categories = categories;
   const downloadpercentage = toFixed(
     scale(downloadcompletion, 0, downloadsize) * 100
   );
   const [selectedCategory, setSelectedCategory] = useLocalState(
     context,
     'category',
-    all_categories[0]
+    categories[0]
   );
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
   const search = createSearch<ProgramData>(
@@ -66,7 +66,6 @@ export const NtosNetDownloader = (props, context) => {
       ? // If we have a query, search everything for it.
       filter(search)
       : // Otherwise, show respective programs for the category.
-      selectedCategory !== all_categories[0] &&
       filter((program: ProgramData) => program.category === selectedCategory),
     // This sorts all programs in the lists by name and compatibility
     sortBy(
@@ -140,7 +139,7 @@ export const NtosNetDownloader = (props, context) => {
         <Stack>
           <Stack.Item minWidth="105px" shrink={0} basis={0}>
             <Tabs vertical>
-              {all_categories.map((category) => (
+              {categories.map((category) => (
                 <Tabs.Tab
                   key={category}
                   selected={category === selectedCategory}
