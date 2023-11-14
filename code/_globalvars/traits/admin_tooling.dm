@@ -277,10 +277,10 @@ GLOBAL_LIST_INIT(admin_visible_traits, list(
 	),
 ))
 
-/// value -> trait name, generated on use from trait_by_type global
-GLOBAL_LIST(trait_name_map)
+/// value -> trait name, generated as needed for adminning.
+GLOBAL_LIST(admin_trait_name_map)
 
-/proc/generate_trait_name_map()
+/proc/generate_admin_trait_name_map()
 	. = list()
 	for(var/key in GLOB.admin_visible_traits)
 		for(var/tname in GLOB.admin_visible_traits[key])

@@ -547,13 +547,23 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	),
 ))
 
+/// value -> trait name, list of ALL traits that exist in the game, used for any type of accessing.
+GLOBAL_LIST(global_trait_name_map)
+
+/proc/generate_global_trait_name_map()
+	. = list()
+	for(var/key in GLOB.traits_by_type)
+		for(var/tname in GLOB.traits_by_type[key])
+			var/val = GLOB.traits_by_type[key][tname]
+			.[val] = tname
+
 GLOBAL_LIST_INIT(movement_type_trait_to_flag, list(
 	TRAIT_MOVE_GROUND = GROUND,
 	TRAIT_MOVE_FLYING = FLYING,
 	TRAIT_MOVE_VENTCRAWLING = VENTCRAWLING,
 	TRAIT_MOVE_FLOATING = FLOATING,
-	TRAIT_MOVE_PHASING = PHASING
-	))
+	TRAIT_MOVE_PHASING = PHASING,
+))
 
 GLOBAL_LIST_INIT(movement_type_addtrait_signals, set_movement_type_addtrait_signals())
 GLOBAL_LIST_INIT(movement_type_removetrait_signals, set_movement_type_removetrait_signals())
