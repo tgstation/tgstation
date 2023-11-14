@@ -175,14 +175,14 @@
 	. = ..()
 	AddElement(/datum/element/lifesteal, 5)
 	var/static/list/innate_actions = list(
-		/datum/action/cooldown/vine_tangle = BB_TARGETTED_ACTION,
+		/datum/action/cooldown/vine_tangle = BB_TARGETED_ACTION,
 	)
 	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!combat_mode)
 		return
-	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
+	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETED_ACTION]
 	if(!istype(tangle_ability))
 		return
 	tangle_ability.Trigger(target = victim)
@@ -255,7 +255,7 @@
 
 /datum/ai_controller/basic_controller/human_trap
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

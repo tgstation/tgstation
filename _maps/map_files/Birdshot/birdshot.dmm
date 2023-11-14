@@ -5905,8 +5905,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "engine"
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/iron/smooth,
-/area/station/engineering/supermatter)
+/area/station/engineering/supermatter/room)
 "coJ" = (
 /obj/structure/chair/stool/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -16771,8 +16775,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/mixingchamber_access,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "ordnancefreezer"
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/iron/dark,
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "gfE" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 8
@@ -40927,6 +40935,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
+/obj/machinery/air_sensor/engine_chamber,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "oFf" = (
@@ -59927,11 +59936,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/toilet/auxiliary)
-"uJZ" = (
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
-/area/station/commons/fitness/recreation/entertainment)
 "uKl" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -63660,6 +63664,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 4
 	},
+/obj/machinery/air_sensor/ordnance_freezer_chamber,
 /turf/open/floor/engine/vacuum,
 /area/station/science/ordnance/freezerchamber)
 "vTm" = (
@@ -66715,18 +66720,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "wPf" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/hop)
+/obj/item/clothing/glasses/blindfold,
+/turf/open/space/basic,
+/area/space)
 "wPh" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -68544,8 +68540,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/mixingchamber_access,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "ordnanceburn"
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/iron/dark,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xoa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -95297,7 +95297,7 @@ njA
 lqt
 cpT
 xQv
-wPf
+xQw
 mvT
 vrn
 ncL
@@ -109934,7 +109934,7 @@ tIE
 aJN
 aJN
 aJN
-uJZ
+aJN
 aJN
 doX
 doX
@@ -132053,7 +132053,7 @@ dDB
 dDB
 dDB
 dDB
-dDB
+wPf
 dDB
 dDB
 dDB

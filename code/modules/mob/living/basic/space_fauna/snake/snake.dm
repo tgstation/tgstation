@@ -71,7 +71,7 @@
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/allow_items,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

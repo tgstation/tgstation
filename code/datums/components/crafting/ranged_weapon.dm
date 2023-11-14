@@ -214,6 +214,9 @@
 		/obj/item/stack/cable_coil = 12,
 		/obj/item/inducer =  1,
 	)
+	blacklist = list(
+		/obj/item/inducer/sci,
+	)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
