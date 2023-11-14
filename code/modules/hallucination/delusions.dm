@@ -256,5 +256,3 @@
 	duration = 60 SECONDS
 	affects_us = TRUE
 
-	return ..()
-
