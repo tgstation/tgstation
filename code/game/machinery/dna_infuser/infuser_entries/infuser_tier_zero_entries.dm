@@ -94,9 +94,13 @@
 	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
 		"enjoys carrots",
-		"jumps a lot",
+		"hears well; a little too well",
+		"has an adorable bunny tail",
+		"infusing even more grants the following:"
+		"able to jump long distances, hopping along",
 		"can sniff out familiar scents",
 		"soft and fuzzy; gives great hugs",
+		"enough infusion and the hop can shatter glass"
 	)
 	input_obj_or_mob = list(
 		/mob/living/basic/rabbit,
