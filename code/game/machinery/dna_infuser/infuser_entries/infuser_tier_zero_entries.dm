@@ -86,37 +86,3 @@
 	)
 	infusion_desc = "domestic"
 	tier = DNA_MUTANT_TIER_ZERO
-
-/datum/infuser_entry/rabbit
-	name = "Rabbit"
-	infuse_mob_name = "rabbit"
-	desc = "Finally, something worth infusing for."
-	threshold_desc = DNA_INFUSION_NO_THRESHOLD
-	qualities = list(
-		"enjoys carrots",
-		"hears well; a little too well",
-		"has an adorable bunny tail",
-		"infusing even more grants the following:",
-		"able to jump long distances, hopping along",
-		"can sniff out familiar scents",
-		"soft and fuzzy; gives great hugs",
-		"enough infusion and the hop can shatter glass"
-	)
-	input_obj_or_mob = list(
-		/mob/living/basic/rabbit,
-	)
-	output_organs = list(
-		/obj/item/organ/internal/ears/cat/bunny/random,
-		/obj/item/organ/external/tail/cat/bunny,
-		/obj/item/organ/internal/tongue/bunny,
-	)
-	output_limbs = list(
-		/obj/item/bodypart/head/bunny,
-		/obj/item/bodypart/arm/right/bunny,
-		/obj/item/bodypart/arm/left/bunny,
-		/obj/item/bodypart/chest/bunny,
-		/obj/item/bodypart/leg/left/digitigrade/bunny,
-		/obj/item/bodypart/leg/right/digitigrade/bunny,
-	)
-	infusion_desc = "domestic"
-	tier = DNA_MUTANT_TIER_ZERO

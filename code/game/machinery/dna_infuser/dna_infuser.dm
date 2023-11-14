@@ -150,6 +150,8 @@
 	new_limb.update_limb(is_creating = TRUE)
 	target.updateappearance(mutcolor_update = TRUE)
 	check_tier_progression(target)
+	if(!pick_limb(target) && infusing_into.all_limbs_mutant) // no more viable limbs
+		ADD_TRAIT(target, TRAIT_MUTANT, BODYPART_TRAIT)
 	return TRUE
 
 /obj/machinery/dna_infuser/proc/pick_limb(mob/living/carbon/human/target)
@@ -298,6 +300,9 @@
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
 	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
+		return FALSE
+	if(target.flags_1 & HOLOGRAM_1)
+		balloon_alert(user, "can't infuse with holograms!")
 		return FALSE
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)

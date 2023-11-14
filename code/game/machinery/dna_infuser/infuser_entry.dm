@@ -49,3 +49,5 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 	var/list/output_limbs
 	///message the target gets while being infused
 	var/infusion_desc = "mutant-like"
+	/// If the target should be given TRAIT_MUTANT if all possible limbs have been applied.
+	var/all_limbs_mutant = FALSE

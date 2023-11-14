@@ -55,8 +55,9 @@
 		window.deconstruct(disassembled = FALSE)
 		mover.balloon_alert_to_viewers("smashed through!")
 		var/mob/living/carbon/human/bunny = mover
-		bunny.apply_damage(damage = rand(10,25), damagetype = BRUTE, spread_damage = TRUE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
+		bunny.apply_damage(damage = rand(10,25), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
 		new /obj/effect/decal/cleanable/glass(get_step(bunny, bunny.dir))
+
 ///Ends the jump
 /datum/action/cooldown/spell/bunny_hop/proc/end_jump(mob/living/jumper)
 	jumper.remove_filter(BUNNY_HOP)
