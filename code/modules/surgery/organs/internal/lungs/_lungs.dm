@@ -800,6 +800,7 @@
 /obj/item/organ/internal/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+/// Returns if these lungs are capable of taking in any air. If only_check_failure_states is true, will not check for NOBREATH and other potentially positive states.
 /obj/item/organ/internal/lungs/proc/can_breathe(only_check_failure_states = FALSE)
 	if (organ_flags & ORGAN_FAILING)
 		return FALSE
@@ -1002,25 +1003,29 @@
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 
+/// Adjusting proc for [received_pressure_mult]. Updates bronchodilation alerts.
 /obj/item/organ/internal/lungs/proc/adjust_received_pressure_mult(adjustment)
 	received_pressure_mult = max(received_pressure_mult + adjustment, 0)
 	update_bronchodilation_alerts()
 
+/// Setter proc for [received_pressure_mult]. Updates bronchodilation alerts.
 /obj/item/organ/internal/lungs/proc/set_received_pressure_mult(new_value)
 	received_pressure_mult = max(new_value, 0)
 	update_bronchodilation_alerts()
 
+/// Depending on [received_pressure_mult], gives either a bronchocontraction or bronchoconstriction alert to our owner (if we have one), or clears the alert
+/// if [received_pressure_mult] is 0.
 /obj/item/organ/internal/lungs/proc/update_bronchodilation_alerts()
 	if (!owner)
 		return
 
 	var/initial_value = initial(received_pressure_mult)
 	if (received_pressure_mult == initial_value)
-		owner?.clear_alert(ALERT_BRONCHODILATION)
-	else if (received_pressure_mult > initial(received_pressure_mult))
-		owner?.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchodilated)
+		owner.clear_alert(ALERT_BRONCHODILATION)
+	else if (received_pressure_mult > initial_value)
+		owner.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchodilated)
 	else
-		owner?.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchoconstricted)
+		owner.throw_alert(ALERT_BRONCHODILATION, /atom/movable/screen/alert/bronchoconstricted)
 
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT

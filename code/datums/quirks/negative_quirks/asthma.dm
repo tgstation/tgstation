@@ -61,6 +61,14 @@
 	/// Every second, an asthma attack can happen via this probability. 0-1.
 	var/chance_for_attack_to_happen_per_second = 0.05
 
+	/// Assoc list of (/datum/disease/asthma_attack typepath -> number). Used in pickweight for when we pick a random asthma attack to apply.
+	var/static/list/asthma_attack_rarities = list(
+		/datum/disease/asthma_attack/minor = 500,
+		/datum/disease/asthma_attack/moderate = 400,
+		/datum/disease/asthma_attack/severe = 50,
+		/datum/disease/asthma_attack/critical = 0.5, // this can quickly kill you, so its rarity is justified
+	)
+
 /datum/quirk/item_quirk/asthma/add_unique(client/client_source)
 	. = ..()
 
@@ -121,13 +129,14 @@
 
 /// Causes an asthma attack via infecting our owner with the attack disease. Notifies ghosts.
 /datum/quirk/item_quirk/asthma/proc/do_asthma_attack()
-	var/datum/disease/asthma_attack/typepath = pick_weight(GLOB.asthma_attack_rarities)
+	var/datum/disease/asthma_attack/typepath = pick_weight(asthma_attack_rarities)
 
 	current_attack = new typepath
-	current_attack.infect(quirk_holder, make_copy = FALSE) // dont leave make_copy on FALSE. worst mistake ive ever made
+	current_attack.infect(quirk_holder, make_copy = FALSE) // dont leave make_copy on TRUE. worst mistake ive ever made
 	RegisterSignal(current_attack, COMSIG_QDELETING, PROC_REF(attack_deleting))
 
-	notify_ghosts("[quirk_holder] is having an asthma attack: [current_attack.name]!", source = quirk_holder, action = NOTIFY_ORBIT, header = "Asthma attack!")
+	if (current_attack.alert_ghosts)
+		notify_ghosts("[quirk_holder] is having an asthma attack: [current_attack.name]!", source = quirk_holder, action = NOTIFY_ORBIT, header = "Asthma attack!")
 
 /// Setter proc for [inflammation]. Adjusts the amount by lung health, adjusts pressure mult, gives feedback messages if silent is FALSE.
 /datum/quirk/item_quirk/asthma/proc/adjust_inflammation(amount, silent = FALSE)

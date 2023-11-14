@@ -241,7 +241,7 @@
 	name = "Inhaler"
 	desc = "A small device capable of administering short bursts of aerosolized chemicals. Requires a canister to function."
 	id = "inhaler"
-	build_path = /obj/item/inhaler
+	build_path = /obj/item/inhaler/medical
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.1)
 	category = list(

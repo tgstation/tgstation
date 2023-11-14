@@ -606,8 +606,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/inhaler_canister
 
+	/// The decrement we will apply to the received_pressure_mult of our targets lungs.
 	var/pressure_mult_increment = 0.4
+	/// After this many cycles of overdose, we activate secondary effects.
 	var/secondary_overdose_effect_cycle_threshold = 40
+	/// We stop increasing stamina damage once we reach this number.
 	var/maximum_od_stamina_damage = 80
 
 /datum/reagent/medicine/albuterol/on_mob_metabolize(mob/living/affected_mob)

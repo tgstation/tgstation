@@ -19,8 +19,7 @@
 	if (!.)
 		return
 
-	var/mob/living/carbon/human/human_patient = patient
-	return (human_patient.has_quirk(/datum/quirk/item_quirk/asthma))
+	return (patient.has_quirk(/datum/quirk/item_quirk/asthma))
 
 /datum/surgery_step/expand_windpipe
 	name = "force open windpipe (retractor)"
@@ -33,6 +32,7 @@
 	preop_sound = 'sound/surgery/retractor1.ogg'
 	success_sound = 'sound/surgery/retractor2.ogg'
 
+	/// The amount of inflammation a failure or success of this surgery will reduce.
 	var/inflammation_reduction = 75
 
 /datum/surgery_step/expand_windpipe/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -44,8 +44,6 @@
 		span_notice("[user] begins to stretch [target]'s windpipe."),
 	)
 	display_pain(target, "You feel a strange stretching sensation in your neck!")
-
-/datum/surgery_step/expand_windpipe/finish
 
 /datum/surgery_step/expand_windpipe/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
 	if (!reduce_inflammation(user, target, tool, surgery))
@@ -66,8 +64,6 @@
 	if (!reduce_inflammation(user, target, tool, surgery))
 		return
 
-	var/mob/living/carbon/human/human_patient = target
-
 	display_results(
 		user,
 		target,
@@ -75,20 +71,24 @@
 		span_bolddanger("[user] succeeds at stretching [target]'s windpipe with [tool], but accidentally clips a few arteries!"),
 		span_bolddanger("[user] finishes stretching [target]'s windpipe, but screws up!")
 	)
-	human_patient.losebreath++
-	var/wound_bonus = tool.wound_bonus
-	var/obj/item/bodypart/head/patient_chest = human_patient.get_bodypart(BODY_ZONE_CHEST)
-	if (patient_chest)
-		if (prob(30))
-			human_patient.cause_wound_of_type_and_severity(WOUND_SLASH, patient_chest, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL, WOUND_PICK_LOWEST_SEVERITY, tool)
-		patient_chest.receive_damage(brute = 10, wound_bonus = wound_bonus, sharpness = SHARP_EDGED, damage_source = tool)
-	playsound(human_patient, 'sound/weapons/bladeslice.ogg', 40)
+
+	playsound(target, 'sound/weapons/bladeslice.ogg', 40)
+	target.losebreath++
+
+	if (iscarbon(target))
+		var/mob/living/carbon/carbon_patient = target
+		var/wound_bonus = tool.wound_bonus
+		var/obj/item/bodypart/head/patient_chest = carbon_patient.get_bodypart(BODY_ZONE_CHEST)
+		if (patient_chest)
+			if (prob(30))
+				carbon_patient.cause_wound_of_type_and_severity(WOUND_SLASH, patient_chest, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL, WOUND_PICK_LOWEST_SEVERITY, tool)
+			patient_chest.receive_damage(brute = 10, wound_bonus = wound_bonus, sharpness = SHARP_EDGED, damage_source = tool)
 
 	return FALSE
 
+/// Reduces the asthmatic's inflammation by [inflammation_reduction]. Called by both success and failure.
 /datum/surgery_step/expand_windpipe/proc/reduce_inflammation(mob/user, mob/living/target, obj/item/tool, datum/surgery/surgery)
-	var/mob/living/carbon/human/human_patient = target
-	var/datum/quirk/item_quirk/asthma/asthma_quirk = locate(/datum/quirk/item_quirk/asthma) in human_patient.quirks
+	var/datum/quirk/item_quirk/asthma/asthma_quirk = locate(/datum/quirk/item_quirk/asthma) in target.quirks
 	if (isnull(asthma_quirk))
 		qdel(surgery) // not really an error cause quirks can get removed during surgery?
 		return FALSE

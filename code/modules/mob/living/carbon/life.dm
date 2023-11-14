@@ -133,6 +133,16 @@
 		return FALSE
 	return our_lungs.currently_breathing()
 
+/mob/living/carbon/can_breathe()
+	. = ..()
+	if (!.)
+		return
+
+	var/obj/item/organ/internal/lungs/our_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	if (isnull(our_lungs))
+		return FALSE
+	return our_lungs.can_breathe()
+
 /mob/living/carbon/can_breathe_reagents(consider_internals = TRUE)
 	. = ..()
 	if (!.)

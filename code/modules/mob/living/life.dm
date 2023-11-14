@@ -153,10 +153,16 @@
 	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
 
 /mob/living/proc/currently_breathing()
-	if (HAS_TRAIT(src, TRAIT_NOBREATH))
+	if (!can_breathe())
 		return FALSE
 	if (stat == DEAD)
 		return FALSE
+	return TRUE
+
+/mob/living/proc/can_breathe()
+	if (HAS_TRAIT(src, TRAIT_NOBREATH))
+		return FALSE
+
 	return TRUE
 
 /mob/living/proc/can_breathe_reagents(consider_internals = TRUE)

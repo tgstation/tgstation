@@ -1,10 +1,3 @@
-GLOBAL_LIST_INIT(asthma_attack_rarities, list(
-	/datum/disease/asthma_attack/minor = 500,
-	/datum/disease/asthma_attack/moderate = 400,
-	/datum/disease/asthma_attack/severe = 50,
-	/datum/disease/asthma_attack/critical = 5, // very rare
-))
-
 /datum/disease/asthma_attack
 	form = "Bronchitis"
 	name = "Asthma attack"
@@ -22,23 +15,35 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 	disease_flags = CURABLE|INCREMENTAL_CURE
 	required_organ = ORGAN_SLOT_LUNGS
 
+	/// The world.time after which we will begin remission.
 	var/time_to_start_remission
 
+	/// The max time, after initial infection, it will take for us to begin remission
 	var/max_time_til_remission
+	/// The min time, after initial infection, it will take for us to begin remission
 	var/min_time_til_remission
 
+	/// Are we in remission, where we stop progressing and instead slowly degrade in intensity until we remove ourselves?
 	var/in_remission = FALSE
 
+	/// The current progress to stage demotion. Resets to 0 and reduces our stage by 1 when it exceeds [progress_needed_to_demote]. Only increases when in remission.
 	var/progress_to_stage_demotion = 0
+	/// The amount of demotion progress we receive per second while in remission.
 	var/progress_to_demotion_per_second = 1
+	/// Once [progress_to_stage_demotion] exceeds or meets this, we reduce our stage.
 	var/progress_needed_to_demote = 10
 
+	/// Do we alert ghosts when we are applied?
+	var/alert_ghosts = FALSE
+
+	/// A assoc list of (severity -> string), where string will be suffixed to our name in (suffix) format.
 	var/static/list/severity_to_suffix = list(
 		DISEASE_SEVERITY_MEDIUM = "Minor",
 		DISEASE_SEVERITY_HARMFUL = "Moderate",
 		DISEASE_SEVERITY_DANGEROUS = "Severe",
 		DISEASE_SEVERITY_BIOHAZARD = "EXTREME"
 	)
+	/// A assoc list of (stringified number -> number), where the key is the stage and the number is how much inflammation we will cause the asthmatic per second.
 	var/list/stage_to_inflammation_per_second
 
 /datum/disease/asthma_attack/New()
@@ -56,9 +61,11 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 
 	return ..()
 
+/// Adds our suffix via [severity_to_suffix] in the format of (suffix) to our name.
 /datum/disease/asthma_attack/proc/suffix_name()
 	name += " ([severity_to_suffix[severity]])"
 
+/// Returns the asthma quirk of our victim. As we can only be applied to asthmatics, this should never return null.
 /datum/disease/asthma_attack/proc/get_asthma_quirk(mob/living/target = affected_mob)
 	RETURN_TYPE(/datum/quirk/item_quirk/asthma)
 
@@ -162,6 +169,7 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 	)
 
 	visibility_flags = HIDDEN_SCANNER
+	alert_ghosts = TRUE
 
 /datum/disease/asthma_attack/severe/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -200,7 +208,9 @@ GLOBAL_LIST_INIT(asthma_attack_rarities, list(
 		"6" = 500, // youre fucked frankly
 	)
 
+	/// Have we warned our user of the fact they are at stage 5? If no, and are at or above stage five, we send a warning and set this to true.
 	var/warned_user = FALSE
+	/// Have we ever reached our max stage? If no, and we are at our max stage, we send a ominous message warning them of their imminent demise.
 	var/max_stage_reached = FALSE
 
 /datum/disease/asthma_attack/critical/stage_act(seconds_per_tick, times_fired)

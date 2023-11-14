@@ -9,14 +9,14 @@
 	var/obj/item/reagent_containers/inhaler_canister/initial_casister_path
 
 	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "inhaler"
+	icon_state = "inhaler_generic"
 
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.1)
 
 	/// The underlay of our canister, if one is installed.
 	var/mutable_appearance/canister_underlay
 	/// The y offset to be applied to [canister_underlay].
-	var/canister_underlay_y_offset = 4
+	var/canister_underlay_y_offset = -2
 	/// If true, we will show a rotary display with how many puffs we can be used for until the canister runs out.
 	var/show_puffs_left = TRUE // this is how real inhalers work
 
@@ -43,6 +43,14 @@
 			else
 				puffs_left = span_danger("[puffs_left]")
 			. += "Its rotary display shows its canister can be used [puffs_left] more times."
+
+/obj/item/inhaler/Exited(atom/movable/gone, direction)
+	. = ..()
+	if (!.)
+		return
+
+	if (gone == canister)
+		set_canister(null, move_canister = FALSE)
 
 /obj/item/inhaler/attack(mob/living/target_mob, mob/living/user, params)
 	if (!can_puff(target_mob, user))
@@ -137,18 +145,16 @@
 	return TRUE
 
 /// Setter proc for [canister]. Moves the existing canister out of the inhaler, while moving a new canister inside and registering it.
-/obj/item/inhaler/proc/set_canister(obj/item/reagent_containers/inhaler_canister/new_canister, mob/living/user)
-	if (!isnull(canister))
+/obj/item/inhaler/proc/set_canister(obj/item/reagent_containers/inhaler_canister/new_canister, mob/living/user, move_canister = TRUE)
+	if (move_canister && !isnull(canister))
 		if (iscarbon(loc))
 			var/mob/living/carbon/carbon_loc = loc
 			INVOKE_ASYNC(carbon_loc, TYPE_PROC_REF(/mob/living/carbon, put_in_hands), canister)
 		else if (!isnull(loc))
 			canister.forceMove(loc)
-		UnregisterSignal(canister, COMSIG_QDELETING)
 
 	canister = new_canister
 	canister?.forceMove(src)
-	RegisterSignal(canister, COMSIG_QDELETING, PROC_REF(canister_deleting))
 	update_canister_underlay()
 
 /// Updates our underlays with our canister, if any.
@@ -186,21 +192,14 @@
 
 	return TRUE
 
-/obj/item/inhaler/proc/canister_deleting(datum/signal_source)
-	SIGNAL_HANDLER
-
-	set_canister(null)
-
 /obj/item/reagent_containers/inhaler_canister
 	name = "inhaler canister"
 	desc = "A small canister filled with aerosolized reagents for use in a inhaler."
 	w_class = WEIGHT_CLASS_TINY
 
 	icon = 'icons/obj/medical/chemical.dmi'
-	icon_state = "inhaler_canister"
+	icon_state = "canister_generic"
 
-	amount_per_transfer_from_this = 5
-	volume = 25
 	reagent_flags = SEALED_CONTAINER|DRAINABLE|REFILLABLE
 	has_variable_transfer_amount = FALSE
 
@@ -257,22 +256,29 @@
 
 	return ..()
 
+/obj/item/inhaler/medical
+	icon_state = "inhaler_medical"
+
 /obj/item/inhaler/salbutamol
 	name = "salbutamol inhaler"
+	icon_state = "inhaler_medical"
 	initial_casister_path = /obj/item/reagent_containers/inhaler_canister/salbutamol
 
 /obj/item/reagent_containers/inhaler_canister/salbutamol
 	name = "salbutamol canister"
+	icon_state = "canister_medical"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 30)
 
 /obj/item/inhaler/albuterol
 	name = "albuterol inhaler"
+	icon_state = "inhaler_medical"
 	initial_casister_path = /obj/item/reagent_containers/inhaler_canister/albuterol
 
 /obj/item/reagent_containers/inhaler_canister/albuterol
 	name = "albuterol canister"
 	desc = "A small canister filled with aerosolized reagents for use in a inhaler. This one contains albuterol, a potent bronchodilator that can stop \
 	asthma attacks in their tracks."
+	icon_state = "canister_medical"
 	list_reagents = list(/datum/reagent/medicine/albuterol = 30)
 
 /obj/item/reagent_containers/inhaler_canister/albuterol/asthma
@@ -281,8 +287,8 @@
 	asthma attacks in their tracks. It seems to be a lower-pressure variant, and can only hold 20u."
 	list_reagents = list(/datum/reagent/medicine/albuterol = 20)
 	volume = 20
-	amount_per_transfer_from_this = 5
 
 /obj/item/inhaler/albuterol/asthma
 	name = "rescue inhaler"
+	icon_state = "inhaler_generic"
 	initial_casister_path = /obj/item/reagent_containers/inhaler_canister/albuterol/asthma
