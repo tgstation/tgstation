@@ -195,6 +195,7 @@
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(!bodypart_disabled)
 		owner.set_usable_hands(owner.usable_hands + 1)
+		to_chat(owner, span_notice("You regain control of your [name]!"))
 
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
@@ -300,6 +301,7 @@
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(!bodypart_disabled)
 		owner.set_usable_hands(owner.usable_hands + 1)
+		to_chat(owner, span_notice("You regain control of your [name]!"))
 
 	if(owner.hud_used)
 		var/atom/movable/screen/inventory/hand/hand_screen_object = owner.hud_used.hand_slots["[held_index]"]
@@ -424,6 +426,7 @@
 				to_chat(owner, span_userdanger("You lose control of your [name]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
+		to_chat(owner, span_notice("You regain control of your [name]!"))
 
 /obj/item/bodypart/leg/left/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'
@@ -518,6 +521,7 @@
 				to_chat(owner, span_userdanger("You lose control of your [name]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
+		to_chat(owner, span_notice("You regain control of your [name]!"))
 
 /obj/item/bodypart/leg/right/monkey
 	icon = 'icons/mob/human/species/monkey/bodyparts.dmi'

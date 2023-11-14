@@ -229,7 +229,7 @@
 		if(initial(spider.poison_per_bite))
 			spider_description += " [initial(spider_poison.name)] injection of [initial(spider.poison_per_bite)]u per bite."
 		else
-			spider_description += " Does not inject [initial(spider_poison.name)]."
+			spider_description += " Does not inject poison."
 		option.info = span_boldnotice(spider_description)
 
 		display_spiders[initial(spider.name)] = option

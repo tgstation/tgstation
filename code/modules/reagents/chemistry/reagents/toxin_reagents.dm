@@ -14,8 +14,6 @@
 	var/liver_damage_multiplier = 1
 	///won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present if true
 	var/silent_toxin = FALSE
-	///The afflicted must be above this health value in order for the toxin to deal damage
-	var/health_required = -100
 
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -23,7 +21,7 @@
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(toxpwr && affected_mob.health > health_required)
+	if(toxpwr)
 		if(affected_mob.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
@@ -1283,36 +1281,62 @@
 		to_chat(affected_mob, span_notice("Ah, what was that? You thought you heard something..."))
 		affected_mob.adjust_confusion(5 SECONDS)
 
+// Most spiders inject 3u of venom per bite (with the exception of assassain that injects 5u)
 /datum/reagent/toxin/spider
 	name = "Spider Toxin"
 	description = "Hello! I am a bugged reagent. Please report me for my crimes. Thank you!!"
 	toxpwr = 0
-
-/datum/reagent/toxin/spider/exhaustion
-	name = "Exhaustion Spider Toxin"
-	description = "A toxic chemical produced by spiders to weaken prey."
-
-/datum/reagent/toxin/spider/exhuastion/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
-	if(affected_mob.adjustStaminaLoss((volume/3) * REM * seconds_per_tick, updating_stamina = FALSE))
-		return UPDATE_MOB_HEALTH
+	liver_damage_multiplier = 0
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spider/paralysis
 	name = "Paralysis Spider Toxin"
 	description = "A toxic chemical produced by spiders to incapacitate prey."
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0.1
+	liver_damage_multiplier = 1
+	var/list/parlyzed_limbs = list()
+	var/list/unaffected_limbs = list(
+		TRAIT_PARALYSIS_L_ARM = "left arm",
+		TRAIT_PARALYSIS_R_ARM = "right arm",
+		TRAIT_PARALYSIS_L_LEG = "left leg",
+		TRAIT_PARALYSIS_R_LEG = "right leg",
+	)
 
 /datum/reagent/toxin/spider/paralysis/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(SPT_PROB(10, seconds_per_tick))
-		affected_mob.drop_all_held_items()
-		to_chat(affected_mob, span_notice("You cant feel your hands!"))
-	if(current_cycle > 5)
-		if(SPT_PROB((volume/3), seconds_per_tick))
-			var/paralyzed_limb = pick_paralyzed_limb()
-			ADD_TRAIT(affected_mob, paralyzed_limb, type)
 
-/datum/reagent/toxin/spider/paralysis/proc/pick_paralyzed_limb()
-	return (pick(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM, TRAIT_PARALYSIS_R_LEG, TRAIT_PARALYSIS_L_LEG))
+	// every 5u of toxin can paralysis one limb so to get all four you need more than 20u
+	var/max_toxin_limit = 5 * (length(parlyzed_limbs) + 1)
+	var/min_toxin_limit = 5 * (length(parlyzed_limbs))
+
+	if(SPT_PROB(0.5, seconds_per_tick))
+		affected_mob.adjust_slurring(3 SECONDS * REM * seconds_per_tick)
+
+	if(volume <= min_toxin_limit)
+		if(SPT_PROB((min_toxin_limit - volume), seconds_per_tick))
+			unparalyze_limb(affected_mob)
+	else if(volume >= max_toxin_limit)
+		if(SPT_PROB((volume - max_toxin_limit), seconds_per_tick))
+			paralyze_limb(affected_mob)
+
+/datum/reagent/toxin/spider/paralysis/proc/paralyze_limb(mob/living/affected_mob)
+	if(!length(unaffected_limbs))
+		return
+	var/parlyze_limb_trait = pick(unaffected_limbs)
+	var/limb_name = unaffected_limbs[parlyze_limb_trait]
+	ADD_TRAIT(affected_mob, parlyze_limb_trait, type)
+	unaffected_limbs -= parlyze_limb_trait
+	parlyzed_limbs[parlyze_limb_trait] = limb_name
+
+/datum/reagent/toxin/spider/paralysis/proc/unparalyze_limb(mob/living/affected_mob)
+	if(!length(parlyzed_limbs))
+		return
+	var/parlyze_limb_trait = pick(parlyzed_limbs)
+	var/limb_name = parlyzed_limbs[parlyze_limb_trait]
+	REMOVE_TRAIT(affected_mob, parlyze_limb_trait, type)
+	parlyzed_limbs -= parlyze_limb_trait
+	unaffected_limbs[parlyze_limb_trait] = limb_name
 
 /datum/reagent/toxin/spider/paralysis/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
@@ -1321,22 +1345,99 @@
 	REMOVE_TRAIT(affected_mob, TRAIT_PARALYSIS_R_LEG, type)
 	REMOVE_TRAIT(affected_mob, TRAIT_PARALYSIS_L_LEG, type)
 
-/datum/reagent/toxin/hunterspider
-	name = "Spider Toxin"
-	description = "A toxic chemical produced by spiders to weaken prey."
-	health_required = 40
-	liver_damage_multiplier = 0
+/datum/reagent/toxin/spider/exhaustion
+	name = "Exhaustion Spider Toxin"
+	description = "A toxic chemical produced by spiders to exhaust prey while hunting."
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	data = 15
 
-/datum/reagent/toxin/viperspider
-	name = "Viper Spider Toxin"
-	toxpwr = 5
-	description = "An extremely toxic chemical produced by the rare viper spider. Brings their prey to the brink of death and causes hallucinations."
-	health_required = 10
-	liver_damage_multiplier = 0
-
-/datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/toxin/spider/exhaustion/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
+
+	if(HAS_TRAIT_FROM(affected_mob, TRAIT_INCAPACITATED, STAMINA))
+		data = initial(data)
+		return
+
+	if(affected_mob.adjustStaminaLoss(data * REM * seconds_per_tick, updating_stamina = FALSE))
+		. = UPDATE_MOB_HEALTH
+
+	if(SPT_PROB(5, seconds_per_tick))
+		to_chat(affected_mob, "You feel tired.")
+	data = max(data - 1, 3)
+
+/datum/reagent/toxin/spider/confusion
+	name = "Confusion Spider Toxin"
+	description = "A toxic chemical produced by spiders to confuse and disorient prey."
+	toxpwr = 0.5
+	liver_damage_multiplier = 0.25
+
+/datum/reagent/toxin/spider/confusion/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
+	if(SPT_PROB(15, seconds_per_tick))
+		affected_mob.adjust_confusion_up_to(rand(5 SECONDS, 7 SECONDS) * REM * seconds_per_tick, 7 SECONDS)
+		affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
+
+		if(SPT_PROB(10, seconds_per_tick))
+			to_chat(affected_mob, "You feel confused and disoriented.")
+
+/datum/reagent/toxin/spider/deadly
+	name = "Deadly Spider Toxin"
+	description = "A toxic chemical produced by spiders that slowly kill their prey from the inside out."
+	toxpwr = 0.75
+	liver_damage_multiplier = 0.25
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	var/static/list/possible_organs = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+
+/datum/reagent/toxin/spider/deadly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
+	if(!HAS_TRAIT(affected_mob, TRAIT_NOBREATH))
+		if(SPT_PROB(7.5, seconds_per_tick))
+			affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			affected_mob.losebreath += 1 * REM * seconds_per_tick
+			. = UPDATE_MOB_HEALTH
+
+			if(SPT_PROB(10, seconds_per_tick))
+				affected_mob.emote("gasp")
+
+	var/organ_damage = min(current_cycle/10, 5) // and you thought liver damage was bad before
+	affected_mob.adjustOrganLoss(pick(possible_organs), organ_damage * REM * seconds_per_tick, required_organ_flag=ORGAN_ORGANIC)
+
+/datum/reagent/toxin/spider/mindbreaker
+	name = "Mindbreaker Spider Toxin"
+	description = "A toxic chemical produced by spiders to drug and cause hallucinations in their prey."
+	toxpwr = 0.1
+	liver_damage_multiplier = 1
+
+/datum/reagent/toxin/spider/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_drugginess_up_to(10 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
+
+	if(SPT_PROB(3.5, seconds_per_tick))
+		affected_mob.emote(pick("twitch","drool","moan","giggle"))
+
+	affected_mob.cause_hallucination( \
+		/datum/hallucination/delusion/preset, \
+		"spider mindbreaker toxin", \
+		duration = 5 SECONDS, \
+		affects_us = FALSE, \
+		affects_all_humans = FALSE, \
+		skip_nearby = FALSE, \
+		play_wabbajack = FALSE, \
+		include_nearby_mobs = TRUE, \
+		randomize = TRUE, \
+	)
 
 /datum/reagent/toxin/tetrodotoxin
 	name = "Tetrodotoxin"

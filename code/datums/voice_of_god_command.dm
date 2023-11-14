@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 			"voice of god", \
 			duration = 15 SECONDS * power_multiplier, \
 			affects_us = FALSE, \
-			affects_others = TRUE, \
+			affects_all_humans = TRUE, \
 			skip_nearby = FALSE, \
 		)
 

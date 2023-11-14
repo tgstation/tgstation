@@ -33,7 +33,7 @@
 	/// Speed modifier to apply if controlled by a human player
 	var/player_speed_modifier = -4
 	/// What reagent the mob injects targets with
-	var/poison_type = /datum/reagent/toxin/hunterspider
+	var/poison_type = null
 	/// How much of a reagent the mob injects on attack
 	var/poison_per_bite = 0
 	/// Multiplier to apply to web laying speed. Fractional numbers make it faster, because it's a multiplier.

@@ -419,7 +419,7 @@
 		"[id] status effect", \
 		duration = duration, \
 		affects_us = FALSE, \
-		affects_others = TRUE, \
+		affects_all_humans = TRUE, \
 		skip_nearby = FALSE, \
 		play_wabbajack = FALSE, \
 	)

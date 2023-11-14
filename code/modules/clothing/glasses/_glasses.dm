@@ -726,7 +726,7 @@
 			src.name, \
 			duration = 0, \
 			affects_us = TRUE, \
-			affects_others = TRUE, \
+			affects_all_humans = TRUE, \
 			skip_nearby = FALSE, \
 			play_wabbajack = FALSE, \
 		)

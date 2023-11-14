@@ -207,18 +207,22 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	var/static/list/options = list("Yes", "No")
 	var/duration = tgui_input_number(user, "How long should it last in seconds?", "Delusion: Duration", max_value = INFINITY, min_value = 1, default = 30)
 	var/affects_us = (tgui_alert(user, "Should they see themselves as the delusion?", "Delusion: Affects us", options) == "Yes")
-	var/affects_others = (tgui_alert(user, "Should they see everyone else delusion?", "Delusion: Affects others", options) == "Yes")
+	var/affects_all_humans = (tgui_alert(user, "Should they see everyone else delusion?", "Delusion: Affects others", options) == "Yes")
 	var/skip_nearby = (tgui_alert(user, "Should the delusion only affect people outside of their view?", "Delusion: Skip in view", options) == "Yes")
 	var/play_wabbajack = (tgui_alert(user, "Play the wabbajack sound when it happens?", "Delusion: Wabbajack sound", options) == "Yes")
+	var/include_nearby_mobs = (tgui_alert(user, "Should the delusion affect all mobs within view?", "Delusion: All mobs in view", options) == "Yes")
+	var/randomize = (tgui_alert(user, "Should the delusion keep polymoprhing during the duration?", "Delusion: Randomize", options) == "Yes")
 
 	delusion_args = list(
 		chosen,
 		"forced delusion",
 		duration = duration * 1 SECONDS,
 		affects_us = affects_us,
-		affects_others = affects_others,
+		affects_all_humans = affects_all_humans,
 		skip_nearby = skip_nearby,
 		play_wabbajack = play_wabbajack,
+		include_nearby_mobs = include_nearby_mobs,
+		randomize = randomize,
 	)
 
 	if(ispath(chosen, /datum/hallucination/delusion/custom))

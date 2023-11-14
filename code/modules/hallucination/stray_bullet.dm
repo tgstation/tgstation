@@ -297,7 +297,7 @@
 		"fake [name]", \
 		duration = 30 SECONDS, \
 		affects_us = TRUE, \
-		affects_others = FALSE, \
+		affects_all_humans = FALSE, \
 		skip_nearby = FALSE, \
 		play_wabbajack = TRUE, \
 	)

@@ -26,9 +26,11 @@
 	icon_dead = "young_ambush_dead"
 	maxHealth = 55
 	health = 55
-	melee_damage_lower = 12
-	melee_damage_upper = 18
+	melee_damage_lower = 6
+	melee_damage_upper = 9
 	speed = 1
+	poison_per_bite = 2
+	poison_type = /datum/reagent/toxin/spider/paralysis
 
 /mob/living/basic/spider/growing/young/ambush/Initialize(mapload)
 	. = ..()
@@ -49,8 +51,8 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	speed = 0.5
-	poison_per_bite = 4
-	poison_type = /datum/reagent/peaceborg/confuse
+	poison_per_bite = 2
+	poison_type = /datum/reagent/toxin/spider/mindbreaker
 	sight = SEE_SELF|SEE_MOBS
 
 /mob/living/basic/spider/growing/young/scout/Initialize(mapload)
@@ -127,7 +129,7 @@
 	web_speed = 0.25
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
 	poison_per_bite = 2
-	poison_type = /datum/reagent/toxin/acid
+	poison_type = /datum/reagent/toxin/spider/confusion
 
 /mob/living/basic/spider/growing/young/tangle/Initialize(mapload)
 	. = ..()
@@ -241,11 +243,11 @@
 	icon_dead = "young_viper_dead"
 	maxHealth = 30
 	health = 30
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_lower = 1
+	melee_damage_upper = 1
 	speed = 0.2
-	poison_type = /datum/reagent/toxin/viperspider
-	poison_per_bite = 2
+	poison_type = /datum/reagent/toxin/spider/deadly
+	poison_per_bite = 3
 
 /// Will differentiate into the "tarantula" giant spider.
 /mob/living/basic/spider/growing/young/tarantula

@@ -41,7 +41,7 @@
 					duration = 30 SECONDS,
 					skip_nearby = FALSE,
 					affects_us = FALSE,
-					affects_others = TRUE,
+					affects_all_humans = TRUE,
 					play_wabbajack = FALSE,
 				)
 
@@ -53,7 +53,7 @@
 					duration = 45 SECONDS,
 					skip_nearby = FALSE,
 					affects_us = TRUE,
-					affects_others = FALSE,
+					affects_all_humans = FALSE,
 					play_wabbajack = TRUE,
 				)
 
