@@ -19,7 +19,7 @@ type Data = {
   ore_images: Ore_images[];
 };
 
-export const MaterialStand = (props, context) => {
+export const OreContainer = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { ores = [] } = data;
   const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
@@ -27,7 +27,7 @@ export const MaterialStand = (props, context) => {
   const ores_filtered =
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
   return (
-    <Window title="Material Stand" width={550} height={400}>
+    <Window title="Ore Container" width={550} height={400}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>

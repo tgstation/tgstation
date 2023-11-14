@@ -1,4 +1,0 @@
-author: "DATA_"
-delete-after: True
-changes:
-  - spellcheck: "The examine message for a carbon with an empty golem stomach now properly matches said carbon's gender."
