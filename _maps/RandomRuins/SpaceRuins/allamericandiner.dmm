@@ -331,13 +331,6 @@
 /obj/structure/urinal/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
-"qp" = (
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
-	dir = 8;
-	pixel_x = -11
-	},
-/turf/closed/wall,
-/area/ruin/space/has_grav/allamericandiner)
 "qB" = (
 /obj/structure/closet/crate/trashcart/filled,
 /turf/open/misc/asteroid/airless,
@@ -470,6 +463,7 @@
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/cups,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
 "wC" = (
@@ -1158,8 +1152,11 @@
 /area/ruin/space/has_grav/allamericandiner)
 "Vq" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/box/cups,
 /obj/machinery/light/dim/directional/east,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/allamericandiner)
 "Vy" = (
@@ -1982,7 +1979,7 @@ jZ
 LR
 jZ
 Vq
-FB
+rd
 rd
 lI
 yQ
@@ -2017,7 +2014,7 @@ EK
 EK
 Lu
 EK
-qp
+EK
 EK
 EK
 eM
