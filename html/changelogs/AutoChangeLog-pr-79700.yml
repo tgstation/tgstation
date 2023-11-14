@@ -1,0 +1,4 @@
+author: "D4C-420"
+delete-after: True
+changes:
+  - spellcheck: "hopefully changed all instances of the word 'mjolnir' to 'mjollnir'"
