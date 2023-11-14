@@ -1,4 +1,5 @@
-import { Component, Fragment } from 'inferno';
+import { BooleanLike } from 'common/react';
+import { FakeTerminal } from '../components/FakeTerminal';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Grid, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
 import { NtosWindow } from '../layouts';
@@ -10,55 +11,6 @@ const CONTRACT_STATUS_EXTRACTING = 4;
 const CONTRACT_STATUS_COMPLETE = 5;
 const CONTRACT_STATUS_ABORTED = 6;
 
-export class FakeTerminal extends Component {
-  constructor(props) {
-    super(props);
-    this.timer = null;
-    this.state = {
-      currentIndex: 0,
-      currentDisplay: [],
-    };
-  }
-
-  tick() {
-    const { props, state } = this;
-    if (state.currentIndex <= props.allMessages.length) {
-      this.setState((prevState) => {
-        return {
-          currentIndex: prevState.currentIndex + 1,
-        };
-      });
-      const { currentDisplay } = state;
-      currentDisplay.push(props.allMessages[state.currentIndex]);
-    } else {
-      clearTimeout(this.timer);
-      setTimeout(props.onFinished, props.finishedTimeout);
-    }
-  }
-
-  componentDidMount() {
-    const { linesPerSecond = 2.5 } = this.props;
-    this.timer = setInterval(() => this.tick(), 1000 / linesPerSecond);
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timer);
-  }
-
-  render() {
-    return (
-      <Box m={1}>
-        {this.state.currentDisplay.map((value) => (
-          <Fragment key={value}>
-            {value}
-            <br />
-          </Fragment>
-        ))}
-      </Box>
-    );
-  }
-}
-
 export const SyndicateContractor = (props, context) => {
   return (
     <NtosWindow width={500} height={600}>
@@ -69,8 +21,36 @@ export const SyndicateContractor = (props, context) => {
   );
 };
 
+type Data = {
+  error: string;
+  logged_in: BooleanLike;
+  first_load: BooleanLike;
+  info_screen: BooleanLike;
+  redeemable_tc: Number;
+  earned_tc: Number;
+  contracts_completed: Number;
+  contracts: ContractData[];
+  ongoing_contract: BooleanLike;
+  extraction_enroute: BooleanLike;
+  dropoff_direction: string;
+};
+
+type ContractData = {
+  id: Number;
+  status: Number;
+  target: string;
+  target_rank: string;
+  extraction_enroute: BooleanLike;
+  message: string;
+  contract: string;
+  dropoff: string;
+  payout: Number;
+  payout_bonus: Number;
+};
+
 export const SyndicateContractorContent = (props, context) => {
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend<Data>(context);
+  const { error, logged_in, first_load, info_screen } = data;
 
   const terminalMessages = [
     'Recording biometric data...',
@@ -125,7 +105,7 @@ export const SyndicateContractorContent = (props, context) => {
     'identity.',
   ];
 
-  const errorPane = !!data.error && (
+  const errorPane = !!error && (
     <Modal backgroundColor="red">
       <Flex align="center">
         <Flex.Item mr={2}>
@@ -133,7 +113,7 @@ export const SyndicateContractorContent = (props, context) => {
         </Flex.Item>
         <Flex.Item mr={2} grow={1} textAlign="center">
           <Box width="260px" textAlign="left" minHeight="80px">
-            {data.error}
+            {error}
           </Box>
           <Button content="Dismiss" onClick={() => act('PRG_clear_error')} />
         </Flex.Item>
@@ -141,7 +121,7 @@ export const SyndicateContractorContent = (props, context) => {
     </Modal>
   );
 
-  if (!data.logged_in) {
+  if (!logged_in) {
     return (
       <Section minHeight="525px">
         <Box width="100%" textAlign="center">
@@ -151,12 +131,12 @@ export const SyndicateContractorContent = (props, context) => {
             onClick={() => act('PRG_login')}
           />
         </Box>
-        {!!data.error && <NoticeBox>{data.error}</NoticeBox>}
+        {!!error && <NoticeBox>{error}</NoticeBox>}
       </Section>
     );
   }
 
-  if (data.logged_in && data.first_load) {
+  if (logged_in && first_load) {
     return (
       <Box backgroundColor="rgba(0, 0, 0, 0.8)" minHeight="525px">
         <FakeTerminal
@@ -168,7 +148,7 @@ export const SyndicateContractorContent = (props, context) => {
     );
   }
 
-  if (data.info_screen) {
+  if (info_screen) {
     return (
       <>
         <Box backgroundColor="rgba(0, 0, 0, 0.8)" minHeight="500px">
@@ -195,7 +175,8 @@ export const SyndicateContractorContent = (props, context) => {
 };
 
 export const StatusPane = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
+  const { redeemable_tc, earned_tc, contracts_completed } = data;
 
   return (
     <Section
@@ -219,21 +200,19 @@ export const StatusPane = (props, context) => {
               buttons={
                 <Button
                   content="Claim"
-                  disabled={data.redeemable_tc <= 0}
+                  disabled={redeemable_tc <= 0}
                   onClick={() => act('PRG_redeem_TC')}
                 />
               }>
-              {data.redeemable_tc}
+              {redeemable_tc}
             </LabeledList.Item>
-            <LabeledList.Item label="TC Earned">
-              {data.earned_tc}
-            </LabeledList.Item>
+            <LabeledList.Item label="TC Earned">{earned_tc}</LabeledList.Item>
           </LabeledList>
         </Grid.Column>
         <Grid.Column>
           <LabeledList>
             <LabeledList.Item label="Contracts Completed">
-              {data.contracts_completed}
+              {contracts_completed}
             </LabeledList.Item>
             <LabeledList.Item label="Current Status">ACTIVE</LabeledList.Item>
           </LabeledList>
@@ -244,8 +223,10 @@ export const StatusPane = (props, context) => {
 };
 
 const ContractsTab = (props, context) => {
-  const { act, data } = useBackend(context);
-  const contracts = data.contracts || [];
+  const { act, data } = useBackend<Data>(context);
+  const { contracts, ongoing_contract, extraction_enroute, dropoff_direction } =
+    data;
+
   return (
     <>
       <Section
@@ -253,15 +234,12 @@ const ContractsTab = (props, context) => {
         buttons={
           <Button
             content="Call Extraction"
-            disabled={!data.ongoing_contract || data.extraction_enroute}
+            disabled={!ongoing_contract || extraction_enroute}
             onClick={() => act('PRG_call_extraction')}
           />
         }>
         {contracts.map((contract) => {
-          if (
-            data.ongoing_contract &&
-            contract.status !== CONTRACT_STATUS_ACTIVE
-          ) {
+          if (ongoing_contract && contract.status !== CONTRACT_STATUS_ACTIVE) {
             return;
           }
           const active = contract.status > CONTRACT_STATUS_INACTIVE;
@@ -276,7 +254,6 @@ const ContractsTab = (props, context) => {
                   ? `${contract.target} (${contract.target_rank})`
                   : 'Invalid Target'
               }
-              level={active ? 1 : 2}
               buttons={
                 <>
                   <Box inline bold mr={1}>
@@ -310,8 +287,8 @@ const ContractsTab = (props, context) => {
       <Section
         title="Dropoff Locator"
         textAlign="center"
-        opacity={data.ongoing_contract ? 100 : 0}>
-        <Box bold>{data.dropoff_direction}</Box>
+        opacity={ongoing_contract ? 100 : 0}>
+        <Box bold>{dropoff_direction}</Box>
       </Section>
     </>
   );

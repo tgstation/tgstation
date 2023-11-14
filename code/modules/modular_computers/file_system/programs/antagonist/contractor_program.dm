@@ -127,8 +127,8 @@
 		update_computer_icon()
 		return data
 
+	data["ongoing_contract"] = !!traitor_data.uplink_handler.contractor_hub.current_contract
 	if(traitor_data.uplink_handler.contractor_hub.current_contract)
-		data["ongoing_contract"] = TRUE
 		program_icon_state = "contractor-contract"
 		if (traitor_data.uplink_handler.contractor_hub.current_contract.status == CONTRACT_STATUS_EXTRACTING)
 			data["extraction_enroute"] = TRUE
