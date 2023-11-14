@@ -570,7 +570,7 @@
 	var/tc_to_spawn = tgui_input_number(admin, "How much TC to spawn with?", "TC", 0, 100)
 
 	var/list/nuke_candidates = poll_ghost_candidates(
-		"Do you want to play emergency synciate reinforcements?",
+		"Do you want to play as an emergency syndicate reinforcement?",
 		ROLE_OPERATIVE,
 		ROLE_OPERATIVE,
 		30 SECONDS,
@@ -586,13 +586,16 @@
 
 	var/turf/spawn_loc
 	if(infil_or_nukebase == SPAWN_AT_INFILTRATOR)
-		// I'd love to use areas_by_type but it's a unique area
-		var/area/spawn_in = (locate(/area/shuttle/syndicate/hallway) in GLOB.areas) || (locate(/area/shuttle/syndicate) in GLOB.areas)
+		var/area/spawn_in
+		// Prioritize EVA then hallway, if neither can be found default to the first area we can find
+		for(var/area_type in list(/area/shuttle/syndicate/eva, /area/shuttle/syndicate/hallway, /area/shuttle/syndicate))
+			spawn_in = locate(area_type) in GLOB.areas // I'd love to use areas_by_type but the Infiltrator is a unique area
+			if(spawn_in)
+				break
+
 		var/list/turf/options = list()
 		for(var/turf/open/open_turf in spawn_in?.get_contained_turfs())
 			if(open_turf.is_blocked_turf())
-				continue
-			if(istype(open_turf, /turf/open/floor/fakespace)) // goofy nuke diorama
 				continue
 			options += open_turf
 

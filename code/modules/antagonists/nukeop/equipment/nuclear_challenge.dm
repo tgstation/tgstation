@@ -66,12 +66,12 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		war_declaration = tgui_input_text(usr, "Insert your custom declaration", "Declaration", multiline = TRUE, encode = FALSE)
 
 	if(!war_declaration)
-		to_chat(usr, span_warning("Invalid war declaration."))
+		tgui_alert(usr, "Invalid war declaration.", "Poor Choice of Words")
 		return
 
 	for(var/obj/item/circuitboard/computer/syndicate_shuttle/board as anything in GLOB.syndicate_shuttle_boards)
 		if(board.challenge)
-			to_chat(usr, span_warning("War has been delcared already!"))
+			tgui_alert(usr, "War has already been declared!", "War Was Declared")
 			return
 
 	war_was_declared(memo = war_declaration)
@@ -151,6 +151,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/item/circuitboard/computer/syndicate_shuttle/board as anything in GLOB.syndicate_shuttle_boards)
 		if(board.moved)
 			to_chat(user, span_boldwarning("The shuttle has already been moved! You have forfeit the right to declare war."))
+			return FALSE
+		if(board.challenge)
+			to_chat(user, span_boldwarning("War has already been declared!"))
 			return FALSE
 	return TRUE
 
