@@ -60,8 +60,8 @@
 			var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
 			if(monster?.master == caster.mind)
 				return PROJECTILE_PIERCE_PHASE
-			var/datum/antagonist/lunatic/monster = victim.mind?.has_antag_datum(/datum/antagonist/lunatic)
-			if(monster?.ascended_heretic == caster.mind)
+			var/datum/antagonist/lunatic/lunatic = victim.mind?.has_antag_datum(/datum/antagonist/lunatic)
+			if(lunatic?.ascended_heretic == caster.mind)
 				return PROJECTILE_PIERCE_PHASE
 
 		// Anti-magic destroys the projectile
