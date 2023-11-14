@@ -286,8 +286,6 @@
 		defense_mod += 2
 	if(target.get_organic_health() < 50)
 		defense_mod -= 1
-	if(target.check_block()) //CQC users, if they manage to block the tackle, gain a hefty defense bonus
-		defense_mod += 5
 
 	var/leg_wounds = 0 // -1 defense per 2 leg wounds
 	for(var/i in target.all_wounds)
@@ -304,6 +302,9 @@
 		if(tackle_target.mob_negates_gravity())
 			defense_mod += 1
 		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
+			defense_mod += 5
+
+		if(tackle_target.check_block()) //CQC users, if they manage to block the tackle, gain a hefty defense bonus
 			defense_mod += 5
 
 		var/mob/living/carbon/human/human_sacker = parent
