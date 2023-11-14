@@ -96,7 +96,7 @@
 		"enjoys carrots",
 		"hears well; a little too well",
 		"has an adorable bunny tail",
-		"infusing even more grants the following:"
+		"infusing even more grants the following:",
 		"able to jump long distances, hopping along",
 		"can sniff out familiar scents",
 		"soft and fuzzy; gives great hugs",
