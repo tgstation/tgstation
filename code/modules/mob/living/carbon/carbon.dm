@@ -983,6 +983,7 @@
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
 	new_bodypart.update_owner(src)
 
@@ -1005,7 +1006,7 @@
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	old_bodypart.on_removal()
+	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
 
 	for(var/obj/item/organ/organ in old_bodypart)

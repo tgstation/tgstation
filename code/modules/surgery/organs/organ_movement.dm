@@ -117,6 +117,8 @@
 /obj/item/organ/proc/on_bodypart_insert(obj/item/bodypart/limb)
 	SHOULD_CALL_PARENT(TRUE)
 
+	item_flags |= ABSTRACT
+
 /*
  * Remove the organ from the select mob.
  *
@@ -185,6 +187,8 @@
 
 	if(limb_owner)
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
+	if(!bodypart_owner) //this literally only exists because dullahans spawn and delete fake eyes
+		return
 
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! we moves the organ right after, so we unregister before we move them physically
 
@@ -203,6 +207,8 @@
 
 	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
 		AddElement(/datum/element/decal/blood)
+
+	item_flags &= ~ABSTRACT
 
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()

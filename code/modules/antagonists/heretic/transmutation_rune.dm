@@ -101,6 +101,11 @@
 
 	// Now go through all our nearby atoms and see which are good for our ritual.
 	for(var/atom/nearby_atom as anything in atoms_in_range)
+		if(isitem(nearby_atom))
+			var/obj/item/item = nearby_atom
+			if(item.item_flags & ABSTRACT) //woops sacrificed your own brain
+				continue
+
 		// Go through all of our required atoms
 		for(var/req_type in requirements_list)
 			// We already have enough of this type, skip
