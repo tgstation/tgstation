@@ -110,7 +110,7 @@
 
 /obj/item/tk_grab/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	REMOVE_TRAIT(focus, TRAIT_TELEKINESIS_CONTROLLED, REF(src))
+	REMOVE_TRAIT(focus, TRAIT_TELEKINESIS_CONTROLLED, REF(tk_user))
 	focus = null
 	tk_user = null
 	return ..()
@@ -260,7 +260,7 @@
 	if(!check_if_focusable(target))
 		return
 	focus = target
-	ADD_TRAIT(focus, TRAIT_TELEKINESIS_CONTROLLED, REF(src))
+	ADD_TRAIT(focus, TRAIT_TELEKINESIS_CONTROLLED, REF(tk_user))
 	update_appearance()
 	apply_focus_overlay()
 	return TRUE

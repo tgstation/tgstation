@@ -218,7 +218,7 @@
 		if(!(target in user.contents) && ismob(target))
 			if(user.combat_mode) // Flogging action
 				return
-	else if (HAS_TRAIT(src, TRAIT_TELEKINESIS_CONTROLLED)) // if we're far away, you can still fire it at yourself if you have TK.
+	else if (HAS_TRAIT_FROM_ONLY(src, TRAIT_TELEKINESIS_CONTROLLED, REF(user))) // if we're far away, you can still fire it at yourself if you have TK.
 		tk_controlled = TRUE
 
 	if(isliving(user))
