@@ -286,3 +286,5 @@ GLOBAL_LIST(admin_trait_name_map)
 		for(var/tname in GLOB.admin_visible_traits[key])
 			var/val = GLOB.admin_visible_traits[key][tname]
 			.[val] = tname
+
+	return .

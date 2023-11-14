@@ -557,6 +557,8 @@ GLOBAL_LIST(global_trait_name_map)
 			var/val = GLOB.traits_by_type[key][tname]
 			.[val] = tname
 
+	return .
+
 GLOBAL_LIST_INIT(movement_type_trait_to_flag, list(
 	TRAIT_MOVE_GROUND = GROUND,
 	TRAIT_MOVE_FLYING = FLYING,
@@ -573,7 +575,11 @@ GLOBAL_LIST_INIT(movement_type_removetrait_signals, set_movement_type_removetrai
 	for(var/trait in GLOB.movement_type_trait_to_flag)
 		. += SIGNAL_ADDTRAIT(trait)
 
+	return .
+
 /proc/set_movement_type_removetrait_signals(signal_prefix)
 	. = list()
 	for(var/trait in GLOB.movement_type_trait_to_flag)
 		. += SIGNAL_REMOVETRAIT(trait)
+
+	return .
