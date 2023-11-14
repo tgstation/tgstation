@@ -304,9 +304,6 @@
 		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
 			defense_mod += 5
 
-		if(tackle_target.check_block()) //CQC users, if they manage to block the tackle, gain a hefty defense bonus
-			defense_mod += 5
-
 		var/mob/living/carbon/human/human_sacker = parent
 		if(tackle_target.check_shields(human_sacker, 0, human_sacker.name, attack_type = UNARMED_ATTACK)) //If we block, add a hefty defense bonus, but only if we roll a successful block
 			defense_mod += 5
