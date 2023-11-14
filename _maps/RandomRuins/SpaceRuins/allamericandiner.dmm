@@ -332,12 +332,11 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
 "qp" = (
-/obj/machinery/chem_dispenser/drinks{
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 8;
-	pixel_x = 17;
-	pixel_y = 0
+	pixel_x = -11
 	},
-/turf/open/floor/iron/kitchen/small,
+/turf/closed/wall,
 /area/ruin/space/has_grav/allamericandiner)
 "qB" = (
 /obj/structure/closet/crate/trashcart/filled,
@@ -1981,7 +1980,7 @@ EK
 ej
 jZ
 LR
-qp
+jZ
 Vq
 FB
 rd
@@ -2018,7 +2017,7 @@ EK
 EK
 Lu
 EK
-EK
+qp
 EK
 EK
 eM
