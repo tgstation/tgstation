@@ -187,46 +187,20 @@
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	limb_id = BODYPART_ID_RABBIT
 	is_dimorphic = TRUE
-
-/obj/item/bodypart/chest/bunny/try_attach_limb(mob/living/carbon/new_limb_owner, special)
-	. = ..()
-	if(!.)
-		return
-	ADD_TRAIT(new_limb_owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-
-/obj/item/bodypart/chest/bunny/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-	return ..()
+	bodypart_traits = list(TRAIT_FRIENDLY)
 
 /obj/item/bodypart/arm/left/bunny
 	name = "rabbit left arm"
 	desc = "Ensures the fluffiest hugs are possible."
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	limb_id = BODYPART_ID_RABBIT
-
-/obj/item/bodypart/arm/left/bunny/try_attach_limb(mob/living/carbon/new_limb_owner, special)
-	. = ..()
-	if(!.)
-		return
-	ADD_TRAIT(new_limb_owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-
-/obj/item/bodypart/arm/left/bunny/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-	return ..()
+	bodypart_traits = list(TRAIT_FRIENDLY)
 
 /obj/item/bodypart/arm/right/bunny
 	name = "rabbit right arm"
 	desc = "Ensures the fluffiest hugs are possible."
 	icon_greyscale = 'icons/mob/human/species/misc/genetics_limbs.dmi'
 	limb_id = BODYPART_ID_RABBIT
+	bodypart_traits = list(TRAIT_FRIENDLY)
 
-/obj/item/bodypart/arm/right/bunny/try_attach_limb(mob/living/carbon/new_limb_owner, special)
-	. = ..()
-	if(!.)
-		return
-	ADD_TRAIT(new_limb_owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-
-/obj/item/bodypart/arm/right/bunny/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_FRIENDLY, ORGAN_TRAIT)
-	return ..()
 #undef BUNNY_HOP
