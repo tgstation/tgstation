@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "PDAs now log that they've been emagged, but will no longer log any further programs they open beyond that. This means Nukies don't sell themselves out by opening their disk tracking app."
