@@ -63,45 +63,7 @@
 		hallucinator.client?.images -= delusions
 		LAZYNULL(delusions)
 
-//	if(randomize)
-//		STOP_PROCESSING(SSobj, src)
-
 	return ..()
-
-// this is only used if we are randomizing the delusions (so they polymorph constantly)
-/datum/hallucination/delusion/process(seconds_per_tick)
-	if(!QDELETED(hallucinator) && LAZYLEN(delusions))
-		hallucinator.client?.images -= delusions
-		LAZYNULL(delusions)
-
-	var/list/mob/living/funny_looking_mobs = list()
-
-	// The delusion includes us - we might be in it already, we might not
-	if(affects_us)
-		funny_looking_mobs |= hallucinator
-	else // The delusion should not inlude us
-		funny_looking_mobs -= hallucinator
-
-	// The delusion includes all mobs within view (even ones that aren't human)
-	for(var/mob/living/nearby_mob in get_hearers_in_view(11, hallucinator))
-		if(nearby_mob == hallucinator) // Already handled by affects_us
-			continue
-		funny_looking_mobs |= nearby_mob
-
-	for(var/mob/living/found_mob in funny_looking_mobs)
-		// no need to check if it's randomized since it's guaranteed if we are using process()
-		var/datum/hallucination/delusion/random_delusion
-		while(!random_delusion)
-			random_delusion = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
-			if(initial(random_delusion.dynamic_icon))
-				random_delusion = null // try again
-
-		var/image/funny_image = image(initial(random_delusion.delusion_icon_file), found_mob, initial(random_delusion.delusion_icon_state))
-		funny_image.name = initial(random_delusion.delusion_name)
-		funny_image.override = TRUE
-
-		LAZYADD(delusions, funny_image)
-		hallucinator.client.images |= funny_image
 
 /datum/hallucination/delusion/start()
 	if(!hallucinator.client || (!delusion_icon_file && !randomize))
@@ -159,9 +121,6 @@
 
 	if(duration > 0)
 		QDEL_IN(src, duration)
-
-//	if(randomize)
-//		START_PROCESSING(SSobj, src)
 
 	return TRUE
 
