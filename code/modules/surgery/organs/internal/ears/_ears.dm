@@ -88,7 +88,6 @@
 	ear_to_use = "Bunny (Large)"
 	damage_multiplier = 2
 	organ_traits = list(TRAIT_GOOD_HEARING)
-
 /obj/item/organ/internal/ears/cat/bunny/random
 	var/list/random_ear_choices = list(/datum/sprite_accessory/ears/bunny_large, /datum/sprite_accessory/ears/rabbit_large, /datum/sprite_accessory/ears/bunny, /datum/sprite_accessory/ears/rabbit)
 
