@@ -28,6 +28,12 @@
 
 	return .
 
+/mob/living/carbon/human/get_damage_mod(damage_type)
+	if (!dna?.species?.damage_modifier)
+		return ..()
+	var/species_mod = (100 - dna.species.damage_modifier) / 100
+	return ..() * species_mod
+
 /mob/living/carbon/human/apply_damage(
 	damage = 0,
 	damagetype = BRUTE,

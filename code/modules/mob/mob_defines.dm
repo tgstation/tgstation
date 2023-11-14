@@ -20,7 +20,7 @@
 	// we never want to hide a turf because it's not lit
 	// We can rely on the lighting plane to handle that for us
 	see_in_dark = 1e6
-	// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
+	// A list of factions that this mob is currently in, for hostile mob targeting, amongst other things
 	faction = list(FACTION_NEUTRAL)
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed

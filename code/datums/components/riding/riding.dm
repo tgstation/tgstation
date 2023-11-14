@@ -67,8 +67,11 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(vehicle_moved))
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(vehicle_bump))
 	RegisterSignal(parent, COMSIG_BUCKLED_CAN_Z_MOVE, PROC_REF(riding_can_z_move))
+	RegisterSignals(parent, GLOB.movement_type_addtrait_signals, PROC_REF(on_movement_type_trait_gain))
+	RegisterSignals(parent, GLOB.movement_type_removetrait_signals, PROC_REF(on_movement_type_trait_loss))
 	if(!can_force_unbuckle)
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(force_unbuckle))
+
 /**
  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
  *
@@ -91,6 +94,10 @@
 	unequip_buckle_inhands(rider)
 	rider.updating_glide_size = TRUE
 	UnregisterSignal(rider, COMSIG_LIVING_TRY_PULL)
+	for (var/trait in GLOB.movement_type_trait_to_flag)
+		if (HAS_TRAIT(parent, trait))
+			REMOVE_TRAIT(rider, trait, REF(src))
+	REMOVE_TRAIT(rider, TRAIT_NO_FLOATING_ANIM, REF(src))
 	if(!movable_parent.has_buckled_mobs())
 		qdel(src)
 
@@ -106,6 +113,11 @@
 	if(rider.pulling == source)
 		rider.stop_pulling()
 	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, PROC_REF(on_rider_try_pull))
+
+	for (var/trait in GLOB.movement_type_trait_to_flag)
+		if (HAS_TRAIT(parent, trait))
+			ADD_TRAIT(rider, trait, REF(src))
+	ADD_TRAIT(rider, TRAIT_NO_FLOATING_ANIM, REF(src))
 
 /// This proc is called when the rider attempts to grab the thing they're riding, preventing them from doing so.
 /datum/component/riding/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
@@ -296,6 +308,20 @@
 /datum/component/riding/proc/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
 	SIGNAL_HANDLER
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
+
+/// Called when our vehicle gains a movement trait, so we can apply it to the riders
+/datum/component/riding/proc/on_movement_type_trait_gain(atom/movable/source, trait)
+	SIGNAL_HANDLER
+	var/atom/movable/movable_parent = parent
+	for (var/mob/rider in movable_parent.buckled_mobs)
+		ADD_TRAIT(rider, trait, REF(src))
+
+/// Called when our vehicle loses a movement trait, so we can remove it from the riders
+/datum/component/riding/proc/on_movement_type_trait_loss(atom/movable/source, trait)
+	SIGNAL_HANDLER
+	var/atom/movable/movable_parent = parent
+	for (var/mob/rider in movable_parent.buckled_mobs)
+		REMOVE_TRAIT(rider, trait, REF(src))
 
 /datum/component/riding/proc/force_unbuckle(atom/movable/source, mob/living/living_hitter)
 	SIGNAL_HANDLER

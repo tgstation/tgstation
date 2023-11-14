@@ -68,12 +68,8 @@
 /datum/ai_behavior/find_and_set/in_list
 
 /datum/ai_behavior/find_and_set/in_list/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
-	var/list/found = list()
-	for(var/locate_path in locate_paths)
-		var/single_locate = ..(controller, locate_path, search_range)
-		if(single_locate)
-			found += single_locate
-	if(found.len)
+	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
+	if(length(found))
 		return pick(found)
 
 /**
@@ -142,7 +138,13 @@
 /datum/ai_behavior/find_and_set/conscious_person
 
 /datum/ai_behavior/find_and_set/conscious_person/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/list/customers = list()
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(IS_DEAD_OR_INCAP(target) || !target.mind)
 			continue
-		return target
+		customers += target
+
+	if(customers.len)
+		return pick(customers)
+
+	return null

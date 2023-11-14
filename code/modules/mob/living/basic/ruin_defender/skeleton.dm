@@ -51,7 +51,8 @@
 	AddElement(/datum/element/basic_eating, heal_amt = 50, drinking = TRUE, food_types = good_drinks)
 	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 25, damage_type = BURN, drinking = TRUE, food_types = bad_drinks)
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
-	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, good_drinks + bad_drinks)
+	var/list/foods_list = good_drinks + bad_drinks
+	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
 
 /mob/living/basic/skeleton/settler
 	name = "undead settler"
@@ -161,7 +162,7 @@
 /// Skeletons mostly just beat people to death, but they'll also find and drink milk.
 /datum/ai_controller/basic_controller/skeleton
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_EMOTE_KEY = "rattles",
 		BB_EMOTE_CHANCE = 20,
