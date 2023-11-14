@@ -251,7 +251,7 @@
 	species = "cactus"
 	plantname = "Fruiting Cactus"
 	product = /obj/item/food/grown/ash_flora/cactus_fruit
-	mutatelist = list(/obj/item/seeds/star_cactus)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/star_cactus)
 	genes = list(/datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	growthstages = 2

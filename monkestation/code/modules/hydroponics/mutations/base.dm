@@ -363,3 +363,38 @@
 	created_product = /obj/item/grown/log/steel
 	created_seed = /obj/item/seeds/tower/steel
 	required_endurance = list(80, INFINITY)
+
+/datum/hydroponics/plant_mutation/greenbean_jump
+	mutates_from = list(/obj/item/seeds/greenbean)
+	created_product = /obj/item/food/grown/jumpingbeans
+	created_seed = /obj/item/seeds/greenbean/jump
+
+/datum/hydroponics/plant_mutation/melon_barrel
+	mutates_from = list(/obj/item/seeds/watermelon)
+	created_product = /obj/item/food/grown/barrelmelon
+	created_seed = /obj/item/seeds/watermelon/barrel
+
+/datum/hydroponics/plant_mutation/rose_carbon
+	mutates_from = list(/obj/item/seeds/rose)
+	created_product = /obj/item/grown/carbon_rose
+	created_seed = /obj/item/seeds/carbon_rose
+
+/datum/hydroponics/plant_mutation/peas_laughin
+	mutates_from = list(/obj/item/seeds/peas)
+	created_product = /obj/item/food/grown/laugh
+	created_seed = /obj/item/seeds/peas/laugh
+
+/datum/hydroponics/plant_mutation/peas_world
+	mutates_from = list(/obj/item/seeds/peas/laugh)
+	created_product = /obj/item/food/grown/peace
+	created_seed = /obj/item/seeds/peas/laugh/peace
+
+/datum/hydroponics/plant_mutation/plumb
+	mutates_from = list(/obj/item/seeds/plum)
+	created_product = /obj/item/food/grown/plum/plumb
+	created_seed = /obj/item/seeds/plum/plumb
+
+/datum/hydroponics/plant_mutation/star_cactus
+	mutates_from = list(/obj/item/seeds/lavaland/cactus)
+	created_product = /obj/item/food/grown/star_cactus
+	created_seed = /obj/item/seeds/star_cactus
