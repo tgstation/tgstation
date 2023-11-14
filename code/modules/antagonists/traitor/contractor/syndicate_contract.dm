@@ -169,7 +169,8 @@
 /datum/syndicate_contract/proc/handle_victim_experience(mob/living/victim, level = VICTIM_EXPERIENCE_START)
 	// Ship 'em back - dead or alive, 4 minutes wait.
 	// Even if they weren't the target, we're still treating them the same.
-	addtimer(CALLBACK(src, PROC_REF(return_victim), victim), (60 * 10) * 4)
+	if(!level)
+		addtimer(CALLBACK(src, PROC_REF(return_victim), victim), (60 * 10) * 4)
 	if(victim.stat == DEAD)
 		return
 
