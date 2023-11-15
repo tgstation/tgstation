@@ -1,6 +1,7 @@
 /obj/item/organ/internal/brain/cybernetic
 	name = "cybernetic brain"
 	desc = "A mechanical brain found inside of androids. Not to be confused with a positronic brain."
+	icon_state = "brain-c"
 	organ_flags = ORGAN_ROBOTIC | ORGAN_VITAL
 	failing_desc = "seems to be broken, and will not work without repairs."
 
