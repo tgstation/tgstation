@@ -24,7 +24,7 @@
 	if(controller.pathing_attempts >= max_pathing_attempts)
 		controller.CancelActions()
 
-///Should the movement be allowed to happen?
+///Should the movement be allowed to happen? return TRUE if it can, FALSE otherwise
 /datum/ai_movement/proc/allowed_to_move(datum/move_loop/source)
 	SHOULD_BE_PURE(TRUE)
 
@@ -60,10 +60,8 @@
 
 	source.delay = controller.movement_delay
 
-	// Why doesn't this return TRUE?
-	// MOVELOOP_SKIP_STEP is defined as (1<<0) and TRUE are defined as the same "1", returning TRUE would be the equivalent of skipping the move
 	if(allowed_to_move(source))
-		return
+		return NONE
 	increment_pathing_failures(controller)
 	return MOVELOOP_SKIP_STEP
 

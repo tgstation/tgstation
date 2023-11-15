@@ -1,5 +1,5 @@
 /datum/preference/choiced/prosthetic
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "prosthetic"
 	savefile_identifier = PREFERENCE_CHARACTER
 

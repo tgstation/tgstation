@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "AI controlled mobs which are immobilized are now properly immobilized"

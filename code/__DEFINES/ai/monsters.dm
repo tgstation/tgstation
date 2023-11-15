@@ -190,6 +190,9 @@
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
 
+//gutlunch keys
+///the trough we will eat from
+#define BB_TROUGH_TARGET "trough_target"
 //leaper keys
 ///key holds our volley ability
 #define BB_LEAPER_VOLLEY "leaper_volley"

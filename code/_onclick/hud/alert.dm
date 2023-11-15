@@ -17,13 +17,17 @@
 	if(!category || QDELETED(src))
 		return
 
+	var/datum/weakref/master_ref
+	if(isdatum(new_master))
+		master_ref = WEAKREF(new_master)
 	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
 			return thealert
-		if(new_master && new_master != thealert.master)
-			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
+		if(master_ref && thealert.master_ref && master_ref != thealert.master_ref)
+			var/datum/current_master = thealert.master_ref.resolve()
+			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [current_master]")
 
 			clear_alert(category)
 			return .()
@@ -55,7 +59,7 @@
 		new_master.layer = old_layer
 		new_master.plane = old_plane
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
-		thealert.master = new_master
+		thealert.master_ref = master_ref
 	else
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
@@ -774,13 +778,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "This can be clicked on to perform an action."
 	icon_state = "template"
 	timeout = 30 SECONDS
-	/// The target to use the action on
-	var/atom/target
+	/// Weakref to the target atom to use the action on
+	var/datum/weakref/target_ref
 	/// Which on click action to use
 	var/action = NOTIFY_JUMP
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
+	var/atom/target = target_ref?.resolve()
 	if(isnull(target))
 		return
 
@@ -910,14 +915,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, span_boldnotice("[name]</span> - <span class='info'>[desc]"))
 		return FALSE
-	if(master && click_master)
-		return usr.client.Click(master, location, control, params)
+	var/datum/our_master = master_ref?.resolve()
+	if(our_master && click_master)
+		return usr.client.Click(our_master, location, control, params)
 
 	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
 	severity = 0
-	master = null
+	master_ref = null
 	owner = null
 	screen_loc = ""

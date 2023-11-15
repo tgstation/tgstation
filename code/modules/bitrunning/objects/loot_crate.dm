@@ -11,6 +11,8 @@
 /obj/structure/closet/crate/secure/bitrunning // Base class. Do not spawn this.
 	name = "base class cache"
 	desc = "Talk to a coder."
+	icon_state = "bitrunning"
+	base_icon_state = "bitrunning"
 
 /// The virtual domain - side of the bitrunning crate. Deliver to the send location.
 /obj/structure/closet/crate/secure/bitrunning/encrypted
