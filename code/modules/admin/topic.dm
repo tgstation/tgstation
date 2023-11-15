@@ -1759,7 +1759,7 @@
 
 		web_sound(usr, link_url)
 //monkestation edit start
-	else if(href_list["approve_token"])
+	else if(href_list["approve_antag_token"])
 		if(!check_rights(R_ADMIN))
 			return
 		var/atom/movable/target = locate(href_list["approve_token"])
@@ -1769,7 +1769,7 @@
 		user_client.client_token_holder.approve_token()
 		message_admins("[user_client]'s token has been approved, by [owner]")
 
-	else if(href_list["reject_token"])
+	else if(href_list["reject_antag_token"])
 		if(!check_rights(R_ADMIN))
 			return
 		var/atom/movable/target = locate(href_list["reject_token"])

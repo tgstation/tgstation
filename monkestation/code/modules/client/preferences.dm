@@ -21,6 +21,8 @@
 		"high_threat" = 0,
 		"medium_threat" = 0,
 		"low_threat" = 0,
+		"event_tokens" = 0,
+		"event_token_month" = 0,
 	)
 
 	///amount of metaconis you can earn per shift
@@ -30,10 +32,3 @@
 	var/list/alt_job_titles = list()
 	/// the month we used our last donator token on
 	var/token_month = 0
-
-	///how many event tokens we currently have
-	var/event_tokens = 0
-	///the month we last used event tokens on
-	var/event_token_month = 0
-	///what token event do we currently have queued
-	var/datum/twitch_event/queued_token_event

@@ -4,6 +4,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	var/datum/meta_token_holder/client_token_holder
 
 /datum/meta_token_holder
+	///the client that owns this holder
 	var/client/owner
 	///are they a donator? and do they have their free token?
 	var/donator_token = FALSE
@@ -18,7 +19,14 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	///the antagonist we are currently waiting for a reply on whether we can use
 	var/datum/antagonist/in_queue
 	var/in_queued_tier
+	///is the queued token a donor token
 	var/queued_donor = FALSE
+	///how many event tokens we currently have
+	var/event_tokens = 0
+	///the month we last used event tokens on
+	var/event_token_month = 0
+	///what token event do we currently have queued
+	var/datum/twitch_event/queued_token_event
 
 /datum/meta_token_holder/New(client/creator)
 	. = ..()
@@ -36,6 +44,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	total_low_threat_tokens = saved_tokens["low_threat"]
 	total_medium_threat_tokens = saved_tokens["medium_threat"]
 	total_high_threat_tokens = saved_tokens["high_threat"]
+	event_tokens = saved_tokens["event_tokens"]
+	event_token_month = saved_tokens["event_token_month"]
 
 	total_antag_tokens = total_low_threat_tokens + total_medium_threat_tokens + total_high_threat_tokens
 
@@ -44,6 +54,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		"low_threat" = total_low_threat_tokens,
 		"medium_threat" = total_medium_threat_tokens,
 		"high_threat" = total_high_threat_tokens,
+		"event_tokens" = event_tokens,
+		"event_token_month" = event_token_month,
 	)
 	owner.prefs.save_preferences()
 
@@ -87,8 +99,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 
 	convert_tokens_to_list()
 
-
-/datum/meta_token_holder/proc/approve_token()
+/datum/meta_token_holder/proc/approve_token(thing_to_approve)
 	if(!in_queue)
 		return
 	to_chat(owner, "Your request to play as [in_queue] has been approved.")
@@ -103,7 +114,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	in_queued_tier = null
 	queued_donor = FALSE
 
-/datum/meta_token_holder/proc/reject_token()
+/datum/meta_token_holder/proc/reject_token(thing_to_reject)
 	to_chat(owner, "Your request to play as [in_queue] has been denied.")
 	in_queue = null
 	in_queued_tier = null
