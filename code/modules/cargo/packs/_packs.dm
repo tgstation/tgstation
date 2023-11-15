@@ -132,5 +132,5 @@
 		if(possible_stack.material_type)
 			if(!SSstock_market.materials_quantity[possible_stack.material_type])
 				continue
-			SSstock_market.materials_quantity[possible_stack.material_type] -= possible_stack.amount
-			SSstock_market.materials_prices[possible_stack.material_type] += round((SSstock_market.materials_prices[possible_stack.material_type]) * (possible_stack.amount / (SSstock_market.materials_quantity[possible_stack.material_type] - possible_stack.amount)))
+			SSstock_market.materials_quantity[possible_stack.material_type] -= contains[possible_stack]
+			SSstock_market.materials_prices[possible_stack.material_type] += round((SSstock_market.materials_prices[possible_stack.material_type]) * (contains[possible_stack] / (SSstock_market.materials_quantity[possible_stack.material_type] - contains[possible_stack])))
