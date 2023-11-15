@@ -148,7 +148,7 @@
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "high_five.dm"
-#include "high_luminosity_eyes.dm"
+#include "screenshot_high_luminosity_eyes.dm"
 #include "holidays.dm"
 #include "hulk.dm"
 #include "human_through_recycler.dm"
