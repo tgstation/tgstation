@@ -35,14 +35,16 @@ SUBSYSTEM_DEF(ore_generation)
 		"medium" = 5,
 		"small" = 7,
 	)
-	var/list/post_ore_r = list(
+	/// Ores spawned by proximity to an ore vent. Useful for logging purposes.
+	var/list/post_ore_random = list(
 		"1" = 0,
 		"2" = 0,
 		"3" = 0,
 		"4" = 0,
 		"5" = 0,
 	)
-	var/list/post_ore_m = list(
+	/// Ores spawned randomly on the map without proximity to an ore vent. Useful for logging purposes.
+	var/list/post_ore_manual = list(
 		"1" = 0,
 		"2" = 0,
 		"3" = 0,

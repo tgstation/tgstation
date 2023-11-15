@@ -129,7 +129,7 @@
 	. = ..()
 	if(tapped)
 		return FALSE
-	if(istype(M, /mob/living/basic/node_drone))
+	if(istype(target, /mob/living/basic/node_drone))
 		return TRUE
 
 /obj/structure/ore_vent/examine(mob/user)
@@ -270,9 +270,12 @@
 	if(!discovered)
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
-		if(do_after(user, 4 SECONDS) || scan_only)
+		if(scan_only)
 			discovered = TRUE
-			balloon_alert(user, "vent scanned!")
+		if(!discovered)
+			if(do_after(user, 4 SECONDS))
+				discovered = TRUE
+				balloon_alert(user, "vent scanned!")
 
 			if(ishuman(user))
 				var/mob/living/carbon/human/scanning_miner = user
