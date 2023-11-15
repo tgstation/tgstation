@@ -142,3 +142,9 @@
 	item_path = /obj/item/highfrequencyblade/wizard
 	category = "Offensive"
 	cost = 3
+
+/datum/spellbook_entry/item/frog_contract
+	name = "Frog Contract"
+	desc = "Sign a pact with the frogs to have your own destructive pet guardian!"
+	item_path = /obj/item/frog_contract
+	category = "Offensive"

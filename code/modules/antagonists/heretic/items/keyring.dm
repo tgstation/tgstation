@@ -1,4 +1,4 @@
-/obj/effect/knock_portal
+/obj/effect/lock_portal
 	name = "crack in reality"
 	desc = "A crack in space, impossibly deep and painful to the eyes. Definitely not safe."
 	icon = 'icons/effects/eldritch.dmi'
@@ -12,45 +12,51 @@
 	density = FALSE //so we dont block doors closing
 	layer = OBJ_LAYER //under doors
 	///The knock portal we teleport to
-	var/obj/effect/knock_portal/destination
+	var/obj/effect/lock_portal/destination
 	///The airlock we are linked to, we delete if it is destroyed
 	var/obj/machinery/door/our_airlock
+	/// if true the heretic is teleported to a random airlock, nonheretics are sent to the target
+	var/inverted = FALSE
 
-/obj/effect/knock_portal/Initialize(mapload, target)
+/obj/effect/lock_portal/Initialize(mapload, target, invert = FALSE)
 	. = ..()
 	if(target)
 		our_airlock = target
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(delete_on_door_delete))
-		
+
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	inverted = invert
 
 ///Deletes us and our destination portal if our_airlock is destroyed
-/obj/effect/knock_portal/proc/delete_on_door_delete(datum/source)
+/obj/effect/lock_portal/proc/delete_on_door_delete(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
 
 ///Signal handler for when our location is entered, calls teleport on the victim, if their old_loc didnt contain a portal already (to prevent loops)
-/obj/effect/knock_portal/proc/on_entered(datum/source, mob/living/loser, atom/old_loc)
+/obj/effect/lock_portal/proc/on_entered(datum/source, mob/living/loser, atom/old_loc)
 	SIGNAL_HANDLER
 	if(istype(loser) && !(locate(type) in old_loc))
 		teleport(loser)
 
-/obj/effect/knock_portal/Destroy()
-	QDEL_NULL(destination)
+/obj/effect/lock_portal/Destroy()
+	if(!isnull(destination) && !QDELING(destination))
+		QDEL_NULL(destination)
+
+	destination = null
 	our_airlock = null
 	return ..()
 
 ///Teleports the teleportee, to a random airlock if the teleportee isnt a heretic, or the other portal if they are one
-/obj/effect/knock_portal/proc/teleport(mob/living/teleportee)
+/obj/effect/lock_portal/proc/teleport(mob/living/teleportee)
 	if(isnull(destination)) //dumbass
 		qdel(src)
 		return
 
 	//get it?
-	var/obj/machinery/door/doorstination = IS_HERETIC_OR_MONSTER(teleportee) ? destination.our_airlock : find_random_airlock()
+	var/obj/machinery/door/doorstination = (inverted ? !IS_HERETIC_OR_MONSTER(teleportee) : IS_HERETIC_OR_MONSTER(teleportee)) ? destination.our_airlock : find_random_airlock()
 	if(!do_teleport(teleportee, get_turf(doorstination), channel = TELEPORT_CHANNEL_MAGIC))
 		return
 
@@ -61,7 +67,7 @@
 	INVOKE_ASYNC(src, PROC_REF(async_opendoor), doorstination)
 
 ///Returns a random airlock on the same Z level as our portal, that isnt our airlock
-/obj/effect/knock_portal/proc/find_random_airlock()
+/obj/effect/lock_portal/proc/find_random_airlock()
 	var/list/turf/possible_destinations = list()
 	for(var/obj/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(airlock.z != z)
@@ -72,7 +78,7 @@
 	return pick(possible_destinations)
 
 ///Asynchronous proc to unbolt, then open the passed door
-/obj/effect/knock_portal/proc/async_opendoor(obj/machinery/door/door)
+/obj/effect/lock_portal/proc/async_opendoor(obj/machinery/door/door)
 	if(istype(door, /obj/machinery/door/airlock)) //they can create portals on ANY door, but we should unlock airlocks so they can actually open
 		var/obj/machinery/door/airlock/as_airlock = door
 		as_airlock.unbolt()
@@ -83,11 +89,13 @@
 	///List of IDs this card consumed
 	var/list/obj/item/card/id/fused_ids = list()
 	///The first portal in the portal pair, so we can clear it later
-	var/obj/effect/knock_portal/portal_one
+	var/obj/effect/lock_portal/portal_one
 	///The second portal in the portal pair, so we can clear it later
-	var/obj/effect/knock_portal/portal_two
+	var/obj/effect/lock_portal/portal_two
 	///The first door we are linking in the pair, so we can create a portal pair
 	var/datum/weakref/link
+	/// are our created portals inverted? (heretics get sent to a random airlock, crew get sent to the target)
+	var/inverted = FALSE
 
 /obj/item/card/id/advanced/heretic/examine(mob/user)
 	. = ..()
@@ -97,6 +105,7 @@
 	. += span_hypnophrase("Using an ID on this will consume it and allow you to copy its accesses.")
 	. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
 	. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
+	. += span_hypnophrase("<b>Ctrl-clicking the ID</b>, makes the ID make inverted portals instead, which teleport you onto a random airlock onstation, while heathens are teleported to the destination.")
 
 /obj/item/card/id/advanced/heretic/attack_self(mob/user)
 	. = ..()
@@ -108,6 +117,13 @@
 		return ..()
 	var/obj/item/card/id/card = fused_ids[cardname]
 	shapeshift(card)
+
+/obj/item/card/id/advanced/heretic/CtrlClick(mob/user)
+	. = ..()
+	if(!IS_HERETIC(user))
+		return
+	inverted = !inverted
+	balloon_alert(user, "[inverted ? "now" : "no longer"] creating inverted rifts")
 
 ///Changes our appearance to the passed ID card
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
@@ -124,7 +140,7 @@
 ///Deletes and nulls our portal pair
 /obj/item/card/id/advanced/heretic/proc/clear_portals()
 	QDEL_NULL(portal_one)
-	QDEL_NULL(portal_two)	
+	QDEL_NULL(portal_two)
 
 ///Clears portal references
 /obj/item/card/id/advanced/heretic/proc/clear_portal_refs()
@@ -138,9 +154,9 @@
 	if(portal_one || portal_two)
 		clear_portals()
 		message += ", previous cleared"
-	
-	portal_one = new(get_turf(door2), door2)
-	portal_two = new(get_turf(door1), door1)
+
+	portal_one = new(get_turf(door2), door2, inverted)
+	portal_two = new(get_turf(door1), door1, inverted)
 	portal_one.destination = portal_two
 	RegisterSignal(portal_one, COMSIG_QDELETING, PROC_REF(clear_portal_refs))  //we only really need to register one because they already qdel both portals if one is destroyed
 	portal_two.destination = portal_one
@@ -159,7 +175,7 @@
 	. = ..()
 	if(!proximity_flag || !IS_HERETIC(user))
 		return
-	if(istype(target, /obj/effect/knock_portal))
+	if(istype(target, /obj/effect/lock_portal))
 		clear_portals()
 		return
 

@@ -178,7 +178,7 @@
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
+	if(!isnull(mover.pulledby) && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
 	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE
@@ -193,6 +193,22 @@
 /obj/structure/spider/spikes/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
+
+/obj/structure/spider/reflector
+	name = "Reflective silk screen"
+	icon = 'icons/effects/effects.dmi'
+	desc = "Made up of an extremly reflective silk material looking at it hurts."
+	icon_state = "reflector"
+	max_integrity = 30
+	density = TRUE
+	opacity = TRUE
+	anchored = TRUE
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY
+
+/obj/structure/spider/reflector/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
 
 /obj/structure/spider/effigy
 	name = "web effigy"

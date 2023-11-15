@@ -36,3 +36,8 @@
 /// : because of the embedded typecheck
 #define text_ref(datum) (isdatum(datum) ? (datum:cached_ref ||= "\ref[datum]") : ("\ref[datum]"))
 #endif
+
+// Refs contain a type id within their string that can be used to identify byond types.
+// Custom types that we define don't get a unique id, but this is useful for identifying
+// types that don't normally have a way to run istype() on them.
+#define TYPEID(thing) copytext(REF(thing), 4, 6)

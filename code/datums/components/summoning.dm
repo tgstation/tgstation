@@ -1,16 +1,32 @@
 /datum/component/summoning
+	/// Types of mob we can create
 	var/list/mob_types = list()
-	var/spawn_chance // chance for the mob to spawn on hit in percent
+	/// Percentage chance to spawn a mob
+	var/spawn_chance
+	/// Maximum mobs we can have active at once
 	var/max_mobs
-	var/spawn_delay // delay in spawning between mobs (deciseconds)
+	/// Cooldown between spawning mobs
+	var/spawn_delay
+	/// Text to display when spawning a mob
 	var/spawn_text
+	/// Sound to play when spawning a mob
 	var/spawn_sound
+	/// Factions to assign to a summoned mob
 	var/list/faction
-
-	var/last_spawned_time = 0
+	/// Cooldown tracker for when we can summon another mob
+	COOLDOWN_DECLARE(summon_cooldown)
+	/// List containing all of our mobs
 	var/list/spawned_mobs = list()
 
-/datum/component/summoning/Initialize(mob_types, spawn_chance=100, max_mobs=3, spawn_delay=100, spawn_text="appears out of nowhere", spawn_sound='sound/magic/summon_magic.ogg', faction)
+/datum/component/summoning/Initialize(
+	mob_types,
+	spawn_chance = 100,
+	max_mobs = 3,
+	spawn_delay = 10 SECONDS,
+	spawn_text = "appears out of nowhere",
+	spawn_sound = 'sound/magic/summon_magic.ogg',
+	list/faction,
+)
 	if(!isitem(parent) && !ishostile(parent) && !isgun(parent) && !ismachinery(parent) && !isstructure(parent) && !isprojectilespell(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -54,26 +70,22 @@
 	do_spawn_mob(get_turf(target), firer)
 
 /datum/component/summoning/proc/do_spawn_mob(atom/spawn_location, summoner)
-	if(spawned_mobs.len >= max_mobs)
+	if(length(spawned_mobs) >= max_mobs || !COOLDOWN_FINISHED(src, summon_cooldown) || !prob(spawn_chance))
 		return
-	if(last_spawned_time > world.time)
-		return
-	if(!prob(spawn_chance))
-		return
-	last_spawned_time = world.time + spawn_delay
+	COOLDOWN_START(src, summon_cooldown, spawn_delay)
 	var/chosen_mob_type = pick(mob_types)
-	var/mob/living/simple_animal/L = new chosen_mob_type(spawn_location)
-	if(ishostile(L))
-		var/mob/living/simple_animal/hostile/H = L
-		H.friends += summoner // do not attack our summon boy
-	spawned_mobs += L
+	var/mob/living/summoned = new chosen_mob_type(spawn_location)
+	if(ishostile(summoned))
+		var/mob/living/simple_animal/hostile/angry_boy = summoned
+		angry_boy.friends |= summoner // do not attack our summon boy
+	spawned_mobs |= summoned
 	if(faction != null)
-		L.faction = faction
-	RegisterSignal(L, COMSIG_LIVING_DEATH, PROC_REF(on_spawned_death)) // so we can remove them from the list, etc (for mobs with corpses)
-	playsound(spawn_location,spawn_sound, 50, TRUE)
-	spawn_location.visible_message(span_danger("[L] [spawn_text]."))
+		summoned.faction = faction.Copy()
+	RegisterSignals(summoned, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_spawned_death))
+	spawn_location.visible_message(span_danger("[summoned] [spawn_text]!"))
 
+/// When a spawned thing dies, remove it from our list
 /datum/component/summoning/proc/on_spawned_death(mob/killed, gibbed)
 	SIGNAL_HANDLER
-
+	UnregisterSignal(killed, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 	spawned_mobs -= killed

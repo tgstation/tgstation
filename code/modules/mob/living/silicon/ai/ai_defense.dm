@@ -54,10 +54,6 @@
 
 	return TRUE
 
-/mob/living/silicon/ai/bullet_act(obj/projectile/Proj)
-	. = ..(Proj)
-	updatehealth()
-
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	return // no eyes, no flashing
 

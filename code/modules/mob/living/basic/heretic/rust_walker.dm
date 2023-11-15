@@ -1,6 +1,6 @@
 /// Pretty simple mob which creates areas of rust and has a rust-creating projectile spell
 /mob/living/basic/heretic_summon/rust_walker
-	name = "Rust Walker"
+	name = "\improper Rust Walker"
 	real_name = "Rusty"
 	desc = "A grinding, clanking construct which leaches life from its surroundings with every armoured step."
 	icon_state = "rust_walker_s"
@@ -17,13 +17,12 @@
 /mob/living/basic/heretic_summon/rust_walker/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_RUST)
-	var/datum/action/cooldown/spell/aoe/rust_conversion/small/conversion = new(src)
-	conversion.Grant(src)
-	ai_controller?.set_blackboard_key(BB_GENERIC_ACTION, conversion)
 
-	var/datum/action/cooldown/spell/basic_projectile/rust_wave/short/wave = new(src)
-	wave.Grant(src)
-	ai_controller?.set_blackboard_key(BB_TARGETTED_ACTION, wave)
+	var/static/list/grantable_spells = list(
+		/datum/action/cooldown/spell/aoe/rust_conversion/small = BB_GENERIC_ACTION,
+		/datum/action/cooldown/spell/basic_projectile/rust_wave/short = BB_TARGETED_ACTION,
+	)
+	grant_actions_by_list(grantable_spells)
 
 /mob/living/basic/heretic_summon/rust_walker/setDir(newdir)
 	. = ..()
@@ -51,7 +50,7 @@
 /// Converts unconverted terrain, sprays pocket sand around
 /datum/ai_controller/basic_controller/rust_walker
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

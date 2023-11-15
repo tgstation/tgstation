@@ -105,3 +105,11 @@ https://freesound.org/people/reelworldstudio/sounds/161122/
 
 arcade_jump.ogg is adapted from se2001's "8-Bit Jump 3", which is public domain (CC 0):
 hhttps://freesound.org/people/se2001/sounds/528568/
+
+hiccup sfx is taken from SOUNDFISHING's hiccup sound effects, which is license under LESF and allowed ussage for video games under section 4 of aggreement:
+https://www.soundfishing.eu/sound/hiccup
+
+laser2.ogg is adapted with 3 SFX made by junggle (CC 4), inferno (CC Sampling+), humanoide9000 (CC 0):
+https://freesound.org/people/junggle/sounds/28917/
+https://freesound.org/people/inferno/sounds/18397/
+https://freesound.org/people/humanoide9000/sounds/330293/

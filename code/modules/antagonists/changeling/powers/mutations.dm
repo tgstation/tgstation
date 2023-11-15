@@ -373,53 +373,87 @@
 				playsound(get_turf(H),I.hitsound,75,TRUE)
 				return
 
-/obj/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
-	var/mob/living/carbon/human/H = firer
+/obj/projectile/tentacle/on_hit(atom/movable/target, blocked = 0, pierce_hit)
+	if(!isliving(firer) || !ismovable(target))
+		return ..()
+
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
-	if(isitem(target))
-		var/obj/item/I = target
-		if(!I.anchored)
-			to_chat(firer, span_notice("You pull [I] towards yourself."))
-			H.throw_mode_on(THROW_MODE_TOGGLE)
-			I.throw_at(H, 10, 2)
-			. = BULLET_ACT_HIT
 
-	else if(isliving(target))
-		var/mob/living/L = target
-		if(!L.anchored && !L.throwing)//avoid double hits
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				var/firer_combat_mode = TRUE
-				var/mob/living/living_shooter = firer
-				if(istype(living_shooter))
-					firer_combat_mode = living_shooter.combat_mode
-				if(fire_modifiers && fire_modifiers["right"])
-					var/obj/item/I = C.get_active_held_item()
-					if(I)
-						if(C.dropItemToGround(I))
-							C.visible_message(span_danger("[I] is yanked off [C]'s hand by [src]!"),span_userdanger("A tentacle pulls [I] away from you!"))
-							on_hit(I) //grab the item as if you had hit it directly with the tentacle
-							return BULLET_ACT_HIT
-						else
-							to_chat(firer, span_warning("You can't seem to pry [I] off [C]'s hands!"))
-							return BULLET_ACT_BLOCK
-					else
-						to_chat(firer, span_danger("[C] has nothing in hand to disarm!"))
-						return BULLET_ACT_HIT
-				if(firer_combat_mode)
-					C.visible_message(span_danger("[L] is thrown towards [H] by a tentacle!"),span_userdanger("A tentacle grabs you and throws you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, PROC_REF(tentacle_grab), H, C))
-					return BULLET_ACT_HIT
-				else
-					C.visible_message(span_danger("[L] is grabbed by [H]'s tentacle!"),span_userdanger("A tentacle grabs you and pulls you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE)
-					return BULLET_ACT_HIT
+	var/mob/living/ling = firer
+	if(isitem(target) && iscarbon(ling))
+		var/obj/item/catching = target
+		if(catching.anchored)
+			return BULLET_ACT_BLOCK
 
-			else
-				L.visible_message(span_danger("[L] is pulled by [H]'s tentacle!"),span_userdanger("A tentacle grabs you and pulls you towards [H]!"))
-				L.throw_at(get_step_towards(H,L), 8, 2)
-				. = BULLET_ACT_HIT
+		var/mob/living/carbon/carbon_ling = ling
+		to_chat(carbon_ling, span_notice("You pull [catching] towards yourself."))
+		carbon_ling.throw_mode_on(THROW_MODE_TOGGLE)
+		catching.throw_at(
+			target = carbon_ling,
+			range = 10,
+			speed = 2,
+			thrower = carbon_ling,
+			diagonals_first = TRUE,
+			callback = CALLBACK(src, PROC_REF(reset_throw), carbon_ling),
+			gentle = TRUE,
+		)
+		return BULLET_ACT_HIT
+
+	. = ..()
+	if(. != BULLET_ACT_HIT)
+		return .
+	var/mob/living/victim = target
+	if(!isliving(victim) || target.anchored || victim.throwing)
+		return BULLET_ACT_BLOCK
+
+	if(!iscarbon(victim) || !ishuman(ling) || !ling.combat_mode)
+		victim.visible_message(
+			span_danger("[victim] is grabbed by [ling]'s [src]]!"),
+			span_userdanger("\A [src] grabs you and pulls you towards [ling]!"),
+		)
+		victim.throw_at(
+			target = get_step_towards(ling, victim),
+			range = 8,
+			speed = 2,
+			thrower = ling,
+			diagonals_first = TRUE,
+			gentle = TRUE,
+		)
+		return BULLET_ACT_HIT
+
+	if(LAZYACCESS(fire_modifiers, RIGHT_CLICK))
+		var/obj/item/stealing = victim.get_active_held_item()
+		if(!isnull(stealing))
+			if(victim.dropItemToGround(stealing))
+				victim.visible_message(
+					span_danger("[stealing] is yanked off [victim]'s hand by [src]!"),
+					span_userdanger("\A [src] pulls [stealing] away from you!"),
+				)
+				return on_hit(stealing) //grab the item as if you had hit it directly with the tentacle
+
+			to_chat(ling, span_warning("You can't seem to pry [stealing] off [victim]'s hands!"))
+			return BULLET_ACT_BLOCK
+
+		to_chat(ling, span_danger("[victim] has nothing in hand to disarm!"))
+		return BULLET_ACT_HIT
+
+	if(ling.combat_mode)
+		victim.visible_message(
+			span_danger("[victim] is thrown towards [ling] by \a [src]!"),
+			span_userdanger("\A [src] grabs you and throws you towards [ling]!"),
+		)
+		victim.throw_at(
+			target = get_step_towards(ling, victim),
+			range  = 8,
+			speed = 2,
+			thrower = ling,
+			diagonals_first = TRUE,
+			callback = CALLBACK(src, PROC_REF(tentacle_grab), ling, victim),
+			gentle = TRUE,
+		)
+
+	return BULLET_ACT_HIT
 
 /obj/projectile/tentacle/Destroy()
 	qdel(chain)

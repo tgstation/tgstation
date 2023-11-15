@@ -1,4 +1,4 @@
-/// This component will intercept bare-handed attacks by the owner on critically injured carbons and amputate random limbs instead
+/// This component will intercept bare-handed attacks by the owner on sufficiently injured carbons and amputate random limbs instead
 /datum/element/amputating_limbs
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -32,16 +32,16 @@
 	src.minimum_stat = minimum_stat
 	src.snip_chance = snip_chance
 	src.target_zones = target_zones
-	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(try_amputate))
+	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET), PROC_REF(try_amputate))
 
 /datum/element/amputating_limbs/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	UnregisterSignal(source, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
 /// Called when you click on literally anything with your hands, see if it is an injured carbon and then try to cut it up
-/datum/element/amputating_limbs/proc/try_amputate(mob/living/surgeon, atom/victim)
+/datum/element/amputating_limbs/proc/try_amputate(mob/living/surgeon, atom/victim, proximity, modifiers)
 	SIGNAL_HANDLER
-	if (!iscarbon(victim) || HAS_TRAIT(victim, TRAIT_NODISMEMBER) || !prob(snip_chance))
+	if (!proximity || !iscarbon(victim) || HAS_TRAIT(victim, TRAIT_NODISMEMBER) || !prob(snip_chance))
 		return
 
 	var/mob/living/carbon/limbed_victim = victim
@@ -68,7 +68,7 @@
 
 /// Chop one off
 /datum/element/amputating_limbs/proc/amputate(mob/living/surgeon, mob/living/carbon/victim, obj/item/bodypart/to_remove)
-	surgeon.visible_message(span_warning("[surgeon] begins [surgery_verb] [to_remove] off of [victim]!"))
+	surgeon.visible_message(span_warning("[surgeon] [surgery_verb] [to_remove] off of [victim]!"))
 	if (surgery_time > 0 && !do_after(surgeon, delay = surgery_time, target = victim))
 		return
 	to_remove.dismember()

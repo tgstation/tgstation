@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - qol: "You will no longer be added to the list for ghost-orbit role polls if you have opted out of getting antag ghost roles in your preferences."
+  - qol: "You will get a tgui_alert to accept the ghost role if you were selected via the orbit poll, instead of it just throwing you intot he role."

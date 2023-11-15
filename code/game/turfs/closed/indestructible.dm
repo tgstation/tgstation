@@ -308,6 +308,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	explosive_resistance = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 
+/turf/closed/indestructible/riveted/boss/wasteland
+	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
+
 /turf/closed/indestructible/riveted/boss/see_through
 	opacity = FALSE
 
@@ -356,3 +359,13 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/grille/Initialize(mapload)
 	. = ..()
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
+
+/turf/closed/indestructible/meat
+	name = "dense meat wall"
+	desc = "A huge chunk of dense, packed meat. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/meat.dmi'
+	icon_state = "meatwall-0"
+	base_icon_state = "meatwall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_WALLS

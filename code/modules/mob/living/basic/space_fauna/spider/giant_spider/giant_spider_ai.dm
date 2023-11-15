@@ -1,7 +1,7 @@
 /// Attacks people it can see, spins webs if it can't see anything to attack.
 /datum/ai_controller/basic_controller/giant_spider
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED | PAUSE_DURING_DO_AFTER
@@ -30,7 +30,7 @@
 /// Used by Araneus, who only attacks those who attack first. He is house-trained and will not web up the HoS office.
 /datum/ai_controller/basic_controller/giant_spider/retaliate
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	planning_subtrees = list(
@@ -43,8 +43,8 @@
 /// Retaliates, hunts other maintenance creatures, runs away from larger attackers, and spins webs.
 /datum/ai_controller/basic_controller/giant_spider/pest
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller(), // Hunt mobs our size
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger(), // Run away from mobs bigger than we are
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller, // Hunt mobs our size
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/larger, // Run away from mobs bigger than we are
 	)
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

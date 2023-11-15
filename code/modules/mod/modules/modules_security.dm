@@ -422,8 +422,10 @@
 			UnregisterSignal(creature, COMSIG_MOVABLE_MOVED)
 			return
 
-		if(oldgroup != newgroup)
-			sorted_creatures[oldgroup] -= creature
+		if(oldgroup == newgroup)
+			return
+			
+		sorted_creatures[oldgroup] -= creature
 
 	sorted_creatures[newgroup] += creature
 	keyed_creatures[creature] = newgroup

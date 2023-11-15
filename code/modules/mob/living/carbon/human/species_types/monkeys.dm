@@ -40,8 +40,6 @@
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
-
-
 /datum/species/monkey/random_name(gender,unique,lastname)
 	var/randname = "monkey ([rand(1,999)])"
 
@@ -52,70 +50,13 @@
 	passtable_on(H, SPECIES_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
+	H.AddElement(/datum/element/human_biter)
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	passtable_off(C, SPECIES_TRAIT)
 	C.dna.remove_mutation(/datum/mutation/human/race)
-
-/datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
-	// If our hands are not blocked, dont try to bite them
-	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		// if we aren't an advanced tool user, we call attack_paw and cancel the preceeding attack chain
-		if(!ISADVANCEDTOOLUSER(user))
-			target.attack_paw(user, modifiers)
-			return TRUE
-		return ..()
-
-	// this shouldn't even be possible, but I'm sure the check was here for a reason
-	if(!iscarbon(target))
-		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
-		return TRUE
-	var/mob/living/carbon/victim = target
-	if(user.is_muzzled())
-		return TRUE // cannot bite them if we're muzzled
-
-	var/obj/item/bodypart/affecting
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
-	var/armor = victim.run_armor_check(affecting, MELEE)
-
-	if(prob(MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE))
-		victim.visible_message(
-			span_danger("[user]'s bite misses [victim]!"),
-			span_danger("You avoid [user]'s bite!"),
-			span_hear("You hear jaws snapping shut!"),
-			COMBAT_MESSAGE_RANGE,
-			user,
-		)
-		to_chat(user, span_danger("Your bite misses [victim]!"))
-		return TRUE
-
-	var/obj/item/bodypart/head/mouth = user.get_bodypart(BODY_ZONE_HEAD)
-	if(!mouth) // check for them having a head, ala HARS
-		return TRUE
-
-	var/damage_roll = rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high)
-	victim.apply_damage(damage_roll, BRUTE, affecting, armor)
-
-	victim.visible_message(
-		span_danger("[name] bites [victim]!"),
-		span_userdanger("[name] bites you!"),
-		span_hear("You hear a chomp!"),
-		COMBAT_MESSAGE_RANGE,
-		name,
-	)
-	to_chat(user, span_danger("You bite [victim]!"))
-
-	if(armor >= 2) // if they have basic armor on the limb we bit, don't spread diseases
-		return TRUE
-	for(var/datum/disease/bite_infection as anything in user.diseases)
-		if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
-			continue // ignore diseases that have special spread logic, or are not contagious
-		victim.ForceContractDisease(bite_infection)
-
-	return TRUE
+	C.RemoveElement(/datum/element/human_biter)
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(check_holidays(MONKEYDAY))
@@ -132,6 +73,10 @@
 		'sound/creatures/monkey/monkey_screech_6.ogg',
 		'sound/creatures/monkey/monkey_screech_7.ogg',
 	)
+
+/datum/species/monkey/get_physical_attributes()
+	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
+		Natural monkeys cannot operate machinery or most tools with their paws, but unusually clever monkeys or those that were once something else can."
 
 /datum/species/monkey/get_species_description()
 	return "Monkeys are a type of primate that exist between humans and animals on the evolutionary chain. \
@@ -244,5 +189,32 @@
 
 /obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
 	return owner.get_bodypart(BODY_ZONE_HEAD)
+
+/// Virtual monkeys that crave virtual bananas. Everything about them is ephemeral (except that bite).
+/datum/species/monkey/holodeck
+	id = SPECIES_MONKEY_HOLODECK
+	knife_butcher_results = list()
+	meat = null
+	skinned_type = null
+	inherent_traits = list(
+		TRAIT_GENELESS,
+		TRAIT_GUN_NATURAL,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_NO_ZOMBIFY,
+		TRAIT_NOBLOOD,
+		TRAIT_NOHUNGER,
+		TRAIT_VENTCRAWLER_NUDE,
+	)
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
+	)
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

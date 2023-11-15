@@ -49,8 +49,8 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-	AddElement(/datum/element/basic_eating, 2, 0, null, edibles)
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, edibles)
+	AddElement(/datum/element/basic_eating, heal_amt = 2, food_types = edibles)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(edibles))
 
 	AddComponent(\
 		/datum/component/tameable,\
@@ -71,7 +71,7 @@
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends/allow_items,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

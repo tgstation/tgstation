@@ -1,0 +1,31 @@
+directory = "_maps/modular_generic/"
+
+[rooms.station_small]
+modules = ["station_s_kitchen.dmm", "station_s_chasm.dmm", "station_s_garden.dmm", "station_s_mime.dmm", "station_s_vault.dmm"]
+
+[rooms.station_medium]
+modules = ["station_m_tools.dmm", "station_m_evidence.dmm", "station_m_kitchen.dmm", "station_m_shipping.dmm", "station_m_showroom.dmm", "station_m_arcade.dmm", "station_m_breakroom.dmm", "station_m_shuttle.dmm"]
+
+[rooms.station_large]
+modules = ["station_l_morgue.dmm", "station_l_crates.dmm", "station_l_webs.dmm", "station_l_bathroom.dmm", "station_l_kitchen.dmm", "station_l_security.dmm", "station_l_kilojan.dmm"]
+
+[rooms.beach_medium]
+modules = ["beach_m_shipping.dmm", "beach_m_oasis.dmm"]
+
+[rooms.beach_large]
+modules = ["beach_l_ribs.dmm"]
+
+[rooms.jungle_medium]
+modules = ["jungle_m_armory.dmm"]
+
+[rooms.jungle_large]
+modules = ["jungle_l_dock.dmm"]
+
+[rooms.ice_small]
+modules = ["ice_s_freezer.dmm"]
+
+[rooms.ice_medium]
+modules = ["ice_m_comms.dmm"]
+
+[rooms.ice_large]
+modules = ["ice_l_trophyroom.dmm", "ice_l_storage.dmm"]

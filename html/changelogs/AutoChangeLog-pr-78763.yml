@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "The Changeling Space Suit has been replaced by a new ability which makes you passively spaceproof without replacing your clothing."
-  - admin: "Editing the atmos sensitivity variables on a basic mob during the game will now actually do something."

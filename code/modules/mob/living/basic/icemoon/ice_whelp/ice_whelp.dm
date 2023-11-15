@@ -40,16 +40,19 @@
 /mob/living/basic/mining/ice_whelp/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
-	var/datum/action/cooldown/mob_cooldown/ice_breath/flamethrower = new(src)
-	var/datum/action/cooldown/mob_cooldown/ice_breathe_all_directions/wide_flames = new(src)
-	flamethrower.Grant(src)
-	wide_flames.Grant(src)
-	ai_controller.set_blackboard_key(BB_WHELP_WIDESPREAD_FIRE, wide_flames)
-	ai_controller.set_blackboard_key(BB_WHELP_STRAIGHTLINE_FIRE, flamethrower)
+
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross = BB_WHELP_WIDESPREAD_FIRE,
+	)
+
+	grant_actions_by_list(innate_actions)
 
 
 /mob/living/basic/mining/ice_whelp/proc/pre_attack(mob/living/sculptor, atom/target)

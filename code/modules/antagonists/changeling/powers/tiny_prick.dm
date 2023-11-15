@@ -21,7 +21,7 @@
 	changeling.chosen_sting = src
 
 	changeling.lingstingdisplay.icon_state = button_icon_state
-	changeling.lingstingdisplay.invisibility = 0
+	changeling.lingstingdisplay.SetInvisibility(0, id=type)
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
@@ -29,7 +29,7 @@
 	changeling.chosen_sting = null
 
 	changeling.lingstingdisplay.icon_state = null
-	changeling.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	changeling.lingstingdisplay.RemoveInvisibility(type)
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)

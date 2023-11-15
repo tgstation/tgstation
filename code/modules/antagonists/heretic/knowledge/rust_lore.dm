@@ -13,6 +13,9 @@
  * Mark of Rust
  * Ritual of Knowledge
  * Rust Construction
+ * > Sidepaths:
+ *   Lionhunter Rifle
+ *
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -22,7 +25,7 @@
  * Entropic Plume
  * > Sidepaths:
  *   Rusted Ritual
- *   Blood Cleave
+ *   Rust Charge
  *
  * Rustbringer's Oath
  */
@@ -261,7 +264,12 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	new /datum/rust_spread(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
