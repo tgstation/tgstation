@@ -61,8 +61,8 @@
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	QDEL_NULL(current_potion)
 	for(var/thing in stored_slimes)
-		var/mob/living/simple_animal/slime/S = thing
-		S.forceMove(drop_location())
+		var/mob/living/simple_animal/slime/stored_slime = thing
+		stored_slime.forceMove(drop_location())
 	stored_slimes.Cut()
 	if(connected_recycler)
 		connected_recycler.connected -= src
@@ -108,40 +108,40 @@
 	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
 	..()
 
-/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/food/monkeycube))
+/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/used_item, mob/user, params)
+	if(istype(used_item, /obj/item/food/monkeycube))
 		monkeys++
-		to_chat(user, span_notice("You feed [O] to [src]. It now has [monkeys] monkey cubes stored."))
-		qdel(O)
+		to_chat(user, span_notice("You feed [used_item] to [src]. It now has [monkeys] monkey cubes stored."))
+		qdel(used_item)
 		return
-	else if(istype(O, /obj/item/storage/bag))
-		var/obj/item/storage/P = O
+	else if(istype(used_item, /obj/item/storage/bag))
+		var/obj/item/storage/storage_bag = used_item
 		var/loaded = FALSE
-		for(var/obj/G in P.contents)
-			if(istype(G, /obj/item/food/monkeycube))
+		for(var/obj/item_in_bag in storage_bag.contents)
+			if(istype(item_in_bag, /obj/item/food/monkeycube))
 				loaded = TRUE
 				monkeys++
-				qdel(G)
+				qdel(item_in_bag)
 		if(loaded)
-			to_chat(user, span_notice("You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored."))
+			to_chat(user, span_notice("You fill [src] with the monkey cubes stored in [used_item]. [src] now has [monkeys] monkey cubes stored."))
 		return
-	else if(istype(O, /obj/item/slimepotion/slime))
+	else if(istype(used_item, /obj/item/slimepotion/slime))
 		var/replaced = FALSE
-		if(user && !user.transferItemToLoc(O, src))
+		if(user && !user.transferItemToLoc(used_item, src))
 			return
 		if(!QDELETED(current_potion))
 			current_potion.forceMove(drop_location())
 			replaced = TRUE
-		current_potion = O
-		to_chat(user, span_notice("You load [O] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""]."))
+		current_potion = used_item
+		to_chat(user, span_notice("You load [used_item] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""]."))
 		return
 	..()
 
-/obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
+/obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/used_multitool)
 	. = ..()
-	if (istype(I) && istype(I.buffer,/obj/machinery/monkey_recycler))
-		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
-		connected_recycler = I.buffer
+	if (istype(used_multitool) && istype(used_multitool.buffer,/obj/machinery/monkey_recycler))
+		to_chat(user, span_notice("You link [src] with [used_multitool.buffer] in [used_multitool] buffer."))
+		connected_recycler = used_multitool.buffer
 		connected_recycler.connected += src
 		return TRUE
 
@@ -153,15 +153,15 @@
 /datum/action/innate/slime_place/Activate()
 	if(!target || !isliving(owner))
 		return
-	var/mob/living/C = owner
-	var/mob/camera/ai_eye/remote/xenobio/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/mob/living/owner_mob = owner
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = owner_mob.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = target
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
-			S.forceMove(remote_eye.loc)
-			S.visible_message(span_notice("[S] warps in!"))
-			X.stored_slimes -= S
+		for(var/mob/living/simple_animal/slime/stored_slime in xeno_console.stored_slimes)
+			stored_slime.forceMove(remote_eye.loc)
+			stored_slime.visible_message(span_notice("[stored_slime] warps in!"))
+			xeno_console.stored_slimes -= stored_slime
 	else
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
 
@@ -173,20 +173,20 @@
 /datum/action/innate/slime_pick_up/Activate()
 	if(!target || !isliving(owner))
 		return
-	var/mob/living/C = owner
-	var/mob/camera/ai_eye/remote/xenobio/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/mob/living/owner_mob = owner
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = owner_mob.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = target
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
-			if(X.stored_slimes.len >= X.max_slimes)
+		for(var/mob/living/simple_animal/slime/target_slime in remote_eye.loc)
+			if(xeno_console.stored_slimes.len >= xeno_console.max_slimes)
 				break
-			if(!S.ckey)
-				if(S.buckled)
-					S.Feedstop(silent = TRUE)
-				S.visible_message(span_notice("[S] vanishes in a flash of light!"))
-				S.forceMove(X)
-				X.stored_slimes += S
+			if(!target_slime.ckey)
+				if(target_slime.buckled)
+					target_slime.stop_feeding(silent = TRUE)
+				target_slime.visible_message(span_notice("[target_slime] vanishes in a flash of light!"))
+				target_slime.forceMove(xeno_console)
+				xeno_console.stored_slimes += target_slime
 	else
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
 
@@ -225,27 +225,28 @@
 /datum/action/innate/monkey_recycle/Activate()
 	if(!target || !isliving(owner))
 		return
-	var/mob/living/C = owner
-	var/mob/camera/ai_eye/remote/xenobio/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = target
-	var/obj/machinery/monkey_recycler/recycler = X.connected_recycler
+	var/mob/living/owner_mob = owner
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = owner_mob.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = target
+	var/obj/machinery/monkey_recycler/recycler = xeno_console.connected_recycler
 
 	if(!recycler)
 		to_chat(owner, span_warning("There is no connected monkey recycler. Use a multitool to link one."))
 		return
-	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/carbon/human/M in remote_eye.loc)
-			if(!ismonkey(M))
-				continue
-			if(M.stat)
-				M.visible_message(span_notice("[M] vanishes as [M.p_theyre()] reclaimed for recycling!"))
-				recycler.use_power(500)
-				X.monkeys += recycler.cube_production
-				X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
-				qdel(M)
-				to_chat(owner, span_notice("[X] now has [X.monkeys] monkeys available."))
-	else
+	if(!GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
+		return
+
+	for(var/mob/living/carbon/human/target_mob in remote_eye.loc)
+		if(!ismonkey(target_mob))
+			continue
+		if(target_mob.stat)
+			target_mob.visible_message(span_notice("[target_mob] vanishes as [target_mob.p_theyre()] reclaimed for recycling!"))
+			recycler.use_power(500)
+			xeno_console.monkeys += recycler.cube_production
+			xeno_console.monkeys = round(xeno_console.monkeys, 0.1) //Prevents rounding errors
+			qdel(target_mob)
+			to_chat(owner, span_notice("[xeno_console] now has [xeno_console.monkeys] monkeys available."))
 
 /datum/action/innate/slime_scan
 	name = "Scan Slime"
@@ -255,12 +256,12 @@
 /datum/action/innate/slime_scan/Activate()
 	if(!target || !isliving(owner))
 		return
-	var/mob/living/C = owner
-	var/mob/camera/ai_eye/remote/xenobio/remote_eye = C.remote_control
+	var/mob/living/owner_mob = owner
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = owner_mob.remote_control
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
-			slime_scan(S, C)
+		for(var/mob/living/simple_animal/slime/scanned_slime in remote_eye.loc)
+			slime_scan(scanned_slime, owner_mob)
 	else
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
 
@@ -273,17 +274,17 @@
 	if(!target || !isliving(owner))
 		return
 
-	var/mob/living/C = owner
-	var/mob/camera/ai_eye/remote/xenobio/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/mob/living/owner_mob = owner
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = owner_mob.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = target
 
-	if(QDELETED(X.current_potion))
+	if(QDELETED(xeno_console.current_potion))
 		to_chat(owner, span_warning("No potion loaded."))
 		return
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
-			X.current_potion.attack(S, C)
+		for(var/mob/living/simple_animal/slime/potioned_slime in remote_eye.loc)
+			xeno_console.current_potion.attack(potioned_slime, owner_mob)
 			break
 	else
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
@@ -336,116 +337,112 @@
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)
 	..()
 
-// Scans slime
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/simple_animal/slime/S)
+/// Scans the target slime
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/simple_animal/slime/target_slime)
 	SIGNAL_HANDLER
-	if(!GLOB.cameranet.checkTurfVis(S.loc))
+	if(!GLOB.cameranet.checkTurfVis(target_slime.loc))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
-	var/mob/living/C = user
-	var/mob/camera/ai_eye/remote/xenobio/E = C.remote_control
-	var/area/mobarea = get_area(S.loc)
-	if(mobarea.name == E.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		slime_scan(S, C)
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
+	var/area/mobarea = get_area(target_slime.loc)
+	if(mobarea.name == remote_eye.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		slime_scan(target_slime, user)
 
-//Feeds a potion to slime
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickAlt(mob/living/user, mob/living/simple_animal/slime/S)
+///Feeds a stored potion to slime
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickAlt(mob/living/user, mob/living/simple_animal/slime/target_slime)
 	SIGNAL_HANDLER
-	if(!GLOB.cameranet.checkTurfVis(S.loc))
+	if(!GLOB.cameranet.checkTurfVis(target_slime.loc))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
-	var/mob/living/C = user
-	var/mob/camera/ai_eye/remote/xenobio/E = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/mobarea = get_area(S.loc)
-	if(QDELETED(X.current_potion))
-		to_chat(C, span_warning("No potion loaded."))
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
+	var/area/mobarea = get_area(target_slime.loc)
+	if(QDELETED(xeno_console.current_potion))
+		to_chat(user, span_warning("No potion loaded."))
 		return
-	if(mobarea.name == E.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		INVOKE_ASYNC(X.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), S, C)
+	if(mobarea.name == remote_eye.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		INVOKE_ASYNC(xeno_console.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), target_slime, user)
 
-//Picks up slime
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/simple_animal/slime/S)
+///Picks up a slime, and places them in the internal storage
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/simple_animal/slime/target_slime)
 	SIGNAL_HANDLER
-	if(!GLOB.cameranet.checkTurfVis(S.loc))
+	if(!GLOB.cameranet.checkTurfVis(target_slime.loc))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
-	var/mob/living/C = user
-	var/mob/camera/ai_eye/remote/xenobio/E = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/mobarea = get_area(S.loc)
-	if(mobarea.name == E.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		if(X.stored_slimes.len >= X.max_slimes)
-			to_chat(C, span_warning("Slime storage is full."))
-			return
-		if(S.ckey)
-			to_chat(C, span_warning("The slime wiggled free!"))
-			return
-		if(S.buckled)
-			S.Feedstop(silent = TRUE)
-		S.visible_message(span_notice("[S] vanishes in a flash of light!"))
-		S.forceMove(X)
-		X.stored_slimes += S
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
+	var/area/mobarea = get_area(target_slime.loc)
+	if(mobarea.name != remote_eye.allowed_area && !(mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		return
+	if(xeno_console.stored_slimes.len >= xeno_console.max_slimes)
+		to_chat(user, span_warning("Slime storage is full."))
+		return
+	if(target_slime.ckey)
+		to_chat(user, span_warning("The slime wiggled free!"))
+		return
+	if(target_slime.buckled)
+		target_slime.stop_feeding(silent = TRUE)
+	target_slime.visible_message(span_notice("[target_slime] vanishes in a flash of light!"))
+	target_slime.forceMove(xeno_console)
+	xeno_console.stored_slimes += target_slime
 
-//Place slimes
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickShift(mob/living/user, turf/open/T)
+///Places a slime from the internal storage
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickShift(mob/living/user, turf/open/target_turf)
 	SIGNAL_HANDLER
 
-	if(!GLOB.cameranet.checkTurfVis(T))
+	if(!GLOB.cameranet.checkTurfVis(target_turf))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
-	var/mob/living/C = user
-	var/mob/camera/ai_eye/remote/xenobio/E = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/turfarea = get_area(T)
-	if(turfarea.name == E.allowed_area || (turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
-			S.forceMove(T)
-			S.visible_message(span_notice("[S] warps in!"))
-			X.stored_slimes -= S
+	var/mob/living/user_mob = user
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user_mob.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
+	var/area/turfarea = get_area(target_turf)
+	if(turfarea.name == remote_eye.allowed_area || (turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		for(var/mob/living/simple_animal/slime/stored_slime in xeno_console.stored_slimes)
+			stored_slime.forceMove(target_turf)
+			stored_slime.visible_message(span_notice("[stored_slime] warps in!"))
+			xeno_console.stored_slimes -= stored_slime
 
-//Place monkey
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickCtrl(mob/living/user, turf/open/T)
+///Places a monkey from the internal storage
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickCtrl(mob/living/user, turf/open/target_turf)
 	SIGNAL_HANDLER
-	if(!GLOB.cameranet.checkTurfVis(T))
+	if(!GLOB.cameranet.checkTurfVis(target_turf))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
-	var/mob/living/C = user
-	var/mob/camera/ai_eye/remote/xenobio/E = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/turfarea = get_area(T)
-	if(turfarea.name == E.allowed_area || (turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		if(X.monkeys >= 1)
-			var/mob/living/carbon/human/food = new /mob/living/carbon/human/species/monkey(T, TRUE, C)
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
+	var/area/turfarea = get_area(target_turf)
+	if(turfarea.name == remote_eye.allowed_area || (turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		if(xeno_console.monkeys >= 1)
+			var/mob/living/carbon/human/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
 			if (!QDELETED(food))
-				food.LAssailant = WEAKREF(C)
-				X.monkeys--
-				X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
-				to_chat(C, span_notice("[X] now has [X.monkeys] monkeys stored."))
+				food.LAssailant = WEAKREF(user)
+				xeno_console.monkeys--
+				xeno_console.monkeys = round(xeno_console.monkeys, 0.1) //Prevents rounding errors
+				to_chat(user, span_notice("[xeno_console] now has [xeno_console.monkeys] monkeys stored."))
 		else
-			to_chat(C, span_warning("[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored."))
+			to_chat(user, span_warning("[xeno_console] needs to have at least 1 monkey stored. Currently has [xeno_console.monkeys] monkeys stored."))
 
-//Pick up monkey
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/M)
+///Used to pick up a dead monkey for recycling
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/target_mob)
 	SIGNAL_HANDLER
-	if(!ismonkey(M))
+	if(!ismonkey(target_mob))
 		return
-	if(!isturf(M.loc) || !GLOB.cameranet.checkTurfVis(M.loc))
+	if(!isturf(target_mob.loc) || !GLOB.cameranet.checkTurfVis(target_mob.loc))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
-	var/mob/living/C = user
-	var/mob/camera/ai_eye/remote/xenobio/E = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
-	var/area/mobarea = get_area(M.loc)
-	if(!X.connected_recycler)
-		to_chat(C, span_warning("There is no connected monkey recycler. Use a multitool to link one."))
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
+	var/area/mobarea = get_area(target_mob.loc)
+	if(!xeno_console.connected_recycler)
+		to_chat(user, span_warning("There is no connected monkey recycler. Use a multitool to link one."))
 		return
-	if(mobarea.name == E.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		if(!M.stat)
+	if(mobarea.name == remote_eye.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		if(!target_mob.stat)
 			return
-		M.visible_message(span_notice("[M] vanishes as [p_theyre()] reclaimed for recycling!"))
-		X.connected_recycler.use_power(500)
-		X.monkeys += connected_recycler.cube_production
-		X.monkeys = round(X.monkeys, 0.1) //Prevents rounding errors
-		qdel(M)
-		to_chat(C, span_notice("[X] now has [X.monkeys] monkeys available."))
+		target_mob.visible_message(span_notice("[target_mob] vanishes as [p_theyre()] reclaimed for recycling!"))
+		xeno_console.connected_recycler.use_power(500)
+		xeno_console.monkeys += connected_recycler.cube_production
+		xeno_console.monkeys = round(xeno_console.monkeys, 0.1) //Prevents rounding errors
+		qdel(target_mob)
+		to_chat(user, span_notice("[xeno_console] now has [xeno_console.monkeys] monkeys available."))

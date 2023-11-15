@@ -22,11 +22,11 @@
 	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "grey baby slime" //sets the icon in the map editor
 	///the color of the slime you're spawning.
-	var/slime_species = "grey"
+	var/slime_species = /datum/slime_type/grey
 
 /obj/effect/mob_spawn/corpse/slime/special(mob/living/simple_animal/slime/spawned_slime)
 	. = ..()
-	spawned_slime.set_colour(slime_species)
+	spawned_slime.set_slime_type(slime_species)
 
 ///dead facehuggers, great for xeno ruins so you can have a cool ruin without spiraling the entire round into xenomorph hell. also, this is a terrible terrible artifact of time
 /obj/effect/mob_spawn/corpse/facehugger

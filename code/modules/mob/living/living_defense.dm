@@ -271,26 +271,26 @@
 	return TRUE
 
 
-/mob/living/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
+/mob/living/attack_slime(mob/living/simple_animal/slime/attacking_slime, list/modifiers)
 	if(!SSticker.HasRoundStarted())
-		to_chat(M, "You cannot attack people before the game has started.")
+		to_chat(attacking_slime, "You cannot attack people before the game has started.")
 		return
 
-	if(M.buckled)
-		if(M in buckled_mobs)
-			M.Feedstop()
+	if(attacking_slime.buckled)
+		if(attacking_slime in buckled_mobs)
+			attacking_slime.stop_feeding()
 		return // can't attack while eating!
 
 	if(HAS_TRAIT(src, TRAIT_PACIFISM))
-		to_chat(M, span_warning("You don't want to hurt anyone!"))
+		to_chat(attacking_slime, span_warning("You don't want to hurt anyone!"))
 		return FALSE
 
 	if (stat != DEAD)
-		log_combat(M, src, "attacked")
-		M.do_attack_animation(src)
-		visible_message(span_danger("\The [M.name] glomps [src]!"), \
-						span_userdanger("\The [M.name] glomps you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, M)
-		to_chat(M, span_danger("You glomp [src]!"))
+		log_combat(attacking_slime, src, "attacked")
+		attacking_slime.do_attack_animation(src)
+		visible_message(span_danger("\The [attacking_slime.name] glomps [src]!"), \
+						span_userdanger("\The [attacking_slime.name] glomps you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacking_slime)
+		to_chat(attacking_slime, span_danger("You glomp [src]!"))
 		return TRUE
 
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
