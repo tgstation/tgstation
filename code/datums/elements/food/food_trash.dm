@@ -30,7 +30,15 @@
 
 /datum/element/food_trash/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
+	UnregisterSignal(target, list(
+		COMSIG_FOOD_CONSUMED,
+		COMSIG_ITEM_ATTACK_SELF,
+		COMSIG_FOOD_CROSSED,
+		COMSIG_ITEM_ON_GRIND,
+		COMSIG_ITEM_ON_JUICE,
+		COMSIG_ITEM_USED_AS_INGREDIENT,
+		COMSIG_ITEM_ON_COMPOSTED,
+		COMSIG_ITEM_SOLD_TO_CUSTOMER,))
 
 /datum/element/food_trash/proc/generate_trash(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER
@@ -40,13 +48,21 @@
 
 /datum/element/food_trash/proc/async_generate_trash(datum/source)
 	var/atom/edible_object = source
+	var/obj/item/trash_item
 
-	var/obj/item/trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())
+	if(istype(source, /obj/item/food/grown) && ispath(trash, /obj/item/food))
+		var/obj/item/food/grown/plant = source
+		trash_item = new trash(edible_object.drop_location())
+		trash_item.reagents?.set_all_reagents_purity(plant.seed.get_reagent_purity())
+	else
+		trash_item = generate_trash_procpath ? call(source, generate_trash_procpath)() : new trash(edible_object.drop_location())
 
 	if(isliving(edible_object.loc))
 		var/mob/living/food_holding_mob = edible_object.loc
 		food_holding_mob.dropItemToGround(edible_object)
 		food_holding_mob.put_in_hands(trash_item)
+
+	Detach(source)
 
 /datum/element/food_trash/proc/food_crossed(datum/source, mob/crosser, bitecount)
 	SIGNAL_HANDLER

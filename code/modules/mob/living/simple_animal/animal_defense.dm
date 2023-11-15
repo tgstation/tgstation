@@ -75,7 +75,7 @@
 			to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
 			log_combat(user, src, "disarmed")
 		else
-			var/damage = rand(15, 30)
+			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			visible_message(span_danger("[user] slashes at [src]!"), \
 							span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You slash at [src]!"))
@@ -98,20 +98,20 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
 
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
+/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
-		if(M.is_adult)
+		if(user.is_adult)
 			damage = rand(20, 35)
 		return attack_threshold_check(damage)
 
-/mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
-	if(M.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
+/mob/living/simple_animal/attack_drone(mob/living/basic/drone/user)
+	if(user.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 
-/mob/living/simple_animal/attack_drone_secondary(mob/living/simple_animal/drone/M)
-	if(M.combat_mode)
+/mob/living/simple_animal/attack_drone_secondary(mob/living/basic/drone/user)
+	if(user.combat_mode)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
@@ -131,12 +131,10 @@
 		return TRUE
 
 /mob/living/simple_animal/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+	. = ..()
+	if(!. || QDELETED(src))
 		return FALSE
 
-	. = ..()
-	if(QDELETED(src))
-		return
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
 			ex_act_devastate()
@@ -144,6 +142,8 @@
 			ex_act_heavy()
 		if (EXPLODE_LIGHT)
 			ex_act_light()
+
+	return TRUE
 
 /// Called when a devastating explosive acts on this mob
 /mob/living/simple_animal/proc/ex_act_devastate()
@@ -191,7 +191,7 @@
 			if (EMP_LIGHT)
 				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
 				apply_damage(maxHealth * 0.6)
-				Shake(5, 5, 1 SECONDS)
+				Shake(duration = 1 SECONDS)
 			if (EMP_HEAVY)
 				visible_message(span_danger("[src] suddenly bursts apart!"))
 				apply_damage(maxHealth)

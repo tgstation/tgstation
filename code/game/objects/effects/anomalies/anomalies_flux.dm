@@ -1,4 +1,3 @@
-
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
 	icon_state = "flux"
@@ -15,6 +14,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	apply_wibbly_filters(src)
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -49,3 +49,41 @@
 			explosion(src, heavy_impact_range = 1, light_impact_range = 4, flash_range = 6)
 		if(FLUX_NO_EXPLOSION)
 			new /obj/effect/particle_effect/sparks(loc)
+
+/// A flux anomaly which doesn't explode or produce a core
+/obj/effect/anomaly/flux/minor
+	explosive = FLUX_NO_EXPLOSION
+
+// We need to override the default arguments here to achieve the desired effect
+/obj/effect/anomaly/flux/minor/Initialize(mapload, new_lifespan, drops_core = FALSE, explosive = FLUX_NO_EXPLOSION)
+	return ..()
+
+///Bigger, meaner, immortal flux anomaly
+/obj/effect/anomaly/flux/big
+	immortal = TRUE
+	aSignal = null
+	shockdamage = 30
+
+	///range in whuich we zap
+	var/zap_range = 1
+	///strength of the zappy
+	var/zap_power = 2500
+	///the zappy flags
+	var/zap_flags = ZAP_GENERATES_POWER | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+
+/obj/effect/anomaly/flux/big/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+
+	transform *= 3
+
+/obj/effect/anomaly/flux/big/anomalyEffect()
+	. = ..()
+
+	tesla_zap(source = src, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
+
+/obj/effect/anomaly/flux/big/Bumped(atom/movable/bumpee)
+	. = ..()
+
+	if(isliving(bumpee))
+		var/mob/living/living = bumpee
+		living.dust()

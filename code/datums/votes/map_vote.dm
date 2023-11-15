@@ -1,6 +1,7 @@
 /datum/vote/map_vote
 	name = "Map"
 	message = "Vote for next round's map!"
+	count_method = VOTE_COUNT_METHOD_MULTI
 
 /datum/vote/map_vote/New()
 	. = ..()
@@ -19,7 +20,7 @@
 /datum/vote/map_vote/create_vote()
 	. = ..()
 	check_population(should_key_choices = FALSE)
-	if((length(choices) == 1) && EMERGENCY_ESCAPED_OR_ENDGAMED) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
+	if(length(choices) == 1) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
 		var/de_facto_winner = choices[1]
 		var/datum/map_config/change_me_out = global.config.maplist[de_facto_winner]
 		SSmapping.changemap(change_me_out)
@@ -66,19 +67,26 @@
 	message = initial(message)
 	return TRUE
 
-/// Before we create a vote, remove all maps from our choices that are outside of our population range. Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).
+/// Before we create a vote, remove all maps from our choices that are outside of our population range.
+/// Note that this can result in zero remaining choices for our vote, which is not ideal (but ultimately okay).
 /// Argument should_key_choices is TRUE, pass as FALSE in a context where choices are already keyed in a list.
 /datum/vote/map_vote/proc/check_population(should_key_choices = TRUE)
 	if(should_key_choices)
 		for(var/key in default_choices)
 			choices[key] = 0
 
+	var/filter_threshold = 0
+	if(SSticker.HasRoundStarted())
+		filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	else
+		filter_threshold = GLOB.clients.len
+
 	for(var/map in choices)
 		var/datum/map_config/possible_config = config.maplist[map]
-		if(possible_config.config_min_users > 0 && GLOB.clients.len < possible_config.config_min_users)
+		if(possible_config.config_min_users > 0 && filter_threshold < possible_config.config_min_users)
 			choices -= map
 
-		else if(possible_config.config_max_users > 0 && GLOB.clients.len > possible_config.config_max_users)
+		else if(possible_config.config_max_users > 0 && filter_threshold > possible_config.config_max_users)
 			choices -= map
 
 	return choices
@@ -110,3 +118,12 @@
 	SSmapping.map_voted = TRUE
 	if(SSmapping.map_vote_rocked)
 		SSmapping.map_vote_rocked = FALSE
+
+/proc/revert_map_vote()
+	var/datum/map_config/override_map = SSmapping.config
+	if(isnull(override_map))
+		return
+
+	SSmapping.changemap(override_map)
+	log_game("The next map has been reset to [override_map.map_name].")
+	send_to_playing_players(span_boldannounce("The next map is: [override_map.map_name]."))

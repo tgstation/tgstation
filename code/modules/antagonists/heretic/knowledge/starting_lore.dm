@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 
-	var/obj/item/organ/where_to_put_our_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+	var/obj/item/organ/where_to_put_our_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	// Our heart slot is not valid to put a heart
 	if(!is_valid_heart(where_to_put_our_heart))
 		where_to_put_our_heart = null
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		)
 
 		for(var/backup_slot in backup_organs)
-			var/obj/item/organ/look_for_backup = user.getorganslot(backup_slot)
+			var/obj/item/organ/look_for_backup = user.get_organ_slot(backup_slot)
 			// This backup slot is not a valid slot to put a heart
 			if(!is_valid_heart(look_for_backup))
 				continue
@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		to_chat(user, span_boldnotice("You don't have a heart, or any chest organs for that matter. You didn't get a Living Heart because of it."))
 
 /datum/heretic_knowledge/living_heart/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	if(our_living_heart)
 		qdel(our_living_heart.GetComponent(/datum/component/living_heart))
 
@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 	// Obviously you need a heart in your chest to do a ritual on your... heart
 	if(!our_living_heart)
 		loc.balloon_alert(user, "ritual failed, you have no [our_heretic.living_heart_organ_slot]!") // "you have no heart!"
@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	var/obj/item/organ/our_new_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+	var/obj/item/organ/our_new_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
 
 	// Our heart is robotic or synthetic - we need to replace it, and we fortunately should have one by here
 	if(!is_valid_heart(our_new_heart))
@@ -183,9 +183,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		return FALSE
 	if(!new_heart.useable)
 		return FALSE
-	if(new_heart.status == ORGAN_ROBOTIC)
-		return FALSE
-	if(new_heart.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING))
+	if(new_heart.organ_flags & (ORGAN_ROBOTIC|ORGAN_FAILING))
 		return FALSE
 
 	return TRUE
@@ -214,3 +212,79 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	spell_to_add = /datum/action/cooldown/spell/shadow_cloak
 	cost = 0
 	route = PATH_START
+
+/**
+ * Codex Cicatrixi is available at the start:
+ * This allows heretics to choose if they want to rush all the influences and take them stealthily, or
+ * Construct a codex and take what's left with more points.
+ * Another downside to having the book is strip searches, which means that it's not just a free nab, at least until you get exposed - and when you do, you'll probably need the faster drawing speed.
+ * Overall, it's a tradeoff between speed and stealth or power.
+ */
+/datum/heretic_knowledge/codex_cicatrix
+	name = "Codex Cicatrix"
+	desc = "Allows you to transmute a book, any unique pen (anything but generic pens), and your pick from any carcass (animal or human), leather, or hide to create a Codex Cicatrix. \
+		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
+		It can also be used to draw and remove transmutation runes easier, and as a spell focus in a pinch."
+	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
+		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
+	required_atoms = list(
+		/obj/item/book = 1,
+		/obj/item/pen = 1,
+		list(/mob/living, /obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide) = 1,
+	)
+	banned_atom_types = list(/obj/item/pen)
+	result_atoms = list(/obj/item/codex_cicatrix)
+	cost = 1
+	route = PATH_START
+	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
+
+/datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
+	if(item_path == /obj/item/pen)
+		return "unique type of pen"
+	return ..()
+
+/datum/heretic_knowledge/codex_cicatrix/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	for(var/mob/living/body in atoms)
+		if(body.stat != DEAD)
+			continue
+
+		selected_atoms += body
+		return TRUE
+	return FALSE
+
+/datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)
+	var/mob/living/body = locate() in selected_atoms
+	if(!body)
+		return
+	// A golem or an android doesn't have skin!
+	var/exterior_text = "skin"
+	// If carbon, it's the limb. If not, it's the body.
+	var/ripped_thing = body
+
+	// We will check if it's a carbon's body.
+	// If it is, we will damage a random bodypart, and check that bodypart for its body type, to select between 'skin' or 'exterior'.
+	if(iscarbon(body))
+		var/mob/living/carbon/carbody = body
+		var/obj/item/bodypart/bodypart = pick(carbody.bodyparts)
+		ripped_thing = bodypart
+		bodypart.receive_damage(25, sharpness = SHARP_EDGED)
+		if(!(bodypart.bodytype & BODYTYPE_ORGANIC))
+			exterior_text = "exterior"
+	else
+		// If it is not a carbon mob, we will just check biotypes and damage it directly.
+		if(body.mob_biotypes & (MOB_MINERAL|MOB_ROBOTIC))
+			exterior_text = "exterior"
+			body.apply_damage(25, BRUTE)
+
+	// Procure book for flavor text. This is why we call parent at the end.
+	var/obj/item/book/le_book = locate() in selected_atoms
+	if(!le_book)
+		stack_trace("Somehow, no book in codex cicatrix selected atoms! [english_list(selected_atoms)]")
+	playsound(body, 'sound/items/poster_ripped.ogg', 100, TRUE)
+	body.do_jitter_animation()
+	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
+	return ..()

@@ -13,6 +13,10 @@
 	///Take on the dna/preference from whoever we're gonna be inserted in
 	var/imprint_on_next_insertion = TRUE
 
+/datum/bodypart_overlay/mutant/get_overlay(layer, obj/item/bodypart/limb)
+	inherit_color(limb) // If draw_color is not set yet, go ahead and do that
+	return ..()
+
 ///Completely random image and color generation (obeys what a player can choose from)
 /datum/bodypart_overlay/mutant/proc/randomize_appearance()
 	randomize_sprite()
@@ -41,7 +45,7 @@
 ///Get the image we need to draw on the person. Called from get_overlay() which is called from _bodyparts.dm. Limb can be null
 /datum/bodypart_overlay/mutant/get_image(image_layer, obj/item/bodypart/limb)
 	if(!sprite_datum)
-		return
+		CRASH("Trying to call get_image() on [type] while it didn't have a sprite_datum. This shouldn't happen, report it as soon as possible.")
 
 	var/gender = (limb?.limb_gender == FEMALE) ? "f" : "m"
 	var/list/icon_state_builder = list()
@@ -59,7 +63,8 @@
 
 	return appearance
 
-/datum/bodypart_overlay/mutant/color_image(image/overlay, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
+
 	overlay.color = sprite_datum.color_src ? draw_color : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)
@@ -89,8 +94,13 @@
 
 ///Give the organ its color. Force will override the existing one.
 /datum/bodypart_overlay/mutant/proc/inherit_color(obj/item/bodypart/ownerlimb, force)
+	if(isnull(ownerlimb))
+		draw_color = null
+		return TRUE
+
 	if(draw_color && !force)
-		return
+		return FALSE
+
 	switch(color_source)
 		if(ORGAN_COLOR_OVERRIDE)
 			draw_color = override_color(ownerlimb.draw_color)
@@ -100,17 +110,29 @@
 			if(!ishuman(ownerlimb.owner))
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
-			draw_color = human_owner.hair_color
+			var/obj/item/bodypart/head/my_head = human_owner.get_bodypart(BODY_ZONE_HEAD) //not always the same as ownerlimb
+			//head hair color takes priority, owner hair color is a backup if we lack a head or something
+			if(my_head)
+				draw_color = my_head.hair_color
+			else
+				draw_color = human_owner.hair_color
+
 	return TRUE
 
 ///Sprite accessories are singletons, stored list("Big Snout" = instance of /datum/sprite_accessory/snout/big), so here we get that singleton
 /datum/bodypart_overlay/mutant/proc/fetch_sprite_datum(datum/sprite_accessory/accessory_path)
-	var/list/feature_list = get_global_feature_list()
-
-	return feature_list[initial(accessory_path.name)]
+	return fetch_sprite_datum_from_name(initial(accessory_path.name))
 
 ///Get the singleton from the sprite name
 /datum/bodypart_overlay/mutant/proc/fetch_sprite_datum_from_name(accessory_name)
 	var/list/feature_list = get_global_feature_list()
+	var/found = feature_list[accessory_name]
+	if(found)
+		return found
 
-	return feature_list[accessory_name]
+	if(!length(feature_list))
+		CRASH("External organ [type] returned no sprite datums from get_global_feature_list(), so no accessories could be found!")
+	else if(accessory_name)
+		CRASH("External organ [type] couldn't find sprite accessory [accessory_name]!")
+	else
+		CRASH("External organ [type] had fetch_sprite_datum called with a null accessory name!")

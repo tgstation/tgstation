@@ -5,7 +5,7 @@
 	base_icon_state = "durand"
 	movedelay = 4
 	max_integrity = 400
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_durand
 	max_temperature = 30000
 	force = 40
@@ -14,12 +14,13 @@
 	wreckage = /obj/structure/mecha_wreckage/durand
 	mech_type = EXOSUIT_MODULE_DURAND
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)
 	var/obj/durand_shield/shield
-
 
 /datum/armor/mecha_durand
 	melee = 40
@@ -157,7 +158,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 /obj/durand_shield //projectiles get passed to this when defense mode is enabled
 	name = "defense grid"
-	icon = 'icons/mecha/durand_shield.dmi'
+	icon = 'icons/mob/effects/durand_shield.dmi'
 	icon_state = "shield_null"
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	pixel_y = 4
@@ -177,12 +178,11 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 /obj/durand_shield/Initialize(mapload, chassis, plane, layer, dir)
 	. = ..()
 	src.chassis = chassis
-	src.layer = layer
-	SET_PLANE_EXPLICIT(src, plane, src)
+	src.layer = ABOVE_MOB_LAYER
+	SET_PLANE_IMPLICIT(src, plane)
 	setDir(dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(activate))
 	RegisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(shield_glide_size_update))
-
 
 /obj/durand_shield/Destroy()
 	UnregisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER)
@@ -233,16 +233,15 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	set_light_on(chassis.defense_mode)
 
 	if(chassis.defense_mode)
-		invisibility = 0
+		SetInvisibility(INVISIBILITY_NONE, id=type)
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
-		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE , l_power = 5, l_color = "#00FFFF")
 		icon_state = "shield"
+		resetdir(chassis, dir, dir) // to set the plane for the shield properly when it's turned on
 		RegisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE, PROC_REF(resetdir))
 	else
 		flick("shield_drop", src)
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
-		set_light(0)
 		icon_state = "shield_null"
 		addtimer(CALLBACK(src, PROC_REF(make_invisible)), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 		UnregisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE)
@@ -257,13 +256,14 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
  */
 /obj/durand_shield/proc/make_invisible()
 	if(!chassis.defense_mode)
-		invisibility = INVISIBILITY_MAXIMUM
+		RemoveInvisibility(type)
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
 	SIGNAL_HANDLER
+
 	setDir(newdir)
 
-/obj/durand_shield/take_damage()
+/obj/durand_shield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(!chassis)
 		qdel(src)
 		return

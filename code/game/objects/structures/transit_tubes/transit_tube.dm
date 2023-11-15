@@ -1,7 +1,7 @@
 
 /obj/structure/transit_tube
 	name = "transit tube"
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon = 'icons/obj/pipes_n_cables/transit_tube.dmi'
 	icon_state = "straight"
 	desc = "A transit tube for moving things around."
 	density = TRUE
@@ -61,7 +61,7 @@
 
 
 /obj/structure/transit_tube/proc/has_entrance(from_dir)
-	from_dir = turn(from_dir, 180)
+	from_dir = REVERSE_DIR(from_dir)
 
 	for(var/direction in tube_dirs)
 		if(direction == from_dir)

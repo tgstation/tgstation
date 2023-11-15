@@ -3,7 +3,7 @@
  */
 /obj/item/implant
 	name = "implant"
-	icon = 'icons/obj/implants.dmi'
+	icon = 'icons/hud/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE
@@ -37,12 +37,10 @@
 	if(isslime(target))
 		return TRUE
 
-	if(isanimal(target))
-		var/mob/living/simple_animal/animal = target
-		// Robots and most non-organics aren't healable.
-		return animal.healable
+	if(!isanimal_or_basicmob(target))
+		return TRUE
 
-	return TRUE
+	return !(target.mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL|MOB_SPIRIT))
 
 /**
  * What does the implant do upon injection?

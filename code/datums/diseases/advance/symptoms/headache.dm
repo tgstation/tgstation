@@ -9,6 +9,7 @@
 /datum/symptom/headache
 	name = "Headache"
 	desc = "The virus causes inflammation inside the brain, causing constant headaches."
+	illness = "Brain Freeze"
 	stealth = -1
 	resistance = 4
 	stage_speed = 2

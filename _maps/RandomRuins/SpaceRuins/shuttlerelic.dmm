@@ -45,7 +45,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/powered)
 "k" = (
-/mob/living/simple_animal/hostile/retaliate/spaceman,
+/mob/living/basic/spaceman,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "l" = (
@@ -70,7 +70,7 @@
 /obj/structure/chair/old{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/retaliate/spaceman,
+/mob/living/basic/spaceman,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "t" = (

@@ -3,13 +3,13 @@
 #define SEND_PRESSURE (0.05*ONE_ATMOSPHERE)
 
 /obj/machinery/disposal
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	density = TRUE
 	armor_type = /datum/armor/machinery_disposal
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
-	obj_flags = CAN_BE_HIT | USES_TGUI
+	obj_flags = CAN_BE_HIT
 
 	/// The internal air reservoir of the disposal
 	var/datum/gas_mixture/air_contents
@@ -62,6 +62,7 @@
 	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
+		COMSIG_TURF_RECEIVE_SWEEPED_ITEMS = PROC_REF(ready_for_trash),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
@@ -87,8 +88,9 @@
 		trunk = null
 	return ..()
 
-/obj/machinery/disposal/handle_atom_del(atom/A)
-	if(A == stored && !QDELETED(src))
+/obj/machinery/disposal/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == stored && !QDELETED(src))
 		stored = null
 		deconstruct(FALSE)
 
@@ -115,11 +117,11 @@
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
 		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=0))
+			if(!I.tool_start_check(user, amount=1))
 				return
 
 			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
-			if(I.use_tool(src, user, 20, volume=100) && panel_open)
+			if(I.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
 				to_chat(user, span_notice("You slice the floorweld off \the [src]."))
 				deconstruct()
 			return
@@ -134,24 +136,25 @@
 		return ..()
 
 /// The regal rat spawns ratty treasures from the disposal
-/obj/machinery/disposal/proc/rat_rummage(mob/living/simple_animal/hostile/regalrat/king)
+/obj/machinery/disposal/proc/rat_rummage(mob/living/basic/regal_rat/king)
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
-	if (do_mob(king, src, 2 SECONDS, interaction_key = "regalrat"))
-		var/loot = rand(1,100)
-		switch(loot)
-			if(1 to 5)
-				to_chat(king, span_notice("You find some leftover coins. More for the royal treasury!"))
-				var/pickedcoin = pick(GLOB.ratking_coins)
-				for(var/i = 1 to rand(1,3))
-					new pickedcoin(get_turf(king))
-			if(6 to 33)
-				king.say(pick("Treasure!","Our precious!","Cheese!"))
-				to_chat(king, span_notice("Score! You find some cheese!"))
-				new /obj/item/food/cheese/wedge(get_turf(king))
-			else
-				var/pickedtrash = pick(GLOB.ratking_trash)
-				to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
-				new pickedtrash(get_turf(king))
+	if (!do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
+		return
+	var/loot = rand(1,100)
+	switch(loot)
+		if(1 to 5)
+			to_chat(king, span_notice("You find some leftover coins. More for the royal treasury!"))
+			var/pickedcoin = pick(GLOB.ratking_coins)
+			for(var/i = 1 to rand(1,3))
+				new pickedcoin(get_turf(king))
+		if(6 to 33)
+			king.say(pick("Treasure!","Our precious!","Cheese!"), ignore_spam = TRUE, forced = "regal rat rummaging")
+			to_chat(king, span_notice("Score! You find some cheese!"))
+			new /obj/item/food/cheese/wedge(get_turf(king))
+		else
+			var/pickedtrash = pick(GLOB.ratking_trash)
+			to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
+			new pickedtrash(get_turf(king))
 
 /// Moves an item into the diposal bin
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
@@ -185,7 +188,7 @@
 		user.visible_message(span_warning("[user] starts climbing into [src]."), span_notice("You start climbing into [src]..."))
 	else
 		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
-	if(do_mob(user, target, 20))
+	if(do_after(user, 2 SECONDS, target))
 		if (!loc)
 			return
 		target.forceMove(src)
@@ -277,11 +280,13 @@
 	var/turf/T = loc
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(stored)
-			stored.forceMove(T)
-			src.transfer_fingerprints_to(stored)
-			stored.set_anchored(FALSE)
-			stored.set_density(TRUE)
-			stored.update_appearance()
+			var/obj/structure/disposalconstruct/construct = stored
+			stored = null
+			construct.forceMove(T)
+			transfer_fingerprints_to(construct)
+			construct.set_anchored(FALSE)
+			construct.set_density(TRUE)
+			construct.update_appearance()
 	for(var/atom/movable/AM in src) //out, out, darned crowbar!
 		AM.forceMove(T)
 	..()
@@ -319,11 +324,9 @@
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/T = I
+		var/obj/item/storage/bag/trash/bag = I
 		to_chat(user, span_warning("You empty the bag."))
-		for(var/obj/item/O in T.contents)
-			T.atom_storage.attempt_remove(O,src)
-		T.update_appearance()
+		bag.atom_storage.remove_all(src)
 		update_appearance()
 	else
 		return ..()
@@ -383,7 +386,7 @@
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
-		if(HAS_TRAIT(throwingdatum.thrower, TRAIT_THROWINGARM) || prob(75))
+		if((throwingdatum.thrower && HAS_TRAIT(throwingdatum.thrower, TRAIT_THROWINGARM)) || prob(75))
 			AM.forceMove(src)
 			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()
@@ -439,7 +442,7 @@
 
 //timed process
 //charge the gas reservoir and perform flush if ready
-/obj/machinery/disposal/bin/process(delta_time)
+/obj/machinery/disposal/bin/process(seconds_per_tick)
 	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
@@ -471,7 +474,7 @@
 		return
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	var/transfer_moles = 0.05 * delta_time * (pressure_delta*air_contents.volume)/(env.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_moles = 0.05 * seconds_per_tick * (pressure_delta*air_contents.volume)/(env.temperature * R_IDEAL_GAS_EQUATION)
 
 	//Actually transfer the gas
 	var/datum/gas_mixture/removed = env.remove(transfer_moles)
@@ -545,10 +548,13 @@
 	return
 
 /// Handles the signal for the rat king looking inside the disposal
-/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/simple_animal/hostile/regalrat/king)
+/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER
+	if(king.combat_mode)
+		return
 
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)
+	return COMPONENT_RAT_INTERACTED
 
 /// Handles a carbon mob getting shoved into the disposal bin
 /obj/machinery/disposal/proc/trash_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
@@ -560,5 +566,21 @@
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
-	log_combat(src, target, "shoved", "into [src] (disposal bin)")
+	log_combat(shover, target, "shoved", "into [src] (disposal bin)")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
+/obj/machinery/disposal/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
+	SIGNAL_HANDLER
+	if(!items_to_sweep)
+		return
+	for (var/obj/item/garbage in items_to_sweep)
+		garbage.forceMove(src)
+
+	items_to_sweep.Cut()
+
+	update_appearance()
+	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
+	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+
+#undef SEND_PRESSURE

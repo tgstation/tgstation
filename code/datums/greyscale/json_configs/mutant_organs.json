@@ -1,4 +1,18 @@
 {
+	"appendix": [
+		{
+			"type": "icon_state",
+			"icon_state": "appendix",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "appendix_insides",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
 	"brain": [
 		{
 			"type": "icon_state",

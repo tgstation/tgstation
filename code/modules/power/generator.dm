@@ -35,7 +35,7 @@
 
 	var/L = min(round(lastgenlev / 100000), 11)
 	if(L != 0)
-		. += mutable_appearance('icons/obj/power.dmi', "teg-op[L]")
+		. += mutable_appearance('icons/obj/machines/engine/other.dmi', "teg-op[L]")
 	if(hot_circ && cold_circ)
 		. += "teg-oc[lastcirc]"
 
@@ -228,3 +228,5 @@
 	if(cold_circ)
 		cold_circ.generator = null
 		cold_circ = null
+
+#undef GENRATE

@@ -39,9 +39,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/caravan/syndicate3)
 "dt" = (
@@ -84,11 +82,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/machinery/light/small/directional/west,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -100,14 +94,8 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -126,11 +114,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/syndicate3{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -141,10 +125,7 @@
 /area/shuttle/ruin/caravan/syndicate3)
 "kc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "kk" = (
@@ -183,22 +164,6 @@
 "nv" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
-"nA" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/shuttle/ruin/caravan/syndicate3)
-"ox" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/west,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
-/area/shuttle/ruin/caravan/syndicate3)
 "oW" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/button/door/directional/west{
@@ -209,6 +174,14 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/ruin/caravan/syndicate3)
+"pY" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "rQ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -229,17 +202,28 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
+"ts" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/iron/dark,
+/area/shuttle/ruin/caravan/syndicate3)
 "uv" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged/smg/pilot{
+/mob/living/basic/trooper/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "uI" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/ruin/caravan/syndicate3)
+"wl" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "wS" = (
 /obj/machinery/door/airlock/hatch{
@@ -253,19 +237,22 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/syndicate3)
+"zB" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/pod/dark,
+/area/shuttle/ruin/caravan/syndicate3)
 "zP" = (
 /obj/machinery/computer/crew{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -273,18 +260,8 @@
 /obj/machinery/computer/shuttle/caravan/syndicate3{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/ruin/caravan/syndicate3)
-"ES" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -317,11 +294,8 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/syndicate3)
 "Ib" = (
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
@@ -344,26 +318,8 @@
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/dark,
-/area/shuttle/ruin/caravan/syndicate3)
-"Jm" = (
-/obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/small/directional/west,
-/obj/machinery/power/apc/syndicate{
-	dir = 8;
-	name = "Syndicate Drop Ship APC";
-	pixel_x = -25
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Jv" = (
 /turf/template_noop,
@@ -401,20 +357,15 @@
 "KW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/ruin/caravan/syndicate3)
-"Li" = (
+"LF" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/airalarm/syndicate{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Mc" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Nn" = (
@@ -455,19 +406,16 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "RT" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "SU" = (
@@ -479,8 +427,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Te" = (
@@ -516,11 +464,7 @@
 /obj/item/storage/medkit/regular,
 /obj/item/assembly/flash/handheld,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -572,16 +516,16 @@ uI
 "}
 (4,1,1) = {"
 uI
-Jm
+zB
 RT
 nv
 Mc
-ox
+pY
 uI
 "}
 (5,1,1) = {"
 uI
-Li
+LF
 Ib
 iN
 Mc
@@ -618,7 +562,7 @@ UI
 (9,1,1) = {"
 bh
 oW
-nA
+wl
 iN
 Vp
 JT
@@ -645,7 +589,7 @@ uI
 (12,1,1) = {"
 uI
 gv
-ES
+ts
 iN
 KN
 gz

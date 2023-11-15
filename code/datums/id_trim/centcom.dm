@@ -193,3 +193,9 @@
 	. = ..()
 
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
+
+/datum/id_trim/centcom/ert/militia
+	assignment = "Frontier Militia"
+
+/datum/id_trim/centcom/ert/militia/general
+	assignment = "Frontier Militia General"

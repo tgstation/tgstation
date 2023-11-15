@@ -8,6 +8,8 @@
 
 	hide = FALSE
 
+	has_gas_visuals = FALSE
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/Initialize(mapload)
 	. = ..()
 
@@ -47,7 +49,7 @@
 			buckled_mob.bodytemperature = avg_temp
 		pipe_air.temperature = avg_temp
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/process(delta_time)
+/obj/machinery/atmospherics/pipe/heat_exchanging/process(seconds_per_tick)
 	if(!parent)
 		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
 
@@ -76,7 +78,7 @@
 	var/heat_limit = 1000
 	if(pipe_air.temperature > heat_limit + 1)
 		for(var/mob/living/buckled_mob as anything in buckled_mobs)
-			buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
+			buckled_mob.apply_damage(seconds_per_tick * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/update_pipe_icon()
 	return

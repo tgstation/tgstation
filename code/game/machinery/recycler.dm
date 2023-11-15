@@ -3,7 +3,7 @@
 /obj/machinery/recycler
 	name = "recycler"
 	desc = "A large crushing machine used to recycle small items inefficiently. There are lights on the side."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
@@ -12,11 +12,11 @@
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
 	var/bloody = FALSE
-	var/eat_dir = WEST
 	var/amount_produced = 50
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
 	var/item_recycle_sound = 'sound/items/welder.ogg'
+	var/datum/component/material_container/materials
 
 /obj/machinery/recycler/Initialize(mapload)
 	var/list/allowed_materials = list(
@@ -32,7 +32,8 @@
 		/datum/material/titanium,
 		/datum/material/bluespace
 	)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	materials = AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/butchering/recycler, \
 	speed = 0.1 SECONDS, \
 	effectiveness = amount_produced, \
@@ -50,11 +51,15 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/machinery/recycler/Destroy()
+	materials = null
+	return ..()
+
 /obj/machinery/recycler/RefreshParts()
 	. = ..()
 	var/amt_made = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		amt_made = 12.5 * manipulator.tier //% of materials salvaged
+	for(var/datum/stock_part/servo/servo in component_parts)
+		amt_made = 12.5 * servo.tier //% of materials salvaged
 	amount_produced = min(50, amt_made) + 50
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
@@ -76,22 +81,23 @@
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(I, close_after_pry = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 
-/obj/machinery/recycler/emag_act(mob/user)
+/obj/machinery/recycler/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, span_notice("You use the cryptographic sequencer on [src]."))
+	balloon_alert(user, "safeties disabled")
+	return FALSE
 
 /obj/machinery/recycler/update_icon_state()
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
@@ -104,12 +110,13 @@
 	. = ..()
 	if(!anchored)
 		return
-	if(border_dir == eat_dir)
+	if(border_dir == dir)
 		return TRUE
 
-/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/AM)
+/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(eat), AM)
+
+	INVOKE_ASYNC(src, PROC_REF(eat), enterer)
 
 /obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -122,65 +129,75 @@
 		return //I don't know how you called Crossed() but stop it.
 	if(morsel.resistance_flags & INDESTRUCTIBLE)
 		return
+	if(morsel.flags_1 & HOLOGRAM_1)
+		visible_message(span_notice("[morsel] fades away!"))
+		qdel(morsel)
+		return
 
-	var/list/to_eat = morsel.get_all_contents()
+	var/list/to_eat = (issilicon(morsel) ? list(morsel) : morsel.get_all_contents()) //eating borg contents leads to many bad things
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
 	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
 
-	for(var/i in to_eat)
-		var/atom/movable/AM = i
-		if(isitem(AM))
-			var/obj/item/bodypart/head/as_head = AM
-			var/obj/item/mmi/as_mmi = AM
-			if(istype(AM, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+	for(var/thing in to_eat)
+		var/obj/as_object = thing
+		if(istype(as_object))
+			if(as_object.resistance_flags & INDESTRUCTIBLE)
+				if(!isturf(as_object.loc) && !isliving(as_object.loc))
+					as_object.forceMove(loc) // so you still cant shove it in a locker
+				continue
+			var/obj/item/bodypart/head/as_head = thing
+			var/obj/item/mmi/as_mmi = thing
+			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
-			nom += AM
-		else if(isliving(AM))
+			nom += thing
+		else if(isliving(thing))
 			living_detected = TRUE
-			crunchy_nom += AM
+			crunchy_nom += thing
 
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
 				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
+					if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
+						break
 					crush_living(CRUNCH)
 					use_power(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
-	for(var/nommed in nom)
-		recycle_item(nommed)
-		use_power(active_power_usage)
-	if(nom.len && sound)
-		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
-	if(not_eaten)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
-	if(!ismob(morsel))
-		qdel(morsel)
-	else // Lets not qdel a mob, yes?
-		for(var/iterable in morsel.contents)
-			var/atom/movable/content = iterable
-			qdel(content)
 
-/obj/machinery/recycler/proc/recycle_item(obj/item/I)
-	var/obj/item/grown/log/L = I
-	if(istype(L))
+	/**
+	 * we process the list in reverse so that atoms without parents/contents are deleted first & their parents are deleted next & so on.
+	 * this is the reverse order in which get_all_contents() returns it's list
+	 * if we delete an atom containing stuff then all its stuff are deleted with it as well so we will end recycling deleted items down the list and gain nothing from them
+	 */
+	for(var/i = length(nom); i >= 1; i--)
+		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
+			break
+		use_power(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+	if(nom.len && sound)
+		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
+	if(not_eaten)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten * 5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+
+/obj/machinery/recycler/proc/recycle_item(obj/item/weapon)
+	. = FALSE
+	var/obj/item/grown/log/wood = weapon
+	if(istype(wood))
 		var/seed_modifier = 0
-		if(L.seed)
-			seed_modifier = round(L.seed.potency / 25)
-		new L.plank_type(loc, 1 + seed_modifier)
-		qdel(I)
+		if(wood.seed)
+			seed_modifier = round(wood.seed.potency / 25)
+		new wood.plank_type(loc, 1 + seed_modifier)
+		. = TRUE
 	else
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/material_amount = materials.get_item_material_amount(I, BREAKDOWN_FLAGS_RECYCLER)
-		if(!material_amount)
-			return
-		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
-		qdel(I)
-		materials.retrieve_all()
+		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+		if(retrieved > 0) //item was salvaged i.e. deleted
+			materials.retrieve_all()
+			return TRUE
+	qdel(weapon)
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
@@ -194,7 +211,6 @@
 	update_appearance()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
-
 	L.forceMove(loc)
 
 	if(issilicon(L))

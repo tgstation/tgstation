@@ -22,7 +22,7 @@
 		return
 	RegisterSignal(implant, COMSIG_IMPLANT_IMPLANTED, PROC_REF(on_implant_implantation))
 	RegisterSignal(implant, COMSIG_IMPLANT_REMOVED, PROC_REF(on_implant_removal))
-	RegisterSignal(implant, COMSIG_PARENT_QDELETING, PROC_REF(on_implant_destruction))
+	RegisterSignal(implant, COMSIG_QDELETING, PROC_REF(on_implant_destruction))
 
 	implants += implant
 

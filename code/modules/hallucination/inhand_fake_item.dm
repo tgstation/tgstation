@@ -129,17 +129,17 @@
 		stack_trace("[type] was created without a parent hallucination.")
 		return INITIALIZE_HINT_QDEL
 
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(parent_deleting))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_deleting))
 	src.parent = parent
 
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
 /obj/item/hallucinated/Destroy(force)
-	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(parent, COMSIG_QDELETING)
 	parent = null
 	return ..()
 
-/// Signal proc for [COMSIG_PARENT_QDELETING], if our associated hallucination deletes, we should too
+/// Signal proc for [COMSIG_QDELETING], if our associated hallucination deletes, we should too
 /obj/item/hallucinated/proc/parent_deleting(datum/source)
 	SIGNAL_HANDLER
 

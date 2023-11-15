@@ -34,7 +34,7 @@
 	/// T-ray scan range.
 	var/range = 4
 
-/obj/item/mod/module/t_ray/on_active_process(delta_time)
+/obj/item/mod/module/t_ray/on_active_process(seconds_per_tick)
 	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
 
 ///Magnetic Stability - Gives the user a slowdown but makes them negate gravity and be immune to slips.
@@ -52,19 +52,17 @@
 	cooldown_time = 0.5 SECONDS
 	/// Slowdown added onto the suit.
 	var/slowdown_active = 0.5
+	/// A list of traits to add to the wearer when we're active (see: Magboots)
+	var/list/active_traits = list(TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE, TRAIT_NEGATES_GRAVITY)
 
 /obj/item/mod/module/magboot/on_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	mod.wearer.add_traits(active_traits, MOD_TRAIT)
 	mod.slowdown += slowdown_active
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	mod.wearer.remove_traits(active_traits, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/magboot/advanced
@@ -81,7 +79,7 @@
 		these are only capable of working in zero-gravity environments, a blessing to some Engineers."
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
-	complexity = 3
+	complexity = 2
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
@@ -109,7 +107,6 @@
 	icon_state = "tether_projectile"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
-	nodamage = TRUE
 	range = 10
 	hitsound = 'sound/weapons/batonextend.ogg'
 	hitsound_wall = 'sound/weapons/batonextend.ogg'
@@ -121,9 +118,9 @@
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
 		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE)
-	..()
+	return ..()
 
-/obj/projectile/tether/on_hit(atom/target)
+/obj/projectile/tether/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(firer)
 		firer.throw_at(target, 10, 1, firer, FALSE, FALSE, null, MOVE_FORCE_NORMAL, TRUE)
@@ -162,10 +159,10 @@
 
 /obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
-	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
-	.["usertoxins"] = mod.wearer?.getToxLoss() || 0
-	.["usermaxtoxins"] = mod.wearer?.getMaxHealth() || 0
-	.["threatlevel"] = perceived_threat_level
+	.["is_user_irradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : FALSE
+	.["background_radiation_level"] = perceived_threat_level
+	.["health_max"] = mod.wearer?.getMaxHealth() || 0
+	.["loss_tox"] = mod.wearer?.getToxLoss() || 0
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER

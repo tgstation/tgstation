@@ -33,13 +33,6 @@
 		window_colour = using_mat.greyscale_colors
 
 /**
- * Returns a subtype of dimensional theme.
- */
-/datum/dimension_theme/proc/get_random_theme()
-	var/subtype = pick(subtypesof(/datum/dimension_theme))
-	return new subtype()
-
-/**
  * Applies themed transformation to the provided turf.
  *
  * Arguments
@@ -105,7 +98,7 @@
 /datum/dimension_theme/proc/transform_floor(turf/open/floor/affected_floor)
 	if (replace_floors.len == 0)
 		return FALSE
-	affected_floor.ChangeTurf(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
+	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
 /**
@@ -183,7 +176,7 @@
  * * affected_turf - Turf to transform.
  */
 /datum/dimension_theme/proc/apply_materials(turf/affected_turf)
-	var/list/custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
+	var/list/custom_materials = list(GET_MATERIAL_REF(material) = SHEET_MATERIAL_AMOUNT)
 
 	if (istype(affected_turf, /turf/open/floor/material) || istype(affected_turf, /turf/closed/wall/material))
 		affected_turf.set_custom_materials(custom_materials)
@@ -191,6 +184,7 @@
 		if (!permit_replace_material(thing))
 			continue
 		thing.set_custom_materials(custom_materials)
+		thing.update_appearance(updates = UPDATE_ICON)
 
 #undef PERMITTED_MATERIAL_REPLACE_TYPES
 
@@ -231,7 +225,7 @@
 	sound = 'sound/items/eatfood.ogg'
 
 /datum/dimension_theme/natural
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "map_flower"
 	window_colour = "#00f7ff"
 	replace_floors = list(/turf/open/floor/grass = 1)
@@ -242,7 +236,7 @@
 		/obj/structure/table = list(/obj/structure/table/wood = 5, /obj/structure/table/wood/fancy = 1),)
 
 /datum/dimension_theme/bamboo
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "bamboo"
 	replace_floors = list(/turf/open/floor/bamboo = 1)
 	replace_walls = /turf/closed/wall/mineral/bamboo
@@ -279,7 +273,7 @@
 	replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
 
 /datum/dimension_theme/glass
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "small"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)

@@ -5,9 +5,10 @@
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
 	setup_mood()
-
-	// All start without eyes, and get them via set species
-	become_blind(NO_EYES)
+	// This needs to be called very very early in human init (before organs / species are created at the minimum)
+	setup_organless_effects()
+	// Physiology needs to be created before species, as some species modify physiology
+	setup_physiology()
 
 	create_dna()
 	dna.species.create_fresh_body(src)
@@ -17,8 +18,6 @@
 	set_species(dna.species.type)
 
 	prepare_huds() //Prevents a nasty runtime on human init
-
-	physiology = new()
 
 	. = ..()
 
@@ -34,6 +33,9 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
 
+/mob/living/carbon/human/proc/setup_physiology()
+	physiology = new()
+
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
@@ -41,14 +43,22 @@
 		return
 	mob_mood = new /datum/mood(src)
 
+/// This proc is for holding effects applied when a mob is missing certain organs
+/// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
+/// Gaining said organs removes these effects
+/mob/living/carbon/human/proc/setup_organless_effects()
+	// All start without eyes, and get them via set species
+	become_blind(NO_EYES)
+	// Mobs cannot taste anything without a tongue; the tongue organ removes this on Insert
+	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
+
 /mob/living/carbon/human/proc/setup_human_dna()
-	//initialize dna. for spawned humans; overwritten by other code
-	randomize_human(src)
-	dna.initialize_dna()
+	randomize_human(src, randomize_mutations = TRUE)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
-	QDEL_LIST(bioware)
+	if(biowares)
+		QDEL_LIST(biowares)
 	GLOB.human_list -= src
 
 	if (mob_mood)
@@ -59,7 +69,7 @@
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	if(stat != CONSCIOUS || levels > 1) // you're not The One
 		return ..()
-	var/obj/item/organ/external/wings/gliders = getorgan(/obj/item/organ/external/wings)
+	var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 	if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
 		visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
 						span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
@@ -173,8 +183,25 @@
 			if(!(ACCESS_MEDICAL in access))
 				to_chat(human_user, span_warning("ERROR: Invalid access"))
 				return
+
+			if(href_list["physical_status"])
+				var/health_status = tgui_input_list(human_user, "Specify a new physical status for this person.", "Medical HUD", PHYSICAL_STATUSES, target_record.physical_status)
+				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+					return
+
+				target_record.physical_status = health_status
+				return
+
+			if(href_list["mental_status"])
+				var/health_status = tgui_input_list(human_user, "Specify a new mental status for this person.", "Medical HUD", MENTAL_STATUSES, target_record.mental_status)
+				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
+					return
+
+				target_record.mental_status = health_status
+				return
+
 			if(href_list["quirk"])
-				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL)
+				var/quirkstring = get_quirk_string(TRUE, CAT_QUIRK_ALL, from_scan = TRUE)
 				if(quirkstring)
 					to_chat(human_user,  "<span class='notice ml-1'>Detected physiological traits:</span>\n<span class='notice ml-2'>[quirkstring]</span>")
 				else
@@ -209,12 +236,18 @@
 				to_chat(human_user, span_warning("ERROR: Unable to locate data core entry for target."))
 				return
 			if(href_list["status"])
-				var/setcriminal = tgui_input_list(human_user, "Specify a new criminal status for this person.", "Security HUD", WANTED_STATUSES(), target_record.wanted_status)
-				if(!setcriminal || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
+				var/new_status = tgui_input_list(human_user, "Specify a new criminal status for this person.", "Security HUD", WANTED_STATUSES(), target_record.wanted_status)
+				if(!new_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
-				investigate_log("has been set from [target_record.wanted_status] to [setcriminal] by [key_name(human_user)].", INVESTIGATE_RECORDS)
-				target_record.wanted_status = setcriminal
-				sec_hud_set_security_status()
+
+				if(new_status == WANTED_ARREST)
+					var/datum/crime/new_crime = new(author = human_user, details = "Set by SecHUD.")
+					target_record.crimes += new_crime
+					investigate_log("SecHUD auto-crime | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+
+				investigate_log("has been set from [target_record.wanted_status] to [new_status] via HUD by [key_name(human_user)].", INVESTIGATE_RECORDS)
+				target_record.wanted_status = new_status
+				update_matching_security_huds(target_record.name)
 				return
 
 			if(href_list["view"])
@@ -224,14 +257,19 @@
 					return
 				to_chat(human_user, "<b>Name:</b> [target_record.name]")
 				to_chat(human_user, "<b>Criminal Status:</b> [target_record.wanted_status]")
-				to_chat(human_user, "<b>Rapsheet:</b>")
-				for(var/datum/crime/crime in target_record.crimes)
-					to_chat(human_user, "<b>Crime:</b> [crime.name]")
-					to_chat(human_user, "<b>Details:</b> [crime.details]")
-					to_chat(human_user, "Added by [crime.author] at [crime.time]")
-					to_chat(human_user, "----------")
 				to_chat(human_user, "<b>Citations:</b> [length(target_record.citations)]")
-				to_chat(human_user, "<b>Note:</b> [target_record.security_note || "None."]")
+				to_chat(human_user, "<b>Note:</b> [target_record.security_note || "None"]")
+				to_chat(human_user, "<b>Rapsheet:</b> [length(target_record.crimes)] incidents")
+				if(length(target_record.crimes))
+					for(var/datum/crime/crime in target_record.crimes)
+						if(!crime.valid)
+							to_chat(human_user, span_notice("-- REDACTED --"))
+							continue
+
+						to_chat(human_user, "<b>Crime:</b> [crime.name]")
+						to_chat(human_user, "<b>Details:</b> [crime.details]")
+						to_chat(human_user, "Added by [crime.author] at [crime.time]")
+				to_chat(human_user, "----------")
 
 				return
 
@@ -245,7 +283,7 @@
 				var/datum/crime/citation/new_citation = new(name = citation_name, author = allowed_access, fine = fine)
 
 				target_record.citations += new_citation
-				new_citation.alert_owner(target_record.name, "You have been fined [fine] credits for '[citation_name]'. Fines may be paid at security.")
+				new_citation.alert_owner(usr, src, target_record.name, "You have been fined [fine] credits for '[citation_name]'. Fines may be paid at security.")
 				investigate_log("New Citation: <strong>[citation_name]</strong> Fine: [fine] | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
 				SSblackbox.ReportCitation(REF(new_citation), human_user.ckey, human_user.real_name, target_record.name, citation_name, fine)
 
@@ -296,7 +334,7 @@
 	var/obj/item/bodypart/the_part = isbodypart(target_zone) ? target_zone : get_bodypart(check_zone(target_zone)) //keep these synced
 	// Loop through the clothing covering this bodypart and see if there's any thiccmaterials
 	if(!(injection_flags & INJECT_CHECK_PENETRATE_THICK))
-		for(var/obj/item/clothing/iter_clothing in clothingonpart(the_part))
+		for(var/obj/item/clothing/iter_clothing in get_clothing_on_part(the_part))
 			if(iter_clothing.clothing_flags & THICKMATERIAL)
 				. = FALSE
 				break
@@ -382,10 +420,10 @@
 //Used for new human mobs created by cloning/goleming/podding
 /mob/living/carbon/human/proc/set_cloned_appearance()
 	if(gender == MALE)
-		facial_hairstyle = "Full Beard"
+		set_facial_hairstyle("Full Beard", update = FALSE)
 	else
-		facial_hairstyle = "Shaved"
-	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+		set_facial_hairstyle("Shaved", update = FALSE)
+	set_hairstyle(pick("Bedhead", "Bedhead 2", "Bedhead 3"), update = FALSE)
 	underwear = "Nude"
 	update_body(is_creating = TRUE)
 
@@ -424,7 +462,7 @@
 			to_chat(src, span_warning("Remove [p_their()] mask first!"))
 			return FALSE
 
-		if (!getorganslot(ORGAN_SLOT_LUNGS))
+		if (!get_organ_slot(ORGAN_SLOT_LUNGS))
 			to_chat(src, span_warning("You have no lungs to breathe with, so you cannot perform CPR!"))
 			return FALSE
 
@@ -435,7 +473,7 @@
 		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
 						span_notice("You try to perform CPR on [target.name]... Hold still!"))
 
-		if (!do_mob(src, target, time = panicking ? CPR_PANIC_SPEED : (3 SECONDS)))
+		if (!do_after(src, delay = panicking ? CPR_PANIC_SPEED : (3 SECONDS), target = target))
 			to_chat(src, span_warning("You fail to perform CPR on [target]!"))
 			return FALSE
 
@@ -443,12 +481,15 @@
 			return FALSE
 
 		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
-		add_mood_event("saved_life", /datum/mood_event/saved_life)
+		if(HAS_MIND_TRAIT(src, TRAIT_MORBID))
+			add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
+		else
+			add_mood_event("saved_life", /datum/mood_event/saved_life)
 		log_combat(src, target, "CPRed")
 
 		if (HAS_TRAIT(target, TRAIT_NOBREATH))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... which is a sensation you don't recognise..."))
-		else if (!target.getorganslot(ORGAN_SLOT_LUNGS))
+		else if (!target.get_organ_slot(ORGAN_SLOT_LUNGS))
 			to_chat(target, span_unconscious("You feel a breath of fresh air... but you don't feel any better..."))
 		else
 			target.adjustOxyLoss(-min(target.getOxyLoss(), 7))
@@ -492,30 +533,6 @@
 
 	return TRUE
 
-/**
- * Used to update the makeup on a human and apply/remove lipstick traits, then store/unstore them on the head object in case it gets severed
- */
-/mob/living/carbon/human/proc/update_lips(new_style, new_colour, apply_trait)
-	lip_style = new_style
-	lip_color = new_colour
-	update_body()
-
-	var/obj/item/bodypart/head/hopefully_a_head = get_bodypart(BODY_ZONE_HEAD)
-	REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
-	hopefully_a_head?.stored_lipstick_trait = null
-
-	if(new_style && apply_trait)
-		ADD_TRAIT(src, apply_trait, LIPSTICK_TRAIT)
-		hopefully_a_head?.stored_lipstick_trait = apply_trait
-
-/**
- * A wrapper for [mob/living/carbon/human/proc/update_lips] that tells us if there were lip styles to change
- */
-/mob/living/carbon/human/proc/clean_lips()
-	if(isnull(lip_style) && lip_color == initial(lip_color))
-		return FALSE
-	update_lips(null)
-	return TRUE
 
 /**
  * Called on the COMSIG_COMPONENT_CLEAN_FACE_ACT signal
@@ -568,18 +585,27 @@
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
-	//Handle mutant parts if possible
+	var/mutable_appearance/zap_appearance
+
+	// If we have a species, we need to handle mutant parts and stuff
 	if(dna?.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
-		var/static/mutable_appearance/electrocution_skeleton_anim
-		if(!electrocution_skeleton_anim)
-			electrocution_skeleton_anim = mutable_appearance(icon, "electrocuted_base")
-			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
-		add_overlay(electrocution_skeleton_anim)
-		addtimer(CALLBACK(src, PROC_REF(end_electrocution_animation), electrocution_skeleton_anim), anim_duration)
+		var/static/mutable_appearance/shock_animation_dna
+		if(!shock_animation_dna)
+			shock_animation_dna = mutable_appearance(icon, "electrocuted_base")
+			shock_animation_dna.appearance_flags |= RESET_COLOR|KEEP_APART
+		zap_appearance = shock_animation_dna
 
-	else //or just do a generic animation
-		flick_overlay_view("electrocuted_generic", src, anim_duration, ABOVE_MOB_LAYER)
+	// Otherwise do a generic animation
+	else
+		var/static/mutable_appearance/shock_animation_generic
+		if(!shock_animation_generic)
+			shock_animation_generic = mutable_appearance(icon, "electrocuted_generic")
+			shock_animation_generic.appearance_flags |= RESET_COLOR|KEEP_APART
+		zap_appearance = shock_animation_generic
+
+	add_overlay(zap_appearance)
+	addtimer(CALLBACK(src, PROC_REF(end_electrocution_animation), zap_appearance), anim_duration)
 
 /mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
@@ -661,7 +687,7 @@
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
 		for(var/datum/mutation/human/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE)
-				dna.remove_mutation(existing_mutation.name)
+				dna.remove_mutation(existing_mutation)
 
 	if(heal_flags & HEAL_TEMP)
 		set_coretemperature(get_body_temp_normal(apply_change = FALSE))
@@ -669,15 +695,21 @@
 
 	return ..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, vomit_type = VOMIT_TOXIC, harm = TRUE, force = FALSE, purge_ratio = 0.1)
-	if(blood && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
-		if(message)
-			visible_message(span_warning("[src] dry heaves!"), \
-							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
-		if(stun)
-			Stun(20 SECONDS)
-		return 1
-	..()
+/mob/living/carbon/human/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
+	if(!((vomit_flags & MOB_VOMIT_BLOOD) && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
+		return ..()
+
+	if(vomit_flags & MOB_VOMIT_MESSAGE)
+		visible_message(
+			span_warning("[src] dry heaves!"),
+			span_userdanger("You try to throw up, but there's nothing in your stomach!"),
+		)
+	if(vomit_flags & MOB_VOMIT_STUN)
+		Stun(20 SECONDS)
+	if(vomit_flags & MOB_VOMIT_KNOCKDOWN)
+		Knockdown(20 SECONDS)
+
+	return TRUE
 
 /mob/living/carbon/human/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, mob_height))
@@ -686,6 +718,7 @@
 			HUMAN_HEIGHT_SHORT,
 			HUMAN_HEIGHT_MEDIUM,
 			HUMAN_HEIGHT_TALL,
+			HUMAN_HEIGHT_TALLER,
 			HUMAN_HEIGHT_TALLEST
 		)
 		if(!(var_value in heights))
@@ -707,6 +740,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
+	VV_DROPDOWN_OPTION(VV_HK_APPLY_DNA_INFUSION, "Apply DNA Infusion")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -787,6 +821,19 @@
 			var/msg = span_notice("[key_name_admin(usr)] has removed [key_name(src)] from purrbation.")
 			message_admins(msg)
 			admin_ticket_log(src, msg)
+	if(href_list[VV_HK_APPLY_DNA_INFUSION])
+		if(!check_rights(R_SPAWN))
+			return
+		if(!ishuman(src))
+			to_chat(usr, "This can only be done to human species.")
+			return
+		var/result = usr.client.grant_dna_infusion(src)
+		if(result)
+			to_chat(usr, "Successfully applied DNA Infusion [result] to [src].")
+			log_admin("[key_name(usr)] has applied DNA Infusion [result] to [key_name(src)].")
+		else
+			to_chat(usr, "Failed to apply DNA Infusion to [src].")
+			log_admin("[key_name(usr)] failed to apply a DNA Infusion to [key_name(src)].")
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
@@ -868,9 +915,14 @@
 
 	return ..()
 
+/mob/living/carbon/human/reagent_check(datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
+	return dna.species.handle_chemical(chem, src, seconds_per_tick, times_fired)
+
 /mob/living/carbon/human/updatehealth()
 	. = ..()
-	dna?.species.spec_updatehealth(src)
 	if(HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
@@ -943,78 +995,6 @@
 
 /mob/living/carbon/human/species/golem
 	race = /datum/species/golem
-
-/mob/living/carbon/human/species/golem/adamantine
-	race = /datum/species/golem/adamantine
-
-/mob/living/carbon/human/species/golem/plasma
-	race = /datum/species/golem/plasma
-
-/mob/living/carbon/human/species/golem/diamond
-	race = /datum/species/golem/diamond
-
-/mob/living/carbon/human/species/golem/gold
-	race = /datum/species/golem/gold
-
-/mob/living/carbon/human/species/golem/silver
-	race = /datum/species/golem/silver
-
-/mob/living/carbon/human/species/golem/plasteel
-	race = /datum/species/golem/plasteel
-
-/mob/living/carbon/human/species/golem/titanium
-	race = /datum/species/golem/titanium
-
-/mob/living/carbon/human/species/golem/plastitanium
-	race = /datum/species/golem/plastitanium
-
-/mob/living/carbon/human/species/golem/alien_alloy
-	race = /datum/species/golem/alloy
-
-/mob/living/carbon/human/species/golem/wood
-	race = /datum/species/golem/wood
-
-/mob/living/carbon/human/species/golem/uranium
-	race = /datum/species/golem/uranium
-
-/mob/living/carbon/human/species/golem/sand
-	race = /datum/species/golem/sand
-
-/mob/living/carbon/human/species/golem/glass
-	race = /datum/species/golem/glass
-
-/mob/living/carbon/human/species/golem/bluespace
-	race = /datum/species/golem/bluespace
-
-/mob/living/carbon/human/species/golem/bananium
-	race = /datum/species/golem/bananium
-
-/mob/living/carbon/human/species/golem/blood_cult
-	race = /datum/species/golem/runic
-
-/mob/living/carbon/human/species/golem/cloth
-	race = /datum/species/golem/cloth
-
-/mob/living/carbon/human/species/golem/plastic
-	race = /datum/species/golem/plastic
-
-/mob/living/carbon/human/species/golem/bronze
-	race = /datum/species/golem/bronze
-
-/mob/living/carbon/human/species/golem/cardboard
-	race = /datum/species/golem/cardboard
-
-/mob/living/carbon/human/species/golem/leather
-	race = /datum/species/golem/leather
-
-/mob/living/carbon/human/species/golem/bone
-	race = /datum/species/golem/bone
-
-/mob/living/carbon/human/species/golem/durathread
-	race = /datum/species/golem/durathread
-
-/mob/living/carbon/human/species/golem/snow
-	race = /datum/species/golem/snow
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly

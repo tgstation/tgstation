@@ -190,7 +190,12 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 				M.playsound_local(T, null, 100, FALSE, 0, FALSE, pressure_affected = FALSE, sound_to_use = legion_sound)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
-		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
+		notify_ghosts(
+			"Legion has been released in the [get_area(src)]!",
+			source = src,
+			alert_overlay = release_overlay,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 
 /obj/effect/decal/necropolis_gate_decal
 	icon = 'icons/effects/96x96.dmi'
@@ -240,10 +245,6 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/necropolis_arch/singularity_pull()
 	return 0
 
-#define STABLE 0 //The tile is stable and won't collapse/sink when crossed.
-#define COLLAPSE_ON_CROSS 1 //The tile is unstable and will temporary become unusable when crossed.
-#define DESTROY_ON_CROSS 2 //The tile is nearly broken and will permanently become unusable when crossed.
-#define UNIQUE_EFFECT 3 //The tile has some sort of unique effect when crossed.
 //stone tiles for boss arenas
 /obj/structure/stone_tile
 	name = "stone tile"
@@ -255,67 +256,17 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
 	var/tile_random_sprite_max = 24
-	var/fall_on_cross = STABLE //If the tile has some sort of effect when crossed
-	var/fallen = FALSE //If the tile is unusable
-	var/falling = FALSE //If the tile is falling
 
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+
+	var/static/list/give_turf_traits
+	if(!give_turf_traits)
+		give_turf_traits = string_list(list(TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED))
+	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 
 /obj/structure/stone_tile/singularity_pull()
-	return
-
-/obj/structure/stone_tile/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
-	if(falling || fallen)
-		return
-	var/turf/T = get_turf(src)
-	if(!islava(T) && !ischasm(T)) //nothing to sink or fall into
-		return
-	var/obj/item/I
-	if(isitem(AM))
-		I = AM
-	var/mob/living/L
-	if(isliving(AM))
-		L = AM
-	switch(fall_on_cross)
-		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
-			if((I && I.w_class >= WEIGHT_CLASS_BULKY) || (L && !(L.movement_type & FLYING) && L.mob_size >= MOB_SIZE_HUMAN)) //too heavy! too big! aaah!
-				INVOKE_ASYNC(src, PROC_REF(collapse))
-		if(UNIQUE_EFFECT)
-			crossed_effect(AM)
-
-/obj/structure/stone_tile/proc/collapse()
-	falling = TRUE
-	var/break_that_sucker = fall_on_cross == DESTROY_ON_CROSS
-	playsound(src, 'sound/effects/pressureplate.ogg', 50, TRUE)
-	Shake(-1, -1, 25)
-	sleep(0.5 SECONDS)
-	if(break_that_sucker)
-		playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
-	else
-		playsound(src, 'sound/mecha/mechmove04.ogg', 50, TRUE)
-	animate(src, alpha = 0, pixel_y = pixel_y - 3, time = 5)
-	fallen = TRUE
-	if(break_that_sucker)
-		QDEL_IN(src, 10)
-	else
-		addtimer(CALLBACK(src, PROC_REF(rebuild)), 55)
-
-/obj/structure/stone_tile/proc/rebuild()
-	pixel_x = initial(pixel_x)
-	pixel_y = initial(pixel_y) - 5
-	animate(src, alpha = initial(alpha), pixel_x = initial(pixel_x), pixel_y = initial(pixel_y), time = 30)
-	sleep(3 SECONDS)
-	falling = FALSE
-	fallen = FALSE
-
-/obj/structure/stone_tile/proc/crossed_effect(atom/movable/AM)
 	return
 
 /obj/structure/stone_tile/block
@@ -411,8 +362,3 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "burnt stone surrounding tile"
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
-
-#undef STABLE
-#undef COLLAPSE_ON_CROSS
-#undef DESTROY_ON_CROSS
-#undef UNIQUE_EFFECT

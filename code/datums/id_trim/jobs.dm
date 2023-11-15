@@ -155,6 +155,30 @@
 		)
 	job = /datum/job/bartender
 
+/datum/id_trim/job/bitrunner
+	assignment = "Bitrunner"
+	trim_state = "trim_bitrunner"
+	department_color = COLOR_CARGO_BROWN
+	subdepartment_color = COLOR_CARGO_BROWN
+	sechud_icon_state = SECHUD_BITRUNNER
+	minimal_access = list(
+		ACCESS_BIT_DEN,
+		ACCESS_CARGO,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MECH_MINING,
+		ACCESS_MINERAL_STOREROOM,
+	)
+	extra_access = list(
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_QM,
+	)
+	job = /datum/job/bitrunner
+
 /datum/id_trim/job/botanist
 	assignment = "Botanist"
 	trim_state = "trim_botanist"
@@ -215,6 +239,7 @@
 		ACCESS_SHIPPING,
 		)
 	extra_access = list(
+		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
 		)
@@ -234,6 +259,7 @@
 	minimal_access = list(
 		ACCESS_CHAPEL_OFFICE,
 		ACCESS_CREMATORIUM,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MORGUE,
 		ACCESS_SERVICE,
 		ACCESS_THEATRE,
@@ -332,22 +358,23 @@
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MORGUE,
+		ACCESS_MORGUE_SECURE,
 		ACCESS_PHARMACY,
 		ACCESS_PSYCHOLOGY,
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
-		)
+	)
 	minimal_wildcard_access = list(
 		ACCESS_CMO,
-		)
+	)
 	extra_access = list(
 		ACCESS_TELEPORTER,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		)
+	)
 	job = /datum/job/chief_medical_officer
 
 /datum/id_trim/job/clown
@@ -357,6 +384,7 @@
 	subdepartment_color = COLOR_MAGENTA
 	sechud_icon_state = SECHUD_CLOWN
 	minimal_access = list(
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SERVICE,
 		ACCESS_THEATRE,
 		)
@@ -395,6 +423,32 @@
 	assignment = "Chef"
 	sechud_icon_state = SECHUD_CHEF
 
+/datum/id_trim/job/coroner
+	assignment = "Coroner"
+	trim_state = "trim_coroner"
+	department_color = COLOR_MEDICAL_BLUE
+	subdepartment_color = COLOR_SERVICE_LIME
+	sechud_icon_state = SECHUD_CORONER
+	minimal_access = list(
+		ACCESS_MEDICAL,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MORGUE,
+		ACCESS_MORGUE_SECURE,
+		ACCESS_SERVICE,
+		ACCESS_SURGERY,
+	)
+	extra_access = list(
+		ACCESS_PSYCHOLOGY,
+		ACCESS_PHARMACY,
+	)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_CMO,
+		ACCESS_HOP,
+	)
+	job = /datum/job/coroner
+
 /datum/id_trim/job/curator
 	assignment = "Curator"
 	trim_state = "trim_curator"
@@ -404,6 +458,7 @@
 	minimal_access = list(
 		ACCESS_AUX_BASE,
 		ACCESS_LIBRARY,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MINING_STATION,
 		ACCESS_SERVICE,
 		)
@@ -429,17 +484,18 @@
 		ACCESS_MECH_SECURITY,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MORGUE,
+		ACCESS_MORGUE_SECURE,
 		ACCESS_SECURITY,
 		ACCESS_WEAPONS,
-		)
+	)
 	extra_access = list(
 		ACCESS_BRIG,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_HOS,
-		)
+	)
 	job = /datum/job/detective
 
 /datum/id_trim/job/detective/refresh_trim_access()
@@ -510,6 +566,8 @@
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MORGUE,
+		ACCESS_MORGUE_SECURE,
 		ACCESS_PSYCHOLOGY,
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_SCIENCE,
@@ -517,10 +575,10 @@
 		ACCESS_TELEPORTER,
 		ACCESS_THEATRE,
 		ACCESS_WEAPONS,
-		)
+	)
 	minimal_wildcard_access = list(
 		ACCESS_HOP,
-		)
+	)
 	extra_access = list()
 	extra_wildcard_access = list()
 	template_access = list(
@@ -543,6 +601,7 @@
 		ACCESS_ALL_PERSONAL_LOCKERS,
 		ACCESS_ARMORY,
 		ACCESS_AUX_BASE,
+		ACCESS_BIT_DEN,
 		ACCESS_BRIG,
 		ACCESS_BRIG_ENTRANCE,
 		ACCESS_CARGO,
@@ -560,20 +619,21 @@
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MINING,
 		ACCESS_MORGUE,
+		ACCESS_MORGUE_SECURE,
 		ACCESS_RC_ANNOUNCE,
 		ACCESS_SCIENCE,
 		ACCESS_SECURITY,
 		ACCESS_SERVICE,
 		ACCESS_SHIPPING,
 		ACCESS_WEAPONS,
-		)
+	)
 	minimal_wildcard_access = list(
 		ACCESS_HOS,
-		)
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		)
+	)
 	job = /datum/job/head_of_security
 
 /datum/id_trim/job/head_of_security/refresh_trim_access()
@@ -616,6 +676,7 @@
 		ACCESS_BRIG_ENTRANCE,
 		ACCESS_COURT,
 		ACCESS_LAWYER,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SERVICE,
 		)
 	extra_access = list()
@@ -658,6 +719,7 @@
 	subdepartment_color = COLOR_WHITE
 	sechud_icon_state = SECHUD_MIME
 	minimal_access = list(
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_SERVICE,
 		ACCESS_THEATRE,
 		)
@@ -676,6 +738,7 @@
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_PARAMEDIC
 	minimal_access = list(
+		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_CONSTRUCTION,
 		ACCESS_HYDROPONICS,
@@ -703,7 +766,7 @@
 	assignment = "Prisoner"
 	trim_state = "trim_warden"
 	department_color = COLOR_PRISONER_BLACK
-	subdepartment_color = COLOR_PRISONER_ORANGE
+	subdepartment_color = COLOR_PRISONER_BLACK
 	sechud_icon_state = SECHUD_PRISONER
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -749,16 +812,20 @@
 	sechud_icon_state = SECHUD_PSYCHOLOGIST
 	minimal_access = list(
 		ACCESS_MEDICAL,
+		ACCESS_MINERAL_STOREROOM,
 		ACCESS_PSYCHOLOGY,
 		ACCESS_SERVICE,
-		)
-	extra_access = list()
+	)
+	extra_access = list(
+		ACCESS_MORGUE,
+		ACCESS_MORGUE_SECURE,
+	)
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
 		ACCESS_CMO,
 		ACCESS_HOP,
-		)
+	)
 	job = /datum/job/psychologist
 
 /datum/id_trim/job/quartermaster
@@ -770,6 +837,7 @@
 	sechud_icon_state = SECHUD_QUARTERMASTER
 	minimal_access = list(
 		ACCESS_AUX_BASE,
+		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MINING,
@@ -785,7 +853,9 @@
 		ACCESS_EVA,
 		ACCESS_BRIG_ENTRANCE,
 		)
-	extra_access = list()
+	extra_access = list(
+		ACCESS_TELEPORTER,
+		)
 	minimal_wildcard_access = list(
 		ACCESS_QM,
 	)
@@ -862,6 +932,7 @@
 	extra_access = list(
 		ACCESS_GENETICS,
 		ACCESS_XENOBIOLOGY,
+		ACCESS_MORGUE_SECURE,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -965,6 +1036,7 @@
 	assignment = "Security Officer (Cargo)"
 	subdepartment_color = COLOR_CARGO_BROWN
 	department_access = list(
+		ACCESS_BIT_DEN,
 		ACCESS_CARGO,
 		ACCESS_MINING,
 		ACCESS_SHIPPING,
@@ -1033,6 +1105,7 @@
 		ACCESS_MINING_STATION,
 		)
 	extra_access = list(
+		ACCESS_BIT_DEN,
 		ACCESS_MAINT_TUNNELS,
 		)
 	template_access = list(

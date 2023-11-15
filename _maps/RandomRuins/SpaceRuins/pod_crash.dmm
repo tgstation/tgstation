@@ -1,0 +1,582 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/tiled/blue/airless,
+/area/ruin/space)
+"e" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"g" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass/titanium,
+/obj/item/shard/titanium,
+/turf/open/floor/mineral/titanium/tiled/blue/airless,
+/area/ruin/space)
+"h" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/mineral/titanium/tiled/blue/airless,
+/area/ruin/space)
+"i" = (
+/obj/effect/decal/cleanable/glass/titanium,
+/obj/item/storage/pod/directional/south,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/computer/pod{
+	dir = 8
+	},
+/obj/machinery/light/broken/directional/south,
+/turf/open/floor/mineral/titanium/tiled/blue/airless,
+/area/ruin/space)
+"k" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/obj/effect/decal/cleanable/glass/titanium,
+/obj/item/modular_computer/pda/cargo,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/small/red/dim/directional/south,
+/turf/open/floor/mineral/titanium/tiled/blue/airless,
+/area/ruin/space)
+"l" = (
+/obj/effect/mob_spawn/corpse/human/scientist,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"n" = (
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/structure/closet/crate/cardboard/tiziran,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"p" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"q" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space)
+"s" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"v" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/crate,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"y" = (
+/obj/structure/girder/displaced,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space)
+"A" = (
+/obj/structure/girder/displaced,
+/turf/template_noop,
+/area/ruin/space)
+"C" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"E" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space)
+"I" = (
+/obj/structure/billboard/nanotrasen/defaced,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"J" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space)
+"L" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"O" = (
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/ruin/space)
+"P" = (
+/obj/machinery/power/shuttle_engine/propulsion/right{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space)
+"R" = (
+/turf/closed/mineral/asteroid,
+/area/ruin/space)
+"S" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/mineral/titanium/tiled/blue/airless,
+/area/ruin/space)
+"X" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space)
+"Y" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space)
+
+(1,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(2,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(3,1,1) = {"
+n
+n
+n
+R
+R
+n
+R
+s
+n
+n
+n
+n
+n
+n
+s
+R
+n
+n
+n
+n
+"}
+(4,1,1) = {"
+n
+n
+R
+R
+R
+R
+R
+s
+n
+e
+n
+n
+n
+s
+s
+R
+R
+n
+n
+n
+"}
+(5,1,1) = {"
+n
+R
+R
+R
+R
+R
+R
+l
+n
+E
+n
+n
+n
+s
+R
+R
+R
+R
+n
+n
+"}
+(6,1,1) = {"
+n
+s
+s
+R
+s
+s
+s
+s
+n
+n
+n
+n
+n
+s
+R
+R
+R
+s
+n
+n
+"}
+(7,1,1) = {"
+n
+n
+s
+s
+s
+s
+n
+n
+n
+n
+n
+n
+n
+s
+s
+R
+s
+s
+n
+n
+"}
+(8,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+L
+Y
+S
+P
+n
+s
+s
+n
+n
+n
+"}
+(9,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+O
+h
+A
+n
+n
+n
+n
+n
+n
+"}
+(10,1,1) = {"
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+A
+i
+C
+n
+n
+n
+s
+n
+n
+"}
+(11,1,1) = {"
+n
+n
+n
+s
+n
+n
+n
+n
+n
+n
+n
+n
+g
+L
+n
+n
+s
+R
+s
+n
+"}
+(12,1,1) = {"
+n
+n
+s
+s
+s
+n
+n
+n
+n
+L
+d
+y
+n
+n
+n
+n
+s
+R
+R
+s
+"}
+(13,1,1) = {"
+n
+n
+s
+R
+s
+n
+n
+A
+E
+J
+k
+X
+n
+n
+n
+n
+n
+s
+R
+s
+"}
+(14,1,1) = {"
+n
+n
+R
+R
+s
+s
+n
+n
+n
+q
+S
+p
+n
+n
+n
+n
+s
+R
+R
+s
+"}
+(15,1,1) = {"
+n
+s
+R
+R
+R
+s
+s
+n
+n
+n
+v
+n
+n
+n
+n
+s
+s
+s
+n
+n
+"}
+(16,1,1) = {"
+n
+s
+R
+R
+R
+R
+s
+s
+n
+n
+E
+n
+n
+n
+s
+R
+R
+s
+n
+n
+"}
+(17,1,1) = {"
+s
+R
+R
+R
+R
+R
+s
+I
+n
+n
+n
+o
+n
+n
+s
+R
+s
+s
+n
+n
+"}
+(18,1,1) = {"
+R
+R
+R
+R
+R
+R
+s
+s
+n
+n
+n
+n
+n
+n
+n
+s
+s
+n
+n
+n
+"}
+(19,1,1) = {"
+s
+s
+s
+R
+R
+R
+s
+s
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}
+(20,1,1) = {"
+n
+n
+s
+s
+s
+R
+s
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+n
+"}

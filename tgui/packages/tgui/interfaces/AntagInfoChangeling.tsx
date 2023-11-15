@@ -1,7 +1,9 @@
+import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../components';
 import { Window } from '../layouts';
+import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
 const hivestyle = {
   fontWeight: 'bold',
@@ -38,12 +40,6 @@ const fallenstyle = {
   fontWeight: 'bold',
 };
 
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-};
-
 type Memory = {
   name: string;
   story: string;
@@ -55,17 +51,18 @@ type Info = {
   stolen_antag_info: string;
   memories: Memory[];
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
 export const AntagInfoChangeling = (props, context) => {
   return (
-    <Window width={720} height={720}>
+    <Window width={720} height={750}>
       <Window.Content
         style={{
           'backgroundImage': 'none',
         }}>
         <Stack vertical fill>
-          <Stack.Item maxHeight={13.2}>
+          <Stack.Item maxHeight={16}>
             <IntroductionSection />
           </Stack.Item>
           <Stack.Item grow={4}>
@@ -87,24 +84,6 @@ export const AntagInfoChangeling = (props, context) => {
         </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack vertical>
-      <Stack.Item bold>Your current objectives:</Stack.Item>
-      <Stack.Item>
-        {(!objectives && 'None!') ||
-          objectives.map((objective) => (
-            <Stack.Item key={objective.count}>
-              #{objective.count}: {objective.explanation}
-            </Stack.Item>
-          ))}
-      </Stack.Item>
-    </Stack>
   );
 };
 
@@ -138,7 +117,7 @@ const HivemindSection = (props, context) => {
 
 const IntroductionSection = (props, context) => {
   const { act, data } = useBackend<Info>(context);
-  const { true_name, hive_name, objectives } = data;
+  const { true_name, hive_name, objectives, can_change_objective } = data;
   return (
     <Section
       fill
@@ -150,7 +129,16 @@ const IntroductionSection = (props, context) => {
           <span style={hivestyle}> {hive_name}</span>.
         </Stack.Item>
         <Stack.Item>
-          <ObjectivePrintout />
+          <ObjectivePrintout
+            objectives={objectives}
+            objectiveFollowup={
+              <ReplaceObjectivesButton
+                can_change_objective={can_change_objective}
+                button_title={'Evolve New Directives'}
+                button_colour={'green'}
+              />
+            }
+          />
         </Stack.Item>
       </Stack>
     </Section>
@@ -167,7 +155,7 @@ const AbilitiesSection = (props, context) => {
             <Stack.Item basis={0} textColor="label" grow>
               Your
               <span style={absorbstyle}>&ensp;Absorb DNA</span> ability allows
-              you to steal the DNA and memories of a victim. Your
+              you to steal the DNA and memories of a victim. The
               <span style={absorbstyle}>&ensp;Extract DNA Sting</span> ability
               also steals the DNA of a victim, and is undetectable, but does not
               grant you their memories or speech patterns.

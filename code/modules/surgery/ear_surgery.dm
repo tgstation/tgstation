@@ -23,7 +23,7 @@
 	time = 64
 
 /datum/surgery/ear_surgery/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/ears/target_ears = target.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/target_ears = target.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!target_ears)
 		return FALSE
 	return TRUE
@@ -39,7 +39,7 @@
 	display_pain(target, "You feel a dizzying pain in your head!")
 
 /datum/surgery_step/fix_ears/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/obj/item/organ/internal/ears/target_ears = target.getorganslot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/internal/ears/target_ears = target.get_organ_slot(ORGAN_SLOT_EARS)
 	display_results(
 		user,
 		target,
@@ -49,11 +49,11 @@
 	)
 	display_pain(target, "Your head swims, but it seems like you can feel your hearing coming back!")
 	target_ears.deaf = (20) //deafness works off ticks, so this should work out to about 30-40s
-	target_ears.setOrganDamage(0)
+	target_ears.set_organ_damage(0)
 	return ..()
 
 /datum/surgery_step/fix_ears/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/internal/brain))
+	if(target.get_organ_by_type(/obj/item/organ/internal/brain))
 		display_results(
 			user,
 			target,

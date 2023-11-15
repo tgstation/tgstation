@@ -48,7 +48,9 @@
 	//Temporary/Internal stuff, do not copy these.
 	var/static/list/ignored_vars = list(
 		NAMEOF(item, animate_movement),
+#ifndef EXPERIMENT_515_DONT_CACHE_REF
 		NAMEOF(item, cached_ref),
+#endif
 		NAMEOF(item, datum_flags),
 		NAMEOF(item, fingerprintslast),
 		NAMEOF(item, layer),

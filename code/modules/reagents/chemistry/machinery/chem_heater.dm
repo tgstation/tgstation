@@ -49,10 +49,9 @@
 		QDEL_NULL(beaker)
 	return ..()
 
-
-/obj/machinery/chem_heater/handle_atom_del(atom/A)
+/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
 
@@ -64,7 +63,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -79,8 +78,8 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		try_put_in_hand(beaker, user)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		try_put_in_hand(beaker, user)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
@@ -99,7 +98,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient*1000]%</b> speed.")
 
-/obj/machinery/chem_heater/process(delta_time)
+/obj/machinery/chem_heater/process(seconds_per_tick)
 	..()
 	//Tutorial logics
 	if(tutorial_active)
@@ -151,10 +150,15 @@
 			if(beaker.reagents.is_reacting)//on_reaction_step() handles this
 				return
 			//keep constant with the chemical acclimator please
-			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
-			use_power(active_power_usage * delta_time)
+			use_power(active_power_usage * seconds_per_tick)
+
+/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
@@ -190,10 +194,10 @@
 	return ..()
 
 ///Forces a UI update every time a reaction step happens inside of the beaker it contains. This is so the UI is in sync with the reaction since it's important that the output matches the current conditions for pH adjustment and temperature.
-/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, delta_time)
+/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
 	SIGNAL_HANDLER
 	if(on)
-		holder.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume * (rand(8,11) * 0.1))//Give it a little wiggle room since we're actively reacting
+		holder.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume * (rand(8,11) * 0.1))//Give it a little wiggle room since we're actively reacting
 	for(var/ui_client in ui_client_list)
 		var/datum/tgui/ui = ui_client
 		if(!ui)
@@ -223,11 +227,11 @@
 */
 /obj/machinery/chem_heater/proc/add_ui_client_list(new_ui)
 	LAZYADD(ui_client_list, new_ui)
-	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, PROC_REF(on_ui_deletion))
+	RegisterSignal(new_ui, COMSIG_QDELETING, PROC_REF(on_ui_deletion))
 
 ///This removes an open ui instance from the ui list and deregsiters the signal
 /obj/machinery/chem_heater/proc/remove_ui_client_list(old_ui)
-	UnregisterSignal(old_ui, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(old_ui, COMSIG_QDELETING)
 	LAZYREMOVE(ui_client_list, old_ui)
 
 ///This catches a signal and uses it to delete the ui instance from the list

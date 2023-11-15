@@ -1,8 +1,9 @@
 //3-Way Manifold
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold
-	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
+	icon = 'icons/obj/pipes_n_cables/he-manifold.dmi'
 	icon_state = "manifold-3"
+	base_icon_state = "manifold"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
@@ -15,9 +16,14 @@
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "he_manifold"
 
+	has_gas_visuals = FALSE
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/set_init_directions()
 	initialize_directions = ALL_CARDINALS
 	initialize_directions &= ~dir
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_pipe_icon()
+	icon_state = "[base_icon_state]-[piping_layer]"
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/update_overlays()
 	. = ..()

@@ -6,6 +6,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pandemic0"
 	icon_keyboard = null
+	icon_screen = null
 	base_icon_state = "pandemic"
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
@@ -61,7 +62,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
+	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
 		return
 	eject_beaker()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -72,11 +73,11 @@
 /obj/machinery/computer/pandemic/attack_ai_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
-	if(A == beaker)
+/obj/machinery/computer/pandemic/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
-	return ..()
 
 /obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
 	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
@@ -200,14 +201,14 @@
 	use_power(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
-	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
-	bottle.name = "[adv_disease.name] culture bottle"
-	bottle.desc = "A small bottle. Contains [adv_disease.agent] culture in synthblood medium."
+	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
+	bottle.name = "[adv_disease.name] culture tube"
+	bottle.desc = "A small test tube containing [adv_disease.agent] culture in synthblood medium."
 	bottle.reagents.add_reagent(/datum/reagent/blood, 20, data)
 	wait = TRUE
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
-	log_virus("A culture bottle was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
+	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
 
@@ -222,8 +223,8 @@
 	use_power(active_power_usage)
 	var/id = index
 	var/datum/disease/disease = SSdisease.archive_diseases[id]
-	var/obj/item/reagent_containers/cup/bottle/bottle = new(drop_location())
-	bottle.name = "[disease.name] vaccine bottle"
+	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
+	bottle.name = "[disease.name] vaccine tube"
 	bottle.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 	wait = TRUE
 	update_appearance()
@@ -308,22 +309,21 @@
 		traits["index"] = index++
 		traits["name"] = disease.name
 		traits["spread"] = disease.spread_text || "none"
-		if(!istype(disease, /datum/disease/advance)) // Advanced diseases get more info
-			continue
-		var/datum/disease/advance/adv_disease = disease
-		var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())
-		traits["can_rename"] = ((disease_name == "Unknown") && adv_disease.mutable)
-		traits["is_adv"] = TRUE
-		traits["name"] = disease_name
-		traits["resistance"] = adv_disease.totalResistance()
-		traits["stage_speed"] = adv_disease.totalStageSpeed()
-		traits["stealth"] = adv_disease.totalStealth()
-		traits["symptoms"] = list()
-		for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
-			var/list/this_symptom = list()
-			this_symptom = symptom.get_symptom_data()
-			traits["symptoms"] += list(this_symptom)
-		traits["transmission"] = adv_disease.totalTransmittable()
+		if(istype(disease, /datum/disease/advance)) // Advanced diseases get more info
+			var/datum/disease/advance/adv_disease = disease
+			var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())
+			traits["can_rename"] = ((disease_name == "Unknown") && adv_disease.mutable)
+			traits["is_adv"] = TRUE
+			traits["name"] = disease_name
+			traits["resistance"] = adv_disease.totalResistance()
+			traits["stage_speed"] = adv_disease.totalStageSpeed()
+			traits["stealth"] = adv_disease.totalStealth()
+			traits["symptoms"] = list()
+			for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
+				var/list/this_symptom = list()
+				this_symptom = symptom.get_symptom_data()
+				traits["symptoms"] += list(this_symptom)
+			traits["transmission"] = adv_disease.totalTransmittable()
 		data += list(traits)
 	return data
 

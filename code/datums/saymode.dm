@@ -64,7 +64,7 @@
 /datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/organ/internal/vocal_cords/V = C.getorganslot(ORGAN_SLOT_VOICE)
+		var/obj/item/organ/internal/vocal_cords/V = C.get_organ_slot(ORGAN_SLOT_VOICE)
 		if(V?.can_speak_with())
 			V.handle_speech(message) //message
 			V.speak_with(message) //action
@@ -77,8 +77,8 @@
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
 	if(isdrone(user))
-		var/mob/living/simple_animal/drone/D = user
-		D.drone_chat(message)
+		var/mob/living/basic/drone/drone_user = user
+		drone_user.drone_chat(message)
 		return FALSE
 	if(user.binarycheck())
 		user.robot_talk(message)
@@ -96,17 +96,3 @@
 		AI.holopad_talk(message, language)
 		return FALSE
 	return TRUE
-
-/datum/saymode/mafia
-	key = "j"
-	mode = MODE_MAFIA
-
-/datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
-	var/datum/mafia_controller/MF = GLOB.mafia_game
-	if (!MF)
-		return TRUE
-	var/datum/mafia_role/R = MF.player_role_lookup[user]
-	if(!R || R.team != "mafia")
-		return TRUE
-	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"),"mafia")
-	return FALSE

@@ -4,10 +4,11 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo
 	name = "ore silo"
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/machines/ore_silo.dmi'
 	icon_state = "silo"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
 
 	/// The machine UI's page of logs showing ore history.
 	var/log_page = 1
@@ -15,6 +16,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/holds = list()
 	/// List of all components that are sharing ores with this silo.
 	var/list/datum/component/remote_materials/ore_connected_machines = list()
+	/// Material Container
+	var/datum/component/material_container/materials
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
@@ -31,7 +34,16 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/datum/material/bluespace,
 		/datum/material/plastic,
 		)
-	AddComponent(/datum/component/material_container, materials_list, INFINITY, MATCONTAINER_NO_INSERT, allowed_items=/obj/item/stack)
+	materials = AddComponent( \
+		/datum/component/material_container, \
+		materials_list, \
+		INFINITY, \
+		container_signals = list( \
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/ore_silo, log_item_consumed), \
+			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/machinery/ore_silo, log_sheets_ejected), \
+		), \
+		allowed_items = /obj/item/stack \
+	)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 
@@ -43,46 +55,25 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		mats.disconnect_from(src)
 
 	ore_connected_machines = null
-
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.retrieve_all()
+	materials = null
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/living/user, obj/item/stack/I, breakdown_flags=NONE)
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	// stolen from /datum/component/material_container/proc/OnAttackBy
-	if(user.combat_mode)
-		return
-	if(I.item_flags & ABSTRACT)
-		return
-	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
-		to_chat(user, span_warning("[M] won't accept [I]!"))
-		return
-	var/item_mats = materials.get_item_material_amount(I, breakdown_flags)
-	if(!item_mats)
-		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [M]."))
-		return
-	// assumes unlimited space...
-	var/amount = I.amount
-	materials.user_insert(I, user, breakdown_flags)
-	silo_log(M, "deposited", amount, "sheets", item_mats)
-	return TRUE
+/obj/machinery/ore_silo/proc/log_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
+	SIGNAL_HANDLER
 
-/obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
-		updateUsrDialog()
-		return
-	if(default_deconstruction_crowbar(W))
-		return
+	silo_log(context, "deposited", amount_inserted, item_inserted.name, mats_consumed)
 
-	if(!powered())
-		return ..()
+/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context)
+	SIGNAL_HANDLER
 
-	if (isstack(W))
-		return remote_attackby(src, user, W)
+	silo_log(context, "ejected", -sheets.amount, "[sheets.singular_name]", sheets.custom_materials)
 
-	return ..()
+/obj/machinery/ore_silo/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
+
+/obj/machinery/ore_silo/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/ore_silo/ui_interact(mob/user)
 	user.set_machine(src)
@@ -91,13 +82,12 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	popup.open()
 
 /obj/machinery/ore_silo/proc/generate_ui()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
 		var/datum/material/mat = M
 		var/amount = materials.materials[M]
-		var/sheets = round(amount) / MINERAL_MATERIAL_AMOUNT
+		var/sheets = round(amount) / SHEET_MATERIAL_AMOUNT
 		var/ref = REF(M)
 		if (sheets)
 			if (sheets >= 1)
@@ -116,9 +106,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	ui += "</div><div class='statusDisplay'><h2>Connected Machines:</h2>"
 	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
 		var/atom/parent = mats.parent
-		var/hold_key = "[get_area(parent)]/[mats.category]"
 		ui += "<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>"
-		ui += "<a href='?src=[REF(src)];hold[!holds[hold_key]]=[url_encode(hold_key)]'>[holds[hold_key] ? "Allow" : "Hold"]</a>"
+		ui += "<a href='?src=[REF(src)];hold=[REF(mats)]'>[holds[mats] ? "Allow" : "Hold"]</a>"
 		ui += " <b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"
 	if(!ore_connected_machines.len)
 		ui += "Nothing!"
@@ -157,24 +146,17 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/remote_materials/mats = locate(href_list["remove"]) in ore_connected_machines
 		if (mats)
 			mats.disconnect_from(src)
-			ore_connected_machines -= mats
 			updateUsrDialog()
 			return TRUE
-	else if(href_list["hold1"])
-		holds[href_list["hold1"]] = TRUE
-		updateUsrDialog()
-		return TRUE
-	else if(href_list["hold0"])
-		holds -= href_list["hold0"]
+	else if(href_list["hold"])
+		var/datum/component/remote_materials/mats = locate(href_list["hold"]) in ore_connected_machines
+		mats.toggle_holding()
 		updateUsrDialog()
 		return TRUE
 	else if(href_list["ejectsheet"])
 		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
-		var/list/matlist = list()
-		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
-		silo_log(src, "ejected", -count, "sheets", matlist)
+		var/amount = text2num(href_list["eject_amt"])
+		materials.retrieve_sheets(amount, eject_sheet, drop_location())
 		return TRUE
 	else if(href_list["page"])
 		log_page = text2num(href_list["page"]) || 1
@@ -184,15 +166,24 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
-		I.buffer = src
+		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
+/**
+ * Creates a log entry for depositing/withdrawing from the silo both ingame and in text based log
+ *
+ * Arguments:
+ * - [M][/obj/machinery]: The machine performing the action.
+ * - action: Text that visually describes the action (smelted/deposited/resupplied...)
+ * - amount: The amount of sheets/objects deposited/withdrawn by this action. Positive for depositing, negative for withdrawing.
+ * - noun: Name of the object the action was performed with (sheet, units, ore...)
+ * - [mats][list]: Assoc list in format (material datum = amount of raw materials). Wants the actual amount of raw (iron, glass...) materials involved in this action. If you have 10 metal sheets each worth 100 iron you would pass a list with the iron material datum = 1000
+ */
 /obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
 	if (!length(mats))
 		return
 	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
-
 	var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
 	if(!LAZYLEN(logs))
 		GLOB.silo_access_logs[REF(src)] = logs = list(entry)
@@ -226,9 +217,21 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	amount = _amount
 	noun = _noun
 	materials = mats.Copy()
-	for(var/each in materials)
-		materials[each] *= abs(_amount)
 	format()
+	var/list/data = list(
+		"machine_name" = machine_name,
+		"area_name" = AREACOORD(M),
+		"action" = action,
+		"amount" = abs(amount),
+		"noun" = noun,
+		"raw_materials" = get_raw_materials(""),
+		"direction" = amount < 0 ? "withdrawn" : "deposited",
+	)
+	logger.Log(
+		LOG_CATEGORY_SILO,
+		"[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")]",
+		data,
+	)
 
 /datum/ore_silo_log/proc/merge(datum/ore_silo_log/other)
 	if (other == src || action != other.action || noun != other.noun)
@@ -245,13 +248,14 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /datum/ore_silo_log/proc/format()
 	name = "[machine_name]: [action] [amount]x [noun]"
+	formatted = "([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br> [get_raw_materials("")]"
 
-	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
-	var/sep = ""
+/datum/ore_silo_log/proc/get_raw_materials(separator)
+	var/list/msg = list()
 	for(var/key in materials)
 		var/datum/material/M = key
-		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
-		msg += sep
-		sep = ", "
+		var/val = round(materials[key])
+		msg += separator
+		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
-	formatted = msg.Join()
+	return msg.Join()

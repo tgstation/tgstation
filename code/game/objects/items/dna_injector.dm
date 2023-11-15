@@ -82,7 +82,7 @@
 	if(target != user)
 		target.visible_message(span_danger("[user] is trying to inject [target] with [src]!"), \
 			span_userdanger("[user] is trying to inject you with [src]!"))
-		if(!do_mob(user, target) || used)
+		if(!do_after(user, 3 SECONDS, target) || used)
 			return
 		target.visible_message(span_danger("[user] injects [target] with the syringe with [src]!"), \
 						span_userdanger("[user] injects you with the syringe with [src]!"))
@@ -574,3 +574,11 @@
 /obj/item/dnainjector/antiwebbing
 	name = "\improper DNA injector (Anti-Webbing)"
 	remove_mutations = list(/datum/mutation/human/webbing)
+
+/obj/item/dnainjector/clever
+	name = "\improper DNA injector (Clever)"
+	add_mutations = list(/datum/mutation/human/clever)
+
+/obj/item/dnainjector/anticlever
+	name = "\improper DNA injector (Anti-Clever)"
+	remove_mutations = list(/datum/mutation/human/clever)

@@ -9,8 +9,8 @@
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
-	icon = 'icons/obj/card.dmi'
-	icon_state = "data_3"
+	icon = 'icons/obj/assemblies/module.dmi'
+	icon_state = "skillchip"
 	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -42,7 +42,9 @@
 	var/cooldown = 5 MINUTES
 	/// Cooldown for chip actions.
 	COOLDOWN_DECLARE(chip_cooldown)
-	/// Used to determine if this is an abstract type or not. If this is meant to be an abstract type, set it to the type's path. Will be overridden by subsequent abstract parents. See /datum/action/item_action/chameleon/change/skillchip/initialize_disguises()
+	/// Used to determine if this is an abstract type or not.
+	/// If this is meant to be an abstract type, set it to the type's path.
+	/// Will be overridden by subsequent abstract parents.
 	var/abstract_parent_type = /obj/item/skillchip
 	/// Set to TRUE when the skill chip's effects are applied. Set to FALSE when they're not.
 	var/active = FALSE
@@ -149,8 +151,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	for(var/trait in auto_traits)
-		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.add_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -183,8 +185,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	for(var/trait in auto_traits)
-		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
+	if(length(auto_traits))
+		user.remove_traits(auto_traits, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
@@ -248,7 +250,7 @@
 		return "Incompatible lifeform detected."
 
 	// No brain
-	var/obj/item/organ/internal/brain/brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return "No brain detected."
 
@@ -486,5 +488,14 @@
 	skill_icon = "cookie"
 	activate_message = span_notice("You recall learning from your grandmother how they baked their cookies with love.")
 	deactivate_message = span_notice("You forget all memories imparted upon you by your grandmother. Were they even your real grandma?")
+
+/obj/item/skillchip/master_angler
+	name = "Mast-Angl-Er skillchip"
+	auto_traits = list(TRAIT_REVEAL_FISH)
+	skill_name = "Fisherman's Discernment"
+	skill_description = "While fishing, it'll make a smidge easier to guess whatever you're trying to catch."
+	skill_icon = "fish"
+	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
+	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
 
 #undef SKILLCHIP_CATEGORY_GENERAL

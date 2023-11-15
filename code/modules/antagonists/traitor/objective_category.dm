@@ -48,7 +48,7 @@
 			var/list/result = filter_invalid_objective_list(value, progression_points)
 			if(!length(result))
 				continue
-			filtered_objectives[value] = objectives[value]
+			filtered_objectives[result] = objectives[value]
 		else
 			if(!objective_valid(value, progression_points))
 				continue

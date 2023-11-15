@@ -19,6 +19,7 @@
 	bot_type = VIBE_BOT
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	path_image_color = "#2cac12"
+	possessed_message = "You are a vibebot! Maintain the station's vibes to the best of your ability!"
 
 	///The vibe ability given to vibebots, so sentient ones can still change their color.
 	var/datum/action/innate/vibe/vibe_ability

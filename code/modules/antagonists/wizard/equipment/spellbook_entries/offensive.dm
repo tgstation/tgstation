@@ -23,6 +23,14 @@
 	spell_type = /datum/action/cooldown/spell/touch/smite
 	category = "Offensive"
 
+/datum/spellbook_entry/summon_simians
+	name = "Summon Simians"
+	desc = "This spell reaches deep into the elemental plane of bananas (the monkey one, not the clown one), and \
+		summons primal monkeys and lesser gorillas that will promptly flip out and attack everything in sight. Fun! \
+		Their lesser, easily manipulable minds will be convinced you are one of their allies, but only for a minute. Unless you also are a monkey."
+	spell_type = /datum/action/cooldown/spell/conjure/simian
+	category = "Offensive"
+
 /datum/spellbook_entry/blind
 	name = "Blind"
 	desc = "Temporarily blinds a single target."
@@ -85,6 +93,19 @@
 	category = "Offensive"
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
 
+/datum/spellbook_entry/sanguine_strike
+	name = "Exsanguinating Strike"
+	desc = "Sanguine spell that enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
+	spell_type =  /datum/action/cooldown/spell/sanguine_strike
+	category = "Offensive"
+
+/datum/spellbook_entry/scream_for_me
+	name = "Scream For Me"
+	desc = "Sadistic sanguine spell that inflicts numerous severe blood wounds all over the victim's body."
+	spell_type =  /datum/action/cooldown/spell/touch/scream_for_me
+	cost = 1
+	category = "Offensive"
+
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
@@ -121,3 +142,9 @@
 	item_path = /obj/item/highfrequencyblade/wizard
 	category = "Offensive"
 	cost = 3
+
+/datum/spellbook_entry/item/frog_contract
+	name = "Frog Contract"
+	desc = "Sign a pact with the frogs to have your own destructive pet guardian!"
+	item_path = /obj/item/frog_contract
+	category = "Offensive"

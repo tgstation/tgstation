@@ -9,7 +9,6 @@
 	gender = MALE
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	speak_emote = list("oinks","squees")
-	see_in_dark = 6
 	butcher_results = list(/obj/item/food/meat/slab/pig = 6)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -30,11 +29,11 @@
 	ai_controller = /datum/ai_controller/basic_controller/pig
 
 /mob/living/basic/pig/Initialize(mapload)
+	. = ..()
 	AddElement(/datum/element/pet_bonus, "oinks!")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured)
 	make_tameable()
-	. = ..()
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
@@ -48,7 +47,7 @@
 
 /datum/ai_controller/basic_controller/pig
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -59,11 +58,6 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/pig,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/random_speech/pig,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/pig
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/pig
-
-/datum/ai_behavior/basic_melee_attack/pig
-	action_cooldown = 2 SECONDS

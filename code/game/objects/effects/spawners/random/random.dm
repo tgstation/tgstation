@@ -19,6 +19,8 @@
 	var/spawn_loot_double = TRUE
 	/// Whether the items should be distributed to offsets 0,1,-1,2,-2,3,-3.. This overrides pixel_x/y on the spawner itself
 	var/spawn_loot_split = FALSE
+	/// The pixel x/y divider offsets for spawn_loot_split (spaced 1 pixel apart by default)
+	var/spawn_loot_split_pixel_offsets = 2
 	/// Whether the spawner should spawn all the loot in the list
 	var/spawn_all_loot = FALSE
 	/// The chance for the spawner to create loot (ignores spawn_loot_count)
@@ -52,6 +54,7 @@
 
 	if(loot?.len)
 		var/loot_spawned = 0
+		var/pixel_divider = FLOOR(16 / spawn_loot_split_pixel_offsets, 1) // 16 pixels offsets is max that should be allowed in any direction
 		while((spawn_loot_count-loot_spawned) && loot.len)
 			var/lootspawn = pick_weight_recursive(loot)
 			if(!spawn_loot_double)
@@ -74,7 +77,9 @@
 					spawned_loot.pixel_y = rand(-16, 16)
 				else if (spawn_loot_split)
 					if (loot_spawned)
-						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
+						var/column = FLOOR(loot_spawned / pixel_divider, 1)
+						spawned_loot.pixel_x = spawn_loot_split_pixel_offsets * (loot_spawned % pixel_divider) + (column * spawn_loot_split_pixel_offsets)
+						spawned_loot.pixel_y = spawn_loot_split_pixel_offsets * (loot_spawned % pixel_divider)
 			loot_spawned++
 
 /**
@@ -92,8 +97,9 @@
 
 	if(radius >= 0)
 		for(var/turf/turf_in_view in view(radius, get_turf(src)))
-			if(!turf_in_view.density)
-				scatter_locations += turf_in_view
+			if(isclosedturf(turf_in_view) || (isgroundlessturf(turf_in_view) && !GET_TURF_BELOW(turf_in_view)))
+				continue
+			scatter_locations += turf_in_view
 
 	return scatter_locations
 

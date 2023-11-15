@@ -12,10 +12,12 @@
 #define PLANE_SPACE -25
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -12
+#define GRAVITY_PULSE_PLANE -13
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -12 //Transparent plane that shows openspace underneath the floor
+
+#define TRANSPARENT_FLOOR_PLANE -11
 
 #define FLOOR_PLANE -10
 
@@ -57,11 +59,12 @@
 #define EMISSIVE_SPACE_LAYER 3
 #define EMISSIVE_WALL_LAYER 4
 
-/// Masks the emissive plane
-#define EMISSIVE_MASK_PLANE 15
-#define EMISSIVE_MASK_RENDER_TARGET "*EMISSIVE_MASK_PLANE"
+#define RENDER_PLANE_LIGHTING 15
 
-#define RENDER_PLANE_LIGHTING 16
+/// Masks the lighting plane with turfs, so we never light up the void
+/// Failing that, masks emissives and the overlay lighting plane
+#define LIGHT_MASK_PLANE 16
+#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
@@ -121,17 +124,16 @@
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (WALL_PLANE) use this.
 
 //FLOOR_PLANE layers
+#define TURF_PLATING_DECAL_LAYER 2.001
+#define TURF_DECAL_LAYER 2.009 //Makes turf decals appear in DM how they will look inworld.
 #define CULT_OVERLAY_LAYER 2.01
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
-#define TURF_PLATING_DECAL_LAYER 2.031
-#define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
 #define LATTICE_LAYER 2.04
 #define DISPOSAL_PIPE_LAYER 2.042
 #define WIRE_LAYER 2.044
 #define GLASS_FLOOR_LAYER 2.046
 #define TRAM_RAIL_LAYER 2.047
-#define TRAM_FLOOR_LAYER 2.048
 #define ABOVE_OPEN_TURF_LAYER 2.049
 
 //WALL_PLANE layers
@@ -155,11 +157,16 @@
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.53
 #define HIGH_PIPE_LAYER 2.54
-// Anything aboe this layer is not "on" a turf for the purposes of washing
+// Anything above this layer is not "on" a turf for the purposes of washing
 // I hate this life of ours
 #define FLOOR_CLEAN_LAYER 2.55
+#define TRAM_STRUCTURE_LAYER 2.57
+#define TRAM_FLOOR_LAYER 2.58
+#define TRAM_WALL_LAYER 2.59
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
+///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
+#define WATER_LEVEL_LAYER 2.61
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
 #define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
@@ -196,6 +203,7 @@
 // GAME_PLANE_UPPER layers
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
+#define TRAM_SIGNAL_LAYER 4.26
 // WALL_PLANE_UPPER layers
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
@@ -213,6 +221,13 @@
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
+
+/**
+ * The layer of the visual overlay used in the submerge element.
+ * The vis overlay inherits the planes of the movables it's attached to (that also have KEEP_TOGETHER added)
+ * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
+ */
+#define WATER_VISUAL_OVERLAY_LAYER 1000
 
 //---------- LIGHTING -------------
 
@@ -246,6 +261,7 @@
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
 #define ECHO_LAYER 7
+#define PARRY_LAYER 8
 
 #define FOV_EFFECT_LAYER 100
 
@@ -265,9 +281,20 @@
 /// Layer for tutorial instructions
 #define TUTORIAL_INSTRUCTIONS_LAYER 5
 
+/// Layer for light overlays
+#define LIGHT_DEBUG_LAYER 6
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4
+
+///Layer for lobby menu collapse button
+#define LOBBY_BELOW_MENU_LAYER 2
+///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)
+#define LOBBY_MENU_LAYER 3
+///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
+#define LOBBY_SHUTTER_LAYER 4
+///Layer for lobby menu buttons that are hanging away from and lower than the main panel
+#define LOBBY_BOTTOM_BUTTON_LAYER 5
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
@@ -281,16 +308,17 @@
 //Describes how different plane masters behave when they are being culled for performance reasons
 /// This plane master will not go away if its layer is culled. useful for preserving effects
 #define PLANE_CRITICAL_DISPLAY (1<<0)
-/// This plane master will temporarially remove relays to non critical planes if it's layer is culled (and it's critical)
-/// This is VERY hacky, but needed to ensure that some instances of BLEND_MULITPLY work as expected (fuck you god damn parallax)
-/// It also implies that the critical plane has a *'d render target, making it mask itself
-#define PLANE_CRITICAL_NO_EMPTY_RELAY (1<<1)
+/// This plane master will temporarially remove relays to all other planes
+/// Allows us to retain the effects of a plane while cutting off the changes it makes
+#define PLANE_CRITICAL_NO_RELAY (1<<1)
+/// We assume this plane master has a render target starting with *, it'll be removed, forcing it to render in place
+#define PLANE_CRITICAL_CUT_RENDER (1<<2)
 
-#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_EMPTY_RELAY)
+#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_RELAY|PLANE_CRITICAL_CUT_RENDER)
 
 /// A value of /datum/preference/numeric/multiz_performance that disables the option
 #define MULTIZ_PERFORMANCE_DISABLE -1
 /// We expect at most 3 layers of multiz
 /// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
 /// If you modify this, you'll need to modify the tsx file too
-#define MAX_EXPECTED_Z_DEPTH 2
+#define MAX_EXPECTED_Z_DEPTH 3

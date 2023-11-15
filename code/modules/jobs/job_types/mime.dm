@@ -26,10 +26,10 @@
 		/obj/item/food/baguette = 15,
 		/obj/item/food/cheese/wheel = 10,
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 10,
-		/obj/item/book/mimery = 1,
+		/obj/item/book/granter/action/spell/mime/mimery = 1,
 	)
 	rpg_title = "Fool"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 	voice_of_god_power = 0.5 //Why are you speaking
 	voice_of_god_silence_power = 3
@@ -52,7 +52,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/mime
 	suit = /obj/item/clothing/suit/toggle/suspenders
 	backpack_contents = list(
-		/obj/item/book/mimery = 1,
+		/obj/item/book/granter/action/spell/mime/mimery = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 1,
 		/obj/item/stamp/mime = 1,
 		)
@@ -83,48 +83,42 @@
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.show_to(H)
 
-/obj/item/book/mimery
+/obj/item/book/granter/action/spell/mime/mimery
 	name = "Guide to Dank Mimery"
 	desc = "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence. One use only."
-	icon_state = "bookmime"
-	starting_title = "Guide to Dank Mimery"
+	pages_to_mastery = 0
+	reading_time = 0
 
-/obj/item/book/mimery/attack_self(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	var/list/spell_icons = list(
-		"Invisible Wall" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_wall"),
-		"Invisible Chair" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_chair"),
-		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box")
-		)
+/obj/item/book/granter/action/spell/mime/mimery/on_reading_start(mob/living/user)
+	var/list/spell_icons = list()
+	var/list/name_to_spell = list()
+	for(var/datum/action/type as anything in list(/datum/action/cooldown/spell/conjure/invisible_wall, /datum/action/cooldown/spell/conjure/invisible_chair, /datum/action/cooldown/spell/conjure_item/invisible_box))
+		if(!(locate(type) in user.actions))
+			spell_icons[initial(type.name)] = image(icon = initial(type.button_icon), icon_state = initial(type.button_icon_state))
+		name_to_spell[initial(type.name)] = type
 	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
-	var/datum/action/cooldown/spell/picked_spell_type
-	switch(picked_spell)
-		if("Invisible Wall")
-			picked_spell_type = /datum/action/cooldown/spell/conjure/invisible_wall
-
-		if("Invisible Chair")
-			picked_spell_type = /datum/action/cooldown/spell/conjure/invisible_chair
-
-		if("Invisible Box")
-			picked_spell_type = /datum/action/cooldown/spell/conjure_item/invisible_box
-
-	if(ispath(picked_spell_type))
-		// Gives the user a vow ability too, if they don't already have one
-		var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in user.actions
-		if(!vow && user.mind)
-			vow = new(user.mind)
-			vow.Grant(user)
-
-		picked_spell_type = new picked_spell_type(user.mind || user)
-		picked_spell_type.Grant(user)
-
-		to_chat(user, span_warning("The book disappears into thin air."))
-		qdel(src)
-
+	if(!picked_spell)
+		return FALSE
+	granted_action = name_to_spell[picked_spell]
 	return TRUE
+
+/obj/item/book/granter/action/spell/mime/mimery/on_reading_finished(mob/living/user)
+	// Gives the user a vow ability too, if they don't already have one
+	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in user.actions
+	if(!vow && user.mind)
+		vow = new(user.mind)
+		vow.Grant(user)
+	var/datum/action/new_action = new granted_action(user.mind || user)
+	new_action.Grant(user)
+	to_chat(user, span_warning("The book disappears into thin air."))
+	qdel(src)
+
+/obj/item/book/granter/action/spell/mime/mimery/can_learn(mob/living/user)
+	for(var/type in list(/datum/action/cooldown/spell/conjure/invisible_wall, /datum/action/cooldown/spell/conjure/invisible_chair, /datum/action/cooldown/spell/conjure_item/invisible_box))
+		if(!(locate(type) in user.actions))
+			return TRUE
+	to_chat(user, span_warning("You already know the secrets of mimery!"))
+	return FALSE
 
 /**
  * Checks if we are allowed to interact with a radial menu
@@ -132,7 +126,7 @@
  * Arguments:
  * * user The human mob interacting with the menu
  */
-/obj/item/book/mimery/proc/check_menu(mob/living/carbon/human/user)
+/obj/item/book/granter/action/spell/mime/mimery/proc/check_menu(mob/living/carbon/human/user)
 	if(!istype(user))
 		return FALSE
 	if(!user.is_holding(src))

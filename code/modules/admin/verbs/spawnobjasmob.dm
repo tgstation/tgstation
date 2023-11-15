@@ -66,4 +66,4 @@
 
 
 		log_admin("[key_name(usr)] spawned a sentient object-mob [basemob] from [chosen_obj] at [AREACOORD(usr)]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn object-mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn object-mob") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

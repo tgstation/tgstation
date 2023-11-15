@@ -4,7 +4,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	set name = "Secrets"
 	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
 	set category = "Admin.Game"
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 	var/datum/secrets_menu/tgui = new(usr)//create the datum
 	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 
@@ -43,6 +43,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	return data
 
 #define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
+#define HIGHLANDER_DELAY_TEXT "40 seconds (crush the hope of a normal shift)"
 /datum/secrets_menu/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -54,9 +55,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		//Generic Buttons anyone can use.
 		if("admin_log")
 			var/dat = "<meta charset='UTF-8'><B>Admin Log<HR></B>"
-			for(var/l in GLOB.admin_log)
+			for(var/l in GLOB.admin_activities)
 				dat += "<li>[l]</li>"
-			if(!GLOB.admin_log.len)
+			if(!GLOB.admin_activities.len)
 				dat += "No-one has done anything this round!"
 			holder << browse(dat, "window=admin_log")
 		if("show_admins")
@@ -70,19 +71,18 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		if("maint_access_engiebrig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.airlocks)
-				M.check_access()
-				if (ACCESS_MAINT_TUNNELS in M.req_access)
-					M.req_access = list()
-					M.req_one_access = list(ACCESS_BRIG, ACCESS_ENGINEERING)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
+				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
+					doors.req_access = list()
+					doors.req_one_access = list(ACCESS_BRIG, ACCESS_ENGINEERING)
 			message_admins("[key_name_admin(holder)] made all maint doors engineering and brig access-only.")
 		if("maint_access_brig")
 			if(!is_debugger)
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.airlocks)
-				M.check_access()
-				if (ACCESS_MAINT_TUNNELS in M.req_access)
-					M.req_access = list(ACCESS_BRIG)
+			for(var/obj/machinery/door/airlock/maintenance/doors as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/maintenance))
+				if ((ACCESS_MAINT_TUNNELS in doors.req_access) || (ACCESS_MAINT_TUNNELS in doors.req_one_access))
+					doors.req_access = list(ACCESS_BRIG)
+					doors.req_one_access = list()
 			message_admins("[key_name_admin(holder)] made all maint doors brig access-only.")
 		if("infinite_sec")
 			if(!is_debugger)
@@ -123,7 +123,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			holder.list_fingerprints()
 
 		if("ctfbutton")
-			toggle_id_ctf(holder, "centcom")
+			toggle_id_ctf(holder, CTF_GHOST_CTF_GAME_ID)
 
 		if("tdomereset")
 			var/delete_mobs = tgui_alert(usr, "Clear all mobs?", "Thunderdome Reset", list("Yes", "No", "Cancel"))
@@ -142,6 +142,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					qdel(obj) //Clear objects
 
 			var/datum/map_template/thunderdome_template = SSmapping.map_templates[THUNDERDOME_TEMPLATE_FILE]
+			thunderdome_template.should_place_on_top = FALSE
 			var/turf/thunderdome_corner = locate(thunderdome.x - 3, thunderdome.y - 1, 1) // have to do a little bit of coord manipulation to get it in the right spot
 			thunderdome_template.load(thunderdome_corner)
 
@@ -170,13 +171,13 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 						SSnightshift.can_fire = TRUE
 						SSnightshift.fire()
 					else
-						SSnightshift.update_nightshift(FALSE, TRUE)
+						SSnightshift.update_nightshift(active = FALSE, announce = TRUE, forced = TRUE)
 				if("On")
 					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(TRUE, TRUE)
+					SSnightshift.update_nightshift(active = TRUE, announce = TRUE, forced = TRUE)
 				if("Off")
 					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(FALSE, TRUE)
+					SSnightshift.update_nightshift(active = FALSE, announce = TRUE, forced = TRUE)
 		if("moveferry")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send CentCom Ferry"))
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
@@ -206,12 +207,11 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("Make Your Own")
 					AdminCreateVirus(holder)
 				if("Random")
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					E = DC.runEvent()
+					force_event(/datum/round_event_control/disease_outbreak)
 				if("Choose")
 					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sort_list(typesof(/datum/disease), GLOBAL_PROC_REF(cmp_typepaths_asc))
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
+					var/datum/round_event/disease_outbreak/DO = DC.run_event()
 					DO.virus_type = virus
 					E = DO
 		if("allspecies")
@@ -220,7 +220,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/result = input(holder, "Please choose a new species","Species") as null|anything in GLOB.species_list
 			if(result)
 				SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Species Change", "[result]"))
-				log_admin("[key_name(holder)] turned all humans into [result]", 1)
+				log_admin("[key_name(holder)] turned all humans into [result]")
 				message_admins("\blue [key_name_admin(holder)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
 				for(var/i in GLOB.human_list)
@@ -230,21 +230,21 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All APCs"))
-			log_admin("[key_name(holder)] made all areas powered", 1)
+			log_admin("[key_name(holder)] made all areas powered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas powered"))
 			power_restore()
 		if("unpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Depower All APCs"))
-			log_admin("[key_name(holder)] made all areas unpowered", 1)
+			log_admin("[key_name(holder)] made all areas unpowered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas unpowered"))
 			power_failure()
 		if("quickpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All SMESs"))
-			log_admin("[key_name(holder)] made all SMESs powered", 1)
+			log_admin("[key_name(holder)] made all SMESs powered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
 		if("anon_name")
@@ -260,11 +260,14 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		if("onlyone")
 			if(!is_funmin)
 				return
-			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", "40 seconds (crush the hope of a normal shift)"))
-			if(response == "Instant!")
-				holder.only_one()
-			else
-				holder.only_one_delayed()
+			var/response = tgui_alert(usr,"Delay by 40 seconds?", "There can, in fact, only be one", list("Instant!", HIGHLANDER_DELAY_TEXT))
+			switch(response)
+				if("Instant!")
+					holder.only_one()
+				if(HIGHLANDER_DELAY_TEXT)
+					holder.only_one_delayed()
+				else
+					return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("There Can Be Only One"))
 		if("guns")
 			if(!is_funmin)
@@ -325,7 +328,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
-			for(var/obj/machinery/door/airlock/W in GLOB.airlocks)
+			for(var/obj/machinery/door/airlock/W as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
@@ -345,24 +348,24 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Break All Lights"))
 			message_admins("[key_name_admin(holder)] broke all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
+			for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 				L.break_light_tube()
-				stoplag()
+				CHECK_TICK
 		if("whiteout")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Fix All Lights"))
 			message_admins("[key_name_admin(holder)] fixed all lights")
-			for(var/obj/machinery/light/L in GLOB.machines)
+			for(var/obj/machinery/light/L as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/light))
 				L.fix()
-				stoplag()
+				CHECK_TICK
 		if("customportal")
 			if(!is_funmin)
 				return
 
 			var/list/settings = list(
 				"mainsettings" = list(
-					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/simple_animal/hostile/bee),
+					"typepath" = list("desc" = "Path to spawn", "type" = "datum", "path" = "/mob/living", "subtypesonly" = TRUE, "value" = /mob/living/basic/bee),
 					"humanoutfit" = list("desc" = "Outfit if human", "type" = "datum", "path" = "/datum/outfit", "subtypesonly" = TRUE, "value" = /datum/outfit),
 					"amount" = list("desc" = "Number per portal", "type" = "number", "value" = 1),
 					"portalnum" = list("desc" = "Number of total portals", "type" = "number", "value" = 10),
@@ -410,7 +413,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 				var/list/storm_appearances = list()
 				for(var/offset in 0 to SSmapping.max_plane_offset)
-					var/mutable_appearance/storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+					var/mutable_appearance/storm = mutable_appearance('icons/obj/machines/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
 					SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
 					storm.color = prefs["color"]["value"]
 					storm_appearances += storm
@@ -551,7 +554,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/spawnpoint = pick(GLOB.blobstart)
 			var/list/mob/dead/observer/candidates
 			var/mob/dead/observer/chosen_candidate
-			var/mob/living/simple_animal/drone/nerd
+			var/mob/living/basic/drone/nerd
 			var/teamsize
 
 			teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
@@ -567,12 +570,29 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			while(length(candidates) && teamsize)
 				chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
-				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
+				nerd = new /mob/living/basic/drone/classic(spawnpoint)
 				nerd.key = chosen_candidate.key
 				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--
 
 			return TRUE
+		if("ctf_instagib")
+			if(!is_funmin)
+				return
+			if(GLOB.ctf_games.len <= 0)
+				tgui_alert(usr, "No CTF games are set up.")
+				return
+			var/selected_game = tgui_input_list(usr, "Select a CTF game to ruin.", "Instagib Mode", GLOB.ctf_games)
+			if(isnull(selected_game))
+				return
+			var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[selected_game]
+			var/choice = tgui_alert(usr, "[ctf_controller.instagib_mode ? "Return to standard" : "Enable instagib"] mode?", "Instagib Mode", list("Yes", "No"))
+			if(choice != "Yes")
+				return
+			ctf_controller.toggle_instagib_mode()
+			message_admins("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+			log_admin("[key_name_admin(holder)] [ctf_controller.instagib_mode ? "enabled" : "disabled"] instagib mode in CTF game: [selected_game]")
+
 	if(E)
 		E.processing = FALSE
 		if(E.announce_when>0)
@@ -588,6 +608,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
 #undef THUNDERDOME_TEMPLATE_FILE
+#undef HIGHLANDER_DELAY_TEXT
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE

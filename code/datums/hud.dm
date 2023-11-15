@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!hud_users_all_z_levels[new_viewer])
 		hud_users_all_z_levels[new_viewer] = 1
 
-		RegisterSignal(new_viewer, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud users and hud atoms use these signals
+		RegisterSignal(new_viewer, COMSIG_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud users and hud atoms use these signals
 		RegisterSignal(new_viewer, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_atom_or_user_z_level_changed), override = TRUE)
 
 		var/turf/their_turf = get_turf(new_viewer)
@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 		if(!hud_atoms_all_z_levels[former_viewer])//make sure we arent unregistering changes on a mob thats also a hud atom for this hud
 			UnregisterSignal(former_viewer, COMSIG_MOVABLE_Z_CHANGED)
-			UnregisterSignal(former_viewer, COMSIG_PARENT_QDELETING)
+			UnregisterSignal(former_viewer, COMSIG_QDELETING)
 
 		hud_users_all_z_levels -= former_viewer
 
@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 	// No matter where or who you are, you matter to me :)
 	RegisterSignal(new_hud_atom, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_atom_or_user_z_level_changed), override = TRUE)
-	RegisterSignal(new_hud_atom, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud atoms and hud users use these signals
+	RegisterSignal(new_hud_atom, COMSIG_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud atoms and hud users use these signals
 	hud_atoms_all_z_levels[new_hud_atom] = TRUE
 
 	var/turf/atom_turf = get_turf(new_hud_atom)
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(huds, list(
 	//make sure we arent unregistering a hud atom thats also a hud user mob
 	if(!hud_users_all_z_levels[hud_atom_to_remove])
 		UnregisterSignal(hud_atom_to_remove, COMSIG_MOVABLE_Z_CHANGED)
-		UnregisterSignal(hud_atom_to_remove, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(hud_atom_to_remove, COMSIG_QDELETING)
 
 	for(var/mob/mob_to_remove as anything in hud_users_all_z_levels)
 		remove_atom_from_single_hud(mob_to_remove, hud_atom_to_remove)
@@ -323,12 +323,16 @@ GLOBAL_LIST_INIT(huds, list(
 		for(var/atom/hud_atom as anything in hud_atoms)
 			if(mob_exceptions && (hud_atom in hud_exceptions[requesting_mob]))
 				continue
-			requesting_mob.client.images |= hud_atom.active_hud_list[hud_category]
+			var/image/output = hud_atom.active_hud_list?[hud_category]
+			// byond throws a fit if you try to add null to the images list
+			if(!output)
+				continue
+			requesting_mob.client.images |= output
 
 /// add just hud_atom's hud images (that are part of this atom_hud) to all the requesting_mobs's client.images list
 /// optimization of [/datum/atom_hud/proc/add_atom_to_single_mob_hud] for hot cases, we assert that no nulls will be passed in via the list
 /datum/atom_hud/proc/add_atom_to_all_mob_huds(list/mob/requesting_mobs, atom/hud_atom) //unsafe, no sanity apart from client
-	if(!hud_atom)
+	if(!hud_atom?.active_hud_list)
 		return
 
 	var/list/images_to_add = list()
@@ -339,7 +343,7 @@ GLOBAL_LIST_INIT(huds, list(
 	var/list/exceptions = hud_exceptions
 	for(var/mob/requesting_mob as anything in requesting_mobs)
 		if(!requesting_mob.client)
-			return
+			continue
 		if(!exceptions[requesting_mob] || !(hud_atom in exceptions[requesting_mob]))
 			requesting_mob.client.images |= images_to_add
 
@@ -357,7 +361,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 	for(var/hud_image in hud_icons)
 		for(var/atom/atom_to_remove as anything in atoms_to_remove)
-			client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
+			client_mob.client.images -= atom_to_remove.active_hud_list?[hud_image]
 
 /// remove every hud image for this hud on atom_to_remove from client_mobs's client.images list
 /// optimization of [/datum/atom_hud/proc/remove_atom_from_single_hud] for hot cases, we assert that no nulls will be passed in via the list
@@ -371,7 +375,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 	for(var/mob/client_mob as anything in client_mobs)
 		if(!client_mob.client)
-			return
+			continue
 		client_mob.client.images -= images_to_remove
 
 /datum/atom_hud/proc/unregister_atom(datum/source, force)

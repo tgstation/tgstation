@@ -19,13 +19,13 @@
 	UnregisterSignal(owner, list(COMSIG_CARBON_PRE_BREATHE, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), COMSIG_CARBON_PRE_MISC_HELP))
 
 /datum/status_effect/strandling/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
+	return span_warning("[owner.p_They()] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
 
 /// Signal proc for [COMSIG_CARBON_PRE_BREATHE], causes losebreath whenever we're trying to breathe
 /datum/status_effect/strandling/proc/on_breathe(mob/living/source)
 	SIGNAL_HANDLER
 
-	if(source.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+	if(source.get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
 		return
 
 	source.losebreath++
@@ -69,7 +69,7 @@
 	tool?.play_tool_sound(owner)
 
 	// Now try to remove the effect with a doafter. If we have a tool, we'll even remove it 60% faster.
-	if(!do_mob(user, owner, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1), interaction_key = REF(src)))
+	if(!do_after(user, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1), owner, interaction_key = REF(src)))
 		to_chat(user, span_warning("You fail to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck!"))
 		return FALSE
 

@@ -11,7 +11,7 @@
 
 	invocation = "THE STARS ALIGN! THE COSMOS BLEEDS!"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM|SPELL_REQUIRES_MIND
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_STATION|SPELL_REQUIRES_MIND
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY
 	spell_max_level = 1
 
@@ -29,6 +29,7 @@
 		merely a vessel for the arcane flow. Soon, all that is left is not pain, but hunger."))
 
 	cast_on.set_species(/datum/species/vampire)
+	cast_on.blood_volume = BLOOD_VOLUME_NORMAL ///for predictable blood total amounts when the spell is first cast.
 
 	cast_on.AddComponent(/datum/component/splattercasting)
 

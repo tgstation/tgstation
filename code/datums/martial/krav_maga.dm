@@ -91,7 +91,7 @@
 	to_chat(attacker, span_danger("You leg sweep [defender]!"))
 	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	defender.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
-	defender.Knockdown(60)
+	defender.Knockdown(6 SECONDS)
 	log_combat(attacker, defender, "leg sweeped")
 	return TRUE
 

@@ -348,7 +348,7 @@ const NewscasterChannelBox = (props, context) => {
     channelAuthor,
     channelCensored,
     viewing_channel,
-    security_mode,
+    admin_mode,
     photo_data,
     paper,
     user,
@@ -393,16 +393,16 @@ const NewscasterChannelBox = (props, context) => {
               }
               onClick={() => act('togglePhoto')}
             />
-            {!!security_mode && (
+            {!!admin_mode && (
               <Button
                 icon="ban"
                 content={'D-Notice'}
                 tooltip="Censor the whole channel and it's \
                   contents as dangerous to the station. Cannot be undone."
-                disabled={!security_mode || !viewing_channel}
+                disabled={!admin_mode || !viewing_channel}
                 onClick={() =>
                   act('channelDNotice', {
-                    secure: security_mode,
+                    secure: admin_mode,
                     channel: viewing_channel,
                   })
                 }
@@ -426,7 +426,7 @@ const NewscasterChannelBox = (props, context) => {
 /** Channel select is the left-hand menu where all the channels are listed. */
 const NewscasterChannelSelector = (props, context) => {
   const { act, data } = useBackend(context);
-  const { channels = [], viewing_channel, security_mode, wanted = [] } = data;
+  const { channels = [], viewing_channel, wanted = [] } = data;
   return (
     <Section minHeight="100%" width={window.innerWidth - 410 + 'px'}>
       <Tabs vertical>
@@ -493,7 +493,7 @@ const NewscasterChannelMessages = (props, context) => {
   const {
     messages = [],
     viewing_channel,
-    security_mode,
+    admin_mode,
     channelCensored,
     channelLocked,
     channelAuthor,
@@ -533,11 +533,11 @@ const NewscasterChannelMessages = (props, context) => {
             }
             buttons={
               <>
-                {!!security_mode && (
+                {!!admin_mode && (
                   <Button
                     icon="comment-slash"
                     tooltip="Censor Story"
-                    disabled={!security_mode}
+                    disabled={!admin_mode}
                     onClick={() =>
                       act('storyCensor', {
                         messageID: message.ID,
@@ -545,11 +545,11 @@ const NewscasterChannelMessages = (props, context) => {
                     }
                   />
                 )}
-                {!!security_mode && (
+                {!!admin_mode && (
                   <Button
                     icon="user-slash"
                     tooltip="Censor Author"
-                    disabled={!security_mode}
+                    disabled={!admin_mode}
                     onClick={() =>
                       act('authorCensor', {
                         messageID: message.ID,

@@ -1,6 +1,6 @@
 #define STRONG_PUNCH_COMBO "HH"
 #define LAUNCH_KICK_COMBO "HD"
-#define DROP_KICK_COMBO "HG"
+#define DROP_KICK_COMBO "DD"
 
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
@@ -8,115 +8,140 @@
 	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/sleeping_carp_help
 	display_combos = TRUE
+	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER)
 
 /datum/martial_art/the_sleeping_carp/teach(mob/living/target, make_temporary = FALSE)
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
-	target.faction |= "carp" //:D
+	target.add_traits(scarp_traits, SLEEPING_CARP_TRAIT)
+	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
+	target.faction |= FACTION_CARP //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
-	REMOVE_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	UnregisterSignal(target, COMSIG_PARENT_ATTACKBY)
-	target.faction -= "carp" //:(
+	target.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
+	UnregisterSignal(target, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT)
+	target.faction -= FACTION_CARP //:(
 	. = ..()
 
-/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/A, mob/living/D)
+/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
 	if(findtext(streak,STRONG_PUNCH_COMBO))
 		reset_streak()
-		strongPunch(A,D)
+		strongPunch(attacker, defender)
 		return TRUE
 	if(findtext(streak,LAUNCH_KICK_COMBO))
 		reset_streak()
-		launchKick(A,D)
+		launchKick(attacker, defender)
 		return TRUE
 	if(findtext(streak,DROP_KICK_COMBO))
 		reset_streak()
-		dropKick(A,D)
+		dropKick(attacker, defender)
 		return TRUE
 	return FALSE
 
 ///Gnashing Teeth: Harm Harm, consistent 20 force punch on every second harm punch
-/datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/A, mob/living/D)
+/datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/attacker, mob/living/defender)
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
-	var/obj/item/bodypart/affecting = D.get_bodypart(D.get_random_valid_zone(A.zone_selected))
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("precisely kick", "brutally chop", "cleanly hit", "viciously slam")
-	D.visible_message(span_danger("[A] [atk_verb]s [D]!"), \
-					span_userdanger("[A] [atk_verb]s you!"), null, null, A)
-	to_chat(A, span_danger("You [atk_verb] [D]!"))
-	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(A, D, "strong punched (Sleeping Carp)")
-	D.apply_damage(20, A.get_attack_type(), affecting)
+	defender.visible_message(span_danger("[attacker] [atk_verb]s [defender]!"), \
+					span_userdanger("[attacker] [atk_verb]s you!"), null, null, attacker)
+	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	log_combat(attacker, defender, "strong punched (Sleeping Carp)")
+	defender.apply_damage(20, attacker.get_attack_type(), affecting)
 	return
 
-///Crashing Wave Kick: Punch Shove combo, throws people seven tiles backwards
-/datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/A, mob/living/D)
-	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
-	D.visible_message(span_warning("[A] kicks [D] square in the chest, sending them flying!"), \
-					span_userdanger("You are kicked square in the chest by [A], sending you flying!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	var/atom/throw_target = get_edge_target_turf(D, A.dir)
-	D.throw_at(throw_target, 7, 4, A)
-	D.apply_damage(15, A.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
-	log_combat(A, D, "launchkicked (Sleeping Carp)")
+///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
+/datum/martial_art/the_sleeping_carp/proc/launchKick(mob/living/attacker, mob/living/defender)
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
+	defender.visible_message(span_warning("[attacker] kicks [defender] square in the chest, sending them flying!"), \
+					span_userdanger("You are kicked square in the chest by [attacker], sending you flying!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
+	defender.throw_at(throw_target, 7, 4, attacker)
+	defender.apply_damage(15, attacker.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+	log_combat(attacker, defender, "launchkicked (Sleeping Carp)")
 	return
 
-///Keelhaul: Harm Grab combo, knocks people down, deals stamina damage while they're on the floor
-/datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/A, mob/living/D)
-	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
-	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	if(D.body_position == STANDING_UP)
-		D.apply_damage(10, A.get_attack_type(), BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
-		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
-		D.Knockdown(40)
-		D.visible_message(span_warning("[A] kicks [D] in the head, sending them face first into the floor!"), \
-					span_userdanger("You are kicked in the head by [A], sending you crashing to the floor!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
+///Keelhaul: Disarm Disarm combo, knocks people down and deals substantial stamina damage, and also discombobulates them. Knocks objects out of their hands if they're already on the ground.
+/datum/martial_art/the_sleeping_carp/proc/dropKick(mob/living/attacker, mob/living/defender)
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
+	playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	if(defender.body_position == STANDING_UP)
+		defender.Knockdown(4 SECONDS)
+		defender.visible_message(span_warning("[attacker] kicks [defender] in the head, sending them face first into the floor!"), \
+					span_userdanger("You are kicked in the head by [attacker], sending you crashing to the floor!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 	else
-		D.apply_damage(5, A.get_attack_type(), BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
-		D.apply_damage(40, STAMINA, BODY_ZONE_HEAD)
-		D.drop_all_held_items()
-		D.visible_message(span_warning("[A] kicks [D] in the head!"), \
-					span_userdanger("You are kicked in the head by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
-	log_combat(A, D, "dropkicked (Sleeping Carp)")
+		defender.drop_all_held_items()
+		defender.visible_message(span_warning("[attacker] kicks [defender] in the head!"), \
+					span_userdanger("You are kicked in the head by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+	defender.apply_damage(40, STAMINA)
+	defender.adjust_dizzy_up_to(10 SECONDS, 10 SECONDS)
+	defender.adjust_temp_blindness_up_to(2 SECONDS, 10 SECONDS)
+	log_combat(attacker, defender, "dropkicked (Sleeping Carp)")
 	return
 
-/datum/martial_art/the_sleeping_carp/grab_act(mob/living/A, mob/living/D)
-	add_to_streak("G",D)
-	if(check_streak(A,D))
+/datum/martial_art/the_sleeping_carp/grab_act(mob/living/attacker, mob/living/defender)
+	if(!can_deflect(attacker)) //allows for deniability
+		return ..()
+
+	add_to_streak("G", defender)
+	if(check_streak(attacker, defender))
 		return TRUE
-	log_combat(A, D, "grabbed (Sleeping Carp)")
+	var/grab_log_description = "grabbed"
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
+		defender.visible_message(
+			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold"),
+			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
+		)
+		grab_log_description = "grabbed and nerve pinched"
+		defender.Unconscious(10 SECONDS)
+	defender.apply_damage(20, STAMINA)
+	log_combat(attacker, defender, "[grab_log_description] (Sleeping Carp)")
 	return ..()
 
-/datum/martial_art/the_sleeping_carp/harm_act(mob/living/A, mob/living/D)
-	add_to_streak("H",D)
-	if(check_streak(A,D))
+/datum/martial_art/the_sleeping_carp/harm_act(mob/living/attacker, mob/living/defender)
+	add_to_streak("H", defender)
+	if(check_streak(attacker, defender))
 		return TRUE
-	var/obj/item/bodypart/affecting = D.get_bodypart(D.get_random_valid_zone(A.zone_selected))
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+
+	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
-	D.visible_message(span_danger("[A] [atk_verb]s [D]!"), \
-					span_userdanger("[A] [atk_verb]s you!"), null, null, A)
-	to_chat(A, span_danger("You [atk_verb] [D]!"))
-	D.apply_damage(rand(10,15), BRUTE, affecting, wound_bonus = CANT_WOUND)
-	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(A, D, "punched (Sleeping Carp)")
+	defender.visible_message(span_danger("[attacker] [atk_verb]s [defender]!"), \
+					span_userdanger("[attacker] [atk_verb]s you!"), null, null, attacker)
+	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
+
+	defender.apply_damage(rand(10,15), attacker.get_attack_type(), affecting, wound_bonus = CANT_WOUND)
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	log_combat(attacker, defender, "punched (Sleeping Carp)")
+
 	return TRUE
 
-/datum/martial_art/the_sleeping_carp/disarm_act(mob/living/A, mob/living/D)
-	add_to_streak("D",D)
-	if(check_streak(A,D))
+/datum/martial_art/the_sleeping_carp/disarm_act(mob/living/attacker, mob/living/defender)
+	if(!can_deflect(attacker)) //allows for deniability
+		return ..()
+
+	add_to_streak("D", defender)
+	if(check_streak(attacker, defender))
 		return TRUE
-	log_combat(A, D, "disarmed (Sleeping Carp)")
+
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
+	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	defender.apply_damage(20, STAMINA)
+	log_combat(attacker, defender, "disarmed (Sleeping Carp)")
+
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/can_deflect(mob/living/carp_user)
+	if(!can_use(carp_user) || !carp_user.combat_mode)
+		return FALSE
 	if(carp_user.incapacitated(IGNORE_GRAB)) //NO STUN
 		return FALSE
 	if(!(carp_user.mobility_flags & MOBILITY_USE)) //NO UNABLE TO USE
@@ -128,17 +153,20 @@
 		return FALSE
 	return TRUE
 
-/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carp_user, obj/projectile/P, def_zone)
-	. = ..()
+/datum/martial_art/the_sleeping_carp/proc/hit_by_projectile(mob/living/carp_user, obj/projectile/hitting_projectile, def_zone)
+	SIGNAL_HANDLER
+
 	if(!can_deflect(carp_user))
-		return BULLET_ACT_HIT
-	if(carp_user.throw_mode)
-		carp_user.visible_message(span_danger("[carp_user] effortlessly swats the projectile aside! They can block bullets with their bare hands!"), span_userdanger("You deflect the projectile!"))
-		playsound(get_turf(carp_user), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-		P.firer = carp_user
-		P.set_angle(rand(0, 360))//SHING
-		return BULLET_ACT_FORCE_PIERCE
-	return BULLET_ACT_HIT
+		return NONE
+
+	carp_user.visible_message(
+		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
+		span_userdanger("You deflect [hitting_projectile]!"),
+	)
+	playsound(carp_user, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+	hitting_projectile.firer = carp_user
+	hitting_projectile.set_angle(rand(0, 360))//SHING
+	return COMPONENT_BULLET_PIERCED
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
 /datum/martial_art/the_sleeping_carp/proc/on_attackby(mob/living/carp_user, obj/item/attack_weapon, mob/attacker, params)
@@ -162,12 +190,13 @@
 	set category = "Sleeping Carp"
 
 	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
-	[span_notice("Gnashing Teeth")]: Punch Punch. Deal additional damage every second (consecutive) punch!\n\
+	[span_notice("Gnashing Teeth")]: Punch Punch. Deal additional damage every second (consecutive) punch! Very good chance to wound!\n\
 	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
-	[span_notice("Keelhaul")]: Punch Grab. Kick an opponent to the floor, knocking them down! If your opponent is already prone, this move will disarm them and deal additional stamina damage to them.\n\
-	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \
-	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons. \
-	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \
+	[span_notice("Keelhaul")]: Shove Shove. Nonlethally kick an opponent to the floor, knocking them down, discombobulating them and dealing substantial stamina damage. If they're already prone, disarm them as well.\n\
+	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damage. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
+	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \n\
+	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons. \n\
+	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \n\
 	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
 
 
@@ -181,7 +210,7 @@
 	throw_speed = 2
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/staff.dmi'
 	icon_state = "bostaff0"
 	base_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
@@ -204,7 +233,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, span_warning("You club yourself over the head with [src]."))
-		user.Paralyze(60)
+		user.Paralyze(6 SECONDS)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -235,19 +264,23 @@
 		if(prob(10))
 			H.visible_message(span_warning("[H] collapses!"), \
 							span_userdanger("Your legs give out!"))
-			H.Paralyze(80)
+			H.Paralyze(8 SECONDS)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message(span_warning("[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"), \
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))
-				H.SetSleeping(600)
+				H.SetSleeping(60 SECONDS)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
 	else
 		return ..()
 
-/obj/item/staff/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/staff/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	return FALSE
+
+#undef STRONG_PUNCH_COMBO
+#undef LAUNCH_KICK_COMBO
+#undef DROP_KICK_COMBO

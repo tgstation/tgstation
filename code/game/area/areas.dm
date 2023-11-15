@@ -32,8 +32,8 @@
 	var/list/firedoors
 	///A list of firelocks currently active. Used by fire alarms when setting their icons.
 	var/list/active_firelocks
-	///A list of all fire alarms in this area. Used by fire locks and burglar alarms to tell the fire alarm to change its icon.
-	var/list/firealarms
+	///A list of all fire alarms in this area. Used by firelocks and burglar alarms to change icon state.
+	var/list/firealarms = list()
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
 	///List of all lights in our area
@@ -107,11 +107,6 @@
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
 	var/datum/map_generator/map_generator
 
-	/// Default network root for this area aka station, lavaland, etc
-	var/network_root_id = null
-	/// Area network id when you want to find all devices hooked up to this area
-	var/network_area_id = null
-
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
 
@@ -177,12 +172,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!ambientsounds)
 		ambientsounds = GLOB.ambience_assoc[ambience_index]
 
-	if(area_flags & AREA_USES_STARLIGHT && CONFIG_GET(flag/starlight))
-		// Areas lit by starlight are not supposed to be fullbright 4head
-		base_lighting_alpha = 0
-		base_lighting_color = null
-		static_lighting = TRUE
-
 	if(requires_power)
 		luminosity = 0
 	else
@@ -200,11 +189,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	reg_in_areas_in_z()
 
-	if(!mapload)
-		if(!network_root_id)
-			network_root_id = STATION_NETWORK_ROOT // default to station root because this might be created with a blueprint
-		SSnetworks.assign_area_network_id(src)
-
 	update_base_lighting()
 
 	return INITIALIZE_HINT_LATELOAD
@@ -216,13 +200,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
 
-/area/proc/RunGeneration()
+/// Generate turfs, including cool cave wall gen
+/area/proc/RunTerrainGeneration()
 	if(map_generator)
 		map_generator = new map_generator()
 		var/list/turfs = list()
 		for(var/turf/T in contents)
 			turfs += T
 		map_generator.generate_terrain(turfs, src)
+
+/// Populate the previously generated terrain with mobs and objects
+/area/proc/RunTerrainPopulation()
+	if(map_generator)
+		var/list/turfs = list()
+		for(var/turf/T in contents)
+			turfs += T
+		map_generator.populate_terrain(turfs, src)
 
 /area/proc/test_gen()
 	if(map_generator)
@@ -278,11 +271,24 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
-	GLOB.sortedAreas -= src
-	GLOB.areas -= src
+	//this is not initialized until get_sorted_areas() is called so we have to do a null check
+	if(!isnull(GLOB.sortedAreas))
+		GLOB.sortedAreas -= src
+	//just for sanity sake cause why not
+	if(!isnull(GLOB.areas))
+		GLOB.areas -= src
+	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
+	firedoors = null
+	//atmos cleanup
+	firealarms = null
 	air_vents = null
+	air_scrubbers = null
+	//turf cleanup
+	contained_turfs = null
+	turfs_to_uncontain = null
+	//parent cleanup
 	return ..()
 
 /**
@@ -476,6 +482,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
+	SEND_SIGNAL(gone, COMSIG_MOVABLE_EXITED_AREA, src, direction)
 
 	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
@@ -503,8 +510,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_light = FALSE
 	power_environ = FALSE
 	always_unpowered = FALSE
-	area_flags &= ~VALID_TERRITORY
-	area_flags &= ~BLOBS_ALLOWED
+	area_flags &= ~(VALID_TERRITORY|BLOBS_ALLOWED|CULT_PERMITTED)
 	require_area_resort()
 /**
  * Set the area size of the area
@@ -539,3 +545,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /// Called when a living mob that spawned here, joining the round, receives the player client.
 /area/proc/on_joining_game(mob/living/boarder)
 	return
+
+/**
+ * Returns the name of an area, with the original name if the area name has been changed.
+ *
+ * If an area has not been renamed, returns the area name. If it has been modified (by blueprints or other means)
+ * returns the current name, as well as the initial value, in the format of [Current Location Name (Original Name)]
+ */
+
+/area/proc/get_original_area_name()
+	if(name == initial(name))
+		return name
+	return "[name] ([initial(name)])"
+
+/**
+ * A blank area subtype solely used by the golem area editor for the purpose of
+ * allowing golems to create new areas without suffering from the hazard_area debuffs.
+ */
+/area/golem
+	name = "Golem Territory"

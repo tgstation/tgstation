@@ -24,6 +24,8 @@
 	var/species
 	/// The character's ID trim
 	var/trim
+	/// The character's voice, if they have one.
+	var/voice
 
 /datum/record/New(
 	age = 18,
@@ -37,6 +39,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	voice = "?????",
 )
 	src.age = age
 	src.blood_type = blood_type
@@ -70,6 +73,10 @@
 	var/minor_disabilities
 	/// Fancy description of minor disabilities
 	var/minor_disabilities_desc
+	/// Physical status of this person in medical records.
+	var/physical_status
+	/// Mental status of this person in medical records.
+	var/mental_status
 	/// Positive and neutral quirk strings
 	var/quirk_notes
 	/// Security note
@@ -95,6 +102,8 @@
 	major_disabilities_desc = "No disabilities have been diagnosed at the moment.",
 	minor_disabilities = "None",
 	minor_disabilities_desc = "No disabilities have been diagnosed at the moment.",
+	physical_status = PHYSICAL_ACTIVE,
+	mental_status = MENTAL_STABLE,
 	quirk_notes,
 )
 	. = ..()
@@ -103,6 +112,8 @@
 	src.major_disabilities_desc = major_disabilities_desc
 	src.minor_disabilities = minor_disabilities
 	src.minor_disabilities_desc = minor_disabilities_desc
+	src.physical_status = physical_status
+	src.mental_status = mental_status
 	src.quirk_notes = quirk_notes
 
 	GLOB.manifest.general += src
@@ -116,9 +127,11 @@
  */
 /datum/record/locked
 	/// Mob's dna
-	var/datum/dna/dna_ref
+	var/datum/dna/locked_dna
 	/// Mind datum
-	var/datum/mind/mind_ref
+	var/datum/weakref/mind_ref
+	/// Typepath of species used by player, for usage in respawning via records
+	var/species_type
 
 /datum/record/locked/New(
 	age = 18,
@@ -133,12 +146,13 @@
 	species = "Human",
 	trim = "Unassigned",
 	/// Locked specific
-	datum/dna/dna_ref,
+	datum/dna/locked_dna,
 	datum/mind/mind_ref,
 )
 	. = ..()
-	src.dna_ref = dna_ref
-	src.mind_ref = mind_ref
+	src.locked_dna = locked_dna
+	src.mind_ref = WEAKREF(mind_ref)
+	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src
 
@@ -181,10 +195,14 @@
 	if(!character_appearance)
 		return new /icon()
 
-	var/mutable_appearance/appearance = character_appearance
-	appearance.setDir(orientation)
+	var/icon/picture_image
+	if(!isicon(character_appearance))
+		var/mutable_appearance/appearance = character_appearance
+		appearance.setDir(orientation)
 
-	var/icon/picture_image = getFlatIcon(appearance)
+		picture_image = getFlatIcon(appearance)
+	else
+		picture_image = character_appearance
 
 	var/datum/picture/picture = new
 	picture.picture_name = name
@@ -199,15 +217,15 @@
 /datum/record/crew/proc/get_rapsheet(alias, header = "Rapsheet", description = "No further details.")
 	var/print_count = ++GLOB.manifest.print_count
 	var/obj/item/paper/printed_paper = new
-	var/final_paper_text = text("<center><b>SR-[print_count]: [header]</b></center><br>")
+	var/final_paper_text = "<center><b>SR-[print_count]: [header]</b></center><br>"
 
-	final_paper_text += text("Name: []<br>Gender: []<br>Age: []<br>", name, gender, age)
+	final_paper_text += "Name: [name]<br>Gender: [gender]<br>Age: [age]<br>"
 	if(alias != name)
-		final_paper_text += text("Alias: []<br>", alias)
+		final_paper_text += "Alias: [alias]<br>"
 
-	final_paper_text += text("Species: []<br>Fingerprint: []<br>Wanted Status: []<br><br>", species, fingerprint, wanted_status)
+	final_paper_text += "Species: [species]<br>Fingerprint: [fingerprint]<br>Wanted Status: [wanted_status]<br><br>"
 
-	final_paper_text += text("<center><B>Security Data</B></center><br><br>")
+	final_paper_text += "<center><B>Security Data</B></center><br><br>"
 
 	final_paper_text += "Crimes:<br>"
 	final_paper_text += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
@@ -218,10 +236,14 @@
 						<th>Time Added</th>
 						</tr>"}
 	for(var/datum/crime/crime in crimes)
-		final_paper_text += "<tr><td>[crime.name]</td>"
-		final_paper_text += "<td>[crime.details]</td>"
-		final_paper_text += "<td>[crime.author]</td>"
-		final_paper_text += "<td>[crime.time]</td>"
+		if(crime.valid)
+			final_paper_text += "<tr><td>[crime.name]</td>"
+			final_paper_text += "<td>[crime.details]</td>"
+			final_paper_text += "<td>[crime.author]</td>"
+			final_paper_text += "<td>[crime.time]</td>"
+		else
+			for(var/i in 1 to 4)
+				final_paper_text += "<td>--REDACTED--</td>"
 		final_paper_text += "</tr>"
 	final_paper_text += "</table><br><br>"
 
@@ -243,13 +265,13 @@
 		final_paper_text += "</tr>"
 	final_paper_text += "</table><br><br>"
 
-	final_paper_text += text("<center>Important Notes:</center><br>")
+	final_paper_text += "<center>Important Notes:</center><br>"
 	if(security_note)
-		final_paper_text += text("- [security_note]<br>")
+		final_paper_text += "- [security_note]<br>"
 	if(description)
-		final_paper_text += text("- [description]<br>")
+		final_paper_text += "- [description]<br>"
 
-	printed_paper.name = text("SR-[] '[]'", print_count, name)
+	printed_paper.name = "SR-[print_count] '[name]'"
 	printed_paper.add_raw_text(final_paper_text)
 	printed_paper.update_appearance()
 

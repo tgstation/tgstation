@@ -175,9 +175,6 @@
 #define SDQL2_STATE_SWITCHING 5
 #define SDQL2_STATE_HALTING 6
 
-#define SDQL2_VALID_OPTION_TYPES list("proccall", "select", "priority", "autogc" , "sequential")
-#define SDQL2_VALID_OPTION_VALUES list("async", "blocking", "force_nulls", "skip_nulls", "high", "normal", "keep_alive" , "true")
-
 #define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS (1<<0)
 #define SDQL2_OPTION_BLOCKING_CALLS (1<<1)
 #define SDQL2_OPTION_HIGH_PRIORITY (1<<2) //High priority SDQL query, allow using almost all of the tick.
@@ -204,6 +201,9 @@
 		message_admins(span_danger("ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!"))
 		usr.log_message("non-admin attempted to execute a SDQL query!", LOG_ADMIN)
 		return FALSE
+	var/prompt = tgui_alert(usr, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
+	if (prompt != "Yes")
+		return
 	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
 	if(length(results) == 3)
 		for(var/I in 1 to 3)
@@ -730,7 +730,11 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			var/atom/A = object
 			var/turf/T = A.loc
 			var/area/a
-			if(istype(T))
+			if(isturf(A))
+				a = A.loc
+				T = A //this should prevent the "inside" part
+				text_list += " <font color='gray'>at</font> [ADMIN_COORDJMP(A)]"
+			else if(istype(T))
 				text_list += " <font color='gray'>at</font> [T] [ADMIN_COORDJMP(T)]"
 				a = T.loc
 			else
@@ -1231,3 +1235,21 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		usr.log_message("non-holder clicked on a statclick! ([src])", LOG_ADMIN)
 		return
 	usr.client.debug_variables(GLOB.sdql2_queries)
+
+#undef SDQL2_HALT_CHECK
+#undef SDQL2_IS_RUNNING
+#undef SDQL2_OPTION_BLOCKING_CALLS
+#undef SDQL2_OPTION_DO_NOT_AUTOGC
+#undef SDQL2_OPTION_HIGH_PRIORITY
+#undef SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS
+#undef SDQL2_OPTION_SEQUENTIAL
+#undef SDQL2_OPTIONS_DEFAULT
+#undef SDQL2_STAGE_SWITCH_CHECK
+#undef SDQL2_STATE_ERROR
+#undef SDQL2_STATE_EXECUTING
+#undef SDQL2_STATE_HALTING
+#undef SDQL2_STATE_IDLE
+#undef SDQL2_STATE_PRESEARCH
+#undef SDQL2_STATE_SEARCHING
+#undef SDQL2_STATE_SWITCHING
+#undef SDQL2_TICK_CHECK

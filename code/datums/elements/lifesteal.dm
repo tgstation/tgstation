@@ -7,46 +7,19 @@
 	argument_hash_start_idx = 2
 	/// heals a constant amount every time a hit occurs
 	var/flat_heal
+	/// static list shared that tells which order of damage types to prioritize
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
-/datum/element/lifesteal/Attach(datum/target, flat_heal)
+/datum/element/lifesteal/Attach(datum/target, flat_heal = 10)
 	. = ..()
-	if(ismachinery(target) || isstructure(target) || isgun(target) || isprojectilespell(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
-	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(item_afterattack))
-	else if(ishostile(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(hostile_attackingtarget))
-	else
-		return ELEMENT_INCOMPATIBLE
-
 	src.flat_heal = flat_heal
+	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_lifesteal)))
 
-/datum/element/lifesteal/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
+/datum/element/lifesteal/Detach(datum/target)
+	qdel(target.GetComponent(/datum/component/on_hit_effect))
 	return ..()
 
-/datum/element/lifesteal/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
-	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
-	do_lifesteal(user, target)
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
-
-/datum/element/lifesteal/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
-	SIGNAL_HANDLER
-
-	if(!success)
-		return
-	do_lifesteal(attacker, target)
-
-/datum/element/lifesteal/proc/projectile_hit(datum/fired_from, atom/movable/firer, atom/target, Angle)
-	SIGNAL_HANDLER
-
-	do_lifesteal(firer, target)
-
-/datum/element/lifesteal/proc/do_lifesteal(atom/heal_target, atom/damage_target)
+/datum/element/lifesteal/proc/do_lifesteal(datum/element_owner, atom/heal_target, atom/damage_target, hit_zone)
 	if(isliving(heal_target) && isliving(damage_target))
 		var/mob/living/healing = heal_target
 		var/mob/living/damaging = damage_target

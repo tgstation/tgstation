@@ -4,8 +4,6 @@
 	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
 	icon_state = "filter"
 	density = FALSE
-	///category for plumbing RCD
-	category="Distribution"
 
 	///whitelist of chems id's that go to the left side. Empty to disable port
 	var/list/left = list()
@@ -40,11 +38,12 @@
 	switch(action)
 		if("add")
 			var/which = params["which"]
-			var/selected_reagent = tgui_input_list(usr, "Select [which] reagent", "Reagent", GLOB.chemical_name_list)
+
+			var/selected_reagent = tgui_input_list(usr, "Select [which] reagent", "Reagent", GLOB.name2reagent)
 			if(!selected_reagent)
 				return TRUE
 
-			var/chem_id = get_chem_id(selected_reagent)
+			var/datum/reagent/chem_id = GLOB.name2reagent[selected_reagent]
 			if(!chem_id)
 				return TRUE
 

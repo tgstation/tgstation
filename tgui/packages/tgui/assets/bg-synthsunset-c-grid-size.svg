@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg id="em4uO9hb2pv1" viewBox="86.2 82.558 400 450" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" width="350px" height="400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+#em4uO9hb2pv4_to {animation: em4uO9hb2pv4_to__to 1000ms linear infinite normal forwards}@keyframes em4uO9hb2pv4_to__to { 0% {transform: translate(263.949556px,388px)} 100% {transform: translate(263.949556px,395.410979px)}} #em4uO9hb2pv5_to {animation: em4uO9hb2pv5_to__to 1000ms linear infinite normal forwards}@keyframes em4uO9hb2pv5_to__to { 0% {transform: translate(263.949556px,437.451142px)} 100% {transform: translate(263.949556px,477.856037px)}} #em4uO9hb2pv6_to {animation: em4uO9hb2pv6_to__to 1000ms linear infinite normal forwards}@keyframes em4uO9hb2pv6_to__to { 0% {transform: translate(263.949556px,477.451141px)} 100% {transform: translate(263.949556px,507px)}} #em4uO9hb2pv7_to {animation: em4uO9hb2pv7_to__to 1000ms linear infinite normal forwards}@keyframes em4uO9hb2pv7_to__to { 0% {transform: translate(257.595104px,408px)} 100% {transform: translate(257.595104px,437.856038px)}} #em4uO9hb2pv8_to {animation: em4uO9hb2pv8_to__to 1000ms linear infinite normal forwards}@keyframes em4uO9hb2pv8_to__to { 0% {transform: translate(258px,395.410979px)} 100% {transform: translate(258px,408px)}}
+</style>
+  <defs>
+    <linearGradient id="em4uO9hb2pv2-fill" x1="257.848986" y1="84.30193" x2="256.478025" y2="378.040783" spreadMethod="pad" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1, 0, 0, 1, 32.317979, 15.69849)">
+      <stop id="em4uO9hb2pv2-fill-0" offset="0" stop-color="#e72696"/>
+      <stop id="em4uO9hb2pv2-fill-1" offset="1" stop-color="#facf31"/>
+    </linearGradient>
+  </defs>
+  <path d="M 449.76 259.593 C 449.76 260.889 449.745 262.181 449.714 263.47 L 130.62 263.47 C 130.589 262.181 130.574 260.889 130.574 259.593 C 130.574 257.386 130.619 255.189 130.708 253.003 L 449.626 253.003 C 449.715 255.189 449.76 257.386 449.76 259.593 Z M 434.441 327.907 L 145.893 327.907 C 143.917 323.74 142.115 319.473 140.498 315.117 L 439.836 315.117 C 438.219 319.473 436.417 323.74 434.441 327.907 Z M 133.453 289.922 L 446.881 289.922 C 446.151 293.719 445.286 297.468 444.291 301.164 L 136.043 301.164 C 135.048 297.468 134.183 293.719 133.453 289.922 Z M 131.064 272.19 L 449.27 272.19 C 449.095 274.432 448.873 276.661 448.607 278.876 L 131.727 278.876 C 131.461 276.661 131.239 274.432 131.064 272.19 Z M 290.167 100 C 373.937 100 442.632 164.541 449.239 246.609 L 131.095 246.609 C 137.702 164.541 206.397 100 290.167 100 Z M 414.785 359.303 L 165.549 359.303 C 161.689 354.485 158.102 349.438 154.813 344.186 L 425.521 344.186 C 422.232 349.438 418.645 354.485 414.785 359.303 Z M 375.047 394.767 L 205.287 394.767 C 197.384 389.794 189.949 384.148 183.06 377.908 L 397.274 377.908 C 390.385 384.148 382.95 389.794 375.047 394.767 Z" fill="url(#em4uO9hb2pv2-fill)"/>
+  <line x1="86.2" y1="414.95" x2="486.2" y2="414.039" fill="none" stroke="#5edba5" stroke-width="3" style=""/>
+  <line x1="309.179" y1="473.781" x2="430.178" y2="473.506" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(0.173648, 0.984808, -0.984808, 0.173648, 771.932387, 27.334005)">
+    <title>vert line 7</title>
+  </line>
+  <line x1="151.183" y1="475.044" x2="269.858" y2="474.604" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(-0.173648, 0.984808, -0.984808, -0.173648, 714.68734, 349.954016)">
+    <title>vert line 3</title>
+  </line>
+  <line x1="270.444" y1="473.493" x2="388.993" y2="473.225" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(0.087156, 0.996195, -0.996195, 0.087156, 772.539295, 103.639124)">
+    <title>vert line 6</title>
+  </line>
+  <line x1="109.269" y1="473.663" x2="231.239" y2="473.385" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(-0.258819, 0.965926, -0.965926, -0.258819, 671.708034, 431.628247)">
+    <title>vert line 2</title>
+  </line>
+  <line x1="65.708" y1="473.725" x2="192.541" y2="473.436" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(-0.34202, 0.939693, -0.939693, -0.34202, 618.307795, 514.217141)">
+    <title>vert line 1</title>
+  </line>
+  <line x1="230.594" y1="473.242" x2="349.497" y2="472.971" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(0, 1, -1, 0, 763.152008, 183.061005)">
+    <title>vert line 5</title>
+  </line>
+  <line x1="344.963" y1="473.597" x2="468.706" y2="473.315" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(0.258819, 0.965926, -0.965926, 0.258819, 758.861416, -42.055348)">
+    <title>vert line 8</title>
+  </line>
+  <line x1="381.132" y1="473.023" x2="507.578" y2="473.402" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(0.34202, 0.939693, -0.939693, 0.34202, 737.051091, -106.192735)">
+    <title>vert line 9</title>
+  </line>
+  <line x1="191.046" y1="473.586" x2="309.687" y2="473.316" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(-0.087156, 0.996195, -0.996195, -0.087156, 743.836818, 265.301309)">
+    <title>vert line 4</title>
+  </line>
+  <path d="" fill="none" stroke="#3f5787" stroke-width="0.8"/>
+  <line x1="86.2" y1="424.911" x2="486.2" y2="424" fill="none" stroke="#5edba5" stroke-width="3" style=""/>
+  <line x1="86.2" y1="440.911" x2="486.2" y2="440" fill="none" stroke="#5edba5" stroke-width="3" style=""/>
+  <line x1="86.2" y1="464.91" x2="486.2" y2="464" fill="none" stroke="#5edba5" stroke-width="3" style=""/>
+  <line x1="86.2" y1="498.552" x2="486.2" y2="497.64" fill="none" stroke="#5edba5" stroke-width="3" style=""/>
+  <line x1="422.842" y1="456.21" x2="516.415" y2="455.998" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(0.422618, 0.906308, -0.906308, 0.422618, 684.525663, -162.281795)"/>
+  <line x1="60.198" y1="450.808" x2="141.309" y2="450.623" fill="none" stroke="#5edba5" stroke-width="3" style="" transform="matrix(-0.422618, 0.906308, -0.906308, -0.422618, 551.820776, 549.882271)"/>
+  <line x1="83.53" y1="533.614" x2="489.497" y2="532.688" fill="none" stroke="#5edba5" stroke-width="3" style=""/>
+</svg>

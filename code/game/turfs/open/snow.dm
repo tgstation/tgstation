@@ -2,6 +2,7 @@
 	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
+	damaged_dmi = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
 	planetary_atmos = TRUE
@@ -17,9 +18,8 @@
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/sheet/mineral/snow, 2)
 
-/turf/open/misc/snow/break_tile()
-	. = ..()
-	icon_state = "snow_dug"
+/turf/open/misc/snow/broken_states()
+	return list("snow_dug")
 
 /turf/open/misc/snow/actually_safe
 	slowdown = 0

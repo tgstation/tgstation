@@ -21,6 +21,11 @@
 	desc = "A 10mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c10mm
 
+/obj/item/ammo_casing/c10mm/reaper
+	name = "10mm reaper bullet casing"
+	desc = "A 10mm reaper bullet casing."
+	projectile_type = /obj/projectile/bullet/c10mm/reaper
+
 // 9mm (Makarov, Stechkin APS, PP-95)
 
 /obj/item/ammo_casing/c9mm
@@ -50,5 +55,5 @@
 /obj/item/ammo_casing/a50ae
 	name = ".50AE bullet casing"
 	desc = "A .50AE bullet casing."
-	caliber = CALIBER_50
+	caliber = CALIBER_50AE
 	projectile_type = /obj/projectile/bullet/a50ae

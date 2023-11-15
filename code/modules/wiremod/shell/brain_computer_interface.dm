@@ -1,7 +1,7 @@
 /obj/item/organ/internal/cyberimp/bci
 	name = "brain-computer interface"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "bci"
 	visual = FALSE
 	zone = BODY_ZONE_HEAD
@@ -17,9 +17,8 @@
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
-/obj/item/organ/internal/cyberimp/bci/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/internal/cyberimp/bci/on_insert(mob/living/carbon/receiver)
 	. = ..()
-
 	// Organs are put in nullspace, but this breaks circuit interactions
 	forceMove(receiver)
 
@@ -115,7 +114,7 @@
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
 	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER, trigger = PROC_REF(update_charge_action))
 
-	user_port = add_output_port("User", PORT_TYPE_ATOM)
+	user_port = add_output_port("User", PORT_TYPE_USER)
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)
@@ -184,7 +183,7 @@
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
 
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
 	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
@@ -195,7 +194,7 @@
 	user = null
 
 	UnregisterSignal(owner, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,
 	))
@@ -224,7 +223,7 @@
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_they(capitalized = TRUE)] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='?src=[REF(src)];open_bci=1'>\a [parent] implanted in [source.p_them()]</a>.")
 
 /obj/item/circuit_component/bci_core/Topic(href, list/href_list)
 	..()
@@ -238,7 +237,7 @@
 /datum/action/innate/bci_charge_action
 	name = "Check BCI Charge"
 	check_flags = NONE
-	button_icon = 'icons/obj/power.dmi'
+	button_icon = 'icons/obj/machines/cell_charger.dmi'
 	button_icon_state = "cell"
 
 	var/obj/item/circuit_component/bci_core/circuit_component
@@ -275,7 +274,7 @@
 		to_chat(owner, span_info("[circuit_component.parent]'s [cell.name] has <b>[cell.percent()]%</b> charge left."))
 		to_chat(owner, span_info("You can recharge it by using a cyborg recharging station."))
 
-/datum/action/innate/bci_charge_action/process(delta_time)
+/datum/action/innate/bci_charge_action/process(seconds_per_tick)
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /datum/action/innate/bci_charge_action/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
@@ -293,7 +292,7 @@
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 
 	var/busy = FALSE
 	var/busy_icon_state
@@ -400,7 +399,7 @@
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if (default_pry_open(weapon))
+	if (default_pry_open(weapon, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if (default_deconstruction_crowbar(weapon))
@@ -437,7 +436,7 @@
 
 	playsound(loc, 'sound/machines/ping.ogg', 30, FALSE)
 
-	var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.getorgan(/obj/item/organ/internal/cyberimp/bci)
+	var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
 
 	if (bci_organ)
 		bci_organ.Remove(carbon_occupant)
@@ -453,7 +452,7 @@
 		say("Occupant has been injected with [bci_to_implant].")
 		bci_to_implant.Insert(carbon_occupant)
 
-/obj/machinery/bci_implanter/open_machine()
+/obj/machinery/bci_implanter/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -461,7 +460,7 @@
 
 	return TRUE
 
-/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user)
+/obj/machinery/bci_implanter/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 
@@ -469,7 +468,7 @@
 
 	var/mob/living/carbon/carbon_occupant = occupant
 	if (istype(occupant))
-		var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.getorgan(/obj/item/organ/internal/cyberimp/bci)
+		var/obj/item/organ/internal/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/internal/cyberimp/bci)
 		if (isnull(bci_organ) && isnull(bci_to_implant))
 			say("No brain-computer interface inserted, and occupant does not have one. Insert a BCI to implant one.")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
@@ -526,5 +525,5 @@
 	build_path = /obj/machinery/bci_implanter
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/servo = 1,
 	)

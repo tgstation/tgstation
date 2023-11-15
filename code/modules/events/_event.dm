@@ -25,35 +25,58 @@
 	var/alert_observers = TRUE //should we let the ghosts and admins know this event is firing
 									//should be disabled on events that fire a lot
 
+	/// Minimum wizard rituals at which to trigger this event, inclusive
+	var/min_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+	/// Maximum wizard rituals at which to trigger this event, inclusive
+	var/max_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
+
 	var/triggering //admin cancellation
 
 	/// Whether or not dynamic should hijack this event
 	var/dynamic_should_hijack = FALSE
 
 	/// Datum that will handle admin options for forcing the event.
-	/// If there are no options, just leave it null.
-	var/datum/event_admin_setup/admin_setup = null
+	/// If there are no options, just leave it as an empty list.
+	var/list/datum/event_admin_setup/admin_setup = list()
+	/// Flags dictating whether this event should be run on certain kinds of map
+	var/map_flags = NONE
 
 /datum/round_event_control/New()
 	if(config && !wizardevent) // Magic is unaffected by configs
 		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
-	if(admin_setup)
-		admin_setup = new admin_setup(src)
+	if(!length(admin_setup))
+		return
+	var/list/admin_setup_types = admin_setup.Copy()
+	admin_setup.Cut()
+	for(var/admin_setup_type in admin_setup_types)
+		admin_setup += new admin_setup_type(src)
 
 /datum/round_event_control/wizard
 	category = EVENT_CATEGORY_WIZARD
 	wizardevent = TRUE
 
+/// Returns true if event can run in current map
+/datum/round_event_control/proc/valid_for_map()
+	if (!map_flags)
+		return TRUE
+	if (SSmapping.is_planetary())
+		if (map_flags & EVENT_SPACE_ONLY)
+			return FALSE
+	else
+		if (map_flags & EVENT_PLANETARY_ONLY)
+			return FALSE
+	return TRUE
+
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/can_spawn_event(players_amt)
+/datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
 		return FALSE
-	if(wizardevent != SSevents.wizardmode)
+	if(!allow_magic && wizardevent != SSevents.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE
@@ -79,7 +102,7 @@
 
 	triggering = TRUE
 
-	// We sleep HERE, in pre-event setup (because there's no sense doing it in runEvent() since the event is already running!) for the given amount of time to make an admin has enough time to cancel an event un-fitting of the present round.
+	// We sleep HERE, in pre-event setup (because there's no sense doing it in run_event() since the event is already running!) for the given amount of time to make an admin has enough time to cancel an event un-fitting of the present round.
 	if(alert_observers)
 		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
@@ -110,7 +133,7 @@ Runs the event
 * - random: shows if the event was triggered randomly, or by on purpose by an admin or an item
 * - announce_chance_override: if the value is not null, overrides the announcement chance when an admin calls an event
 */
-/datum/round_event_control/proc/runEvent(random = FALSE, announce_chance_override = null, admin_forced = FALSE)
+/datum/round_event_control/proc/run_event(random = FALSE, announce_chance_override = null, admin_forced = FALSE, event_cause)
 	/*
 	* We clear our signals first so we dont cancel a wanted event by accident,
 	* the majority of time the admin will probably want to cancel a single midround spawned random events
@@ -119,8 +142,11 @@ Runs the event
 	*/
 	UnregisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT)
 	var/datum/round_event/round_event = new typepath(TRUE, src)
-	if(admin_forced && admin_setup)
-		admin_setup.apply_to_event(round_event)
+	if(admin_forced && length(admin_setup))
+		//not part of the signal because it's conditional and relies on usr heavily
+		for(var/datum/event_admin_setup/admin_setup_datum in admin_setup)
+			admin_setup_datum.apply_to_event(round_event)
+	SEND_SIGNAL(src, COMSIG_CREATED_ROUND_EVENT, round_event)
 	round_event.setup()
 	round_event.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	occurrences++
@@ -137,18 +163,13 @@ Runs the event
 		return round_event
 
 	triggering = FALSE
-	if(random)
-		log_game("Random Event triggering: [name] ([typepath]).")
+	log_game("[random ? "Random" : "Forced"] Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		announce_deadchat(random)
+		round_event.announce_deadchat(random, event_cause)
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[round_event]")
 	return round_event
-
-///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
-/datum/round_event_control/proc/announce_deadchat(random)
-	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 //Returns the component for the listener
 /datum/round_event_control/proc/stop_random_event()
@@ -191,6 +212,10 @@ Runs the event
 	SHOULD_CALL_PARENT(FALSE)
 	return
 
+///Annouces the event name to deadchat, override this if what an event should show to deadchat is different to its event name.
+/datum/round_event/proc/announce_deadchat(random, cause)
+	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered[cause ? " by [cause]" : ""]!", "<b>[control.name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+
 //Called when the tick is equal to the start_when variable.
 //Allows you to start before announcing or vice versa.
 //Only called once.
@@ -204,7 +229,12 @@ Runs the event
 /datum/round_event/proc/announce_to_ghosts(atom/atom_of_interest)
 	if(control.alert_observers)
 		if (atom_of_interest)
-			notify_ghosts("[control.name] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
+			notify_ghosts(
+				"[control.name] has an object of interest: [atom_of_interest]!",
+				source = atom_of_interest,
+				action = NOTIFY_ORBIT,
+				header = "Something's Interesting!",
+			)
 	return
 
 //Called when the tick is equal to the announce_when variable.

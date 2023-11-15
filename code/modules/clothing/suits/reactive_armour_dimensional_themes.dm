@@ -77,12 +77,13 @@
  */
 /datum/armour_dimensional_theme/proc/convert_turf(turf/to_convert)
 	if (isfloorturf(to_convert))
-		to_convert.ChangeTurf(replace_floor, flags = CHANGETURF_INHERIT_AIR)
+		var/turf/open/open_turf = to_convert
+		open_turf.replace_floor(replace_floor, flags = CHANGETURF_INHERIT_AIR)
 	else if (iswallturf(to_convert))
 		to_convert.ChangeTurf(replace_wall)
 
 	if (material)
-		var/list/custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
+		var/list/custom_materials = list(GET_MATERIAL_REF(material) = SHEET_MATERIAL_AMOUNT)
 		to_convert.set_custom_materials(custom_materials)
 
 /**
@@ -102,7 +103,7 @@
 	var/to_place = rand(MIN_BARRIERS, MAX_BARRIERS)
 	var/list/custom_materials = list()
 	if (material)
-		custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
+		custom_materials = list(GET_MATERIAL_REF(material) = SHEET_MATERIAL_AMOUNT)
 
 	while (target_area.len > 0 && to_place > 0)
 		var/turf/place_turf = pick(target_area)

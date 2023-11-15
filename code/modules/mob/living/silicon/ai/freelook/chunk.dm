@@ -156,7 +156,7 @@
 
 		var/image/mirror_from = GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		var/turf/chunk_corner = locate(x, y, z_level)
-		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE - 1, CHUNK_SIZE - 1))
+		for(var/turf/lad as anything in CORNER_BLOCK(chunk_corner, CHUNK_SIZE, CHUNK_SIZE)) //we use CHUNK_SIZE for width and height here as it handles subtracting 1 from those two parameters by itself
 			var/image/our_image = new /image(mirror_from)
 			our_image.loc = lad
 			turfs[lad] = our_image
@@ -178,5 +178,3 @@
 		obscuredTurfs[obscured_turf] = new_static
 
 #undef UPDATE_BUFFER_TIME
-#undef CHUNK_SIZE
-#undef GET_CHUNK_COORD

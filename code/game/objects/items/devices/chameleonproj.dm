@@ -58,6 +58,9 @@
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
+	make_copy(target, user)
+
+/obj/item/chameleon/proc/make_copy(atom/target, mob/user)
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
 	var/obj/temp = new /obj()
@@ -145,6 +148,7 @@
 
 /obj/effect/dummy/chameleon/ex_act(S, T)
 	master.disrupt()
+	return TRUE
 
 /obj/effect/dummy/chameleon/bullet_act()
 	. = ..()

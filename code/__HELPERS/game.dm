@@ -35,7 +35,7 @@
 
 		else if(iscarbon(object_to_check))
 			var/mob/living/carbon/mob_to_check = object_to_check
-			for(var/organ in mob_to_check.internal_organs)
+			for(var/organ in mob_to_check.organs)
 				found_organ = organ
 				found_organ.organ_flags ^= ORGAN_FROZEN
 
@@ -68,16 +68,30 @@
 			return player_mob
 	return null
 
-///Returns true if the mob that a player is controlling is alive
+/**
+ * Checks if the passed mind has a mob that is "alive"
+ *
+ * * player_mind - who to check for alive status
+ * * enforce_human - if TRUE, the checks fails if the mind's mob is a silicon, brain, or infectious zombie.
+ *
+ * Returns TRUE if they're alive, FALSE otherwise
+ */
 /proc/considered_alive(datum/mind/player_mind, enforce_human = TRUE)
 	if(player_mind?.current)
 		if(enforce_human)
-			var/mob/living/carbon/human/player_mob
-			if(ishuman(player_mind.current))
-				player_mob = player_mind.current
-			return player_mind.current.stat != DEAD && !issilicon(player_mind.current) && !isbrain(player_mind.current) && (!player_mob || player_mob.dna.species.id != SPECIES_ZOMBIE)
+			var/mob/living/carbon/human/player_mob = player_mind.current
+
+			if(player_mob.stat == DEAD)
+				return FALSE
+			if(issilicon(player_mob) || isbrain(player_mob))
+				return FALSE
+			if(istype(player_mob) && (player_mob.dna?.species?.id == SPECIES_ZOMBIE_INFECTIOUS))
+				return FALSE
+			return TRUE
+
 		else if(isliving(player_mind.current))
-			return player_mind.current.stat != DEAD
+			return (player_mind.current.stat != DEAD)
+
 	return FALSE
 
 /**
@@ -113,7 +127,7 @@
 
 /// Like add_image_to_client, but will add the image from a list of clients
 /proc/add_image_to_clients(image/image_to_remove, list/show_to)
-	for(var/client/add_to as anything in show_to)
+	for(var/client/add_to in show_to)
 		add_to.images += image_to_remove
 
 /// Removes an image from a client's `.images`. Useful as a callback.
@@ -122,11 +136,10 @@
 
 /// Like remove_image_from_client, but will remove the image from a list of clients
 /proc/remove_image_from_clients(image/image_to_remove, list/hide_from)
-	for(var/client/remove_from as anything in hide_from)
+	for(var/client/remove_from in hide_from)
 		remove_from.images -= image_to_remove
 
-
-///Add an image to a list of clients and calls a proc to remove it after a duration
+/// Add an image to a list of clients and calls a proc to remove it after a duration
 /proc/flick_overlay_global(image/image_to_show, list/show_to, duration)
 	if(!show_to || !length(show_to) || !image_to_show)
 		return
@@ -134,7 +147,7 @@
 		add_to.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-/// Flicks a certain overlay onto an atom, handling icon_state strings
+///Flicks a certain overlay onto an atom, handling icon_state strings
 /atom/proc/flick_overlay(image_to_show, list/show_to, duration, layer)
 	var/image/passed_image = \
 		istext(image_to_show) \
@@ -143,16 +156,41 @@
 
 	flick_overlay_global(passed_image, show_to, duration)
 
-/// flicks an overlay to anyone who can view this atom
-/atom/proc/flick_overlay_view(image_to_show, duration)
-	var/list/viewing = list()
-	for(var/mob/viewer as anything in viewers(src))
-		if(viewer.client)
-			viewing += viewer.client
-	flick_overlay(image_to_show, viewing, duration)
+/**
+ * Helper atom that copies an appearance and exists for a period
+*/
+/atom/movable/flick_visual
+
+/// Takes the passed in MA/icon_state, mirrors it onto ourselves, and displays that in world for duration seconds
+/// Returns the displayed object, you can animate it and all, but you don't own it, we'll delete it after the duration
+/atom/proc/flick_overlay_view(mutable_appearance/display, duration)
+	if(!display)
+		return null
+
+	var/mutable_appearance/passed_appearance = \
+		istext(display) \
+			? mutable_appearance(icon, display, layer) \
+			: display
+
+	// If you don't give it a layer, we assume you want it to layer on top of this atom
+	// Because this is vis_contents, we need to set the layer manually (you can just set it as you want on return if this is a problem)
+	if(passed_appearance.layer == FLOAT_LAYER)
+		passed_appearance.layer = layer + 0.1
+	// This is faster then pooling. I promise
+	var/atom/movable/flick_visual/visual = new()
+	visual.appearance = passed_appearance
+	visual.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	// I hate /area
+	var/atom/movable/lies_to_children = src
+	lies_to_children.vis_contents += visual
+	QDEL_IN_CLIENT_TIME(visual, duration)
+	return visual
+
+/area/flick_overlay_view(mutable_appearance/display, duration)
+	return
 
 ///Get active players who are playing in the round
-/proc/get_active_player_count(alive_check = 0, afk_check = 0, human_check = 0)
+/proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
 	var/active_players = 0
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/player_mob = GLOB.player_list[i]
@@ -224,6 +262,9 @@
 
 ///Calls the show_candidate_poll_window() to all eligible ghosts
 /proc/poll_candidates(question, jobban_type, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
+	if (group.len == 0)
+		return list()
+
 	var/time_passed = world.time
 	if (!question)
 		question = "Would you like to be a special role?"
@@ -395,13 +436,9 @@
 
 	return pick(possible_loc)
 
-///Prevents power_failure message spam if a traitor purchases repeatedly.
-GLOBAL_VAR_INIT(power_failure_message_cooldown, 0)
-
 ///Disable power in the station APCs
 /proc/power_fail(duration_min, duration_max)
-	var/message_cooldown
-	for(var/obj/machinery/power/apc/current_apc as anything in GLOB.apcs_list)
+	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
 		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
 			continue
 		var/area/apc_area = current_apc.area
@@ -409,9 +446,7 @@ GLOBAL_VAR_INIT(power_failure_message_cooldown, 0)
 			continue
 
 		var/duration = rand(duration_min,duration_max)
-		message_cooldown = max(duration, message_cooldown)
 		current_apc.energy_fail(duration)
-	GLOB.power_failure_message_cooldown = world.time + message_cooldown
 
 /**
  * Sends a round tip to a target. If selected_tip is null, a random tip will be sent instead (5% chance of it being silly).

@@ -44,6 +44,8 @@
 	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
 	var/obj/effect/countdown/syndicatebomb/countdown
+	/// Whether the countdown is visible on examine
+	var/examinable_countdown = TRUE
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = (payload in src) && (active || ignore_active)
@@ -59,7 +61,7 @@
 		..()
 
 /obj/machinery/syndicatebomb/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
@@ -97,7 +99,7 @@
 
 /obj/machinery/syndicatebomb/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/syndicatebomb(src)
+	set_wires(new /datum/wires/syndicatebomb(src))
 	if(payload)
 		payload = new payload(src)
 	update_appearance()
@@ -112,9 +114,15 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	. = ..()
-	. += {"The patented external shell design is resistant to "probably all" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."}
-	. += "A small window reveals some information about the payload: [payload.desc]."
-	. += {"A digital display on it reads "[seconds_remaining()]"."}
+	. += "The patented external shell design is resistant to \"probably all\" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."
+	if(istype(payload))
+		. += "A small window reveals some information about the payload: [payload.desc]."
+	if(examinable_countdown)
+		. += span_notice("A digital display on it reads \"[seconds_remaining()]\".")
+		if(active)
+			balloon_alert(user, "[seconds_remaining()]")
+	else
+		. += span_notice({"The digital display on it is inactive."})
 
 /obj/machinery/syndicatebomb/update_icon_state()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -123,6 +131,7 @@
 /obj/machinery/syndicatebomb/proc/seconds_remaining()
 	if(active)
 		. = max(0, round((detonation_timer - world.time) / 10))
+
 	else
 		. = timer_set
 
@@ -174,11 +183,11 @@
 	if(payload || !wires.is_all_cut() || !open_panel)
 		return FALSE
 
-	if(!tool.tool_start_check(user, amount=5))  //uses up 5 fuel
+	if(!tool.tool_start_check(user, amount=1))
 		return TRUE
 
 	to_chat(user, span_notice("You start to cut [src] apart..."))
-	if(tool.use_tool(src, user, 20, volume=50, amount=5)) // uses up 5 fuel
+	if(tool.use_tool(src, user, 20, volume=50))
 		to_chat(user, span_notice("You cut [src] apart."))
 		new /obj/item/stack/sheet/plasteel(loc, 5)
 		qdel(src)
@@ -222,10 +231,10 @@
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	if(!user.canUseTopic(src, !issilicon(user)) || !user.can_interact_with(src))
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
-	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
 	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
@@ -242,7 +251,12 @@
 	if(isnull(payload) || istype(payload, /obj/machinery/syndicatebomb/training))
 		return
 
-	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
+	notify_ghosts(
+		"\A [src] has been activated at [get_area(src)]!",
+		source = src,
+		action = NOTIFY_ORBIT,
+		header = "Bomb Planted",
+	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
 	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
@@ -312,6 +326,7 @@
 
 /obj/item/bombcore/ex_act(severity, target) // Little boom can chain a big boom.
 	detonate()
+	return TRUE
 
 /obj/item/bombcore/burn()
 	detonate()
@@ -337,7 +352,7 @@
 	desc = "After a string of unwanted detonations, this payload has been specifically redesigned to not explode unless triggered electronically by a bomb shell."
 
 /obj/item/bombcore/syndicate/ex_act(severity, target)
-	return
+	return FALSE
 
 /obj/item/bombcore/syndicate/burn()
 	return ..()
@@ -382,9 +397,7 @@
 		attempts++
 		defusals++
 		holder.loc.visible_message(span_notice("[icon2html(holder, viewers(holder))] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds..."))
-		sleep(5 SECONDS) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
-		if(istype(holder))
-			reset()
+		addtimer(CALLBACK(src, PROC_REF(reset)), 5 SECONDS) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
 
 /obj/item/bombcore/badmin
 	name = "badmin payload"
@@ -401,12 +414,14 @@
 
 /obj/item/bombcore/badmin/summon/detonate()
 	var/obj/machinery/syndicatebomb/B = loc
-	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE)
+	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE, cardinals_only = FALSE)
 	qdel(B)
 	qdel(src)
 
 /obj/item/bombcore/badmin/summon/clown
-	summon_path = /mob/living/simple_animal/hostile/retaliate/clown
+	name = "bananium payload"
+	desc = "Clowns delivered fast and cheap!"
+	summon_path = /mob/living/basic/clown
 	amt_summon = 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
@@ -587,7 +602,7 @@
 
 /obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
-		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
+		for(var/obj/machinery/syndicatebomb/B as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/syndicatebomb))
 			if(B.active)
 				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++

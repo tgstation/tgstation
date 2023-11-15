@@ -11,7 +11,7 @@
 
 /datum/traitor_objective/ultimate/battlecruiser/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	// There's no empty space to load a battlecruiser in...
-	if(!SSmapping.empty_space)
+	if(SSmapping.is_planetary())
 		return FALSE
 
 	return TRUE
@@ -19,7 +19,7 @@
 /datum/traitor_objective/ultimate/battlecruiser/on_objective_taken(mob/user)
 	. = ..()
 	team = new()
-	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/selfdestruct)
 	if(nuke.r_code == NUKE_CODE_UNSET)
 		nuke.r_code = random_nukecode()
 	team.nuke = nuke

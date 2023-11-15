@@ -11,6 +11,10 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_2
+
+/// Counter for number of chicks hatched by throwing eggs, minecraft style. Chicks will not emerge from thrown eggs if this value exceeds the MAX_CHICKENS define.
+GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 /obj/item/food/egg
 	name = "egg"
@@ -24,13 +28,19 @@
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
-	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
+	/// How likely is it that a chicken will come out of here if we throw it?
+	var/chick_throw_prob = 13
 
 /obj/item/food/egg/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/boiledegg, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/food/egg/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg)
+
+/obj/item/food/egg/organic
+	name = "organic egg"
+	desc = "A 100% natural egg from the best hens."
+	starting_reagent_purity = 1
 
 /obj/item/food/egg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10, /datum/reagent/consumable/mold = 10)
@@ -59,13 +69,24 @@
 
 	var/turf/hit_turf = get_turf(hit_atom)
 	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
-	//Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
-	if(prob(13) && chick_count < MAX_CHICKENS) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft. I decided not to include the chances for the creation of multiple chicks from the impact of one egg, since that'd probably require nested prob()s or something (and people might think that it was a bug, anyway).
-		new /mob/living/simple_animal/chick(hit_turf)
-		chick_count++
-
+	if (prob(chick_throw_prob))
+		spawn_impact_chick(hit_turf)
 	reagents.expose(hit_atom, TOUCH)
 	qdel(src)
+
+/// Spawn a baby chicken from throwing an egg
+/obj/item/food/egg/proc/spawn_impact_chick(turf/spawn_turf)
+	var/chickens_remaining = MAX_CHICKENS - GLOB.chicks_from_eggs
+	if (chickens_remaining < 1)
+		return
+	var/spawned_chickens = prob(97) ? 1 : min(4, chickens_remaining) // We don't want to go over the limit
+	if (spawned_chickens > 1) // Chicken jackpot!
+		visible_message(span_notice("[spawned_chickens] chicks come out of the egg! Jackpot!"))
+	else
+		visible_message(span_notice("A chick comes out of the cracked egg!"))
+	for(var/i in 1 to spawned_chickens)
+		new /mob/living/basic/chick(spawn_turf)
+		GLOB.chicks_from_eggs++
 
 /obj/item/food/egg/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/toy/crayon))
@@ -149,6 +170,28 @@
 	icon_state = "egg-yellow"
 	inhand_icon_state = "egg-yellow"
 
+/obj/item/food/egg/penguin_egg
+	icon = 'icons/mob/simple/penguins.dmi'
+	icon_state = "penguin_egg"
+
+/obj/item/food/egg/fertile
+	name = "fertile-looking egg"
+	desc = "An egg! It looks fertilized.\nQuite how you can tell this just by looking at it is a mystery."
+	chick_throw_prob = 100
+
+/obj/item/food/egg/fertile/Initialize(mapload, loc)
+	. = ..()
+
+	AddComponent(/datum/component/fertile_egg,\
+		embryo_type = /mob/living/basic/chick,\
+		minimum_growth_rate = 1,\
+		maximum_growth_rate = 2,\
+		total_growth_required = 200,\
+		current_growth = 0,\
+		location_allowlist = typecacheof(list(/turf)),\
+		spoilable = FALSE,\
+	)
+
 /obj/item/food/friedegg
 	name = "fried egg"
 	desc = "A fried egg. Would go well with a touch of salt and pepper."
@@ -163,7 +206,7 @@
 	tastes = list("egg" = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/rawegg
 	name = "raw egg"
@@ -196,6 +239,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/boiledegg/rotten
+	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/eggsausage
 	name = "egg with sausage"
@@ -206,6 +250,7 @@
 	foodtypes = MEAT | FRIED | BREAKFAST
 	tastes = list("egg" = 4, "meat" = 4)
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/boiledegg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10)
@@ -227,6 +272,7 @@
 	tastes = list("egg" = 1, "cheese" = 1)
 	foodtypes = MEAT | BREAKFAST | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/omelette/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/kitchen/fork))
@@ -260,6 +306,7 @@
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtypes = MEAT | BREAKFAST | GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/eggwrap
 	name = "egg wrap"
@@ -274,6 +321,7 @@
 	tastes = list("egg" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/chawanmushi
 	name = "chawanmushi"
@@ -287,3 +335,4 @@
 	)
 	tastes = list("custard" = 1)
 	foodtypes = MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_3

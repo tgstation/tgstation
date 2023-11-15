@@ -10,6 +10,7 @@
 		/obj/item/trash/can = 15,
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
+		/obj/effect/spawner/random/trash/bacteria = 5,
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
@@ -19,6 +20,7 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/food/deadmouse = 1,
 		/obj/item/trash/candle = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/item/trash/flare = 1,
 		/obj/item/popsicle_stick = 1,
 		/obj/item/reagent_containers/syringe = 1,
@@ -80,6 +82,7 @@
 	loot = list(
 		/obj/structure/grille = 5,
 		/obj/effect/spawner/random/trash/food_packaging = 3,
+		/obj/effect/spawner/random/trash/bacteria = 1,
 		/obj/effect/spawner/random/trash/cigbutt = 1,
 		/obj/item/food/deadmouse = 1,
 	)
@@ -154,7 +157,7 @@
 	var/graffiti_icons = list(
 		"rune1", "rune2", "rune3", "rune4", "rune5", "rune6",
 		"amyjon", "face", "matt", "revolution", "engie", "guy",
-		"end", "dwarf", "uboa", "body", "cyka", "star", "poseur tag",
+		"end", "dwarf", "uboa", "body", "cyka", "star",
 		"prolizard", "antilizard", "danger", "firedanger", "electricdanger",
 		"biohazard", "radiation", "safe", "evac", "space", "med", "trade", "shop",
 		"food", "peace", "like", "skull", "nay", "heart", "credit",
@@ -256,3 +259,29 @@
 		/obj/item/storage/box/lights/mixed,
 		/obj/item/storage/box/lights/bulbs,
 	)
+
+/obj/effect/spawner/random/trash/bacteria
+	name = "moldy food spawner"
+	loot = list(
+		/obj/item/food/breadslice/moldy/bacteria,
+		/obj/item/food/pizzaslice/moldy/bacteria,
+	)
+
+/obj/effect/spawner/random/trash/crushed_can
+	name = "crushed can spawner"
+	icon_state = "crushed_can"
+	loot = list(/obj/item/trash/can)
+	/// Whether the can will spawn with this spawner's icon_state instead of a random one (used for mapedits)
+	var/soda_icons = list(
+		"energy_drink", "monkey_energy", "thirteen_loko", "space_mountain_wind", "dr_gibb", "starkist",
+		"sodawater", "tonic", "cola", "purple_can", "ice_tea_can",
+		"sol_dry", "wellcheers", "space beer", "ebisu", "shimauma", "moonlabor",
+		"space_up", "lemon_lime", "shamblers", "shamblerseldritch", "air", "laughter",
+		"volt_energy", "melon_soda",
+	)
+
+/obj/effect/spawner/random/trash/crushed_can/make_item(spawn_loc, type_path_to_make)
+	var/obj/item/trash/can/crushed_can = .. ()
+	if(istype(crushed_can))
+		crushed_can.icon_state = pick(soda_icons)
+	return crushed_can

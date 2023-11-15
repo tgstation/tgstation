@@ -2,7 +2,7 @@
 /// The datum hosting the signal is automaticaly added as the first argument
 /// Returns a bitfield gathered from all registered procs
 /// Arguments given here are packaged in a list and given to _SendSignal
-#define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup?[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
+#define SEND_SIGNAL(target, sigtype, arguments...) ( !target._listen_lookup?[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
 
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
@@ -17,6 +17,10 @@
 
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
+
+/// A wrapper for _AddComonent that passes in a source.
+/// Necessary if dupe_mode is set to COMPONENT_DUPE_SOURCES.
+#define AddComponentFrom(source, arguments...) _AddComponent(list(##arguments), source)
 
 /// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
 #define LoadComponent(arguments...) _LoadComponent(list(##arguments))

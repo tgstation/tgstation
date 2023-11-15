@@ -13,14 +13,15 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 	. = ..()
 	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, PROC_REF(on_occupations_divided))
 
-/datum/triple_ai_controller/proc/on_occupations_divided(datum/source)
+/datum/triple_ai_controller/proc/on_occupations_divided(datum/source, pure, allow_all)
 	SIGNAL_HANDLER
 
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
-	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-		secondary_ai_spawn.latejoin_active = TRUE
-	qdel(src)
+	if(!pure)
+		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+			secondary_ai_spawn.latejoin_active = TRUE
+		qdel(src)
 
 /datum/triple_ai_controller/Destroy(force)
 	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)

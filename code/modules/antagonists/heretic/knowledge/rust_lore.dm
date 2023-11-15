@@ -13,6 +13,9 @@
  * Mark of Rust
  * Ritual of Knowledge
  * Rust Construction
+ * > Sidepaths:
+ *   Lionhunter Rifle
+ *
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -22,7 +25,7 @@
  * Entropic Plume
  * > Sidepaths:
  *   Rusted Ritual
- *   Blood Cleave
+ *   Rust Charge
  *
  * Rustbringer's Oath
  */
@@ -67,6 +70,12 @@
 /datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
+	// Rusting an airlock causes it to lose power, mostly to prevent the airlock from shocking you.
+	// This is a bit of a hack, but fixing this would require the enture wire cut/pulse system to be reworked.
+	if(istype(target, /obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/airlock = target
+		airlock.loseMainPower()
+
 	target.rust_heretic_act()
 	return COMPONENT_USE_HAND
 
@@ -74,11 +83,12 @@
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
+		/datum/heretic_knowledge/entropy_pulse,
 	)
 	cost = 1
 	route = PATH_RUST
@@ -111,7 +121,7 @@
  * Gradually heals the heretic ([source]) on rust,
  * including baton knockdown and stamina damage.
  */
-/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)
@@ -119,16 +129,19 @@
 		return
 
 	// Heals all damage + Stamina
-	source.adjustBruteLoss(-2, FALSE)
-	source.adjustFireLoss(-2, FALSE)
-	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
-	source.adjustOxyLoss(-0.5, FALSE)
-	source.adjustStaminaLoss(-2)
+	var/need_mob_update = FALSE
+	need_mob_update += source.adjustBruteLoss(-2, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-2, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(-0.5, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-2, updating_stamina = FALSE)
+	if(need_mob_update)
+		source.updatehealth()
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility(-0.5 SECONDS)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * delta_time
+		source.blood_volume += 2.5 * seconds_per_tick
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
@@ -149,7 +162,10 @@
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
-	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/area_conversion,
+		/datum/heretic_knowledge/rifle,
+	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 	route = PATH_RUST
@@ -159,6 +175,7 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/rust,
 		/datum/heretic_knowledge/reroll_targets,
@@ -188,10 +205,11 @@
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
+	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/rifle,
 		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
+		/datum/heretic_knowledge/spell/rust_charge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
@@ -213,20 +231,20 @@
 	var/area/ritual_location = /area/station/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
-		TRAIT_STUNIMMUNE,
-		TRAIT_SLEEPIMMUNE,
+		TRAIT_BOMBIMMUNE,
+		TRAIT_NO_SLIP_ALL,
+		TRAIT_NOBREATH,
+		TRAIT_PIERCEIMMUNE,
 		TRAIT_PUSHIMMUNE,
-		TRAIT_SHOCKIMMUNE,
-		TRAIT_NOSLIPALL,
 		TRAIT_RADIMMUNE,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHEAT,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_BOMBIMMUNE,
-		TRAIT_NOBREATH,
-		)
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_SHOCKIMMUNE,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_STUNIMMUNE,
+	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -246,7 +264,12 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	new /datum/rust_spread(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
@@ -264,15 +287,13 @@
 	var/turf/our_turf = get_turf(source)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		if(!immunities_active)
-			for(var/trait in conditional_immunities)
-				ADD_TRAIT(source, trait, type)
+			source.add_traits(conditional_immunities, type)
 			immunities_active = TRUE
 
 	// If we're not on a rust turf, and we have given out our traits, nerf our guy
 	else
 		if(immunities_active)
-			for(var/trait in conditional_immunities)
-				REMOVE_TRAIT(source, trait, type)
+			source.remove_traits(conditional_immunities, type)
 			immunities_active = FALSE
 
 /**
@@ -280,18 +301,21 @@
  *
  * Gradually heals the heretic ([source]) on rust.
  */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	source.adjustBruteLoss(-4, FALSE)
-	source.adjustFireLoss(-4, FALSE)
-	source.adjustToxLoss(-4, FALSE, forced = TRUE)
-	source.adjustOxyLoss(-4, FALSE)
-	source.adjustStaminaLoss(-20)
+	var/need_mob_update = FALSE
+	need_mob_update += source.adjustBruteLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjustOxyLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-20, updating_stamina = FALSE)
+	if(need_mob_update)
+		source.updatehealth()
 
 /**
  * #Rust spread datum
@@ -331,8 +355,8 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/datum/rust_spread/process(delta_time)
-	var/spread_amount = round(spread_per_sec * delta_time)
+/datum/rust_spread/process(seconds_per_tick)
+	var/spread_amount = round(spread_per_sec * seconds_per_tick)
 
 	if(length(edge_turfs) < spread_amount)
 		compile_turfs()

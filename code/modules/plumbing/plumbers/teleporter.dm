@@ -4,8 +4,6 @@
 	desc = "A bluespace anchor for chemicals. Does not require power. Use a multitool linked to a Chemical Recipient on this machine to start teleporting reagents."
 	icon_state = "beacon"
 	density = FALSE
-	///category for plumbing RCD
-	category="Distribution"
 
 	///whoever we teleport our chems to
 	var/obj/machinery/plumbing/receiver/target = null
@@ -47,7 +45,7 @@
 ///Transfer reagents and display a flashing icon
 /obj/machinery/plumbing/sender/proc/teleport_chemicals(obj/machinery/plumbing/receiver/R, amount)
 	flick(initial(icon_state) + "_flash", src)
-	reagents.trans_to(R, amount, round_robin = TRUE)
+	reagents.trans_to(R, amount)
 
 ///A bluespace output pipe for plumbing. Supports multiple recipients. Must be constructed with a circuit board
 /obj/machinery/plumbing/receiver
@@ -74,11 +72,11 @@
 		return
 
 	var/obj/item/multitool/M = I
-	M.buffer = src
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	M.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
-/obj/machinery/plumbing/receiver/process(delta_time)
+/obj/machinery/plumbing/receiver/process(seconds_per_tick)
 	if(machine_stat & NOPOWER || panel_open)
 		return
 
@@ -97,7 +95,7 @@
 
 		next_index++
 
-		use_power(active_power_usage * delta_time)
+		use_power(active_power_usage * seconds_per_tick)
 
 ///Notify all senders to forget us
 /obj/machinery/plumbing/receiver/proc/lose_senders()

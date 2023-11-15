@@ -83,7 +83,7 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool)
+/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(!opening)
 		return ..()
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
@@ -113,9 +113,9 @@
 
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
 	if(!opening)
-		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
-		return
-	return ..()
+		return ..()
+	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+	return
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
@@ -383,7 +383,7 @@
 			new girder_type(loc)
 		for(var/material in custom_materials)
 			var/datum/material/material_datum = material
-			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / MINERAL_MATERIAL_AMOUNT, 1))
+			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
 	qdel(src)
 
 /obj/structure/falsewall/material/mat_update_desc(mat)

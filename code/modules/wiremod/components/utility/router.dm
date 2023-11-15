@@ -72,3 +72,5 @@
 	display_name = "Multiplexer"
 	desc = "Copies the input chosen by \"Input Selector\" to the output."
 	output_port_amount = 1
+
+#undef WRAPACCESS

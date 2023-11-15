@@ -8,6 +8,8 @@
 	job_rank = ROLE_MALF
 	antag_hud_name = "traitor"
 	ui_name = "AntagInfoMalf"
+	can_assign_self_objectives = TRUE
+	default_custom_objective = "Make sure your precious crew are incapable of ever, ever leaving you."
 	///the name of the antag flavor this traitor has.
 	var/employer
 	///assoc list of strings set up after employer is given
@@ -31,14 +33,14 @@
 	owner.special_role = job_rank
 	if(give_objectives)
 		forge_ai_objectives()
-
-	employer = pick(GLOB.ai_employers)
+	if(!employer)
+		employer = pick(GLOB.ai_employers)
 
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
+	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
 	return ..()
 
@@ -151,6 +153,7 @@
 	var/law_borg = "Accomplish your AI's objectives at all costs."
 
 	malf_ai.set_zeroth_law(law, law_borg)
+	malf_ai.laws.protected_zeroth = TRUE
 	malf_ai.set_syndie_radio()
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
@@ -177,6 +180,7 @@
 	data["allies"] = malfunction_flavor["allies"]
 	data["goal"] = malfunction_flavor["goal"]
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 
 	//module picker data
 
@@ -234,11 +238,9 @@
 	if(objectives.len) //If the traitor had no objectives, don't need to process this.
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_greentext("Success!")]"
-			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
+			if(!objective.check_completion())
 				malf_ai_won = FALSE
+			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
 
 	result += objectives_text
@@ -262,5 +264,42 @@
 	malf_ai_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return malf_ai_icon
+
+//Subtype of Malf AI datum, used for one of the traitor final objectives
+/datum/antagonist/malf_ai/infected
+	name = "Infected AI"
+	employer = "Infected AI"
+	///The player, to who is this AI slaved
+	var/datum/mind/boss
+
+/datum/antagonist/malf_ai/infected/New(give_objectives = TRUE, datum/mind/new_boss)
+	. = ..()
+	if(new_boss)
+		boss = new_boss
+
+/datum/antagonist/malf_ai/infected/forge_ai_objectives()
+	if(!boss)
+		return
+	var/datum/objective/protect/protection_objective = new
+	protection_objective.owner = owner
+	protection_objective.target = boss
+	protection_objective.update_explanation_text()
+	objectives += protection_objective
+
+/datum/antagonist/malf_ai/infected/add_law_zero()
+	if(!boss)
+		return
+	var/mob/living/silicon/ai/malf_ai = owner.current
+
+	malf_ai.laws = new /datum/ai_laws/syndicate_override
+
+	var/mob/living/boss_mob = boss.current
+
+	malf_ai.set_zeroth_law("Only [boss_mob.real_name] and people [boss_mob.p_they()] designate[boss_mob.p_s()] as being such are Syndicate Agents.")
+	malf_ai.set_syndie_radio()
+
+	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
+
+	malf_ai.add_malf_picker()
 
 #undef PROB_SPECIAL

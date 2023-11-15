@@ -176,7 +176,7 @@
 
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
-	id = "fountain"
+	id = "lava_fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
 	prefix = "_maps/RandomRuins/AnywhereRuins/"
 	suffix = "fountain_hall.dmm"
@@ -267,3 +267,35 @@
 	cost = 5
 	suffix = "lavaland_surface_bileworm_nest.dmm"
 	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/lava_phonebooth
+	name = "Phonebooth"
+	id = "lava_phonebooth"
+	description = "A venture by nanotrasen to help popularize the use of holopads. This one somehow made its way here."
+	suffix = "lavaland_surface_phonebooth.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/battle_site
+	name = "Battle Site"
+	id = "battle_site"
+	description = "The long past site of a battle between beast and humanoids. The victor is unknown, but the losers are clear."
+	suffix = "lavaland_battle_site.dmm"
+	allow_duplicates = TRUE
+	cost = 3
+
+/datum/map_template/ruin/lavaland/watcher_grave
+	name = "Watchers' Grave"
+	id = "watcher-grave"
+	description = "A lonely cave where an orphaned child awaits a new parent."
+	suffix = "lavaland_surface_watcher_grave.dmm"
+	cost = 5
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/mook_village
+	name = "Mook Village"
+	id = "mook_village"
+	description = "A village hosting a community of friendly mooks!"
+	suffix = "lavaland_surface_mookvillage.dmm"
+	allow_duplicates = FALSE
+	cost = 5

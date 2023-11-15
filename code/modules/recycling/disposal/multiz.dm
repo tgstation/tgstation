@@ -21,11 +21,11 @@
 		return ..()
 
 	//Are we a trunk that goes up? Or down?
-	var/turf/target = null
+	var/turf/target = get_turf(src)
 	if(multiz_dir == MULTIZ_PIPE_UP)
-		target = SSmapping.get_turf_above(get_turf(src))
+		target = GET_TURF_ABOVE(target)
 	if(multiz_dir == MULTIZ_PIPE_DOWN)
-		target = SSmapping.get_turf_below(get_turf(src))
+		target = GET_TURF_BELOW(target)
 	if(!target) //Nothing located.
 		return
 

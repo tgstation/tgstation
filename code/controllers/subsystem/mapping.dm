@@ -33,6 +33,9 @@ SUBSYSTEM_DEF(mapping)
 	/// List of z level (as number) -> plane offset of that z level
 	/// Used to maintain the plane cube
 	var/list/z_level_to_plane_offset = list()
+	/// List of z level (as number) -> list of all z levels vertically connected to ours
+	/// Useful for fast grouping lookups and such
+	var/list/z_level_to_stack = list()
 	/// List of z level (as number) -> The lowest plane offset in that z stack
 	var/list/z_level_to_lowest_plane_offset = list()
 	// This pair allows for easy conversion between an offset plane, and its true representation
@@ -80,7 +83,7 @@ SUBSYSTEM_DEF(mapping)
 	var/adding_new_zlevel = FALSE
 
 	///shows the default gravity value for each z level. recalculated when gravity generators change.
-	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
+	///List in the form: list(z level num = max generator gravity in that z level OR the gravity level trait)
 	var/list/gravity_by_z_level = list()
 
 	/// list of traits and their associated z leves
@@ -104,7 +107,7 @@ SUBSYSTEM_DEF(mapping)
 		var/old_config = config
 		config = global.config.defaultmap
 		if(!config || config.defaulted)
-			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to Meta Station."))
+			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to MetaStation."))
 			config = old_config
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
@@ -130,16 +133,19 @@ SUBSYSTEM_DEF(mapping)
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
 	while (space_levels_so_far < config.space_ruin_levels)
+		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
 		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
-	// and one level with no ruins
-	for (var/i in 1 to config.space_empty_levels)
+	// Create empty space levels
+	while (space_levels_so_far < config.space_empty_levels + config.space_ruin_levels)
+		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
+
+	else if (SSmapping.config.load_all_away_missions) // we're likely in a local testing environment, so punch it.
+		load_all_away_missions()
 
 	loading_ruins = TRUE
 	setup_ruins()
@@ -147,14 +153,18 @@ SUBSYSTEM_DEF(mapping)
 
 #endif
 	// Run map generation after ruin generation to prevent issues
-	run_map_generation()
-	// Add the transit level
-	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
+	run_map_terrain_generation()
+	// Generate our rivers, we do this here so the map doesn't load on top of them
+	setup_rivers()
+	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
+	run_map_terrain_population()
+	// Add the first transit level
+	var/datum/space_level/base_transit = add_reservation_zlevel()
 	require_area_resort()
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
-	initialize_reserved_level(transit.z_value)
+	initialize_reserved_level(base_transit.z_value)
 	calculate_default_z_level_gravities()
 
 	return SS_INIT_SUCCESS
@@ -171,7 +181,8 @@ SUBSYSTEM_DEF(mapping)
 		var/packetlen = length(packet)
 		while(packetlen)
 			if(MC_TICK_CHECK)
-				lists_to_reserve.Cut(1, index)
+				if(index)
+					lists_to_reserve.Cut(1, index)
 				return
 			var/turf/T = packet[packetlen]
 			T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
@@ -179,7 +190,7 @@ SUBSYSTEM_DEF(mapping)
 			unused_turfs["[T.z]"] |= T
 			var/area/old_area = T.loc
 			old_area.turfs_to_uncontain += T
-			T.flags_1 |= UNUSED_RESERVATION_TURF
+			T.turf_flags = UNUSED_RESERVATION_TURF
 			world_contents += T
 			world_turf_contents += T
 			packet.len--
@@ -203,13 +214,13 @@ SUBSYSTEM_DEF(mapping)
 	if(multiz_levels.len < z_level)
 		multiz_levels.len = z_level
 
-	var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
-	var/linked_up = level_trait(z_level, ZTRAIT_UP)
-	multiz_levels[z_level] = list()
-	if(linked_down)
-		multiz_levels[z_level]["[DOWN]"] = TRUE
-	if(linked_up)
-		multiz_levels[z_level]["[UP]"] = TRUE
+	var/z_above = level_trait(z_level, ZTRAIT_UP)
+	var/z_below = level_trait(z_level, ZTRAIT_DOWN)
+	if(!(z_above == TRUE || z_above == FALSE || z_above == null) || !(z_below == TRUE || z_below == FALSE || z_below == null))
+		stack_trace("Warning, numeric mapping offsets are deprecated. Instead, mark z level connections by setting UP/DOWN to true if the connection is allowed")
+	multiz_levels[z_level] = new /list(LARGEST_Z_LEVEL_INDEX)
+	multiz_levels[z_level][Z_LEVEL_UP] = !!z_above
+	multiz_levels[z_level][Z_LEVEL_DOWN] = !!z_below
 
 /datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
 	if(!isnum(z_level_number) || z_level_number < 1)
@@ -221,7 +232,7 @@ SUBSYSTEM_DEF(mapping)
 		max_gravity = max(grav_gen.setting, max_gravity)
 
 	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
-	gravity_by_z_level["[z_level_number]"] = max_gravity
+	gravity_by_z_level[z_level_number] = max_gravity
 	return max_gravity
 
 
@@ -235,26 +246,39 @@ SUBSYSTEM_DEF(mapping)
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
 	if (lava_ruins.len)
 		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS], clear_below = TRUE)
-		for (var/lava_z in lava_ruins)
-			spawn_rivers(lava_z)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	if (ice_ruins.len)
 		// needs to be whitelisted for underground too so place_below ruins work
 		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
-		for (var/ice_z in ice_ruins)
-			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
 		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE)
-		for (var/ice_z in ice_ruins_underground)
-			spawn_rivers(ice_z, 4, level_trait(ice_z, ZTRAIT_BASETURF), /area/icemoon/underground/unexplored/rivers)
 
 	// Generate deep space ruins
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
-		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
+		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
+		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
+		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
+
+/// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
+/// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
+/datum/controller/subsystem/mapping/proc/setup_rivers()
+	// Generate mining ruins
+	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
+	for (var/lava_z in lava_ruins)
+		spawn_rivers(lava_z, 4, /turf/open/lava/smooth/lava_land_surface, /area/lavaland/surface/outdoors/unexplored)
+
+	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
+	for (var/ice_z in ice_ruins)
+		var/river_type = HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED) ? /turf/open/lava/plasma/ice_moon : /turf/open/openspace/icemoon
+		spawn_rivers(ice_z, 4, river_type, /area/icemoon/surface/outdoors/unexplored/rivers)
+
+	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
+	for (var/ice_z in ice_ruins_underground)
+		spawn_rivers(ice_z, 4, level_trait(ice_z, ZTRAIT_BASETURF), /area/icemoon/underground/unexplored/rivers)
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
 	if(clearing_reserved_turfs || !initialized) //in either case this is just not needed.
@@ -284,6 +308,10 @@ SUBSYSTEM_DEF(mapping)
 	if(!error)
 		returning += M
 		qdel(T, TRUE)
+
+/datum/controller/subsystem/mapping/proc/get_reservation_from_turf(turf/T)
+	RETURN_TYPE(/datum/turf_reservation)
+	return used_turfs[T]
 
 /* Nuke threats, for making the blue tiles on the station go RED
 Used by the AI doomsday and the self-destruct nuke.
@@ -328,7 +356,6 @@ Used by the AI doomsday and the self-destruct nuke.
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
 	holodeck_templates = SSmapping.holodeck_templates
-	transit = SSmapping.transit
 	areas_in_z = SSmapping.areas_in_z
 
 	config = SSmapping.config
@@ -410,10 +437,6 @@ Used by the AI doomsday and the self-destruct nuke.
 		qdel(query_round_map_name)
 
 #ifndef LOWMEMORYMODE
-	// TODO: remove this when the DB is prepared for the z-levels getting reordered
-	while (world.maxz < (5 - 1) && space_levels_so_far < config.space_ruin_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	if(config.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
@@ -436,8 +459,16 @@ Used by the AI doomsday and the self-destruct nuke.
 		// And as the file is now removed set the next map to default.
 		next_map_config = load_default_map_config()
 
+/**
+ * Global list of AREA TYPES that are associated with the station.
+ *
+ * This tracks the types of all areas in existence that are a UNIQUE_AREA and are on the station Z.
+ *
+ * This does not track the area instances themselves - See [GLOB.areas] for that.
+ */
 GLOBAL_LIST_EMPTY(the_station_areas)
 
+/// Generates the global station area list, filling it with typepaths of unique areas found on the station Z.
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	for(var/area/station/station_area in GLOB.areas)
 		if (!(station_area.area_flags & UNIQUE_AREA))
@@ -448,9 +479,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
 
-/datum/controller/subsystem/mapping/proc/run_map_generation()
+/// Generate the turfs of the area
+/datum/controller/subsystem/mapping/proc/run_map_terrain_generation()
 	for(var/area/A as anything in GLOB.areas)
-		A.RunGeneration()
+		A.RunTerrainGeneration()
+
+/// Populate the turfs of the area
+/datum/controller/subsystem/mapping/proc/run_map_terrain_population()
+	for(var/area/A as anything in GLOB.areas)
+		A.RunTerrainPopulation()
 
 /datum/controller/subsystem/mapping/proc/maprotate()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
@@ -523,10 +560,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
 		return
 
-	if (change_to.config_min_users > 0 && GLOB.clients.len < change_to.config_min_users)
+	var/filter_threshold = get_active_player_count(alive_check = FALSE, afk_check = TRUE, human_check = FALSE)
+	if (change_to.config_min_users > 0 && filter_threshold != 0 && filter_threshold < change_to.config_min_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (change_to.config_max_users > 0 && GLOB.clients.len > change_to.config_max_users)
+	if (change_to.config_max_users > 0 && filter_threshold > change_to.config_max_users)
 		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
@@ -647,31 +685,46 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Loading [away_name] failed!")
 		return
 
-/datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
-	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
-	var/datum/turf_reservation/reserve = new type
-	if(turf_type_override)
+/// Adds a new reservation z level. A bit of space that can be handed out on request
+/// Of note, reservations default to transit turfs, to make their most common use, shuttles, faster
+/datum/controller/subsystem/mapping/proc/add_reservation_zlevel(for_shuttles)
+	num_of_res_levels++
+	return add_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+
+/// Requests a /datum/turf_reservation based on the given width, height, and z_size. You can specify a z_reservation to use a specific z level, or leave it null to use any z level.
+/datum/controller/subsystem/mapping/proc/request_turf_block_reservation(
+	width,
+	height,
+	z_size = 1,
+	z_reservation = null,
+	reservation_type = /datum/turf_reservation,
+	turf_type_override = null,
+)
+	UNTIL((!z_reservation || reservation_ready["[z_reservation]"]) && !clearing_reserved_turfs)
+	var/datum/turf_reservation/reserve = new reservation_type
+	if(!isnull(turf_type_override))
 		reserve.turf_type = turf_type_override
-	if(!z)
+	if(!z_reservation)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
-			if(reserve.Reserve(width, height, i))
+			if(reserve.reserve(width, height, z_size, i))
 				return reserve
 		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
-		num_of_res_levels += 1
-		var/datum/space_level/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+		var/datum/space_level/newReserved = add_reservation_zlevel()
 		initialize_reserved_level(newReserved.z_value)
-		if(reserve.Reserve(width, height, newReserved.z_value))
+		if(reserve.reserve(width, height, z_size, newReserved.z_value))
 			return reserve
 	else
-		if(!level_trait(z, ZTRAIT_RESERVED))
+		if(!level_trait(z_reservation, ZTRAIT_RESERVED))
 			qdel(reserve)
 			return
 		else
-			if(reserve.Reserve(width, height, z))
+			if(reserve.reserve(width, height, z_size, z_reservation))
 				return reserve
 	QDEL_NULL(reserve)
 
-//This is not for wiping reserved levels, use wipe_reservations() for that.
+///Sets up a z level as reserved
+///This is not for wiping reserved levels, use wipe_reservations() for that.
+///If this is called after SSatom init, it will call Initialize on all turfs on the passed z, as its name promises
 /datum/controller/subsystem/mapping/proc/initialize_reserved_level(z)
 	UNTIL(!clearing_reserved_turfs) //regardless, lets add a check just in case.
 	clearing_reserved_turfs = TRUE //This operation will likely clear any existing reservations, so lets make sure nothing tries to make one while we're doing it.
@@ -681,11 +734,15 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,z))
 	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,z))
 	var/block = block(A, B)
-	for(var/t in block)
-		// No need to empty() these, because it's world init and they're
-		// already /turf/open/space/basic.
-		var/turf/T = t
-		T.flags_1 |= UNUSED_RESERVATION_TURF
+	for(var/turf/T as anything in block)
+		// No need to empty() these, because they just got created and are already /turf/open/space/basic.
+		T.turf_flags = UNUSED_RESERVATION_TURF
+		CHECK_TICK
+
+	// Gotta create these suckers if we've not done so already
+	if(SSatoms.initialized)
+		SSatoms.InitializeAtoms(Z_TURFS(z))
+
 	unused_turfs["[z]"] = block
 	reservation_ready["[z]"] = TRUE
 	clearing_reserved_turfs = FALSE
@@ -743,7 +800,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// We are guarenteed that we'll always grow bottom up
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
-	z_level_to_lowest_plane_offset += 1
+	z_level_to_lowest_plane_offset.len += 1
+	gravity_by_z_level.len += 1
+	z_level_to_stack.len += 1
+	// Bare minimum we have ourselves
+	z_level_to_stack[z_value] = list(z_value)
 	// 0's the default value, we'll update it later if required
 	z_level_to_plane_offset[z_value] = 0
 	z_level_to_lowest_plane_offset[z_value] = 0
@@ -775,24 +836,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
-	// Yes this will cause infinite loops if our templating is fucked. Fuck off
-	var/below_offset = 0
-	// I'm sorry, it needs to start at 0
-	var/current_level = -1
-	var/current_z = update_with.z_value
+	var/plane_offset = 0
+	var/datum/space_level/current_z = update_with
 	var/list/datum/space_level/levels_checked = list()
-	do
-		current_level += 1
-		current_z += below_offset
-		z_level_to_plane_offset[current_z] = current_level
-		var/datum/space_level/next_level = z_list[current_z]
-		below_offset = next_level.traits[ZTRAIT_DOWN]
-		levels_checked += next_level
-	while(below_offset)
+	var/list/z_stack = list()
+	while(TRUE)
+		var/z_level = current_z.z_value
+		z_stack += z_level
+		z_level_to_plane_offset[z_level] = plane_offset
+		levels_checked += current_z
+		if(!current_z.traits[ZTRAIT_DOWN]) // If there's nothing below, stop looking
+			break
+		// Otherwise, down down down we go
+		current_z = z_list[z_level - 1]
+		plane_offset += 1
 
 	/// Updates the lowest offset value
 	for(var/datum/space_level/level_to_update in levels_checked)
-		z_level_to_lowest_plane_offset[level_to_update.z_value] = current_level
+		z_level_to_lowest_plane_offset[level_to_update.z_value] = plane_offset
+		z_level_to_stack[level_to_update.z_value] = z_stack
 
 	// This can be affected by offsets, so we need to update it
 	// PAIN
@@ -800,7 +862,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		generate_lighting_appearance_by_z(i)
 
 	var/old_max = max_plane_offset
-	max_plane_offset = max(max_plane_offset, current_level)
+	max_plane_offset = max(max_plane_offset, plane_offset)
 	if(max_plane_offset == old_max)
 		return
 
@@ -815,7 +877,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/generate_offset_lists(gen_from, new_offset)
 	create_plane_offsets(gen_from, new_offset)
 	for(var/offset in gen_from to new_offset)
-		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
+		GLOB.starlight_objects += starlight_object(offset)
+		GLOB.starlight_overlays += starlight_overlay(offset)
 
 	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
 		var/list/gas_info = GLOB.meta_gas_info[gas_type]
@@ -851,6 +914,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 			true_to_offset_planes[string_real] |= offset_plane
 
+/// Takes a turf or a z level, and returns a list of all the z levels that are connected to it
+/datum/controller/subsystem/mapping/proc/get_connected_levels(turf/connected)
+	var/z_level = connected
+	if(isturf(z_level))
+		z_level = connected.z
+	return z_level_to_stack[z_level]
+
 /datum/controller/subsystem/mapping/proc/lazy_load_template(template_key, force = FALSE)
 	RETURN_TYPE(/datum/turf_reservation)
 
@@ -880,3 +950,81 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
 		GLOB.default_lighting_underlays_by_z.len = z_level
 	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
+
+/// Returns true if the map we're playing on is on a planet
+/datum/controller/subsystem/mapping/proc/is_planetary()
+	return config.planetary
+
+/// For debug purposes, will add every single away mission present in a given directory.
+/// You can optionally pass in a string directory to load from instead of the default.
+/datum/controller/subsystem/mapping/proc/load_all_away_missions(map_directory)
+	if(!map_directory)
+		map_directory = "_maps/RandomZLevels/"
+	var/start_time = null // in case we're doing this at runtime, useful to know how much time we're spending loading all these away missions
+	var/confirmation_alert_result = null
+	var/new_wait = 0 // default to always zeroing out the wait time for away missions to be unlocked due to the unit-testery nature of this map
+
+	if(IsAdminAdvancedProcCall())
+		if(!check_rights(R_DEBUG))
+			return
+		var/confirmation_string = "This will load every single away mission in the [map_directory] directory. This might cause a bit of lag that can only be cleared on a world restart. Are you sure you want to do this?"
+		confirmation_alert_result = tgui_alert(usr, confirmation_string, "DEBUG ONLY!!!", list("Yes", "Cancel"))
+		if(confirmation_alert_result != "Yes")
+			return
+
+		var/current_wait_time = CONFIG_GET(number/gateway_delay)
+		switch(tgui_alert(usr, "Do you want to zero out the cooldown for access to these maps? Currently [DisplayTimeText(current_wait_time)]", "OH FUCK!!!", list("Yes", "No", "Cancel")))
+			if("No")
+				new_wait = current_wait_time
+			if("Cancel")
+				return
+
+	else
+		start_time = REALTIMEOFDAY
+		var/beginning_message = "Loading all away missions..."
+		to_chat(world, span_boldannounce(beginning_message))
+		log_world(beginning_message)
+		log_mapping(beginning_message)
+
+	var/list/all_away_missions = generate_map_list_from_directory(map_directory)
+	var/number_of_away_missions = length(all_away_missions)
+	for(var/entry in all_away_missions)
+		load_new_z_level(entry, entry, secret = FALSE) // entry in both fields so we know if something failed to load since it'll log the full file name of what was loaded.
+
+	for(var/datum/gateway_destination/away_datum in GLOB.gateway_destinations)
+		away_datum.wait = new_wait
+		log_mapping("Now loading [away_datum.name]...")
+
+	validate_z_level_loading(all_away_missions)
+
+	if(!isnull(start_time))
+		var/tracked_time = (REALTIMEOFDAY - start_time) / 10
+		var/finished_message = "Loaded [number_of_away_missions] away missions in [tracked_time] second[tracked_time == 1 ? "" : "s"]!"
+		to_chat(world, span_boldannounce(finished_message))
+		log_world(finished_message)
+		log_mapping(finished_message)
+
+	if(isnull(confirmation_alert_result))
+		log_mapping("All away missions have been loaded. List of away missions paired to corresponding Z-Levels are as follows:")
+		log_mapping(gather_z_level_information())
+		return
+
+	message_admins("[key_name_admin(usr)] has loaded every single away mission in the [map_directory] directory. [ADMIN_SEE_ZLEVEL_LAYOUT]")
+	log_game("[key_name(usr)] has loaded every single away mission in the [map_directory] directory.")
+
+/// Lightweight proc that just checks to make sure that all of the expected z-levels were loaded. Split out for clarity from load_all_away_missions()
+/// Argument "checkable_levels" is just a list of the names (typically the filepaths) of the z-levels we were expected to load, which should correspond to the name on the space level datum.
+/datum/controller/subsystem/mapping/proc/validate_z_level_loading(list/checkable_levels)
+	for(var/z in 1 to max(world.maxz, length(z_list)))
+		var/datum/space_level/level = z_list[z]
+		if(isnull(level))
+			continue
+
+		var/level_name = level.name
+		if(level_name in checkable_levels)
+			checkable_levels -= level_name
+			continue
+
+	var/number_of_remaining_levels = length(checkable_levels)
+	if(number_of_remaining_levels > 0)
+		CRASH("The following [number_of_remaining_levels] away mission(s) were not loaded: [checkable_levels.Join("\n")]")

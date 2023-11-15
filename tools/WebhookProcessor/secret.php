@@ -10,8 +10,11 @@ $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 //This requires the public_repo (or repo for private repositories) and read:org permissions
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
 
-//Used to prevent potential RCEs
+//The repository auto-updates are sourced from.
 $repoOwnerAndName = "tgstation/tgstation";
+
+//Whitelist of repository names that have PRs auto-tagged
+$repoAutoTaggerWhitelist = array("tgstation", "TerraGov-Marine-Corps");
 
 //Auto update settings
 $enable_live_tracking = true;	//auto update this file from the repository

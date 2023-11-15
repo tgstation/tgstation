@@ -45,10 +45,10 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/Initialize(mapload)
+/obj/machinery/computer/rdconsole/LateInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 	if(stored_research)
 		stored_research.consoles_accessing += src
 
@@ -107,7 +107,7 @@ Nothing else in the console has ID requirements.
 	var/list/price = TN.get_price(stored_research)
 	if(stored_research.can_afford(price))
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
-		if(stored_research == SSresearch.science_tech)
+		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))
 			say("Successfully researched [TN.display_name].")
@@ -140,13 +140,15 @@ Nothing else in the console has ID requirements.
 	say("Not enough research points...")
 	return FALSE
 
-/obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		obj_flags |= EMAGGED
-		locked = FALSE
-	return ..()
+/obj/machinery/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if (obj_flags & EMAGGED)
+		return
+	balloon_alert(user, "security protocols disabled")
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	obj_flags |= EMAGGED
+	locked = FALSE
+	return TRUE
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
 	. = ..()
@@ -184,16 +186,9 @@ Nothing else in the console has ID requirements.
 			"stored_research" = t_disk.stored_research.researched_nodes,
 		)
 	if (d_disk)
-		data["d_disk"] = list (
-			"max_blueprints" = d_disk.max_blueprints,
-			"blueprints" = list(),
-		)
-		for (var/i in 1 to d_disk.max_blueprints)
-			if (d_disk.blueprints[i])
-				var/datum/design/D = d_disk.blueprints[i]
-				data["d_disk"]["blueprints"] += D.id
-			else
-				data["d_disk"]["blueprints"] += null
+		data["d_disk"] = list("blueprints" = list())
+		for (var/datum/design/D in d_disk.blueprints)
+			data["d_disk"]["blueprints"] += D.id
 
 
 	// Serialize all nodes to display
@@ -298,7 +293,7 @@ Nothing else in the console has ID requirements.
 	.["static_data"] = list(
 		"node_cache" = node_cache,
 		"design_cache" = design_cache,
-		"id_cache" = flat_id_cache
+		"id_cache" = flat_id_cache,
 	)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params)
@@ -329,55 +324,6 @@ Nothing else in the console has ID requirements.
 		if ("ejectDisk")
 			eject_disk(params["type"])
 			return TRUE
-		if ("writeDesign")
-			if(QDELETED(d_disk))
-				say("No Design Disk Inserted!")
-				return TRUE
-			var/slot = text2num(params["slot"])
-			var/design_id = params["selectedDesign"]
-			if(!stored_research.researched_designs.Find(design_id))
-				stack_trace("ID did not map to a researched datum [design_id]")
-				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-			if(design)
-				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
-					if(design.autolathe_exportable && !design.reagents_list.len)
-						design.build_type |= AUTOLATHE
-					design.category |= RND_CATEGORY_IMPORTED
-				d_disk.blueprints[slot] = design
-			return TRUE
-		if ("uploadDesignSlot")
-			if(QDELETED(d_disk))
-				say("No design disk found.")
-				return TRUE
-			var/n = text2num(params["slot"])
-			stored_research.add_design(d_disk.blueprints[n], TRUE)
-			return TRUE
-		if ("clearDesignSlot")
-			if(QDELETED(d_disk))
-				say("No design disk inserted!")
-				return TRUE
-			var/n = text2num(params["slot"])
-			var/datum/design/D = d_disk.blueprints[n]
-			say("Wiping design [D.name] from design disk.")
-			d_disk.blueprints[n] = null
-			return TRUE
-		if ("eraseDisk")
-			if (params["type"] == RND_DESIGN_DISK)
-				if(QDELETED(d_disk))
-					say("No design disk inserted!")
-					return TRUE
-				say("Wiping design disk.")
-				for(var/i in 1 to d_disk.max_blueprints)
-					d_disk.blueprints[i] = null
-			if (params["type"] == RND_TECH_DISK)
-				if(QDELETED(t_disk))
-					say("No tech disk inserted!")
-					return TRUE
-				qdel(t_disk.stored_research)
-				t_disk.stored_research = new
-				say("Wiping technology disk.")
-			return TRUE
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
@@ -386,6 +332,9 @@ Nothing else in the console has ID requirements.
 				for(var/D in d_disk.blueprints)
 					if(D)
 						stored_research.add_design(D, TRUE)
+				say("Uploading blueprints from disk.")
+				d_disk.on_upload(stored_research)
+				return TRUE
 			if (params["type"] == RND_TECH_DISK)
 				if (QDELETED(t_disk))
 					say("No tech disk inserted!")
@@ -393,6 +342,7 @@ Nothing else in the console has ID requirements.
 				say("Uploading technology disk.")
 				t_disk.stored_research.copy_research_to(stored_research)
 			return TRUE
+		//Tech disk-only action.
 		if ("loadTech")
 			if(QDELETED(t_disk))
 				say("No tech disk inserted!")

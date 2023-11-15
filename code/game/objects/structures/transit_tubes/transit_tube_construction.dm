@@ -3,7 +3,7 @@
 // normal transit tubes
 /obj/structure/c_transit_tube
 	name = "unattached transit tube"
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon = 'icons/obj/pipes_n_cables/transit_tube.dmi'
 	icon_state = "straight"
 	desc = "An unattached segment of transit tube."
 	density = FALSE
@@ -160,7 +160,7 @@
 //see station.dm for the logic
 /obj/structure/c_transit_tube_pod
 	name = "unattached transit tube pod"
-	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon = 'icons/obj/pipes_n_cables/transit_tube.dmi'
 	icon_state = "pod"
 	desc = "Could probably be <b>dragged</b> into an open Transit Tube."
 	anchored = FALSE

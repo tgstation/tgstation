@@ -21,11 +21,12 @@
 
 	for(var/current_account as anything in SSeconomy.bank_accounts_by_id)
 		var/datum/bank_account/current_bank_account = SSeconomy.bank_accounts_by_id[current_account]
+		var/job_title = current_bank_account.account_job?.title
 		player_accounts += list(list(
 			"name" = current_bank_account.account_holder,
-			"job" = current_bank_account.account_job.title,
-			"balance" = current_bank_account.account_balance,
-			"modifier" = current_bank_account.payday_modifier,
+			"job" = job_title ? job_title : "No Job", // because this can be null
+			"balance" = round(current_bank_account.account_balance),
+			"modifier" = round((current_bank_account.payday_modifier * 0.9), 0.1),
 		))
 	data["PlayerAccounts"] = player_accounts
 	data["AuditLog"] = audit_list

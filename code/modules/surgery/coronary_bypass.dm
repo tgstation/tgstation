@@ -13,7 +13,7 @@
 	)
 
 /datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/heart/target_heart = target.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
 	if(target_heart)
 		if(target_heart.damage > 60 && !target_heart.operated)
 			return TRUE
@@ -99,7 +99,7 @@
 
 /datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	target.setOrganLoss(ORGAN_SLOT_HEART, 60)
-	var/obj/item/organ/internal/heart/target_heart = target.getorganslot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/internal/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
 	if(target_heart) //slightly worrying if we lost our heart mid-operation, but that's life
 		target_heart.operated = TRUE
 	display_results(

@@ -10,6 +10,7 @@
 /datum/symptom/hallucigen
 	name = "Hallucigen"
 	desc = "The virus stimulates the brain, causing occasional hallucinations."
+	illness = "Paranoyance"
 	stealth = 1
 	resistance = -4
 	stage_speed = 1

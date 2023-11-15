@@ -1,0 +1,68 @@
+name: TGS Test Suite
+on:
+  push:
+    branches:
+    - master
+    - 'project/**'
+    - 'gh-readonly-queue/master/**'
+    - 'gh-readonly-queue/project/**'
+    paths:
+    - '.tgs.yml'
+    - '.github/workflows/tgs_test.yml'
+    - 'dependencies.sh'
+    - 'code/__DEFINES/tgs.config.dm'
+    - 'code/__DEFINES/tgs.dm'
+    - 'code/game/world.dm'
+    - 'code/modules/tgs/**'
+    - 'tools/tgs_scripts/**'
+    - 'tools/tgs_test/**'
+  pull_request:
+    branches:
+    - master
+    - 'project/**'
+    paths:
+    - '.tgs.yml'
+    - '.github/workflows/tgs_test.yml'
+    - 'dependencies.sh'
+    - 'code/__DEFINES/tgs.config.dm'
+    - 'code/__DEFINES/tgs.dm'
+    - 'code/game/world.dm'
+    - 'code/modules/tgs/**'
+    - 'tools/tgs_scripts/**'
+    - 'tools/tgs_test/**'
+  merge_group:
+    branches:
+    - master
+env:
+  TGS_API_PORT: 5000
+  PR_NUMBER: ${{ github.event.number }}
+jobs:
+  test_tgs_docker:
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') )
+    name: Test TGS Docker
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: test_tgs_docker-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
+    services:
+      tgs:
+        image: tgstation/server
+        env:
+          Database__DatabaseType: Sqlite
+          Database__ConnectionString: Data Source=TGS_TGTest.sqlite3;Mode=ReadWriteCreate
+          General__ConfigVersion: 4.1.0
+          General__ApiPort: ${{ env.TGS_API_PORT }}
+          General__SetupWizardMode: Never
+        ports:
+          - 5000:5000 #Can't use env here for some reason
+    steps:
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Test TGS Integration
+        run: dotnet run -c Release --project tools/tgs_test ${{ github.repository }} /tgs_instances/tgstation ${{ env.TGS_API_PORT }} ${{ github.event.pull_request.head.sha || github.sha }} ${{ secrets.GITHUB_TOKEN }} ${{ env.PR_NUMBER }}

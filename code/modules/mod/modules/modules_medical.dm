@@ -13,24 +13,27 @@
 		but it's up to you to do something with it."
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
 	/// Scanning mode, changes how we scan something.
 	var/mode = HEALTH_SCAN
+
 	/// List of all scanning modes.
 	var/static/list/modes = list(HEALTH_SCAN, WOUND_SCAN, CHEM_SCAN)
 
 /obj/item/mod/module/health_analyzer/add_ui_data()
 	. = ..()
-	.["userhealth"] = mod.wearer?.health || 0
-	.["usermaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["userbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["userburn"] = mod.wearer?.getFireLoss() || 0
-	.["usertoxin"] = mod.wearer?.getToxLoss() || 0
-	.["useroxy"] = mod.wearer?.getOxyLoss() || 0
+	.["health"] = mod.wearer?.health || 0
+	.["health_max"] = mod.wearer?.getMaxHealth() || 0
+	.["loss_brute"] = mod.wearer?.getBruteLoss() || 0
+	.["loss_fire"] = mod.wearer?.getFireLoss() || 0
+	.["loss_tox"] = mod.wearer?.getToxLoss() || 0
+	.["loss_oxy"] = mod.wearer?.getOxyLoss() || 0
+
+	return .
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
@@ -50,6 +53,8 @@
 /obj/item/mod/module/health_analyzer/get_configuration()
 	. = ..()
 	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
+
+	return .
 
 /obj/item/mod/module/health_analyzer/configure_edit(key, value)
 	switch(key)
@@ -164,7 +169,6 @@
 /obj/projectile/organ
 	name = "organ"
 	damage = 0
-	nodamage = TRUE
 	hitsound = 'sound/effects/attackblob.ogg'
 	hitsound_wall = 'sound/effects/attackblob.ogg'
 	/// A reference to the organ we "are".
@@ -182,7 +186,7 @@
 	organ = null
 	return ..()
 
-/obj/projectile/organ/on_hit(atom/target)
+/obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!ishuman(target))
 		organ.forceMove(drop_location())
@@ -202,7 +206,7 @@
 			succeed = TRUE
 			break
 	if(succeed)
-		var/list/organs_to_boot_out = organ_receiver.getorganslot(organ.slot)
+		var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
 		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
 			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
 				continue
@@ -334,7 +338,7 @@
 			ripped_clothing[clothing] = shared_flags
 			clothing.body_parts_covered &= ~shared_flags
 
-/obj/item/mod/module/thread_ripper/on_process(delta_time)
+/obj/item/mod/module/thread_ripper/on_process(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

@@ -268,7 +268,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	var/mob/living/carbon/human/host = our_disease.following_host
 	if(!host)
 		return FALSE
-	for(var/obj/thing as anything in host.get_equipped_items(FALSE))
+	for(var/obj/thing as anything in host.get_equipped_items(include_accessories = TRUE))
 		thing.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
 	//no shoes? infect the floor.
 	if(!host.shoes)

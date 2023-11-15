@@ -9,3 +9,8 @@
 #define TAB_LIBRARY 1
 #define TAB_SECURE 2
 #define TAB_PRIVATE 3
+
+///cost defines for drawing graffiti: how many charges of a crayon or spraycan are used.
+#define CRAYON_COST_SMALL 0.5
+#define CRAYON_COST_DEFAULT 1
+#define CRAYON_COST_LARGE 5

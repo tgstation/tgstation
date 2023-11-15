@@ -15,16 +15,19 @@
 
 /obj/item/clothing/head/costume/foilhat/Initialize(mapload)
 	. = ..()
-	if(!warped)
-		AddComponent(/datum/component/anti_magic, \
-			antimagic_flags = MAGIC_RESISTANCE_MIND, \
-			inventory_flags = ITEM_SLOT_HEAD, \
-			charges = 6, \
-			drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
-			expiration = CALLBACK(src, PROC_REF(warp_up)) \
-		)
-	else
+	if(warped)
 		warp_up()
+		return
+
+	AddComponent(
+		/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE_MIND, \
+		inventory_flags = ITEM_SLOT_HEAD, \
+		charges = 6, \
+		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		expiration = CALLBACK(src, PROC_REF(warp_up)) \
+	)
+
 
 /obj/item/clothing/head/costume/foilhat/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -105,7 +108,7 @@
 		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
 	)
 	user.say(pick(conspiracy_line), forced=type)
-	var/obj/item/organ/internal/brain/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.setOrganDamage(BRAIN_DAMAGE_DEATH)
+		brain.set_organ_damage(BRAIN_DAMAGE_DEATH)
 	return OXYLOSS

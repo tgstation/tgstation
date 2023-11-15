@@ -5,8 +5,8 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/dust_animation()
 	new /obj/effect/temp_visual/dust_animation(loc, dna.species.dust_anim)
 
-/mob/living/carbon/human/spawn_gibs(with_bodyparts)
-	if(with_bodyparts)
+/mob/living/carbon/human/spawn_gibs(drop_bitflags=NONE)
+	if(drop_bitflags & DROP_BODYPARTS)
 		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
 	else
 		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
@@ -21,17 +21,13 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	if(stat == DEAD)
 		return
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	var/obj/item/organ/internal/heart/H = getorganslot(ORGAN_SLOT_HEART)
-	if(H)
-		H.beat = BEAT_NONE
+	var/obj/item/organ/internal/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
+	human_heart?.beat = BEAT_NONE
 
 	. = ..()
 
-	if(client && !suiciding && !(client in GLOB.dead_players_during_shift))
+	if(client && !HAS_TRAIT(src, TRAIT_SUICIDED) && !(client in GLOB.dead_players_during_shift))
 		GLOB.dead_players_during_shift += client
-
-	if(!QDELETED(dna)) //The gibbed param is bit redundant here since dna won't exist at this point if they got deleted.
-		dna.species.spec_death(gibbed, src)
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
@@ -39,7 +35,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		if(key) // Prevents log spamming of keyless mob deaths (like xenobio monkeys)
 			investigate_log("has died at [loc_name(src)].<br>\
 				BRUTE: [src.getBruteLoss()] BURN: [src.getFireLoss()] TOX: [src.getToxLoss()] OXY: [src.getOxyLoss()] CLONE: [src.getCloneLoss()] STAM: [src.getStaminaLoss()]<br>\
-				<b>Brain damage</b>: [src.getOrganLoss(ORGAN_SLOT_BRAIN) || "0"]<br>\
+				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
 				<b>Blood volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
 	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab."))
@@ -50,7 +46,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
 
 	readout += "<br>Stomach:"
-	var/obj/item/organ/internal/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/internal/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	for(var/datum/reagent/bile in belly?.reagents?.reagent_list)
 		if(!belly.food_reagents[bile.type])
 			readout += "<br>[round(bile.volume, 0.001)] units of [bile.name]"

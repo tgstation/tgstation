@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/fakesyndiesuit = 2,
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/spinningtoy/dark_matter = 1,
 		/obj/item/toy/balloon/arrest = 2,
 		/obj/item/toy/mecha/ripley = 1,
 		/obj/item/toy/mecha/ripleymkii = 1,
@@ -58,14 +59,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/rouny = 2,
 		/obj/item/toy/plush/abductor = 2,
 		/obj/item/toy/plush/abductor/agent = 2,
-		/obj/item/toy/plush/greek_cucumber = 2,
-		/obj/item/storage/belt/military/snack = 2,
+		/obj/item/toy/plush/shark = 2,
+		/obj/item/storage/belt/military/snack/full = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
 		/obj/item/toy/eldritch_book = 2,
 		/obj/item/storage/box/heretic_box = 1,
 		/obj/item/toy/foamfinger = 2,
-		/obj/item/clothing/glasses/trickblindfold = 2))
+		/obj/item/clothing/glasses/trickblindfold = 2,
+		/obj/item/clothing/mask/party_horn = 2,
+		/obj/item/storage/box/party_poppers = 2))
 
 /obj/machinery/computer/arcade
 	name = "random arcade"
@@ -74,7 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -153,6 +156,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
+
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
 
 	var/enemy_name = "Space Villain"
 	///Enemy health/attack points
@@ -579,7 +584,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			var/mob/living/living_user = user
 			if (istype(living_user))
 				living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
-				living_user.gib()
+				living_user.gib(DROP_ALL_REMAINS)
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 		user.lost_game()
 
@@ -617,17 +622,18 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	. += "\t[span_info("magical -> defend until outmagiced")]"
 	return .
 
-/obj/machinery/computer/arcade/battle/emag_act(mob/user)
+/obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
+	balloon_alert(user, "hard mode enabled")
 	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
 	bomb_cooldown = 18
 	var/gamerSkill = 0
-	if(usr?.mind)
-		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
+	if(user?.mind)
+		gamerSkill = user.mind.get_skill_level(/datum/skill/gaming)
 	enemy_setup(gamerSkill)
 	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
 	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
@@ -641,6 +647,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "Outbomb Cuban Pete"
 
 	updateUsrDialog()
+	return TRUE
 
 // ** AMPUTATION ** //
 

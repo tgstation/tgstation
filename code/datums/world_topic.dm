@@ -176,12 +176,10 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
-	//Oh this is a hack, someone refactor the functionality out of the chat command PLS
-	var/datum/tgs_chat_command/namecheck/NC = new
-	var/datum/tgs_chat_user/user = new
-	user.friendly_name = input["sender"]
-	user.mention = user.friendly_name
-	return NC.Run(user, input["namecheck"])
+	log_admin("world/Topic Name Check: [input["sender"]] on [input["namecheck"]]")
+	message_admins("Name checking [input["namecheck"]] from [input["sender"]] (World topic)")
+
+	return keywords_lookup(input["namecheck"], 1)
 
 /datum/world_topic/adminwho
 	keyword = "adminwho"
@@ -196,7 +194,7 @@
 /datum/world_topic/status/Run(list/input)
 	. = list()
 	.["version"] = GLOB.game_version
-	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
+	.["respawn"] = config ? !!CONFIG_GET(flag/allow_respawn) : FALSE // show respawn as true regardless of "respawn as char" or "free respawn"
 	.["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
@@ -205,6 +203,7 @@
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
 	.["hub"] = GLOB.hub_visibility
+	.["identifier"] = CONFIG_GET(string/serversqlname)
 
 
 	var/list/adm = get_admin_counts()
@@ -240,4 +239,3 @@
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
-

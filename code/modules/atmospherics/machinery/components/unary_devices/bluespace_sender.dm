@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender
-	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
+	icon = 'icons/obj/machines/atmospherics/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_sender_off"
 	base_icon_state = "bluespace_sender"
 	name = "Bluespace Gas Sender"
@@ -46,6 +46,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	GLOB.bluespace_senders += src
 
 	update_appearance()
+	register_context()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
 	if(bluespace_network.total_moles())
@@ -55,6 +56,24 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	GLOB.bluespace_senders -= src
 
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/examine(mob/user)
+	. = ..()
+	. += span_notice("With the panel open:")
+	. += span_notice(" -Use a wrench with left-click to rotate [src] and right-click to unanchor it.")
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Unan" : "An"]chor"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()
 	if(panel_open)
@@ -84,10 +103,10 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
-		to_chat(user, span_notice("You can't open [src] while it's on!"))
+		balloon_alert(user, "turn off!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!anchored)
-		to_chat(user, span_notice("Anchor [src] first!"))
+		balloon_alert(user, "anchor!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", tool))
 		change_pipe_connection(panel_open)
@@ -103,8 +122,8 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
-	multitool.buffer = src
-	to_chat(user, span_notice("You store linkage information in [item]'s buffer."))
+	multitool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act(mob/living/user, obj/item/tool)
@@ -112,6 +131,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
+		balloon_alert(user, "open panel!")
 		return
 	if(default_unfasten_wrench(user, tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -129,6 +149,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		if(!can_interact(user))
 			return
 		on = !on
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
 		return

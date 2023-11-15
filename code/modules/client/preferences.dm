@@ -314,12 +314,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (!preference.is_accessible(src))
 			continue
 
-		LAZYINITLIST(preferences[preference.category])
-
 		var/value = read_preference(preference.type)
 		var/data = preference.compile_ui_data(user, value)
 
+		LAZYINITLIST(preferences[preference.category])
 		preferences[preference.category][preference.savefile_key] = data
+
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/list/append_character_preferences = preference_middleware.get_character_preferences(user)
@@ -439,6 +439,55 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(GetQuirkBalance() < 0)
 		all_quirks = list()
 
+/**
+ * Safely read a given preference datum from a given client.
+ *
+ * Reads the given preference datum from the given client, and guards against null client and null prefs.
+ * The client object is fickle and can go null at times, so use this instead of read_preference() if you
+ * want to ensure no runtimes.
+ *
+ * returns client.prefs.read_preference(prefs_to_read) or FALSE if something went wrong.
+ *
+ * Arguments:
+ * * client/prefs_holder - the client to read the pref from
+ * * datum/preference/pref_to_read - the type of preference datum to read.
+ */
+/proc/safe_read_pref(client/prefs_holder, datum/preference/pref_to_read)
+	if(!prefs_holder)
+		return FALSE
+	if(prefs_holder && !prefs_holder?.prefs)
+		stack_trace("[prefs_holder?.mob] ([prefs_holder?.ckey]) had null prefs, which shouldn't be possible!")
+		return FALSE
+
+	return prefs_holder?.prefs.read_preference(pref_to_read)
+
+/**
+ * Get the given client's chat toggle prefs.
+ *
+ * Getter function for prefs.chat_toggles which guards against null client and null prefs.
+ * The client object is fickle and can go null at times, so use this instead of directly accessing the var
+ * if you want to ensure no runtimes.
+ *
+ * returns client.prefs.chat_toggles or FALSE if something went wrong.
+ *
+ * Arguments:
+ * * client/prefs_holder - the client to get the chat_toggles pref from.
+ */
+/proc/get_chat_toggles(client/target)
+	if(ismob(target))
+		var/mob/target_mob = target
+		target = target_mob.client
+
+	if(isnull(target))
+		return NONE
+
+	var/datum/preferences/preferences = target.prefs
+	if(isnull(preferences))
+		stack_trace("[key_name(target)] preference datum was null")
+		return NONE
+
+	return preferences.chat_toggles
+
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
 /datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
 	apply_character_randomization_prefs(is_antag)
@@ -460,6 +509,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.icon_render_keys = list()
 		character.update_body(is_creating = TRUE)
 
+	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_APPLIED)
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)

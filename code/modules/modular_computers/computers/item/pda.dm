@@ -2,7 +2,7 @@
 	name = "pda"
 	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
-	worn_icon_state = "pda"
+	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
@@ -12,8 +12,8 @@
 	inhand_icon_state = "electronic"
 
 	steel_sheet_cost = 2
-	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
-	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
+	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 
 	icon_state_menu = "menu"
 	max_capacity = 64
@@ -43,6 +43,7 @@
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
+		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/clothing/mask/cigarette,
 	)
 
@@ -82,7 +83,7 @@
 /obj/item/modular_computer/pda/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
-		explode(usr, from_message_menu = TRUE)
+		explode(user, from_message_menu = TRUE)
 
 /obj/item/modular_computer/pda/attack_self(mob/user)
 	// bypass literacy checks to access syndicate uplink
@@ -172,14 +173,14 @@
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()
 	var/detomatix_difficulty
 
-	for(var/datum/computer_file/program/downloaded_apps as anything in stored_files)
+	for(var/datum/computer_file/program/downloaded_apps in stored_files)
 		detomatix_difficulty += downloaded_apps.detomatix_resistance
 
 	return detomatix_difficulty
 
 /obj/item/modular_computer/pda/proc/remove_pen(mob/user)
 
-	if(issilicon(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)) //TK doesn't work even with this removed but here for readability
+	if(issilicon(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH)) //TK doesn't work even with this removed but here for readability
 		return
 
 	if(inserted_item)
@@ -224,24 +225,26 @@
  * if it has one.
  *
  * Arguments:
- * * ringtone_client - The client whose prefs we'll use to set the ringtone of this PDA.
+ * * owner_client - The client whose prefs we'll use to set the ringtone of this PDA.
  */
-/obj/item/modular_computer/pda/proc/update_ringtone_pref(client/ringtone_client)
-	if(!ringtone_client)
+/obj/item/modular_computer/pda/proc/update_pda_prefs(client/owner_client)
+	if(!owner_client)
 		return
 
-	var/new_ringtone = ringtone_client?.prefs?.read_preference(/datum/preference/text/pda_ringtone)
+	var/new_ringtone = owner_client.prefs.read_preference(/datum/preference/text/pda_ringtone)
+	if(new_ringtone && (new_ringtone != MESSENGER_RINGTONE_DEFAULT))
+		update_ringtone(new_ringtone)
 
-	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
-		return
-
-	update_ringtone(new_ringtone)
+	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
+	if(new_theme)
+		device_theme = GLOB.pda_name_to_theme[new_theme]
 
 /// A simple proc to set the ringtone from a pda.
 /obj/item/modular_computer/pda/proc/update_ringtone(new_ringtone)
 	if(!istext(new_ringtone))
 		return
-	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+	var/datum/computer_file/program/messenger/messenger_app = locate() in stored_files
+	if(messenger_app)
 		messenger_app.ringtone = new_ringtone
 
 /**
@@ -252,7 +255,7 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
-	device_theme = "syndicate"
+	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
@@ -298,7 +301,6 @@
 
 /obj/item/modular_computer/pda/silicon/cyborg
 	starting_programs = list(
-		/datum/computer_file/program/computerconfig,
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
 	)
@@ -321,7 +323,7 @@
 		return ..()
 	return FALSE
 
-/obj/item/modular_computer/pda/silicon/get_ntnet_status(specific_action = 0)
+/obj/item/modular_computer/pda/silicon/get_ntnet_status()
 	//No borg found
 	if(!silicon_owner)
 		return FALSE
@@ -372,7 +374,7 @@
 		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
-/obj/item/modular_computer/pda/silicon/toggle_flashlight()
+/obj/item/modular_computer/pda/silicon/toggle_flashlight(mob/user)
 	if(!silicon_owner || QDELETED(silicon_owner))
 		return FALSE
 	if(iscyborg(silicon_owner))
@@ -395,7 +397,7 @@
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
-	device_theme = "syndicate"
+	device_theme = PDA_THEME_SYNDICATE
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate/Initialize(mapload)
 	. = ..()

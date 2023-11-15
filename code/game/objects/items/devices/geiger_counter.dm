@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NOBLUDGEON
-	custom_materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 
 	var/last_perceived_radiation_danger = null
 
@@ -111,7 +111,7 @@
 	to_chat(user, span_notice("[icon2html(src, user)] [isliving(target) ? "Subject" : "Target"] is free of radioactive contamination."))
 
 /obj/item/geiger_counter/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.can_perform_action(src))
 		return ..()
 	if(!scanning)
 		to_chat(usr, span_warning("[src] must be on to reset its radiation level!"))

@@ -102,9 +102,9 @@ SUBSYSTEM_DEF(statpanels)
 		return
 
 	target.stat_panel.send_message("update_stat", list(
-		global_data = global_data,
-		ping_str = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
-		other_str = target.mob?.get_status_tab_items(),
+		"global_data" = global_data,
+		"ping_str" = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
+		"other_str" = target.mob?.get_status_tab_items(),
 	))
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)
@@ -112,7 +112,7 @@ SUBSYSTEM_DEF(statpanels)
 	var/coord_entry = COORD(eye_turf)
 	if(!mc_data)
 		generate_mc_data()
-	target.stat_panel.send_message("update_mc", list(mc_data = mc_data, coord_entry = coord_entry))
+	target.stat_panel.send_message("update_mc", list("mc_data" = mc_data, "coord_entry" = coord_entry))
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
@@ -227,7 +227,7 @@ SUBSYSTEM_DEF(statpanels)
 		// Now, we're gonna queue image generation out of those refs
 		to_make += turf_item
 		already_seen[turf_item] = OBJ_IMAGE_LOADING
-		obj_window.RegisterSignal(turf_item, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/object_window_info,viewing_atom_deleted)) // we reset cache if anything in it gets deleted
+		obj_window.RegisterSignal(turf_item, COMSIG_QDELETING, TYPE_PROC_REF(/datum/object_window_info,viewing_atom_deleted)) // we reset cache if anything in it gets deleted
 	return turf_items
 
 #undef OBJ_IMAGE_LOADING
@@ -333,7 +333,7 @@ SUBSYSTEM_DEF(statpanels)
 
 /// Takes a client, attempts to generate object images for it
 /// We will update the client with any improvements we make when we're done
-/datum/object_window_info/process(delta_time)
+/datum/object_window_info/process(seconds_per_tick)
 	// Cache the datum access for sonic speed
 	var/list/to_make = atoms_to_imagify
 	var/list/newly_seen = atoms_to_images

@@ -6,8 +6,9 @@
 	name = "baseturf editor"
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
-
+	/// Replacing a specific turf
 	var/list/baseturf_to_replace
+	/// The desired bottom turf
 	var/baseturf
 
 	plane = POINT_PLANE
@@ -33,9 +34,16 @@
 
 	qdel(src)
 
+/// Replaces all the requested baseturfs (usually space/baseturfbottom) with the desired baseturf. Skips if its already there
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
 	thing.remove_baseturfs_from_typecache(baseturf_to_replace)
-	thing.PlaceOnBottom(fake_turf_type = baseturf)
+
+	if(length(thing.baseturfs))
+		var/turf/tile = thing.baseturfs[1]
+		if(tile == baseturf)
+			return
+
+	thing.place_on_bottom(baseturf)
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
@@ -57,6 +65,10 @@
 	name = "asteroid snow baseturf editor"
 	baseturf = /turf/open/misc/asteroid/snow
 
+/obj/effect/baseturf_helper/asteroid/moon
+	name = "lunar sand baseturf editor"
+	baseturf = /turf/open/misc/asteroid/moon
+
 /obj/effect/baseturf_helper/beach/sand
 	name = "beach sand baseturf editor"
 	baseturf = /turf/open/misc/beach/sand
@@ -76,7 +88,12 @@
 /obj/effect/baseturf_helper/reinforced_plating
 	name = "reinforced plating baseturf editor"
 	baseturf = /turf/open/floor/plating/reinforced
-	baseturf_to_replace = list(/turf/open/floor/plating,/turf/open/space,/turf/baseturf_bottom)
+	baseturf_to_replace = list(/turf/open/floor/plating)
+
+/obj/effect/baseturf_helper/reinforced_plating/replace_baseturf(turf/thing)
+	if(istype(thing, /turf/open/floor/plating))
+		return //Plates should not be placed under other plates
+	thing.stack_ontop_of_baseturf(/turf/open/floor/plating, baseturf)
 
 //This applies the reinforced plating to the above Z level for every tile in the area where this is placed
 /obj/effect/baseturf_helper/reinforced_plating/ceiling
@@ -94,6 +111,9 @@
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
+	anchored = TRUE
+	// Unless otherwise specified, layer above everything
+	layer = ABOVE_ALL_MOB_LAYER
 	var/late = FALSE
 
 /obj/effect/mapping_helpers/Initialize(mapload)
@@ -134,13 +154,16 @@
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
 					here.PlaceOnTop(T.type)
+					qdel(airlock)
 					qdel(src)
 					return
 				here.PlaceOnTop(/turf/closed/wall)
 				qdel(airlock)
+				qdel(src)
 				return
 			if(9 to 11)
 				airlock.lights = FALSE
+				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
 				airlock.locked = TRUE
 			if(12 to 15)
 				airlock.locked = TRUE
@@ -189,6 +212,7 @@
 	if(airlock.locked)
 		log_mapping("[src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 	else
+		// Used instead of bolt so that we can pretend it was always locked, i.e. no sound effects on init.
 		airlock.locked = TRUE
 
 /obj/effect/mapping_helpers/airlock/unres
@@ -209,6 +233,15 @@
 	else
 		airlock.abandoned = TRUE
 
+/obj/effect/mapping_helpers/airlock/welded
+	name = "airlock welded helper"
+	icon_state = "airlock_welded"
+
+/obj/effect/mapping_helpers/airlock/welded/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.welded)
+		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] welded but it's already welded closed!")
+	airlock.welded = TRUE
+
 /obj/effect/mapping_helpers/airlock/cutaiwire
 	name = "airlock cut ai wire helper"
 	icon_state = "airlock_cutaiwire"
@@ -228,6 +261,322 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to autoname the [airlock] but it's already autonamed!")
 	else
 		airlock.autoname = TRUE
+
+//air alarm helpers
+/obj/effect/mapping_helpers/airalarm
+	desc = "You shouldn't see this. Report it please."
+	late = TRUE
+
+/obj/effect/mapping_helpers/airalarm/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
+	if(isnull(target))
+		var/area/target_area = get_area(src)
+		log_mapping("[src] failed to find an air alarm at [AREACOORD(src)] ([target_area.type]).")
+	else
+		payload(target)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/airalarm/LateInitialize()
+	. = ..()
+	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
+
+	if(isnull(target))
+		qdel(src)
+		return
+	if(target.unlocked)
+		target.unlock()
+
+	if(target.tlv_cold_room)
+		target.set_tlv_cold_room()
+	if(target.tlv_no_checks)
+		target.set_tlv_no_checks()
+	if(target.tlv_no_checks && target.tlv_cold_room)
+		CRASH("Tried to apply incompatible air alarm threshold helpers!")
+
+	if(target.syndicate_access)
+		target.give_syndicate_access()
+	if(target.away_general_access)
+		target.give_away_general_access()
+	if(target.engine_access)
+		target.give_engine_access()
+	if(target.mixingchamber_access)
+		target.give_mixingchamber_access()
+	if(target.all_access)
+		target.give_all_access()
+	if(target.syndicate_access + target.away_general_access + target.engine_access + target.mixingchamber_access + target.all_access > 1)
+		CRASH("Tried to combine incompatible air alarm access helpers!")
+
+	if(target.air_sensor_chamber_id)
+		target.setup_chamber_link()
+
+	target.update_appearance()
+	qdel(src)
+
+/obj/effect/mapping_helpers/airalarm/proc/payload(obj/machinery/airalarm/target)
+	return
+
+/obj/effect/mapping_helpers/airalarm/unlocked
+	name = "airalarm unlocked interface helper"
+	icon_state = "airalarm_unlocked_interface_helper"
+
+/obj/effect/mapping_helpers/airalarm/unlocked/payload(obj/machinery/airalarm/target)
+	if(target.unlocked)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to unlock the [target] but it's already unlocked!")
+	target.unlocked = TRUE
+
+/obj/effect/mapping_helpers/airalarm/syndicate_access
+	name = "airalarm syndicate access helper"
+	icon_state = "airalarm_syndicate_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/syndicate_access/payload(obj/machinery/airalarm/target)
+	if(target.syndicate_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to syndicate but it's already changed!")
+	target.syndicate_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/away_general_access
+	name = "airalarm away access helper"
+	icon_state = "airalarm_away_general_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/away_general_access/payload(obj/machinery/airalarm/target)
+	if(target.away_general_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to away_general but it's already changed!")
+	target.away_general_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/engine_access
+	name = "airalarm engine access helper"
+	icon_state = "airalarm_engine_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/engine_access/payload(obj/machinery/airalarm/target)
+	if(target.engine_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to engine_access but it's already changed!")
+	target.engine_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/mixingchamber_access
+	name = "airalarm mixingchamber access helper"
+	icon_state = "airalarm_mixingchamber_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/mixingchamber_access/payload(obj/machinery/airalarm/target)
+	if(target.mixingchamber_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to mixingchamber_access but it's already changed!")
+	target.mixingchamber_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/all_access
+	name = "airalarm all access helper"
+	icon_state = "airalarm_all_access_helper"
+
+/obj/effect/mapping_helpers/airalarm/all_access/payload(obj/machinery/airalarm/target)
+	if(target.all_access)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s access to all_access but it's already changed!")
+	target.all_access = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room
+	name = "airalarm cold room tlv helper"
+	icon_state = "airalarm_tlv_cold_room_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_cold_room/payload(obj/machinery/airalarm/target)
+	if(target.tlv_cold_room)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
+	target.tlv_cold_room = TRUE
+
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks
+	name = "airalarm no checks tlv helper"
+	icon_state = "airalarm_tlv_no_checks_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks/payload(obj/machinery/airalarm/target)
+	if(target.tlv_no_checks)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to no_checks but it's already changed!")
+	target.tlv_no_checks = TRUE
+
+/obj/effect/mapping_helpers/airalarm/link
+	name = "airalarm link helper"
+	icon_state = "airalarm_link_helper"
+	var/chamber_id = ""
+	var/allow_link_change = FALSE
+
+/obj/effect/mapping_helpers/airalarm/link/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
+	if(!isnull(alarm))
+		alarm.air_sensor_chamber_id = chamber_id
+		alarm.allow_link_change = allow_link_change
+	else
+		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
+		return INITIALIZE_HINT_QDEL
+
+//apc helpers
+/obj/effect/mapping_helpers/apc
+	desc = "You shouldn't see this. Report it please."
+	late = TRUE
+
+/obj/effect/mapping_helpers/apc/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
+	if(isnull(target))
+		var/area/target_area = get_area(src)
+		log_mapping("[src] failed to find an apc at [AREACOORD(src)] ([target_area.type]).")
+	else
+		payload(target)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/apc/LateInitialize()
+	. = ..()
+	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
+
+	if(isnull(target))
+		qdel(src)
+		return
+	if(target.cut_AI_wire)
+		target.wires.cut(WIRE_AI)
+	if(target.cell_5k)
+		target.install_cell_5k()
+	if(target.cell_10k)
+		target.install_cell_10k()
+	if(target.unlocked)
+		target.unlock()
+	if(target.syndicate_access)
+		target.give_syndicate_access()
+	if(target.away_general_access)
+		target.give_away_general_access()
+	if(target.no_charge)
+		target.set_no_charge()
+	if(target.full_charge)
+		target.set_full_charge()
+	if(target.cell_5k && target.cell_10k)
+		CRASH("Tried to combine non-combinable cell_5k and cell_10k APC helpers!")
+	if(target.syndicate_access && target.away_general_access)
+		CRASH("Tried to combine non-combinable syndicate_access and away_general_access APC helpers!")
+	if(target.no_charge && target.full_charge)
+		CRASH("Tried to combine non-combinable no_charge and full_charge APC helpers!")
+	target.update_appearance()
+	qdel(src)
+
+/obj/effect/mapping_helpers/apc/proc/payload(obj/machinery/power/apc/target)
+	return
+
+/obj/effect/mapping_helpers/apc/cut_AI_wire
+	name = "apc AI wire mended helper"
+	icon_state = "apc_cut_AIwire_helper"
+
+/obj/effect/mapping_helpers/apc/cut_AI_wire/payload(obj/machinery/power/apc/target)
+	if(target.cut_AI_wire)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to mend the AI wire on the [target] but it's already cut!")
+	target.cut_AI_wire = TRUE
+
+/obj/effect/mapping_helpers/apc/cell_5k
+	name = "apc 5k cell helper"
+	icon_state = "apc_5k_cell_helper"
+
+/obj/effect/mapping_helpers/apc/cell_5k/payload(obj/machinery/power/apc/target)
+	if(target.cell_5k)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to change [target]'s cell to cell_5k but it's already changed!")
+	target.cell_5k = TRUE
+
+/obj/effect/mapping_helpers/apc/cell_10k
+	name = "apc 10k cell helper"
+	icon_state = "apc_10k_cell_helper"
+
+/obj/effect/mapping_helpers/apc/cell_10k/payload(obj/machinery/power/apc/target)
+	if(target.cell_10k)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to change [target]'s cell to cell_10k but it's already changed!")
+	target.cell_10k = TRUE
+
+/obj/effect/mapping_helpers/apc/syndicate_access
+	name = "apc syndicate access helper"
+	icon_state = "apc_syndicate_access_helper"
+
+/obj/effect/mapping_helpers/apc/syndicate_access/payload(obj/machinery/power/apc/target)
+	if(target.syndicate_access)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to adjust [target]'s access to syndicate but it's already changed!")
+	target.syndicate_access = TRUE
+
+/obj/effect/mapping_helpers/apc/away_general_access
+	name = "apc away access helper"
+	icon_state = "apc_away_general_access_helper"
+
+/obj/effect/mapping_helpers/apc/away_general_access/payload(obj/machinery/power/apc/target)
+	if(target.away_general_access)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to adjust [target]'s access to away_general but it's already changed!")
+	target.away_general_access = TRUE
+
+/obj/effect/mapping_helpers/apc/unlocked
+	name = "apc unlocked interface helper"
+	icon_state = "apc_unlocked_interface_helper"
+
+/obj/effect/mapping_helpers/apc/unlocked/payload(obj/machinery/power/apc/target)
+	if(target.unlocked)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to unlock the [target] but it's already unlocked!")
+	target.unlocked = TRUE
+
+/obj/effect/mapping_helpers/apc/no_charge
+	name = "apc no charge helper"
+	icon_state = "apc_no_charge_helper"
+
+/obj/effect/mapping_helpers/apc/no_charge/payload(obj/machinery/power/apc/target)
+	if(target.no_charge)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to set [target]'s charge to 0 but it's already at 0!")
+	target.no_charge = TRUE
+
+/obj/effect/mapping_helpers/apc/full_charge
+	name = "apc full charge helper"
+	icon_state = "apc_full_charge_helper"
+
+/obj/effect/mapping_helpers/apc/full_charge/payload(obj/machinery/power/apc/target)
+	if(target.full_charge)
+		var/area/apc_area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to set [target]'s charge to 100 but it's already at 100!")
+	target.full_charge = TRUE
+
+//Used to turn off lights with lightswitch in areas.
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch
+	name = "area turned off lights helper"
+	icon_state = "lights_off"
+
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+	check_validity()
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/proc/check_validity()
+	var/area/needed_area = get_area(src)
+	if(!needed_area.lightswitch)
+		stack_trace("[src] at [AREACOORD(src)] [(needed_area.type)] tried to turn lights off but they are already off!")
+	var/obj/machinery/light_switch/light_switch = locate(/obj/machinery/light_switch) in needed_area
+	if(!light_switch)
+		stack_trace("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
+	needed_area.lightswitch = FALSE
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
@@ -382,8 +731,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/l_hand = NO_REPLACE
 	/// Which slots on the mob should be bloody?
 	var/bloody_slots = NONE
-	/// Directions we generate for the mob.
-	var/generated_dirs = list(NORTH, SOUTH, EAST, WEST)
 	/// Do we draw more than one frame for the mob?
 	var/animated = TRUE
 
@@ -401,7 +748,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return TRUE
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/inject(atom/target)
-	apply_dynamic_human_icon(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, generated_dirs, animated)
+	apply_dynamic_human_appearance(target, outfit_path, species_path, mob_spawn_path, r_hand, l_hand, bloody_slots, animated)
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
 	. = ..()
@@ -501,8 +848,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "Dead Body placer"
 	late = TRUE
 	icon_state = "deadbodyplacer"
+	///if TRUE, was spawned out of mapload.
 	var/admin_spawned
-	var/bodycount = 2 //number of bodies to spawn
+	///number of bodies to spawn
+	var/bodycount = 3
+	/// These species IDs will be barred from spawning if morgue_cadaver_disable_nonhumans is disabled (In the future, we can also dehardcode this)
+	var/list/blacklisted_from_rng_placement = list(
+		SPECIES_ETHEREAL, // they revive on death which is bad juju
+		SPECIES_HUMAN,  // already have a 50% chance of being selected
+	)
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	. = ..()
@@ -511,23 +865,23 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	admin_spawned = TRUE
 
 /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
-	var/area/a = get_area(src)
-	var/list/trays = list()
-	for (var/i in a.contents)
-		if (istype(i, /obj/structure/bodycontainer/morgue))
-			if(admin_spawned)
-				var/obj/structure/bodycontainer/morgue/early_morgue_tray = i
-				if(early_morgue_tray.connected.loc != early_morgue_tray)
-					continue
-			trays += i
-	if(!trays.len)
+	var/area/morgue_area = get_area(src)
+	var/list/obj/structure/bodycontainer/morgue/trays = list()
+	for(var/turf/area_turf as anything in morgue_area.get_contained_turfs())
+		var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
+		if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
+			continue
+		trays += morgue_tray
+
+	var/numtrays = length(trays)
+	if(numtrays == 0)
 		if(admin_spawned)
 			message_admins("[src] spawned at [ADMIN_VERBOSEJMP(src)] failed to find a closed morgue to spawn a body!")
 		else
 			log_mapping("[src] at [x],[y] could not find any morgues.")
 		return
 
-	var/reuse_trays = (trays.len < bodycount) //are we going to spawn more trays than bodies?
+	var/reuse_trays = (numtrays < bodycount) //are we going to spawn more trays than bodies?
 
 	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
 	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
@@ -536,35 +890,38 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(use_species)
 		var/list/temp_list = get_selectable_species()
 		usable_races = temp_list.Copy()
-		usable_races -= SPECIES_ETHEREAL //they revive on death which is bad juju
-		LAZYREMOVE(usable_races, SPECIES_HUMAN)
-		if(!usable_races)
+		LAZYREMOVE(usable_races, blacklisted_from_rng_placement)
+		if(!LAZYLEN(usable_races))
 			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
 		if(override_species)
 			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
 	else if(override_species)
-		usable_races += override_species
+		LAZYADD(usable_races, override_species)
 
-	for (var/i = 1 to bodycount)
+	var/guaranteed_human_spawned = FALSE
+	for (var/i in 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
 		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
-		var/mob/living/carbon/human/new_human = new /mob/living/carbon/human(morgue_tray.loc, 1)
+		var/mob/living/carbon/human/new_human = new(morgue_tray.loc)
 
 		var/species_to_pick
-		if(LAZYLEN(usable_races))
-			if(!species_probability)
-				species_probability = 50
-				stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
-			if(prob(species_probability))
-				species_to_pick = pick(usable_races)
-				var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
-				if(new_human_species)
-					new_human.set_species(new_human_species)
-					new_human_species = new_human.dna.species
-					new_human_species.randomize_features(new_human)
-					new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
-				else
-					stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
+
+		if(guaranteed_human_spawned && use_species)
+			if(LAZYLEN(usable_races))
+				if(!isnum(species_probability))
+					species_probability = 50
+					stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
+				if(prob(species_probability))
+					species_to_pick = pick(usable_races)
+					var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
+					if(new_human_species)
+						new_human.set_species(new_human_species)
+						new_human_species = new_human.dna.species
+						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
+					else
+						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
+		else
+			guaranteed_human_spawned = TRUE
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
@@ -572,17 +929,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		body_bag.forceMove(morgue_tray)
 
 		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/part in new_human.internal_organs) //randomly remove organs from each body, set those we keep to be in stasis
+		for (var/obj/item/organ/internal/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
 			else
-				var/obj/item/organ/O = part
-				O.organ_flags |= ORGAN_FROZEN
+				part.organ_flags |= ORGAN_FROZEN
 
 		morgue_tray.update_appearance()
 
 	qdel(src)
-
 
 //On Ian's birthday, the hop's office is decorated.
 /obj/effect/mapping_helpers/ianbirthday
@@ -846,3 +1201,184 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/open/floor/floor = get_turf(src)
 	floor.burn_tile()
 	qdel(src)
+
+///Applies BROKEN flag to the first found machine on a tile
+/obj/effect/mapping_helpers/broken_machine
+	name = "broken machine helper"
+	icon_state = "broken_machine"
+	late = TRUE
+
+/obj/effect/mapping_helpers/broken_machine/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	var/obj/machinery/target = locate(/obj/machinery) in loc
+	if(isnull(target))
+		var/area/target_area = get_area(src)
+		log_mapping("[src] failed to find a machine at [AREACOORD(src)] ([target_area.type]).")
+	else
+		payload(target)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/broken_machine/LateInitialize()
+	. = ..()
+	var/obj/machinery/target = locate(/obj/machinery) in loc
+
+	if(isnull(target))
+		qdel(src)
+		return
+
+	target.update_appearance()
+	qdel(src)
+
+/obj/effect/mapping_helpers/broken_machine/proc/payload(obj/machinery/airalarm/target)
+	if(target.machine_stat & BROKEN)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to break [target] but it's already broken!")
+	target.set_machine_stat(target.machine_stat | BROKEN)
+
+///Deals random damage to the first window found on a tile to appear cracked
+/obj/effect/mapping_helpers/damaged_window
+	name = "damaged window helper"
+	icon_state = "damaged_window"
+	late = TRUE
+	/// Minimum roll of integrity damage in percents needed to show cracks
+	var/integrity_damage_min = 0.25
+	/// Maximum roll of integrity damage in percents needed to show cracks
+	var/integrity_damage_max = 0.85
+
+/obj/effect/mapping_helpers/damaged_window/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/damaged_window/LateInitialize()
+	. = ..()
+	var/obj/structure/window/target = locate(/obj/structure/window) in loc
+
+	if(isnull(target))
+		var/area/target_area = get_area(src)
+		log_mapping("[src] failed to find a window at [AREACOORD(src)] ([target_area.type]).")
+		qdel(src)
+		return
+	else
+		payload(target)
+
+	target.update_appearance()
+	qdel(src)
+
+/obj/effect/mapping_helpers/damaged_window/proc/payload(obj/structure/window/target)
+	if(target.get_integrity() < target.max_integrity)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to damage [target] but it's already damaged!")
+	target.take_damage(rand(target.max_integrity * integrity_damage_min, target.max_integrity * integrity_damage_max))
+
+//requests console helpers
+/obj/effect/mapping_helpers/requests_console
+	desc = "You shouldn't see this. Report it please."
+	late = TRUE
+
+/obj/effect/mapping_helpers/requests_console/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/requests_console/LateInitialize(mapload)
+	var/obj/machinery/airalarm/target = locate(/obj/machinery/requests_console) in loc
+	if(isnull(target))
+		var/area/target_area = get_area(target)
+		log_mapping("[src] failed to find a requests console at [AREACOORD(src)] ([target_area.type]).")
+	else
+		payload(target)
+
+	qdel(src)
+
+/// Fills out the request console's variables
+/obj/effect/mapping_helpers/requests_console/proc/payload(obj/machinery/requests_console/console)
+	return
+
+/obj/effect/mapping_helpers/requests_console/announcement
+	name = "request console announcement helper"
+	icon_state = "requests_console_announcement_helper"
+
+/obj/effect/mapping_helpers/requests_console/announcement/payload(obj/machinery/requests_console/console)
+	console.can_send_announcements = TRUE
+
+/obj/effect/mapping_helpers/requests_console/assistance
+	name = "request console assistance requestable helper"
+	icon_state = "requests_console_assistance_helper"
+
+/obj/effect/mapping_helpers/requests_console/assistance/payload(obj/machinery/requests_console/console)
+	GLOB.req_console_assistance |= console.department
+
+/obj/effect/mapping_helpers/requests_console/supplies
+	name = "request console supplies requestable helper"
+	icon_state = "requests_console_supplies_helper"
+
+/obj/effect/mapping_helpers/requests_console/supplies/payload(obj/machinery/requests_console/console)
+	GLOB.req_console_supplies |= console.department
+
+/obj/effect/mapping_helpers/requests_console/information
+	name = "request console information relayable helper"
+	icon_state = "requests_console_information_helper"
+
+/obj/effect/mapping_helpers/requests_console/information/payload(obj/machinery/requests_console/console)
+	GLOB.req_console_information |= console.department
+
+/obj/effect/mapping_helpers/requests_console/ore_update
+	name = "request console ore update helper"
+	icon_state = "requests_console_ore_update_helper"
+
+/obj/effect/mapping_helpers/requests_console/ore_update/payload(obj/machinery/requests_console/console)
+	console.receive_ore_updates = TRUE
+
+/obj/effect/mapping_helpers/engraving
+	name = "engraving helper"
+	icon = 'icons/turf/wall_overlays.dmi'
+	icon_state = "engraving2"
+	late = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/mapping_helpers/engraving/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/engraving/LateInitialize()
+	var/turf/closed/engraved_wall = get_turf(src)
+
+	if(!isclosedturf(engraved_wall) || !SSpersistence.saved_engravings.len || HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
+		qdel(src)
+		return
+
+	var/engraving = pick_n_take(SSpersistence.saved_engravings)
+	if(!islist(engraving))
+		stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
+		qdel(src)
+		return
+
+	engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+	qdel(src)
+
+/// Apply to a wall (or floor, technically) to ensure it is instantly destroyed by any explosion, even if usually invulnerable
+/obj/effect/mapping_helpers/bombable_wall
+	name = "bombable wall helper"
+	icon = 'icons/turf/overlays.dmi'
+	icon_state = "explodable"
+
+/obj/effect/mapping_helpers/bombable_wall/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return
+
+	var/turf/our_turf = get_turf(src) // In case a locker ate us or something
+	our_turf.AddElement(/datum/element/bombable_turf)
+	return INITIALIZE_HINT_QDEL

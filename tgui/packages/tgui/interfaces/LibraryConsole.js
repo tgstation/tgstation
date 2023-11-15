@@ -248,8 +248,15 @@ export const CheckoutEntries = (props, context) => {
 
 const CheckoutModal = (props, context) => {
   const { act, data } = useBackend(context);
+  const inventory = flow([
+    map((book, i) => ({
+      ...book,
+      // Generate a unique id
+      key: i,
+    })),
+    sortBy((book) => book.key),
+  ])(data.inventory);
 
-  const { checking_out } = data;
   const [checkoutBook, setCheckoutBook] = useLocalState(
     context,
     'CheckoutBook',
@@ -258,7 +265,7 @@ const CheckoutModal = (props, context) => {
   const [bookName, setBookName] = useLocalState(
     context,
     'CheckoutBookName',
-    checking_out || 'Book'
+    'Insert Book name...'
   );
   const [checkoutee, setCheckoutee] = useLocalState(
     context,
@@ -270,20 +277,21 @@ const CheckoutModal = (props, context) => {
     'CheckoutPeriod',
     5
   );
-
   return (
     <Modal width="500px">
       <Box fontSize="20px" pb={1}>
         Are you sure you want to loan out this book?
       </Box>
+      <Dropdown
+        over
+        mb={1.7}
+        width="100%"
+        displayText={bookName}
+        options={inventory.map((book) => book.title)}
+        value={bookName}
+        onSelected={(e) => setBookName(e)}
+      />
       <LabeledList>
-        <LabeledList.Item label="Book Name">
-          <Input
-            width="250px"
-            value={bookName}
-            onChange={(e, value) => setBookName(value)}
-          />
-        </LabeledList.Item>
         <LabeledList.Item label="Loan To">
           <Input
             width="160px"
@@ -374,6 +382,7 @@ export const SearchAndDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     search_categories = [],
+    book_id,
     title,
     category,
     author,
@@ -394,6 +403,19 @@ export const SearchAndDisplay = (props, context) => {
       <Stack justify="space-between">
         <Stack.Item pb={0.6}>
           <Stack>
+            <Stack.Item>
+              <Input
+                value={book_id}
+                placeholder={book_id === null ? 'ID' : book_id}
+                mt={0.5}
+                width="70px"
+                onChange={(e, value) =>
+                  act('set_search_id', {
+                    id: value,
+                  })
+                }
+              />
+            </Stack.Item>
             <Stack.Item>
               <Dropdown
                 options={search_categories}
@@ -866,7 +888,7 @@ export const PageSelect = (props, context) => {
   } = props;
 
   if (page_count === 1) {
-    return;
+    return null;
   }
 
   return (

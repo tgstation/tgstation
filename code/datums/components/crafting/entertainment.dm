@@ -149,7 +149,7 @@
 	var/obj/structure/toiletbong/toiletbong = result
 
 	// because we want to set the toilet's location and dir, we need to do the consumption manually
-	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1) 
+	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1)
 	if(toilet)
 		for (var/obj/item/cistern_item in toilet.contents)
 			cistern_item.forceMove(user.drop_location())
@@ -157,7 +157,7 @@
 		toiletbong.dir = toilet.dir
 		toiletbong.loc = toilet.loc
 		qdel(toilet)
-	
+
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
 /datum/crafting_recipe/punching_bag
@@ -174,7 +174,7 @@
 
 /datum/crafting_recipe/stacklifter
 	name = "Chest Press"
-	result = /obj/structure/weightmachine/stacklifter
+	result = /obj/structure/weightmachine
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
@@ -195,3 +195,13 @@
 	)
 	category = CAT_ENTERTAINMENT
 	time = 10 SECONDS
+
+/datum/crafting_recipe/latexballoon
+	name = "Latex Balloon"
+	result = /obj/item/latexballoon
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/clothing/gloves/latex = 1,
+		/obj/item/stack/cable_coil = 2,
+	)
+	category = CAT_EQUIPMENT

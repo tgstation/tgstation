@@ -20,7 +20,7 @@
 	CRASH("Get image needs to be overridden")
 
 ///Color the image
-/datum/bodypart_overlay/proc/color_image(image/overlay, layer)
+/datum/bodypart_overlay/proc/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return
 
 ///Called on being added to a limb

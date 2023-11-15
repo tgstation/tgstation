@@ -11,6 +11,7 @@
 /datum/symptom/chills
 	name = "Chills"
 	desc = "The virus inhibits the body's thermoregulation, cooling the body down."
+	illness = "Cold Shoulder"
 	stealth = 0
 	resistance = 2
 	stage_speed = 3

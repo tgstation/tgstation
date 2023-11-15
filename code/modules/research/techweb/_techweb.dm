@@ -26,7 +26,7 @@
 	var/list/boosted_nodes = list()
 	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
-	/// Items already deconstructed for a generic point boost, path = list(point_type = points)
+	/// List of items already deconstructed for research points, preventing infinite research point generation.
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
 	var/list/research_points = list()
@@ -38,10 +38,19 @@
 	var/list/discovered_mutations = list()
 	/// Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 	var/list/tiers = list()
-	/// Available experiments
-	var/list/available_experiments = list()
-	/// Completed experiments
-	var/list/completed_experiments = list()
+	/// This is a list of all incomplete experiment datums that are accessible for scientists to complete
+	var/list/datum/experiment/available_experiments = list()
+	/// A list of all experiment datums that have been complete
+	var/list/datum/experiment/completed_experiments = list()
+	/// Assoc list of all experiment datums that have been skipped, to tech point reward for completing them -
+	/// That is, upon researching a node without completing its associated discounts, their experiments go here.
+	/// Completing these experiments will have a refund.
+	var/list/datum/experiment/skipped_experiment_types = list()
+
+	/// If science researches something without completing its discount experiments,
+	/// they have the option to complete them later for a refund
+	/// This ratio determines how much of the original discount is refunded
+	var/skipped_experiment_refund_ratio = 0.66
 
 	///All RD consoles connected to this individual techweb.
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
@@ -134,12 +143,11 @@
 		l[i] = amount
 	modify_point_list(l)
 
-/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE) //Adds any missing research to theirs.
-	if(unlock_hidden)
-		for(var/i in receiver.hidden_nodes)
-			CHECK_TICK
-			if(available_nodes[i] || researched_nodes[i] || visible_nodes[i])
-				receiver.hidden_nodes -= i //We can see it so let them see it too.
+/datum/techweb/proc/copy_research_to(datum/techweb/receiver) //Adds any missing research to theirs.
+	for(var/i in receiver.hidden_nodes)
+		CHECK_TICK
+		if(get_available_nodes()[i] || get_researched_nodes()[i] || get_visible_nodes()[i])
+			receiver.hidden_nodes -= i //We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
@@ -208,6 +216,9 @@
 	else
 		researched_designs[design.id] = TRUE
 
+	for(var/list/datum/techweb_node/unlocked_nodes as anything in design.unlocked_by)
+		hidden_nodes -= unlocked_nodes
+
 	return TRUE
 
 /datum/techweb/proc/remove_design_by_id(id, custom = FALSE)
@@ -272,7 +283,7 @@
 		var/datum/experiment/experiment = completed_experiment
 		if (experiment == experiment_type)
 			return FALSE
-	available_experiments += new experiment_type()
+	available_experiments += new experiment_type(src)
 
 /**
  * Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.
@@ -294,7 +305,27 @@
 /datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
 	available_experiments -= completed_experiment
 	completed_experiments[completed_experiment.type] = completed_experiment
-	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization]")
+
+	var/result_text = "[completed_experiment] has been completed"
+	var/refund = skipped_experiment_types[completed_experiment.type] || 0
+	if(refund > 0)
+		add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = refund))
+		result_text += ", refunding [refund] points"
+		// Nothing more to gain here, but we keep it in the list to prevent double dipping
+		skipped_experiment_types[completed_experiment.type] = -1
+	var/points_rewarded
+	if(completed_experiment.points_reward)
+		add_point_list(completed_experiment.points_reward)
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding "
+		var/list/english_list_keys = list()
+		for(var/points_type in completed_experiment.points_reward)
+			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
+		points_rewarded += "[english_list(english_list_keys)] points"
+		result_text += points_rewarded
+	result_text += "!"
+
+	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""][points_rewarded].")
+	return result_text
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
@@ -311,10 +342,20 @@
 			return FALSE
 	var/log_message = "[id]/[organization] researched node [node.id]"
 	if(auto_adjust_cost)
-		var/node_cost = node.get_price(src)
+		var/list/node_cost = node.get_price(src)
 		remove_point_list(node_cost)
-		log_message += " at the cost of [node_cost]"
-	researched_nodes[node.id] = TRUE //Add to our researched list
+		log_message += " at the cost of [json_encode(node_cost)]"
+
+	//Add to our researched list
+	researched_nodes[node.id] = TRUE
+
+	// Track any experiments we skipped relating to this
+	for(var/missed_experiment in node.discount_experiments)
+		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
+			continue
+		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment] * skipped_experiment_refund_ratio
+
+	// Gain the experiments from the new node
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
 		var/datum/techweb_node/unlocked_node = SSresearch.techweb_node_by_id(id)
@@ -323,6 +364,12 @@
 		if (unlocked_node.discount_experiments.len > 0)
 			add_experiments(unlocked_node.discount_experiments)
 		update_node_status(unlocked_node)
+
+	// Gain more new experiments
+	if (node.experiments_to_unlock.len)
+		add_experiments(node.experiments_to_unlock)
+
+	// Unlock what the research actually unlocks
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
@@ -353,17 +400,15 @@
 	LAZYINITLIST(boosted_nodes[node.id])
 	for(var/point_type in pointlist)
 		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
-	if(node.autounlock_by_boost)
-		hidden_nodes -= node.id
+	unhide_node(node)
 	update_node_status(node)
 	return TRUE
 
-/// Boosts a techweb node by using items.
-/datum/techweb/proc/boost_with_item(datum/techweb_node/node, itempath)
-	if(!istype(node) || !ispath(itempath))
+///Removes a node from the hidden_nodes list, making it viewable and researchable (if no experiments are required).
+/datum/techweb/proc/unhide_node(datum/techweb_node/node)
+	if(!istype(node))
 		return FALSE
-	var/list/boost_amount = node.boost_item_paths[itempath]
-	boost_techweb_node(node, boost_amount)
+	hidden_nodes -= node.id
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)
@@ -477,9 +522,9 @@
 			continue
 
 		experiment.completed = TRUE
-		complete_experiment(experiment)
+		var/announcetext = complete_experiment(experiment)
 		if(length(GLOB.experiment_handlers))
 			var/datum/component/experiment_handler/handler = GLOB.experiment_handlers[1]
-			handler.announce_message_to_all("The [experiment.name] has been completed!")
+			handler.announce_message_to_all(announcetext)
 
 	return TRUE

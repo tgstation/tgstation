@@ -21,6 +21,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	#endif
 
 	announcer = new announcer() //Initialize the station's announcer datum
+	SSparallax.post_station_setup() //Apply station effects that parallax might have
 
 	return SS_INIT_SUCCESS
 
@@ -58,6 +59,13 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
 			continue //Dont add abstract ones to it
+
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_PLANETARY) && SSmapping.is_planetary()) // we're on a planet but we can't do planet ;_;
+			continue
+
+		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_SPACE_BOUND) && !SSmapping.is_planetary()) //we're in space but we can't do space ;_;
+			continue
+
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
 	var/positive_trait_count = pick(20;0, 5;1, 1;2)
@@ -68,12 +76,14 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
 	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
 
-///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them and adds them to the list of traits.
+///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them, adds them to the list of traits,
+///then removes them from possible traits as to not roll twice.
 /datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, amount)
 	if(!amount)
 		return
 	for(var/iterator in 1 to amount)
 		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
+		selectable_traits_by_types[trait_sign] -= trait_type
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.

@@ -58,12 +58,14 @@
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name()
-	var/face_name = get_face_name("")
-	var/id_name = get_id_name("")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return "Unknown"
-	if(name_override)
-		return name_override
+	var/list/identity = list(null, null)
+	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
+	var/signal_face = LAZYACCESS(identity, VISIBLE_NAME_FACE)
+	var/signal_id = LAZYACCESS(identity, VISIBLE_NAME_ID)
+	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
+	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
 	if(face_name)
 		if(id_name && (id_name != face_name))
 			return "[face_name] (as [id_name])"
@@ -110,10 +112,6 @@
 	//Check inventory slots
 	return (wear_id?.GetID() || belt?.GetID())
 
-/mob/living/carbon/human/reagent_check(datum/reagent/R, delta_time, times_fired)
-	return dna.species.handle_chemicals(R, src, delta_time, times_fired)
-	// if it returns 0, it will run the usual on_mob_life for that reagent. otherwise, it will stop after running handle_chemicals for the species.
-
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
@@ -128,6 +126,7 @@
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
 		return TRUE
 	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
+
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()
 	. += "[dna.species.type]"
@@ -170,13 +169,15 @@
 	if(LAZYLEN(scar_data) != SCAR_SAVE_LENGTH)
 		return // invalid, should delete
 	var/version = text2num(scar_data[SCAR_SAVE_VERS])
-	if(!version || version < SCAR_CURRENT_VERSION) // get rid of old scars
+	if(!version || version != SCAR_CURRENT_VERSION) // get rid of scars using a incompatable version
 		return
 	if(specified_char_index && (mind?.original_character_slot_index != specified_char_index))
 		return
+	if (isnull(text2num(scar_data[SCAR_SAVE_BIOLOGY])))
+		return
 	var/obj/item/bodypart/the_part = get_bodypart("[scar_data[SCAR_SAVE_ZONE]]")
 	var/datum/scar/scaries = new
-	return scaries.load(the_part, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]), text2num(scar_data[SCAR_SAVE_BIOLOGY]), text2num(scar_data[SCAR_SAVE_CHAR_SLOT]))
+	return scaries.load(the_part, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]), text2num(scar_data[SCAR_SAVE_BIOLOGY]), text2num(scar_data[SCAR_SAVE_CHAR_SLOT]), text2num(scar_data[SCAR_SAVE_CHECK_ANY_BIO]))
 
 /// Read all the scars we have for the designated character/scar slots, verify they're good/dump them if they're old/wrong format, create them on the user, and write the scars that passed muster back to the file
 /mob/living/carbon/human/proc/load_persistent_scars()
@@ -229,11 +230,11 @@
 ///Returns death message for mob examine text
 /mob/living/carbon/human/proc/generate_death_examine_text()
 	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
-	var/t_He = p_they(TRUE)
+	var/t_He = p_They()
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !getorgan(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse)
+	if(key || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
@@ -257,6 +258,8 @@
 
 		if (preference.is_randomizable())
 			preference.apply_to_human(src, preference.create_random_value(preferences))
+
+	fully_replace_character_name(real_name, dna.species.random_name())
 
 /**
  * Setter for mob height
@@ -287,3 +290,33 @@
 		return HUMAN_HEIGHT_DWARF
 
 	return mob_height
+
+/**
+ * Makes a full copy of src and returns it.
+ * Attempts to copy as much as possible to be a close to the original.
+ * This includes job outfit (which handles skillchips), quirks, and mutations.
+ * We do not set a mind here, so this is purely the body.
+ * Args:
+ * location - The turf the human will be spawned on.
+ */
+/mob/living/carbon/human/proc/make_full_human_copy(turf/location, client/quirk_client)
+	RETURN_TYPE(/mob/living/carbon/human)
+
+	var/mob/living/carbon/human/clone = new(location)
+
+	clone.fully_replace_character_name(null, dna.real_name)
+	copy_clothing_prefs(clone)
+	clone.age = age
+	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
+
+	clone.dress_up_as_job(SSjob.GetJob(job))
+
+	for(var/datum/quirk/original_quircks as anything in quirks)
+		clone.add_quirk(original_quircks.type, override_client = client)
+	for(var/datum/mutation/human/mutations in dna.mutations)
+		clone.dna.add_mutation(mutations)
+
+	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+	clone.domutcheck()
+
+	return clone

@@ -1,7 +1,7 @@
 /obj/structure/frame
 	name = "frame"
 	desc = "A generic looking construction frame. One day this will be something greater."
-	icon = 'icons/obj/stock_parts.dmi'
+	icon = 'icons/obj/assemblies/stock_parts.dmi'
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250
@@ -183,7 +183,7 @@
 					set_anchored(!anchored)
 				return
 
-			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len)
+			if(!circuit && istype(P, /obj/item/storage/part_replacer) && P.contents.len)
 				var/obj/item/storage/part_replacer/replacer = P
 				// map of circuitboard names to the board
 				var/list/circuit_boards = list()
@@ -208,12 +208,12 @@
 					attackby(replacer, user, params)
 					return
 
-			if(istype(P, /obj/item/circuitboard/machine))
+			if(!circuit && istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/machine_board = P
 				install_board(machine_board, user, TRUE)
 				return
 
-			else if(istype(P, /obj/item/circuitboard))
+			else if(!circuit && istype(P, /obj/item/circuitboard))
 				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
 
@@ -231,6 +231,14 @@
 				state = 2
 				circuit.forceMove(drop_location())
 				components.Remove(circuit)
+				//spawn stack components from the circuitboards requested components since they no longer exist inside components
+				for(var/component in circuit.req_components)
+					if(!ispath(component, /obj/item/stack))
+						continue
+					var/obj/item/stack/stack_path = component
+					var/stack_amount = circuit.req_components[component] - req_components[component]
+					if(stack_amount > 0)
+						new stack_path(drop_location(), stack_amount)
 				circuit = null
 				if(components.len == 0)
 					to_chat(user, span_notice("You remove the circuit board."))
@@ -261,15 +269,7 @@
 					P.play_tool_sound(src)
 					var/obj/machinery/new_machine = new circuit.build_path(loc)
 					if(istype(new_machine))
-						// Machines will init with a set of default components. Move to nullspace so we don't trigger handle_atom_del, then qdel.
-						// Finally, replace with this frame's parts.
-						if(new_machine.circuit)
-							// Move to nullspace and delete.
-							new_machine.circuit.moveToNullspace()
-							QDEL_NULL(new_machine.circuit)
-						for(var/obj/old_part in new_machine.component_parts)
-							old_part.moveToNullspace()
-							qdel(old_part)
+						new_machine.clear_components()
 
 						// Set anchor state
 						new_machine.set_anchored(anchored)
@@ -283,7 +283,7 @@
 
 						//Inform machine that its finished & cleanup
 						new_machine.RefreshParts()
-						new_machine.on_construction()
+						new_machine.on_construction(user)
 						components = null
 					qdel(src)
 				return
@@ -308,7 +308,7 @@
 						target_path = path
 
 					var/obj/item/part
-					while(req_components[path] > 0 && (part = locate(target_path) in part_list))
+					while(req_components[path] > 0 && (part = look_for(part_list, target_path, ispath(path, /obj/item/stack/ore/bluespace_crystal) ? /obj/item/stack/sheet/bluespace_crystal : null)))
 						part_list -= part
 						if(istype(part,/obj/item/stack))
 							var/obj/item/stack/S = part
@@ -341,16 +341,19 @@
 
 				var/stock_part_path
 
-				if (ispath(stock_part_base, /obj/item))
+				if(ispath(stock_part_base, /obj/item))
 					stock_part_path = stock_part_base
-				else if (ispath(stock_part_base, /datum/stock_part))
+				else if(ispath(stock_part_base, /datum/stock_part))
 					var/datum/stock_part/stock_part_datum_type = stock_part_base
 					stock_part_path = initial(stock_part_datum_type.physical_object_type)
 				else
 					stack_trace("Bad stock part in req_components: [stock_part_base]")
 					continue
 
-				if (!istype(P, stock_part_path))
+				//if we require an bluespace crystall and we have an full sheet of them we can allow that
+				if(ispath(stock_part_path, /obj/item/stack/ore/bluespace_crystal) && istype(P, /obj/item/stack/sheet/bluespace_crystal))
+					//allow it
+				else if(!istype(P, stock_part_path))
 					continue
 
 				if(isstack(P))
@@ -394,6 +397,18 @@
 	if(user.combat_mode)
 		return ..()
 
+/// returns instance of path1 in list else path2 in list
+/obj/structure/frame/machine/proc/look_for(list/parts, path1, path2 = null)
+	//look for path1 in list
+	var/part = locate(path1) in parts
+	if(!isnull(part))
+		return part
+
+	//optional look for path2 in list
+	if(!isnull(path2))
+		part = locate(path2) in parts
+	return part
+
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state >= 2)
@@ -413,3 +428,12 @@
 			new physical_object_type(drop_location())
 		else
 			stack_trace("Invalid component [component] was found in constructable frame")
+
+/obj/structure/frame/machine/secured
+	state = 2
+	icon_state = "box_1"
+
+/obj/structure/frame/machine/secured/Initialize(mapload)
+	. = ..()
+
+	set_anchored(TRUE)

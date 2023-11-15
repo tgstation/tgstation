@@ -73,7 +73,7 @@
 	var/datum/move_loop/loop = SSmove_manager.move(AM, direction, speed, tiles ? tiles * speed : INFINITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(set_to_normal))
+	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(set_to_normal))
 
 /obj/effect/step_trigger/thrower/proc/pre_move(datum/move_loop/source)
 	SIGNAL_HANDLER

@@ -1,0 +1,4 @@
+/mob/living/simple_animal/hostile/netherworld/blankbody : /mob/living/basic/blankbody{@OLD}
+/mob/living/simple_animal/hostile/netherworld : /mob/living/basic/creature{@OLD}
+/mob/living/simple_animal/hostile/netherworld/migo : /mob/living/basic/migo{@OLD}
+/mob/living/simple_animal/hostile/netherworld/statue : /mob/living/basic/statue{@OLD}

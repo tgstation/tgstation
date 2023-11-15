@@ -1,0 +1,99 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+//@use 'sass:map';
+
+//palette
+$cyan: #5edba5;
+$pink: #ed12f5;
+$orange: #ff9900;
+$purple: #463191;
+
+@use '../colors.scss' with (
+   $primary: $pink,
+   $label: $orange,
+   $good: $cyan,
+   // $fg-map-keys: (),
+   // $bg-map-keys: (),
+ );
+
+@use '../base.scss' with (
+   $color-bg: $purple,
+   $color-bg-grad-spread: 12%,
+ );
+
+.theme-ntos_synth {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss', $with: ());
+
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': $cyan,
+      'color-transparent-text': rgba(227, 240, 255, 0.75),
+      'color-disabled': #363636,
+      'color-selected': #465899,
+      'color-caution': #be6209
+    )
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: ('color-default-fill': rgba(237, 18, 245, 0.75))
+  );
+  @include meta.load-css(
+    '../components/Section.scss',
+    $with: ('background-color': rgba(0, 0, 0, 0.3))
+  );
+  @include meta.load-css(
+    '../components/Tooltip.scss',
+    $with: ('background-color': rgba(255, 153, 0, 0.75))
+  );
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': rgba(3, 100, 117, 0.75))
+  );
+
+  .Section {
+    color: $cyan;
+    background-image: linear-gradient(
+      to right,
+      rgba(194, 0, 219, 0.75),
+      rgba(3, 100, 117, 0.75)
+    );
+  }
+  .Button {
+    color: $cyan;
+    background-color: $purple;
+    outline: base.em(2px) outset $pink;
+  }
+  .ProgressBar {
+    color: $orange;
+  }
+
+  .Layout__content {
+    background-image: url('../../assets/bg-synthsunset-c-grid.svg');
+    background-size: 100%;
+    background-position: top;
+    background-repeat: no-repeat;
+  }
+  .Tab {
+    color: $cyan;
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 153, 0, 0.4),
+      rgba(194, 0, 219, 0.75)
+    );
+  }
+  .Tab--selected {
+    color: $pink;
+  }
+}

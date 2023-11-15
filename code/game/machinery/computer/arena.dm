@@ -21,6 +21,9 @@
 /// Controller for admin event arenas
 /obj/machinery/computer/arena
 	name = "arena controller"
+
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
+
 	/// Arena ID
 	var/arena_id = ARENA_DEFAULT_ID
 	/// Enables/disables spawning
@@ -210,7 +213,7 @@
 	set_doors(closed = TRUE)
 
 /obj/machinery/computer/arena/proc/get_spawn(team)
-	for(var/obj/machinery/arena_spawn/A in GLOB.machines)
+	for(var/obj/machinery/arena_spawn/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/arena_spawn))
 		if(A.arena_id == arena_id && A.team == team)
 			return A
 
@@ -244,7 +247,7 @@
 
 
 /obj/machinery/computer/arena/proc/set_doors(closed = FALSE)
-	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
+	for(var/obj/machinery/door/poddoor/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(D.id != arena_id)
 			continue
 		if(closed)
@@ -385,7 +388,7 @@
 /obj/machinery/arena_spawn/proc/get_controller()
 	if(_controller && !QDELETED(_controller) && _controller.arena_id == arena_id)
 		return _controller
-	for(var/obj/machinery/computer/arena/A in GLOB.machines)
+	for(var/obj/machinery/computer/arena/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/arena))
 		if(A.arena_id == arena_id)
 			_controller = A
 			return _controller

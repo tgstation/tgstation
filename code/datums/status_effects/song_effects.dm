@@ -33,4 +33,4 @@
 	return ..()
 
 /datum/status_effect/song/antimagic/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to be covered in a dull, grey aura.")
+	return span_notice("[owner.p_They()] seem[owner.p_s()] to be covered in a dull, grey aura.")

@@ -8,6 +8,8 @@
 #define REQUEST_NUKE "request_nuke"
 /// Requests somebody from fax
 #define REQUEST_FAX "request_fax"
+/// Requests from Request Music
+#define REQUEST_INTERNET_SOUND "request_internet_sound"
 
 GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
@@ -64,7 +66,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 /datum/request_manager/proc/pray(client/C, message, is_chaplain)
 	request_for_client(C, REQUEST_PRAYER, message)
 	for(var/client/admin in GLOB.admins)
-		if(is_chaplain && admin.prefs.chat_toggles & CHAT_PRAYER && admin.prefs.toggles & SOUND_PRAYERS)
+		if(is_chaplain && get_chat_toggles(admin) & CHAT_PRAYER && admin.prefs.toggles & SOUND_PRAYERS)
 			SEND_SOUND(admin, sound('sound/effects/pray.ogg'))
 
 /**
@@ -106,6 +108,17 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  */
 /datum/request_manager/proc/fax_request(client/requester, message, additional_info)
 	request_for_client(requester, REQUEST_FAX, message, additional_info)
+
+/**
+ * Creates a request for a song
+ *
+ * Arguments:
+ * * requester - The client who is sending the request
+ * * message - The URL of the song
+ */
+
+/datum/request_manager/proc/music_request(client/requester, message)
+	request_for_client(requester, REQUEST_INTERNET_SOUND, message)
 
 /**
  * Creates a request and registers the request with all necessary internal tracking lists
@@ -210,7 +223,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				to_chat(usr, "You cannot set the nuke code for a non-nuke-code-request request!", confidential = TRUE)
 				return TRUE
 			var/code = random_nukecode()
-			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
+			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
 				SD.r_code = code
 			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
 			return TRUE
@@ -220,6 +233,16 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				return TRUE
 			var/obj/item/paper/request_message = request.additional_information
 			request_message.ui_interact(usr)
+			return TRUE
+		if ("play")
+			if(request.req_type != REQUEST_INTERNET_SOUND)
+				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
+				return TRUE
+			if(findtext(request.message, ":") && !findtext(request.message, GLOB.is_http_protocol))
+				to_chat(usr, "Request is not a valid URL.", confidential = TRUE)
+				return TRUE
+
+			web_sound(usr, request.message)
 			return TRUE
 
 /datum/request_manager/ui_data(mob/user)
@@ -246,3 +269,4 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 #undef REQUEST_SYNDICATE
 #undef REQUEST_NUKE
 #undef REQUEST_FAX
+#undef REQUEST_INTERNET_SOUND

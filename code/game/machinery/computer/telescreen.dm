@@ -1,9 +1,10 @@
 /obj/machinery/computer/security/telescreen
 	name = "\improper Telescreen"
 	desc = "Used for watching an empty arena."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "telescreen"
 	icon_keyboard = null
+	icon_screen = null
 	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
@@ -15,7 +16,7 @@
 /obj/item/wallframe/telescreen
 	name = "telescreen frame"
 	desc = "A wall-mountable telescreen frame. Apply to wall to use."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen
 	pixel_shift = 32
@@ -34,7 +35,7 @@
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "entertainment_blank"
 	network = list()
 	density = FALSE
@@ -48,13 +49,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /obj/item/wallframe/telescreen/entertainment
 	name = "entertainment telescreen frame"
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "entertainment_blank"
 	result_path = /obj/machinery/computer/security/telescreen/entertainment
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_CLICK, PROC_REF(BigClick))
+	find_and_hang_on_wall()
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
@@ -270,5 +272,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	is_show_active = !is_show_active
 	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
 	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
-	for(var/obj/machinery/computer/security/telescreen/entertainment/tv in GLOB.machines)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/tv as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
 		tv.update_shows(is_show_active, tv_network_id, announcement)

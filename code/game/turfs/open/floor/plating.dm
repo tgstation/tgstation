@@ -163,12 +163,11 @@
 			to_chat(user, span_danger("You hit [src], to no effect!"))
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.mode == RCD_FLOORWALL)
-		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
+		return list("delay" = 0, "cost" = 1)
 
-/turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(passed_mode == RCD_FLOORWALL)
-		to_chat(user, span_notice("You build a floor."))
+/turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
 		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE
@@ -176,8 +175,9 @@
 /turf/open/floor/plating/foam/ex_act()
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return TRUE
 
-/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	return
 
 //reinforced plating deconstruction states
@@ -212,7 +212,7 @@
 		if(PLATE_BOLTS_LOOSENED)
 			return span_notice("The plating reinforcement is <i>unscrewed</i> but <b>welded</b> firmly to the plating.")
 		if(PLATE_CUT)
-			return span_notice("The plating reinforcements have been <i>sliced through</i> but is still <b>loosly</b> held in place.")
+			return span_notice("The plating reinforcements have been <i>sliced through</i> but are still <b>loosely</b> held in place.")
 
 /turf/open/floor/plating/reinforced/update_icon_state()
 	icon_state = "r_plate-[deconstruction_state]"
@@ -251,7 +251,7 @@
 		if(PLATE_BOLTS_LOOSENED)
 			switch(tool_used.tool_behaviour)
 				if(TOOL_WELDER)
-					if(!tool_used.tool_start_check(user, amount=0))
+					if(!tool_used.tool_start_check(user, amount=3))
 						return
 					balloon_alert(user, "slicing...")
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
@@ -286,7 +286,7 @@
 					return TRUE
 
 				if(TOOL_WELDER)
-					if(!tool_used.tool_start_check(user, amount=0))
+					if(!tool_used.tool_start_check(user, amount=3))
 						return
 					balloon_alert(user, "welding back on...")
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
@@ -306,6 +306,13 @@
 	if(!isnull(below_turf) && !isspaceturf(below_turf))
 		new /obj/effect/decal/cleanable/glass/plastitanium/screws(below_turf)
 		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
+
+///not an actual turf its used just for rcd ui purposes
+/turf/open/floor/plating/rcd
+	name = "Floor/Wall"
+	icon = 'icons/hud/radial.dmi'
+	icon_state = "wallfloor"
+
 
 #undef PLATE_INTACT
 #undef PLATE_BOLTS_LOOSENED

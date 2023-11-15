@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "you can no longer change null rods that arent the normal null rod into different types"

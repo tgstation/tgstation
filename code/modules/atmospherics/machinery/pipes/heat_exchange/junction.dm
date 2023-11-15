@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction
-	icon = 'icons/obj/atmospherics/pipes/he-junction.dmi'
+	icon = 'icons/obj/pipes_n_cables/he-junction.dmi'
 	icon_state = "pipe11-3"
 
 	name = "junction"
@@ -15,6 +15,8 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "junction"
 
+	has_gas_visuals = FALSE
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)
@@ -23,7 +25,7 @@
 			initialize_directions = WEST|EAST
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/get_node_connects()
-	return list(turn(dir, 180), dir)
+	return list(REVERSE_DIR(dir), dir)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/is_connectable(obj/machinery/atmospherics/target, given_layer, he_type_check)
 	if(dir == get_dir(target, src))

@@ -5,10 +5,10 @@ import { Component, Fragment } from 'inferno';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
-import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
+import { Box, Tabs, Button, Stack, Section, Tooltip, Dimmer } from '../../components';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
-import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
+import { calculateProgression, calculateDangerLevel, dangerDefault, dangerLevelsTooltip } from './calculateDangerLevel';
 
 type UplinkItem = {
   id: string;
@@ -24,6 +24,7 @@ type UplinkItem = {
   restricted_species: string;
   progression_minimum: number;
   cost_override_string: string;
+  lock_other_purchases: BooleanLike;
   ref?: string;
 };
 
@@ -56,6 +57,9 @@ type UplinkData = {
   active_objectives: Objective[];
   maximum_active_objectives: number;
   maximum_potential_objectives: number;
+  purchased_items: number;
+  shop_locked: BooleanLike;
+  can_renegotiate: BooleanLike;
 };
 
 type UplinkState = {
@@ -157,6 +161,7 @@ export class Uplink extends Component<{}, UplinkState> {
       telecrystals,
       progression_points,
       primary_objectives,
+      can_renegotiate,
       completed_final_objective,
       active_objectives,
       potential_objectives,
@@ -171,6 +176,8 @@ export class Uplink extends Component<{}, UplinkState> {
       extra_purchasable_stock,
       current_stock,
       lockable,
+      purchased_items,
+      shop_locked,
     } = data;
     const { allItems, allCategories, currentTab } = this.state as UplinkState;
 
@@ -200,7 +207,19 @@ export class Uplink extends Component<{}, UplinkState> {
         id: item.id,
         name: item.name,
         category: item.category,
-        desc: <Box>{item.desc}</Box>,
+        desc: (
+          <Box>
+            {item.desc}
+            {(item.lock_other_purchases && (
+              <Box color="orange" bold>
+                Taking this item will lock you from further purchasing from the
+                marketplace. Additionally, if you have already purchased an
+                item, you will not be able to purchase this.
+              </Box>
+            )) ||
+              null}
+          </Box>
+        ),
         cost: (
           <Box>
             {item.cost_override_string || `${item.cost} TC`}
@@ -208,7 +227,7 @@ export class Uplink extends Component<{}, UplinkState> {
               <>
                 ,&nbsp;
                 <Box as="span">
-                  {calculateReputationLevel(item.progression_minimum, true)}
+                  {calculateDangerLevel(item.progression_minimum, true)}
                 </Box>
               </>
             ) : (
@@ -216,7 +235,10 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
-        disabled: !canBuy || (has_progression && !hasEnoughProgression),
+        disabled:
+          !canBuy ||
+          (has_progression && !hasEnoughProgression) ||
+          (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
         },
@@ -258,12 +280,15 @@ export class Uplink extends Component<{}, UplinkState> {
                           (!!has_progression && (
                             <Box>
                               <Box>
-                                Your current level of reputation.&nbsp;
-                                Reputation determines what quality of objective
-                                you get and what items you can purchase.&nbsp;
+                                <Box>Your current level of threat.</Box> Threat
+                                determines
+                                {has_objectives
+                                  ? ' the severity of secondary objectives you get and '
+                                  : ' '}
+                                what items you can purchase.&nbsp;
                                 <Box mt={0.5}>
                                   {/* A minute in deciseconds */}
-                                  Reputation passively increases by{' '}
+                                  Threat passively increases by{' '}
                                   <Box color="green" as="span">
                                     {calculateProgression(
                                       current_progression_scaling
@@ -273,10 +298,10 @@ export class Uplink extends Component<{}, UplinkState> {
                                 </Box>
                                 {Math.abs(progressionPercentage) > 0 && (
                                   <Box mt={0.5}>
-                                    Because your reputation is{' '}
+                                    Because your threat level is
                                     {progressionPercentage < 0
-                                      ? 'ahead '
-                                      : 'behind '}
+                                      ? ' ahead '
+                                      : ' behind '}
                                     of where it should be, you are getting
                                     <Box
                                       as="span"
@@ -292,20 +317,20 @@ export class Uplink extends Component<{}, UplinkState> {
                                     {progressionPercentage < 0
                                       ? 'less'
                                       : 'more'}{' '}
-                                    reputation every minute
+                                    threat every minute
                                   </Box>
                                 )}
-                                {reputationLevelsTooltip}
+                                {dangerLevelsTooltip}
                               </Box>
                             </Box>
                           )) ||
-                          'Your current level of reputation. You are a respected elite and do not need to improve your reputation.'
+                          "Your current threat level. You are a killing machine and don't need to improve your threat level."
                         }>
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
-                          ? calculateReputationLevel(progression_points, false)
-                          : calculateReputationLevel(reputationDefault, false)}
+                          ? calculateDangerLevel(progression_points, false)
+                          : calculateDangerLevel(dangerDefault, false)}
                       </Tooltip>
                     </Box>
                     <Box color="good" bold fontSize={1.2} textAlign="right">
@@ -359,6 +384,7 @@ export class Uplink extends Component<{}, UplinkState> {
                 <PrimaryObjectiveMenu
                   primary_objectives={primary_objectives}
                   final_objective={completed_final_objective}
+                  can_renegotiate={can_renegotiate}
                 />
               )) ||
                 (currentTab === 1 && has_objectives && (
@@ -395,19 +421,34 @@ export class Uplink extends Component<{}, UplinkState> {
                     handleRequestObjectives={() => act('regenerate_objectives')}
                   />
                 )) || (
-                  <GenericUplink
-                    currency=""
-                    categories={allCategories}
-                    items={items}
-                    handleBuy={(item) => {
-                      const extraDataItem = item as Item<ItemExtraData>;
-                      if (!extraDataItem.extraData?.ref) {
-                        act('buy', { path: item.id });
-                      } else {
-                        act('buy', { ref: extraDataItem.extraData.ref });
-                      }
-                    }}
-                  />
+                  <Section>
+                    <GenericUplink
+                      currency=""
+                      categories={allCategories}
+                      items={items}
+                      handleBuy={(item) => {
+                        const extraDataItem = item as Item<ItemExtraData>;
+                        if (!extraDataItem.extraData?.ref) {
+                          act('buy', { path: item.id });
+                        } else {
+                          act('buy', { ref: extraDataItem.extraData.ref });
+                        }
+                      }}
+                    />
+                    {(shop_locked && (
+                      <Dimmer>
+                        <Box
+                          color="red"
+                          fontFamily={'Bahnschrift'}
+                          fontSize={3}
+                          align={'top'}
+                          as="span">
+                          SHOP LOCKED
+                        </Box>
+                      </Dimmer>
+                    )) ||
+                      null}
+                  </Section>
                 )}
             </Stack.Item>
           </Stack>

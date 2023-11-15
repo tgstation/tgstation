@@ -9,8 +9,9 @@
 	receive_ricochet_chance_mod = 0.6
 	pass_flags_self = PASSSTRUCTURE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	var/broken = FALSE
 	armor_type = /datum/armor/obj_structure
+	burning_particles = /particles/smoke/burning
+	var/broken = FALSE
 
 /datum/armor/obj_structure
 	fire = 50
@@ -62,6 +63,6 @@
 
 /obj/structure/zap_act(power, zap_flags)
 	if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power/8000, BURN, "energy")
-	power -= power/2000 //walls take a lot out of ya
+		take_damage(power * 2.5e-4, BURN, "energy")
+	power -= power * 5e-4 //walls take a lot out of ya
 	. = ..()

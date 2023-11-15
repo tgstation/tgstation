@@ -285,6 +285,7 @@
 	name = "Titan's Finale"
 	desc = "A single-use ability that shoots a large amount of projectiles around you."
 	cooldown_time = 2.5 SECONDS
+	projectile_type = /obj/projectile/colossus
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
 	. = ..()
@@ -296,6 +297,7 @@
 		colossus = firer
 		colossus.say("Perish.", spans = list("colossus", "yell"))
 
+	SLEEP_CHECK_DEATH(0.5 SECONDS, firer) //gives dumbasses in melee range a slim chance to retreat
 	var/finale_counter = 10
 	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)

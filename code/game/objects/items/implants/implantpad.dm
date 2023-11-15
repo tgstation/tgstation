@@ -1,7 +1,7 @@
 /obj/item/implantpad
 	name = "implant pad"
 	desc = "Used to modify implants."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "implantpad-0"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -25,16 +25,16 @@
 		if(case)
 			. += span_warning("There seems to be something inside it, but you can't quite tell what from here...")
 
-/obj/item/implantpad/handle_atom_del(atom/A)
-	if(A == case)
-		case = null
-	update_appearance()
-	updateSelfDialog()
+/obj/item/implantpad/Exited(atom/movable/gone, direction)
 	. = ..()
+	if(gone == case)
+		case = null
+		update_appearance()
+		updateSelfDialog()
 
 /obj/item/implantpad/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(!case)
 		to_chat(user, span_warning("There's no implant to remove from [src]."))
@@ -44,7 +44,6 @@
 
 	add_fingerprint(user)
 	case.add_fingerprint(user)
-	case = null
 
 	updateSelfDialog()
 	update_appearance()
@@ -60,7 +59,7 @@
 		return ..()
 
 /obj/item/implantpad/ui_interact(mob/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		user.unset_machine(src)
 		user << browse(null, "window=implantpad")
 		return

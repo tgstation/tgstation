@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 23
+#define DB_MINOR_VERSION 25
 
 
 //! ## Timing subsystem
@@ -119,8 +119,11 @@
 /// Subsystem initialized sucessfully.
 #define SS_INIT_SUCCESS 2
 
-/// Successful, but don't print anything. Useful if subsystem was disabled.
+/// If your system doesn't need to be initialized (by being disabled or something)
 #define SS_INIT_NO_NEED 3
+
+/// Succesfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
+#define SS_INIT_NO_MESSAGE 4
 
 //! ### SS initialization load orders
 // Subsystem init_order, from highest priority to lowest priority
@@ -155,15 +158,16 @@
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_RESEARCH 47
 #define INIT_ORDER_TIMETRACK 46
-#define INIT_ORDER_NETWORKS 45
 #define INIT_ORDER_SPATIAL_GRID 43
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
+#define INIT_ORDER_TTS 33
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
 #define INIT_ORDER_SKILLS 15
+#define INIT_ORDER_QUEUELINKS 10
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
@@ -197,32 +201,33 @@
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
 #define FIRE_PRIORITY_WET_FLOORS 20
-#define FIRE_PRIORITY_FLUIDS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
+#define FIRE_PRIORITY_ASSETS 20
 #define FIRE_PRIORITY_HYPERSPACE_DRIFT 20
 #define FIRE_PRIORITY_NPC_MOVEMENT 21
 #define FIRE_PRIORITY_NPC_ACTIONS 22
 #define FIRE_PRIORITY_PATHFINDING 23
+#define FIRE_PRIORITY_CLIFF_FALLING 24
 #define FIRE_PRIORITY_PROCESS 25
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
 #define FIRE_PRIORITY_SPACEDRIFT 30
-#define FIRE_PRIOTITY_SMOOTHING 35
-#define FIRE_PRIORITY_NETWORKS 40
+#define FIRE_PRIORITY_SMOOTHING 35
 #define FIRE_PRIORITY_OBJ 40
 #define FIRE_PRIORITY_ACID 40
-#define FIRE_PRIOTITY_BURNING 40
+#define FIRE_PRIORITY_BURNING 40
 #define FIRE_PRIORITY_DEFAULT 50
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
+#define FIRE_PRIORITY_FLUIDS 80
 #define FIRE_PRIORITY_MOBS 100
-#define FIRE_PRIORITY_ASSETS 105
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
+#define FIRE_PRIORITY_TTS 425
 #define FIRE_PRIORITY_MOUSE_ENTERED 450
 #define FIRE_PRIORITY_OVERLAYS 500
 #define FIRE_PRIORITY_EXPLOSIONS 666
@@ -235,7 +240,6 @@
 
 // SS runlevels
 
-#define RUNLEVEL_INIT 0
 #define RUNLEVEL_LOBBY 1
 #define RUNLEVEL_SETUP 2
 #define RUNLEVEL_GAME 4
@@ -255,24 +259,13 @@
 /// Game has round finished
 #define GAME_STATE_FINISHED 4
 
-//! ## Overlays subsystem
-
-#define POST_OVERLAY_CHANGE(changed_on) \
-	if(length(changed_on.overlays) >= MAX_ATOM_OVERLAYS) { \
-		var/text_lays = overlays2text(changed_on.overlays); \
-		stack_trace("Too many overlays on [changed_on.type] - [length(changed_on.overlays)], refusing to update and cutting.\
-			\n What follows is a printout of all existing overlays at the time of the overflow \n[text_lays]"); \
-		changed_on.overlays.Cut(); \
-		changed_on.add_overlay(mutable_appearance('icons/testing/greyscale_error.dmi')); \
-	} \
-	if(alternate_appearances) { \
-		for(var/I in changed_on.alternate_appearances){\
-			var/datum/atom_hud/alternate_appearance/AA = changed_on.alternate_appearances[I];\
-			if(AA.transfer_overlays){\
-				AA.copy_overlays(changed_on, TRUE);\
-			}\
-		} \
-	}
+// Used for SSticker.force_ending
+/// Default, round is not being forced to end.
+#define END_ROUND_AS_NORMAL 0
+/// End the round now as normal
+#define FORCE_END_ROUND 1
+/// For admin forcing roundend, can be used to distinguish the two
+#define ADMIN_FORCE_END_ROUND 2
 
 /**
 	Create a new timer and add it to the queue.
@@ -294,40 +287,49 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
 
-//Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
+// Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
 #define SSAIR_REBUILD_QUEUE 2
 
 // Explosion Subsystem subtasks
-#define SSEXPLOSIONS_MOVABLES 1
-#define SSEXPLOSIONS_TURFS 2
+#define SSEXPLOSIONS_TURFS 1
+#define SSEXPLOSIONS_MOVABLES 2
 #define SSEXPLOSIONS_THROWS 3
 
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
 
-//Wardrobe cache metadata indexes
+// Wardrobe cache metadata indexes
 #define WARDROBE_CACHE_COUNT 1
 #define WARDROBE_CACHE_LAST_INSPECT 2
 #define WARDROBE_CACHE_CALL_INSERT 3
 #define WARDROBE_CACHE_CALL_REMOVAL 4
 
-//Wardrobe preloaded stock indexes
+// Wardrobe preloaded stock indexes
 #define WARDROBE_STOCK_CONTENTS 1
 #define WARDROBE_STOCK_CALL_INSERT 2
 #define WARDROBE_STOCK_CALL_REMOVAL 3
 
-//Wardrobe callback master list indexes
+// Wardrobe callback master list indexes
 #define WARDROBE_CALLBACK_INSERT 1
 #define WARDROBE_CALLBACK_REMOVE 2
 
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
-// Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()
+// Only use these defines if you want to access some other objects processing seconds_per_tick, otherwise use the seconds_per_tick that is sent as a parameter to process()
 #define SSFLUIDS_DT (SSplumbing.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)
 #define SSOBJ_DT (SSobj.wait/10)
 
+// The change in the world's time from the subsystem's last fire in seconds.
+#define DELTA_WORLD_TIME(ss) ((world.time - ss.last_fire) * 0.1)
+
 /// The timer key used to know how long subsystem initialization takes
 #define SS_INIT_TIMER_KEY "ss_init"
+
+// Vote subsystem counting methods
+/// First past the post. One selection per person, and the selection with the most votes wins.
+#define VOTE_COUNT_METHOD_SINGLE 1
+/// Approval voting. Any number of selections per person, and the selection with the most votes wins.
+#define VOTE_COUNT_METHOD_MULTI 2

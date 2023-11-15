@@ -44,16 +44,14 @@
 		return
 
 	to_chat(chosen_mob, span_danger("You suddenly lose feeling in your leg[chosen_mob.usable_legs == 1 ? "":"s"]!"))
-	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
-	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
+	chosen_mob.add_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
 	return ..()
 
 /datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	if(QDELETED(chosen_mob))
 		return
 
-	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
-	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
+	chosen_mob.remove_traits(list(TRAIT_PARALYSIS_L_LEG, TRAIT_PARALYSIS_R_LEG), type)
 	if(chosen_mob.usable_legs > 1)
 		to_chat(chosen_mob, span_green("You regain feeling in your leg[chosen_mob.usable_legs == 1 ? "":"s"]!"))
 	return ..()
@@ -73,9 +71,10 @@
 		/obj/item/bodypart/head = 1,
 		/obj/item/book = 1,
 		)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/ash_spirit
+	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
 	cost = 1
 	route = PATH_SIDE
+	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
 
 /datum/heretic_knowledge/summon/ashy/cleanup_atoms(list/selected_atoms)
 	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms

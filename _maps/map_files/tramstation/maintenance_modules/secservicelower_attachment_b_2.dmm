@@ -1,0 +1,116 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/entertainment/cigar,
+/obj/effect/spawner/random/entertainment/cigar,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"o" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/station/maintenance/port/central)
+"p" = (
+/turf/closed/wall,
+/area/station/maintenance/port/central)
+"t" = (
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Storage Maintenance Hatch"
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Storage Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/entertainment/dice,
+/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/costume,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
+
+(1,1,1) = {"
+p
+p
+p
+p
+p
+p
+"}
+(2,1,1) = {"
+p
+G
+x
+a
+a
+p
+"}
+(3,1,1) = {"
+p
+p
+p
+g
+a
+p
+"}
+(4,1,1) = {"
+p
+i
+C
+a
+a
+p
+"}
+(5,1,1) = {"
+t
+t
+t
+t
+O
+o
+"}
+(6,1,1) = {"
+t
+t
+t
+t
+t
+t
+"}

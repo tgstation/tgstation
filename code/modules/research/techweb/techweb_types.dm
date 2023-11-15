@@ -6,18 +6,26 @@
 	organization = "Nanotrasen"
 	should_generate_points = TRUE
 
-//When something is researched, triggers the proc for this techweb only
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
 	. = ..()
 	if(.)
-		node.on_research()
+		node.on_station_research()
+
+/datum/techweb/oldstation
+	id = "CHARLIE"
+	organization = "Nanotrasen"
+	should_generate_points = TRUE
+
+/datum/techweb/oldstation/New()
+	. = ..()
+	research_node_id("oldstation_surgery", TRUE, TRUE, FALSE)
 
 /**
  * Admin techweb that has everything unlocked by default
  */
 /datum/techweb/admin
 	id = "ADMIN"
-	organization = "CentCom"
+	organization = "Central Command"
 
 /datum/techweb/admin/New()
 	. = ..()
@@ -27,25 +35,6 @@
 	for(var/i in SSresearch.point_types)
 		research_points[i] = INFINITY
 	hidden_nodes = list()
-
-/**
- * Techweb made through BEPIS machine
- * Should only contain 1 BEPIS tech at random.
- */
-/datum/techweb/bepis
-	id = "EXPERIMENTAL"
-	organization = "Nanotrasen R&D"
-
-/datum/techweb/bepis/New(remove_tech = TRUE)
-	. = ..()
-	var/bepis_id = pick(SSresearch.techweb_nodes_experimental) //To add a new tech to the BEPIS, add the ID to this pick list.
-	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
-	hidden_nodes -= BN.id //Has to be removed from hidden nodes
-	research_node(BN, TRUE, FALSE, FALSE)
-	update_node_status(BN)
-	if(remove_tech)
-		SSresearch.techweb_nodes_experimental -= bepis_id
-		log_research("[BN.display_name] has been removed from experimental nodes through the BEPIS techweb's \"remove tech\" feature.")
 
 /**
  * Techweb made through tech disks

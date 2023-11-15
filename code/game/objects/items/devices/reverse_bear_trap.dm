@@ -39,7 +39,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/item/reverse_bear_trap/process(delta_time)
+/obj/item/reverse_bear_trap/process(seconds_per_tick)
 	if(!ticking)
 		return
 	soundloop2.mid_length = max(0.5, COOLDOWN_TIMELEFT(src, kill_countdown) - 5) //beepbeepbeepbeepbeep
@@ -107,7 +107,15 @@
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD)
 	arm()
-	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/beep.ogg', notify_volume = 75, header = "Reverse bear trap armed")
+	notify_ghosts(
+		"[user] put a reverse bear trap on [target]!",
+		source = src,
+		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		ghost_sound = 'sound/machines/beep.ogg',
+		notify_volume = 75,
+		header = "Reverse bear trap armed",
+	)
 
 /obj/item/reverse_bear_trap/proc/snap()
 	reset()

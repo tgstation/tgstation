@@ -6,7 +6,7 @@
 /obj/item/v8_engine
 	name = "ancient engine"
 	desc = "An extremely well perserved, massive V8 engine from the early 2000s. It seems to be missing the rest of the vehicle. There's a tiny label on the side."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "v8_engine"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
@@ -24,7 +24,7 @@
 	if (!COOLDOWN_FINISHED(src, engine_sound_cooldown))
 		return
 	playsound(src, 'sound/items/car_engine_start.ogg', vol = 75, vary = FALSE, extrarange = 3)
-	Shake(7, 7, ENGINE_COOLDOWN)
+	Shake(duration = ENGINE_COOLDOWN)
 	to_chat(user, span_notice("Darn thing... it's too old to keep on without retrofitting it! Without modifications, it works like it's junk."))
 	COOLDOWN_START(src, engine_sound_cooldown, ENGINE_COOLDOWN)
 
@@ -42,11 +42,10 @@
 		user.mind.teach_crafting_recipe(/datum/crafting_recipe/house_edge)
 		to_chat(user, span_notice("You learned how to make the House Edge."))
 
-
 /obj/item/house_edge
 	name = "House Edge"
 	desc = "Dangerous. Loud. Sleek. It has a built in roulette wheel. This thing could easily rip your arm off if you're not careful."
-	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "house_edge0"
 	inhand_icon_state = "house_edge0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

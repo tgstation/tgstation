@@ -1,3 +1,6 @@
+/// Max length of custom objective text
+#define CUSTOM_OBJECTIVE_MAX_LENGTH 300
+
 GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
@@ -50,6 +53,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_to_ghosts = FALSE
 	/// The typepath for the outfit to show in the preview for the preferences menu.
 	var/preview_outfit
+	/// Flags for antags to turn on or off and check!
+	var/antag_flags = NONE
+	/// If true, this antagonist can assign themself a new objective
+	var/can_assign_self_objectives = FALSE
+	/// Default to fill in when entering a custom objective.
+	var/default_custom_objective = "Cause chaos on the space station."
+	/// Whether we give a hardcore random bonus for greentexting as this antagonist while playing hardcore random
+	var/hardcore_random_bonus = FALSE
 
 	//ANTAG UI
 
@@ -115,6 +126,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 		ui = new(user, src, ui_name, name)
 		ui.open()
 
+/datum/antagonist/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("change_objectives")
+			submit_player_objective()
+			return TRUE
+
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
 
@@ -122,6 +142,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/data = list()
 	data["antag_name"] = name
 	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
 	return data
 
 //button for antags to review their descriptions/info
@@ -153,20 +174,20 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return TRUE
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
-	. = TRUE
 	var/datum/mind/tested = new_owner || owner
 	if(tested.has_antag_datum(type))
 		return FALSE
 	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
 		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
 			return FALSE
+	return TRUE
 
 //This will be called in add_antag_datum before owner assignment.
 //Should return antag datum without owner.
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
-///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
+///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transferred.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)
@@ -230,8 +251,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!silent)
 		greet()
 		if(ui_name)
-			to_chat(owner.current, span_boldnotice("For more info, read the panel. you can always come back to it using the button in the top left."))
+			to_chat(owner.current, span_boldnotice("For more info, read the panel. \
+				You can always come back to it using the button in the top left."))
 			info_button.Trigger()
+		var/type_policy = get_policy("[type]") // path to text
+		if(type_policy)
+			to_chat(owner.current, type_policy)
+
 	apply_innate_effects()
 	give_antag_moodies()
 	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, PROC_REF(pre_mindshield))
@@ -253,8 +279,13 @@ GLOBAL_LIST_EMPTY(antagonists)
  */
 /datum/antagonist/proc/is_banned(mob/player)
 	if(!player)
+		stack_trace("Called is_banned without a mob. This shouldn't happen.")
 		return FALSE
-	. = (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
+
+	if(!player.ckey)
+		return FALSE
+
+	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
 
 /**
  * Proc that replaces a player who cannot play a specific antagonist due to being banned via a poll, and alerts the player of their being on the banlist.
@@ -324,7 +355,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/give_antag_moodies()
 	if(!antag_moodlet)
 		return
-	owner.current.add_mood_event("antag_moodlet", antag_moodlet)
+	owner.current.add_mood_event("antag_moodlet_[type]", antag_moodlet)
 
 /**
  * Proc that removes this antagonist's ascribed moodlet from the player.
@@ -332,7 +363,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/clear_antag_moodies()
 	if(!antag_moodlet)
 		return
-	owner.current.clear_mood_event("antag_moodlet")
+	owner.current.clear_mood_event("antag_moodlet_[type]")
 
 /**
  * Proc that will return the team this antagonist belongs to, when called. Helpful with antagonists that may belong to multiple potential teams in a single round.
@@ -428,6 +459,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
+	dummy.wear_suit?.update_greyscale()
 	var/icon = getFlatIcon(dummy)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
@@ -513,3 +545,55 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/forge_objectives()
 	return
 
+/**
+ * Allows player to replace their objectives with a new one they wrote themselves.
+ * * retain_existing - If true, will just be added as a new objective instead of replacing existing ones.
+ * * retain_escape - If true, will retain specifically 'escape alive' objectives (or similar)
+ * * force - Skips the check about whether this antagonist is supposed to set its own objectives, for badminning
+ */
+/datum/antagonist/proc/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
+	if (isnull(owner) || isnull(owner.current))
+		return
+	var/mob/living/owner_mob = owner.current
+	if (!force && !can_assign_self_objectives)
+		owner_mob.balloon_alert(owner_mob, "can't do that!")
+		return
+	var/custom_objective_text = tgui_input_text(
+		owner_mob,
+		message = "Specify your new objective.",
+		title = "Custom Objective",
+		default = default_custom_objective,
+		max_length = CUSTOM_OBJECTIVE_MAX_LENGTH,
+	)
+	if (QDELETED(src) || QDELETED(owner_mob) || isnull(custom_objective_text))
+		return // Some people take a long-ass time to type maybe they got dusted
+
+	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
+	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
+
+	var/datum/objective/custom/custom_objective = new()
+	custom_objective.owner = owner
+	custom_objective.explanation_text = custom_objective_text
+	custom_objective.completed = TRUE
+
+	if (retain_existing)
+		objectives.Insert(1, custom_objective)
+	else if (!retain_escape)
+		objectives = list(custom_objective)
+	else
+		var/static/list/escape_objectives = list(
+			/datum/objective/escape,
+			/datum/objective/survive,
+			/datum/objective/martyr,
+			/datum/objective/exile,
+		)
+		for (var/datum/objective/check_objective in objectives)
+			if (is_type_in_list(check_objective, escape_objectives))
+				continue
+			objectives -= check_objective
+		objectives.Insert(1, custom_objective)
+
+	can_assign_self_objectives = FALSE
+	owner.announce_objectives()
+
+#undef CUSTOM_OBJECTIVE_MAX_LENGTH

@@ -37,16 +37,10 @@
 		cell = new cell(src)
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/Destroy()
-	if(isatom(cell))
-		QDEL_NULL(cell)
-	return ..()
-
-// Clean up the cell on destroy
-/obj/item/inspector/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/inspector/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/inspector/get_cell()
@@ -77,7 +71,7 @@
 	return ..()
 
 /obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands= !iscyborg(user)) || !cell_cover_open || !cell)
+	if(!user.can_perform_action(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
 		return ..()
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
@@ -136,7 +130,7 @@
 /obj/item/paper/report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
@@ -334,7 +328,7 @@
 /obj/item/paper/fake_report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	show_written_words = FALSE
 	///What area the inspector scanned when the report was made. Used to generate the examine text of the report
@@ -380,7 +374,7 @@
 	grind_results = list(/datum/reagent/water = 5)
 
 /obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 		return
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water

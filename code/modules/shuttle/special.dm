@@ -6,7 +6,7 @@
 /obj/machinery/power/emitter/energycannon
 	name = "Energy Cannon"
 	desc = "A heavy duty industrial laser."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "emitter_+a"
 	base_icon_state = "emitter_+a"
 	anchored = TRUE
@@ -68,8 +68,8 @@
 /obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
 	return FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
-	return
+/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
@@ -154,7 +154,7 @@
 // Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
 // and a good time.
 
-/mob/living/simple_animal/drone/snowflake/bardrone
+/mob/living/basic/drone/snowflake/bardrone
 	name = "Bardrone"
 	desc = "A barkeeping drone, a robot built to tend bars."
 	hacked = TRUE
@@ -166,12 +166,9 @@
 	initial_language_holder = /datum/language_holder/universal
 	default_storage = null
 
-/mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
+/mob/living/basic/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
-	access_card.add_access(list(ACCESS_CENT_BAR))
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(check_barstaff_godmode))
-	check_barstaff_godmode()
+	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
@@ -192,21 +189,11 @@
 	access_card.add_access(cap_trim.access + cap_trim.wildcard_access + list(ACCESS_CENT_BAR))
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(check_barstaff_godmode))
-	check_barstaff_godmode()
+	AddComponentFrom(ROUNDSTART_TRAIT, /datum/component/area_based_godmode, area_type = /area/shuttle/escape, allow_area_subtypes = TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
 	. = ..()
-
-/mob/living/simple_animal/proc/check_barstaff_godmode()
-	SIGNAL_HANDLER
-
-	if(istype(get_area(loc), /area/shuttle/escape))
-		status_flags |= GODMODE
-	else
-		status_flags &= ~GODMODE
 
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone
@@ -241,6 +228,9 @@
 		var/mob/living/carbon/human/human_user = user
 		if(is_bartender_job(human_user.mind?.assigned_role))
 			return TRUE
+
+	if(istype(user, /mob/living/basic/drone/snowflake/bardrone))
+		return TRUE
 
 	var/obj/item/card/id/ID = user.get_idcard(FALSE)
 	if(ID && (ACCESS_CENT_BAR in ID.access))
@@ -289,8 +279,8 @@
 /obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)
 	return
 
-/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user)
-	return
+/obj/machinery/scanner_gate/luxury_shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)
+	return FALSE
 
 #define LUXURY_MESSAGE_COOLDOWN 100
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
@@ -423,7 +413,7 @@
 		alarm_beep()
 		return ..()
 
-/mob/living/simple_animal/hostile/bear/fightpit
+/mob/living/basic/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -439,3 +429,5 @@
 
 /obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.
+
+#undef LUXURY_MESSAGE_COOLDOWN

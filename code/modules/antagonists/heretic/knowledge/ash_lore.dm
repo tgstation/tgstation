@@ -7,7 +7,7 @@
  * Grasp of Ash
  * Ashen Passage
  * > Sidepaths:
- *   Priest's Ritual
+ *   Scorching Shark
  *   Ashen Eyes
  *
  * Mark of Ash
@@ -15,14 +15,14 @@
  * Fire Blast
  * Mask of Madness
  * > Sidepaths:
- *   Curse of Corrosion
+ *   Space Phase
  *   Curse of Paralysis
  *
  * Fiery Blade
  * Nightwatcher's Rebirth
  * > Sidepaths:
  *   Ashen Ritual
- *   Rusted Ritual
+ *   Eldritch Coin
  *
  * Ashlord's Rite
  */
@@ -61,7 +61,7 @@
 	if(target.is_blind())
 		return
 
-	if(!target.getorganslot(ORGAN_SLOT_EYES))
+	if(!target.get_organ_slot(ORGAN_SLOT_EYES))
 		return
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
@@ -72,10 +72,10 @@
 	name = "Ashen Passage"
 	desc = "Grants you Ashen Passage, a silent but short range jaunt."
 	gain_text = "He knew how to walk between the planes."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/ash_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
-		/datum/heretic_knowledge/essence,
+		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/medallion,
 	)
 	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
@@ -127,10 +127,11 @@
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/curse/corrosion,
+		/datum/heretic_knowledge/spell/space_phase,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
@@ -165,10 +166,11 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
+	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/summon/rusty,
+		/datum/heretic_knowledge/eldritch_coin,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
@@ -188,12 +190,13 @@
 	route = PATH_ASH
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
-		TRAIT_RESISTHEAT,
+		TRAIT_BOMBIMMUNE,
 		TRAIT_NOBREATH,
+		TRAIT_NOFIRE,
 		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE,
 	)
 
 /datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -209,7 +212,12 @@
 
 /datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 
 	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
 	circle_spell.Grant(user)
@@ -223,6 +231,9 @@
 		existing_beam_spell.beam_duration *= 0.66 // Faster beams
 		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
 
+	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
+	fiery_rebirth?.cooldown_time *= 0.16
+
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
-	for(var/trait in traits_to_apply)
-		ADD_TRAIT(user, trait, MAGIC_TRAIT)
+	if(length(traits_to_apply))
+		user.add_traits(traits_to_apply, MAGIC_TRAIT)

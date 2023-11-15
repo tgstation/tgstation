@@ -54,7 +54,7 @@
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_TURF_CHANGE, PROC_REF(turf_changed_pre))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	if(!src.assembly)
 		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, PROC_REF(on_link_requested))
 	else
@@ -67,7 +67,7 @@
 	if(assembly)
 		UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)

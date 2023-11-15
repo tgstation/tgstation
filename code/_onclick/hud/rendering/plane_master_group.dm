@@ -70,6 +70,10 @@
 /datum/plane_master_group/proc/show_plane(atom/movable/screen/plane_master/plane)
 	plane.show_to(our_hud.mymob)
 
+/// Nice wrapper for the "[]"ing
+/datum/plane_master_group/proc/get_plane(plane)
+	return plane_masters["[plane]"]
+
 /// Returns a list of all the plane master types we want to create
 /datum/plane_master_group/proc/get_plane_types()
 	return subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate
@@ -80,7 +84,7 @@
 		for(var/plane_offset in starting_offset to ending_offset)
 			if(plane_offset != 0 && !initial(mytype.allows_offsetting))
 				continue
-			var/atom/movable/screen/plane_master/instance = new mytype(null, src, plane_offset)
+			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset)
 			plane_masters["[instance.plane]"] = instance
 			prep_plane_instance(instance)
 

@@ -72,6 +72,9 @@
 /// Deploys a part of the suit onto the user.
 /obj/item/mod/control/proc/deploy(mob/user, obj/item/part)
 	var/datum/mod_part/part_datum = mod_parts[part.slot_flags]
+	if(!wearer)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE // pAI is trying to deploy it from your hands
 	if(part.loc != src)
 		if(!user)
 			return FALSE
@@ -157,10 +160,11 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	for(var/obj/item/mod/module/module as anything in modules)
-		if(!module.active || module.allowed_inactive)
+		if(!module.active || (module.allow_flags & MODULE_ALLOW_INACTIVE))
 			continue
 		module.deactivate(display_message = FALSE)
 	activating = TRUE
+	mod_link.end_call()
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	var/activation_step_time = activation_time / length(mod_parts)
 	for(var/datum/mod_part/part as anything in get_parts())
@@ -170,8 +174,8 @@
 			seal_part(part, seal = !active)
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(has_wearer))))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
-		if(ai)
-			to_chat(ai, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\"</b>"))
+		if(ai_assistant)
+			to_chat(ai_assistant, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai_assistant]\"</b>"))
 		finish_activation(on = !active)
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
@@ -205,7 +209,7 @@
 		part.alternate_worn_layer = part_datum.unsealed_layer
 	wearer.update_clothing(part.slot_flags)
 
-/// Finishes the suit's activation, starts processing.
+/// Finishes the suit's activation
 /obj/item/mod/control/proc/finish_activation(on)
 	var/datum/mod_part/part_datum = mod_parts[slot_flags]
 	active = on
@@ -213,11 +217,9 @@
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_activation()
-		START_PROCESSING(SSobj, src)
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_deactivation()
-		STOP_PROCESSING(SSobj, src)
 	update_speed()
 	update_icon_state()
 	wearer.update_clothing(slot_flags)

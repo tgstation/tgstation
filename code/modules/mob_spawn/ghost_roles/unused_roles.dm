@@ -129,7 +129,8 @@
 
 /datum/outfit/cryobartender
 	name = "Cryogenic Bartender"
-	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	neck = /obj/item/clothing/neck/bowtie
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/armor/vest
 	back = /obj/item/storage/backpack
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
@@ -172,7 +173,7 @@
 	name = "sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	faction = list("nanotrasenprivate")
+	faction = list(FACTION_NANOTRASEN_PRIVATE)
 	prompt_name = "a private security officer"
 	you_are_text = "You are a Nanotrasen Private Security Officer!"
 	flavour_text = "If higher command has an assignment for you, it's best you follow that. Otherwise, death to The Syndicate."
@@ -271,7 +272,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
 	var/datum/job/spawn_job = SSjob.GetJobType(spawner_job_path)
 	var/policy = get_policy(spawn_job.policy_index)
 	if(policy)

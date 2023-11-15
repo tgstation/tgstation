@@ -2,7 +2,7 @@
 	name = "MOD circuit adapter module"
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	module_type = MODULE_USABLE
-	complexity = 3
+	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
@@ -123,7 +123,7 @@
 	toggle_suit = add_input_port("Toggle Suit", PORT_TYPE_SIGNAL)
 	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
 	// States
-	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
+	wearer = add_output_port("Wearer", PORT_TYPE_USER)
 	deployed = add_output_port("Deployed", PORT_TYPE_NUMBER)
 	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)

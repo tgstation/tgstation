@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
-	create_storage(type = /datum/storage/tcg)
+	create_storage(storage_type = /datum/storage/tcg)
 
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)
@@ -255,7 +255,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
 	if(istype(item, /obj/item/tcgcard))
-		if(contents.len > 30)
+		if(contents.len >= 30)
 			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
 			return FALSE
 		var/obj/item/tcgcard/new_card = item
@@ -395,7 +395,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	desc = "A TGC flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
 	icon = 'icons/obj/toys/tcgmisc.dmi'
 	icon_state = "coin_nanotrasen"
-	custom_materials = list(/datum/material/plastic = 400)
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*5)
 	material_flags = NONE
 	sideslist = list("nanotrasen", "syndicate")
 	override_material_worth = TRUE
@@ -510,3 +510,5 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			continue
 		vars[name] = SStrading_card_game.resolve_keywords(value)
 
+#undef TAPPED_ANGLE
+#undef UNTAPPED_ANGLE

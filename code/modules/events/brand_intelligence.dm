@@ -6,7 +6,9 @@
 	description = "Vending machines will attack people until the Patient Zero is disabled."
 	min_players = 15
 	max_occurrences = 1
-	admin_setup = /datum/event_admin_setup/listed_options/brand_intelligence
+	min_wizard_trigger_potency = 2
+	max_wizard_trigger_potency = 6
+	admin_setup = list(/datum/event_admin_setup/listed_options/brand_intelligence)
 
 /datum/round_event/brand_intelligence
 	announce_when = 21
@@ -32,8 +34,8 @@
 
 /datum/round_event/brand_intelligence/setup()
 	//select our origin machine (which will also be the type of vending machine affected.)
-	for(var/obj/machinery/vending/vendor in GLOB.machines)
-		if(!is_station_level(vendor.z))
+	for(var/obj/machinery/vending/vendor as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
+		if(!vendor.onstation)
 			continue
 		if(!vendor.density)
 			continue

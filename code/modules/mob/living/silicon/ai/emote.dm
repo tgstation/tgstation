@@ -7,23 +7,15 @@
 	key = "blank"
 	var/emotion = AI_EMOTION_BLANK
 
-/datum/emote/ai/emotion_display/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/ai/emotion_display/run_emote(mob/living/silicon/ai/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/silicon/ai/ai = user
-	var/turf/ai_turf = get_turf(ai)
 
-	for(var/obj/machinery/status_display/ai/ai_display as anything in GLOB.ai_status_displays)
-		var/turf/display_turf = get_turf(ai_display)
+	if(!istype(user))
+		return
 
-		// - Station AIs can change every display on the station Z.
-		// - Ghost role AIs (or AIs on the mining base?) can only affect their Z
-		if(!is_valid_z_level(ai_turf, display_turf))
-			continue
-
-		ai_display.emotion = emotion
-		ai_display.update()
+	user.apply_emote_display(emotion)
 
 /datum/emote/ai/emotion_display/very_happy
 	key = "veryhappy"

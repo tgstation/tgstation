@@ -12,7 +12,7 @@
 
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM|SPELL_REQUIRES_MIND
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_STATION|SPELL_REQUIRES_MIND
 	spell_max_level = 1
 
 /datum/action/cooldown/spell/lichdom/can_cast_spell(feedback = TRUE)
@@ -62,7 +62,7 @@
 
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_cast_on = cast_on
-		var/obj/item/organ/internal/brain/lich_brain = carbon_cast_on.getorganslot(ORGAN_SLOT_BRAIN)
+		var/obj/item/organ/internal/brain/lich_brain = carbon_cast_on.get_organ_slot(ORGAN_SLOT_BRAIN)
 		if(lich_brain) // This prevents MMIs being used to stop lich revives
 			lich_brain.organ_flags &= ~ORGAN_VITAL
 			lich_brain.decoy_override = TRUE

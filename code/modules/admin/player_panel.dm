@@ -2,7 +2,7 @@
 	if(!check_rights())
 		return
 	log_admin("[key_name(usr)] checked the player panel.")
-	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge; charset=UTF-8'/><title>Player Panel</title></head>"
+	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge' charset='UTF-8'/><title>Player Panel</title></head>"
 
 	//javascript, the part that does most of the work~
 	dat += {"
@@ -224,7 +224,7 @@
 			var/color = "#e6e6e6"
 			if(i%2 == 0)
 				color = "#f2f2f2"
-			var/is_antagonist = is_special_character(M)
+			var/is_antagonist = is_special_character(M, allow_fake_antags = TRUE)
 
 			var/M_job = ""
 
@@ -253,7 +253,7 @@
 					else
 						M_job = "Silicon-based"
 
-				else if(isanimal(M)) //simple animals
+				else if(isanimal_or_basicmob(M)) //simple animals
 					if(iscorgi(M))
 						M_job = "Corgi"
 					else if(isslime(M))

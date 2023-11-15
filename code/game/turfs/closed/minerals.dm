@@ -92,37 +92,40 @@
 		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
 		return
 
-	if(I.tool_behaviour == TOOL_MINING)
-		var/turf/T = user.loc
-		if (!isturf(T))
-			return
+	if(I.tool_behaviour != TOOL_MINING)
+		return
+	var/turf/T = user.loc
+	if (!isturf(T))
+		return
 
-		if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
-			return
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
+		return
 
-		TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
+	TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
 
-		balloon_alert(user, "picking...")
+	balloon_alert(user, "picking...")
 
-		if(!I.use_tool(src, user, tool_mine_speed, volume=50))
-			TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
-			return
-		if(ismineralturf(src))
-			gets_drilled(user, TRUE)
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+	if(!I.use_tool(src, user, tool_mine_speed, volume=50))
+		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
+		return
+	if(ismineralturf(src))
+		gets_drilled(user, TRUE)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 
 /turf/closed/mineral/attack_hand(mob/user)
-	if(!weak_turf)
+	var/mining_arms = HAS_TRAIT(user, TRAIT_FIST_MINING)
+	if(!weak_turf && !mining_arms)
 		return ..()
 	var/turf/user_turf = user.loc
 	if (!isturf(user_turf))
 		return
-	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
+	if(TIMER_COOLDOWN_RUNNING(src, REF(user))) //prevents mining turfs in progress
 		return
-	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
+	var/mining_speed = mining_arms ? tool_mine_speed : hand_mine_speed
+	TIMER_COOLDOWN_START(src, REF(user), mining_speed)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
 	balloon_alert(user, "pulling out pieces...")
-	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
+	if(!do_after(user, mining_speed * skill_modifier, target = src))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return
 	if(ismineralturf(src))
@@ -132,7 +135,9 @@
 	if(user.Adjacent(src))
 		attack_hand(user)
 
-/turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
+/turf/closed/mineral/proc/gets_drilled(mob/user, give_exp = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
@@ -176,7 +181,7 @@
 	. = ..()
 	if(target == src)
 		gets_drilled(null, FALSE)
-		return
+		return TRUE
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			gets_drilled(null, FALSE)
@@ -186,6 +191,8 @@
 		if(EXPLODE_LIGHT)
 			if(prob(75))
 				gets_drilled(null, FALSE)
+
+	return TRUE
 
 /turf/closed/mineral/blob_act(obj/structure/blob/B)
 	if(prob(50))
@@ -327,6 +334,12 @@
 		/turf/closed/mineral/gibtonite/volcanic = 4,
 	)
 
+/// A turf that can't we can't build openspace chasms on or spawn ruins in.
+/turf/closed/mineral/random/volcanic/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
+	turf_flags = NO_RUINS
+
 /turf/closed/mineral/random/snow
 	name = "snowy mountainside"
 	icon = MAP_SWITCH('icons/turf/walls/mountain_wall.dmi', 'icons/turf/mining.dmi')
@@ -360,6 +373,12 @@
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
+
+/// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
+/turf/closed/mineral/random/snow/do_not_chasm
+	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
+	turf_flags = NO_RUINS
 
 /turf/closed/mineral/random/snow/underground
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
@@ -587,6 +606,12 @@
 	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
+/// This snowy mountain will never be scraped away for any reason what so ever.
+/turf/closed/mineral/snowmountain/icemoon/unscrapeable
+	turf_flags = IS_SOLID | NO_CLEARING
+	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
+
 /turf/closed/mineral/snowmountain/cavern
 	name = "ice cavern rock"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
@@ -605,23 +630,18 @@
 /turf/closed/mineral/snowmountain/coldroom
 	baseturfs = /turf/open/misc/asteroid/snow/coldroom
 	turf_type = /turf/open/misc/asteroid/snow/coldroom
-
-/turf/closed/mineral/snowmountain/coldroom/Initialize(mapload)
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	return ..()
 
 //yoo RED ROCK RED ROCK
 
 /turf/closed/mineral/asteroid
 	name = "iron rock"
-	icon = 'icons/turf/mining.dmi'
 	icon_state = "redrock"
 	icon = MAP_SWITCH('icons/turf/walls/red_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "red_wall"
 
 /turf/closed/mineral/random/stationside/asteroid
 	name = "iron rock"
-	icon = 'icons/turf/mining.dmi'
 	icon = MAP_SWITCH('icons/turf/walls/red_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "red_wall"
 
@@ -639,6 +659,7 @@
 
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
+	icon_state = "rock_Gibtonite_inactive"
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
@@ -654,7 +675,7 @@
 	var/previous_stage = stage
 	if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
 		user.visible_message(span_notice("[user] holds [attacking_item] to [src]..."), span_notice("You use [attacking_item] to locate where to cut off the chain reaction and attempt to stop it..."))
-		defuse()
+		defuse(user)
 	..()
 	if(istype(attacking_item, /obj/item/clothing/gloves/gauntlets) && previous_stage == GIBTONITE_UNSTRUCK && stage == GIBTONITE_ACTIVE && istype(user))
 		user.Immobilize(0.5 SECONDS)
@@ -683,7 +704,7 @@
 /turf/closed/mineral/gibtonite/proc/countdown(notify_admins = FALSE)
 	set waitfor = FALSE
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
-		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), 5) //makes the animation pulse one time per tick
+		flick_overlay_view(mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER + 0.1), 0.5 SECONDS) //makes the animation pulse one time per tick
 		det_time--
 		sleep(0.5 SECONDS)
 	if(istype(src, /turf/closed/mineral/gibtonite))
@@ -691,9 +712,9 @@
 			var/turf/bombturf = get_turf(src)
 			mineralAmt = 0
 			stage = GIBTONITE_DETONATE
-			explosion(bombturf, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, adminlog = notify_admins, explosion_cause = src)
+			explosion(bombturf, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, flame_range = 0, flash_range = 0, adminlog = notify_admins, explosion_cause = src)
 
-/turf/closed/mineral/gibtonite/proc/defuse()
+/turf/closed/mineral/gibtonite/proc/defuse(mob/living/defuser)
 	if(stage == GIBTONITE_ACTIVE)
 		cut_overlay(activated_overlay)
 		activated_overlay.icon_state = "rock_Gibtonite_inactive"
@@ -703,8 +724,13 @@
 		if(det_time < 0)
 			det_time = 0
 		visible_message(span_notice("The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!"))
+		if(defuser)
+			SEND_SIGNAL(defuser, COMSIG_LIVING_DEFUSED_GIBTONITE, det_time)
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
+
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user)
@@ -713,15 +739,15 @@
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
 		stage = GIBTONITE_DETONATE
-		explosion(bombturf, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, adminlog = FALSE, explosion_cause = src)
+		explosion(bombturf, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, flame_range = 0, flash_range = 0, adminlog = FALSE, explosion_cause = src)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
-			G.icon_state = "Gibtonite ore 3"
+			G.icon_state = "gibtonite_3"
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
-			G.icon_state = "Gibtonite ore 2"
+			G.icon_state = "gibtonite_2"
 
 	var/flags = NONE
 	var/old_type = type
@@ -738,7 +764,7 @@
 	defer_change = TRUE
 
 /turf/closed/mineral/gibtonite/ice
-	icon_state = "icerock_Gibtonite"
+	icon_state = "icerock_Gibtonite_inactive"
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "icerock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
@@ -774,6 +800,9 @@
 
 
 /turf/closed/mineral/strong/gets_drilled(mob/user, give_exp = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
+
 	if(!ishuman(user))
 		return // see attackby
 	var/mob/living/carbon/human/H = user

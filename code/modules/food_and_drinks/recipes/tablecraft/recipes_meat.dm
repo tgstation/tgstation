@@ -145,7 +145,7 @@
 	name = "Pig in a Blanket"
 	reqs = list(
 		/obj/item/food/bun = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/pigblanket
@@ -183,7 +183,7 @@
 	name = "BBQ Ribs"
 	reqs = list(
 		/datum/reagent/consumable/bbqsauce = 5,
-		/obj/item/food/meat/steak/plain = 2,
+		/obj/item/food/meat/steak = 2,
 		/obj/item/stack/rods = 2
 	)
 	result = /obj/item/food/bbqribs
@@ -192,7 +192,7 @@
 /datum/crafting_recipe/food/meatclown
 	name = "Meat Clown"
 	reqs = list(
-		/obj/item/food/meat/steak/plain = 1,
+		/obj/item/food/meat/steak = 1,
 		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/meatclown
@@ -237,8 +237,8 @@
 	reqs = list(
 		/datum/reagent/consumable/flour = 5,
 		/datum/reagent/consumable/milk = 5,
-		/datum/reagent/consumable/salt = 5,
-		/datum/reagent/consumable/blackpepper = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2,
 		/obj/item/food/grown/mushroom = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/tomato = 1,
@@ -288,10 +288,31 @@
 /datum/crafting_recipe/food/meatloaf
 	name = "Meatloaf"
 	reqs = list(
-		/obj/item/food/meat/slab = 3,
+		/obj/item/food/meat/slab = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/ketchup = 10,
 	)
 	result = /obj/item/food/raw_meatloaf
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/sweet_and_sour_meatballs
+	name = "Sweet and sour meatballs"
+	reqs = list(
+		/obj/item/food/meatball = 3,
+		/obj/item/food/pineappleslice = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/datum/reagent/consumable/sugar = 5,
+	)
+	result = /obj/item/food/sweet_and_sour_meatballs
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/pineapple_skewer
+	name = "Pineapple skewer"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/food/pineappleslice = 2,
+		/obj/item/food/meat/cutlet = 2,
+	)
+	result = /obj/item/food/kebab/pineapple_skewer
 	category = CAT_MEAT

@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "distro & waste sensors not reading values from the actual pipes they are on"
-  - bugfix: "losing distro & waste options from the drop-down box after connecting to a new sensor."
-  - refactor: "all occurrences of _sensor with a macro to avoid typos."

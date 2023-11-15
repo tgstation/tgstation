@@ -11,7 +11,10 @@
 	else if(islist(target))
 		vv_do_list(target, href_list)
 	if(href_list["Vars"])
-		debug_variables(locate(href_list["Vars"]))
+		var/datum/vars_target = locate(href_list["Vars"])
+		if(href_list["special_varname"]) // Some special vars can't be located even if you have their ref, you have to use this instead
+			vars_target = vars_target.vars[href_list["special_varname"]]
+		debug_variables(vars_target)
 
 //Stuff below aren't in dropdowns/etc.
 
@@ -82,25 +85,25 @@
 			var/newamt
 			switch(Text)
 				if("brute")
-					L.adjustBruteLoss(amount)
+					L.adjustBruteLoss(amount, forced = TRUE)
 					newamt = L.getBruteLoss()
 				if("fire")
-					L.adjustFireLoss(amount)
+					L.adjustFireLoss(amount, forced = TRUE)
 					newamt = L.getFireLoss()
 				if("toxin")
-					L.adjustToxLoss(amount)
+					L.adjustToxLoss(amount, forced = TRUE)
 					newamt = L.getToxLoss()
 				if("oxygen")
-					L.adjustOxyLoss(amount)
+					L.adjustOxyLoss(amount, forced = TRUE)
 					newamt = L.getOxyLoss()
 				if("brain")
 					L.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
-					newamt = L.getOrganLoss(ORGAN_SLOT_BRAIN)
+					newamt = L.get_organ_loss(ORGAN_SLOT_BRAIN)
 				if("clone")
-					L.adjustCloneLoss(amount)
+					L.adjustCloneLoss(amount, forced = TRUE)
 					newamt = L.getCloneLoss()
 				if("stamina")
-					L.adjustStaminaLoss(amount)
+					L.adjustStaminaLoss(amount, forced = TRUE)
 					newamt = L.getStaminaLoss()
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)

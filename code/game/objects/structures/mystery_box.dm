@@ -47,8 +47,8 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/ballistic/automatic/m90,
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
-	/obj/item/gun/ballistic/automatic/sniper_rifle,
-	/obj/item/gun/ballistic/rifle/boltaction/brand_new,
+	/obj/item/gun/ballistic/rifle/sniper_rifle,
+	/obj/item/gun/ballistic/rifle/boltaction,
 ))
 
 GLOBAL_LIST_INIT(mystery_box_extended, list(
@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	SSsounds.free_sound_channel(current_sound_channel)
 	current_sound_channel = null
 	box_state = MYSTERY_BOX_STANDBY
-	Shake(10, 0, 0.5 SECONDS)
+	Shake(3, 0, 0.5 SECONDS)
 
 /// Someone attacked the box with an empty hand, spawn the shown prize and give it to them, then close the box
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 		if(grant_extra_mag && istype(instantiated_gun, /obj/item/gun/ballistic))
 			var/obj/item/gun/ballistic/instantiated_ballistic = instantiated_gun
 			if(!instantiated_ballistic.internal_magazine)
-				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.mag_type(loc)
+				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.spawn_magazine_type(loc)
 				user.put_in_hands(extra_mag)
 
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)

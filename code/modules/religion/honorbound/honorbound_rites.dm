@@ -59,7 +59,7 @@
 	if(joining_now.mind.has_antag_datum(/datum/antagonist/cult))//what the fuck?!
 		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!"))
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
-		joining_now.gib(TRUE)
+		joining_now.gib(DROP_ORGANS|DROP_BODYPARTS)
 		return FALSE
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
 	if(joining_now in honor.guilty)
@@ -128,7 +128,7 @@
 	var/obj/item/paper/autograph = writ_target
 	var/turf/tool_turf = get_turf(religious_tool)
 	writ_target = null
-	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
+	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the paper is still there
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	autograph.visible_message(span_notice("Words magically form on [autograph]!"))
@@ -138,8 +138,8 @@
 	return TRUE
 
 /obj/item/paper/holy_writ
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "honorscroll"
 	slot_flags = null
 	show_written_words = FALSE
 

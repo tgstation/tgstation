@@ -10,6 +10,7 @@
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	suicide_cry = "FOR MY LOVE!!"
 	preview_outfit = /datum/outfit/obsessed
+	hardcore_random_bonus = TRUE
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
@@ -17,7 +18,7 @@
 	if(!istype(C))
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
 		return
-	if(!C.getorgan(/obj/item/organ/internal/brain)) // If only I had a brain
+	if(!C.get_organ_by_type(/obj/item/organ/internal/brain)) // If only I had a brain
 		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
 		return
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
@@ -27,9 +28,6 @@
 
 /datum/antagonist/obsessed/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	var/policy = get_policy(ROLE_OBSESSED)
-	if(policy)
-		to_chat(owner, policy)
 	owner.announce_objectives()
 
 /datum/antagonist/obsessed/Destroy()
@@ -39,9 +37,8 @@
 
 /datum/antagonist/obsessed/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
-	victim_dummy.hair_color = "#bb9966" // Brown
-	victim_dummy.hairstyle = "Messy"
-	victim_dummy.update_body_parts()
+	victim_dummy.set_haircolor("#bb9966", update = FALSE)
+	victim_dummy.set_hairstyle("Messy", update = TRUE)
 
 	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
 	obsessed_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
@@ -65,9 +62,10 @@
 	mask = /obj/item/clothing/mask/surgical
 	neck = /obj/item/camera
 	suit = /obj/item/clothing/suit/apron
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/obsessed/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 

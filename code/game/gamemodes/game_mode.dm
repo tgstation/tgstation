@@ -56,15 +56,17 @@
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	return
 
-/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+/// Checks if the round should be ending, called every ticker tick
+/datum/game_mode/proc/check_finished()
 	if(!SSticker.setup_done)
 		return FALSE
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
 		return TRUE
 	if(GLOB.station_was_nuked)
 		return TRUE
-	if(force_ending)
+	if(GLOB.revolutionary_win)
 		return TRUE
+	return FALSE
 
 /*
  * Generate a list of station goals available to purchase to report to the crew.
@@ -127,7 +129,7 @@
 			for(var/dead_dudes_job in reopened_jobs)
 				reopened_job_report_positions = "[reopened_job_report_positions ? "[reopened_job_report_positions]\n":""][dead_dudes_job]"
 
-			var/suicide_command_report = "<font size = 3><b>Central Command Human Resources Board</b><br>\
+			var/suicide_command_report = "<font size = 3><b>[command_name()] Human Resources Board</b><br>\
 								Notice of Personnel Change</font><hr>\
 								To personnel management staff aboard [station_name()]:<br><br>\
 								Our medical staff have detected a series of anomalies in the vital sensors \
@@ -160,11 +162,11 @@
 
 		if(L.ckey && L.client)
 			var/failed = FALSE
-			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2)) //Connected, but inactive (alt+tabbed or something)
+			if(L.client.inactivity >= ROUNDSTART_LOGOUT_AFK_THRESHOLD) //Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				failed = TRUE //AFK client
 			if(!failed && L.stat)
-				if(L.suiciding) //Suicider
+				if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_boldannounce("Suicide")])\n"
 					failed = TRUE //Disconnected client
 				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
@@ -178,7 +180,7 @@
 		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
-					if(L.suiciding) //Suicider
+					if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Suicide")])\n"
 						continue //Disconnected client
 					else
@@ -191,17 +193,17 @@
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Ghosted")])\n"
 						continue //Ghosted while alive
 
-
-	for (var/C in GLOB.admins)
-		to_chat(C, msg.Join())
+	var/concatenated_message = msg.Join()
+	log_admin(concatenated_message)
+	to_chat(GLOB.admins, concatenated_message)
 
 /datum/game_mode/proc/generate_station_goals(greenshift)
 	var/goal_budget = greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
-	if(!(SSmapping.empty_space))
-		for(var/datum/station_goal/goal in possible)
-			if(goal.requires_space)
-				///Removes all goals that require space if space is not present
+	// Remove all goals that require space if space is not present
+	if(SSmapping.is_planetary())
+		for(var/datum/station_goal/goal as anything in possible)
+			if(initial(goal.requires_space))
 				possible -= goal
 	var/goal_weights = 0
 	while(possible.len && goal_weights < goal_budget)

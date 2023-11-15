@@ -4,10 +4,13 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh"
+	alien_speed = -0.3
 	var/atom/movable/screen/leap_icon = null
+	///How fast does our pounce move us?
+	var/pounce_speed = 2
 
 /mob/living/carbon/alien/adult/hunter/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small
 	..()
 
 //Hunter verbs
@@ -50,7 +53,7 @@
 		body_position_pixel_y_offset = -32
 		update_icons()
 		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT) //Throwing itself doesn't protect mobs against lava (because gulag).
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, PROC_REF(leap_end)))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, pounce_speed, src, FALSE, TRUE, callback = CALLBACK(src, PROC_REF(leap_end)))
 
 /mob/living/carbon/alien/adult/hunter/proc/leap_end()
 	leaping = FALSE
@@ -75,7 +78,7 @@
 					blocked = TRUE
 			if(!blocked)
 				L.visible_message(span_danger("[src] pounces on [L]!"), span_userdanger("[src] pounces on you!"))
-				L.Paralyze(100)
+				L.Paralyze(5 SECONDS)
 				sleep(0.2 SECONDS)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
@@ -86,3 +89,4 @@
 			visible_message(span_danger("[src] smashes into [hit_atom]!"), span_alertalien("[src] smashes into [hit_atom]!"))
 			Paralyze(40, ignore_canstun = TRUE)
 
+#undef MAX_ALIEN_LEAP_DIST

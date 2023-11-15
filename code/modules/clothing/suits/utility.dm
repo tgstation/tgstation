@@ -104,6 +104,7 @@
 	laser = 20
 	energy = 30
 	bomb = 100
+	bio = 50
 	fire = 80
 	acid = 50
 
@@ -200,8 +201,3 @@
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
-
-/obj/item/clothing/suit/utility/radiation/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
-	. = ..()
-	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)

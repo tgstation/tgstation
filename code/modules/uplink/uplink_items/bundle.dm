@@ -58,9 +58,8 @@
 			These items are collectively worth more than 25 telecrystals, but you do not know which specialization \
 			you will receive. May contain discontinued and/or exotic items. \
 			The Syndicate will only provide one Syndi-Kit per agent."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_a
-	cost = 25
+	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -70,9 +69,8 @@
 			In Syndi-kit Special, you will receive items used by famous syndicate agents of the past. \
 			Collectively worth more than 25 telecrystals, the syndicate loves a good throwback. \
 			The Syndicate will only provide one Syndi-Kit per agent."
-	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/syndicate/bundle_b
-	cost = 25
+	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
@@ -125,8 +123,8 @@
 		tc_budget -= uplink_item.cost
 		new uplink_item.item(surplus_crate)
 
-/// overwrites purchase for surplus items to instead spawn this crate and run the previous procs
-/datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
+/// overwrites item spawning proc for surplus items to spawn an appropriate crate via a podspawn
+/datum/uplink_item/bundles_tc/surplus/spawn_item(spawn_path, mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/obj/structure/closet/crate/surplus_crate = new crate_type()
 	if(!istype(surplus_crate))
 		CRASH("crate_type is not a crate")
@@ -139,6 +137,7 @@
 		"style" = STYLE_SYNDICATE,
 		"spawn" = surplus_crate,
 	))
+	return source //For log icon
 
 /datum/uplink_item/bundles_tc/surplus/united
 	name = "United Surplus Crate"
@@ -147,14 +146,13 @@
 			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 80 TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
-	item = /obj/structure/closet/crate/syndicrate
-	progression_minimum = 30 MINUTES
+	item = /obj/structure/closet/crate/secure/syndicrate
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	crate_tc_value = 80
-	crate_type = /obj/structure/closet/crate/syndicrate
+	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
-/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/syndicrate/surplus_crate, list/possible_items)
+/datum/uplink_item/bundles_tc/surplus/united/fill_crate(obj/structure/closet/crate/secure/syndicrate/surplus_crate, list/possible_items)
 	if(!istype(surplus_crate))
 		return
 	var/tc_budget = crate_tc_value
@@ -172,5 +170,5 @@
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/item/syndicrate_key
-	progression_minimum = 30 MINUTES
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS

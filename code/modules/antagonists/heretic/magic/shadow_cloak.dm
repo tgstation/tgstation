@@ -73,12 +73,12 @@
 	)
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
-	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, PROC_REF(on_early_cloak_loss))
+	RegisterSignal(active_cloak, COMSIG_QDELETING, PROC_REF(on_early_cloak_loss))
 	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
 	if(!QDELETED(active_cloak))
-		UnregisterSignal(active_cloak, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(active_cloak, COMSIG_QDELETING)
 		qdel(active_cloak)
 	active_cloak = null
 
@@ -94,7 +94,7 @@
 	deltimer(uncloak_timer)
 	uncloak_timer = null
 
-/// Signal proc for [COMSIG_PARENT_QDELETING], if our cloak is deleted early, impart negative effects
+/// Signal proc for [COMSIG_QDELETING], if our cloak is deleted early, impart negative effects
 /datum/action/cooldown/spell/shadow_cloak/proc/on_early_cloak_loss(datum/status_effect/source)
 	SIGNAL_HANDLER
 
@@ -141,8 +141,7 @@
 	animate(cloak_image, alpha = 255, 0.2 SECONDS)
 	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, id, cloak_image)
 	// Add the relevant traits and modifiers
-	ADD_TRAIT(owner, TRAIT_UNKNOWN, id)
-	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, id)
+	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Register signals to cause effects
@@ -158,8 +157,7 @@
 	owner.remove_alt_appearance(id)
 	QDEL_NULL(cloak_image)
 	// Remove traits and modifiers
-	REMOVE_TRAIT(owner, TRAIT_UNKNOWN, id)
-	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, id)
+	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Clear signals
@@ -195,7 +193,7 @@
 		qdel(src)
 
 /// Signal proc for [COMSIG_MOB_APPLY_DAMAGE], being damaged past a threshold will roll a chance to stop the effect
-/datum/status_effect/shadow_cloak/proc/on_damaged(datum/source, damage, damagetype)
+/datum/status_effect/shadow_cloak/proc/on_damaged(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 
 	// Stam damage is generally bursty, so we'll half it

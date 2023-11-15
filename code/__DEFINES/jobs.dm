@@ -6,6 +6,8 @@
 #define JOB_UNAVAILABLE_SLOTFULL 5
 /// Job unavailable due to incompatibility with an antag role.
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
+/// Checks for character age.
+#define JOB_UNAVAILABLE_AGE 7
 
 /// Used when the `get_job_unavailable_error_message` proc can't make sense of a given code.
 #define GENERIC_JOB_UNAVAILABLE_ERROR "Error: Unknown job availability."
@@ -17,6 +19,12 @@
 
 #define JOB_DISPLAY_ORDER_DEFAULT 0
 
+// Keys for jobconfig.toml
+#define JOB_CONFIG_PLAYTIME_REQUIREMENTS "Playtime Requirements"
+#define JOB_CONFIG_REQUIRED_ACCOUNT_AGE "Required Account Age"
+#define JOB_CONFIG_REQUIRED_CHARACTER_AGE "Required Character Age"
+#define JOB_CONFIG_SPAWN_POSITIONS "Spawn Positions"
+#define JOB_CONFIG_TOTAL_POSITIONS "Total Positions"
 
 /**
  * =======================
@@ -56,6 +64,7 @@
 #define JOB_STATION_ENGINEER "Station Engineer"
 #define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
 //Medical
+#define JOB_CORONER "Coroner"
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
 #define JOB_PARAMEDIC "Paramedic"
 #define JOB_CHEMIST "Chemist"
@@ -68,6 +77,7 @@
 #define JOB_QUARTERMASTER "Quartermaster"
 #define JOB_CARGO_TECHNICIAN "Cargo Technician"
 #define JOB_SHAFT_MINER "Shaft Miner"
+#define JOB_BITRUNNER "Bitrunner"
 //Service
 #define JOB_BARTENDER "Bartender"
 #define JOB_BOTANIST "Botanist"
@@ -102,6 +112,11 @@
 #define JOB_CENTCOM_SPECIAL_OFFICER "Special Ops Officer"
 #define JOB_CENTCOM_PRIVATE_SECURITY "Private Security Force"
 
+#define JOB_GROUP_ENGINEERS list( \
+	JOB_STATION_ENGINEER, \
+	JOB_ATMOSPHERIC_TECHNICIAN, \
+)
+
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
@@ -124,21 +139,22 @@
 #define JOB_DISPLAY_ORDER_QUARTERMASTER 19
 #define JOB_DISPLAY_ORDER_CARGO_TECHNICIAN 20
 #define JOB_DISPLAY_ORDER_SHAFT_MINER 21
-#define JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER 22
-#define JOB_DISPLAY_ORDER_MEDICAL_DOCTOR 23
-#define JOB_DISPLAY_ORDER_PARAMEDIC 24
-#define JOB_DISPLAY_ORDER_CHEMIST 25
-#define JOB_DISPLAY_ORDER_VIROLOGIST 26
-#define JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR 27
-#define JOB_DISPLAY_ORDER_SCIENTIST 28
-#define JOB_DISPLAY_ORDER_ROBOTICIST 29
-#define JOB_DISPLAY_ORDER_GENETICIST 30
-#define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 31
-#define JOB_DISPLAY_ORDER_WARDEN 32
-#define JOB_DISPLAY_ORDER_DETECTIVE 33
-#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 34
-#define JOB_DISPLAY_ORDER_PRISONER 35
-
+#define JOB_DISPLAY_ORDER_BITRUNNER 22
+#define JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER 23
+#define JOB_DISPLAY_ORDER_MEDICAL_DOCTOR 24
+#define JOB_DISPLAY_ORDER_PARAMEDIC 25
+#define JOB_DISPLAY_ORDER_CHEMIST 26
+#define JOB_DISPLAY_ORDER_VIROLOGIST 27
+#define JOB_DISPLAY_ORDER_CORONER 28
+#define JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR 29
+#define JOB_DISPLAY_ORDER_SCIENTIST 30
+#define JOB_DISPLAY_ORDER_ROBOTICIST 31
+#define JOB_DISPLAY_ORDER_GENETICIST 32
+#define JOB_DISPLAY_ORDER_HEAD_OF_SECURITY 33
+#define JOB_DISPLAY_ORDER_WARDEN 34
+#define JOB_DISPLAY_ORDER_DETECTIVE 35
+#define JOB_DISPLAY_ORDER_SECURITY_OFFICER 36
+#define JOB_DISPLAY_ORDER_PRISONER 37
 
 #define DEPARTMENT_UNASSIGNED "No Department"
 
@@ -182,6 +198,11 @@
 #define JOB_ASSIGN_QUIRKS (1<<7)
 /// Whether this job can be an intern.
 #define JOB_CAN_BE_INTERN (1<<8)
+/// This job cannot have more slots opened by the Head of Personnel (but admins or other random events can still do this).
+#define JOB_CANNOT_OPEN_SLOTS (1<<9)
+
+/// Combination flag for jobs which are considered regular crew members of the station.
+#define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

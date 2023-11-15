@@ -13,7 +13,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Operative" = 'icons/hud/screen_operative.dmi',
 	"Clockwork" = 'icons/hud/screen_clockwork.dmi',
 	"Glass" = 'icons/hud/screen_glass.dmi',
-	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi'
+	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
+	"Detective" = 'icons/hud/screen_detective.dmi',
 ))
 
 /proc/ui_style2icon(ui_style)
@@ -45,7 +46,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/toggleable_inventory = list() //the screen objects which can be hidden
 	var/list/atom/movable/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
-	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
+	/// Screen objects that never exit view.
+	var/list/always_visible_inventory = list()
 	var/list/inv_slots[SLOTS_AMT] // /atom/movable/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
 
@@ -69,6 +71,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// had with a proc call, especially on one of the hottest procs in the
 	/// game (MouseEntered).
 	var/screentips_enabled = SCREENTIP_PREFERENCE_ENABLED
+	/// Whether to use text or images for click hints.
+	/// Same behavior as `screentips_enabled`--very hot, updated when the preference is updated.
+	var/screentip_images = TRUE
 	/// If this client is being shown atmos debug overlays or not
 	var/atmos_debug_overlays = FALSE
 
@@ -93,6 +98,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
+	// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
+	// They typically use * in their render target. They exist solely so we can reuse them,
+	// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
+	var/list/asset_refs_for_reuse = list()
+
 /datum/hud/New(mob/owner)
 	mymob = owner
 
@@ -115,6 +125,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/datum/preferences/preferences = owner?.client?.prefs
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
 	screentips_enabled = preferences?.read_preference(/datum/preference/choiced/enable_screentips)
+	screentip_images = preferences?.read_preference(/datum/preference/toggle/screentip_images)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
@@ -124,6 +135,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
+	// Register onto the global spacelight appearances
+	// So they can be render targeted by anything in the world
+	for(var/obj/starlight_appearance/starlight as anything in GLOB.starlight_objects)
+		register_reuse(starlight)
+
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_plane_increase))
 	RegisterSignal(mymob, COMSIG_MOB_LOGIN, PROC_REF(client_refresh))
 	RegisterSignal(mymob, COMSIG_MOB_LOGOUT, PROC_REF(clear_client))
@@ -132,10 +148,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	update_sightflags(mymob, mymob.sight, NONE)
 
 /datum/hud/proc/client_refresh(datum/source)
-	RegisterSignal(mymob.client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
-	on_eye_change(null, null, mymob.client.eye)
+	SIGNAL_HANDLER
+	RegisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
+	on_eye_change(null, null, mymob.canon_client.eye)
 
 /datum/hud/proc/clear_client(datum/source)
+	SIGNAL_HANDLER
 	if(mymob.canon_client)
 		UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
 
@@ -146,6 +164,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
+	SEND_SIGNAL(src, COMSIG_HUD_EYE_CHANGED, old_eye, new_eye)
+
 	if(old_eye)
 		UnregisterSignal(old_eye, COMSIG_MOVABLE_Z_CHANGED)
 	if(new_eye)
@@ -156,6 +176,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	eye_z_changed(new_eye)
 
 /datum/hud/proc/update_sightflags(datum/source, new_sight, old_sight)
+	SIGNAL_HANDLER
 	// If neither the old and new flags can see turfs but not objects, don't transform the turfs
 	// This is to ensure parallax works when you can't see holder objects
 	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
@@ -201,10 +222,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_NULL(module_store_icon)
 	QDEL_LIST(static_inventory)
 
+	// all already deleted by static inventory clear
 	inv_slots.Cut()
 	action_intent = null
 	zone_select = null
 	pull_icon = null
+	rest_icon = null
+	hand_slots.Cut()
 
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
@@ -222,7 +246,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
-	QDEL_LIST(screenoverlays)
+	QDEL_LIST(always_visible_inventory)
 	mymob = null
 
 	QDEL_NULL(screentip_text)
@@ -231,6 +255,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/on_plane_increase(datum/source, old_max_offset, new_max_offset)
 	SIGNAL_HANDLER
+	for(var/i in old_max_offset + 1 to new_max_offset)
+		register_reuse(GLOB.starlight_objects[i + 1])
 	build_plane_groups(old_max_offset + 1, new_max_offset)
 
 /// Creates the required plane masters to fill out new z layers (because each "level" of multiz gets its own plane master set)
@@ -308,6 +334,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
+			if(always_visible_inventory.len)
+				screenmob.client.screen += always_visible_inventory
 
 			screenmob.client.screen += toggle_palette
 
@@ -324,6 +352,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
+			if(always_visible_inventory.len)
+				screenmob.client.screen += always_visible_inventory
 
 			//These ones are a part of 'static_inventory', 'toggleable_inventory' or 'hotkeybuttons' but we want them to stay
 			for(var/h in hand_slots)
@@ -344,6 +374,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
+			if(always_visible_inventory.len)
+				screenmob.client.screen += always_visible_inventory
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
@@ -353,6 +385,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
+	update_reuse(screenmob)
 
 	// ensure observers get an accurate and up-to-date view
 	if (!viewmob)
@@ -397,12 +430,28 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (initial(ui_style) || ui_style == new_ui_style)
 		return
 
-	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + screenoverlays + inv_slots)
+	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + always_visible_inventory + inv_slots)
 		if (item.icon == ui_style)
 			item.icon = new_ui_style
 
 	ui_style = new_ui_style
 	build_hand_slots()
+
+/datum/hud/proc/register_reuse(atom/movable/screen/reuse)
+	asset_refs_for_reuse += WEAKREF(reuse)
+	mymob?.client?.screen += reuse
+
+/datum/hud/proc/unregister_reuse(atom/movable/screen/reuse)
+	asset_refs_for_reuse -= WEAKREF(reuse)
+	mymob?.client?.screen -= reuse
+
+/datum/hud/proc/update_reuse(mob/show_to)
+	for(var/datum/weakref/screen_ref as anything in asset_refs_for_reuse)
+		var/atom/movable/screen/reuse = screen_ref.resolve()
+		if(isnull(reuse))
+			asset_refs_for_reuse -= screen_ref
+			continue
+		show_to.client?.screen += reuse
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()
@@ -427,14 +476,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hand_slots = list()
 	var/atom/movable/screen/inventory/hand/hand_box
 	for(var/i in 1 to mymob.held_items.len)
-		hand_box = new /atom/movable/screen/inventory/hand()
+		hand_box = new /atom/movable/screen/inventory/hand(null, src)
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
 		hand_box.screen_loc = ui_hand_position(i)
 		hand_box.held_index = i
 		hand_slots["[i]"] = hand_box
-		hand_box.hud = src
 		static_inventory += hand_box
 		hand_box.update_appearance()
 
@@ -488,7 +536,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			palette_actions.insert_action(button, palette_actions.index_of(relative_to))
 		if(SCRN_OBJ_FLOATING) // If we don't have it as a define, this is a screen_loc, and we should be floating
 			floating_actions += button
-			var/client/our_client = mymob.client
+			var/client/our_client = mymob.canon_client
 			if(!our_client)
 				position_action(button, button.linked_action.default_button_position)
 				return
@@ -529,7 +577,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /// Ensures all of our buttons are properly within the bounds of our client's view, moves them if they're not
 /datum/hud/proc/view_audit_buttons()
-	var/our_view = mymob?.client?.view
+	var/our_view = mymob?.canon_client?.view
 	if(!our_view)
 		return
 	listed_actions.check_against_view()
@@ -645,7 +693,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-[pixel_north_offset]"
 
 /datum/action_group/proc/check_against_view()
-	var/owner_view = owner?.mymob?.client?.view
+	var/owner_view = owner?.mymob?.canon_client?.view
 	if(!owner_view)
 		return
 	// Unlikey as it is, we may have been changed. Want to start from our target position and fail down

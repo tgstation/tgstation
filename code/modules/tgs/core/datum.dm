@@ -4,10 +4,21 @@ TGS_DEFINE_AND_SET_GLOBAL(tgs, null)
 	var/datum/tgs_version/version
 	var/datum/tgs_event_handler/event_handler
 
+	var/list/warned_deprecated_command_runs
+
 /datum/tgs_api/New(datum/tgs_event_handler/event_handler, datum/tgs_version/version)
 	. = ..()
 	src.event_handler = event_handler
 	src.version = version
+
+/datum/tgs_api/proc/TerminateWorld()
+	while(TRUE)
+		TGS_DEBUG_LOG("About to terminate world. Tick: [world.time], sleep_offline: [world.sleep_offline]")
+		world.sleep_offline = FALSE // https://www.byond.com/forum/post/2894866
+		del(world)
+		world.sleep_offline = FALSE // just in case, this is BYOND after all...
+		sleep(1)
+		TGS_DEBUG_LOG("BYOND DIDN'T TERMINATE THE WORLD!!! TICK IS: [world.time], sleep_offline: [world.sleep_offline]")
 
 /datum/tgs_api/latest
 	parent_type = /datum/tgs_api/v5
@@ -54,4 +65,7 @@ TGS_PROTECT_DATUM(/datum/tgs_api)
 	return TGS_UNIMPLEMENTED
 
 /datum/tgs_api/proc/SecurityLevel()
+	return TGS_UNIMPLEMENTED
+
+/datum/tgs_api/proc/Visibility()
 	return TGS_UNIMPLEMENTED

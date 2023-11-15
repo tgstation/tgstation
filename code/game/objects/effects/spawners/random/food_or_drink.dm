@@ -56,6 +56,7 @@
 		/obj/item/seeds/liberty = 5,
 		/obj/item/seeds/replicapod = 5,
 		/obj/item/seeds/reishi = 5,
+		/obj/item/seeds/seedling = 5,
 		/obj/item/seeds/nettle/death = 1,
 		/obj/item/seeds/plump/walkingmushroom = 1,
 		/obj/item/seeds/cannabis/rainbow = 1,
@@ -72,12 +73,12 @@
 	name = "soup spawner"
 	icon_state = "soup"
 	loot = list(
-		/obj/item/food/soup/beet,
-		/obj/item/food/soup/sweetpotato,
-		/obj/item/food/soup/stew,
-		/obj/item/food/soup/hotchili,
-		/obj/item/food/soup/nettle,
-		/obj/item/food/soup/meatball,
+		/obj/item/reagent_containers/cup/bowl/soup/hotchili,
+		/obj/item/reagent_containers/cup/bowl/soup/meatball_soup,
+		/obj/item/reagent_containers/cup/bowl/soup/nettle,
+		/obj/item/reagent_containers/cup/bowl/soup/stew,
+		/obj/item/reagent_containers/cup/bowl/soup/sweetpotato,
+		/obj/item/reagent_containers/cup/bowl/soup/white_beet,
 	)
 
 /obj/effect/spawner/random/food_or_drink/salad
@@ -155,6 +156,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/sake = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/grappa = 5,
 		/obj/item/reagent_containers/cup/glass/bottle/applejack = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5,
 		/obj/item/reagent_containers/cup/bottle/ethanol = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/fernet = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/champagne = 2,
@@ -223,7 +225,7 @@
 		/obj/item/food/breadslice/root = 5,
 		/obj/item/food/kebab/candied_mushrooms = 5,
 		/obj/item/food/steeped_mushrooms = 5,
-		/obj/item/food/larvae = 5,
+		/obj/item/food/canned/larvae = 5,
 		/obj/item/food/emperor_roll = 5,
 		/obj/item/food/honey_roll = 5,
 	)
@@ -242,7 +244,7 @@
 		/obj/item/reagent_containers/condiment/soysauce = 1,
 		/obj/item/reagent_containers/condiment/vinegar = 1,
 		/obj/item/reagent_containers/condiment/peanut_butter = 1,
-		/obj/item/reagent_containers/condiment/quality_oil = 1,
+		/obj/item/reagent_containers/condiment/olive_oil = 1,
 		/obj/item/reagent_containers/condiment/cherryjelly = 1,
 	)
 
@@ -253,4 +255,71 @@
 		/obj/item/storage/box/drinkingglasses,
 		/obj/item/storage/box/cups,
 		/obj/item/storage/box/condimentbottles,
+	)
+
+///Used for the employee birthday station trait
+/obj/effect/spawner/random/food_or_drink/cake_ingredients
+	name = "cake ingredients spawner"
+	icon_state = "cake"
+	spawn_all_loot = TRUE
+	loot = list(
+		/obj/item/food/cakebatter,
+		/obj/item/flashlight/flare/candle,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/cup/bottle/caramel,
+	)
+
+/obj/effect/spawner/random/food_or_drink/cake_ingredients/Initialize(mapload)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
+		spawn_loot_chance = 0
+	return ..()
+
+/obj/effect/spawner/random/food_or_drink/donuts
+	name = "donut spawner"
+	icon_state = "donut"
+	loot = list(
+		/obj/item/food/donut/apple = 3,
+		/obj/item/food/donut/berry = 3,
+		/obj/item/food/donut/caramel = 3,
+		/obj/item/food/donut/choco = 3,
+		/obj/item/food/donut/plain = 3,
+		/obj/item/food/donut/blumpkin = 2,
+		/obj/item/food/donut/bungo = 2,
+		/obj/item/food/donut/laugh = 2,
+		/obj/item/food/donut/matcha = 2,
+		/obj/item/food/donut/trumpet = 2,
+		/obj/item/food/donut/chaos = 1,
+		/obj/item/food/donut/meat = 1,
+	)
+
+/obj/effect/spawner/random/food_or_drink/jelly_donuts
+	name = "jelly donut spawner"
+	icon_state = "jelly_donut"
+	loot = list(
+		/obj/item/food/donut/jelly/apple = 3,
+		/obj/item/food/donut/jelly/berry = 3,
+		/obj/item/food/donut/jelly/caramel = 3,
+		/obj/item/food/donut/jelly/choco = 3,
+		/obj/item/food/donut/jelly/plain = 3,
+		/obj/item/food/donut/jelly/blumpkin = 2,
+		/obj/item/food/donut/jelly/bungo = 2,
+		/obj/item/food/donut/jelly/laugh = 2,
+		/obj/item/food/donut/jelly/matcha = 2,
+		/obj/item/food/donut/jelly/trumpet = 2,
+	)
+
+/obj/effect/spawner/random/food_or_drink/slime_jelly_donuts
+	name = "slime jelly donut spawner"
+	icon_state = "slime_jelly_donut"
+	loot = list(
+		/obj/item/food/donut/jelly/slimejelly/apple = 3,
+		/obj/item/food/donut/jelly/slimejelly/berry = 3,
+		/obj/item/food/donut/jelly/slimejelly/caramel = 3,
+		/obj/item/food/donut/jelly/slimejelly/choco = 3,
+		/obj/item/food/donut/jelly/slimejelly/plain = 3,
+		/obj/item/food/donut/jelly/slimejelly/blumpkin = 2,
+		/obj/item/food/donut/jelly/slimejelly/bungo = 2,
+		/obj/item/food/donut/jelly/slimejelly/laugh = 2,
+		/obj/item/food/donut/jelly/slimejelly/matcha = 2,
+		/obj/item/food/donut/jelly/slimejelly/trumpet = 2,
 	)

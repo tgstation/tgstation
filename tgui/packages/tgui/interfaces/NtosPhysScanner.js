@@ -5,7 +5,7 @@ import { sanitizeText } from '../sanitize';
 
 export const NtosPhysScanner = (props, context) => {
   const { act, data } = useBackend(context);
-  const { set_mode, last_record, available_modes = [] } = data;
+  const { last_record } = data;
   const textHtml = {
     __html: sanitizeText(last_record),
   };

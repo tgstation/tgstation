@@ -1,0 +1,97 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/bodybags,
+/obj/item/clothing/gloves/latex,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"j" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Morgue Maintenance"
+	},
+/obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"u" = (
+/turf/template_noop,
+/area/template_noop)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 8
+	},
+/obj/machinery/vending/wallmed/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery/white{
+	color = "#52B4E9"
+	},
+/obj/effect/landmark/generic_maintenance_landmark,
+/obj/structure/closet/body_bag,
+/mob/living/basic/skeleton{
+	name = "Jim";
+	desc = "Left to rot in maintenance, a poor soul whose green light was never noticed by the doctor..."
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+"Y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark,
+/area/station/maintenance/department/medical)
+
+(1,1,1) = {"
+W
+d
+"}
+(2,1,1) = {"
+T
+d
+"}
+(3,1,1) = {"
+O
+b
+"}
+(4,1,1) = {"
+j
+Y
+"}
+(5,1,1) = {"
+j
+a
+"}
+(6,1,1) = {"
+r
+u
+"}

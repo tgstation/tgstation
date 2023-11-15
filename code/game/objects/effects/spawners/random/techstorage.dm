@@ -34,10 +34,12 @@
 		/obj/item/circuitboard/machine/ore_redemption,
 		/obj/item/circuitboard/computer/order_console/mining,
 		/obj/item/circuitboard/machine/microwave,
+		/obj/item/circuitboard/machine/microwave/engineering,
 		/obj/item/circuitboard/machine/deep_fryer,
 		/obj/item/circuitboard/machine/griddle,
 		/obj/item/circuitboard/machine/reagentgrinder,
 		/obj/item/circuitboard/machine/oven,
+		/obj/item/circuitboard/machine/stove,
 		/obj/item/circuitboard/machine/processor,
 		/obj/item/circuitboard/machine/gibber,
 		/obj/item/circuitboard/machine/chem_dispenser/drinks,
@@ -57,6 +59,7 @@
 		/obj/item/circuitboard/computer/rdconsole,
 		/obj/item/circuitboard/computer/scan_consolenew,
 		/obj/item/circuitboard/machine/dnascanner,
+		/obj/item/circuitboard/machine/dna_infuser,
 	)
 
 /obj/effect/spawner/random/techstorage/security_all
@@ -112,6 +115,7 @@
 	loot = list(
 		/obj/item/circuitboard/computer/crew,
 		/obj/item/circuitboard/computer/communications,
+		/obj/item/circuitboard/computer/bankmachine,
 	)
 
 /obj/effect/spawner/random/techstorage/rnd_secure_all
@@ -121,4 +125,3 @@
 		/obj/item/circuitboard/computer/apc_control,
 		/obj/item/circuitboard/computer/robotics,
 	)
-

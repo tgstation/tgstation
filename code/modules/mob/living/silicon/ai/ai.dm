@@ -22,7 +22,6 @@
 	status_flags = CANSTUN|CANPUSH
 	combat_mode = TRUE //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
-	see_in_dark = NIGHTVISION_FOV_RANGE
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
@@ -37,7 +36,7 @@
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	var/icon/holo_icon //Default is assigned when AI is created.
+	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
 	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
 	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
@@ -45,7 +44,6 @@
 	var/obj/item/multitool/aiMulti
 	///Weakref to the bot the ai's commanding right now
 	var/datum/weakref/bot_ref
-	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
 
 	//MALFUNCTION
@@ -54,7 +52,6 @@
 	var/can_dominate_mechs = FALSE
 	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
-	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
@@ -65,7 +62,8 @@
 	var/camera_light_on = FALSE
 	var/list/obj/machinery/camera/lit_cameras = list()
 
-	var/datum/trackable/track = new
+	///The internal tool used to track players visible through cameras.
+	var/datum/trackable/ai_tracking_tool
 
 	var/last_tablet_note_seen = null
 	var/can_shunt = TRUE
@@ -80,7 +78,7 @@
 	var/mob/camera/ai_eye/eyeobj
 	var/sprint = 10
 	var/cooldown = 0
-	var/acceleration = 1
+	var/acceleration = TRUE
 
 	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
@@ -133,6 +131,8 @@
 		for (var/law in laws.inherent)
 			lawcheck += law
 
+	create_eye()
+
 	if(target_ai.mind)
 		target_ai.mind.transfer_to(src)
 		if(mind.special_role)
@@ -140,36 +140,35 @@
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
 		if(!mind.has_ever_been_ai)
 			mind.has_ever_been_ai = TRUE
+	else if(target_ai.key)
+		key = target_ai.key
 
-	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
-	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
+	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))
+	to_chat(src, span_bold("While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc."))
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "For department channels, use the following say commands:")
 	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
 	show_laws()
-	to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning."))
 
 	job = "AI"
 
-	create_eye()
-
 	create_modularInterface()
 
+	// /mob/living/silicon/ai/apply_prefs_job() uses these to set these procs at mapload
+	// this is used when a person is being inserted into an AI core during a round
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
+		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
 
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
-
-
-	holo_icon = getHologramIcon(icon('icons/mob/silicon/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
-
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -191,12 +190,20 @@
 	builtInCamera = new (src)
 	builtInCamera.network = list("ss13")
 
-	ADD_TRAIT(src, TRAIT_PULL_BLOCKED, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
+	ai_tracking_tool = new(src)
+	RegisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
+
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_HANDS_BLOCKED), ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
+
+/mob/living/silicon/ai/weak_syndie
+	radio = /obj/item/radio/headset/silicon/ai/evil
+	radio_enabled = TRUE
+	interaction_range = 1
+	sprint = 5
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -204,7 +211,8 @@
 	switch(_key)
 		if("`", "0")
 			if(cam_prev)
-				cameraFollow = null //stop following something, we want to jump away.
+				if(ai_tracking_tool.tracking)
+					ai_tracking_tool.set_tracking(FALSE)
 				eyeobj.setLoc(cam_prev)
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -215,7 +223,8 @@
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
-				cameraFollow = null //stop following something, we want to jump away.
+				if(ai_tracking_tool.tracking)
+					ai_tracking_tool.set_tracking(FALSE)
 				eyeobj.setLoc(cam_hotkeys[_key])
 				return
 	return ..()
@@ -231,6 +240,7 @@
 	QDEL_NULL(robot_control)
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
+	QDEL_NULL(ai_tracking_tool)
 	malfhack = null
 	current = null
 	bot_ref = null
@@ -240,6 +250,7 @@
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
 		ai_voicechanger = null
+	UnregisterSignal(src, COMSIG_TRACKABLE_TRACKING_TARGET)
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
@@ -250,7 +261,7 @@
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
 
-/mob/living/silicon/ai/ignite_mob()
+/mob/living/silicon/ai/ignite_mob(silent)
 	return FALSE
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
@@ -261,6 +272,33 @@
 	else
 		var/preferred_icon = input ? input : C.prefs.read_preference(/datum/preference/choiced/ai_core_display)
 		icon_state = resolve_ai_icon(preferred_icon)
+
+/// Apply an AI's hologram preference
+/mob/living/silicon/ai/proc/apply_pref_hologram_display(client/player_client)
+	if(player_client.prefs?.read_preference(/datum/preference/choiced/ai_hologram_display))
+		var/list/hologram_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_hologram_display)
+		if(hologram_choice == "Random")
+			hologram_choice = pick(GLOB.ai_hologram_icons)
+
+		hologram_appearance = mutable_appearance(GLOB.ai_hologram_icons[hologram_choice], GLOB.ai_hologram_icon_state[hologram_choice])
+
+	hologram_appearance ||= mutable_appearance(GLOB.ai_hologram_icons[AI_HOLOGRAM_DEFAULT], GLOB.ai_hologram_icon_state[AI_HOLOGRAM_DEFAULT])
+
+/// Apply an AI's emote display preference
+/mob/living/silicon/ai/proc/apply_pref_emote_display(client/player_client)
+	if(player_client.prefs?.read_preference(/datum/preference/choiced/ai_emote_display))
+		var/emote_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_emote_display)
+
+		if(emote_choice == "Random")
+			emote_choice = pick(GLOB.ai_status_display_emotes)
+
+		apply_emote_display(emote_choice)
+
+/// Apply an emote to all AI status displays on the station
+/mob/living/silicon/ai/proc/apply_emote_display(emote)
+	for(var/obj/machinery/status_display/ai/ai_display as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/status_display/ai))
+		ai_display.emotion = emote
+		ai_display.update()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
@@ -359,6 +397,20 @@
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
 
+/mob/living/silicon/ai/verb/ai_camera_track()
+	set name = "track"
+	set hidden = TRUE //Don't display it on the verb lists. This verb exists purely so you can type "track Oldman Robustin" and follow his ass
+
+	ai_tracking_tool.set_tracked_mob(src)
+
+///Called when an AI finds their tracking target.
+/mob/living/silicon/ai/proc/on_track_target(datum/trackable/source, mob/living/target)
+	SIGNAL_HANDLER
+	if(eyeobj)
+		eyeobj.setLoc(get_turf(target))
+	else
+		view_core()
+
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
 	set name = "Toggle Floor Bolts"
@@ -413,15 +465,17 @@
 	the_mmi.brainmob.name = src.real_name
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
-	the_mmi.brainmob.set_suicide(suiciding)
-	the_mmi.brain.suicided = suiciding
+
+	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
+	the_mmi.brainmob.set_suicide(has_suicided_trait)
+	the_mmi.brain.suicided = has_suicided_trait
 	if(the_core)
 		var/obj/structure/ai_core/core = the_core
 		core.core_mmi = the_mmi
 		the_mmi.forceMove(the_core)
 	else
 		the_mmi.forceMove(get_turf(src))
-	if(the_mmi.brainmob.stat == DEAD && !suiciding)
+	if(the_mmi.brainmob.stat == DEAD && !has_suicided_trait)
 		the_mmi.brainmob.set_stat(CONSCIOUS)
 	if(mind)
 		mind.transfer_to(the_mmi.brainmob)
@@ -461,38 +515,21 @@
 			src << browse(last_tablet_note_seen, "window=show_tablet")
 	//Carn: holopad requests
 	if(href_list["jump_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/holopad)
 		if(Holopad)
 			cam_prev = get_turf(eyeobj)
 			eyeobj.setLoc(Holopad)
 		else
 			to_chat(src, span_notice("Unable to locate the holopad."))
 	if(href_list["project_to_holopad"])
-		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in GLOB.machines
+		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type(/obj/machinery/holopad)
 		if(Holopad)
 			lastloc = get_turf(eyeobj)
 			Holopad.attack_ai_secondary(src) //may as well recycle
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
 	if(href_list["track"])
-		var/string = href_list["track"]
-		trackable_mobs()
-		var/list/trackeable = list()
-		trackeable += track.humans + track.others
-		var/list/target = list()
-		for(var/I in trackeable)
-			var/datum/weakref/to_resolve = trackeable[I]
-			var/mob/to_track = to_resolve.resolve()
-			if(!to_track || to_track.name != string)
-				continue
-			target += to_track
-		if(name == string)
-			target += src
-		if(length(target))
-			cam_prev = get_turf(eyeobj)
-			ai_actual_track(pick(target))
-		else
-			to_chat(src, "Target is not on or near any active cameras on the station.")
+		ai_tracking_tool.set_tracked_mob(src, href_list["track"])
 		return
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
@@ -531,12 +568,13 @@
 	if(QDELETED(C))
 		return FALSE
 
-	if(!tracking)
-		cameraFollow = null
-
 	if(QDELETED(eyeobj))
 		view_core()
 		return
+
+	if(ai_tracking_tool.tracking)
+		ai_tracking_tool.set_tracking(FALSE)
+
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
 	return TRUE
@@ -605,7 +643,8 @@
 	set category = "AI Commands"
 	set name = "Jump To Network"
 	unset_machine()
-	cameraFollow = null
+	if(ai_tracking_tool.tracking)
+		ai_tracking_tool.set_tracking(FALSE)
 	var/cameralist[0]
 
 	if(incapacitated())
@@ -672,22 +711,17 @@
 						return
 					var/mutable_appearance/character_icon = personnel_list[input]
 					if(character_icon)
-						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
 						character_icon.setDir(SOUTH)
-
-						var/icon/icon_for_holo = getFlatIcon(character_icon)
-						holo_icon = getHologramIcon(icon(icon_for_holo))
+						hologram_appearance = character_icon
 
 				if("My Character")
 					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
 						if("Yes")
 							var/mob/living/carbon/human/dummy/ai_dummy = new
-							var/mutable_appearance/appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-							var/icon/character_icon = getHologramIcon(getFlatIcon(appearance))
-							if(character_icon)
-								qdel(holo_icon)
+							var/mutable_appearance/dummy_appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+							if(dummy_appearance)
 								qdel(ai_dummy)
-								holo_icon = character_icon
+								hologram_appearance = dummy_appearance
 						if("No")
 							return FALSE
 
@@ -697,7 +731,7 @@
 			"carp" = 'icons/mob/simple/carp.dmi',
 			"chicken" = 'icons/mob/simple/animal.dmi',
 			"corgi" = 'icons/mob/simple/pets.dmi',
-			"cow" = 'icons/mob/simple/animal.dmi',
+			"cow" = 'icons/mob/simple/cows.dmi',
 			"crab" = 'icons/mob/simple/animal.dmi',
 			"fox" = 'icons/mob/simple/pets.dmi',
 			"goat" = 'icons/mob/simple/animal.dmi',
@@ -705,7 +739,7 @@
 			"cat2" = 'icons/mob/simple/pets.dmi',
 			"poly" = 'icons/mob/simple/animal.dmi',
 			"pug" = 'icons/mob/simple/pets.dmi',
-			"spider" = 'icons/mob/simple/animal.dmi'
+			"spider" = 'icons/mob/simple/arachnoid.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -713,16 +747,17 @@
 				return
 			if(isnull(icon_list[input]))
 				return
-			qdel(holo_icon)
+			var/working_state = ""
 			switch(input)
 				if("poly")
-					holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
+					working_state = "parrot_fly"
 				if("chicken")
-					holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
+					working_state = "chicken_brown"
 				if("spider")
-					holo_icon = getHologramIcon(icon(icon_list[input],"guard"))
+					working_state = "guard"
 				else
-					holo_icon = getHologramIcon(icon(icon_list[input], input))
+					working_state = input
+			hologram_appearance = mutable_appearance(icon_list[input], working_state)
 		else
 			var/list/icon_list = list(
 				"default" = 'icons/mob/silicon/ai.dmi',
@@ -737,12 +772,13 @@
 				return
 			if(isnull(icon_list[input]))
 				return
-			qdel(holo_icon)
+			var/working_state = ""
 			switch(input)
 				if("xeno queen")
-					holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
+					working_state = "alienq"
 				else
-					holo_icon = getHologramIcon(icon(icon_list[input], input))
+					working_state = input
+			hologram_appearance = mutable_appearance(icon_list[input], working_state)
 	return
 
 /datum/action/innate/core_return
@@ -784,7 +820,7 @@
 	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
 		for (var/z_key in chunk.cameras)
 			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
-				if (!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+				if(isnull(camera) || !camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
 					continue
 				visible |= camera
 
@@ -826,31 +862,31 @@
 /mob/living/silicon/ai/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
 		return
-	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
-		if(!can_be_carded)
-			to_chat(user, span_boldwarning("Transfer failed."))
-			return
-		disconnect_shell() //If the AI is controlling a borg, force the player back to core!
-		if(!mind)
-			to_chat(user, span_warning("No intelligence patterns detected."))
-			return
-		ShutOffDoomsdayDevice()
-		var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
-		new_core.circuit.battery = battery
-		ai_restore_power()//So the AI initially has power.
-		control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
-		interaction_range = 0
-		radio_enabled = FALSE //No talking on the built-in radio for you either!
-		forceMove(card)
-		card.AI = src
-		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-		to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+	if(interaction != AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
+		return
+	if(!can_be_carded)
+		balloon_alert(user, "transfer failed!")
+		return
+	disconnect_shell() //If the AI is controlling a borg, force the player back to core!
+	if(!mind)
+		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
+		return
+	ShutOffDoomsdayDevice()
+	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
+	new_core.circuit.battery = battery
+	ai_restore_power()//So the AI initially has power.
+	control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
+	radio_enabled = FALSE //No talking on the built-in radio for you either!
+	forceMove(card)
+	card.AI = src
+	to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
+	to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
+/mob/living/silicon/ai/can_perform_action(atom/movable/target, action_bitflags)
 	if(control_disabled)
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
-	return can_see(M) && ..() //stop AIs from leaving windows open and using then after they lose vision
+	return can_see(target) && ..() //stop AIs from leaving windows open and using then after they lose vision
 
 /mob/living/silicon/ai/proc/can_see(atom/A)
 	if(isturf(loc)) //AI in core, check if on cameras
@@ -868,20 +904,24 @@
 	var/treated_message = source.say_quote(raw_translation, spans, message_mods)
 
 	var/start = "Relayed Speech: "
-	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/namepart
+	var/list/stored_name = list(null)
+	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
+	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
 	var/hrefpart = "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if (isliving(speaker))
-		var/mob/living/living_speaker = speaker
-		if(living_speaker.job)
-			jobpart = "[living_speaker.job]"
-	if (istype(speaker, /obj/effect/overlay/holo_pad_hologram))
-		var/obj/effect/overlay/holo_pad_hologram/holo = speaker
-		if(holo.Impersonation?.job)
-			jobpart = "[holo.Impersonation.job]"
-		else if(usr?.job) // not great, but AI holograms have no other usable ref
-			jobpart = "[usr.job]"
+	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+		if (isliving(speaker))
+			var/mob/living/living_speaker = speaker
+			if(living_speaker.job)
+				jobpart = "[living_speaker.job]"
+		if (istype(speaker, /obj/effect/overlay/holo_pad_hologram))
+			var/obj/effect/overlay/holo_pad_hologram/holo = speaker
+			if(holo.Impersonation?.job)
+				jobpart = "[holo.Impersonation.job]"
+			else if(usr?.job) // not great, but AI holograms have no other usable ref
+				jobpart = "[usr.job]"
 
 	var/rendered = "<i><span class='game say'>[start][span_name("[hrefpart][namepart] ([jobpart])</a> ")]<span class='message'>[treated_message]</span></span></i>"
 
@@ -894,7 +934,7 @@
 	if(oldname != real_name)
 		if(eyeobj)
 			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.saved_identification = real_name
+			modularInterface.imprint_id(name = real_name)
 
 		// Notify Cyborgs
 		for(var/mob/living/silicon/robot/Slave in connected_robots)
@@ -955,7 +995,7 @@
 	update_sight()
 	if(client.eye != src)
 		var/atom/AT = client.eye
-		AT.get_remote_view_fullscreens(src)
+		AT?.get_remote_view_fullscreens(src)
 	else
 		clear_fullscreen("remote_view", 0)
 
@@ -978,20 +1018,32 @@
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
-	else if(apc.aidisabled)
+		return
+	if(apc.aidisabled)
 		to_chat(src, span_danger("Hack aborted. [apc] is no longer responding to our systems."))
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
-	else
-		malf_picker.processing_time += 10
+		return
 
-		apc.malfai = parent || src
-		apc.malfhack = TRUE
-		apc.locked = TRUE
-		apc.coverlocked = TRUE
+	malf_picker.processing_time += 10
+	var/area/apcarea = apc.area
+	var/datum/ai_module/destructive/nuke_station/doom_n_boom = locate(/datum/ai_module/destructive/nuke_station) in malf_picker.possible_modules["Destructive Modules"]
+	if(doom_n_boom && (is_type_in_list (apcarea, doom_n_boom.discount_areas)) && !(is_type_in_list (apcarea, doom_n_boom.hacked_command_areas)))
+		doom_n_boom.hacked_command_areas += apcarea
+		doom_n_boom.cost = max(50, 130 - (length(doom_n_boom.hacked_command_areas) * 20))
+		var/datum/antagonist/malf_ai/malf_ai_datum = mind.has_antag_datum(/datum/antagonist/malf_ai)
+		if(malf_ai_datum)
+			malf_ai_datum.update_static_data_for_all_viewers()
+		else //combat software AIs use a different UI
+			malf_picker.update_static_data_for_all_viewers()
 
-		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
-		to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
-		apc.update_appearance()
+	apc.malfai = parent || src
+	apc.malfhack = TRUE
+	apc.locked = TRUE
+	apc.coverlocked = TRUE
+
+	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
+	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
+	apc.update_appearance()
 
 /mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
 	set category = "AI Commands"
@@ -1061,7 +1113,6 @@
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, span_danger("Your remote connection has been reset!"))
 		deployed_shell.undeploy()
-		UnregisterSignal(deployed_shell, COMSIG_LIVING_DEATH)
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()
@@ -1106,6 +1157,14 @@
 	else if(.)
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
+/mob/living/silicon/ai/proc/show_camera_list()
+	var/list/cameras = get_camera_list(network)
+	var/camera = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
+	if(isnull(camera))
+		return
+	if(isnull(cameras[camera]))
+		return
+	switchCamera(cameras[camera])
 
 /mob/living/silicon/on_handsblocked_start()
 	return // AIs have no hands
@@ -1126,3 +1185,5 @@
 	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return
+
+#undef CALL_BOT_COOLDOWN

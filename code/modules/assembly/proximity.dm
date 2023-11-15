@@ -2,7 +2,7 @@
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
-	custom_materials = list(/datum/material/iron=800, /datum/material/glass=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*8, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 2)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -90,17 +90,18 @@
 /obj/item/assembly/prox_sensor/proc/sense()
 	if(!scanning || !secured || next_activate > world.time)
 		return FALSE
+	next_activate = world.time + (3 SECONDS) // this must happen before anything else
 	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
 		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	next_activate = world.time + 30
+
 	return TRUE
 
-/obj/item/assembly/prox_sensor/process(delta_time)
+/obj/item/assembly/prox_sensor/process(seconds_per_tick)
 	if(!timing)
 		return
-	time -= delta_time
+	time -= seconds_per_tick
 	if(time <= 0)
 		timing = FALSE
 		toggle_scan(TRUE)

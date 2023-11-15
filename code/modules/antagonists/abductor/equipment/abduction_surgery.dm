@@ -4,8 +4,8 @@
 	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/extract_organ,
 		/datum/surgery_step/gland_insert,
@@ -30,7 +30,7 @@
 	var/list/organ_types = list(/obj/item/organ/internal/heart)
 
 /datum/surgery_step/extract_organ/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/atom/A in target.internal_organs)
+	for(var/atom/A in target.organs)
 		if(A.type in organ_types)
 			IC = A
 			break

@@ -48,7 +48,7 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/cascade // Big boi delamination
-	description = "The engineers have finally done it, we are all going to die..."
+	description = "I never thought I'd see a resonance cascade, let alone experience one..."
 	mood_change = -8
 	timeout = 5 MINUTES
 
@@ -78,9 +78,22 @@
 	timeout = 60 SECONDS
 
 /datum/mood_event/dismembered
-	description = "AHH! I WAS USING THAT LIMB!"
+	description = "AHH! MY LIMB! I WAS USING THAT!"
 	mood_change = -10
 	timeout = 8 MINUTES
+
+/datum/mood_event/dismembered/add_effects(obj/item/bodypart/limb)
+	if(limb)
+		description = "AHH! MY [uppertext(limb.plaintext_zone)]! I WAS USING THAT!"
+
+/datum/mood_event/reattachment
+	description = "Ouch! My limb feels like I fell asleep on it."
+	mood_change = -3
+	timeout = 2 MINUTES
+
+/datum/mood_event/reattachment/add_effects(obj/item/bodypart/limb)
+	if(limb)
+		description = "Ouch! My [limb.plaintext_zone] feels like I fell asleep on it."
 
 /datum/mood_event/tased
 	description = "There's no \"z\" in \"taser\". It's in the zap."
@@ -128,6 +141,10 @@
 	mood_change = -3
 	timeout = 5 MINUTES
 
+/datum/mood_event/photophobia
+	description = "The lights are too bright..."
+	mood_change = -3
+
 /datum/mood_event/nyctophobia
 	description = "It sure is dark around here..."
 	mood_change = -3
@@ -149,6 +166,9 @@
 	description = "I feel like I'm held together by flimsy string, and could fall apart at any moment!"
 	mood_change = -4
 	timeout = 2 MINUTES
+
+/datum/mood_event/healsbadman/long_term
+	timeout = 10 MINUTES
 
 /datum/mood_event/jittery
 	description = "I'm nervous and on edge and I can't stand still!!"
@@ -296,6 +316,11 @@
 	description = "I need something to cover my head..."
 	mood_change = -3
 
+/datum/mood_event/bald_reminder
+	description = "I was reminded that I can't grow my hair back at all! This is awful!"
+	mood_change = -5
+	timeout = 4 MINUTES
+
 /datum/mood_event/bad_touch
 	description = "I don't like when people touch me."
 	mood_change = -3
@@ -413,3 +438,9 @@
 /datum/mood_event/unsatisfied_nomad
 	description = "I've been here too long! I want to go out and explore space!"
 	mood_change = -3
+
+///Wizard cheesy grand finale - what everyone but the wizard gets
+/datum/mood_event/madness_despair
+	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
+	mood_change = -200
+	special_screen_obj = "mood_despair"

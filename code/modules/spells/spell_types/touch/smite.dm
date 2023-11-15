@@ -48,11 +48,12 @@
 			return TRUE
 
 	victim.investigate_log("has been gibbed by the smite spell.", INVESTIGATE_DEATHS)
-	victim.gib()
+	victim.gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /obj/item/melee/touch_attack/smite
 	name = "\improper smiting touch"
 	desc = "This hand of mine glows with an awesome power!"
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

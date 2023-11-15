@@ -52,6 +52,6 @@
 	to_chat(owner, span_notice("You grit your teeth and burst the implanted [item_target.name]!"))
 	owner.log_message("swallowed an implanted pill, [target]", LOG_ATTACK)
 	if(item_target.reagents.total_volume)
-		item_target.reagents.trans_to(owner, item_target.reagents.total_volume, transfered_by = owner, methods = INGEST)
+		item_target.reagents.trans_to(owner, item_target.reagents.total_volume, transferred_by = owner, methods = INGEST)
 	qdel(target)
 	return TRUE

@@ -51,10 +51,10 @@
 		return central_turf
 
 /datum/map_template/ruin/proc/place_on_isolated_level(z)
-	var/datum/turf_reservation/reservation = SSmapping.RequestBlockReservation(width, height, z) //Make the new level creation work with different traits.
+	var/datum/turf_reservation/reservation = SSmapping.request_turf_block_reservation(width, height, 1, z) //Make the new level creation work with different traits.
 	if(!reservation)
 		return
-	var/turf/placement = locate(reservation.bottom_left_coords[1],reservation.bottom_left_coords[2],reservation.bottom_left_coords[3])
+	var/turf/placement = reservation.bottom_left_turfs[1]
 	load(placement)
 	loaded++
 	for(var/turf/T in get_affected_turfs(placement))
@@ -81,9 +81,18 @@
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
 
+	if(PERFORM_ALL_TESTS(log_mapping))
+		log_mapping("All ruins being loaded for map testing.")
+
 	//Set up the starting ruin list
 	for(var/key in ruins)
 		var/datum/map_template/ruin/R = ruins[key]
+
+		if(PERFORM_ALL_TESTS(log_mapping))
+			R.cost = 0
+			R.allow_duplicates = FALSE // no multiples for testing
+			R.always_place = !R.unpickable // unpickable ruin means it spawns as a set with another ruin
+
 		if(R.cost > budget) //Why would you do that
 			continue
 		if(R.always_place)
@@ -124,7 +133,7 @@
 					for(var/v in current_pick.always_spawn_with)
 						if(current_pick.always_spawn_with[v] == PLACE_BELOW)
 							var/turf/T = locate(1,1,target_z)
-							if(!SSmapping.get_turf_below(T))
+							if(!GET_TURF_BELOW(T))
 								if(forced_z)
 									continue outer
 								else
@@ -174,7 +183,7 @@
 								if(PLACE_DEFAULT)
 									forced_ruins[linked] = -1
 								if(PLACE_BELOW)
-									forced_ruins[linked] = SSmapping.get_turf_below(placed_turf)
+									forced_ruins[linked] = GET_TURF_BELOW(placed_turf)
 								if(PLACE_ISOLATED)
 									forced_ruins[linked] = SSmapping.get_isolated_ruin_z()
 

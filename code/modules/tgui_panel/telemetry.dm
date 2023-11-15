@@ -108,6 +108,7 @@
 	if(found)
 		var/msg = "[key_name(client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
 		message_admins(msg)
+		send2tgs_adminless_only("Banned-user", msg)
 		log_admin_private(msg)
 		log_suspicious_login(msg, access_log_mirror = FALSE)
 
@@ -138,3 +139,6 @@
 		))
 		query.Execute()
 		qdel(query)
+
+#undef TGUI_TELEMETRY_MAX_CONNECTIONS
+#undef TGUI_TELEMETRY_RESPONSE_WINDOW

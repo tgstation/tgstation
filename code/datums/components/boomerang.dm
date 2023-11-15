@@ -83,3 +83,5 @@
 	true_parent.visible_message(span_danger("[true_parent] is flying back at [throwing_datum.thrower]!"), \
 						span_danger("You see [true_parent] fly back at you!"), \
 						span_hear("You hear an aerodynamic woosh!"))
+
+#undef BOOMERANG_REBOUND_INTERVAL

@@ -21,8 +21,6 @@
 	var/decksize = INFINITY
 	/// The description of the cardgame that is played with this deck (used for memories)
 	var/cardgame_desc = "card game"
-	/// Wielding status for holding with two hands
-	var/wielded = FALSE
 	/// The holodeck computer used to spawn a holographic deck (see /obj/item/toy/cards/deck/syndicate/holographic)
 	var/obj/machinery/computer/holodeck/holodeck
 	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
@@ -33,8 +31,6 @@
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
 	register_context()
 
@@ -50,18 +46,6 @@
 			initial_cards += "[i] of [suit]"
 		for(var/person in list("Jack", "Queen", "King"))
 			initial_cards += "[person] of [suit]"
-
-/// triggered on wield of two handed item
-/obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/toy/cards/deck/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 
 /obj/item/toy/cards/deck/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like their luck ran out!"))
@@ -87,7 +71,7 @@
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(src == held_item)
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		context[SCREENTIP_CONTEXT_LMB] = dealer_deck.wielded ? "Recycle mode" : "Dealer mode"
+		context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(dealer_deck, TRAIT_WIELDED) ? "Recycle mode" : "Dealer mode"
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Shuffle"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -143,7 +127,7 @@
 				other_players = other_players)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
-	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
+	if(!ishuman(user) || !user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		return
 
 	var/obj/item/toy/singlecard/card = draw(user)
@@ -160,8 +144,8 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
-	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
-		if(wielded)
+	if(user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
+		if(HAS_TRAIT(src, TRAIT_WIELDED))
 			shuffle_cards(user)
 		else
 			to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))

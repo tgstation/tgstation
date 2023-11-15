@@ -19,6 +19,13 @@
 /obj/effect/light_emitter/singularity_act()
 	return
 
+/obj/effect/light_emitter/podbay
+	set_cap = 1
+
+/obj/effect/light_emitter/thunderdome
+	set_cap = 1
+	set_luminosity = 1.6
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner
@@ -29,6 +36,7 @@
 	new /obj/item/storage/backpack/duffelbag/explorer(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
+	new /obj/item/storage/backpack/messenger/explorer(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
@@ -43,7 +51,7 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 
 /obj/structure/closet/secure_closet/miner
-	name = "miner's equipment"
+	name = "miner's equipment locker"
 	icon_state = "mining"
 	req_access = list(ACCESS_MINING)
 
@@ -54,6 +62,7 @@
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/storage/box/emptysandbags(src)
+	new /obj/item/card/mining_point_card(src)
 	new /obj/item/shovel(src)
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/radio/headset/headset_cargo/mining(src)
@@ -61,11 +70,18 @@
 	new /obj/item/storage/bag/plants(src)
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
-	new /obj/item/survivalcapsule(src)
+	if (HAS_TRAIT(SSstation, STATION_TRAIT_SMALLER_PODS))
+		new /obj/item/survivalcapsule/bathroom(src)
+	else
+		new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
 
+
+/obj/structure/closet/secure_closet/miner/populate_contents_immediate()
+	. = ..()
+
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 
 /**********************Shuttle Computer**************************/
 
@@ -108,6 +124,10 @@
 	roundstart_template = /datum/map_template/shuttle/mining/kilo
 	height = 10
 
+/obj/docking_port/stationary/mining_home/northstar
+	roundstart_template = /datum/map_template/shuttle/mining/northstar
+	height = 6
+
 /obj/docking_port/stationary/mining_home/common
 	name = "SS13: Common Mining Dock"
 	shuttle_id = "commonmining_home"
@@ -116,9 +136,13 @@
 /obj/docking_port/stationary/mining_home/common/kilo
 	roundstart_template = /datum/map_template/shuttle/mining_common/kilo
 
+/obj/docking_port/stationary/mining_home/common/northstar
+	roundstart_template = /datum/map_template/shuttle/mining_common/northstar
+
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 
 /obj/structure/closet/crate/miningcar
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
 	icon_state = "miningcar"
+	base_icon_state = "miningcar"

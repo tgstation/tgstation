@@ -31,21 +31,23 @@
 
 /datum/component/holderloving/RegisterWithParent()
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(check_my_loc))
-	RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(holder_deleting))
+	RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(holder_deleting))
 	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXITED,
+		COMSIG_ITEM_STORED,
 	), PROC_REF(check_my_loc))
 
 /datum/component/holderloving/UnregisterFromParent()
-	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXITED,
+		COMSIG_ITEM_STORED,
 	))
 
 /datum/component/holderloving/PostTransfer()

@@ -28,6 +28,9 @@
 		var/list/citations = list()
 
 		for(var/datum/crime/citation/warrant as anything in target.citations)
+			if(!warrant.valid)
+				continue
+
 			var/list/entry = list(list(
 				author = warrant.author,
 				details = warrant.details,

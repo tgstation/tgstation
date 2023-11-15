@@ -8,7 +8,6 @@ SUBSYSTEM_DEF(communications)
 
 	COOLDOWN_DECLARE(silicon_message_cooldown)
 	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
-	COOLDOWN_DECLARE(emergency_meeting_cooldown)
 
 	/// Are we trying to send a cross-station message that contains soft-filtered words? If so, flip to TRUE to extend the time admins have to cancel the message.
 	var/soft_filtering = FALSE
@@ -17,6 +16,10 @@ SUBSYSTEM_DEF(communications)
 	var/list/command_report_footnotes = list()
 	/// A counter of conditions that are blocking the command report from printing. Counter incremements up for every blocking condition, and de-incrememnts when it is complete.
 	var/block_command_report = 0
+	/// Has a special xenomorph egg been delivered?
+	var/xenomorph_egg_delivered = FALSE
+	/// The location where the special xenomorph egg was planted
+	var/area/captivity_area
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
@@ -30,45 +33,17 @@ SUBSYSTEM_DEF(communications)
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] Announces:", players = players)
+		minor_announce(html_decode(input),"[user.name] announces:", players = players)
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
-		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "[syndicate? "Syndicate " : ""]Captain", has_important_message = TRUE, players = players)
+		var/list/message_data = user.treat_message(input)
+		if(syndicate)
+			priority_announce(html_decode(message_data["message"]), null, 'sound/misc/announce_syndi.ogg', ANNOUNCEMENT_TYPE_SYNDICATE, has_important_message = TRUE, players = players, color_override = "red")
+		else
+			priority_announce(html_decode(message_data["message"]), null, 'sound/misc/announce.ogg', ANNOUNCEMENT_TYPE_CAPTAIN, has_important_message = TRUE, players = players)
 		COOLDOWN_START(src, nonsilicon_message_cooldown, COMMUNICATION_COOLDOWN)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
-
-/**
- * Check if a mob can call an emergency meeting
- *
- * Should only really happen during april fools.
- * Checks to see that it's been at least 5 minutes since the last emergency meeting call.
- * Arguments:
- * * user - Mob who called the meeting
- */
-/datum/controller/subsystem/communications/proc/can_make_emergency_meeting(mob/living/user)
-	if(!check_holidays(APRIL_FOOLS))
-		return FALSE
-	else if(COOLDOWN_FINISHED(src, emergency_meeting_cooldown))
-		return TRUE
-	else
-		return FALSE
-
-/**
- * Call an emergency meeting
- *
- * Communications subsystem wrapper for the call_emergency_meeting world proc.
- * Checks to make sure the proc can be called, and handles
- * relevant logging and timing. See that proc definition for more detail.
- * Arguments:
- * * user - Mob who called the meeting
- */
-/datum/controller/subsystem/communications/proc/emergency_meeting(mob/living/user)
-	if(!can_make_emergency_meeting(user))
-		return FALSE
-	call_emergency_meeting(user, get_area(user))
-	COOLDOWN_START(src, emergency_meeting_cooldown, COMMUNICATION_COOLDOWN_MEETING)
-	message_admins("[ADMIN_LOOKUPFLW(user)] has called an emergency meeting.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
 	for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
@@ -86,3 +61,4 @@ SUBSYSTEM_DEF(communications)
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI
+#undef COMMUNICATION_COOLDOWN_MEETING

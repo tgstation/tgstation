@@ -1,7 +1,7 @@
 /// The light switch. Can have multiple per area.
 /obj/machinery/light_switch
 	name = "light switch"
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "light-nopower"
 	base_icon_state = "light"
 	desc = "Make dark."
@@ -12,28 +12,40 @@
 	var/area/area = null
 	///Range of the light emitted when powered, but off
 	var/light_on_range = 1
-
-/obj/machinery/light_switch/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/light_switch,
-	))
+	/// Should this lightswitch automatically rename itself to match the area it's in?
+	var/autoname = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/light_switch,
+	))
 	if(istext(area))
 		area = text2path(area)
 	if(ispath(area))
 		area = GLOB.areas_by_type[area]
 	if(!area)
 		area = get_area(src)
-
-	if(!name)
+	if(autoname)
 		name = "light switch ([area.name])"
-
+	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), TRUE))
+	register_context()
 	update_appearance()
+
+/obj/machinery/light_switch/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = area.lightswitch ? "Flick off" : "Flick on"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour != TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/machinery/light_switch/update_appearance(updates=ALL)
 	. = ..()
@@ -61,6 +73,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
 	set_lights(!area.lightswitch)
+
+/obj/machinery/light_switch/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
+		to_chat(user, "You pop \the [src] off the wall.")
+		deconstruct()
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /obj/machinery/light_switch/proc/set_lights(status)
 	if(area.lightswitch == status)
@@ -94,7 +113,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/item/wallframe/light_switch
 	name = "light switch"
 	desc = "An unmounted light switch. Attach it to a wall to use."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "light-nopower"
 	result_path = /obj/machinery/light_switch
 	pixel_shift = 26

@@ -33,17 +33,22 @@
 
 	for (var/quirk_name in quirks)
 		var/datum/quirk/quirk = quirks[quirk_name]
+		var/datum/quirk_constant_data/constant_data = GLOB.all_quirk_constant_data[quirk]
+		var/list/datum/preference/customization_options = constant_data?.get_customization_data()
+
 		quirk_info[sanitize_css_class_name(quirk_name)] = list(
 			"description" = initial(quirk.desc),
 			"icon" = initial(quirk.icon),
 			"name" = quirk_name,
 			"value" = initial(quirk.value),
+			"customizable" = constant_data?.is_customizable(),
+			"customization_options" = customization_options,
 		)
 
 	return list(
 		"max_positive_quirks" = MAX_QUIRKS,
 		"quirk_info" = quirk_info,
-		"quirk_blacklist" = SSquirks.quirk_blacklist,
+		"quirk_blacklist" = GLOB.quirk_string_blacklist,
 	)
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)

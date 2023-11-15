@@ -11,7 +11,7 @@
 			to_chat(M, span_warning("Access denied. [name] is secured with a DNA lock."))
 			log_message("Permission denied (DNA LOCK).", LOG_MECHA)
 			return
-	if(!operation_allowed(M))
+	if((mecha_flags & ID_LOCK_ON) && !allowed(M))
 		to_chat(M, span_warning("Access denied. Insufficient operation keycodes."))
 		log_message("Permission denied (No keycode).", LOG_MECHA)
 		return
@@ -120,7 +120,7 @@
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			if(!AI.linked_core) //if the victim AI has no core
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
-				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+				AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
@@ -183,6 +183,8 @@
 	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))
 		to_chat(user, span_notice("You exit the mech."))
+		if(cabin_sealed)
+			set_cabin_seal(user, FALSE)
 		mob_exit(user, silent = TRUE)
 	else
 		to_chat(user, span_notice("You stop exiting the mech. Weapons are enabled again."))

@@ -12,7 +12,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
-	allowed_inactive = TRUE
+	allow_flags = MODULE_ALLOW_INACTIVE
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
@@ -115,7 +115,7 @@
 		your drill is surely the one that both pierces and creates the heavens."
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS
@@ -149,6 +149,12 @@
 	if(!ismineralturf(bumped_into) || !drain_power(use_power_cost))
 		return
 	var/turf/closed/mineral/mineral_turf = bumped_into
+	var/turf/closed/mineral/gibtonite/giberal_turf = mineral_turf
+	if(istype(giberal_turf) && giberal_turf.stage != GIBTONITE_UNSTRUCK)
+		playsound(bumper, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected! Drills disabled."))
+		on_deactivation()
+		return
 	mineral_turf.gets_drilled(mod.wearer)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -164,7 +170,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
-	allowed_inactive = TRUE
+	allow_flags = MODULE_ALLOW_INACTIVE
 	/// The ores stored in the bag.
 	var/list/ores = list()
 
@@ -394,13 +400,11 @@
 		))
 
 /obj/item/mod/module/ash_accretion/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /obj/item/mod/module/ash_accretion/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	if(!traveled_tiles)
 		return
@@ -462,6 +466,13 @@
 	cooldown_time = 1.25 SECONDS
 	/// Time it takes us to complete the animation.
 	var/animate_time = 0.25 SECONDS
+	/// List of traits to add/remove from our subject as needed.
+	var/static/list/user_traits = list(
+		TRAIT_FORCED_STANDING,
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_LAVA_IMMUNE,
+		TRAIT_NO_SLIP_ALL,
+	)
 
 /obj/item/mod/module/sphere_transform/activate()
 	if(!mod.wearer.has_gravity())
@@ -477,10 +488,7 @@
 	mod.wearer.base_pixel_y -= 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y, flags = ANIMATION_PARALLEL)
 	mod.wearer.SpinAnimation(1.5)
-	ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_HANDS_BLOCKED, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
-	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPALL, MOD_TRAIT)
+	mod.wearer.add_traits(user_traits, MOD_TRAIT)
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
@@ -492,10 +500,7 @@
 	mod.wearer.base_pixel_y += 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/datum, remove_filter), list("mod_ball", "mod_blur", "mod_outline")), animate_time)
-	REMOVE_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_HANDS_BLOCKED, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPALL, MOD_TRAIT)
+	mod.wearer.remove_traits(user_traits, MOD_TRAIT)
 	mod.wearer.remove_movespeed_mod_immunities(MOD_TRAIT, /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
@@ -513,14 +518,14 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/bomb = new /obj/projectile/bullet/reusable/mining_bomb(mod.wearer.loc)
+	var/obj/projectile/bomb = new /obj/projectile/bullet/mining_bomb(mod.wearer.loc)
 	bomb.preparePixelProjectile(target, mod.wearer)
 	bomb.firer = mod.wearer
 	playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
 	INVOKE_ASYNC(bomb, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
 
-/obj/item/mod/module/sphere_transform/on_active_process(delta_time)
+/obj/item/mod/module/sphere_transform/on_active_process(seconds_per_tick)
 	animate(mod.wearer) //stop the animation
 	mod.wearer.SpinAnimation(1.5) //start it back again
 	if(!mod.wearer.has_gravity())
@@ -533,13 +538,12 @@
 		return
 	deactivate()
 
-/obj/projectile/bullet/reusable/mining_bomb
+/obj/projectile/bullet/mining_bomb
 	name = "mining bomb"
 	desc = "A bomb. Why are you examining this?"
 	icon_state = "mine_bomb"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	damage = 0
-	nodamage = TRUE
 	range = 6
 	suppressed = SUPPRESSED_VERY
 	armor_flag = BOMB
@@ -547,13 +551,16 @@
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
-	ammo_type = /obj/structure/mining_bomb
+	embedding = null
 
-/obj/projectile/bullet/reusable/mining_bomb/handle_drop()
-	if(dropped)
-		return
-	dropped = TRUE
-	new ammo_type(get_turf(src), firer)
+/obj/projectile/bullet/mining_bomb/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, /obj/structure/mining_bomb)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
+
+/obj/projectile/bullet/mining_bomb/proc/handle_drop(datum/source, obj/structure/mining_bomb/mining_bomb)
+	SIGNAL_HANDLER
+	addtimer(CALLBACK(mining_bomb, TYPE_PROC_REF(/obj/structure/mining_bomb, prime), firer), mining_bomb.prime_time)
 
 /obj/structure/mining_bomb
 	name = "mining bomb"
@@ -580,7 +587,6 @@
 /obj/structure/mining_bomb/Initialize(mapload, atom/movable/firer)
 	. = ..()
 	generate_image()
-	addtimer(CALLBACK(src, PROC_REF(prime), firer), prime_time)
 
 /obj/structure/mining_bomb/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer)

@@ -17,11 +17,16 @@
 	var/time = 0
 	/// If only one of the resulting atom is allowed per turf
 	var/one_per_turf = FALSE
+	/// If the atom is fulltile, as in a fulltile window. This is used for the direction check to prevent fulltile windows from being able to be built over directional stuff.
+	/// Setting this to true will effectively set check_direction to true.
+	var/is_fulltile = FALSE
+	/// If this atom should run the direction check, for use when building things like directional windows where you can have more than one per turf
+	var/check_direction = FALSE
 	/// If the atom requires a floor below
 	var/on_solid_ground = FALSE
-	/// If the atom requires a tram floor below
-	var/on_tram = FALSE
-	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT)
+	/// If the atom checks that there are objects with density in the same turf when being built. TRUE by default
+	var/check_density = TRUE
+	/// Bitflag of additional placement checks required to place. (STACK_CHECK_CARDINALS|STACK_CHECK_ADJACENT|STACK_CHECK_TRAM_FORBIDDEN|STACK_CHECK_TRAM_EXCLUSIVE)
 	var/placement_checks = NONE
 	/// If TRUE, the created atom will gain custom mat datums
 	var/applies_mats = FALSE
@@ -41,8 +46,9 @@
 	time = 0,
 	one_per_turf = FALSE,
 	on_solid_ground = FALSE,
-	on_tram = FALSE,
-	window_checks = FALSE,
+	is_fulltile = FALSE,
+	check_direction = FALSE,
+	check_density = TRUE,
 	placement_checks = NONE,
 	applies_mats = FALSE,
 	trait_booster,
@@ -58,7 +64,9 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_solid_ground = on_solid_ground
-	src.on_tram = on_tram
+	src.is_fulltile = is_fulltile
+	src.check_direction = check_direction || is_fulltile
+	src.check_density = check_density
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster
@@ -78,7 +86,6 @@
 	time = 0,
 	one_per_turf = FALSE,
 	on_solid_ground = FALSE,
-	on_tram = FALSE,
 	window_checks = FALSE,
 	placement_checks = NONE,
 	applies_mats = FALSE,

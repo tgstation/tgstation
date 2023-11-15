@@ -32,7 +32,19 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	create_reagents(casing_holder_volume)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
-	wires = new /datum/wires/explosive/chem_grenade(src)
+	set_wires(new /datum/wires/explosive/chem_grenade(src))
+
+/obj/item/grenade/chem_grenade/Destroy(force)
+	QDEL_NULL(wires)
+	QDEL_NULL(landminemode)
+	QDEL_LIST(beakers)
+	return ..()
+
+/obj/item/grenade/chem_grenade/apply_grenade_fantasy_bonuses(quality)
+	threatscale = modify_fantasy_variable("threatscale", threatscale, quality/10)
+
+/obj/item/grenade/chem_grenade/remove_grenade_fantasy_bonuses(quality)
+	threatscale = reset_fantasy_variable("threatscale", threatscale)
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == GRENADE_READY) //show/hide the timer based on assembly state
@@ -355,7 +367,7 @@
 	if (active)
 		return
 	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
-	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	unit_spread = newspread
 	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))

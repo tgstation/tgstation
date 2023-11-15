@@ -15,8 +15,8 @@
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
 	var/list/required_parts = list(
-		/datum/stock_part/manipulator,
-		/datum/stock_part/manipulator,
+		/datum/stock_part/servo,
+		/datum/stock_part/servo,
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
@@ -41,8 +41,8 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		speed += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		speed += servo.tier
 	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
 	if(icon_state != chair_icon)
 		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)
@@ -185,8 +185,15 @@
 			visible_message(span_danger("[src] crashes into [A], sending [disabled] flying!"))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
-/obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)
-	if((obj_flags & EMAGGED) || !panel_open)
-		return
-	to_chat(user, span_warning("A bomb appears in [src], what the fuck?"))
+/obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	if (panel_open)
+		balloon_alert(user, "open maintenance panel!")
+		return FALSE
+
+	balloon_alert(user, "bomb implanted...?")
+	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
+	return TRUE

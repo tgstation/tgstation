@@ -287,60 +287,20 @@
 	/// List of ordnance experiments that our partner is willing to accept. If this list is not filled it means the partner will accept everything.
 	var/list/accepted_experiments = list()
 	/// Associative list of which technology the partner might be able to boost and by how much.
-	var/list/boosted_nodes = list()
-
+	var/list/boostable_nodes = list()
 
 /datum/scientific_partner/proc/purchase_boost(datum/techweb/purchasing_techweb, datum/techweb_node/node)
 	if(!allowed_to_boost(purchasing_techweb, node.id))
 		return FALSE
-	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC=boosted_nodes[node.id]))
-	purchasing_techweb.scientific_cooperation[type] -= boosted_nodes[node.id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
+	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC = boostable_nodes[node.id]))
+	purchasing_techweb.scientific_cooperation[type] -= boostable_nodes[node.id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
 	return TRUE
 
 /datum/scientific_partner/proc/allowed_to_boost(datum/techweb/purchasing_techweb, node_id)
-	if(purchasing_techweb.scientific_cooperation[type] < (boosted_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
+	if(purchasing_techweb.scientific_cooperation[type] < (boostable_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
 		return FALSE
 	if(!(node_id in purchasing_techweb.get_available_nodes())) // Not currently available
 		return FALSE
-	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boosted_nodes[node_id])) // Already bought or we have a bigger discount
+	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
 		return FALSE
 	return TRUE
-
-/datum/computer_file/data/ordnance
-	size = 4
-	filetype = "ORD"
-	/// List of experiments filtered by doppler array or populated by the tank compressor. Experiment path as key, score as value.
-	var/list/possible_experiments
-
-/datum/computer_file/data/ordnance/proc/return_data()
-	return null
-
-/datum/computer_file/data/ordnance/clone()
-	var/datum/computer_file/data/ordnance/temp = ..()
-	temp.possible_experiments = possible_experiments
-	return temp
-
-/datum/computer_file/data/ordnance/explosive
-	filetype = "DOP"
-	/// Tachyon record, used for an explosive experiment.
-	var/datum/data/tachyon_record/explosion_record
-
-/datum/computer_file/data/ordnance/explosive/return_data()
-	return explosion_record
-
-/datum/computer_file/data/ordnance/explosive/clone()
-	var/datum/computer_file/data/ordnance/explosive/temp = ..()
-	temp.explosion_record = explosion_record
-	return temp
-
-/datum/computer_file/data/ordnance/gaseous
-	var/datum/data/compressor_record/gas_record
-	filetype = "COM"
-
-/datum/computer_file/data/ordnance/gaseous/return_data()
-	return gas_record
-
-/datum/computer_file/data/ordnance/gaseous/clone()
-	var/datum/computer_file/data/ordnance/gaseous/temp = ..()
-	temp.gas_record = gas_record
-	return temp
