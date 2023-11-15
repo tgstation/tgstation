@@ -46,6 +46,8 @@
 	var/offsets = TRUE
 	/// do we process?
 	var/processes = TRUE
+	///the blend type we use for particles
+	var/particle_blending = BLEND_DEFAULT
 
 /datum/component/particle_spewer/Initialize(duration = 0, spawn_interval = 0, offset_x = 0, offset_y = 0, icon_file, particle_state, equipped_offset = 0, burst_amount = 0, lifetime = 0, random_bursts = 0)
 	. = ..()
@@ -114,6 +116,7 @@
 			spawned.pixel_y = offset_y 
 		spawned.icon = icon_file  
 		spawned.icon_state = particle_state
+		spawned.blend_mode = particle_blending
 
 		living_particles |= spawned
 

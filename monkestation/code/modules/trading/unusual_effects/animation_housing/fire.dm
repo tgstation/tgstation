@@ -4,9 +4,9 @@
 	burst_amount = 3
 	spawn_interval = 0.2 SECONDS
 	particle_state = "1x1"
+	particle_blending = BLEND_ADD
 
 /datum/component/particle_spewer/fire/animate_particle(obj/effect/abstract/particle/spawned)
-	spawned.blend_mode = BLEND_ADD
 	spawned.pixel_x += rand(-6,6)
 	spawned.pixel_y += rand(-4,4)
 

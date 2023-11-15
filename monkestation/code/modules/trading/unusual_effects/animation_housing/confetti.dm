@@ -2,12 +2,12 @@
 	unusual_description = "partytime"
 	duration = 2 SECONDS
 	burst_amount = 5
+	particle_blending = BLEND_ADD
 
 /datum/component/particle_spewer/confetti/animate_particle(obj/effect/abstract/particle/spawned)
 	var/matrix/first = matrix()
 	var/matrix/second = matrix()
 	
-	spawned.blend_mode = BLEND_ADD
 	spawned.pixel_x += rand(-3,3)
 	spawned.pixel_y += rand(-3,3)
 
