@@ -195,7 +195,9 @@
 
 /obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/syndicate/cowboy = 1,
+		/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear = 1,
 		/obj/item/ammo_box/a357 = 2,
 	), src)
+
+
 

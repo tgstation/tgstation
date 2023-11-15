@@ -1,225 +1,189 @@
-/*
-Destructive Analyzer
+///How much power it costs to deconstruct an item.
+#define DESTRUCTIVE_ANALYZER_POWER_USAGE (BASE_MACHINE_IDLE_CONSUMPTION * 2.5)
+///The 'ID' for deconstructing items for Research points instead of nodes.
+#define DESTRUCTIVE_ANALYZER_DESTROY_POINTS "research_points"
 
-It is used to destroy hand-held objects and advance technological research. Controls are in the linked R&D console.
-
-Note: Must be placed within 3 tiles of the R&D Console
-*/
+/**
+ * ## Destructive Analyzer
+ * It is used to destroy hand-held objects and advance technological research.
+ */
 /obj/machinery/rnd/destructive_analyzer
 	name = "destructive analyzer"
 	desc = "Learn science by destroying things!"
 	icon_state = "d_analyzer"
 	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
-	var/decon_mod = 0
 
-/obj/machinery/rnd/destructive_analyzer/RefreshParts()
+/obj/machinery/rnd/destructive_analyzer/Initialize(mapload)
 	. = ..()
-	var/T = 0
-	for(var/datum/stock_part/stock_part in component_parts)
-		T += stock_part.tier
-	decon_mod = T
+	register_context()
 
-/obj/machinery/rnd/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
-	var/list/temp_list = params2list(source_list)
-	for(var/O in temp_list)
-		temp_list[O] = text2num(temp_list[O])
-	return temp_list
+/obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(loaded_item)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove Item"
+	else if(!isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert Item"
+	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/living/user)
-	if(!user.combat_mode)
-		. = 1
-		if(!is_insertion_ready(user))
-			return
-		if(!user.transferItemToLoc(O, src))
-			to_chat(user, span_warning("\The [O] is stuck to your hand, you cannot put it in the [src.name]!"))
-			return
-		busy = TRUE
-		loaded_item = O
-		to_chat(user, span_notice("You add the [O.name] to the [src.name]!"))
-		flick("d_analyzer_la", src)
-		addtimer(CALLBACK(src, PROC_REF(finish_loading)), 10)
-		updateUsrDialog()
+/obj/machinery/rnd/destructive_analyzer/attackby(obj/item/weapon, mob/living/user, params)
+	if(user.combat_mode)
+		return ..()
+	if(!is_insertion_ready(user))
+		return ..()
+	if(!user.transferItemToLoc(weapon, src))
+		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
+		return TRUE
+	busy = TRUE
+	loaded_item = weapon
+	to_chat(user, span_notice("You add the [weapon.name] to the [name]!"))
+	flick("[base_icon_state]_la", src)
+	addtimer(CALLBACK(src, PROC_REF(finish_loading)), 1 SECONDS)
+	return TRUE
 
-/obj/machinery/rnd/destructive_analyzer/proc/finish_loading()
-	update_appearance()
-	reset_busy()
+/obj/machinery/rnd/destructive_analyzer/AltClick(mob/user)
+	. = ..()
+	unload_item()
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
 	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"
 	return ..()
 
-/obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
-	if(QDELETED(thing) || QDELETED(src))
-		return FALSE
-	if(!innermode)
-		flick("d_analyzer_process", src)
-		busy = TRUE
-		addtimer(CALLBACK(src, PROC_REF(reset_busy)), 24)
-		use_power(250)
-		if(thing == loaded_item)
-			loaded_item = null
-		var/list/food = thing.GetDeconstructableContents()
-		for(var/obj/item/innerthing in food)
-			destroy_item(innerthing, TRUE)
-	for(var/mob/living/victim in thing)
-		if(victim.stat != DEAD)
-			victim.investigate_log("has been killed by a destructive analyzer.", INVESTIGATE_DEATHS)
-		victim.death()
+/obj/machinery/rnd/destructive_analyzer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DestructiveAnalyzer")
+		ui.open()
 
-	qdel(thing)
-	loaded_item = null
-	if (!innermode)
-		update_appearance()
-	return TRUE
+/obj/machinery/rnd/destructive_analyzer/ui_data(mob/user)
+	var/list/data = list()
+	data["server_connected"] = !!stored_research
+	data["node_data"] = list()
+	if(loaded_item)
+		data["item_icon"] = icon2base64(getFlatIcon(image(icon = loaded_item.icon, icon_state = loaded_item.icon_state), no_anim = TRUE))
+		data["indestructible"] = !(loaded_item.resistance_flags & INDESTRUCTIBLE)
+		data["loaded_item"] = loaded_item
+		data["already_deconstructed"] = !!stored_research.deconstructed_items[loaded_item.type]
+		var/list/points = techweb_item_point_check(loaded_item)
+		data["recoverable_points"] = techweb_point_display_generic(points)
 
-/obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id, mob/user)
-	if(!istype(loaded_item))
-		return FALSE
-
-	if (id && id != RESEARCH_MATERIAL_DESTROY_ID)
-		var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
-		if(!istype(TN))
-			return FALSE
-		var/dpath = loaded_item.type
-		var/list/worths = TN.boost_item_paths[dpath]
-		var/list/differences = list()
-		var/list/already_boosted = stored_research.boosted_nodes[TN.id]
-		for(var/i in worths)
-			var/used = already_boosted? already_boosted[i] : 0
-			var/value = min(worths[i], TN.research_costs[i]) - used
-			if(value > 0)
-				differences[i] = value
-		if(length(worths) && !length(differences))
-			return FALSE
-		var/choice = tgui_alert(user, "Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?", "Destructive Analyzer", list("Proceed", "Cancel"))
-		if(choice != "Proceed")
-			return FALSE
-		if(QDELETED(loaded_item) || QDELETED(src))
-			return FALSE
-		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
-		if(destroy_item(loaded_item))
-			stored_research.boost_with_item(SSresearch.techweb_node_by_id(TN.id), dpath)
-
-	else
-		var/list/point_value = techweb_item_point_check(loaded_item)
-		if(stored_research.deconstructed_items[loaded_item.type])
-			point_value = list()
-		var/user_mode_string = ""
-		if(length(point_value))
-			user_mode_string = " for [json_encode(point_value)] points"
-		var/choice = tgui_alert(usr, "Are you sure you want to destroy [loaded_item][user_mode_string]?",, list("Proceed", "Cancel"))
-		if(choice == "Cancel")
-			return FALSE
-		if(QDELETED(loaded_item) || QDELETED(src))
-			return FALSE
-		destroy_item(loaded_item)
-	return TRUE
-
-/obj/machinery/rnd/destructive_analyzer/proc/unload_item()
-	if(!loaded_item)
-		return FALSE
-	loaded_item.forceMove(get_turf(src))
-	loaded_item = null
-	update_appearance()
-	return TRUE
-
-/obj/machinery/rnd/destructive_analyzer/ui_interact(mob/user)
-	. = ..()
-	var/datum/browser/popup = new(user, "destructive_analyzer", name, 900, 600)
-	popup.set_content(ui_deconstruct())
-	popup.open()
-
-/obj/machinery/rnd/destructive_analyzer/proc/ui_deconstruct() //Legacy code
-	var/list/l = list()
-	if(!loaded_item)
-		l += "<div class='statusDisplay'>No item loaded. Standing-by...</div>"
-	else
-		l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
-		l += "<table><tr><td>[icon2html(loaded_item, usr)]</td><td><b>[loaded_item.name]</b> <A href='?src=[REF(src)];eject_item=1'>Eject</A></td></tr></table>[RDSCREEN_NOBREAK]"
-		l += "Select a node to boost by deconstructing this item. This item can boost:"
-
-		var/anything = FALSE
-		var/list/boostable_nodes = techweb_item_boost_check(loaded_item)
+		var/list/boostable_nodes = techweb_item_unlock_check(loaded_item)
 		for(var/id in boostable_nodes)
-			anything = TRUE
-			var/list/worth = boostable_nodes[id]
-			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
+			var/datum/techweb_node/unlockable_node = SSresearch.techweb_node_by_id(id)
+			var/list/node_data = list()
+			node_data["node_name"] = unlockable_node.display_name
+			node_data["node_id"] = unlockable_node.id
+			node_data["node_hidden"] = !!stored_research.hidden_nodes[unlockable_node.id]
+			data["node_data"] += list(node_data)
+	else
+		data["loaded_item"] = null
+	return data
 
-			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
-			if (stored_research.researched_nodes[N.id])  // already researched
-				l += "<span class='linkOff'>[N.display_name]</span>"
-				l += "This node has already been researched."
-			else if(!length(worth))  // reveal only
-				if (stored_research.hidden_nodes[N.id])
-					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
-					l += "This node will be revealed."
-				else
-					l += "<span class='linkOff'>[N.display_name]</span>"
-					l += "This node has already been revealed."
-			else  // boost by the difference
-				var/list/differences = list()
-				var/list/already_boosted = stored_research.boosted_nodes[N.id]
-				for(var/i in worth)
-					var/already_boosted_amount = already_boosted? stored_research.boosted_nodes[N.id][i] : 0
-					var/amt = min(worth[i], N.research_costs[i]) - already_boosted_amount
-					if(amt > 0)
-						differences[i] = amt
-				if (length(differences))
-					l += "<A href='?src=[REF(src)];deconstruct=[N.id]'>[N.display_name]</A>"
-					l += "This node will be boosted with the following:<BR>[techweb_point_display_generic(differences)]"
-				else
-					l += "<span class='linkOff'>[N.display_name]</span>"
-					l += "This node has already been boosted.</span>"
-			l += "</div>[RDSCREEN_NOBREAK]"
+/obj/machinery/rnd/destructive_analyzer/ui_static_data(mob/user)
+	var/list/data = list()
+	data["research_point_id"] = DESTRUCTIVE_ANALYZER_DESTROY_POINTS
+	return data
 
-		var/list/point_values = techweb_item_point_check(loaded_item)
-		if(point_values)
-			anything = TRUE
-			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
-			if (stored_research.deconstructed_items[loaded_item.type])
-				l += "<span class='linkOff'>Point Deconstruction</span>"
-				l += "This item's points have already been claimed."
-			else
-				l += "<A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_DESTROY_ID]'>Point Deconstruction</A>"
-				l += "This item is worth: <BR>[techweb_point_display_generic(point_values)]!"
-			l += "</div>[RDSCREEN_NOBREAK]"
-
-		if(!(loaded_item.resistance_flags & INDESTRUCTIBLE))
-			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_DESTROY_ID]'>Destroy Item</A>"
-			l += "</div>[RDSCREEN_NOBREAK]"
-			anything = TRUE
-
-		if (!anything)
-			l += "Nothing!"
-
-		l += "</div>"
-
-	for(var/i in 1 to length(l))
-		if(!findtextEx(l[i], RDSCREEN_NOBREAK))
-			l[i] += "<br>"
-	. = l.Join("")
-	return replacetextEx(., RDSCREEN_NOBREAK, "")
-
-/obj/machinery/rnd/destructive_analyzer/Topic(raw, ls)
+/obj/machinery/rnd/destructive_analyzer/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 
-	add_fingerprint(usr)
-	usr.set_machine(src)
+	var/mob/user = usr
+	switch(action)
+		if("eject_item")
+			if(busy)
+				balloon_alert(user, "already busy!")
+				return TRUE
+			if(loaded_item)
+				unload_item()
+				return TRUE
+		if("deconstruct")
+			if(!user_try_decon_id(params["deconstruct_id"]))
+				say("Destructive analysis failed!")
+			return TRUE
 
-	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
-		if(busy)
-			to_chat(usr, span_danger("The destructive analyzer is busy at the moment."))
-			return
-		if(loaded_item)
-			unload_item()
-	if(ls["deconstruct"])
-		if(!user_try_decon_id(ls["deconstruct"], usr))
-			say("Destructive analysis failed!")
-
-	updateUsrDialog()
-
+//This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
 /obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
 	return FALSE
+
+///Drops the loaded item where it can and nulls it.
+/obj/machinery/rnd/destructive_analyzer/proc/unload_item()
+	if(!loaded_item)
+		return FALSE
+	playsound(loc, 'sound/machines/terminal_insert_disc.ogg', 30, FALSE)
+	loaded_item.forceMove(drop_location())
+	loaded_item = null
+	update_appearance(UPDATE_ICON)
+	return TRUE
+
+///Called in a timer callback after loading something into it, this handles resetting the 'busy' state back to its initial state
+///So the machine can be used.
+/obj/machinery/rnd/destructive_analyzer/proc/finish_loading()
+	update_appearance(UPDATE_ICON)
+	reset_busy()
+
+/**
+ * Destroys an item by going through all its contents (including itself) and calling destroy_item_individual
+ * Args:
+ * gain_research_points - Whether deconstructing each individual item should check for research points to boost.
+ */
+/obj/machinery/rnd/destructive_analyzer/proc/destroy_item(gain_research_points = FALSE)
+	if(QDELETED(loaded_item) || QDELETED(src))
+		return FALSE
+	flick("[base_icon_state]_process", src)
+	busy = TRUE
+	addtimer(CALLBACK(src, PROC_REF(reset_busy)), 2.4 SECONDS)
+	use_power(DESTRUCTIVE_ANALYZER_POWER_USAGE)
+	var/list/all_contents = loaded_item.get_all_contents()
+	for(var/innerthing in all_contents)
+		destroy_item_individual(innerthing, gain_research_points)
+
+	loaded_item = null
+	update_appearance(UPDATE_ICON)
+	return TRUE
+
+/**
+ * Destroys the individual provided item
+ * Args:
+ * thing - The thing being destroyed. Generally an object, but it can be a mob too, such as intellicards and pAIs.
+ * gain_research_points - Whether deconstructing this should give research points to the stored techweb, if applicable.
+ */
+/obj/machinery/rnd/destructive_analyzer/proc/destroy_item_individual(obj/item/thing, gain_research_points = FALSE)
+	if(isliving(thing))
+		var/mob/living/mob_thing = thing
+		if(mob_thing.stat != DEAD)
+			mob_thing.investigate_log("has been killed by a destructive analyzer.", INVESTIGATE_DEATHS)
+		mob_thing.death()
+	var/list/point_value = techweb_item_point_check(thing)
+	if(point_value && !stored_research.deconstructed_items[thing.type])
+		stored_research.deconstructed_items[thing.type] = TRUE
+		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = point_value))
+	qdel(thing)
+
+/**
+ * Attempts to destroy the loaded item using a provided research id.
+ * Args:
+ * id - The techweb ID node that we're meant to unlock if applicable.
+ */
+/obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id)
+	if(!istype(loaded_item))
+		return FALSE
+	if(isnull(id))
+		return FALSE
+
+	if(id == DESTRUCTIVE_ANALYZER_DESTROY_POINTS)
+		if(!destroy_item(gain_research_points = TRUE))
+			return FALSE
+		return TRUE
+
+	var/datum/techweb_node/node_to_discover = SSresearch.techweb_node_by_id(id)
+	if(!istype(node_to_discover))
+		return FALSE
+	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[loaded_item.type]"))
+	if(!destroy_item())
+		return FALSE
+	stored_research.unhide_node(SSresearch.techweb_node_by_id(node_to_discover.id))
+	return TRUE
+
+#undef DESTRUCTIVE_ANALYZER_DESTROY_POINTS
+#undef DESTRUCTIVE_ANALYZER_POWER_USAGE

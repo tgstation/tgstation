@@ -20,7 +20,7 @@
 	/// What interaction key do we use for our interaction
 	var/do_after_key
 
-/datum/element/wall_tearer/Attach(datum/target, allow_reinforced = TRUE, tear_time = 4 SECONDS, reinforced_multiplier = 3, do_after_key = null)
+/datum/element/wall_tearer/Attach(datum/target, allow_reinforced = TRUE, tear_time = 2 SECONDS, reinforced_multiplier = 2, do_after_key = null)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
@@ -28,17 +28,15 @@
 	src.tear_time = tear_time
 	src.reinforced_multiplier = reinforced_multiplier
 	src.do_after_key = do_after_key
-	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attacked_wall))
+	RegisterSignals(target, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK), PROC_REF(on_attacked_wall))
 
 /datum/element/wall_tearer/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(source, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_LIVING_UNARMED_ATTACK))
 
 /// Try to tear up a wall
 /datum/element/wall_tearer/proc/on_attacked_wall(mob/living/tearer, atom/target, proximity_flag)
 	SIGNAL_HANDLER
-	if (!proximity_flag)
-		return NONE
 	if (DOING_INTERACTION_WITH_TARGET(tearer, target) || (!isnull(do_after_key) && DOING_INTERACTION(tearer, do_after_key)))
 		tearer.balloon_alert(tearer, "busy!")
 		return COMPONENT_HOSTILE_NO_ATTACK
@@ -62,6 +60,7 @@
 	var/is_valid = validate_target(target, tearer)
 	if (is_valid != WALL_TEAR_ALLOWED)
 		return
+	tearer.do_attack_animation(target)
 	target.AddComponent(/datum/component/torn_wall)
 	is_valid = validate_target(target, tearer) // And now we might have just destroyed it
 	if (is_valid == WALL_TEAR_ALLOWED)

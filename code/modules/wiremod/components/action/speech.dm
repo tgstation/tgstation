@@ -26,7 +26,7 @@
 	if(!parent.shell)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent.shell, COOLDOWN_CIRCUIT_SPEECH))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_SPEECH))
 		return
 
 	if(message.value)

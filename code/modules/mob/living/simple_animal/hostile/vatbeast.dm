@@ -28,8 +28,7 @@
 
 /mob/living/simple_animal/hostile/vatbeast/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/tentacle_slap/slapper = new(src)
-	slapper.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/tentacle_slap)
 
 	add_cell_sample()
 	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
