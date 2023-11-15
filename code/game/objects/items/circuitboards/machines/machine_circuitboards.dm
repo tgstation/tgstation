@@ -551,7 +551,7 @@
 
 /obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
 	build_path = smartfridge.base_build_path
-	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
+	if(!fridges_name_paths.Find(build_path))
 		name = "[initial(smartfridge.name)]" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
