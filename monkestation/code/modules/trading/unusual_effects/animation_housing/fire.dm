@@ -2,7 +2,7 @@
 	unusual_description = "flaming"
 	duration = 2 SECONDS
 	burst_amount = 3
-	spawn_interval 0.2 SECONDS
+	spawn_interval = 0.2 SECONDS
 	particle_state = "1x1"
 
 /datum/component/particle_spewer/fire/animate_particle(obj/effect/abstract/particle/spawned)
@@ -15,11 +15,12 @@
 	
 	if(prob(35))
 		spawned.layer = ABOVE_MOB_LAYER
-		
+
 	var/normal_x = rand(-4, 4) + spawned.pixel_x
 	var/inverse_x = 0 - normal_x
+	spawned.alpha = 0
 
-	animate(spawned, time = 0.4 SECONDS, pixel_y = rand(6, 16) + spawned.pixel_y, pixel_x = normal_x, easing = LINEAR_EASING)
+	animate(spawned, alpha = 255,  time = 0.4 SECONDS, pixel_y = rand(6, 16) + spawned.pixel_y, pixel_x = normal_x, easing = LINEAR_EASING)
 	animate(time = 0.5 SECONDS, alpha = 0, inverse_x , pixel_y = rand(6, 16) + spawned.pixel_y, easing = LINEAR_EASING|EASE_OUT)
 	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)
 
