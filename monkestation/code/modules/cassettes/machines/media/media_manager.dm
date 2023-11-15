@@ -178,7 +178,7 @@
 
 		targetURL = M.media_url
 		targetStartTime = M.media_start_time
-		targetVolume = max(0, M.volume - (dist * 0.1))
+		targetVolume = max(0, M.volume * (1 - (dist * 0.1)))
 		targetBalance = x_dist
 
 		//MP_DEBUG("Found audio source: [M.media_url] @ [(world.time - start_time) / 10]s.")
@@ -212,7 +212,7 @@
 		var/dist = get_dist(new_loc, M)
 		var/x_dist = -(new_loc.x - M.x) * 10
 
-		targetVolume = max(0, M.volume - (dist * 0.1))
+		targetVolume = max(0, M.volume * (1 - (dist * 0.1)))
 		targetBalance = x_dist
 	push_volume_recalc(targetVolume, targetBalance)
 
