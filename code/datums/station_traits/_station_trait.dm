@@ -22,6 +22,8 @@
 	var/trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	/// Whether or not this trait can be reverted by an admin
 	var/can_revert = TRUE
+	/// If set to true we'll show a button on the lobby to notify people about this trait
+	var/sign_up_button = FALSE
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
 	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
@@ -50,7 +52,7 @@
 	SIGNAL_HANDLER
 	return
 
-///type of info the centcom report has on this trait, if any.
+/// Returns the type of info the centcom report has on this trait, if any.
 /datum/station_trait/proc/get_report()
 	return "<i>[name]</i> - [report_message]"
 
@@ -64,7 +66,7 @@
 
 	qdel(src)
 
-///Called by decals if they can be colored, to see if we got some cool colors for them. Only takes the first station trait
+/// Called by decals if they can be colored, to see if we got some cool colors for them. Only takes the first station trait
 /proc/request_station_colors(atom/thing_to_color, pattern)
 	for(var/datum/station_trait/trait in SSstation.station_traits)
 		var/decal_color = trait.get_decal_color(thing_to_color, pattern || PATTERN_DEFAULT)
@@ -72,6 +74,21 @@
 			return decal_color
 	return null
 
-///Return a color for the decals, if any
+/// Return a color for the decals, if any
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
+	return
+
+/// Apply any additional handling we need to our lobby button
+/datum/station_trait/proc/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	RegisterSignal(lobby_button, COMSIG_CLICK, PROC_REF(on_lobby_button_click))
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_lobby_button_update_icon))
+
+/// Called when our lobby button is clicked on
+/datum/station_trait/proc/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
+	SIGNAL_HANDLER
+	return
+
+/// Called when our lobby button tries to update its appearance
+/datum/station_trait/proc/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	SIGNAL_HANDLER
 	return

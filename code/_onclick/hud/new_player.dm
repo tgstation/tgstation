@@ -6,32 +6,49 @@
 	var/menu_hud_status = TRUE
 
 /datum/hud/new_player/New(mob/owner)
-	..()
+	. = ..()
 
-	if(!owner || !owner.client)
+	if (!owner || !owner.client)
 		return
 
-	if(owner.client.interviewee)
+	if (owner.client.interviewee)
 		return
 
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
-	for(var/button_type in buttons)
-		var/atom/movable/screen/lobby/lobbyscreen = new button_type(our_hud = src)
+	for (var/atom/movable/screen/lobby/lobbyscreen as anything in buttons)
+		if (!initial(lobbyscreen.always_available))
+			continue
+		lobbyscreen = new lobbyscreen(our_hud = src)
 		lobbyscreen.SlowInit()
 		static_inventory += lobbyscreen
-		if(!lobbyscreen.always_shown)
+		if (!lobbyscreen.always_shown)
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
-		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
+		if (istype(lobbyscreen, /atom/movable/screen/lobby/button))
 			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
 			lobby_button.owner = REF(owner)
+
+	var/position_iterator = 1
+	for (var/datum/station_trait/trait as anything in SSstation.station_traits)
+		if (!trait.sign_up_button)
+			continue
+		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new()
+		sign_up_button.SlowInit()
+		sign_up_button.hud = src
+		sign_up_button.owner = REF(owner)
+		sign_up_button.screen_loc = "TOP:-[42 + 28 * position_iterator],CENTER:-86"
+		static_inventory += sign_up_button
+		trait.setup_lobby_button(sign_up_button)
+		position_iterator++
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_MENU_LAYER
 	screen_loc = "TOP,CENTER"
-	///Whether this HUD element can be hidden from the client's "screen" (moved off-screen) or not
+	/// Whether this HUD element can be hidden from the client's "screen" (moved off-screen) or not
 	var/always_shown = FALSE
+	/// If true we will create this button every time the HUD is generated
+	var/always_available = TRUE
 
 ///Set the HUD in New, as lobby screens are made before Atoms are Initialized.
 /atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
@@ -398,6 +415,13 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 	new_player.handle_player_polling()
+
+/// A generic "sign up" button used by station traits
+/atom/movable/screen/lobby/button/sign_up
+	icon = 'icons/hud/lobby/signup_button.dmi'
+	icon_state = "signup"
+	base_icon_state = "signup"
+	always_available = FALSE
 
 /atom/movable/screen/lobby/button/collapse
 	name = "Collapse Lobby Menu"
