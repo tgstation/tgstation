@@ -1,0 +1,4 @@
+author: "Shroopy"
+delete-after: True
+changes:
+  - bugfix: "Molotovs now splash before burning, not after"

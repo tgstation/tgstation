@@ -1,0 +1,4 @@
+author: "falconignite"
+delete-after: True
+changes:
+  - bugfix: "Lizard tail wagging graphics"
