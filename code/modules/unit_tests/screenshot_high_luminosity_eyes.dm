@@ -7,7 +7,7 @@
 /datum/unit_test/screenshot_high_luminosity_eyes/Run()
 	// Create a mob with red and blue eyes. This is to test that high luminosity eyes properly default to the old eye color.
 	var/mob/living/carbon/human/test_subject = allocate(/mob/living/carbon/human/consistent)
-	test_subject.equipOutfit(/datum/outfit/job/assistant)
+	test_subject.equipOutfit(/datum/outfit/job/assistant/consistent)
 	test_subject.eye_color_left = COLOR_RED
 	test_subject.eye_color_right = COLOR_BLUE
 
