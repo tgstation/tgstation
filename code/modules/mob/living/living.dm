@@ -335,20 +335,20 @@
 			var/resilience_mult = get_grab_resilience_mult()
 			var/resilience_text = ""
 			if (resilience_mult > 1)
-				resilience_text = "<b><i>tightly </i></b>"
+				resilience_text = "<b><i> tightly</i></b>"
 			else if (resilience_mult < 1)
-				resilience_text = "<i>weakly </i>"
+				resilience_text = "<i> weakly</i>"
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/grabbed_human = M
 				var/grabbed_by_hands = (zone_selected == "l_arm" || zone_selected == "r_arm") && grabbed_human.usable_hands > 0
-				M.visible_message(span_warning("[src] [resilience_text]grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
-								span_warning("[src] [resilience_text]grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
-				to_chat(src, span_notice("You [resilience_text]grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+				M.visible_message(span_warning("[src][resilience_text] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
+								span_warning("[src][resilience_text] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
+				to_chat(src, span_notice("You[resilience_text] grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
 			else
-				M.visible_message(span_warning("[src] [resilience_text]grabs [M] passively!"), \
-								span_warning("[src] [resilience_text]grabs you passively!"), null, null, src)
-				to_chat(src, span_notice("You [resilience_text]grab [M] passively!"))
+				M.visible_message(span_warning("[src][resilience_text] grabs [M] passively!"), \
+								span_warning("[src][resilience_text] grabs you passively!"), null, null, src)
+				to_chat(src, span_notice("You[resilience_text] grab [M] passively!"))
 
 		if(!iscarbon(src))
 			M.LAssailant = null
