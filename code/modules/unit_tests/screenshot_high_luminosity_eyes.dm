@@ -26,11 +26,14 @@
 	test_eyes.set_beam_color(COLOR_SCIENCE_PINK, to_update = UPDATE_EYES_LEFT)
 	test_eyes.set_beam_color(COLOR_SLIME_GREEN, to_update = UPDATE_EYES_RIGHT)
 	test_eyes.set_beam_range(0)
+	TEST_ASSERT_EQUAL(test_eyes.eye.light_on, TRUE, "[src]'s 'eye.light_on' is FALSE after setting range to 0 while on. 'eye.light_on' should = TRUE!")
 	test_screenshot("light_emissive", get_flat_icon_for_all_directions(test_subject, no_anim = FALSE))
 
 	// turn it on and off again, it should look the same afterwards
 	test_eyes.toggle_active()
+	TEST_ASSERT_EQUAL(test_eyes.eye.light_on, FALSE, "[src]'s 'eye.light_on' is TRUE after being toggled off at range 0. 'eye.light_on' should = FALSE!")
 	test_eyes.toggle_active()
+	TEST_ASSERT_EQUAL(test_eyes.eye.light_on, TRUE, "[src]'s 'eye.light_on' is FALSE after being toggled on at range 0. 'eye.light_on' should = TRUE!")
 	test_screenshot("light_emissive", get_flat_icon_for_all_directions(test_subject, no_anim = FALSE))
 
 	// Make sure the light comes back on when we go from range 0 to 1
