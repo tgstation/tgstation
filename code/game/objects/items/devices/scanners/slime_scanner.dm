@@ -32,11 +32,11 @@
 	else if (scanned_slime.nutrition < scanned_slime.get_hunger_nutrition())
 		to_render += "\n[span_warning("Warning: slime is hungry")]"
 
-	to_render += "\nElectric change strength: [scanned_slime.powerlevel]\nHealth: [round(scanned_slime.health/scanned_slime.maxHealth,0.01)*100]%"
+	to_render += "\nElectric charge strength: [scanned_slime.powerlevel]\nHealth: [round(scanned_slime.health/scanned_slime.maxHealth,0.01)*100]%"
 
-	to_render += "\nPossible mutation[scanned_slime.slime_type.mutations.len > 1 ? "s" : ""]:  "
+	to_render += "\nPossible mutation[scanned_slime.slime_type.mutations.len > 1 ? "s" : ""]: "
 	var/list/mutation_text = list()
-	for(var/datum/slime_type/key in scanned_slime.slime_type.mutations)
+	for(var/datum/slime_type/key as anything in scanned_slime.slime_type.mutations)
 		mutation_text += initial(key.colour)
 
 	to_render += "[mutation_text.Join(", ")]"
