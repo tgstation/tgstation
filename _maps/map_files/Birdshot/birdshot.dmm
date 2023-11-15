@@ -2020,7 +2020,7 @@
 /area/station/science/ordnance/bomb)
 "aPG" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -2061,7 +2061,7 @@
 /turf/open/floor/iron/dark/small,
 /area/station/security/checkpoint/customs)
 "aQn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/pink/visible,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering/supermatter)
 "aQr" = (
@@ -2080,7 +2080,7 @@
 /area/station/engineering/engine_smes)
 "aQB" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
 	dir = 9
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -46412,7 +46412,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/theater)
 "qrP" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
 	dir = 6
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
