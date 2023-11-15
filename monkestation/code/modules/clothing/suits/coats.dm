@@ -99,8 +99,8 @@
 /obj/item/clothing/suit/armor/guardmanvest
 	name = "guardman's vest"
 	desc = "It keeps your guts intact, thats really all that matters"
-	worn_icon = 'monkestation/icons/mob/suit.dmi'
 	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
 	icon_state = "guardman_vest"
 
 
