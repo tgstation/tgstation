@@ -1788,5 +1788,5 @@
 			return
 		cassette_review.ui_interact(usr)
 
-	else if()
+//	else if()
 //monkestation edit end

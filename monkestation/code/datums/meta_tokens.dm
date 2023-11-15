@@ -1,9 +1,9 @@
 GLOBAL_LIST_INIT(used_monthly_token, list())
 
 /client
-	var/datum/antag_token_holder/client_saved_tokens
+	var/datum/meta_token_holder/client_saved_tokens
 
-/datum/antag_token_holder
+/datum/meta_token_holder
 	var/client/owner
 	///are they a donator? and do they have their free token?
 	var/donator_token = FALSE
@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	var/in_queued_tier
 	var/queued_donor = FALSE
 
-/datum/antag_token_holder/New(client/creator)
+/datum/meta_token_holder/New(client/creator)
 	. = ..()
 	if(!creator)
 		return
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	convert_list_to_tokens(owners_prefs.saved_tokens)
 	donator_token = check_for_donator_token()
 
-/datum/antag_token_holder/proc/convert_list_to_tokens(list/saved_tokens)
+/datum/meta_token_holder/proc/convert_list_to_tokens(list/saved_tokens)
 	if(!length(saved_tokens))
 		return
 	total_low_threat_tokens = saved_tokens["low_threat"]
@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 
 	total_antag_tokens = total_low_threat_tokens + total_medium_threat_tokens + total_high_threat_tokens
 
-/datum/antag_token_holder/proc/convert_tokens_to_list()
+/datum/meta_token_holder/proc/convert_tokens_to_list()
 	owner.prefs.saved_tokens = list(
 		"low_threat" = total_low_threat_tokens,
 		"medium_threat" = total_medium_threat_tokens,
@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	)
 	owner.prefs.save_preferences()
 
-/datum/antag_token_holder/proc/check_for_donator_token()
+/datum/meta_token_holder/proc/check_for_donator_token()
 	if(!owner.patreon)
 		return FALSE
 	if(!owner.patreon.has_access(ACCESS_TRAITOR_RANK))
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		return FALSE
 	return TRUE
 
-/datum/antag_token_holder/proc/spend_token(tier, use_donor = FALSE)
+/datum/meta_token_holder/proc/spend_token(tier, use_donor = FALSE)
 	if(use_donor)
 		if(donator_token)
 			donator_token = FALSE
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	convert_tokens_to_list()
 
 ///adjusts the users tokens, yes they can be in antag token debt
-/datum/antag_token_holder/proc/adjust_tokens(tier, amount)
+/datum/meta_token_holder/proc/adjust_tokens(tier, amount)
 	switch(tier)
 		if(HIGH_THREAT)
 			total_high_threat_tokens += amount
@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	convert_tokens_to_list()
 
 
-/datum/antag_token_holder/proc/approve_token()
+/datum/meta_token_holder/proc/approve_token()
 	if(!in_queue)
 		return
 	to_chat(owner, "Your request to play as [in_queue] has been approved.")
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	in_queued_tier = null
 	queued_donor = FALSE
 
-/datum/antag_token_holder/proc/reject_token()
+/datum/meta_token_holder/proc/reject_token()
 	to_chat(owner, "Your request to play as [in_queue] has been denied.")
 	in_queue = null
 	in_queued_tier = null

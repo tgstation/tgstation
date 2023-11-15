@@ -36,3 +36,4 @@
 	///the month we last used event tokens on
 	var/event_token_month = 0
 	///what token event do we currently have queued
+	var/datum/twitch_event/queued_token_event
