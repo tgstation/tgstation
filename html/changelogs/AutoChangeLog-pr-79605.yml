@@ -1,0 +1,4 @@
+author: "TwistedSilicon"
+delete-after: True
+changes:
+  - bugfix: "invisimin verb now makes you invisible to all HUDs too! No more floating healthbars or job identifiers giving you away while you sneak around."
