@@ -64,8 +64,7 @@
 			if(!istype(attacking_item, second_tier_material))
 				return
 			var/obj/item/stack/sheet/second_tier = attacking_item
-			if(second_tier.get_amount() >= second_tier_material_amount && do_after(user, 1 SECONDS, src))
-				second_tier.use(second_tier_material_amount)
+			if(do_after(user, 1 SECONDS, src) && second_tier.use(second_tier_material_amount))
 				current_tier = 2
 				part_efficiency += part_efficiency_increase_amount
 				max_rpm *= max_rpm_tier_multiplier
@@ -75,8 +74,7 @@
 			if(!istype(attacking_item, third_tier_material))
 				return
 			var/obj/item/stack/sheet/third_tier = attacking_item
-			if(third_tier.get_amount() >= third_tier_material_amount && do_after(user, 2 SECONDS, src))
-				third_tier.use(third_tier_material_amount)
+			if(do_after(user, 2 SECONDS, src) && third_tier.use(third_tier_material_amount))
 				current_tier = 3
 				part_efficiency += part_efficiency_increase_amount
 				max_rpm *= max_rpm_tier_multiplier
@@ -86,8 +84,7 @@
 			if(!istype(attacking_item, fourth_tier_material))
 				return
 			var/obj/item/stack/sheet/fourth_tier = attacking_item
-			if(fourth_tier.get_amount() >= fourth_tier_material_amount && do_after(user, 3 SECONDS, src))
-				fourth_tier.use(fourth_tier_material_amount)
+			if(do_after(user, 3 SECONDS, src) && fourth_tier.use(fourth_tier_material_amount))
 				current_tier = 4
 				part_efficiency += part_efficiency_increase_amount
 				max_rpm *= max_rpm_tier_multiplier
