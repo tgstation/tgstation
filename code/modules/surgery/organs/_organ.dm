@@ -90,11 +90,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/organ/ex_act(severity, target)
-	if(bodypart_owner) //trust me bro you dont want this
-		return FALSE
-	return ..()
-
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
 	LAZYADD(organ_traits, trait)

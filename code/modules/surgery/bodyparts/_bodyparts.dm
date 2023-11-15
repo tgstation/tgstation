@@ -417,10 +417,12 @@
 			bodypart_organ.Remove(bodypart_organ.owner)
 		else
 			if(bodypart_organ.bodypart_remove(src))
-				bodypart_organ.forceMove(get_turf(src))
+				if(drop_loc) //can be null if being deleted
+					bodypart_organ.forceMove(get_turf(drop_loc))
 
-	for(var/atom/movable/movable as anything in src)
-		movable.forceMove(drop_loc)
+	if(drop_loc) //can be null during deletion
+		for(var/atom/movable/movable as anything in src)
+			movable.forceMove(drop_loc)
 
 	update_icon_dropped()
 

@@ -54,7 +54,7 @@
 	if(brain_size > 1)
 		. += span_notice("It is bigger than average...")
 
-/obj/item/organ/internal/brain/Insert(mob/living/carbon/brain_owner, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -62,7 +62,7 @@
 	name = initial(name)
 
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
-	if(brain_owner?.mind?.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)
+	if(brain_owner?.mind?.has_antag_datum(/datum/antagonist/changeling) && !(movement_flags & NO_ID_TRANSFER))
 		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)
@@ -109,21 +109,7 @@
 	//Update the body's icon so it doesnt appear debrained anymore
 	brain_owner.update_body_parts()
 
-/obj/item/organ/internal/brain/on_mob_insert(mob/living/carbon/organ_owner, special)
-	// Are we inserting into a new mob from a head?
-	// If yes, we want to quickly steal the brainmob from the head before we do anything else.
-	// This is usually stuff like reattaching dismembered/amputated heads.
-	if(istype(loc, /obj/item/bodypart/head))
-		var/obj/item/bodypart/head/brain_holder = loc
-		if(brain_holder.brainmob)
-			brainmob = brain_holder.brainmob
-			brain_holder.brainmob = null
-			brainmob.container = null
-			brainmob.forceMove(src)
-
-	return ..()
-
-/obj/item/organ/internal/brain/Remove(mob/living/carbon/brain_owner, special = 0, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
 	if(!QDELETED(brain_owner) && length(skillchips))
 		if(!special)
@@ -140,7 +126,7 @@
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
+	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !(movement_flags & NO_ID_TRANSFER))
 		transfer_identity(brain_owner)
 	brain_owner.update_body_parts()
 	brain_owner.clear_mood_event("brain_damage")
@@ -569,6 +555,6 @@
 /// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
 /obj/item/organ/internal/brain/replace_into(mob/living/carbon/new_owner)
 	var/obj/item/organ/internal/brain/old_brain = new_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	old_brain.Remove(new_owner, special = TRUE, no_id_transfer = TRUE)
+	old_brain.Remove(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
-	return Insert(new_owner, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+	return Insert(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER | DELETE_IF_REPLACED)

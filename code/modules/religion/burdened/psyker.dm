@@ -82,7 +82,7 @@
 	qdel(old_head)
 	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
-	old_brain.Remove(src, special = TRUE, no_id_transfer = TRUE)
+	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
 	if(old_eyes)

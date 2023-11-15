@@ -26,7 +26,6 @@
 	unarmed_effectiveness = 0
 	bodypart_trait_source = HEAD_TRAIT
 
-	var/mob/living/brain/brainmob //The current occupant.
 	var/obj/item/organ/internal/brain/brain //The brain organ
 	var/obj/item/organ/internal/eyes/eyes
 	var/obj/item/organ/internal/ears/ears
@@ -104,11 +103,6 @@
 	if(gone == brain)
 		brain = null
 		update_icon_dropped()
-		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
-			message_admins("Brainmob: ([ADMIN_LOOKUPFLW(brainmob)]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
-			brainmob.log_message(", brainmob, was left stranded in [src] without a brain", LOG_GAME)
-	if(gone == brainmob)
-		brainmob = null
 	if(gone == eyes)
 		eyes = null
 		update_icon_dropped()
@@ -123,12 +117,12 @@
 	if(show_organs_on_examine && IS_ORGANIC_LIMB(src))
 		if(!brain)
 			. += span_info("The brain has been removed from [src].")
-		else if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
+		else if(brain.suicided || (brain.brainmob && HAS_TRAIT(brain.brainmob, TRAIT_SUICIDED)))
 			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
-		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
-			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
-		else if(brainmob)
-			if(brainmob.key || brainmob.get_ghost(FALSE, TRUE))
+		else if(brain.brainmob)
+			if(brain.brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+				. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
+			if(brain.brainmob.key || brain.brainmob.get_ghost(FALSE, TRUE))
 				. += span_info("Its muscles are twitching slightly... It seems to have some life still in it.")
 			else
 				. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")

@@ -10,13 +10,13 @@
  *
  * receiver - the mob who will get our organ
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
- * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
+ * movement_flags - Flags for how we behave in movement. See DEFINES/organ_movement for flags
  */
-/obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
-	mob_insert(receiver, special, drop_if_replaced)
-	bodypart_insert(limb_owner = receiver)
+	mob_insert(receiver, special, drop_if_replaced, movement_flags)
+	bodypart_insert(limb_owner = receiver, movement_flags)
 
 	return TRUE
 
@@ -26,11 +26,11 @@
  * * organ_owner - the mob who owns our organ, that we're removing the organ from. Can be null
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
-/obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
-	mob_remove(organ_owner, special)
-	bodypart_remove(limb_owner = organ_owner)
+	mob_remove(organ_owner, special, movement_flags)
+	bodypart_remove(limb_owner = organ_owner, movement_flags)
 
 /*
  * Insert the organ into the select mob.
@@ -39,7 +39,7 @@
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
  */
-/obj/item/organ/proc/mob_insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/proc/mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!iscarbon(receiver))
@@ -53,10 +53,10 @@
 	var/obj/item/organ/replaced = receiver.get_organ_slot(slot)
 	if(replaced)
 		replaced.Remove(receiver, special = TRUE)
-		if(drop_if_replaced)
-			replaced.forceMove(get_turf(receiver))
-		else
+		if(movement_flags & DELETE_IF_REPLACED)
 			qdel(replaced)
+		else
+			replaced.forceMove(get_turf(receiver))
 
 		if(!IS_ROBOTIC_ORGAN(src) && (organ_flags & ORGAN_VIRGIN))
 			blood_dna_info = receiver.get_blood_dna_list()
@@ -64,7 +64,6 @@
 			// wash also adds the blood dna again
 			wash(CLEAN_TYPE_BLOOD)
 			organ_flags &= ~ORGAN_VIRGIN
-
 
 	receiver.organs |= src
 	receiver.organs_slot[slot] = src
@@ -77,7 +76,7 @@
 /// Called after the organ is inserted into a mob.
 /// Adds Traits, Actions, and Status Effects on the mob in which the organ is impanted.
 /// Override this proc to create unique side-effects for inserting your organ. Must be called by overrides.
-/obj/item/organ/proc/on_mob_insert(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/proc/on_mob_insert(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/trait in organ_traits)
@@ -95,7 +94,7 @@
 
 /// Insert an organ into a limb, assume the limb as always detached and include no owner operations here (except the get_bodypart helper here I guess)
 /// Give EITHER a limb OR a limb owner
-/obj/item/organ/proc/bodypart_insert(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner)
+/obj/item/organ/proc/bodypart_insert(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(limb_owner)
@@ -114,7 +113,7 @@
 	return TRUE
 
 /// Add any limb specific effects you might want here
-/obj/item/organ/proc/on_bodypart_insert(obj/item/bodypart/limb)
+/obj/item/organ/proc/on_bodypart_insert(obj/item/bodypart/limb, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	item_flags |= ABSTRACT
@@ -125,7 +124,7 @@
  * * organ_owner - the mob who owns our organ, that we're removing the organ from. Can be null
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
-/obj/item/organ/proc/mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/proc/mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(organ_owner)
@@ -142,7 +141,7 @@
 /// Called after the organ is removed from a mob.
 /// Removes Traits, Actions, and Status Effects on the mob in which the organ was impanted.
 /// Override this proc to create unique side-effects for removing your organ. Must be called by overrides.
-/obj/item/organ/proc/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+/obj/item/organ/proc/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!iscarbon(organ_owner))
@@ -182,7 +181,7 @@
 
 /// Called to remove an organ from a limb. Do not put any mob operations here (except the bodypart_getter at the start)
 /// Give EITHER a limb OR a limb_owner
-/obj/item/organ/proc/bodypart_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner)
+/obj/item/organ/proc/bodypart_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(limb_owner)
@@ -202,7 +201,7 @@
 	return TRUE
 
 /// Called on limb removal to remove limb specific limb effects or statusses
-/obj/item/organ/proc/on_bodypart_remove(obj/item/bodypart/limb)
+/obj/item/organ/proc/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))

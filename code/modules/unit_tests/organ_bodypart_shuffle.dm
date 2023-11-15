@@ -8,7 +8,7 @@
 	var/list/removed_organs = list()
 
 	for(var/obj/item/organ/organ as anything in hollow_boy.organs)
-		organ.forceMove(null)
+		organ.moveToNullspace()
 		removed_organs += organ
 
 	for(var/obj/item/organ/organ as anything in removed_organs)

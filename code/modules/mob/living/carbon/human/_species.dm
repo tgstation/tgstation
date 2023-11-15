@@ -372,17 +372,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				var/obj/item/organ/internal/brain/existing_brain = existing_organ
 				if(!existing_brain.decoy_override)
 					existing_brain.before_organ_replacement(new_organ)
-					existing_brain.Remove(organ_holder, special = TRUE, no_id_transfer = TRUE)
-					QDEL_NULL(existing_organ)
+					existing_brain.Remove(organ_holder, special = TRUE, movement_flags = NO_ID_TRANSFER | DELETE_IF_REPLACED)
 			else
 				existing_organ.before_organ_replacement(new_organ)
-				existing_organ.Remove(organ_holder, special = TRUE)
-				QDEL_NULL(existing_organ)
+				existing_organ.Remove(organ_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 		if(isnull(existing_organ) && should_have && !(new_organ.zone in excluded_zones) && organ_holder.get_bodypart(deprecise_zone(new_organ.zone)))
 			used_neworgan = TRUE
 			new_organ.set_organ_damage(new_organ.maxHealth * (1 - health_pct))
-			new_organ.Insert(organ_holder, special = TRUE, drop_if_replaced = FALSE)
+			new_organ.Insert(organ_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 		if(!used_neworgan)
 			QDEL_NULL(new_organ)
