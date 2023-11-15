@@ -129,8 +129,9 @@
 	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
 		if(!ispath(possible_stack, /obj/item/stack/sheet))
 			continue
-		if(possible_stack.material_type)
-			if(!SSstock_market.materials_quantity[possible_stack.material_type])
-				continue
-			SSstock_market.materials_quantity[possible_stack.material_type] -= contains[possible_stack]
-			SSstock_market.materials_prices[possible_stack.material_type] += round((SSstock_market.materials_prices[possible_stack.material_type]) * (contains[possible_stack] / (SSstock_market.materials_quantity[possible_stack.material_type] - contains[possible_stack])))
+		if(!possible_stack.material_type)
+			continue
+		if(!SSstock_market.materials_quantity[possible_stack.material_type])
+			continue
+		SSstock_market.materials_quantity[possible_stack.material_type] -= contains[possible_stack]
+		SSstock_market.materials_prices[possible_stack.material_type] += round((SSstock_market.materials_prices[possible_stack.material_type]) * (contains[possible_stack] / (SSstock_market.materials_quantity[possible_stack.material_type] - contains[possible_stack])))
