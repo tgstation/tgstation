@@ -117,7 +117,7 @@
 	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
 		return
 
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && ((stat >= SOFT_CRIT && (stat != DEAD || stat != UNCONSCIOUS))))
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && !((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS))))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		UnarmedAttack(A, FALSE)
 		return
