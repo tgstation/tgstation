@@ -438,7 +438,8 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	deactivate(eye_owner, close_ui = TRUE)
-	eye.forceMove(src)
+	if(!QDELETED(eye))
+		eye.forceMove(src)
 	return ..()
 
 /obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
