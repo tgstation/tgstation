@@ -13,6 +13,7 @@
 	data["equipslot"] = "[component.unusual_equip_slot]"
 	data["item_overlay"] = component.unusal_overlay
 	data["unusual_type"] = "[unusual.type]"
+	data["unusual_number"] = "[component.unusual_number]"
 
 	extra_stat_inventory["unusual"] += list(data)
 	save_preferences()

@@ -17,7 +17,10 @@
 			temp = new path
 			var/list/viable_unusuals = subtypesof(/datum/component/particle_spewer) - /datum/component/particle_spewer/movement
 			var/picked_path = pick(viable_unusuals)
-			temp.AddComponent(/datum/component/unusual_handler, particle_path = picked_path)
+			var/pulled_key =  user.ckey
+			if(!pulled_key)
+				pulled_key = "MissingNo." // have fun trying to get this one lol
+			temp.AddComponent(/datum/component/unusual_handler, particle_path = picked_path, fresh_unusual = TRUE, client_ckey = pulled_key)
 		
 		//token adding
 		if("High Tier")
@@ -91,3 +94,20 @@
 		qdel(query_add_gear_purchase)
 
 	return TRUE
+
+/proc/testing_spawn_bulk_unusuals()
+	var/turf/turf = get_turf(usr)
+	
+	for(var/i = 1 to 20)
+		var/list/viable_hats = list(
+		/obj/item/clothing/head/caphat,
+		/obj/item/clothing/head/beanie,
+		/obj/item/clothing/head/beret,
+		)
+		viable_hats += subtypesof(/obj/item/clothing/head/hats) - typesof(/obj/item/clothing/head/hats/hos) - /obj/item/clothing/head/hats/centcom_cap - /obj/item/clothing/head/hats/hopcap - /obj/item/clothing/head/hats/centhat - /obj/item/clothing/head/hats/warden
+		viable_hats += subtypesof(/obj/item/clothing/head/costume)
+		var/path = pick(viable_hats)
+		var/obj/item/temp = new path(turf)
+		var/list/viable_unusuals = subtypesof(/datum/component/particle_spewer) - /datum/component/particle_spewer/movement
+		var/picked_path = pick(viable_unusuals)
+		temp.AddComponent(/datum/component/unusual_handler, particle_path = picked_path)

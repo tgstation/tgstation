@@ -1,3 +1,6 @@
+GLOBAL_LIST_INIT(total_unusuals_per_type, list())
+
+
 /datum/component/unusual_handler
 	var/atom/source_object
 	///the description added to the unusual.
@@ -12,11 +15,16 @@
 	var/unusual_equip_slot = ITEM_SLOT_HEAD
 	/// the icon_state of the overlay given to unusals
 	var/unusal_overlay = "none"
+	///the unique number our unusual is in the item path
+	var/unusual_number = 0
 
 //this init is handled far differently than others. it parses data from the DB for information about the unusual itself
 //it than loads this info into the component itself, the particle_path is purely for spawning temporary ones in round
 /datum/component/unusual_handler/Initialize(list/parsed_variables = list(), particle_path = /datum/component/particle_spewer/confetti, fresh_unusual = FALSE, client_ckey = "dwasint")
 	. = ..()
+	if(!length(GLOB.total_unusuals_per_type))
+		fetch_unusual_data()
+
 	if(!length(parsed_variables))
 		src.particle_path = particle_path
 	else
@@ -25,6 +33,9 @@
 	if(fresh_unusual)
 		original_owner_ckey = client_ckey
 		round_id = text2num(GLOB.round_id)
+		GLOB.total_unusuals_per_type["[particle_path]"]++
+		unusual_number = "[GLOB.total_unusuals_per_type["[particle_path]"]]"
+
 	source_object = parent
 
 	source_object.AddComponent(src.particle_path)
@@ -36,10 +47,12 @@
 	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
 	source_object.desc += span_notice("\n Unboxed on round: [round_id]")
 	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
+	source_object.desc += span_notice("\n Series Number: [unusual_number]")
 
 	source_object.name = "unusual [unusual_description] [source_object.name]"
 
 	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
+	save_unusual_data()
 
 /datum/component/unusual_handler/Destroy(force, silent)
 	. = ..()
@@ -50,6 +63,7 @@
 	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
 	source_object.desc += span_notice("\n Unboxed on: [round_id]")
 	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
+	source_object.desc += span_notice("\n Series Number: [unusual_number]")
 
 /datum/component/unusual_handler/proc/setup_from_list(list/parsed_results)
 	particle_path = text2path(parsed_results["type"])
@@ -58,16 +72,25 @@
 	unusual_description = parsed_results["description"]
 	unusual_equip_slot = text2num(parsed_results["equipslot"])
 	unusal_overlay = parsed_results["item_overlay"]
+	unusual_number = parsed_results["unusual_number"]
 
-/obj/item/clothing/head/costume/chicken/confetti_unusual/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/unusual_handler)
+/datum/component/unusual_handler/proc/fetch_unusual_data()
+	var/json_file = file("data/unusual_tracking.json")
+	if(!fexists(json_file))
+		stack_trace("We are missing the unusual JSON file, this will mess up unusual counting and unique names!")
+	var/list/json = json_decode(file2text(json_file))
 
-/obj/item/clothing/head/costume/chicken/snow_unusual/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/snow)
+	if(!json)
+		return
 
-/obj/item/clothing/head/costume/chicken/galaxies_unusual/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/galaxies)
+	for(var/type in json)
+		GLOB.total_unusuals_per_type[type] = json[type]
 
+/datum/component/unusual_handler/proc/save_unusual_data()
+	var/json_file = file("data/unusual_tracking.json")
+	if(!fexists(json_file))
+		stack_trace("We are missing the unusual JSON file, this will mess up unusual counting and unique names!")
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(GLOB.total_unusuals_per_type))
+
+	

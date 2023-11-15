@@ -84,8 +84,8 @@
 	maptext_y += 60
 
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
-	if(isliving(user))
-		if(!user.put_in_hands(rolled_item))
+	if(type_string == "Unusual")
+		if(isliving(user) && !user.put_in_hands(rolled_item))
 			rolled_item.forceMove(get_turf(user))
 
 	addtimer(CALLBACK(src, PROC_REF(cleanup), user), 3 SECONDS)

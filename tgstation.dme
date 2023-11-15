@@ -6348,6 +6348,7 @@
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\__spawning_component.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\_footprint.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\confetti.dm"
+#include "monkestation\code\modules\trading\unusual_effects\animation_housing\fire.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\galaxies.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\holy_steps.dm"
 #include "monkestation\code\modules\trading\unusual_effects\animation_housing\music.dm"
