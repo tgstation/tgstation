@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - qol: "Dead human examines count as \"soul departed\" when the client is disconnected or the human doesn't have a brain anymore."
