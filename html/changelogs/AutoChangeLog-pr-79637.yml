@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Ashwalker Tendril Revives no longer ghost the player being revived."

@@ -1,0 +1,445 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/sign/poster/contraband/calada_jelly/directional/south,
+/turf/open/floor/wood,
+/area/template_noop)
+"e" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"g" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/reed/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"h" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/gun/ballistic/rifle/boltaction,
+/turf/open/water/jungle,
+/area/template_noop)
+"i" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = -8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"j" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/item/hatchet/wooden,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/template_noop)
+"k" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 7
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"m" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/floor/wood,
+/area/template_noop)
+"n" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/firepit,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = -11
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/misc/dirt,
+/area/template_noop)
+"q" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"r" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"s" = (
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt,
+/area/template_noop)
+"u" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/remains/xeno,
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"v" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 9;
+	pixel_y = 21
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"x" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/flora/rock/pile/jungle/large/style_random{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/template_noop)
+"y" = (
+/turf/closed/wall/mineral/wood,
+/area/template_noop)
+"z" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 9
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"A" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/wooden,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/poster/contraband/free_tonto/directional/west,
+/obj/effect/spawner/random/medical/medkit_rare,
+/obj/effect/spawner/random/exotic/antag_gear,
+/turf/open/floor/wood,
+/area/template_noop)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt,
+/area/template_noop)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/bush/jungle/c/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"D" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/misc/dirt,
+/area/template_noop)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash,
+/turf/open/misc/dirt,
+/area/template_noop)
+"J" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/structure/flora/rock/style_2,
+/obj/structure/railing,
+/turf/open/floor/wood,
+/area/template_noop)
+"K" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"L" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/ammo_box/strilka310,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner/end/flip{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"M" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"O" = (
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt,
+/area/template_noop)
+"P" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"Q" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/spawner/random/clothing/backpack,
+/turf/open/misc/dirt,
+/area/template_noop)
+"R" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/flora/rock/style_3,
+/turf/open/floor/wood,
+/area/template_noop)
+"T" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/misc/dirt,
+/area/template_noop)
+"U" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/structure/flora/grass/jungle/a/style_random,
+/turf/open/floor/wood,
+/area/template_noop)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/bush/jungle,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/effect/spawner/random/structure/crate,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"X" = (
+/obj/effect/spawner/random/decoration/glowstick,
+/turf/open/water/jungle,
+/area/template_noop)
+"Y" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 7
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+n
+"}
+(2,1,1) = {"
+a
+y
+y
+y
+W
+s
+y
+y
+a
+"}
+(3,1,1) = {"
+a
+y
+A
+x
+Y
+U
+M
+y
+a
+"}
+(4,1,1) = {"
+a
+y
+v
+T
+P
+q
+d
+y
+a
+"}
+(5,1,1) = {"
+a
+G
+k
+g
+r
+p
+m
+O
+a
+"}
+(6,1,1) = {"
+a
+u
+J
+h
+K
+X
+j
+C
+a
+"}
+(7,1,1) = {"
+a
+B
+L
+R
+Q
+e
+z
+y
+a
+"}
+(8,1,1) = {"
+a
+y
+y
+y
+i
+D
+y
+y
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
