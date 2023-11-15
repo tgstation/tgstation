@@ -49,6 +49,11 @@
 		return TRUE
 	return FALSE
 
+///Called when the driver turns
+/obj/vehicle/sealed/mecha/proc/on_turn(mob/living/driver, direction)
+	SIGNAL_HANDLER
+	relaymove(driver, direction)
+
 /obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
 	. = TRUE
 	if(!canmove || !(user in return_drivers()))
@@ -116,7 +121,7 @@
 	var/keyheld = FALSE
 	if(strafe)
 		for(var/mob/driver as anything in return_drivers())
-			if(driver.client?.keys_held["Alt"])
+			if(driver.client?.movement_locked)
 				keyheld = TRUE
 				break
 
