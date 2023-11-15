@@ -414,9 +414,9 @@
 	eye = new /obj/item/flashlight/eyelight/glow
 
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
-	. = ..()
 	deactivate(close_ui = TRUE)
 	QDEL_NULL(eye)
+	return ..()
 
 /obj/item/organ/internal/eyes/robotic/glow/emp_act()
 	. = ..()
