@@ -1,5 +1,0 @@
-author: "wraith-54321"
-delete-after: True
-changes:
-  - bugfix: "Admins can now actually force events"
-  - bugfix: "fixed some midrounds spawning without their antag datum"

@@ -60,3 +60,9 @@
 2023-11-14:
   lmenvs:
   - rscadd: TTNT's donator item set!
+2023-11-15:
+  Glyphee:
+  - bugfix: changed atmos on the dirt tiles to `"o2=22;n2=82;TEMP=293.15"`
+  wraith-54321:
+  - bugfix: Admins can now actually force events
+  - bugfix: fixed some midrounds spawning without their antag datum
