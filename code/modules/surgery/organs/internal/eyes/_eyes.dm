@@ -416,7 +416,6 @@
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
 	. = ..()
 	deactivate(close_ui = TRUE)
-	eye.moveToNullspace()
 	QDEL_NULL(eye)
 
 /obj/item/organ/internal/eyes/robotic/glow/emp_act()
