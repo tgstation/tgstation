@@ -84,7 +84,7 @@
 /mob/living/basic/mining/wolf/proc/make_tameable()
 	AddComponent(\
 		/datum/component/tameable,\
-		food_types = list(/obj/item/stack/sheet/bone, /obj/item/food/meat/slab),\
+		food_types = list(/obj/item/food/meat/slab),\
 		tame_chance = 15,\
 		bonus_tame_chance = 5,\
 		after_tame = CALLBACK(src, PROC_REF(tame_wolf)),\
