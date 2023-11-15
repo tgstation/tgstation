@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 //it than loads this info into the component itself, the particle_path is purely for spawning temporary ones in round
 /datum/component/unusual_handler/Initialize(list/parsed_variables = list(), particle_path = /datum/component/particle_spewer/confetti, fresh_unusual = FALSE, client_ckey = "dwasint")
 	. = ..()
+	source_object = parent
 	if(!length(GLOB.total_unusuals_per_type))
 		fetch_unusual_data()
 
@@ -36,7 +37,6 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 		GLOB.total_unusuals_per_type["[particle_path]"]++
 		unusual_number = "[GLOB.total_unusuals_per_type["[particle_path]"]]"
 
-	source_object = parent
 
 	source_object.AddComponent(src.particle_path)
 
@@ -49,7 +49,11 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
 	source_object.desc += span_notice("\n Series Number: [unusual_number]")
 
-	source_object.name = "unusual [unusual_description] [source_object.name]"
+	if(!length(parsed_variables))
+		if(unusual_number == 1)
+			source_object.name = span_hypnophrase("unusual [unusual_description] [source_object.name]")
+		else
+			source_object.name = "unusual [unusual_description] [source_object.name]"
 
 	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
 	save_unusual_data()
@@ -73,6 +77,7 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	unusual_equip_slot = text2num(parsed_results["equipslot"])
 	unusal_overlay = parsed_results["item_overlay"]
 	unusual_number = parsed_results["unusual_number"]
+	source_object.name = parsed_results["name"]
 
 /datum/component/unusual_handler/proc/fetch_unusual_data()
 	var/json_file = file("data/unusual_tracking.json")
@@ -93,4 +98,4 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(GLOB.total_unusuals_per_type))
 
-	
+
