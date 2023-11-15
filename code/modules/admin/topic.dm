@@ -1758,7 +1758,7 @@
 			return
 
 		web_sound(usr, link_url)
-
+//monkestation edit start
 	else if(href_list["approve_token"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1766,7 +1766,7 @@
 		if(!IS_CLIENT_OR_MOCK(target))
 			return
 		var/client/user_client = target
-		user_client.saved_tokens.approve_token()
+		user_client.client_saved_tokens.approve_token()
 		message_admins("[user_client]'s token has been approved, by [owner]")
 
 	else if(href_list["reject_token"])
@@ -1776,7 +1776,7 @@
 		if(!IS_CLIENT_OR_MOCK(target))
 			return
 		var/client/user_client = target
-		user_client.saved_tokens.reject_token()
+		user_client.client_saved_tokens.reject_token()
 		message_admins("[user_client]'s token has been rejected, by [owner]")
 
 	else if(href_list["open_music_review"])
@@ -1787,3 +1787,6 @@
 		if(!istype(cassette_review))
 			return
 		cassette_review.ui_interact(usr)
+
+	else if()
+//monkestation edit end

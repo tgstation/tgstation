@@ -13,6 +13,8 @@
 	var/id_tag
 	///should we announce this event
 	var/announce = TRUE
+	///how many event tokens does this cost to trigger
+	var/token_cost = 0
 
 /datum/twitch_event/proc/run_event(name)
 	if(event_flags & TWITCH_AFFECTS_STREAMER)

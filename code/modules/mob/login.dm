@@ -131,8 +131,8 @@
 	if(!client.patreon)
 		client.patreon = new(client)
 
-	if(!client.saved_tokens)
-		client.saved_tokens = new(client)
+	if(!client.client_saved_tokens)
+		client.client_saved_tokens = new(client)
 
 	return TRUE
 

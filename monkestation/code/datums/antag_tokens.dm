@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(used_monthly_token, list())
 
 /client
-	var/datum/antag_token_holder/saved_tokens
+	var/datum/antag_token_holder/client_saved_tokens
 
 /datum/antag_token_holder
 	var/client/owner

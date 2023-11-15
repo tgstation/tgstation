@@ -30,3 +30,9 @@
 	var/list/alt_job_titles = list()
 	/// the month we used our last donator token on
 	var/token_month = 0
+
+	///how many event tokens we currently have
+	var/event_tokens = 0
+	///the month we last used event tokens on
+	var/event_token_month = 0
+	///what token event do we currently have queued

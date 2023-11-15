@@ -20,16 +20,8 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	new_review.submitted_tape = submitted
 
 	GLOB.cassette_reviews["[new_review.id]"] = new_review
-
-	var/message = "[span_big(span_admin("[span_prefix("MUSIC APPROVAL:")] <EM>[key_name(user)]</EM> [ADMIN_OPEN_REVIEW(new_review.id)] has requested a review on their cassette."))]"
-
-	for(var/client/X in GLOB.admins)
-		X << 'sound/items/bikehorn.ogg'
-
-	to_chat(GLOB.admins,
-		type = MESSAGE_TYPE_ADMINCHAT,
-		html = message,
-		confidential = TRUE)
+	SEND_NOTIFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_big(span_admin("[span_prefix("MUSIC APPROVAL:")] <EM>[key_name(user)]</EM> [ADMIN_OPEN_REVIEW(new_review.id)] \
+															has requested a review on their cassette."))]")
 	to_chat(user, span_notice("Your Cassette has been sent to the Space Board of Music for review, you will be notified when an outcome has been made."))
 
 /obj/item/device/cassette_tape/proc/generate_cassette_json()
