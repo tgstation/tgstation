@@ -38,7 +38,7 @@
 /mob/proc/create_unusual()
 	if(!client?.prefs)
 		return
-	var/obj/item/clothing/head/costume/chicken/created = new()
+	var/obj/item/clothing/head/costume/nightcap/created = new()
 
-	created.AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/snow, fresh_unusual = TRUE, client_ckey = ckey)
+	created.AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/fire, fresh_unusual = TRUE, client_ckey = ckey)
 	client.prefs.save_new_unusual(created)
