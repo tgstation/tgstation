@@ -9,4 +9,4 @@
 		EVENT_TRACK_ROLESET = 0.9,
 		EVENT_TRACK_OBJECTIVES = 1
 		)
-	tag_multipliers = list(TAG_EXTERNAL = 0.3)
+	tag_multipliers = list(TAG_EXTERNAL = 0.2)
