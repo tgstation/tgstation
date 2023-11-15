@@ -16,7 +16,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	gold_core_spawnable = NO_SPAWN
-	speech_probability_rate = 30 // FIXME: might need to nerf this
+	speech_probability_rate = 13
 
 	/// Callback to save our memory at the end of the round.
 	var/datum/callback/roundend_callback = null
@@ -63,7 +63,7 @@
 		Write_Memory(TRUE)
 	var/special_status = determine_special_poly()
 	if(special_status == POLY_LONGEST_SURVIVAL || special_status == POLY_BEATING_DEATHSTREAK || prob(0.666))
-		var/mob/living/basic/parrot/poly/ghost/specter = new(loc) // san7890 make this the transfer mob proc
+		var/mob/living/basic/parrot/poly/ghost/specter = new(loc)
 		if(mind)
 			mind.transfer_to(specter)
 		else

@@ -47,9 +47,9 @@
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
 ///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
-///called before hearing a message froma tom/movable/Hear():
+///called before hearing a message from atom/movable/Hear():
 #define COMSIG_MOVABLE_PRE_HEAR "movable_pre_hear"
-	///do not proceed to hear the message
+	///cancel hearing the message because we're doing something else presumably
 	#define COMSIG_MOVABLE_CANCEL_HEARING (1<<0)
 ///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range))
 #define COMSIG_MOVABLE_HEAR "movable_hear"
