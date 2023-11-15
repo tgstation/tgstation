@@ -1655,7 +1655,6 @@
 * Called from [/atom/movable/proc/keyLoop], this exists to be overwritten by living mobs with a check to see if we're actually alive enough to change directions
 */
 /atom/movable/proc/keybind_face_direction(direction)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_KEYBIND_FACE_DIR, direction)
 	setDir(direction)
 
 /**

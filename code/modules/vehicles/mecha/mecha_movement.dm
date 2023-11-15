@@ -49,10 +49,10 @@
 		return TRUE
 	return FALSE
 
-///Called when the driver turns
+///Called when the driver turns with the movement lock key
 /obj/vehicle/sealed/mecha/proc/on_turn(mob/living/driver, direction)
 	SIGNAL_HANDLER
-	relaymove(driver, direction)
+	return COMSIG_IGNORE_MOVEMENT_LOCK
 
 /obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
 	. = TRUE
