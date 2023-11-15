@@ -69,7 +69,7 @@
 	deltimer(decay_timer)
 	return ..()
 
-/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/monster_core/Insert(mob/living/carbon/target_carbon, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return

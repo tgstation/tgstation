@@ -111,9 +111,9 @@
 
 /obj/item/organ/internal/brain/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
-	if(!QDELETED(brain_owner) && length(skillchips))
+	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
-			to_chat(brain_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
+			to_chat(organ_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
 		for(var/chip in skillchips)
 			var/obj/item/skillchip/skillchip = chip
 			// Run the try_ proc with force = TRUE.
@@ -127,9 +127,9 @@
 		BT.owner = null
 
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !(movement_flags & NO_ID_TRANSFER))
-		transfer_identity(brain_owner)
-	brain_owner.update_body_parts()
-	brain_owner.clear_mood_event("brain_damage")
+		transfer_identity(organ_owner)
+	organ_owner.update_body_parts()
+	organ_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"

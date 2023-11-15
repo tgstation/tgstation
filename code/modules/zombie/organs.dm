@@ -23,7 +23,7 @@
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/internal/zombie_infection/on_mob_insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/zombie_infection/on_mob_insert(mob/living/carbon/M, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return .

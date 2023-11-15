@@ -19,7 +19,7 @@
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return

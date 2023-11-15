@@ -52,7 +52,7 @@
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
 
-/obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	// If we don't do this before everything else, heterochromia will be reset leading to eye_color_right no longer being accurate
 	if(ishuman(eye_recipient))
 		var/mob/living/carbon/human/human_recipient = eye_recipient
@@ -425,7 +425,7 @@
 	deactivate(close_ui = TRUE)
 
 /// Set the initial color of the eyes on insert to be the mob's previous eye color.
-/obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()
 	current_color_string = old_eye_color_left
 	current_left_color_string = old_eye_color_left

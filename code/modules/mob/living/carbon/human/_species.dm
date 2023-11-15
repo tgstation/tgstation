@@ -423,7 +423,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(current_organ)
 				current_organ.before_organ_replacement(replacement)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
-			replacement.Insert(organ_holder, special=TRUE, drop_if_replaced=FALSE)
+			replacement.Insert(organ_holder, special=TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
 	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
@@ -490,7 +490,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 			//Load a persons preferences from DNA
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
-			new_organ.Insert(human, special=TRUE, drop_if_replaced=FALSE)
+			new_organ.Insert(human, special=TRUE, movement_flags = DELETE_IF_REPLACED)
 
 
 

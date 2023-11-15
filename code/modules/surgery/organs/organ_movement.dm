@@ -15,8 +15,8 @@
 /obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
-	mob_insert(receiver, special, drop_if_replaced, movement_flags)
-	bodypart_insert(limb_owner = receiver, movement_flags)
+	mob_insert(receiver, special, movement_flags)
+	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
 
 	return TRUE
 
@@ -30,14 +30,14 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	mob_remove(organ_owner, special, movement_flags)
-	bodypart_remove(limb_owner = organ_owner, movement_flags)
+	bodypart_remove(null, organ_owner, movement_flags)
 
 /*
  * Insert the organ into the select mob.
  *
  * receiver - the mob who will get our organ
  * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
- * drop_if_replaced - if there's an organ in the slot already, whether we drop it afterwards
+ * movement_flags - Flags for how we behave in movement. See DEFINES/organ_movement for flags
  */
 /obj/item/organ/proc/mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)

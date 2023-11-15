@@ -153,7 +153,7 @@
 	add_gas_reaction(/datum/gas/zauker, while_present = PROC_REF(too_much_zauker))
 
 ///Simply exists so that you don't keep any alerts from your previous lack of lungs.
-/obj/item/organ/internal/lungs/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/lungs/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return .

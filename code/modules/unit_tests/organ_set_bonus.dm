@@ -30,7 +30,7 @@
 		// Attempt to insert entire list of mutant organs for the given infusion_entry.
 		for(var/obj/item/organ/organ as anything in output_organs)
 			organ = new organ()
-			TEST_ASSERT(organ.Insert(lab_rat, special = TRUE, drop_if_replaced = FALSE), "The organ `[organ.type]` for `[infuser_entry.type]` was not inserted in the mob when expected, Insert() returned falsy when TRUE was expected.")
+			TEST_ASSERT(organ.Insert(lab_rat, special = TRUE, movement_flags = DELETE_IF_REPLACED), "The organ `[organ.type]` for `[infuser_entry.type]` was not inserted in the mob when expected, Insert() returned falsy when TRUE was expected.")
 			inserted_organs += organ
 
 		// Search for added Status Effect.

@@ -53,7 +53,7 @@
 	if(restyle_flags)
 		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
-/obj/item/organ/external/mob_insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	if(!should_external_organ_apply_to(type, receiver))
 		stack_trace("adding a [type] to a [receiver.type] when it shouldn't be!")
 
@@ -245,7 +245,7 @@
 	///Store our old datum here for if our antennae are healed
 	var/original_sprite_datum
 
-/obj/item/organ/external/antennae/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/antennae/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(!.)
 		return

@@ -15,7 +15,7 @@
 	if(iscarbon(loc))
 		Insert(loc)
 
-/obj/item/organ/internal/body_egg/Insert(mob/living/carbon/egg_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/body_egg/Insert(mob/living/carbon/egg_owner, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()
 	if(!.)
 		return

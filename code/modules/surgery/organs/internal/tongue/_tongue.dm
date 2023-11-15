@@ -118,7 +118,7 @@
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
-/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return

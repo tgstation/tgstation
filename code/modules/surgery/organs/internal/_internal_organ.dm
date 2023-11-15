@@ -5,7 +5,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	. = ..()
 	if(!. || !owner)
 		return

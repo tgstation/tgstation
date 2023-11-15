@@ -158,6 +158,7 @@
 #include "code\__DEFINES\nuclear_bomb.dm"
 #include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\observers.dm"
+#include "code\__DEFINES\organ_movement.dm"
 #include "code\__DEFINES\overlays.dm"
 #include "code\__DEFINES\pai.dm"
 #include "code\__DEFINES\paintings.dm"

@@ -197,6 +197,10 @@
 	head.tongue = src
 	..()
 
+/obj/item/organ/internal/brain/on_bodypart_insert(obj/item/bodypart/head/head)
+	head.brain = src
+	..()
+
 /obj/item/organ/internal/eyes/on_bodypart_remove(obj/item/bodypart/head/head)
 	head.eyes = src
 	..()
@@ -207,6 +211,10 @@
 
 /obj/item/organ/internal/tongue/on_bodypart_remove(obj/item/bodypart/head/head)
 	head.tongue = src
+	..()
+
+/obj/item/organ/internal/brain/on_bodypart_remove(obj/item/bodypart/head/head)
+	head.brain = src
 	..()
 
 /obj/item/bodypart/chest/drop_limb(special, dismembered, move_to_floor = TRUE)

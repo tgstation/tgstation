@@ -63,7 +63,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	AddElement(/datum/element/noticable_organ, "mouth is permanently affixed into a relaxed smile.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/gondola)
 
-/obj/item/organ/internal/tongue/gondola/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
+/obj/item/organ/internal/tongue/gondola/Insert(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
 	tongue_owner.add_mood_event("gondola_zen", /datum/mood_event/gondola_serenity)
 
@@ -89,7 +89,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	AddElement(/datum/element/noticable_organ, "right arm has small needles breaching the skin all over it.", BODY_ZONE_R_ARM)
 	pax_hugs = new
 
-/obj/item/organ/internal/liver/gondola/Insert(mob/living/carbon/liver_owner, special, drop_if_replaced)
+/obj/item/organ/internal/liver/gondola/Insert(mob/living/carbon/liver_owner, special, movement_flags)
 	. = ..()
 	var/has_left = liver_owner.has_left_hand(check_disabled = FALSE)
 	var/has_right = liver_owner.has_right_hand(check_disabled = FALSE)

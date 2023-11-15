@@ -15,7 +15,7 @@
 	var/HUD_type = 0
 	var/HUD_trait = null
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return

@@ -84,7 +84,7 @@
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
-	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
+	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(old_eyes)
 		qdel(old_eyes)
 	return TRUE

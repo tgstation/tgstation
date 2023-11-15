@@ -378,7 +378,7 @@
 	///How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS
 
-/obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/reciever, special = FALSE, movement_flags)
 	. = ..()
 	if(ishuman(reciever)) //Sorry, only humans
 		RegisterSignal(reciever, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
