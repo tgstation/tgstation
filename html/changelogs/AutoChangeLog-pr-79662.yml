@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - bugfix: "The PDA painter and the emergency shield generator can now be destroyed."

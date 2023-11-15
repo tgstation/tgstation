@@ -122,3 +122,16 @@
 	name = "[purchaser]'s Materials Order"
 	src.cost = cost
 	src.contains = contains
+
+/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+	. = ..()
+	//Remove our material sheets from SSstock_market's materials_quantity equal to the quantity within the crate.
+	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
+		if(!ispath(possible_stack, /obj/item/stack/sheet))
+			continue
+		if(!possible_stack.material_type)
+			continue
+		if(!SSstock_market.materials_quantity[possible_stack.material_type])
+			continue
+		SSstock_market.materials_quantity[possible_stack.material_type] -= contains[possible_stack]
+		SSstock_market.materials_prices[possible_stack.material_type] += round((SSstock_market.materials_prices[possible_stack.material_type]) * (contains[possible_stack] / (SSstock_market.materials_quantity[possible_stack.material_type] - contains[possible_stack])))

@@ -488,3 +488,131 @@
   - image: added a more detailed lightmask for the emp bar sign sprite
   zxaber:
   - bugfix: Ashwalker Tendril Revives no longer ghost the player being revived.
+2023-11-14:
+  1393F:
+  - bugfix: The Sleeping Carp scroll no longer says deflect using throw mode.
+  Ben10Omintrix:
+  - refactor: gutlunches have been refactored into basic mobs. please report any bugs
+  - rscadd: ashwalkers have a small ranch they can manage
+  - bugfix: wall tearer compnent wont runtime when interacting with mineral walls
+  BlueMemesauce:
+  - bugfix: Fixed tcomms relays being weird, they should be sabotagable again
+  Danny Boy:
+  - bugfix: Fixed Signer eyebrow raising/lowering indicators and emotes
+  - bugfix: Fixed Signer RuneChat punctuation
+  - bugfix: Signers no longer sign with their species' tongue
+  GPeckman:
+  - qol: Fixed/improved feedback when failing to apply a direct law change to a cyborg.
+  - bugfix: Borgs who are unsynced from a malf AI now lose the zeroth law as intended.
+  Hatterhat:
+  - bugfix: Kronkaine's action speed buff now stops when metabolized out.
+  - bugfix: Drug-related moodlets should now time out properly. They still linger
+      after metabolization ends, but they no longer last forever.
+  Likteer:
+  - rscadd: Green Beer has an overdose effect now. It will permeate your skin.
+  MTandi:
+  - balance: Mech overclock coefficient is down to 1.25 from the default 1.5 for Ripley
+      and Clarke.
+  - balance: Mech overclock heating now scales with movespeed, higher speed - faster
+      overheat.
+  - bugfix: fixed pipe painter not applying pipe color properly
+  - qol: made spraycans work also as pipe painters
+  - qol: spraycans now have basic color presets for quick selection
+  - image: Crates got new sprites
+  - image: Added more crate styles
+  Majkl-J:
+  - bugfix: You can now eject blank IDs from modular computers
+  Melbert:
+  - balance: Body temperature from being lit on fire will soft cap at 1,200 K. It
+      will still increase beyond this, but with diminishing returns. For example,
+      at 5,000 K, fire will heat 67x weaker.
+  - bugfix: Fixes some potential exploits and issues involving shielded equipment.
+  OrionTheFox:
+  - image: Resprites the Reactive Anomaly Armor
+  Rhials:
+  - bugfix: The full mining lockers in the Lavaland Mafia map have been replaced with
+      (empty) mining carts.
+  SethLafuente:
+  - bugfix: fixes half-covering glassware protecting eyes from chemicals
+  SyncIt21:
+  - bugfix: suite storage units can be locked again. Remember to install a card reader
+      or set the access levels in the airlock electronics inside its stock parts &
+      finally swipe your ID to properly enforce access control.
+  distributivgesetz:
+  - bugfix: Removes some roundstart active turfs.
+  - bugfix: The PDA painter and the emergency shield generator can now be destroyed.
+  - code_imp: Atoms no longer break again after they are hit when broken, making them
+      hopefully more stable in the future.
+  larentoun:
+  - qol: 'Gunpoint: Examining the target will show who is holding them at gunpoint'
+  - qol: 'Gunpoint: Examining the shooter will show who they are holding at gunpoint'
+  - balance: 'Gunpoint: If the target tries to grab, they will trigger the shot'
+  - balance: 'Gunpoint: If the target or the shooter are shoved, it will cancel the
+      gunpoint'
+  - balance: 'Gunpoint: If the target is pulled, it will cancel the gunpoint'
+  - balance: Both the target and the shooter can't be bumped anymore to avoid cheesing
+      charged shot or removing the gunpoint by just moving around
+  - bugfix: Clicking the alert button of the shooter will now correctly remove gunpoint
+  mc-oofert:
+  - bugfix: tramstation cargo disposals outlet has been repositioned to not softlock
+      whoever cannot lay down
+  san7890:
+  - bugfix: Gorillas and Regal Rats will no longer show up in the ghost-control menu
+      if they died without anyone ever taking control of them.
+  timothymtorres:
+  - rscadd: Add bamboo seeds to ash walker den. This lets them craft blowguns, crude
+      syringes, bamboo spears, punji stick traps, and more!
+2023-11-15:
+  Ben10Omintrix:
+  - bugfix: bileworms will now attack
+  D4C-420:
+  - spellcheck: hopefully changed all instances of the word 'mjolnir' to 'mjollnir'
+  Ghommie:
+  - bugfix: Fixed a small issue with disposal outlets leaving contents about to be
+      ejected stuck inside the pipe beneath it if deleted.
+  Jacquerel:
+  - balance: Sapient brimdemons can't hurt themselves with their own beams
+  JohnFulpWillard:
+  - refactor: Destructive Analyzers now have a TGUI menu.
+  - bugfix: PDAs now log that they've been emagged, but will no longer log any further
+      programs they open beyond that. This means Nukies don't sell themselves out
+      by opening their disk tracking app.
+  LT3:
+  - bugfix: Bad luck omen again raises your chance of getting shocked by the tram
+      plate
+  - bugfix: Tram plate checks and energizes when the tram is moving
+  - code_imp: Omen component now applies the cursed trait
+  Melbert:
+  - code_imp: General heart code cleanup.
+  - bugfix: Heartbeat sound effects are no longer sourced to the exact tile you fell
+      into crit at
+  - bugfix: Abductors glands are less likely to become invisible or look wrong
+  - bugfix: Ethereal hearts are less likely to become invisible or look wrong, and
+      now properly spawn with their shine overlay
+  - image: Adds heartbeat animation to beating Ethereal Hearts
+  - bugfix: Fixes hallucination and encrypted announcements printing to the Newscaster.
+  SyncIt21:
+  - bugfix: drying rack now shows correct examines & screen tips.
+  - code_imp: tone of code organization for smart fridges overall. changed ui to typescript.
+  - qol: added more detailed examines & screen tips for smart fridges. drying racks
+      can be dismantled with a crowbar and not simply pried open with it.
+  TwistedSilicon:
+  - bugfix: invisimin verb now makes you invisible to all HUDs too! No more floating
+      healthbars or job identifiers giving you away while you sneak around.
+  jjpark-kb:
+  - qol: looms will now attempt to loop through stackable items (cotton as an example)
+  larentoun:
+  - rscadd: Emote Panel TGUI added in IC category.
+  mc-oofert:
+  - bugfix: The plaguebearer can no longer depower virology on Tramstation
+  san7890:
+  - bugfix: Safeties in the code have been added to prevent things in disposals going
+      into nullspace whenever they get ejected from a pipe - you will just magically
+      spawn at the turf that you were meant to be flung towards.
+  - qol: You will no longer be added to the list for ghost-orbit role polls if you
+      have opted out of getting antag ghost roles in your preferences.
+  - qol: You will get a tgui_alert to accept the ghost role if you were selected via
+      the orbit poll, instead of it just throwing you intot he role.
+  san7890, Ghommie:
+  - bugfix: The Blessing of Insanity now grants no damage slowdown and free hyperspace
+      movement correctly.
