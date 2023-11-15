@@ -416,6 +416,7 @@
 /obj/item/organ/internal/eyes/robotic/glow/Destroy()
 	. = ..()
 	deactivate(close_ui = TRUE)
+	eye.moveToNullspace()
 	QDEL_NULL(eye)
 
 /obj/item/organ/internal/eyes/robotic/glow/emp_act()
@@ -429,6 +430,7 @@
 	. = ..()
 	left_eye_color_string = old_eye_color_left
 	right_eye_color_string = old_eye_color_right
+	update_mob_eye_color(eye_recipient)
 
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_recipient)
 	. = ..()
@@ -520,8 +522,10 @@
  * Turns on the attached flashlight object, updates the mob overlay to be added.
  */
 /obj/item/organ/internal/eyes/robotic/glow/proc/activate()
-	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively, no light overlay
+	if(eye.light_range)
 		eye.set_light_on(TRUE)
+	else
+		eye.light_on = TRUE // at range 0 we are just going to make the eyes glow emissively, no light overlay
 	update_mob_eye_color()
 
 /**
