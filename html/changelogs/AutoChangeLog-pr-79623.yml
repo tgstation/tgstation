@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "drying rack now shows correct examines & screen tips."
-  - code_imp: "tone of code organization for smart fridges overall. changed ui to typescript."
-  - qol: "added more detailed examines & screen tips for smart fridges. drying racks can be dismantled with a crowbar and not simply pried open with it."

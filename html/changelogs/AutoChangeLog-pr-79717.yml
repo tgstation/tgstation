@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Bad luck omen again raises your chance of getting shocked by the tram plate"
-  - bugfix: "Tram plate checks and energizes when the tram is moving"
-  - code_imp: "Omen component now applies the cursed trait"

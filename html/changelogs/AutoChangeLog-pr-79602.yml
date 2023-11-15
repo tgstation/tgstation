@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "General heart code cleanup."
-  - bugfix: "Heartbeat sound effects are no longer sourced to the exact tile you fell into crit at"
-  - bugfix: "Abductors glands are less likely to become invisible or look wrong"
-  - bugfix: "Ethereal hearts are less likely to become invisible or look wrong, and now properly spawn with their shine overlay"
-  - image: "Adds heartbeat animation to beating Ethereal Hearts"
