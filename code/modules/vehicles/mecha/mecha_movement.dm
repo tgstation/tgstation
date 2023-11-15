@@ -121,7 +121,7 @@
 	var/keyheld = FALSE
 	if(strafe)
 		for(var/mob/driver as anything in return_drivers())
-			if(driver.client?.movement_locked)
+			if(driver.client?.keys_held["Alt"])
 				keyheld = TRUE
 				break
 
