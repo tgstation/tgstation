@@ -33,12 +33,13 @@
 		RegisterSignal(cast_on, COMSIG_MOVABLE_MOVED, PROC_REF(break_glass))
 	else
 		cast_on.pass_flags |= PASSTABLE|PASSGRILLE|PASSMACHINE|PASSSTRUCTURE
+		RegisterSignal(cast_on, COMSIG_MOVABLE_MOVED, PROC_REF(break_grilles))
 	ADD_TRAIT(cast_on, TRAIT_SILENT_FOOTSTEPS, BUNNY_HOP)
 	ADD_TRAIT(cast_on, TRAIT_MOVE_FLYING, BUNNY_HOP)
 
 	cast_on.add_filter(BUNNY_HOP, 2, drop_shadow_filter(color = "#03020781", size = 0.9))
 	var/shadow_filter = cast_on.get_filter(BUNNY_HOP)
-	var/jump_height = 8 * bunny_multiplier
+	var/jump_height = 8 + 16 * ((bunny_multiplier - 1) / 5)
 	var/jump_duration = 0.25 SECONDS * bunny_multiplier
 	new /obj/effect/temp_visual/mook_dust(get_turf(cast_on))
 	animate(cast_on, pixel_y = cast_on.pixel_y + jump_height, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
@@ -51,12 +52,33 @@
 
 /datum/action/cooldown/spell/bunny_hop/proc/break_glass(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	for(var/obj/structure/window/window in get_turf(mover))
+	var/mob/living/carbon/human/bunny = mover
+	for(var/obj/structure/window/window in get_turf(bunny))
 		window.deconstruct(disassembled = FALSE)
 		mover.balloon_alert_to_viewers("smashed through!")
-		var/mob/living/carbon/human/bunny = mover
-		bunny.apply_damage(damage = rand(15,25), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
+		bunny.apply_damage(damage = rand(5,15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
 		new /obj/effect/decal/cleanable/glass(get_step(bunny, bunny.dir))
+	for(var/obj/machinery/door/window/windoor in get_turf(bunny))
+		windoor.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		bunny.apply_damage(damage = rand(5,15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(windoor, oldloc))
+		new /obj/effect/decal/cleanable/glass(get_step(bunny, bunny.dir))
+	for(var/obj/structure/grille/grille in get_turf(bunny))
+		grille.shock(bunny, 70)
+		grille.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		bunny.apply_damage(damage = rand(5,10), damagetype = BRUTE, wound_bonus = 5, bare_wound_bonus = 15, attack_direction = get_dir(grille, oldloc))
+		new /obj/effect/decal/cleanable/generic(get_step(bunny, bunny.dir))
+
+/datum/action/cooldown/spell/bunny_hop/proc/break_grilles(atom/movable/mover, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/bunny = mover
+	for(var/obj/structure/grille/grille in get_turf(bunny))
+		grille.shock(bunny, 70)
+		grille.deconstruct(disassembled = FALSE)
+		mover.balloon_alert_to_viewers("smashed through!")
+		bunny.apply_damage(damage = rand(5,10), damagetype = BRUTE, wound_bonus = 5, bare_wound_bonus = 15, attack_direction = get_dir(grille, oldloc))
+		new /obj/effect/decal/cleanable/generic(get_step(bunny, bunny.dir))
 
 ///Ends the jump
 /datum/action/cooldown/spell/bunny_hop/proc/end_jump(mob/living/jumper)
@@ -67,13 +89,6 @@
 	REMOVE_TRAIT(jumper, TRAIT_MOVE_FLYING, BUNNY_HOP)
 	new /obj/effect/temp_visual/mook_dust(get_turf(jumper))
 	UnregisterSignal(jumper, COMSIG_MOVABLE_MOVED)
-
-/datum/action/cooldown/spell/bunny_hop/GetCooldown()
-	var/cooldown = 7 SECONDS
-	for(var/obj/item/bodypart/bodypart in last_caster.bodyparts)
-		if(bodypart.limb_id == BODYPART_ID_RABBIT || bodypart.limb_id == BODYPART_ID_DIGITIGRADE)
-			cooldown -= 1 SECONDS
-	return cooldown
 
 /obj/item/bodypart/leg/left/digitigrade/bunny
 	name = "rabbit left leg"
