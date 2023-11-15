@@ -1,4 +1,0 @@
-author: "jjpark-kb"
-delete-after: True
-changes:
-  - qol: "looms will now attempt to loop through stackable items (cotton as an example)"

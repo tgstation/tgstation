@@ -47,6 +47,11 @@
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
+		// preemptively expel the contents from the trunk
+		// in case the outlet is deleted before expel_holder could be called.
+		var/obj/structure/disposalholder/holder = locate() in trunk
+		if(holder)
+			trunk.expel(holder)
 		trunk.linked = null
 		trunk = null
 	QDEL_NULL(stored)
@@ -68,7 +73,7 @@
 	if(playsound)
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 
-	if(!H)
+	if(QDELETED(H))
 		return
 
 	pipe_eject(H, dir, TRUE, target, eject_range, eject_speed)
