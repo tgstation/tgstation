@@ -39,7 +39,5 @@
 	test_eyes.set_beam_color(COLOR_BLUE, to_update = UPDATE_EYES_RIGHT)
 	test_screenshot("light_eyes_on", get_flat_icon_for_all_directions(test_subject, no_anim = FALSE))
 
-	test_eyes.Remove
-
 #undef UPDATE_EYES_LEFT
 #undef UPDATE_EYES_RIGHT
