@@ -40,18 +40,18 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(isobserver(mob))
 		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so becareful where you are."))
 
-	if(!client_saved_tokens)
-		client_saved_tokens = new(src)
+	if(!client_token_holder)
+		client_token_holder = new(src)
 
-	var/tier = tgui_input_list(src, "High:[client_saved_tokens.total_high_threat_tokens] | \
-									Med: [client_saved_tokens.total_medium_threat_tokens] | \
-									Low: [client_saved_tokens.total_low_threat_tokens] | \
-									Donator:[client_saved_tokens.donator_token]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
+	var/tier = tgui_input_list(src, "High:[client_token_holder.total_high_threat_tokens] | \
+									Med: [client_token_holder.total_medium_threat_tokens] | \
+									Low: [client_token_holder.total_low_threat_tokens] | \
+									Donator:[client_token_holder.donator_token]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
 	if(!tier)
 		return
 
 	var/using_donor = FALSE
-	if(client_saved_tokens.donator_token)
+	if(client_token_holder.donator_token)
 		var/choice = tgui_alert(src, "Use Donator Token?" , "Spend Tokens", list("Yes", "No"))
 		if(choice == "Yes")
 			using_donor = TRUE
@@ -59,13 +59,13 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(!using_donor)
 		switch(tier)
 			if(HIGH_THREAT)
-				if(client_saved_tokens.total_high_threat_tokens <= 0)
+				if(client_token_holder.total_high_threat_tokens <= 0)
 					return
 			if(MEDIUM_THREAT)
-				if(client_saved_tokens.total_medium_threat_tokens <= 0)
+				if(client_token_holder.total_medium_threat_tokens <= 0)
 					return
 			if(LOW_THREAT)
-				if(client_saved_tokens.total_low_threat_tokens <= 0)
+				if(client_token_holder.total_low_threat_tokens <= 0)
 					return
 
 	var/datum/antagonist/chosen_antagonist
@@ -78,9 +78,9 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(!chosen_antagonist)
 		return
 
-	client_saved_tokens.queued_donor = using_donor
-	client_saved_tokens.in_queued_tier = tier
-	client_saved_tokens.in_queue = new chosen_antagonist
+	client_token_holder.queued_donor = using_donor
+	client_token_holder.in_queued_tier = tier
+	client_token_holder.in_queue = new chosen_antagonist
 
 	to_chat(src, "Your request has been sent to the admins.")
 	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> [ADMIN_APPROVE_TOKEN(src)] [ADMIN_REJECT_TOKEN(src)] | \

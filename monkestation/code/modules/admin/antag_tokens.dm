@@ -16,4 +16,4 @@
 	if(!tier)
 		return
 
-	chosen_client.client_saved_tokens.adjust_tokens(tier, adjustment_amount)
+	chosen_client.client_token_holder.adjust_tokens(tier, adjustment_amount)
