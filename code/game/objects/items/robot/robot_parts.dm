@@ -283,7 +283,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
 			if(!O)
 				return
 			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
@@ -292,7 +292,7 @@
 				O.laws = M.laws
 				M.laws.associate(O)
 
-			O.invisibility = 0
+			O.SetInvisibility(INVISIBILITY_NONE)
 			//Transfer debug settings to new mob
 			O.custom_name = created_name
 			O.locked = panel_locked

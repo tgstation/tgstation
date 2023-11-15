@@ -1,6 +1,6 @@
 /obj/machinery/plumbing/grinder_chemical
 	name = "chemical grinder"
-	desc = "chemical grinder."
+	desc = "Chemical grinder. Can either grind or juice stuff you put in."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -8,7 +8,6 @@
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	var/eat_dir = SOUTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -18,21 +17,35 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/plumbing/grinder_chemical/setDir(newdir)
-	. = ..()
-	eat_dir = newdir
+/obj/machinery/plumbing/grinder_chemical/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/storage/bag))
+		to_chat(user, span_notice("You dump items from [weapon] into the grinder."))
+		for(var/obj/item/obj_item in weapon.contents)
+			grind(obj_item)
+	else
+		to_chat(user, span_notice("You attempt to grind [weapon]."))
+		grind(weapon)
+
+	return TRUE
 
 /obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!anchored)
 		return
-	if(border_dir == eat_dir)
-		return TRUE
+	if(!istype(mover, /obj/item))
+		return FALSE
+	return TRUE
 
 /obj/machinery/plumbing/grinder_chemical/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
+
 	grind(AM)
 
+/**
+ * Grinds/Juices the atom
+ * Arguments
+ * * [AM][atom] - the atom to grind or juice
+ */
 /obj/machinery/plumbing/grinder_chemical/proc/grind(atom/AM)
 	if(machine_stat & NOPOWER)
 		return
@@ -40,11 +53,14 @@
 		return
 	if(!isitem(AM))
 		return
+
 	var/obj/item/I = AM
+	var/result
 	if(I.grind_results || I.juice_typepath)
 		use_power(active_power_usage)
 		if(I.grind_results)
-			I.grind(src, src)
+			result = I.grind(reagents, usr)
 		else if (I.juice_typepath)
-			I.juice(src, src)
-		qdel(I)
+			result = I.juice(reagents, usr)
+		if(result)
+			qdel(I)

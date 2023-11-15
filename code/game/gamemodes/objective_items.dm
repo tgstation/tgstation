@@ -353,6 +353,7 @@
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization"
+	valid_containers = list(/obj/item/folder)
 	targetitem = /obj/item/documents
 	exists_on_map = TRUE
 

@@ -235,21 +235,23 @@ Charged extracts:
 	effect_desc = "Randomizes the user's species."
 
 /obj/item/slimecross/charged/black/do_effect(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		to_chat(user, span_warning("You have to be able to have a species to get your species changed."))
+	var/mob/living/carbon/human/experiment_subject = user
+	if(!istype(experiment_subject))
+		balloon_alert(experiment_subject, "incompatible biology!")
 		return
 	var/list/allowed_species = list()
 	for(var/stype in subtypesof(/datum/species))
-		var/datum/species/X = stype
-		if(initial(X.changesource_flags) & SLIME_EXTRACT)
+		var/datum/species/try_species = stype
+		if(initial(try_species.changesource_flags) & SLIME_EXTRACT)
 			allowed_species += stype
 
 	var/datum/species/changed = pick(allowed_species)
-	if(changed)
-		H.set_species(changed, icon_update = 1)
-		to_chat(H, span_danger("You feel very different!"))
-	..()
+	if(isnull(changed))
+		visible_message(span_notice("[src] fizzes uselessly."))
+		return
+	experiment_subject.set_species(changed, icon_update = TRUE)
+	to_chat(experiment_subject, span_danger("You feel very different!"))
+	return ..()
 
 /obj/item/slimecross/charged/lightpink
 	colour = SLIME_TYPE_LIGHT_PINK

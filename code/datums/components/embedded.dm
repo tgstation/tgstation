@@ -93,7 +93,8 @@
 	if(harmful)
 		victim.throw_alert(ALERT_EMBEDDED_OBJECT, /atom/movable/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
-		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
+		if (limb.can_bleed())
+			weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		damage += weapon.w_class * impact_pain_mult
 		victim.add_mood_event("embedded", /datum/mood_event/embedded)
 
@@ -206,13 +207,17 @@
 		qdel(src)
 		return
 	if(harmful)
-		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
-		victim.adjustStaminaLoss(pain_stam_pct * damage)
-		victim.emote("scream")
+		damaging_removal(victim, I, limb)
 
 	victim.visible_message(span_notice("[victim] successfully rips [weapon] [harmful ? "out" : "off"] of [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You successfully remove [weapon] from your [limb.plaintext_zone]."))
 	safeRemove(victim)
+
+/// Proc that actually does the damage associated with ripping something out of yourself. Call this before safeRemove.
+/datum/component/embedded/proc/damaging_removal(mob/living/carbon/victim, obj/item/removed, obj/item/bodypart/limb, ouch_multiplier = 1)
+	var/damage = weapon.w_class * remove_pain_mult * ouch_multiplier
+	limb.receive_damage(brute=(1-pain_stam_pct) * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
+	victim.adjustStaminaLoss(pain_stam_pct * damage)
+	victim.emote("scream")
 
 /// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// If you want the thing to go into someone's hands rather than the floor, pass them in to_hands
@@ -248,7 +253,7 @@
 /datum/component/embedded/proc/checkTweeze(mob/living/carbon/victim, obj/item/possible_tweezers, mob/user)
 	SIGNAL_HANDLER
 
-	if(!istype(victim) || possible_tweezers.tool_behaviour != TOOL_HEMOSTAT || user.zone_selected != limb.body_zone)
+	if(!istype(victim) || (possible_tweezers.tool_behaviour != TOOL_HEMOSTAT && possible_tweezers.tool_behaviour != TOOL_WIRECUTTER) || user.zone_selected != limb.body_zone)
 		return
 
 	if(weapon != limb.embedded_objects[1]) // just pluck the first one, since we can't easily coordinate with other embedded components affecting this limb who is highest priority
@@ -265,18 +270,21 @@
 /// The actual action for pulling out an embedded object with a hemostat
 /datum/component/embedded/proc/tweezePluck(obj/item/possible_tweezers, mob/user)
 	var/mob/living/carbon/victim = parent
-
 	var/self_pluck = (user == victim)
+	// quality of the tool we're using
+	var/tweezer_speed = possible_tweezers.toolspeed
+	// is this an actual piece of medical equipment
+	var/tweezer_safe = (possible_tweezers.tool_behaviour == TOOL_HEMOSTAT)
+	var/pluck_time = rip_time * (weapon.w_class * 0.3) * (self_pluck ? 1.5 : 1) * tweezer_speed * (tweezer_safe ? 1 : 1.5)
 
 	if(self_pluck)
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone]"), span_notice("You start plucking [weapon] from your [limb.plaintext_zone]..."),\
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [user.p_their()] [limb.plaintext_zone] with [possible_tweezers]..."), span_notice("You start plucking [weapon] from your [limb.plaintext_zone] with [possible_tweezers]... (It will take [DisplayTimeText(pluck_time)].)"),\
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
 	else
-		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.plaintext_zone]"),span_notice("You start plucking [weapon] from [victim]'s [limb.plaintext_zone]..."), \
+		user.visible_message(span_danger("[user] begins plucking [weapon] from [victim]'s [limb.plaintext_zone] with [possible_tweezers]..."),span_notice("You start plucking [weapon] from [victim]'s [limb.plaintext_zone] with [possible_tweezers]... (It will take [DisplayTimeText(pluck_time)]."), \
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone]..."))
+		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.plaintext_zone] with [possible_tweezers]... (It will take [DisplayTimeText(pluck_time)]."))
 
-	var/pluck_time = 2.5 SECONDS * weapon.w_class * (self_pluck ? 2 : 1)
 	if(!do_after(user, pluck_time, victim))
 		if(self_pluck)
 			to_chat(user, span_danger("You fail to pluck [weapon] from your [limb.plaintext_zone]."))
@@ -285,8 +293,11 @@
 			to_chat(victim, span_danger("[user] fails to pluck [weapon] from your [limb.plaintext_zone]."))
 		return
 
-	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
-	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.plaintext_zone]."))
+	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.plaintext_zone][tweezer_safe ? "." : ", but hurt [victim.p_them()] in the process."]"))
+	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.plaintext_zone][tweezer_safe ? "." : ", but it's not perfect."]"))
+	if(!tweezer_safe)
+		// sure it still hurts but it sucks less
+		damaging_removal(victim, weapon, limb, (0.4 * possible_tweezers.w_class))
 	safeRemove(user)
 
 /// Called when an object is ripped out of someone's body by magic or other abnormal means
@@ -303,7 +314,7 @@
 		return
 	var/damage = weapon.w_class * remove_pain_mult
 	limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
-	limb.force_wound_upwards(/datum/wound/pierce/bleed/moderate)
+	victim.cause_wound_of_type_and_severity(WOUND_PIERCE, limb, WOUND_SEVERITY_MODERATE)
 	victim.adjustStaminaLoss(pain_stam_pct * damage)
 	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
 

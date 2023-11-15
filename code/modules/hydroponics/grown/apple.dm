@@ -26,6 +26,9 @@
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
 
+/obj/item/food/grown/apple/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/appleslice, 5, 20, screentip_verb = "Slice")
+
 // Gold Apple
 /obj/item/seeds/apple/gold
 	name = "pack of golden apple seeds"
@@ -40,6 +43,9 @@
 	mutatelist = null
 	reagents_add = list(/datum/reagent/gold = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 40 // Alchemy!
+
+/obj/item/food/grown/apple/gold/make_processable()
+	return // You're going to break your knife!
 
 /obj/item/food/grown/apple/gold
 	seed = /obj/item/seeds/apple/gold

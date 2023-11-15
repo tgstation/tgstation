@@ -262,11 +262,14 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
+	. = ..()
+	if(. != BULLET_ACT_HIT)
+		return
+
 	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(Proj.is_hostile_projectile() && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	return ..()
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))

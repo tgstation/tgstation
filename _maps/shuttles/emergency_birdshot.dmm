@@ -751,7 +751,7 @@
 /area/shuttle/escape)
 "Ko" = (
 /obj/structure/table/optable,
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/item/clothing/mask/surgical,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/white,

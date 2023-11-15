@@ -47,9 +47,6 @@
 		if(location)
 			/// Sends a signal that the new atom `src`, has been created at `loc`
 			SEND_SIGNAL(location, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, A, arguments[1])
-			var/area/atom_area = get_area(location)
-			if(atom_area)
-				SEND_SIGNAL(atom_area, COMSIG_AREA_INITIALIZED_IN, A)
 		if(created_atoms && from_template && ispath(the_type, /atom/movable))//we only want to populate the list with movables
 			created_atoms += A.get_all_contents()
 

@@ -12,7 +12,6 @@
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
 	var/icon_name = "grinder-o"
 	var/bloody = FALSE
-	var/eat_dir = WEST
 	var/amount_produced = 50
 	var/crush_damage = 1000
 	var/eat_victim_items = TRUE
@@ -34,6 +33,7 @@
 		/datum/material/bluespace
 	)
 	materials = AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/butchering/recycler, \
 	speed = 0.1 SECONDS, \
 	effectiveness = amount_produced, \
@@ -110,7 +110,7 @@
 	. = ..()
 	if(!anchored)
 		return
-	if(border_dir == eat_dir)
+	if(border_dir == dir)
 		return TRUE
 
 /obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
@@ -128,6 +128,10 @@
 	if(!isturf(morsel.loc))
 		return //I don't know how you called Crossed() but stop it.
 	if(morsel.resistance_flags & INDESTRUCTIBLE)
+		return
+	if(morsel.flags_1 & HOLOGRAM_1)
+		visible_message(span_notice("[morsel] fades away!"))
+		qdel(morsel)
 		return
 
 	var/list/to_eat = (issilicon(morsel) ? list(morsel) : morsel.get_all_contents()) //eating borg contents leads to many bad things

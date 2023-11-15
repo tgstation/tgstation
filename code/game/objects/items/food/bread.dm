@@ -55,10 +55,6 @@
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
-// special subtype we use for the "Bread" Admin Smite (or the breadify proc)
-/obj/item/food/bread/plain/smite
-	desc = "If you hold it up to your ear, you can hear the screams of the damned."
-
 /obj/item/food/breadslice/plain
 	name = "bread slice"
 	desc = "A slice of home."

@@ -19,10 +19,11 @@
 
 		TEST_ASSERT_EQUAL(length(victim.all_wounds), 0, "Patient is somehow wounded before test")
 		var/datum/wound/iter_test_wound
+		var/datum/wound_pregen_data/iter_pregen_data = GLOB.all_wound_pregen_data[iter_test_wound]
 		var/threshold_penalty = 0
 
 		for(iter_test_wound in iter_test_wound_list)
-			var/threshold = initial(iter_test_wound.threshold_minimum) - threshold_penalty // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
+			var/threshold = iter_pregen_data.threshold_minimum - threshold_penalty // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
 			if(dam_types[i] == BRUTE)
 				tested_part.receive_damage(WOUND_MINIMUM_DAMAGE, 0, wound_bonus = threshold, sharpness=sharps[i])
 			else if(dam_types[i] == BURN)
@@ -59,10 +60,11 @@
 
 		TEST_ASSERT_EQUAL(length(victim.all_wounds), 0, "Patient is somehow wounded before test")
 		var/datum/wound/iter_test_wound
+		var/datum/wound_pregen_data/iter_pregen_data = GLOB.all_wound_pregen_data[iter_test_wound]
 		var/threshold_penalty = 0
 
 		for(iter_test_wound in iter_test_wound_list)
-			var/threshold = initial(iter_test_wound.threshold_minimum) - threshold_penalty // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
+			var/threshold = iter_pregen_data.threshold_minimum - threshold_penalty // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
 			if(dam_types[i] == BRUTE)
 				tested_part.receive_damage(WOUND_MINIMUM_DAMAGE, 0, wound_bonus = threshold, sharpness=sharps[i])
 			else if(dam_types[i] == BURN)

@@ -167,16 +167,52 @@
  * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
  */
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
-	// Before you fix it:
-	// yes, checking manifests is a part of intended functionality.
 	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
 	var/price = 0
 	for(var/exported_datum in report.total_amount)
 		price += report.total_value[exported_datum]
-	if(price)
-		to_chat(user, span_notice("Scanned [target], value: <b>[price]</b> credits[target.contents.len ? " (contents included)" : ""]."))
+
+	var/message = "Scanned [target]"
+	var/warning = FALSE
+	if(length(target.contents))
+		message = "Scanned [target] and its contents"
+		if(price)
+			message += ", total value: <b>[price]</b> credits"
+		else
+			message += ", no export values"
+			warning = TRUE
+		if(!report.all_contents_scannable)
+			message += " (Undeterminable value detected, final value may differ)"
+		message += "."
 	else
-		to_chat(user, span_warning("Scanned [target], no export value."))
+		if(!report.all_contents_scannable)
+			message += ", unable to determine value."
+			warning = TRUE
+		else if(price)
+			message += ", value: <b>[price]</b> credits."
+		else
+			message += ", no export value."
+			warning = TRUE
+	if(warning)
+		to_chat(user, span_warning(message))
+	else
+		to_chat(user, span_notice(message))
+
+	if(price)
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+
+	if(istype(target, /obj/item/delivery))
+		var/obj/item/delivery/parcel = target
+		if(!parcel.sticker)
+			return
+		var/obj/item/barcode/our_code = parcel.sticker
+		to_chat(user, span_notice("Export barcode detected! This parcel, upon export, will pay out to [our_code.payments_acc.account_holder], \
+			with a [our_code.cut_multiplier * 100]% split to them (already reflected in above recorded value)."))
+
+	if(istype(target, /obj/item/barcode))
+		var/obj/item/barcode/our_code = target
+		to_chat(user, span_notice("Export barcode detected! This barcode, if attached to a parcel, will pay out to [our_code.payments_acc.account_holder], \
+			with a [our_code.cut_multiplier * 100]% split to them."))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user

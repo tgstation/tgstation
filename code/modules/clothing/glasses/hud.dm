@@ -70,6 +70,7 @@
 	icon_state = "healthhudnight"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flags_cover = GLASSESCOVERSEYES
 	// Blue green, dark
 	color_cutoffs = list(5, 15, 30)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -90,8 +91,18 @@
 	desc = "Sunglasses with a medical HUD."
 	icon_state = "sunhudmed"
 	flash_protect = FLASH_PROTECTION_FLASH
+	flags_cover = GLASSESCOVERSEYES
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
+
+/obj/item/clothing/glasses/hud/health/sunglasses/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunmedremoval)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "diagnostic HUD"
@@ -107,6 +118,7 @@
 	icon_state = "diagnostichudnight"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flags_cover = GLASSESCOVERSEYES
 	// Pale yellow
 	color_cutoffs = list(30, 20, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -117,7 +129,17 @@
 	icon_state = "sunhuddiag"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_FLASH
+	flags_cover = GLASSESCOVERSEYES
 	tint = 1
+
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsundiagremoval)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
@@ -150,14 +172,25 @@
 	desc = "Sunglasses with a security HUD."
 	icon_state = "sunhudsec"
 	flash_protect = FLASH_PROTECTION_FLASH
+	flags_cover = GLASSESCOVERSEYES
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+
+/obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsecremoval)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
 	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	flags_cover = GLASSESCOVERSEYES
 	// Red with a tint of green
 	color_cutoffs = list(35, 5, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -186,6 +219,7 @@
 /obj/item/clothing/glasses/hud/toggle
 	name = "Toggle HUD"
 	desc = "A hud with multiple functions."
+	flags_cover = GLASSESCOVERSEYES
 	actions_types = list(/datum/action/item_action/switch_hud)
 
 /obj/item/clothing/glasses/hud/toggle/attack_self(mob/user)
@@ -251,6 +285,7 @@
 	desc = "For thinking you look cool while brutalizing protestors and minorities."
 	icon_state = "bigsunglasses"
 	flash_protect = FLASH_PROTECTION_FLASH
+	flags_cover = GLASSESCOVERSEYES
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 

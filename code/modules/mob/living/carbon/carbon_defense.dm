@@ -55,6 +55,13 @@
 
 	return null
 
+/mob/living/carbon/is_ears_covered()
+	for(var/obj/item/worn_thing as anything in get_equipped_items())
+		if(worn_thing.flags_cover & EARS_COVERED)
+			return worn_thing
+
+	return null
+
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
@@ -100,7 +107,7 @@
 	if(I.force)
 		var/attack_direction = get_dir(user, src)
 		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction, attacking_item = I)
-		if(I.damtype == BRUTE && IS_ORGANIC_LIMB(affecting))
+		if(I.damtype == BRUTE && affecting.can_bleed())
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
@@ -127,22 +134,35 @@
 	var/message_verb_simple = length(I.attack_verb_simple) ? "[pick(I.attack_verb_simple)]" : "attack"
 
 	var/extra_wound_details = ""
+
 	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
+
 		var/mangled_state = hit_bodypart.get_mangled_state()
-		var/bio_state = hit_bodypart.biological_state
-		if((mangled_state & BODYPART_MANGLED_FLESH) && (mangled_state & BODYPART_MANGLED_BONE))
+
+		var/bio_status = hit_bodypart.get_bio_state_status()
+
+		var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
+		var/has_interior = ((bio_status & ANATOMY_INTERIOR))
+
+		var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
+		var/interior_ready_to_dismember = (!has_interior || ((mangled_state & BODYPART_MANGLED_INTERIOR)))
+
+		var/dismemberable = ((hit_bodypart.dismemberable_by_wound()) || hit_bodypart.dismemberable_by_total_damage())
+		if (dismemberable)
 			extra_wound_details = ", threatening to sever it entirely"
-		else if((mangled_state & BODYPART_MANGLED_FLESH && I.get_sharpness()) || ((mangled_state & BODYPART_MANGLED_BONE) && (bio_state & BIO_BONE) && !(bio_state & BIO_FLESH)))
-			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the bone"
-		else if((mangled_state & BODYPART_MANGLED_BONE && I.get_sharpness()) || ((mangled_state & BODYPART_MANGLED_FLESH) && (bio_state & BIO_FLESH) && !(bio_state & BIO_BONE)))
-			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining tissue"
+		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && I.get_sharpness()))
+			var/bone_text = hit_bodypart.get_internal_description()
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [bone_text]"
+		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && I.get_sharpness()))
+			var/tissue_text = hit_bodypart.get_external_description()
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [tissue_text]"
 
 	var/message_hit_area = ""
 	if(hit_area)
 		message_hit_area = " in the [hit_area]"
 	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [I][extra_wound_details]!"
 	var/attack_message_victim = "You're [message_verb_continuous][message_hit_area] with [I][extra_wound_details]!"
-	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [I]!"
+	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [I][extra_wound_details]!"
 	if(user in viewers(src, null))
 		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [I][extra_wound_details]!"
 		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [I][extra_wound_details]!"
@@ -155,10 +175,10 @@
 	return TRUE
 
 
-/mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
+/mob/living/carbon/attack_drone(mob/living/basic/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
-/mob/living/carbon/attack_drone_secondary(mob/living/simple_animal/drone/user)
+/mob/living/carbon/attack_drone_secondary(mob/living/basic/drone/user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -336,6 +356,7 @@
 
 	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
 		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
+		target.emote("sway")
 		if(target_held_item)
 			append_message = "loosening [target.p_their()] grip on [target_held_item]"
 			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
@@ -379,7 +400,7 @@
 		bodypart.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
-/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE, jitter_time = 20 SECONDS, stutter_time = 4 SECONDS, stun_duration = 4 SECONDS)
 	. = ..()
 	if(!.)
 		return
@@ -400,22 +421,30 @@
 		//Found our victims, now lets shock them all
 		for(var/victim in shocking_queue)
 			var/mob/living/carbon/C = victim
-			C.electrocute_act(shock_damage*0.75, src, 1, flags)
+			C.electrocute_act(shock_damage*0.75, src, 1, flags, jitter_time, stutter_time, stun_duration)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	if(should_stun)
-		Paralyze(40)
+	var/paralyze = !(flags & SHOCK_KNOCKDOWN)
+	var/immediately_stun = should_stun && !(flags & SHOCK_DELAY_STUN)
+	if (immediately_stun)
+		if (paralyze)
+			Paralyze(stun_duration)
+		else
+			Knockdown(stun_duration)
 	//Jitter and other fluff.
 	do_jitter_animation(300)
-	adjust_jitter(20 SECONDS)
-	adjust_stutter(4 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(secondary_shock), should_stun), 2 SECONDS)
+	adjust_jitter(jitter_time)
+	adjust_stutter(stutter_time)
+	if (should_stun)
+		addtimer(CALLBACK(src, PROC_REF(secondary_shock), paralyze, stun_duration * 1.5), 2 SECONDS)
 	return shock_damage
 
 ///Called slightly after electrocute act to apply a secondary stun.
-/mob/living/carbon/proc/secondary_shock(should_stun)
-	if(should_stun)
-		Paralyze(60)
+/mob/living/carbon/proc/secondary_shock(paralyze, stun_duration)
+	if (paralyze)
+		Paralyze(stun_duration)
+	else
+		Knockdown(stun_duration)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
@@ -663,7 +692,7 @@
 		amount = min(amount, 0) //Prevents oxy damage but not healing
 
 	. = ..()
-	check_passout(.)
+	check_passout()
 
 /mob/living/carbon/proc/get_interaction_efficiency(zone)
 	var/obj/item/bodypart/limb = get_bodypart(zone)
@@ -672,18 +701,17 @@
 
 /mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced, required_biotype, required_respiration_type)
 	. = ..()
-	check_passout(.)
+	check_passout()
 
 /**
-* Check to see if we should be passed out from oyxloss
+* Check to see if we should be passed out from oxyloss
 */
-/mob/living/carbon/proc/check_passout(oxyloss)
-	if(!isnum(oxyloss))
-		return
-	if(oxyloss <= 50)
-		if(getOxyLoss() > 50)
+/mob/living/carbon/proc/check_passout()
+	var/mob_oxyloss = getOxyLoss()
+	if(mob_oxyloss >= 50)
+		if(!HAS_TRAIT_FROM(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT))
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-	else if(getOxyLoss() <= 50)
+	else if(mob_oxyloss < 50)
 		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 
 /mob/living/carbon/get_organic_health()
@@ -698,14 +726,16 @@
 		return ..()
 
 	var/obj/item/bodypart/grasped_part = get_bodypart(zone_selected)
-	if(!grasped_part?.get_modified_bleed_rate())
+	if(!grasped_part?.can_be_grasped())
 		return
 	var/starting_hand_index = active_hand_index
 	if(starting_hand_index == grasped_part.held_index)
 		to_chat(src, span_danger("You can't grasp your [grasped_part.name] with itself!"))
 		return
 
-	to_chat(src, span_warning("You try grasping at your [grasped_part.name], trying to stop the bleeding..."))
+	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
+	to_chat(src, span_warning("You try grasping at your [grasped_part.name][bleeding_text]..."))
 	if(!do_after(src, 0.75 SECONDS))
 		to_chat(src, span_danger("You fail to grasp your [grasped_part.name]."))
 		return
@@ -716,6 +746,17 @@
 		QDEL_NULL(grasp)
 		return
 	grasp.grasp_limb(grasped_part)
+
+/// If TRUE, the owner of this bodypart can try grabbing it to slow bleeding, as well as various other effects.
+/obj/item/bodypart/proc/can_be_grasped()
+	if (get_modified_bleed_rate())
+		return TRUE
+
+	for (var/datum/wound/iterated_wound as anything in wounds)
+		if (iterated_wound.wound_flags & CAN_BE_GRASPED)
+			return TRUE
+
+	return FALSE
 
 /// an abstract item representing you holding your own limb to staunch the bleeding, see [/mob/living/carbon/proc/grabbedby] will probably need to find somewhere else to put this.
 /obj/item/hand_item/self_grasp
@@ -761,7 +802,9 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
 	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
-	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
+	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
+	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
 

@@ -211,8 +211,6 @@
 	///A reagent the nutriments are converted into when the item is juiced.
 	var/datum/reagent/consumable/juice_typepath
 
-	var/canMouseDown = FALSE
-
 	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
@@ -423,7 +421,7 @@
 	///Separator between the items on the list
 	var/sep = ""
 	///Nodes that can be boosted
-	var/list/boostable_nodes = techweb_item_boost_check(src)
+	var/list/boostable_nodes = techweb_item_unlock_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
@@ -500,7 +498,6 @@
 			return
 		var/datum/fantasy_affix/affix = affixes[picked_affix_name]
 		affixes.Remove(affix)
-		QDEL_LIST_ASSOC(affixes) //remove the rest, we didn't use them
 		var/fantasy_quality = 0
 		if(affix.alignment & AFFIX_GOOD)
 			fantasy_quality++
@@ -598,9 +595,6 @@
 		if(!R.low_power_mode) //can't equip modules with an empty cell.
 			R.activate_module(src)
 			R.hud_used.update_robot_modules_display()
-
-/obj/item/proc/GetDeconstructableContents()
-	return get_all_contents() - src
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -965,11 +959,10 @@
 /obj/item/proc/grind(datum/reagents/target_holder, mob/user)
 	if(on_grind() == -1)
 		return FALSE
-	if(!reagents)
-		reagents = new()
-	reagents.add_reagent_list(grind_results)
-	if(reagents && target_holder)
-		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	if(target_holder)
+		target_holder.add_reagent_list(grind_results)
+		if(reagents)
+			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	return TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
@@ -982,9 +975,10 @@
 /obj/item/proc/juice(datum/reagents/target_holder, mob/user)
 	if(on_juice() == -1)
 		return FALSE
-	reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
-	if(reagents && target_holder)
-		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	if(reagents)
+		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
+		if(target_holder)
+			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	return TRUE
 
 /obj/item/proc/set_force_string()
@@ -1196,7 +1190,7 @@
 	return src
 
 /**
- * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.
+ * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targeting the target.
  *
  * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
  *
@@ -1318,7 +1312,7 @@
 		// victim's chest (for cavity implanting the item)
 		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
 		if(victim_cavity.cavity_item)
-			victim.vomit(5, FALSE, FALSE, distance = 0)
+			victim.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = 5, distance = 0)
 			forceMove(drop_location())
 			to_chat(victim, span_warning("You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]"))
 		else
@@ -1349,12 +1343,9 @@
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
-
-	SEND_SIGNAL(src, COMSIG_ATOM_WASHED)
-
 	if(ismob(loc))
 		var/mob/mob_loc = loc
-		mob_loc.regenerate_icons()
+		mob_loc.update_clothing(slot_flags)
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)

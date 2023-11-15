@@ -167,7 +167,7 @@
 		/datum/reagent/consumable/nutriment = 15
 	)
 	tastes = list("bread" = 10)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN 
 	venue_value = FOOD_PRICE_TRASH
 
 /obj/item/food/bread/reispan/make_processable()
@@ -305,7 +305,7 @@
 		/datum/reagent/consumable/capsaicin = 2,
 	)
 	tastes = list("barbecue meat" = 1, "noodles" = 1, "chilli heat" = 1)
-	foodtypes = MEAT | GRAIN | VEGETABLES
+	foodtypes = MEAT | GRAIN | VEGETABLES | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/yakisoba_katsu
@@ -467,7 +467,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1, "toast" = 1, "bacon" = 1, "pickles" = 1, "cheese" = 1)
-	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | PINEAPPLE | BREAKFAST
+	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
 // Snacks
@@ -482,7 +482,7 @@
 		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("octopus" = 1, "batter" = 1, "onion" = 1, "worcestershire sauce" = 1)
-	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES
+	foodtypes = SEAFOOD | GRAIN | FRIED | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/takoyaki/russian
@@ -496,7 +496,7 @@
 		/datum/reagent/consumable/capsaicin = 10,
 	)
 	tastes = list("octopus" = 1, "batter" = 1, "onion" = 1, "chilli heat" = 1)
-	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES
+	foodtypes = SEAFOOD | GRAIN | FRIED | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/takoyaki/taco
@@ -523,7 +523,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("batter" = 1, "cabbage" = 1, "onion" = 1, "worcestershire sauce" = 1)
-	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES | DAIRY
+	foodtypes = SEAFOOD | GRAIN | FRIED | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 //hey, the name literally means "grilled how you like it", it'd be crazy to not make it customisable
@@ -669,7 +669,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("fries" = 1, "duck" = 1, "ketchup" = 1, "mayo" = 1, "spicy seasoning" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/little_hawaii_hotdog
@@ -782,7 +782,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("chicken" = 1, "coconut" = 1, "curry" = 1)
-	foodtypes = MEAT | VEGETABLES | DAIRY
+	foodtypes = MEAT | VEGETABLES | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/huoxing_tofu

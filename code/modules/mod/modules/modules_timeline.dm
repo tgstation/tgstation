@@ -297,11 +297,14 @@
 	///Reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
 	var/datum/weakref/tem_weakref
 
-/obj/projectile/energy/chrono_beam/on_hit(atom/target)
+/obj/projectile/energy/chrono_beam/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/obj/item/mod/module/tem/tem = tem_weakref.resolve()
 	if(target && tem && isliving(target))
 		var/obj/structure/chrono_field/field = new(target.loc, target, tem)
 		tem.field_connect(field)
+		return BULLET_ACT_HIT
+
+	return ..()
 
 /obj/structure/chrono_field
 	name = "eradication field"
@@ -403,8 +406,9 @@
 		var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
 		if(linked_tem && istype(linked_tem))
 			linked_tem.field_connect(src)
-	else
 		return BULLET_ACT_HIT
+
+	return ..()
 
 /obj/structure/chrono_field/assume_air()
 	return FALSE

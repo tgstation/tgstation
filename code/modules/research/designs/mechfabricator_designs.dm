@@ -775,12 +775,24 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+	)
+
+/datum/design/paddyupgrade
+	name = "Ripley MK-I to Paddy Conversion Kit"
+	id = "paddyupgrade"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT *5,
+	)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MODULES,
+		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_CHASSIS,
 	)
 
 /datum/design/mech_hydraulic_clamp
@@ -791,12 +803,20 @@
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
 	construction_time = 100
 	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT,
-		RND_CATEGORY_MECHFAB_RIPLEY
-	)
-	category = list(
 		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
+	)
+
+/datum/design/mech_hydraulic_claw
+	name = "Hydraulic Claw"
+	id = "mech_hydraulic_claw"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw
+	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
+	construction_time = 100
+	category = list(
+		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
+		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 	)
 
 /datum/design/mech_drill
@@ -1168,6 +1188,17 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/silicon_knife
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
+	construction_time = 4 SECONDS
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE
+	)
+
+/datum/design/borg_upgrade_drink_apparatus
+	name = "Drink Apparatus"
+	id = "borg_upgrade_drink_apparatus"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/drink_app
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	construction_time = 4 SECONDS
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_SERVICE

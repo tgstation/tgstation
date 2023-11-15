@@ -147,6 +147,7 @@
 	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.stack_name]_[rand(1, 3)]")
 	pancake_visual.pixel_x = rand(-1, 1)
 	pancake_visual.pixel_y = 3 * contents.len - 1
+	pancake_visual.layer = layer + (contents.len * 0.01)
 	add_overlay(pancake_visual)
 	update_appearance()
 

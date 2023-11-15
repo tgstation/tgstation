@@ -44,7 +44,7 @@
 
 // Operates TGUI
 /obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
-	if(!enabled || !user.can_read(src, READING_CHECK_LITERACY) || !use_power())
+	if(!enabled || !user.can_read(src, READING_CHECK_LITERACY))
 		if(ui)
 			ui.close()
 		return
@@ -96,6 +96,7 @@
 	)
 
 	data["proposed_login"] = list(
+		IDInserted = computer_id_slot ? TRUE : FALSE,
 		IDName = computer_id_slot?.registered_name,
 		IDJob = computer_id_slot?.assignment,
 	)

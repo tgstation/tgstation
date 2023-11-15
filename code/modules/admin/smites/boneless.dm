@@ -11,11 +11,9 @@
 
 	var/mob/living/carbon/carbon_target = target
 	for(var/obj/item/bodypart/limb as anything in carbon_target.bodyparts)
-		var/type_wound = pick(list(
-			/datum/wound/blunt/bone/critical,
-			/datum/wound/blunt/bone/severe,
-			/datum/wound/blunt/bone/critical,
-			/datum/wound/blunt/bone/severe,
-			/datum/wound/blunt/bone/moderate,
+		var/severity = pick_weight(list(
+			WOUND_SEVERITY_MODERATE = 1,
+			WOUND_SEVERITY_SEVERE = 2,
+			WOUND_SEVERITY_CRITICAL = 2,
 		))
-		limb.force_wound_upwards(type_wound, smited = TRUE)
+		carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, limb, severity)

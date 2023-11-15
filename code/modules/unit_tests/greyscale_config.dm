@@ -38,4 +38,4 @@
 			continue
 		var/number_of_colors = length(colors) - 1
 		if(config.expected_colors != number_of_colors)
-			TEST_FAIL("[thing] has the wrong amount of colors configured for [config.DebugName()]. Expected [config.expected_colors] but only found [number_of_colors].")
+			TEST_FAIL("[thing] has the wrong amount of colors configured for [config.DebugName()]. Expected [config.expected_colors] colors but found [number_of_colors].")

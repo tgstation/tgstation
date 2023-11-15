@@ -108,7 +108,6 @@
 			continue
 		. += AM
 
-
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
 	. = list()
 	.["tool_behaviour"] = list()
@@ -123,14 +122,15 @@
 			if(isstack(item))
 				var/obj/item/stack/stack = item
 				.["other"][item.type] += stack.amount
-			else if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
-				var/obj/item/reagent_containers/container = item
-				for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
-					.["other"][reagent.type] += reagent.volume
-			else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
-				if(item.tool_behaviour)
-					.["tool_behaviour"] += item.tool_behaviour
+			else
 				.["other"][item.type] += 1
+				if(is_reagent_container(item) && item.is_drainable() && length(item.reagents.reagent_list)) //some container that has some reagents inside it that can be drained
+					var/obj/item/reagent_containers/container = item
+					for(var/datum/reagent/reagent as anything in container.reagents.reagent_list)
+						.["other"][reagent.type] += reagent.volume
+				else //a reagent container that is empty can also be used as a tool. e.g. glass bottle can be used as a rolling pin
+					if(item.tool_behaviour)
+						.["tool_behaviour"] += item.tool_behaviour
 		else if (ismachinery(object))
 			LAZYADDASSOCLIST(.["machinery"], object.type, object)
 		else if (isstructure(object))
@@ -205,13 +205,13 @@
 			var/atom/movable/result
 			if(ispath(recipe.result, /obj/item/stack))
 				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
-			else if (ispath(recipe.result, /obj/item/food))
-				result = new recipe.result(get_turf(crafter.loc), no_base_reagents = TRUE)
 			else
 				result = new recipe.result(get_turf(crafter.loc))
 				if(result.atom_storage && recipe.delete_contents)
 					for(var/obj/item/thing in result)
 						qdel(thing)
+			if (IsEdible(result))
+				result.reagents?.clear_reagents()
 			result.CheckParts(parts, recipe)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)

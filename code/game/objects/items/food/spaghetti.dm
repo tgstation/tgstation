@@ -178,6 +178,7 @@
 	)
 	tastes = list("noodles" = 5, "meat" = 3, "egg" = 4, "dried seaweed" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/kitakata_ramen
 	name = "kitakata ramen"
@@ -191,6 +192,7 @@
 	)
 	tastes = list("noodles" = 5, "meat" = 4, "mushrooms" = 3, "onion" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/kitsune_udon
 	name = "kitsune udon"
@@ -204,6 +206,7 @@
 	)
 	tastes = list("noodles" = 5, "tofu" = 4, "sugar" = 3, "soy sauce" = 2)
 	foodtypes = GRAIN | VEGETABLES
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/nikujaga
 	name = "nikujaga"
@@ -217,6 +220,7 @@
 	)
 	tastes = list("noodles" = 5, "meat" = 4, "potato" = 3, "onion" = 2, "mixed veggies" = 2)
 	foodtypes = GRAIN | VEGETABLES | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/pho
 	name = "pho"
@@ -230,6 +234,7 @@
 	)
 	tastes = list("noodles" = 5, "meat" = 4, "cabbage" = 3, "onion" = 2, "herbs" = 2)
 	foodtypes = GRAIN | VEGETABLES | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/spaghetti/pad_thai
 	name = "pad thai"
@@ -243,3 +248,4 @@
 	)
 	tastes = list("noodles" = 5, "fried tofu" = 4, "lime" = 2, "peanut" = 3, "onion" = 2)
 	foodtypes = GRAIN | VEGETABLES | NUTS | FRUIT
+	crafting_complexity = FOOD_COMPLEXITY_4

@@ -219,19 +219,21 @@
 	allowed = list(
 		/obj/item/stamp,
 		/obj/item/storage/bag/mail,
+		/obj/item/universal_scanner,
 	)
 
 // Quartermaster
 
 /obj/item/clothing/suit/jacket/quartermaster
-	name = "quatermaster's overcoat"
-	desc = "A luxury, brown double-breasted overcoat, made from kangaroo skin. It's gold cuffs linked are styled on the credits symbol. It makes you feel more important then you probably are."
+	name = "quartermaster's overcoat"
+	desc = "A luxury, brown double-breasted overcoat made from kangaroo skin. It's gold cuffs are linked and styled on the credits symbol. It makes you feel more important than you probably are."
 	icon_state = "qm_coat"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(
 		/obj/item/stamp,
 		/obj/item/storage/bag/mail,
+		/obj/item/universal_scanner,
 	)
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale

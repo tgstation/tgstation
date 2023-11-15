@@ -45,10 +45,9 @@
 	if(resulting_food_path)
 		var/atom/location = holder.my_atom.drop_location()
 		for(var/i in 1 to created_volume)
+			var/obj/item/food/result = new resulting_food_path(location)
 			if(ispath(resulting_food_path, /obj/item/food) && !isnull(resulting_reagent_purity))
-				new resulting_food_path(location, starting_reagent_purity = resulting_reagent_purity)
-			else
-				new resulting_food_path(location)
+				result.reagents?.set_all_reagents_purity(resulting_reagent_purity)
 
 /datum/chemical_reaction/food/tofu
 	required_reagents = list(/datum/reagent/consumable/soymilk = 10)
@@ -96,6 +95,10 @@
 	results = list(/datum/reagent/consumable/corn_syrup = 5)
 	required_reagents = list(/datum/reagent/consumable/corn_starch = 1, /datum/reagent/toxin/acid = 1)
 	required_temp = 374
+
+/datum/chemical_reaction/food/rice_flour
+	results = list(/datum/reagent/consumable/rice_flour = 10)
+	required_reagents = list(/datum/reagent/consumable/flour = 5,/datum/reagent/consumable/rice = 5)
 
 /datum/chemical_reaction/food/caramel
 	results = list(/datum/reagent/consumable/caramel = 1)
@@ -149,6 +152,12 @@
 	mix_message = "The ingredients form a dough."
 	reaction_flags = REACTION_INSTANT
 	resulting_food_path = /obj/item/food/dough
+
+/datum/chemical_reaction/food/rice_dough
+	required_reagents = list(/datum/reagent/consumable/rice_flour = 20,/datum/reagent/water = 10)
+	mix_message = "The ingredients form a rice dough."
+	reaction_flags = REACTION_INSTANT
+	resulting_food_path = /obj/item/food/rice_dough
 
 /datum/chemical_reaction/food/cakebatter
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/flour = 15, /datum/reagent/consumable/sugar = 5)
@@ -243,7 +252,8 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/olive_oil_upconvert
-	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1, /datum/reagent/consumable/nutriment/fat/oil = 2)
+	required_catalysts = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1)
+	required_reagents = list( /datum/reagent/consumable/nutriment/fat/oil = 2)
 	results = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 2)
 	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
 	reaction_flags = REACTION_INSTANT

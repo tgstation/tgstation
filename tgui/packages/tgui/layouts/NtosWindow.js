@@ -15,7 +15,6 @@ export const NtosWindow = (props, context) => {
   const {
     PC_device_theme,
     PC_batteryicon,
-    PC_showbatteryicon,
     PC_batterypercent,
     PC_ntneticon,
     PC_stationdate,
@@ -61,7 +60,7 @@ export const NtosWindow = (props, context) => {
                 />
               )}
             </Box>
-            {!!(PC_showbatteryicon && PC_batteryicon) && (
+            {!!PC_batteryicon && (
               <Box inline mr={1}>
                 <img
                   className="NtosHeader__icon"

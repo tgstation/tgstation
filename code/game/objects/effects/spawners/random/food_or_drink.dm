@@ -56,6 +56,7 @@
 		/obj/item/seeds/liberty = 5,
 		/obj/item/seeds/replicapod = 5,
 		/obj/item/seeds/reishi = 5,
+		/obj/item/seeds/seedling = 5,
 		/obj/item/seeds/nettle/death = 1,
 		/obj/item/seeds/plump/walkingmushroom = 1,
 		/obj/item/seeds/cannabis/rainbow = 1,
@@ -272,3 +273,53 @@
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_BIRTHDAY))
 		spawn_loot_chance = 0
 	return ..()
+
+/obj/effect/spawner/random/food_or_drink/donuts
+	name = "donut spawner"
+	icon_state = "donut"
+	loot = list(
+		/obj/item/food/donut/apple = 3,
+		/obj/item/food/donut/berry = 3,
+		/obj/item/food/donut/caramel = 3,
+		/obj/item/food/donut/choco = 3,
+		/obj/item/food/donut/plain = 3,
+		/obj/item/food/donut/blumpkin = 2,
+		/obj/item/food/donut/bungo = 2,
+		/obj/item/food/donut/laugh = 2,
+		/obj/item/food/donut/matcha = 2,
+		/obj/item/food/donut/trumpet = 2,
+		/obj/item/food/donut/chaos = 1,
+		/obj/item/food/donut/meat = 1,
+	)
+
+/obj/effect/spawner/random/food_or_drink/jelly_donuts
+	name = "jelly donut spawner"
+	icon_state = "jelly_donut"
+	loot = list(
+		/obj/item/food/donut/jelly/apple = 3,
+		/obj/item/food/donut/jelly/berry = 3,
+		/obj/item/food/donut/jelly/caramel = 3,
+		/obj/item/food/donut/jelly/choco = 3,
+		/obj/item/food/donut/jelly/plain = 3,
+		/obj/item/food/donut/jelly/blumpkin = 2,
+		/obj/item/food/donut/jelly/bungo = 2,
+		/obj/item/food/donut/jelly/laugh = 2,
+		/obj/item/food/donut/jelly/matcha = 2,
+		/obj/item/food/donut/jelly/trumpet = 2,
+	)
+
+/obj/effect/spawner/random/food_or_drink/slime_jelly_donuts
+	name = "slime jelly donut spawner"
+	icon_state = "slime_jelly_donut"
+	loot = list(
+		/obj/item/food/donut/jelly/slimejelly/apple = 3,
+		/obj/item/food/donut/jelly/slimejelly/berry = 3,
+		/obj/item/food/donut/jelly/slimejelly/caramel = 3,
+		/obj/item/food/donut/jelly/slimejelly/choco = 3,
+		/obj/item/food/donut/jelly/slimejelly/plain = 3,
+		/obj/item/food/donut/jelly/slimejelly/blumpkin = 2,
+		/obj/item/food/donut/jelly/slimejelly/bungo = 2,
+		/obj/item/food/donut/jelly/slimejelly/laugh = 2,
+		/obj/item/food/donut/jelly/slimejelly/matcha = 2,
+		/obj/item/food/donut/jelly/slimejelly/trumpet = 2,
+	)

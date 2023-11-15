@@ -29,7 +29,7 @@
 /datum/outfit/mafia/ninja
 	name = "Mafia Ninja"
 	glasses = /obj/item/clothing/glasses/sunglasses
-	suit = /obj/item/clothing/suit/costume/ianshirt
+	suit = /obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian
 	uniform = /obj/item/clothing/under/pants/jeans
 	shoes = /obj/item/clothing/shoes/sandal
 

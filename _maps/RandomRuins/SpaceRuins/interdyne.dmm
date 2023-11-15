@@ -1020,7 +1020,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/interdyne)
 "PD" = (
-/obj/item/surgery_tray,
+/obj/item/surgery_tray/full,
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)

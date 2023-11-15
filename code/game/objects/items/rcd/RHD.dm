@@ -104,6 +104,7 @@
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
+	update_static_data_for_all_viewers()
 
 /// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/item, mob/user)
@@ -184,6 +185,11 @@
 		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume")
 		return TRUE
 
+/obj/item/construction/ui_static_data(mob/user)
+	. = list()
+
+	.["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
+
 ///shared data for rcd,rld & plumbing
 /obj/item/construction/ui_data(mob/user)
 	var/list/data = list()
@@ -194,8 +200,6 @@
 		total_matter = 0
 	data["matterLeft"] = total_matter
 
-	//silo details
-	data["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
 	data["silo_enabled"] = silo_link
 
 	return data
@@ -222,6 +226,15 @@
 	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
 		toggle_silo(ui.user)
 		return TRUE
+
+	var/update = handle_ui_act(action, params, ui, state)
+	if(isnull(update))
+		update = FALSE
+	return update
+
+/// overwrite to insert custom ui handling for subtypes
+/obj/item/construction/proc/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	return null
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	if(!silo_mats || !silo_mats.mat_container || !silo_link)

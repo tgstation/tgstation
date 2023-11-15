@@ -21,7 +21,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 		return FALSE
 
 	var/obj/item/bodypart/part = hand
-	if(isnull(part) || scythe.empowerment > SCYTHE_SATED)
+	if(isnull(part) || scythe.empowerment >= SCYTHE_SATED)
 		return ..()
 
 	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))

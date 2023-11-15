@@ -3,20 +3,17 @@
 	Piercing wounds
 */
 /datum/wound/pierce
-	wound_type = WOUND_PIERCE
 
 /datum/wound/pierce/bleed
 	name = "Piercing Wound"
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	treatable_by = list(/obj/item/stack/medical/suture)
-	treatable_tool = TOOL_CAUTERY
+	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
-	wound_flags = (ACCEPTS_GAUZE)
+	wound_flags = (ACCEPTS_GAUZE | CAN_BE_GRASPED)
 
-	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
-
-	scar_file = FLESH_SCAR_FILE
+	default_scar_file = FLESH_SCAR_FILE
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -30,13 +27,13 @@
 
 /datum/wound/pierce/bleed/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
-	if(!no_bleeding && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+	if(limb.can_bleed() && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
 
 	return ..()
 
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat == DEAD || (wounding_dmg < 5) || no_bleeding || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
+	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
 		return
 	if(limb.current_gauze?.splint_factor)
 		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
@@ -59,7 +56,7 @@
 
 /datum/wound/pierce/bleed/get_bleed_rate_of_change()
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on it's own (nor get worse)
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
 	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
 		return BLOOD_FLOW_INCREASING
@@ -68,12 +65,12 @@
 	return BLOOD_FLOW_STEADY
 
 /datum/wound/pierce/bleed/handle_process(seconds_per_tick, times_fired)
-	if (!victim || IS_IN_STASIS(victim))
+	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
 	set_blood_flow(min(blood_flow, WOUND_SLASH_MAX_BLOODFLOW))
 
-	if(!no_bleeding)
+	if(limb.can_bleed())
 		if(victim.bodytemperature < (BODYTEMP_NORMAL - 10))
 			adjust_blood_flow(-0.1 * seconds_per_tick)
 			if(SPT_PROB(2.5, seconds_per_tick))
@@ -110,9 +107,9 @@
 	if (limb) // parent can cause us to be removed, so its reasonable to check if we're still applied
 		adjust_blood_flow(-0.03 * power) // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
-/datum/wound/pierce/bleed/on_synthflesh(power)
+/datum/wound/pierce/bleed/on_synthflesh(reac_volume)
 	. = ..()
-	adjust_blood_flow(-0.025 * power) // 20u * 0.05 = -1 blood flow, less than with slashes but still good considering smaller bleed rates
+	adjust_blood_flow(-0.025 * reac_volume) // 20u * 0.05 = -1 blood flow, less than with slashes but still good considering smaller bleed rates
 
 /// If someone is using a suture to close this puncture
 /datum/wound/pierce/bleed/proc/suture(obj/item/stack/medical/suture/I, mob/user)
@@ -127,7 +124,7 @@
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
-	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
+	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] stitches up some of the [bleeding_wording] on [victim]."), span_green("You stitch up some of the [bleeding_wording] on [user == victim ? "yourself" : "[victim]"]."))
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
 	adjust_blood_flow(-blood_sutured)
@@ -157,7 +154,7 @@
 	if(!do_after(user, treatment_delay, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
-	var/bleeding_wording = (no_bleeding ? "holes" : "bleeding")
+	var/bleeding_wording = (!limb.can_bleed() ? "holes" : "bleeding")
 	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
 	limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
 	if(prob(30))
@@ -173,6 +170,9 @@
 	abstract = TRUE
 
 	required_limb_biostate = (BIO_FLESH)
+	required_wounding_types = list(WOUND_PIERCE)
+
+	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
 
 /datum/wound/pierce/get_limb_examine_description()
 	return span_warning("The flesh on this limb appears badly perforated.")
@@ -189,18 +189,22 @@
 	gauzed_clot_rate = 0.8
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
-	threshold_minimum = 30
 	threshold_penalty = 20
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
+
+	simple_treat_text = "<b>Bandaging</b> the wound will reduce blood loss, help the wound close by itself quicker, and speed up the blood recovery period. The wound itself can be slowly <b>sutured</b> shut."
+	homemade_treat_text = "<b>Tea</b> stimulates the body's natural healing systems, slightly fastening clotting. The wound itself can be rinsed off on a sink or shower as well. Other remedies are unnecessary."
 
 /datum/wound_pregen_data/flesh_pierce/breakage
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/moderate
 
+	threshold_minimum = 30
+
 /datum/wound/pierce/bleed/moderate/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		examine_desc = "has a small, circular hole"
 		occur_text = "splits a small hole open"
 
@@ -216,18 +220,22 @@
 	gauzed_clot_rate = 0.6
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
-	threshold_minimum = 50
 	threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
+
+	simple_treat_text = "<b>Bandaging</b> the wound is essential, and will reduce blood loss. Afterwards, the wound can be <b>sutured</b> shut, preferably while the patient is resting and/or grasping their wound."
+	homemade_treat_text = "Bed sheets can be ripped up to make <b>makeshift gauze</b>. <b>Flour, table salt, or salt mixed with water</b> can be applied directly to stem the flow, though unmixed salt will irritate the skin and worsen natural healing. Resting and grabbing your wound will also reduce bleeding."
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/severe
 
+	threshold_minimum = 50
+
 /datum/wound/pierce/bleed/severe/update_descriptions()
-	if(no_bleeding)
+	if(!limb.can_bleed())
 		occur_text = "tears a hole open"
 
 /datum/wound/pierce/bleed/critical
@@ -242,13 +250,17 @@
 	gauzed_clot_rate = 0.4
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
-	threshold_minimum = 100
 	threshold_penalty = 50
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
-	wound_flags = (ACCEPTS_GAUZE | MANGLES_FLESH)
+	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)
+
+	simple_treat_text = "<b>Bandaging</b> the wound is of utmost importance, as is seeking direct medical attention - <b>Death</b> will ensue if treatment is delayed whatsoever, with lack of <b>oxygen</b> killing the patient, thus <b>Food, Iron, and saline solution</b> is always recommended after treatment. This wound will not naturally seal itself."
+	homemade_treat_text = "Bed sheets can be ripped up to make <b>makeshift gauze</b>. <b>Flour, salt, and saltwater</b> topically applied will help. Dropping to the ground and grabbing your wound will reduce blood flow."
 
 /datum/wound_pregen_data/flesh_pierce/cavity
 	abstract = FALSE
 
 	wound_path_to_generate = /datum/wound/pierce/bleed/critical
+
+	threshold_minimum = 100

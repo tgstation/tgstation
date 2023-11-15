@@ -6,8 +6,9 @@
 	name = "baseturf editor"
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
-
+	/// Replacing a specific turf
 	var/list/baseturf_to_replace
+	/// The desired bottom turf
 	var/baseturf
 
 	plane = POINT_PLANE
@@ -33,9 +34,16 @@
 
 	qdel(src)
 
+/// Replaces all the requested baseturfs (usually space/baseturfbottom) with the desired baseturf. Skips if its already there
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
 	thing.remove_baseturfs_from_typecache(baseturf_to_replace)
-	thing.PlaceOnBottom(fake_turf_type = baseturf)
+
+	if(length(thing.baseturfs))
+		var/turf/tile = thing.baseturfs[1]
+		if(tile == baseturf)
+			return
+
+	thing.place_on_bottom(baseturf)
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
@@ -909,7 +917,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 					if(new_human_species)
 						new_human.set_species(new_human_species)
 						new_human_species = new_human.dna.species
-						new_human_species.randomize_features(new_human)
 						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
 					else
 						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
@@ -1359,3 +1366,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
 	qdel(src)
+
+/// Apply to a wall (or floor, technically) to ensure it is instantly destroyed by any explosion, even if usually invulnerable
+/obj/effect/mapping_helpers/bombable_wall
+	name = "bombable wall helper"
+	icon = 'icons/turf/overlays.dmi'
+	icon_state = "explodable"
+
+/obj/effect/mapping_helpers/bombable_wall/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return
+
+	var/turf/our_turf = get_turf(src) // In case a locker ate us or something
+	our_turf.AddElement(/datum/element/bombable_turf)
+	return INITIALIZE_HINT_QDEL

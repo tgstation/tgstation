@@ -63,25 +63,24 @@
 	qdel(src)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.mode == RCD_FLOORWALL)
-		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
-	if(the_rcd.mode == RCD_CATWALK)
-		return list("mode" = RCD_CATWALK, "delay" = 0, "cost" = 2)
+	if(the_rcd.mode == RCD_TURF)
+		return list("delay" = 0, "cost" = the_rcd.rcd_design_path == /obj/structure/lattice/catwalk ? 2 : 1)
+	return FALSE
 
-/obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	if(passed_mode == RCD_FLOORWALL)
-		to_chat(user, span_notice("You build a floor."))
-		var/turf/T = src.loc
-		if(isgroundlessturf(T))
-			T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+/obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
+		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
+		if(design_structure == /turf/open/floor/plating)
+			var/turf/T = src.loc
+			if(isgroundlessturf(T))
+				T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				qdel(src)
+				return TRUE
+		if(design_structure == /obj/structure/lattice/catwalk)
+			var/turf/turf = loc
 			qdel(src)
+			new /obj/structure/lattice/catwalk(turf)
 			return TRUE
-	if(passed_mode == RCD_CATWALK)
-		to_chat(user, span_notice("You build a catwalk."))
-		var/turf/turf = loc
-		qdel(src)
-		new /obj/structure/lattice/catwalk(turf)
-		return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(S, current_size)

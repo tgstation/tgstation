@@ -14,6 +14,8 @@
 	var/key = ""
 	/// This will also call the emote.
 	var/key_third_person = ""
+	/// Needed for more user-friendly emote names, so emotes with keys like "aflap" will show as "flap angry". Defaulted to key.
+	var/name = ""
 	/// Message displayed when emote is used.
 	var/message = ""
 	/// Message displayed if the user is a mime.
@@ -71,6 +73,9 @@
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
+	if(!name)
+		name = key
+
 /**
  * Handles the modifications and execution of emotes.
  *
@@ -101,7 +106,7 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(user, tmp_sound, 50, vary)
 
@@ -187,6 +192,10 @@
 /datum/emote/proc/select_message_type(mob/user, msg, intentional)
 	// Basically, we don't care that the others can use datum variables, because they're never going to change.
 	. = msg
+	if(!isliving(user))
+		return .
+	var/mob/living/living_user = user
+
 	if(!muzzle_ignore && user.is_muzzled() && emote_type & EMOTE_AUDIBLE)
 		return "makes a [pick("strong ", "weak ", "")]noise."
 	if(HAS_MIND_TRAIT(user, TRAIT_MIMING) && message_mime)
@@ -195,14 +204,16 @@
 		. = message_alien
 	else if(islarva(user) && message_larva)
 		. = message_larva
-	else if(iscyborg(user) && message_robot)
-		. = message_robot
 	else if(isAI(user) && message_AI)
 		. = message_AI
 	else if(ismonkey(user) && message_monkey)
 		. = message_monkey
+	else if((iscyborg(user) || (living_user.mob_biotypes & MOB_ROBOTIC)) && message_robot)
+		. = message_robot
 	else if(isanimal_or_basicmob(user) && message_animal_or_basic)
 		. = message_animal_or_basic
+
+	return .
 
 /**
  * Replaces the %t in the message in message_param by params.

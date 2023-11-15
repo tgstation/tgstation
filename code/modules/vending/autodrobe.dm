@@ -66,6 +66,8 @@
 			"products" = list(
 				/obj/item/clothing/suit/costume/imperium_monk = 1,
 				/obj/item/clothing/suit/chaplainsuit/holidaypriest = 1,
+				/obj/item/clothing/suit/chaplainsuit/habit = 1,
+				/obj/item/clothing/head/chaplain/habit_veil = 1,
 				/obj/item/clothing/suit/chaplainsuit/whiterobe = 1,
 				/obj/item/clothing/head/wizard/marisa/fake = 1,
 				/obj/item/clothing/suit/wizrobe/marisa/fake = 1,

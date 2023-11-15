@@ -135,6 +135,12 @@
 	database_id = MEDAL_COSMOS_ASCENSION
 	icon = "cosmicascend"
 
+/datum/award/achievement/misc/lock_ascension
+	name = "Secrets of the Locked Labyrinth"
+	desc = "You managed to open a gate into the mansus."
+	database_id = MEDAL_LOCK_ASCENSION
+	icon = "lockascend"
+
 /datum/award/achievement/misc/grand_ritual_finale
 	name = "Archmage"
 	desc = "Made a big impression on the station with your phenomenal cosmic power."

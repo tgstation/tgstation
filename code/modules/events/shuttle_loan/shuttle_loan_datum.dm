@@ -17,6 +17,8 @@
 	. = ..()
 	if(!logging_desc)
 		stack_trace("No logging blurb set for [src.type]!")
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_LOANER_SHUTTLE))
+		bonus_points *= 1.15
 
 /// Spawns paths added to `spawn_list`, and passes empty shuttle turfs so you can spawn more complicated things like dead bodies.
 /datum/shuttle_loan_situation/proc/spawn_items(list/spawn_list, list/empty_shuttle_turfs)
@@ -86,12 +88,12 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/imports/specialops]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
-	spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+	spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
+	spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
 	if(prob(75))
-		spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+		spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
 	if(prob(50))
-		spawn_list.Add(/mob/living/basic/syndicate/ranged/infiltrator)
+		spawn_list.Add(/mob/living/basic/trooper/syndicate/ranged/infiltrator)
 
 /datum/shuttle_loan_situation/lots_of_bees
 	sender = "CentCom Janitorial Division"
@@ -178,11 +180,11 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
 	pack.generate(pick_n_take(empty_shuttle_turfs))
 
-	spawn_list.Add(/mob/living/basic/syndicate/russian)
-	spawn_list.Add(/mob/living/basic/syndicate/russian/ranged) //drops a mateba
+	spawn_list.Add(/mob/living/basic/trooper/russian)
+	spawn_list.Add(/mob/living/basic/trooper/russian/ranged) //drops a mateba
 	spawn_list.Add(/mob/living/basic/bear/russian)
 	if(prob(75))
-		spawn_list.Add(/mob/living/basic/syndicate/russian)
+		spawn_list.Add(/mob/living/basic/trooper/russian)
 	if(prob(50))
 		spawn_list.Add(/mob/living/basic/bear/russian)
 

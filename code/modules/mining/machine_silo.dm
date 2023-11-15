@@ -8,6 +8,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	icon_state = "silo"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
 
 	/// The machine UI's page of logs showing ore history.
 	var/log_page = 1
@@ -165,8 +166,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
 		I.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
 		return TRUE
 
 /**

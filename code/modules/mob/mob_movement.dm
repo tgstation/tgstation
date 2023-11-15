@@ -74,8 +74,8 @@
 		return FALSE
 	if(!mob?.loc)
 		return FALSE
-	if(mob.notransform)
-		return FALSE //This is sota the goto stop mobs from moving var
+	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
+		return FALSE //This is sorta the goto stop mobs from moving trait
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
@@ -132,7 +132,7 @@
 	//Basically an optional override for our glide size
 	//Sometimes you want to look like you're moving with a delay you don't actually have yet
 	visual_delay = 0
-	var/old_dir = dir
+	var/old_dir = mob.dir
 
 	. = ..()
 
@@ -253,9 +253,9 @@
 				if(salt)
 					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
-						var/mob/living/simple_animal/revenant/R = L
-						R.reveal(20)
-						R.stun(20)
+						var/mob/living/basic/revenant/ghostie = L
+						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
+						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Some strange aura is blocking the way."))

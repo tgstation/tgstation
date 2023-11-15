@@ -142,7 +142,9 @@
 			if (!COOLDOWN_FINISHED(src, shock_cooldown))
 				return
 			if(ishuman(attacked_mob))
-				attacked_mob.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
+				attacked_mob.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES | SHOCK_NOSTUN)
+				attacked_mob.dropItemToGround(attacked_mob.get_active_held_item())
+				attacked_mob.dropItemToGround(attacked_mob.get_inactive_held_item())
 				user.visible_message(span_userdanger("[user] electrocutes [attacked_mob] with [user.p_their()] touch!"), \
 					span_danger("You electrocute [attacked_mob] with your touch!"))
 			else

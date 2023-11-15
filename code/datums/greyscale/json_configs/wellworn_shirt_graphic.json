@@ -1,0 +1,41 @@
+{
+    "wellworn_shirt_gamer": [
+        {
+            "type": "icon_state",
+            "icon_state": "worn_clean",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+			"type": "icon_state",
+			"icon_state": "nerd_overlay",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "nerd_base",
+			"blend_mode": "overlay"
+		}
+	],
+	"wellworn_shirt_ian": [
+        {
+            "type": "icon_state",
+            "icon_state": "worn_clean",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+			"type": "icon_state",
+			"icon_state": "ian_overlay",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "ian_base",
+			"blend_mode": "overlay"
+		}
+    ]
+}

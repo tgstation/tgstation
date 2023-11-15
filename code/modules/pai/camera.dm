@@ -1,10 +1,3 @@
-/mob/living/silicon/pai/ClickOn(atom/target, params)
-	. = ..()
-	if(aicamera && aicamera.in_camera_mode)
-		aicamera.toggle_camera_mode(sound = FALSE)
-		aicamera.captureimage(target, usr)
-	return TRUE
-
 /obj/item/camera/siliconcam/pai_camera
 	name = "pAI photo camera"
 	light_color = COLOR_PAI_GREEN
@@ -13,7 +6,7 @@
 	var/number = length(stored)
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
-	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
+	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
 	balloon_alert(user, "image recorded")
 
 /**
