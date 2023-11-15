@@ -260,6 +260,17 @@
 
 	return TRUE
 
+/// Returns a multiplier to apply to a specific kind of damage
+/mob/living/proc/get_damage_mod(damage_type)
+	switch(damage_type)
+		if (OXY)
+			return HAS_TRAIT(src, TRAIT_NOBREATH) ? 0 : 1
+		if (TOX)
+			if (HAS_TRAIT(src, TRAIT_TOXINLOVER))
+				return -1
+			return HAS_TRAIT(src, TRAIT_TOXIMMUNE) ? 0 : 1
+	return 1
+
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 

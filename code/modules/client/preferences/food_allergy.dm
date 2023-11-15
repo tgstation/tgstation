@@ -1,5 +1,5 @@
 /datum/preference/choiced/food_allergy
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "food_allergy"
 	savefile_identifier = PREFERENCE_CHARACTER
 	can_randomize = FALSE

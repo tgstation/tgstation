@@ -3,7 +3,7 @@
  */
 /datum/ai_controller/basic_controller/brimdemon
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -28,7 +28,7 @@
 	if (!succeeded)
 		return
 	var/mob/living/target = controller.blackboard[target_key]
-	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETTED_ACTION]
+	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
 	if(!ability?.IsAvailable())
 		return
 	ability.InterceptClickOn(caller = controller.pawn, target = target)

@@ -30,19 +30,19 @@
 	if(proximity_flag)
 		if(isgun(target))
 			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/targetted_gun = target
-			var/obj/item/firing_pin/old_pin = targetted_gun.pin
+			var/obj/item/gun/targeted_gun = target
+			var/obj/item/firing_pin/old_pin = targeted_gun.pin
 			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
-					old_pin.forceMove(targetted_gun.drop_location())
+					old_pin.forceMove(targeted_gun.drop_location())
 				old_pin.gun_remove(user)
 
-			if(!targetted_gun.pin)
+			if(!targeted_gun.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return .
-				if(gun_insert(user, targetted_gun))
+				if(gun_insert(user, targeted_gun))
 					if(old_pin)
 						balloon_alert(user, "swapped firing pin")
 					else

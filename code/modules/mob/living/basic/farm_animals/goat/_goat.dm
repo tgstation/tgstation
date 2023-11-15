@@ -56,7 +56,7 @@
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
 
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, edibles)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(edibles))
 
 /// Called when we attack something in order to piece together the intent of the AI/user and provide desired behavior. The element might be okay here but I'd rather the fluff.
 /// Goats are really good at beating up plants by taking bites out of them, but we use the default attack for everything else
