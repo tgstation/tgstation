@@ -54,7 +54,7 @@
 	var/icon/final_icon = get_flat_icon_for_all_directions(test_subject, no_anim = FALSE)
 	for(var/mutable_appearance/light_underlay as anything in test_subject.underlays)
 		if(light_underlay.icon == 'icons/effects/light_overlays/light_cone.dmi')
-		 	// The light cone icon is 96x96, so we have to shift it over to have it match our sprites. x = 1, y = 1 is the lower left corner so we shift 32 pixels opposite to that.
+			// The light cone icon is 96x96, so we have to shift it over to have it match our sprites. x = 1, y = 1 is the lower left corner so we shift 32 pixels opposite to that.
 			final_icon.Blend(get_flat_icon_for_all_directions(light_underlay, no_anim = FALSE), ICON_UNDERLAY, -world.icon_size + 1, -world.icon_size + 1)
 	return final_icon
 
