@@ -31,6 +31,12 @@
 	RegisterSignal(parent, COMSIG_NEEDS_NEW_PHRASE, PROC_REF(set_new_blackboard_phrase))
 	RegisterSignal(parent, COMSIG_LIVING_WRITE_MEMORY, PROC_REF(on_write_memory))
 
+	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+
+/datum/component/listen_and_repeat/Destroy(force, silent)
+	REMOVE_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
+	return ..()
+
 /// Called when we hear something.
 /datum/component/listen_and_repeat/proc/on_hear(datum/source, list/passed_arguments)
 	SIGNAL_HANDLER
