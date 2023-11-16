@@ -50,10 +50,17 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 	source_object.desc += span_notice("\n Series Number: [unusual_number]")
 
 	if(!length(parsed_variables))
-		if(unusual_number == 1)
-			source_object.name = span_hypnophrase("unusual [unusual_description] [source_object.name]")
-		else
-			source_object.name = "unusual [unusual_description] [source_object.name]"
+		switch(unusual_number)
+			if(1)
+				source_object.name = span_hypnophrase("unusual [unusual_description] [source_object.name]")
+			if(2 to 5)
+				source_object.name = span_cult("unusual [unusual_description] [source_object.name]")
+			if(6 to 10)
+				source_object.name = span_clown("unusual [unusual_description] [source_object.name]")
+			if(11 to 25)
+				source_object.name = span_green("unusual [unusual_description] [source_object.name]")
+			else
+				source_object.name = "unusual [unusual_description] [source_object.name]"
 
 	RegisterSignal(source_object, COMSIG_ATOM_UPDATE_DESC, PROC_REF(append_unusual))
 	save_unusual_data()
