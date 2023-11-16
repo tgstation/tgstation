@@ -1,0 +1,4 @@
+author: "YesterdaysPromise"
+delete-after: True
+changes:
+  - rscadd: "Adds a chance that, when sharpened, a sufficiently potent carrot will turn into a sword instead of a shiv."

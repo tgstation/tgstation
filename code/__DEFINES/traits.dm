@@ -1056,6 +1056,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
+/// This item is currently under the control of telekinesis
+#define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
 
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
