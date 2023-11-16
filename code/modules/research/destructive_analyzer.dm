@@ -172,7 +172,6 @@
 		return FALSE
 
 	if(id == DESTRUCTIVE_ANALYZER_DESTROY_POINTS)
-		to_chat(world, "AAAAAAA")
 		if(!destroy_item(gain_research_points = TRUE))
 			return FALSE
 		return TRUE
