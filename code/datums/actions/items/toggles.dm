@@ -80,6 +80,9 @@
 		return FALSE
 	return ..()
 
+/datum/action/item_action/toggle_hud
+	name = "Toggle Implant HUD"
+
 /datum/action/item_action/wheelys
 	name = "Toggle Wheels"
 	desc = "Pops out or in your shoes' wheels."

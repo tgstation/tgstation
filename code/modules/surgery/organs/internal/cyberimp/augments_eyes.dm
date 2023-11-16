@@ -14,6 +14,23 @@
 	slot = ORGAN_SLOT_HUD
 	var/HUD_type = 0
 	var/HUD_trait = null
+	actions_types = list(/datum/action/item_action/toggle_hud)
+	var/toggledOn = TRUE
+
+/obj/item/organ/internal/cyberimp/eyes/hud/ui_action_click(mob/user)
+	toggle_hud(user)
+
+/obj/item/organ/internal/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
+	if(toggledOn)
+		if(HUD_type)
+			var/datum/atom_hud/hud = GLOB.huds[HUD_type]
+			hud.hide_from(eye_owner)
+		toggledOn = FALSE
+	else
+		if(HUD_type)
+			var/datum/atom_hud/hud = GLOB.huds[HUD_type]
+			hud.show_to(eye_owner)
+		toggledOn = TRUE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
