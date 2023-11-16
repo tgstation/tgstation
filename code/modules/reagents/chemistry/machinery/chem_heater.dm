@@ -447,10 +447,10 @@ To continue set your target temperature to 390K."}
 			if(acid_reagent_heater)
 				cur_vol = acid_reagent_heater.volume
 			volume = 100 - cur_vol
-			beaker.reagents.trans_id_to(src, acid_reagent.type, volume)//negative because we're going backwards
+			beaker.reagents.trans_to(src, volume, target_id = acid_reagent.type)//negative because we're going backwards
 			return
 		//We must be positive here
-		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/acidic_buffer, dispense_volume)
+		reagents.trans_to(beaker, dispense_volume, target_id = /datum/reagent/reaction_agent/acidic_buffer)
 		return
 
 	if(buffer_type == "basic")
@@ -464,9 +464,9 @@ To continue set your target temperature to 390K."}
 			if(basic_reagent_heater)
 				cur_vol = basic_reagent_heater.volume
 			volume = 100 - cur_vol
-			beaker.reagents.trans_id_to(src, basic_reagent.type, volume)//negative because we're going backwards
+			beaker.reagents.trans_to(src, volume, target_id = basic_reagent.type)//negative because we're going backwards
 			return
-		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/basic_buffer, dispense_volume)
+		reagents.trans_to(beaker, dispense_volume, target_id = /datum/reagent/reaction_agent/basic_buffer)
 		return
 
 
