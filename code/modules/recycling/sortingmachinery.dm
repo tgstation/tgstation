@@ -1,5 +1,5 @@
 /obj/item/delivery
-	icon = 'icons/obj/storage/wrapping.dmi'
+	icon = 'icons/obj/service/wrapping.dmi'
 	inhand_icon_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sort_tag = 0

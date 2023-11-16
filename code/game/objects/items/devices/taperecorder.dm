@@ -488,11 +488,14 @@
 
 //Random colour tapes
 /obj/item/tape/random
+	icon = 'icons/mapping/random_spawners.dmi'
 	icon_state = "random_tape"
 
 /obj/item/tape/random/Initialize(mapload)
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple", "greyscale")]"
 	. = ..()
 
 /obj/item/tape/dyed
+	icon = 'icons/obj/devices/device.dmi'
 	icon_state = "tape_greyscale"

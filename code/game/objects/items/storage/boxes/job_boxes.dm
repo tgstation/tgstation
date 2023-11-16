@@ -97,7 +97,7 @@
 	name = "operative toolkit care package"
 	desc = "A small parcel. It contains a few items every operative needs."
 	w_class =  WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/storage/wrapping.dmi'
+	icon = 'icons/obj/service/wrapping.dmi'
 	icon_state = "deliverypackage2"
 
 /obj/item/tool_parcel/attack_self(mob/user)
