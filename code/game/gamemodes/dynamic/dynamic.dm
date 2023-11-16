@@ -19,6 +19,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 GLOBAL_LIST_EMPTY(dynamic_station_traits)
 /// Rulesets which have been forcibly enabled or disabled
 GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
+/// Station traits displayed in the lobby
+GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 /datum/game_mode/dynamic
 	// Threat logging vars

@@ -145,8 +145,10 @@
 	name = "Cargo Gorilla"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
+	sign_up_button = TRUE
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
-
+	/// Who signed up to this in the lobby
+	var/list/lobby_candidates
 	/// The gorilla we created, we only hold this ref until the round starts.
 	var/mob/living/basic/gorilla/cargorilla/cargorilla
 
@@ -182,11 +184,22 @@
 	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
 
 /datum/station_trait/cargorilla/on_round_start()
-	if(!cargorilla)
-		return
-
-	addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
+	if (!LAZYLEN(lobby_candidates))
+		addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
+	lobby_candidates = null
 	cargorilla = null
+
+/datum/station_trait/cargorilla/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
+	if (LAZYFIND(lobby_candidates, user))
+		LAZYREMOVE(lobby_candidates, user)
+	else
+		LAZYADD(lobby_candidates, user)
+
+/datum/station_trait/cargorilla/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
+	if(LAZYFIND(lobby_candidates, lobby_button.owner))
+		lobby_button.base_icon_state = "signup_on"
+	else
+		lobby_button.base_icon_state = "signup"
 
 /// Get us a ghost for the gorilla.
 /datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)

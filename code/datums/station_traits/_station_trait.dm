@@ -36,11 +36,14 @@
 
 	if(threat_reduction)
 		GLOB.dynamic_station_traits[src] = threat_reduction
-
+	if(sign_up_button)
+		GLOB.lobby_station_traits += src
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
+
+
 
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src
@@ -77,6 +80,10 @@
 /// Return a color for the decals, if any
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
 	return
+
+/// Return TRUE if we want to show a lobby button, by default we assume they're pointless after round start
+/datum/station_trait/proc/can_display_lobby_button()
+	return sign_up_button && !SSticker.HasRoundStarted()
 
 /// Apply any additional handling we need to our lobby button
 /datum/station_trait/proc/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
