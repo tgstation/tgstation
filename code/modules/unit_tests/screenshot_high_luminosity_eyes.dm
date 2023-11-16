@@ -51,7 +51,7 @@
 	flat_icon = create_icon()
 	test_screenshot("light_on", flat_icon)
 
-/// Create the mob icon with light underlays
+/// Create the mob icon with light cone underlay
 /datum/unit_test/screenshot_high_luminosity_eyes/proc/create_icon()
 	var/icon/final_icon = get_flat_icon_for_all_directions(test_subject, no_anim = FALSE)
 	for(var/mutable_appearance/light_underlay as anything in test_subject.underlays)
