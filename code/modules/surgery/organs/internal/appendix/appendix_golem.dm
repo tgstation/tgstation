@@ -2,7 +2,7 @@
 /obj/item/organ/internal/appendix/golem
 	name = "internal forge"
 	desc = "This expanded digestive chamber allows golems to smelt minerals, provided that they are immersed in lava."
-	icon_state = "ethereal_heart"
+	icon_state = "ethereal_heart-off"
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
 	/// Action which performs smelting
