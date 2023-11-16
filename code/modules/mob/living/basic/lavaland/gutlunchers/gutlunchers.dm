@@ -33,6 +33,7 @@
 
 /mob/living/basic/mining/gutlunch/Initialize(mapload)
 	. = ..()
+	GLOB.gutlunch_count++
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	if(greyscale_config)
 		set_greyscale(colors = list(pick(possible_colors)))
@@ -46,6 +47,10 @@
 		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
 		breed_timer = 3 MINUTES,\
 	)
+
+/mob/living/basic/mining/gutlunch/Destroy()
+	GLOB.gutlunch_count--
+	return ..()
 
 /mob/living/basic/mining/gutlunch/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
@@ -110,7 +115,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/breed,
+		/datum/pet_command/point_targeting/breed/gutlunch,
 		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/mine_walls,
