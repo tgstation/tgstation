@@ -25,9 +25,11 @@
 	var/icon/flat_icon = create_icon()
 	test_screenshot("light_on", flat_icon)
 
-	// Make sure the light overlay goes away (but not the emissive overlays) when we go to light range 0 while still turned on
+	// Change the eye color to pink and green
 	test_eyes.set_beam_color(COLOR_SCIENCE_PINK, to_update = UPDATE_EYES_LEFT)
 	test_eyes.set_beam_color(COLOR_SLIME_GREEN, to_update = UPDATE_EYES_RIGHT)
+
+	// Make sure the light overlay goes away (but not the emissive overlays) when we go to light range 0 while still turned on
 	test_eyes.set_beam_range(0)
 	TEST_ASSERT_EQUAL(test_eyes.eye.light_on, TRUE, "[src]'s 'eye.light_on' is FALSE after setting range to 0 while on. 'eye.light_on' should = TRUE!")
 	flat_icon = create_icon()
