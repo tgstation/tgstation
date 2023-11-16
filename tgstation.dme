@@ -4497,6 +4497,7 @@
 #include "code\modules\mob\living\basic\icemoon\ice_whelp\ice_whelp_ai.dm"
 #include "code\modules\mob\living\basic\icemoon\wolf\wolf.dm"
 #include "code\modules\mob\living\basic\icemoon\wolf\wolf_ai.dm"
+#include "code\modules\mob\living\basic\icemoon\wolf\wolf_extras.dm"
 #include "code\modules\mob\living\basic\jungle\venus_human_trap.dm"
 #include "code\modules\mob\living\basic\jungle\leaper\leaper.dm"
 #include "code\modules\mob\living\basic\jungle\leaper\leaper_abilities.dm"
