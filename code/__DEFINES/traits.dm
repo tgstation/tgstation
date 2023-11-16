@@ -669,7 +669,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TENTACLE_IMMUNE "tentacle_immune"
 /// Currently under the effect of overwatch
 #define TRAIT_OVERWATCHED "watcher_overwatched"
-/// Cannot be targetted by watcher overwatch
+/// Cannot be targeted by watcher overwatch
 #define TRAIT_OVERWATCH_IMMUNE "overwatch_immune"
 
 //non-mob traits
@@ -1056,6 +1056,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
  */
 #define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
+/// This item is currently under the control of telekinesis
+#define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
 
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
@@ -1352,5 +1354,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
 
+///trait determines if this mob can breed given by /datum/component/breeding
+#define TRAIT_MOB_BREEDER "mob_breeder"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"

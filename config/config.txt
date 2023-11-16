@@ -410,8 +410,8 @@ MINUTE_CLICK_LIMIT 400
 
 ## Game Chat Message Options
 ## Various messages to be sent to connected chat channels.
-## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
-## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS>=4.
+## If using TGS>=4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
 ## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
 
 ## Which channel will have a message about a new game starting, message includes the station name.
