@@ -427,6 +427,16 @@
 	base_icon_state = "signup"
 	always_available = FALSE
 
+/atom/movable/screen/lobby/button/sign_up/MouseEntered(location, control, params)
+	. = ..()
+	if(QDELETED(src) || !desc)
+		return
+	openToolTip(usr, tip_src = src, params = params, title = name, content = desc,)
+
+/atom/movable/screen/lobby/button/sign_up/MouseExited()
+	. = ..()
+	closeToolTip(usr)
+
 /atom/movable/screen/lobby/button/collapse
 	name = "Collapse Lobby Menu"
 	icon = 'icons/hud/lobby/collapse_expand.dmi'

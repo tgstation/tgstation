@@ -165,6 +165,7 @@
 
 /datum/station_trait/cargorilla/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	lobby_button.desc = "Become the Cargo Gorilla, a peaceful shepherd of boxes."
 	return ..()
 
 /datum/station_trait/cargorilla/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
@@ -186,7 +187,10 @@
 /datum/station_trait/cargorilla/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	SIGNAL_HANDLER
 	if (SSticker.HasRoundStarted())
-		overlays += "gorilla_off"
+		var/mutable_appearance/gorilla_face = mutable_appearance(icon = lobby_button.icon, icon_state = "gorilla_off")
+		gorilla_face.pixel_x = 1
+		gorilla_face.pixel_y = 1
+		overlays += gorilla_face
 		return
 	if (LAZYFIND(lobby_candidates, lobby_button.get_mob()))
 		overlays += "gorilla_on"
@@ -252,6 +256,8 @@
 	if (!LAZYLEN(lobby_candidates))
 		addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
 	lobby_candidates = null
+	for (var/atom/button as anything in lobby_buttons)
+		button.update_appearance(UPDATE_ICON)
 
 /// Get us a ghost for the gorilla.
 /datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
