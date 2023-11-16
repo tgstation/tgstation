@@ -85,7 +85,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/strippable, GLOB.strippable_parrot_items)
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/basic_eating, food_types = edibles)
 	AddComponent(/datum/component/listen_and_repeat, desired_phrases = get_static_list_of_phrases(), blackboard_key = BB_PARROT_REPEAT_STRING)
 	AddComponent(\
 		/datum/component/tameable,\
@@ -308,14 +307,23 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!istype(thing, /obj/item/food/cracker)) // Poly wants a cracker
 		return
 
-	qdel(thing)
+	consume_cracker(thing) // potential clash with the tameable element so we'll leave it to that to handle eating the cracker.
+	return COMPONENT_NO_AFTERATTACK
+
+/// Eats a cracker (or anything i guess). This would be nice to eventually fold into the basic_eating element but we do too much snowflake inventory code stuff for this to be reliable presently.
+/// We don't qdel the item here, we assume the invoking proc will have handled that somehow.
+/// Returns TRUE if we ate the thing.
+/mob/living/basic/parrot/proc/consume_cracker(obj/item/thing)
+	to_chat(src, span_notice("[src] eagerly devours \the [thing]."))
+	if(!istype(thing, /obj/item/food/cracker))
+		return TRUE // we still ate it
+
 	if(health < maxHealth)
 		adjustBruteLoss(-10)
 	speech_probability_rate *= 1.27
 	speech_shuffle_rate += 10
 	update_speech_blackboards()
-	to_chat(src, span_notice("[src] eagerly devours the cracker."))
-	return COMPONENT_NO_AFTERATTACK
+	return TRUE
 
 /// Handles special behavior whenever we are injured.
 /mob/living/basic/parrot/proc/on_injured(mob/living/basic/source, mob/living/attacker, attack_flags)
@@ -343,6 +351,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return
 
 	if(stat != CONSCIOUS) // don't gotta do shit
+		return
+
+	if(istype(held_item, /obj/item/food/cracker))
+		consume_cracker(held_item)
+		qdel(held_item)
 		return
 
 	if(!gently && isgrenade(held_item))
