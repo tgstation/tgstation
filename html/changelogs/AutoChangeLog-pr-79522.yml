@@ -1,0 +1,16 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - rscadd: "Bitrunning Patch 1 features a host of changes!"
+  - rscadd: "Added randomized mobs to virtual domains, which will be indicated with a unique icon."
+  - rscadd: "New emag interaction with the quantum server. Antags will spawn more frequently, and they can hack themselves onto the station. You have been warned."
+  - rscadd: "Both living and dead players can now see which mob is going to spawn an antagonist in the vdom."
+  - rscadd: "Two new vdom antagonists: Cyber Tac and the NetGuardian. These unlock at specific thresholds."
+  - balance: "You can no longer stack copies of the same ability with bitrunning disks."
+  - balance: "Some of the disk items have been replaced with stronger versions."
+  - bugfix: "You can no longer spy on crew using the advanced camera console on syndicate assault."
+  - bugfix: "Fixed the spawning mechanism of virtual domain antagonists. You should now have a chance of playing as one. This chance increases as more domains are completed."
+  - bugfix: "Vdom antagonists shouldn't spawn at the end of the run any longer."
+  - bugfix: "The preference for vdom antagonists has been changed to factor in the new types. Check your preferences!"
+  - bugfix: "The quantum server will now show its balloon alerts to all observers."
+  - bugfix: "Random domains should be fully random again."
