@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	maxHealth = 80
 	pass_flags = PASSTABLE | PASSMOB
 
-	butcher_results = list(/obj/item/food/cracker = 1)
+	guaranteed_butcher_results = list(/obj/item/food/cracker = 1)
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
