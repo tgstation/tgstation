@@ -201,8 +201,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		. += icon_welded
 
 	if(broken && secure)
-		. += mutable_appearance(icon, icon_broken, alpha = src.alpha)
-		. += emissive_appearance(icon, icon_broken, src, alpha = src.alpha)
+		. += mutable_appearance(icon, icon_broken, alpha = alpha)
+		. += emissive_appearance(icon, icon_broken, src, alpha = alpha)
 		return
 
 	if(broken || !secure)
