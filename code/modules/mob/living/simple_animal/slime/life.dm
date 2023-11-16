@@ -70,7 +70,7 @@
 				break
 
 			if(Target in view(1,src))
-				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
+				if(!can_feed_on(Target)) //If they're not able to be fed upon, ignore them.
 					if(!is_attack_on_cooldown)
 						is_attack_on_cooldown = TRUE
 						addtimer(VARSET_CALLBACK(src, is_attack_on_cooldown, FALSE), 4.5 SECONDS)

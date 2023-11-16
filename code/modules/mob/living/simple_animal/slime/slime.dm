@@ -284,7 +284,7 @@
 /mob/living/simple_animal/slime/MouseDrop(atom/movable/target_atom as mob|obj)
 	if(isliving(target_atom) && target_atom != src && usr == src)
 		var/mob/living/Food = target_atom
-		if(CanFeedon(Food))
+		if(can_feed_on(Food))
 			start_feeding(Food)
 	return ..()
 

@@ -39,7 +39,7 @@
 	if(isnull(choice))
 		return FALSE
 	var/mob/living/victim = choice
-	if(CanFeedon(victim))
+	if(can_feed_on(victim))
 		start_feeding(victim)
 		return TRUE
 	return FALSE
@@ -53,7 +53,8 @@
 	var/mob/living/simple_animal/slime/slime_owner = owner
 	slime_owner.Feed()
 
-/mob/living/simple_animal/slime/proc/CanFeedon(mob/living/meal, silent = FALSE)
+///Can the slime leech life energy from the target?
+/mob/living/simple_animal/slime/proc/can_feed_on(mob/living/meal, silent = FALSE)
 	if(!Adjacent(meal))
 		return FALSE
 
@@ -122,7 +123,7 @@
 
 ///The slime will start feeding on the target
 /mob/living/simple_animal/slime/proc/start_feeding(mob/living/target_mob)
-	target_mob.unbuckle_all_mobs(force=TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
+	target_mob.unbuckle_all_mobs(force=TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
 	if(target_mob.buckle_mob(src, force=TRUE))
 		layer = target_mob.layer+0.01 //appear above the target mob
 		target_mob.visible_message(span_danger("[name] latches onto [target_mob]!"), \
