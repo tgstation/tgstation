@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'icons/obj/storage/closet.dmi'
+	icon = 'icons/obj/storage/closet_new.dmi'
 	icon_state = "generic"
 	density = TRUE
 	drag_slowdown = 1.5 // Same as a prone mob
@@ -26,13 +26,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// Whether or not this door is being animated
 	var/is_animating_door = FALSE
 	/// Vertical squish of the door
-	var/door_anim_squish = 0.12
+	var/door_anim_squish = 0.2
 	/// The maximum angle the door will be drawn at
-	var/door_anim_angle = 136
-	/// X position of the closet door hinge
+	var/door_anim_angle = 140
+	/// X position of the closet door hinge, relative to the center of the sprite
 	var/door_hinge_x = -6.5
 	/// Amount of time it takes for the door animation to play
-	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
+	var/door_anim_time = 2 // set to 0 to make the door not animate at all
 	/// Paint jobs for this closet, crates are a subtype of closet so they override these values
 	var/list/paint_jobs = TRUE
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
