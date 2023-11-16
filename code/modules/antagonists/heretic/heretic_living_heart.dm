@@ -222,7 +222,7 @@
 
 // The tracking action given to moon acolytes to find their master
 /datum/action/cooldown/track_target/lunatic
-	desc = "LMB: See what your master looks like and track them. RMB: Repeat track."
+	desc = "LMB: Track your master"
 
 /datum/action/cooldown/track_target/lunatic/Grant(mob/granted)
 	if(!IS_LUNATIC(granted))
@@ -247,10 +247,13 @@
 	. = ..()
 	if(!.)
 		return
-
 	if(!IS_LUNATIC(owner))
 		return FALSE
-	if(radial_open)
-		return FALSE
+	return TRUE
 
+/datum/action/cooldown/track_target/lunatic/check_menu()
+	if(QDELETED(src))
+		return FALSE
+	if(!IS_LUNATIC(owner))
+		return FALSE
 	return TRUE

@@ -24,14 +24,6 @@
 
 	to_chat(owner, span_boldnotice("Ruin the lie, save the truth through obeying [heretic_master] the ringleader!"))
 
-/datum/antagonist/lunatic/on_gain()
-	. = ..()
-	var/datum/action/cooldown/track_target/lunatic/moon_track = new/datum/action/cooldown/track_target/lunatic()
-	var/datum/action/cooldown/spell/touch/mad_touch/mad_touch = new/datum/action/cooldown/spell/touch/mad_touch()
-
-	mad_touch.Grant(owner)
-	moon_track.Grant(owner)
-
 /datum/antagonist/lunatic/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/moon_parade.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	return ..()
@@ -39,8 +31,13 @@
 
 /datum/antagonist/lunatic/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
-	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	handle_clown_mutation(our_mob, "Ancient knowledge from the moon has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
+
+	var/datum/action/cooldown/track_target/lunatic/moon_track = new/datum/action/cooldown/track_target/lunatic()
+	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new/datum/action/cooldown/spell/touch/mansus_grasp()
+	mad_touch.Grant(our_mob)
+	moon_track.Grant(our_mob)
 
 /datum/antagonist/lunatic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current

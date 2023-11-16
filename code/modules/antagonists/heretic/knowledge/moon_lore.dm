@@ -220,6 +220,8 @@
 
 	// Roughly 1/5th of the station will rise up as lunatics to the heretic
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
+		// How many lunatics we have
+		var/amount_of_lunatics = 0
 		if (isnull(crewmate.mind))
 			continue
 		if (IS_HERETIC_OR_MONSTER(crewmate)) // Heretics, lunatics and monsters shouldn't become lunatics
@@ -228,7 +230,7 @@
 		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE)) // Mindshielded and anti-magic folks are immune against this effect
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
-		if(prob(5))
+		if(amount_of_lunatics<length(GLOB.human_list)/5)
 			var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
 			lunatic.set_master(user.mind, user)
 			var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
