@@ -59,14 +59,14 @@
 
 	//commands to give when tamed
 	var/static/list/pet_commands = list(
-	/datum/pet_command/idle,
-	/datum/pet_command/free,
-	/datum/pet_command/good_boy/wolf,
-	/datum/pet_command/follow/wolf,
-	/datum/pet_command/point_targeting/attack,
-	/datum/pet_command/point_targeting/fetch,
-	/datum/pet_command/play_dead,
-	/datum/pet_command/protect_owner,
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/good_boy/wolf,
+		/datum/pet_command/follow/wolf,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/play_dead,
+		/datum/pet_command/protect_owner,
 	)
 
 /mob/living/basic/mining/wolf/Initialize(mapload)
