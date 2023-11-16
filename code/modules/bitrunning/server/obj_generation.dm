@@ -25,7 +25,6 @@
 	to_wear.belt = /obj/item/bitrunning_host_monitor
 	to_wear.glasses = null
 	to_wear.gloves = null
-	to_wear.head = null
 	to_wear.l_pocket = null
 	to_wear.r_pocket = null
 	to_wear.suit = null
@@ -37,13 +36,11 @@
 	if(istype(jumpsuit))
 		jumpsuit.set_armor(/datum/armor/clothing_under)
 
-	var/thing = avatar.get_active_held_item()
-	if(thing)
-		qdel(thing)
+	var/obj/item/clothing/head/hat = locate() in avatar.get_equipped_items()
+	if(istype(hat))
+		hat.set_armor(/datum/armor/none)
 
-	thing = avatar.get_inactive_held_item()
-	if(thing)
-		qdel(thing)
+	QDEL_LIST(avatar.held_items)
 
 	var/obj/item/storage/backpack/bag = avatar.back
 	if(istype(bag))
