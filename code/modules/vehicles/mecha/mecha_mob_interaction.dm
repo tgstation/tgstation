@@ -158,14 +158,12 @@
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
 	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
-	RegisterSignal(M, COMSIG_LIVING_DEATH, PROC_REF(pilot_died), TRUE)
 	. = ..()
 	update_appearance()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
 	UnregisterSignal(M, COMSIG_MOB_SAY)
-	UnregisterSignal(M, COMSIG_LIVING_DEATH)
 	M.clear_alert(ALERT_CHARGE)
 	M.clear_alert(ALERT_MECH_DAMAGE)
 	if(M.client)
@@ -191,11 +189,3 @@
 	else
 		to_chat(user, span_notice("You stop exiting the mech. Weapons are enabled again."))
 	is_currently_ejecting = FALSE
-
-/obj/vehicle/sealed/mecha/proc/pilot_died(datum/source)
-	SIGNAL_HANDLER
-	if(issilicon(source) || isbrain(source))
-		return
-	playsound(src, 'sound/machines/synth_no.ogg', 25, TRUE)
-	say("Pilot fatality.")
-	mob_exit(source, randomstep = TRUE)
