@@ -44,7 +44,7 @@
 	test_screenshot("light_emissive", flat_icon)
 
 	// Make sure the light comes back on when we go from range 0 to 1
-	// Change left/right eye color back to red/blue. It should matche the original screenshot
+	// Change left/right eye color back to red/blue. It should match the original screenshot
 	test_eyes.set_beam_range(default_light_range)
 	test_eyes.set_beam_color(COLOR_RED, to_update = UPDATE_EYES_LEFT)
 	test_eyes.set_beam_color(COLOR_BLUE, to_update = UPDATE_EYES_RIGHT)
