@@ -1,0 +1,955 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bb" = (
+/obj/item/organ/external/wings/moth,
+/obj/structure/closet/crate/trashcart,
+/obj/item/bodypart/arm/left/skeleton,
+/obj/item/bodypart/arm/right/skeleton,
+/obj/item/evidencebag,
+/obj/item/organ/internal/heart/cybernetic/tier2,
+/obj/structure/broken_flooring/pile,
+/obj/item/stack/sheet/animalhide/human/five,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"bv" = (
+/obj/structure/showcase/horrific_experiment,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"eO" = (
+/obj/effect/spawner/random/contraband/narcotics,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"gh" = (
+/turf/open/space/basic,
+/area/space)
+"gr" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"gy" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"hf" = (
+/obj/item/circuitboard/machine/medical_kiosk,
+/obj/structure/frame/machine,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"hp" = (
+/obj/structure/table/reinforced,
+/obj/item/gps/spaceruin{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/storage/backpack/industrial{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hazardvest{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"hu" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/stack/spacecash/c20,
+/obj/item/pen/fountain,
+/obj/structure/broken_flooring/singular,
+/obj/item/swab,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"hv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/pill/maintenance{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"io" = (
+/obj/structure/closet/body_bag,
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/corpse/human{
+	brute_damage = 35;
+	mob_type = /mob/living/carbon/human/species/fly;
+	oxy_damage = 65
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"iw" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/obj/effect/spawner/random/entertainment/plushie,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"iU" = (
+/obj/effect/spawner/random/trash/garbage,
+/obj/effect/spawner/random/medical/medkit,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"kf" = (
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"kl" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"kp" = (
+/obj/structure/safe,
+/obj/item/stamp/syndicate,
+/obj/item/traitor_bug,
+/obj/item/eyesnatcher,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"kx" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"lT" = (
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"mB" = (
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"mZ" = (
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"nW" = (
+/obj/item/storage/box/disks{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/structure/broken_flooring/singular,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"pu" = (
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"py" = (
+/obj/structure/closet/body_bag,
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/obj/effect/mob_spawn/corpse/human{
+	brute_damage = 50;
+	burn_damage = 50
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"pD" = (
+/obj/machinery/iv_drip/saline,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"pR" = (
+/obj/machinery/iv_drip,
+/obj/item/storage/box/syringes{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"qh" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/rack_parts,
+/obj/item/storage/pill_bottle/mannitol,
+/obj/item/retractor/advanced,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"qC" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"qX" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/broken_flooring/corner,
+/obj/item/trash/syndi_cakes,
+/obj/item/trash/syndi_cakes,
+/obj/item/trash/syndi_cakes,
+/obj/item/poster/random_contraband,
+/obj/item/organ/internal/tongue/zombie,
+/obj/structure/closet/crate/trashcart,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"rB" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/stack/medical/bone_gel,
+/obj/item/stack/medical/ointment,
+/obj/item/thermometer,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/biopsy_tool,
+/obj/effect/spawner/random/contraband/narcotics,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"sa" = (
+/obj/structure/frame/computer,
+/obj/item/circuitboard/computer/operating,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"sU" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"tI" = (
+/obj/structure/tank_holder/anesthetic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"uo" = (
+/obj/machinery/computer/terminal{
+	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
+	desc = "A garbage truck's dusty old control console.";
+	name = "dashboard";
+	upperinfo = "Controls locked."
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"uG" = (
+/obj/structure/chair/plastic,
+/obj/item/reagent_containers/syringe/lethal/choral,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"uR" = (
+/obj/machinery/iv_drip,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"vf" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/lead,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"vM" = (
+/obj/structure/closet/cardboard,
+/obj/item/toy/plush/snakeplushie,
+/obj/item/bodypart/arm/left/robot/surplus,
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/toy/nuke,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"wh" = (
+/mob/living/basic/trooper/syndicate/ranged,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"wk" = (
+/obj/structure/frame/computer,
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/circuitboard/computer/operating,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"xj" = (
+/obj/structure/window/reinforced/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"xw" = (
+/obj/item/restraints/handcuffs/cable/zipties/used,
+/obj/structure/closet/crate/trashcart/filled,
+/obj/item/reagent_containers/condiment/soysauce,
+/obj/item/reagent_containers/pill/mannitol,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"xH" = (
+/obj/item/food/badrecipe/moldy,
+/obj/item/food/badrecipe/moldy,
+/obj/structure/closet/mini_fridge/grimy,
+/obj/effect/decal/cleanable/oil,
+/obj/item/reagent_containers/cup/bottle/morphine,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"zb" = (
+/obj/item/wheelchair,
+/obj/item/cane/white,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"zj" = (
+/obj/structure/table/rolling{
+	desc = "An Interdyne Pharmaceutics brand 'Crash Cart Classic' rolling table for surgical tools. It can and will move.";
+	name = "rolling surgical tray"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"zn" = (
+/obj/structure/closet/cardboard,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/gauze,
+/obj/item/stack/sticky_tape/surgical,
+/obj/structure/broken_flooring/corner,
+/obj/item/organ/internal/cyberimp/arm/surgery,
+/obj/item/organ/internal/cyberimp/eyes/hud/medical,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"zu" = (
+/obj/structure/toilet{
+	anchored = 0
+	},
+/obj/effect/spawner/random/contraband/permabrig_weapon,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"zZ" = (
+/obj/item/pillow,
+/obj/structure/closet/crate/trashcart/laundry,
+/obj/item/bodybag,
+/obj/item/bodybag,
+/obj/item/clothing/under/rank/medical/scrubs/blue,
+/obj/item/clothing/under/rank/medical/scrubs/blue,
+/obj/item/clothing/under/rank/medical/scrubs/coroner,
+/obj/item/clothing/under/rank/medical/scrubs/green,
+/obj/item/clothing/under/rank/medical/scrubs/green,
+/obj/item/clothing/suit/toggle/labcoat,
+/obj/item/clothing/suit/toggle/labcoat,
+/obj/item/clothing/suit/toggle/labcoat,
+/obj/item/clothing/suit/toggle/labcoat,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Al" = (
+/obj/structure/frame/computer,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Am" = (
+/obj/structure/mannequin/plastic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"AB" = (
+/obj/structure/shipping_container/interdyne{
+	armor_type = /datum/armor/immune
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"AG" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"AU" = (
+/obj/item/paper/crumpled,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/broken_flooring/side,
+/obj/item/suppressor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"BE" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/bag/trash{
+	pixel_x = -12;
+	pixel_y = 0
+	},
+/obj/item/storage/bag/trash,
+/obj/item/storage/bag/trash{
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Cv" = (
+/obj/item/storage/box/mousetraps,
+/obj/structure/table/reinforced,
+/obj/item/melee/flyswatter,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"CJ" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"CM" = (
+/obj/item/toy/braintoy,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/closet/crate/trashcart,
+/obj/item/shard,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"CU" = (
+/obj/structure/mannequin/skeleton,
+/obj/structure/broken_flooring/plating,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Dj" = (
+/obj/item/food/deadmouse/moldy,
+/obj/item/statuebust/hippocratic,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Dv" = (
+/obj/item/popsicle_stick{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/rack_parts,
+/obj/item/shard,
+/obj/item/wrench/medical,
+/obj/effect/decal/cleanable/plastic,
+/obj/effect/spawner/random/contraband/permabrig_gear,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"EJ" = (
+/obj/item/stack/sticky_tape/surgical,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Go" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/pill/cyanide{
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Gp" = (
+/obj/item/organ/internal/eyes/robotic/basic,
+/obj/item/kitchen/spoon,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Hx" = (
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/closet/crate/freezer,
+/obj/item/skillchip/entrails_reader,
+/obj/item/mod/module/health_analyzer,
+/obj/item/shovel,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"HE" = (
+/obj/structure/bed/maint,
+/obj/structure/bedsheetbin,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"IM" = (
+/obj/effect/decal/cleanable/robot_debris,
+/obj/structure/closet/crate/freezer,
+/obj/item/organ/internal/liver/roach,
+/obj/item/organ/internal/stomach,
+/obj/item/organ/internal/tongue/robot,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"IS" = (
+/obj/structure/broken_flooring/singular,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"JW" = (
+/obj/item/plate,
+/obj/effect/decal/cleanable/plastic,
+/obj/structure/closet/crate/trashcart,
+/obj/item/food/deadmouse,
+/obj/effect/spawner/random/medical/medkit,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Kk" = (
+/obj/item/wheelchair,
+/obj/item/screwdriver,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Ky" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Lh" = (
+/obj/item/food/deadmouse/moldy,
+/obj/item/pushbroom,
+/obj/item/storage/bag/trash/filled,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Ll" = (
+/obj/item/trash/boritos/red,
+/obj/item/storage/box/gloves,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"LA" = (
+/obj/item/mail/junkmail,
+/obj/effect/decal/cleanable/plastic,
+/obj/item/clothing/mask/surgical,
+/obj/item/extinguisher/empty,
+/obj/item/sticker/assistant,
+/obj/item/reagent_containers/cup/coffeepot,
+/obj/item/coffee_cartridge/decaf,
+/obj/structure/closet/crate/trashcart,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"LG" = (
+/obj/structure/lattice/catwalk,
+/obj/item/crowbar/large/emergency,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"LI" = (
+/obj/structure/table/reinforced,
+/obj/item/gas_filter,
+/obj/item/gas_filter,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/head/utility/hardhat/orange{
+	pixel_y = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"LR" = (
+/obj/machinery/power/terminal,
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"MC" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"NJ" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/gloves{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/machinery/recharger{
+	pixel_y = -10
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Od" = (
+/obj/item/clothing/head/cone{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/machinery/light/warm,
+/obj/machinery/power/apc{
+	cell_type = /obj/item/stock_parts/cell/lead;
+	locked = 0;
+	pixel_y = -25;
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Ok" = (
+/obj/item/reagent_containers/pill/cyanide,
+/obj/effect/spawner/random/medical/minor_healing,
+/obj/effect/spawner/random/medical/surgery_tool,
+/obj/item/reagent_containers/blood/o_minus,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"OA" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Pd" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Pe" = (
+/obj/effect/decal/cleanable/robot_debris/up,
+/obj/structure/frame/computer,
+/obj/item/stack/sheet/glass{
+	amount = 2
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"PM" = (
+/obj/structure/closet/mini_fridge/grimy,
+/obj/item/storage/organbox,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/item/storage/pill_bottle/epinephrine,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Qq" = (
+/obj/structure/microscope,
+/obj/structure/broken_flooring/singular,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/item/instrument/bilehorn,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"QK" = (
+/obj/effect/decal/cleanable/robot_debris/down,
+/obj/item/circular_saw,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Rn" = (
+/obj/structure/closet/crate/cardboard,
+/obj/item/book/manual/wiki/surgery,
+/obj/item/book/manual/wiki/surgery,
+/obj/item/book/manual/wiki/medicine{
+	name = "Medical Space Compendium, Volume 637"
+	},
+/obj/item/book/manual/wiki/medicine{
+	name = "Medical Space Compendium, Volume 637"
+	},
+/obj/item/book/manual/wiki/medicine{
+	name = "Medical Space Compendium, Volume 637"
+	},
+/obj/item/book/manual/wiki/medicine{
+	name = "Medical Space Compendium, Volume 637"
+	},
+/obj/item/stamp/denied,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"RT" = (
+/obj/structure/frame/machine,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Tp" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/obj/structure/curtain/cloth,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"TM" = (
+/obj/structure/closet/body_bag,
+/obj/structure/table/optable,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/mob_spawn/corpse/human{
+	brute_damage = 200;
+	mob_type = /mob/living/carbon/human/species/lizard
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Ua" = (
+/obj/structure/table/reinforced,
+/obj/item/analyzer{
+	pixel_y = 6
+	},
+/obj/item/geiger_counter{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/flashlight{
+	pixel_x = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Um" = (
+/obj/effect/decal/cleanable/garbage,
+/obj/item/lipstick,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"UJ" = (
+/obj/item/storage/box/masks,
+/obj/item/storage/box/masks,
+/obj/item/storage/box/masks,
+/obj/item/clothing/mask/surgical,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"VL" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/space/basic,
+/area/space)
+"WX" = (
+/obj/machinery/light/warm,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"XC" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"XD" = (
+/obj/structure/sinkframe,
+/obj/structure/broken_flooring/pile,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"XR" = (
+/obj/structure/broken_flooring/pile,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Yj" = (
+/obj/structure/reflector/single/mapping{
+	rotation_angle = 360
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Zi" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+
+(1,1,1) = {"
+gh
+gh
+sU
+sU
+sU
+qC
+VL
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+"}
+(2,1,1) = {"
+gh
+qC
+xj
+xj
+qC
+qC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+"}
+(3,1,1) = {"
+Pd
+Zi
+NJ
+vf
+Cv
+qC
+MC
+wk
+nW
+sa
+HE
+PM
+zZ
+hu
+vM
+AB
+py
+io
+TM
+XC
+"}
+(4,1,1) = {"
+iw
+xj
+uo
+AG
+WX
+qC
+MC
+Dj
+XR
+Al
+QK
+CJ
+Um
+zb
+tI
+CJ
+uG
+CJ
+Ok
+MC
+"}
+(5,1,1) = {"
+kx
+xj
+hp
+LI
+kl
+qC
+MC
+Pe
+CJ
+CJ
+CJ
+eO
+CJ
+CJ
+Kk
+CJ
+zj
+Go
+bv
+MC
+"}
+(6,1,1) = {"
+Pd
+xj
+Zi
+qC
+mZ
+OA
+gr
+CJ
+Ky
+iU
+Rn
+CM
+qh
+CJ
+wh
+CJ
+CJ
+Ky
+Yj
+MC
+"}
+(7,1,1) = {"
+Pd
+Zi
+BE
+Ua
+kl
+OA
+gr
+CJ
+CJ
+mB
+Dv
+rB
+JW
+CJ
+EJ
+AB
+xw
+CJ
+kp
+MC
+"}
+(8,1,1) = {"
+iw
+Zi
+lT
+lT
+kl
+qC
+MC
+uR
+CJ
+CJ
+hv
+CJ
+CJ
+CJ
+Gp
+CJ
+pD
+CJ
+IM
+MC
+"}
+(9,1,1) = {"
+Pd
+Zi
+lT
+kl
+Od
+qC
+MC
+pR
+eO
+XD
+UJ
+RT
+Lh
+CJ
+Hx
+CJ
+zu
+IS
+bb
+MC
+"}
+(10,1,1) = {"
+kx
+Zi
+lT
+LR
+kf
+qC
+MC
+CU
+Ll
+xH
+Qq
+hf
+LA
+CJ
+Am
+Tp
+zn
+AU
+qX
+XC
+"}
+(11,1,1) = {"
+gh
+qC
+gy
+Zi
+qC
+qC
+MC
+MC
+MC
+MC
+MC
+MC
+MC
+pu
+pu
+pu
+MC
+MC
+MC
+MC
+"}
+(12,1,1) = {"
+gh
+gh
+sU
+sU
+LG
+qC
+VL
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+gh
+"}

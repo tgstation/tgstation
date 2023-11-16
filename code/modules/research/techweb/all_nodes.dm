@@ -2162,7 +2162,7 @@
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
@@ -2205,7 +2205,7 @@
 		"alien_scalpel",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
@@ -2244,7 +2244,7 @@
 		"alien_wrench",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/circuitboard/machine/abductor,
 		/obj/item/crowbar/abductor,
@@ -2297,12 +2297,12 @@
 /datum/techweb_node/syndicate_basic/proc/register_uplink_items()
 	SIGNAL_HANDLER
 	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	boost_item_paths = list()
+	required_items_to_unlock = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
 		if(!item.item || !item.illegal_tech)
 			continue
-		boost_item_paths |= item.item //allows deconning to unlock.
+		required_items_to_unlock |= item.item //allows deconning to unlock.
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////
