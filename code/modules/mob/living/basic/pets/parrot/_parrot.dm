@@ -146,6 +146,9 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			"This parrot is no more.",
 		)
 
+/mob/living/basic/parrot/say_dead(message)
+	return // this is so flarped
+
 /mob/living/basic/parrot/get_status_tab_items()
 	. = ..()
 	. += "Held Item: [held_item]"
