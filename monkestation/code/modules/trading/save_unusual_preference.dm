@@ -2,7 +2,7 @@
 	var/datum/component/unusual_handler/component = unusual.GetComponent(/datum/component/unusual_handler)
 	if(!component)
 		return
-		
+
 	var/list/data = list()
 	// These MUST be strings if you don't make them a string whatever daemon lurks inside of byond will get you.
 	data["name"] = unusual.name
@@ -24,7 +24,7 @@
 
 /datum/preferences/proc/clear_unusuals()
 	extra_stat_inventory["unusual"] = list()
-	save_preferences()	
+	save_preferences()
 
 /mob/proc/spawn_first_stored_unusual()
 	if(!client?.prefs)
@@ -38,7 +38,7 @@
 /mob/proc/create_unusual()
 	if(!client?.prefs)
 		return
-	var/obj/item/clothing/head/costume/nightcap/created = new()
+	var/obj/item/clothing/head/costume/nightcap/red/created = new()
 
 	created.AddComponent(/datum/component/unusual_handler, particle_path = /datum/component/particle_spewer/fire, fresh_unusual = TRUE, client_ckey = ckey)
 	client.prefs.save_new_unusual(created)
