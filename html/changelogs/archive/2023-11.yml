@@ -616,3 +616,20 @@
   san7890, Ghommie:
   - bugfix: The Blessing of Insanity now grants no damage slowdown and free hyperspace
       movement correctly.
+2023-11-16:
+  ArcaneMusic:
+  - bugfix: The Galactic Material Market now respects quantity of materials purchased,
+      removing them from the market when bought and preventing you from ordering more
+      than are available at a given time.
+  Fikou:
+  - qol: Dead human examines count as "soul departed" when the client is disconnected
+      or the human doesn't have a brain anymore.
+  Shroopy:
+  - bugfix: Molotovs now splash before burning, not after
+  deathrobotpunch:
+  - qol: the donksoft vendor refill cartridge is now available at the service lathe
+  falconignite:
+  - bugfix: Lizard tail wagging graphics
+  san7890:
+  - balance: Male Goats should no longer spawn with an udder, instead of it just being
+      Pete.

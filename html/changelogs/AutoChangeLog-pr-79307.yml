@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "The Galactic Material Market now respects quantity of materials purchased, removing them from the market when bought and preventing you from ordering more than are available at a given time."
