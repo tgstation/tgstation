@@ -84,9 +84,9 @@
 
 ///Attempts to generate an Ntnet log, returns the log on success, FALSE otherwise.
 /datum/computer_file/program/proc/generate_network_log(text)
-	if(computer)
-		return computer.add_log(text)
-	return FALSE
+	if(!computer || computer.obj_flags & EMAGGED)
+		return FALSE
+	return computer.add_log(text)
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).

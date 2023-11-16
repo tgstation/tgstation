@@ -1,10 +1,23 @@
-import { map } from 'common/collections';
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Table } from '../components';
 import { Window } from '../layouts';
 
+type Item = {
+  name: string;
+  amount: number;
+};
+
+type Data = {
+  contents: Item[];
+  name: string;
+  isdryer: BooleanLike;
+  drying: BooleanLike;
+};
+
 export const SmartVend = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
+  const { contents = [] } = data;
   return (
     <Window width={440} height={550}>
       <Window.Content scrollable>
@@ -19,18 +32,18 @@ export const SmartVend = (props, context) => {
               </Button>
             )
           }>
-          {(data.contents.length === 0 && (
+          {contents.length === 0 ? (
             <NoticeBox>Unfortunately, this {data.name} is empty.</NoticeBox>
-          )) || (
+          ) : (
             <Table>
               <Table.Row header>
                 <Table.Cell>Item</Table.Cell>
                 <Table.Cell collapsing />
                 <Table.Cell collapsing textAlign="center">
-                  {data.verb ? data.verb : 'Dispense'}
+                  {data.isdryer ? 'Take' : 'Dispense'}
                 </Table.Cell>
               </Table.Row>
-              {map((value, key) => (
+              {Object.values(contents).map((value, key) => (
                 <Table.Row key={key}>
                   <Table.Cell>{value.name}</Table.Cell>
                   <Table.Cell collapsing textAlign="right">
@@ -58,7 +71,7 @@ export const SmartVend = (props, context) => {
                     />
                   </Table.Cell>
                 </Table.Row>
-              ))(data.contents)}
+              ))}
             </Table>
           )}
         </Section>

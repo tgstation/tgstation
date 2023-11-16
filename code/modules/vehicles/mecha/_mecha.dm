@@ -35,6 +35,7 @@
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+	verb_say = "beeps"
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
 	var/step_energy_drain = 8
 	///How much energy we drain each time we mechpunch someone
