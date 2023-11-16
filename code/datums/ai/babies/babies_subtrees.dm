@@ -11,7 +11,7 @@
 	if(!SPT_PROB(chance, seconds_per_tick))
 		return
 
-	if(controller.pawn.gender == FEMALE || !controller.blackboard[BB_BREED_READY])
+	if(controller.pawn.gender != FEMALE || !controller.blackboard[BB_BREED_READY])
 		return
 
 	var/partner_types = controller.blackboard[BB_BABIES_PARTNER_TYPES]
