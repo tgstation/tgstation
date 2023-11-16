@@ -152,6 +152,8 @@
 	faction = list(FACTION_NEUTRAL, FACTION_MONKEY, FACTION_JUNGLE)
 	unique_name = FALSE
 	ai_controller = null
+	/// Message we show to someone upon possession
+	var/on_possessed_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight."
 
 /mob/living/basic/gorilla/cargorilla/Initialize(mapload)
 	. = ..()
@@ -174,7 +176,7 @@
 		poll_candidates = TRUE,\
 		poll_length = 30 SECONDS,\
 		role_name = "Cargorilla",\
-		assumed_control_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight.",\
+		assumed_control_message = on_possessed_message,\
 		poll_ignore_key = POLL_IGNORE_CARGORILLA,\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
 	)

@@ -44,7 +44,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber)
 
-	if(!mapload || isnull(GLOB.cargo_sloth) || !is_station_level(z))
+	if(!mapload || !isnull(GLOB.cargo_sloth) || !is_station_level(z))
 		return
 
 	// If someone adds non-cargo sloths to maps we'll have a problem but we're fine for now

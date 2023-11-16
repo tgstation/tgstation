@@ -16,6 +16,8 @@
 
 ///Attempts to select players for special roles the mode might have.
 /datum/game_mode/proc/pre_setup()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_GAMEMODE_SETUP, src)
 	return TRUE
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things

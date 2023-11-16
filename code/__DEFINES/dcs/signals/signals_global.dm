@@ -84,6 +84,9 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
+/// Global signal sent before the gamemode is set up
+#define COMSIG_GLOB_PRE_GAMEMODE_SETUP "!pre_gamemode_setup"
+
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 

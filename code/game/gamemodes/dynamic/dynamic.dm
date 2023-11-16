@@ -461,6 +461,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 
 /datum/game_mode/dynamic/pre_setup()
+	. = ..()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
 		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
