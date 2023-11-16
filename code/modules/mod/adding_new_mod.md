@@ -84,14 +84,13 @@ So, now that we have our theme, we want to add a skin to it (or another theme of
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	variants = list(
 		"psychological" = list(
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 			),
 		),
 	)
@@ -101,8 +100,7 @@ We now have a psychological skin, this will apply the psychological icons to eve
 For example, if our helmet's icon covers the full head (like the research skin), we want to do something like this.
 
 ```dm
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
@@ -113,8 +111,8 @@ For example, if our helmet's icon covers the full head (like the research skin),
 Otherwise, with an open helmet that becomes closed (like the engineering skin), we'd do this.
 
 ```dm
-			HELMET_LAYER = NECK_LAYER,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_LAYER = NECK_LAYER
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
@@ -139,45 +137,44 @@ There are specific cases of helmets that semi-cover the head, like the cosmohonk
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	variants = list(
 		"psychological" = list(
-			HELMET_LAYER = NECK_LAYER,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_LAYER = NECK_LAYER
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
 		"psychotherapeutic" = list(
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
@@ -269,45 +266,44 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 	inbuilt_modules = list(/obj/item/mod/module/neuron_healer/advanced)
 	variants = list(
 		"psychological" = list(
-			HELMET_LAYER = NECK_LAYER,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_LAYER = NECK_LAYER
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
 		"psychotherapeutic" = list(
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
+			/obj/item/clothing/head/mod = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
-			CHESTPLATE_FLAGS = list(
+			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 			),
-			GAUNTLETS_FLAGS = list(
+			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
-			BOOTS_FLAGS = list(
+			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),

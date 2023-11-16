@@ -166,9 +166,10 @@
 	activating = TRUE
 	mod_link.end_call()
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
-	for(var/datum/mod_part/part as anything in get_part_datums())
+	for(var/obj/item/part as anything in get_parts())
+		var/datum/mod_part/part_datum = get_part_datum(part)
 		if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer))))
-			to_chat(wearer, span_notice("[part.part_item] [active ? part.unsealed_message : part.sealed_message]."))
+			to_chat(wearer, span_notice("[part.part_item] [active ? part_datum.unsealed_message : part_datum.sealed_message]."))
 			playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			seal_part(part, is_sealed = !active)
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS, extra_checks = CALLBACK(src, PROC_REF(get_wearer))))

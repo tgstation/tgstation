@@ -112,6 +112,18 @@
 		),
 	)
 
+#ifdef UNIT_TESTS
+/datum/mod_theme/New()
+	var/list/skin_parts = list()
+	for(var/variant in variants)
+		skin_parts += assoc_to_keys(variants[variant])
+	for(var/skin in skin_parts)
+		for(var/compared_skin in skin_parts)
+			if(skin != compared_skin)
+				stack_trace("[type] variants [skin] and [compared_skin] aren't made of the same parts.")
+		skin_parts -= skin
+#endif
+
 /// Create parts of the suit and modify them using the theme's variables.
 /datum/mod_theme/proc/set_up_parts(obj/item/mod/control/mod, skin)
 	var/list/parts = list(mod)

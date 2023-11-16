@@ -4,7 +4,7 @@
 /// Default cell drain per process on MODsuits
 #define DEFAULT_CHARGE_DRAIN 5
 
-/// Default time for the suit to seal.
+/// Default time for a part of the suit to seal.
 #define MOD_ACTIVATION_STEP_TIME (2 SECONDS)
 
 /// Passive module, just acts when put in naturally.
