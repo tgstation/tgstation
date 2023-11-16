@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
-	var/icon_emag = "sparking"
+	var/icon_broken = "sparking"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
@@ -201,8 +201,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		. += icon_welded
 
 	if(broken && secure)
-		. += mutable_appearance(icon, icon_emag, alpha = src.alpha)
-		. += emissive_appearance(icon, icon_emag, src, alpha = src.alpha)
+		. += mutable_appearance(icon, icon_broken, alpha = src.alpha)
+		. += emissive_appearance(icon, icon_broken, src, alpha = src.alpha)
 		return
 
 	if(broken || !secure)
