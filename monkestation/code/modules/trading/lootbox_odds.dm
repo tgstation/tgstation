@@ -22,6 +22,9 @@
 				pulled_key = "MissingNo." // have fun trying to get this one lol
 			temp.AddComponent(/datum/component/unusual_handler, particle_path = picked_path, fresh_unusual = TRUE, client_ckey = pulled_key)
 
+			if(user.client?.prefs)
+				user.client.prefs.save_new_unusual(temp)
+
 		//token adding
 		if("High Tier")
 			temp = new /obj/item/coin/antagtoken
