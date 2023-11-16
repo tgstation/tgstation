@@ -3,6 +3,7 @@
 	event_duration = 5 MINUTES
 	event_flags = TWITCH_AFFECTS_ALL
 	id_tag = "skinny-5"
+	token_cost = 500
 
 /datum/twitch_event/skinny/run_event(name)
 	. = ..()

@@ -3,6 +3,7 @@
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_STREAMER
 	id_tag = "ook-die-fate"
+	token_cost = 2500
 
 /datum/twitch_event/free_wiz/run_event(name)
 	. = ..()
@@ -19,3 +20,4 @@
 	event_name = "Change Everyone's Fate"
 	event_flags = TWITCH_AFFECTS_ALL
 	id_tag = "everyone-die-fate"
+	token_cost = 5002 // :)

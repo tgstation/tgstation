@@ -3,6 +3,7 @@
 	event_duration = 15 MINUTES //effect is very minor so it lasts for a while
 	event_flags = TWITCH_AFFECTS_ALL
 	id_tag = "australia-mode"
+	token_cost = 500
 
 /datum/twitch_event/australia_mode/run_event(name)
 	. = ..()

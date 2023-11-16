@@ -16,17 +16,6 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	/datum/antagonist/paradox_clone,
 ))
 
-//PLACEHOLDER VALUES(1 to 1 cent to token conversion, also you get a free token if you dont pay yeah totally)
-///assoc list of how many event tokens each role gets each month
-GLOBAL_LIST_INIT(patreon_etoken_values, list(
-	NO_RANK = 0,
-	RANK_TANKS = 100,
-	ASSISTANT_RANK = 500,
-	COMMAND_RANK = 1000,
-	TRAITOR_RANK = 2500,
-	NUKIE_RANK = 5000,
-))
-
 /client/verb/spend_antag_tokens()
 	set category = "IC"
 	set name = "Spend Antag Tokens"
@@ -83,11 +72,12 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	client_token_holder.in_queue = new chosen_antagonist
 
 	to_chat(src, "Your request has been sent to the admins.")
-	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> [ADMIN_APPROVE_TOKEN(src)] [ADMIN_REJECT_TOKEN(src)] | \
+	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> \
+							[ADMIN_APPROVE_ANTAG_TOKEN(src)] [ADMIN_REJECT_ANTAG_TOKEN(src)] | \
 							[src] has requested to use their antag token to be a [chosen_antagonist].")]")
 
-/client/proc/trigger_token_event()
-	set category = "Ghost"
+/client/verb/trigger_token_event()
+	set category = "IC"
 	set name = "Trigger Token Event"
 	set desc = "Opens a ui to spend event tokens on"
 
@@ -96,28 +86,27 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 
 	var/static/list/event_list
 	if(!event_list)
-		event_list = subtypesof(/datum/twitch_event)
-		for(var/datum/twitch_event/event as anything in event_list)
-			if(!event.token_cost)
-				event_list -= event
+		event_list = list()
+		for(var/event as anything in GLOB.twitch_events_by_type)
+			var/datum/twitch_event/event_instance = GLOB.twitch_events_by_type[event]
+			if(!event_instance.token_cost)
+				continue
+			event_list += event_instance
 
-	check_event_tokens(src)
+	client_token_holder.check_event_tokens(src)
 
-	var/datum/twitch_event/selected_event = tgui_input_list(src, "Event tokens: [prefs.event_tokens]", "Choose an event to trigger", event_list)
+	var/datum/twitch_event/selected_event = tgui_input_list(src, "Event tokens: [client_token_holder.event_tokens]", "Choose an event to trigger", event_list)
+	if(!selected_event)
+		return
+
 	var/confirm = tgui_alert(src, "Are you sure you want to trigger [selected_event.event_name]? It will cost [selected_event.token_cost] event tokens.", "Trigger token event", \
 							list("Yes", "No"))
 	if(confirm == "Yes")
-		if(prefs.event_tokens >= selected_event.token_cost)
-			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "MESSAGE")
+		if(client_token_holder.event_tokens >= selected_event.token_cost)
+			client_token_holder.queued_token_event = selected_event
+			to_chat(src, "Your request has been sent.")
+			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("TOKEN EVENT:")] <EM>[key_name(src)]</EM> \
+																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \
+																				[src] has requested use their event tokens to trigger [selected_event].")]")
 			return
 		to_chat(src, "You dont have enough tokens to trigger this event.")
-
-/proc/approve_token_event()
-
-/proc/reject_token_event()
-
-/proc/check_event_tokens(client/checked_client)
-	var/month_number = text2num(time2text(world.time, "MM"))
-	if(checked_client.prefs.event_token_month != month_number)
-		checked_client.prefs.event_token_month = month_number
-		checked_client.prefs.event_tokens = GLOB.patreon_etoken_values[checked_client.patreon.owned_rank]

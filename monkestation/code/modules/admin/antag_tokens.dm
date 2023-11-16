@@ -16,4 +16,5 @@
 	if(!tier)
 		return
 
-	chosen_client.client_token_holder.adjust_tokens(tier, adjustment_amount)
+	log_admin("[key_name(src)] adjusted the [tier] antag tokens of [key_name(chosen_client)] by [adjustment_amount].")
+	chosen_client.client_token_holder.adjust_antag_tokens(tier, adjustment_amount)

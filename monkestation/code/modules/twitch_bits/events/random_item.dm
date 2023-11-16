@@ -3,6 +3,7 @@
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_STREAMER
 	id_tag = "give-ook-item"
+	token_cost = 1000
 
 /datum/twitch_event/give_smsword/run_event(name)
 	. = ..()

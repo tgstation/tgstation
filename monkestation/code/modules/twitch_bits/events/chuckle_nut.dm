@@ -3,6 +3,7 @@
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_STREAMER
 	id_tag = "chucklenuts-ook"
+	token_cost = 800
 
 /datum/twitch_event/chucklenuts/random
 	event_name = "Think Fast"

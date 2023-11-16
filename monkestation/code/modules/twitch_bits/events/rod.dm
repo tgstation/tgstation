@@ -4,6 +4,7 @@
 	event_flags = TWITCH_AFFECTS_STREAMER
 	id_tag = "rod-ook"
 	announce = FALSE //takes a while to reach its target so dont announce it
+	token_cost = 3000
 
 /datum/twitch_event/clang/run_event(name)
 	. = ..()

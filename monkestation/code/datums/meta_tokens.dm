@@ -1,5 +1,15 @@
 GLOBAL_LIST_INIT(used_monthly_token, list())
 
+///assoc list of how many event tokens each role gets each month
+GLOBAL_LIST_INIT(patreon_etoken_values, list(
+	NO_RANK = 0,
+	RANK_TANKS = 100,
+	ASSISTANT_RANK = 500,
+	COMMAND_RANK = 1000,
+	TRAITOR_RANK = 2500,
+	NUKIE_RANK = 5000,
+))
+
 /client
 	var/datum/meta_token_holder/client_token_holder
 
@@ -69,7 +79,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		return FALSE
 	return TRUE
 
-/datum/meta_token_holder/proc/spend_token(tier, use_donor = FALSE)
+/datum/meta_token_holder/proc/spend_antag_token(tier, use_donor = FALSE)
 	if(use_donor)
 		if(donator_token)
 			donator_token = FALSE
@@ -88,7 +98,8 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 	convert_tokens_to_list()
 
 ///adjusts the users tokens, yes they can be in antag token debt
-/datum/meta_token_holder/proc/adjust_tokens(tier, amount)
+/datum/meta_token_holder/proc/adjust_antag_tokens(tier, amount)
+	var/list/old_token_values = list(HIGH_THREAT = total_high_threat_tokens, MEDIUM_THREAT = total_medium_threat_tokens, LOW_THREAT = total_low_threat_tokens)
 	switch(tier)
 		if(HIGH_THREAT)
 			total_high_threat_tokens += amount
@@ -97,25 +108,60 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 		if(LOW_THREAT)
 			total_low_threat_tokens += amount
 
+	log_admin("[key_name(owner)] had their antag tokens adjusted from high: [old_token_values[HIGH_THREAT]], medium: [old_token_values[MEDIUM_THREAT]], \
+				low: [old_token_values[LOW_THREAT]], to, high: [total_high_threat_tokens], medium: [total_medium_threat_tokens], low: [total_low_threat_tokens]")
 	convert_tokens_to_list()
 
-/datum/meta_token_holder/proc/approve_token(thing_to_approve)
+/datum/meta_token_holder/proc/approve_antag_token()
 	if(!in_queue)
 		return
-	to_chat(owner, "Your request to play as [in_queue] has been approved.")
 
-	spend_token(in_queued_tier, queued_donor)
+	to_chat(owner, "Your request to play as [in_queue] has been approved.")
+	spend_antag_token(in_queued_tier, queued_donor)
 	if(!owner.mob.mind)
 		owner.mob.mind_initialize()
-	in_queue.antag_token(owner.mob.mind, owner.mob)
+	in_queue.antag_token(owner.mob.mind, owner.mob) //might not be in queue
 
 	qdel(in_queue)
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE
 
-/datum/meta_token_holder/proc/reject_token(thing_to_reject)
+/datum/meta_token_holder/proc/reject_antag_token()
+	if(!in_queue)
+		return
+
 	to_chat(owner, "Your request to play as [in_queue] has been denied.")
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE
+
+/datum/meta_token_holder/proc/adjust_event_tokens(amount)
+	check_event_tokens(owner)
+	var/old_value = event_tokens
+	event_tokens += amount
+	log_admin("[key_name(owner)] had their event tokens adjusted from [old_value] to, [event_tokens].")
+	convert_tokens_to_list()
+
+/datum/meta_token_holder/proc/check_event_tokens(client/checked_client)
+	var/month_number = text2num(time2text(world.time, "MM"))
+	if(event_token_month != month_number)
+		event_token_month = month_number
+		event_tokens = GLOB.patreon_etoken_values[checked_client.patreon.owned_rank]
+		convert_tokens_to_list()
+
+/datum/meta_token_holder/proc/approve_token_event()
+	if(!queued_token_event)
+		return
+
+	to_chat(owner, "Your request to trigger [queued_token_event] has been approved.")
+	adjust_event_tokens(-queued_token_event.token_cost)
+	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
+	queued_token_event = null
+
+/datum/meta_token_holder/proc/reject_token_event()
+	if(!queued_token_event)
+		return
+
+	to_chat(owner, "Your request to trigger [queued_token_event] has been denied.")
+	queued_token_event = null

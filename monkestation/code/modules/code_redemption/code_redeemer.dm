@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(redeemed_codes, list())
 	if(isnum(path))
 		usr.client.prefs.adjust_metacoins(usr.ckey, path, "Redeemed a Giveaway Code", donator_multipler = FALSE)
 	else if(path == HIGH_THREAT || path == MEDIUM_THREAT || path == LOW_THREAT)
-		usr.client.client_token_holder.adjust_tokens(path, 1)
+		usr.client.client_token_holder.adjust_antag_tokens(path, 1)
 		to_chat(usr, span_boldnotice("You have successfully redeemed a giveaway code for: [path] Antag Token."))
 	else
 		var/pathedstring = text2path(path)

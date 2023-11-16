@@ -1,17 +1,17 @@
-/client/proc/set_players_event_tokens()
+/client/proc/adjust_players_event_tokens()
 	set category = "Admin.Fun"
-//due to the fact that these reset each month im just making this directly this this value instead of add or subtract
-	set name = "Set Event Tokens"
-	set desc = "Set how many event tokens someone has."
+
+	set name = "Adjust Event Tokens"
+	set desc = "Adjust how many event tokens someone has."
 
 	var/mob/chosen_player = tgui_input_list(src, "Choose a Player", "Player List", GLOB.player_list)
 	if(!chosen_player)
 		return
 
 	var/client/chosen_client = chosen_player.client
-	var/adjustment_amount = tgui_input_number(src, "What should we set this users tokens to?", "Input Value", TRUE)
-	if(!adjustment_amount || !chosen_client || !chosen_client.patreon)
+	var/adjustment_amount = tgui_input_number(src, "How much should we adjust this users tokens by?", "Input Value", TRUE)
+	if(!adjustment_amount || !chosen_client)
 		return
 
-	check_event_tokens(chosen_client)
-	chosen_client.prefs.event_tokens = adjustment_amount
+	log_admin("[key_name(src)] adjusted the event tokens of [key_name(chosen_client)] by [adjustment_amount].")
+	chosen_client.client_token_holder.adjust_event_tokens(adjustment_amount)
