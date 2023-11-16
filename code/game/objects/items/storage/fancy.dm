@@ -184,7 +184,7 @@
 /obj/item/storage/fancy/cigarettes
 	name = "\improper Space Cigarettes packet"
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics. On the back it advertises to be the only brand that can be smoked in the vaccum of space."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/service/cigarettes.dmi'
 	icon_state = "cig"
 	inhand_icon_state = "cigpacket"
 	worn_icon_state = "cigpack"
@@ -384,7 +384,7 @@
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/service/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
 	base_icon_state = "cig_paper_pack"
 	contents_tag = "rolling paper"
@@ -409,7 +409,7 @@
 /obj/item/storage/fancy/cigarettes/cigars
 	name = "\improper premium cigar case"
 	desc = "A case of premium cigars. Very expensive."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/service/cigarettes.dmi'
 	icon_state = "cigarcase"
 	base_icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL

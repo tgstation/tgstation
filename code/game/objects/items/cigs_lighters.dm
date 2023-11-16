@@ -18,7 +18,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/match
 	name = "match"
 	desc = "A simple match stick, used for lighting fine smokables."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/service/cigarettes.dmi'
 	icon_state = "match_unlit"
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
@@ -532,7 +532,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 2 MINUTES
 	icon_state = "candyoff"
 	icon_on = "candyon"
-	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
+	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/service/cigarettes.dmi if you add more.
 	inhand_icon_off = "candyoff"
 	type_butt = /obj/item/food/candy_trash
 	heat = 473.15 // Lowered so that the sugar can be carmalized, but not burnt.
@@ -565,7 +565,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A brown roll of tobacco and... well, you're not quite sure. This thing's huge!"
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
-	icon_off = "cigaroff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
+	icon_off = "cigaroff" //make sure to add positional sprites in icons/obj/service/cigarettes.dmi if you add more.
 	inhand_icon_state = "cigaron" //gets overriden during intialize(), just have it for unit test sanity.
 	inhand_icon_on = "cigaron"
 	inhand_icon_off = "cigaroff"
@@ -701,7 +701,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/service/cigarettes.dmi'
 	icon_state = "zippo"
 	inhand_icon_state = "zippo"
 	worn_icon_state = "lighter"
@@ -1005,7 +1005,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/rollingpaper
 	name = "rolling paper"
 	desc = "A thin piece of paper used to make fine smokeables."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/service/cigarettes.dmi'
 	icon_state = "cig_paper"
 	w_class = WEIGHT_CLASS_TINY
 

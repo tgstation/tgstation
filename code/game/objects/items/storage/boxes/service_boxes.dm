@@ -73,7 +73,7 @@
 /obj/item/storage/box/matches
 	name = "matchbox"
 	desc = "A small box of Almost But Not Quite Plasma Premium Matches."
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/obj/service/cigarettes.dmi'
 	icon_state = "matchbox"
 	inhand_icon_state = "zippo"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
