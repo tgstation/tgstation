@@ -83,7 +83,7 @@
 	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
 	return TRUE
 
-/obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special = 0)
+/obj/item/organ/internal/monster_core/Remove(mob/living/carbon/target_carbon, special, movement_flags)
 	if (!inert && !special)
 		owner.visible_message(span_notice("[src] rapidly decays as it's removed."))
 		go_inert()

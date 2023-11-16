@@ -41,7 +41,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 		factions_to_remove += FACTION_MINING
 	receiver.faction |= list(FACTION_HOSTILE, FACTION_MINING)
 
-/obj/item/organ/internal/heart/gondola/Remove(mob/living/carbon/heartless, special)
+/obj/item/organ/internal/heart/gondola/Remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	for(var/faction in factions_to_remove)
 		heartless.faction -= faction
@@ -67,7 +67,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	. = ..()
 	tongue_owner.add_mood_event("gondola_zen", /datum/mood_event/gondola_serenity)
 
-/obj/item/organ/internal/tongue/gondola/Remove(mob/living/carbon/tongue_owner, special)
+/obj/item/organ/internal/tongue/gondola/Remove(mob/living/carbon/tongue_owner, special, movement_flags)
 	tongue_owner.clear_mood_event("gondola_zen")
 	return ..()
 
@@ -104,7 +104,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	RegisterSignal(liver_owner, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(liver_owner, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 
-/obj/item/organ/internal/liver/gondola/Remove(mob/living/carbon/liver_owner, special)
+/obj/item/organ/internal/liver/gondola/Remove(mob/living/carbon/liver_owner, special, movement_flags)
 	. = ..()
 	pax_hugs.remove(liver_owner)
 	UnregisterSignal(liver_owner, list(COMSIG_HUMAN_EQUIPPING_ITEM, COMSIG_LIVING_TRY_PULL))

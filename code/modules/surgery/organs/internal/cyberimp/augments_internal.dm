@@ -87,7 +87,7 @@
 	stored_items = list()
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special = 0)
+/obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special, movement_flags)
 	if(active)
 		ui_action_click()
 	..()

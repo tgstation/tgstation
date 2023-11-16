@@ -25,7 +25,7 @@
 	if(HUD_trait)
 		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special = FALSE)
+/obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
 	if(HUD_type)
 		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
