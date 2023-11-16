@@ -307,7 +307,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!istype(thing, /obj/item/food/cracker)) // Poly wants a cracker
 		return
 
-	consume_cracker(thing) // potential clash with the tameable element so we'll leave it to that to handle eating the cracker.
+	consume_cracker(thing) // potential clash with the tameable element so we'll leave it to that to handle qdeling the cracker.
 	return COMPONENT_NO_AFTERATTACK
 
 /// Eats a cracker (or anything i guess). This would be nice to eventually fold into the basic_eating element but we do too much snowflake inventory code stuff for this to be reliable presently.
