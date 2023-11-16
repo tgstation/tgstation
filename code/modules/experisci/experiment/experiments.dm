@@ -45,7 +45,7 @@
 		/mob/living/basic/cow,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/snake,
-		/mob/living/simple_animal/pet/cat,
+		/mob/living/basic/pet/cat,
 	)
 
 /datum/experiment/scanning/random/cytology/medium/one

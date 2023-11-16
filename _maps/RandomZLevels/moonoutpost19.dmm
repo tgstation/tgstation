@@ -5120,7 +5120,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "HP" = (
-/mob/living/simple_animal/pet/cat/space{
+/mob/living/basic/pet/cat/space{
 	desc = "With survival instincts like these, it's no wonder cats survived to the 26th century.";
 	name = "Jones"
 	},
