@@ -17,6 +17,7 @@
 		/obj/item/stack/sheet/plasteel = 2,
 		/obj/item/stack/sheet/bronze = 2,
 		/obj/item/stack/sheet/runed_metal = 1,
+		/obj/item/stack/sheet/titaniumglass = 2,
 		exotic_material = 2 // this needs to be refactored properly
 	)
 
@@ -49,9 +50,14 @@
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
 		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=100))
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			if (!QDELETED(M))
-				M.add_fingerprint(user)
+			if(state == GIRDER_TRAM)
+				var/obj/item/stack/sheet/mineral/titanium/M = new (user.loc, 2)
+				if(!QDELETED(M))
+					M.add_fingerprint(user)
+			else
+				var/obj/item/stack/sheet/iron/M = new (loc, 2)
+				if(!QDELETED(M))
+					M.add_fingerprint(user)
 			qdel(src)
 			return
 
@@ -63,7 +69,7 @@
 			balloon_alert(user, "need floor!")
 			return
 		if(state == GIRDER_TRAM)
-			if(!locate(/obj/structure/industrial_lift/tram) in src.loc.contents)
+			if(!locate(/obj/structure/transport/linear/tram) in src.loc.contents)
 				balloon_alert(user, "need tram floors!")
 				return
 
@@ -128,8 +134,8 @@
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
-					sheets.use(2)
-					var/obj/structure/tramwall/tram_wall = new(loc)
+					sheets.use(amount)
+					var/obj/structure/tram/alt/iron/tram_wall = new(loc)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -147,6 +153,21 @@
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
+
+		if(istype(sheets, /obj/item/stack/sheet/titaniumglass) && state == GIRDER_TRAM)
+			var/amount = construction_cost[/obj/item/stack/sheet/titaniumglass]
+			if(sheets.get_amount() < amount)
+				balloon_alert(user, "need [amount] sheets!")
+				return
+			balloon_alert(user, "adding panel...")
+			if (do_after(user, 2 SECONDS, target = src))
+				if(sheets.get_amount() < amount)
+					return
+				sheets.use(amount)
+				var/obj/structure/tram/tram_wall = new(loc)
+				transfer_fingerprints_to(tram_wall)
+				qdel(src)
+			return
 
 		if(istype(sheets, /obj/item/stack/sheet/plasteel))
 			var/amount = construction_cost[/obj/item/stack/sheet/plasteel]
@@ -202,22 +223,17 @@
 				if(sheets.get_amount() < amount)
 					balloon_alert(user, "need [amount] sheets!")
 					return
+				var/tram_wall_type = text2path("/obj/structure/tram/alt/[M]")
+				if(!tram_wall_type)
+					balloon_alert(user, "need titanium glass or mineral!")
+					return
 				balloon_alert(user, "adding plating...")
 				if (do_after(user, 4 SECONDS, target = src))
 					if(sheets.get_amount() < amount)
 						return
+					var/obj/structure/tram/tram_wall
+					tram_wall = new tram_wall_type(loc)
 					sheets.use(amount)
-					var/obj/structure/tramwall/tram_wall
-					var/tram_wall_type = text2path("/obj/structure/tramwall/[M]")
-					if(tram_wall_type)
-						tram_wall = new tram_wall_type(loc)
-					else
-						var/obj/structure/tramwall/material/mat_tram_wall = new(loc)
-						var/list/material_list = list()
-						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
-						if(material_list)
-							mat_tram_wall.set_custom_materials(material_list)
-						tram_wall = mat_tram_wall
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -290,9 +306,9 @@
 			if(state != GIRDER_TRAM)
 				return
 			state = GIRDER_DISASSEMBLED
-			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			if (!QDELETED(M))
-				M.add_fingerprint(user)
+			var/obj/item/stack/sheet/mineral/titanium/material = new (user.loc, 2)
+			if (!QDELETED(material))
+				material.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 
@@ -361,10 +377,12 @@
 	if((mover.pass_flags & PASSGRILLE) || isprojectile(mover))
 		return prob(girderpasschance)
 
-/obj/structure/girder/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	. = !density
-	if(caller)
-		. = . || (caller.pass_flags & PASSGRILLE)
+/obj/structure/girder/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(!density)
+		return TRUE
+	if(pass_info.pass_flags & PASSGRILLE)
+		return TRUE
+	return FALSE
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -392,8 +410,15 @@
 	max_integrity = 350
 
 /obj/structure/girder/tram
-	name = "tram girder"
+	name = "tram frame"
+	desc = "Titanium framework to construct tram walls. Can be plated with <b>titanium glass</b> or other wall materials."
+	icon_state = "tram"
 	state = GIRDER_TRAM
+	density = FALSE
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+
+/obj/structure/girder/tram/corner
+	name = "tram frame corner"
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
 
@@ -444,19 +469,25 @@
 
 /obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
-		if(RCD_FLOORWALL)
+		if(RCD_TURF)
+			if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
+				return FALSE
+
 			return rcd_result_with_memory(
-				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 8),
+				list("delay" = 2 SECONDS, "cost" = 8),
 				get_turf(src), RCD_MEMORY_WALL,
 			)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 2 SECONDS, "cost" = 13)
+			return list("delay" = 2 SECONDS, "cost" = 13)
 	return FALSE
 
-/obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	var/turf/T = get_turf(src)
-	switch(passed_mode)
-		if(RCD_FLOORWALL)
+/obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
+		if(RCD_TURF)
+			if(the_rcd.rcd_design_path != /turf/open/floor/plating/rcd)
+				return FALSE
+
+			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall)
 			qdel(src)
 			return TRUE

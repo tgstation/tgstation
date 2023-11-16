@@ -76,7 +76,7 @@
 
 	if(isliving(what))
 		var/mob/living/themob = what
-		themob.gib(TRUE,TRUE,TRUE)
+		themob.gib()
 	else
 		qdel(what)
 	LAZYREMOVE(processor_contents, what)

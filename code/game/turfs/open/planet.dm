@@ -18,14 +18,27 @@
 	name = "dirt flooring" //FOR THE LOVE OF GOD USE THIS INSTEAD OF DIRT FOR STATION MAPS
 	desc = "You heard this place was dirty, but this is just absurd."
 	baseturfs = /turf/open/floor/plating
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE
+
+/turf/open/misc/dirt/jungle
+	slowdown = 0.5
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/misc/dirt/dark
 	icon_state = "greenerdirt"
 	base_icon_state = "greenerdirt"
 
-/turf/open/misc/dirt/jungle
+/turf/open/misc/dirt/dark/station
+	baseturfs = /turf/open/floor/plating
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+
+/turf/open/misc/dirt/dark/station/airless
+	initial_gas_mix = AIRLESS_ATMOS
+	temperature = TCMB
+
+/turf/open/misc/dirt/dark/jungle
 	slowdown = 0.5
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
@@ -67,8 +80,11 @@
 /turf/open/misc/grass/burnt_states()
 	return list("jungle_damaged")
 
+/turf/open/misc/grass/jungle/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/closed/mineral/random/jungle
-	baseturfs = /turf/open/misc/dirt/dark
+	baseturfs = /turf/open/misc/dirt/dark/jungle
 
 /turf/closed/mineral/random/jungle/mineral_chances()
 	return list(
@@ -81,3 +97,6 @@
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 	)
+
+/turf/closed/mineral/random/jungle/space_safe
+	baseturfs = /turf/open/misc/dirt/dark/station/airless

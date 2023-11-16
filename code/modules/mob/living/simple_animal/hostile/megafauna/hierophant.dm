@@ -453,7 +453,7 @@ Difficulty: Hard
 		wander = TRUE
 		did_reset = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)
 		if(target && isliving(target))
 			var/mob/living/L = target
@@ -694,7 +694,7 @@ Difficulty: Hard
 		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
-		if((friendly_fire_check && caster?.faction_check_mob(L)) || L.stat == DEAD)
+		if((friendly_fire_check && caster?.faction_check_atom(L)) || L.stat == DEAD)
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
@@ -719,7 +719,7 @@ Difficulty: Hard
 		hit_things += M
 		for(var/O in M.occupants)
 			var/mob/living/occupant = O
-			if(friendly_fire_check && caster?.faction_check_mob(occupant))
+			if(friendly_fire_check && caster?.faction_check_atom(occupant))
 				continue
 			to_chat(occupant, span_userdanger("Your [M.name] is struck by a [name]!"))
 			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)

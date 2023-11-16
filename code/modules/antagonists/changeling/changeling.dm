@@ -350,12 +350,11 @@
 /datum/antagonist/changeling/proc/regain_powers()
 	emporium_action.Grant(owner.current)
 	for(var/datum/action/changeling/power as anything in innate_powers)
-		if(power.needs_button)
-			power.Grant(owner.current)
+		power.Grant(owner.current)
 
 	for(var/power_path in purchased_powers)
 		var/datum/action/changeling/power = purchased_powers[power_path]
-		if(istype(power) && power.needs_button)
+		if(istype(power))
 			power.Grant(owner.current)
 
 /*
@@ -1048,9 +1047,6 @@
 
 /datum/outfit/changeling_space
 	name = "Changeling (Space)"
-
-	head = /obj/item/clothing/head/helmet/space/changeling
-	suit = /obj/item/clothing/suit/space/changeling
 	l_hand = /obj/item/melee/arm_blade
 
 #undef FORMAT_CHEM_CHARGES_TEXT

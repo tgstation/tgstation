@@ -6,6 +6,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	icon = 'icons/obj/machines/fax.dmi'
 	icon_state = "fax"
 	density = TRUE
+	anchored_tabletop_offset = 6
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 100
 	pass_flags = PASSTABLE

@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes:
-  - bugfix: "Some icons for selecting character preferences are no longer scaled incorrectly."

@@ -129,6 +129,10 @@
 		return //I don't know how you called Crossed() but stop it.
 	if(morsel.resistance_flags & INDESTRUCTIBLE)
 		return
+	if(morsel.flags_1 & HOLOGRAM_1)
+		visible_message(span_notice("[morsel] fades away!"))
+		qdel(morsel)
+		return
 
 	var/list/to_eat = (issilicon(morsel) ? list(morsel) : morsel.get_all_contents()) //eating borg contents leads to many bad things
 

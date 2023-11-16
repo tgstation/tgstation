@@ -61,9 +61,6 @@
 		if (isnull(creature.client)) // Are they connected?
 			trimmed_list.Remove(creature)
 			continue
-		if (isnull(creature.mind))
-			trimmed_list.Remove(creature)
-			continue
 		if(creature.client.get_remaining_days(minimum_required_age) > 0)
 			trimmed_list.Remove(creature)
 			continue
@@ -73,6 +70,10 @@
 		if (is_banned_from(creature.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
 			trimmed_list.Remove(creature)
 			continue
+
+		if (isnull(creature.mind))
+			continue
+
 		if (restrict_ghost_roles && (creature.mind.assigned_role.title in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
 			trimmed_list.Remove(creature)
 			continue
@@ -108,8 +109,8 @@
 				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 	var/threat = round(mode.threat_level/10)
-
-	if (job_check < required_enemies[threat])
+	var/ruleset_forced = (GLOB.dynamic_forced_rulesets[type] || RULESET_NOT_FORCED) == RULESET_FORCE_ENABLED
+	if (!ruleset_forced && job_check < required_enemies[threat])
 		log_dynamic("FAIL: [src] is not ready, because there are not enough enemies: [required_enemies[threat]] needed, [job_check] found")
 		return FALSE
 
@@ -176,7 +177,12 @@
 		if(makeBody)
 			new_character = generate_ruleset_body(applicant)
 		finish_setup(new_character, i)
-		notify_ghosts("[applicant.name] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
+		notify_ghosts(
+			"[applicant.name] has been picked for the ruleset [name]!",
+			source = new_character,
+			action = NOTIFY_ORBIT,
+			header = "Something Interesting!",
+		)
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = make_body(applicant)
@@ -218,7 +224,7 @@
 /datum/dynamic_ruleset/midround/from_living/autotraitor
 	name = "Syndicate Sleeper Agent"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
-	antag_datum = /datum/antagonist/traitor
+	antag_datum = /datum/antagonist/traitor/infiltrator/sleeper_agent
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_flag_override = ROLE_TRAITOR
 	protected_roles = list(
@@ -256,7 +262,7 @@
 	var/mob/M = pick(candidates)
 	assigned += M
 	candidates -= M
-	var/datum/antagonist/traitor/newTraitor = new
+	var/datum/antagonist/traitor/infiltrator/sleeper_agent/newTraitor = new
 	M.mind.add_antag_datum(newTraitor)
 	message_admins("[ADMIN_LOOKUPFLW(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
 	log_dynamic("[key_name(M)] was selected by the [name] ruleset and has been made into a midround traitor.")
@@ -373,7 +379,7 @@
 
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 
-/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/nuclear/acceptable(population=0, threat_level=0)
 	if (locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
 		return FALSE // Unavailable if nuke ops were already sent at roundstart
 	indice_pop = min(operative_cap.len, round(living_players.len/5)+1)
@@ -528,7 +534,7 @@
 	minimum_players = 15
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/acceptable(population = 0, threat_level = 0)
 	var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) //Checks if there's a single safe, dark tile on station.
 	if(!spawn_loc)
 		return FALSE
@@ -581,7 +587,7 @@
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
-	var/mob/living/simple_animal/hostile/space_dragon/S = new (pick(spawn_locs))
+	var/mob/living/basic/space_dragon/S = new (pick(spawn_locs))
 	player_mind.transfer_to(S)
 	player_mind.add_antag_datum(/datum/antagonist/space_dragon)
 
@@ -705,7 +711,7 @@
 	spawn_locs = list()
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/acceptable(population=0, threat_level=0)
 	if(GLOB.dead_mob_list.len < dead_mobs_required)
 		return FALSE
 	return ..()
@@ -729,7 +735,7 @@
 	. = ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/generate_ruleset_body(mob/applicant)
-	var/mob/living/simple_animal/revenant/revenant = new(pick(spawn_locs))
+	var/mob/living/basic/revenant/revenant = new(pick(spawn_locs))
 	revenant.key = applicant.key
 	message_admins("[ADMIN_LOOKUPFLW(revenant)] has been made into a revenant by the midround ruleset.")
 	log_game("[key_name(revenant)] was spawned as a revenant by the midround ruleset.")
@@ -768,7 +774,7 @@
 	minimum_players = 20
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/pirates/acceptable(population=0, threat_level=0)
 	if (SSmapping.is_planetary() || GLOB.light_pirate_gangs.len == 0)
 		return FALSE
 	return ..()
@@ -790,7 +796,7 @@
 	minimum_players = 25
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat=0)
+/datum/dynamic_ruleset/midround/dangerous_pirates/acceptable(population=0, threat_level=0)
 	if (SSmapping.is_planetary() || GLOB.heavy_pirate_gangs.len == 0)
 		return FALSE
 	return ..()

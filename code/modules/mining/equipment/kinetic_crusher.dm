@@ -201,7 +201,7 @@
 	hammer_synced = null
 	return ..()
 
-/obj/projectile/destabilizer/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/destabilizer/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
 		var/mob/living/L = target
 		var/had_effect = (L.has_status_effect(/datum/status_effect/crusher_mark)) //used as a boolean
@@ -437,3 +437,36 @@
 		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
 		chaser.damage = 20
 		log_combat(user, target, "fired a chaser at", src)
+
+/obj/item/crusher_trophy/ice_demon_cube
+	name = "demonic cube"
+	desc = "A stone cold cube dropped from an ice demon."
+	icon_state = "ice_demon_cube"
+	denied_type = /obj/item/crusher_trophy/ice_demon_cube
+	///how many will we summon?
+	var/summon_amount = 2
+	///cooldown to summon demons upon the target
+	COOLDOWN_DECLARE(summon_cooldown)
+
+/obj/item/crusher_trophy/ice_demon_cube/effect_desc()
+	return "mark detonation to unleash demonic ice clones upon the target"
+
+/obj/item/crusher_trophy/ice_demon_cube/on_mark_detonation(mob/living/target, mob/living/user)
+	if(isnull(target) || !COOLDOWN_FINISHED(src, summon_cooldown))
+		return
+	for(var/i in 1 to summon_amount)
+		var/turf/drop_off = find_dropoff_turf(target, user)
+		var/mob/living/basic/mining/demon_afterimage/crusher/friend = new(drop_off)
+		friend.faction = list(FACTION_NEUTRAL)
+		friend.befriend(user)
+		friend.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)
+
+///try to make them spawn all around the target to surround him
+/obj/item/crusher_trophy/ice_demon_cube/proc/find_dropoff_turf(mob/living/target, mob/living/user)
+	var/list/turfs_list = get_adjacent_open_turfs(target)
+	for(var/turf/possible_turf in turfs_list)
+		if(possible_turf.is_blocked_turf())
+			continue
+		return possible_turf
+	return get_turf(user)

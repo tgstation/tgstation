@@ -1,6 +1,6 @@
 /obj/item/radio/intercom
 	name = "station intercom"
-	desc = "Talk through this."
+	desc = "A trusty station intercom, ready to spring into action even when the headsets go silent."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
 	anchored = TRUE
@@ -16,12 +16,17 @@
 	overlay_mic_idle = "intercom_m"
 	overlay_mic_active = null
 
+	///The icon of intercom while its turned off
+	var/icon_off = "intercom-p"
+
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 
 /obj/item/radio/intercom/prison
-	name = "prison intercom"
+	name = "receive-only intercom"
 	desc = "A station intercom. It looks like it has been modified to not broadcast."
+	icon_state = "intercom_prison"
+	icon_off = "intercom_prison-p"
 
 /obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
 	. = ..()
@@ -157,7 +162,7 @@
 			return
 
 /obj/item/radio/intercom/update_icon_state()
-	icon_state = on ? initial(icon_state) : "intercom-p"
+	icon_state = on ? initial(icon_state) : icon_off
 	return ..()
 
 /**
@@ -193,7 +198,7 @@
 	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
@@ -208,11 +213,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 /obj/item/radio/intercom/command
 	name = "command intercom"
-	desc = "The command team's special extended-frequency intercom. Mostly just used for eavesdropping, gossiping about subordinates, and complaining about the higher-ups."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	desc = "The command's special free-frequency intercom. It's a versatile tool that can be tuned to any frequency, granting you access to channels you're not supposed to be on. Plus, it comes equipped with a built-in voice amplifier for crystal-clear communication."
 	icon_state = "intercom_command"
 	freerange = TRUE
+	command = TRUE
+	icon_off = "intercom_command-p"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)

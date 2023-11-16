@@ -131,7 +131,7 @@
 	var/subsystem_type = /datum/controller/subsystem/machines
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
-	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
+	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	var/fair_market_price = 69
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
@@ -512,19 +512,24 @@
 	return TRUE
 
 ///Get a valid powered area to reference for power use, mainly for wall-mounted machinery that isn't always mapped directly in a powered location.
-/obj/machinery/proc/get_room_area(area/machine_room)
+/obj/machinery/proc/get_room_area()
 	var/area/machine_area = get_area(src)
-	if(!machine_area.always_unpowered) ///check our loc first to see if its a powered area
-		machine_room = machine_area
-		return machine_room
-	var/turf/mounted_wall = get_step(src,dir)
-	if (mounted_wall && istype(mounted_wall, /turf/closed))
+	if(isnull(machine_area))
+		return null // ??
+
+	// check our own loc first to see if its a powered area
+	if(!machine_area.always_unpowered)
+		return machine_area
+
+	// loc area wasn't good, checking adjacent wall for a good area to use
+	var/turf/mounted_wall = get_step(src, dir)
+	if(isclosedturf(mounted_wall))
 		var/area/wall_area = get_area(mounted_wall)
-		if(!wall_area.always_unpowered) //loc area wasn't good, checking adjacent wall for a good area to use
-			machine_room = wall_area
-			return machine_room
-	machine_room = machine_area ///couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
-	return machine_room
+		if(!wall_area.always_unpowered)
+			return wall_area
+
+	// couldn't find a proper powered area on loc or adjacent wall, defaulting back to loc and blaming mappers
+	return machine_area
 
 ///makes this machine draw power from its area according to which use_power mode it is set to
 /obj/machinery/proc/update_current_power_usage()
@@ -591,13 +596,7 @@
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
 
-	var/is_dextrous = FALSE
-	if(isanimal(user))
-		var/mob/living/simple_animal/user_as_animal = user
-		if (user_as_animal.dextrous)
-			is_dextrous = TRUE
-
-	if(!issilicon(user) && !is_dextrous && !user.can_hold_items())
+	if(!issilicon(user) && !user.can_hold_items())
 		return FALSE //spiders gtfo
 
 	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
@@ -686,10 +685,25 @@
 /obj/machinery/attack_paw(mob/living/user, list/modifiers)
 	if(!user.combat_mode)
 		return attack_hand(user)
+
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	var/damage = take_damage(4, BRUTE, MELEE, 1)
-	user.visible_message(span_danger("[user] smashes [src] with [user.p_their()] paws[damage ? "." : ", without leaving a mark!"]"), null, null, COMBAT_MESSAGE_RANGE)
+	var/damage = take_damage(damage_amount = 4, damage_type = BRUTE, damage_flag = MELEE, sound_effect = TRUE, attack_dir = get_dir(user, src))
+
+	var/hit_with_what_noun = "paws"
+	var/obj/item/bodypart/arm/arm = user.get_active_hand()
+	if(!isnull(arm))
+		hit_with_what_noun = arm.appendage_noun // hit with "their hand"
+		if(user.usable_hands > 1)
+			hit_with_what_noun += plural_s(hit_with_what_noun) // hit with "their hands"
+
+	user.visible_message(
+		span_danger("[user] smashes [src] with [user.p_their()] [hit_with_what_noun][damage ? "." : ", without leaving a mark!"]"),
+		span_danger("You smash [src] with your [hit_with_what_noun][damage ? "." : ", without leaving a mark!"]"),
+		span_hear("You hear a [damage ? "smash" : "thud"]."),
+		COMBAT_MESSAGE_RANGE,
+	)
+	return TRUE
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
@@ -744,7 +758,7 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type)
+/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
 		return TOOL_ACT_MELEE_CHAIN_BLOCKING
 	. = ..()
@@ -1120,9 +1134,9 @@
 
 /obj/machinery/zap_act(power, zap_flags)
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
-		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
+		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2, adminlog = TRUE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
-		take_damage(power * 6.25e-7, BURN, ENERGY)
+		take_damage(power * 2.5e-4, BURN, ENERGY)
 		if(prob(40))
 			emp_act(EMP_LIGHT)
 		power -= power * 5e-4

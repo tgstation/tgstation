@@ -72,7 +72,7 @@
 
 /datum/component/squashable/proc/Squish(mob/living/target)
 	if(squash_flags & SQUASHED_SHOULD_BE_GIBBED)
-		target.gib()
+		target.gib(DROP_ALL_REMAINS)
 	else
 		target.adjustBruteLoss(squash_damage)
 

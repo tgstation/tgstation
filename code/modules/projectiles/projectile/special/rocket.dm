@@ -5,7 +5,7 @@
 	embedding = null
 	shrapnel_type = null
 
-/obj/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/gyro/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
 	explosion(target, devastation_range = -1, light_impact_range = 2, explosion_cause = src)
 	return BULLET_ACT_HIT
@@ -25,7 +25,7 @@
 	/// Whether the rocket is capable of instantly killing a living target
 	var/random_crits_enabled = TRUE // Worst thing Valve ever added
 
-/obj/projectile/bullet/rocket/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/rocket/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/random_crit_gib = FALSE
 	if(isliving(target) && prob(1) && random_crits_enabled)
 		var/mob/living/gibbed_dude = target
@@ -53,7 +53,7 @@ among other potential differences. This granularity is helpful for things like t
 		if(random_crit_gib)
 			var/mob/living/gibbed_dude = target
 			new /obj/effect/temp_visual/crit(get_turf(gibbed_dude))
-			gibbed_dude.gib()
+			gibbed_dude.gib(DROP_ALL_REMAINS)
 
 /// PM9 HEAP rocket - the anti-anything missile you always craved.
 /obj/projectile/bullet/rocket/heap

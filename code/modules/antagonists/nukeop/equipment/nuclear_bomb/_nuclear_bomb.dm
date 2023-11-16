@@ -464,6 +464,7 @@ GLOBAL_VAR(station_nuke_source)
 		source = src,
 		header = "Nuke Armed",
 		action = NOTIFY_ORBIT,
+		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 	update_appearance()
 
@@ -643,7 +644,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
 	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
-	gibbed.gib()
+	gibbed.gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /**

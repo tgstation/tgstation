@@ -78,7 +78,7 @@
 
 /datum/ai_controller/basic_controller/lightgeist
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/lightgeist,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/lightgeist,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -91,13 +91,13 @@
 	)
 
 /// Attack only mobs who have damage that we can heal, I think this is specific enough not to be a generic type
-/datum/targetting_datum/lightgeist
+/datum/targeting_strategy/lightgeist
 	/// Types of mobs we can heal, not in a blackboard key because there is no point changing this at runtime because the component will already exist
 	var/heal_biotypes = MOB_ORGANIC | MOB_MINERAL
 	/// Type of limb we can heal
 	var/required_bodytype = BODYTYPE_ORGANIC
 
-/datum/targetting_datum/lightgeist/can_attack(mob/living/living_mob, mob/living/target)
+/datum/targeting_strategy/lightgeist/can_attack(mob/living/living_mob, mob/living/target, vision_range)
 	if (!isliving(target) || target.stat == DEAD)
 		return FALSE
 	if (!(heal_biotypes & target.mob_biotypes))

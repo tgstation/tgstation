@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "Bar Bots (and several other mobs) will no longer aggro on you if you click on them with a \"forceful\" item from halfway across the room."

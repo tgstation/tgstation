@@ -4,20 +4,20 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/chicken,
 	/mob/living/basic/cow,
+	/mob/living/basic/goat,
 	/mob/living/basic/lizard,
 	/mob/living/basic/mouse/brown/tom,
 	/mob/living/basic/pet,
 	/mob/living/basic/pig,
 	/mob/living/basic/rabbit,
 	/mob/living/basic/sheep,
+	/mob/living/basic/sloth,
 	/mob/living/basic/snake,
 	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
-	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/sloth,
 )))
 
 /datum/round_event_control/sentience

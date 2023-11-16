@@ -877,7 +877,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/generate_offset_lists(gen_from, new_offset)
 	create_plane_offsets(gen_from, new_offset)
 	for(var/offset in gen_from to new_offset)
-		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
+		GLOB.starlight_objects += starlight_object(offset)
+		GLOB.starlight_overlays += starlight_overlay(offset)
 
 	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
 		var/list/gas_info = GLOB.meta_gas_info[gas_type]

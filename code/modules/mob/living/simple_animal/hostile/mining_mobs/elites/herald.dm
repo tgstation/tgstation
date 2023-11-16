@@ -227,14 +227,13 @@
 	damage = 20
 	armour_penetration = 60
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target
-		if(mob_target.faction_check_mob(firer))
+		if(mob_target.faction_check_atom(firer))
 			damage = 0
 
 	. = ..()
@@ -247,7 +246,7 @@
 	damage = 0
 	color = rgb(255,255,102)
 
-/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!QDELETED(firer))
 		firer.forceMove(get_turf(src))

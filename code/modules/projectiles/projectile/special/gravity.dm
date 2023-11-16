@@ -16,7 +16,7 @@
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun?.power, 15)
 
-/obj/projectile/gravityrepulse/on_hit()
+/obj/projectile/gravityrepulse/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
@@ -50,7 +50,7 @@
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun?.power, 15)
 
-/obj/projectile/gravityattract/on_hit()
+/obj/projectile/gravityattract/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
@@ -83,7 +83,7 @@
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun?.power, 15)
 
-/obj/projectile/gravitychaos/on_hit()
+/obj/projectile/gravitychaos/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))

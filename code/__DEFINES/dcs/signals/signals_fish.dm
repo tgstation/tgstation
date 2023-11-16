@@ -31,3 +31,6 @@
 
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"
+
+/// From /obj/item/fish_analyzer/proc/analyze_status: (fish, user)
+#define COMSIG_FISH_ANALYZER_ANALYZE_STATUS "fish_analyzer_analyze_status"

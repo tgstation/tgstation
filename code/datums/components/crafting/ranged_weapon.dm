@@ -206,6 +206,36 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
 
+/datum/crafting_recipe/rebarxbow
+	name = "Heated Rebar Crossbow"
+	result = /obj/item/gun/ballistic/rifle/rebarxbow
+	reqs = list(
+		/obj/item/stack/rods = 6,
+		/obj/item/stack/cable_coil = 12,
+		/obj/item/inducer =  1,
+	)
+	blacklist = list(
+		/obj/item/inducer/sci,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	time = 5 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/rebarxbowforced
+	name = "Forced Rebar Crossbow"
+	desc = "Get an extra shot in your crossbow... for a chance of shooting yourself when you fire it."
+	result = /obj/item/gun/ballistic/rifle/rebarxbow/forced
+	reqs = list(
+		/obj/item/gun/ballistic/rifle/rebarxbow = 1,
+	)
+	blacklist = list(
+	/obj/item/gun/ballistic/rifle/rebarxbow/forced,
+	/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
+	)
+	tool_behaviors = list(TOOL_CROWBAR)
+	time = 1 SECONDS
+	category = CAT_WEAPON_RANGED
+
 /datum/crafting_recipe/pipegun_prime
 	name = "Regal Pipegun"
 	always_available = FALSE
@@ -222,18 +252,19 @@
 	time = 30 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/deagle_prime //When you factor in the makarov (7 tc), the toolbox (1 tc), and the emag (3 tc), this comes to a total of 17 TC or thereabouts. Igorning the 20k pricetag, obviously.
+/datum/crafting_recipe/deagle_prime //When you factor in the makarov (7 tc), the toolbox (1 tc), and the emag (3 tc), this comes to a total of 18 TC or thereabouts. Igorning the 20k pricetag, obviously.
 	name = "Regal Condor"
 	always_available = FALSE
-	result = /obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
+	result = /obj/item/gun/ballistic/automatic/pistol/deagle/regal
 	reqs = list(
 		/obj/item/gun/ballistic/automatic/pistol = 1,
 		/obj/item/stack/sheet/mineral/gold = 25,
 		/obj/item/stack/sheet/mineral/silver = 25,
 		/obj/item/food/donkpocket = 1,
-		/obj/item/stack/telecrystal = 3,
+		/obj/item/stack/telecrystal = 4,
 		/obj/item/clothing/head/costume/crown/fancy = 1, //the captain's crown
 		/obj/item/storage/toolbox/syndicate = 1,
+		/obj/item/stack/sheet/iron = 10,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	tool_paths = list(
@@ -249,18 +280,22 @@
 	blacklist += subtypesof(/obj/item/gun/ballistic/automatic/pistol)
 
 /datum/crafting_recipe/deagle_prime_mag
-	name = "Regal Condor Magazine (10mm)"
+	name = "Regal Condor Magazine (10mm Reaper)"
 	always_available = FALSE
-	result = /obj/item/ammo_box/magazine/r10mm/empty
+	result = /obj/item/ammo_box/magazine/r10mm
 	reqs = list(
 		/obj/item/stack/sheet/iron = 10,
-		/obj/item/stack/telecrystal = 2,
+		/obj/item/stack/sheet/mineral/gold = 10,
+		/obj/item/stack/sheet/mineral/silver = 10,
+		/obj/item/stack/sheet/mineral/plasma = 10,
+		/obj/item/food/donkpocket = 1, //Station mass murder, as sponsored by Donk Co.
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	tool_paths = list(
 		/obj/item/clothing/under/syndicate,
 		/obj/item/clothing/mask/gas/syndicate,
-		/obj/item/card/emag
+		/obj/item/card/emag,
+		/obj/item/gun/ballistic/automatic/pistol/deagle/regal
 	)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED

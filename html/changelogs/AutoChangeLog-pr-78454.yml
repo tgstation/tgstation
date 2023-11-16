@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix butchered monkeys to transfer reagents and diseases to meat"

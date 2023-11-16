@@ -38,6 +38,56 @@
 	test_godmode(dummy)
 
 /**
+ * Test whether the adjust damage procs return the correct values and that the mob's health is the expected value afterwards.
+ *
+ * By default this calls apply_damage(amount) followed by verify_damage(amount_after) and returns TRUE if both succeeded.
+ * amount_after defaults to the mob's current stamina loss but can be overridden as needed.
+ *
+ * Arguments:
+ * * testing_mob - the mob to apply the damage to
+ * * amount - the amount of damage to apply to the mob
+ * * expected - what the expected return value of the damage proc is
+ * * amount_after - in case you want to specify what the damage amount on the mob should be afterwards
+ * * included_types - Bitflag of damage types to apply
+ * * biotypes - the biotypes of damage to apply
+ * * bodytypes - the bodytypes of damage to apply
+ * * forced - whether or not this is forced damage
+ */
+/datum/unit_test/mob_damage/proc/test_apply_damage(mob/living/testing_mob, amount, expected = -amount, amount_after, included_types, biotypes, bodytypes, forced)
+	if(isnull(amount_after))
+		amount_after = testing_mob.getStaminaLoss() - expected // stamina loss applies to both carbon and basic mobs the same way, so that's why we're using it here
+	if(!apply_damage(testing_mob, amount, expected, included_types, biotypes, bodytypes, forced))
+		return FALSE
+	if(!verify_damage(testing_mob, amount_after, included_types))
+		return FALSE
+	return TRUE
+
+/**
+ * Test whether the set damage procs return the correct values and that the mob's health is the expected value afterwards.
+ *
+ * By default this calls set_damage(amount) followed by verify_damage(amount_after) and returns TRUE if both succeeded.
+ * amount_after defaults to the mob's current stamina loss but can be overridden as needed.
+ *
+ * Arguments:
+ * * testing_mob - the mob to apply the damage to
+ * * amount - the amount of damage to apply to the mob
+ * * expected - what the expected return value of the damage proc is
+ * * amount_after - in case you want to specify what the damage amount on the mob should be afterwards
+ * * included_types - Bitflag of damage types to apply
+ * * biotypes - the biotypes of damage to apply
+ * * bodytypes - the bodytypes of damage to apply
+ * * forced - whether or not this is forced damage
+ */
+/datum/unit_test/mob_damage/proc/test_set_damage(mob/living/testing_mob, amount, expected, amount_after, included_types, biotypes, bodytypes, forced)
+	if(isnull(amount_after))
+		amount_after = testing_mob.getStaminaLoss() - expected
+	if(!set_damage(testing_mob, amount, expected, included_types, biotypes, bodytypes, forced))
+		return FALSE
+	if(!verify_damage(testing_mob, amount_after, included_types))
+		return FALSE
+	return TRUE
+
+/**
  * Check that the mob has a specific amount of damage
  *
  * By default this checks that the mob has <amount> of every type of damage.
@@ -65,6 +115,7 @@
 	if(included_types & STAMINALOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getStaminaLoss(), amount, \
 			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.getStaminaLoss()]!")
+	return TRUE
 
 /**
  * Apply a specific amount of damage to the mob using adjustBruteLoss(), adjustToxLoss(), etc.
@@ -105,6 +156,7 @@
 		damage_returned = testing_mob.adjustStaminaLoss(amount, updating_stamina = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"adjustStaminaLoss() should have returned [expected], but returned [damage_returned] instead!")
+	return TRUE
 
 /**
  * Set a specific amount of damage for the mob using setBruteLoss(), setToxLoss(), etc.
@@ -145,40 +197,43 @@
 		damage_returned = testing_mob.setStaminaLoss(amount, updating_stamina = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"setStaminaLoss() should have returned [expected], but returned [damage_returned] instead!")
+	return TRUE
 
 ///	Sanity tests damage and healing using adjustToxLoss, adjustBruteLoss, etc
 /datum/unit_test/mob_damage/proc/test_sanity_simple(mob/living/carbon/human/consistent/dummy)
-
 	// Apply 5 damage and then heal it
-	apply_damage(dummy, 5)
-	verify_damage(dummy, 5)
+	if(!test_apply_damage(dummy, amount = 5))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
 
-	apply_damage(dummy, -5)
-	verify_damage(dummy, 0)
+	if(!test_apply_damage(dummy, amount = -5))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
 
 	// Apply 15 damage and heal 3
-	apply_damage(dummy, 15)
-	verify_damage(dummy, 15)
+	if(!test_apply_damage(dummy, amount = 15))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
 
-	apply_damage(dummy, -3)
-	verify_damage(dummy, 12)
+	if(!test_apply_damage(dummy, amount = -3))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! underhealing was not applied correctly")
 
 	// Now overheal by 666. It should heal for 12.
 
-	apply_damage(dummy, -666, expected = 12)
-	verify_damage(dummy, 0)
+	if(!test_apply_damage(dummy, amount = -666, expected = 12))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! overhealing was not applied correctly")
 
 	// Now test the damage setter procs
 
 	// set all types of damage to 5
-	set_damage(dummy, 5, expected = -5)
-	verify_damage(dummy, 5)
+	if(!test_set_damage(dummy, amount = 5, expected = -5))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! failed to set damage to 5")
 	// now try healing 5
-	set_damage(dummy, 0, expected = 5)
-	verify_damage(dummy, 0)
+	if(!test_set_damage(dummy, amount = 0, expected = 5))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! failed to set damage to 0")
 
 ///	Sanity tests damage and healing using the more complex procs like take_overall_damage(), heal_overall_damage(), etc
 /datum/unit_test/mob_damage/proc/test_sanity_complex(mob/living/carbon/human/consistent/dummy)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
+
 	var/damage_returned
 	// take 5 brute, 2 burn
 	damage_returned = round(dummy.take_bodypart_damage(5, 2, updating_health = FALSE), 1)
@@ -195,21 +250,24 @@
 	TEST_ASSERT_EQUAL(damage_returned, 5, \
 		"heal_bodypart_damage() should have returned 5, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 1, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 1, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_bodypart_damage did not apply its healing correctly on the mob!")
 
 	// heal 1 brute, 1 burn
 	damage_returned = round(dummy.heal_overall_damage(1, 1, updating_health = FALSE), 1)
 	TEST_ASSERT_EQUAL(damage_returned, 2, \
 		"heal_overall_damage() should have returned 2, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mob!")
 
 	// take 50 brute, 50 burn
 	damage_returned = round(dummy.take_overall_damage(50, 50, updating_health = FALSE), 1)
 	TEST_ASSERT_EQUAL(damage_returned, -100, \
 		"take_overall_damage() should have returned -100, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("take_overall_damage did not apply its damage correctly on the mob!")
 
 	// testing negative damage amount args with the overall damage procs - the sign should be ignored for these procs
 
@@ -229,7 +287,8 @@
 	TEST_ASSERT_EQUAL(damage_returned, 10, \
 		"heal_overall_damage() should have returned 10, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 50, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healingcorrectly on the mob!")
 
 	// testing overhealing
 
@@ -237,134 +296,150 @@
 	TEST_ASSERT_EQUAL(damage_returned, 100, \
 		"heal_overall_damage() should have returned 100, but returned [damage_returned] instead!")
 
-	verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS)
+	if(!verify_damage(dummy, 0, included_types = BRUTELOSS|FIRELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mob!")
 
 ///	Tests damage procs with godmode on
 /datum/unit_test/mob_damage/proc/test_godmode(mob/living/carbon/human/consistent/dummy)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
 	// flip godmode bit to 1
 	dummy.status_flags ^= GODMODE
 
 	// Apply 9 damage and then heal it
-	apply_damage(dummy, 9, expected = 0)
-	verify_damage(dummy, 0)
+	if(!test_apply_damage(dummy, amount = 9, expected = 0))
+		TEST_FAIL("ABOVE FAILURE: failed test_godmode! mob took damage despite having godmode enabled.")
 
-	apply_damage(dummy, -9, expected = 0)
-	verify_damage(dummy, 0)
+	if(!test_apply_damage(dummy, amount = -9, expected = 0))
+		TEST_FAIL("ABOVE FAILURE: failed test_godmode! mob healed when they should've been at full health.")
 
 	// Apply 11 damage and then heal it, this time with forced enabled. The damage should go through regardless of godmode.
-	apply_damage(dummy, 11, forced = TRUE)
-	verify_damage(dummy, 11)
+	if(!test_apply_damage(dummy, amount = 11, forced = TRUE))
+		TEST_FAIL("ABOVE FAILURE: failed test_godmode! godmode did not respect forced = TRUE")
 
-	apply_damage(dummy, -11, forced = TRUE)
-	verify_damage(dummy, 0)
+	if(!test_apply_damage(dummy, amount = -11, forced = TRUE))
+		TEST_FAIL("ABOVE FAILURE: failed test_godmode! godmode did not respect forced = TRUE")
 
 	// flip godmode bit back to 0
 	dummy.status_flags ^= GODMODE
 
 /// Testing biotypes
 /datum/unit_test/mob_damage/proc/test_biotypes(mob/living/carbon/human/consistent/dummy)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
 	// Testing biotypes using a plasmaman, who is MOB_MINERAL and MOB_HUMANOID
 	dummy.set_species(/datum/species/plasmaman)
 
 	// argumentless default: should default to required_biotype = ALL. The damage should be applied in that case.
-	apply_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS)
-	verify_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS)
+	if(!test_apply_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS))
+		TEST_FAIL("ABOVE FAILURE: plasmaman did not take damage with biotypes = ALL")
 
 	// If we specify MOB_ORGANIC, the damage should not get applied because plasmamen lack that biotype.
-	apply_damage(dummy, 1, expected = 0, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_ORGANIC)
-	verify_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS)
+	if(!test_apply_damage(dummy, 1, expected = 0, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_ORGANIC))
+		TEST_FAIL("ABOVE FAILURE: plasmaman took damage with biotypes = MOB_ORGANIC")
 
 	// Now if we specify MOB_MINERAL the damage should get applied.
-	apply_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL)
-	verify_damage(dummy, 2, included_types = TOXLOSS|CLONELOSS|STAMINALOSS)
+	if(!test_apply_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL))
+		TEST_FAIL("ABOVE FAILURE: plasmaman did not take damage with biotypes = MOB_MINERAL")
 
 	// Transform back to human
 	dummy.set_species(/datum/species/human)
 
 	// We have 2 damage presently.
 	// Try to heal it; let's specify MOB_MINERAL, which should no longer work because we have changed back to a human.
-	apply_damage(dummy, -2, expected = 0, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL)
-	verify_damage(dummy, 2, included_types = TOXLOSS|CLONELOSS|STAMINALOSS)
+	if(!test_apply_damage(dummy, -2, expected = 0, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL))
+		TEST_FAIL("ABOVE FAILURE: human took damage with biotypes = MOB_MINERAL")
 
 	// Force heal some of the damage. When forced = TRUE the damage/healing gets applied no matter what.
-	apply_damage(dummy, -1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL, forced = TRUE)
-	verify_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS)
+	if(!test_apply_damage(dummy, -1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL, forced = TRUE))
+		TEST_FAIL("ABOVE FAILURE: human did not get healed when biotypes = MOB_MINERAL and forced = TRUE")
 
 	// Now heal the rest of it with the correct biotype. Make sure that this works. We should have 0 damage afterwards.
-	apply_damage(dummy, -1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_ORGANIC)
-	verify_damage(dummy, 0, included_types = TOXLOSS|CLONELOSS|STAMINALOSS)
+	if(!test_apply_damage(dummy, -1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_ORGANIC))
+		TEST_FAIL("ABOVE FAILURE: human did not get healed with biotypes = MOB_ORGANIC")
 
 /// Testing oxyloss with the TRAIT_NOBREATH
 /datum/unit_test/mob_damage/proc/test_nobreath(mob/living/carbon/human/consistent/dummy)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
+
 	// TRAIT_NOBREATH is supposed to prevent oxyloss damage (but not healing). Let's make sure that's the case.
 	ADD_TRAIT(dummy, TRAIT_NOBREATH, TRAIT_SOURCE_UNIT_TESTS)
 	// force some oxyloss here
 	dummy.setOxyLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more oxyloss damage with TRAIT_NOBREATH. It should not work.
-	apply_damage(dummy, 2, expected = 0, included_types = OXYLOSS)
-	verify_damage(dummy, 2, included_types = OXYLOSS)
+	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = dummy.getOxyLoss(), included_types = OXYLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_nobreath! mob took oxyloss damage while having TRAIT_NOBREATH")
 
 	// Make sure we are still be able to heal the oxyloss. This should work.
-	apply_damage(dummy, -2, included_types = OXYLOSS)
-	verify_damage(dummy, 0, included_types = OXYLOSS)
+	if(!test_apply_damage(dummy, -2, amount_after = dummy.getOxyLoss()-2, included_types = OXYLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_nobreath! mob could not heal oxyloss damage while having TRAIT_NOBREATH")
 
 	REMOVE_TRAIT(dummy, TRAIT_NOBREATH, TRAIT_SOURCE_UNIT_TESTS)
 
 /// Testing toxloss with TRAIT_TOXINLOVER and TRAIT_TOXIMMUNE
 /datum/unit_test/mob_damage/proc/test_toxintraits(mob/living/carbon/human/consistent/dummy)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
+
 	// TRAIT_TOXINLOVER is supposed to invert toxin damage and healing. Things that would normally cause toxloss now heal it, and vice versa.
 	ADD_TRAIT(dummy, TRAIT_TOXINLOVER, TRAIT_SOURCE_UNIT_TESTS)
 	// force some toxloss here
 	dummy.setToxLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more toxloss damage with TRAIT_TOXINLOVER. It should heal instead.
-	apply_damage(dummy, 2, expected = 2, included_types = TOXLOSS)
-	verify_damage(dummy, 0, included_types = TOXLOSS)
+	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.getToxLoss()-2, included_types = TOXLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not heal from toxin damage with TRAIT_TOXINLOVER")
 
 	// If we try to heal the toxloss we should take damage instead
-	apply_damage(dummy, -2, expected = -2, included_types = TOXLOSS)
-	verify_damage(dummy, 2, included_types = TOXLOSS)
+	if(!test_apply_damage(dummy, -2, expected = -2, amount_after = dummy.getToxLoss()+2, included_types = TOXLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not take damage from toxin healing with TRAIT_TOXINLOVER")
 
 	// TOXIMMUNE trait should prevent the damage you get from being healed by toxins medicines while having TRAIT_TOXINLOVER
 	ADD_TRAIT(dummy, TRAIT_TOXIMMUNE, TRAIT_SOURCE_UNIT_TESTS)
 
 	// need to force apply some toxin damage since the TOXIMUNNE trait sets toxloss to 0 upon being added
-	apply_damage(dummy, 2, included_types = TOXLOSS, forced = TRUE)
+	dummy.setToxLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// try to 'heal' again - this time it should just do nothing because we should be immune to any sort of toxin damage - including from inverted healing
-	apply_damage(dummy, -2, expected = 0, included_types = TOXLOSS)
-	verify_damage(dummy, 2, included_types = TOXLOSS)
+	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = dummy.getToxLoss(), included_types = TOXLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob should not have taken any damage or healing with TRAIT_TOXINLOVER + TRAIT_TOXIMMUNE")
 
 	// ok, let's try taking 'damage'. The inverted damage should still heal mobs with the TOXIMMUNE trait.
-	apply_damage(dummy, 2, expected = 2, included_types = TOXLOSS)
-	verify_damage(dummy, 0, included_types = TOXLOSS)
+	if(!test_apply_damage(dummy, 2, expected = 2, amount_after = dummy.getToxLoss()-2, included_types = TOXLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_toxintraits! mob did not heal from taking toxin damage with TRAIT_TOXINLOVER + TRAIT_TOXIMMUNE")
 
 	REMOVE_TRAIT(dummy, TRAIT_TOXINLOVER, TRAIT_SOURCE_UNIT_TESTS)
 	REMOVE_TRAIT(dummy, TRAIT_TOXIMMUNE, TRAIT_SOURCE_UNIT_TESTS)
 
 /// Testing cloneloss with TRAIT_NOCLONELOSS
 /datum/unit_test/mob_damage/proc/test_nocloneloss(mob/living/carbon/human/consistent/dummy)
-	// TRAIT_NOBREATH is supposed to prevent cloneloss damage and healing. Let's make sure that's the case.
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
+
+	// TRAIT_TRAIT_NOCLONELOSS is supposed to prevent cloneloss damage and healing. Let's make sure that's the case.
 	ADD_TRAIT(dummy, TRAIT_NOCLONELOSS, TRAIT_SOURCE_UNIT_TESTS)
 	// force some cloneloss here
 	dummy.setCloneLoss(2, updating_health = FALSE, forced = TRUE)
 
 	// Try to take more cloneloss damage with TRAIT_NOCLONELOSS. It should not work.
-	apply_damage(dummy, 2, expected = 0, included_types = CLONELOSS)
-	verify_damage(dummy, 2, included_types = CLONELOSS)
+	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = dummy.getCloneLoss(), included_types = CLONELOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob took cloneloss damage with TRAIT_NOCLONELOSS")
 
 	// Healing the cloneloss should not work either, unless we force it
-	apply_damage(dummy, -2, expected = 0, included_types = CLONELOSS)
-	verify_damage(dummy, 2, included_types = CLONELOSS)
+	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = dummy.getCloneLoss(), included_types = CLONELOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob healed cloneloss damage with TRAIT_NOCLONELOSS")
 	// so let's force it
-	apply_damage(dummy, -2, expected = 2, included_types = CLONELOSS, forced = TRUE)
-	verify_damage(dummy, 0, included_types = CLONELOSS)
+	if(!test_apply_damage(dummy, -2, expected = 2, amount_after = dummy.getCloneLoss()-2, included_types = CLONELOSS, forced = TRUE))
+		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob could not heal cloneloss damage with forced = TRUE and TRAIT_NOCLONELOSS")
 
 	REMOVE_TRAIT(dummy, TRAIT_NOCLONELOSS, TRAIT_SOURCE_UNIT_TESTS)
 
 /// Testing heal_ordered_damage()
 /datum/unit_test/mob_damage/proc/test_ordered_healing(mob/living/carbon/human/consistent/dummy)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	dummy.fully_heal(HEAL_DAMAGE)
 	var/damage_returned
 
 	// We apply 20 brute, 20 burn, and 20 toxin damage. 60 damage total
@@ -381,12 +456,12 @@
 	TEST_ASSERT_EQUAL(dummy.getFireLoss(), 10, \
 		"[src] should have 10 burn damage, but has [dummy.getFireLoss()] instead!")
 	TEST_ASSERT_EQUAL(dummy.getToxLoss(), 20, \
-		"[src] should have 2 toxin damage, but has [dummy.getToxLoss()] instead!")
+		"[src] should have 20 toxin damage, but has [dummy.getToxLoss()] instead!")
 
 	// Now heal the remaining 30, overhealing by 5.
 	damage_returned = round(dummy.heal_ordered_damage(35, list(BRUTE, BURN, TOX)), 1)
 	TEST_ASSERT_EQUAL(damage_returned, 30, \
-		"heal_ordered_damage() should have returned 0, but returned [damage_returned] instead!")
+		"heal_ordered_damage() should have returned 30, but returned [damage_returned] instead!")
 
 	// Should have no damage remaining
 	TEST_ASSERT_EQUAL(dummy.getBruteLoss(), 0, \
@@ -439,37 +514,42 @@
 	if(included_types & STAMINALOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getStaminaLoss(), amount, \
 			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.getStaminaLoss()]!")
+	return TRUE
 
 /datum/unit_test/mob_damage/basic/test_sanity_simple(mob/living/basic/mouse/gray/gusgus)
 	// check to see if basic mob damage works
 
 	// Simple damage and healing
 	// Take 1 damage, heal for 1
-	apply_damage(gusgus, 1)
-	verify_damage(gusgus, 1)
+	if(!test_apply_damage(gusgus, amount = 1))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
 
-	apply_damage(gusgus, -1)
-	verify_damage(gusgus, 0)
+	if(!test_apply_damage(gusgus, amount = -1))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
 
 	// Give 2 damage of every time (translates to 10 brute, 2 staminaloss)
-	apply_damage(gusgus, 2)
-	verify_damage(gusgus, 2)
+	if(!test_apply_damage(gusgus, amount = 2))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
 
 	// underhealing: heal 1 damage of every type (translates to 5 brute, 1 staminaloss)
-	apply_damage(gusgus, -1)
-	verify_damage(gusgus, 1)
+	if(!test_apply_damage(gusgus, amount = -1))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
 
 	// overhealing
 
 	// heal 11 points of toxloss (should take care of all 5 brute damage remaining)
-	apply_damage(gusgus, -11, expected = 5, included_types = TOXLOSS)
+	if(!apply_damage(gusgus, -11, expected = 5, included_types = TOXLOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! toxloss was not applied correctly")
 	// heal the remaining point of staminaloss
-	apply_damage(gusgus, -11, expected = 1, included_types = STAMINALOSS)
+	if(!apply_damage(gusgus, -11, expected = 1, included_types = STAMINALOSS))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! failed to heal staminaloss correctly")
 	// heal 35 points of each type, we should already be at full health so nothing should happen
-	apply_damage(gusgus, -35, expected = 0)
-	verify_damage(gusgus, 0)
+	if(!test_apply_damage(gusgus, amount = -35, expected = 0))
+		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! overhealing was not applied correctly")
 
 /datum/unit_test/mob_damage/basic/test_sanity_complex(mob/living/basic/mouse/gray/gusgus)
+	// Heal up, so that errors from the previous tests we won't cause this one to fail
+	gusgus.fully_heal(HEAL_DAMAGE)
 	var/damage_returned
 	// overall damage procs
 
@@ -508,7 +588,8 @@
 	TEST_ASSERT_EQUAL(damage_returned, -6, \
 		"take_overall_damage() should have returned -6, but returned [damage_returned] instead!")
 
-	verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS)
+	if(!verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS))
+		TEST_FAIL("take_overall_damage did not apply its damage correctly on the mouse!")
 
 	// testing negative args with the overall damage procs
 
@@ -528,7 +609,8 @@
 	TEST_ASSERT_EQUAL(damage_returned, 2, \
 		"heal_overall_damage() should have returned 2, but returned [damage_returned] instead!")
 
-	verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS)
+	if(!verify_damage(gusgus, 1, expected = 6, included_types = BRUTELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mouse!")
 
 	// testing overhealing
 
@@ -536,4 +618,5 @@
 	TEST_ASSERT_EQUAL(damage_returned, 6, \
 		"heal_overall_damage() should have returned 6, but returned [damage_returned] instead!")
 
-	verify_damage(gusgus, 0, included_types = BRUTELOSS)
+	if(!verify_damage(gusgus, 0, included_types = BRUTELOSS))
+		TEST_FAIL("heal_overall_damage did not apply its healing correctly on the mouse!")

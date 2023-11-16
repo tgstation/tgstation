@@ -3,6 +3,7 @@
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "watermelonslice"
 	food_reagents = list(
 		/datum/reagent/water = 1,
@@ -13,6 +14,22 @@
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	juice_typepath = /datum/reagent/consumable/watermelonjuice
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/appleslice
+	name = "apple slice"
+	desc = "The perfect after-school snack."
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "appleslice"
+	food_reagents = list(
+		/datum/reagent/consumable/applejuice = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.2,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	tastes = list("apple" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD
+	juice_typepath = /datum/reagent/consumable/applejuice
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/hugemushroomslice
@@ -66,7 +83,7 @@
 	)
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	trash_type = /obj/item/trash/popcorn/
+	trash_type = /obj/item/trash/popcorn
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/soydope
@@ -414,6 +431,18 @@
 /obj/item/food/seaweedsheet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/sushi/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+
+/obj/item/food/seaweedsheet/saltcane
+	name = "dried saltcane sheathe"
+	desc = "A dried sheet of saltcane sheathe can used for making sushi. Use an ingredient on it to start making custom sushi!"
+	icon_state = "seaweedsheet"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/granola_bar
 	name = "granola bar"

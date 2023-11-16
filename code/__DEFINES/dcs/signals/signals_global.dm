@@ -77,8 +77,8 @@
 /// global signal sent when a nuclear device is detonating (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
 #define COMSIG_GLOB_NUKE_DEVICE_DETONATING "!nuclear_device_detonating"
 
-/// Global signal sent when a light mechanism is completed (try_id)
-#define COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED "!light_mechanism_completed"
+/// Global signal sent when a puzzle piece is completed (light mechanism, etc.) (try_id)
+#define COMSIG_GLOB_PUZZLE_COMPLETED "!puzzle_completed"
 
 /// Global signal called after the station changes its name.
 /// (new_name, old_name)
@@ -90,7 +90,13 @@
 /// Global signal when light debugging is canceled
 #define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"
 
+/// Global signal when starlight color is changed (old_star, new_star)
+#define COMSIG_STARLIGHT_COLOR_CHANGED "!starlight_color_changed"
+
 /// Global signal sent when a religious sect is chosen
 #define COMSIG_RELIGIOUS_SECT_CHANGED "!religious_sect_changed"
 /// Global signal sent when a religious sect is reset
 #define COMSIG_RELIGIOUS_SECT_RESET "!religious_sect_reset"
+
+/// Global signal sent when narsie summon count is updated: (new count)
+#define COMSIG_NARSIE_SUMMON_UPDATE "!narsie_summon_update"

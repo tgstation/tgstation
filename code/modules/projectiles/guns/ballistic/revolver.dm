@@ -60,9 +60,9 @@
 	set category = "Object"
 	set desc = "Click to spin your revolver's chamber."
 
-	var/mob/M = usr
+	var/mob/user = usr
 
-	if(M.stat || !in_range(M,src))
+	if(user.stat || !in_range(user, src))
 		return
 
 	if (recent_spin > world.time)
@@ -71,7 +71,8 @@
 
 	if(do_spin())
 		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
-		usr.visible_message(span_notice("[usr] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
+		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
+		balloon_alert(user, "chamber spun")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
 
@@ -139,6 +140,17 @@
 	desc = "A modernized 7 round revolver manufactured by Waffle Co. Uses .357 ammo."
 	icon_state = "revolversyndie"
 
+/obj/item/gun/ballistic/revolver/syndicate/nuclear
+	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/revolver/syndicate/cowboy
+	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
+	//There's already a cowboy sprite in there!
+	icon_state = "lucky"
+
+/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear
+	pin = /obj/item/firing_pin/implant/pindicate
+
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
 	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
@@ -201,10 +213,13 @@
 /obj/item/gun/ballistic/revolver/russian/fire_gun(atom/target, mob/living/user, flag, params)
 	. = ..(null, user, flag, params)
 
+	var/tk_controlled = FALSE
 	if(flag)
 		if(!(target in user.contents) && ismob(target))
 			if(user.combat_mode) // Flogging action
 				return
+	else if (HAS_TRAIT_FROM_ONLY(src, TRAIT_TELEKINESIS_CONTROLLED, REF(user))) // if we're far away, you can still fire it at yourself if you have TK.
+		tk_controlled = TRUE
 
 	if(isliving(user))
 		if(!can_trigger_gun(user))
@@ -212,8 +227,9 @@
 	if(target != user)
 		playsound(src, dry_fire_sound, 30, TRUE)
 		user.visible_message(
-			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."), \
-			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"))
+			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."),
+			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"),
+		)
 		return
 
 	if(ishuman(user))
@@ -235,7 +251,8 @@
 				antagonist = src, \
 				rounds_loaded = loaded_rounds, \
 				aimed_at =  affecting.name, \
-				result = (chambered ? "lost" : "won"))
+				result = (chambered ? "lost" : "won"), \
+			)
 
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_CURSED)) // I cannot live, I cannot die, trapped in myself, body my holding cell.
@@ -246,6 +263,9 @@
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 				if(is_target_face)
 					shoot_self(user, affecting)
+				else if(tk_controlled) // the consequence of you doing the telekinesis stuff
+					to_chat(user, span_userdanger("As your mind concentrates on the revolver, you realize that it's pointing towards your head a little too late!"))
+					shoot_self(user, BODY_ZONE_HEAD)
 				else
 					user.visible_message(span_danger("[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!"), span_userdanger("You cowardly fire [src] at your [affecting.name]!"), span_hear("You hear a gunshot!"))
 				chambered = null

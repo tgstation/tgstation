@@ -146,3 +146,7 @@
 /obj/item/sbeacondrop/clownbomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a silly explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb/badmin/clown
+
+/obj/item/sbeacondrop/horse
+	desc = "A label on it reads: <i>Warning: Activating this device will send a live horse to your location.</i>"
+	droptype = /mob/living/basic/pony/syndicate

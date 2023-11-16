@@ -8,6 +8,7 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	supports_variations_flags = CLOTHING_MONKEY_VARIATION
 
 /datum/armor/clothing_under/syndicate
 	melee = 10
@@ -32,6 +33,7 @@
 	armor_type = /datum/armor/clothing_under/syndicate_bloodred
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 
 /datum/armor/clothing_under/syndicate_bloodred
 	melee = 10
@@ -99,6 +101,7 @@
 	icon_state = "tactical_suit"
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 
 /obj/item/clothing/under/syndicate/camo
 	name = "camouflage fatigues"
@@ -106,12 +109,14 @@
 	icon_state = "camogreen"
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
 	icon_state = "trackpants"
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 	armor_type = /datum/armor/clothing_under/syndicate_soviet
 	resistance_flags = NONE
 
@@ -123,12 +128,14 @@
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
 	desc = "Military grade tracksuits for frontline squatting."
 	icon_state = "rus_under"
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 	armor_type = /datum/armor/clothing_under/syndicate_rus_army
 	resistance_flags = NONE
 
@@ -142,6 +149,7 @@
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
 	icon_state = "scrubswine"
 	can_adjust = FALSE
+	supports_variations_flags = NONE
 	armor_type = /datum/armor/clothing_under/syndicate_scrubs
 
 /datum/armor/clothing_under/syndicate_scrubs

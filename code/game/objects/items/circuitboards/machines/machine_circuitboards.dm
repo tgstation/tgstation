@@ -255,7 +255,8 @@
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator"
@@ -462,7 +463,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/servo = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -513,7 +514,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -550,7 +551,7 @@
 
 /obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
 	build_path = smartfridge.base_build_path
-	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
+	if(!fridges_name_paths.Find(build_path))
 		name = "[initial(smartfridge.name)]" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
@@ -601,7 +602,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -960,7 +961,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/servo = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR"
@@ -1245,9 +1247,21 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
@@ -1368,6 +1382,21 @@
 		/obj/item/stack/cable_coil = 5,
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/card_reader = 1)
+
+//Tram
+/obj/item/circuitboard/machine/crossing_signal
+	name = "Crossing Signal"
+	build_path = /obj/machinery/transport/crossing_signal
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/guideway_sensor
+	name = "Guideway Sensor"
+	build_path = /obj/machinery/transport/guideway_sensor
+	req_components = list(
+		/obj/item/assembly/prox_sensor = 1,
+	)
 
 //Misc
 /obj/item/circuitboard/machine/sheetifier
@@ -1529,21 +1558,3 @@
 		/obj/item/stack/sheet/plasteel = 2,
 	)
 
-/obj/item/circuitboard/machine/quantum_server
-	name = "Quantum Server"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/quantum_server
-	req_components = list(
-		/datum/stock_part/servo = 2,
-		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/capacitor = 1,
-	)
-
-/obj/item/circuitboard/machine/netpod
-	name = "Netpod"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/netpod
-	req_components = list(
-		/datum/stock_part/servo = 1,
-		/datum/stock_part/matter_bin = 2,
-	)

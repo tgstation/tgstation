@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/minebot
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BLACKLIST_MINERAL_TURFS = list(/turf/closed/mineral/gibtonite),
 		BB_AUTOMATED_MINING = FALSE,
 	)
@@ -12,7 +12,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot,
-		/datum/ai_planning_subtree/find_and_hunt_target/consume_ores/minebot,
+		/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot,
 		/datum/ai_planning_subtree/minebot_mining,
 		/datum/ai_planning_subtree/locate_dead_humans,
 	)
@@ -133,11 +133,11 @@
 	controller.clear_blackboard_key(target_key)
 
 ///store ores in our body
-/datum/ai_planning_subtree/find_and_hunt_target/consume_ores/minebot
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores/minebot
 	hunt_chance = 100
 
-/datum/ai_planning_subtree/find_and_hunt_target/consume_ores/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_ores/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/automated_mining = controller.blackboard[BB_AUTOMATED_MINING]
 	var/mob/living/living_pawn = controller.pawn
 
@@ -201,10 +201,10 @@
 	radial_icon_state = "mech_eject"
 	ability_key = BB_MINEBOT_DUMP_ABILITY
 
-/datum/pet_command/point_targetting/attack/minebot
+/datum/pet_command/point_targeting/attack/minebot
 	attack_behaviour = /datum/ai_behavior/basic_ranged_attack/minebot
 
-/datum/pet_command/point_targetting/attack/minebot/execute_action(datum/ai_controller/controller)
+/datum/pet_command/point_targeting/attack/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	var/mob/living/living_pawn = controller.pawn
 	if(!living_pawn.combat_mode)

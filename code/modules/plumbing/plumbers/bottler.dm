@@ -34,23 +34,24 @@
 ///changes the tile array
 /obj/machinery/plumbing/bottler/setDir(newdir)
 	. = ..()
+	var/turf/target_turf = get_turf(src)
 	switch(dir)
 		if(NORTH)
-			goodspot = get_step(get_turf(src), NORTH)
-			inputspot = get_step(get_turf(src), SOUTH)
-			badspot = get_step(get_turf(src), EAST)
+			goodspot = get_step(target_turf, NORTH)
+			inputspot = get_step(target_turf, SOUTH)
+			badspot = get_step(target_turf, EAST)
 		if(SOUTH)
-			goodspot = get_step(get_turf(src), SOUTH)
-			inputspot = get_step(get_turf(src), NORTH)
-			badspot = get_step(get_turf(src), WEST)
+			goodspot = get_step(target_turf, SOUTH)
+			inputspot = get_step(target_turf, NORTH)
+			badspot = get_step(target_turf, WEST)
 		if(WEST)
-			goodspot = get_step(get_turf(src), WEST)
-			inputspot = get_step(get_turf(src), EAST)
-			badspot = get_step(get_turf(src), NORTH)
+			goodspot = get_step(target_turf, WEST)
+			inputspot = get_step(target_turf, EAST)
+			badspot = get_step(target_turf, NORTH)
 		if(EAST)
-			goodspot = get_step(get_turf(src), EAST)
-			inputspot = get_step(get_turf(src), WEST)
-			badspot = get_step(get_turf(src), SOUTH)
+			goodspot = get_step(target_turf, EAST)
+			inputspot = get_step(target_turf, WEST)
+			badspot = get_step(target_turf, SOUTH)
 
 	//If by some miracle
 	if( ( !valid_output_configuration ) && ( goodspot != null && inputspot != null && badspot != null ) )
@@ -63,7 +64,7 @@
 	if(!valid_output_configuration)
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
-	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = 100)
+	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = reagents.maximum_volume, round_value = TRUE)
 	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return .
 	wanted_amount = new_amount
@@ -81,8 +82,13 @@
 	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
 		use_power(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
-		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
-			var/obj/item/reagent_containers/B = AM
+		//allowed containers
+		var/static/list/allowed_containers = list(
+			/obj/item/reagent_containers/cup,
+			/obj/item/ammo_casing/shotgun/dart,
+		)
+		if(is_type_in_list(AM, allowed_containers))
+			var/obj/item/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
 				reagents.trans_to(B, wanted_amount, transferred_by = src)
@@ -90,10 +96,8 @@
 				return
 			///glass was full so we move it away
 			AM.forceMove(badspot)
-		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
+		else if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
 			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
-			return
-		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
+		else if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
 			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
-			return

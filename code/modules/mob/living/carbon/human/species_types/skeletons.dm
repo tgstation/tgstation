@@ -5,7 +5,6 @@
 	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_GENELESS,
@@ -22,6 +21,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		TRAIT_UNHUSKABLE,
 		TRAIT_XENO_IMMUNE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
@@ -31,7 +31,6 @@
 	mutantheart = null
 	mutantliver = /obj/item/organ/internal/liver/bone
 	mutantlungs = null
-	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk
@@ -54,6 +53,11 @@
 	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
+
+/datum/species/skeleton/get_physical_attributes()
+	return "These humerus folk lack any fleshy biology, which allows them to resist pressure, temperature, radiation, asphyxiation and even toxins. \
+		However, due to that same fact, it is quite hard to heal them as well. The calcium found in common space milk is highly effective at treating their wounds. \
+		Their limbs are easy to pop off their joints, but they can somehow just slot them back in."
 
 /datum/species/skeleton/get_species_description()
 	return "A rattling skeleton! They descend upon Space Station 13 \

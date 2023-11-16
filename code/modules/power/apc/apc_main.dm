@@ -264,6 +264,7 @@
 /obj/machinery/power/apc/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == cell)
+		cell.update_appearance()
 		cell = null
 		charging = APC_NOT_CHARGING
 		update_appearance()

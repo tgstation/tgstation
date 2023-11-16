@@ -455,15 +455,15 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return FALSE
 
 	caller.playsound_local(caller, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
-	adjust_uses(-1)
-
-	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
-		build_all_button_icons()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
 	addtimer(CALLBACK(src, PROC_REF(animate_machine), caller, clicked_machine), 5 SECONDS) //kabeep!
 	unset_ranged_ability(caller, span_danger("Sending override signal..."))
+	adjust_uses(-1) //adjust after we unset the active ability since we may run out of charges, thus deleting the ability
+
+	if(uses)
+		desc = "[initial(desc)] It has [uses] use\s remaining."
+		build_all_button_icons()
 	return TRUE
 
 /datum/action/innate/ai/ranged/override_machine/proc/animate_machine(mob/living/caller, obj/machinery/to_animate)
@@ -622,7 +622,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	name = "Robotic Factory (Removes Shunting)"
 	description = "Build a machine anywhere, using expensive nanomachines, that can convert a living human into a loyal cyborg slave when placed inside."
 	cost = 100
-	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/place_transformer
 	unlock_text = span_notice("You make contact with Space Amazon and request a robotics factory for delivery.")
 	unlock_sound = 'sound/machines/ping.ogg'
@@ -655,9 +654,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/obj/machinery/transformer/conveyor = new(T)
 	conveyor.master_ai = owner
 	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
-	owner_AI.can_shunt = FALSE
-	to_chat(owner, span_warning("You are no longer able to shunt your core to APCs."))
+	if(owner_AI.can_shunt) //prevent repeated messages
+		owner_AI.can_shunt = FALSE
+		to_chat(owner, span_warning("You are no longer able to shunt your core to APCs."))
 	adjust_uses(-1)
+	active = FALSE
 
 /mob/living/silicon/ai/proc/remove_transformer_image(client/C, image/I, turf/T)
 	if(C && I.loc == T)
@@ -1024,7 +1025,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			say_name = params["name"]
 
 /datum/ai_module/utility/emag
-	name = "Targetted Safeties Override"
+	name = "Targeted Safeties Override"
 	description = "Allows you to disable the safeties of any machinery on the station, provided you can access it."
 	cost = 20
 	power_type = /datum/action/innate/ai/ranged/emag
@@ -1032,7 +1033,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	unlock_sound = SFX_SPARKS
 
 /datum/action/innate/ai/ranged/emag
-	name = "Targetted Safeties Override"
+	name = "Targeted Safeties Override"
 	desc = "Allows you to effectively emag anything you click on."
 	button_icon = 'icons/obj/card.dmi'
 	button_icon_state = "emag"

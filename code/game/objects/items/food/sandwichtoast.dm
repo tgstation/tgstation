@@ -284,7 +284,7 @@
 	// Closest thing to a mullet we have
 	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
 		return FOOD_LIKED
-	return FOOD_DISLIKED
+	return FOOD_ALLERGIC
 
 /**
 * Callback to be used with the edible component.
@@ -302,5 +302,5 @@
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts to shove [src] down [user.p_their()] throat the wrong way. It looks like [user.p_theyre()] trying to commit suicide!"))
 	qdel(src)
-	user.gib(TRUE, TRUE, TRUE)
+	user.gib()
 	return MANUAL_SUICIDE

@@ -14,7 +14,7 @@
 	var/amount
 
 /datum/supply_pack/market_materials/get_cost()
-	for(var/datum/material/mat in SSstock_market.materials_prices)
+	for(var/datum/material/mat as anything in SSstock_market.materials_prices)
 		if(material == mat)
 			return SSstock_market.materials_prices[mat] * amount
 

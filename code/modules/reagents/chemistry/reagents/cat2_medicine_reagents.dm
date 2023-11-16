@@ -1,6 +1,5 @@
 // Category 2 medicines are medicines that have an ill effect regardless of volume/OD to dissuade doping. Mostly used as emergency chemicals OR to convert damage (and heal a bit in the process). The type is used to prompt borgs that the medicine is harmful.
 /datum/reagent/medicine/c2
-	harmful = TRUE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	inverse_chem = null //Some of these use inverse chems - we're just defining them all to null here to avoid repetition, eventually this will be moved up to parent
 	creation_purity = REAGENT_STANDARD_PURITY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
@@ -46,7 +45,13 @@
 		. = UPDATE_MOB_HEALTH
 
 	if(good_kind_of_healing && !reaping && SPT_PROB(0.00005, seconds_per_tick)) //janken with the grim reaper!
-		notify_ghosts("[affected_mob] has entered a game of rock-paper-scissors with death!", source = affected_mob, action = NOTIFY_ORBIT, header = "Who Will Win?")
+		notify_ghosts(
+			"[affected_mob] has entered a game of rock-paper-scissors with death!",
+			source = affected_mob,
+			action = NOTIFY_ORBIT,
+			header = "Who Will Win?",
+			notify_flags = NOTIFY_CATEGORY_DEFAULT,
+		)
 		reaping = TRUE
 		if(affected_mob.apply_status_effect(/datum/status_effect/necropolis_curse, CURSE_BLINDING))
 			helbent = TRUE
@@ -492,13 +497,15 @@
 		show_message = 0
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	var/harmies = min(carbies.getBruteLoss(), carbies.adjustBruteLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype)*-1)
-	var/burnies = min(carbies.getFireLoss(), carbies.adjustFireLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype)*-1)
+	var/current_bruteloss = carbies.getBruteLoss() // because this will be changed after calling adjustBruteLoss()
+	var/current_fireloss = carbies.getFireLoss() // because this will be changed after calling adjustFireLoss()
+	var/harmies = clamp(carbies.adjustBruteLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
+	var/burnies = clamp(carbies.adjustFireLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
 	var/need_mob_update = harmies + burnies
-	need_mob_update += carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))), updating_health = FALSE, required_biotype = affected_biotype) //0.5 - 0.75
+	need_mob_update = carbies.adjustToxLoss((harmies + burnies)*(0.5 + (0.25*(1-creation_purity))), updating_health = FALSE, required_biotype = affected_biotype) || need_mob_update //0.5 - 0.75
 
 	if(need_mob_update)
 		carbies.updatehealth()

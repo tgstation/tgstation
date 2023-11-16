@@ -1,3 +1,4 @@
+#define ONLY_TURF 1
 
 /// Gives all current occupants a notification that the server is going down
 /obj/machinery/quantum_server/proc/begin_shutdown(mob/user)
@@ -90,7 +91,7 @@
 	var/turf/goal_turfs = list()
 	var/turf/crate_turfs = list()
 
-	for(var/thing in GLOB.landmarks_list)
+	for(var/obj/effect/landmark/bitrunning/thing in GLOB.landmarks_list)
 		if(istype(thing, /obj/effect/landmark/bitrunning/hololadder_spawn))
 			exit_turfs += get_turf(thing)
 			qdel(thing) // i'm worried about multiple servers getting confused so lets clean em up
@@ -109,6 +110,11 @@
 			qdel(thing)
 			continue
 
+		if(istype(thing, /obj/effect/landmark/bitrunning/loot_signal))
+			var/turf/signaler_turf = get_turf(thing)
+			signaler_turf.AddComponent(/datum/component/bitrunning_points, generated_domain)
+			qdel(thing)
+
 	if(!length(exit_turfs))
 		CRASH("Failed to find exit turfs on generated domain.")
 	if(!length(goal_turfs))
@@ -119,7 +125,6 @@
 		new /obj/structure/closet/crate/secure/bitrunning/encrypted(pick(crate_turfs))
 
 	return TRUE
-#define ONLY_TURF 1 // There should only ever be one turf at the bottom left of the map.
 
 /// Loads the safehouse
 /obj/machinery/quantum_server/proc/initialize_safehouse()
@@ -142,7 +147,7 @@
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	is_ready = FALSE
 
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	sever_connections()
 
 	if(!fast)
 		notify_spawned_threats()
@@ -155,12 +160,12 @@
 
 	update_use_power(IDLE_POWER_USE)
 	domain_randomized = FALSE
-	domain_threats = 0
 	retries_spent = 0
 
 /// Deletes all the tile contents
 /obj/machinery/quantum_server/proc/scrub_vdom()
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR) // just in case
+	sever_connections() /// just in case someone's connected
+	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
 
 	if(length(generated_domain.reservations))
 		var/datum/turf_reservation/res = generated_domain.reservations[1]

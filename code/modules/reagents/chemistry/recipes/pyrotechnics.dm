@@ -125,16 +125,16 @@
 		///special size for anti cult effect
 		var/effective_size = round(created_volume/48)
 		playsound(T, 'sound/effects/pray.ogg', 80, FALSE, effective_size)
-		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,T))
+		for(var/mob/living/basic/revenant/ghostie in get_hearers_in_view(7,T))
 			var/deity
 			if(GLOB.deity)
 				deity = GLOB.deity
 			else
 				deity = "Christ"
-			to_chat(R, span_userdanger("The power of [deity] compels you!"))
-			R.stun(20)
-			R.reveal(100)
-			R.adjustHealth(50)
+			to_chat(ghostie, span_userdanger("The power of [deity] compels you!"))
+			ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
+			ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 10 SECONDS)
+			ghostie.adjust_health(50)
 		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
 			if(IS_CULTIST(C))
 				to_chat(C, span_userdanger("The divine explosion sears you!"))
@@ -542,9 +542,9 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/T1 = created_volume * 8e3		//100 units : Zap 3 times, with powers 8e5/2e6/4.8e6. Tesla revolvers have a power of 10000 for comparison.
-	var/T2 = created_volume * 2e4
-	var/T3 = created_volume * 4.8e4
+	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 8e5/2e6/4.8e6. Tesla revolvers have a power of 10000 for comparison.
+	var/T2 = created_volume * 50
+	var/T3 = created_volume * 120
 	var/added_delay = 0.5 SECONDS
 	if(created_volume >= 75)
 		addtimer(CALLBACK(src, PROC_REF(zappy_zappy), holder, T1), added_delay)
@@ -557,10 +557,11 @@
 	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), added_delay)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
-	if(QDELETED(holder.my_atom))
+	var/atom/holder_atom = holder.my_atom
+	if(QDELETED(holder_atom))
 		return
-	tesla_zap(holder.my_atom, 7, power, zap_flags)
-	playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
+	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1e3, zap_flags = zap_flags)
+	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474

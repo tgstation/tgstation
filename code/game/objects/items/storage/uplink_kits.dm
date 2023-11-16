@@ -340,6 +340,14 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie
+	name = "Boxed Rebar Crossbow"
+	desc = "Now features instruction manual for making ammo."
+
+/obj/item/storage/box/syndie_kit/rebarxbowsyndie/PopulateContents()
+	new /obj/item/book/granter/crafting_recipe/dusting/rebarxbowsyndie_ammo(src)
+	new /obj/item/gun/ballistic/rifle/rebarxbow/syndie(src)
+
 /obj/item/storage/box/syndie_kit/origami_bundle
 	name = "origami kit"
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
@@ -610,7 +618,16 @@
 	new /obj/item/storage/belt/grenade/full(src)
 	if(prob(1))
 		new /obj/item/clothing/head/hats/hos/shako(src)
-		new /obj/item/mod/module/hat_stabilizer(src)
+
+/obj/item/storage/box/syndie_kit/core_gear
+	name = "core equipment box"
+	desc = "Contains all the necessary gear for success for any nuclear operative unsure of what is needed for success in the field. Everything here WILL help you."
+
+/obj/item/storage/box/syndie_kit/core_gear/PopulateContents()
+	new /obj/item/implanter/freedom (src)
+	new /obj/item/card/emag/doorjack (src)
+	new /obj/item/reagent_containers/hypospray/medipen/stimulants (src)
+	new /obj/item/grenade/c4 (src)
 
 /// Surplus Ammo Box
 
@@ -747,13 +764,13 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	/// If all the antag datums are 'fake', disallow induction! No self-antagging.
+	/// If all the antag datums are 'fake' or none exist, disallow induction! No self-antagging.
 	var/faker
 	for(var/datum/antagonist/antag_datum as anything in human_target.mind.antag_datums)
 		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
 			faker = TRUE
 
-	if(faker) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(faker || isnull(human_target.mind.antag_datums)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
@@ -788,6 +805,21 @@
 /obj/item/storage/box/syndie_kit/poster_box/PopulateContents()
 	for(var/i in 1 to poster_count)
 		new /obj/item/poster/traitor(src)
+
+/obj/item/storage/box/syndie_kit/cowboy
+	name = "western outlaw pack"
+	desc = "Contains everything you'll need to be the rootin' tootin' cowboy you always wanted. Either play the Lone Ranger or go in with your posse of outlaws."
+
+/obj/item/storage/box/syndie_kit/cowboy/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/clothing/shoes/cowboy/black/syndicate= 1,
+		/obj/item/clothing/head/cowboy/black/syndicate = 1,
+		/obj/item/storage/belt/holster/nukie/cowboy/full = 1,
+		/obj/item/clothing/under/costume/dutch/syndicate = 1,
+		/obj/item/lighter/skull = 1,
+		/obj/item/sbeacondrop/horse = 1,
+		/obj/item/food/grown/apple = 1,
+	), src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

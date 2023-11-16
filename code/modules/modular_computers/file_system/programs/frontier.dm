@@ -8,7 +8,7 @@
 	program_icon_state = "research"
 	tgui_id = "NtosScipaper"
 	program_icon = "paper-plane"
-	transfer_access = list(ACCESS_ORDNANCE)
+	download_access = list(ACCESS_ORDNANCE)
 
 	var/datum/techweb/linked_techweb
 	/// Unpublished, temporary paper datum.
@@ -18,14 +18,11 @@
 	/// The file under consideration.
 	var/datum/computer_file/data/ordnance/selected_file
 
-/datum/computer_file/program/scipaper_program/New()
+/datum/computer_file/program/scipaper_program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	paper_to_be = new
-
-/datum/computer_file/program/scipaper_program/on_start(mob/living/user)
-	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
-		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, computer)
 
 /datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/multitool))
@@ -68,9 +65,9 @@
 		singular_partner["path"] = partner.type
 		singular_partner["boostedNodes"] = list()
 		singular_partner["acceptedExperiments"] = list()
-		for (var/node_id in partner.boosted_nodes)
+		for (var/node_id in partner.boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
-			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = partner.boosted_nodes[node_id], "id"=node_id))
+			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = partner.boostable_nodes[node_id], "id" = node_id))
 		for (var/datum/experiment/ordnance/ordnance_experiment as anything in partner.accepted_experiments)
 			singular_partner["acceptedExperiments"] += initial(ordnance_experiment.name)
 		parsed_partners += list(singular_partner)
@@ -157,7 +154,7 @@
 				data["purchaseableBoosts"][partner.type] = list()
 				for(var/node_id in linked_techweb.get_available_nodes())
 					// Not from our partner
-					if(!(node_id in partner.boosted_nodes))
+					if(!(node_id in partner.boostable_nodes))
 						continue
 					if(!partner.allowed_to_boost(linked_techweb, node_id))
 						continue

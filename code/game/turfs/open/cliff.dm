@@ -35,6 +35,10 @@
 	SET_PLANE(underlay, underlay_plane || plane, src)
 	underlays += underlay
 
+/turf/open/cliff/Destroy(force)
+	UnregisterSignal(src, COMSIG_TURF_MOVABLE_THROW_LANDED)
+	return ..()
+
 /turf/open/cliff/CanPass(atom/movable/mover, border_dir)
 	..()
 

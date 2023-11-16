@@ -74,6 +74,9 @@
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/wood/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
 /turf/open/floor/wood/tile
 	icon_state = "wood_tile"
 	floor_tile = /obj/item/stack/tile/wood/tile
@@ -274,6 +277,9 @@
 	icon_state = "carpetsymbol"
 	smoothing_flags = NONE
 	floor_tile = /obj/item/stack/tile/carpet/symbol
+
+/turf/open/floor/carpet/lone/lavaland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/carpet/lone/star
 	icon_state = "carpetstar"

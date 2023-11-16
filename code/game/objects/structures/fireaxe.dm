@@ -211,6 +211,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 /obj/structure/fireaxecabinet/empty
 	populate_contents = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
+
 /obj/item/wallframe/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "Home to a window's greatest nightmare. Apply to wall to use."
@@ -237,6 +239,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
 
 /obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 
 /obj/item/wallframe/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"
