@@ -309,42 +309,46 @@
 /datum/action/innate/hotkey_help/Activate()
 	if(!target || !isliving(owner))
 		return
-	to_chat(owner, "<b>Click shortcuts:</b>")
-	to_chat(owner, "Shift-click a slime to pick it up, or the floor to drop all held slimes.")
-	to_chat(owner, "Ctrl-click a slime to scan it.")
-	to_chat(owner, "Alt-click a slime to feed it a potion.")
-	to_chat(owner, "Ctrl-click or a dead monkey to recycle it, or the floor to place a new monkey.")
+
+	var/render_list = list()
+	render_list += "<b>Click shortcuts:</b>"
+	render_list += "Shift-click a slime to pick it up, or the floor to drop all held slimes."
+	render_list += "Ctrl-click a slime to scan it."
+	render_list += "Alt-click a slime to feed it a potion."
+	render_list += "Ctrl-click or a dead monkey to recycle it, or the floor to place a new monkey."
+
+	to_chat(owner, examine_block(jointext(render_list, "\n")))
 
 //
 // Alternate clicks for slime, monkey and open turf if using a xenobio console
 
 
-//Feeds a potion to slime
+///Feeds a stored potion to a slime
 /mob/living/simple_animal/slime/AltClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_ALT, src)
 	..()
 
-//Picks up slime
+///Picks up a slime, and places them in the internal storage
 /mob/living/simple_animal/slime/ShiftClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_SHIFT, src)
 	..()
 
-//Place slimes
+///Places a slime from the internal storage
 /turf/open/ShiftClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_SHIFT, src)
 	..()
 
-//scans slimes
+/// Scans the target slime
 /mob/living/simple_animal/slime/CtrlClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_CTRL, src)
 	..()
 
-//picks up dead monkies
+///Picks up a dead monkey for recycling
 /mob/living/carbon/human/species/monkey/CtrlClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
 	..()
 
-//places monkies
+///Places a monkey from the internal storage
 /turf/open/CtrlClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)
 	..()
@@ -360,7 +364,7 @@
 	if(mobarea.name == remote_eye.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
 		slime_scan(target_slime, user)
 
-///Feeds a stored potion to slime
+///Feeds a stored potion to a slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickAlt(mob/living/user, mob/living/simple_animal/slime/target_slime)
 	SIGNAL_HANDLER
 	if(!GLOB.cameranet.checkTurfVis(target_slime.loc))
@@ -435,7 +439,7 @@
 		else
 			to_chat(user, span_warning("[xeno_console] needs to have at least 1 monkey stored. Currently has [xeno_console.monkeys] monkeys stored."))
 
-///Used to pick up a dead monkey for recycling
+///Picks up a dead monkey for recycling
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/target_mob)
 	SIGNAL_HANDLER
 	if(!ismonkey(target_mob))

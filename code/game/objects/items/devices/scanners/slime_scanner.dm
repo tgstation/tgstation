@@ -39,8 +39,11 @@
 	for(var/datum/slime_type/key as anything in scanned_slime.slime_type.mutations)
 		mutation_text += initial(key.colour)
 
+	if(!mutation_text.len)
+		to_render += " None detected."
+
 	to_render += "[mutation_text.Join(", ")]"
-	to_render += "\nGenetic instability: [scanned_slime.mutation_chance] % chance of mutation attempt on splitting"
+	to_render += "\nGenetic instability: [scanned_slime.mutation_chance] % chance of mutation attempt on splitting."
 
 	if (scanned_slime.cores > 1)
 		to_render += "\nMultiple cores detected"
@@ -50,4 +53,4 @@
 		to_render += "\n[span_notice("Core mutation in progress: [scanned_slime.crossbreed_modification]")]\
 					  \n[span_notice("Progress in core mutation: [scanned_slime.applied_crossbreed_amount] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
 
-	to_chat(user, examine_block(to_render))
+	to_chat(user, examine_block(jointext(to_render,"")))
