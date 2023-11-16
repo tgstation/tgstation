@@ -50,6 +50,7 @@
 		hud.hide_from(eye_owner)
 	if(HUD_trait)
 		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
+	toggledOn = FALSE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
