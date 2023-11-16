@@ -1,0 +1,5 @@
+/area/centcom/heretic_sacrifice/knock : /area/centcom/heretic_sacrifice/lock{@OLD}
+/obj/effect/landmark/heretic/knock: /obj/effect/landmark/heretic/lock{@OLD}
+/obj/item/melee/sickly_blade/knock: /obj/item/melee/sickly_blade/lock{@OLD}
+/obj/effect/knock_portal: /obj/effect/knock_portal{@OLD}
+/obj/item/heretic_lintel: /obj/item/heretic_labyrinth_handbook{@OLD}

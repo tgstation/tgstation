@@ -15,7 +15,7 @@
 
 /datum/component/torn_wall/Initialize()
 	. = ..()
-	if (!iswallturf(parent) || isindestructiblewall(parent))
+	if (!isclosedturf(parent) || isindestructiblewall(parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/torn_wall/RegisterWithParent()
@@ -53,6 +53,12 @@
 		return
 	var/turf/closed/wall/attached_wall = parent
 	playsound(attached_wall, 'sound/effects/meteorimpact.ogg', 100, vary = TRUE)
+
+	if(ismineralturf(attached_wall))
+		var/turf/closed/mineral/mineral_turf = attached_wall
+		mineral_turf.gets_drilled()
+		return
+
 	attached_wall.dismantle_wall(devastated = TRUE)
 
 /// Fix it up on weld

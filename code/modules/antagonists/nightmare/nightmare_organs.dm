@@ -50,8 +50,8 @@
 /obj/item/organ/internal/heart/nightmare
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
-	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "demon_heart-on"
+	base_icon_state = "demon_heart"
 	visual = TRUE
 	color = "#1C1C1C"
 	decay_factor = 0
@@ -59,10 +59,6 @@
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
-
-/obj/item/organ/internal/heart/nightmare/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
-	return ..()
 
 /obj/item/organ/internal/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -94,7 +90,7 @@
 		QDEL_NULL(blade)
 
 /obj/item/organ/internal/heart/nightmare/Stop()
-	return 0
+	return FALSE
 
 /obj/item/organ/internal/heart/nightmare/on_death(seconds_per_tick, times_fired)
 	if(!owner)
