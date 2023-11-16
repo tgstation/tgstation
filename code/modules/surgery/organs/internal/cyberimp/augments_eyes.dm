@@ -12,25 +12,25 @@
 	name = "HUD implant"
 	desc = "These cybernetic eyes will display a HUD over everything you see. Maybe."
 	slot = ORGAN_SLOT_HUD
+	actions_types = list(/datum/action/item_action/toggle_hud)
 	var/HUD_type = 0
 	var/HUD_trait = null
-	actions_types = list(/datum/action/item_action/toggle_hud)
-	var/toggledOn = TRUE
+	var/toggled_on = TRUE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/ui_action_click(mob/user)
 	toggle_hud(user)
 
 /obj/item/organ/internal/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
-	if(toggledOn)
+	if(toggled_on)
 		if(HUD_type)
 			var/datum/atom_hud/hud = GLOB.huds[HUD_type]
 			hud.hide_from(eye_owner)
-		toggledOn = FALSE
+		toggled_on = FALSE
 	else
 		if(HUD_type)
 			var/datum/atom_hud/hud = GLOB.huds[HUD_type]
 			hud.show_to(eye_owner)
-		toggledOn = TRUE
+		toggled_on = TRUE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
@@ -41,7 +41,7 @@
 		hud.show_to(eye_owner)
 	if(HUD_trait)
 		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
-	toggledOn = TRUE
+	toggled_on = TRUE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special = FALSE)
 	. = ..()
@@ -50,7 +50,7 @@
 		hud.hide_from(eye_owner)
 	if(HUD_trait)
 		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
-	toggledOn = FALSE
+	toggled_on = FALSE
 
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
