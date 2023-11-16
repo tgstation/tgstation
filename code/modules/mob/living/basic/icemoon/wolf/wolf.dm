@@ -88,4 +88,4 @@
 /mob/living/basic/mining/wolf/befriend(mob/living/new_friend)
 	. = ..()
 	faction = new_friend.faction.Copy()
-	visible_message(span_notice("[src] lowers [src.p_their()] heckles at [new_friend]'s offering and begins to wag [src.p_their()] tail."))
+	visible_message(span_notice("[src] lowers [src.p_their()] snout at [new_friend]'s offering and begins to wag [src.p_their()] tail."))
