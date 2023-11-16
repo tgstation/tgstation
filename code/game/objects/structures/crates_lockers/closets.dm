@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'icons/obj/storage/closet_new.dmi'
+	icon = 'icons/obj/storage/closet.dmi'
 	icon_state = "generic"
 	density = TRUE
 	drag_slowdown = 1.5 // Same as a prone mob
