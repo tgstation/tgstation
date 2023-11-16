@@ -64,6 +64,7 @@ GLOBAL_LIST_INIT(total_unusuals_per_type, list())
 
 /datum/component/unusual_handler/proc/append_unusual(atom/source, updates)
 	SIGNAL_HANDLER
+	source_object.desc = initial(source_object.desc)
 	source_object.desc += span_notice("\n Unboxed by: [original_owner_ckey]")
 	source_object.desc += span_notice("\n Unboxed on: [round_id]")
 	source_object.desc += span_notice("\n Unusual Type: [unusual_description]")
