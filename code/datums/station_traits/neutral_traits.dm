@@ -152,23 +152,56 @@
 	var/list/lobby_candidates
 	/// The gorilla we created, we only hold this ref until the round starts.
 	var/mob/living/basic/gorilla/cargorilla/cargorilla
+	/// Have we handed out our gorilla pass yet?
+	var/accepting_signups = TRUE
 
 /datum/station_trait/cargorilla/New()
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
 	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_GAMEMODE_SETUP, PROC_REF(on_gamemode_setup))
 
+/datum/station_trait/cargorilla/can_display_lobby_button()
+	return accepting_signups
+
+/datum/station_trait/cargorilla/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
+	return ..()
+
 /datum/station_trait/cargorilla/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
+	if (SSticker.HasRoundStarted())
+		INVOKE_ASYNC(src, PROC_REF(attempt_cargorilla_latejoin), user)
+		return
 	if (LAZYFIND(lobby_candidates, user))
 		LAZYREMOVE(lobby_candidates, user)
-	else
-		LAZYADD(lobby_candidates, user)
+		return
+	LAZYADD(lobby_candidates, user)
 
 /datum/station_trait/cargorilla/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
-	if(LAZYFIND(lobby_candidates, lobby_button.get_mob()))
+	if (SSticker.HasRoundStarted() || LAZYFIND(lobby_candidates, lobby_button.get_mob()))
 		lobby_button.base_icon_state = "signup_on"
-	else
-		lobby_button.base_icon_state = "signup"
+		return
+	lobby_button.base_icon_state = "signup"
+	return
+
+/datum/station_trait/cargorilla/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	SIGNAL_HANDLER
+	if (SSticker.HasRoundStarted())
+		overlays += "gorilla_off"
+		return
+	if (LAZYFIND(lobby_candidates, lobby_button.get_mob()))
+		overlays += "gorilla_on"
+		overlays += "tick"
+		return
+	overlays += "gorilla_off"
+	overlays += "cross"
+
+/// Try to put our observer straight into the gorilla, but ask first
+/datum/station_trait/cargorilla/proc/attempt_cargorilla_latejoin(mob/dead/new_player/user)
+	if (!tgui_alert(user, "Become a gorilla?", "Gorilla Confirmation", list("Yes", "No")) != "Yes")
+		return
+	if (QDELETED(user) || QDELETED(cargorilla))
+		return
+	assign_gorilla(user)
 
 /// Replace some cargo equipment and 'personnel' with a gorilla.
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
@@ -180,6 +213,7 @@
 
 	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
+	RegisterSignals(cargorilla, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING), PROC_REF(unassign_gorilla))
 	// We do a poll on roundstart, don't let ghosts in early
 	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
 	// hm our sloth looks funny today
@@ -210,15 +244,7 @@
 			LAZYREMOVE(lobby_candidates, signee)
 	if (!LAZYLEN(lobby_candidates))
 		return // They logged out I guess
-
-	var/mob/dead/our_lucky_contestant = pick(lobby_candidates)
-	our_lucky_contestant.log_message("was assigned control of [cargorilla].", LOG_GAME)
-	cargorilla.key = our_lucky_contestant.key
-	to_chat(cargorilla, span_boldnotice(cargorilla.on_possessed_message))
-	cargorilla.became_player_controlled()
-
-	LAZYCLEARLIST(lobby_candidates)
-	cargorilla = null
+	assign_gorilla(pick(lobby_candidates))
 
 /datum/station_trait/cargorilla/on_round_start()
 	if (!cargorilla)
@@ -226,15 +252,32 @@
 	if (!LAZYLEN(lobby_candidates))
 		addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
 	lobby_candidates = null
-	cargorilla = null
 
 /// Get us a ghost for the gorilla.
 /datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
-	if(QDELETED(gorilla))
+	if(!QDELETED(gorilla))
+		gorilla.poll_for_gorilla()
+
+/// Puts our lucky winner into the gorilla
+/datum/station_trait/cargorilla/proc/assign_gorilla(mob/dead/volunteer)
+	if (QDELETED(cargorilla) || cargorilla.mind)
+		to_chat(volunteer, span_warning("You missed your chance to become the gorilla..."))
 		return
+	// Make another reference because we'll drop ours when we log someone into the mob
+	var/mob/living/basic/gorilla/cargorilla/our_boy = cargorilla
+	volunteer.log_message("was assigned control of [cargorilla].", LOG_GAME)
+	our_boy.key = volunteer.key
+	to_chat(our_boy, span_boldnotice(our_boy.on_possessed_message))
+	our_boy.became_player_controlled()
+	LAZYCLEARLIST(lobby_candidates)
 
-	gorilla.poll_for_gorilla()
-
+/// Called when we no longer need a gorilla
+/datum/station_trait/cargorilla/proc/unassign_gorilla()
+	SIGNAL_HANDLER
+	UnregisterSignal(cargorilla, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING))
+	cargorilla = null
+	accepting_signups = FALSE
+	destroy_lobby_buttons()
 
 /datum/station_trait/birthday
 	name = "Employee Birthday"

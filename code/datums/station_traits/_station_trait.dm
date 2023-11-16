@@ -24,6 +24,8 @@
 	var/can_revert = TRUE
 	/// If set to true we'll show a button on the lobby to notify people about this trait
 	var/sign_up_button = FALSE
+	/// Lobby buttons controlled by this trait
+	var/list/lobby_buttons = list()
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
 	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
@@ -43,11 +45,10 @@
 	if(trait_to_give)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 
-
-
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src
 	GLOB.dynamic_station_traits.Remove(src)
+	destroy_lobby_buttons()
 	return ..()
 
 /// Proc ran when round starts. Use this for roundstart effects.
@@ -81,14 +82,18 @@
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
 	return
 
-/// Return TRUE if we want to show a lobby button, by default we assume they're pointless after round start
+/// Return TRUE if we want to show a lobby button
 /datum/station_trait/proc/can_display_lobby_button()
-	return sign_up_button && !SSticker.HasRoundStarted()
+	return sign_up_button
 
 /// Apply any additional handling we need to our lobby button
 /datum/station_trait/proc/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	RegisterSignal(lobby_button, COMSIG_CLICK, PROC_REF(on_lobby_button_click))
+	SHOULD_CALL_PARENT(TRUE)
+	lobby_buttons |= lobby_button
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_lobby_button_update_icon))
+	RegisterSignal(lobby_button, COMSIG_CLICK, PROC_REF(on_lobby_button_click))
+	RegisterSignal(lobby_button, COMSIG_QDELETING, PROC_REF(on_lobby_button_destroyed))
+	lobby_button.update_appearance(UPDATE_ICON)
 
 /// Called when our lobby button is clicked on
 /datum/station_trait/proc/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
@@ -99,3 +104,19 @@
 /datum/station_trait/proc/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
 	SIGNAL_HANDLER
 	return
+
+/// Don't hold references to deleted buttons
+/datum/station_trait/proc/on_lobby_button_destroyed(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	SIGNAL_HANDLER
+	lobby_buttons -= lobby_button
+
+/// Remove all of our active lobby buttons
+/datum/station_trait/proc/destroy_lobby_buttons()
+	for (var/atom/movable/screen/button as anything in lobby_buttons)
+		var/mob/hud_owner = button.get_mob()
+		qdel(button)
+		if (QDELETED(hud_owner))
+			continue
+		var/datum/hud/using_hud = hud_owner.hud_used
+		using_hud?.show_hud(using_hud?.hud_version)
+	lobby_buttons = list()
