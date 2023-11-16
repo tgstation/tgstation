@@ -335,6 +335,7 @@
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	applied_cell = /obj/item/stock_parts/cell/super
 	applied_modules = list(
+		/obj/item/mod/module/organ_thrower,
 		/obj/item/mod/module/defibrillator/combat,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,

@@ -18,8 +18,8 @@
 
 	for(var/mod_path in subtypesof(/obj/item/mod/control))
 		var/obj/item/mod/control/control_mod = new
-		for(var/path in control_mod.chestplate.allowed)
-			wearable_item_paths |= path
+		// for(var/path in control_mod.chestplate.allowed)
+		// 	wearable_item_paths |= path
 		qdel(control_mod)
 
 

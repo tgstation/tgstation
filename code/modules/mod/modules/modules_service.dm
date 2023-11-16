@@ -72,8 +72,8 @@
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
-	if(!deleting)
-		qdel(mod.boots.GetComponent(/datum/component/squeak))
+	// if(!deleting)
+	// 	qdel(mod.boots.GetComponent(/datum/component/squeak))
 	mod.wearer.RemoveElement(/datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")

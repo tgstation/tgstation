@@ -21,7 +21,7 @@
 		guns_typecache = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe))
 
 /obj/item/mod/module/magnetic_harness/on_install()
-	already_allowed_guns = guns_typecache & mod.chestplate.allowed
+	// already_allowed_guns = guns_typecache & mod.chestplate.allowed
 //	mod.chestplate.allowed |= guns_typecache
 
 /obj/item/mod/module/magnetic_harness/on_uninstall(deleting = FALSE)
@@ -403,7 +403,7 @@
 
 		if(oldgroup == newgroup)
 			return
-			
+
 		sorted_creatures[oldgroup] -= creature
 
 	sorted_creatures[newgroup] += creature

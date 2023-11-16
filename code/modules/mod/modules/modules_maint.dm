@@ -12,10 +12,10 @@
 	incompatible_modules = list(/obj/item/mod/module/springlock)
 
 /obj/item/mod/module/springlock/on_install()
-	mod.activation_time *= 0.5
+	mod.activation_step_time *= 0.5
 
 /obj/item/mod/module/springlock/on_uninstall(deleting = FALSE)
-	mod.activation_time *= 2
+	mod.activation_step_time *= 2
 
 /obj/item/mod/module/springlock/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_wearer_exposed))

@@ -16,5 +16,3 @@
 	var/can_overslot = FALSE
 	/// What are we overslotting over?
 	var/obj/item/overslotting = null
-
-

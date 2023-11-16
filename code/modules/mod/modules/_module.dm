@@ -76,9 +76,9 @@
 	for(var/part_slot in parts)
 		if(need_extended)
 			var/datum/mod_part/part_datum = parts[part_slot]
-			if(part_datum.part_item == mod || part_datum.part_item.loc == mod)
+			if(part_datum.part_item.loc == mod)
 				continue
-		total_slot_flags |= part_slot
+		total_slot_flags |= text2num(part_slot)
 	var/list/needed_slots = required_slots.Copy()
 	for(var/needed_slot in needed_slots)
 		if(!(needed_slot & total_slot_flags))

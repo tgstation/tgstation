@@ -65,7 +65,7 @@
 	data["control"] = name
 	data["complexity_max"] = complexity_max
 	data["parts"] = list()
-	for(var/obj/item/part as anything in get_parts(items = TRUE))
+	for(var/obj/item/part as anything in get_parts())
 		data["parts"] += list(part.name)
 	return data
 

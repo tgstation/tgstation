@@ -409,7 +409,7 @@
 	if(!traveled_tiles)
 		return
 	var/datum/armor/to_remove = get_armor_by_type(armor_mod)
-	for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
+	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(to_remove.generate_new_with_multipliers(list(ARMOR_ALL = traveled_tiles))))
 	if(traveled_tiles == max_traveled_tiles)
 		mod.slowdown += speed_added
@@ -429,7 +429,7 @@
 		if(traveled_tiles >= max_traveled_tiles)
 			return
 		traveled_tiles++
-		for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
+		for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 			part.set_armor(part.get_armor().add_other_armor(armor_mod))
 		if(traveled_tiles >= max_traveled_tiles)
 			balloon_alert(mod.wearer, "fully ash covered")
@@ -448,7 +448,7 @@
 			mod.slowdown += actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 		traveled_tiles--
-		for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
+		for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 			part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
 		if(traveled_tiles <= 0)
 			balloon_alert(mod.wearer, "ran out of ash!")

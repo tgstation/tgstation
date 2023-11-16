@@ -46,7 +46,7 @@
 	actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
 	mod.slowdown -= actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
-	for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
+	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
@@ -60,7 +60,7 @@
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	mod.slowdown += actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
-	for(var/obj/item/part as anything in mod.get_parts(items = TRUE, all = TRUE))
+	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
 		if(!remove_pressure_protection || !isclothing(part))
 			continue
@@ -254,10 +254,10 @@
 	use_power_cost = initial(the_dna_lock_behind_the_slaughter.use_power_cost)
 
 /obj/item/mod/module/springlock/bite_of_87/on_install()
-	mod.activation_time *= 0.1
+	// mod.activation_time *= 0.1
 
 /obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
-	mod.activation_time *= 10
+	// mod.activation_time *= 10
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
@@ -413,10 +413,9 @@
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
 	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
 	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
-	var/list/mod_skin = mod.theme.skins[mod.skin]
+	var/list/mod_skin = mod.theme.variants[mod.skin]
 	mod.icon = mod_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mod.worn_icon = mod_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
-	mod.alternate_worn_layer = mod_skin[CONTROL_LAYER]
 	mod.lefthand_file = initial(mod.lefthand_file)
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = null
@@ -488,13 +487,19 @@
 
 /obj/item/mod/module/infiltrator/on_suit_activation()
 	mod.wearer.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
-//	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(!istype(helmet))
+		return
+	helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), MOD_TRAIT)
 	if(deleting)
 		return
-//	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
+	if(!istype(helmet))
+		return
+	helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 ///Medbeam - Medbeam but built into a modsuit
 /obj/item/mod/module/medbeam

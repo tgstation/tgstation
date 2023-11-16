@@ -82,7 +82,7 @@ So, now that we have our theme, we want to add a skin to it (or another theme of
 	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
-	skins = list(
+	variants = list(
 		"psychological" = list(
 			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
@@ -137,7 +137,7 @@ There are specific cases of helmets that semi-cover the head, like the cosmohonk
 	armor_type = /datum/armor/modtheme_psychological
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
-	skins = list(
+	variants = list(
 		"psychological" = list(
 			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
@@ -267,7 +267,7 @@ Now we want to add it to the psychological theme, which is very simple, finishin
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	inbuilt_modules = list(/obj/item/mod/module/neuron_healer/advanced)
-	skins = list(
+	variants = list(
 		"psychological" = list(
 			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
