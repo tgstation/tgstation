@@ -82,7 +82,7 @@
 //TIER 2
 
 /datum/slime_type/darkblue
-	colour = SLIME_TYPE_BLUE
+	colour = SLIME_TYPE_DARK_BLUE
 	core_type = /obj/item/slime_extract/darkblue
 	mutations = list(
 		/datum/slime_type/purple = "1",
