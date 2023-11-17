@@ -1,10 +1,10 @@
 /datum/action/cooldown/lunatic_track
-	name = "Living Heartbeat"
+	name = "Moonlight Echo"
 	desc = "Track your ringleader."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_heretic"
-	button_icon = 'icons/obj/antags/eldritch.dmi'
-	button_icon_state = "living_heart"
+	button_icon_state = "moon_smile"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 	cooldown_time = 4 SECONDS
 
 /datum/action/cooldown/lunatic_track/Grant(mob/granted)
