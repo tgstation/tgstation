@@ -147,8 +147,6 @@
 /mob/living/basic/pet/cat/breadcat/proc/pre_unarmed_attack(mob/living/hitter, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(!proximity)
-		return NONE
 	if(istype(target, /obj/machinery/oven/range))
 		target.attack_hand(src)
 		return COMPONENT_CANCEL_ATTACK_CHAIN

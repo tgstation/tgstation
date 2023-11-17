@@ -293,7 +293,7 @@
 /datum/ai_behavior/find_hunt_target/stove
 
 /datum/ai_behavior/find_hunt_target/stove/valid_dinner(mob/living/source, obj/machinery/oven/range/stove, radius)
-	if(!length(stove.used_tray) || !stove.open)
+	if(!length(stove.used_tray?.contents) || stove.open)
 		return FALSE
 	//something in there is still baking...
 	for(var/atom/baking in stove.used_tray)
