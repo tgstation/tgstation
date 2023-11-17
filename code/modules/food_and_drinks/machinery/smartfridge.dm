@@ -525,8 +525,12 @@
 	desc = "A refrigerated storage unit for food."
 	base_build_path = /obj/machinery/smartfridge/food
 
-/obj/machinery/smartfridge/food/accept_check(obj/item/O)
-	if(IS_EDIBLE(O) || (istype(O,/obj/item/reagent_containers/cup/bowl) && O.reagents && O.reagents.reagent_list.len))
+/obj/machinery/smartfridge/food/accept_check(obj/item/thing)
+	if(thing.w_class >= WEIGHT_CLASS_BULKY)
+		return FALSE
+	if(IS_EDIBLE(thing))
+		return TRUE
+	if(istype(thing, /obj/item/reagent_containers/cup/bowl) && thing.reagents?.total_volume > 0)
 		return TRUE
 	return FALSE
 
