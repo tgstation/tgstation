@@ -19,9 +19,9 @@
 
 /datum/ai_planning_subtree/reside_in_home
 	///chance we enter our home
-	var/reside_chance = 90
+	var/reside_chance = 5
 	///chance we leave our home
-	var/leave_home_chance = 90
+	var/leave_home_chance = 15
 
 /datum/ai_planning_subtree/reside_in_home/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn

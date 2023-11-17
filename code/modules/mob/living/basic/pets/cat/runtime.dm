@@ -1,3 +1,7 @@
+#define RUNTIME_SAVE_DATA "data/npc_saves/Runtime.sav"
+#define RUNTIME_JSON_DATA "data/npc_saves/Runtime.json"
+#define MAX_CAT_DEPLOY 50
+
 /mob/living/basic/pet/cat/runtime
 	name = "Runtime"
 	desc = "GCAT"
@@ -89,3 +93,7 @@
 			return
 		for(var/index in 1 to min(family[cat_type], MAX_CAT_DEPLOY))
 			new cat_type(loc)
+
+#undef RUNTIME_SAVE_DATA
+#undef RUNTIME_JSON_DATA
+#undef MAX_CAT_DEPLOY

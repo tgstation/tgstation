@@ -1,7 +1,3 @@
-
-#define RUNTIME_SAVE_DATA "data/npc_saves/Runtime.sav"
-#define RUNTIME_JSON_DATA "data/npc_saves/Runtime.json"
-#define MAX_CAT_DEPLOY 50
 /mob/living/basic/pet/cat
 	name = "cat"
 	desc = "Kitty!!"
