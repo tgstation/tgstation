@@ -67633,8 +67633,8 @@
 	pixel_y = 6
 	},
 /obj/item/reagent_containers/condiment/enzyme{
-	layer = 5;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
