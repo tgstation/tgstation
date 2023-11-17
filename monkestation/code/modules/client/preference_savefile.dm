@@ -57,6 +57,7 @@
 	savefile.set_entry("extra_stat_inventory", extra_stat_inventory)
 	if(token_month)
 		savefile.set_entry("token_month", token_month)
+	savefile.set_entry("lootboxes_owned", lootboxes_owned)
 
 /datum/preferences/proc/load_preferences_monkestation()
 	load_jobxp_preferences()
@@ -70,4 +71,5 @@
 	extra_stat_inventory = SANITIZE_LIST(extra_stat_inventory)
 
 	token_month = savefile.get_entry("token_month", token_month)
+	lootboxes_owned = savefile.get_entry("lootboxes_owned", lootboxes_owned)
 

@@ -41,3 +41,5 @@
 		"single-use" = list(),
 		"generic" = list(),
 		)
+	///amount of lootboxes owned
+	var/lootboxes_owned = 0
