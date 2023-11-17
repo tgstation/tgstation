@@ -32,7 +32,7 @@
 
 /atom/movable/screen/fullscreen/lootbox_overlay/main/guaranteed
 	guarentee_unusual = TRUE
-	
+
 /atom/movable/screen/fullscreen/lootbox_overlay/main/Click(location, control, params)
 	if(opened)
 		return
@@ -50,13 +50,13 @@
 	user.overlay_fullscreen("lb_spark", /atom/movable/screen/fullscreen/lootbox_overlay/sparks)
 	user.overlay_fullscreen("lb_bg", /atom/movable/screen/fullscreen/lootbox_overlay/background)
 	var/atom/movable/screen/fullscreen/lootbox_overlay/item_preview/preview = user.overlay_fullscreen("lb_preview", /atom/movable/screen/fullscreen/lootbox_overlay/item_preview)
-	
+
 	var/type_rolled
 	if(!guarentee_unusual)
 		type_rolled = rand(1, 100)
 	else
 		type_rolled = 1
-	
+
 	var/type_string
 	switch(type_rolled)
 		if(1)
@@ -85,6 +85,7 @@
 
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
 	if(type_string == "Unusual")
+		to_chat(world, span_boldannounce("[user] has unboxed a [rolled_item.name]!"))
 		if(isliving(user) && !user.put_in_hands(rolled_item))
 			rolled_item.forceMove(get_turf(user))
 
