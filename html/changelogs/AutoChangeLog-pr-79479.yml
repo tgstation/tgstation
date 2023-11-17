@@ -1,0 +1,5 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - rscadd: "Chat Reliability Layer"
+  - code_imp: "TGUI chat messages now track their sequence and will be resent if the client notices a discrepenency"
