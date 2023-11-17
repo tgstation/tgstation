@@ -246,6 +246,10 @@
 /datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/kitten = locate(locate_path) in oview(search_range, controller.pawn)
 	//kitten already has food near it, go feed another hungry kitten
+
+	if(isnull(kitten))
+		return null
+
 	var/list/nearby_food = typecache_filter_list(oview(2, kitten), controller.blackboard[BB_HUNTABLE_PREY])
 	if(kitten.stat != DEAD && !length(nearby_food))
 		return kitten

@@ -13,8 +13,6 @@
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-//	minbodytemp = 200
-//	maxbodytemp = 400
 	unsuitable_atmos_damage = 0.5
 	butcher_results = list(/obj/item/food/meat/slab = 1,
 		/obj/item/organ/internal/ears/cat = 1,
@@ -38,7 +36,6 @@
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-//	footstep_type = FOOTSTEP_MOB_CLAW
 	///can this cat breed?
 	var/can_breed = TRUE
 	///can hold items?
@@ -76,17 +73,17 @@
 	if(gone != held_food)
 		return
 	held_food = null
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/pet/cat/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	if(is_type_in_typecache(arrived, carriable_items))
+	if(is_type_in_list(arrived, carriable_items))
 		held_food = arrived
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /mob/living/basic/pet/cat/update_overlays()
 	. = ..()
-	if(stat == DEAD ||resting || !held_food)
+	if(stat == DEAD || resting || !held_food)
 		return
 	if(istype(held_food, /obj/item/fish))
 		held_item_overlay = mutable_appearance(icon, "cat_fish_overlay")
@@ -120,9 +117,8 @@
 	icon_state = "spacecat"
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
-	unsuitable_atmos_damage = 0
-//	minbodytemp = TCMB
-//	maxbodytemp = T0C + 40
+	minimum_survivable_temperature = TCMB
+	maximum_survivable_temperature = T0C + 40
 	held_state = "spacecat"
 
 /mob/living/basic/pet/cat/breadcat
