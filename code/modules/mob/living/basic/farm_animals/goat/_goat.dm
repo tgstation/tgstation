@@ -110,8 +110,10 @@
 
 	INVOKE_ASYNC(src, PROC_REF(eat_plant), edible_plants)
 
-/// When invoked, adds an udder. Overridden on subtypes
+/// When invoked, adds an udder when applicable. Male goats do not have udders.
 /mob/living/basic/goat/proc/add_udder()
+	if(gender == MALE)
+		return
 	AddComponent(/datum/component/udder)
 
 /// Proc that handles dealing with the various types of plants we might eat. Assumes that a valid list of type(s) will be passed in.

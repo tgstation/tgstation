@@ -82,7 +82,7 @@
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed and react
 		// the stomach manages how fast they are feed in a drip style
-		reagents.trans_id_to(body, bit.type, amount=amount)
+		reagents.trans_to(body, amount, target_id = bit.type)
 
 	//Handle disgust
 	if(body)
