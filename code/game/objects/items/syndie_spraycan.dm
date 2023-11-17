@@ -181,7 +181,7 @@
  * * victim - whoever just slipped, point and laugh at them
  */
 /obj/effect/decal/cleanable/traitor_rune/proc/slip(mob/living/victim)
-	if(victim.movement_type & FLYING)
+	if(victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
 	if (!victim.slip(slip_time, src, slip_flags))
 		return

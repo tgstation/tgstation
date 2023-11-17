@@ -425,7 +425,7 @@
 			return
 
 	//don't close the trap if they're as small as a mouse, or not touching the ground
-	if(victim.mob_size <= MOB_SIZE_TINY || (!thrown_at && victim.movement_type & (FLYING|FLOATING)))
+	if(victim.mob_size <= MOB_SIZE_TINY || (!thrown_at && (victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)))
 		return
 
 	close_trap()

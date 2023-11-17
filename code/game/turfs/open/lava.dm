@@ -246,7 +246,7 @@
 		. = TRUE
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
-	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
+	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) //you're flying over it.
 		return LAVA_BE_IGNORING
 
 	if(isobj(burn_target))
@@ -265,7 +265,7 @@
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
 	if(burn_buckled)
-		if(burn_buckled.movement_type & (FLYING|FLOATING))
+		if(burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 			return LAVA_BE_PROCESSING
 		if(isobj(burn_buckled))
 			var/obj/burn_buckled_obj = burn_buckled

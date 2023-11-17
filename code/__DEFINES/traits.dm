@@ -651,6 +651,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOVE_VENTCRAWLING "move_ventcrawling"
 #define TRAIT_MOVE_FLOATING "move_floating"
 #define TRAIT_MOVE_PHASING "move_phasing"
+#define TRAIT_MOVE_UPSIDE_DOWN "move_upside_down"
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
 
@@ -1102,6 +1103,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define SPECIES_FLIGHT_TRAIT "species-flight"
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
+#define NEGATIVE_GRAVITY_TRAIT "negative-gravity"
 /// A trait gained from a mob's leap action, like the leaper
 #define LEAPING_TRAIT "leaping"
 /// A trait gained from a mob's vanish action, like the herophant
