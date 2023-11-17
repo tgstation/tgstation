@@ -7563,7 +7563,7 @@
 /area/station/maintenance/floor1/port)
 "bSJ" = (
 /obj/structure/rack,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/effect/spawner/random/armory/bulletproof_armor,
 /obj/effect/spawner/random/armory/bulletproof_helmet,
@@ -23367,7 +23367,7 @@
 /area/station/hallway/floor3/aft)
 "ghQ" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
@@ -28201,7 +28201,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
@@ -29742,10 +29741,11 @@
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/command/minisat,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "hQl" = (
@@ -42103,7 +42103,7 @@
 /area/station/engineering/atmos/hfr_room)
 "kZi" = (
 /obj/structure/rack,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/restraints/handcuffs,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/directional/east{
@@ -57435,7 +57435,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "oTF" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
@@ -64979,7 +64979,8 @@
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Access"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
+/obj/effect/mapping_helpers/airlock/access/any/command/minisat,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "qVv" = (
@@ -66993,7 +66994,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -72438,7 +72439,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms/apartment2)
 "sXl" = (
-/obj/item/storage/secure/safe/caps_spare/directional/south,
+/obj/structure/secure_safe/caps_spare/directional/south,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -74744,7 +74745,7 @@
 /area/station/maintenance/floor4/starboard)
 "tBe" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "tBh" = (
@@ -82266,7 +82267,7 @@
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain/private)
 "vyv" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/floor2/starboard/aft)
 "vyz" = (
@@ -92311,7 +92312,7 @@
 /turf/open/misc/beach/sand,
 /area/station/hallway/floor2/fore)
 "yaY" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "yba" = (

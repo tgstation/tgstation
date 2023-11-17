@@ -170,7 +170,7 @@
 		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) //required_amount/8, because the water usage is split between eight sprays. As of this comment, required_amount/8 = 10u each.
 		water.reagents = water_reagents
 		water_reagents.my_atom = water
-		reagents.trans_to(water, required_amount/8)
+		reagents.trans_to(water, required_amount / 8)
 		water.move_at(get_step(chassis, get_dir(targetturf, chassis)), 2, 4) //Target is the tile opposite of the mech as the starting turf.
 
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)

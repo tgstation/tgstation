@@ -3736,7 +3736,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "awY" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -10653,7 +10653,7 @@
 /area/station/cargo/warehouse)
 "cDX" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -13509,7 +13509,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -15262,7 +15262,7 @@
 "ekE" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -24188,7 +24188,7 @@
 /area/station/service/chapel/office)
 "hGG" = (
 /obj/structure/closet/secure_closet/hos,
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 35
 	},
 /obj/structure/sign/poster/official/space_cops/directional/north,
@@ -24343,7 +24343,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "hKL" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
@@ -31028,7 +31028,7 @@
 /area/station/service/chapel/monastery)
 "kcb" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -39261,7 +39261,7 @@
 "mTX" = (
 /obj/structure/closet/secure_closet/hop,
 /obj/structure/sign/clock/directional/west,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "mUd" = (
@@ -40726,7 +40726,7 @@
 /area/station/hallway/secondary/construction/engineering)
 "nug" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/safe/caps_spare/directional/east,
+/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/machinery/cell_charger{
 	pixel_y = 4
 	},
@@ -57201,7 +57201,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/status_display/evac/directional/north,
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "tqT" = (
@@ -59148,7 +59148,7 @@
 /obj/structure/closet{
 	name = "Evidence Closet 1"
 	},
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/spawner/random/contraband/cannabis,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
@@ -61955,7 +61955,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -62158,7 +62158,7 @@
 /area/station/command/meeting_room)
 "uVB" = (
 /obj/structure/table/glass,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/white,

@@ -616,3 +616,104 @@
   san7890, Ghommie:
   - bugfix: The Blessing of Insanity now grants no damage slowdown and free hyperspace
       movement correctly.
+2023-11-16:
+  ArcaneMusic:
+  - bugfix: The Galactic Material Market now respects quantity of materials purchased,
+      removing them from the market when bought and preventing you from ordering more
+      than are available at a given time.
+  Fikou:
+  - qol: Dead human examines count as "soul departed" when the client is disconnected
+      or the human doesn't have a brain anymore.
+  Shroopy:
+  - bugfix: Molotovs now splash before burning, not after
+  deathrobotpunch:
+  - qol: the donksoft vendor refill cartridge is now available at the service lathe
+  falconignite:
+  - bugfix: Lizard tail wagging graphics
+  san7890:
+  - balance: Male Goats should no longer spawn with an udder, instead of it just being
+      Pete.
+2023-11-17:
+  CRITAWAKETS:
+  - qol: The supermatter filters have been flipped on BirdshotStation to work like
+      the supermatters on every round, meaning the filtered gas goes in, and the non-filtered
+      gas comes out.
+  Dalm:
+  - image: A tea room sign for the bar
+  Fikou:
+  - bugfix: grabs no longer trigger krav maga
+  GPeckman:
+  - rscadd: Androids now have robotic brains instead of organic brains.
+  Ghommie:
+  - bugfix: Fixed catwalks over open space not making a sound when walked over.
+  - rscadd: The mother hallucination has more possible one-liners now.
+  Melbert:
+  - balance: Stop, drop, and roll no longer instantly clears 5 fire stacks off of
+      you - Instead, it will clear 1 fire stack off of you every time you roll, with
+      a roll every 0.8 seconds.
+  - balance: Stop, drop, and roll no longer stuns you for 6 seconds. Instead, it will
+      knock you to the floor while you are rolling. Moving around or getting up will
+      cancel the roll, and you cannot use items while rolling around.
+  - balance: Stop, drop, and roll will now repeat until the fire is put out or you
+      get up.
+  RedBaronFlyer:
+  - image: light tube inhand sprites are now grey, as are the icons for the light
+      bulb/tube/mixed boxes
+  Shadow-Quill:
+  - bugfix: 'The CRAB-17 will now only take whole credits, as fractional credits were
+      found to be worth less.
+
+      :cl:'
+  SyncIt21:
+  - code_imp: removed redundant procs `get_master_reagent_id()` & `get_master_reagent_name()`
+  - code_imp: merged `remove_all_type()` proc with `remove_reagent()` now this proc
+      can perform both functions.  `remove_reagent()` now returns the total volume
+      of reagents removed rather than a simple TRUE/FALSE.
+  - code_imp: merged `trans_id_to()` proc with `trans_to()` now this proc can perform
+      both functions
+  - refactor: plumbing reaction chamber will now use only a single tick to balance
+      ph of a solution making it less efficient but more faster. Just make the reaction
+      chamber wait for longer periods of time to accurately balance ph
+  - refactor: reagent holder code has been condensed. Report any bugs on GitHub
+  Vekter (on behalf of Constellado):
+  - image: 'Added a new bar sign as one of the winners of our Bar Sign Contest: "The
+      Assembly Line".'
+  YesterdaysPromise:
+  - rscadd: Adds a chance that, when sharpened, a sufficiently potent carrot will
+      turn into a sword instead of a shiv.
+  Zergspower:
+  - bugfix: Space Ruin - All American Diner - Soda Machine now is scooted out of the
+      way
+  jlsnow301:
+  - rscadd: Bitrunning Patch 1 features a host of changes!
+  - rscadd: Added randomized mobs to virtual domains, which will be indicated with
+      a unique icon.
+  - rscadd: New emag interaction with the quantum server. Antags will spawn more frequently,
+      and they can hack themselves onto the station. You have been warned.
+  - rscadd: Both living and dead players can now see which mob is going to spawn an
+      antagonist in the vdom.
+  - rscadd: 'Two new vdom antagonists: Cyber Tac and the NetGuardian. These unlock
+      at specific thresholds.'
+  - balance: You can no longer stack copies of the same ability with bitrunning disks.
+  - balance: Some of the disk items have been replaced with stronger versions.
+  - bugfix: You can no longer spy on crew using the advanced camera console on syndicate
+      assault.
+  - bugfix: Fixed the spawning mechanism of virtual domain antagonists. You should
+      now have a chance of playing as one. This chance increases as more domains are
+      completed.
+  - bugfix: Vdom antagonists shouldn't spawn at the end of the run any longer.
+  - bugfix: The preference for vdom antagonists has been changed to factor in the
+      new types. Check your preferences!
+  - bugfix: The quantum server will now show its balloon alerts to all observers.
+  - bugfix: Random domains should be fully random again.
+  mc-oofert:
+  - qol: if you die in a mech you automatically eject
+  mogeoko:
+  - bugfix: Turbine parts will now use an amount of materials no greater than needed
+      for the upgrade
+  san7890:
+  - bugfix: Bar Bots (and several other mobs) will no longer aggro on you if you click
+      on them with a "forceful" item from halfway across the room.
+  - balance: After a string of unfortunate incidents, persons with telekinesis have
+      been strongly warned against playing Russian Roulette, as they tend to hyperfixate
+      on the gun a bit too much and end up firing it directly at their head.

@@ -1,5 +1,8 @@
 GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
+/atom
+	var/list/alternate_appearances
+
 /atom/proc/remove_alt_appearance(key)
 	if(alternate_appearances)
 		for(var/K in alternate_appearances)
