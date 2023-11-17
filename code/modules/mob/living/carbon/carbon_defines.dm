@@ -113,8 +113,6 @@
 	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
 	var/last_top_offset
 
-	var/is_leaning = FALSE
-
 	COOLDOWN_DECLARE(bleeding_message_cd)
 
 	var/next_smell = 0 /// Cooldown for the next smell
