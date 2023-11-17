@@ -15,7 +15,8 @@
 	actions_types = list(/datum/action/item_action/toggle_hud)
 	var/HUD_type = 0
 	var/HUD_trait = null
-	var/toggled_on = TRUE /// Whether the HUD implant is on or off
+	/// Whether the HUD implant is on or off
+	var/toggled_on = TRUE 
 
 
 /obj/item/organ/internal/cyberimp/eyes/hud/proc/toggle_hud(mob/living/carbon/eye_owner)
