@@ -14,12 +14,12 @@
 	var/capacitor_coefficient = 1
 	/// The loaded map template, map_template/virtual_domain
 	var/datum/lazy_template/virtual_domain/generated_domain
-	/// The loaded safehouse, map_template/safehouse
-	var/datum/map_template/safehouse/generated_safehouse
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
+	/// Chance multipled by threat to spawn a glitch
+	var/glitch_chance = 0.05
 	/// List of available domains
 	var/list/available_domains = list()
 	/// Current plugged in users
@@ -42,6 +42,8 @@
 	var/server_cooldown_time = 3 MINUTES
 	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
+	/// Determines the glitches available to spawn, builds with completion
+	var/threat = 0
 	/// The turfs we can place a hololadder on.
 	var/turf/exit_turfs = list()
 
@@ -54,15 +56,12 @@
 	. = ..()
 
 	radio = new(src)
-	radio.set_frequency(FREQ_SUPPLY)
-	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
+	radio.keyslot = new /obj/item/encryptionkey/headset_cargo()
+	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
 	RegisterSignals(src, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_broken))
 	RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete))
-	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(src, COMSIG_BITRUNNER_SPAWN_GLITCH, PROC_REF(on_threat_created))
 
 	// This further gets sorted in the client by cost so it's random and grouped
 	available_domains = shuffle(subtypesof(/datum/lazy_template/virtual_domain))
@@ -76,17 +75,39 @@
 	spawned_threat_refs.Cut()
 	QDEL_NULL(exit_turfs)
 	QDEL_NULL(generated_domain)
-	QDEL_NULL(generated_safehouse)
 	QDEL_NULL(radio)
+
+/obj/machinery/quantum_server/examine(mob/user)
+	. = ..()
+
+	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
+
+	if(capacitor_coefficient < 1)
+		. += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
+
+	if(servo_bonus > 0.2)
+		. += span_infoplain("Its manipulation potential is increasing rewards by [servo_bonus]x.")
+		. += span_infoplain("Injury from unsafe ejection reduced [servo_bonus * 100]%.")
+
+	if(!is_ready)
+		. += span_notice("It is currently cooling down. Give it a few moments.")
+
+/obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
+	obj_flags |= EMAGGED
+	glitch_chance = 0.09
+
+	add_overlay(mutable_appearance('icons/obj/machines/bitrunning.dmi', "emag_overlay"))
+	balloon_alert(user, "bzzzt...")
+	playsound(src, 'sound/effects/sparks1.ogg', 35, vary = TRUE)
 
 /obj/machinery/quantum_server/update_appearance(updates)
 	if(isnull(generated_domain) || !is_operational)
 		set_light(l_on = FALSE)
 		return ..()
 
-	set_light_color(is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE)
-	set_light(l_range = 2, l_power = 1.5, l_on = TRUE)
-
+	set_light(l_range = 2, l_power = 1.5, l_color = is_ready ? LIGHT_COLOR_BABY_BLUE : LIGHT_COLOR_FIRE, l_on = TRUE)
 	return ..()
 
 /obj/machinery/quantum_server/update_icon_state()
@@ -96,6 +117,14 @@
 
 	icon_state = "[base_icon_state]_[is_ready ? "on" : "off"]"
 	return ..()
+
+/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(istype(weapon, /obj/item/bitrunning_debug))
+		obj_flags |= EMAGGED
+		glitch_chance = 0.5
+		capacitor_coefficient = 0.01
+		points = 100
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = ..()
@@ -121,8 +150,6 @@
 	return FALSE
 
 /obj/machinery/quantum_server/RefreshParts()
-	. = ..()
-
 	var/capacitor_rating = 1.15
 	var/datum/stock_part/capacitor/cap = locate() in component_parts
 	capacitor_rating -= cap.tier * 0.15
@@ -139,3 +166,4 @@
 
 	servo_bonus = servo_rating
 
+	return ..()

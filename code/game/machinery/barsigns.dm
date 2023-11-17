@@ -412,6 +412,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "For those who wish to be optimally tactful to the non-alcoholic population."
 	neon_color = COLOR_ORANGE
 
+/datum/barsign/tearoom
+	name = "Little Treats Tea Room"
+	icon_state = "little_treats"
+	desc = "A delightfully relaxing tearoom for all the fancy lads in the cosmos."
+	neon_color = COLOR_LIGHT_ORANGE
+
+/datum/barsign/assembly_line
+	name = "The Assembly Line"
+	icon_state = "the-assembly-line"
+	desc = "Where every drink is masterfully crafted with industrial efficiency!"
+	neon_color = "#ffffff"
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns
