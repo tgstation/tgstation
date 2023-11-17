@@ -127,7 +127,7 @@
 	else
 		string += ", [to_display.telecrystal_reward] TC"
 		string += ", [to_display.progression_reward] PR"
-	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE && !istype(to_display, /datum/traitor_objective/ultimate))
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE)
 		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
 		string += " <a href='?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
 	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
@@ -335,9 +335,6 @@
 				traitor_won = FALSE
 			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
-		if(uplink_handler.final_objective)
-			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"
-			traitor_won = TRUE
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 

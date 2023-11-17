@@ -1,10 +1,9 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Dimmer, Section, Stack } from '../../components';
+import { Box, Button, Section, Stack } from '../../components';
 import { ObjectiveElement } from './ObjectiveMenu';
 
 type PrimaryObjectiveMenuProps = {
   primary_objectives;
-  final_objective;
   can_renegotiate;
 };
 
@@ -13,7 +12,7 @@ export const PrimaryObjectiveMenu = (
   context
 ) => {
   const { act } = useBackend(context);
-  const { primary_objectives, final_objective, can_renegotiate } = props;
+  const { primary_objectives, can_renegotiate } = props;
   return (
     <Section fill>
       <Section>
@@ -28,29 +27,6 @@ export const PrimaryObjectiveMenu = (
           }
         </Box>
       </Section>
-      {final_objective && (
-        <Dimmer>
-          <Box
-            color="red"
-            fontFamily={'Bahnschrift'}
-            fontSize={3}
-            align={'top'}
-            as="span">
-            PRIORITY MESSAGE
-            <br />
-            SOURCE: xxx.xxx.xxx.224:41394
-            <br />
-            <br />
-            \\Debrief in progress.
-            <br />
-            \\Final Objective confirmed complete. <br />
-            \\Your work is done here, agent.
-            <br />
-            <br />
-            CONNECTION CLOSED_
-          </Box>
-        </Dimmer>
-      )}
       <Section>
         <Stack vertical fill scrollable>
           {primary_objectives.map((prim_obj, index) => (

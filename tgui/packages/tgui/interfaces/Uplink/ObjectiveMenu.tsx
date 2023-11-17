@@ -1,6 +1,6 @@
 import { BooleanLike, classes } from 'common/react';
 import { Component } from 'inferno';
-import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';
+import { Section, Stack, Box, Button, Flex, Tooltip, Dimmer, Icon } from '../../components';
 import { calculateProgression, getDangerLevel, Rank } from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
 
@@ -15,7 +15,6 @@ export type Objective = {
   ui_buttons?: ObjectiveUiButton[];
   objective_state: ObjectiveState;
   original_progression: number;
-  final_objective: BooleanLike;
 };
 
 export type ObjectiveUiButton = {
@@ -291,12 +290,8 @@ const ObjectiveFunction = (
       progressionReward={objective.progression_reward}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
-      hideTcRep={objective.final_objective}
-      finalObjective={objective.final_objective}
       canAbort={
-        !!handleAbort &&
-        !objective.final_objective &&
-        objective.objective_state === ObjectiveState.Active
+        !!handleAbort && objective.objective_state === ObjectiveState.Active
       }
       grow={grow}
       handleCompletion={(event) => {
@@ -367,7 +362,6 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     originalProgression,
     hideTcRep,
     grow,
-    finalObjective,
     ...rest
   } = props;
 
@@ -428,13 +422,6 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
             <Box mt={1}>
               Failing this objective will deduct {telecrystalPenalty} TC.
             </Box>
-          )}
-          {finalObjective && objectiveState === ObjectiveState.Inactive && (
-            <NoticeBox warning mt={1}>
-              Taking this objective will lock you out of getting anymore
-              objectives! Furthermore, you will be unable to abort this
-              objective.
-            </NoticeBox>
           )}
         </Box>
       </Flex.Item>

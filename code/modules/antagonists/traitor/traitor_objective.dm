@@ -48,7 +48,6 @@
 	/// If undefined, this will either take from the abstract type or the type of the objective itself
 	var/duplicate_type = null
 	/// Used only in unit testing. Can be used to explicitly skip the progression_reward and telecrystal_reward check for non-abstract objectives.
-	/// Useful for final objectives as they don't need a reward.
 	var/needs_reward = TRUE
 
 /// Returns a list of variables that can be changed by config, allows for balance through configuration.

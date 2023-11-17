@@ -36,8 +36,6 @@
 	var/list/completed_objectives = list()
 	/// All objectives assigned by type to handle any duplicates
 	var/list/potential_duplicate_objectives = list()
-	/// Text of the final objective, once assigned. Used for uplink data and traitor greentext. Empty string means not yet reached.
-	var/final_objective = ""
 	/// Objectives that must be completed for traitor greentext. Set by the traitor datum.
 	var/list/primary_objectives
 	/// The role that this uplink handler is associated to.
@@ -226,8 +224,6 @@
 		objective.update_progression_reward()
 
 /datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
-	if(istype(to_abort, /datum/traitor_objective/ultimate))
-		return
 	if(to_abort.objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 	to_abort.fail_objective(penalty_cost = to_abort.telecrystal_penalty)
