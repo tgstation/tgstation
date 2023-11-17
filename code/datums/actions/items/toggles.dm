@@ -84,11 +84,11 @@
 	name = "Toggle Implant HUD"
 
 /datum/action/item_action/toggle_hud/Trigger(trigger_flags)
-   . = ..()
-   if(!.)
-      return
-   var/obj/item/organ/internal/cyberimp/eyes/hud/hud_implant = target
-   hud_implant.toggle_hud(owner)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/organ/internal/cyberimp/eyes/hud/hud_implant = target
+	hud_implant.toggle_hud(owner)
 
 /datum/action/item_action/wheelys
 	name = "Toggle Wheels"
