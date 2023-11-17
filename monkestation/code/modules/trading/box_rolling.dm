@@ -85,7 +85,7 @@
 
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
 	if(type_string == "Unusual")
-		to_chat(world, span_boldannounce("[user] has unboxed a [rolled_item.name]!"))
+		to_chat(world, span_boldannounce("[user] has unboxed an [rolled_item.name]!"))
 		if(isliving(user) && !user.put_in_hands(rolled_item))
 			rolled_item.forceMove(get_turf(user))
 
