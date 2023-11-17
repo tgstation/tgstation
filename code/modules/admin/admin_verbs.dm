@@ -358,10 +358,12 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(isnull(holder) || isnull(mob))
 		return
 	if(mob.invisimin)
+		mob.add_to_all_human_data_huds()
 		mob.invisimin = FALSE
 		mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
 	else
+		mob.remove_from_all_data_huds()
 		mob.invisimin = TRUE
 		mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
 		to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)

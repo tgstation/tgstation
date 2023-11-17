@@ -253,7 +253,7 @@
 		// Move the leaked water from nutrients to... water
 		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
 		if(leaking_water_amount)
-			nutri_reagents.trans_id_to(water_reagents, /datum/reagent/water, leaking_water_amount)
+			nutri_reagents.trans_to(water_reagents, leaking_water_amount, target_id = /datum/reagent/water)
 
 	// We should only take MACHINE_REAGENT_TRANSFER every tick; this is the remaining amount we can take
 	var/remaining_transfer_amount = max(MACHINE_REAGENT_TRANSFER - (nutri_reagents.total_volume - initial_nutri_amount), 0)
@@ -887,7 +887,7 @@
 					if(istype(not_water_reagent,/datum/reagent/water))
 						continue
 					var/transfer_me_to_tray = reagent_source.reagents.get_reagent_amount(not_water_reagent.type) * transfer_amount / reagent_source.reagents.total_volume
-					reagent_source.reagents.trans_id_to(H.reagents, not_water_reagent.type, transfer_me_to_tray)
+					reagent_source.reagents.trans_to(H.reagents, transfer_me_to_tray, target_id = not_water_reagent.type)
 			else
 				reagent_source.reagents.trans_to(H.reagents, transfer_amount, transferred_by = user)
 			lastuser = WEAKREF(user)
