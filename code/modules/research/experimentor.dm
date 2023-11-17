@@ -26,6 +26,7 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
 	var/recentlyExperimented = 0
 	/// Weakref to the first ian we can find at init
 	var/datum/weakref/tracked_ian_ref
@@ -40,12 +41,6 @@
 	var/list/item_reactions
 	var/static/list/valid_items //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
-
-/obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
-	var/list/temp_list = params2list(source_list)
-	for(var/O in temp_list)
-		temp_list[O] = text2num(temp_list[O])
-	return temp_list
 
 /obj/machinery/rnd/experimentor/proc/valid_items()
 	RETURN_TYPE(/list)
@@ -130,20 +125,22 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/living/user)
-	if(!user.combat_mode)
-		. = 1
-		if(!is_insertion_ready(user))
-			return
-		if(!user.transferItemToLoc(O, src))
-			return
-		loaded_item = O
-		to_chat(user, span_notice("You add [O] to the machine."))
-		flick("h_lathe_load", src)
+/obj/machinery/rnd/experimentor/attackby(obj/item/weapon, mob/living/user, params)
+	if(user.combat_mode)
+		return ..()
+	if(!is_insertion_ready(user))
+		return ..()
+	if(!user.transferItemToLoc(weapon, src))
+		to_chat(user, span_warning("\The [weapon] is stuck to your hand, you cannot put it in the [name]!"))
+		return TRUE
+	loaded_item = weapon
+	to_chat(user, span_notice("You add [weapon] to the machine."))
+	flick("h_lathe_load", src)
+	return TRUE
 
 /obj/machinery/rnd/experimentor/default_deconstruction_crowbar(obj/item/O)
 	ejectItem()
-	. = ..(O)
+	return ..(O)
 
 /obj/machinery/rnd/experimentor/ui_interact(mob/user)
 	var/list/dat = list("<center>")
@@ -160,22 +157,19 @@
 		if(istype(loaded_item,/obj/item/relic))
 			dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
 		dat += "<b><a href='byond://?src=[REF(src)];function=eject'>Eject</A>"
-		var/list/listin = techweb_item_boost_check(src)
+		var/list/listin = techweb_item_unlock_check(src)
 		if(listin)
 			var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
 			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
-			var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
 			for(var/node_id in listin)
 				var/datum/techweb_node/N = SSresearch.techweb_node_by_id(node_id)
 				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
 				var/datum/techweb/science_web = locate(/datum/techweb/science) in SSresearch.techwebs
 				if(science_web.researched_nodes[N.id])
 					res += str
-				else if(science_web.boosted_nodes[N.id])
-					boosted += str
 				if(science_web.visible_nodes[N.id]) //JOY OF DISCOVERY!
 					output += str
-			output += boosted + res
+			output += res
 			dat += output
 	else
 		dat += "<b>Nothing loaded.</b>"
@@ -217,9 +211,9 @@
 			experiment(dotype,process)
 			use_power(750)
 			if(dotype != FAIL)
-				var/list/nodes = techweb_item_boost_check(process)
+				var/list/nodes = techweb_item_unlock_check(process)
 				var/picked = pick_weight(nodes) //This should work.
-				stored_research.boost_with_item(SSresearch.techweb_node_by_id(picked), process.type)
+				stored_research.unhide_node(SSresearch.techweb_node_by_id(picked))
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)

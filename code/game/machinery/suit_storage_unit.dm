@@ -143,7 +143,7 @@
 
 /obj/machinery/suit_storage_unit/interdyne
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/tank/jetpack/oxygen/harness
+	storage_type = /obj/item/tank/internals/oxygen
 	mod_type = /obj/item/mod/control/pre_equipped/interdyne
 
 /obj/machinery/suit_storage_unit/void_old
@@ -380,6 +380,7 @@
 		choices,
 		custom_check = CALLBACK(src, PROC_REF(check_interactable), user),
 		require_near = !issilicon(user),
+		autopick_single_option = FALSE
 	)
 
 	if (!choice)

@@ -160,7 +160,7 @@
 	access_view = ACCESS_MINING_STATION
 	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/cargo/mining
 
 /datum/supply_pack/service/survivalknives
 	name = "Survival Knives Crate"
@@ -169,6 +169,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/knife/combat/survival = 3)
 	crate_name = "survival knife crate"
+	crate_type = /obj/structure/closet/crate/cargo/mining
 
 /datum/supply_pack/service/wedding
 	name = "Wedding Crate"
@@ -224,6 +225,7 @@
 					/obj/item/storage/box/donkpockets/donkpockethonk,
 				)
 	crate_name = "donk pocket crate"
+	crate_type = /obj/structure/closet/crate/freezer/food
 
 /datum/supply_pack/service/randomized/donkpockets/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 3)
@@ -240,6 +242,7 @@
 					/obj/item/food/ready_donk/donkhiladas,
 				)
 	crate_name = "\improper Ready-Donk crate"
+	crate_type = /obj/structure/closet/crate/freezer/food
 
 /datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 3)
