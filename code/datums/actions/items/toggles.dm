@@ -82,6 +82,7 @@
 
 /datum/action/item_action/toggle_hud
 	name = "Toggle Implant HUD"
+	desc = "Disables your HUD implant's visuals. You can still access examine information."
 
 /datum/action/item_action/toggle_hud/Trigger(trigger_flags)
 	. = ..()
