@@ -394,6 +394,23 @@
 		/obj/item/mod/module/anomaly_locked/kinesis/prototype,
 	)
 
+/obj/item/mod/control/pre_equipped/glitch
+	theme = /datum/mod_theme/glitch
+	starting_frequency = null
+	applied_cell = /obj/item/stock_parts/cell/bluespace
+	applied_modules = list(
+		/obj/item/mod/module/storage,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
+		/obj/item/mod/module/flashlight,
+	)
+	default_pins = list(
+		/obj/item/mod/module/armor_booster,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
+	)
+
 /obj/item/mod/control/pre_equipped/responsory
 	theme = /datum/mod_theme/responsory
 	starting_frequency = MODLINK_FREQ_CENTCOM
