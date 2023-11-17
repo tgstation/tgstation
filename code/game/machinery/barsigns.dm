@@ -147,7 +147,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		update_appearance()
 		return TRUE
 
-	// if barsigns ever become a craftable or techweb wall mount then remove this
+	// if barsigns ever become a craftable or techweb wall mount then remove this //TODO REMOVE THIS?
 	if(machine_stat & BROKEN)
 		return TRUE
 
@@ -453,3 +453,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	req_access = null
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
+
+/obj/item/wallframe/barsign
+	name = "bar sign frame"
+	desc = "Used to help draw the rabble into your bar"
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "fire_bitem" //change
+	result_path = /obj/machinery/barsign
+	pixel_shift = 26 //adjust
