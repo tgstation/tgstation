@@ -10742,7 +10742,7 @@
 /area/station/security/checkpoint/medical)
 "dho" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_y = 5
 	},
 /obj/machinery/status_display/evac/directional/west,
@@ -15716,7 +15716,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = 6
 	},
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 35
 	},
 /obj/machinery/firealarm/directional/south,
@@ -22009,7 +22009,7 @@
 /area/station/cargo/warehouse)
 "gKk" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/safe/caps_spare/directional/east,
+/obj/structure/secure_safe/caps_spare/directional/east,
 /obj/item/papercutter{
 	pixel_x = 7
 	},
@@ -23021,7 +23021,7 @@
 /turf/open/floor/vault,
 /area/station/security/prison/rec)
 "haw" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/light/directional/south,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28665,8 +28665,8 @@
 	dir = 6
 	},
 /obj/structure/table,
-/obj/item/storage/secure/safe/directional/south,
-/obj/item/storage/secure/briefcase,
+/obj/structure/secure_safe/directional/south,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/rd)
 "iOS" = (
@@ -50768,7 +50768,7 @@
 "pwc" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/closet/secure_closet/personal,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/tile/brown/opposingcorners{
 	dir = 1
@@ -64133,7 +64133,7 @@
 /obj/item/bedsheet/medical{
 	dir = 4
 	},
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
@@ -73245,7 +73245,7 @@
 /area/station/engineering/atmos)
 "wwB" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)

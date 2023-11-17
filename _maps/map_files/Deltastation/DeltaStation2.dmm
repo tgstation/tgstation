@@ -817,7 +817,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/eva/abandoned)
 "ajG" = (
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
@@ -1159,7 +1159,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -8215,7 +8215,7 @@
 "bWn" = (
 /obj/structure/sign/poster/party_game/directional/west,
 /obj/structure/table,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -11552,7 +11552,7 @@
 /area/station/service/theater)
 "cNy" = (
 /obj/item/kirbyplants/random,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
 "cNH" = (
@@ -16562,7 +16562,7 @@
 "eaL" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
 /obj/machinery/airalarm/directional/east,
@@ -18007,7 +18007,7 @@
 "euf" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/east,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/taperecorder{
 	pixel_x = 3;
@@ -21708,7 +21708,7 @@
 /area/station/security/warden)
 "fpe" = (
 /obj/structure/closet/secure_closet/contraband/heads,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/storage/box/ids,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/bot,
@@ -25288,7 +25288,7 @@
 /area/station/medical/paramedic)
 "gjG" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 32
 	},
 /obj/machinery/light_switch/directional/north,
@@ -27233,7 +27233,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "gGv" = (
@@ -27335,7 +27335,7 @@
 "gHH" = (
 /obj/structure/cable,
 /obj/structure/closet/secure_closet/contraband/heads,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
@@ -31713,7 +31713,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "hQJ" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 8
@@ -36579,7 +36579,7 @@
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 5;
 	pixel_y = -3
 	},
@@ -41984,7 +41984,7 @@
 /area/station/hallway/primary/central/fore)
 "kqk" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -45533,7 +45533,7 @@
 "lmI" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/records/medical/laptop,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -47633,7 +47633,7 @@
 "lLW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/storage/briefcase{
 	pixel_x = -3;
 	pixel_y = 3
@@ -52999,7 +52999,7 @@
 /area/station/service/chapel/funeral)
 "niL" = (
 /obj/structure/rack,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/item/reagent_containers/pill/patch/aiuri,
@@ -56774,7 +56774,7 @@
 "oit" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/north,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/item/storage/lockbox/loyalty,
 /obj/item/storage/backpack/satchel/leather/withwallet{
 	pixel_y = 6
@@ -59839,7 +59839,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -63410,7 +63410,7 @@
 "pQR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/grenade/smokebomb,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/aft)
@@ -76887,7 +76887,7 @@
 "tip" = (
 /obj/structure/rack,
 /obj/item/aicard,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -83247,7 +83247,7 @@
 /area/station/science/lobby)
 "uLn" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/machinery/firealarm/directional/north,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/flashlight/pen,
@@ -84993,7 +84993,7 @@
 /turf/open/floor/iron/diagonal,
 /area/station/science/breakroom)
 "vhx" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
@@ -85687,7 +85687,7 @@
 "vrz" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/taperecorder,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -87519,7 +87519,7 @@
 "vPv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/ai/directional/east,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/aicard,
 /obj/item/circuitboard/aicore,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
@@ -88250,7 +88250,7 @@
 "vZw" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -91661,7 +91661,7 @@
 /area/station/hallway/secondary/entry)
 "wRe" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -93292,7 +93292,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/spawner/random/food_or_drink/cups,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/brown/opposingcorners{
@@ -95474,7 +95474,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
