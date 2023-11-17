@@ -116,7 +116,7 @@
 	if(part_datum.overslotting)
 		UnregisterSignal(part, COMSIG_ATOM_EXITED)
 		var/obj/item/overslot = part_datum.overslotting
-		if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+		if(!QDELING(wearer) && !wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 			wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 		part_datum.overslotting = null
 	SEND_SIGNAL(src, COMSIG_MOD_PART_RETRACTED, user, part)

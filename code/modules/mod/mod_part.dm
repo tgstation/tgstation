@@ -16,3 +16,7 @@
 	var/can_overslot = FALSE
 	/// What are we overslotting over?
 	var/obj/item/overslotting = null
+
+/datum/mod_part/Destroy()
+	part_item = null
+	return ..()
