@@ -18,7 +18,15 @@
 // DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 
 /mob/proc/changeNext_move(num)
-	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
+	var/stat_multi = 1
+	switch(stat)
+		if(SOFT_CRIT)
+			stat_multi = 2
+		if(HARD_CRIT)
+			stat_multi = 4
+		else
+			stat_multi = 1
+	next_move = world.time + ((num+next_move_adjust) * next_move_modifier * stat_multi)
 
 /mob/living/changeNext_move(num)
 	var/mod = next_move_modifier
