@@ -9,3 +9,6 @@
 /// Sent from /datum/ai_planning_subtree/parrot_as_in_repeat() : ()
 #define COMSIG_NEEDS_NEW_PHRASE "parrot_needs_new_phrase"
 	#define NO_NEW_PHRASE_AVAILABLE (1<<0) //! Cancel to try again later for when we actually get a new phrase
+
+/// Called whenever an animal is pet via the /datum/element/pet_bonus element: (mob/living/petter, modifiers)
+#define COMSIG_ANIMAL_PET "animal_pet"
