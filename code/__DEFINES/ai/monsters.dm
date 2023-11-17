@@ -219,3 +219,12 @@
 #define BB_WIZARD_BLINK_SPELL "BB_wizard_blink_spell"
 /// Key for the next time we can cast a spell
 #define BB_WIZARD_SPELL_COOLDOWN "BB_wizard_spell_cooldown"
+
+
+#define BB_TRESSPASSER_TARGET "tresspasser_target"
+#define BB_HOSTILE_MEOWS "hostile_meows"
+#define BB_MOUSE_TARGET "mouse_target"
+#define BB_CAT_FOOD_TARGET "cat_food_target"
+#define BB_FOOD_TO_DELIVER "food_to_deliver"
+#define BB_CARRIABLE_PREY "carriable_items"
+#define BB_KITTEN_TO_FEED "kitten_to_feed"

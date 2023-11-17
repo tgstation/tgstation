@@ -1,11 +1,3 @@
-#define BB_TRESSPASSER_TARGET "tresspasser_target"
-#define BB_HOSTILE_MEOWS "hostile_meows"
-#define BB_MOUSE_TARGET "mouse_target"
-#define BB_CAT_FOOD_TARGET "cat_food_target"
-#define BB_FOOD_TO_DELIVER "food_to_deliver"
-#define BB_CARRIABLE_ITEMS "carriable_items"
-#define BB_KITTEN_TO_FEED "kitten_to_feed"
-
 /datum/ai_controller/basic_controller/cat
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -112,6 +104,14 @@
 	hunt_chance = 75
 	hunt_range = 9
 
+/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	var/list/items_we_carry = typecache_filter_list(living_pawn, controller.blackboard[BB_CARRIABLE_PREY])
+	if(length(items_we_carry))
+		return
+	return ..()
+
+
 /datum/ai_behavior/find_hunt_target/hunt_mice/valid_dinner(mob/living/source, mob/living/mouse, radius)
 	if(mouse.stat == DEAD || mouse.mind)
 		return FALSE
@@ -158,17 +158,26 @@
 	manual_emote += end_result
 	living_pawn.manual_emote(manual_emote)
 
-/datum/ai_planning_subtree/find_and_hunt_target/find_food
+/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food
 	target_key = BB_CAT_FOOD_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/find_cat_food
+	finding_behavior = /datum/ai_behavior/find_hunt_target/find_cat_food
 	hunt_targets = list(/obj/item/fish, /obj/item/food/deadmouse)
 	hunt_chance = 75
 	hunt_range = 9
 
+/datum/ai_behavior/hunt_target/unarmed_attack_target/find_cat_food
+	always_reset_target = TRUE
+
+/datum/ai_behavior/find_hunt_target/find_cat_food/valid_dinner(mob/living/source, atom/dinner, radius)
+	//this food is already near a kitten, let the kitten eat it
+	if(locate(/mob/living/basic/pet/cat/kitten) in oview(2, dinner))
+		return FALSE
+	return can_see(source, dinner, radius)
+
 /datum/ai_planning_subtree/haul_food_to_young/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/living_pawn = controller.pawn
 	if(!controller.blackboard_key_exists(BB_FOOD_TO_DELIVER))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands/in_list, BB_CARRIABLE_ITEMS)
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands/given_list, BB_CARRIABLE_PREY)
 		return
 	if(!controller.blackboard_key_exists(BB_KITTEN_TO_FEED))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_kitten, BB_KITTEN_TO_FEED, /mob/living/basic/pet/cat/kitten)
@@ -180,6 +189,41 @@
 
 /datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/kitten = locate(locate_path) in oview(search_range, controller.pawn)
-	return (kitten.stat != DEAD)
+	//kitten already has food near it, go feed another hungry kitten
+	var/list/nearby_food = typecache_filter_list(oview(2, kitten), controller.blackboard[BB_CARRIABLE_PREY])
+	return (kitten.stat != DEAD && !length(nearby_food))
 
 /datum/ai_behavior/deliver_food_to_kitten
+/datum/ai_behavior/deliver_food_to_kitten
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
+	action_cooldown = 5 SECONDS
+
+/datum/ai_behavior/deliver_food_to_kitten/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	var/mob/living/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
+
+/datum/ai_behavior/deliver_food_to_kitten/perform(seconds_per_tick, datum/ai_controller/controller, target_key, food_key)
+	. = ..()
+	var/mob/living/target = controller.blackboard[target_key]
+
+	if(QDELETED(target))
+		finish_action(controller, FALSE, target_key, food_key)
+		return
+
+	var/mob/living/living_pawn = controller.pawn
+	var/atom/movable/food = controller.blackboard[food_key]
+
+	if(isnull(food) || !(food in living_pawn))
+		finish_action(controller, FALSE, target_key, food_key)
+		return
+
+	food.forceMove(get_turf(living_pawn))
+	finish_action(controller, TRUE, target_key, food_key)
+
+/datum/ai_behavior/territorial_struggle/finish_action(datum/ai_controller/controller, success, target_key, food_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
+	controller.clear_blackboard_key(food_key)
