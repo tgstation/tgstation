@@ -133,6 +133,8 @@
 /obj/item/choice_beacon/holy
 	name = "armaments beacon"
 	desc = "Summon a set of standard issue chaplain armaments, as dictated by I.C.R.A."
+	icon_state = "icra_delivery"
+	inhand_icon_state = "icra_delivery"
 	company_source = "Interstellar Conservation of Religion Association"
 	company_message = span_bold("A choice has already been made.")
 
