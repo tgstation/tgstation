@@ -193,7 +193,7 @@
 #define REAGENT_STRICT_TYPE (1<<0)
 ///Parent type but not sub types for e.g. if param is obj/item it will look for obj/item/stack but not obj/item/stack/sheet
 #define REAGENT_PARENT_TYPE (1<<1)
-///same as is istype() check
+///same as istype() check
 #define REAGENT_SUB_TYPE (1<<2)
 
 #define RNGCHEM_INPUT "input"
