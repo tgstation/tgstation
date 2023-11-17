@@ -1,6 +1,10 @@
 #define BB_TRESSPASSER_TARGET "tresspasser_target"
 #define BB_HOSTILE_MEOWS "hostile_meows"
 #define BB_MOUSE_TARGET "mouse_target"
+#define BB_CAT_FOOD_TARGET "cat_food_target"
+#define BB_FOOD_TO_DELIVER "food_to_deliver"
+#define BB_CARRIABLE_ITEMS "carriable_items"
+#define BB_KITTEN_TO_FEED "kitten_to_feed"
 
 /datum/ai_controller/basic_controller/cat
 	blackboard = list(
@@ -14,8 +18,9 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/flee_target/from_flee_key/cat_struggle,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
+		/datum/ai_planning_subtree/find_and_hunt_target/find_food,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/haul_food_to_young,
 		/datum/ai_planning_subtree/territorial_struggle,
 	)
 
@@ -152,3 +157,29 @@
 	var/end_result = success ? "and succeeds!" : "but fails!"
 	manual_emote += end_result
 	living_pawn.manual_emote(manual_emote)
+
+/datum/ai_planning_subtree/find_and_hunt_target/find_food
+	target_key = BB_CAT_FOOD_TARGET
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target
+	hunt_targets = list(/obj/item/fish, /obj/item/food/deadmouse)
+	hunt_chance = 75
+	hunt_range = 9
+
+/datum/ai_planning_subtree/haul_food_to_young/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	if(!controller.blackboard_key_exists(BB_FOOD_TO_DELIVER))
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands/in_list, BB_CARRIABLE_ITEMS)
+		return
+	if(!controller.blackboard_key_exists(BB_KITTEN_TO_FEED))
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_kitten, BB_KITTEN_TO_FEED, /mob/living/basic/pet/cat/kitten)
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/deliver_food_to_kitten, BB_KITTEN_TO_FEED, BB_FOOD_TO_DELIVER)
+
+/datum/ai_behavior/find_and_set/valid_kitten
+
+/datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/mob/living/kitten = locate(locate_path) in oview(search_range, controller.pawn)
+	return (kitten.stat != DEAD)
+
+/datum/ai_behavior/deliver_food_to_kitten

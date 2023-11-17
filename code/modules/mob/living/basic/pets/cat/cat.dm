@@ -1,7 +1,7 @@
+
 #define RUNTIME_SAVE_DATA "data/npc_saves/Runtime.sav"
 #define RUNTIME_JSON_DATA "data/npc_saves/Runtime.json"
 #define MAX_CAT_DEPLOY 50
-
 /mob/living/basic/pet/cat
 	name = "cat"
 	desc = "Kitty!!"
@@ -43,8 +43,13 @@
 	var/can_breed = TRUE
 	///can hold items?
 	var/can_hold_item = TRUE
+	///list of items we can carry
+	var/static/list/carriable_items = typecacheof(list(
+		/obj/item/fish,
+		/obj/item/food/deadmouse,
+	))
 	///item we are currently holding
-	var/obj/item/held_item
+	var/obj/item/held_food
 	///mutable appearance for held item
 	var/mutable_appearance/held_item_overlay
 
@@ -53,9 +58,39 @@
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	if(!can_breed)
+	ai_controller.set_blackboard_key(BB_CARRIABLE_PREY, carriable_items)
+	if(can_breed)
+		add_breeding_component()
+	if(can_hold_item)
+		RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
+/mob/living/basic/pet/cat/proc/pre_attack(mob/living/source, atom/movable/target)
+	SIGNAL_HANDLER
+	if(!is_type_in_typecache(target, carriable_items) || held_food)
 		return
-	add_breeding_component()
+	target.forceMove(src)
+
+/mob/living/basic/pet/cat/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone != held_food)
+		return
+	held_food = null
+	update_appearance(UPDATE_OVERLAYS)
+/mob/living/basic/pet/cat/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(is_type_in_typecache(arrived, carriable_items))
+		held_food = arrived
+		update_appearance(UPDATE_OVERLAYS)
+	return ..()
+
+/mob/living/basic/pet/cat/update_overlays()
+	. = ..()
+	if(stat == DEAD ||resting || !held_food)
+		return
+	if(istype(held_food, /obj/item/fish))
+		held_item_overlay = mutable_appearance(icon, "cat_fish_overlay")
+	if(istype(held_food, /obj/item/food/deadmouse))
+		held_item_overlay = mutable_appearance(icon, "cat_mouse_overlay")
+	. += held_item_overlay
 
 /mob/living/basic/pet/cat/update_resting()
 	. = ..()
@@ -87,7 +122,6 @@
 //	minbodytemp = TCMB
 //	maxbodytemp = T0C + 40
 	held_state = "spacecat"
-
 /mob/living/basic/pet/cat/breadcat
 	name = "bread cat"
 	desc = "They're a cat... with a bread!"
@@ -102,7 +136,6 @@
 		/obj/item/organ/external/tail/cat = 1,
 		/obj/item/food/breadslice/plain = 1
 	)
-
 /mob/living/basic/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
@@ -113,7 +146,6 @@
 	collar_icon_state = null
 	unique_pet = TRUE
 	held_state = "original"
-
 /mob/living/basic/pet/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww."
@@ -125,7 +157,6 @@
 	mob_size = MOB_SIZE_SMALL
 	collar_icon_state = "kitten"
 	can_breed = FALSE
-
 /mob/living/basic/pet/cat/_proc
 	name = "Proc"
 	gender = MALE
