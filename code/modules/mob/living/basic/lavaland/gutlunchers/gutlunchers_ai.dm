@@ -129,6 +129,7 @@
 
 /datum/pet_command/point_targeting/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
 	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
+		parent.balloon_alert_to_viewers("can't reproduce anymore!")
 		return
 	return ..()
 
