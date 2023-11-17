@@ -1,8 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "removed redundant procs `get_master_reagent_id()` & `get_master_reagent_name()`"
-  - code_imp: "merged `remove_all_type()` proc with `remove_reagent()` now this proc can perform both functions.  `remove_reagent()` now returns the total volume of reagents removed rather than a simple TRUE/FALSE."
-  - code_imp: "merged `trans_id_to()` proc with `trans_to()` now this proc can perform both functions"
-  - refactor: "plumbing reaction chamber will now use only a single tick to balance ph of a solution making it less efficient but more faster. Just make the reaction chamber wait for longer periods of time to accurately balance ph"
-  - refactor: "reagent holder code has been condensed. Report any bugs on GitHub"
