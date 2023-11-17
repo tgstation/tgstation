@@ -170,8 +170,6 @@
 			glasses = equipping
 			if(glasses.glass_colour_type)
 				update_glasses_color(glasses, 1)
-			if(glasses.tint)
-				update_tint()
 			if(glasses.vision_flags || glasses.invis_override || glasses.invis_view || !isnull(glasses.lighting_cutoff))
 				update_sight()
 			update_worn_glasses()
