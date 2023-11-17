@@ -217,7 +217,7 @@
 
 /datum/greyscale_config/quantum_keycard
 	name = "Quantum Keycard"
-	icon_file = 'icons/obj/assemblies/circuitry_n_data.dmi'
+	icon_file = 'icons/obj/device.dmi'
 	json_config = 'code/datums/greyscale/json_configs/quantum_keycard.json'
 
 //
