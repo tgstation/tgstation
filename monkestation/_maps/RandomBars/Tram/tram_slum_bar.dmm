@@ -156,7 +156,9 @@
 /area/station/service/kitchen)
 "hb" = (
 /obj/machinery/light/dim/directional/west,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/commons/lounge)
 "he" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -547,7 +549,9 @@
 /area/station/service/theater)
 "vb" = (
 /obj/effect/landmark/start/hangover,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/commons/lounge)
 "vA" = (
 /obj/structure/chair/stool/directional/east,
@@ -742,7 +746,9 @@
 /turf/open/floor/wood/tile,
 /area/station/service/bar/atrium)
 "Co" = (
-/turf/open/misc/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/commons/lounge)
 "Cs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -783,7 +789,9 @@
 /area/station/service/theater)
 "Eu" = (
 /obj/effect/landmark/start/assistant,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/commons/lounge)
 "EE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1114,7 +1122,9 @@
 /area/station/service/theater)
 "RK" = (
 /obj/machinery/light/dim/directional/north,
-/turf/open/misc/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/station/commons/lounge)
 "RT" = (
 /obj/structure/table/wood,
