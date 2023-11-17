@@ -1,3 +1,5 @@
+#define FORCED_SPEECH_COOLDOWN_DURATION 5 SECONDS
+
 GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	/datum/strippable_item/parrot_headset,
 )))
@@ -75,6 +77,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		/obj/item/food/cracker,
 	)
 
+	/// Tracks the times when we send a phrase through either being pet or attack to ensure it's not abused to flood
+	COOLDOWN_DECLARE(forced_speech_cooldown)
 
 /mob/living/basic/parrot/Initialize(mapload)
 	. = ..()
@@ -200,10 +204,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!isnull(client) || stat != CONSCIOUS)
 		return null
 
+	if(!COOLDOWN_FINISHED(forced_speech_cooldown))
+		return null
+
 	var/return_value = SEND_SIGNAL(src, COMSIG_NEEDS_NEW_PHRASE)
 	if(return_value & NO_NEW_PHRASE_AVAILABLE)
 		return null
 
+	COOLDOWN_START(src, orced_speech_cooldown, FORCED_SPEECH_COOLDOWN_DURATION)
 	return ai_controller.blackboard[BB_PARROT_REPEAT_STRING]
 
 /// Proc that listens for when a parrot is pet so we can dispatch a voice line.
@@ -446,3 +454,5 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	drop_held_item()
 	return COMSIG_KB_ACTIVATED
+
+#undef FORCED_SPEECH_COOLDOWN_DURATION
