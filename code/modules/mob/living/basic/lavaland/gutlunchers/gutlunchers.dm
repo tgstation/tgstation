@@ -14,7 +14,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	basic_mob_flags = DEL_ON_DEATH
 	speak_emote = list("warbles", "quavers")
-	faction = list(FACTION_MINING, FACTION_ASHWALKER)
+	faction = list(FACTION_ASHWALKER)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
