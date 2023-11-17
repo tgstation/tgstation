@@ -429,6 +429,7 @@
 	brain_size = 0.8
 
 /obj/item/organ/internal/brain/abductor
+	icon_state = "brain-x"
 	brain_size = 1.3
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
