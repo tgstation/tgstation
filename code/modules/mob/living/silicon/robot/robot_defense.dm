@@ -95,8 +95,12 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(shell) //AI shells always have the laws of the AI
 			to_chat(user, span_warning("[src] is controlled remotely! You cannot upload new laws this way!"))
 			return
-		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
-			emote("buzz-[user.name]")
+		if(connected_ai && lawupdate)
+			to_chat(user, span_warning("[src] is receiving laws remotely from a synced AI!"))
+			return
+		if(emagged)
+			to_chat(user, span_warning("The law interface glitches out!"))
+			emote("buzz")
 			return
 		if(!mind) //A player mind is required for law procs to run antag checks.
 			to_chat(user, span_warning("[src] is entirely unresponsive!"))
