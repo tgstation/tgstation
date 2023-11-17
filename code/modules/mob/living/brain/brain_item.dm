@@ -429,6 +429,8 @@
 	brain_size = 0.8
 
 /obj/item/organ/internal/brain/abductor
+	name = "grey brain"
+	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
 
