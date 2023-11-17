@@ -1,10 +1,10 @@
 /mob/living/carbon/update_obscured_slots(obj/item/worn_item)
 	..()
 	var/obscured_slots = worn_item.flags_inv
-	if(obscured_slots & (HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS))
-		update_body_parts()
 	if(obscured_slots & HIDEEYES)
 		dna?.species?.handle_body(src)
+	if(obscured_slots & (HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS))
+		update_body_parts()
 
 /// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)

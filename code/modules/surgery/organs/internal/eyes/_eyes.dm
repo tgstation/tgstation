@@ -129,7 +129,7 @@
 
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 
-	if(isnull(eye_icon_state) || my_head?.eyes_hidden || parent.check_obscured_slots(TRUE) & ITEM_SLOT_EYES)
+	if(isnull(eye_icon_state) || my_head?.eyes_hidden || (parent.check_obscured_slots(TRUE) & ITEM_SLOT_EYES))
 		return list()
 
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)

@@ -593,8 +593,6 @@
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
 	for(var/obj/item/clothing/worn_item in get_all_worn_items())
-		if(!istype(worn_item))
-			continue
 		tint += worn_item.tint
 
 	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -1162,15 +1160,15 @@
 		update_worn_back(0)
 		. = TRUE
 
-	if(head?.wash(clean_types))
-		update_worn_head()
-		. = TRUE
-
 	// Check and wash stuff that can be covered
 	var/obscured = check_obscured_slots()
 
+	if(head && !(obscured & ITEM_SLOT_HEAD) && head.wash(clean_types))
+		update_worn_head()
+		. = TRUE
+
 	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(glasses && !(obscured & ITEM_SLOT_EYES) && glasses.wash(clean_types))
+	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		update_worn_glasses()
 		. = TRUE
 

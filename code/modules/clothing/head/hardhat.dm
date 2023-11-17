@@ -122,10 +122,6 @@
 	///Icon state of the welding visor.
 	var/visor_state = "weldvisor"
 
-/obj/item/clothing/head/utility/hardhat/welding/Initialize(mapload)
-	. = ..()
-	update_overlays()
-
 /obj/item/clothing/head/utility/hardhat/welding/attack_self_secondary(mob/user, modifiers)
 	adjust_visor(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -136,11 +132,14 @@
 		return
 	return ..()
 
+/obj/item/clothing/head/utility/hardhat/welding/visor_toggling()
+	. = ..()
+	update_appearance()
+
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-		update_overlays()
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
