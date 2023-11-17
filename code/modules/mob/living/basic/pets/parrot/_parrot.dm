@@ -341,6 +341,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Handles picking up the item we're holding, done in its own proc because of a snowflake edge case we need to account for. No additional logic beyond that.
 /// Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/pick_up_item(obj/item/target)
+	if(istype(target, /obj/item/food/cracker))
+		consume_cracker(target)
+		qdel(target)
+		return
+
 	target.forceMove(src)
 	held_item = target
 
@@ -351,11 +356,6 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return
 
 	if(stat != CONSCIOUS) // don't gotta do shit
-		return
-
-	if(istype(held_item, /obj/item/food/cracker))
-		consume_cracker(held_item)
-		qdel(held_item)
 		return
 
 	if(!gently && isgrenade(held_item))
