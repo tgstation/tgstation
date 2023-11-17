@@ -2562,7 +2562,7 @@
 "aZP" = (
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_y = -10
 	},
 /obj/item/paper_bin{
@@ -16236,7 +16236,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/item/bedsheet/ce,
 /obj/effect/landmark/start/chief_engineer,
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/ce)
 "fTD" = (
@@ -17367,7 +17367,7 @@
 /area/station/command/heads_quarters/ce)
 "gpK" = (
 /obj/structure/closet/secure_closet/engineering_chief,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/lighter,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/grimy,
@@ -18369,7 +18369,7 @@
 /area/station/medical/chemistry)
 "gIG" = (
 /obj/structure/table/glass,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
 "gIH" = (
@@ -19597,7 +19597,7 @@
 	name = "Evidence Closet 2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "evidence safe"
 	},
 /turf/open/floor/iron/smooth,
@@ -38641,7 +38641,7 @@
 /obj/effect/turf_decal/siding/dark_red/corner{
 	dir = 8
 	},
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -43195,7 +43195,7 @@
 /area/station/command/corporate_suite)
 "ptB" = (
 /obj/item/kirbyplants/organic/applebush,
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/bridge)
 "ptN" = (
@@ -55410,7 +55410,7 @@
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 15;
 	pixel_y = 28
 	},
@@ -61262,11 +61262,11 @@
 /area/station/maintenance/department/science/xenobiology)
 "vgC" = (
 /obj/structure/closet/secure_closet/chief_medical,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/storage/secure/safe/directional/south{
+/obj/structure/secure_safe/directional/south{
 	pixel_y = -23
 	},
 /obj/item/gun/syringe,
@@ -71998,11 +71998,11 @@
 "yhk" = (
 /obj/structure/table,
 /obj/machinery/light_switch/directional/north,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 12
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -1;
 	pixel_y = 8
 	},
