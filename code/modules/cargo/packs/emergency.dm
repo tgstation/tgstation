@@ -62,7 +62,7 @@
 	access = ACCESS_ATMOSPHERICS
 	contains = list(/obj/item/watertank/atmos)
 	crate_name = "firefighting backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/emergency/internals
 	name = "Internals Crate"
