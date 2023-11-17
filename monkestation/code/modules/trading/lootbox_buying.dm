@@ -26,6 +26,11 @@
 /client/proc/open_lootbox()
 	if(!mob)
 		return
+		
+	if(isnewplayer(mob))
+		to_chat(mob, span_warning("Observe or spawn in first!"))
+		return
+
 	if(!prefs.lootboxes_owned)
 		return
 	prefs.lootboxes_owned--
