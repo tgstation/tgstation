@@ -1168,7 +1168,7 @@
 		. = TRUE
 
 	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
+	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		update_worn_glasses()
 		. = TRUE
 

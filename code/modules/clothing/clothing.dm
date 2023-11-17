@@ -486,7 +486,7 @@ BLIND     // can't see anything
 			var/mob/living/carbon/carbon_user = user
 			if(visor_vars_to_toggle & VISOR_TINT)
 				carbon_user.update_tint()
-			if(visor_flags & MASKINTERNALS && carbon_user.invalid_internals())
+			if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
 				carbon_user.cutoff_internals()
 	return TRUE
 
