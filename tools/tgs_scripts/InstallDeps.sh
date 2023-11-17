@@ -37,11 +37,11 @@ fi
 if ! [ -x "$has_youtubedl" ]; then
 	echo "Installing youtube-dl with pip3..."
 	if ! [ -x "$has_sudo" ]; then
- 		rm /usr/lib/python3.11/EXTERNALLY-MANAGED
+ 		rm -f /usr/lib/python3.11/EXTERNALLY-MANAGED
 		apt-get update
 		apt-get install -y python3 python3-pip
 	else
- 		sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
+ 		sudo rm -f /usr/lib/python3.11/EXTERNALLY-MANAGED
 		sudo apt-get update
 		sudo apt-get install -y python3 python3-pip
 	fi
