@@ -93,13 +93,13 @@
 			if(wear_mask)
 				return
 			wear_mask = equipping
-			wear_mask_update(equipping, toggle_off = 0)
+			update_worn_mask()
 		if(ITEM_SLOT_HEAD)
 			if(head)
 				return
 			head = equipping
 			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, equipping)
-			head_update(equipping)
+			update_worn_head()
 		if(ITEM_SLOT_NECK)
 			if(wear_neck)
 				return
@@ -137,11 +137,12 @@
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
 
+	var/not_handled = FALSE
 	if(I == head)
 		head = null
 		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_HAT, I, force, newloc, no_move, invdrop, silent)
 		if(!QDELETED(src))
-			head_update(I)
+			update_worn_head()
 	else if(I == back)
 		back = null
 		if(!QDELETED(src))
@@ -149,8 +150,8 @@
 	else if(I == wear_mask)
 		wear_mask = null
 		if(!QDELETED(src))
-			wear_mask_update(I, toggle_off = 1)
-	if(I == wear_neck)
+			update_worn_mask()
+	else if(I == wear_neck)
 		wear_neck = null
 		if(!QDELETED(src))
 			update_worn_neck(I)
@@ -164,6 +165,11 @@
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
+	else
+		not_handled = TRUE
+
+	if(!not_handled)
+		update_obscured_slots(I)
 
 	// Not an else-if because we're probably equipped in another slot
 	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
@@ -320,27 +326,6 @@
 /mob/living/carbon/proc/toggle_externals(obj/item/tank)
 	// Carbons can't open their own externals tanks.
 	return FALSE
-
-/// Handle stuff to update when a mob equips/unequips a mask.
-/mob/living/proc/wear_mask_update(obj/item/I, toggle_off = 1)
-	update_worn_mask()
-
-/mob/living/carbon/wear_mask_update(obj/item/I, toggle_off = 1)
-	var/obj/item/clothing/C = I
-	if(istype(C) && (C.tint || initial(C.tint)))
-		update_tint()
-	update_worn_mask()
-
-/// Handle stuff to update when a mob equips/unequips a headgear.
-/mob/living/carbon/proc/head_update(obj/item/I, forced)
-	if(isclothing(I))
-		var/obj/item/clothing/C = I
-		if(C.tint || initial(C.tint))
-			update_tint()
-		update_sight()
-	if(I.flags_inv & HIDEMASK || forced)
-		update_worn_mask()
-	update_worn_head()
 
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
 	var/index = get_held_index_of_item(I)

@@ -163,7 +163,7 @@
 			if(ears)
 				return
 			ears = equipping
-			update_inv_ears()
+			update_worn_ears()
 		if(ITEM_SLOT_EYES)
 			if(glasses)
 				return
@@ -191,8 +191,6 @@
 
 			wear_suit = equipping
 
-			if(equipping.flags_inv & HIDEJUMPSUIT)
-				update_worn_undersuit()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
 				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
@@ -238,6 +236,7 @@
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
+	var/not_handled = FALSE
 	if(I == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
@@ -247,8 +246,6 @@
 			update_mob_action_buttons() //certain action buttons may be usable again.
 		wear_suit = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
-			if(I.flags_inv & HIDEJUMPSUIT)
-				update_worn_undersuit()
 			update_worn_oversuit()
 	else if(I == w_uniform)
 		if(invdrop)
@@ -273,8 +270,6 @@
 		var/obj/item/clothing/glasses/G = I
 		if(G.glass_colour_type)
 			update_glasses_color(G, 0)
-		if(G.tint)
-			update_tint()
 		if(G.vision_flags || G.invis_override || G.invis_view || !isnull(G.lighting_cutoff))
 			update_sight()
 		if(!QDELETED(src))
@@ -282,7 +277,7 @@
 	else if(I == ears)
 		ears = null
 		if(!QDELETED(src))
-			update_inv_ears()
+			update_worn_ears()
 	else if(I == shoes)
 		shoes = null
 		if(!QDELETED(src))
@@ -308,7 +303,12 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_suit_storage()
+	else
+		not_handled = TRUE
 	update_equipment_speed_mods()
+
+	if(!not_handled)
+		update_obscured_slots(I)
 
 	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
 	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
@@ -325,8 +325,8 @@
 	// Use mask in absence of tube.
 	if(isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
 		// Adjust dishevelled breathing mask back onto face.
-		if (wear_mask.mask_adjusted)
-			wear_mask.adjustmask(src)
+		if (wear_mask.up)
+			wear_mask.adjust_visor(src)
 		return toggle_open_internals(tank, is_external)
 	// Use helmet in absence of tube or valid mask.
 	if(can_breathe_helmet())
@@ -345,30 +345,6 @@
 /// Returns TRUE if the tank successfully toggles open/closed. Opens the tank only if a breathing apparatus is found.
 /mob/living/carbon/human/toggle_externals(obj/item/tank)
 	return toggle_internals(tank, TRUE)
-
-/mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
-	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
-		update_body_parts()
-	// Close internal air tank if mask was the only breathing apparatus.
-	if(invalid_internals())
-		cutoff_internals()
-	if(I.flags_inv & HIDEEYES)
-		update_worn_glasses()
-	sec_hud_set_security_status()
-	..()
-
-/mob/living/carbon/human/head_update(obj/item/I, forced)
-	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
-		update_body_parts()
-	// Close internal air tank if helmet was the only breathing apparatus.
-	if (invalid_internals())
-		cutoff_internals()
-	if(I.flags_inv & HIDEEYES || forced)
-		update_worn_glasses()
-	if(I.flags_inv & HIDEEARS || forced)
-		update_body()
-	sec_hud_set_security_status()
-	..()
 
 /mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
 	var/datum/outfit/O = null

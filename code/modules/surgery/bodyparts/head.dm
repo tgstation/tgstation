@@ -80,6 +80,8 @@
 	VAR_PROTECTED/show_debrained = FALSE
 	/// Draw this head as missing eyes
 	VAR_PROTECTED/show_eyeless = FALSE
+	/// Are the eyes currently hidden by something?
+	var/eyes_hidden = FALSE
 
 	/// Offset to apply to equipment worn on the ears
 	var/datum/worn_feature_offset/worn_ears_offset

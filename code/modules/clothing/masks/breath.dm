@@ -21,12 +21,12 @@
 	return OXYLOSS
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
-	adjustmask(user)
+	adjust_visor(user)
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
 	if(user.can_perform_action(src, NEED_DEXTERITY))
-		adjustmask(user)
+		adjust_visor(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	. = ..()

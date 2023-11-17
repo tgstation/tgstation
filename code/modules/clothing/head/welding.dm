@@ -23,9 +23,10 @@
 	acid = 60
 
 /obj/item/clothing/head/utility/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
 
 /obj/item/clothing/head/utility/welding/visor_toggling()
 	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 	inhand_icon_state = "[initial(inhand_icon_state)][up ? "off" : ""]"
 

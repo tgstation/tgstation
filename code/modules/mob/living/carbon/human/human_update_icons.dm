@@ -54,7 +54,7 @@ There are several things that need to be remembered:
 		update_worn_id()
 		update_worn_glasses()
 		update_worn_gloves()
-		update_inv_ears()
+		update_worn_ears()
 		update_worn_shoes()
 		update_suit_storage()
 		update_worn_mask()
@@ -70,6 +70,12 @@ There are several things that need to be remembered:
 		//damage overlays
 		update_damage_overlays()
 
+/mob/living/carbon/human/update_obscured_slots(obj/item/worn_item)
+	..()
+	var/obscured_slots = worn_item.flags_inv
+	if(obscured_slots & HIDEFACE)
+		sec_hud_set_security_status()
+
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
@@ -83,6 +89,8 @@ There are several things that need to be remembered:
 	if(istype(w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/uniform = w_uniform
 		update_hud_uniform(uniform)
+
+		update_obscured_slots(uniform)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_ICLOTHING)
 			return
@@ -143,6 +151,9 @@ There are several things that need to be remembered:
 	if(wear_id)
 		var/obj/item/worn_item = wear_id
 		update_hud_id(worn_item)
+
+		update_obscured_slots(worn_item)
+
 		var/icon_file = 'icons/mob/clothing/id.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
@@ -182,6 +193,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = gloves
 		update_hud_gloves(worn_item)
 
+		update_obscured_slots(worn_item)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_GLOVES)
 			return
 
@@ -216,6 +229,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = glasses
 		update_hud_glasses(worn_item)
 
+		update_obscured_slots(worn_item)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EYES)
 			return
 
@@ -227,7 +242,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLASSES_LAYER)
 
 
-/mob/living/carbon/human/update_inv_ears()
+/mob/living/carbon/human/update_worn_ears()
 	remove_overlay(EARS_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -241,6 +256,8 @@ There are several things that need to be remembered:
 	if(ears)
 		var/obj/item/worn_item = ears
 		update_hud_ears(worn_item)
+
+		update_obscured_slots(worn_item)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EARS)
 			return
@@ -262,6 +279,8 @@ There are several things that need to be remembered:
 	if(wear_neck)
 		var/obj/item/worn_item = wear_neck
 		update_hud_neck(wear_neck)
+
+		update_obscured_slots(worn_item)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_NECK)
 			return
@@ -288,6 +307,8 @@ There are several things that need to be remembered:
 	if(shoes)
 		var/obj/item/worn_item = shoes
 		update_hud_shoes(worn_item)
+
+		update_obscured_slots(worn_item)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET)
 			return
@@ -326,6 +347,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = s_store
 		update_hud_s_store(worn_item)
 
+		update_obscured_slots(worn_item)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE)
 			return
 
@@ -345,6 +368,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = head
 		update_hud_head(worn_item)
 
+		update_obscured_slots(worn_item)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_HEAD)
 			return
 
@@ -355,7 +380,6 @@ There are several things that need to be remembered:
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
 
-	update_mutant_bodyparts()
 	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/human/update_worn_belt()
@@ -368,6 +392,8 @@ There are several things that need to be remembered:
 	if(belt)
 		var/obj/item/worn_item = belt
 		update_hud_belt(worn_item)
+
+		update_obscured_slots(worn_item)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_BELT)
 			return
@@ -391,6 +417,9 @@ There are several things that need to be remembered:
 	if(wear_suit)
 		var/obj/item/worn_item = wear_suit
 		update_hud_wear_suit(worn_item)
+
+		update_obscured_slots(worn_item)
+
 		var/icon_file = DEFAULT_SUIT_FILE
 
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
@@ -439,6 +468,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_mask
 		update_hud_wear_mask(worn_item)
 
+		update_obscured_slots(worn_item)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_MASK)
 			return
 
@@ -462,6 +493,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = back
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
+
+		update_obscured_slots(worn_item)
+
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 
 		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
@@ -477,6 +511,7 @@ There are several things that need to be remembered:
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
+		update_obscured_slots(legcuffed)
 		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)

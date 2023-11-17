@@ -8,27 +8,15 @@
 	//HIDDEN CHECKS START
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
+	eyes_hidden = FALSE
 	if(human_head_owner)
-		if(human_head_owner.head)
-			var/obj/item/hat = human_head_owner.head
-			if(hat.flags_inv & HIDEHAIR)
+		for(var/obj/item/worn_item in human_head_owner.get_all_worn_items())
+			if(worn_item.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
-			if(hat.flags_inv & HIDEFACIALHAIR)
+			if(worn_item.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
-
-		if(human_head_owner.wear_mask)
-			var/obj/item/mask = human_head_owner.wear_mask
-			if(mask.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(mask.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
-
-		if(human_head_owner.w_uniform)
-			var/obj/item/item_uniform = human_head_owner.w_uniform
-			if(item_uniform.flags_inv & HIDEHAIR)
-				hair_hidden = TRUE
-			if(item_uniform.flags_inv & HIDEFACIALHAIR)
-				facial_hair_hidden = TRUE
+			if(worn_item.flags_inv & HIDEEYES)
+				eyes_hidden = TRUE
 		//invisibility and husk stuff
 		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
 			hair_hidden = TRUE
@@ -44,7 +32,7 @@
 		else
 			show_debrained = FALSE
 
-		if(!owner.get_organ_slot(ORGAN_SLOT_EYES))
+		if(!eyes_hidden && !owner.get_organ_slot(ORGAN_SLOT_EYES))
 			show_eyeless = TRUE
 		else
 			show_eyeless = FALSE
@@ -54,7 +42,7 @@
 		else
 			show_debrained = FALSE
 
-		if(!eyes)
+		if(!eyes_hidden && !eyes)
 			show_eyeless = TRUE
 		else
 			show_eyeless = FALSE

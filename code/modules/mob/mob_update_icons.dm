@@ -7,7 +7,62 @@
 
 ///Updates every item slot passed into it.
 /mob/proc/update_clothing(slot_flags)
-	return
+	if(slot_flags & ITEM_SLOT_BACK)
+		update_worn_back()
+	if(slot_flags & ITEM_SLOT_MASK)
+		update_worn_mask()
+	if(slot_flags & ITEM_SLOT_NECK)
+		update_worn_neck()
+	if(slot_flags & ITEM_SLOT_HANDCUFFED)
+		update_worn_handcuffs()
+	if(slot_flags & ITEM_SLOT_LEGCUFFED)
+		update_worn_legcuffs()
+	if(slot_flags & ITEM_SLOT_BELT)
+		update_worn_belt()
+	if(slot_flags & ITEM_SLOT_ID)
+		update_worn_id()
+	if(slot_flags & ITEM_SLOT_EARS)
+		update_worn_ears()
+	if(slot_flags & ITEM_SLOT_EYES)
+		update_worn_glasses()
+	if(slot_flags & ITEM_SLOT_GLOVES)
+		update_worn_gloves()
+	if(slot_flags & ITEM_SLOT_HEAD)
+		update_worn_head()
+	if(slot_flags & ITEM_SLOT_FEET)
+		update_worn_shoes()
+	if(slot_flags & ITEM_SLOT_OCLOTHING)
+		update_worn_oversuit()
+	if(slot_flags & ITEM_SLOT_ICLOTHING)
+		update_worn_undersuit()
+	if(slot_flags & ITEM_SLOT_SUITSTORE)
+		update_suit_storage()
+	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
+		update_pockets()
+	if(slot_flags & ITEM_SLOT_HANDS)
+		update_held_items()
+
+///Updates item slots obscured by this item
+/mob/proc/update_obscured_slots(obj/item/worn_item)
+	var/obscured_slots = worn_item.flags_inv
+	if(obscured_slots & HIDEGLOVES)
+		update_worn_gloves()
+	if(obscured_slots & HIDESUITSTORAGE)
+		update_suit_storage()
+	if(obscured_slots & HIDEJUMPSUIT)
+		update_worn_undersuit()
+	if(obscured_slots & HIDESHOES)
+		update_worn_shoes()
+	if(obscured_slots & HIDEMASK)
+		update_worn_mask()
+	if(obscured_slots & HIDEEARS)
+		update_worn_ears()
+	if(obscured_slots & HIDEEYES)
+		update_worn_glasses()
+	if(obscured_slots & HIDENECK)
+		update_worn_neck()
+	if(obscured_slots & HIDEHEADGEAR)
+		update_worn_head()
 
 /mob/proc/update_icons()
 	return
@@ -76,14 +131,14 @@
 /mob/proc/update_worn_gloves()
 	return
 
-///Updates the handcuff overlay & HUD element.
+///Updates the suit storage overlay & HUD element.
 /mob/proc/update_suit_storage()
 	return
 
-///Updates the handcuff overlay & HUD element.
+///Updates the pocket overlay & HUD element.
 /mob/proc/update_pockets()
 	return
 
-///Updates the handcuff overlay & HUD element.
-/mob/proc/update_inv_ears()
+///Updates the headset overlay & HUD element.
+/mob/proc/update_worn_ears()
 	return
