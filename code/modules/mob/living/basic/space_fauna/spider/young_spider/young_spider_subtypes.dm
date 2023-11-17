@@ -32,10 +32,9 @@
 
 /mob/living/basic/spider/growing/young/ambush/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
-	var/datum/action/cooldown/mob_cooldown/sneak/spider/sneak_web = new(src)
-	sneak_web.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/spider)
+	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /// Will differentiate into the "scout" giant spider.
 /mob/living/basic/spider/growing/young/scout
@@ -136,7 +135,7 @@
 		heal_brute = 10,\
 		heal_burn = 10,\
 		heal_time = 3 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
@@ -175,7 +174,7 @@
 		heal_brute = 5,\
 		heal_burn = 5,\
 		heal_time = 2 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tank, /mob/living/basic/spider/giant/tank)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\

@@ -114,7 +114,7 @@
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
 	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER, trigger = PROC_REF(update_charge_action))
 
-	user_port = add_output_port("User", PORT_TYPE_ATOM)
+	user_port = add_output_port("User", PORT_TYPE_USER)
 
 /obj/item/circuit_component/bci_core/Destroy()
 	QDEL_NULL(charge_action)

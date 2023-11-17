@@ -322,7 +322,12 @@
 
 	if(air1.total_moles() > CRYO_MIN_GAS_MOLES)
 		if(beaker)
-			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * seconds_per_tick, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
+			beaker.reagents.trans_to(
+				occupant,
+				(CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * seconds_per_tick,
+				efficiency * CRYO_MULTIPLY_FACTOR,
+				methods = VAPOR
+			)
 			consume_gas = TRUE
 	return TRUE
 

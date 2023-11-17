@@ -11,6 +11,10 @@
 	/// the original limb from before the prosthetic was applied
 	var/obj/item/bodypart/old_limb
 
+/datum/quirk_constant_data/prosthetic_limb
+	associated_typepath = /datum/quirk/prosthetic_limb
+	customization_options = list(/datum/preference/choiced/prosthetic)
+
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_type = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
 	if(isnull(limb_type))  //Client gone or they chose a random prosthetic

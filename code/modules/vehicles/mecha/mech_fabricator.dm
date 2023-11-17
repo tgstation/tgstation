@@ -403,9 +403,6 @@
 
 	. = TRUE
 
-	add_fingerprint(usr)
-	usr.set_machine(src)
-
 	switch(action)
 		if("build")
 			var/designs = params["designs"]
@@ -498,16 +495,6 @@
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
-
-/obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
-	if(panel_open)
-		to_chat(user, span_warning("You can't load [src] while it's opened!"))
-		return FALSE
-	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
-		return FALSE
-
-	return TRUE
 
 /obj/machinery/mecha_part_fabricator/maint
 	link_on_init = FALSE
