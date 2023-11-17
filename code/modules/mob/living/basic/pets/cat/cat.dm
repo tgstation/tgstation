@@ -67,7 +67,7 @@
 
 /mob/living/basic/pet/cat/proc/pre_attack(mob/living/source, atom/movable/target)
 	SIGNAL_HANDLER
-	if(!is_type_in_typecache(target, carriable_items) || held_food)
+	if(!is_type_in_list(target, carriable_items) || held_food)
 		return
 	target.forceMove(src)
 
@@ -76,11 +76,12 @@
 	if(gone != held_food)
 		return
 	held_food = null
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
+
 /mob/living/basic/pet/cat/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(is_type_in_typecache(arrived, carriable_items))
 		held_food = arrived
-		update_appearance(UPDATE_OVERLAYS)
+		update_appearance()
 	return ..()
 
 /mob/living/basic/pet/cat/update_overlays()

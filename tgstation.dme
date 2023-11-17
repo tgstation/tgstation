@@ -4562,7 +4562,6 @@
 #include "code\modules\mob\living\basic\pets\sloth.dm"
 #include "code\modules\mob\living\basic\pets\cat\cat.dm"
 #include "code\modules\mob\living\basic\pets\cat\cat_ai.dm"
-#include "code\modules\mob\living\basic\pets\cat\cat_house.dm"
 #include "code\modules\mob\living\basic\pets\cat\keeki.dm"
 #include "code\modules\mob\living\basic\pets\cat\runtime.dm"
 #include "code\modules\mob\living\basic\pets\dog\_dog.dm"

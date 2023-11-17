@@ -8,6 +8,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/reside_in_home,
 		/datum/ai_planning_subtree/flee_target/from_flee_key/cat_struggle,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
@@ -15,6 +16,61 @@
 		/datum/ai_planning_subtree/haul_food_to_young,
 		/datum/ai_planning_subtree/territorial_struggle,
 	)
+
+/datum/ai_planning_subtree/reside_in_home
+	///chance we enter our home
+	var/reside_chance = 90
+	///chance we leave our home
+	var/leave_home_chance = 90
+
+/datum/ai_planning_subtree/reside_in_home/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+
+	if(controller.blackboard_key_exists(BB_CAT_HOME))
+		controller.queue_behavior(/datum/ai_behavior/enter_cat_home, BB_CAT_HOME)
+		return
+
+	if(istype(living_pawn.loc, /obj/structure/cat_house))
+		if(SPT_PROB(leave_home_chance, seconds_per_tick))
+			controller.set_blackboard_key(BB_CAT_HOME, living_pawn.loc)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
+	if(SPT_PROB(reside_chance, seconds_per_tick))
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_home, BB_CAT_HOME, /obj/structure/cat_house)
+
+/datum/ai_behavior/find_and_set/valid_home/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	for(var/obj/structure/cat_house/home in oview(search_range, controller.pawn))
+		if(home.resident_cat)
+			continue
+		return home
+
+	return null
+
+/datum/ai_behavior/enter_cat_home
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
+
+/datum/ai_behavior/enter_cat_home/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return FALSE
+	set_movement_target(controller, target)
+
+/datum/ai_behavior/enter_cat_home/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	. = ..()
+	var/obj/structure/cat_house/home = controller.blackboard[target_key]
+	var/mob/living/basic/living_pawn = controller.pawn
+	if(living_pawn == home.resident_cat || isnull(home.resident_cat))
+		living_pawn.melee_attack(home)
+		finish_action(controller, TRUE, target_key)
+		return
+
+	finish_action(controller, FALSE, target_key)
+
+/datum/ai_behavior/enter_cat_home/finish_action(datum/ai_controller/controller, success, target_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
+
 
 /datum/ai_planning_subtree/flee_target/from_flee_key/cat_struggle
 	flee_behaviour = /datum/ai_behavior/run_away_from_target/cat_struggle
@@ -269,57 +325,3 @@
 /datum/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
-
-/datum/ai_controller/basic_controller/cat/bread
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove,
-		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
-		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
-		/datum/ai_planning_subtree/haul_food_to_young,
-	)
-
-/datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove
-	target_key = BB_STOVE_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
-	finding_behavior = /datum/ai_behavior/find_hunt_target/stove
-	hunt_targets = list(/obj/machinery/oven/range)
-	hunt_range = 9
-
-/datum/ai_behavior/find_hunt_target/stove
-
-/datum/ai_behavior/find_hunt_target/stove/valid_dinner(mob/living/source, obj/machinery/oven/range/stove, radius)
-	if(!length(stove.used_tray?.contents) || stove.open)
-		return FALSE
-	//something in there is still baking...
-	for(var/atom/baking in stove.used_tray)
-		if(HAS_TRAIT(baking, TRAIT_BAKEABLE))
-			return FALSE
-	return TRUE
-
-
-/datum/ai_controller/basic_controller/cat/cake
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove,
-		/datum/ai_planning_subtree/find_and_hunt_target/decorate_donuts,
-		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
-		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
-		/datum/ai_planning_subtree/haul_food_to_young,
-	)
-
-/datum/ai_planning_subtree/find_and_hunt_target/decorate_donuts
-	target_key = BB_DONUT_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/decorate_donuts
-	finding_behavior = /datum/ai_behavior/find_hunt_target/decorate_donuts
-	hunt_targets = list(/obj/item/food/donut)
-	hunt_range = 9
-
-/datum/ai_behavior/find_hunt_target/decorate_donuts/valid_dinner(mob/living/source, obj/item/food/donut/target, radius)
-	if(!target.is_decorated)
-		return FALSE
-	return can_see(source, target, radius)
-
-/datum/ai_behavior/hunt_target/decorate_donuts
-	always_reset_target = TRUE
-
-/datum/ai_behavior/hunt_target/decorate_donuts/target_caught(mob/living/hunter, atom/target)
-	hunter.spin(spintime = 4, speed = 1)
