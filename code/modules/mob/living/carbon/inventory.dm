@@ -137,7 +137,7 @@
 	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
 		return
 
-	var/not_handled = FALSE
+	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
 	if(I == head)
 		head = null
 		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_HAT, I, force, newloc, no_move, invdrop, silent)
