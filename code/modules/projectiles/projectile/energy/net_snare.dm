@@ -69,7 +69,7 @@
 		new/obj/item/restraints/legcuffs/beartrap/energy(get_turf(loc))
 	else if(iscarbon(target))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy(get_turf(target))
-		B.spring_trap(null, target)
+		B.spring_trap(target)
 	. = ..()
 
 /obj/projectile/energy/trap/on_range()
@@ -88,7 +88,7 @@
 		qdel(src)
 	if(iscarbon(target))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
-		B.spring_trap(null, target)
+		B.spring_trap(target)
 	QDEL_IN(src, 10)
 	. = ..()
 
