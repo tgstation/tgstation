@@ -2,7 +2,7 @@
 	event_name = "Give Ook Random Item"
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_STREAMER
-	id_tag = "give-ook-item"
+	id_tag = T_EVENT_GIVE_OOK_ITEM
 	token_cost = 1000
 
 /datum/twitch_event/give_smsword/run_event(name)
@@ -13,3 +13,9 @@
 		var/obj/item/gamer_item = pick(subtypesof(/obj/item))
 		gamer_item = new gamer_item()
 		debug_uplink_reciever.put_in_hands(gamer_item)
+
+/datum/twitch_event/give_smsword/everyone
+	event_name = "Give Everyone Random Item"
+	event_flags = TWITCH_AFFECTS_ALL
+	id_tag = T_EVENT_GIVE_EVERYONE_ITEM
+	token_cost = null

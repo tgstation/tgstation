@@ -2,7 +2,7 @@
 	event_name = "Thinned Out Mode"
 	event_duration = 5 MINUTES
 	event_flags = TWITCH_AFFECTS_ALL
-	id_tag = "skinny-5"
+	id_tag = T_EVENT_SKINNY_5
 	token_cost = 500
 
 /datum/twitch_event/skinny/run_event(name)

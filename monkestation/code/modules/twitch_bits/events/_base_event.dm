@@ -9,7 +9,7 @@
 	var/random_count = 0
 	///list of targets
 	var/list/targets = list()
-	///the tag tied to this event, should make these be defines at some point
+	///the tag tied to this event
 	var/id_tag
 	///should we announce this event
 	var/announce = TRUE

@@ -16,6 +16,10 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	/datum/antagonist/paradox_clone,
 ))
 
+#define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
+#define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
 /client/verb/spend_antag_tokens()
 	set category = "IC"
 	set name = "Spend Antag Tokens"
@@ -110,3 +114,8 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 																				[src] has requested use their event tokens to trigger [selected_event].")]")
 			return
 		to_chat(src, "You dont have enough tokens to trigger this event.")
+
+#undef ADMIN_APPROVE_ANTAG_TOKEN
+#undef ADMIN_REJECT_ANTAG_TOKEN
+#undef ADMIN_APPROVE_TOKEN_EVENT
+#undef ADMIN_REJECT_TOKEN_EVENT
