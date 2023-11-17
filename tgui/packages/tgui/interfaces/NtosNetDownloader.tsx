@@ -7,7 +7,7 @@ import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { NtosWindow } from '../layouts';
 
-type NetDownloaderData = {
+type Data = {
   disk_size: number;
   disk_used: number;
   downloadcompletion: number;
@@ -34,7 +34,7 @@ type ProgramData = {
 };
 
 export const NtosNetDownloader = (props, context) => {
-  const { act, data } = useBackend<NetDownloaderData>(context);
+  const { act, data } = useBackend<Data>(context);
   const {
     disk_size,
     disk_used,
@@ -44,8 +44,8 @@ export const NtosNetDownloader = (props, context) => {
     downloadsize,
     error,
     emagged,
-    categories,
-    programs,
+    categories = [],
+    programs = [],
   } = data;
   const all_categories = categories;
   const downloadpercentage = toFixed(
@@ -162,7 +162,7 @@ export const NtosNetDownloader = (props, context) => {
 
 const Program = (props, context) => {
   const { program } = props;
-  const { act, data } = useBackend<NetDownloaderData>(context);
+  const { act, data } = useBackend<Data>(context);
   const {
     disk_size,
     disk_used,
