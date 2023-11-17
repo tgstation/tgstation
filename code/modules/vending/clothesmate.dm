@@ -21,6 +21,7 @@
 				/obj/item/clothing/neck/scarf = 6,
 				/obj/item/clothing/neck/large_scarf = 6,
 				/obj/item/clothing/neck/infinity_scarf = 6,
+				/obj/item/clothing/neck/ascot = 6,
 				/obj/item/clothing/neck/tie = 6,
 				/obj/item/clothing/head/rasta = 3,
 				/obj/item/clothing/head/chaplain/kippah = 3,

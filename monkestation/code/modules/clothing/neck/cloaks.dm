@@ -41,3 +41,10 @@
 	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
 	icon_state = "beecloak"
 	worn_icon_state = "beecloak"
+
+/obj/item/clothing/neck/ascot
+	name = "Ascot"
+	desc = "A fancy scarf to keep your neck warm and ward off sharp objects"
+	icon_state = "ascot"
+	worn_icon_state = "ascot"
+
