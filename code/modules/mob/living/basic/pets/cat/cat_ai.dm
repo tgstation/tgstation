@@ -6,11 +6,11 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/flee_target/from_flee_key/cat_struggle,
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
-		/datum/ai_planning_subtree/find_and_hunt_target/find_food,
+		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/haul_food_to_young,
 		/datum/ai_planning_subtree/territorial_struggle,
@@ -106,7 +106,7 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_mice/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	var/list/items_we_carry = typecache_filter_list(living_pawn, controller.blackboard[BB_CARRIABLE_PREY])
+	var/list/items_we_carry = typecache_filter_list(living_pawn, controller.blackboard[BB_HUNTABLE_PREY])
 	if(length(items_we_carry))
 		return
 	return ..()
@@ -177,7 +177,7 @@
 
 /datum/ai_planning_subtree/haul_food_to_young/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	if(!controller.blackboard_key_exists(BB_FOOD_TO_DELIVER))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands/given_list, BB_CARRIABLE_PREY)
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/in_hands/given_list, BB_FOOD_TO_DELIVER, controller.blackboard[BB_HUNTABLE_PREY])
 		return
 	if(!controller.blackboard_key_exists(BB_KITTEN_TO_FEED))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_kitten, BB_KITTEN_TO_FEED, /mob/living/basic/pet/cat/kitten)
@@ -190,15 +190,17 @@
 /datum/ai_behavior/find_and_set/valid_kitten/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/mob/living/kitten = locate(locate_path) in oview(search_range, controller.pawn)
 	//kitten already has food near it, go feed another hungry kitten
-	var/list/nearby_food = typecache_filter_list(oview(2, kitten), controller.blackboard[BB_CARRIABLE_PREY])
-	return (kitten.stat != DEAD && !length(nearby_food))
+	var/list/nearby_food = typecache_filter_list(oview(2, kitten), controller.blackboard[BB_HUNTABLE_PREY])
+	if(kitten.stat != DEAD && !length(nearby_food))
+		return kitten
+	return null
 
 /datum/ai_behavior/deliver_food_to_kitten
 /datum/ai_behavior/deliver_food_to_kitten
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 	action_cooldown = 5 SECONDS
 
-/datum/ai_behavior/deliver_food_to_kitten/setup(datum/ai_controller/controller, target_key)
+/datum/ai_behavior/deliver_food_to_kitten/setup(datum/ai_controller/controller, target_key, food_key)
 	. = ..()
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(target))
@@ -223,7 +225,48 @@
 	food.forceMove(get_turf(living_pawn))
 	finish_action(controller, TRUE, target_key, food_key)
 
-/datum/ai_behavior/territorial_struggle/finish_action(datum/ai_controller/controller, success, target_key, food_key)
+/datum/ai_behavior/deliver_food_to_kitten/finish_action(datum/ai_controller/controller, success, target_key, food_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(food_key)
+
+/datum/ai_controller/basic_controller/cat/kitten
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_FIND_MOM_TYPES = list(/mob/living/basic/pet/cat),
+		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/pet/cat/kitten),
+		BB_HUNGRY_MEOW = list("mrrp...", "mraw..."),
+		BB_MAX_DISTANCE_TO_FOOD = 2,
+	)
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/look_for_adult,
+		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food/kitten,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+
+//if the food is too far away, point at it or meow. if its near us then go eat it
+/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food/kitten/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/target = controller.blackboard[BB_CAT_FOOD_TARGET]
+	if(target && get_dist(target, controller.pawn) > controller.blackboard[BB_MAX_DISTANCE_TO_FOOD])
+		controller.queue_behavior(/datum/ai_behavior/beacon_for_food, BB_CAT_FOOD_TARGET, BB_HUNGRY_MEOW)
+		return
+	return ..()
+
+/datum/ai_behavior/beacon_for_food
+
+/datum/ai_behavior/beacon_for_food/perform(seconds_per_tick, datum/ai_controller/controller, target_key, meows_key)
+	. = ..()
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		finish_action(controller, FALSE)
+	var/mob/living/living_pawn = controller.pawn
+	var/list/meowing_list = controller.blackboard[meows_key]
+	if(length(meowing_list))
+		living_pawn.say(pick(meowing_list), forced = "ai_controller")
+	living_pawn._pointed(target)
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, success, target_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)

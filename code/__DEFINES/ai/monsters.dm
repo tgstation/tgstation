@@ -226,5 +226,7 @@
 #define BB_MOUSE_TARGET "mouse_target"
 #define BB_CAT_FOOD_TARGET "cat_food_target"
 #define BB_FOOD_TO_DELIVER "food_to_deliver"
-#define BB_CARRIABLE_PREY "carriable_items"
+#define BB_HUNTABLE_PREY "huntable_prey"
 #define BB_KITTEN_TO_FEED "kitten_to_feed"
+#define BB_HUNGRY_MEOW "hungry_meows"
+#define BB_MAX_DISTANCE_TO_FOOD "max_distance_to_food"

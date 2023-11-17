@@ -44,10 +44,10 @@
 	///can hold items?
 	var/can_hold_item = TRUE
 	///list of items we can carry
-	var/static/list/carriable_items = typecacheof(list(
+	var/static/list/carriable_items = list(
 		/obj/item/fish,
 		/obj/item/food/deadmouse,
-	))
+	)
 	///item we are currently holding
 	var/obj/item/held_food
 	///mutable appearance for held item
@@ -58,7 +58,7 @@
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ai_controller.set_blackboard_key(BB_CARRIABLE_PREY, carriable_items)
+	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(carriable_items))
 	if(can_breed)
 		add_breeding_component()
 	if(can_hold_item)
@@ -122,6 +122,7 @@
 //	minbodytemp = TCMB
 //	maxbodytemp = T0C + 40
 	held_state = "spacecat"
+
 /mob/living/basic/pet/cat/breadcat
 	name = "bread cat"
 	desc = "They're a cat... with a bread!"
@@ -146,6 +147,7 @@
 	collar_icon_state = null
 	unique_pet = TRUE
 	held_state = "original"
+
 /mob/living/basic/pet/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww."
@@ -157,6 +159,13 @@
 	mob_size = MOB_SIZE_SMALL
 	collar_icon_state = "kitten"
 	can_breed = FALSE
+	ai_controller = /datum/ai_controller/basic_controller/cat/kitten
+	can_hold_item = FALSE
+
+/mob/living/basic/pet/cat/kitten/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/basic_eating, food_types = carriable_items)
+
 /mob/living/basic/pet/cat/_proc
 	name = "Proc"
 	gender = MALE
