@@ -61,6 +61,8 @@
 
 
 /obj/item/reagent_containers/hypospray/cmo
+	volume = 90
+	possible_transfer_amounts = list(1,2,3,4,5)
 	list_reagents = list(/datum/reagent/medicine/omnizine = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
