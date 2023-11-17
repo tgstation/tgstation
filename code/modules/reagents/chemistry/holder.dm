@@ -1297,7 +1297,12 @@
 			else
 				if(!istype(cached_reagent, reagent))
 					continue
+
 		total_amount += cached_reagent.volume
+
+		//short cut to break when we have found our one exact type
+		if(type_check == REAGENT_STRICT_TYPE)
+			break
 
 	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
 
