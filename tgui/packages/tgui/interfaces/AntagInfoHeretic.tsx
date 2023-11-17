@@ -1,5 +1,6 @@
+import { BooleanLike } from '../../common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
+import { Section, Stack, Tabs, Button, BlockQuote } from '../components';
 import { Window } from '../layouts';
 import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
@@ -48,6 +49,7 @@ type Info = {
   side_charges: number;
   total_sacrifices: number;
   objectives: Objective[];
+  can_change_objective: BooleanLike;
 };
 
 const IntroductionSection = (props, context) => {
@@ -167,23 +169,10 @@ const GuideSection = () => {
 
 const InformationSection = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { charges, side_charges, total_sacrifices, ascended } = data;
+  const { charges, side_charges, total_sacrifices } = data;
   return (
     <Stack.Item>
       <Stack vertical fill>
-        {!!ascended && (
-          <Stack.Item>
-            <Stack align="center">
-              <Stack.Item>You have</Stack.Item>
-              <Stack.Item fontSize="24px">
-                <Box inline color="yellow">
-                  ASCENDED
-                </Box>
-                !
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-        )}
         <Stack.Item>
           You have <b>{charges || 0}</b>&nbsp;
           <span style={hereticBlue}>
@@ -304,7 +293,6 @@ const ResearchInfo = (props, context) => {
 
 export const AntagInfoHeretic = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { ascended } = data;
 
   const [currentTab, setTab] = useLocalState(context, 'currentTab', 0);
 
@@ -313,9 +301,8 @@ export const AntagInfoHeretic = (props, context) => {
       <Window.Content
         style={{
           'background-image': 'none',
-          'background': ascended
-            ? 'radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);'
-            : 'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
+          'background':
+            'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
         }}>
         <Stack vertical fill>
           <Stack.Item>
