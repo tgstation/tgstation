@@ -55,7 +55,6 @@
 
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
-
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
 	return ..()
