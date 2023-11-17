@@ -22,10 +22,14 @@
 	var/build_stack_type = /obj/item/stack/sheet/iron
 	/// How many mats to drop when deconstructed
 	var/build_stack_amount = 2
+	/// If not zero, the elevation element will be added. Also used to nudge the person back when buckled to it after init.
+	var/elevation = 6
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/soft_landing)
+	if(elevation)
+		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	register_context()
 
 /obj/structure/bed/examine(mob/user)
@@ -63,6 +67,14 @@
 	deconstruct(disassembled = TRUE)
 	return TRUE
 
+/obj/structure/bed/post_buckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y -= elevation
+
+/obj/structure/bed/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y += elevation
+
 /// Medical beds
 /obj/structure/bed/medical
 	name = "medical bed"
@@ -74,6 +86,7 @@
 	resistance_flags = NONE
 	build_stack_type = /obj/item/stack/sheet/mineral/titanium
 	build_stack_amount = 1
+	elevation = 0
 	/// The item it spawns when it's folded up.
 	var/foldable_type
 
@@ -117,11 +130,13 @@
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()
 
-/obj/structure/bed/medical/post_buckle_mob(mob/living/patient)
+/obj/structure/bed/medical/post_buckle_mob(mob/living/buckled)
+	. = ..()
 	set_density(TRUE)
 	update_appearance()
 
-/obj/structure/bed/medical/post_unbuckle_mob(mob/living/patient)
+/obj/structure/bed/medical/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
 	set_density(FALSE)
 	update_appearance()
 
@@ -135,7 +150,6 @@
 				patient.pixel_y = patient.base_pixel_y
 		else
 			buckled_mobs[1].pixel_y = buckled_mobs[1].base_pixel_y
-
 	else
 		icon_state = "[base_icon_state]_down"
 
@@ -257,6 +271,7 @@
 	anchored = FALSE
 	build_stack_type = /obj/item/stack/sheet/mineral/wood
 	build_stack_amount = 10
+	elevation = 0
 	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
@@ -306,6 +321,7 @@
 	name = "dirty mattress"
 	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
 	icon_state = "dirty_mattress"
+	elevation = 4
 
 /obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
@@ -322,11 +338,13 @@
 	var/mob/living/goldilocks
 
 /obj/structure/bed/double/post_buckle_mob(mob/living/target)
+	. = ..()
 	if(buckled_mobs.len > 1 && !goldilocks) // Push the second buckled mob a bit higher from the normal lying position
-		target.pixel_y = target.base_pixel_y + 6
+		target.pixel_y += elevation
 		goldilocks = target
 
 /obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
-	target.pixel_y = target.base_pixel_y + target.body_position_pixel_y_offset
+	. = ..()
+	target.pixel_y -= elevation
 	if(target == goldilocks)
 		goldilocks = null

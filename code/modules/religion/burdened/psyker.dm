@@ -9,6 +9,7 @@
 	)
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
+	brain_size = 1.3
 
 /obj/item/organ/internal/brain/psyker/on_insert(mob/living/carbon/inserted_into)
 	. = ..()

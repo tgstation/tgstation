@@ -53,6 +53,9 @@
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+
+
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
 	return ..()
