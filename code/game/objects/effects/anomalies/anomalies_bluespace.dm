@@ -10,6 +10,10 @@
 	///Distance we can teleport someone passively
 	var/teleport_distance = 4
 
+/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
 	for(var/mob/living/M in range(teleport_range,src))
@@ -98,4 +102,3 @@
 
 	var/mob/living/living = bumpee
 	living.apply_status_effect(/datum/status_effect/teleport_madness)
-

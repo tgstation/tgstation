@@ -1,0 +1,330 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"c" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "vdomsnow"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/turf_decal/bot_white{
+	color = "#52B4E9"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/textured_large,
+/area/template_noop)
+"f" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"i" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"j" = (
+/obj/structure/barricade/wooden/crude/snow,
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"l" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/structure/hedge,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"n" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/stool/directional/east{
+	pixel_x = -6
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"r" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/machinery/exoscanner,
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"t" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"u" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/structure/hedge,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"v" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/obj/structure/flora/grass/green/style_random,
+/obj/structure/flora/bush/snow/style_random,
+/turf/open/misc/snow,
+/area/template_noop)
+"w" = (
+/obj/machinery/computer/terminal/derelict{
+	dir = 8
+	},
+/obj/machinery/light/cold/dim/directional/east,
+/turf/open/misc/snow,
+/area/template_noop)
+"y" = (
+/obj/structure/table/reinforced,
+/obj/structure/sign/poster/random/directional/east,
+/obj/machinery/recharger,
+/turf/open/misc/snow,
+/area/template_noop)
+"A" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"D" = (
+/turf/template_noop,
+/area/template_noop)
+"F" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/turf_decal/bot_white{
+	color = "#52B4E9"
+	},
+/obj/structure/noticeboard/directional/north,
+/obj/machinery/light/cold/dim/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/template_noop)
+"K" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/turf_decal/bot_white{
+	color = "#52B4E9"
+	},
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/template_noop)
+"L" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"M" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"N" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"O" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters{
+	dir = 1;
+	id = "vdomsnow"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"P" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
+	},
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"R" = (
+/obj/structure/flora/grass/brown,
+/obj/structure/flora/bush/snow/style_2,
+/turf/open/misc/snow,
+/area/template_noop)
+"S" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/drip{
+	icon_state = "bloodyhands_left"
+	},
+/obj/effect/decal/cleanable/blood/drip{
+	icon_state = "drip1"
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"T" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/obj/structure/chair/office/light,
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"V" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/structure/table/reinforced,
+/obj/structure/sign/poster/random/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/bureaucracy/stamp,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Z" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy/crayon,
+/obj/machinery/button/door/directional/south{
+	id = "vdomsnow"
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+
+(1,1,1) = {"
+D
+D
+D
+D
+D
+D
+D
+D
+f
+"}
+(2,1,1) = {"
+D
+a
+a
+a
+j
+c
+a
+a
+D
+"}
+(3,1,1) = {"
+D
+a
+N
+n
+P
+i
+V
+a
+D
+"}
+(4,1,1) = {"
+D
+a
+e
+v
+o
+T
+Z
+a
+D
+"}
+(5,1,1) = {"
+D
+a
+F
+S
+R
+p
+M
+j
+D
+"}
+(6,1,1) = {"
+D
+a
+K
+L
+t
+A
+b
+O
+D
+"}
+(7,1,1) = {"
+D
+a
+u
+r
+w
+y
+l
+a
+D
+"}
+(8,1,1) = {"
+D
+a
+a
+a
+a
+a
+a
+a
+D
+"}
+(9,1,1) = {"
+D
+D
+D
+D
+D
+D
+D
+D
+D
+"}

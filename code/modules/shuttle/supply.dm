@@ -1,38 +1,38 @@
 GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
-		/obj/structure/blob,
-		/obj/effect/rune,
-		/obj/item/disk/nuclear,
-		/obj/machinery/nuclearbomb,
-		/obj/item/beacon,
-		/obj/narsie,
-		/obj/tear_in_reality,
-		/obj/machinery/teleport/station,
-		/obj/machinery/teleport/hub,
-		/obj/machinery/quantumpad,
-		/obj/effect/mob_spawn,
-		/obj/effect/hierophant,
-		/obj/structure/receiving_pad,
-		/obj/item/warp_cube,
-		/obj/machinery/rnd/production, //print tracking beacons, send shuttle
-		/obj/machinery/autolathe, //same
-		/obj/projectile/beam/wormhole,
-		/obj/effect/portal,
-		/obj/item/shared_storage,
-		/obj/structure/extraction_point,
-		/obj/machinery/syndicatebomb,
-		/obj/item/hilbertshotel,
-		/obj/item/swapper,
 		/obj/docking_port,
-		/obj/machinery/launchpad,
-		/obj/machinery/exodrone_launcher,
-		/obj/machinery/disposal,
-		/obj/structure/disposalpipe,
-		/obj/item/mail,
-		/obj/machinery/camera,
+		/obj/effect/hierophant,
+		/obj/effect/mob_spawn,
+		/obj/effect/portal,
+		/obj/effect/rune,
+		/obj/item/beacon,
+		/obj/item/disk/nuclear,
 		/obj/item/gps,
-		/obj/structure/checkoutmachine,
+		/obj/item/hilbertshotel,
+		/obj/item/mail,
+		/obj/item/shared_storage,
+		/obj/item/swapper,
+		/obj/item/warp_cube,
+		/obj/machinery/autolathe, // In case you manage to get it to print a beacon while in transit
+		/obj/machinery/camera,
+		/obj/machinery/disposal,
+		/obj/machinery/exodrone_launcher,
 		/obj/machinery/fax,
+		/obj/machinery/launchpad,
+		/obj/machinery/nuclearbomb,
+		/obj/machinery/quantumpad,
+		/obj/machinery/rnd/production,
+		/obj/machinery/syndicatebomb,
+		/obj/machinery/teleport/hub,
+		/obj/machinery/teleport/station,
+		/obj/narsie,
+		/obj/projectile/beam/wormhole,
+		/obj/structure/blob,
+		/obj/structure/checkoutmachine,
+		/obj/structure/disposalpipe,
+		/obj/structure/extraction_point,
+		/obj/structure/guardian_beacon,
+		/obj/tear_in_reality,
 	)))
 
 /// How many goody orders we can fit in a lockbox before we upgrade to a crate
@@ -160,14 +160,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/price
 	var/pack_cost
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
-	var/list/rejected_orders = list() //list of all orders that exceeded the available budget and are uncancelable
+	var/list/clean_up_orders = list() // orders to remove since we are done with them
 
 	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
 		price = spawning_order.get_final_cost()
 
-		//department orders EARN money for cargo, not the other way around
+		// department orders EARN money for cargo, not the other way around
 		var/datum/bank_account/paying_for_this
 		if(!spawning_order.department_destination && spawning_order.charge_on_purchase)
 			if(spawning_order.paying_account) //Someone paid out of pocket
@@ -185,8 +185,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
 						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
-					if(!spawning_order.can_be_cancelled) //only if it absolutely cannot be canceled by the player do we cancel it for them
-						rejected_orders += spawning_order
+					if(!spawning_order.can_be_cancelled) //only if it absolutly cannot be canceled by the player do we cancel it for them
+						SSshuttle.shopping_list -= spawning_order
+						clean_up_orders += spawning_order
 					continue
 
 		pack_cost = spawning_order.pack.get_cost()
@@ -202,9 +203,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
 		value += pack_cost
-		SSshuttle.shopping_list -= spawning_order
-		SSshuttle.order_history += spawning_order
-		QDEL_NULL(spawning_order.applied_coupon)
 
 		if(!spawning_order.pack.goody) //we handle goody crates below
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
@@ -219,10 +217,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
 
-	//clear out all rejected uncancellable orders
-	for(var/datum/supply_order/rejected_order in rejected_orders)
-		SSshuttle.shopping_list -= rejected_order
-		qdel(rejected_order)
+		// done dealing with order. Time to remove & delete it
+		SSshuttle.shopping_list -= spawning_order
+		clean_up_orders += spawning_order
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
 	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case
@@ -255,7 +252,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		order.generateCombo(miscboxes[miscbox], miscbox, misc_contents[miscbox], misc_costs[miscbox])
 		qdel(order)
 
-	SSeconomy.import_total += value
+	//clean up all dealt with orders
+	for(var/datum/supply_order/completed_order in clean_up_orders)
+		qdel(completed_order)
+
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
@@ -290,7 +290,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		msg += export_text + "\n"
 		cargo_budget.adjust_money(report.total_value[exported_datum])
 
-	SSeconomy.export_total += (cargo_budget.account_balance - presale_points)
 	SSshuttle.centcom_message = msg
 	investigate_log("contents sold for [cargo_budget.account_balance - presale_points] credits. Contents: [report.exported_atoms ? report.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 

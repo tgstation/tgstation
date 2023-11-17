@@ -220,16 +220,7 @@
 		buckled.user_unbuckle_mob(src,src)
 
 /mob/living/carbon/resist_fire()
-	adjust_fire_stacks(-5)
-	Paralyze(60, ignore_canstun = TRUE)
-	spin(32,2)
-	visible_message(span_danger("[src] rolls on the floor, trying to put [p_them()]self out!"), \
-		span_notice("You stop, drop, and roll!"))
-	sleep(3 SECONDS)
-	if(fire_stacks <= 0 && !QDELETED(src))
-		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
-			span_notice("You extinguish yourself."))
-	return
+	return !!apply_status_effect(/datum/status_effect/stop_drop_roll)
 
 /mob/living/carbon/resist_restraints()
 	var/obj/item/I = null
@@ -251,6 +242,8 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 1 MINUTES, cuff_break = 0)
+	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, I) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
+		return //The blocking object should sent a fluff-appropriate to_chat about cuff removal being blocked
 	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, span_warning("You're already attempting to remove [I]!"))
 		return

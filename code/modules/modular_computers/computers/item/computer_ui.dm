@@ -96,6 +96,7 @@
 	)
 
 	data["proposed_login"] = list(
+		IDInserted = computer_id_slot ? TRUE : FALSE,
 		IDName = computer_id_slot?.registered_name,
 		IDJob = computer_id_slot?.assignment,
 	)

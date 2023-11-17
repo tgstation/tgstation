@@ -5,11 +5,11 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "aw" = (
-/obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "aN" = (
@@ -31,27 +31,8 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"aZ" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/mob/living/basic/trooper/syndicate/ranged/shotgun/space/stormtrooper,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "bh" = (
 /turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"bo" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "bD" = (
 /obj/structure/table/reinforced,
@@ -199,12 +180,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"fM" = (
-/obj/machinery/computer/crew/syndie{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "fV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/mineral/plastitanium/red,
@@ -236,7 +211,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ip" = (
-/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "iB" = (
@@ -274,7 +249,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/basic/trooper/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "ja" = (
@@ -411,10 +385,6 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"oZ" = (
-/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
-/turf/open/floor/carpet/royalblack,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "pl" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
@@ -468,6 +438,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "qY" = (
 /obj/machinery/light/small/directional/south,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rm" = (
@@ -622,12 +593,6 @@
 /obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"xZ" = (
-/obj/machinery/computer/camera_advanced/syndie{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "yl" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Captain's Room"
@@ -639,10 +604,6 @@
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"yD" = (
-/mob/living/basic/trooper/syndicate/ranged/smg/space/stormtrooper,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "yJ" = (
 /obj/structure/table/reinforced,
@@ -686,13 +647,6 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Aa" = (
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"AN" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/mob/living/basic/trooper/syndicate/ranged/smg/space/stormtrooper,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Bm" = (
@@ -787,10 +741,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"EX" = (
-/mob/living/basic/trooper/syndicate/ranged/shotgun/space/stormtrooper,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "Fp" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/plastitanium,
@@ -863,6 +813,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Ig" = (
@@ -1009,11 +960,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"Nt" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "Of" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1077,7 +1023,7 @@
 /turf/closed/mineral/random,
 /area/space)
 "QX" = (
-/mob/living/basic/trooper/syndicate/ranged/space/stormtrooper,
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Ra" = (
@@ -2016,14 +1962,14 @@ ru
 Sv
 vD
 uP
-uP
+Io
 Yj
 vD
 uP
 Wy
 DA
+Io
 uP
-QX
 vD
 cc
 ru
@@ -2082,9 +2028,9 @@ uP
 uP
 lN
 uP
+QX
 uP
-uP
-uP
+Io
 hA
 qx
 qx
@@ -2255,8 +2201,8 @@ sz
 Kz
 ru
 Mc
-gD
-yD
+uP
+uP
 uP
 rP
 ru
@@ -2305,7 +2251,7 @@ ru
 sH
 Kz
 yl
-oZ
+bh
 bh
 Yk
 pS
@@ -2314,7 +2260,7 @@ Jz
 vK
 uP
 uP
-uP
+Io
 sL
 hy
 ru
@@ -2372,7 +2318,7 @@ pM
 vK
 uP
 uP
-EX
+QX
 sL
 Im
 ru
@@ -2429,7 +2375,7 @@ JN
 MR
 ru
 Sd
-gD
+uP
 uP
 uP
 gD
@@ -2887,7 +2833,7 @@ dw
 ru
 rH
 uP
-AN
+JA
 JA
 iX
 JA
@@ -3002,13 +2948,13 @@ uP
 uP
 dd
 uP
-Aa
-hD
-Nt
+uP
+uP
+Ox
 aw
-hD
-hD
-bo
+uP
+uP
+uP
 uP
 dd
 uP
@@ -3062,9 +3008,9 @@ ru
 XS
 uP
 uP
-hD
-aZ
-hD
+uP
+FN
+uP
 uP
 uP
 Cf
@@ -3466,13 +3412,13 @@ ru
 Kz
 ru
 Kz
+Kz
+Kz
 pz
 Kz
-xZ
-Kz
-fM
-Kz
 kI
+Kz
+Kz
 Kz
 ru
 Mm
@@ -3531,7 +3477,7 @@ Kz
 Kz
 Kz
 Kz
-Kz
+dz
 ru
 ru
 ru
