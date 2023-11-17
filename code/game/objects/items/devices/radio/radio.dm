@@ -1,7 +1,7 @@
 #define FREQ_LISTENING (1<<0)
 
 /obj/item/radio
-	icon = 'icons/obj/radio.dmi'
+	icon = 'icons/obj/device.dmi'
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
 	inhand_icon_state = "radio"
