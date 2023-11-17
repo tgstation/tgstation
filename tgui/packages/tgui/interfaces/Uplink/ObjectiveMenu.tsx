@@ -290,6 +290,7 @@ const ObjectiveFunction = (
       progressionReward={objective.progression_reward}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
+      hideTcRep={false}
       canAbort={
         !!handleAbort && objective.objective_state === ObjectiveState.Active
       }
@@ -339,7 +340,6 @@ type ObjectiveElementProps = {
   telecrystalPenalty: number;
   grow: boolean;
   hideTcRep: BooleanLike;
-  finalObjective: BooleanLike;
   canAbort: BooleanLike;
 
   handleCompletion?: (event: MouseEvent) => void;
