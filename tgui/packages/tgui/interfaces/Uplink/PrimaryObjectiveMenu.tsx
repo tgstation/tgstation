@@ -50,7 +50,6 @@ export const PrimaryObjectiveMenu = (
                 hideTcRep
                 canAbort={false}
                 grow={false}
-                finalObjective={false}
               />
             </Stack.Item>
           ))}
