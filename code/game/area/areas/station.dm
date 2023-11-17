@@ -4,6 +4,7 @@
 	name = "Station Areas"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
+	area_flags = UNIQUE_AREA //TEMP EDIT FOR TM, DO NOT KEEP
 
 //Maintenance
 

@@ -229,11 +229,10 @@
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
-		setup_minds += candidate.mind
 		var/mob/living/carbon/human/new_human = make_body(candidate)
-		candidate.mind.set_current(new_human)
-		candidate.mind.special_role = antag_flag
-		candidate.mind.restricted_roles = restricted_roles
+		new_human.mind.special_role = antag_flag
+		new_human.mind.restricted_roles = restricted_roles
+		setup_minds += new_human.mind
 	setup = TRUE
 
 

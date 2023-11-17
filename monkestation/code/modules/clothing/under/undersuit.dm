@@ -75,3 +75,10 @@
 	icon_state = "wonka"
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	worn_icon_state = "wonka"
+
+/obj/item/clothing/under/guardmanuniform
+	name = "guardman's uniform"
+	desc = "The red color is meant to hide either your blood or the xeno's blood, do xenos even have red blood?"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	icon_state = "guardman_uniform"
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
