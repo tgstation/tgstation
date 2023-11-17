@@ -6,4 +6,5 @@ PROCESSING_SUBSYSTEM_DEF(fastprocess)
 PROCESSING_SUBSYSTEM_DEF(actualfastprocess)
 	name = "Actual Fast Processing"
 	wait = 0.1 SECONDS
+	priority = FIRE_PRIORITY_TICKER
 	stat_tag = "AFP"
