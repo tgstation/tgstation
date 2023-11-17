@@ -11,6 +11,7 @@
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
+	ai_controller = /datum/ai_controller/basic_controller/cat/cake
 	attacked_sound = 'sound/items/eatfood.ogg'
 	death_message = "loses her false life and collapses!"
 	death_sound = SFX_BODYFALL
@@ -45,3 +46,9 @@
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name
+
+/mob/living/basic/pet/cat/cak/spin(spintime, speed)
+	. = ..()
+	for(var/obj/item/food/donut/target in oview(1, src))
+		if(!target.is_decorated)
+			target.decorate_donut()

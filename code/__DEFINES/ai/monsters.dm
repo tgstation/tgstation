@@ -231,3 +231,4 @@
 #define BB_HUNGRY_MEOW "hungry_meows"
 #define BB_MAX_DISTANCE_TO_FOOD "max_distance_to_food"
 #define BB_STOVE_TARGET "stove_target"
+#define BB_DONUT_TARGET "donut_target"
