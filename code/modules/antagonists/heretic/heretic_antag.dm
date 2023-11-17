@@ -4,7 +4,7 @@
  * Simple helper to generate a string of
  * garbled symbols up to [length] characters.
  *
- * Used in creating spooky-text for heretic ascension announcements.
+ * Used in creating spooky-text for heretic-related announcements.
  */
 /proc/generate_heretic_text(length = 25)
 	. = ""
@@ -28,8 +28,6 @@
 	hardcore_random_bonus = TRUE
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
-	/// Whether we've ascended! (Completed one of the final rituals)
-	var/ascended = FALSE
 	/// The path our heretic has chosen. Mostly used for flavor.
 	var/heretic_path = PATH_START
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
@@ -89,7 +87,6 @@
 	data["charges"] = knowledge_points
 	data["side_charges"] = side_path_points
 	data["total_sacrifices"] = total_sacrifices
-	data["ascended"] = ascended
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
@@ -105,10 +102,6 @@
 			knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points + side_path_points)
 		else
 			knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points)
-
-		// Final knowledge can't be learned until all objectives are complete.
-		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
-			knowledge_data["disabled"] = !can_ascend()
 
 		knowledge_data["hereticPath"] = initial(knowledge.route)
 		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
@@ -165,19 +158,6 @@
 			else
 				knowledge_points -= initial(researched_path.cost)
 			return TRUE
-
-/datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
-	if (isnull(owner) || isnull(owner.current))
-		return
-	var/confirmed = tgui_alert(
-		owner.current,
-		message = "Are you sure? You will no longer be able to Ascend.",
-		title = "Reject the call?",
-		buttons = list("Yes", "No"),
-	) == "Yes"
-	if (!confirmed)
-		return
-	return ..()
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
 	if(user.stat == DEAD)
@@ -270,7 +250,7 @@
 /*
  * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
  *
- * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING] or is ascended.
+ * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING].
  * If so, allow them to cast like normal.
  * If not, cancel the cast, and returns [SPELL_CANCEL_CAST].
  */
@@ -283,9 +263,6 @@
 
 	// If we've got the trait, we don't care
 	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
-		return
-	// All powerful, don't care
-	if(ascended)
 		return
 
 	// We shouldn't be able to cast this! Cancel it.
@@ -496,12 +473,9 @@
 			parts += "<b>Objective #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 			count++
 
-	if(ascended)
-		parts += span_greentext(span_big("THE HERETIC ASCENDED!"))
-
 	else
 		if(succeeded)
-			parts += span_greentext("The heretic was successful, but did not ascend!")
+			parts += span_greentext("The heretic was successful!")
 		else
 			parts += span_redtext("The heretic has failed.")
 
@@ -621,10 +595,7 @@
 
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		if(istype(knowledge, /datum/heretic_knowledge/ultimate))
-			string_of_knowledge += span_bold(knowledge.name)
-		else
-			string_of_knowledge += knowledge.name
+		string_of_knowledge += knowledge.name
 
 	return "<br><b>Research Done:</b><br>[english_list(string_of_knowledge, and_text = ", and ")]<br>"
 
@@ -695,19 +666,6 @@
 		rituals[knowledge.name] = knowledge
 
 	return sortTim(rituals, GLOBAL_PROC_REF(cmp_heretic_knowledge), associative = TRUE)
-
-/**
- * Checks to see if our heretic can ccurrently ascend.
- *
- * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
- */
-/datum/antagonist/heretic/proc/can_ascend()
-	if(!can_assign_self_objectives)
-		return FALSE // We spurned the offer of the Mansus :(
-	for(var/datum/objective/must_be_done as anything in objectives)
-		if(!must_be_done.check_completion())
-			return FALSE
-	return TRUE
 
 /**
  * Helper to determine if a Heretic

@@ -207,7 +207,6 @@
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
 		/datum/heretic_knowledge/spell/rust_charge,
 	)
@@ -215,107 +214,6 @@
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/ultimate/rust_final
-	name = "Rustbringer's Oath"
-	desc = "The ascension ritual of the Path of Rust. \
-		Bring 3 corpses to a transmutation rune on the bridge of the station to complete the ritual. \
-		When completed, the ritual site will endlessly spread rust onto any surface, stopping for nothing. \
-		Additionally, you will become extremely resilient on rust, healing at triple the rate \
-		and becoming immune to many effects and dangers."
-	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
-		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
-	route = PATH_RUST
-	/// If TRUE, then immunities are currently active.
-	var/immunities_active = FALSE
-	/// A typepath to an area that we must finish the ritual in.
-	var/area/ritual_location = /area/station/command/bridge
-	/// A static list of traits we give to the heretic when on rust.
-	var/static/list/conditional_immunities = list(
-		TRAIT_BOMBIMMUNE,
-		TRAIT_NO_SLIP_ALL,
-		TRAIT_NOBREATH,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_PUSHIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_SHOCKIMMUNE,
-		TRAIT_SLEEPIMMUNE,
-		TRAIT_STUNIMMUNE,
-	)
-
-/datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	// This map doesn't have a Bridge, for some reason??
-	// Let them complete the ritual anywhere
-	if(!GLOB.areas_by_type[ritual_location])
-		ritual_location = null
-
-/datum/heretic_knowledge/ultimate/rust_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	if(ritual_location)
-		var/area/our_area = get_area(loc)
-		if(!istype(our_area, ritual_location))
-			loc.balloon_alert(user, "ritual failed, must be in [initial(ritual_location.name)]!") // "must be in bridge"
-			return FALSE
-
-	return ..()
-
-/datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-	new /datum/rust_spread(loc)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
-	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
-
-/**
- * Signal proc for [COMSIG_MOVABLE_MOVED].
- *
- * Gives our heretic ([source]) buffs if they stand on rust.
- */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-
-	// If we're on a rusty turf, and haven't given out our traits, buff our guy
-	var/turf/our_turf = get_turf(source)
-	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		if(!immunities_active)
-			source.add_traits(conditional_immunities, type)
-			immunities_active = TRUE
-
-	// If we're not on a rust turf, and we have given out our traits, nerf our guy
-	else
-		if(immunities_active)
-			source.remove_traits(conditional_immunities, type)
-			immunities_active = FALSE
-
-/**
- * Signal proc for [COMSIG_LIVING_LIFE].
- *
- * Gradually heals the heretic ([source]) on rust.
- */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	SIGNAL_HANDLER
-
-	var/turf/our_turf = get_turf(source)
-	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		return
-
-	var/need_mob_update = FALSE
-	need_mob_update += source.adjustBruteLoss(-4, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-4, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-4, updating_health = FALSE, forced = TRUE)
-	need_mob_update += source.adjustOxyLoss(-4, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-20, updating_stamina = FALSE)
-	if(need_mob_update)
-		source.updatehealth()
 
 /**
  * #Rust spread datum

@@ -174,62 +174,6 @@
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
 	adds_sidepath_points = 1
-	next_knowledge = list(/datum/heretic_knowledge/ultimate/lock_final)
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
-
-/datum/heretic_knowledge/ultimate/lock_final
-	name = "Unlock the Labyrinth"
-	desc = "The ascension ritual of the Path of Knock. \
-		Bring 3 corpses without organs in their torso to a transmutation rune to complete the ritual. \
-		When completed, you gain the ability to transform into empowered eldritch creatures \
-		and in addition, create a tear to the Labyrinth's heart; \
-		a tear in reality located at the site of this ritual. \
-		Eldritch creatures will endlessly pour from this rift \
-		who are bound to obey your instructions."
-	gain_text = "The Stewards guided me, and I guided them. \
-		My foes were the Locks and my blades were the Key! \
-		The Labyrinth will be Locked no more, and freedom will be ours! WITNESS US!"
-	required_atoms = list(/mob/living/carbon/human = 3)
-	route = PATH_LOCK
-
-/datum/heretic_knowledge/ultimate/lock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	for(var/mob/living/carbon/human/body in atoms)
-		if(body.stat != DEAD)
-			continue
-		var/obj/item/bodypart/chest = body.get_bodypart(BODY_ZONE_CHEST)
-		if(LAZYLEN(chest.get_organs()))
-			to_chat(user, span_hierophant_warning("[body] has organs in their chest."))
-			continue
-
-		selected_atoms += body
-
-	if(!LAZYLEN(selected_atoms))
-		loc.balloon_alert(user, "ritual failed, not enough valid bodies!")
-		return FALSE
-	return TRUE
-
-/datum/heretic_knowledge/ultimate/lock_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	priority_announce(
-		text = "Delta-class dimensional anomaly detec[generate_heretic_text()] Reality rended, torn. Gates open, doors open, [user.real_name] has ascended! Fear the tide! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-	user.client?.give_award(/datum/award/achievement/misc/lock_ascension, user)
-
-	// buffs
-	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
-	transform_spell.Grant(user)
-
-	user.client?.give_award(/datum/award/achievement/misc/lock_ascension, user)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/datum/heretic_knowledge/blade_upgrade/flesh/lock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/lock)
-	blade_upgrade.chance += 30
-	new /obj/structure/lock_tear(loc, user.mind)

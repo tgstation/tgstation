@@ -99,48 +99,6 @@
 	database_id = MEDAL_ASCENSION
 	icon = "ascension"
 
-/datum/award/achievement/misc/ash_ascension
-	name = "Nightwatcher's Eyes"
-	desc = "You've risen above the flames, became one with the ashes. You've been reborn as one with the Nightwatcher."
-	database_id = MEDAL_ASH_ASCENSION
-	icon = "ashascend"
-
-/datum/award/achievement/misc/flesh_ascension
-	name = "Vortex of Arms"
-	desc = "You've became something more, something greater. A piece of the emperor resides within you, and you within him."
-	database_id = MEDAL_FLESH_ASCENSION
-	icon = "fleshascend"
-
-/datum/award/achievement/misc/rust_ascension
-	name = "Hills of Rust"
-	desc = "You've summoned a piece of the Hill of rust, and so the Hills welcome you."
-	database_id = MEDAL_RUST_ASCENSION
-	icon = "rustascend"
-
-/datum/award/achievement/misc/void_ascension
-	name = "All that perish"
-	desc = "Place of a different being, different time. Everything ends there... but maybe it is just the beginning?"
-	database_id = MEDAL_VOID_ASCENSION
-	icon = "voidascend"
-
-/datum/award/achievement/misc/blade_ascension
-	name = "Silver and Steel"
-	desc = "You've become the master of all duellists - the paragon of blades."
-	database_id = MEDAL_BLADE_ASCENSION
-	icon = "bladeascend"
-
-/datum/award/achievement/misc/cosmic_ascension
-	name = "It arrived"
-	desc = "You managed to teleport an entity on the station that really shouldn't be there."
-	database_id = MEDAL_COSMOS_ASCENSION
-	icon = "cosmicascend"
-
-/datum/award/achievement/misc/lock_ascension
-	name = "Secrets of the Locked Labyrinth"
-	desc = "You managed to open a gate into the mansus."
-	database_id = MEDAL_LOCK_ASCENSION
-	icon = "lockascend"
-
 /datum/award/achievement/misc/grand_ritual_finale
 	name = "Archmage"
 	desc = "Made a big impression on the station with your phenomenal cosmic power."

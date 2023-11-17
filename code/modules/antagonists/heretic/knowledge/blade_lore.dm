@@ -379,83 +379,8 @@
 	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
-		/datum/heretic_knowledge/ultimate/blade_final,
 		/datum/heretic_knowledge/spell/rust_charge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 	route = PATH_BLADE
-
-/datum/heretic_knowledge/ultimate/blade_final
-	name = "Maelstrom of Silver"
-	desc = "The ascension ritual of the Path of Blades. \
-		Bring 3 headless corpses to a transmutation rune to complete the ritual. \
-		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
-		These blades will protect you from all attacks, but are consumed on use. \
-		Your Furious Steel spell will also have a shorter cooldown. \
-		Additionally, you become a master of combat, gaining full wound immunity and the ability to shrug off short stuns. \
-		Your Sundered Blades deal bonus damage and heal you on attack for a portion of the damage dealt."
-	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
-		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
-	route = PATH_BLADE
-
-/datum/heretic_knowledge/ultimate/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	return !sacrifice.get_bodypart(BODY_ZONE_HEAD)
-
-/datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
-	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
-	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
-	user.add_stun_absorption(
-		source = name,
-		message = span_warning("%EFFECT_OWNER throws off the stun!"),
-		self_message = span_warning("You throw off the stun!"),
-		examine_message = span_hypnophrase("%EFFECT_OWNER_THEYRE standing stalwartly."),
-		// flashbangs are like 5-10 seoncds,
-		// a banana peel is ~5 seconds, depending on botany
-		// body throws and tackles are less than 5 seconds,
-		// stun baton / stamcrit detracts no time,
-		// and worst case: beepsky / tasers are 10 seconds.
-		max_seconds_of_stuns_blocked = 45 SECONDS,
-		delete_after_passing_max = FALSE,
-		recharge_time = 2 MINUTES,
-	)
-	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
-	steel_spell?.cooldown_time /= 2
-
-	var/mob/living/carbon/human/heretic = user
-	heretic.physiology.knockdown_mod = 0.75 // Otherwise knockdowns would probably overpower the stun absorption effect.
-
-/datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	SIGNAL_HANDLER
-
-	if(target == source)
-		return
-
-	// Turns your heretic blades into eswords, pretty much.
-	var/bonus_damage = clamp(30 - blade.force, 0, 12)
-
-	target.apply_damage(
-		damage = bonus_damage,
-		damagetype = BRUTE,
-		spread_damage = TRUE,
-		wound_bonus = 5,
-		sharpness = SHARP_EDGED,
-		attack_direction = get_dir(source, target),
-	)
-
-	if(target.stat != DEAD)
-		// And! Get some free healing for a portion of the bonus damage dealt.
-		source.heal_overall_damage(bonus_damage / 2, bonus_damage / 2)

@@ -220,74 +220,9 @@
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
 	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
 		/datum/heretic_knowledge/summon/rusty,
 	)
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
 	route = PATH_COSMIC
-
-/datum/heretic_knowledge/ultimate/cosmic_final
-	name = "Creators's Gift"
-	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with bluespace dust in their body to a transmutation rune to complete the ritual. \
-		When completed, you become the owner of a Star Gazer. \
-		You will be able to command the Star Gazer with Alt+click. \
-		You can also give it commands through speech. \
-		The Star Gazer is a strong ally who can even break down reinforced walls. \
-		The Star Gazer has an aura that will heal you and damage opponents. \
-		Star Touch can now teleport you to the Star Gazer when activated in your hand."
-	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
-		I clung on to them, they would protect me, and I would protect it. \
-		I closed my eyes with my head laid against their form. I was safe. \
-		WITNESS MY ASCENSION!"
-	route = PATH_COSMIC
-	/// A static list of command we can use with our mob.
-	var/static/list/star_gazer_commands = list(
-		/datum/pet_command/idle,
-		/datum/pet_command/free,
-		/datum/pet_command/follow,
-		/datum/pet_command/point_targeting/attack/star_gazer
-	)
-
-/datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	return sacrifice.has_reagent(/datum/reagent/bluespace)
-
-/datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
-	star_gazer_mob.maxHealth = INFINITY
-	star_gazer_mob.health = INFINITY
-	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
-	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
-	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(FACTION_HERETIC), current_owner = user)
-	star_gazer_mob.befriend(user)
-	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()
-	commands_action.Grant(user, star_gazer_mob)
-	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = locate() in user.actions
-	if(star_touch_spell)
-		star_touch_spell.set_star_gazer(star_gazer_mob)
-		star_touch_spell.ascended = TRUE
-
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/datum/heretic_knowledge/blade_upgrade/cosmic/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/cosmic)
-	blade_upgrade.combo_duration = 10 SECONDS
-	blade_upgrade.combo_duration_amount = 10 SECONDS
-	blade_upgrade.max_combo_duration = 30 SECONDS
-	blade_upgrade.increase_amount = 2 SECONDS
-
-	var/datum/action/cooldown/spell/conjure/cosmic_expansion/cosmic_expansion_spell = locate() in user.actions
-	cosmic_expansion_spell?.ascended = TRUE
-
-	user.client?.give_award(/datum/award/achievement/misc/cosmic_ascension, user)

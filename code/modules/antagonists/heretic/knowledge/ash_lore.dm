@@ -168,72 +168,9 @@
 		The Nightwatcher was a particular man, always watching."
 	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/eldritch_coin,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
 	cost = 1
 	route = PATH_ASH
-
-/datum/heretic_knowledge/ultimate/ash_final
-	name = "Ashlord's Rite"
-	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of flames, gaining two abilites. \
-		Cascade, which causes a massive, growing ring of fire around you, \
-		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		You will also become immune to flames, space, and similar environmental hazards."
-	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
-		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
-		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
-	route = PATH_ASH
-	/// A static list of all traits we apply on ascension.
-	var/static/list/traits_to_apply = list(
-		TRAIT_BOMBIMMUNE,
-		TRAIT_NOBREATH,
-		TRAIT_NOFIRE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-	)
-
-/datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	. = ..()
-	if(!.)
-		return
-
-	if(sacrifice.on_fire)
-		return TRUE
-	if(HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
-		return TRUE
-	return FALSE
-
-/datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-
-	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
-	circle_spell.Grant(user)
-
-	var/datum/action/cooldown/spell/fire_cascade/big/screen_wide_fire_spell = new(user.mind)
-	screen_wide_fire_spell.Grant(user)
-
-	var/datum/action/cooldown/spell/charged/beam/fire_blast/existing_beam_spell = locate() in user.actions
-	if(existing_beam_spell)
-		existing_beam_spell.max_beam_bounces *= 2 // Double beams
-		existing_beam_spell.beam_duration *= 0.66 // Faster beams
-		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
-
-	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
-	fiery_rebirth?.cooldown_time *= 0.16
-
-	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
-	if(length(traits_to_apply))
-		user.add_traits(traits_to_apply, MAGIC_TRAIT)

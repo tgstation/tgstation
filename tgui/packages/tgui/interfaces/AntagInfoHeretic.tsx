@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
 import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
 const hereticRed = {
@@ -48,14 +47,12 @@ type Info = {
   charges: number;
   side_charges: number;
   total_sacrifices: number;
-  ascended: BooleanLike;
   objectives: Objective[];
-  can_change_objective: BooleanLike;
 };
 
 const IntroductionSection = (props, context) => {
   const { data, act } = useBackend<Info>(context);
-  const { objectives, ascended, can_change_objective } = data;
+  const { objectives, can_change_objective } = data;
 
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
@@ -68,29 +65,22 @@ const IntroductionSection = (props, context) => {
             <Stack.Divider />
             <InformationSection />
             <Stack.Divider />
-            {!ascended && (
-              <Stack.Item>
-                <ObjectivePrintout
-                  fill
-                  titleMessage={
-                    can_change_objective
-                      ? 'In order to ascend, you have these tasks to fulfill'
-                      : 'Use your dark knowledge to fulfil your personal goal'
-                  }
-                  objectives={objectives}
-                  objectiveFollowup={
-                    <ReplaceObjectivesButton
-                      can_change_objective={can_change_objective}
-                      button_title={'Reject Ascension'}
-                      button_colour={'red'}
-                      button_tooltip={
-                        'Turn your back on the Mansus to accomplish a task of your choosing. Selecting this option will prevent you from ascending!'
-                      }
-                    />
-                  }
-                />
-              </Stack.Item>
-            )}
+            <Stack.Item>
+              <ObjectivePrintout
+                fill
+                titleMessage={
+                  'Research dark knowledge to fulfil your personal goal'
+                }
+                objectives={objectives}
+                objectiveFollowup={
+                  <ReplaceObjectivesButton
+                    can_change_objective={can_change_objective}
+                    button_title={'Change Discipline'}
+                    button_colour={'red'}
+                  />
+                }
+              />
+            </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
@@ -168,9 +158,7 @@ const GuideSection = () => {
           harder sacrifices.
         </Stack.Item>
         <Stack.Item>
-          - Accomplish all of your objectives to be able to learn the{' '}
-          <span style={hereticYellow}>final ritual</span>. Complete the ritual
-          to become all powerful!
+          - Use the knowledge and power you gain to accomplish your goals!
         </Stack.Item>
       </Stack>
     </Stack.Item>

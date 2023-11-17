@@ -22,8 +22,6 @@
 	var/star_mark_range = 7
 	/// Effect for when the spell triggers
 	var/obj/effect/expansion_effect = /obj/effect/temp_visual/cosmic_domain
-	/// If the heretic is ascended or not
-	var/ascended = FALSE
 
 /datum/action/cooldown/spell/conjure/cosmic_expansion/cast(mob/living/cast_on)
 	new expansion_effect(get_turf(cast_on))
@@ -31,9 +29,6 @@
 		if(cast_on == nearby_mob)
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
-	if (ascended)
-		for(var/turf/cast_turf as anything in get_turfs(get_turf(cast_on)))
-			new /obj/effect/forcefield/cosmic_field(cast_turf)
 	return ..()
 
 /datum/action/cooldown/spell/conjure/cosmic_expansion/proc/get_turfs(turf/target_turf)

@@ -256,8 +256,7 @@
  * A knowledge subtype for limited_amount knowledge
  * used for base knowledge (the ones that make blades)
  *
- * A heretic can only learn one /starting type knowledge,
- * and their ascension depends on whichever they chose.
+ * A heretic can only learn one /starting type knowledge.
  */
 /datum/heretic_knowledge/limited_amount/starting
 	abstract_parent_type = /datum/heretic_knowledge/limited_amount/starting
@@ -265,14 +264,6 @@
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
-
-/datum/heretic_knowledge/limited_amount/starting/New()
-	. = ..()
-	// Starting path also determines the final knowledge we're limited too
-	for(var/datum/heretic_knowledge/final_knowledge_type as anything in subtypesof(/datum/heretic_knowledge/ultimate))
-		if(initial(final_knowledge_type.route) == route)
-			continue
-		banned_knowledge += final_knowledge_type
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -665,83 +656,3 @@
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS
-
-/**
- * The special final tier of knowledges that unlocks ASCENSION.
- */
-/datum/heretic_knowledge/ultimate
-	abstract_parent_type = /datum/heretic_knowledge/ultimate
-	mutually_exclusive = TRUE // I guess, but it doesn't really matter by this point
-	cost = 2
-	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
-	required_atoms = list(/mob/living/carbon/human = 3)
-
-/datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	var/total_points = 0
-	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(our_heretic.researched_knowledge))
-		total_points += knowledge.cost
-
-	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [worldtime2text()]. \
-		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
-		and have sacrificed [our_heretic.total_sacrifices] people ([our_heretic.high_value_sacrifices] of which were high value)")
-
-/datum/heretic_knowledge/ultimate/can_be_invoked(datum/antagonist/heretic/invoker)
-	if(invoker.ascended)
-		return FALSE
-
-	if(!invoker.can_ascend())
-		return FALSE
-
-	return TRUE
-
-/datum/heretic_knowledge/ultimate/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	if(!can_be_invoked(heretic_datum))
-		return FALSE
-
-	// Remove all non-dead humans from the atoms list.
-	// (We only want to sacrifice dead folk.)
-	for(var/mob/living/carbon/human/sacrifice in atoms)
-		if(!is_valid_sacrifice(sacrifice))
-			atoms -= sacrifice
-
-	// All the non-dead humans are removed in this proc.
-	// We handle checking if we have enough humans in the ritual itself.
-	return TRUE
-
-/**
- * Checks if the passed human is a valid sacrifice for our ritual.
- */
-/datum/heretic_knowledge/ultimate/proc/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
-
-/datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	heretic_datum.ascended = TRUE
-
-	// Show the cool red gradiant in our UI
-	heretic_datum.update_static_data(user)
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		human_user.physiology.brute_mod *= 0.5
-		human_user.physiology.burn_mod *= 0.5
-
-	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
-	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
-	notify_ghosts(
-		"[user] has completed an ascension ritual!",
-		source = user,
-		action = NOTIFY_ORBIT,
-		header = "A Heretic is Ascending!",
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
-	)
-	return TRUE
-
-/datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)
-	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
-		selected_atoms -= sacrifice
-		sacrifice.gib(DROP_ALL_REMAINS)
-
-	return ..()

@@ -283,7 +283,6 @@
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 	adds_sidepath_points = 1
 	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/flesh_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/spell/cleave,
 	)
@@ -298,44 +297,6 @@
 	cost = 1
 	route = PATH_FLESH
 	poll_ignore_define = POLL_IGNORE_STALKER
-
-/datum/heretic_knowledge/ultimate/flesh_final
-	name = "Priest's Final Hymn"
-	desc = "The ascension ritual of the Path of Flesh. \
-		Bring 4 corpses to a transmutation rune to complete the ritual. \
-		When completed, you gain the ability to shed your human form \
-		and become the Lord of the Night, a supremely powerful creature. \
-		Just the act of transforming causes nearby heathens great fear and trauma. \
-		While in the Lord of the Night form, you can consume arms to heal and regain segments. \
-		Additionally, you can summon three times as many Ghouls and Voiceless Dead, \
-		and can create unlimited blades to arm them all."
-	gain_text = "With the Marshal's knowledge, my power had peaked. The throne was open to claim. \
-		Men of this world, hear me, for the time has come! The Marshal guides my army! \
-		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
-	required_atoms = list(/mob/living/carbon/human = 4)
-	route = PATH_FLESH
-
-/datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-
-	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
-	worm_spell.Grant(user)
-
-	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
-
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)
-	grasp_ghoul.limit *= 3
-	var/datum/heretic_knowledge/limited_amount/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
-	ritual_ghoul.limit *= 3
-	var/datum/heretic_knowledge/limited_amount/starting/base_flesh/blade_ritual = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_flesh)
-	blade_ritual.limit = 999
 
 #undef GHOUL_MAX_HEALTH
 #undef MUTE_MAX_HEALTH
