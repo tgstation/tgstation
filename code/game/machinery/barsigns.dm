@@ -86,8 +86,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron(drop_location(), 2)
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(!disassembled)
+			new /obj/item/wallframe/barsign(loc)
+		else
+			new /obj/item/stack/sheet/iron(drop_location(), 2)
+			new /obj/item/stack/cable_coil(drop_location(), 2)
+
 	qdel(src)
 
 /obj/machinery/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -458,6 +463,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	name = "bar sign frame"
 	desc = "Used to help draw the rabble into your bar"
 	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "fire_bitem" //change
+	icon_state = "noticeboard" //change
 	result_path = /obj/machinery/barsign
 	pixel_shift = 26 //adjust
