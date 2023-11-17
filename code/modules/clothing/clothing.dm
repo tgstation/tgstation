@@ -230,9 +230,6 @@
 	..()
 	if(!istype(user))
 		return
-	if(iscarbon(user) && tint)
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.update_tint()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
 		REMOVE_CLOTHING_TRAIT(user, trait)
@@ -249,9 +246,6 @@
 	if (!istype(user))
 		return
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		if(iscarbon(user) && tint)
-			var/mob/living/carbon/carbon_user = user
-			carbon_user.update_tint()
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 		for(var/trait in clothing_traits)

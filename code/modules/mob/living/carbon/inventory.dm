@@ -168,16 +168,22 @@
 	else
 		not_handled = TRUE
 
-	if(!not_handled)
-		update_obscured_slots(I)
+	if(not_handled)
+		return
+
+	update_equipment_speed_mods()
+	update_obscured_slots(I)
+
+	if(isclothing(I))
+		var/obj/item/clothing/clothing = I
+		if(clothing.tint)
+			update_tint()
 
 	// Not an else-if because we're probably equipped in another slot
 	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
 		cutoff_internals()
 		if(!QDELETED(src))
 			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
-
-	update_equipment_speed_mods()
 
 /// Returns TRUE if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
