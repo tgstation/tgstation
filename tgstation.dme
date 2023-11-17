@@ -3009,6 +3009,7 @@
 #include "code\modules\antagonists\heretic\magic\flesh_ascension.dm"
 #include "code\modules\antagonists\heretic\magic\flesh_surgery.dm"
 #include "code\modules\antagonists\heretic\magic\furious_steel.dm"
+#include "code\modules\antagonists\heretic\magic\lunatic_track.dm"
 #include "code\modules\antagonists\heretic\magic\madness_touch.dm"
 #include "code\modules\antagonists\heretic\magic\manse_link.dm"
 #include "code\modules\antagonists\heretic\magic\mansus_grasp.dm"

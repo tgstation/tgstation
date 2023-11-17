@@ -34,7 +34,7 @@
 	handle_clown_mutation(our_mob, "Ancient knowledge from the moon has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
 
-	var/datum/action/cooldown/track_target/lunatic/moon_track = new/datum/action/cooldown/track_target/lunatic()
+	var/datum/action/cooldown/lunatic_track/moon_track = new/datum/action/cooldown/lunatic_track()
 	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new/datum/action/cooldown/spell/touch/mansus_grasp()
 	mad_touch.Grant(our_mob)
 	moon_track.Grant(our_mob)
