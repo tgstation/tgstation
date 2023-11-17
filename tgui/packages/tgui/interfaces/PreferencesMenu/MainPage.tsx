@@ -342,11 +342,7 @@ const createSetRandomization =
 
 const sortPreferences = sortBy<[string, unknown]>(([featureId, _]) => {
   const feature = features[featureId];
-  if (feature?.sortingPrefix) {
-    return feature.sortingPrefix + feature.name;
-  } else {
-    return feature?.name;
-  }
+  return feature?.name;
 });
 
 export const PreferenceList = (props: {
