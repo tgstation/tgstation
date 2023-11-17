@@ -233,16 +233,14 @@
 /datum/ai_controller/basic_controller/cat/kitten
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_FIND_MOM_TYPES = list(/mob/living/basic/pet/cat),
-		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/pet/cat/kitten),
 		BB_HUNGRY_MEOW = list("mrrp...", "mraw..."),
 		BB_MAX_DISTANCE_TO_FOOD = 2,
 	)
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/look_for_adult,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food/kitten,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 //if the food is too far away, point at it or meow. if its near us then go eat it
@@ -254,6 +252,7 @@
 	return ..()
 
 /datum/ai_behavior/beacon_for_food
+	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/beacon_for_food/perform(seconds_per_tick, datum/ai_controller/controller, target_key, meows_key)
 	. = ..()
@@ -270,3 +269,35 @@
 /datum/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+/datum/ai_controller/basic_controller/cat/bread
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove,
+		/datum/ai_planning_subtree/flee_target/from_flee_key/cat_struggle,
+		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
+		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
+		/datum/ai_planning_subtree/haul_food_to_young,
+	)
+
+/datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove
+	target_key = BB_STOVE_TARGET
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/stove
+	finding_behavior = /datum/ai_behavior/find_hunt_target/stove
+	hunt_targets = list(/obj/machinery/oven/range)
+	hunt_chance = 75
+	hunt_range = 9
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/stove
+	always_reset_target = TRUE
+
+/datum/ai_behavior/find_hunt_target/stove
+
+/datum/ai_behavior/find_hunt_target/stove/valid_dinner(mob/living/source, obj/machinery/oven/range/stove, radius)
+	if(!length(stove.used_tray) || !stove.open)
+		return FALSE
+	//something in there is still baking...
+	for(var/atom/baking in stove.used_tray)
+		if(HAS_TRAIT(baking, TRAIT_BAKEABLE))
+			return FALSE
+	return TRUE
+

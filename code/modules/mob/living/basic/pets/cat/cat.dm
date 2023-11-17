@@ -55,6 +55,7 @@
 
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/relay_attackers)
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -129,6 +130,7 @@
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
+	ai_controller = /datum/ai_controller/basic_controller/cat/bread
 	collar_icon_state = null
 	held_state = "breadcat"
 	butcher_results = list(
@@ -137,6 +139,21 @@
 		/obj/item/organ/external/tail/cat = 1,
 		/obj/item/food/breadslice/plain = 1
 	)
+
+/mob/living/basic/pet/cat/breadcat/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_unarmed_attack))
+
+/mob/living/basic/pet/cat/breadcat/proc/pre_unarmed_attack(mob/living/hitter, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(!proximity)
+		return NONE
+	if(istype(target, /obj/machinery/oven/range))
+		target.attack_hand(src)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+
 /mob/living/basic/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
