@@ -62,12 +62,6 @@
 	},
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
-"cg" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/turf/open/water/beach/biodome/sinking,
-/area/station/commons/lounge)
 "cZ" = (
 /obj/machinery/requests_console/directional/north{
 	name = "Kitchen Requests Console"
@@ -1249,10 +1243,6 @@
 /obj/effect/spawner/random/entertainment/lighter,
 /turf/open/floor/wood,
 /area/station/service/bar)
-"LC" = (
-/obj/structure/railing/corner,
-/turf/open/water/beach/biodome/sinking,
-/area/station/commons/lounge)
 "LD" = (
 /turf/open/misc/beach/coastline_b{
 	dir = 8
@@ -1495,22 +1485,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
-"Rr" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/structure/table/reinforced/titaniumglass,
-/obj/item/plate,
-/obj/item/food/fishmeat,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "playerscantreadthis";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/station/service/kitchen)
 "Rv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1641,9 +1615,6 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "Vg" = (
@@ -1699,12 +1670,6 @@
 /obj/machinery/atm,
 /obj/effect/turf_decal/sand,
 /turf/open/misc/beach/sand,
-/area/station/commons/lounge)
-"Wx" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/water/beach/biodome/sinking,
 /area/station/commons/lounge)
 "WJ" = (
 /obj/structure/chair{
@@ -1788,7 +1753,10 @@
 /area/station/commons/lounge)
 "ZG" = (
 /obj/structure/railing{
-	dir = 9
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
 	},
 /turf/open/water/beach/biodome/sinking,
 /area/station/commons/lounge)
@@ -2161,13 +2129,13 @@ zC
 "}
 (14,1,1) = {"
 jm
-LC
+jm
 dP
 dP
 dP
 dP
 dP
-Wx
+jm
 hh
 KJ
 Hk
@@ -2221,7 +2189,7 @@ HN
 ZG
 Xc
 Xc
-cg
+jm
 hh
 KJ
 WJ
@@ -2245,7 +2213,7 @@ jm
 HB
 RL
 ZG
-cg
+jm
 jm
 jm
 jm
@@ -2377,7 +2345,7 @@ lL
 "}
 (22,1,1) = {"
 xw
-Rr
+ek
 sa
 Vb
 xw

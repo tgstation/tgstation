@@ -676,8 +676,8 @@
 /turf/open/floor/fake_seafloor/medium,
 /area/station/commons/lounge)
 "EF" = (
-/obj/structure/railing/corner{
-	dir = 4
+/obj/structure/railing{
+	dir = 1
 	},
 /turf/open/floor/fake_seafloor,
 /area/station/commons/lounge)
@@ -1108,12 +1108,6 @@
 	},
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/theater)
-"Yv" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/turf/open/floor/fake_seafloor,
-/area/station/commons/lounge)
 "YG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1560,7 +1554,7 @@ Um
 pR
 pR
 pR
-Yv
+EF
 BO
 jZ
 Uk
