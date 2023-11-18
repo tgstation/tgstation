@@ -250,7 +250,7 @@ GLOBAL_LIST(fishing_property_cache)
 					final_table[result] = round(final_table[result] * 3.5, 1)
 				else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
 					final_table[result] *= 2
-				if(!HAS_TRAIT(bait, OMNI_BAIT_TRAIT))
+				if(!HAS_TRAIT(bait, TRAIT_OMNI_BAIT))
 					//Bait matching likes doubles the chance
 					var/list/fav_bait = fish_list_properties[result][NAMEOF(caught_fish, favorite_bait)]
 					for(var/bait_identifer in fav_bait)

@@ -117,10 +117,10 @@
 	var/riposte_ready = TRUE
 
 /datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
+	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 
 /datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 /datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
 	mob/living/carbon/human/source,

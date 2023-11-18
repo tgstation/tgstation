@@ -133,7 +133,7 @@
 	return ..()
 
 /datum/status_effect/protective_blades/on_apply()
-	RegisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
+	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 	for(var/blade_num in 1 to max_num_blades)
 		var/time_until_created = (blade_num - 1) * time_between_initial_blades
 		if(time_until_created <= 0)
@@ -144,7 +144,7 @@
 	return TRUE
 
 /datum/status_effect/protective_blades/on_remove()
-	UnregisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK)
 	QDEL_LIST(blades)
 
 	return ..()
@@ -160,7 +160,7 @@
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
 	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
 
-/// Signal proc for [COMSIG_HUMAN_CHECK_SHIELDS].
+/// Signal proc for [COMSIG_LIVING_CHECK_BLOCK].
 /// If we have a blade in our list, consume it and block the incoming attack (shield it)
 /datum/status_effect/protective_blades/proc/on_shield_reaction(
 	mob/living/carbon/human/source,
@@ -194,7 +194,7 @@
 
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 1)
 
-	return SHIELD_BLOCK
+	return SUCCESSFUL_BLOCK
 
 /// Remove deleted blades from our blades list properly.
 /datum/status_effect/protective_blades/proc/remove_blade(obj/effect/floating_blade/to_remove)

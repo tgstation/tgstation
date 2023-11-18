@@ -169,6 +169,9 @@
 /mob/living/proc/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_animal_secondary(src, modifiers)
 
+/**
+ * Called when a simple animal is unarmed attacking / clicking on this atom.
+ */
 /atom/proc/attack_animal(mob/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 
