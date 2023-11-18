@@ -237,6 +237,12 @@
 	// revive will regenerate organs, so our heart refence is going to be null'd. Unreliable
 	var/mob/living/carbon/regenerating = ethereal_heart.owner
 
+	// clears the dismemberment mood debuff if we are suffering from it
+	var/body_zone_list = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	for(var/body_zone in body_zone_list)
+		if(regenerating.mob_mood.has_mood_of_category("dismembered_[body_zone]"))
+			regenerating.clear_mood_event("dismembered_[body_zone]")
+
 	playsound(get_turf(regenerating), 'sound/effects/ethereal_revive.ogg', 100)
 	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	regenerating.gain_trauma(picked_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
