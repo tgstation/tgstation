@@ -717,3 +717,21 @@
   - balance: After a string of unfortunate incidents, persons with telekinesis have
       been strongly warned against playing Russian Roulette, as they tend to hyperfixate
       on the gun a bit too much and end up firing it directly at their head.
+2023-11-18:
+  Ben10Omintrix:
+  - bugfix: gutlunches will stop having too many children
+  - balance: gutlunches are no longer in the mining faction
+  JohnFulpWillard:
+  - refactor: Secure briefcases are now actual briefcases.
+  - refactor: Wall safes are now structures, rather than items that can't be picked
+      up.
+  - refactor: Lockable items (Wall safes & Secure Briefcases) now use TGUI.
+  ZephyrTFA:
+  - rscadd: Chat Reliability Layer
+  - code_imp: TGUI chat messages now track their sequence and will be resent if the
+      client notices a discrepenency
+  jlsnow301:
+  - bugfix: After correcting a slight miscalculation, Bit Avatars now have hands again.
+  nikothedude:
+  - code_imp: TGUI preference lists can now have sorting prefixes to allow for specific
+      placement of items
