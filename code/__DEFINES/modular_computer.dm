@@ -7,7 +7,7 @@
 #define PROGRAM_ALL ALL
 #define PROGRAM_CONSOLE (1<<0)
 #define PROGRAM_LAPTOP (1<<1)
-#define PROGRAM_TABLET (1<<2)
+#define PROGRAM_PDA (1<<2)
 
 //Program categories
 #define PROGRAM_CATEGORY_DEVICE "Device Tools"

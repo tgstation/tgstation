@@ -8,7 +8,7 @@
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	undeletable = TRUE
-	usage_flags = PROGRAM_TABLET
+	usage_flags = PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"

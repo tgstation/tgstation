@@ -243,3 +243,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/effect/extraction_holder/singularity_pull()
 	return
+
+/obj/item/extraction_pack/syndicate
+	name = "syndicate fulton extraction pack"
+	can_use_indoors = TRUE
