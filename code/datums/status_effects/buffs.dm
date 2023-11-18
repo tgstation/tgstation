@@ -557,7 +557,7 @@
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
-	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -575,7 +575,7 @@
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
-	remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
 
 /// Gives you a brief period of anti-gravity
 /datum/status_effect/jump_jet

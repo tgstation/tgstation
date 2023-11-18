@@ -2097,11 +2097,11 @@
 	name = "Long + Membrane"
 	icon_state = "longmeme"
 
-/datum/sprite_accessory/spines/aqautic
+/datum/sprite_accessory/spines/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/spines_animated/aqautic
+/datum/sprite_accessory/spines_animated/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 

@@ -1,3 +1,6 @@
+#define NORMAL_TOAST_PROB 3
+#define BROKEN_TOAST_PROB 33
+
 /datum/component/energized
 	can_transfer = FALSE
 	///what we give to connect_loc by default, makes slippable mobs moving over us slip
@@ -48,24 +51,14 @@
 /datum/component/energized/proc/toast(turf/open/floor/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!source.broken && !source.burnt)
-		return
-
 	if(!isliving(arrived))
-		return
-
-	if(prob(85))
-		if(prob(25))
-			do_sparks(1, FALSE, source)
-			playsound(src, SFX_SPARKS, 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			source.audible_message(span_danger("[parent] makes an electric crackle..."))
 		return
 
 	var/mob/living/future_tram_victim = arrived
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
 	// Check for stopped states.
-	if(isnull(tram) || !tram.controller_operational || !inbound || !outbound)
+	if(isnull(tram) || !tram.controller_operational || !tram.controller_active || !inbound || !outbound)
 		return FALSE
 
 	var/obj/structure/transport/linear/tram/tram_part = tram.return_closest_platform_to(parent)
@@ -76,6 +69,17 @@
 	if(isnull(source))
 		return FALSE
 
+	var/toast_prob = NORMAL_TOAST_PROB
+	if(source.broken || source.burnt || HAS_TRAIT(future_tram_victim, TRAIT_CURSED))
+		toast_prob = BROKEN_TOAST_PROB
+
+	if(prob(100 - toast_prob))
+		if(prob(25))
+			do_sparks(1, FALSE, source)
+			playsound(src, SFX_SPARKS, 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			source.audible_message(span_danger("[parent] makes an electric crackle..."))
+		return FALSE
+
 	// Everything will be based on position and travel direction
 	var/plate_pos
 	var/tram_pos
@@ -83,11 +87,11 @@
 	// Try to be agnostic about N-S vs E-W movement
 	if(tram.travel_direction & (NORTH|SOUTH))
 		plate_pos = source.y
-		tram_pos = source.y
+		tram_pos = tram_part.y
 		tram_velocity_sign = tram.travel_direction & NORTH ? 1 : -1
 	else
 		plate_pos = source.x
-		tram_pos = source.x
+		tram_pos = tram_part.x
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
@@ -102,7 +106,7 @@
 		return FALSE
 	if((tram.travel_direction & EAST) && outbound > tram.destination_platform.platform_code)
 		return FALSE
-	if(approach_distance >= AMBER_THRESHOLD_NORMAL)
+	if(approach_distance >= AMBER_THRESHOLD_DEGRADED)
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
@@ -112,8 +116,12 @@
 		action = NOTIFY_ORBIT,
 		header = "Electrifying!",
 	)
+	do_sparks(4, FALSE, source)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))
 	to_chat(future_tram_victim, span_userdanger("You hear a loud electric crackle!"))
 	future_tram_victim.electrocute_act(15, src, 1)
 	return TRUE
+
+#undef NORMAL_TOAST_PROB
+#undef BROKEN_TOAST_PROB
