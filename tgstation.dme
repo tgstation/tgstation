@@ -5908,6 +5908,8 @@
 #include "monkestation\code\modules\ghost_players\job_helpers\hydroponics_helper.dm"
 #include "monkestation\code\modules\ghost_players\job_helpers\injured_spawner.dm"
 #include "monkestation\code\modules\ghost_players\job_helpers\organ_printer.dm"
+#include "monkestation\code\modules\goonimizations\goon_keybinds.dm"
+#include "monkestation\code\modules\goonimizations\shuttle_votes.dm"
 #include "monkestation\code\modules\hydroponics\botanical_lexicon.dm"
 #include "monkestation\code\modules\hydroponics\plant_genes.dm"
 #include "monkestation\code\modules\hydroponics\seeds.dm"

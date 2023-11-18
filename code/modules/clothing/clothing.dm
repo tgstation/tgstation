@@ -76,6 +76,18 @@
 	. = ..()
 	var/mob/M = usr
 
+	if(istype(over_object, /atom/movable/screen/inventory))
+		var/atom/movable/screen/inventory/slot = over_object
+		if(M.get_item_by_slot(slot.slot_id))
+			var/obj/item/clothing/item = M.get_item_by_slot(slot.slot_id)
+			if(!M.temporarilyRemoveItemFromInventory(item))
+				return
+			if(!M.put_in_active_hand(item))
+				if(!M.put_in_inactive_hand(item))
+					if(!M.active_storage?.attempt_insert(item, M))
+						item.forceMove(get_turf(M))
+			item.equip_to_best_slot()
+
 	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
 
