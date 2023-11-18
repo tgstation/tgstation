@@ -10,3 +10,7 @@
 /// Converts the chat payload into a JSON string
 /datum/chat_payload/proc/into_message()
 	return "{\"sequence\":[sequence],\"content\":[json_encode(content)]}"
+
+/// Returns the content of the chat payload
+/datum/chat_payload/proc/get_content_as_html()
+	return message_to_html(content)
