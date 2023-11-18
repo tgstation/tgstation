@@ -106,6 +106,10 @@
 		for(var/atom/thing as anything in nearby_atoms)
 			if(!ismovable(thing))
 				continue
+			if(isitem(thing))
+				var/obj/item/item = thing
+				if(item.item_flags & ABSTRACT) //bodyparts and stuff will get registered otherwise
+					continue
 
 			// There are atoms around the rune still, and there shouldn't be.
 			// All component atoms were consumed, and all resulting atoms were cleaned up.

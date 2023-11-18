@@ -202,19 +202,19 @@
 	..()
 
 /obj/item/organ/internal/eyes/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.eyes = src
+	head.eyes = null
 	..()
 
 /obj/item/organ/internal/ears/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.ears = src
+	head.ears = null
 	..()
 
 /obj/item/organ/internal/tongue/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.tongue = src
+	head.tongue = null
 	..()
 
 /obj/item/organ/internal/brain/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.brain = src
+	head.brain = null
 	..()
 
 /obj/item/bodypart/chest/drop_limb(special, dismembered, move_to_floor = TRUE)
@@ -324,6 +324,11 @@
 				new_limb_owner.surgeries -= attach_surgery
 				qdel(attach_surgery)
 				break
+
+		for(var/obj/item/organ/organ as anything in organs)
+			if(deprecise_zone(organ.zone) != body_zone)
+				continue
+			organ.bodypart_insert(src)
 
 	for(var/datum/wound/wound as anything in wounds)
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
