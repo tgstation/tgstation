@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - refactor: "Secure briefcases are now actual briefcases."
-  - refactor: "Wall safes are now structures, rather than items that can't be picked up."
-  - refactor: "Lockable items (Wall safes & Secure Briefcases) now use TGUI."

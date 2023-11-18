@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - code_imp: "TGUI preference lists can now have sorting prefixes to allow for specific placement of items"
