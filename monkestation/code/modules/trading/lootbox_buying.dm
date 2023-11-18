@@ -24,8 +24,8 @@
 	prefs.lootboxes_owned++
 
 /client/proc/open_lootbox()
-	message_admins("[client.ckey] opened a lootbox!")
-	log_game("[client.ckey] opened a lootbox!")
+	message_admins("[ckey] opened a lootbox!")
+	log_game("[ckey] opened a lootbox!")
 	if(!mob)
 		return
 
