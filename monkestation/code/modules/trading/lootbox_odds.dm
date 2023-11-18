@@ -83,7 +83,7 @@
 		if(!query_add_gear_purchase.Execute())
 			to_chat(buyer, fail_message)
 			qdel(query_add_gear_purchase)
-			addtimer(CALLBACK(src, PROC_REF(add_to_user), buyer) 15 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(add_to_user), buyer), 15 SECONDS)
 			return FALSE
 		qdel(query_add_gear_purchase)
 	else
