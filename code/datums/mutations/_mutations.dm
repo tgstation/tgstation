@@ -75,16 +75,27 @@
 	var/energy_coeff = -1
 	/// List of strings of valid chromosomes this mutation can accept.
 	var/list/valid_chrom_list = list()
+	/// Keep track of remove timer id to prevent hard dels
+	var/remove_timer
+	/// Keep track of modify timer id to prevent hard dels
+	var/modify_timer
 
 /datum/mutation/human/New(class = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
 	src.class = class
 	if(timer)
-		addtimer(CALLBACK(src, PROC_REF(remove)), timer)
+		remove_timer = addtimer(CALLBACK(src, PROC_REF(remove)), timer)
 		timeout = timer
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
 	update_valid_chromosome_list()
+
+/datum/mutation/human/Destroy()
+	if(remove_timer)
+		deltimer(remove_timer)
+	if(modify_timer)
+		deltimer(modify_timer)
+	return ..()
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
@@ -115,7 +126,7 @@
 		owner.apply_overlay(layer_used)
 	grant_power() //we do checks here so nothing about hulk getting magic
 	if(!modified)
-		addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
+		modify_timer = addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
 
 /datum/mutation/human/proc/get_visual_indicator()
 	return
