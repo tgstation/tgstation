@@ -82,7 +82,9 @@
 	maptext_width = 360
 	maptext_x += 120 - length(rolled_item.name)
 	maptext_y += 60
-
+	if(mob.client)
+		message_admins("[mob.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
+		log_game("[mob.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
 	if(type_string == "Unusual")
 		to_chat(world, span_boldannounce("[user] has unboxed an [rolled_item.name]!"))
