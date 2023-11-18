@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!isnull(client) || stat != CONSCIOUS)
 		return null
 
-	if(!COOLDOWN_FINISHED(forced_speech_cooldown))
+	if(!COOLDOWN_FINISHED(src, forced_speech_cooldown))
 		return null
 
 	var/return_value = SEND_SIGNAL(src, COMSIG_NEEDS_NEW_PHRASE)
