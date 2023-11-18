@@ -92,4 +92,3 @@
 	spawned_mobs = unlucky_server.setup_glitch(forced_role)
 
 	return SUCCESSFUL_SPAWN
- b n
