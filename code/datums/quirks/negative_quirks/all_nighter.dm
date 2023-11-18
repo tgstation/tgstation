@@ -11,6 +11,7 @@
 	medical_record_text = "Patient appears to be suffering from sleep deprivation."
 	hardcore_value = 2
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE|QUIRK_MOODLET_BASED|QUIRK_PROCESSES
+
 	mail_goodies = list(
 		/obj/item/clothing/glasses/blindfold,
 		/obj/item/bedsheet/random,
@@ -20,6 +21,7 @@
 		/obj/item/clothing/head/costume/nightcap/blue,
 		/obj/item/pillow/random,
 	)
+
 	///a list of all the reagents which alleviate the negative moodlet
 	var/list/stimulants = list(
 		/datum/reagent/medicine/stimulants,
@@ -40,6 +42,7 @@
 ///adds the corresponding moodlet and visual effects
 /datum/quirk/all_nighter/add(client/client_source)
 	quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
+
 	add_bags()
 
 ///removes the corresponding moodlet and visual effects
