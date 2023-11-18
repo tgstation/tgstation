@@ -227,7 +227,7 @@ If you're using hotkey mode, you can stop pulling things using H.
 In a pinch, stripping yourself naked will give you a sizeable resistance to being tackled. What do you value more, your freedom or your dignity?
 Laying down will help slow down bloodloss. Death will halt it entirely.
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
-Most job-related suit clothing can fit job-related items into it, such as the atmospheric technician's winter coat holding an RPD, or labcoats holding most medicine.
+Most job-related suit slot clothing can fit job-related items into it, such as the atmospheric technician's winter coat holding an RPD, or labcoats holding most medicine.
 Most things have special interactions with right, alt, shift, and control click. Experiment!
 On most clothing items that go in the suit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
