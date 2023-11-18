@@ -103,6 +103,7 @@
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control locker"
+	icon_door = "chemical"
 	req_access = list(ACCESS_SURGERY)
 
 /obj/structure/closet/secure_closet/animal/PopulateContents()
@@ -115,7 +116,7 @@
 	name = "chemical closet"
 	desc = "Store dangerous chemicals in here."
 	req_access = list(ACCESS_PHARMACY)
-	icon_door = "chemical"
+	icon_state = "chem_secure"
 
 /obj/structure/closet/secure_closet/chemical/PopulateContents()
 	..()
@@ -129,7 +130,6 @@
 
 /obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
 	name = "advanced chemical closet"
-	icon_state = "chem_secure"
 	req_access = list(ACCESS_PLUMBING)
 
 /obj/structure/closet/secure_closet/chemical/heisenberg/PopulateContents()
