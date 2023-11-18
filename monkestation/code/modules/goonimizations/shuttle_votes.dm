@@ -22,6 +22,17 @@ SUBSYSTEM_DEF(autotransfer)
 	name = "Call Shuttle"
 	message = "Should we go home?!"
 
+/datum/vote/shuttle_call/can_be_initiated(mob/by_who, forced = FALSE)
+	if(started_time)
+		var/next_allowed_time = SSautotransfer.targettime
+		if(next_allowed_time > world.time && !forced)
+			message = "A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a shuttle vote can happen!"
+			return FALSE
+
+	message = initial(message)
+	. = ..()
+
+
 /datum/vote/shuttle_call/New()
 	. = ..()
 	default_choices = list("Yes", "No", "Yes (No Recall)")
