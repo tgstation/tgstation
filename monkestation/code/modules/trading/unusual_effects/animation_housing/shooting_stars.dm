@@ -20,10 +20,10 @@
 	if(prob(30))
 		spawned.icon_state = "starlarge"
 	if(direction & NORTH|SOUTH)
-		spawned.pixel_x += rand(-80, 80)
+		spawned.pixel_x += rand(-16, 16)
 
 	if(direction & EAST|WEST)
-		spawned.pixel_y += rand(-80, 80)
+		spawned.pixel_y += rand(-16, 16)
 
 	switch(direction)
 		if(NORTH)
@@ -35,4 +35,3 @@
 		if(WEST)
 			animate(spawned, time = rand(0.5 SECONDS, duration), pixel_x = spawned.pixel_x - 160, alpha = 25)
 	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)
-	
