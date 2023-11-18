@@ -882,7 +882,7 @@
 			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
 				if(IS_ORGANIC_LIMB(squish_part))
 					var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-					squish_part.force_wound_upwards(type_wound, wound_source = "crushed by [src]")
+					squish_part.force_wound_upwards(type_wound)
 				else
 					squish_part.receive_damage(brute=30)
 			carbon_target.visible_message(span_danger("[carbon_target]'s body is maimed underneath the mass of [src]!"), span_userdanger("Your body is maimed underneath the mass of [src]!"))
