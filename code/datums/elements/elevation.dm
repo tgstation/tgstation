@@ -120,6 +120,7 @@
 	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, REF(src))
 	for(var/mob/living/living in source)
 		elevate_mob(living, -pixel_shift)
+		UnregisterSignal(living, COMSIG_LIVING_SET_BUCKLED)
 	return ..()
 
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
