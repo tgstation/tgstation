@@ -42,7 +42,6 @@
 ///adds the corresponding moodlet and visual effects
 /datum/quirk/all_nighter/add(client/client_source)
 	quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
-
 	add_bags()
 
 ///removes the corresponding moodlet and visual effects
@@ -104,13 +103,13 @@
 		quirk_holder.clear_mood_event("all_nighter", /datum/mood_event/all_nighter)
 	if(!("all_nighter" in quirk_holder.mob_mood.mood_events) &&  !happy_camper)
 		quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
+		to_chat(quirk_holder, span_danger("You start feeling tired again."))
 
 	//adjusts bag overlay accordingly
 	if(bodypart_overlay && beauty_sleep)
 		remove_bags()
 	if(!bodypart_overlay && !beauty_sleep)
 		add_bags()
-		to_chat(quirk_holder, span_danger("You start feeling tired again."))
 
 
 #undef SLEEP_BANK_MULTIPLIER
