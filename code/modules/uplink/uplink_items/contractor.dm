@@ -75,7 +75,7 @@
 	name = "Fulton Extraction Kit"
 	desc = "For getting your target across the station to those difficult dropoffs. \
 		Place the beacon somewhere secure, and link the pack. \
-		Activating the pack on your target in space will send them over to the beacon - \
+		Activating the pack on your target will send them over to the beacon - \
 		make sure they're not just going to run away though!"
 	item = /obj/item/storage/box/contractor/fulton_extraction
 	limited_stock = 1

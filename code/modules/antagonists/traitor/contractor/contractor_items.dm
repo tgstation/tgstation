@@ -13,7 +13,7 @@
 	illustration = "writing_syndie"
 
 /obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
-	new /obj/item/extraction_pack(src)
+	new /obj/item/extraction_pack/syndicate(src)
 	new /obj/item/fulton_core(src)
 
 /obj/item/paper/contractor_guide
