@@ -1,16 +1,11 @@
-//WAITING UNTIL SAN7890'S PR ABOUT TRAITS GLOBALVARS IS MERGED
-#define TRAIT_TURF_HAS_ELEVATED_OBJ(z) "turf_has_elevated_obj_[z]"
-#define TRAIT_ELEVATED_TURF "elevated_turf"
-
 /**
  * Manages the elevation of the turf the source is on (can be the turf itself)
- * The atom with the highest pixel_shift gets to set the elevation of the turf to that
- * value
+ * The atom with the highest pixel_shift gets to set the elevation of the turf to that value.
  */
 /datum/element/elevation
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	///The amount of pixel_z applied to the mob standing on the turf.
+	///The amount of pixel_z applied to the mob standing on the turf
 	var/pixel_shift
 
 /datum/element/elevation/Attach(datum/target, pixel_shift)
