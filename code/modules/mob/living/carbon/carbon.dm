@@ -66,19 +66,36 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
+		var/blocked = FALSE
 		if(victim.movement_type & FLYING)
 			return
-		if(hurt)
-			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-			take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		if(!hurt)
+			return
+
+		if(ishuman(victim))
+			var/mob/living/carbon/human/human_victim = victim
+			if(human_victim.check_block(src, 0, "[name]", LEAP_ATTACK))
+				blocked = TRUE
+
+		take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		Paralyze(2 SECONDS)
+		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+
+		if(blocked)
+			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
+				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
+			log_combat(src, victim, "crashed into and was blocked by")
+			return
+		else
 			victim.Paralyze(2 SECONDS)
-			Paralyze(2 SECONDS)
+			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""]!"))
-		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
-		log_combat(src, victim, "crashed into")
+			log_combat(src, victim, "crashed into")
+
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
