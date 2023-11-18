@@ -537,8 +537,10 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		target_fax.receive(fax_item, sender)
 
 	else if(force) //no fax machines but we really gotte send? SEND A FAX MACHINE
-		var/obj/machinery/fax/new_fax_machine = new ()
-		send_supply_pod_to_area(new_fax_machine, area_type, force_pod_type)
+		var/obj/machinery/fax/new_fax_machine = new()
+		if(!send_supply_pod_to_area(new_fax_machine, area_type, force_pod_type))
+			stack_trace("Attempted to forcibly send a fax to [area_type], however the area does not exist or has no valid dropoff spot for a fax machine")
+			return FALSE
 		addtimer(CALLBACK(new_fax_machine, TYPE_PROC_REF(/obj/machinery/fax, receive), fax_item, sender), 10 SECONDS)
 
 	else
