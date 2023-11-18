@@ -69,7 +69,7 @@
 
 /datum/loadout_item/proc/add_to_user(client/buyer)
 	SHOULD_CALL_PARENT(TRUE)
-	var/fail_message ="<span class='warning'>Failed to add purchase to database. You have not been charged.</span>"
+	var/fail_message ="<span class='warning'>Failed to add lootbox item to database. Will reattempt until added!</span>"
 	if(!SSdbcore.IsConnected())
 		to_chat(buyer, fail_message)
 		return FALSE
@@ -83,6 +83,7 @@
 		if(!query_add_gear_purchase.Execute())
 			to_chat(buyer, fail_message)
 			qdel(query_add_gear_purchase)
+			addtimer(CALLBACK(src, PROC_REF(add_to_user), buyer) 15 SECONDS)
 			return FALSE
 		qdel(query_add_gear_purchase)
 	else
