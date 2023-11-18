@@ -135,6 +135,9 @@
 			return
 	return ..()
 
+/turf/open/floor/tram/plate/energized/broken
+	broken = TRUE
+
 // Resetting the tram contents to its original state needs the turf to be there
 /turf/open/indestructible/tram
 	name = "tram guideway"
