@@ -33,6 +33,8 @@ SUBSYSTEM_DEF(materials)
 	var/list/rigid_stack_recipes = list(
 		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, time = 3 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_STRUCTURE),
 	)
+	///Blank versions of all of the mining templates, indexed by rarity.
+	var/list/template_paths_by_rarity = list()
 
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()
@@ -165,3 +167,7 @@ SUBSYSTEM_DEF(materials)
 			combo[GET_MATERIAL_REF(mat)] = materials_declaration[mat] * multiplier
 		material_combos[combo_index] = combo
 	return combo
+
+/datum/controller/subsystem/materials/proc/InitializeTemplates()
+	for(var/datum/mining_template/template as anything in typesof(/datum/mining_template))
+		LAZYADD(template_paths_by_rarity["[initial(template.rarity)]"], template)
