@@ -11,6 +11,14 @@
 	new /obj/item/tank/internals/oxygen(src)
 
 
+/obj/structure/closet/l3closet/scientist/PopulateContents()
+	new /obj/item/storage/bag/xeno(src)
+	new /obj/item/clothing/suit/bio_suit/scientist(src)
+	new /obj/item/clothing/head/bio_hood/scientist(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/tank/internals/oxygen(src)
+
+
 /obj/structure/closet/l3closet/virology
 	icon_state = "bio_viro"
 
@@ -40,15 +48,3 @@
 	new /obj/item/clothing/head/bio_hood/janitor(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
-
-
-/obj/structure/closet/l3closet/scientist
-	icon_state = "bio_viro"
-
-/obj/structure/closet/l3closet/scientist/PopulateContents()
-	new /obj/item/storage/bag/xeno(src)
-	new /obj/item/clothing/suit/bio_suit/scientist(src)
-	new /obj/item/clothing/head/bio_hood/scientist(src)
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/tank/internals/oxygen(src)
-
