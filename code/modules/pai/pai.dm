@@ -176,7 +176,7 @@
 	return "[src] bleeps electronically."
 
 /mob/living/silicon/pai/emag_act(mob/user)
-	handle_emag(user)
+	return handle_emag(user)
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()

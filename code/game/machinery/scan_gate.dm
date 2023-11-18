@@ -107,13 +107,14 @@
 			wires.interact(user)
 	return ..()
 
-/obj/machinery/scanner_gate/emag_act(mob/user)
+/obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	locked = FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You fry the ID checking system."))
+	balloon_alert(user, "id checker disabled")
+	return TRUE
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
