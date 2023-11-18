@@ -43,6 +43,7 @@ SUBSYSTEM_DEF(chat)
 
 /datum/controller/subsystem/chat/proc/send_payload_to_client(client/target, datum/chat_payload/payload)
 	target.tgui_panel.window.send_message("chat/message", payload.into_message())
+	SEND_TEXT(target, payload.get_content_as_html())
 
 /datum/controller/subsystem/chat/fire()
 	for(var/ckey in client_to_payloads)
