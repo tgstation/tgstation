@@ -57,7 +57,7 @@
 	var/list/data = list()
 	var/turf/turf = get_turf(computer)
 	data["atmozphereMode"] = atmozphere_mode
-	data["clickAtmozphereCompatible"] = (computer.hardware_flag & PROGRAM_TABLET)
+	data["clickAtmozphereCompatible"] = (computer.hardware_flag & PROGRAM_PDA)
 	switch (atmozphere_mode) //Null air wont cause errors, don't worry.
 		if(ATMOZPHERE_SCAN_ENV)
 			var/datum/gas_mixture/air = turf?.return_air()
@@ -74,7 +74,7 @@
 				atmozphere_mode = ATMOZPHERE_SCAN_ENV
 				UnregisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 				return TRUE
-			if(!(computer.hardware_flag & PROGRAM_TABLET))
+			if(!(computer.hardware_flag & PROGRAM_PDA))
 				computer.say("Device incompatible for scanning objects!")
 				return FALSE
 			atmozphere_mode = ATMOZPHERE_SCAN_CLICK

@@ -101,11 +101,11 @@
 			to_chat(user, span_warning("[powder_keg] doesn't have at least 15u of gunpowder to fill [src]!"))
 			return
 		if(has_enough_gunpowder)
-			powder_keg.reagents.trans_id_to(src, /datum/reagent/gunpowder, amount = charge_size)
+			powder_keg.reagents.trans_to(src, charge_size, target_id = /datum/reagent/gunpowder)
 			balloon_alert(user, "[src] loaded with gunpowder")
 			return
 		if(has_enough_alt_fuel)
-			powder_keg.reagents.trans_id_to(src, /datum/reagent/fuel, amount = charge_size)
+			powder_keg.reagents.trans_to(src, charge_size, target_id = /datum/reagent/fuel)
 			balloon_alert(user, "[src] loaded with welding fuel")
 			return
 	..()

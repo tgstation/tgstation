@@ -463,7 +463,7 @@
 	if(reagents.has_reagent(reagent_required, reagent_required_amount))
 		balloon_alert(mod.wearer, "already charged!")
 		return FALSE
-	if(!attacking_item.reagents.trans_id_to(src, reagent_required, reagent_required_amount))
+	if(!attacking_item.reagents.trans_to(src, reagent_required_amount, target_id = reagent_required))
 		return FALSE
 	balloon_alert(mod.wearer, "charge [reagents.has_reagent(reagent_required, reagent_required_amount) ? "fully" : "partially"] reloaded")
 	return TRUE
