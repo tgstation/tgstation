@@ -10799,7 +10799,8 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/asteroid_magnet{
 	center_y = 61;
-	center_x = 105
+	center_x = 105;
+	area_size = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)

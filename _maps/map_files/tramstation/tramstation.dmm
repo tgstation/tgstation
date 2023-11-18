@@ -7684,7 +7684,8 @@
 "bhy" = (
 /obj/machinery/asteroid_magnet{
 	center_x = 215;
-	center_y = 87
+	center_y = 87;
+	area_size = 3
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
