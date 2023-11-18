@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Body temperature from being lit on fire will soft cap at 1,200 K. It will still increase beyond this, but with diminishing returns. For example, at 5,000 K, fire will heat 67x weaker."
