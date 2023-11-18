@@ -51,6 +51,7 @@ SUBSYSTEM_DEF(stock_market)
 		price_minimum = round(initial(mat.minimum_value_override) * SHEET_MATERIAL_AMOUNT)
 	var/price_maximum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
 	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
+	var/quantity_baseline = initial(mat.tradable_base_quantity)
 
 	var/stock_quantity = materials_quantity[mat]
 
@@ -84,15 +85,15 @@ SUBSYSTEM_DEF(stock_market)
 	switch(trend)
 		if(MARKET_TREND_UPWARD)
 			price_change = ROUND_UP(gaussian(price_units * 0.1, price_baseline * 0.05)) //If we don't ceil, small numbers will get trapped at low values
-			quantity_change = -round(gaussian(stock_quantity * 0.1, stock_quantity * 0.05))
+			quantity_change = -round(gaussian(quantity_baseline * 0.05, quantity_baseline * 0.05))
 		if(MARKET_TREND_STABLE)
 			price_change = round(gaussian(0, price_baseline * 0.01))
-			quantity_change = round(gaussian(0, stock_quantity * 0.01))
+			quantity_change = round(gaussian(0, quantity_baseline * 0.01))
 		if(MARKET_TREND_DOWNWARD)
 			price_change = -ROUND_UP(gaussian(price_units * 0.1, price_baseline * 0.05))
-			quantity_change = round(gaussian(stock_quantity * 0.1, stock_quantity * 0.05))
+			quantity_change = round(gaussian(quantity_baseline * 0.05, quantity_baseline * 0.05))
 	materials_prices[mat] =  round(clamp(price_units + price_change, price_minimum, price_maximum))
-	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, initial(mat.tradable_base_quantity) * 2))
+	materials_quantity[mat] = round(clamp(stock_quantity + quantity_change, 0, quantity_baseline * 2))
 
 /**
  * Market events are a way to spice up the market and make it more interesting.

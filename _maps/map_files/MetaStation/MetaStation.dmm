@@ -1617,7 +1617,7 @@
 "aEP" = (
 /obj/machinery/light_switch/directional/east,
 /obj/structure/dresser,
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "aEW" = (
@@ -2674,7 +2674,7 @@
 "aWR" = (
 /obj/structure/table/glass,
 /obj/machinery/light_switch/directional/north,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 3;
 	pixel_y = 5
 	},
@@ -9255,7 +9255,7 @@
 /area/station/commons/dorms)
 "dth" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -7;
 	pixel_y = 12
 	},
@@ -14692,7 +14692,7 @@
 /obj/structure/closet/secure_closet/engineering_chief,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -15807,7 +15807,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/range)
 "fOn" = (
-/obj/item/storage/secure/safe/directional/north,
+/obj/structure/secure_safe/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Chief Engineer's Office"
 	},
@@ -18064,7 +18064,7 @@
 "gHC" = (
 /obj/structure/table/wood,
 /obj/machinery/light_switch/directional/west,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -27282,7 +27282,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Evidence Storage"
 	},
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "evidence safe"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -27371,7 +27371,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -28969,7 +28969,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "krP" = (
-/obj/item/storage/secure/safe/directional/south,
+/obj/structure/secure_safe/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -29101,7 +29101,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/satellite)
 "ktY" = (
-/obj/item/storage/secure/safe/directional/north{
+/obj/structure/secure_safe/directional/north{
 	name = "armory safe A"
 	},
 /turf/open/floor/iron/dark,
@@ -40034,7 +40034,7 @@
 /area/station/security/warden)
 "ory" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	desc = "A large briefcase with a digital locking system, and the Nanotrasen logo emblazoned on the sides.";
 	name = "\improper Nanotrasen-brand secure briefcase exhibit";
 	pixel_y = 2
@@ -40312,7 +40312,7 @@
 /area/station/engineering/atmos/storage/gas)
 "ovz" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/machinery/computer/security/wooden_tv{
 	pixel_x = 3;
 	pixel_y = 2
@@ -41173,7 +41173,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "oLL" = (
-/obj/item/storage/secure/safe/hos{
+/obj/structure/secure_safe/hos{
 	pixel_x = 36;
 	pixel_y = 28
 	},
@@ -41712,7 +41712,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -43923,7 +43923,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/firealarm/directional/south,
 /obj/structure/rack,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/clothing/mask/cigarette/cigar,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -49897,10 +49897,10 @@
 /turf/open/floor/plating/airless,
 /area/station/solars/starboard/fore)
 "rQz" = (
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/structure/table/wood,
 /obj/item/folder/blue,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/assembly/flash/handheld,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -54798,7 +54798,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
 	pixel_x = -12;
@@ -64311,7 +64311,7 @@
 /area/station/maintenance/department/engine)
 "wOQ" = (
 /obj/structure/safe,
-/obj/item/storage/secure/briefcase/riches,
+/obj/item/storage/briefcase/secure/riches,
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/card/id/advanced/silver/reaper,
 /obj/item/lazarus_injector,
@@ -66986,7 +66986,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table/glass,
-/obj/item/storage/secure/safe/caps_spare/directional/west,
+/obj/structure/secure_safe/caps_spare/directional/west,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
