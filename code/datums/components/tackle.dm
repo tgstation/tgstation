@@ -200,16 +200,14 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		var/target_armor = human_target.run_armor_check(BODY_ZONE_CHEST, MELEE)
-		potential_roll_outcome *= ((100 - target_armor) /100)
+		potential_outcome *= ((100 - target_armor) /100)
 	else
-		potential_roll_outcome *= 0.9
-
-	var/actual_roll = rand(1, potential_roll_outcome)
+		potential_outcome *= 0.9
 
 	var/mob/living/carbon/human/human_target = target
 	var/mob/living/carbon/human/human_sacker = user
 
-	switch(actual_roll)
+	switch(potential_roll)
 		if(-INFINITY to 0) //I don't want to know how this has happened, okay?
 			neutral_outcome(user, target, roll, tackle_word) //Default to neutral
 
