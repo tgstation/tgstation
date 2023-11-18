@@ -141,3 +141,22 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	armor_type = /datum/armor/mask_gas
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
+
+/obj/item/clothing/under/costume/krieg
+	name = "\improper Krieg's Attire"
+	desc = "The garb of a malicious psycho from the Pandora sector."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "kriegunder"
+	worn_icon_state = "kriegunder"
+	inhand_icon_state = null
+	body_parts_covered = LEGS|ARMS
+
+/obj/item/clothing/mask/krieg
+	name = "\improper Krieg's Mask"
+	desc = "The mask of a malicious psycho from the Pandora sector."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "kriegmask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
