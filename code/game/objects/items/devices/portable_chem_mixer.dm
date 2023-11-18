@@ -121,11 +121,15 @@
 /obj/item/storage/portable_chem_mixer/proc/update_contents()
 	dispensable_reagents.Cut()
 	for (var/obj/item/reagent_containers/container in contents)
-		var/key = container.reagents.get_master_reagent_id()
-		if (!(key in dispensable_reagents))
-			dispensable_reagents[key] = list()
-			dispensable_reagents[key]["reagents"] = list()
-		dispensable_reagents[key]["reagents"] += container.reagents
+		var/datum/reagent/key = container.reagents.get_master_reagent()
+		if(isnull(key)) //no reagent inside container
+			continue
+
+		var/key_type = key.type
+		if (!(key_type in dispensable_reagents))
+			dispensable_reagents[key_type] = list()
+			dispensable_reagents[key_type]["reagents"] = list()
+		dispensable_reagents[key_type]["reagents"] += container.reagents
 
 /obj/item/storage/portable_chem_mixer/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

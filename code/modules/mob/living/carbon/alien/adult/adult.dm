@@ -75,10 +75,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		real_name = name
 
 /mob/living/carbon/alien/adult/proc/grab(mob/living/carbon/human/target)
-	if(target.check_block())
-		target.visible_message(span_warning("[target] blocks [src]'s grab!"), \
-						span_userdanger("You block [src]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, src)
-		to_chat(src, span_warning("Your grab at [target] was blocked!"))
+	if(target.check_block(src, 0, "[target]'s grab"))
 		return FALSE
 	target.grabbedby(src)
 	return TRUE

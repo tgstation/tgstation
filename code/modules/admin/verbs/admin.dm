@@ -128,14 +128,14 @@
 
 	switch(add_or_remove)
 		if("Add")
-			for(var/key in GLOB.traits_by_type)
+			for(var/key in GLOB.admin_visible_traits)
 				if(istype(D,key))
-					available_traits += GLOB.traits_by_type[key]
+					available_traits += GLOB.admin_visible_traits[key]
 		if("Remove")
-			if(!GLOB.trait_name_map)
-				GLOB.trait_name_map = generate_trait_name_map()
+			if(!GLOB.admin_trait_name_map)
+				GLOB.admin_trait_name_map = generate_admin_trait_name_map()
 			for(var/trait in D._status_traits)
-				var/name = GLOB.trait_name_map[trait] || trait
+				var/name = GLOB.admin_trait_name_map[trait] || trait
 				available_traits[name] = trait
 
 	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sort_list(available_traits)
