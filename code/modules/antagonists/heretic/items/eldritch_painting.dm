@@ -245,9 +245,9 @@
 /datum/brain_trauma/severe/flesh_desire/on_gain()
 	// Allows them to eat faster, mainly for flavor
 	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	// We don't want this to be bypassed by Aguesia so if they have it, remove it
+	// We don't want this to be bypassed by the Ageusia quirk
 	if(HAS_TRAIT(owner, TRAIT_AGEUSIA))
-		REMOVE_TRAIT(owner, TRAIT_AGEUSIA, "The Desire for Flesh")
+		REMOVE_TRAIT(owner, TRAIT_AGEUSIA, QUIRK_TRAIT)
 	// If they have a tongue, make it crave meat
 	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(tongue)
