@@ -6,8 +6,9 @@
 	name = "baseturf editor"
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
-
+	/// Replacing a specific turf
 	var/list/baseturf_to_replace
+	/// The desired bottom turf
 	var/baseturf
 
 	plane = POINT_PLANE
@@ -33,9 +34,16 @@
 
 	qdel(src)
 
+/// Replaces all the requested baseturfs (usually space/baseturfbottom) with the desired baseturf. Skips if its already there
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
 	thing.remove_baseturfs_from_typecache(baseturf_to_replace)
-	thing.PlaceOnBottom(fake_turf_type = baseturf)
+
+	if(length(thing.baseturfs))
+		var/turf/tile = thing.baseturfs[1]
+		if(tile == baseturf)
+			return
+
+	thing.place_on_bottom(baseturf)
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"

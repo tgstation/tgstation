@@ -31,6 +31,8 @@
 	lighting_cutoff_blue = 25
 	mob_size = MOB_SIZE_LARGE
 	ai_controller = /datum/ai_controller/basic_controller/leaper
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 	///appearance when we dead
 	var/mutable_appearance/dead_overlay
 	///appearance when we are alive
@@ -40,15 +42,20 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/untargetted_ability/blood_rain,
-		/datum/pet_command/untargetted_ability/summon_toad,
-		/datum/pet_command/point_targetting/attack,
-		/datum/pet_command/point_targetting/use_ability/flop,
-		/datum/pet_command/point_targetting/use_ability/bubble,
+		/datum/pet_command/untargeted_ability/blood_rain,
+		/datum/pet_command/untargeted_ability/summon_toad,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/use_ability/flop,
+		/datum/pet_command/point_targeting/use_ability/bubble,
 	)
 
 /mob/living/basic/leaper/Initialize(mapload)
 	. = ..()
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+		pull_force = PULL_FORCE_DEFAULT,\
+	)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/wall_smasher)

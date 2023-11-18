@@ -1,4 +1,5 @@
 /obj/machinery/computer/prisoner
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
 	var/obj/item/card/id/advanced/prisoner/contained_id
 
 /obj/machinery/computer/prisoner/Destroy()

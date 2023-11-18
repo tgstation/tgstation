@@ -8,18 +8,20 @@
 	name = "CQC"
 	id = MARTIALART_CQC
 	help_verb = /mob/living/proc/CQC_help
-	block_chance = 75
 	smashes_tables = TRUE
 	display_combos = TRUE
 	var/old_grab_state = null
 	var/mob/restraining_mob
+	/// Probability of successfully blocking attacks while on throw mode
+	var/block_chance = 75
 
 /datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
 	. = ..()
 	RegisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(cqc_user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
-	UnregisterSignal(cqc_user, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(cqc_user, list(COMSIG_ATOM_ATTACKBY, COMSIG_LIVING_CHECK_BLOCK))
 	. = ..()
 
 ///Signal from getting attacked with an item, for a special interaction with touch spells
@@ -40,6 +42,31 @@
 		return
 	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
 	return COMPONENT_NO_AFTERATTACK
+
+/datum/martial_art/cqc/proc/check_block(mob/living/cqc_user, atom/movable/hitby, damage, attack_text, attack_type, ...)
+	SIGNAL_HANDLER
+
+	if(!can_use(cqc_user) || !cqc_user.throw_mode || cqc_user.incapacitated(IGNORE_GRAB))
+		return NONE
+	if(attack_type == PROJECTILE_ATTACK)
+		return NONE
+	if(!prob(block_chance))
+		return NONE
+
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
+	if(istype(attacker) && cqc_user.Adjacent(attacker))
+		cqc_user.visible_message(
+			span_danger("[cqc_user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
+			span_userdanger("You block [attack_text]!"),
+		)
+		attacker.Stun(4 SECONDS)
+	else
+		cqc_user.visible_message(
+			span_danger("[cqc_user] blocks [attack_text]!"),
+			span_userdanger("You block [attack_text]!"),
+		)
+	return SUCCESSFUL_BLOCK
+
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
 	if(new_target && new_target != restraining_mob)

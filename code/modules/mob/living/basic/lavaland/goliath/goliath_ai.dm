@@ -3,7 +3,7 @@
 
 /datum/ai_controller/basic_controller/goliath
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -27,7 +27,7 @@
 /// Go for the tentacles if they're available
 /datum/ai_behavior/basic_melee_attack/goliath
 
-/datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
+/datum/ai_behavior/basic_melee_attack/goliath/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key, health_ratio_key)
 	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
 	if (time_on_target < MIN_TIME_TO_TENTACLE)
 		return ..()

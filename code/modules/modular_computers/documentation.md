@@ -31,13 +31,12 @@ This is how the base program is setup. the rest is mostly tgui stuff. I'll use t
 	/// programs.
 	requires_ntnet = 1
 
-	/// This is access required to run the program itself. ONLY SET THIS FOR
-	/// SUPER SECURE SHIT. This also acts as transfer_access as well.
-	required_access = access_network
+	/// This is access required to run the program itself.
+	run_access = access_network
 
 	/// This is the access needed to download from ntnet or host on the ptp
 	/// program. This is what you want to use most of the time.
-	transfer_access = access_change_ids
+	download_access = access_change_ids
 
 	/// If it's available to download on ntnet. pretty self explanatory.
 	available_on_ntnet = 1

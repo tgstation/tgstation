@@ -220,7 +220,7 @@
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
 	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_MEDICAL)
+	download_access = list(ACCESS_MEDICAL)
 	available_on_ntnet = TRUE
 	program_icon = "heartbeat"
 
@@ -260,7 +260,7 @@
 	filedesc = "Custodial Locator"
 	extended_desc = "This program allows for tracking of custodial equipment."
 	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_JANITOR)
+	download_access = list(ACCESS_JANITOR)
 	available_on_ntnet = TRUE
 	program_icon = "broom"
 	size = 2

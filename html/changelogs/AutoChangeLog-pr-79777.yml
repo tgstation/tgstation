@@ -1,0 +1,4 @@
+author: "Shroopy"
+delete-after: True
+changes:
+  - qol: "Implanted HUDs can now be toggled on and off with an action."

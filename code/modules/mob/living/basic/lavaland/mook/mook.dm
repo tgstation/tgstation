@@ -41,8 +41,8 @@
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targetting/attack,
-		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/fetch,
 	)
 
 /mob/living/basic/mining/mook/Initialize(mapload)
@@ -107,7 +107,7 @@
 		ore_target.forceMove(src)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(istype(target, /obj/structure/material_stand))
+	if(istype(target, /obj/structure/ore_container/material_stand))
 		if(held_ore)
 			held_ore.forceMove(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
