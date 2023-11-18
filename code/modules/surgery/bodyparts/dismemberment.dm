@@ -90,7 +90,7 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_REMOVED, owner, dismembered)
 	update_limb(dropping_limb = TRUE)
 	bodypart_flags &= ~BODYPART_IMPLANTED //limb is out and about, it can't really be considered an implant
-	owner.remove_bodypart(src)
+	owner.remove_bodypart(src, special)
 
 	for(var/datum/scar/scar as anything in scars)
 		scar.victim = null

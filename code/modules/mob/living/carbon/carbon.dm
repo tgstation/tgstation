@@ -994,14 +994,14 @@
 	synchronize_bodytypes()
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
-/mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
+/mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
 
 	for(var/obj/item/organ/organ in old_bodypart)
-		organ.mob_remove(src)
+		organ.mob_remove(src, special, (special ? NO_ID_TRANSFER : null))
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
