@@ -781,7 +781,7 @@
 
 	if(SPT_PROB(1.5, seconds_per_tick))
 		holder.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
-		holder.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
+		holder.remove_reagent(/datum/reagent/toxin/itching_powder, 1.2)
 		return
 	else
 		return ..() || .
@@ -953,18 +953,17 @@
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(current_cycle <= 11 || !SPT_PROB(min(31, current_cycle), seconds_per_tick))
-		return
-	affected_mob.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
-	var/constructed_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
-	if(prob(10))
-		constructed_flags |= MOB_VOMIT_BLOOD
-	if(prob(50))
-		constructed_flags |= MOB_VOMIT_STUN
-	affected_mob.vomit(vomit_flags = constructed_flags, distance = rand(0,4))
-	for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
-		if(R != src)
-			affected_mob.reagents.remove_reagent(R.type,1)
+	if(current_cycle > 11 && SPT_PROB(min(31, current_cycle), seconds_per_tick))
+		affected_mob.vomit(10, prob(10), prob(50), rand(0,4), TRUE)
+		var/constructed_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM)
+		if(prob(10))
+			constructed_flags |= MOB_VOMIT_BLOOD
+		if(prob(50))
+			constructed_flags |= MOB_VOMIT_STUN
+		affected_mob.vomit(vomit_flags = constructed_flags, distance = rand(0,4))
+		for(var/datum/reagent/toxin/R in affected_mob.reagents.reagent_list)
+			if(R != src)
+				affected_mob.reagents.remove_reagent(R.type, 1)
 
 /datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

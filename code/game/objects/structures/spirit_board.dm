@@ -56,7 +56,11 @@
 
 	if(virgin)
 		virgin = FALSE
-		notify_ghosts("Someone has begun playing with \a [src] in [get_area(src)]!", source = src, header = "Spirit board")
+		notify_ghosts(
+			"Someone has begun playing with \a [src] in [get_area(src)]!",
+			source = src,
+			header = "Spirit board",
+		)
 
 	var/new_planchette = tgui_input_list(ghost, "Choose the letter.", "Seance!", ghosty_options)
 	if(isnull(new_planchette))

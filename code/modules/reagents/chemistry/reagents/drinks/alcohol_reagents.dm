@@ -147,6 +147,7 @@
 	name = "Green Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is dyed a festive green."
 	color = COLOR_CRAYON_GREEN
+	overdose_threshold = 55 //More than a glass
 	taste_description = "green piss water"
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -158,6 +159,20 @@
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/drinker)
 	drinker.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
+
+/datum/reagent/consumable/ethanol/beer/green/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+
+	if(!ishuman(affected_mob))
+		return
+
+	var/mob/living/carbon/human/affected_human = affected_mob
+	if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
+		affected_human.skin_tone = "green"
+	else if(HAS_TRAIT(affected_human, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(affected_human, TRAIT_FIXED_MUTANT_COLORS)) //Code stolen from spraytan overdose
+		affected_human.dna.features["mcolor"] = "#a8e61d"
+	affected_human.update_body(is_creating = TRUE)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"

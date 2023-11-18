@@ -20,8 +20,6 @@
 	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///In-case we don't want the main machine to get the reagents, but perhaps whoever is buckled to it
 	var/recipient_reagents_holder
-	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if its injected or whatevs
-	var/methods
 	///What color is our demand connect?
 	var/demand_color = COLOR_RED
 	///What color is our supply connect?
@@ -100,7 +98,7 @@
 	//find the duct to take from
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
-		return
+		return FALSE
 	net = ducts[num2text(dir)]
 
 	//find all valid suppliers in the duct
@@ -110,7 +108,7 @@
 			valid_suppliers += supplier
 	var/suppliersLeft = valid_suppliers.len
 	if(!suppliersLeft)
-		return
+		return FALSE
 
 	//take an equal amount from each supplier
 	var/currentRequest
@@ -119,6 +117,7 @@
 		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
 		give.transfer_to(src, currentRequest, reagent, net)
 		suppliersLeft--
+	return TRUE
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
@@ -138,10 +137,8 @@
 /datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
-	if(reagent)
-		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
-	else
-		reagents.trans_to(target.recipient_reagents_holder, amount, methods = methods)
+
+	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent)
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
@@ -214,8 +211,11 @@
 
 	STOP_PROCESSING(SSplumbing, src)
 
-	for(var/duct_dir in ducts)
-		var/datum/ductnet/duct = ducts[duct_dir]
+	//remove_plumber() can remove all ducts at once if they all belong to the same pipenet
+	//for e.g. in case of circular connections
+	//so we check if we have ducts to remove after each iteration
+	while(ducts.len)
+		var/datum/ductnet/duct = ducts[ducts[1]] //for maps index 1 will return the 1st key
 		duct.remove_plumber(src)
 
 	active = FALSE

@@ -197,14 +197,14 @@
 				continue
 			regurgitate_guardian(guardian)
 
-/obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+/obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/basic/guardian/guardian)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(guardian))
 	guardian.locked = TRUE
 	guardian.forceMove(src)
 	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
-/obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+/obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/basic/guardian/guardian)
 	guardian.locked = FALSE
 	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
@@ -538,8 +538,11 @@
 	. = ..()
 	if(!ishuman(exposed_mob) || exposed_mob.stat == DEAD)
 		return
+	if(!(methods & (INGEST | TOUCH)))
+		return
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	if(!HAS_TRAIT(exposed_human, TRAIT_CAN_USE_FLIGHT_POTION) || reac_volume < 5 || !exposed_human.dna)
+	var/obj/item/bodypart/chest/chest = exposed_human.get_bodypart(BODY_ZONE_CHEST)
+	if(!chest.wing_types || reac_volume < 5 || !exposed_human.dna)
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 		return
@@ -547,16 +550,16 @@
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
 	else
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
-	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human)
+	var/obj/item/organ/external/wings/functional/wings = get_wing_choice(exposed_human, chest)
 	wings = new wings()
 	wings.Insert(exposed_human)
 	exposed_human.dna.species.handle_mutant_bodyparts(exposed_human)
 	playsound(exposed_human.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
-	exposed_human.adjustBruteLoss(20)
+	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, forced = TRUE, wound_bonus = CANT_WOUND)
 	exposed_human.emote("scream")
 
-/datum/reagent/flightpotion/proc/get_wing_choice(mob/living/carbon/human/needs_wings)
-	var/list/wing_types = needs_wings.dna.species.wing_types.Copy()
+/datum/reagent/flightpotion/proc/get_wing_choice(mob/needs_wings, obj/item/bodypart/chest/chest)
+	var/list/wing_types = chest.wing_types.Copy()
 	if(wing_types.len == 1 || !needs_wings.client)
 		return wing_types[1]
 	var/list/radial_wings = list()

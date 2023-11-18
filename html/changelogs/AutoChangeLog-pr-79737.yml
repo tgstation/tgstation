@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Infiltrators (Latejoin/Midround traitors) can now buy and use Contract kits again."
+  - rscdel: "Contractor baton can now only be purchased once."

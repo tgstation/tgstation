@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Paraplegics can now enter netpods."
-  - bugfix: "Fixes an exploit caused by teleporting out of a netpod."
-  - bugfix: "Outfit selection at netpods shouldn't give armor bonuses any longer."

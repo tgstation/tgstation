@@ -48,7 +48,7 @@
 
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = NONE
-//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
+//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
 
 	///The theme, used for the main menu and file browser apps.
 	var/device_theme = PDA_THEME_NTOS
@@ -324,11 +324,14 @@
 		return FALSE
 
 	. = ..()
+	if(!forced)
+		add_log("manual overriding of permissions and modification of device firmware detected. Reboot and reinstall required.")
 	obj_flags |= EMAGGED
 	device_theme = PDA_THEME_SYNDICATE
-	balloon_alert(user, "syndieOS loaded")
-	if (emag_card)
-		to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
+	if(user)
+		balloon_alert(user, "syndieOS loaded")
+		if (emag_card)
+			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
 	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)

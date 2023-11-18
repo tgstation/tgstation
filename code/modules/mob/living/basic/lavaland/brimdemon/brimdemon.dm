@@ -41,11 +41,7 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	beam = new(src)
 	beam.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, beam)
-
-/mob/living/basic/mining/brimdemon/Destroy()
-	QDEL_NULL(beam)
-	return ..()
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, beam)
 
 /mob/living/basic/mining/brimdemon/RangedAttack(atom/target, modifiers)
 	beam.Trigger(target = target)

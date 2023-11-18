@@ -533,7 +533,7 @@
 	need_mob_update += affected_mob.adjustFireLoss(0.5*seconds_per_tick, updating_health = FALSE) //Hence the other damages... ain't I a bastard?
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
 	if(holder)
-		holder.remove_reagent(type, 0.5*seconds_per_tick)
+		holder.remove_reagent(type, 0.5 * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -2533,11 +2533,11 @@
 
 /datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
 	. = ..()
-	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+	ADD_TRAIT(ling, TRAIT_CHANGELING_HIVEMIND_MUTE, type)
 
 /datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
 	. = ..()
-	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+	REMOVE_TRAIT(ling, TRAIT_CHANGELING_HIVEMIND_MUTE, type)
 
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, seconds_per_tick, times_fired)
 	. = ..()
