@@ -96,12 +96,12 @@
 		if(traitor_data.uplink_handler.contractor_hub.current_contract == src)
 			traitor_data.uplink_handler.contractor_hub.current_contract = null
 	else
-		status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting i
+		status = CONTRACT_STATUS_ABORTED // Sending a target that wasn't even yours is as good as just aborting it
 		if(traitor_data.uplink_handler.contractor_hub.current_contract == src)
 			traitor_data.uplink_handler.contractor_hub.current_contract = null
 
 	if(iscarbon(person_sent))
-		for(var/obj/item/person_contents in person_sent.contents)
+		for(var/obj/item/person_contents in person_sent.gather_belongings())
 			if(ishuman(person_sent))
 				var/mob/living/carbon/human/human_sent = person_sent
 				if(person_contents == human_sent.w_uniform)
@@ -109,7 +109,7 @@
 				if(person_contents == human_sent.shoes)
 					continue
 			person_sent.transferItemToLoc(person_contents)
-			victim_belongings.Add(person_contents)
+			victim_belongings.Add(WEAKREF(person_contents))
 
 	var/obj/structure/closet/supplypod/extractionpod/pod = source
 	// Handle the pod returning
@@ -245,14 +245,18 @@
 	do_sparks(8, FALSE, victim)
 	victim.visible_message(span_notice("[victim] vanishes..."))
 
-	for(var/obj/item/victim_contents in victim.contents)
+	for(var/datum/weakref/belonging_ref in victim_belongings)
+		var/obj/item/belonging = belonging_ref.resolve()
+		if(!belonging)
+			continue
 		if(ishuman(victim))
 			var/mob/living/carbon/human/human_victim = victim
-			if(victim_contents == human_victim.w_uniform)
-				continue //So all they're left with are shoes and uniform.
-			if(victim_contents == human_victim.shoes)
+			//So all they're left with are shoes and uniform.
+			if(belonging == human_victim.w_uniform)
 				continue
-		victim.dropItemToGround(victim_contents)
+			if(belonging == human_victim.shoes)
+				continue
+		belonging.forceMove(return_pod)
 
 	for(var/obj/item/W in victim_belongings)
 		W.forceMove(return_pod)

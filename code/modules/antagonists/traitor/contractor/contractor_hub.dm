@@ -1,5 +1,5 @@
 /datum/contractor_hub
-	///The current contract in progress, and can be
+	///The current contract in progress, and can be null if no contract is in progress.
 	var/datum/syndicate_contract/current_contract
 	///List of all available syndicate contracts that can be taken.
 	var/list/datum/syndicate_contract/assigned_contracts = list()
