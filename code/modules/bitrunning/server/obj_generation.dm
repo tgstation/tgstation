@@ -10,7 +10,7 @@
 		possible_turfs.Remove(chosen_turf)
 		chosen_turf = validate_turf(pick(possible_turfs))
 		if(isnull(chosen_turf))
-			CRASH("vdom: after two attemps, could not find a valid turf for cache")
+			CRASH("vdom: after two attempts, could not find a valid turf for cache")
 
 	new /obj/structure/closet/crate/secure/bitrunning/encrypted(chosen_turf)
 	return TRUE
@@ -40,7 +40,8 @@
 	if(istype(hat))
 		hat.set_armor(/datum/armor/none)
 
-	QDEL_LIST(avatar.held_items)
+	for(var/obj/thing in avatar.held_items)
+		qdel(thing)
 
 	var/obj/item/storage/backpack/bag = avatar.back
 	if(istype(bag))
