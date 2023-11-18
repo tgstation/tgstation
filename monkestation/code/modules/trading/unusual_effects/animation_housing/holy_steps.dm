@@ -1,6 +1,6 @@
 /datum/component/particle_spewer/movement/holy_steps
 	unusual_description = "holy treads"
-	duration = 15 SECONDS
+	duration = 5 SECONDS
 	burst_amount = 25
 	icon_file = 'goon/icons/effects/particles.dmi'
 	particle_state = "starsmall"
@@ -8,12 +8,12 @@
 /datum/component/particle_spewer/movement/holy_steps/animate_particle(obj/effect/abstract/particle/spawned)
 	var/matrix/first = matrix()
 	var/matrix/second = matrix()
-	
+
 	spawned.blend_mode = BLEND_ADD
 	spawned.pixel_x += rand(-3,3)
 	spawned.pixel_y += rand(-3,3)
 
-	first.Turn(rand(-90, 90))	
+	first.Turn(rand(-90, 90))
 	first.Scale(0.5,0.5)
 	second.Turn(rand(-90, 90))
 

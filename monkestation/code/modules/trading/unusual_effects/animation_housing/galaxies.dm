@@ -1,6 +1,6 @@
-/datum/component/particle_spewer/galaxies
+/datum/component/particle_spewer/movement/galaxies
 	unusual_description = "galactic"
-	duration = 10 SECONDS
+	duration = 5 SECONDS
 	spawn_interval = 0.5 SECONDS
 	burst_amount = 6
 	particle_state = "snow_small"
