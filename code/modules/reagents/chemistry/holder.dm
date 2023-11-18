@@ -401,14 +401,14 @@
  * * amount - checks for having a specific amount of that chemical
  * * needs_metabolizing - takes into consideration if the chemical is matabolizing when it's checked.
  * * check_subtypes - controls whether it should it should also include subtypes: ispath(type, reagent) versus type == reagent.
- * * chemical_flag - checks for a reagent flag.
+ * * chemical_flags - checks for reagent flags.
  */
 /datum/reagents/proc/has_reagent(
 	datum/reagent/target_reagent,
 	amount = -1,
 	needs_metabolizing = FALSE,
 	check_subtypes = FALSE,
-	chemical_flag = NONE
+	chemical_flags = NONE
 )
 	if(!isnull(target_reagent) && !ispath(target_reagent))
 		stack_trace("invalid reagent path passed to has reagent [target_reagent]")
@@ -434,7 +434,7 @@
 			continue
 
 		//next check if it has the specified flag
-		if(chemical_flag && !(holder_reagent.chemical_flags & chemical_flag))
+		if(chemical_flags && !(holder_reagent.chemical_flags & chemical_flags))
 			continue
 
 		//after all that if we get here then we have found our reagent
