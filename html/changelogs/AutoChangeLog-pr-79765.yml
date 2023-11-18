@@ -1,0 +1,4 @@
+author: "WarlockD"
+delete-after: True
+changes:
+  - bugfix: " Attaching a circuit to the air alarm now reads from the correct turf."

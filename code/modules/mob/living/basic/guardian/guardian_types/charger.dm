@@ -62,7 +62,7 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/hit_target(atom/movable/source, mob/living/target, damage_dealt)
 	if(ishuman(target))
 		var/mob/living/carbon/human/hit_human = target
-		if(hit_human.check_shields(src, charge_damage, name, attack_type = LEAP_ATTACK))
+		if(hit_human.check_block(src, charge_damage, name, attack_type = LEAP_ATTACK))
 			return
 	. = ..()
 	var/mob/living/hit_mob = target
