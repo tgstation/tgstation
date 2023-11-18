@@ -195,7 +195,7 @@
 */
 
 /datum/component/tackler/proc/positive_outcome(mob/living/carbon/user, mob/living/carbon/target, roll = 1, tackle_word = "tackle")
-	var/potential_roll_outcome = (roll * 10)
+	var/potential_outcome = (roll * 10)
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
@@ -207,7 +207,7 @@
 	var/mob/living/carbon/human/human_target = target
 	var/mob/living/carbon/human/human_sacker = user
 
-	switch(potential_roll)
+	switch(potential_outcome)
 		if(-INFINITY to 0) //I don't want to know how this has happened, okay?
 			neutral_outcome(user, target, roll, tackle_word) //Default to neutral
 
