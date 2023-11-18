@@ -2,7 +2,6 @@
 	filename = "contractor uplink"
 	filedesc = "Syndicate Contractor Uplink"
 	extended_desc = "A standard, Syndicate issued system for handling important contracts while on the field."
-	downloader_category = PROGRAM_CATEGORY_MISC
 	program_open_overlay = "contractor-assign"
 	program_icon = "tasks"
 	size = 10
