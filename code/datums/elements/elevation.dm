@@ -22,6 +22,7 @@
 	if(turf)
 		if(!HAS_TRAIT(turf, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
 			RegisterSignal(turf, COMSIG_TURF_RESET_ELEVATION, PROC_REF(check_elevation))
+			RegisterSignal(turf, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))
 			reset_elevation(turf)
 		ADD_TRAIT(turf, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(target))
 
@@ -46,13 +47,25 @@
 	if(isturf(oldloc))
 		REMOVE_TRAIT(oldloc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(source))
 		if(!HAS_TRAIT(oldloc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
-			UnregisterSignal(oldloc, COMSIG_TURF_RESET_ELEVATION)
+			UnregisterSignal(oldloc, list(COMSIG_TURF_RESET_ELEVATION, COMSIG_TURF_CHANGE))
 			reset_elevation(oldloc)
 	if(isturf(source.loc))
 		if(!HAS_TRAIT(source.loc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
 			RegisterSignal(source.loc, COMSIG_TURF_RESET_ELEVATION, PROC_REF(check_elevation))
+			RegisterSignal(source.loc, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))
 			reset_elevation(source.loc)
 		ADD_TRAIT(source.loc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(source))
+
+///Changing or destroying the turf detaches the element, also we need to reapply the traits since they don't get passed down.
+/datum/element/elevation/proc/pre_change_turf(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	var/list/trait_sources = GET_TRAIT_SOURCES(changed, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift))
+	trait_sources = trait_sources.Copy()
+	post_change_callbacks += CALLBACK(src, PROC_REF(post_change_turf), trait_sources)
+
+/datum/element/elevation/proc/post_change_turf(list/trait_sources, turf/changed)
+	ADD_TRAIT(changed, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), trait_sources)
+	reset_elevation(changed)
 
 #define ELEVATE_TIME 0.2 SECONDS
 
@@ -93,6 +106,17 @@
 		elevate_mob(living)
 
 /datum/element/elevation_core/Detach(datum/source)
+	/**
+	 * Since the element can be removed outside of Destroy(),
+	 * and even then, signals are passed down to the new turf,
+	 * it's necessary to clear them here.
+	 */
+	UnregisterSignal(source, list(
+		COMSIG_ATOM_ENTERED,
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON,
+		COMSIG_ATOM_EXITED,
+		COMSIG_TURF_RESET_ELEVATION,
+	))
 	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, REF(src))
 	for(var/mob/living/living in source)
 		elevate_mob(living, -pixel_shift)
