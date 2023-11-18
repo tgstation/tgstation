@@ -556,7 +556,7 @@
 			processing_list += item_stuff
 	return processing_list
 
-/// Returns a list of things that the provided mob has which we would rather that they do not have.
+/// Returns a list of things that the provided mob has, including any storage-capable implants.
 /mob/living/proc/gather_belongings()
 	var/list/belongings = get_all_gear()
 	for (var/obj/item/implant/storage/internal_bag in implants)
