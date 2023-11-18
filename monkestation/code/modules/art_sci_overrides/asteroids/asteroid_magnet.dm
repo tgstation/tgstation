@@ -284,6 +284,7 @@
 	A.area_flags |= NOTELEPORT // We dont want people getting nuked during the generation sequence
 	status = "Summoning[ellipsis()]"
 	available_templates -= template
+	selected_template = null
 	updateUsrDialog()
 
 	var/time = world.timeofday
