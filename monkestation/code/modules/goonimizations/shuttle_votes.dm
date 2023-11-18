@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/controller/subsystem/autotransfer/Initialize(timeofday)
 	starttime = world.time
-	targettime = starttime + 1 MINUTES
+	targettime = starttime + 60 MINUTES
 
 	return SS_INIT_SUCCESS
 
