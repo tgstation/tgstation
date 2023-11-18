@@ -52,6 +52,12 @@
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
 ///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
+///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected.
+#define COMSIG_PRE_TILT_AND_CRUSH "atom_pre_tilt_and_crush"
+	#define COMPONENT_IMMUNE_TO_TILT_AND_CRUSH (1<<0)
+///Called when a atom gets something tilted on them
+#define COMSIG_POST_TILT_AND_CRUSH "atom_post_tilt_and_crush"
+
 	///The damage type of the weapon projectile is non-lethal stamina
 	#define ATTACKER_STAMINA_ATTACK (1<<0)
 	///the attacker is shoving the source
