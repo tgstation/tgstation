@@ -109,7 +109,7 @@
 		return
 
 	limb = BP
-	RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(limb_gone))
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(limb_gone))
 	if (isnull(check_any_biostates)) // so we dont break old scars. NOTE: REMOVE AFTER VERSION NUMBER MOVES PAST 3
 		check_any_biostates = FALSE
 	if (check_any_biostates)

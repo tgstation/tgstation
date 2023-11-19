@@ -58,9 +58,10 @@
 	var/occur_text
 
 	if(outright)
+		if(outright)
 		switch(wounding_type)
 			if(WOUND_BLUNT)
-				occur_text = "is outright smashed to a [dismembered_part.bodytype & BODYTYPE_ROBOTIC? "misshapen heap of scrap": "gross pulp"], severing it completely!"
+				occur_text = "is outright smashed to a gross pulp, severing it completely!"
 			if(WOUND_SLASH)
 				occur_text = "is outright slashed off, severing it completely!"
 			if(WOUND_PIERCE)

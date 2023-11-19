@@ -159,7 +159,7 @@
 	if (isnull(back) || forced)
 		return
 	if (type == STAMINA)
-		back.adjustStaminaLoss(amount, forced = forced)
+		back.stamina.adjust(-amount, forced)
 		return // Pass stamina changes all the way along so we maintain consistent speed
 	switch (type)
 		if(BRUTE)

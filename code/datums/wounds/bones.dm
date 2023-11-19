@@ -19,7 +19,11 @@
 	default_scar_file = BONE_SCAR_FILE
 
 	/// Have we been bone gel'd?
+	var/gelled
+	/// Have we been taped?
+	var/taped
 	/// If we did the gel + surgical tape healing method for fractures, how many ticks does it take to heal by default
+	var/regen_ticks_needed
 	/// Our current counter for gel + surgical tape regeneration
 	var/regen_ticks_current
 	/// If we suffer severe head booboos, we can get brain traumas tied to them
