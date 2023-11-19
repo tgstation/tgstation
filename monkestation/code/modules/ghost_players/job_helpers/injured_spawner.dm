@@ -68,8 +68,7 @@
 			if(prob(20))
 				continue
 
-			var/datum/wound/iter_test_wound
-			var/datum/wound/iter_test_wound
+		var/datum/wound/iter_test_wound
 		var/datum/wound_pregen_data/iter_pregen_data = GLOB.all_wound_pregen_data[iter_test_wound]
 		var/threshold_penalty = 0
 

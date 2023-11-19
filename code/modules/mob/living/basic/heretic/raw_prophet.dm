@@ -24,10 +24,6 @@
 	var/static/list/body_parts = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/internal/eyes)
 	AddElement(/datum/element/death_drops, body_parts)
 	AddComponent(/datum/component/focused_attacker)
-	var/on_link_message = "You feel something new enter your sphere of mind... \
-		You hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link."
-	var/on_unlink_message = "Your mind shatters as [src]'s Mansus Link leaves your mind."
-
 	// We don't use these for AI so we can just repeat the same adding process
 	var/static/list/add_abilities = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
