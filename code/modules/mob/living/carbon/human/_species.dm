@@ -256,9 +256,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Arguments:
  * * gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.
  * * unique - If true, ensures that this new name is not a duplicate of anyone else's name currently on the station.
- * * lastname - Does this species' naming system adhere to the last name system? Set to false if it doesn't.
+ * * last_name - Do we use a given last name or pick a random new one?
  */
-/datum/species/proc/random_name(gender,unique,lastname)
+/datum/species/proc/random_name(gender, unique, last_name)
 	if(unique)
 		return random_unique_name(gender)
 
@@ -268,8 +268,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else
 		randname = pick(GLOB.first_names_female)
 
-	if(lastname)
-		randname += " [lastname]"
+	if(last_name)
+		randname += " [last_name]"
 	else
 		randname += " [pick(GLOB.last_names)]"
 
