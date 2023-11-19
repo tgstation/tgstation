@@ -1,0 +1,5 @@
+author: "Bidlink1"
+delete-after: True
+changes:
+  - rscadd: "Lanternfruit to Megaservitor (courtesy of MrMelbert)"
+  - rscadd: "Adds Sulfur and Liquid Electricity production as a gene in Lantern fruit"
