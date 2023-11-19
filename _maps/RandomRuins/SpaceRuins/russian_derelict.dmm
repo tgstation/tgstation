@@ -4876,10 +4876,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"IZ" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "Jc" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
@@ -11718,7 +11714,7 @@ PI
 Ex
 pi
 FI
-IZ
+FI
 FI
 FI
 zv
