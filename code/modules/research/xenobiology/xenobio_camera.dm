@@ -12,10 +12,9 @@
 
 /mob/camera/ai_eye/remote/xenobio/setLoc(turf/destination, force_update = FALSE)
 	var/area/new_area = get_area(destination)
+
 	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
 		return ..()
-	else
-		return
 
 /mob/camera/ai_eye/remote/xenobio/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
 	. = ..()
@@ -182,7 +181,7 @@
 	var/mob/camera/ai_eye/remote/xenobio/remote_eye = owner_mob.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = target
 
-	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+	if(!GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
 		return
 
@@ -211,7 +210,7 @@
 	var/mob/camera/ai_eye/remote/xenobio/remote_eye = living_owner.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = target
 
-	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+	if(!GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		to_chat(owner, span_warning("Target is not near a camera. Cannot proceed."))
 		return
 
@@ -413,11 +412,13 @@
 	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user_mob.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
 	var/area/turfarea = get_area(target_turf)
-	if(turfarea.name == remote_eye.allowed_area || (turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		for(var/mob/living/simple_animal/slime/stored_slime in xeno_console.stored_slimes)
-			stored_slime.forceMove(target_turf)
-			stored_slime.visible_message(span_notice("[stored_slime] warps in!"))
-			xeno_console.stored_slimes -= stored_slime
+	if(turfarea.name != remote_eye.allowed_area && !(turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		return
+
+	for(var/mob/living/simple_animal/slime/stored_slime in xeno_console.stored_slimes)
+		stored_slime.forceMove(target_turf)
+		stored_slime.visible_message(span_notice("[stored_slime] warps in!"))
+		xeno_console.stored_slimes -= stored_slime
 
 ///Places a monkey from the internal storage
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickCtrl(mob/living/user, turf/open/target_turf)
@@ -428,16 +429,18 @@
 	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
 	var/area/turfarea = get_area(target_turf)
-	if(turfarea.name == remote_eye.allowed_area || (turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		if(xeno_console.monkeys >= 1)
-			var/mob/living/carbon/human/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
-			if (!QDELETED(food))
-				food.LAssailant = WEAKREF(user)
-				xeno_console.monkeys--
-				xeno_console.monkeys = round(xeno_console.monkeys, 0.1) //Prevents rounding errors
-				to_chat(user, span_notice("[xeno_console] now has [xeno_console.monkeys] monkeys stored."))
-		else
-			to_chat(user, span_warning("[xeno_console] needs to have at least 1 monkey stored. Currently has [xeno_console.monkeys] monkeys stored."))
+	if(turfarea.name != remote_eye.allowed_area && !(turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		return
+
+	if(xeno_console.monkeys < 1)
+		to_chat(user, span_warning("[xeno_console] needs to have at least 1 monkey stored. Currently has [xeno_console.monkeys] monkeys stored."))
+
+	var/mob/living/carbon/human/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
+	if (!QDELETED(food))
+		food.LAssailant = WEAKREF(user)
+		xeno_console.monkeys--
+		xeno_console.monkeys = round(xeno_console.monkeys, 0.1) //Prevents rounding errors
+		to_chat(user, span_notice("[xeno_console] now has [xeno_console.monkeys] monkeys stored."))
 
 ///Picks up a dead monkey for recycling
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/target_mob)
@@ -453,12 +456,16 @@
 	if(!xeno_console.connected_recycler)
 		to_chat(user, span_warning("There is no connected monkey recycler. Use a multitool to link one."))
 		return
-	if(mobarea.name == remote_eye.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		if(!target_mob.stat)
-			return
-		target_mob.visible_message(span_notice("[target_mob] vanishes as [p_theyre()] reclaimed for recycling!"))
-		xeno_console.connected_recycler.use_power(500)
-		xeno_console.monkeys += connected_recycler.cube_production
-		xeno_console.monkeys = round(xeno_console.monkeys, 0.1) //Prevents rounding errors
-		qdel(target_mob)
-		to_chat(user, span_notice("[xeno_console] now has [xeno_console.monkeys] monkeys available."))
+
+	if(mobarea.name != remote_eye.allowed_area && !(mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
+		return
+
+	if(!target_mob.stat)
+		return
+
+	target_mob.visible_message(span_notice("[target_mob] vanishes as [p_theyre()] reclaimed for recycling!"))
+	xeno_console.connected_recycler.use_power(500)
+	xeno_console.monkeys += connected_recycler.cube_production
+	xeno_console.monkeys = round(xeno_console.monkeys, 0.1) //Prevents rounding errors
+	qdel(target_mob)
+	to_chat(user, span_notice("[xeno_console] now has [xeno_console.monkeys] monkeys available."))
