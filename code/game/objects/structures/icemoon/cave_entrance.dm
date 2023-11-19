@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(13)
 			new /obj/item/gun/magic/hook (loc)
 		if(14)
-			new /obj/item/guardiancreator/miner(loc)
+			new /obj/item/guardian_creator/miner(loc)
 		if(15)
 			new /obj/item/ship_in_a_bottle(loc)
 		if(16)

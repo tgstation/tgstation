@@ -133,7 +133,7 @@
 	var/turf/snare_loc = get_turf(owner)
 	var/obj/effect/abstract/surveillance_snare/new_snare = new(snare_loc, owner)
 	new_snare.assign_owner(owner)
-	RegisterSignal(new_snare, COMSIG_QDELETING, PROC_REF(on_snare_deleted))
+	RegisterSignal(new_snare, COMSIG_PARENT_QDELETING, PROC_REF(on_snare_deleted))
 	placed_snares += new_snare
 
 	StartCooldown()
@@ -165,7 +165,7 @@
 		qdel(src)
 		return
 	owner = new_owner
-	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(owner_destroyed))
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_destroyed))
 
 /// When crossed notify our owner
 /obj/effect/abstract/surveillance_snare/proc/on_entered(atom/source, crossed_object)

@@ -35,14 +35,14 @@
 		addtimer(CALLBACK(src, PROC_REF(bomb_expired)), expire_time, TIMER_DELETE_ME)
 
 /datum/component/direct_explosive_trap/RegisterWithParent()
-	if (!(COMSIG_ATOM_EXAMINE in triggering_signals)) // Maybe you're being extra mean with this one
-		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
+	if (!(COMSIG_PARENT_ATOM_EXAMINE in triggering_signals)) // Maybe you're being extra mean with this one
+		RegisterSignal(parent, COMSIG_PARENT_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignals(parent, triggering_signals, PROC_REF(explode))
 	if (!isnull(saboteur))
 		RegisterSignal(saboteur, COMSIG_QDELETING, PROC_REF(on_bomber_deleted))
 
 /datum/component/direct_explosive_trap/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE) + triggering_signals)
+	UnregisterSignal(parent, list(COMSIG_PARENT_ATOM_EXAMINE) + triggering_signals)
 	if (!isnull(saboteur))
 		UnregisterSignal(saboteur, COMSIG_QDELETING)
 

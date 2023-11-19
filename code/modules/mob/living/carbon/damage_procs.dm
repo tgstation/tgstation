@@ -18,10 +18,7 @@
 	return .
 
 /mob/living/carbon/human/get_damage_mod(damage_type)
-	if (!dna?.species?.damage_modifier)
-		return ..()
-	var/species_mod = (100 - dna.species.damage_modifier) / 100
-	return ..() * species_mod
+	return ..()
 
 /mob/living/carbon/human/apply_damage(
 	damage = 0,
@@ -39,7 +36,6 @@
 
 	// Add relevant DR modifiers into blocked value to pass to parent
 	blocked += physiology?.damage_resistance
-	blocked += dna?.species?.damage_modifier
 	return ..()
 
 /mob/living/carbon/human/get_incoming_damage_modifier(
@@ -52,29 +48,23 @@
 )
 	var/final_mod = ..()
 
-	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
-			if(BP)
-				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					update_damage_overlays()
-			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage_amount, forced = forced)
+			final_mod *= physiology.brute_mod
 		if(BURN)
-			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					update_damage_overlays()
-			else
-				adjustFireLoss(damage_amount, forced = forced)
+			final_mod *= physiology.burn_mod
 		if(TOX)
-			adjustToxLoss(damage_amount, forced = forced)
+			final_mod *= physiology.tox_mod
 		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
+			final_mod *= physiology.oxy_mod
 		if(CLONE)
-			adjustCloneLoss(damage_amount, forced = forced)
+			final_mod *= physiology.clone_mod
 		if(STAMINA)
-			stamina.adjust(-damage_amount, forced = forced)
-	return TRUE
+			final_mod *= physiology.stamina_mod
+		if(BRAIN)
+			final_mod *= physiology.brain_mod
+
+	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/getBruteLoss()
@@ -101,8 +91,6 @@
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return 0
-	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
 	if(amount > 0)
 		take_overall_damage(brute = amount, updating_health = updating_health, required_bodytype = required_bodytype)
 	else
@@ -125,8 +113,6 @@
 	if(amount < 0 && HAS_TRAIT(src, TRAIT_NO_HEALS))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
 		return 0
 	if(amount > 0)
 		take_overall_damage(burn = amount, updating_health = updating_health, required_bodytype = required_bodytype)

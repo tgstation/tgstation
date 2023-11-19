@@ -139,7 +139,7 @@
 	if(!switch_combat_mode)
 		return
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.combat_mode = initial(living_pawn.combat_mode)
+	living_pawn.istate = initial(living_pawn.istate)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/switch_combat_mode
 	switch_combat_mode = TRUE

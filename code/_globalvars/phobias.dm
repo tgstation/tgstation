@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/bee,
 	)),
 	"lizards" = typecacheof(list(/mob/living/basic/lizard)),
-	"skeletons" = typecacheof(list(/mob/living/simple_animal/hostile/skeleton)),
+	"skeletons" = typecacheof(list(/mob/living/basic/skeleton)),
 	"robots" = typecacheof(list(
 		/mob/living/basic/drone,
 		/mob/living/silicon/ai,

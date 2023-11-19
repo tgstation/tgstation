@@ -75,4 +75,3 @@
 	if(!succeeded)
 		return
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.set_combat_mode(initial(living_pawn.combat_mode))

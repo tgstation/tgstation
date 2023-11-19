@@ -296,14 +296,14 @@
 */
 
 /mob/living/simple_animal/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	if(dextrous && (isitem(attack_target) || !(istate & ISTATE_HARM)))
+	if((isitem(attack_target) || !(istate & ISTATE_HARM)))
 		attack_target.attack_hand(src, modifiers)
 		update_held_items()
 	else
 		return ..()
 
 /mob/living/simple_animal/resolve_right_click_attack(atom/target, list/modifiers)
-	if(dextrous && (isitem(target) || !(istate & ISTATE_HARM)))
+	if((isitem(target) || !(istate & ISTATE_HARM)))
 		. = target.attack_hand_secondary(src, modifiers)
 		update_held_items()
 	else
