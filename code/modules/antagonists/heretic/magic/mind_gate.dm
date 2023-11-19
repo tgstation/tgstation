@@ -9,8 +9,7 @@
 
 	sound = 'sound/magic/curse.ogg'
 	school = SCHOOL_FORBIDDEN
-	// The spell deals brain damage so we can allow more spamming
-	cooldown_time = 5 SECONDS
+	cooldown_time = 20 SECONDS
 
 	invocation = "Op' 'oY 'Mi'd"
 	invocation_type = INVOCATION_WHISPER

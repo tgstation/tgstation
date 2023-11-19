@@ -131,6 +131,11 @@
 	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
+/atom/movable/screen/fullscreen/moon_music
+	icon_state = "songofstars0"
+	layer = CURSE_LAYER
+	plane = FULLSCREEN_PLANE
+
 /atom/movable/screen/fullscreen/ivanov_display
 	icon_state = "ivanov"
 	alpha = 180
@@ -223,3 +228,4 @@
 	icon_state = "noise"
 	color = "#04a8d1"
 	alpha = 80
+
