@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed the infinite growth serum exploit."
+  - bugfix: "Fixed generic nutriment processing even when dead."

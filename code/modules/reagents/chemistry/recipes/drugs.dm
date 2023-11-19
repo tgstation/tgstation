@@ -30,7 +30,7 @@
 
 //The less pure it is, the faster it heats up. tg please don't hate me for making your meth even more dangerous
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
-	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
+	var/datum/reagent/meth = holder.has_reagent(/datum/reagent/drug/methamphetamine)
 	if(!meth)//First step
 		reaction.thermic_mod = (1-delta_ph)*5
 		return
@@ -45,7 +45,7 @@
 	temp_meth_explosion(holder, equilibrium.reacted_vol)
 
 /datum/chemical_reaction/methamphetamine/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
-	var/datum/reagent/meth = holder.get_reagent(/datum/reagent/drug/methamphetamine)
+	var/datum/reagent/meth = holder.has_reagent(/datum/reagent/drug/methamphetamine)
 	if(!meth)//Other procs before this can already blow us up
 		return ..()
 	if(meth.purity < purity_min)
