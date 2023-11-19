@@ -132,7 +132,7 @@
 		owner.particles.position = list(-1, 8, 0)
 		owner.particles.fadein = 5
 		owner.particles.height = 200
-	var/datum/gas/chosen_gas = active_gas // Casting it so that we can access gas vars in initial, it's still a typepath
+	//var/datum/gas/chosen_gas = active_gas // Casting it so that we can access gas vars in initial, it's still a typepath
 	owner.particles.color = COLOR_BLUE
 	if (!had_gas)
 		RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))

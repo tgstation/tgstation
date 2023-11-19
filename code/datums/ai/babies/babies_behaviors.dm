@@ -75,3 +75,4 @@
 	if(!succeeded)
 		return
 	var/mob/living/living_pawn = controller.pawn
+	living_pawn.istate = initial(living_pawn.istate)

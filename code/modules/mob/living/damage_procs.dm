@@ -135,7 +135,7 @@
 		if(CLONE)
 			return adjustCloneLoss(heal_amount)
 		if(STAMINA)
-			return adjustStaminaLoss(heal_amount)
+			return stamina.adjust(heal_amount)
 
 /// return the damage amount for the type given
 /**

@@ -1,11 +1,11 @@
 // Drone overlays and visuals
 
-/mob/living/basic/drone/proc/apply_overlay(cache_index)
+/mob/living/basic/drone/apply_overlay(cache_index)
 	if((. = drone_overlays[cache_index]))
 		add_overlay(.)
 
 
-/mob/living/basic/drone/proc/remove_overlay(cache_index)
+/mob/living/basic/drone/remove_overlay(cache_index)
 	var/overlay = drone_overlays[cache_index]
 	if(overlay)
 		cut_overlay(overlay)

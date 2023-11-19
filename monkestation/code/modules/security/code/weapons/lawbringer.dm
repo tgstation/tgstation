@@ -520,7 +520,7 @@
 				M.visible_message(span_warning("[M] is is sent rocketing off their shoes!"))
 			playsound(src, 'sound/items/airhorn.ogg', 100, TRUE, -1)
 			var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
-			new_target.throw_at(throw_target, 200, 8)
+			M.throw_at(throw_target, 200, 8)
 
 /**
  * lawbringer pulse mode:
@@ -543,8 +543,9 @@
 /obj/projectile/lawbringer/pulse/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
+		var/mob/living/new_target = target
 		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
-		target.throw_at(throw_target, 4, 1)
+		new_target.throw_at(throw_target, 4, 1)
 
 /**
  * lawbringer tideshot mode:

@@ -23,7 +23,6 @@
 	var/random_crits_enabled = TRUE // Worst thing Valve ever added
 
 /obj/projectile/bullet/rocket/on_hit(atom/target, blocked = 0, pierce_hit)
-	var/random_crit_gib = FALSE
 	if(isliving(target) && prob(1) && random_crits_enabled)
 		var/mob/living/gibbed_dude = target
 		if(gibbed_dude.stat < HARD_CRIT)

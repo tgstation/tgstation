@@ -130,8 +130,6 @@
 	var/switch_combat_mode = FALSE
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
-	if(switch_combat_mode)
-		hunter.combat_mode = !(hunter.combat_mode)
 	hunter.UnarmedAttack(hunted, TRUE)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)

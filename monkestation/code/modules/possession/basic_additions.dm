@@ -22,6 +22,10 @@
 	/// the shifted x offset of the head
 	var/list/head_x_shift
 
+/mob/living/basic/proc/apply_overlay(cache_index)
+	if((. = possession_overlays[cache_index]))
+		add_overlay(.)
+
 /mob/living/basic/proc/create_overlay_index()
 	var/list/overlays[1]
 	possession_overlays = overlays

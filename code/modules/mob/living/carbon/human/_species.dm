@@ -111,28 +111,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/brutemod = 1
 	///multiplier for burn damage
 	var/burnmod = 1
-	///multiplier for damage from cold temperature
-	var/coldmod = 1
-	///multiplier for damage from hot temperature
-	var/heatmod = 1
-	///multiplier for stun durations
-	var/stunmod = 1
-	///multiplier for money paid at payday
-	var/payday_modifier = 1
-	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
-	var/siemens_coeff = 1
-	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
-	var/fixed_mut_color = ""
-	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
-	var/inert_mutation = /datum/mutation/human/dwarfism
-	///Used to set the mob's death_sound upon species change
-	var/death_sound
-	///Sounds to override barefeet walking
-	var/list/special_step_sounds
-	///Special sound for grabbing
-	var/grab_sound
-	/// A path to an outfit that is important for species life e.g. plasmaman outfit
-	var/datum/outfit/outfit_important_for_life
 	//Used for metabolizing reagents. We're going to assume you're a meatbag unless you say otherwise.
 	var/reagent_tag = PROCESS_ORGANIC
 
@@ -231,37 +209,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/grab_sound
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
 	var/datum/outfit/outfit_important_for_life
-
-	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
-	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
-	/// The natural temperature for a body
-	var/bodytemp_normal = BODYTEMP_NORMAL
-	/// Minimum amount of kelvin moved toward normal body temperature per tick.
-	var/bodytemp_autorecovery_min = BODYTEMP_AUTORECOVERY_MINIMUM
-	/// The body temperature limit the body can take before it starts taking damage from heat.
-	var/bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
-	/// The body temperature limit the body can take before it starts taking damage from cold.
-	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
-
-	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
-	var/fire_overlay = "human"
-
-	/// Generic traits tied to having the species.
-	var/list/inherent_traits = list()
-	/// List of biotypes the mob belongs to. Used by diseases.
-	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
-	var/inherent_respiration_type = RESPIRATION_OXYGEN
-	///List of factions the mob gain upon gaining this species.
-	var/list/inherent_factions
-
-	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
-	var/breathid = GAS_O2
-
-	///What anim to use for dusting
-	var/dust_anim = "dust-h"
-	///What anim to use for gibbing
-	var/gib_anim = "gibbed-h"
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -1493,7 +1440,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 	var/attack_direction = get_dir(user, human)
-	apply_damage(weapon.force * weakness, weapon.damtype, def_zone, armor_block, human, wound_bonus = Iwound_bonus, bare_wound_bonus = weapon.bare_wound_bonus, sharpness = weapon.get_sharpness(), attack_direction = attack_direction)
 
 	if(!weapon.force)
 		return FALSE //item force is zero

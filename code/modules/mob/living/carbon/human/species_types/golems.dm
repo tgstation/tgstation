@@ -425,6 +425,7 @@
 		new /obj/item/stack/ore/glass(get_turf(H))
 	qdel(H)
 
+/*
 /datum/species/golem/sand/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
 		if(P.armor_flag == BULLET || P.armor_flag == BOMB)
@@ -433,6 +434,7 @@
 			span_userdanger("The [P.name] sinks harmlessly in [H]'s sandy body!"))
 			return BULLET_ACT_BLOCK
 	return ..()
+*/
 
 //Reflects lasers and resistant to burn damage, but very vulnerable to brute damage. Shatters on death.
 /datum/species/golem/glass
@@ -457,6 +459,7 @@
 		new /obj/item/shard(get_turf(H))
 	qdel(H)
 
+/*
 /datum/species/golem/glass/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H)) //self-shots don't reflect
 		if(P.armor_flag == LASER || P.armor_flag == ENERGY)
@@ -470,6 +473,7 @@
 				P.preparePixelProjectile(locate(clamp(new_x, 1, world.maxx), clamp(new_y, 1, world.maxy), H.z), H)
 			return BULLET_ACT_FORCE_PIERCE
 	return ..()
+*/
 
 //Teleports when hit or when it wants to
 /datum/species/golem/bluespace
@@ -945,12 +949,14 @@
 	var/last_gong_time = 0
 	var/gong_cooldown = 150
 
+/*
 /datum/species/golem/bronze/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(world.time > last_gong_time + gong_cooldown))
 		return ..()
 	if(P.armor_flag == BULLET || P.armor_flag == BOMB)
 		gong(H)
 		return ..()
+*/
 
 /datum/species/golem/bronze/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	..()
@@ -967,10 +973,6 @@
 	if(world.time > last_gong_time + gong_cooldown)
 		gong(H)
 
-/datum/species/golem/bronze/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	..()
-	if(world.time > last_gong_time + gong_cooldown)
-		gong(H)
 
 /datum/species/golem/bronze/proc/gong(mob/living/carbon/human/H)
 	last_gong_time = world.time

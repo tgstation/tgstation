@@ -44,7 +44,6 @@
 		/obj/item/food/breadslice/banana,
 		/obj/item/food/cnds/banana_honk,
 		/obj/item/food/grown/banana,
-		/obj/item/food/popsicle/topsicle/banana,
 		/obj/item/food/salad/fruit,
 		/obj/item/food/salad/jungle,
 		/obj/item/food/sundae,
