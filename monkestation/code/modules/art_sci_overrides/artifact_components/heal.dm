@@ -38,7 +38,7 @@
 		return
 	var/damage_length = length(damage_types)
 	for(var/dam_type in damage_types)
-		user.apply_damage_type( -(heal_amount / damage_length), dam_type)
+		user.heal_damage_type( (heal_amount / damage_length), dam_type)
 	to_chat(user, span_notice("You feel slightly refreshed!"))
 	new /obj/effect/temp_visual/heal(get_turf(user), COLOR_HEALING_CYAN)
 	COOLDOWN_START(src, heal_cooldown, 5 SECONDS)
@@ -55,7 +55,7 @@
 	for(var/mob/living/carbon/user in view(5, src))
 		var/damage_length = length(damage_types)
 		for(var/dam_type in damage_types)
-			user.apply_damage_type( -(heal_amount / damage_length), dam_type)
+			user.heal_damage_type( (heal_amount / damage_length), dam_type)
 		to_chat(user, span_notice("You feel slightly refreshed!"))
 		new /obj/effect/temp_visual/heal(get_turf(user), COLOR_HEALING_CYAN)
 
