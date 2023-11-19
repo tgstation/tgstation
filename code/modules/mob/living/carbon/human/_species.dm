@@ -1426,7 +1426,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		modified_wound_bonus = CANT_WOUND
 
 	human.send_item_attack_message(weapon, user, hit_area, affecting)
-	var/damage_dealt = human.apply_damage(
+	human.apply_damage(
 		damage = weapon.force,
 		damagetype = weapon.damtype,
 		def_zone = affecting,
@@ -1439,7 +1439,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	)
 
 
-	var/attack_direction = get_dir(user, human)
 
 	if(!weapon.force)
 		return FALSE //item force is zero
