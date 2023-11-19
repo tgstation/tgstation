@@ -117,7 +117,6 @@
 #include "clothing_under_armor_subtype_check.dm"
 #include "combat.dm"
 #include "component_tests.dm"
-#include "confusion.dm"
 #include "connect_loc.dm"
 #include "container_sanity.dm"
 #include "crayons.dm"
