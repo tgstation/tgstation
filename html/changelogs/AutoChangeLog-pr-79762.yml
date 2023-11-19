@@ -1,0 +1,5 @@
+author: "san7890 and Ben10Omintrix/Kobsamobsa"
+delete-after: True
+changes:
+  - refactor: "Parrots (including Poly) have undergone a massive refactor, please report any bugs or unexpected behavior that you may encounter."
+  - qol: "Left-clicking a parrot with a cracker will tame it, right-clicking a parrot with a cracker will now feed it the cracker."

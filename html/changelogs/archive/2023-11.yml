@@ -717,3 +717,66 @@
   - balance: After a string of unfortunate incidents, persons with telekinesis have
       been strongly warned against playing Russian Roulette, as they tend to hyperfixate
       on the gun a bit too much and end up firing it directly at their head.
+2023-11-18:
+  Ben10Omintrix:
+  - bugfix: gutlunches will stop having too many children
+  - balance: gutlunches are no longer in the mining faction
+  JohnFulpWillard:
+  - refactor: Secure briefcases are now actual briefcases.
+  - refactor: Wall safes are now structures, rather than items that can't be picked
+      up.
+  - refactor: Lockable items (Wall safes & Secure Briefcases) now use TGUI.
+  ZephyrTFA:
+  - rscadd: Chat Reliability Layer
+  - code_imp: TGUI chat messages now track their sequence and will be resent if the
+      client notices a discrepenency
+  jlsnow301:
+  - bugfix: After correcting a slight miscalculation, Bit Avatars now have hands again.
+  nikothedude:
+  - code_imp: TGUI preference lists can now have sorting prefixes to allow for specific
+      placement of items
+2023-11-19:
+  DaCoolBoss:
+  - spellcheck: Nukie and ERT defibrillators now reference combat mode instead of
+      intents.
+  Ghommie:
+  - rscadd: Abductors have bigger brains.
+  JohnFulpWillard:
+  - rscadd: Infiltrators (Latejoin/Midround traitors) can now buy and use Contract
+      kits again.
+  - rscdel: Contractor baton can now only be purchased once.
+  LT3:
+  - bugfix: Tram will no longer electrocute innocent, law abiding crew trying to use
+      the crosswalk when there's no tram in sight
+  Melbert:
+  - refactor: Refactored another large chuck of attack code, primarily involving melee
+      item attacks and non-human mob attacks. Report if you see anything weird
+  - bugfix: Pacifists clicking on simple robots or silicons no longer causes sparks
+  - bugfix: Blocked thrown batons are now properly... blocked
+  - bugfix: Plates now respect the weight class of items on top.
+  - bugfix: Fried items now respect existing volume cap.
+  - bugfix: Smartfridges now don't accept bulky food items, good thing we have none
+      of those right guys?
+  Rhials:
+  - spellcheck: The Grey ID Cargo Crate is now spelled properly.
+  SapphicOverload:
+  - bugfix: You can once again use alt to turn while strafing in a mech
+  Shroopy:
+  - qol: Implanted HUDs can now be toggled on and off with an action.
+  SyncIt21:
+  - bugfix: selling large amount of mats in cargo should not give you infinite credits
+  - bugfix: runtime when adjusting material market after buying
+  WarlockD:
+  - bugfix: ' Attaching a circuit to the air alarm now reads from the correct turf.'
+  YakumoChen:
+  - balance: Paint cans hold 20x more paint than before, painters rejoice! (Janitors
+      cry more)
+  distributivgesetz:
+  - bugfix: Fixes a runtime when the radioactive nebula trait runs with a map that
+      has no virology area.
+  mc-oofert:
+  - bugfix: you can climb over more stuff with a climbing hook
+  san7890:
+  - bugfix: '"Old Chat" (AKA: The old-styled non-TGUI raw-HTMLesque chat that you
+      might see when it prods you with the "Failed to load fancy chat!" issue) should
+      now get all text messages as expected.'

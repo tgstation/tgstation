@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes bug that was preventing high luminosity eyes' light from turning on"
+  - bugfix: "fixes eyes being on the wrong side of the head when facing east/west"
