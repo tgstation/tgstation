@@ -117,7 +117,7 @@
 			var/mat_available
 			if(istype(mat)) //regular mat
 				mat_available = materials.get_material_amount(mat)
-			else //category mat means we can make it from any mat, use smalest available mat
+			else //category mat means we can make it from any mat, use largest available mat
 				mat_available = max_available
 
 			max_multiplier = min(max_multiplier, 50, round(mat_available / design_cost))
