@@ -186,8 +186,6 @@
 
 	if(limb_owner)
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
-	if(!bodypart_owner) //this literally only exists because dullahans spawn and delete fake eyes
-		return
 
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! we moves the organ right after, so we unregister before we move them physically
 

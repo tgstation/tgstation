@@ -997,15 +997,15 @@
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	old_bodypart.on_removal(src)
-	bodyparts -= old_bodypart
-
 	if(special)
 		for(var/obj/item/organ/organ in old_bodypart)
-			organ.bodypart_remove(src, special, NO_ID_TRANSFER)
+			organ.bodypart_remove(limb_owner = src, movement_flags = NO_ID_TRANSFER)
 	else
 		for(var/obj/item/organ/organ in old_bodypart)
 			organ.mob_remove(src, special)
+
+	old_bodypart.on_removal(src)
+	bodyparts -= old_bodypart
 
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
