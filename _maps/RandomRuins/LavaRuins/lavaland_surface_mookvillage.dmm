@@ -105,7 +105,6 @@
 /area/lavaland/surface/outdoors)
 "x" = (
 /obj/structure/table/wood/shuttle_bar,
-/obj/item/clothing/head/costume/garland/poppy,
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
 "y" = (

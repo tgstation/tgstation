@@ -117,8 +117,6 @@
 
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
-	var/turf/source_loc = get_turf(source)
-
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
 		return
 
@@ -145,7 +143,7 @@
 		heard_clients = playsound(source.loc, pick(footstep_sounds[shoestep_type][1]),
 			footstep_sounds[shoestep_type][2] * volume * volume_multiplier,
 			TRUE,
-			footstep_sounds[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
+			footstep_sounds[shoestep_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 	else
 		var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
 		if(source.dna.species.special_step_sounds)
@@ -156,7 +154,7 @@
 			heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),
 				bare_footstep_sounds[barefoot_type][2] * volume * volume_multiplier,
 				TRUE,
-				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
+				bare_footstep_sounds[barefoot_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, mixer_channel = CHANNEL_SOUND_FOOTSTEPS)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
