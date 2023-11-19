@@ -699,11 +699,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/full,
 /obj/item/grenade/c4,
-/mob/living/simple_animal/hostile/mining_drone,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing/a357/spent{
 	pixel_x = 5;
