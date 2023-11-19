@@ -53,3 +53,17 @@ DEFINE_BITFIELD(spread_flags, list(
 #define DISEASE_SEVERITY_BIOHAZARD "BIOHAZARD"
 /// Diseases that are uncurable (hms)
 #define DISEASE_SEVERITY_UNCURABLE "Uncurable"
+
+//Severity Guaranteed Cycles or how long before a disease can potentially self-cure
+/// Positive diseases should not self-cure by themselves
+#define DISEASE_CYCLES_POSITIVE 0
+/// Roughly 5 minutes for a harmless virus
+#define DISEASE_CYCLES_NONTHREAT 150
+/// Roughly 4 minutes for a disruptive nuisance virus
+#define DISEASE_CYCLES_MINOR 120
+/// Roughly 3 minutes for a medium virus
+#define DISEASE_CYCLES_MEDIUM 90
+/// Roughly 2 minute for a dangerous virus
+#define DISEASE_CYCLES_DANGEROUS 60
+/// Roughly 1 minute for a biohazard kill-death-evil-bad virus
+#define DISEASE_CYCLES_BIOHAZARD 30
