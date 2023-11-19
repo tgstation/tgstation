@@ -2,13 +2,18 @@
 	name = "Disposal Pipe Factory"
 	cost = BITRUNNER_COST_LOW
 	desc = "An abandoned and infested factory manufacturing disposal pipes."
-	difficulty = BITRUNNER_DIFFICULTY_MEDIUM
+	difficulty = BITRUNNER_DIFFICULTY_LOW
 	extra_loot = list(/obj/item/stack/pipe_cleaner_coil/random/five = 1)
 	help_text = "Not long ago, this place was thriving with activity. The workers \
 	seemed to have left in a hurry, and now productivity is in the bin. Something \
 	must have trashed the place, but what?"
+	is_modular = TRUE
 	key = "pipedream"
 	map_name = "pipedream"
+	mob_modules = list(
+		/datum/modular_mob_segment/hivebots,
+		/datum/modular_mob_segment/hivebots_strong
+	)
 	reward_points = BITRUNNER_REWARD_LOW
 	safehouse_path = /datum/map_template/safehouse/shuttle
 

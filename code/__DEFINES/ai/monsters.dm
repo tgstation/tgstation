@@ -248,3 +248,6 @@
 #define BB_CAT_HOME "cat_home"
 /// key that holds the human we will beg
 #define BB_HUMAN_BEG_TARGET "human_beg_target"
+//netguardians
+/// rocket launcher
+#define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"

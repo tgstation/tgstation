@@ -6,13 +6,13 @@
 	name = "Bird Crate"
 	desc = "Contains five expert telecommunication birds."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/mob/living/simple_animal/parrot)
+	contains = list(/mob/living/basic/parrot)
 	crate_name = "parrot crate"
 
 /datum/supply_pack/critter/parrot/generate()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /mob/living/simple_animal/parrot(.)
+		new /mob/living/basic/parrot(.)
 
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"

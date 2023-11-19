@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(syndicate_monkey_names, world.file2list("strings/names/syndicat
 GLOBAL_LIST_INIT(guardian_first_names, world.file2list("strings/names/guardian_descriptions.txt"))
 GLOBAL_LIST_INIT(guardian_tech_surnames, world.file2list("strings/names/guardian_gamepieces.txt"))
 GLOBAL_LIST_INIT(guardian_fantasy_surnames, world.file2list("strings/names/guardian_tarot.txt"))
+GLOBAL_LIST_INIT(operative_aliases, world.file2list("strings/names/operative_alias.txt"))
 
 GLOBAL_LIST_INIT(verbs, world.file2list("strings/names/verbs.txt"))
 GLOBAL_LIST_INIT(ing_verbs, world.file2list("strings/names/ing_verbs.txt"))
