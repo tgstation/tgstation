@@ -169,6 +169,12 @@
 	required_reagents = list(/datum/reagent/mutationtoxin/jelly = 1, /datum/reagent/toxin/mutagen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
+/// Preserved legacy behaviour from virology that duplicates blood with mutagen
+/datum/chemical_reaction/duplicate_blood
+	results = list(/datum/reagent/blood = 2)
+	required_reagents = list(/datum/reagent/toxin/mutagen = 1)
+	required_catalysts = list(/datum/reagent/blood = 1)
+
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////
 
 
