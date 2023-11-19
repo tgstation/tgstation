@@ -144,11 +144,3 @@
 		Shielding units passively generate tritium, so make sure to properly ventilate/isolate the area before setting up a shielding unit!
 		More circuit boards can be ordered through cargo. Consider setting up auxillary shielding units in-case of destruction, power loss or sabotage.
 	"}
-
-/// Warns the viro that they can't use radioactive resonance
-/obj/item/paper/fluff/radiation_nebula_virologist
-	name = "radioactive resonance"
-	default_raw_text = {"EXTREME IMPORTANCE!!!! <br>
-		During routine bloodscreening on employees working in the nebula, we found no traces of the sympton called 'Radioactive Resonance'. <br>
-		Something inside the nebula is interfering with it, be wary of a more shallow viral genepool.
-	"}

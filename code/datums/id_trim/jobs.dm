@@ -1178,7 +1178,6 @@
 		ACCESS_CHANGE_IDS,
 		ACCESS_CMO,
 		)
-	job = /datum/job/virologist
 
 /datum/id_trim/job/warden
 	assignment = "Warden"
