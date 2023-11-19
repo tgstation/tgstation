@@ -18,7 +18,13 @@
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
-	var/crate_climb_time = 20
+	/// Mobs standing on it are nudged up by this amount.
+	var/elevation = 12
+	/// The same, but when the crate is open
+	var/elevation_open = 12
+	/// The time spent to climb this crate.
+	var/crate_climb_time = 2 SECONDS
+	/// The reference of the manifest paper attached to the cargo crate.
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
@@ -53,7 +59,9 @@
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 
-	AddElement(/datum/element/elevation, pixel_shift = 12)
+	var/elevation_to_add = opened ? elevation_open : elevation
+	if(elevation_to_add)
+		AddElement(/datum/element/elevation, pixel_shift = elevation_to_add)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -104,6 +112,11 @@
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	if(elevation != elevation_open)
+		if(elevation)
+			RemoveElement(/datum/element/elevation, elevation)
+		if(elevation_open)
+			AddElement(/datum/element/elevation, elevation_open)
 	if(!QDELETED(manifest))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
@@ -114,6 +127,11 @@
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	if(elevation != elevation_open)
+		if(elevation_open)
+			RemoveElement(/datum/element/elevation, elevation_open)
+		if(elevation)
+			AddElement(/datum/element/elevation, elevation)
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
@@ -144,6 +162,7 @@
 	close_sound_volume = 50
 	can_install_electronics = FALSE
 	paint_jobs = null
+	elevation_open = 0
 
 /obj/structure/closet/crate/maint
 
@@ -179,6 +198,8 @@
 	desc = "A large cart for hauling around large amounts of laundry."
 	icon_state = "laundry"
 	base_icon_state = "laundry"
+	elevation = 14
+	elevation_open = 14
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
 	. = ..()

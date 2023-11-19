@@ -732,7 +732,7 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	can_buckle = 1
+	can_buckle = TRUE
 	buckle_lying = 90
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
@@ -758,12 +758,24 @@
 	return ..()
 
 /obj/structure/table/optable/make_climbable()
-	AddElement(/datum/element/elevation, pixel_shift = -PIXEL_Y_OFFSET_LYING)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
+
+///Align the mob with the table when buckled.
+/obj/structure/bed/post_buckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.base_pixel_y -= 6
+	buckled.pixel_y -= 6
+
+///Disalign the mob with the table when unbuckled.
+/obj/structure/bed/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.base_pixel_y += 6
+	buckled.pixel_y += 6
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)

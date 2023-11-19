@@ -3,7 +3,7 @@
  * The atom with the highest pixel_shift gets to set the elevation of the turf to that value.
  */
 /datum/element/elevation
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
 	argument_hash_start_idx = 2
 	///The amount of pixel_z applied to the mob standing on the turf
 	var/pixel_shift
@@ -26,6 +26,10 @@
 			reset_elevation(turf)
 		ADD_TRAIT(turf, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(target))
 
+/datum/element/elevation/proc/Detach(datum/source)
+	unregister_turf(source, source.loc)
+	return ..()
+
 /datum/element/elevation/proc/reset_elevation(turf/target)
 	var/list/current_values[2]
 	SEND_SIGNAL(target, COMSIG_TURF_RESET_ELEVATION, current_values)
@@ -44,17 +48,21 @@
 
 /datum/element/elevation/proc/on_moved(atom/movable/source, atom/oldloc)
 	SIGNAL_HANDLER
-	if(isturf(oldloc))
-		REMOVE_TRAIT(oldloc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(source))
-		if(!HAS_TRAIT(oldloc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
-			UnregisterSignal(oldloc, list(COMSIG_TURF_RESET_ELEVATION, COMSIG_TURF_CHANGE))
-			reset_elevation(oldloc)
+	unregister_turf(source, oldloc)
 	if(isturf(source.loc))
 		if(!HAS_TRAIT(source.loc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
 			RegisterSignal(source.loc, COMSIG_TURF_RESET_ELEVATION, PROC_REF(check_elevation))
 			RegisterSignal(source.loc, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))
 			reset_elevation(source.loc)
 		ADD_TRAIT(source.loc, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(source))
+
+/datum/element/elevation/proc/unregister_turf(atom/movable/source, atom/location)
+	if(!isturf(location))
+		return
+	REMOVE_TRAIT(location, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(source))
+	if(!HAS_TRAIT(location, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
+		UnregisterSignal(location, list(COMSIG_TURF_RESET_ELEVATION, COMSIG_TURF_CHANGE))
+		reset_elevation(location)
 
 ///Changing or destroying the turf detaches the element, also we need to reapply the traits since they don't get passed down.
 /datum/element/elevation/proc/pre_change_turf(turf/changed, path, list/new_baseturfs, flags, list/post_change_callbacks)
@@ -126,7 +134,8 @@
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
 	SIGNAL_HANDLER
 	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(entered))
-		elevate_mob(entered)
+		var/elevate_time = isturf(old_loc) && Adjacent(old_loc) ? ELEVATE_TIME : 0
+		elevate_mob(entered, elevate_time = elevate_time)
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
@@ -136,13 +145,14 @@
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
 	SIGNAL_HANDLER
 	if((isnull(gone.loc) || !HAS_TRAIT_FROM(gone.loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(gone))
-		elevate_mob(gone, -pixel_shift)
+		var/elevate_time = isturf(gone.loc) && Adjacent(gone.loc) ? ELEVATE_TIME : 0
+		elevate_mob(gone, -pixel_shift, elevate_time)
 		UnregisterSignal(gone, COMSIG_LIVING_SET_BUCKLED)
 
-/datum/element/elevation_core/proc/elevate_mob(mob/living/target, z_shift = pixel_shift)
-	animate(target, pixel_z = z_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+/datum/element/elevation_core/proc/elevate_mob(mob/living/target, z_shift = pixel_shift, elevate_time = ELEVATE_TIME)
+	animate(target, pixel_z = z_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	if(target.buckled && isvehicle(target.buckled))
-		animate(target.buckled, pixel_z = z_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(target.buckled, pixel_z = z_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 
 ///Vehicles or other things the mob is buckled too also are shifted.
 /datum/element/elevation_core/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
