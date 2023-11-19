@@ -346,8 +346,9 @@
 	map = new(-100, 100, -100, 100)
 
 	// Generate common templates
-	for(var/i in 1 to 12)
-		InsertTemplateToMap(pick(SSmaterials.template_paths_by_rarity["[MINING_COMMON]"]))
+	if(length(SSmaterials.template_paths_by_rarity["[MINING_COMMON]"]))
+		for(var/i in 1 to 12)
+			InsertTemplateToMap(pick(SSmaterials.template_paths_by_rarity["[MINING_COMMON]"]))
 
 	/*
 	// Generate uncommon templates
