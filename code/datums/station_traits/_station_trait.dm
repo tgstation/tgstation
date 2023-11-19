@@ -51,11 +51,6 @@
 	destroy_lobby_buttons()
 	return ..()
 
-/// Proc ran when round starts. Use this for roundstart effects.
-/datum/station_trait/proc/on_round_start()
-	SIGNAL_HANDLER
-	return
-
 /// Returns the type of info the centcom report has on this trait, if any.
 /datum/station_trait/proc/get_report()
 	return "<i>[name]</i> - [report_message]"
@@ -82,9 +77,9 @@
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
 	return
 
-/// Return TRUE if we want to show a lobby button
+/// Return TRUE if we want to show a lobby button, by default we assume we don't want it after the round begins
 /datum/station_trait/proc/can_display_lobby_button()
-	return sign_up_button
+	return sign_up_button && !SSticker.HasRoundStarted()
 
 /// Apply any additional handling we need to our lobby button
 /datum/station_trait/proc/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
@@ -109,6 +104,11 @@
 /datum/station_trait/proc/on_lobby_button_destroyed(atom/movable/screen/lobby/button/sign_up/lobby_button)
 	SIGNAL_HANDLER
 	lobby_buttons -= lobby_button
+
+/// Proc ran when round starts. Use this for roundstart effects. By default we clean up our buttons here.
+/datum/station_trait/proc/on_round_start()
+	SIGNAL_HANDLER
+	destroy_lobby_buttons()
 
 /// Remove all of our active lobby buttons
 /datum/station_trait/proc/destroy_lobby_buttons()

@@ -147,65 +147,43 @@
 	weight = 1
 	sign_up_button = TRUE
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
-	force = TRUE // Laugh at me if this is still here in the PR
 	/// Who signed up to this in the lobby
 	var/list/lobby_candidates
 	/// The gorilla we created, we only hold this ref until the round starts.
 	var/mob/living/basic/gorilla/cargorilla/cargorilla
-	/// Have we handed out our gorilla pass yet?
-	var/accepting_signups = TRUE
 
 /datum/station_trait/cargorilla/New()
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
 	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_GAMEMODE_SETUP, PROC_REF(on_gamemode_setup))
 
-/datum/station_trait/cargorilla/can_display_lobby_button()
-	return accepting_signups
-
 /datum/station_trait/cargorilla/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
-	lobby_button.desc = "Become the Cargo Gorilla, a peaceful shepherd of boxes."
+	lobby_button.desc = "Sign up to become the Cargo Gorilla, a peaceful shepherd of boxes."
 	return ..()
 
 /datum/station_trait/cargorilla/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
-	if (SSticker.HasRoundStarted())
-		INVOKE_ASYNC(src, PROC_REF(attempt_cargorilla_latejoin), user)
+	if (isnull(cargorilla))
 		return
 	if (LAZYFIND(lobby_candidates, user))
 		LAZYREMOVE(lobby_candidates, user)
-		return
-	LAZYADD(lobby_candidates, user)
+	else
+		LAZYADD(lobby_candidates, user)
 
 /datum/station_trait/cargorilla/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
-	if (SSticker.HasRoundStarted() || LAZYFIND(lobby_candidates, lobby_button.get_mob()))
+	if (LAZYFIND(lobby_candidates, lobby_button.get_mob()))
 		lobby_button.base_icon_state = "signup_on"
-		return
-	lobby_button.base_icon_state = "signup"
-	return
+	else
+		lobby_button.base_icon_state = "signup"
 
 /datum/station_trait/cargorilla/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	SIGNAL_HANDLER
-	if (SSticker.HasRoundStarted())
-		var/mutable_appearance/gorilla_face = mutable_appearance(icon = lobby_button.icon, icon_state = "gorilla_off")
-		gorilla_face.pixel_x = 1
-		gorilla_face.pixel_y = 1
-		overlays += gorilla_face
-		return
 	if (LAZYFIND(lobby_candidates, lobby_button.get_mob()))
 		overlays += "gorilla_on"
 		overlays += "tick"
-		return
-	overlays += "gorilla_off"
-	overlays += "cross"
-
-/// Try to put our observer straight into the gorilla, but ask first
-/datum/station_trait/cargorilla/proc/attempt_cargorilla_latejoin(mob/dead/new_player/user)
-	if (!tgui_alert(user, "Become a gorilla?", "Gorilla Confirmation", list("Yes", "No")) != "Yes")
-		return
-	if (QDELETED(user) || QDELETED(cargorilla))
-		return
-	assign_gorilla(user)
+	else
+		overlays += "gorilla_off"
+		overlays += "cross"
 
 /// Replace some cargo equipment and 'personnel' with a gorilla.
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
@@ -213,6 +191,9 @@
 
 	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
 	if(isnull(cargo_sloth))
+		lobby_candidates = list()
+		destroy_lobby_buttons() // Sorry folks
+		sign_up_button = FALSE
 		return
 
 	cargorilla = new(cargo_sloth.loc)
@@ -251,6 +232,7 @@
 	assign_gorilla(pick(lobby_candidates))
 
 /datum/station_trait/cargorilla/on_round_start()
+	. = ..()
 	if (!cargorilla)
 		return // We already assigned him...
 	if (!LAZYLEN(lobby_candidates))
@@ -282,7 +264,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(cargorilla, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING))
 	cargorilla = null
-	accepting_signups = FALSE
+	sign_up_button = FALSE
 	destroy_lobby_buttons()
 
 /datum/station_trait/birthday
