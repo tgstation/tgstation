@@ -7,7 +7,7 @@
 	icon_state = "bhole3"
 	color = COLOR_PURPLE
 	light_color = COLOR_VOID_PURPLE
-	light_outer_range =  = 20
+	light_outer_range  = 20
 	anchored = TRUE
 	density = FALSE
 	layer = HIGH_PIPE_LAYER //0.01 above sigil layer used by heretic runes
