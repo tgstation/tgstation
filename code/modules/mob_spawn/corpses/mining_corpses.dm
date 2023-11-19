@@ -356,7 +356,6 @@
 
 /datum/outfit/consumed_heremoth
 	name = "Legion-Consumed Tribal Mothman"
-	uniform = /obj/item/clothing/under/costume/loincloth
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 
@@ -378,7 +377,6 @@
 
 /datum/outfit/consumed_ice_settler
 	name = "Legion-Consumed Settler"
-	uniform = /obj/item/clothing/under/costume/traditional
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	shoes = /obj/item/clothing/shoes/winterboots
 	mask = /obj/item/clothing/mask/breath

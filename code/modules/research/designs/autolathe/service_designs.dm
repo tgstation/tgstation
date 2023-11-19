@@ -146,7 +146,7 @@
 	name = "Tongs"
 	id = "tongs"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
+	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/kitchen/tongs
 	category = list(
 		RND_CATEGORY_INITIAL,
