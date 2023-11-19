@@ -73,7 +73,6 @@
 	name = "Smile of the moon"
 	desc = "Grants you Smile of the moon, a ranged spell muting, blinding and deafening the target for a short duartion."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
@@ -116,7 +115,6 @@
 	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/moon_amulette,
 		/datum/heretic_knowledge/reroll_targets,
@@ -197,7 +195,6 @@
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
-	adds_sidepath_points = 1
 	route = PATH_MOON
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
