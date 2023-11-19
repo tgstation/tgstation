@@ -375,8 +375,7 @@
 		defense_mod += 1
 	if(HAS_TRAIT(target, TRAIT_GRABWEAKNESS))
 		defense_mod -= 2
-	if(HAS_TRAIT(target, TRAIT_DWARF) || HAS_TRAIT(target, TRAIT_SETTLER)) //WHO ARE YOU CALLING SHORT?
-		defense_mod -= 2
+
 	if(HAS_TRAIT(target, TRAIT_GIANT))
 		defense_mod += 2
 	if(target.get_organic_health() < 50)
@@ -391,6 +390,9 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/tackle_target = target
+
+		if(tackle_target.get_mob_height() <= HUMAN_HEIGHT_SHORTEST) //WHO ARE YOU CALLING SHORT?
+			defense_mod -= 2
 
 		if(isnull(tackle_target.wear_suit) && isnull(tackle_target.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
 			defense_mod += 2
@@ -424,8 +426,6 @@
 
 	if(HAS_TRAIT(sacker, TRAIT_CLUMSY))
 		attack_mod -= 2
-	if(HAS_TRAIT(sacker, TRAIT_DWARF) || HAS_TRAIT(sacker, TRAIT_SETTLER)) //JUST YOU WAIT TILL I FIND A CHAIR, BUDDY, THEN YOU'LL BE SORRY
-		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
 	if(HAS_TRAIT(sacker, TRAIT_NOGUNS)) //Those dedicated to martial combat are particularly skilled tacklers
@@ -441,6 +441,9 @@
 
 	if(ishuman(sacker))
 		var/mob/living/carbon/human/human_sacker = sacker
+
+		if(human_sacker.get_mob_height() <= HUMAN_HEIGHT_SHORTEST) //JUST YOU WAIT TILL I FIND A CHAIR, BUDDY, THEN YOU'LL BE SORRY
+			attack_mod -= 2
 
 		if(human_sacker.mob_mood.sanity_level == SANITY_INSANE) //I've gone COMPLETELY INSANE
 			attack_mod += 15
