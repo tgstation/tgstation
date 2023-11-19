@@ -96,7 +96,7 @@
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
-	if(stage_peaked && !disease_flags & CHRONIC && disease_flags & CURABLE)
+	if(stage_peaked && !(disease_flags & CHRONIC) && disease_flags & CURABLE)
 		if(stage == max_stages) //every cycle we spend at max stage counts towards eventually curing the virus
 			peaked_cycles += 1
 		switch(severity)
@@ -114,11 +114,12 @@
 				cycles_to_beat = DISEASE_CYCLES_DANGEROUS
 			if(DISEASE_SEVERITY_BIOHAZARD)
 				cycles_to_beat = DISEASE_CYCLES_BIOHAZARD
-	if(!disease_flags & CHRONIC || disease_flags & CURABLE)
+
+	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE)
 		if(peaked_cycles > cycles_to_beat)
-			recovery_prob += 1
-			if(slowdown) //using antibiotics after somebody's basically peaked out can help get them over the finish line to kill a virus
-				recovery_prob += (slowdown - 1)
+			recovery_prob += 1 + (peaked_cycles / (cycles_to_beat/2)) //more severe viruses are beaten back more aggressively after the peak
+		if(slowdown) //using antibiotics can help get them over the finish line to kill a virus
+			recovery_prob += (slowdown - 1)
 		if(affected_mob.satiety < 0) //being malnourished makes it a lot harder to defeat your illness
 			recovery_prob += -0.8
 		if(affected_mob.mob_mood) // this and most other modifiers below a shameless rip from sleeping healing buffs, but feeling good helps make it go away quicker
@@ -136,7 +137,7 @@
 				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.2
 
-	if(affected_mob.satiety > 0 && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) && !disease_flags & CHRONIC || disease_flags & CURABLE)
+	if(affected_mob.satiety > 0 && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) && !(disease_flags & CHRONIC) && disease_flags & CURABLE) //resting starved won't help, but resting helps
 		var/turf/rest_turf = get_turf(affected_mob)
 		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
@@ -163,7 +164,7 @@
 
 		recovery_prob += 0.2 //any form of sleeping helps a little bit
 
-	if(recovery_prob && !disease_flags & CHRONIC && disease_flags & CURABLE)
+	if(recovery_prob && !(disease_flags & CHRONIC) && disease_flags & CURABLE)
 		if(SPT_PROB(recovery_prob, seconds_per_tick))
 			if(stage == 1) //if we reduce FROM stage == 1, cure the virus
 				if(affected_mob.satiety < 0)
