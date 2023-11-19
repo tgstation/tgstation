@@ -46,7 +46,8 @@
 /obj/item/organ/internal/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
-	if(!owner)
+	var/mob/living/carbon/body = owner
+	if(!body)
 		return
 
 	//Manage species digestion
