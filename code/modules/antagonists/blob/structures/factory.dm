@@ -8,14 +8,8 @@
 	point_return = BLOB_REFUND_FACTORY_COST
 	resistance_flags = LAVA_PROOF
 	armor_type = /datum/armor/structure_blob/factory
-	///How many spores this factory can have.
-	var/max_spores = BLOB_FACTORY_MAX_SPORES
 	///The list of spores and zombies
 	var/list/spores_and_zombies = list()
-	COOLDOWN_DECLARE(spore_delay)
-	var/spore_cooldown = BLOBMOB_SPORE_SPAWN_COOLDOWN
-	///Its Blobbernaut, if it has spawned any.
-	var/mob/living/basic/blob_minion/blobbernaut/minion/blobbernaut
 	///Used in blob/powers.dm, checks if it's already trying to spawn a blobbernaut to prevent issues.
 	var/is_creating_blobbernaut = FALSE
 
@@ -33,21 +27,21 @@
 
 /obj/structure/blob/special/factory/Destroy()
 	spores_and_zombies = null
-	blobbernaut = null
+	naut = null
 	if(overmind)
 		overmind.factory_blobs -= src
 	return ..()
 
 /obj/structure/blob/special/factory/Be_Pulsed()
 	. = ..()
-	if(blobbernaut)
+	if(naut)
 		return
 	if(length(spores_and_zombies) >= max_spores)
 		return
 	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/basic/blob_minion/created_spore = (overmind) ? overmind.create_spore(loc) : new(loc)
+
 /// Tracks the existence of a mob in our mobs list
 /obj/structure/blob/special/factory/proc/register_mob(mob/living/basic/blob_minion/blob_mob)
 	spores_and_zombies |= blob_mob
@@ -80,16 +74,16 @@
 	visible_message(span_boldwarning("The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!"))
 	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 
-	blobbernaut = new_naut
-	blobbernaut.link_to_factory(src)
+	naut = new_naut
+	naut.link_to_factory(src)
 	RegisterSignals(new_naut, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_blobbernaut_death))
 	update_appearance(UPDATE_ICON)
 
 /// When our brave soldier dies, reset our max integrity
 /obj/structure/blob/special/factory/proc/on_blobbernaut_death(mob/living/death_naut)
 	SIGNAL_HANDLER
-	if (isnull(blobbernaut) || blobbernaut != death_naut)
+	if (isnull(naut) || naut != death_naut)
 		return
-	blobbernaut = null
+	naut = null
 	max_integrity = initial(max_integrity)
 	update_appearance(UPDATE_ICON)

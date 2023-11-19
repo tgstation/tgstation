@@ -12,7 +12,6 @@
 	production = 1
 	growthstages = 2
 	yield = 1
-	instability = 15
 	potency = 30
 
 /obj/item/seeds/seedling/harvest(mob/harvester)

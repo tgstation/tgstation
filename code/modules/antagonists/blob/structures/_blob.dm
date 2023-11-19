@@ -399,7 +399,7 @@
 	var/expand_range = 0
 
 	// Spore production vars: for core, factories, and nodes (with strains)
-	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
+	var/mob/living/basic/blob_minion/blobbernaut/minion/naut = null
 	var/max_spores = 0
 	var/list/spores = list()
 	COOLDOWN_DECLARE(spore_delay)
@@ -461,7 +461,7 @@
 	if(!COOLDOWN_FINISHED(src, spore_delay))
 		return
 	COOLDOWN_START(src, spore_delay, spore_cooldown)
-	var/mob/living/simple_animal/hostile/blob/blobspore/BS = new (loc, src)
+	var/mob/living/basic/blob_minion/spore/BS = new (loc, src)
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
 		BS.overmind = overmind
 		BS.update_icons()

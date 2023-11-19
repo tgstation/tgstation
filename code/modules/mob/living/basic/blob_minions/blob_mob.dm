@@ -7,7 +7,7 @@
 	unique_name = TRUE
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
-	combat_mode = TRUE
+	istate = ISTATE_HARM
 	bubble_icon = "blob"
 	speak_emote = null
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

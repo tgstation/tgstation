@@ -95,7 +95,7 @@
 		return FALSE
 
 	var/atom/bee_hive = bee_ai.blackboard[BB_CURRENT_HOME]
-	if(bee_hive && get_dist(target, bee_hive) > AGGRO_DISTANCE_FROM_HIVE)
+	if(bee_hive && get_dist(target, bee_hive) > 5)
 		return FALSE
 
 	return !(mob_target.bee_friendly())

@@ -8,7 +8,6 @@
 	basic_mob_flags = DEL_ON_DEATH
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
-	combat_mode = TRUE
 	habitable_atmos  = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = 0
 	health = 125
@@ -24,9 +23,8 @@
 	mob_biotypes = MOB_ROBOTIC
 	death_message = "blows apart!"
 	light_system = MOVABLE_LIGHT
-	light_range = 6
+	light_outer_range = 6
 	light_on = FALSE
-	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
 	///the access card we use to access mining
 	var/obj/item/card/id/access_card

@@ -12,7 +12,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "robusts"
 	response_harm_simple = "robust"
-	combat_mode = TRUE
+	istate = ISTATE_HARM
 	maxHealth = 75
 	health = 75
 	melee_damage_lower = 10
