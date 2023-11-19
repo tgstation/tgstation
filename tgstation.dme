@@ -6137,7 +6137,6 @@
 #include "monkestation\code\modules\pissing\bladder.dm"
 #include "monkestation\code\modules\pissing\emote.dm"
 #include "monkestation\code\modules\pissing\piss_effect.dm"
-#include "monkestation\code\modules\pissing\piss_virus.dm"
 #include "monkestation\code\modules\pollution\generic_pollutants.dm"
 #include "monkestation\code\modules\pollution\generic_turf_pollutions.dm"
 #include "monkestation\code\modules\pollution\pollutant_datum.dm"
