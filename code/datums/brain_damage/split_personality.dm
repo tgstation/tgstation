@@ -266,9 +266,8 @@
 	notify_ghosts(
 		"[owner] is blacking out!",
 		source = owner,
-		action = NOTIFY_ORBIT,
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "Bro I'm not even drunk right now",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
