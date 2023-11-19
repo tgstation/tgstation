@@ -350,6 +350,11 @@
 
 	var/special_role_text = lowertext(name)
 
+//monkestation edit start
+	if(contractor_hub)
+		result += contractor_round_end()
+//monkestation edit end
+
 	if(traitor_won)
 		result += span_greentext("The [special_role_text] was successful!")
 	else
