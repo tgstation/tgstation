@@ -140,9 +140,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		balloon_alert(user, "open the panel first!")
 		return FALSE
 
-	tool.play_tool_sound(src)
-	deconstruct(disassembled = TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(do_after(user, (10 SECONDS), target = src))
+		tool.play_tool_sound(src)
+		deconstruct(disassembled = TRUE)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/barsign/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
@@ -482,5 +483,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 		return .
 
 	if(isopenturf(get_step(on_wall, EAST))) //This takes up 2 tiles so we want to make sure we have two tiles to hang it from.
-		balloon_alert("needs more support!")
+		balloon_alert(user, "needs more support!")
 		return FALSE
