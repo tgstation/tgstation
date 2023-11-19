@@ -64,7 +64,7 @@
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.combat_mode) //we are not on attack mode
+	if(!(living_pawn.istate & ISTATE_HARM)) //we are not on attack mode
 		return
 	return ..()
 
@@ -112,7 +112,7 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	if(!living_pawn.combat_mode)
+	if(!(living_pawn.istate & ISTATE_HARM))
 		living_pawn.set_combat_mode(TRUE)
 
 	living_pawn.RangedAttack(target)
@@ -141,7 +141,7 @@
 	var/automated_mining = controller.blackboard[BB_AUTOMATED_MINING]
 	var/mob/living/living_pawn = controller.pawn
 
-	if(!automated_mining && living_pawn.combat_mode) //are we not on automated mining or collect mode?
+	if(!automated_mining && (living_pawn.istate & ISTATE_HARM)) //are we not on automated mining or collect mode?
 		return
 
 	return ..()
@@ -150,7 +150,7 @@
 	hunt_cooldown = 2 SECONDS
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/consume_ores/minebot/target_caught(mob/living/hunter, obj/item/stack/ore/hunted)
-	if(hunter.combat_mode)
+	if(hunter.istate & ISTATE_HARM)
 		hunter.set_combat_mode(FALSE)
 	return ..()
 
@@ -207,7 +207,7 @@
 /datum/pet_command/point_targetting/attack/minebot/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, FALSE)
 	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.combat_mode)
+	if(!(living_pawn.istate & ISTATE_HARM))
 		living_pawn.set_combat_mode(TRUE)
 	return ..()
 

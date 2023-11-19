@@ -70,3 +70,6 @@ GLOBAL_LIST_EMPTY(string_numbers_lists)
 		return .
 
 	return GLOB.string_numbers_lists[string_id] = values
+
+/datum/proc/p_They(temp_gender)
+	return capitalize(p_they(temp_gender))

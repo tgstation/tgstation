@@ -1311,6 +1311,7 @@
 #include "code\datums\elements\light_eaten.dm"
 #include "code\datums\elements\light_eater.dm"
 #include "code\datums\elements\loomable.dm"
+#include "code\datums\elements\mob_grabber.dm"
 #include "code\datums\elements\mob_killed_tally.dm"
 #include "code\datums\elements\movement_turf_changer.dm"
 #include "code\datums\elements\movetype_handler.dm"

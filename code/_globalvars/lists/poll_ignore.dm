@@ -31,6 +31,10 @@
 #define POLL_IGNORE_SHADE "shade"
 #define POLL_IGNORE_SYNDICATE "syndicate"
 #define POLL_IGNORE_SPLITPERSONALITY "splitpersonality"
+#define POLL_IGNORE_VENUSHUMANTRAP "venus"
+#define POLL_IGNORE_SPECTRAL_BLADE "spectralblade"
+#define POLL_IGNORE_SHUTTLE_DENIZENS "shuttledenizen"
+#define POLL_IGNORE_DEFECTIVECLONE "defectiveclone"
 
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(

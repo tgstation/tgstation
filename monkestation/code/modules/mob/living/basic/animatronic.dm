@@ -130,7 +130,7 @@
 	if(blood_hunger)
 		. += "It's glaring at you."
 
-/mob/living/basic/monkey_animatronic/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/monkey_animatronic/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 	var/mob/living/living_target = target
 	if(!istype(living_target))

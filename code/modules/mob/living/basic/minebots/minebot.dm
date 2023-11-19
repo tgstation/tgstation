@@ -75,8 +75,8 @@
 
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
-	icon_state = combat_mode ? "mining_drone_offense" : "mining_drone"
-	balloon_alert(src, "now [combat_mode ? "attacking" : "collecting"]")
+	icon_state = (istate & ISTATE_HARM) ? "mining_drone_offense" : "mining_drone"
+	balloon_alert(src, "now [(istate & ISTATE_HARM) ? "attacking" : "collecting"]")
 
 /mob/living/basic/mining_drone/examine(mob/user)
 	. = ..()
@@ -96,9 +96,9 @@
 
 
 /mob/living/basic/mining_drone/welder_act(mob/living/user, obj/item/welder)
-	if(user.combat_mode)
+	if(user.istate & ISTATE_HARM)
 		return FALSE
-	if(combat_mode)
+	if(istate & ISTATE_HARM)
 		user.balloon_alert(user, "can't repair in attack mode!")
 		return TRUE
 	if(maxHealth == health)
@@ -119,13 +119,13 @@
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 
-	if(. || user.combat_mode)
+	if(. ||( user.istate & ISTATE_HARM))
 		return
-	set_combat_mode(!combat_mode)
-	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
+	set_combat_mode(!(istate & ISTATE_HARM))
+	balloon_alert(user, "now [(istate & ISTATE_HARM) ? "attacking wildlife" : "collecting loose ore"]")
 
 /mob/living/basic/mining_drone/RangedAttack(atom/target)
-	if(!combat_mode)
+	if(!(istate & ISTATE_HARM))
 		return
 	stored_gun.afterattack(target, src)
 
@@ -133,7 +133,7 @@
 /mob/living/basic/mining_drone/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
 
-	if(!. || !proximity_flag || combat_mode)
+	if(!. || !proximity_flag || (istate & ISTATE_HARM))
 		return
 
 	if(istype(attack_target, /obj/item/stack/ore))
