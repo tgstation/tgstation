@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/controller/subsystem/autotransfer/fire()
 	if(world.time > targettime)
+		if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_DOCKED || Shuttle.emergency.mode == SHUTTLE_ESCAPE)
+			return
 		SSvote.initiate_vote(/datum/vote/shuttle_call, "automatic shuttle vote")
 		targettime = targettime + 20 MINUTES
 
