@@ -58,7 +58,6 @@
 	var/occur_text
 
 	if(outright)
-		if(outright)
 		switch(wounding_type)
 			if(WOUND_BLUNT)
 				occur_text = "is outright smashed to a gross pulp, severing it completely!"

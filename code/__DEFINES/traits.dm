@@ -1204,5 +1204,3 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
 // unique trait sources, still defines
 #define EMP_TRAIT "emp_trait"
-#define STATUE_MUTE "statue"
-#define CHANGELING_DRAIN "drain"
