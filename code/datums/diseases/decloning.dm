@@ -13,7 +13,7 @@
 	spread_text = "Organic meltdown"
 	process_dead = TRUE
 
-/datum/disease/decloning/cure()
+/datum/disease/decloning/cure(add_resistance = TRUE)
 	affected_mob.remove_status_effect(/datum/status_effect/decloning)
 	return ..()
 
