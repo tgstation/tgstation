@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed an issue with un-hidden (alien, syndie etc.) nodes not being researchable."

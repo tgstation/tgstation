@@ -73,7 +73,7 @@
 		if(design_structure == /turf/open/floor/plating)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
-				T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				T.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 				qdel(src)
 				return TRUE
 		if(design_structure == /obj/structure/lattice/catwalk)

@@ -180,8 +180,6 @@
 		notify_ghosts(
 			"[applicant.name] has been picked for the ruleset [name]!",
 			source = new_character,
-			action = NOTIFY_ORBIT,
-			header = "Something Interesting!",
 		)
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)

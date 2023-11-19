@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "debug chem synthesizer works again. cleaned up chem dispenser, portable chem dispenser & debug chem synthesizer ui code"
+  - qol: "ui for displaying beaker reagents for debug chem synthesizer has been improved. Now displays input list for adding reagents"

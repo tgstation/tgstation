@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Delam counter will correctly show 0 the shift after a delam"

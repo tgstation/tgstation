@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "Hydrotrays consume nutrients according to their proportion in the mix, instead of randomly picking reagents to consume every cycle."
