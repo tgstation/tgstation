@@ -37,6 +37,8 @@
 
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
+	if(elevation)
+		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	. = ..()
 
 	var/static/list/crate_paint_jobs
@@ -58,10 +60,6 @@
 	)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
-
-	var/elevation_to_add = opened ? elevation_open : elevation
-	if(elevation_to_add)
-		AddElement(/datum/element/elevation, pixel_shift = elevation_to_add)
 
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
@@ -114,9 +112,9 @@
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 	if(elevation != elevation_open)
 		if(elevation)
-			RemoveElement(/datum/element/elevation, elevation)
+			RemoveElement(/datum/element/elevation, pixel_shift = elevation)
 		if(elevation_open)
-			AddElement(/datum/element/elevation, elevation_open)
+			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
 	if(!QDELETED(manifest))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
@@ -129,9 +127,9 @@
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	if(elevation != elevation_open)
 		if(elevation_open)
-			RemoveElement(/datum/element/elevation, elevation_open)
+			RemoveElement(/datum/element/elevation, pixel_shift = elevation_open)
 		if(elevation)
-			AddElement(/datum/element/elevation, elevation)
+			AddElement(/datum/element/elevation, pixel_shift = elevation)
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
