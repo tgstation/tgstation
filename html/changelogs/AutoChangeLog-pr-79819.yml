@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "\"Old Chat\" (AKA: The old-styled non-TGUI raw-HTMLesque chat that you might see when it prods you with the \"Failed to load fancy chat!\" issue) should now get all text messages as expected."

@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram will no longer electrocute innocent, law abiding crew trying to use the crosswalk when there's no tram in sight"

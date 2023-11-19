@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Plates now respect the weight class of items on top."
-  - bugfix: "Fried items now respect existing volume cap."
-  - bugfix: "Smartfridges now don't accept bulky food items, good thing we have none of those right guys?"
