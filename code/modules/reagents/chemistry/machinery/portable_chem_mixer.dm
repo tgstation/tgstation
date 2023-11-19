@@ -235,11 +235,9 @@
 
 			if(!QDELETED(beaker))
 				var/datum/reagents/container = beaker.reagents
-				var/actual = min(amount, 1000, container.maximum_volume - container.total_volume)
+				var/actual = min(amount, container.maximum_volume - container.total_volume)
 				for (var/datum/reagents/source in dispensable_reagents[reagent]["reagents"])
-					var/to_transfer = min(source.total_volume, actual)
-					source.trans_to(beaker, to_transfer, transferred_by = ui.user)
-					actual -= to_transfer
+					actual -= source.trans_to(beaker, min(source.total_volume, actual), transferred_by = ui.user)
 					if (actual <= 0)
 						break
 			return TRUE
