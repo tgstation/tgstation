@@ -52,6 +52,7 @@
 	. = ..()
 	var/hurt = TRUE
 	var/extra_speed = 0
+	var/oof_noise = FALSE //We smacked something with denisty, so play a noise
 	if(throwingdatum.thrower != src)
 		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 
@@ -66,6 +67,7 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		oof_noise = TRUE
 
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
@@ -80,6 +82,7 @@
 
 		take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		Paralyze(2 SECONDS)
+		oof_noise = TRUE
 
 		if(blocked)
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] blocked the worst of it!"),\
@@ -92,7 +95,9 @@
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""]!"))
 			log_combat(src, victim, "crashed into")
-	playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
+
+	if(oof_noise)
+		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
