@@ -58,7 +58,7 @@
 /datum/map_template/ruin/lavaland/syndicate_base
 	name = "Syndicate Lava Base"
 	id = "lava-base"
-	description = "A secret base researching illegal chemical weaoponry and fishing, it is closely guarded by an elite team of syndicate agents."
+	description = "A secret base researching illegal chemical weaponry and fishing, it is closely guarded by an elite team of syndicate agents."
 	suffix = "lavaland_surface_syndicate_base1.dmm"
 	cost = 20
 	allow_duplicates = FALSE
