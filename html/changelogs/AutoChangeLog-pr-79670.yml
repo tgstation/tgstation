@@ -1,4 +1,0 @@
-author: "distributivgesetz"
-delete-after: True
-changes:
-  - bugfix: "Fixes a runtime when the radioactive nebula trait runs with a map that has no virology area."

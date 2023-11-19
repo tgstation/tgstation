@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored another large chuck of attack code, primarily involving melee item attacks and non-human mob attacks. Report if you see anything weird"
-  - bugfix: "Pacifists clicking on simple robots or silicons no longer causes sparks"
-  - bugfix: "Blocked thrown batons are now properly... blocked"

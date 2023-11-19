@@ -521,7 +521,7 @@
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
-		return
+		return FALSE
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
