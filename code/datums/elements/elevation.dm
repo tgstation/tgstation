@@ -26,7 +26,7 @@
 			reset_elevation(turf)
 		ADD_TRAIT(turf, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(target))
 
-/datum/element/elevation/proc/Detach(datum/source)
+/datum/element/elevation/Detach(atom/movable/source)
 	unregister_turf(source, source.loc)
 	return ..()
 
@@ -134,7 +134,7 @@
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
 	SIGNAL_HANDLER
 	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(entered))
-		var/elevate_time = isturf(old_loc) && Adjacent(old_loc) ? ELEVATE_TIME : 0
+		var/elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0
 		elevate_mob(entered, elevate_time = elevate_time)
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
@@ -145,7 +145,7 @@
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
 	SIGNAL_HANDLER
 	if((isnull(gone.loc) || !HAS_TRAIT_FROM(gone.loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(gone))
-		var/elevate_time = isturf(gone.loc) && Adjacent(gone.loc) ? ELEVATE_TIME : 0
+		var/elevate_time = isturf(gone.loc) && source.Adjacent(gone.loc) ? ELEVATE_TIME : 0
 		elevate_mob(gone, -pixel_shift, elevate_time)
 		UnregisterSignal(gone, COMSIG_LIVING_SET_BUCKLED)
 
