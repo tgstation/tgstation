@@ -595,7 +595,7 @@
 
 	var/turf/our_turf = get_turf(robot_owner)
 
-	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
+	if(reagents.has_reagent(amount = 1, chemical_flags = REAGENT_CLEANS))
 		our_turf.wash(CLEAN_SCRUB)
 
 	reagents.expose(our_turf, TOUCH, min(1, 10 / reagents.total_volume))
