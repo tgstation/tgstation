@@ -152,7 +152,6 @@
 	notify_ghosts(
 		"[user] has awoken His Grace!",
 		source = src,
-		action = NOTIFY_ORBIT,
 		header = "All Hail His Grace!",
 	)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)

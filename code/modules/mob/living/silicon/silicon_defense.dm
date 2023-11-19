@@ -27,20 +27,17 @@
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		if(prob(damage))
-			for(var/mob/living/buckled in buckled_mobs)
-				buckled.Paralyze(20)
-				unbuckle_mob(buckled)
-				buckled.visible_message(span_danger("[buckled] is knocked off of [src] by [user]!"), \
-								span_userdanger("You're knocked off of [src] by [user]!"), null, null, user)
-				to_chat(user, span_danger("You knock [buckled] off of [src]!"))
-		switch(user.melee_damage_type)
-			if(BRUTE)
-				adjustBruteLoss(damage)
-			if(BURN)
-				adjustFireLoss(damage)
+	var/damage_received = .
+	if(prob(damage_received))
+		for(var/mob/living/buckled in buckled_mobs)
+			buckled.Paralyze(2 SECONDS)
+			unbuckle_mob(buckled)
+			buckled.visible_message(
+				span_danger("[buckled] is knocked off of [src] by [user]!"),
+				span_userdanger("You're knocked off of [src] by [user]!"),
+				ignored_mobs = user,
+			)
+			to_chat(user, span_danger("You knock [buckled] off of [src]!"))
 
 /mob/living/silicon/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -79,6 +76,15 @@
 			to_chat(user, span_notice("You pet [src]."))
 			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
 
+/mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag)
+	. = ..()
+	if(.)
+		return TRUE
+	if(damage_type == BRUTE && attack_type == UNARMED_ATTACK && attack_flag == MELEE && damage <= 10)
+		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
+		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/attack_drone(mob/living/basic/drone/user)
 	if(user.combat_mode)

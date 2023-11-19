@@ -65,7 +65,7 @@
 	reagent_state = SOLID
 	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	var/brute_heal = 1
 	var/burn_heal = 0
@@ -341,6 +341,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
@@ -362,7 +363,6 @@
 			if(isslime(affected_mob))
 				heating = rand(20, 25)
 	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
-	return ..()
 
 /datum/reagent/consumable/frostoil
 	name = "Frost Oil"
@@ -376,6 +376,7 @@
 	default_container = /obj/item/reagent_containers/cup/bottle/frostoil
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/cooling = 0
 	switch(current_cycle)
 		if(1 to 15)
@@ -401,7 +402,6 @@
 			if(isslime(affected_mob))
 				cooling = -rand(20, 25)
 	affected_mob.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
-	return ..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -460,10 +460,10 @@
 	return ..()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
 		if(SPT_PROB(5, seconds_per_tick))
 			affected_mob.visible_message(span_warning("[affected_mob] [pick("dry heaves!","coughs!","splutters!")]"))
-	return ..()
 
 /datum/reagent/consumable/salt
 	name = "Table Salt"
@@ -803,8 +803,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
-	return ..()
 
 /datum/reagent/consumable/honey
 	name = "Honey"
@@ -826,8 +826,8 @@
 	mytray.adjust_pestlevel(rand(1, 2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
 	. = ..()
+	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
 	var/need_mob_update
 	if(SPT_PROB(33, seconds_per_tick))
 		need_mob_update = affected_mob.adjustBruteLoss(-1, updating_health = FALSE, required_bodytype = affected_bodytype)

@@ -43,8 +43,8 @@ if ! [ -x "$has_youtubedl" ]; then
 		sudo apt-get update
 		sudo apt-get install -y python3 python3-pip
 	fi
-	pip3 install youtube-dl
+	pip3 install youtube-dl --break-system-packages
 elif [ -x "$has_pip3" ]; then
 	echo "Ensuring youtube-dl is up-to-date with pip3..."
-	pip3 install youtube-dl -U
+	pip3 install youtube-dl -U --break-system-packages
 fi

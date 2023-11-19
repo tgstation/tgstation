@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "suite storage units can be locked again. Remember to install a card reader or set the access levels in the airlock electronics inside its stock parts & finally swipe your ID to properly enforce access control."
