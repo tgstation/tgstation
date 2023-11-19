@@ -263,7 +263,6 @@
 		affects_us = FALSE, \
 		affects_others = TRUE, \
 	)
-	owner.overlay_fullscreen("moon", /atom/movable/screen/fullscreen/moon_music, 1)
 	return TRUE
 
 /datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
@@ -294,7 +293,6 @@
 	owner.log_message("[owner] is no longer insane.", LOG_GAME)
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
-	owner.clear_fullscreen("moon", 50)
 	owner.update_appearance(UPDATE_OVERLAYS)
 	return ..()
 

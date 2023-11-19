@@ -132,8 +132,8 @@
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/moon_music
+	icon = 'icons/hud/screen_moon_song.dmi'
 	icon_state = "songofstars0"
-	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/ivanov_display

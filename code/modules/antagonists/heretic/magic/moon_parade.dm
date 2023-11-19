@@ -85,7 +85,7 @@
 	victim.balloon_alert(victim,"you feel unable to move away from the parade!")
 	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by lunar parade")
-	victim.overlay_fullscreen("moon", /atom/movable/screen/fullscreen/moon_music, 1)
+	victim.overlay_fullscreen("moon_song", /atom/movable/screen/fullscreen/moon_music)
 
 	//Lowers sanity
 	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
@@ -97,7 +97,7 @@
 	// Unregister the signal blocking movement on those we hit
 	for(var/datum/weakref/mob_ref in mobs_hit)
 		var/mob/living/real_mob = mob_ref.resolve()
-		real_mob.clear_fullscreen("moon", 50)
+		real_mob.clear_fullscreen("moon_song", animated = 4 SECONDS)
 		UnregisterSignal(real_mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	mobs_hit.Cut()
 	soundloop.stop()
