@@ -45,13 +45,13 @@
 	///Is the slime an adult slime?
 	var/is_adult = TRUE
 
- 	///The number of /obj/item/slime_extract's the slime has left inside
+	///The number of /obj/item/slime_extract's the slime has left inside
 	var/cores = 1
 	///Chance of mutating, should be between 25 and 35
 	var/mutation_chance = 30
- 	///1-10 controls how much electricity they are generating
+	///1-10 controls how much electricity they are generating
 	var/powerlevel = 0
- 	///Controls how long the slime has been overfed, if 10, grows or reproduces
+	///Controls how long the slime has been overfed, if 10, grows or reproduces
 	var/amount_grown = 0
 
 	///Has a mutator been used on the slime? Only one is allowed
@@ -64,7 +64,7 @@
 
 	//CORE-CROSSING CODE
 
- 	///What cross core modification is being used.
+	///What cross core modification is being used.
 	var/crossbreed_modification
 	///How many extracts of the modtype have been applied.
 	var/applied_crossbreed_amount = 0
@@ -80,17 +80,17 @@
 	var/is_attack_on_cooldown = FALSE
 	///If a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/discipline_stacks = 0
- 	///Stored the world time when the slime's stun wears off
+	///Stored the world time when the slime's stun wears off
 	var/stunned_until = 0
 
 	///Is the slime docile?
 	var/docile = FALSE
 
- 	///Used to understand when someone is talking to it
+	///Used to understand when someone is talking to it
 	var/slime_id = 0
 	///AI variable - tells the slime to hunt this down
 	var/mob/living/Target = null
- 	///AI variable - tells the slime to follow this person
+	///AI variable - tells the slime to follow this person
 	var/mob/living/Leader = null
 
 	///Determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
