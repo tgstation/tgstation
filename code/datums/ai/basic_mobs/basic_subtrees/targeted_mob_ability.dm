@@ -23,3 +23,6 @@
 	controller.queue_behavior(use_ability_behaviour, ability_key, target_key)
 	if (finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/targeted_mob_ability/continue_planning
+	finish_planning = FALSE

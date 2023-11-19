@@ -98,7 +98,7 @@
 
 /datum/element/footstep/proc/play_simplestep(mob/living/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
-
+	var/turf/source_loc = get_turf(source)
 	if (forced || SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 

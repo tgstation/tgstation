@@ -48,6 +48,9 @@
 /// Generic key for a non-specific targetted action
 #define BB_TARGETTED_ACTION "BB_targetted_action"
 
+/// Generic key for a non-specific action
+#define BB_GENERIC_ACTION "BB_generic_action"
+
 /// Generic key for a shapeshifting action
 #define BB_SHAPESHIFT_ACTION "BB_shapeshift_action"
 

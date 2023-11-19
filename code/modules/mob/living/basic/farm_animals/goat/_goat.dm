@@ -1,3 +1,13 @@
+/obj/item/food/meat/slab/grassfed
+	name = "eco meat"
+	desc = "A slab of 100% grass fed award-winning farm meat."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/fat = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	) // Marble
+
+
 /// The Greatest (animal) Of All Time. Cud chewing, shin-kicking, kitchen-dwelling nuisance.
 /mob/living/basic/goat
 	name = "goat"

@@ -179,7 +179,7 @@
 	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
-	if(!combat_mode)
+	if(!(istate & ISTATE_HARM))
 		return
 	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
 	if(!istype(tangle_ability))
@@ -230,7 +230,7 @@
 
 	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
-	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
+	RegisterSignal(new_vine, COMSIG_PARENT_QDELETING, PROC_REF(remove_vine), new_vine)
 	vines[new_vine] = component
 	if(isliving(target_atom))
 		var/mob/living/victim = target_atom

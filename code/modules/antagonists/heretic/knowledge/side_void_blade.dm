@@ -160,4 +160,3 @@
 	cost = 1
 	route = PATH_SIDE
 	mob_to_summon = /mob/living/basic/heretic_summon/maid_in_the_mirror
-	poll_ignore_define = POLL_IGNORE_MAID_IN_MIRROR
