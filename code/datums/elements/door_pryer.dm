@@ -36,7 +36,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if (airlock_target.locked || airlock_target.welded || airlock_target.seal)
-		if (!attacker.combat_mode)
+		if (!(attacker.istate & ISTATE_HARM))
 			airlock_target.balloon_alert(attacker, "it's sealed!")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 		return // Attack the door

@@ -80,7 +80,7 @@
 		faction |= REF(creator)
 	created_by = creator
 	ai_controller?.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
-	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))
+	RegisterSignal(creator, COMSIG_PARENT_QDELETING, PROC_REF(creator_destroyed))
 
 /// Reference handling
 /mob/living/basic/legion_brood/proc/creator_destroyed()

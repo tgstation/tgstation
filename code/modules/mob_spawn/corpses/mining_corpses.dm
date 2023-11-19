@@ -353,3 +353,55 @@
 		/obj/item/stack/sheet/runed_metal = 15,
 		)
 	r_pocket = /obj/item/clothing/glasses/hud/health/night/cultblind
+
+/datum/outfit/consumed_heremoth
+	name = "Legion-Consumed Tribal Mothman"
+	uniform = /obj/item/clothing/under/costume/loincloth
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+
+/datum/outfit/consumed_heremoth/pre_equip(mob/living/carbon/human/moth, visualsOnly = FALSE)
+	if(!visualsOnly)
+		moth.set_species(/datum/species/moth)
+	if(prob(70))
+		glasses = /obj/item/clothing/glasses/blindfold
+	if(prob(90))
+		back = /obj/item/storage/backpack/cultpack
+		backpack_contents = list()
+		var/backpack_loot = pick(list(
+			/obj/item/flashlight/lantern = 1,
+			/obj/item/toy/plush/moth = 1,
+			/obj/item/toy/eldritch_book = 2,
+			/obj/item/knife/combat/survival = 2,
+		))
+		backpack_contents += backpack_loot
+
+/datum/outfit/consumed_ice_settler
+	name = "Legion-Consumed Settler"
+	uniform = /obj/item/clothing/under/costume/traditional
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	shoes = /obj/item/clothing/shoes/winterboots
+	mask = /obj/item/clothing/mask/breath
+
+/datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
+	if(prob(40))
+		r_pocket = pick_weight(list(
+			/obj/item/coin/silver = 5,
+			/obj/item/fishing_hook = 2,
+			/obj/item/coin/gold = 2,
+			/obj/item/fishing_hook/shiny = 1,
+		))
+	if(prob(30))
+		back = pick_weight(list(
+			/obj/item/pickaxe = 4,
+			/obj/item/tank/internals/oxygen = 6,
+		))
+	else
+		back = /obj/item/storage/backpack/satchel/explorer
+		backpack_contents = list()
+		var/backpack_loot = pick(list(
+			/obj/item/food/fishmeat = 89,
+			/obj/item/food/fishmeat/carp = 10,
+			/obj/item/skeleton_key = 1,
+		))
+		backpack_contents += backpack_loot

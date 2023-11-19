@@ -174,10 +174,6 @@
 	if(isnull(mind))
 		return
 
-	if(istype(target, /obj/machinery/door/airlock))
-		INVOKE_ASYNC(src, PROC_REF(pry_door), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
-
 	if(!(istate &ISTATE_HARM))
 		INVOKE_ASYNC(src, PROC_REF(poison_target), target)
 		return COMPONENT_HOSTILE_NO_ATTACK

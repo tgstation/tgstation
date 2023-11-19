@@ -112,3 +112,31 @@
 	if (!gibbed)
 		new /obj/effect/temp_visual/hive_spawn_wither(get_turf(src), /* copy_from = */ src)
 	return ..()
+
+/// Plays a dispersing animation on hivelord and legion minions so they don't just vanish
+/obj/effect/temp_visual/hive_spawn_wither
+	name = "withering spawn"
+	duration = 1 SECONDS
+
+/obj/effect/temp_visual/hive_spawn_wither/Initialize(mapload, atom/copy_from)
+	if (isnull(copy_from))
+		. = ..()
+		return INITIALIZE_HINT_QDEL
+	icon = copy_from.icon
+	icon_state = copy_from.icon_state
+	pixel_x = copy_from.pixel_x
+	pixel_y = copy_from.pixel_y
+	duration = rand(0.5 SECONDS, 1 SECONDS)
+	var/matrix/transformation = matrix(transform)
+	transformation.Turn(rand(-70, 70))
+	transformation.Scale(0.7, 0.7)
+	animate(
+		src,
+		pixel_x = rand(-5, 5),
+		pixel_y = -5,
+		transform = transformation,
+		color = "#44444400",
+		time = duration,
+		flags = ANIMATION_RELATIVE,
+	)
+	return ..()
