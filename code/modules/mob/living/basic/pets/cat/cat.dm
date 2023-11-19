@@ -185,5 +185,4 @@
 /mob/living/basic/pet/cat/jerry //Holy shit we left jerry on donut ~ Arcane ~Fikou
 	name = "Jerry"
 	desc = "Tom is VERY amused."
-	inept_hunter = TRUE
 	gender = MALE
