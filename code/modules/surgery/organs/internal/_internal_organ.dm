@@ -27,7 +27,6 @@
 
 	START_PROCESSING(SSobj, src)
 
-
 /obj/item/organ/internal/process(seconds_per_tick, times_fired)
 	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 

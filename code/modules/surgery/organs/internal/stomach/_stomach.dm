@@ -46,13 +46,14 @@
 /obj/item/organ/internal/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
+	if(!owner)
+		return
+
 	//Manage species digestion
 	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			handle_hunger(humi, seconds_per_tick, times_fired)
-
-	var/mob/living/carbon/body = owner
 
 	// digest food, sent all reagents that can metabolize to the body
 	for(var/datum/reagent/bit as anything in reagents.reagent_list)
