@@ -533,6 +533,8 @@
 /obj/item/bodypart/arm/left/robot/advanced
 	name = "advanced robotic left arm"
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
 	unarmed_damage_low = 5
 	unarmed_damage_high = 13
 	unarmed_effectiveness = 20
@@ -542,6 +544,8 @@
 /obj/item/bodypart/arm/right/robot/advanced
 	name = "advanced robotic right arm"
 	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
 	unarmed_damage_low = 5
 	unarmed_damage_high = 13
 	unarmed_effectiveness = 20
@@ -551,6 +555,8 @@
 /obj/item/bodypart/leg/left/robot/advanced
 	name = "advanced robotic left leg"
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
 	unarmed_damage_low = 7
 	unarmed_damage_high = 17
 	unarmed_effectiveness = 20
@@ -560,6 +566,8 @@
 /obj/item/bodypart/leg/right/robot/advanced
 	name = "heavy robotic right leg"
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
 	unarmed_damage_low = 7
 	unarmed_damage_high = 17
 	unarmed_effectiveness = 20
