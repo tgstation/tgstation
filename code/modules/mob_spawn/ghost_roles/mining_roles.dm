@@ -274,11 +274,11 @@
 ///Syndicate Listening Post
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate
-	name = "Syndicate Bioweapon Scientist"
+	name = "Syndicate Chemical Scientist"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	prompt_name = "a syndicate science technician"
-	you_are_text = "You are a syndicate science technician, employed in a top secret research facility developing biological weapons."
+	you_are_text = "You are a syndicate science technician, employed in a top secret research facility developing chemical weapons."
 	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile."
 	important_text = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
 	outfit = /datum/outfit/lavaland_syndicate
