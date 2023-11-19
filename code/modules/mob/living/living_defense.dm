@@ -315,9 +315,22 @@
 
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
+	if(.)
+		return TRUE
+
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.istate & ISTATE_HARM)
+			break
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
+			continue
+		if(operations.next_step(user, modifiers))
+			return TRUE
+
 	var/martial_result = user.apply_martial_art(src, modifiers)
 	if (martial_result != MARTIAL_ATTACK_INVALID)
 		return martial_result
+
+	return FALSE
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/misc/start))
