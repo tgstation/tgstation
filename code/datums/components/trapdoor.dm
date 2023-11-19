@@ -367,7 +367,7 @@
 	in_use = FALSE
 	if(!isopenspaceturf(target_turf)) // second check to make sure nothing changed during constructions
 		return
-	var/turf/new_turf = target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/new_turf = target_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	new_turf.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = TRUE)
 	balloon_alert(user, "trapdoor constructed")
 	qdel(src)
