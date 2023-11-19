@@ -35,7 +35,7 @@
 				return
 	return ..()
 
- /// the master AI process
+/// the master AI process
 /mob/living/simple_animal/slime/proc/process_slime_ai()
 
 	if(slime_ai_processing || stat || client)

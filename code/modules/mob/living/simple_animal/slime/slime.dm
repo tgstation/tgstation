@@ -45,13 +45,13 @@
 	///Is the slime an adult slime?
 	var/is_adult = TRUE
 
- 	/// the number of /obj/item/slime_extract's the slime has left inside
+ 	///The number of /obj/item/slime_extract's the slime has left inside
 	var/cores = 1
-	/// Chance of mutating, should be between 25 and 35
+	///Chance of mutating, should be between 25 and 35
 	var/mutation_chance = 30
- 	/// 1-10 controls how much electricity they are generating
+ 	///1-10 controls how much electricity they are generating
 	var/powerlevel = 0
- 	/// controls how long the slime has been overfed, if 10, grows or reproduces
+ 	///Controls how long the slime has been overfed, if 10, grows or reproduces
 	var/amount_grown = 0
 
 	///Has a mutator been used on the slime? Only one is allowed
@@ -74,36 +74,36 @@
 	///The current mood of the slime, set randomly or through emotes (if sentient).
 	var/current_mood
 
-	/// determines if the AI loop is activated
+	///Determines if the AI loop is activated
 	var/slime_ai_processing = FALSE
-	/// attack cooldown
+	///Attack cooldown
 	var/is_attack_on_cooldown = FALSE
-	/// if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
+	///If a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/discipline_stacks = 0
- 	/// Stored the world time when the slime's stun wears off
+ 	///Stored the world time when the slime's stun wears off
 	var/stunned_until = 0
 
 	///Is the slime docile?
 	var/docile = FALSE
 
- 	/// Used to understand when someone is talking to it
+ 	///Used to understand when someone is talking to it
 	var/slime_id = 0
-	/// AI variable - tells the slime to hunt this down
+	///AI variable - tells the slime to hunt this down
 	var/mob/living/Target = null
- 	/// AI variable - tells the slime to follow this person
+ 	///AI variable - tells the slime to follow this person
 	var/mob/living/Leader = null
 
-	/// Determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
+	///Determines if it's been attacked recently. Can be any number, is a cooloff-ish variable
 	var/attacked_stacks = 0
-	/// If set to 1, the slime will attack and eat anything it comes in contact with
+	///If set to 1, the slime will attack and eat anything it comes in contact with
 	var/rabid = FALSE
-	/// AI variable, cooloff-ish for how long it's going to stay in one place
+	///AI variable, cooloff-ish for how long it's going to stay in one place
 	var/holding_still = 0
-	/// AI variable, cooloff-ish for how long it's going to follow its target
+	///AI variable, cooloff-ish for how long it's going to follow its target
 	var/target_patience = 0
-	/// A list of friends; they are not considered targets for feeding; passed down after splitting
+	///A list of friends; they are not considered targets for feeding; passed down after splitting
 	var/list/Friends = list()
-	/// Last phrase said near it and person who said it
+	///Last phrase said near it and person who said it
 	var/list/speech_buffer = list()
 
 /mob/living/simple_animal/slime/Initialize(mapload, new_type=/datum/slime_type/grey, new_is_adult=FALSE)
