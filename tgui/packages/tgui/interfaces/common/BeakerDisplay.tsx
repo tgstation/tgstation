@@ -2,7 +2,7 @@ import { BooleanLike } from 'common/react';
 import { AnimatedNumber, Box, Button, LabeledList } from '../../components';
 import { useBackend } from '../../backend';
 
-export type BeakerReagent = {
+type BeakerReagent = {
   name: string;
   volume: number;
 };
@@ -15,7 +15,7 @@ export type Beaker = {
   contents: BeakerReagent[];
 };
 
-export type BeakerProps = {
+type BeakerProps = {
   beaker: Beaker;
   replace_contents?: BeakerReagent[];
   title_label?: string;
