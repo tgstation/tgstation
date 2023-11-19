@@ -2622,10 +2622,6 @@
 /obj/structure/chair/comfy/teal{
 	dir = 4
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /mob/living/basic/drone/snowflake/bardrone,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
