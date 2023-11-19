@@ -124,7 +124,6 @@
 #define BB_EMOTE_HEAR "emote_hear"
 #define BB_EMOTE_SEE "emote_see"
 #define BB_EMOTE_SOUND "emote_sound"
-#define BB_EMOTE_CHANCE "emote_chance"
 #define BB_SPEAK_CHANCE "emote_chance"
 
 /// A target that has called this mob for reinforcements

@@ -38280,12 +38280,6 @@
 /obj/structure/spider/stickyweb,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/turf_decal/siding/wood,
-/mob/living/basic/syndicate/russian/ranged/lootless,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/siding/wood,
 /mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -51483,12 +51477,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/chair/stool/directional/west,
-/mob/living/basic/syndicate/russian/ranged/lootless,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/chair/stool/directional/west,
 /mob/living/basic/trooper/russian/ranged/lootless,
 /turf/open/floor/plating,

@@ -2562,23 +2562,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargobay)
 "SJ" = (
-/mob/living/basic/syndicate/ranged/shotgun/space,
-/obj/item/ammo_casing/shotgun/buckshot{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/ammo_casing/shotgun/buckshot{
-	pixel_x = 3;
-	pixel_y = 10
-	},
-/obj/item/ammo_casing/shotgun/buckshot{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /mob/living/basic/trooper/syndicate/ranged/shotgun/space,
 /obj/item/ammo_casing/shotgun/buckshot/spent{
 	pixel_x = 3;

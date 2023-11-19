@@ -286,14 +286,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged{
-	environment_smash = 0;
-	name = "Syndicate Salvage Worker"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1662,14 +1654,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
-/mob/living/basic/syndicate/melee{
-	environment_smash = 0
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1735,15 +1719,6 @@
 /area/shuttle/abandoned/crew)
 "qc" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/basic/syndicate/melee{
-	environment_smash = 0
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /mob/living/basic/trooper/syndicate/melee{
@@ -1766,13 +1741,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/basic/syndicate/melee{
-	environment_smash = 0
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
