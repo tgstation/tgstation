@@ -292,6 +292,6 @@
 /datum/supply_pack/service/bar_sign
 	name = "Bar Sign Replacement Kit"
 	desc = "A replacement bar sign, perfect for drawing in customers to your bar, tavern, inn, nightclub, or even coffeehouse!"
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 14
 	contains = list(/obj/item/wallframe/barsign)
 	crate_name = "bar sign replacement crate"
