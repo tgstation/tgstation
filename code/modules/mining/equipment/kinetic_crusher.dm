@@ -440,6 +440,7 @@
 	name = "demonic cube"
 	desc = "A stone cold cube dropped from an ice demon."
 	icon_state = "ice_demon_cube"
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	denied_type = /obj/item/crusher_trophy/ice_demon_cube
 	///how many will we summon?
 	var/summon_amount = 2

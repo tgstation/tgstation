@@ -3,6 +3,7 @@
 	desc = "These seeds grow into a floral assistant which can help look after other plants!"
 	icon_state = "seed-seedling"
 	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
+	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	species = "seedling"
 	plantname = "Seedling Plant"
 	product = /mob/living/basic/seedling

@@ -1,6 +1,7 @@
 /// Tongs, let you pick up and feed people food from further away.
 /obj/item/kitchen/tongs
 	name = "tongs"
+	icon = 'icons/obj/service/kitchen.dmi'
 	desc = "So you never have to touch anything with your dirty, unwashed hands."
 	reach = 2
 	icon_state = "tongs"
