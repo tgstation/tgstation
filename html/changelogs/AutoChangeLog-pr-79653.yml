@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Nuclear Operatives, in an attempt to appeal to the more \"tacticool\" members of their cause, have begun using callsigns to designate themselves. Check your preferences to set your Operative Alias!"
+  - qol: "At the request of the more vain members of the cause, hair dye has been added to the Operative Firebase dorms."
