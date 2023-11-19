@@ -30,12 +30,12 @@
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
-	if(!all_wounds || !(!user.combat_mode || user == src))
+	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))
 		var/datum/wound/W = i
-		if(W.try_treating(I, user))
+		if(W.try_treating(item, user))
 			return 1
 
 	return ..()

@@ -16,7 +16,7 @@
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
 	/// Holds all languages this mob can speak and understand
-	VAR_PRIVATE/datum/language_holder/language_holder
+	var/datum/language_holder/language_holder
 	/// The list of factions this atom belongs to
 	var/list/faction
 

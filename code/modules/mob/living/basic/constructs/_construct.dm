@@ -2,8 +2,8 @@
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	gender = NEUTER
 	basic_mob_flags = DEL_ON_DEATH
-	combat_mode = TRUE
-	mob_biotypes = MOB_MINERAL | MOB_SPECIAL
+	istate = ISTATE_HARM
+	mob_biotypes = MOB_MINERAL
 	faction = list(FACTION_CULT)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0

@@ -46,7 +46,7 @@
 
 	current_target = target
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_clear_target))
-		if (!isnull(aggro_state))
+	if (!isnull(aggro_state))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_icon_state_updated))
 	if (!isnull(aggro_overlay))
 		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlays_updated))
