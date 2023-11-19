@@ -170,7 +170,7 @@
 		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) //required_amount/8, because the water usage is split between eight sprays. As of this comment, required_amount/8 = 10u each.
 		water.reagents = water_reagents
 		water_reagents.my_atom = water
-		reagents.trans_to(water, required_amount/8)
+		reagents.trans_to(water, required_amount / 8)
 		water.move_at(get_step(chassis, get_dir(targetturf, chassis)), 2, 4) //Target is the tile opposite of the mech as the starting turf.
 
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
@@ -303,13 +303,13 @@
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Wall...")]")
 				if(!do_after_cooldown(floor_turf, source))
 					return
-				floor_turf.PlaceOnTop(/turf/closed/wall)
+				floor_turf.place_on_top(/turf/closed/wall)
 			else if(isopenturf(target))
 				var/turf/open/open_turf = target
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
 				if(!do_after_cooldown(open_turf, source))
 					return
-				open_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				open_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		if(MODE_AIRLOCK)
 			if(isfloorturf(target))
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Airlock...")]")

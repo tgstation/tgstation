@@ -337,10 +337,11 @@
 
 	// Generate item name
 	var/item_name_default = initial(container_style.name)
+	var/datum/reagent/master_reagent = reagents.get_master_reagent()
 	if(selected_container == default_container) // Tubes and bottles gain reagent name
-		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default]"
+		item_name_default = "[master_reagent.name] [item_name_default]"
 	if(!(initial(container_style.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
-		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([volume_in_each]u)"
+		item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
 	var/item_name = tgui_input_text(usr,
 		"Container name",
 		"Name",
@@ -392,7 +393,7 @@
 	if (target == TARGET_BUFFER)
 		if(!check_reactions(reagent, beaker.reagents))
 			return FALSE
-		beaker.reagents.trans_id_to(src, reagent.type, amount)
+		beaker.reagents.trans_to(src, amount, target_id = reagent.type)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
@@ -403,7 +404,7 @@
 	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
 		if(!check_reactions(reagent, reagents))
 			return FALSE
-		reagents.trans_id_to(beaker, reagent.type, amount)
+		reagents.trans_to(beaker, amount, target_id = reagent.type)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 

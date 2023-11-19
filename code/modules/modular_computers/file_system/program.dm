@@ -28,7 +28,7 @@
 	var/requires_ntnet = FALSE
 	/// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
 	var/ntnet_status = 1
-	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
+	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_PDA combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
 	/// Whether the program can be downloaded from NTNet. Set to FALSE to disable.
 	var/available_on_ntnet = TRUE
@@ -84,9 +84,9 @@
 
 ///Attempts to generate an Ntnet log, returns the log on success, FALSE otherwise.
 /datum/computer_file/program/proc/generate_network_log(text)
-	if(computer)
-		return computer.add_log(text)
-	return FALSE
+	if(!computer || computer.obj_flags & EMAGGED)
+		return FALSE
+	return computer.add_log(text)
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
