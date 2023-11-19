@@ -96,7 +96,7 @@
 		to_chat(user, span_warning("You're not ready to tackle!"))
 		return
 
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved
+	if(user.get_timed_status_effect_duration(/datum/status_effect/staggered)) // can't tackle if you're staggered
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
 
@@ -186,9 +186,9 @@
  * If our target is human, their armor will reduce the severity of the roll. We pass along any MELEE armor as a percentage reduction.
  * If they're not human (such as a carbon), we give them a small grace of a 10% reduction.
  *
- * Finally, we figure out what effect our target receives. Note that all positive outcomes inflict off-balance, resulting in a much harder time escaping the potential grab:
+ * Finally, we figure out what effect our target receives. Note that all positive outcomes inflict staggered, resulting in a much harder time escaping the potential grab:
  * * 1 to 20: Our target is briefly stunned and knocked down. suffers 30 stamina damage, and our tackler is also knocked down.
- * * 21 to 49: Our target is knocked down, dealt 40 stamina damage, and put into a passive grab. Given they are off-balance, this means the target must resist to escape!
+ * * 21 to 49: Our target is knocked down, dealt 40 stamina damage, and put into a passive grab. Given they are staggered, this means the target must resist to escape!
  * * 50 to inf: Our target is hit with a significant chunk of stamina damage, put into an aggressive grab, and knocked down. They're probably not escaping after this. If our tackler is stamcrit when they land this, so is our target.
 */
 
@@ -217,10 +217,7 @@
 			target.Paralyze(0.5 SECONDS)
 			user.Knockdown(1 SECONDS)
 			target.Knockdown(2 SECONDS)
-
-			if(ishuman(target) && !human_target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				human_target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 
 		if(21 to 49) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
 			user.visible_message(span_warning("[user] lands an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!"), span_userdanger("You land an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!"), ignored_mobs = target)
@@ -233,12 +230,10 @@
 			target.apply_damage(40, STAMINA)
 			target.Paralyze(0.5 SECONDS)
 			target.Knockdown(3 SECONDS)
+			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			if(ishuman(target) && ishuman(user))
 				INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
 				human_sacker.setGrabState(GRAB_PASSIVE)
-				if(!human_target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					human_target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-					addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
 
 		if(50 to INFINITY) // absolutely BODIED
 			var/stamcritted_user = HAS_TRAIT_FROM(user, TRAIT_INCAPACITATED, STAMINA)
@@ -249,9 +244,7 @@
 				target.apply_damage(100, STAMINA) // CRASHING THIS PLANE WITH NO SURVIVORS
 				target.Paralyze(1 SECONDS)
 				target.Knockdown(5 SECONDS)
-				if(ishuman(target) && !human_target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-					human_target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-					addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+				target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
 			else
 				user.visible_message(span_warning("[user] lands a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), span_userdanger("You land a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), ignored_mobs = target)
 				to_chat(target, span_userdanger("[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!"))
@@ -263,36 +256,27 @@
 				target.apply_damage(60, STAMINA)
 				target.Paralyze(0.5 SECONDS)
 				target.Knockdown(3 SECONDS)
+				target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
 				if(ishuman(target) && ishuman(user))
 					INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
 					human_sacker.setGrabState(GRAB_AGGRESSIVE)
-					if(!human_target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-						human_target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-						addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
 
 /**
  * Our neutral tackling outcome.
  *
- * Our tackler and our target both get knocked off-balance. The target longer than the tackler. However, the tackler stands up after this outcome. This is maybe less neutral than it appears, but the tackler initiated, so...
+ * Our tackler and our target are staggered. The target longer than the tackler. However, the tackler stands up after this outcome. This is maybe less neutral than it appears, but the tackler initiated, so...
  * This outcome also occurs when our target has blocked the tackle in some way, preventing situations where someone tackling into a blocker is too severely punished as a result. Hence, this has its own proc.
 */
 
 /datum/component/tackler/proc/neutral_outcome(mob/living/carbon/user, mob/living/carbon/target, roll = 1, tackle_word = "tackle")
 
-	var/mob/living/carbon/human/human_target = target
-	var/mob/living/carbon/human/human_sacker = user
 
-	user.visible_message(span_warning("[user] lands a [tackle_word] on [target], briefly knocking both off-balance!"), span_userdanger("You land a [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!"), ignored_mobs = target)
-	to_chat(target, span_userdanger("[user] lands a [tackle_word] on you, briefly knocking you off-balance!"))
+	user.visible_message(span_warning("[user] lands a [tackle_word] on [target], briefly staggering them both!"), span_userdanger("You land a [tackle_word] on [target], briefly staggering [target.p_them()] and yourself!"), ignored_mobs = target)
+	to_chat(target, span_userdanger("[user] lands a [tackle_word] on you, briefly staggering you both!"))
 
 	user.get_up(TRUE)
-	if(ishuman(user) && !human_sacker.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		human_sacker.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(human_sacker, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
-
-	if(ishuman(target) && !human_target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		human_target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2) //okay maybe slightly good for the sacker, it's a mild benefit okay?
+	user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
+	target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS) //okay maybe slightly good for the sacker, it's a mild benefit okay?
 
 /**
  * Our negative tackling outcomes.
@@ -305,9 +289,9 @@
  * If they're not human (such as a carbon), we give them a small grace of a 10% reduction.
  *
  * Finally, we figure out what effect our target receives and what our tackler receives:
- * * 1 to 20: Our tackler is knocked down and become off-balance, and our target suffers stamina damage and is knocked off-balance. So not all bad, but the target most likely can punish you for this.
- * * 21 to 49: Our tackler is knocked down, suffers stamina damage, and is off-balance. Ouch.
- * * 50 to inf: Our tackler suffers a catastrophic failure, receiving significant stamina damage, a concussion, and is paralyzed for 3 seconds. Oh, and they're off-balance for a LONG time.
+ * * 1 to 20: Our tackler is knocked down and become staggered, and our target suffers stamina damage and is knocked staggered. So not all bad, but the target most likely can punish you for this.
+ * * 21 to 49: Our tackler is knocked down, suffers stamina damage, and is staggered. Ouch.
+ * * 50 to inf: Our tackler suffers a catastrophic failure, receiving significant stamina damage, a concussion, and is paralyzed for 3 seconds. Oh, and they're staggered for a LONG time.
 */
 
 /datum/component/tackler/proc/negative_outcome(mob/living/carbon/user, mob/living/carbon/target, roll = -1, tackle_word = "tackle")
@@ -322,27 +306,19 @@
 
 	var/actual_roll = rand(1, potential_roll_outcome)
 
-	var/mob/living/carbon/human/human_target = target
-	var/mob/living/carbon/human/human_sacker = user
-
 	switch(actual_roll)
 
 		if(-INFINITY to 0) //I don't want to know how this has happened, okay?
 			neutral_outcome(user, target, roll, tackle_word) //Default to neutral
 
 		if(1 to 20) // It's not completely terrible! But you are somewhat vulernable for doing it.
-			user.visible_message(span_warning("[user] lands a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!"), span_userdanger("You land a weak [tackle_word] on [target], briefly knocking [target.p_them()] off-balance!"), ignored_mobs = target)
-			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!"))
+			user.visible_message(span_warning("[user] lands a weak [tackle_word] on [target], briefly staggering [target.p_them()]!"), span_userdanger("You land a weak [tackle_word] on [target], briefly staggering [target.p_them()]!"), ignored_mobs = target)
+			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, staggering you!"))
 
 			user.Knockdown(1 SECONDS)
+			user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			target.apply_damage(20, STAMINA)
-			if(ishuman(target) && !human_target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				human_target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
-
-			if(ishuman(user) && !human_sacker.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				human_sacker.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(human_sacker, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 
 		if(21 to 49) // oughe
 			user.visible_message(span_warning("[user] lands a dreadful [tackle_word] on [target], briefly knocking [user.p_them()] to the ground!"), span_userdanger("You land a dreadful [tackle_word] on [target], briefly knocking you to the ground!"), ignored_mobs = target)
@@ -350,9 +326,7 @@
 
 			user.Knockdown(3 SECONDS)
 			user.apply_damage(40, STAMINA)
-			if(ishuman(user) && !human_sacker.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				human_sacker.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(human_sacker, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+			user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 
 		if(50 to INFINITY) // It has been decided that you will suffer
 			user.visible_message(span_danger("[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!"), span_userdanger("You botch your [tackle_word] and slam your head into [target], knocking yourself silly!"), ignored_mobs = target)
@@ -362,9 +336,7 @@
 			user.apply_damage(80, STAMINA)
 			user.apply_damage(20, BRUTE, BODY_ZONE_HEAD)
 			user.gain_trauma(/datum/brain_trauma/mild/concussion)
-			if(ishuman(user) && !human_sacker.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				human_sacker.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-				addtimer(CALLBACK(human_sacker, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 3)
+			user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
 
 /**
  * This handles all of the modifiers for the actual carbon-on-carbon tackling, and gets its own proc because of how many there are (with plenty more in mind!)
