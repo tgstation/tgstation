@@ -31,10 +31,11 @@
 	name = "Cat Crate"
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 10 //Cats are worth as much as corgis.
-	contains = list(/mob/living/basic/pet/cat,
-					/obj/item/clothing/neck/petcollar,
-					/obj/item/toy/cattoy,
-				)
+	contains = list(
+		/mob/living/basic/pet/cat,
+		/obj/item/clothing/neck/petcollar,
+		/obj/item/toy/cattoy,
+	)
 	crate_name = "cat crate"
 
 /datum/supply_pack/critter/cat/generate()

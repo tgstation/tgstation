@@ -246,3 +246,5 @@
 #define BB_DONUT_TARGET "donut_target"
 /// key that holds our home...
 #define BB_CAT_HOME "cat_home"
+/// key that holds the human we will beg
+#define BB_HUMAN_BEG_TARGET "human_beg_target"

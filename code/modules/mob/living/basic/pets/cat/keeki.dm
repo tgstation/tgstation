@@ -1,4 +1,4 @@
-/mob/living/basic/pet/cat/cak //I told you I'd do it, Remie
+/mob/living/basic/pet/cat/cak
 	name = "Keeki"
 	desc = "She is a cat made out of cake."
 	icon_state = "cak"
@@ -7,8 +7,12 @@
 	health = 50
 	maxHealth = 50
 	gender = FEMALE
-	butcher_results = list(/obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1, /obj/item/food/cakeslice/birthday = 3,  \
-	/obj/item/food/meat/slab = 2)
+	butcher_results = list(
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
+		/obj/item/food/cakeslice/birthday = 3,
+		/obj/item/food/meat/slab = 2
+	)
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	ai_controller = /datum/ai_controller/basic_controller/cat/cake
@@ -33,7 +37,7 @@
 /mob/living/basic/pet/cat/cak/CheckParts(list/parts)
 	. = ..()
 	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
-	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
+	if(isnull(candidate?.brainmob?.mind))
 		return
 	var/datum/mind/candidate_mind = candidate.brainmob.mind
 	candidate_mind.transfer_to(src)

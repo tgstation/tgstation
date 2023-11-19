@@ -15,6 +15,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/haul_food_to_young,
 		/datum/ai_planning_subtree/territorial_struggle,
+		/datum/ai_planning_subtree/make_babies,
 	)
 
 /datum/ai_planning_subtree/reside_in_home
@@ -99,13 +100,14 @@
 			continue
 		if(is_type_in_list(potential_enemy, ignore_types))
 			continue
-		if(isnull(potential_enemy.ai_controller))
+		var/datum/ai_controller/basic_controller/enemy_controller = potential_enemy.ai_controller
+		if(isnull(enemy_controller))
 			continue
 		//theyre already engaged in a battle, leave them alone!
-		if(potential_enemy.ai_controller.blackboard_key_exists(BB_TRESSPASSER_TARGET))
+		if(enemy_controller.blackboard_key_exists(BB_TRESSPASSER_TARGET))
 			continue
 		//u choose me and i choose u
-		potential_enemy.ai_controller.set_blackboard_key(BB_TRESSPASSER_TARGET, controller.pawn)
+		enemy_controller.set_blackboard_key(BB_TRESSPASSER_TARGET, controller.pawn)
 		return potential_enemy
 	return null
 
@@ -218,7 +220,7 @@
 	target_key = BB_CAT_FOOD_TARGET
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/find_cat_food
 	finding_behavior = /datum/ai_behavior/find_hunt_target/find_cat_food
-	hunt_targets = list(/obj/item/fish, /obj/item/food/deadmouse)
+	hunt_targets = list(/obj/item/fish, /obj/item/food/deadmouse, /obj/item/food/fishmeat)
 	hunt_chance = 75
 	hunt_range = 9
 
@@ -227,7 +229,8 @@
 
 /datum/ai_behavior/find_hunt_target/find_cat_food/valid_dinner(mob/living/source, atom/dinner, radius)
 	//this food is already near a kitten, let the kitten eat it
-	if(locate(/mob/living/basic/pet/cat/kitten) in oview(2, dinner))
+	var/mob/living/nearby_kitten = locate(/mob/living/basic/pet/cat/kitten) in oview(2, dinner)
+	if(nearby_kitten && nearby_kitten != source)
 		return FALSE
 	return can_see(source, dinner, radius)
 
@@ -300,10 +303,15 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/beg_human,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food/kitten,
 	)
 
 //if the food is too far away, point at it or meow. if its near us then go eat it
+
+/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food/kitten
+
+
 /datum/ai_planning_subtree/find_and_hunt_target/find_cat_food/kitten/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/target = controller.blackboard[BB_CAT_FOOD_TARGET]
 	if(target && get_dist(target, controller.pawn) > controller.blackboard[BB_MAX_DISTANCE_TO_FOOD])
@@ -329,3 +337,27 @@
 /datum/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)
+
+/datum/ai_planning_subtree/beg_human
+
+/datum/ai_planning_subtree/beg_human/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+
+	if(controller.blackboard_key_exists(BB_HUMAN_BEG_TARGET))
+		controller.queue_behavior(/datum/ai_behavior/beacon_for_food, BB_HUMAN_BEG_TARGET, BB_HUNGRY_MEOW)
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/human_beg, BB_HUMAN_BEG_TARGET, /mob/living/carbon/human)
+
+/datum/ai_behavior/find_and_set/human_beg/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/list/locate_items = controller.blackboard[BB_HUNTABLE_PREY]
+	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
+		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
+			continue
+		if(!length(typecache_filter_list(human_target.held_items, locate_items)))
+			continue
+		return human_target
+
+	return null
+
+
+

@@ -10,7 +10,8 @@
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	unsuitable_atmos_damage = 0.5
-	butcher_results = list(/obj/item/food/meat/slab = 1,
+	butcher_results = list(
+		/obj/item/food/meat/slab = 1,
 		/obj/item/organ/internal/ears/cat = 1,
 		/obj/item/organ/external/tail/cat = 1,
 		/obj/item/stack/sheet/animalhide/cat = 1
@@ -37,9 +38,10 @@
 	///can hold items?
 	var/can_hold_item = TRUE
 	///list of items we can carry
-	var/static/list/carriable_items = list(
+	var/static/list/huntable_items = list(
 		/obj/item/fish,
 		/obj/item/food/deadmouse,
+		/obj/item/food/fishmeat,
 	)
 	///item we are currently holding
 	var/obj/item/held_food
@@ -52,7 +54,7 @@
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(carriable_items))
+	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(huntable_items))
 	if(can_breed)
 		add_breeding_component()
 	if(can_hold_item)
@@ -60,7 +62,7 @@
 
 /mob/living/basic/pet/cat/proc/pre_attack(mob/living/source, atom/movable/target)
 	SIGNAL_HANDLER
-	if(!is_type_in_list(target, carriable_items) || held_food)
+	if(!is_type_in_list(target, huntable_items) || held_food)
 		return
 	target.forceMove(src)
 
@@ -72,7 +74,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/pet/cat/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	if(is_type_in_list(arrived, carriable_items))
+	if(is_type_in_list(arrived, huntable_items))
 		held_food = arrived
 		update_appearance(UPDATE_OVERLAYS)
 	return ..()
@@ -172,7 +174,7 @@
 
 /mob/living/basic/pet/cat/kitten/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/basic_eating, food_types = carriable_items)
+	AddElement(/datum/element/basic_eating, food_types = huntable_items)
 
 /mob/living/basic/pet/cat/_proc
 	name = "Proc"
