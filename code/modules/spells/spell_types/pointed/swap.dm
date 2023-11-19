@@ -35,7 +35,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/swap/InterceptClickOn(mob/living/caller, params, atom/click_target)
+/datum/action/cooldown/spell/pointed/swap/InterceptClickOn(mob/living/caller, params, atom/target)
 	if((caller.istate & ISTATE_SECONDARY))
 		if(!IsAvailable(feedback = TRUE))
 			return FALSE
