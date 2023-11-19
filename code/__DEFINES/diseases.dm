@@ -55,8 +55,8 @@ DEFINE_BITFIELD(spread_flags, list(
 #define DISEASE_SEVERITY_UNCURABLE "Uncurable"
 
 //Severity Guaranteed Cycles or how long before a disease can potentially self-cure
-/// Positive diseases should not self-cure by themselves
-#define DISEASE_CYCLES_POSITIVE 0
+/// Positive diseases should not self-cure by themselves, but if they do, they cure fast
+#define DISEASE_CYCLES_POSITIVE 1
 /// Roughly 6 minutes for a harmless virus
 #define DISEASE_CYCLES_NONTHREAT 180
 /// Roughly 5 minutes for a disruptive nuisance virus
