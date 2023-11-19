@@ -143,13 +143,10 @@
 		remove_watcher(viewing_client)
 
 	for(var/datum/weakref/locked_ref as anything in locked)
-		var/mob/locked_mob = locked_ref.resolve()
-		if(QDELETED(locked_mob))
-			continue
-		locked_mob.notransform = FALSE
-		UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
+		unlock_mob(locked_ref)
 
 	qdel(src)
+
 
 /// Locks a mob, preventing them from moving, being hurt, or acting
 /datum/cinematic/proc/lock_mob(mob/to_lock)

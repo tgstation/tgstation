@@ -673,7 +673,7 @@
 		layer = initial(layer)
 	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
 	// Make sure it doesn't go out of the southern bounds of the tile when standing.
-	body_position_pixel_y_offset = (current_size-1) * world.icon_size/2
+	body_position_pixel_y_offset = (resize-1) * world.icon_size/2
 
 /mob/living/proc/update_density()
 	if(HAS_TRAIT(src, TRAIT_UNDENSE))
