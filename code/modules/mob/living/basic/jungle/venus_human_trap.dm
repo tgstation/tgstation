@@ -173,7 +173,6 @@
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/lifesteal, 5)
 	var/datum/action/cooldown/vine_tangle/tangle = new(src)
 	tangle.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
