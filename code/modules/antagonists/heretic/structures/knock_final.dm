@@ -5,9 +5,9 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "bhole3"
-	color = COLOR_VOID_PURPLE
+	color = COLOR_PURPLE
 	light_color = COLOR_VOID_PURPLE
-	light_range = 20
+	light_outer_range =  = 20
 	anchored = TRUE
 	density = FALSE
 	layer = HIGH_PIPE_LAYER //0.01 above sigil layer used by heretic runes
@@ -98,9 +98,9 @@
 	name = "destabilised tear"
 	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "bhole3"
-	color = COLOR_VOID_PURPLE
-	light_color = COLOR_VOID_PURPLE
-	light_range = 20
+	color = COLOR_PURPLE
+	light_color = COLOR_PURPLE
+	light_outer_range = 20
 	layer = HIGH_PIPE_LAYER
 	duration = 1 SECONDS
 
@@ -111,4 +111,4 @@
 	animate(transform = matrix().Scale(0.2), time = 0.75 SECONDS)
 	animate(transform = matrix().Scale(3, 0), time = 0.1 SECONDS)
 	animate(src, color = COLOR_WHITE, time = 0.25 SECONDS, flags = ANIMATION_PARALLEL)
-	animate(color = COLOR_VOID_PURPLE, time = 0.3 SECONDS)
+	animate(color = COLOR_PURPLE, time = 0.3 SECONDS)
