@@ -15,9 +15,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	return
 
-/mob/living/carbon/human/dummy/attach_rot(mapload)
-	return
-
 /mob/living/carbon/human/dummy/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	harvest_organs()
 	return ..()

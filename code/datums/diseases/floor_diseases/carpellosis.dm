@@ -1,7 +1,7 @@
 #define GNASHING_RANGE 7
 
 /// Caused by dirty food. Makes you growl at people and bite them spontaneously.
-/datum/disease/advance/carpellosis
+/datum/disease/carpellosis
 	name = "Carpellosis"
 	desc = "You have an angry space carp inside."
 	form = "Parasite"
@@ -21,20 +21,17 @@
 	/// Whether the host has carp ability
 	var/ability_granted = FALSE
 
-/datum/disease/advance/carpellosis/New()
-	symptoms = list(new/datum/symptom/headache)
-	..()
-
-/datum/disease/advance/carpellosis/generate_cure()
+/datum/disease/carpellosis/New()
 	cures = list(pick(cures))
 	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 	cure_text = cure.name
 
-/datum/disease/advance/carpellosis/stage_act(seconds_per_tick, times_fired)
+	return ..()
+
+/datum/disease/carpellosis/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
-
 
 	switch(stage)
 		if(2)
@@ -59,12 +56,12 @@
 			else if(SPT_PROB(2, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
 				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
 
-/datum/disease/advance/carpellosis/Destroy()
+/datum/disease/carpellosis/Destroy()
 	if(ability_granted)
 		QDEL_NULL(rift_ability)
 	return ..()
 
-/datum/disease/advance/carpellosis/cure()
+/datum/disease/carpellosis/cure()
 	if(ability_granted)
 		rift_ability.Remove(affected_mob)
 	if(max_stage_reached && prob(ella_spawn_chance))
@@ -72,7 +69,7 @@
 		new /mob/living/basic/carp/ella(affected_mob.loc)
 	return ..()
 
-/datum/disease/advance/carpellosis/proc/grant_ability()
+/datum/disease/carpellosis/proc/grant_ability()
 	if(ability_granted)
 		return
 	rift_ability = new(src)
@@ -80,13 +77,13 @@
 	rift_ability.HideFrom(affected_mob)
 	ability_granted = TRUE
 
-/datum/disease/advance/carpellosis/proc/find_nearby_human()
+/datum/disease/carpellosis/proc/find_nearby_human()
 	var/list/surroundings = orange(GNASHING_RANGE, affected_mob)
 	for(var/mob/human as anything in typecache_filter_list(surroundings, typecacheof(/mob/living/carbon/human)))
 		if(human.stat != DEAD && !(HAS_TRAIT(human, TRAIT_FAKEDEATH)))
 			return human
 
-/datum/disease/advance/carpellosis/proc/gnash_someone()
+/datum/disease/carpellosis/proc/gnash_someone()
 	var/mob/living/carbon/human/target = find_nearby_human()
 	if(isnull(target) || !affected_mob.get_bodypart(BODY_ZONE_HEAD)) // Need mouth to gnash
 		to_chat(affected_mob, span_warning("You want to gnash at someone..."))

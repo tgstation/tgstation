@@ -713,15 +713,6 @@
 					var/true_sequence = GET_SEQUENCE(M)
 					if (new_sequence == true_sequence)
 						matched_mutation = M
-				//First check is for the more-likely, weaker random virus. Second is for a tougher one. There's a chance both checks fail and you get nothing.
-				//This change was to bring it more in line with what I originally imagined, that the virus risk was from the virus misbehaving somehow - it
-				//should be a "sometimes" thing, not an "always" thing, but risky enough to force the need for precautions to isolate the subject
-				if(prob(60))
-					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(2,2)
-					scanner_occupant.ContactContractDisease(random_disease)
-				else if (prob(30))
-					var/datum/disease/advance/random/random_disease = new /datum/disease/advance/random(3,4)
-					scanner_occupant.ContactContractDisease(random_disease)
 				//Instantiate list to hold resulting mutation_index
 				var/mutation_data[0]
 				//Start with the bad mutation, overwrite with the desired mutation if it passes the check

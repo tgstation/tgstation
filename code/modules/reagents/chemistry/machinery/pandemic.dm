@@ -13,8 +13,6 @@
 
 	/// Whether the pandemic is ready to make another culture/vaccine
 	var/wait
-	/// The currently selected symptom
-	var/datum/symptom/selected_symptom
 	/// The inserted beaker
 	var/obj/item/reagent_containers/beaker
 
@@ -170,47 +168,12 @@
 				beaker.reagents.clear_reagents()
 				eject_beaker()
 			return TRUE
-		if("rename_disease")
-			rename_disease(params["index"], params["name"])
-			return TRUE
-		if("create_culture_bottle")
-			if (wait)
-				return FALSE
-			create_culture_bottle(params["index"])
-			return TRUE
 		if("create_vaccine_bottle")
 			if (wait)
 				return FALSE
 			create_vaccine_bottle(params["index"])
 			return TRUE
 	return FALSE
-
-/**
- * Creates a culture bottle (ie: replicates) of the the specified disease.
- *
- * @param {number} index - The index of the disease to replicate.
- *
- * @returns {boolean} - Success or failure.
- */
-/obj/machinery/computer/pandemic/proc/create_culture_bottle(index)
-	var/id = get_virus_id_by_index(text2num(index))
-	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
-	if(!istype(adv_disease) || !adv_disease.mutable)
-		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
-		return FALSE
-	use_power(active_power_usage)
-	adv_disease = adv_disease.Copy()
-	var/list/data = list("viruses" = list(adv_disease))
-	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
-	bottle.name = "[adv_disease.name] culture tube"
-	bottle.desc = "A small test tube containing [adv_disease.agent] culture in synthblood medium."
-	bottle.reagents.add_reagent(/datum/reagent/blood, 20, data)
-	wait = TRUE
-	update_appearance()
-	var/turf/source_turf = get_turf(src)
-	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
-	return TRUE
 
 /**
  * Creates a vaccine bottle for the specified disease.
@@ -309,21 +272,6 @@
 		traits["index"] = index++
 		traits["name"] = disease.name
 		traits["spread"] = disease.spread_text || "none"
-		if(istype(disease, /datum/disease/advance)) // Advanced diseases get more info
-			var/datum/disease/advance/adv_disease = disease
-			var/disease_name = SSdisease.get_disease_name(adv_disease.GetDiseaseID())
-			traits["can_rename"] = ((disease_name == "Unknown") && adv_disease.mutable)
-			traits["is_adv"] = TRUE
-			traits["name"] = disease_name
-			traits["resistance"] = adv_disease.totalResistance()
-			traits["stage_speed"] = adv_disease.totalStageSpeed()
-			traits["stealth"] = adv_disease.totalStealth()
-			traits["symptoms"] = list()
-			for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
-				var/list/this_symptom = list()
-				this_symptom = symptom.get_symptom_data()
-				traits["symptoms"] += list(this_symptom)
-			traits["transmission"] = adv_disease.totalTransmittable()
 		data += list(traits)
 	return data
 
@@ -340,28 +288,6 @@
 	if(!disease)
 		return FALSE
 	return disease.GetDiseaseID()
-
-/**
- * Renames an advanced disease after running it through sanitize_name().
- *
- * @param {string} id - The ID of the disease to rename.
- *
- * @param {string} name - The new name of the disease.
- *
- * @returns {boolean} - Success or failure.
- */
-/obj/machinery/computer/pandemic/proc/rename_disease(index, name)
-	var/id = get_virus_id_by_index(text2num(index))
-	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
-	if(!adv_disease.mutable)
-		return FALSE
-	if(adv_disease)
-		var/new_name = sanitize_name(name, allow_numbers = TRUE, cap_after_symbols = FALSE)
-		if(!new_name)
-			return FALSE
-		adv_disease.AssignName(new_name)
-		return TRUE
-	return FALSE
 
 /**
  * Allows a user to create another vaccine/culture bottle again.

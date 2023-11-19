@@ -253,8 +253,6 @@
 	if(istype(civilian_bounty, /datum/bounty/reagent))
 		var/datum/bounty/reagent/chemical = civilian_bounty
 		return "[chemical.shipped_volume]/[chemical.required_volume] u"
-	if(istype(civilian_bounty, /datum/bounty/virus))
-		return "At least 1u"
 
 /**
  * Produces the value of the account's civilian bounty reward, if able.

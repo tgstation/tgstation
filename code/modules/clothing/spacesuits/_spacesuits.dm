@@ -310,11 +310,6 @@
 	user.visible_message(span_suicide("[user] is removing [user.p_their()] helmet to make a point! Yo, holy shit, [user.p_they()] dead!")) //the use of p_they() instead of p_their() here is intentional
 	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
-	if(!ishuman(user))
-		return FIRELOSS
-	var/mob/living/carbon/human/humanafterall = user
-	var/datum/disease/advance/cold/pun = new //in the show, arnold survives his stunt, but catches a cold because of it
-	humanafterall.ForceContractDisease(pun, FALSE, TRUE) //this'll show up on health analyzers and the like
 	return FIRELOSS
 
 #undef THERMAL_REGULATOR_COST

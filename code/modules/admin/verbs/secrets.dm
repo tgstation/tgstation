@@ -204,8 +204,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Virus Outbreak"))
 			switch(tgui_alert(usr,"Do you want this to be a random disease or do you have something in mind?",,list("Make Your Own","Random","Choose")))
-				if("Make Your Own")
-					AdminCreateVirus(holder)
 				if("Random")
 					force_event(/datum/round_event_control/disease_outbreak)
 				if("Choose")

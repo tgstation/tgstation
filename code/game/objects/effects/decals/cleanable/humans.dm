@@ -124,12 +124,6 @@
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us
 
-/obj/effect/decal/cleanable/blood/gibs/dry()
-	. = ..()
-	if(!.)
-		return
-	AddComponent(/datum/component/rot, 0, 5 MINUTES, 0.7)
-
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE
 

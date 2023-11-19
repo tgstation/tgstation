@@ -11,9 +11,6 @@
 
 	. = ..()
 
-	if(!gibbed && !QDELING(src)) //double check they didn't start getting deleted in ..()
-		attach_rot()
-
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
 		BT.on_death()
