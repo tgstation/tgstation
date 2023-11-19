@@ -87,7 +87,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!disassembled)
+		if(disassembled)
 			new /obj/item/wallframe/barsign(loc)
 		else
 			new /obj/item/stack/sheet/iron(drop_location(), 2)
@@ -132,6 +132,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	else
 		set_sign(chosen_sign)
 
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/barsign/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!panel_open)
+		balloon_alert(user, "open the panel first!")
+		return FALSE
+
+	tool.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/barsign/attackby(obj/item/I, mob/user)
@@ -459,9 +469,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	name = "bar sign frame"
 	desc = "Used to help draw the rabble into your bar"
 	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "noticeboard" //change
+	icon_state = "barsign"
 	result_path = /obj/machinery/barsign
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
-	pixel_shift = 32 //check if this is better now
+	pixel_shift = 32
+
+/obj/item/wallframe/barsign/try_build(turf/on_wall, mob/user)
+	. = ..()
+	if(!.)
+		return .
+
+	if(isopenturf(get_step(on_wall, EAST))) //This takes up 2 tiles so we want to make sure we have two tiles to hang it from.
+		balloon_alert("needs more support!")
+		return FALSE
