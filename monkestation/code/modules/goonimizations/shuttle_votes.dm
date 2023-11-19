@@ -23,6 +23,8 @@ SUBSYSTEM_DEF(autotransfer)
 	message = "Should we go home?!"
 
 /datum/vote/shuttle_call/can_be_initiated(mob/by_who, forced = FALSE)
+	if(!SSticker.HasRoundStarted())
+		return FALSE
 	if(started_time)
 		var/next_allowed_time = SSautotransfer.targettime
 		if(next_allowed_time > world.time && !forced)
