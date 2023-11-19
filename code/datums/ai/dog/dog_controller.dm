@@ -48,8 +48,8 @@
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,
 		BB_VISION_RANGE = AI_DOG_VISION_RANGE,
-		BB_PET_TARGETING_STRATEGY = new /datum/targetting_datum/basic/not_friends,
-		BB_TARGETING_STRATEGY = new /datum/targetting_datum/basic/holding_object(/obj/item/kitchen/tongs),
+		BB_PET_TARGETING_STRATEGY = new /datum/targetting_datum/basic/not_friends(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/holding_object(/obj/item/kitchen/tongs),
 		// With tongs in hand!
 		BB_TARGET_HELD_ITEM = /obj/item/kitchen/tongs,
 	)
