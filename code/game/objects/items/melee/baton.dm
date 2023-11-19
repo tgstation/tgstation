@@ -175,13 +175,10 @@
 		target.visible_message(desc["visible"], desc["local"])
 
 /obj/item/melee/baton/proc/check_parried(mob/living/carbon/human/human_target, mob/living/user)
-	if(!ishuman(human_target))
-		return
-	if (human_target.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
+	if (human_target.check_block(src, 0, "[user]'s [name]", MELEE_ATTACK))
 		playsound(human_target, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return TRUE
-	if(check_martial_counter(human_target, user))
-		return TRUE
+	return FALSE
 
 /obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, modifiers, in_attack_chain = TRUE)
 	if(!in_attack_chain && HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
@@ -632,7 +629,7 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(active && prob(throw_stun_chance) && isliving(hit_atom))
+	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
 		finalize_baton_attack(hit_atom, thrownby?.resolve(), in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/emp_act(severity)
