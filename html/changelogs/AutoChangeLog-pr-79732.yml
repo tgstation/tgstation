@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "selling large amount of mats in cargo should not give you infinite credits"
-  - bugfix: "runtime when adjusting material market after buying"
