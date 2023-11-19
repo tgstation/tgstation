@@ -1,4 +1,0 @@
-author: "wraith-54321"
-delete-after: True
-changes:
-  - balance: "Reverts our change making miner medipens take only half a second to use on station"
