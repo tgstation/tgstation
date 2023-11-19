@@ -195,10 +195,10 @@
 	species = "lanternfruit"
 	plantname = "Lanternfruit Pod"
 	product = /obj/item/food/grown/lanternfruit
-	lifespan = 35
-	endurance = 35
-	maturation = 5
-	production = 5
+	lifespan = 50
+	endurance = 30
+	maturation = 25
+	production = 25
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lanternfruit-grow"
