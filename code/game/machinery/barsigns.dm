@@ -152,10 +152,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		update_appearance()
 		return TRUE
 
-	// if barsigns ever become a craftable or techweb wall mount then remove this //TODO REMOVE THIS?
-	if(machine_stat & BROKEN)
-		return TRUE
-
 	return ..()
 
 /obj/machinery/barsign/emp_act(severity)
@@ -465,4 +461,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "noticeboard" //change
 	result_path = /obj/machinery/barsign
-	pixel_shift = 26 //adjust
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+	)
+	pixel_shift = 32 //check if this is better now
