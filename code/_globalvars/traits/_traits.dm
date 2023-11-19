@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	),
 	/obj/item/ammo_casing = list(
 		"TRAIT_DART_HAS_INSERT" = TRAIT_DART_HAS_INSERT,
-	)
+	),
 	/obj/item/bodypart = list(
 		"TRAIT_DISABLED_BY_WOUND" = TRAIT_DISABLED_BY_WOUND,
 		"TRAIT_IGNORED_BY_LIVING_FLESH" = TRAIT_IGNORED_BY_LIVING_FLESH,
