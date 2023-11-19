@@ -81,6 +81,7 @@
 	/// Do we reset the target after attacking something, so we can check for status changes.
 	var/always_reset_target = FALSE
 
+
 /datum/ai_behavior/hunt_target/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/atom/hunt_target = controller.blackboard[hunting_target_key]
@@ -123,9 +124,26 @@
 		controller.clear_blackboard_key(hunting_target_key)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target
+	///do we toggle combat mode before interacting with the object?
+	var/switch_combat_mode = FALSE
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
+	if(switch_combat_mode)
+		hunter.combat_mode = !(hunter.combat_mode)
 	hunter.UnarmedAttack(hunted, TRUE)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
+	. = ..()
+	if(!switch_combat_mode)
+		return
+	var/mob/living/living_pawn = controller.pawn
+	living_pawn.combat_mode = initial(living_pawn.combat_mode)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/switch_combat_mode
+	switch_combat_mode = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/use_ability_on_target
 	always_reset_target = TRUE
