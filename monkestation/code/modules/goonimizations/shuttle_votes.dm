@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(autotransfer)
 
 	var/starttime
 	var/targettime
+	var/called = FALSE
 
 /datum/controller/subsystem/autotransfer/Initialize(timeofday)
 	starttime = world.time
@@ -15,7 +16,7 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/controller/subsystem/autotransfer/fire()
 	if(world.time > targettime)
-		if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_DOCKED || Shuttle.emergency.mode == SHUTTLE_ESCAPE)
+		if(called)
 			return
 		SSvote.initiate_vote(/datum/vote/shuttle_call, "automatic shuttle vote")
 		targettime = targettime + 20 MINUTES
@@ -25,7 +26,7 @@ SUBSYSTEM_DEF(autotransfer)
 	message = "Should we go home?!"
 
 /datum/vote/shuttle_call/can_be_initiated(mob/by_who, forced = FALSE)
-	if(!SSticker.HasRoundStarted())
+	if(!SSticker.HasRoundStarted() || SSautotransfer.called)
 		return FALSE
 	if(started_time)
 		var/next_allowed_time = SSautotransfer.targettime
@@ -39,14 +40,16 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/vote/shuttle_call/New()
 	. = ..()
-	default_choices = list("Yes", "No", "Yes (No Recall)")
+	default_choices = list("Yes", "No")
 
 
 /datum/vote/shuttle_call/finalize_vote(winning_option)
+	if(SSautotransfer.called)
+		return
 	if(winning_option == "No")
 		return
 
-	if(winning_option == "Yes (No Recall)")
-		SSshuttle.admin_emergency_no_recall = TRUE
-		SSshuttle.emergency.mode = SHUTTLE_IDLE
+	SSshuttle.admin_emergency_no_recall = TRUE
+	SSshuttle.emergency.mode = SHUTTLE_IDLE
 	SSshuttle.emergency.request()
+	SSautotransfer.called = TRUE
