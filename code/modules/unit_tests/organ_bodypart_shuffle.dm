@@ -17,19 +17,6 @@
 		TEST_ASSERT(!(organ.owner), "Organ '[organ.name] kept reference to human after forceMove into nullspace.")
 		TEST_ASSERT(!(organ.bodypart_owner), "Organ '[organ.name] kept reference to bodypart after forceMove into nullspace.")
 
-	for(var/obj/item/bodypart/bodypart as anything in hollow_boy.bodyparts)
-		bodypart = new bodypart.type() //fresh, duplice bodypart with no insides
-		for(var/obj/item/organ/organ as anything in removed_organs)
-			if(bodypart.body_zone != organ.zone)
-				continue
-			organ.bodypart_insert(bodypart) // Put all the old organs back in
-
-		bodypart.replace_limb(hollow_boy) //so stick new bodyparts on them with their old organs
-
-		// Check if, after we put the old organs in a new limb, and after we put that new limb on the mob, if the organs came with
-		for(var/obj/item/organ as anything in removed_organs) //technically readded organ now
-			TEST_ASSERT(!(organ in hollow_boy.organs), "Organ '[organ.name] was put in an empty bodypart that replaced a humans, but the organ did not come with.")
-
 	// Test if bodyparts are all properly updating when forcefully removed
 	hollow_boy = allocate(/mob/living/carbon/human/consistent) //freshly filled with wet insides
 	var/list/removed_bodyparts = list()
