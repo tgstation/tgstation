@@ -138,9 +138,7 @@
 	if(target)
 		H.original = target
 	H.fire(set_angle)
-	if(is_trishot)
-		shoot_projectile(marker, set_angle + 15, FALSE, FALSE)
-		shoot_projectile(marker, set_angle - 15, FALSE, FALSE)
+	//monke edit - removed heralds shotgun BS from his tri shot
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_trishot(target)
 	ranged_cooldown = world.time + 30

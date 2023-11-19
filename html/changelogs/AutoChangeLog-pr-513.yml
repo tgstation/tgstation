@@ -1,0 +1,9 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - rscadd: "Nuke ops have been authorized for a new experimental combat implant."
+  - qol: "Stacking hardlight spears now stores it in only one spell. And it looks really cool."
+  - qol: "Hardlight spears no longer delete themselves after 10 seconds."
+  - balance: "Hardlight spears now do much more damage."
+  - image: "resprited the hardlight spear"
+  - refactor: "Hardlight spears use projectiles instead of throws now."

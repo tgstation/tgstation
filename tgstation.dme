@@ -6211,6 +6211,7 @@
 #include "monkestation\code\modules\ranching\mutations\tier1.dm"
 #include "monkestation\code\modules\ranching\mutations\tier2.dm"
 #include "monkestation\code\modules\ranching\mutations\tier3.dm"
+#include "monkestation\code\modules\random_rooms\showcase_map_modules.dm"
 #include "monkestation\code\modules\random_rooms\bars\icebox_bar_modules.dm"
 #include "monkestation\code\modules\random_rooms\bars\tram_bar_modules.dm"
 #include "monkestation\code\modules\reagents\_reagents.dm"

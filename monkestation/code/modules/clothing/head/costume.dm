@@ -38,3 +38,10 @@
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "knowingclownhat"
 	worn_y_offset = 6
+
+/obj/item/clothing/head/guardmanhelmet
+	name = "guardman's helmet"
+	desc = "Keeps your brain intact when fighting heretics"
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
+	icon_state = "guardman_helmet"
