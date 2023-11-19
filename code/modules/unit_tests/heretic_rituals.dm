@@ -66,10 +66,10 @@
 			if(islist(ritual_item_path))
 				ritual_item_path = pick(ritual_item_path)
 			for(var/i in 1 to amount_to_create)
-				var/obj/item/item = ritual_item_path(get_turf(our_heretic))
+				var/obj/item/item = new ritual_item_path(get_turf(our_heretic))
 				if(isitem(item))
 					item.item_flags &= ~ABSTRACT
-				created_atoms += new ritual_item_path(get_turf(our_heretic))
+				created_atoms += item
 
 		// Now, we can ACTUALLY run the ritual. Let's do it.
 		// Attempt to run the knowledge via the sacrifice rune.
