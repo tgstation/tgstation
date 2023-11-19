@@ -140,6 +140,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		balloon_alert(user, "open the panel first!")
 		return FALSE
 
+	tool.play_tool_sound(src)
 	if(do_after(user, (10 SECONDS), target = src))
 		tool.play_tool_sound(src)
 		deconstruct(disassembled = TRUE)
@@ -468,7 +469,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 
 /obj/item/wallframe/barsign
 	name = "bar sign frame"
-	desc = "Used to help draw the rabble into your bar"
+	desc = "Used to help draw the rabble into your bar. Some assembly required."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "barsign"
 	result_path = /obj/machinery/barsign
