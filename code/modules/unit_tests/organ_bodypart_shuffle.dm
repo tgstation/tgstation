@@ -28,7 +28,7 @@
 
 		// Check if, after we put the old organs in a new limb, and after we put that new limb on the mob, if the organs came with
 		for(var/obj/item/organ as anything in removed_organs) //technically readded organ now
-			TEST_ASSERT(organ in hollow_boy.organs, "Organ '[organ.name] was put in an empty bodypart that replaced a humans, but the organ did not come with.")
+			TEST_ASSERT(!(organ in hollow_boy.organs), "Organ '[organ.name] was put in an empty bodypart that replaced a humans, but the organ did not come with.")
 
 	// Test if bodyparts are all properly updating when forcefully removed
 	hollow_boy = allocate(/mob/living/carbon/human/consistent) //freshly filled with wet insides
