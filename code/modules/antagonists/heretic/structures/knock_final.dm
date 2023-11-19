@@ -6,7 +6,7 @@
 	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "bhole3"
 	color = COLOR_PURPLE
-	light_color = COLOR_VOID_PURPLE
+	light_color = COLOR_PURPLE
 	light_outer_range  = 20
 	anchored = TRUE
 	density = FALSE
