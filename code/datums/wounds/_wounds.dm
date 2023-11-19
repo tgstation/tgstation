@@ -31,6 +31,14 @@
 	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
+	/// Simple description, shortened for clarity if defined. Otherwise just takes the normal desc in the analyzer proc.
+	var/simple_desc
+	/// Simple analyzer's wound description, which focuses less on the clinical aspect of the wound and more on easily readable treatment instructions.
+	var/simple_treat_text = "Go to medbay idiot"
+	/// Improvised remedies indicated by the first aid analyzer only.
+	var/homemade_treat_text = "Remember to drink lots of water!"
+
+
 	/// If this wound can generate a scar.
 	var/can_scar = TRUE
 
@@ -66,7 +74,7 @@
 	/// Using this limb in a do_after interaction will multiply the length by this duration (arms)
 	var/interaction_efficiency_penalty = 1
 	/// Incoming damage on this limb will be multiplied by this, to simulate tenderness and vulnerability (mostly burns).
-	var/damage_mulitplier_penalty = 1
+	var/damage_multiplier_penalty = 1
 	/// If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg
 	var/limp_slowdown
 	/// If this wound has a limp_slowdown and is applied to a leg, it has this chance to limp each step
@@ -98,8 +106,8 @@
 	var/scar_keyword = "generic"
 	/// If we've already tried scarring while removing (remove_wound can be called twice in a del chain, let's be nice to our code yeah?) TODO: make this cleaner
 	var/already_scarred = FALSE
-	/// If we forced this wound through badmin smite, we won't count it towards the round totals
-	var/from_smite
+	/// The source of how we got the wound, typically a weapon.
+	var/wound_source
 
 	/// What flags apply to this wound
 	var/wound_flags = (ACCEPTS_GAUZE)

@@ -15,6 +15,9 @@
 	if(capitalized)
 		. = capitalize(.)
 
+/datum/proc/p_Their(temp_gender)
+	return capitalize(p_their(temp_gender))
+
 /datum/proc/p_them(capitalized, temp_gender)
 	. = "it"
 	if(capitalized)
