@@ -102,7 +102,7 @@
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
 				cycles_to_beat = DISEASE_CYCLES_POSITIVE
-				if(affected_mob.satiety < 0 || slowdown != 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
+				if(affected_mob.satiety =< 0 || slowdown != 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
 					return
 			if(DISEASE_SEVERITY_NONTHREAT)
 				cycles_to_beat = DISEASE_CYCLES_NONTHREAT
@@ -122,7 +122,7 @@
 			recovery_prob += 1 + (peaked_cycles / (cycles_to_beat/2)) //more severe viruses are beaten back more aggressively after the peak
 		if(slowdown) //using antibiotics can help get them over the finish line to kill a virus
 			recovery_prob += (slowdown - 1)
-		if(affected_mob.satiety < 0) //being malnourished makes it a lot harder to defeat your illness
+		if(affected_mob.satiety =< 0) //being malnourished makes it a lot harder to defeat your illness
 			recovery_prob += -0.8
 		if(affected_mob.mob_mood) // this and most other modifiers below a shameless rip from sleeping healing buffs, but feeling good helps make it go away quicker
 			switch(affected_mob.mob_mood.sanity_level)
@@ -169,7 +169,7 @@
 	if(recovery_prob && !(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		if(SPT_PROB(recovery_prob, seconds_per_tick))
 			if(stage == 1) //if we reduce FROM stage == 1, cure the virus
-				if(affected_mob.satiety < 0)
+				if(affected_mob.satiety =< 0)
 					if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
 						cure(add_resistance = FALSE)
 					else if(prob(50)) //if you rode it out from the peak, coinflip on if you get resistance or not
