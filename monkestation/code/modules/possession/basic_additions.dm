@@ -43,6 +43,7 @@
 	update_held_items()
 
 /mob/living/basic/update_held_items()
+	. = ..()
 	remove_overlay(1)
 	var/list/hands_overlays = list()
 

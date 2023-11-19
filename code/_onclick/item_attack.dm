@@ -157,7 +157,7 @@
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
 	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
+		if(user.istate & ISTATE_HARM)
 			break
 		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
 			continue
