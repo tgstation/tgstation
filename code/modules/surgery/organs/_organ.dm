@@ -82,7 +82,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/Destroy()
 	if(bodypart_owner && !owner && !QDELETED(bodypart_owner))
 		bodypart_remove(bodypart_owner)
-	else if(owner && !QDELETED(owner))
+	else if(owner)
 		// The special flag is important, because otherwise mobs can die
 		// while undergoing transformation into different mobs.
 		Remove(owner, special=TRUE)
