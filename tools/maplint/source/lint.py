@@ -72,7 +72,7 @@ class BannedNeighbor:
     def matches(self, identified: Content, neighbor: Content):
         if self.ignore:
             for ignored_path in self.ignore:
-                if ignored_path.matches_path(neighbor.path)
+                if ignored_path.matches_path(neighbor.path):
                     return False
 
         if self.identical:
