@@ -496,7 +496,6 @@
 	AddComponent(/datum/component/healing_touch,\
 		heal_brute = 45,\
 		heal_burn = 45,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant/hunter/flesh)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
