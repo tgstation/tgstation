@@ -139,7 +139,7 @@
 			if(istype(target, /obj/structure/grille))
 				if(is_full_tile) //if we are trying to build full-tile windows we ignore the grille
 					structures_to_ignore = list(/obj/structure/grille)
-				else //when building directional windows we ignore the grill nd other directional windows
+				else //when building directional windows we ignore the grill and other directional windows
 					structures_to_ignore = list(/obj/structure/grille, /obj/structure/window)
 			else //for directional windows we ignore other directional windows as they can be in diffrent directions on the turf.
 				structures_to_ignore = list(/obj/structure/window)
