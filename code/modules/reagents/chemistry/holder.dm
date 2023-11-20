@@ -855,13 +855,6 @@
 					owner.log_message("has started overdosing on [reagent.name] at [reagent.volume] units.", LOG_GAME)
 			for(var/addiction in reagent.addiction_types)
 				owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
-				if(reagent.overdose_threshold)
-					if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
-						reagent.overdosed = TRUE
-						need_mob_update += reagent.overdose_start(owner)
-						owner.log_message("has started overdosing on [reagent.name] at [reagent.volume] units.", LOG_GAME)
-			for(var/addiction in reagent.addiction_types)
-				owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
 
 			if(reagent.overdosed)
 				need_mob_update += reagent.overdose_process(owner, seconds_per_tick, times_fired)
