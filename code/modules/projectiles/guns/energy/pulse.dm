@@ -29,9 +29,7 @@
 	notify_ghosts(
 		"Someone won a pulse rifle as a prize!",
 		source = src,
-		action = NOTIFY_ORBIT,
 		header = "Pulse rifle prize",
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 
 /obj/item/gun/energy/pulse/loyalpin

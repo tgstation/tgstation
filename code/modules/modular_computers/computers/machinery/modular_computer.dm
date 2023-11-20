@@ -82,7 +82,7 @@
 		return .
 
 	if(cpu.enabled)
-		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
+		. += cpu.active_program?.program_open_overlay || screen_icon_state_menu
 	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
 

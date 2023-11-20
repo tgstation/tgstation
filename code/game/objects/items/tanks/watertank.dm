@@ -467,7 +467,7 @@
 
 	var/inj_am = injection_amount * seconds_per_tick
 	var/used_amount = inj_am / usage_ratio
-	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
+	reagents.trans_to(user, used_amount, usage_ratio, methods = INJECT)
 	update_appearance()
 	user.update_worn_back() //for overlays update
 

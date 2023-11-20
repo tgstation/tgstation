@@ -18,23 +18,25 @@
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
 	var/extended_desc = "N/A"
-	/// Category in the NTDownloader.
-	var/category = PROGRAM_CATEGORY_MISC
-	/// Program-specific screen icon state
-	var/program_icon_state = null
+	///What category this program can be found in within NTNetDownloader.
+	var/downloader_category = PROGRAM_CATEGORY_DEVICE
+	///The overlay to add ontop of the ModPC running the app while it's open.
+	///This is taken from the same file as the ModPC, so you can use usage_flags to prevent
+	///the program from being used on devices that don't have sprites for it.
+	var/program_open_overlay = null
 	///Boolean on whether the program will appear at the top on PDA menus, or in the app list with everything else.
 	var/header_program = FALSE
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
 	var/requires_ntnet = FALSE
 	/// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
 	var/ntnet_status = 1
-	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
+	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_PDA combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
 	/// Whether the program can be downloaded from NTNet. Set to FALSE to disable.
 	var/available_on_ntnet = TRUE
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to TRUE to enable.
 	var/available_on_syndinet = FALSE
-	/// Name of the tgui interface
+	/// Name of the tgui interface. If this is not defined, this will not be available in NTNet.
 	var/tgui_id
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images must also be inserted into /datum/asset/simple/headers.
 	var/ui_header = null
@@ -55,7 +57,7 @@
 	var/datum/computer_file/program/temp = ..()
 	temp.run_access = run_access
 	temp.filedesc = filedesc
-	temp.program_icon_state = program_icon_state
+	temp.program_open_overlay = program_open_overlay
 	temp.requires_ntnet = requires_ntnet
 	temp.usage_flags = usage_flags
 	if(unique_copy)

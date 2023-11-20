@@ -211,7 +211,6 @@
 	notify_ghosts(
 		"[target] has just had their eyes snatched!",
 		source = target,
-		action = NOTIFY_ORBIT,
 		header = "Ouch!",
 	)
 	target.emote("scream")
