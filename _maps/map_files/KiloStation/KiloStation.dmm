@@ -6746,7 +6746,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/mob/living/simple_animal/sloth/citrus,
+/mob/living/basic/sloth/citrus,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "coy" = (
@@ -7040,7 +7040,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "cuj" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/legion,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "cup" = (
@@ -13219,9 +13219,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
-	},
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "eBx" = (
@@ -31829,10 +31826,6 @@
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/jungle/mook{
-	environment_smash = 0;
-	name = "deformed creature"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
@@ -41636,10 +41629,6 @@
 /obj/effect/decal/remains/human,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/hostile/jungle/mook{
-	environment_smash = 0;
-	name = "deformed creature"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
@@ -68138,7 +68127,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/legion,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "wpw" = (
@@ -68808,7 +68797,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/legion,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "wAz" = (
@@ -70759,7 +70748,7 @@
 	pixel_x = 12
 	},
 /obj/item/radio/intercom/directional/east,
-/mob/living/simple_animal/parrot/poly,
+/mob/living/basic/parrot/poly,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "xjr" = (
@@ -73530,7 +73519,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "ycp" = (
-/mob/living/simple_animal/hostile/asteroid/hivelord,
+/mob/living/basic/mining/legion,
 /turf/open/misc/asteroid/lowpressure,
 /area/space/nearstation)
 "ycr" = (

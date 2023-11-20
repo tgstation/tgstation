@@ -6,9 +6,6 @@
 /obj/structure/bonfire/prelit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"ac" = (
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
 "ad" = (
 /obj/structure/railing{
 	dir = 1
@@ -20,64 +17,17 @@
 /mob/living/basic/mining/mook/worker/tribal_chief,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"af" = (
-/obj/structure/chair/wood{
-	dir = 1
-	},
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
-"ag" = (
-/obj/structure/bed/maint,
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
 "ah" = (
 /turf/closed/wall/mineral/wood,
-/area/lavaland/surface/outdoors)
-"ai" = (
-/obj/structure/chair/wood,
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
-"aj" = (
-/obj/structure/closet/cabinet,
-/obj/item/food/grown/banana,
-/obj/item/food/meat/slab/goliath,
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
-"ak" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/flashlight/flare/candle/infinite,
-/turf/open/floor/wood/lavaland,
 /area/lavaland/surface/outdoors)
 "al" = (
 /obj/structure/flora/ash/fireblossom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"am" = (
-/obj/item/flashlight/lantern{
-	start_on = 1
-	},
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
 "an" = (
 /obj/structure/flora/ash/fireblossom,
 /mob/living/basic/mining/mook/worker,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ao" = (
-/obj/structure/railing/corner,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ap" = (
-/obj/structure/material_stand,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aq" = (
-/obj/item/fishing_rod,
-/obj/structure/bed/maint,
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
-"ar" = (
-/turf/open/floor/carpet/lone/lavaland,
 /area/lavaland/surface/outdoors)
 "as" = (
 /obj/effect/landmark/mook_village,
@@ -91,25 +41,11 @@
 /obj/structure/railing,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"av" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "aw" = (
 /obj/structure/railing{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ax" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/clothing/head/costume/garland/poppy,
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
-"ay" = (
-/turf/open/misc/grass/jungle/lavaland,
 /area/lavaland/surface/outdoors)
 "az" = (
 /mob/living/basic/mining/mook/worker/bard,
@@ -132,23 +68,8 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"aE" = (
-/obj/structure/flora/grass/jungle/b,
-/turf/open/misc/grass/jungle/lavaland,
-/area/lavaland/surface/outdoors)
 "aF" = (
 /obj/structure/chair/pew,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aG" = (
-/obj/structure/bed/pod,
-/obj/item/bedsheet/nanotrasen,
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
-"aH" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "aI" = (
@@ -182,30 +103,14 @@
 "aN" = (
 /turf/open/floor/holofloor/wood,
 /area/lavaland/surface/outdoors)
-"aO" = (
-/obj/structure/table/wood/shuttle_bar,
-/obj/item/hatchet/wooden,
-/obj/item/storage/belt/champion,
-/turf/open/floor/wood/lavaland,
-/area/lavaland/surface/outdoors)
 "aP" = (
 /mob/living/basic/mining/mook/worker,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aQ" = (
-/obj/structure/flora/tree/jungle/style_5,
-/turf/open/misc/grass/jungle/lavaland,
 /area/lavaland/surface/outdoors)
 "aR" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/nanotrasen,
 /turf/open/floor/holofloor/wood,
-/area/lavaland/surface/outdoors)
-"aS" = (
-/obj/item/flashlight/lantern{
-	start_on = 1
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "aT" = (
 /obj/structure/flora/tree/jungle/style_5,
@@ -221,10 +126,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"aW" = (
-/obj/structure/flora/tree/jungle/style_3,
-/turf/open/misc/grass/jungle/lavaland,
-/area/lavaland/surface/outdoors)
 "aX" = (
 /obj/structure/flora/grass/jungle/b,
 /turf/open/misc/grass/jungle,
@@ -232,12 +133,6 @@
 "aY" = (
 /obj/structure/chair/pew/left{
 	dir = 8
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aZ" = (
-/obj/structure/railing/corner{
-	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -447,11 +342,11 @@ aN
 aa
 aa
 aa
-ao
+aa
 aw
 aw
 aw
-aZ
+aa
 aI
 aa
 aa
@@ -557,11 +452,11 @@ aa
 aa
 aa
 aa
-av
+aa
 aJ
 aJ
 aJ
-aH
+aa
 aa
 aa
 aP

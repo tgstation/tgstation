@@ -174,11 +174,6 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "eI" = (
-/obj/item/ammo_casing/a357/spent{
-	dir = 1;
-	pixel_x = -1;
-	pixel_y = 5
-	},
 /mob/living/basic/trooper/syndicate/melee/space,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
@@ -704,10 +699,6 @@
 /obj/effect/turf_decal/stripes/full,
 /obj/item/grenade/c4,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/ammo_casing/a357/spent{
-	pixel_x = 5;
-	pixel_y = 12
-	},
 /obj/effect/mob_spawn/corpse/human/russian,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
