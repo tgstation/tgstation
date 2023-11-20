@@ -1,13 +1,13 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { Component, findDOMfromVNode, ReactNode, render } from 'react';
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
 import { Stack } from './Stack';
 
 export interface DropdownEntry {
-  displayText: string | number | InfernoNode;
+  displayText: string | number | ReactNode;
   value: string | number | Enumerator;
 }
 
@@ -21,7 +21,7 @@ type DropdownUniqueProps = {
   over?: boolean;
   color?: string;
   nochevron?: boolean;
-  displayText?: string | number | InfernoNode;
+  displayText?: string | number | ReactNode;
   onClick?: (event) => void;
   // you freaks really are just doing anything with this shit
   selected?: any;

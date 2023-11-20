@@ -5,6 +5,8 @@
   "dependencies": {
     "@popperjs/core": "^2.9.3",
     "@types/marked": "^4.0.8",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
     "common": "workspace:*",
     "dateformat": "^4.5.1",
     "dompurify": "^2.3.1",
@@ -13,6 +15,8 @@
     "inferno-vnode-flags": "^7.4.8",
     "js-yaml": "^4.1.0",
     "marked": "^4.2.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"
   }

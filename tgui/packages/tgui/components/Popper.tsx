@@ -1,11 +1,13 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { Component, createRef, ReactElement, ReactNode } from 'react';
+import { render } from 'react-dom';
 
 type PopperProps = {
-  popperContent: InfernoNode;
+  popperContent: ReactElement;
   options?: ArgumentsOf<typeof createPopper>[2];
   additionalStyles?: CSSProperties;
+  children: ReactNode;
 };
 
 export class Popper extends Component<PopperProps> {
@@ -13,9 +15,10 @@ export class Popper extends Component<PopperProps> {
 
   renderedContent: HTMLDivElement;
   popperInstance: ReturnType<typeof createPopper>;
+  popperRef = createRef<Element>();
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     Popper.id += 1;
   }
@@ -43,7 +46,7 @@ export class Popper extends Component<PopperProps> {
       // This code is copied from `findDOMNode` in inferno-extras.
       // Because this component is written in TypeScript, we will know
       // immediately if this internal variable is removed.
-      const domNode = findDOMfromVNode(this.$LI, true);
+      const domNode = this.popperRef.current as Element;
       if (!domNode) {
         return;
       }
@@ -62,7 +65,7 @@ export class Popper extends Component<PopperProps> {
 
   componentWillUnmount() {
     this.popperInstance?.destroy();
-    render(null, this.renderedContent, () => {
+    render(<> </>, this.renderedContent, () => {
       this.renderedContent.remove();
     });
   }
@@ -70,12 +73,7 @@ export class Popper extends Component<PopperProps> {
   renderPopperContent(callback: () => void) {
     // `render` errors when given false, so we convert it to `null`,
     // which is supported.
-    render(
-      this.props.popperContent || null,
-      this.renderedContent,
-      callback,
-      this.context
-    );
+    render(this.props.popperContent, this.renderedContent, callback);
   }
 
   render() {

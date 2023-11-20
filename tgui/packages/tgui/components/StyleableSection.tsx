@@ -1,13 +1,14 @@
-import { SFC } from 'inferno';
+import { FC } from 'react';
 import { Box } from './Box';
 
 // The cost of flexibility and prettiness.
-export const StyleableSection: SFC<{
+export const StyleableSection: FC<{
   style?;
   titleStyle?;
   textStyle?;
   title?;
   titleSubtext?;
+  children?;
 }> = (props) => {
   return (
     <Box style={props.style}>

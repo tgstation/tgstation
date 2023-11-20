@@ -5,7 +5,7 @@
  */
 
 import { clamp, toFixed } from 'common/math';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 
 const isSafeNumber = (value: number) => {
   // prettier-ignore

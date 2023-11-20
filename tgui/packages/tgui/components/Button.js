@@ -5,8 +5,8 @@
  */
 
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
-import { classes, pureComponentHooks } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { classes } from 'common/react';
+import { Component, createRef } from 'react';
 import { createLogger } from '../logging';
 import { Box, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
@@ -134,8 +134,6 @@ export const Button = (props) => {
   return buttonContent;
 };
 
-Button.defaultHooks = pureComponentHooks;
-
 export const ButtonCheckbox = (props) => {
   const { checked, ...rest } = props;
   return (
@@ -151,8 +149,8 @@ export const ButtonCheckbox = (props) => {
 Button.Checkbox = ButtonCheckbox;
 
 export class ButtonConfirm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       clickedOnce: false,
     };
@@ -202,8 +200,8 @@ export class ButtonConfirm extends Component {
 Button.Confirm = ButtonConfirm;
 
 export class ButtonInput extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.inputRef = createRef();
     this.state = {
       inInput: false,
@@ -311,8 +309,8 @@ export class ButtonInput extends Component {
 Button.Input = ButtonInput;
 
 export class ButtonFile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.inputRef = createRef();
   }
 

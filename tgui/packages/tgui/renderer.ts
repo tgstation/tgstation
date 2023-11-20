@@ -1,5 +1,6 @@
 import { perf } from 'common/perf';
-import { render } from 'inferno';
+import { isValidElement } from 'react';
+import { render } from 'react-dom';
 import { createLogger } from './logging';
 
 const logger = createLogger('renderer');
@@ -29,12 +30,14 @@ export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   if (!reactRoot) {
     reactRoot = document.getElementById('react-root');
   }
-  if (getVNode) {
-    render(getVNode(...args), reactRoot);
+  const renderContent = getVNode ? getVNode(...args) : args[0];
+
+  if(isValidElement(renderContent)) {
+    render(renderContent, reactRoot);
+  } else {
+    logger.error('Invalid render content', renderContent);
   }
-  else {
-    render(args[0] as any, reactRoot);
-  }
+
   perf.mark('render/finish');
   if (suspended) {
     return;

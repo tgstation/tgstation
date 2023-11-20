@@ -8,7 +8,7 @@ import { Middleware, Reducer, Store, applyMiddleware, combineReducers, createSto
 import { backendMiddleware, backendReducer } from './backend';
 import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { assetMiddleware } from './assets';
 import { createLogger } from './logging';
 import { flow } from 'common/fp';

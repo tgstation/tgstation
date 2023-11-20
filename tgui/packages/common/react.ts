@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+import { isValidElement } from 'react';
+
 /**
  * Helper for conditionally adding/removing classes in React
  */
@@ -52,22 +54,11 @@ export const shallowDiffers = (a: object, b: object) => {
 };
 
 /**
- * Default inferno hooks for pure components.
- */
-export const pureComponentHooks = {
-  onComponentShouldUpdate: (lastProps, nextProps) => {
-    return shallowDiffers(lastProps, nextProps);
-  },
-};
-
-/**
  * A helper to determine whether the object is renderable by React.
  */
 export const canRender = (value: unknown) => {
   // prettier-ignore
-  return value !== undefined
-    && value !== null
-    && typeof value !== 'boolean';
+  return isValidElement(value);
 };
 
 /**

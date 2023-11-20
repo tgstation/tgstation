@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 import { useSharedState } from '../../backend';
 import { Stack, Section, Icon, Dimmer } from '../../components';
 import { Design, MaterialMap } from './Types';
@@ -51,12 +51,12 @@ export type DesignBrowserProps<T extends Design = Design> = {
      * A callback to print the design.
      */
     onPrintDesign: (design: T, amount: number) => void
-  ) => InfernoNode;
+  ) => ReactNode;
 
   /**
    * If provided, renders a node into each category in the output.
    */
-  categoryButtons?: (category: Category<T>) => InfernoNode;
+  categoryButtons?: (category: Category<T>) => ReactNode;
 };
 
 /**
@@ -438,12 +438,12 @@ type CategoryViewProps<T extends Design = Design> = {
      * A callback to print the design.
      */
     onPrintDesign: (design: T, amount: number) => void
-  ) => InfernoNode;
+  ) => ReactNode;
 
   /**
    * If provided, renders a node into each category in the output.
    */
-  categoryButtons?: (category: Category<T>) => InfernoNode;
+  categoryButtons?: (category: Category<T>) => ReactNode;
 };
 
 const CategoryView = <T extends Design = Design>(

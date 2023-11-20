@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { BooleanLike, classes } from 'common/react';
+import { ReactNode } from 'react';
 import { Box, unit } from './Box';
 import { Divider } from './Divider';
 import { Tooltip } from './Tooltip';
@@ -19,19 +19,17 @@ export const LabeledList = (props: LabeledListProps) => {
   return <table className="LabeledList">{children}</table>;
 };
 
-LabeledList.defaultHooks = pureComponentHooks;
-
 type LabeledListItemProps = Partial<{
   className: string | BooleanLike;
-  label: string | InfernoNode | BooleanLike;
+  label: string | ReactNode | BooleanLike;
   labelColor: string | BooleanLike;
   labelWrap: boolean;
   color: string | BooleanLike;
   textAlign: string | BooleanLike;
-  buttons: InfernoNode;
+  buttons: ReactNode;
   /** @deprecated */
   content: any;
-  children: InfernoNode;
+  children: ReactNode;
   verticalAlign: string;
   tooltip: string;
 }>;
@@ -105,8 +103,6 @@ const LabeledListItem = (props: LabeledListItemProps) => {
   );
 };
 
-LabeledListItem.defaultHooks = pureComponentHooks;
-
 type LabeledListDividerProps = {
   size?: number;
 };
@@ -126,8 +122,6 @@ const LabeledListDivider = (props: LabeledListDividerProps) => {
     </tr>
   );
 };
-
-LabeledListDivider.defaultHooks = pureComponentHooks;
 
 LabeledList.Item = LabeledListItem;
 LabeledList.Divider = LabeledListDivider;

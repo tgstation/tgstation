@@ -5,14 +5,14 @@
  */
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { Component, InfernoNode, RefObject, createRef } from 'inferno';
+import { Component, ReactNode, RefObject, createRef } from 'react';
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
 
 export type SectionProps = BoxProps & {
   className?: string;
-  title?: InfernoNode;
-  buttons?: InfernoNode;
+  title?: ReactNode;
+  buttons?: ReactNode;
   fill?: boolean;
   fitted?: boolean;
   scrollable?: boolean;

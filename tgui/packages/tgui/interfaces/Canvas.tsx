@@ -1,6 +1,6 @@
 import { Color } from 'common/color';
 import { multiline, decodeHtmlEntities } from 'common/string';
-import { Component, createRef, RefObject } from 'inferno';
+import { Component, createRef, RefObject } from 'react';
 import { useBackend } from '../backend';
 import { Tooltip, Icon, Box, Button, Flex } from '../components';
 import { Window } from '../layouts';

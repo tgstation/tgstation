@@ -20,6 +20,9 @@ const createBabelConfig = (options) => {
         loose: true,
         targets: [],
       }],
+      [require.resolve('@babel/preset-react'), {
+        runtime: 'automatic',
+      }],
       ...presets,
     ].filter(Boolean),
     plugins: [
@@ -27,7 +30,6 @@ const createBabelConfig = (options) => {
         loose: true,
       }],
       require.resolve('@babel/plugin-transform-jscript'),
-      require.resolve('babel-plugin-inferno'),
       removeConsole && require.resolve('babel-plugin-transform-remove-console'),
       require.resolve('common/string.babel-plugin.cjs'),
       ...plugins,

@@ -4,16 +4,15 @@
  * @license MIT
  */
 
-import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { createVNode, InfernoNode, SFC } from 'inferno';
-import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
+import { BooleanLike, classes } from 'common/react';
+import { createElement, ReactNode, FC } from 'react';
 import { CSS_COLORS } from '../constants';
 
 export type BoxProps = {
   [key: string]: any;
   as?: string;
   className?: string | BooleanLike;
-  children?: InfernoNode;
+  children?: ReactNode;
   position?: string | BooleanLike;
   overflow?: string | BooleanLike;
   overflowX?: string | BooleanLike;
@@ -252,7 +251,7 @@ export const computeBoxClassName = (props: BoxProps) => {
   ]);
 };
 
-export const Box: SFC<BoxProps> = (props: BoxProps) => {
+export const Box: FC<BoxProps> = (props: BoxProps) => {
   const { as = 'div', className, children, ...rest } = props;
   // Render props
   if (typeof children === 'function') {
@@ -264,15 +263,5 @@ export const Box: SFC<BoxProps> = (props: BoxProps) => {
       : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
   // Render a wrapper element
-  return createVNode(
-    VNodeFlags.HtmlElement,
-    as,
-    computedClassName,
-    children,
-    ChildFlags.UnknownChildren,
-    computedProps,
-    undefined
-  );
+  return createElement(as, computedClassName, children, undefined);
 };
-
-Box.defaultHooks = pureComponentHooks;

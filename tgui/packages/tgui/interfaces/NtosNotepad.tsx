@@ -7,7 +7,7 @@
 import { NtosWindow } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Section, TextArea, MenuBar, Divider } from '../components';
-import { Component, createRef, RefObject } from 'inferno';
+import { Component, createRef, RefObject } from 'react';
 import { createLogger } from '../logging';
 import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
 

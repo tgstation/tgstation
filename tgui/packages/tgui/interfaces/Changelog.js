@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import { Box, Button, Dropdown, Icon, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
@@ -35,8 +35,8 @@ const icons = {
 };
 
 export class Changelog extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       data: 'Loading changelog data...',
       selectedDate: '',
