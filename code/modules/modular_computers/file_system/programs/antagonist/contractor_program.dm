@@ -2,8 +2,7 @@
 	filename = "contractor uplink"
 	filedesc = "Syndicate Contractor Uplink"
 	extended_desc = "A standard, Syndicate issued system for handling important contracts while on the field."
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "contractor-assign"
+	program_open_overlay = "contractor-assign"
 	program_icon = "tasks"
 	size = 10
 
@@ -45,7 +44,7 @@
 			var/contract_id = text2num(params["contract_id"])
 			traitor_data.uplink_handler.contractor_hub.assigned_contracts[contract_id].status = CONTRACT_STATUS_ACTIVE
 			traitor_data.uplink_handler.contractor_hub.current_contract = traitor_data.uplink_handler.contractor_hub.assigned_contracts[contract_id]
-			program_icon_state = "contractor-contract"
+			program_open_overlay = "contractor-contract"
 			return TRUE
 
 		if("PRG_login")
@@ -59,7 +58,7 @@
 				traitor_data.uplink_handler.contractor_hub = new
 				traitor_data.uplink_handler.contractor_hub.create_contracts(traitor_user.owner)
 				user.playsound_local(user, 'sound/effects/contractstartup.ogg', 100, FALSE)
-				program_icon_state = "contractor-contractlist"
+				program_open_overlay = "contractor-contractlist"
 			return TRUE
 
 		if("PRG_call_extraction")
@@ -68,7 +67,7 @@
 					user.playsound_local(user, 'sound/effects/confirmdropoff.ogg', 100, TRUE)
 					traitor_data.uplink_handler.contractor_hub.current_contract.status = CONTRACT_STATUS_EXTRACTING
 
-					program_icon_state = "contractor-extracted"
+					program_open_overlay = "contractor-extracted"
 				else
 					user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
 					error = "Either both you or your target aren't at the dropoff location, or the pod hasn't got a valid place to land. Clear space, or make sure you're both inside."
@@ -83,7 +82,7 @@
 			traitor_data.uplink_handler.contractor_hub.current_contract = null
 			traitor_data.uplink_handler.contractor_hub.assigned_contracts[contract_id].status = CONTRACT_STATUS_ABORTED
 
-			program_icon_state = "contractor-contractlist"
+			program_open_overlay = "contractor-contractlist"
 
 			return TRUE
 		if("PRG_redeem_TC")
@@ -129,10 +128,10 @@
 
 	data["ongoing_contract"] = !!traitor_data.uplink_handler.contractor_hub.current_contract
 	if(traitor_data.uplink_handler.contractor_hub.current_contract)
-		program_icon_state = "contractor-contract"
+		program_open_overlay = "contractor-contract"
 		if (traitor_data.uplink_handler.contractor_hub.current_contract.status == CONTRACT_STATUS_EXTRACTING)
 			data["extraction_enroute"] = TRUE
-			program_icon_state = "contractor-extracted"
+			program_open_overlay = "contractor-extracted"
 		else
 			data["extraction_enroute"] = FALSE
 		var/turf/curr = get_turf(user)
