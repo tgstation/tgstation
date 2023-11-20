@@ -36,7 +36,7 @@
 
 	var/datum/action/cooldown/blind = new blind_action_type(src)
 	blind.Grant(src)
-	ai_controller?.set_blackboard_key(BB_TARGETTED_ACTION, blind)
+	ai_controller?.set_blackboard_key(BB_TARGETED_ACTION, blind)
 
 /*
  * Callback for the mind_linker component.

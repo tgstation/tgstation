@@ -175,12 +175,12 @@
 	. = ..()
 	var/datum/action/cooldown/vine_tangle/tangle = new(src)
 	tangle.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, tangle)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, tangle)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!(istate & ISTATE_HARM))
 		return
-	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETTED_ACTION]
+	var/datum/action/cooldown/mob_cooldown/tangle_ability = ai_controller.blackboard[BB_TARGETED_ACTION]
 	if(!istype(tangle_ability))
 		return
 	tangle_ability.Trigger(target = victim)

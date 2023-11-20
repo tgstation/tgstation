@@ -44,7 +44,7 @@
 	)
 	charge = new(src)
 	charge.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, charge)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)

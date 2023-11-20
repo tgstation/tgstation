@@ -28,7 +28,7 @@
 	if (!succeeded)
 		return
 	var/mob/living/target = controller.blackboard[target_key]
-	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETTED_ACTION]
+	var/datum/action/cooldown/ability = controller.blackboard[BB_TARGETED_ACTION]
 	if(!ability?.IsAvailable())
 		return
 	ability.InterceptClickOn(caller = controller.pawn, target = target)

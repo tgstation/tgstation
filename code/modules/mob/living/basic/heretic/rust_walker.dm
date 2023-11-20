@@ -23,7 +23,7 @@
 
 	var/datum/action/cooldown/spell/basic_projectile/rust_wave/short/wave = new(src)
 	wave.Grant(src)
-	ai_controller?.set_blackboard_key(BB_TARGETTED_ACTION, wave)
+	ai_controller?.set_blackboard_key(BB_TARGETED_ACTION, wave)
 
 /mob/living/basic/heretic_summon/rust_walker/setDir(newdir)
 	. = ..()
