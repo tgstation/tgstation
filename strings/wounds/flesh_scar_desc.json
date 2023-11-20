@@ -1,6 +1,12 @@
 {
 	"generic": ["general disfigurement"],
 
+	"dislocate": [
+		"light discoloring",
+		"a slight blue tint",
+		"a slightly deadened tint"
+	],
+
 	"bluntmoderate": [
 		"light discoloring",
 		"a slight blue tint",

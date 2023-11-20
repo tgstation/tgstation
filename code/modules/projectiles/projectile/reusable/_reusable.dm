@@ -7,7 +7,7 @@
 	var/ammo_type = /obj/item/ammo_casing/caseless
 	var/dropped = FALSE
 
-/obj/projectile/bullet/reusable/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/reusable/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	handle_drop()
 

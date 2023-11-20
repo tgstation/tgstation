@@ -29,6 +29,7 @@
 	)
 	hat_offset = 0
 	cyborg_base_icon = "cargo"
+	cyborg_base_icon_file = 'monkestation/code/modules/cargoborg/icons/robots_cargo.dmi'
 	model_select_icon = "cargo"
 	canDispose = TRUE
 	borg_skins = list(

@@ -39,7 +39,7 @@
 	// No point making the code more complicated if no non-drone
 	// is ever going to use one of these
 
-	var/mob/living/simple_animal/drone/D
+	var/mob/living/basic/drone/D
 
 	if(isdrone(owner))
 		D = owner

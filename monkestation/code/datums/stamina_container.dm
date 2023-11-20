@@ -81,3 +81,4 @@
 	update()
 	if((amt < 0) && is_regenerating)
 		pause(STAMINA_REGEN_TIME)
+	return amt

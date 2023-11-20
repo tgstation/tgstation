@@ -5,12 +5,15 @@
  * Used in the cult bastard sword!
  */
 /datum/component/soul_stealer
+	var/obj/item/soulstone/soulstone_type
 	/// List of soulstones captured by this item.
 	var/list/obj/item/soulstone/soulstones = list()
 
-/datum/component/soul_stealer/Initialize()
+/datum/component/soul_stealer/Initialize(soulstone_type = /obj/item/soulstone/anybody/purified)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	src.soulstone_type = soulstone_type
 
 /datum/component/soul_stealer/Destroy()
 	QDEL_LIST(soulstones) // We own these, so we'll also just get rid of them. Any souls inside will die, this is fine.
@@ -60,7 +63,7 @@
 /datum/component/soul_stealer/proc/try_capture(mob/living/carbon/human/victim, mob/living/captor)
 	if(victim.stat == CONSCIOUS)
 		return
-	var/obj/item/soulstone/soulstone = new(parent)
+	var/obj/item/soulstone/soulstone = new soulstone_type(parent)
 	soulstone.attack(victim, captor)
 	if(!length(soulstone.contents)) // failed
 		qdel(soulstone)

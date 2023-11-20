@@ -74,7 +74,7 @@
 /mob/living/basic/mouse/examine(mob/user)
 	. = ..()
 
-	var/sameside = user.faction_check_mob(src, exact_match = TRUE)
+	var/sameside = user.faction_check_atom(src, exact_match = TRUE)
 	if(isregalrat(user))
 		if(sameside)
 			. += span_notice("This rat serves under you.")
@@ -381,11 +381,11 @@
 
 /// The mouse AI controller
 /datum/ai_controller/basic_controller/mouse
-	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE, // Always cowardly
+	blackboard = list( // Always cowardly
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(), // Use this to find people to run away from
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
+		BB_BASIC_MOB_FLEE_DISTANCE = 3,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -406,9 +406,6 @@
 
 /// Don't look for anything to run away from if you are distracted by being adjacent to cheese
 /datum/ai_planning_subtree/flee_target/mouse
-	flee_behaviour = /datum/ai_behavior/run_away_from_target/mouse
-
-/datum/ai_planning_subtree/flee_target/mouse
 
 /datum/ai_planning_subtree/flee_target/mouse/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/hunted_cheese = controller.blackboard[BB_CURRENT_HUNTING_TARGET]
@@ -416,16 +413,11 @@
 		return // We see some cheese, which is more important than our life
 	return ..()
 
-/datum/ai_planning_subtree/flee_target/mouse/select
-
-/datum/ai_behavior/run_away_from_target/mouse
-	run_distance = 3 // Mostly exists in small tunnels, don't get ahead of yourself
-
 /// AI controller for rats, slightly more complex than mice becuase they attack people
 /datum/ai_controller/basic_controller/mouse/rat
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BASIC_MOB_CURRENT_TARGET = null, // heathen
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable

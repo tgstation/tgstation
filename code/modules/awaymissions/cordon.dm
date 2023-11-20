@@ -40,7 +40,8 @@
 	return
 
 /turf/cordon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
-	return BULLET_ACT_HIT
+	SHOULD_CALL_PARENT(FALSE) // Fuck you
+	return BULLET_ACT_BLOCK
 
 /turf/cordon/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
 	return FALSE

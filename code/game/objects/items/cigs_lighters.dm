@@ -139,6 +139,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	grind_results = list()
 	heat = 1000
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	throw_verb = "flick"
 	/// Whether this cigarette has been lit.
 	var/lit = FALSE
 	/// Whether this cigarette should start lit.

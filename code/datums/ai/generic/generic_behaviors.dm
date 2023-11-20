@@ -300,11 +300,25 @@
 
 /datum/ai_behavior/perform_speech
 
-/datum/ai_behavior/perform_speech/perform(seconds_per_tick, datum/ai_controller/controller, speech)
+/datum/ai_behavior/perform_speech/perform(seconds_per_tick, datum/ai_controller/controller, speech, speech_sound)
+	. = ..()
+
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
 	living_pawn.say(speech, forced = "AI Controller")
+	if(speech_sound)
+		playsound(living_pawn, speech_sound, 80, vary = TRUE)
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/perform_speech_radio
+
+/datum/ai_behavior/perform_speech_radio/perform(seconds_per_tick, datum/ai_controller/controller, speech, obj/item/radio/speech_radio, list/try_channels = list(RADIO_CHANNEL_COMMON))
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn) || !istype(speech_radio) || QDELETED(speech_radio) || !length(try_channels))
+		finish_action(controller, FALSE)
+		return
+	speech_radio.talk_into(living_pawn, speech, pick(try_channels))
 	finish_action(controller, TRUE)
 
 //song behaviors
