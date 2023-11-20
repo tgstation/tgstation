@@ -32,7 +32,7 @@
 
 /mob/living/basic/guardian/standard/Initialize(mapload, theme)
 	//Wizard Holoparasite theme, just to be more visibly stronger than regular ones
-	theme = /datum/guardian_fluff/tech
+	theme = GUARDIAN_THEME_TECH
 	. = ..()
 	var/datum/action/cooldown/spell/timestop/guardian/timestop_ability = new()
 	timestop_ability.Grant(src)
