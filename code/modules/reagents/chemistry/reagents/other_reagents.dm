@@ -50,6 +50,13 @@
 			else if((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
 				exposed_mob.ContactContractDisease(strain)
 
+	if(data && data["resistances"])
+		for(var/stuff in exposed_mob.diseases)
+			var/datum/disease/infection = stuff
+			if(infection.GetDiseaseID() in data["resistances"])
+				infection.cure()
+		LAZYOR(exposed_mob.disease_resistances, data)
+
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
 		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
