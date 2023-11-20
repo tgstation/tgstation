@@ -437,11 +437,15 @@ const MafiaPlayers = (props, context) => {
         {players?.map((player) => (
           <Flex.Item className="Section__title candystripe" key={player.ref}>
             <Stack align="center">
-              <Stack.Item grow color={!player.alive && 'red'}>
+              <Stack.Item
+                grow
+                color={!player.alive && 'red'}
+                backgroundColor={
+                  player.ref === person_voted_up_ref ? 'yellow' : null
+                }>
                 {player.name}
                 {(!!player.is_you && ' (YOU)') ||
                   (!!player.role_revealed && ' - ' + player.role_revealed)}
-                {!!(player.ref === person_voted_up_ref) && ' (ON TRIAL)'}
               </Stack.Item>
               <Stack.Item>
                 {player.votes !== undefined &&
