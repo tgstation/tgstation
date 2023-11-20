@@ -51,10 +51,11 @@
 		if(istype(boxing_gloves))
 			stamina_exhaustion = 2
 
-	if(iscarbon(user))
-		user.adjustStaminaLoss(stamina_exhaustion)
-		user.mind?.adjust_experience(/datum/skill/fitness, 0.1)
-		user.apply_status_effect(/datum/status_effect/exercised)
+	if(!iscarbon(user))
+		return
+	user.adjustStaminaLoss(stamina_exhaustion)
+	user.mind?.adjust_experience(/datum/skill/fitness, 0.1)
+	user.apply_status_effect(/datum/status_effect/exercised)
 
 /obj/structure/punching_bag/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)

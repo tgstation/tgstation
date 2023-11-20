@@ -868,8 +868,8 @@
 		return
 
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
-	var/skills_space = "" //cobby told me to do this
-	var/fitness_level = src.mind.get_skill_level(/datum/skill/fitness) - 1
+	var/skills_space
+	var/fitness_level = mind.get_skill_level(/datum/skill/fitness) - 1
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay -= 2 SECONDS
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))

@@ -156,16 +156,17 @@
 	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
-	animate(user, pixel_y = pixel_shift_y, time = WORKOUT_LENGTH/2)
+	animate(user, pixel_y = pixel_shift_y, time = WORKOUT_LENGTH * 0.5)
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
-	animate(pixel_y = user.base_pixel_y, time = WORKOUT_LENGTH/2)
+	animate(pixel_y = user.base_pixel_y, time = WORKOUT_LENGTH * 0.5)
 
-	if(iscarbon(user) && user.mind)
-		// the amount of workouts you can do before you hit stamcrit
-		var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/fitness)]
-		// total stamina drain of 1 workout calculated based on the workout length
-		var/stamina_exhaustion = FLOOR(initial(user.maxHealth) / workout_reps / WORKOUT_LENGTH, 0.1)
-		user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
+	if(!iscarbon(user) || isnull(user.mind))
+		return TRUE
+	// the amount of workouts you can do before you hit stamcrit
+	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/fitness)]
+	// total stamina drain of 1 workout calculated based on the workout length
+	var/stamina_exhaustion = FLOOR(initial(user.maxHealth) / workout_reps / WORKOUT_LENGTH, 0.1)
+	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE
 
