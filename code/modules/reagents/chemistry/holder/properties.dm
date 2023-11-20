@@ -121,16 +121,6 @@
 	return 0
 
 /**
- * Directly set the purity of all contained reagents to a new value
- * Arguments
- * * new_purity - the new purity value
- */
-/datum/reagents/proc/set_all_reagents_purity(new_purity = 0)
-	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
-		cached_reagent.purity = max(0, new_purity)
-
-/**
  * Get the average purity of all reagents (or all subtypes of provided typepath)
  * Arguments
  * * [parent_type][datum/reagent] - the typepath of specific reagents to look for
@@ -145,6 +135,17 @@
 		total_amount += reagent.volume
 		weighted_purity += reagent.volume * reagent.purity
 	return weighted_purity / total_amount
+
+/**
+ * Directly set the purity of all contained reagents to a new value
+ * Arguments
+ * * new_purity - the new purity value
+ */
+/datum/reagents/proc/set_all_reagents_purity(new_purity = 0)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		cached_reagent.purity = max(0, new_purity)
+
 
 //================================TASTE===================================================
 /**
