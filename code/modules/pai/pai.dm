@@ -227,6 +227,7 @@
 		var/newcardloc = pai_card
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
+	card = pai_card
 	forceMove(pai_card)
 	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
