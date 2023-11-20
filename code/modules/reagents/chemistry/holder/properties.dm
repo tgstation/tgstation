@@ -126,6 +126,10 @@
  * * [parent_type][datum/reagent] - the typepath of specific reagents to look for
  */
 /datum/reagents/proc/get_average_purity(datum/reagent/parent_type = null)
+	if(!isnull(parent_type) && !ispath(parent_type))
+		stack_trace("illegal path passed to get_average_purity [parent_type]")
+		return FALSE
+
 	var/total_amount
 	var/weighted_purity
 	var/list/cached_reagents = reagent_list
@@ -134,6 +138,7 @@
 			continue
 		total_amount += reagent.volume
 		weighted_purity += reagent.volume * reagent.purity
+
 	return weighted_purity / total_amount
 
 /**
