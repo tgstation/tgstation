@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - bugfix: "admin painting manager works again"

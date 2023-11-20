@@ -1,7 +1,7 @@
 /datum/computer_file/program/maintenance/phys_scanner
 	filename = "phys_scanner"
 	filedesc = "Physical Scanner"
-	category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "This program allows the tablet to scan physical objects and display a data output."
 	size = 2
 	usage_flags = PROGRAM_PDA

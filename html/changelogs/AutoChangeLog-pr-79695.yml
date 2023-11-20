@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Adds a button to check-antagonists that allows admins to send Nuke Op reinforcements with a single button"
-  - admin: "Nuke Ops check antagonists now show you full war status (declared / not declared)"
-  - bugfix: "Fixes multiple nuke teams (or an admin) being able to declare war at once"
