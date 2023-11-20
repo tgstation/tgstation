@@ -190,7 +190,7 @@
 
 /// Box of 7 grey IDs.
 /datum/supply_pack/service/greyidbox
-	name = "Grey ID Card Multipack Cate"
+	name = "Grey ID Card Multipack Crate"
 	desc = "A convenient crate containing a box of seven cheap ID cards in a handy wallet-sized form factor. \
 		Cards come in every colour you can imagne, as long as it's grey."
 	cost = CARGO_CRATE_VALUE * 3

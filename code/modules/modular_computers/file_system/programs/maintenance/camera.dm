@@ -1,11 +1,11 @@
 /datum/computer_file/program/maintenance/camera
 	filename = "camera_app"
 	filedesc = "Camera"
-	program_icon_state = "camera"
-	category = PROGRAM_CATEGORY_MISC
+	program_open_overlay = "camera"
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "This program allows the taking of pictures."
 	size = 4
-	usage_flags = PROGRAM_TABLET
+	usage_flags = PROGRAM_PDA
 	tgui_id = "NtosCamera"
 	program_icon = "camera"
 

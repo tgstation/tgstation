@@ -257,32 +257,154 @@
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
 /mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
-	send_item_attack_message(attacking_item, user)
-	if(!attacking_item.force)
-		return FALSE
+
+	var/targeting = check_zone(user.zone_selected)
+	if(user != src)
+		var/zone_hit_chance = 80
+		if(body_position == LYING_DOWN)
+			zone_hit_chance += 10
+		targeting = get_random_valid_zone(targeting, zone_hit_chance)
+	var/targeting_human_readable = parse_zone(targeting)
+
+	send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
+
+	var/armor_block = min(run_armor_check(
+			def_zone = targeting,
+			attack_flag = MELEE,
+			absorb_text = span_notice("Your armor has protected your [targeting_human_readable]!"),
+			soften_text = span_warning("Your armor has softened a hit to your [targeting_human_readable]!"),
+			armour_penetration = attacking_item.armour_penetration,
+			weak_against_armour = attacking_item.weak_against_armour,
+		), ARMOR_MAX_BLOCK)
+
 	var/damage = attacking_item.force
 	if(mob_biotypes & MOB_ROBOTIC)
 		damage *= attacking_item.demolition_mod
-	apply_damage(damage, attacking_item.damtype, attacking_item = attacking_item)
-	if(attacking_item.damtype == BRUTE && prob(33))
+
+	var/wounding = attacking_item.wound_bonus
+	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && body_position == LYING_DOWN && (LAZYLEN(surgeries) > 0))
+		wounding = CANT_WOUND
+
+	if(user != src)
+		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
+		if(check_block(attacking_item, damage, "the [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+			return FALSE
+
+	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
+
+	if(damage <= 0)
+		return FALSE
+
+	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
+		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
+		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
+
+	var/damage_done = apply_damage(
+		damage = damage,
+		damagetype = attacking_item.damtype,
+		def_zone = targeting,
+		blocked = armor_block,
+		wound_bonus = wounding,
+		bare_wound_bonus = attacking_item.bare_wound_bonus,
+		sharpness = attacking_item.get_sharpness(),
+		attack_direction = get_dir(user, src),
+		attacking_item = attacking_item,
+	)
+
+	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
+
+	return TRUE
+
+/**
+ * Called when we take damage, used to cause effects such as a blood splatter.
+ *
+ * Return TRUE if an effect was done, FALSE otherwise.
+ */
+/mob/living/proc/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype == BRUTE && prob(25 + damage_done * 2))
 		attacking_item.add_mob_blood(src)
-		var/turf/location = get_turf(src)
-		add_splatter_floor(location)
-		if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
-			user.add_mob_blood(src)
-	return TRUE //successful attack
+		add_splatter_floor(get_turf(src))
+		if(get_dist(attacker, src) <= 1)
+			attacker.add_mob_blood(src)
+		return TRUE
 
-/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
-	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-	else
-		return ..()
+	return FALSE
 
-/mob/living/basic/attacked_by(obj/item/I, mob/living/user)
-	if(!attack_threshold_check(I.force, I.damtype, MELEE, FALSE))
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), TRUE, -1)
-	else
-		return ..()
+/mob/living/silicon/robot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		spark_system.start()
+		. = TRUE
+	return ..() || .
+
+/mob/living/silicon/ai/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		spark_system.start()
+		. = TRUE
+	return ..() || .
+
+/mob/living/carbon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	var/obj/item/bodypart/hit_bodypart = get_bodypart(hit_zone) || bodyparts[1]
+	if(!hit_bodypart.can_bleed())
+		return FALSE
+
+	return ..()
+
+/mob/living/carbon/human/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	. = ..()
+	switch(hit_zone)
+		if(BODY_ZONE_HEAD)
+			if(.)
+				if(wear_mask)
+					wear_mask.add_mob_blood(src)
+					update_worn_mask()
+				if(head)
+					head.add_mob_blood(src)
+					update_worn_head()
+				if(glasses && prob(33))
+					glasses.add_mob_blood(src)
+					update_worn_glasses()
+
+			if(!attacking_item.get_sharpness() && armor_block < 50)
+				if(prob(damage_done))
+					adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+					if(stat == CONSCIOUS)
+						visible_message(
+							span_danger("[src] is knocked senseless!"),
+							span_userdanger("You're knocked senseless!"),
+						)
+						set_confusion_if_lower(20 SECONDS)
+						adjust_eye_blur(20 SECONDS)
+					if(prob(10))
+						gain_trauma(/datum/brain_trauma/mild/concussion)
+				else
+					adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_done * 0.2)
+
+				// rev deconversion through blunt trauma.
+				// this can be signalized to the rev datum
+				if(mind && stat == CONSCIOUS && src != attacker && prob(damage_done + ((100 - health) * 0.5)))
+					var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
+					rev?.remove_revolutionary(attacker)
+
+		if(BODY_ZONE_CHEST)
+			if(.)
+				if(wear_suit)
+					wear_suit.add_mob_blood(src)
+					update_worn_oversuit()
+				if(w_uniform)
+					w_uniform.add_mob_blood(src)
+					update_worn_undersuit()
+
+			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && armor_block < 50)
+				if(prob(damage_done))
+					visible_message(
+						span_danger("[src] is knocked down!"),
+						span_userdanger("You're knocked down!"),
+					)
+					apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
+
+	// Triggers force say events
+	if(damage_done > 10 || (damage_done >= 5 && prob(33)))
+		force_say()
 
 /**
  * Last proc in the [/obj/item/proc/melee_attack_chain].
@@ -335,7 +457,7 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
+/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, def_zone)
 	if(!I.force && !length(I.attack_verb_simple) && !length(I.attack_verb_continuous))
 		return
 	var/message_verb_continuous = length(I.attack_verb_continuous) ? "[pick(I.attack_verb_continuous)]" : "attacks"

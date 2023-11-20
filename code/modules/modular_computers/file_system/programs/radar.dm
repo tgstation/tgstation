@@ -1,12 +1,12 @@
 /datum/computer_file/program/radar //generic parent that handles most of the process
 	filename = "genericfinder"
 	filedesc = "debug_finder"
-	category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
-	program_icon_state = "radarntos"
+	program_open_overlay = "radarntos"
 	requires_ntnet = TRUE
 	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	usage_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRadar"
 	///List of trackable entities. Updated by the scan() proc.
@@ -15,7 +15,7 @@
 	var/selected
 	///Used to store when the next scan is available.
 	COOLDOWN_DECLARE(next_scan)
-	///Used to keep track of the last value program_icon_state was set to, to prevent constant unnecessary update_appearance() calls
+	///Used to keep track of the last value program_open_overlay was set to, to prevent constant unnecessary update_appearance() calls
 	var/last_icon_state = ""
 	///Used by the tgui interface, themed NT or Syndicate.
 	var/arrowstyle = "ntosradarpointer.png"
@@ -181,10 +181,10 @@
 
 	var/atom/movable/signal = find_atom()
 	if(!trackable(signal))
-		program_icon_state = "[initial(program_icon_state)]lost"
-		if(last_icon_state != program_icon_state)
+		program_open_overlay = "[initial(program_open_overlay)]lost"
+		if(last_icon_state != program_open_overlay)
 			computer.update_appearance()
-			last_icon_state = program_icon_state
+			last_icon_state = program_open_overlay
 		return
 
 	var/here_turf = get_turf(computer)
@@ -192,17 +192,17 @@
 	var/trackdistance = get_dist_euclidian(here_turf, target_turf)
 	switch(trackdistance)
 		if(0)
-			program_icon_state = "[initial(program_icon_state)]direct"
+			program_open_overlay = "[initial(program_open_overlay)]direct"
 		if(1 to 12)
-			program_icon_state = "[initial(program_icon_state)]close"
+			program_open_overlay = "[initial(program_open_overlay)]close"
 		if(13 to 24)
-			program_icon_state = "[initial(program_icon_state)]medium"
+			program_open_overlay = "[initial(program_open_overlay)]medium"
 		if(25 to INFINITY)
-			program_icon_state = "[initial(program_icon_state)]far"
+			program_open_overlay = "[initial(program_open_overlay)]far"
 
-	if(last_icon_state != program_icon_state)
+	if(last_icon_state != program_open_overlay)
 		computer.update_appearance()
-		last_icon_state = program_icon_state
+		last_icon_state = program_open_overlay
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
@@ -302,8 +302,7 @@
 /datum/computer_file/program/radar/fission360
 	filename = "fission360"
 	filedesc = "Fission360"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "radarsyndicate"
+	program_open_overlay = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
