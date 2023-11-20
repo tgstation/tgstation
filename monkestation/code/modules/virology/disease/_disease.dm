@@ -27,3 +27,23 @@
 
 	///pathogenic warfare - If you have a second disease of a form name in the list they will start fighting.
 	var/list/can_kill = list("Bacteria")
+
+	//When an opportunity for the disease to spread to a mob arrives, runs this percentage through prob()
+	//Ignored if infected materials are ingested (injected with infected blood, eating infected meat)
+	var/infectionchance = 70
+	var/infectionchance_base = 70
+
+	//ticks increases by [speed] every time the disease activates. Drinking Virus Food also accelerates the process by 10.
+	var/ticks = 0
+	var/speed = 1
+
+/proc/filter_disease_by_spread(list/diseases, required = NONE)
+	if(!length(diseases))
+		return list()
+
+	var/list/viable = list()
+	for(var/datum/disease/disease as anything in diseases)
+		if(!(disease.spread_flags & required))
+			continue
+		viable += disease
+	return viable

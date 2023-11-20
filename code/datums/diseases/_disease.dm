@@ -109,13 +109,15 @@
 	if(force_spread)
 		spread_range = force_spread
 
+	affected_mob.spread_airborne_diseases()
+	/*
 	var/turf/T = affected_mob.loc
 	if(istype(T))
 		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
 			var/turf/V = get_turf(C)
 			if(disease_air_spread_walk(T, V))
 				C.AirborneContractDisease(src, force_spread)
-
+	*/
 /proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)
 		return FALSE
@@ -142,10 +144,49 @@
 
 /datum/disease/proc/Copy()
 	//note that stage is not copied over - the copy starts over at stage 1
-	var/static/list/copy_vars = list("name", "visibility_flags", "disease_flags", "spread_flags", "form", "desc", "agent", "spread_text",
-									"cure_text", "max_stages", "stage_prob", "viable_mobtypes", "cures", "infectivity", "cure_chance",
-									"bypasses_immunity", "spreading_modifier", "severity", "required_organs", "needs_all_cures", "strain_data",
-									"infectable_biotypes", "process_dead")
+	var/static/list/copy_vars = list(
+		"name",
+		"visibility_flags",
+		"disease_flags",
+		"spread_flags",
+		"form",
+		"desc",
+		"agent",
+		"spread_text",
+		"cure_text",
+		"max_stages",
+		"stage_prob",
+		"viable_mobtypes",
+		"cures",
+		"infectivity",
+		"cure_chance",
+		"bypasses_immunity",
+		"spreading_modifier",
+		"severity",
+		"required_organs",
+		"needs_all_cures",
+		"strain_data",
+		"infectable_biotypes",
+		"process_dead",
+		"spread",
+		"mutation_modifier",
+		"strength",
+		"robustness",
+		"max_bodytemperature",
+		"min_bodytemperature",
+		"log",
+		"origin",
+		"logged_virusfood",
+		"fever_warning",
+		"color",
+		"pattern",
+		"pattern_color",
+		"can_kill",
+		"infectionchance",
+		"infectionchance_base",
+		"ticks",
+		"speed",
+		)
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()
 	for(var/V in copy_vars)

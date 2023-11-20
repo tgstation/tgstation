@@ -1,5 +1,8 @@
+/mob/living/carbon
+	///our immune system
+	var/datum/immune_system/immune_system
 /datum/immune_system
-	var/mob/living/host = null
+	var/mob/living/carbon/host = null
 	var/strength = 1
 	var/overloaded = FALSE
 	var/list/antibodies = list(
@@ -18,7 +21,7 @@
 		ANTIGEN_Z	= 0,
 		)
 
-/datum/immune_system/New(mob/living/source)
+/datum/immune_system/New(mob/living/carbon/source)
 	..()
 	if (!source)
 		del(src)
@@ -26,15 +29,15 @@
 	host = source
 
 	for (var/antibody in antibodies)
-		if (antibody in rare_antigens)
+		if (antibody in GLOB.rare_antigens)
 			antibodies[antibody] = rand(1,15)
 			if (prob(5))
 				antibodies[antibody] += 10
-		if (antibody in common_antigens)
+		if (antibody in GLOB.common_antigens)
 			antibodies[antibody] = rand(10,30)
-		if (antibody in blood_antigens)
+		if (antibody in GLOB.blood_antigens)
 			antibodies[antibody] = rand(10,20)
-			if (host.dna && host.dna.b_type)
+			if (host.dna && host.dna.blood_type)
 				if (antibody == ANTIGEN_O)
 					antibodies[antibody] += rand(12,15)
 				if (antibody == ANTIGEN_A && findtext(host.dna.blood_type,"A"))
@@ -44,7 +47,7 @@
 				if (antibody == ANTIGEN_RH && findtext(host.dna.blood_type,"+"))
 					antibodies[antibody] += rand(12,15)
 
-/datum/immune_system/proc/transfer_to(mob/living/source)
+/datum/immune_system/proc/transfer_to(mob/living/carbon/source)
 	if (!source.immune_system)
 		source.immune_system = new(source)
 
@@ -63,21 +66,21 @@
 
 /datum/immune_system/proc/Overload()
 	host.adjustToxLoss(100)
-	target.AddComponent(/datum/component/irradiated)
+	host.AddComponent(/datum/component/irradiated)
 	host.bodytemperature = max(host.bodytemperature, BODYTEMP_HEAT_DAMAGE_LIMIT)
 	to_chat(host, span_danger("A terrible fever assails your host, you feel ill as your immune system kicks into overdrive to drive away your infections."))
 	if (ishuman(host))
 		var/mob/living/carbon/human/H = host
 		H.vomit(0,1)//hope you're wearing a biosuit or you'll get reinfected from your vomit, lol
-	for(var/ID in host.virus2)
-		var/datum/disease2/disease/D = host.virus2[ID]
+	for(var/ID in host.diseases)
+		var/datum/disease/D = host.diseases[ID]
 		D.cure(host,2)
 	strength = 0
 	overloaded = TRUE
 
 
 //If even one antibody hass sufficient concentration, the disease won't be able to infect
-/datum/immune_system/proc/CanInfect(datum/disease2/disease/disease)
+/datum/immune_system/proc/CanInfect(datum/disease/disease)
 	if (overloaded)
 		return TRUE
 
@@ -90,21 +93,21 @@
 	if (overloaded)
 		return
 
-	for (var/ID in host.virus2)
-		var/datum/disease2/disease/disease = host.virus2[ID]
+	for (var/ID in host.diseases)
+		var/datum/disease/disease = host.diseases[ID]
 		for (var/A in disease.antigen)
 			var/tally = 0.5
-			if (isturf(host.loc) && host.lying)
+			if (isturf(host.loc) && (host.body_position == LYING_DOWN))
 				tally += 0.5
 				var/obj/structure/bed/B = locate() in host.loc
-				if (B && B.mob_lock_type == /datum/locking_category/buckle/bed)//fucking chairs n stuff
+				if (host.buckled == B)//fucking chairs n stuff
 					tally += 1
-				if (host.sleeping)
+				if (host.IsUnconscious())
 					if (tally < 2)
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 4
-			else if(istype(host.loc, /obj/machinery/atmospherics/unary/cryo_cell))
+			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 				tally += 1.5
 
 			if (antibodies[A] < threshold)
