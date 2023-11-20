@@ -377,7 +377,7 @@
 		return
 	bodypart.receive_damage(scratch_damage)
 	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at [bodypart] to rid its imperfections!"))
+		to_chat(owner, span_notice("You scratch furiously at [bodypart] to ruin the cloth that hides the beauty!"))
 
 
 
