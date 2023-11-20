@@ -19,9 +19,9 @@
 	door_anim_time = 0 // no animation
 	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	/// Mobs standing on it are nudged up by this amount.
-	var/elevation = 12
+	var/elevation = 14
 	/// The same, but when the crate is open
-	var/elevation_open = 12
+	var/elevation_open = 14
 	/// The time spent to climb this crate.
 	var/crate_climb_time = 2 SECONDS
 	/// The reference of the manifest paper attached to the cargo crate.

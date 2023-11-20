@@ -23,7 +23,7 @@
 	/// How many mats to drop when deconstructed
 	var/build_stack_amount = 2
 	/// Mobs standing on it are nudged up by this amount. Also used to align the person back when buckled to it after init.
-	var/elevation = 6
+	var/elevation = 8
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
@@ -323,7 +323,7 @@
 	name = "dirty mattress"
 	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
 	icon_state = "dirty_mattress"
-	elevation = 4
+	elevation = 7
 
 /obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
