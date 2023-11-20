@@ -33,6 +33,7 @@
 		return
 
 	new /obj/effect/temp_visual/heart(pet.loc)
+	SEND_SIGNAL(pet, COMSIG_ANIMAL_PET, petter, modifiers)
 	if(emote_message && prob(33))
 		pet.manual_emote(emote_message)
 	petter.add_mood_event("petting_bonus", moodlet, pet)

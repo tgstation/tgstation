@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(the_rcd.mode == RCD_TURF)
 		if(rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
-			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 		else if(rcd_data["[RCD_DESIGN_PATH]"] == /obj/structure/lattice/catwalk)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
@@ -346,5 +346,5 @@ GLOBAL_LIST_EMPTY(starlight)
 		ChangeTurf(new_floor_path, flags = flags)
 		return
 	// Create plating under tiled floor we try to create directly onto space
-	PlaceOnTop(/turf/open/floor/plating, flags = flags)
-	PlaceOnTop(new_floor_path, flags = flags)
+	place_on_top(/turf/open/floor/plating, flags = flags)
+	place_on_top(new_floor_path, flags = flags)

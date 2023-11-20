@@ -179,10 +179,10 @@
 	var/datum/techweb_node/node_to_discover = SSresearch.techweb_node_by_id(id)
 	if(!istype(node_to_discover))
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[loaded_item.type]"))
 	if(!destroy_item())
 		return FALSE
-	stored_research.unhide_node(SSresearch.techweb_node_by_id(node_to_discover.id))
+	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[loaded_item.type]"))
+	stored_research.unhide_node(node_to_discover)
 	return TRUE
 
 #undef DESTRUCTIVE_ANALYZER_DESTROY_POINTS

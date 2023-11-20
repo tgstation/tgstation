@@ -64,6 +64,8 @@ const loadChatFromStorage = async (store) => {
 export const chatMiddleware = (store) => {
   let initialized = false;
   let loaded = false;
+  const sequences = [];
+  const sequences_requested = [];
   chatRenderer.events.on('batchProcessed', (countByType) => {
     // Use this flag to workaround unread messages caused by
     // loading them from storage. Side effect of that, is that
@@ -85,9 +87,41 @@ export const chatMiddleware = (store) => {
       loadChatFromStorage(store);
     }
     if (type === 'chat/message') {
-      // Normalize the payload
-      const batch = Array.isArray(payload) ? payload : [payload];
-      chatRenderer.processBatch(batch);
+      let payload_obj;
+      try {
+        payload_obj = JSON.parse(payload);
+      } catch (err) {
+        return;
+      }
+
+      const sequence = payload_obj.sequence;
+      if (sequences.includes(sequence)) {
+        return;
+      }
+
+      const sequence_count = sequences.length;
+      seq_check: if (sequence_count > 0) {
+        if (sequences_requested.includes(sequence)) {
+          sequences_requested.splice(sequences_requested.indexOf(sequence), 1);
+          // if we are receiving a message we requested, we can stop reliability checks
+          break seq_check;
+        }
+
+        // cannot do reliability if we don't have any messages
+        const expected_sequence = sequences[sequence_count - 1] + 1;
+        if (sequence !== expected_sequence) {
+          for (
+            let requesting = expected_sequence;
+            requesting < sequence;
+            requesting++
+          ) {
+            requested_sequences.push(requesting);
+            Byond.sendMessage('chat/resend', requesting);
+          }
+        }
+      }
+
+      chatRenderer.processBatch([payload_obj.content]);
       return;
     }
     if (type === loadChat.type) {

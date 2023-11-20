@@ -1,8 +1,8 @@
 /datum/computer_file/program/notepad
 	filename = "notepad"
 	filedesc = "Notepad"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "generic"
 	extended_desc = "Jot down your work-safe thoughts and what not."
 	size = 2
 	tgui_id = "NtosNotepad"
