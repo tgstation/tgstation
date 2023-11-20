@@ -109,7 +109,7 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	if(!user.mind) //this should not happen but just to be safe
 		return
 	. = ..()
-	var/mob/living/simple_animal/drone/created_drone = new /mob/living/simple_animal/drone/cogscarab(get_turf(src))
+	var/mob/living/basic/drone/created_drone = new /mob/living/basic/drone/cogscarab(get_turf(src))
 	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	user.mind.transfer_to(created_drone, TRUE)
 

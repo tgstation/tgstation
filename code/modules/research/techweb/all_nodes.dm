@@ -118,6 +118,7 @@
 		"titaniumglass",
 		"toner_large",
 		"toner",
+		"tongs",
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",

@@ -37,7 +37,7 @@
 
 
 // generic water balloon impact handler, need to move to new file if i make other water balloons
-/obj/item/reagent_containers/water_balloon/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, quickstart)
+/obj/item/reagent_containers/water_balloon/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	. = ..()
 	visible_message("<span class='notice'>The [src.name] bursts upon impact with \the [target.name]!</span>")
 	qdel(src)

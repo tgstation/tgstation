@@ -108,8 +108,9 @@
 	..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
-	if(user)
-		to_chat(user, span_danger("[src] buzzes and beeps."))
+
+	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
+
 	audible_message(span_danger("[src] buzzes oddly!"))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(user)

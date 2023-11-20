@@ -1,4 +1,4 @@
-/// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
+/// Return this from `/datum/component/Initialize` or `/datum/component/OnTransfer` or `/datum/component/on_source_add` to have the component be deleted if it's applied to an incorrect type.
 /// `parent` must not be modified if this is to be returned.
 /// This will be noted in the runtime logs
 #define COMPONENT_INCOMPATIBLE 1
@@ -33,8 +33,8 @@
 /**
  * Component uses source tracking to manage adding and removal logic.
  * Add a source/spawn to/the component by using AddComponentFrom(source, component_type, args...)
- * Only the first args will be respected, and you should instead handle most of your logic in the on_source_added proc.
  * Removing the last source will automatically remove the component from the parent.
+ * Arguments will be passed to on_source_add(source, args...); ensure that Initialize and on_source_add have the same signature.
  */
 #define COMPONENT_DUPE_SOURCES 3
 /// old component is given the initialization args of the new

@@ -39,3 +39,18 @@
 	caliber = CALIBER_40MM
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
+
+
+/obj/item/ammo_casing/a223
+	name = ".223 bullet casing"
+	desc = "A .223 bullet casing."
+	caliber = CALIBER_A223
+	projectile_type = /obj/projectile/bullet/a223
+
+/obj/item/ammo_casing/a223/phasic
+	name = ".223 phasic bullet casing"
+	desc = "A .223 phasic bullet casing."
+	projectile_type = /obj/projectile/bullet/a223/phasic
+
+/obj/item/ammo_casing/a223/weak
+	projectile_type = /obj/projectile/bullet/a223/weak

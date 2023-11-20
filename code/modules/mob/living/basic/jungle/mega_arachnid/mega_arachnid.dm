@@ -36,12 +36,11 @@
 
 /mob/living/basic/mega_arachnid/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/seethrough_mob)
 	var/datum/action/cooldown/spell/pointed/projectile/flesh_restraints/restrain = new(src)
-	var/datum/action/small_sprite/mega_arachnid/mini_arachnid = new(src)
 	var/datum/action/cooldown/mob_cooldown/secrete_acid/acid_spray = new(src)
 	acid_spray.Grant(src)
 	restrain.Grant(src)
-	mini_arachnid.Grant(src)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGA_ARACHNID, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddComponent(/datum/component/appearance_on_aggro, alpha_on_aggro = 255, alpha_on_deaggro = alpha)
 	AddComponent(/datum/component/tree_climber, climbing_distance = 15)

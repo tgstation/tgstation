@@ -61,7 +61,7 @@
 	damage = 10
 	ricochets_max = 0 //it's a MISSILE
 
-/obj/projectile/bullet/SRN_rocket/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/SRN_rocket/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target

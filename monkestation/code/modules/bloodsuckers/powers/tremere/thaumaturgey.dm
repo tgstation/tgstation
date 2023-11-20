@@ -132,7 +132,7 @@
 	damage = 20
 	var/datum/action/cooldown/bloodsucker/targeted/tremere/thaumaturgy/bloodsucker_power
 
-/obj/projectile/magic/arcane_barrage/bloodsucker/on_hit(target)
+/obj/projectile/magic/arcane_barrage/bloodsucker/on_hit(target, blocked, pierce_hit)
 	if(istype(target, /obj/structure/closet) && bloodsucker_power.level_current >= 3)
 		var/obj/structure/closet/hit_closet = target
 		if(hit_closet)

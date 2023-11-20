@@ -58,10 +58,10 @@
 			"health" = creature.health,
 			"name" = creature.name,
 			"pilot" = pilot,
-			"brute" = creature.get_damage_amount(BRUTE),
-			"burn" = creature.get_damage_amount(BURN),
-			"tox" = creature.get_damage_amount(TOX),
-			"oxy" = creature.get_damage_amount(OXY),
+			"brute" = creature.getBruteLoss(),
+			"burn" = creature.getFireLoss(),
+			"tox" = creature.getToxLoss(),
+			"oxy" = creature.getOxyLoss(),
 		))
 
 	return hosted_avatars

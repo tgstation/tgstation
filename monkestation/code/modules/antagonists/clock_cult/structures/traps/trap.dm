@@ -117,7 +117,7 @@
 	outputs |= input.parent
 
 
-/// Adds this as an output to the targetted component's `outputs` list
+/// Adds this as an output to the targeted component's `outputs` list
 /datum/component/clockwork_trap/proc/add_output(datum/component/clockwork_trap/output)
 	output.outputs |= parent
 
