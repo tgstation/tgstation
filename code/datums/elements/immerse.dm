@@ -256,7 +256,7 @@
 ///Removes the overlay from mob and bucklees is flying.
 /datum/element/immerse/proc/on_move_flag_enabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
-	if(!(flag & (FLYING|FLOATING)) || (old_movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || source.throwing)
+	if(!(flag & MOVETYPES_NOT_TOUCHING_GROUND) || (old_movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || source.throwing)
 		return
 	remove_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
