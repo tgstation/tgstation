@@ -274,10 +274,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
-"Qv" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "QO" = (
 /obj/machinery/door/airlock/gold/glass,
 /turf/open/floor/wood,
@@ -473,7 +469,7 @@ Cg
 Cg
 ce
 ns
-Qv
+KO
 JR
 KJ
 od
