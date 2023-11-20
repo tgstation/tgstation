@@ -63,7 +63,7 @@
 	RegisterSignal(jaunt, COMSIG_MOB_EJECTED_FROM_JAUNT, PROC_REF(on_jaunt_exited))
 	jaunter.add_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN), REF(src))
 	jaunter.drop_all_held_items()
-	jaunter.notransform = TRUE
+	ADD_TRAIT(jaunter, TRAIT_NO_TRANSFORM, INNATE_TRAIT)
 
 	// Give them some bloody hands to prevent them from doing things
 	var/obj/item/bloodcrawl/left_hand = new(jaunter)
@@ -75,7 +75,7 @@
 
 	// Make sure they wont be burning for 20 seconds
 	jaunter.extinguish_mob()
-	jaunter.notransform = FALSE
+	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, INNATE_TRAIT)
 
 	slasherdatum.corporeal = FALSE
 

@@ -133,7 +133,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "cZ" = (
@@ -659,7 +659,7 @@
 "ld" = (
 /obj/effect/decal/cleanable/confetti,
 /obj/structure/window/reinforced/spawner/directional/west,
-/mob/living/simple_animal/hostile/retaliate/clown{
+/mob/living/basic/clown{
 	health = 300;
 	name = "Honk-E-Clown";
 	desc = "This clown looks pretty tough, better stay on his good side...";
@@ -1823,7 +1823,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
 "Ht" = (
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/eighties,
 /area/shuttle/escape/luxury)
 "HA" = (
@@ -2618,6 +2618,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape/brig)
+"Wa" = (
+/obj/structure/chair/comfy/teal{
+	dir = 4
+	},
+/mob/living/basic/drone/snowflake/bardrone,
+/turf/open/floor/wood/tile,
+/area/shuttle/escape)
 "Wc" = (
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
@@ -3541,7 +3548,7 @@ xf
 xf
 mw
 mw
-mw
+Wa
 xf
 Ov
 uV

@@ -276,7 +276,7 @@
 	damage = 3
 	ricochets_max = 4
 
-/obj/projectile/bullet/bloodsilver/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/bloodsilver/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!iscarbon(target))
 		return

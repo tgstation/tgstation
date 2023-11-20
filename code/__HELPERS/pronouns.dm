@@ -15,6 +15,9 @@
 	if(capitalized)
 		. = capitalize(.)
 
+/datum/proc/p_Their(temp_gender)
+	return capitalize(p_their(temp_gender))
+
 /datum/proc/p_them(capitalized, temp_gender)
 	. = "it"
 	if(capitalized)
@@ -37,6 +40,9 @@
 
 /datum/proc/p_theyre(capitalized, temp_gender)
 	. = p_they(capitalized, temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
+
+/datum/proc/p_Theyre(temp_gender)
+	return p_They(temp_gender) + "'" + copytext_char(p_are(temp_gender), 2)
 
 /datum/proc/p_s(temp_gender) //is this a descriptive proc name, or what?
 	. = "s"

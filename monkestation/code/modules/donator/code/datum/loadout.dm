@@ -232,3 +232,10 @@
 	item_path = /obj/item/clothing/head/costume/space_marine
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//rickdude
+/datum/loadout_item/suit/aotcloak
+	name = "Survey Corps Cloak"
+	item_path = /obj/item/clothing/suit/hooded/aotcloak
+	donator_only = TRUE
+	requires_purchase = FALSE

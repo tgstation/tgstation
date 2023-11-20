@@ -83,3 +83,17 @@
   wraith-54321:
   - balance: Reverts our change making miner medipens take only half a second to use
       on station
+2023-11-20:
+  Bidlink1:
+  - rscadd: Lanternfruit to Megaservitor (courtesy of MrMelbert)
+  - rscadd: Adds Sulfur and Liquid Electricity production as a gene in Lantern fruit
+  KittyNoodle:
+  - rscadd: Nuke ops have been authorized for a new experimental combat implant.
+  - qol: Stacking hardlight spears now stores it in only one spell. And it looks really
+      cool.
+  - qol: Hardlight spears no longer delete themselves after 10 seconds.
+  - balance: Hardlight spears now do much more damage.
+  - image: resprited the hardlight spear
+  - refactor: Hardlight spears use projectiles instead of throws now.
+  NicoDeLuna:
+  - bugfix: adjusting sprites of the ascot

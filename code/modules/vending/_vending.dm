@@ -680,6 +680,64 @@
 		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
 
 /**
+ * Exists for the purposes of custom behavior.
+ * Called directly after [crushed] is crushed.
+ *
+ * Args:
+ * * mob/living/crushed: The mob that was crushed.
+ * * was_alive: Boolean. True if the mob was alive before the crushing.
+ */
+/atom/movable/proc/post_crush_living(mob/living/crushed, was_alive)
+	return
+
+/**
+ * Exists for the purposes of custom behavior.
+ * Called directly after src actually rotates and falls over.
+ */
+/atom/movable/proc/post_tilt()
+	return
+
+/obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
+
+	if(was_alive && crushed.stat == DEAD && crushed.client)
+		crushed.client.give_award(/datum/award/achievement/misc/vendor_squish, crushed) // good job losing a fight with an inanimate object idiot
+
+	add_memory_in_range(crushed, 7, /datum/memory/witness_vendor_crush, protagonist = crushed, antagonist = src)
+
+	return ..()
+
+
+/obj/machinery/vending/apply_crit_crush(crit_case, atom_target)
+	. = ..()
+
+	if (.)
+		return TRUE
+
+	switch (crit_case)
+		if (VENDOR_CRUSH_CRIT_GLASSCANDY)
+			if (!iscarbon(atom_target))
+				return FALSE
+			var/mob/living/carbon/carbon_target = atom_target
+			for(var/i in 1 to num_shards)
+				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
+				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
+				shard.updateEmbedding()
+				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+				shard.embedding = list()
+				shard.updateEmbedding()
+			return TRUE
+		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
+			if (!isliving(atom_target))
+				return FALSE
+			var/mob/living/living_target = atom_target
+			forceMove(get_turf(living_target))
+			buckle_mob(living_target, force=TRUE)
+			living_target.visible_message(span_danger("[living_target] is pinned underneath [src]!"), span_userdanger("You are pinned down by [src]!"))
+			return TRUE
+
+	return FALSE
+
+/**
  * Causes src to fall onto [target], crushing everything on it (including itself) with [damage]
  * and a small chance to do a spectacular effect per entity (if a chance above 0 is provided).
  *
@@ -769,23 +827,6 @@
 	Move(target, crush_dir) // we still TRY to move onto it for shit like teleporters
 	return flags_to_return
 
-/**
- * Exists for the purposes of custom behavior.
- * Called directly after [crushed] is crushed.
- *
- * Args:
- * * mob/living/crushed: The mob that was crushed.
- * * was_alive: Boolean. True if the mob was alive before the crushing.
- */
-/atom/movable/proc/post_crush_living(mob/living/crushed, was_alive)
-	return
-
-/**
- * Exists for the purposes of custom behavior.
- * Called directly after src actually rotates and falls over.
- */
-/atom/movable/proc/post_tilt()
-	return
 
 /obj/machinery/vending/post_crush_living(mob/living/crushed, was_alive)
 
@@ -880,11 +921,9 @@
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/obj/item/bodypart/squish_part in carbon_target.bodyparts)
-				if(IS_ORGANIC_LIMB(squish_part))
-					var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
-					squish_part.force_wound_upwards(type_wound)
-				else
-					squish_part.receive_damage(brute=30)
+				var/severity = pick(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
+				if (!carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, squish_part, severity, wound_source = "crushed by [src]"))
+					squish_part.receive_damage(brute = 30)
 			carbon_target.visible_message(span_danger("[carbon_target]'s body is maimed underneath the mass of [src]!"), span_userdanger("Your body is maimed underneath the mass of [src]!"))
 			return TRUE
 		if(CRUSH_CRIT_HEADGIB) // skull squish!
@@ -932,6 +971,11 @@
 
 	return FALSE
 
+/**
+ * Rights the vendor up, unpinning mobs under it, if any.
+ * Arguments:
+ * user - mob that has untilted the vendor
+ */
 /obj/machinery/vending/proc/untilt(mob/user)
 	if(user)
 		user.visible_message(span_notice("[user] rights [src]."), \

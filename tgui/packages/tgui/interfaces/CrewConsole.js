@@ -13,14 +13,8 @@ const HEALTH_COLOR_BY_LEVEL = [
   '#801308',
 ];
 
-const HEALTH_ICON_BY_LEVEL = [
-  'heart',
-  'heart',
-  'heart',
-  'heart',
-  'heartbeat',
-  'skull',
-];
+const STAT_LIVING = 0;
+const STAT_DEAD = 4;
 
 const jobIsHead = (jobId) => jobId % 10 === 0;
 
@@ -47,6 +41,16 @@ const jobToColor = (jobId) => {
     return COLORS.department.centcom;
   }
   return COLORS.department.other;
+};
+
+const statToIcon = (life_status) => {
+  switch (life_status) {
+    case STAT_LIVING:
+      return 'heart';
+    case STAT_DEAD:
+      return 'skull';
+  }
+  return 'heartbeat';
 };
 
 const healthToAttribute = (oxy, tox, burn, brute, attributeList) => {
@@ -129,13 +133,7 @@ const CrewTableEntry = (props, context) => {
       <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (
           <Icon
-            name={healthToAttribute(
-              oxydam,
-              toxdam,
-              burndam,
-              brutedam,
-              HEALTH_ICON_BY_LEVEL
-            )}
+            name={statToIcon(life_status)}
             color={healthToAttribute(
               oxydam,
               toxdam,
@@ -145,7 +143,7 @@ const CrewTableEntry = (props, context) => {
             )}
             size={1}
           />
-        ) : life_status ? (
+        ) : life_status !== STAT_DEAD ? (
           <Icon name="heart" color="#17d568" size={1} />
         ) : (
           <Icon name="skull" color="#801308" size={1} />
@@ -162,7 +160,7 @@ const CrewTableEntry = (props, context) => {
             {'/'}
             <HealthStat type="brute" value={brutedam} />
           </Box>
-        ) : life_status ? (
+        ) : life_status !== STAT_DEAD ? (
           'Alive'
         ) : (
           'Dead'

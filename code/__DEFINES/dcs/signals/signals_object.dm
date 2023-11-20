@@ -129,6 +129,15 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
+#define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
+///from base of datum/storage/attempt_insert(): ()
+#define COMSIG_ITEM_STORED "item_stored"
+
+///from base of obj/item/apply_fantasy_bonuses(): (bonus)
+#define COMSIG_ITEM_APPLY_FANTASY_BONUSES "item_apply_fantasy_bonuses"
+///from base of obj/item/remove_fantasy_bonuses(): (bonus)
+#define COMSIG_ITEM_REMOVE_FANTASY_BONUSES "item_remove_fantasy_bonuses"
 
 /// Sebt from obj/item/ui_action_click(): (mob/user, datum/action)
 #define COMSIG_ITEM_UI_ACTION_CLICK "item_action_click"
@@ -175,7 +184,11 @@
 ///from [/obj/structure/closet/supplypod/proc/preOpen]:
 #define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
-///from /obj/item/storage/book/bible/afterattack(): (mob/user, proximity)
+/// from [/obj/item/stack/proc/can_merge]: (obj/item/stack/merge_with, in_hand)
+#define COMSIG_STACK_CAN_MERGE "stack_can_merge"
+	#define CANCEL_STACK_MERGE (1<<0)
+
+///from /obj/item/book/bible/afterattack(): (mob/user, proximity)
 #define COMSIG_BIBLE_SMACKED "bible_smacked"
 	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)
@@ -220,6 +233,11 @@
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"
 ///called when getting the item's exact ratio for cargo's profit, without selling the item.
 #define COMSIG_ITEM_SPLIT_PROFIT_DRY "item_split_profits_dry"
+
+/// Called on component/uplink/OnAttackBy(..)
+#define COMSIG_ITEM_ATTEMPT_TC_REIMBURSE "item_attempt_tc_reimburse"
+///Called when a holoparasite/guardiancreator is used.
+#define COMSIG_TRAITOR_ITEM_USED(type) "traitor_item_used_[type]"
 
 // /obj/item/clothing signals
 

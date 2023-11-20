@@ -62,3 +62,5 @@
 	#define ATTACKER_STAMINA_ATTACK (1<<0)
 	///the attacker is shoving the source
 	#define ATTACKER_SHOVING (1<<1)
+	/// The attack is a damaging-type attack
+	#define ATTACKER_DAMAGING_ATTACK (1<<2)
