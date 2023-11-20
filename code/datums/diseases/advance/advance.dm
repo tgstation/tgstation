@@ -254,7 +254,7 @@
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		if(!S.neutered)
-			properties["severity"] = += S.severity // severity is based on the sum of all non-neutered symptoms' severity
+			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/assign_properties()
