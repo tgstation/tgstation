@@ -3319,8 +3319,6 @@
 	pixel_y = -8;
 	req_access = list("engineering")
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /mob/living/basic/parrot/poly,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
