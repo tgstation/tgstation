@@ -1499,10 +1499,14 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/obj/effect/turf_decal/weather/snow,
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Pete"
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
 	},
+/obj/effect/turf_decal/weather/snow,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/mob/living/basic/goat/pete,
 /turf/open/floor/iron/kitchen_coldroom,
 /area/station/service/kitchen/coldroom)
 "aeq" = (
@@ -3294,6 +3298,10 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
 /obj/machinery/button/door/directional/west{
 	id = "atmos";
 	name = "Atmospherics Lockdown";
@@ -3311,8 +3319,7 @@
 	pixel_y = -8;
 	req_access = list("engineering")
 	},
-/obj/structure/sign/clock/directional/north,
-/mob/living/simple_animal/parrot/poly,
+/mob/living/basic/parrot/poly,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "aqf" = (
@@ -48527,7 +48534,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "oDF" = (
-/mob/living/simple_animal/hostile/retaliate/clown{
+/mob/living/basic/clown{
 	name = "The Forbidden One";
 	limb_destroyer = 1;
 	health = 1000;
@@ -59229,7 +59236,7 @@
 	},
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/closet/body_bag,
-/mob/living/simple_animal/hostile/skeleton{
+/mob/living/basic/skeleton{
 	name = "Jim";
 	desc = "Left to rot in maintenance, a poor soul whose green light was never noticed by the doctor..."
 	},
@@ -59717,7 +59724,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "sha" = (
-/mob/living/simple_animal/sloth/paperwork,
+/mob/living/basic/sloth/paperwork,
 /turf/open/floor/glass,
 /area/station/cargo/storage)
 "shg" = (

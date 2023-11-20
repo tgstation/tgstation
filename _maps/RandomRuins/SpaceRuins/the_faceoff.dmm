@@ -174,8 +174,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "eI" = (
-/obj/item/ammo_casing/a357,
-/mob/living/basic/syndicate/melee/space,
+/mob/living/basic/trooper/syndicate/melee/space,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "eU" = (
@@ -699,7 +698,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/full,
 /obj/item/grenade/c4,
-/mob/living/simple_animal/hostile/mining_drone,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/corpse/human/russian,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/full,
+/mob/living/basic/mining_drone,
+/obj/item/grenade/c4,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "Do" = (

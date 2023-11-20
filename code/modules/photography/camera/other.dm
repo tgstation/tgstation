@@ -3,6 +3,7 @@
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = CAMERA_SEE_GHOSTS_BASIC
 
+
 /obj/item/camera/spooky/badmin
 	desc = "A polaroid camera, some say it can see ghosts! It seems to have an extra magnifier on the end."
 	see_ghosts = CAMERA_SEE_GHOSTS_ORBIT

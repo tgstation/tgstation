@@ -140,7 +140,7 @@
 			target.become_blind(BLOODSUCKER_TRAIT)
 		mesmerized.Immobilize(power_time)
 		mesmerized.next_move = world.time + power_time
-		mesmerized.notransform = TRUE
+		ADD_TRAIT(mesmerized, TRAIT_NO_TRANSFORM, BLOODSUCKER_TRAIT)
 		addtimer(CALLBACK(src, PROC_REF(end_mesmerize), user, target), power_time)
 	if(issilicon(target))
 		var/mob/living/silicon/mesmerized = target
@@ -148,7 +148,7 @@
 		owner.balloon_alert(owner, "temporarily shut [mesmerized] down.")
 
 /datum/action/cooldown/bloodsucker/targeted/tremere/proc/end_mesmerize(mob/living/user, mob/living/target)
-	target.notransform = FALSE
+	REMOVE_TRAIT(target, TRAIT_NO_TRANSFORM, BLOODSUCKER_TRAIT)
 	target.cure_blind(BLOODSUCKER_TRAIT)
 	REMOVE_TRAIT(target, TRAIT_MUTE, BLOODSUCKER_TRAIT)
 	if(istype(user) && target.stat == CONSCIOUS && (target in view(6, get_turf(user))))
