@@ -105,6 +105,9 @@
 	var/datum/antagonist/rev/revolutionary = has_antag_datum(/datum/antagonist/rev)
 	revolutionary?.remove_revolutionary()
 
+	if (src in GLOB.reality_smash_track.tracked_heretics)
+		GLOB.reality_smash_track.remove_tracked_mind(src)
+
 /**
  * ## give_uplink
  *
