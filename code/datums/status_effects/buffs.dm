@@ -190,7 +190,7 @@
 	)
 
 /datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)
-	if(!bonus_time || !new_owner.mind)
+	if(!bonus_time || !new_owner.mind || !iscarbon(new_owner))
 		return 0 SECONDS
 
 	var/modifier = 1
