@@ -43,6 +43,7 @@ class TypepathExtra:
 
 class BannedNeighbor:
     identical: bool = False
+    ignore: Optional[list] = None
     typepath: Optional[TypepathExtra] = None
     pattern: Optional[re.Pattern] = None
 
@@ -59,12 +60,21 @@ class BannedNeighbor:
             self.identical = data.pop("identical")
         expect(isinstance(self.identical, bool), "identical must be a boolean.")
 
+        if "ignore" in data:
+            self.ignore = data.pop("ignore")
+            expect(isinstance(self.ignore, list), "ignore must be a list.")
+
         if "pattern" in data:
             self.pattern = re.compile(data.pop("pattern"))
 
         expect(len(data) == 0, f"Unknown key in banned neighbor: {', '.join(data.keys())}.")
 
     def matches(self, identified: Content, neighbor: Content):
+        if self.ignore:
+            for ignored_path in self.ignore:
+                if ignored_path.matches_path(neighbor.path)
+                    return False
+
         if self.identical:
             if identified.path != neighbor.path:
                 return False
