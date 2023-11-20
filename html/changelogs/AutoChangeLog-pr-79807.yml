@@ -1,5 +1,0 @@
-author: "EuSouAFazer"
-delete-after: True
-changes:
-  - qol: "Slightly moved the universal enzyme on meta's kitchen to a prettier spot."
-  - bugfix: "The universal enzyme on meta's kitchen is no longer unecessarely varedited."
