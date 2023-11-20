@@ -255,6 +255,9 @@
 		properties["transmittable"] += S.transmittable
 		if(!S.neutered)
 			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
+	properties["severity"] += round((properties["resistance"] / 10), 1)
+	properties["severity"] += round((properties["stage_rate"] / 10), 1)
+	properties["severity"] += round((properties["transmittable"] / 3), 1)
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/assign_properties()
@@ -277,7 +280,7 @@
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // can be between 5 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
-		set_severity(properties["severity"])
+		set_severity(round(properties["severity"]), 1)
 		generate_cure(properties)
 	else
 		CRASH("Our properties were empty or null!")

@@ -51,11 +51,12 @@
 				exposed_mob.ContactContractDisease(strain)
 
 	if(data && data["resistances"])
-		for(var/stuff in exposed_mob.diseases)
-			var/datum/disease/infection = stuff
-			if(infection.GetDiseaseID() in data["resistances"])
-				infection.cure()
-		LAZYOR(exposed_mob.disease_resistances, data)
+		if(methods & (INGEST|INJECT)) //have to inject or ingest it. no curefoam/cheap curesprays
+			for(var/stuff in exposed_mob.diseases)
+				var/datum/disease/infection = stuff
+				if(infection.GetDiseaseID() in data["resistances"])
+					if(!infection.bypasses_immunity)
+						infection.cure(add_resistance = FALSE)
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
@@ -161,7 +162,7 @@
 	for(var/thing in exposed_mob.diseases)
 		var/datum/disease/infection = thing
 		if(infection.GetDiseaseID() in data)
-			infection.cure()
+			infection.cure(add_resistance = TRUE)
 	LAZYOR(exposed_mob.disease_resistances, data)
 
 /datum/reagent/vaccine/on_merge(list/data)
