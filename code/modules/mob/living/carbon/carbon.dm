@@ -528,6 +528,7 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
+// Stamina is determined by the initial maxHealth of the mob
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
 	if(stam > DAMAGE_PRECISION && (initial(maxHealth) - stam) <= crit_threshold)
