@@ -375,7 +375,7 @@
 				remove_reagent(reagent.type, reagent.volume * multiplier)
 		reagent_purity = weighted_purity / reagent_amount
 	else
-		var/datum/reagent/source_reagent = get_reagent(source_reagent_typepath)
+		var/datum/reagent/source_reagent = has_reagent(source_reagent_typepath)
 		reagent_amount = source_reagent.volume
 		reagent_purity = source_reagent.purity
 		reagent_ph = source_reagent.ph
@@ -394,63 +394,53 @@
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CLEAR_REAGENTS)
 
 /**
- * Check if this holder contains this reagent. Reagent takes a PATH to a reagent
- * Needs matabolizing takes into consideration if the chemical is metabolizing when it's checked.
+ * Returns a reagent from this holder if it matches all the specified arguments
  * Arguments
  *
- * * [target_reagent][datum/reagent] - the reagent typepath to check for
+ * * [target_reagent][datum/reagent] - the reagent typepath to check for. can be null to return any reagent
  * * amount - checks for having a specific amount of that chemical
  * * needs_metabolizing - takes into consideration if the chemical is matabolizing when it's checked.
  * * check_subtypes - controls whether it should it should also include subtypes: ispath(type, reagent) versus type == reagent.
+ * * chemical_flags - checks for reagent flags.
  */
 /datum/reagents/proc/has_reagent(
 	datum/reagent/target_reagent,
 	amount = -1,
 	needs_metabolizing = FALSE,
-	check_subtypes = FALSE
+	check_subtypes = FALSE,
+	chemical_flags = NONE
 )
-	if(!ispath(target_reagent))
+	if(!isnull(target_reagent) && !ispath(target_reagent))
 		stack_trace("invalid reagent path passed to has reagent [target_reagent]")
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
-		if (check_subtypes ? ispath(holder_reagent.type, target_reagent) : holder_reagent.type == target_reagent)
-			if(!amount)
-				if(needs_metabolizing && !holder_reagent.metabolizing)
-					if(check_subtypes)
-						continue
-					return FALSE
-				return holder_reagent
-			else
-				if(holder_reagent.volume >= amount)
-					if(needs_metabolizing && !holder_reagent.metabolizing)
-						if(check_subtypes)
-							continue
-						return FALSE
-					return holder_reagent
-				else if(!check_subtypes)
-					return FALSE
-	return FALSE
+		//finding for a specific reagent
+		if(!isnull(target_reagent))
+			//first find for specific type or subtype
+			if(!check_subtypes)
+				if(holder_reagent.type != target_reagent)
+					continue
+			else if(!istype(holder_reagent, target_reagent))
+				continue
 
-/**
- * Check if this holder contains a reagent with a chemical_flags containing this flag
- * Reagent takes the bitflag to search for
- *
- * Arguments
- * * chemical_flag - the flag to check for
- * * amount - checks for having a specific amount of reagents matching that chemical
- */
-/datum/reagents/proc/has_chemical_flag(chemical_flag, amount = 0)
-	var/found_amount = 0
-	var/list/cached_reagents = reagent_list
-	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
-		if (holder_reagent.chemical_flags & chemical_flag)
-			found_amount += holder_reagent.volume
-			if(found_amount >= amount)
-				return TRUE
-	return FALSE
+		//next check if we have the requested amount
+		if(amount > 0 && holder_reagent.volume < amount)
+			continue
 
+		//next check for metabolization
+		if(needs_metabolizing && !holder_reagent.metabolizing)
+			continue
+
+		//next check if it has the specified flag
+		if(chemical_flags && !(holder_reagent.chemical_flags & chemical_flags))
+			continue
+
+		//after all that if we get here then we have found our reagent
+		return holder_reagent
+
+	return FALSE
 
 /**
  * Transfer some stuff from this holder to a target object
@@ -521,7 +511,7 @@
 	// Prevents small amount problems, as well as zero and below zero amounts.
 	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
 	if(amount <= 0)
-		return
+		return FALSE
 
 	//Set up new reagents to inherit the old ongoing reactions
 	if(!no_react)
@@ -762,10 +752,13 @@
 
 			if(reagent.overdosed)
 				need_mob_update += reagent.overdose_process(owner, seconds_per_tick, times_fired)
-		if(!dead)
-			need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, times_fired)
-	if(dead)
-		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
+		reagent.current_cycle++
+		need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, times_fired)
+		if(dead && !QDELETED(owner) && !QDELETED(reagent))
+			need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick)
+		if(!QDELETED(owner) && !QDELETED(reagent))
+			reagent.metabolize_reagent(owner, seconds_per_tick, times_fired)
+
 	return need_mob_update
 
 /**
@@ -1287,32 +1280,32 @@
  * Get the amount of this reagent or the sum of all its subtypes if specified
  * Arguments
  * * [reagent][datum/reagent] - the typepath of the reagent to look for
- * * include_subtypes - if TRUE returns the sum of volumes of all subtypes of the above param reagent
+ * * type_check - see defines under reagents.dm file
  */
-/datum/reagents/proc/get_reagent_amount(datum/reagent/reagent, include_subtypes = FALSE)
+/datum/reagents/proc/get_reagent_amount(datum/reagent/reagent, type_check = REAGENT_STRICT_TYPE)
 	if(!ispath(reagent))
 		stack_trace("invalid path passed to get_reagent_amount [reagent]")
 		return 0
-
 	var/list/cached_reagents = reagent_list
+
 	var/total_amount = 0
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
-		if((!include_subtypes && cached_reagent.type == reagent) || (include_subtypes && ispath(cached_reagent.type, reagent)))
-			total_amount += cached_reagent.volume
+		switch(type_check)
+			if(REAGENT_STRICT_TYPE)
+				if(cached_reagent.type != reagent)
+					continue
+			if(REAGENT_PARENT_TYPE) //to simulate typesof() which returns the type and then child types
+				if(cached_reagent.type != reagent && type2parent(cached_reagent.type) != reagent)
+					continue
+			else
+				if(!istype(cached_reagent, reagent))
+					continue
 
-	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
+		total_amount += cached_reagent.volume
 
-/**
- * Gets the sum of volumes of all reagent type paths present in the list
- * Arguments
- * * [reagents][list] - list of reagent typepaths
- */
-/datum/reagents/proc/get_multiple_reagent_amounts(list/reagents)
-	var/list/cached_reagents = reagent_list
-	var/total_amount = 0
-	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
-		if(cached_reagent.type in reagents)
-			total_amount += cached_reagent.volume
+		//short cut to break when we have found our one exact type
+		if(type_check == REAGENT_STRICT_TYPE)
+			break
 
 	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
 
@@ -1384,15 +1377,6 @@
 		trans_data["viruses"] = v.Copy()
 
 	return trans_data
-
-/**
- * Get a reference to the reagent if it exists
- * Arguments
- * * [type][datum/reagent] - the typepath of the reagent to look up
- */
-/datum/reagents/proc/get_reagent(datum/reagent/type)
-	var/list/cached_reagents = reagent_list
-	. = locate(type) in cached_reagents
 
 /**
  * Returns what this holder's reagents taste like
@@ -1513,7 +1497,7 @@
 * * value - How much to adjust the base pH by
 */
 /datum/reagents/proc/adjust_specific_reagent_ph(input_reagent, value)
-	var/datum/reagent/reagent = get_reagent(input_reagent)
+	var/datum/reagent/reagent = has_reagent(input_reagent)
 	if(!reagent) //We can call this with missing reagents.
 		return FALSE
 	reagent.ph = clamp(reagent.ph + value, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)

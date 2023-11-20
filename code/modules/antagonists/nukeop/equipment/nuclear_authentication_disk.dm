@@ -1,5 +1,5 @@
 /obj/item/disk
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'

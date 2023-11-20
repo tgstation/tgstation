@@ -84,7 +84,6 @@
 		notify_ghosts(
 			"[owner] has developed [notification_type] appendicitis!",
 			source = owner,
-			action = NOTIFY_ORBIT,
 			header = "Whoa, Sick!",
 		)
 
