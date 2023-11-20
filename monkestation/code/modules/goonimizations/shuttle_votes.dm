@@ -48,7 +48,8 @@ SUBSYSTEM_DEF(autotransfer)
 		return
 	if(winning_option == "No")
 		return
-
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
+		return
 	SSshuttle.admin_emergency_no_recall = TRUE
 	SSshuttle.emergency.mode = SHUTTLE_IDLE
 	SSshuttle.emergency.request()
