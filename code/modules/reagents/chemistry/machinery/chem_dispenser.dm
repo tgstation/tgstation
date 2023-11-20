@@ -108,7 +108,7 @@
 	if(emagged_reagents)
 		emagged_reagents = sort_list(emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 
-	. = ..()
+	. = ..() // So that we call RefreshParts() after adjusting the lists
 
 	if(is_operational)
 		begin_processing()
