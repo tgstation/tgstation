@@ -7,11 +7,12 @@
 #define POLL_IGNORE_BLOB "blob"
 #define POLL_IGNORE_BOTS "bots"
 #define POLL_IGNORE_CARGORILLA "cargorilla"
-#define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_CONSTRUCT "construct"
+#define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
 #define POLL_IGNORE_DRONE "drone"
 #define POLL_IGNORE_FIRE_SHARK "fire_shark"
 #define POLL_IGNORE_FUGITIVE "fugitive"
+#define POLL_IGNORE_GLITCH "glitch"
 #define POLL_IGNORE_GOLEM "golem"
 #define POLL_IGNORE_HERETIC_MONSTER "heretic_monster"
 #define POLL_IGNORE_HOLOPARASITE "holoparasite"
@@ -36,7 +37,6 @@
 #define POLL_IGNORE_SYNDICATE "syndicate"
 #define POLL_IGNORE_VENUSHUMANTRAP "venus_human_trap"
 
-
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_ACADEMY_WIZARD = "Academy Wizard Defender",
 	POLL_IGNORE_ALIEN_LARVA = "Xenomorph larva",
@@ -45,11 +45,12 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_BLOB = "Blob spores",
 	POLL_IGNORE_BOTS = "Bots",
 	POLL_IGNORE_CARGORILLA = "Cargorilla",
-	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_CONSTRUCT = "Construct",
+	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
 	POLL_IGNORE_DRONE = "Drone shells",
 	POLL_IGNORE_FIRE_SHARK = "Fire Shark",
 	POLL_IGNORE_FUGITIVE = "Fugitive Hunter",
+	POLL_IGNORE_GLITCH = "Glitch",
 	POLL_IGNORE_GOLEM = "Golems",
 	POLL_IGNORE_HERETIC_MONSTER = "Heretic Monster",
 	POLL_IGNORE_HOLOPARASITE = "Holoparasite",
@@ -62,8 +63,8 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_POSSESSED_BLADE = "Possessed blade",
 	POLL_IGNORE_PYROSLIME = "Slime",
 	POLL_IGNORE_RAW_PROPHET = "Raw Prophet",
-	POLL_IGNORE_RUST_SPIRIT = "Rust Spirit",
 	POLL_IGNORE_REGAL_RAT = "Regal rat",
+	POLL_IGNORE_RUST_SPIRIT = "Rust Spirit",
 	POLL_IGNORE_SENTIENCE_POTION = "Sentience potion",
 	POLL_IGNORE_SHADE = "Shade",
 	POLL_IGNORE_SHUTTLE_DENIZENS = "Shuttle denizens",

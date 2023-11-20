@@ -21,10 +21,11 @@ type Data = {
   orderBalance: number;
   materials: Material[];
   catastrophe: BooleanLike;
+  CARGO_CRATE_VALUE: number;
 };
 
 export const MatMarket = (props, context) => {
-  const { act, data } = useBackend<Data>(context); // this will tell your editor that data is the type listed above
+  const { act, data } = useBackend<Data>(context);
 
   const {
     orderingPrive,
@@ -33,7 +34,14 @@ export const MatMarket = (props, context) => {
     orderBalance,
     materials = [],
     catastrophe,
+    CARGO_CRATE_VALUE,
   } = data;
+
+  // offset cost with crate value if there is currently nothing in the order
+  const total_order_cost = orderBalance || CARGO_CRATE_VALUE;
+  // multiplier of 1.1 for private orders
+  const multiplier = orderingPrive ? 1.1 : 1;
+
   return (
     <Window width={980} height={630}>
       <Window.Content scrollable>
@@ -126,7 +134,8 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
-                    creditBalance - orderBalance < material.price ||
+                    creditBalance - total_order_cost <
+                      material.price * multiplier ||
                     material.requested + 1 > material.quantity
                   }
                   tooltip={material.price * 1}
@@ -142,7 +151,8 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
-                    creditBalance - orderBalance < material.price * 5 ||
+                    creditBalance - total_order_cost <
+                      material.price * 5 * multiplier ||
                     material.requested + 5 > material.quantity
                   }
                   tooltip={material.price * 5}
@@ -158,7 +168,8 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
-                    creditBalance - orderBalance < material.price * 10 ||
+                    creditBalance - total_order_cost <
+                      material.price * 10 * multiplier ||
                     material.requested + 10 > material.quantity
                   }
                   tooltip={material.price * 10}
@@ -174,7 +185,8 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
-                    creditBalance - orderBalance < material.price * 25 ||
+                    creditBalance - total_order_cost <
+                      material.price * 25 * multiplier ||
                     material.requested + 25 > material.quantity
                   }
                   tooltip={material.price * 25}
@@ -190,7 +202,8 @@ export const MatMarket = (props, context) => {
                   disabled={
                     catastrophe === 1 ||
                     material.price <= 0 ||
-                    creditBalance - orderBalance < material.price * 50 ||
+                    creditBalance - total_order_cost <
+                      material.price * 50 * multiplier ||
                     material.requested + 50 > material.quantity
                   }
                   tooltip={material.price * 50}

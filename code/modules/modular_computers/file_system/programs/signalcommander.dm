@@ -1,13 +1,13 @@
 /datum/computer_file/program/signal_commander
 	filename = "signaler"
 	filedesc = "SignalCommander"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "signal"
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
+	program_open_overlay = "signal"
 	extended_desc = "A small built-in frequency app that sends out signaller signals with the appropriate hardware."
 	size = 2
 	tgui_id = "NtosSignaler"
 	program_icon = "satellite-dish"
-	usage_flags = PROGRAM_TABLET | PROGRAM_LAPTOP
+	usage_flags = PROGRAM_PDA | PROGRAM_LAPTOP
 	///What is the saved signal frequency?
 	var/signal_frequency = FREQ_SIGNALER
 	/// What is the saved signal code?

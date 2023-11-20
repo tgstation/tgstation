@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Slimes now need to be on an open turf to reproduce and split into more slimy slimes, instead of getting away with using phasing powers in pipes."

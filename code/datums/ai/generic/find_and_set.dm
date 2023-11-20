@@ -68,13 +68,19 @@
 /datum/ai_behavior/find_and_set/in_list
 
 /datum/ai_behavior/find_and_set/in_list/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
-	var/list/found = list()
-	for(var/locate_path in locate_paths)
-		var/single_locate = ..(controller, locate_path, search_range)
-		if(single_locate)
-			found += single_locate
-	if(found.len)
+	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
+	if(length(found))
 		return pick(found)
+
+/// Like find_and_set/in_list, but we return the turf location of the item instead of the item itself.
+/datum/ai_behavior/find_and_set/in_list/turf_location
+
+/datum/ai_behavior/find_and_set/in_list/turf_location/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+	. = ..()
+	if(isnull(.))
+		return null
+
+	return get_turf(.)
 
 /**
  * Variant of find and set which returns an object which can be animated with a staff of change
@@ -152,3 +158,16 @@
 		return pick(customers)
 
 	return null
+
+/datum/ai_behavior/find_and_set/nearby_friends
+	action_cooldown = 2 SECONDS
+
+/datum/ai_behavior/find_and_set/nearby_friends/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/atom/friend = locate(/mob/living/carbon/human) in oview(search_range, controller.pawn)
+
+	if(isnull(friend))
+		return null
+
+	var/mob/living/living_pawn = controller.pawn
+	var/potential_friend = living_pawn.faction.Find(REF(friend)) ? friend : null
+	return potential_friend

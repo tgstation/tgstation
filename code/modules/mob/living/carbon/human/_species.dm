@@ -256,9 +256,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Arguments:
  * * gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.
  * * unique - If true, ensures that this new name is not a duplicate of anyone else's name currently on the station.
- * * lastname - Does this species' naming system adhere to the last name system? Set to false if it doesn't.
+ * * last_name - Do we use a given last name or pick a random new one?
  */
-/datum/species/proc/random_name(gender,unique,lastname)
+/datum/species/proc/random_name(gender, unique, last_name)
 	if(unique)
 		return random_unique_name(gender)
 
@@ -268,8 +268,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else
 		randname = pick(GLOB.first_names_female)
 
-	if(lastname)
-		randname += " [lastname]"
+	if(last_name)
+		randname += " [last_name]"
 	else
 		randname += " [pick(GLOB.last_names)]"
 
@@ -1121,11 +1121,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	user.do_cpr(target)
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
-		target.visible_message(span_warning("[target] blocks [user]'s grab!"), \
-						span_userdanger("You block [user]'s grab!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your grab at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.grab_act(user, target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	target.grabbedby(user)
@@ -1135,11 +1130,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && !attacker_style?.pacifist_style)
 		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
-	if(target.check_block())
-		target.visible_message(span_warning("[target] blocks [user]'s attack!"), \
-						span_userdanger("You block [user]'s attack!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your attack at [target] was blocked!"))
 		return FALSE
 	if(attacker_style?.harm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
@@ -1160,16 +1150,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 		user.do_attack_animation(target, atk_effect)
 
+		//has our target been shoved recently? If so, they're off-balance and we get an easy hit.
+		var/off_balance = FALSE
+
+		//Someone in a grapple is much more vulnerable to being harmed by punches.
+		var/grappled = FALSE
+
+		if(target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+			off_balance = TRUE
+
+		if(target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
+			grappled = TRUE
+
 		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+		var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(attacking_bodypart.unarmed_damage_low)
-			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER)) //kicks never miss (provided your species deals more than 0 damage)
+			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || off_balance) //kicks and attacks against off-balance targets never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
-				miss_chance = min((attacking_bodypart.unarmed_damage_high/attacking_bodypart.unarmed_damage_low) + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 100) //old base chance for a miss + various damage. capped at 100 to prevent weirdness in prob()
+				miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
@@ -1195,32 +1198,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/attack_direction = get_dir(user, target)
 		var/attack_type = attacking_bodypart.attack_type
-		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
+		if(atk_effect == ATTACK_EFFECT_KICK || grappled) //kicks and punches when grappling bypass armor slightly.
 			if(damage >= 9)
 				target.force_say()
-			log_combat(user, target, "kicked")
-			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
-		else//other attacks deal full raw damage + 1.5x in stamina damage
+			log_combat(user, target, grappled ? "grapple punched" : "kicked")
+			target.apply_damage(damage, attack_type, affecting, armor_block - limb_accuracy, attack_direction = attack_direction)
+			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block - limb_accuracy)
+		else // Normal attacks do not gain the benefit of armor penetration.
 			target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			if(damage >= 9)
 				target.force_say()
 			log_combat(user, target, "punched")
 
-		if((target.stat != DEAD) && damage >= attacking_bodypart.unarmed_stun_threshold)
+		//If we rolled a punch high enough to hit our stun threshold, or our target is off-balance and they have at least 40 damage+stamina loss, we knock them down
+		if((target.stat != DEAD) && prob(limb_accuracy) || (target.stat != DEAD) && off_balance && (target.getStaminaLoss() + user.getBruteLoss()) >= 40)
 			target.visible_message(span_danger("[user] knocks [target] down!"), \
 							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You knock [target] down!"))
-			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
+			var/knockdown_duration = 4 SECONDS + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 4 second base stun + 4 second stun modifier = 8 second knockdown duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			log_combat(user, target, "got a stun punch with their previous punch")
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.check_block())
-		target.visible_message(span_warning("[user]'s shove is blocked by [target]!"), \
-						span_danger("You block [user]'s shove!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your shove at [target] was blocked!"))
-		return FALSE
 	if(attacker_style?.disarm_act(user,target) == MARTIAL_ATTACK_SUCCESS)
 		return TRUE
 	if(user.body_position != STANDING_UP)
@@ -1241,7 +1241,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return
 	if(owner.mind)
 		attacker_style = owner.mind.martial_art
-	if((owner != target) && target.check_shields(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
+	if((owner != target) && target.check_block(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
 		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
 						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)
@@ -1257,115 +1257,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		harm(owner, target, attacker_style)
 	else
 		help(owner, target, attacker_style)
-
-/datum/species/proc/spec_attacked_by(obj/item/weapon, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/human)
-	// Allows you to put in item-specific reactions based on species
-	if(user != human)
-		if(human.check_shields(weapon, weapon.force, "the [weapon.name]", MELEE_ATTACK, weapon.armour_penetration, weapon.damtype))
-			return FALSE
-	if(human.check_block())
-		human.visible_message(span_warning("[human] blocks [weapon]!"), \
-						span_userdanger("You block [weapon]!"))
-		return FALSE
-
-	affecting ||= human.bodyparts[1] //Something went wrong. Maybe the limb is missing?
-	var/hit_area = affecting.plaintext_zone
-	var/armor_block = min(human.run_armor_check(
-		def_zone = affecting,
-		attack_flag = MELEE,
-		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
-		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
-		armour_penetration = weapon.armour_penetration,
-		weak_against_armour = weapon.weak_against_armour,
-	), ARMOR_MAX_BLOCK) //cap damage reduction at 90%
-
-	var/modified_wound_bonus = weapon.wound_bonus
-	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
-	if((weapon.item_flags & SURGICAL_TOOL) && !user.combat_mode && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
-		modified_wound_bonus = CANT_WOUND
-
-	human.send_item_attack_message(weapon, user, hit_area, affecting)
-	var/damage_dealt = human.apply_damage(
-		damage = weapon.force,
-		damagetype = weapon.damtype,
-		def_zone = affecting,
-		blocked = armor_block,
-		wound_bonus = modified_wound_bonus,
-		bare_wound_bonus = weapon.bare_wound_bonus,
-		sharpness = weapon.get_sharpness(),
-		attack_direction = get_dir(user, human),
-		attacking_item = weapon,
-	)
-
-	if(damage_dealt <= 0)
-		return FALSE //item force is zero
-	var/bloody = FALSE
-	if(weapon.damtype != BRUTE)
-		return TRUE
-	if(!(prob(25 + (weapon.force * 2))))
-		return TRUE
-
-	if(affecting.can_bleed())
-		weapon.add_mob_blood(human) //Make the weapon bloody, not the person.
-		if(prob(weapon.force * 2)) //blood spatter!
-			bloody = TRUE
-			var/turf/location = human.loc
-			if(istype(location))
-				human.add_splatter_floor(location)
-			if(get_dist(user, human) <= 1) //people with TK won't get smeared with blood
-				user.add_mob_blood(human)
-
-	switch(hit_area)
-		if(BODY_ZONE_HEAD)
-			if(!weapon.get_sharpness() && armor_block < 50)
-				if(prob(weapon.force))
-					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
-					if(human.stat == CONSCIOUS)
-						human.visible_message(span_danger("[human] is knocked senseless!"), \
-										span_userdanger("You're knocked senseless!"))
-						human.set_confusion_if_lower(20 SECONDS)
-						human.adjust_eye_blur(20 SECONDS)
-					if(prob(10))
-						human.gain_trauma(/datum/brain_trauma/mild/concussion)
-				else
-					human.adjustOrganLoss(ORGAN_SLOT_BRAIN, weapon.force * 0.2)
-
-				if(human.mind && human.stat == CONSCIOUS && human != user && prob(weapon.force + ((100 - human.health) * 0.5))) // rev deconversion through blunt trauma.
-					var/datum/antagonist/rev/rev = human.mind.has_antag_datum(/datum/antagonist/rev)
-					if(rev)
-						rev.remove_revolutionary(user)
-
-			if(bloody) //Apply blood
-				if(human.wear_mask)
-					human.wear_mask.add_mob_blood(human)
-					human.update_worn_mask()
-				if(human.head)
-					human.head.add_mob_blood(human)
-					human.update_worn_head()
-				if(human.glasses && prob(33))
-					human.glasses.add_mob_blood(human)
-					human.update_worn_glasses()
-
-		if(BODY_ZONE_CHEST)
-			if(human.stat == CONSCIOUS && !weapon.get_sharpness() && armor_block < 50)
-				if(prob(weapon.force))
-					human.visible_message(span_danger("[human] is knocked down!"), \
-								span_userdanger("You're knocked down!"))
-					human.apply_effect(60, EFFECT_KNOCKDOWN, armor_block)
-
-			if(bloody)
-				if(human.wear_suit)
-					human.wear_suit.add_mob_blood(human)
-					human.update_worn_oversuit()
-				if(human.w_uniform)
-					human.w_uniform.add_mob_blood(human)
-					human.update_worn_undersuit()
-
-	/// Triggers force say events
-	if(weapon.force > 10 || (weapon.force >= 5 && prob(33)))
-		human.force_say(user)
-
-	return TRUE
 
 //////////////////////////
 // ENVIRONMENT HANDLERS //
