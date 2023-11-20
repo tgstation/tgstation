@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "NTNet Downloader now has a search bar, and programs are now better sorted."
