@@ -1456,6 +1456,21 @@
 	. = ..()
 	REMOVE_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
 
+/datum/reagent/medicine/lamphrite
+	name = "Lamphrite"
+	description = "A medication that can stabilize inflammated appendices. Not nearly as effective on bursting appendices, though."
+	color = "#ff3589"
+	self_consuming = FALSE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/lamphrite/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	ADD_TRAIT(affected_mob, TRAIT_STABLEAPPENDIX, type)
+
+/datum/reagent/medicine/lamphrite/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	REMOVE_TRAIT(affected_mob, TRAIT_STABLEAPPENDIX, type)
+
 /datum/reagent/medicine/cordiolis_hepatico
 	name = "Cordiolis Hepatico"
 	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."

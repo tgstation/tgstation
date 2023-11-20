@@ -217,6 +217,13 @@
 	desc = "There's something wiggling in there..."
 	color = COLOR_DARK
 
+/obj/effect/decal/cleanable/vomit/old/bursting_vomit
+	name = "grayish vomit"
+	desc = "Pieces of this vomit almost look... black, and quite powdery. You're not sure what that's about."
+	color = COLOR_DARK
+	decal_reagent = /datum/reagent/gunpowder
+	reagent_amount = 15
+
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
