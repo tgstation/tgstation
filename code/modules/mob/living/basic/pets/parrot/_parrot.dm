@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	response_disarm_simple = "gently move aside"
 	response_harm_continuous = "swats"
 	response_harm_simple = "swat"
-	combat_mode = TRUE //parrots now start "aggressive" since only player parrots will nuzzle.
+	istate = ISTATE_HARM
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_vis_effect = ATTACK_EFFECT_BITE
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attacking))
 	RegisterSignal(src, COMSIG_MOB_CLICKON, PROC_REF(on_click))
-	RegisterSignal(src, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(on_attacked)) // this means we could have a peaceful interaction, like getting a cracker
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY_SECONDARY, PROC_REF(on_attacked)) // this means we could have a peaceful interaction, like getting a cracker
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_injured)) // this means we got hurt and it's go time
 	RegisterSignal(src, COMSIG_ANIMAL_PET, PROC_REF(on_pet))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_item_on_signal))

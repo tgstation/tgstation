@@ -25,7 +25,7 @@
 			/mob/living/basic/axolotl,
 			/mob/living/basic/mouse,
 			/mob/living/basic/mouse/rat,
-			/mob/living/simple_animal/parrot,
+			/mob/living/basic/parrot,
 			/mob/living/basic/butterfly,
 			/mob/living/basic/bee/friendly,
 			/mob/living/basic/crab,

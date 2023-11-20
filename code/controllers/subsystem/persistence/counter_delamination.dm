@@ -3,13 +3,12 @@
 #define DELAMINATION_HIGHSCORE_FILEPATH "data/delamination_highscore.txt"
 
 /datum/controller/subsystem/persistence/proc/load_delamination_counter()
-	if(!fexists(DELAMINATION_COUNT_FILEPATH))
+	if (!fexists(DELAMINATION_COUNT_FILEPATH))
 		return
 	rounds_since_engine_exploded = text2num(file2text(DELAMINATION_COUNT_FILEPATH))
-	if(fexists(DELAMINATION_HIGHSCORE_FILEPATH))
-		delam_highscore = text2num(file2text(DELAMINATION_HIGHSCORE_FILEPATH))
-	for(var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
-		sign.update_delam_count(rounds_since_engine_exploded, delam_highscore)
+	for (var/obj/structure/sign/delamination_counter/sign as anything in GLOB.map_delamination_counters)
+		sign.update_count(rounds_since_engine_exploded)
+
 
 /datum/controller/subsystem/persistence/proc/save_delamination_counter()
 	rustg_file_write("[rounds_since_engine_exploded + 1]", DELAMINATION_COUNT_FILEPATH)
