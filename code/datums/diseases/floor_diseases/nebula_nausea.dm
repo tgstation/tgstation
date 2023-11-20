@@ -18,6 +18,9 @@
 
 	return ..()
 
+/datum/disease/nebula_nausea/GetDiseaseID()
+	return "[type]"
+
 /datum/disease/nebula_nausea/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)

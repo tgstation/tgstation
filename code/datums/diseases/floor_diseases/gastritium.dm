@@ -20,6 +20,9 @@
 
 	return ..()
 
+/datum/disease/gastritium/GetDiseaseID(seconds_per_tick, times_fired)
+	return "[type]"
+
 /datum/disease/gastritium/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
