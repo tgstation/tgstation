@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - qol: "Nearly every ghost alert should now feature a \"VIEW\" button, even those with click interaction."
-  - rscdel: "Ghost alerts no longer show the entire message in the tooltip, instead have been replaced with titles."
