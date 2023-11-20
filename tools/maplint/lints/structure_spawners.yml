@@ -1,0 +1,8 @@
+/obj/effect/spawner/structure:
+  banned_neighbors:
+  - /obj/effect/spawner/structure
+  - /obj/structure
+
+  # - /obj/structure/lattice
+  # - /obj/structure/window
+  #- /obj/structure/grille
