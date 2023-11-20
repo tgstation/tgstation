@@ -56,16 +56,6 @@
 	var/dead_icon_base = "dead_bee"
 	///the bee is a queen?
 	var/is_queen = FALSE
-	///commands we follow
-	var/list/pet_commands = list(
-		/datum/pet_command/idle,
-		/datum/pet_command/free,
-		/datum/pet_command/beehive/enter,
-		/datum/pet_command/beehive/exit,
-		/datum/pet_command/follow/bee,
-		/datum/pet_command/point_targeting/attack/swirl,
-		/datum/pet_command/scatter,
-	)
 
 /mob/living/basic/bee/Initialize(mapload)
 	. = ..()

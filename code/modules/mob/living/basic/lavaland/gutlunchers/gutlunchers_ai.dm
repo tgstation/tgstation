@@ -4,8 +4,8 @@
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_warrior
 	blackboard = list(
-		BB_TARGETTING_DATUM =  GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
-		BB_PET_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic/not_friends),
+		BB_TARGETING_STRATEGY =  /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 		BB_BABIES_CHILD_TYPES = list(/mob/living/basic/mining/gutlunch/grub),
 		BB_MAX_CHILDREN = 5,
@@ -48,7 +48,7 @@
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/gutlunch/milk),
 	)
 	planning_subtrees = list(
@@ -59,7 +59,7 @@
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_milk
 	blackboard = list(
-		BB_TARGETTING_DATUM = GET_TARGETING_STRATEGY(/datum/targetting_datum/basic),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
