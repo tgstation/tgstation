@@ -3,6 +3,36 @@
 	tags = list(TAG_TARGETED, TAG_SPOOKY, TAG_EXTERNAL)
 	checks_antag_cap = TRUE
 
+/datum/round_event_control/anomaly
+	track = EVENT_TRACK_MODERATE
+
+/datum/round_event_control/anomaly/anomaly_vortex
+	track = EVENT_TRACK_MAJOR
+	enemy_roles = list(
+		JOB_ENGINEER,
+		JOB_CHIEF_ENGINEER,
+	)
+	required_enemies = 3
+	tags = list(TAG_DESTRUCTIVE)
+
+/datum/round_event_control/anomaly/anomaly_pyro
+	track = EVENT_TRACK_MAJOR
+	enemy_roles = list(
+		JOB_ENGINEER,
+		JOB_CHIEF_ENGINEER,
+	)
+	required_enemies = 3
+	tags = list(TAG_DESTRUCTIVE)
+
+/datum/round_event_control/anomaly/anomaly_flux
+	track = EVENT_TRACK_MAJOR
+	enemy_roles = list(
+		JOB_ENGINEER,
+		JOB_CHIEF_ENGINEER,
+	)
+	required_enemies = 3
+	tags = list(TAG_DESTRUCTIVE)
+
 /datum/round_event_control/alien_infestation
 	track = EVENT_TRACK_MAJOR
 	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL)
@@ -43,12 +73,13 @@
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/communications_blackout
+	max_occurrences = 2
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_COMMUNAL, TAG_SPOOKY)
 
 /datum/round_event_control/disease_outbreak
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_TARGETED, TAG_EXTERNAL)
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL)
 
 /datum/round_event_control/electrical_storm
 	track = EVENT_TRACK_MUNDANE
@@ -127,6 +158,7 @@
 	tags = list(TAG_COMBAT, TAG_EXTERNAL)
 
 /datum/round_event_control/processor_overload
+	max_occurrences = 2
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_COMMUNAL)
 
@@ -150,6 +182,10 @@
 /datum/round_event_control/scrubber_clog
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_COMMUNAL)
+
+/datum/round_event_control/scrubber_clog/critical
+	track = EVENT_TRACK_MAJOR
+	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL)
 
 /datum/round_event_control/scrubber_overflow
 	track = EVENT_TRACK_MUNDANE

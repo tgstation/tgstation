@@ -185,6 +185,7 @@
 		/mob/living/basic/carp,
 		/mob/living/basic/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
+		/mob/living/basic/bear,  //monkestation addition
 	)
 	return pick(mob_list)
 
@@ -211,7 +212,7 @@
 /datum/round_event/scrubber_clog/strange/get_mob()
 	var/static/list/mob_list = list(
 		/mob/living/basic/lightgeist,
-		/mob/living/basic/bear,
+		///mob/living/basic/bear,  monkestation removal
 		/mob/living/basic/mushroom,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,
