@@ -255,9 +255,10 @@
 		properties["transmittable"] += S.transmittable
 		if(!S.neutered)
 			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
-	properties["severity"] += round((properties["resistance"] / 10), 1)
-	properties["severity"] += round((properties["stage_rate"] / 10), 1)
-	properties["severity"] += round((properties["transmittable"] / 3), 1)
+	if(properties["severity"] > 0)
+		properties["severity"] += round((properties["resistance"] / 10), 1)
+		properties["severity"] += round((properties["stage_rate"] / 10), 1)
+		properties["severity"] += round((properties["transmittable"] / 6), 1)
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/assign_properties()
