@@ -88,7 +88,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
@@ -103,7 +103,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
@@ -118,7 +118,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
@@ -133,7 +133,7 @@
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
 	)
-	construction_time = 200
+	construction_time = 20 SECONDS
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
