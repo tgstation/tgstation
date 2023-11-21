@@ -29,8 +29,6 @@ GLOBAL_LIST_EMPTY(tracked_tracking_implants)
 				<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
 				a malfunction occurs thereby securing safety of subject. The implant will melt and
 				disintegrate into bio-safe elements.<BR>
-				<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-				circuitry. As a result neurotoxins can cause massive damage."}
 	return dat
 
 /obj/item/implant/tracking/c38

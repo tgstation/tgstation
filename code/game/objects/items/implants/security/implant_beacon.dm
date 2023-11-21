@@ -2,13 +2,14 @@
 GLOBAL_LIST_EMPTY(tracked_beacon_implants)
 
 ///Essentially, just turns the implantee into a teleport beacon.
-///Code related to disabling after 10 minutes is in game/machinery/computer/teleporter.dm
 /obj/item/implant/beacon
 	name = "beacon implant"
 	desc = "Teleports things."
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_beacon"
+	///How long will the implant be teleportable to after death?
+	var/lifespan_postmortem = 10 MINUTES
 
 /obj/item/implant/beacon/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
