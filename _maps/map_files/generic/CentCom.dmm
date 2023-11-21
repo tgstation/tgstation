@@ -263,8 +263,8 @@
 /obj/item/food/meat/slab/xeno,
 /obj/item/food/meat/slab/xeno,
 /obj/item/food/meat/slab/xeno,
-/obj/item/food/spaghetti,
-/obj/item/food/spaghetti,
+/obj/item/food/spaghetti/boiledspaghetti,
+/obj/item/food/spaghetti/boiledspaghetti,
 /obj/item/food/meat/rawcutlet,
 /obj/item/food/meat/rawcutlet,
 /obj/item/food/meat/rawcutlet,
@@ -448,7 +448,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -1413,7 +1413,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/structure/table/wood,
 /obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -3255,7 +3255,7 @@
 /area/centcom/central_command_areas/supply)
 "oV" = (
 /obj/structure/table/wood,
-/obj/item/storage/secure/briefcase{
+/obj/item/storage/briefcase/secure{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -7553,7 +7553,7 @@
 /area/centcom/tdome/observation)
 "JW" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
@@ -9299,7 +9299,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -9495,7 +9495,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -9727,7 +9727,7 @@
 "Ui" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
-/obj/item/storage/secure/safe{
+/obj/structure/secure_safe{
 	pixel_x = 32;
 	pixel_y = 24
 	},
@@ -10187,7 +10187,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

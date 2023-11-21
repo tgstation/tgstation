@@ -2,10 +2,7 @@
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
 
-	if(isnull(generated_domain))
-		return
-
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
+	sever_connections()
 
 /// Whenever a corpse spawner makes a new corpse, add it to the list of potential mutations
 /obj/machinery/quantum_server/proc/on_corpse_spawned(datum/source, mob/living/corpse)
@@ -17,8 +14,9 @@
 /obj/machinery/quantum_server/proc/on_delete(datum/source)
 	SIGNAL_HANDLER
 
+	sever_connections()
+
 	if(generated_domain)
-		SEND_SIGNAL(src, COMSIG_BITRUNNER_SEVER_AVATAR)
 		scrub_vdom()
 
 	if(is_ready)
@@ -28,45 +26,26 @@
 	if(circuit)
 		qdel(circuit)
 
-/// Handles examining the server. Shows cooldown time and efficiency.
-/obj/machinery/quantum_server/proc/on_examine(datum/source, mob/examiner, list/examine_text)
-	SIGNAL_HANDLER
-
-	examine_text += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
-
-	if(capacitor_coefficient < 1)
-		examine_text += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
-
-	if(servo_bonus > 0.2)
-		examine_text += span_infoplain("Its manipulation potential is increasing rewards by [servo_bonus]x.")
-		examine_text += span_infoplain("Injury from unsafe ejection reduced [servo_bonus * 100]%.")
-
-	if(!is_ready)
-		examine_text += span_notice("It is currently cooling down. Give it a few moments.")
-		return
-
 /// Whenever something enters the send tiles, check if it's a loot crate. If so, alert players.
 /obj/machinery/quantum_server/proc/on_goal_turf_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+	var/obj/machinery/byteforge/chosen_forge = get_random_nearby_forge()
+	if(isnull(chosen_forge))
 		return
 
-	var/obj/structure/closet/crate/secure/bitrunning/encrypted/loot_crate = arrived
-	if(!istype(loot_crate))
+	if((obj_flags & EMAGGED) && isliving(arrived))
+		var/mob/living/creature = arrived
+
+		if(!creature.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch, check_subtypes = TRUE))
+			return
+
+		INVOKE_ASYNC(src, PROC_REF(station_spawn), arrived, chosen_forge)
 		return
 
-	for(var/mob/person in loot_crate.contents)
-		if(isnull(person.mind))
-			person.forceMove(get_turf(loot_crate))
-
-		var/datum/component/avatar_connection/connection = person.GetComponent(/datum/component/avatar_connection)
-		connection?.full_avatar_disconnect()
-
-	spark_at_location(loot_crate)
-	qdel(loot_crate)
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, arrived, generated_domain.reward_points)
-	generate_loot()
+	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
+		generate_loot(arrived, chosen_forge)
+		return
 
 /// Handles examining the server. Shows cooldown time and efficiency.
 /obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
@@ -83,8 +62,12 @@
 		if(isliving(thing)) // so we can mutate them
 			var/mob/living/creature = thing
 
-			if(creature.can_be_cybercop)
-				mutation_candidate_refs.Add(WEAKREF(creature))
+			if(ismegafauna(creature))
+				var/mob/living/simple_animal/hostile/megafauna/boss = creature
+				boss.make_virtual_megafauna()
+				continue
+
+			mutation_candidate_refs.Add(WEAKREF(creature))
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts
@@ -98,10 +81,11 @@
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 
+	/// Just in case there's any special handling for the domain
+	generated_domain.setup_domain(created_atoms)
+
 /// Handles when cybercops are summoned into the area or ghosts click a ghost role spawner
 /obj/machinery/quantum_server/proc/on_threat_created(datum/source, mob/living/threat)
 	SIGNAL_HANDLER
 
-	domain_threats += 1
-	spawned_threat_refs.Add(WEAKREF(threat))
-	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED) // notify players
+	add_threats(threat)

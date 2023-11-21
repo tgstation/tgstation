@@ -672,17 +672,14 @@
 		return
 	to_chat(user, span_notice("You call out for aid, attempting to summon spirits to your side."))
 
-	notify_ghosts("[user] is raising [user.p_their()] [name], calling for your help!",
-		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
-		source = user, ignore_key = POLL_IGNORE_SPECTRAL_BLADE, header = "Spectral blade")
+	notify_ghosts(
+		"[user] is raising [user.p_their()] [name], calling for your help!",
+		source = user,
+		ignore_key = POLL_IGNORE_SPECTRAL_BLADE,
+		header = "Spectral blade",
+	)
 
 	summon_cooldown = world.time + 600
-
-/obj/item/melee/ghost_sword/Topic(href, href_list)
-	if(href_list["orbit"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.ManualFollow(src)
 
 /obj/item/melee/ghost_sword/process()
 	ghost_check()

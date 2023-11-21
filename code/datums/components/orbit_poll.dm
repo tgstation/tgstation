@@ -47,13 +47,13 @@
 
 	var/message = custom_message || "[capitalize(src.title)] is looking for volunteers"
 
-	notify_ghosts("[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].\n", \
-		action = NOTIFY_ORBIT, \
-		enter_link = "<a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>", \
-		flashwindow = FALSE, \
-		header = "Volunteers requested", \
-		ignore_key = ignore_key, \
-		source = parent \
+	notify_ghosts(
+		"[message]. An orbiter will be chosen in [DisplayTimeText(timeout)].\n",
+		source = parent,
+		header = "Volunteers requested",
+		custom_link = " <a href='?src=[REF(src)];ignore=[ignore_key]'>(Ignore)</a>",
+		ignore_key = ignore_key,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
 	addtimer(CALLBACK(src, PROC_REF(end_poll)), timeout, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE|TIMER_DELETE_ME)
@@ -84,22 +84,47 @@
 		return
 
 	for(var/mob/dead/observer/ghost as anything in orbiter_comp.orbiter_list)
-		if(QDELETED(ghost) || isnull(ghost.client))
+		var/client/ghost_client = ghost.client
+
+		if(QDELETED(ghost) || isnull(ghost_client))
 			continue
+
 		if(is_banned_from(ghost.ckey, job_bans))
+			continue
+
+		var/datum/preferences/ghost_prefs = ghost_client.prefs
+		if(isnull(ghost_prefs))
+			candidates += ghost // we'll assume they wanted to be picked despite prefs being null for whatever fucked up reason
+			continue
+
+		if(!ghost_prefs.read_preference(/datum/preference/toggle/ghost_roles))
+			continue
+		if(!isnull(ghost_client.holder) && !ghost_prefs.read_preference(/datum/preference/toggle/ghost_roles_as_admin))
 			continue
 
 		candidates += ghost
 
-	if(!length(candidates))
+	pick_and_offer(candidates)
+
+/// Takes a list, picks a candidate, and offers the role to them.
+/datum/component/orbit_poll/proc/pick_and_offer(list/volunteers)
+	if(length(volunteers) <= 0)
 		phone_home()
 		return
 
-	var/mob/dead/observer/chosen = pick(candidates)
+	var/mob/dead/observer/chosen = pick(volunteers)
 
-	if(chosen)
-		deadchat_broadcast("[key_name(chosen, include_name = FALSE)] was selected for the role ([title]).", "Ghost Poll: ", parent)
+	if(isnull(chosen))
+		phone_home()
+		return
 
+	SEND_SOUND(chosen, 'sound/misc/notice2.ogg')
+	var/response = tgui_alert(chosen, "Do you want to assume the role of [title]?", "Orbit Polling", list("Yes", "No"), 10 SECONDS)
+	if(response != "Yes")
+		var/reusable_list = volunteers - chosen
+		return pick_and_offer(reusable_list)
+
+	deadchat_broadcast("[key_name(chosen, include_name = FALSE)] was selected for the role ([title]).", "Ghost Poll: ", parent)
 	phone_home(chosen)
 
 /// Make sure to call your parents my dude

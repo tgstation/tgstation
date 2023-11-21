@@ -58,8 +58,10 @@
 #define ALLERGIC_REMOVAL_SKIP "Allergy"
 
 //Used in holder.dm/equlibrium.dm to set values and volume limits
-///the minimum volume of reagents than can be operated on.
+///The minimum volume of reagents than can be operated on.
 #define CHEMICAL_QUANTISATION_LEVEL 0.0001
+///Sanity check limit to clamp chems to sane amounts and prevent rounding errors during transfer.
+#define CHEMICAL_VOLUME_ROUNDING 0.01
 ///Default pH for reagents datum
 #define CHEMICAL_NORMAL_PH 7.000
 ///Minimum pH attainable by a solution
@@ -185,6 +187,14 @@
 #define REACTION_TAG_PLANT (1<<20)
 /// This reaction is produces a product that affects plants
 #define REACTION_TAG_COMPETITIVE (1<<21)
+
+//flags used by holder.dm to locate an reagent
+///Direct type
+#define REAGENT_STRICT_TYPE (1<<0)
+///Parent type but not sub types for e.g. if param is obj/item it will look for obj/item/stack but not obj/item/stack/sheet
+#define REAGENT_PARENT_TYPE (1<<1)
+///same as istype() check
+#define REAGENT_SUB_TYPE (1<<2)
 
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"

@@ -127,7 +127,7 @@
 	name = "Plasma Relief Valve"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/mob/living/basic/skeleton/plasmaminer/jackhammer,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "bX" = (
@@ -358,7 +358,7 @@
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "gd" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "gj" = (
@@ -1263,7 +1263,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -1615,7 +1615,7 @@
 	name = "mining conveyor"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/skeleton/plasmaminer,
+/mob/living/basic/skeleton/plasmaminer,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/plasma_facility/operations)
@@ -1819,7 +1819,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "Hz" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "HA" = (
@@ -1962,7 +1962,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/mob/living/basic/skeleton/plasmaminer/jackhammer,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -2288,7 +2288,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/item/shard,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/mob/living/basic/skeleton/plasmaminer/jackhammer,
 /turf/open/floor/iron/freezer,
 /area/ruin/plasma_facility/commons)
 "Or" = (
@@ -2311,7 +2311,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/mob/living/basic/skeleton/plasmaminer/jackhammer,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/textured,
@@ -2655,7 +2655,7 @@
 	id = "fire_facility_car";
 	name = "Garage Door"
 	},
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "VD" = (

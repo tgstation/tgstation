@@ -59,7 +59,7 @@
 	},
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/closet/body_bag,
-/mob/living/simple_animal/hostile/skeleton{
+/mob/living/basic/skeleton{
 	name = "Jim";
 	desc = "Left to rot in maintenance, a poor soul whose green light was never noticed by the doctor..."
 	},

@@ -463,7 +463,6 @@ GLOBAL_VAR(station_nuke_source)
 		"A nuclear device has been armed in [get_area_name(src)]!",
 		source = src,
 		header = "Nuke Armed",
-		action = NOTIFY_ORBIT,
 	)
 	update_appearance()
 

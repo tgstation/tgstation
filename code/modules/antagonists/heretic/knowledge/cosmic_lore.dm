@@ -70,7 +70,6 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/essence,
@@ -114,7 +113,6 @@
 	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
 		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
@@ -218,7 +216,6 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
@@ -248,7 +245,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/star_gazer
+		/datum/pet_command/point_targeting/attack/star_gazer
 	)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -260,7 +257,12 @@
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY

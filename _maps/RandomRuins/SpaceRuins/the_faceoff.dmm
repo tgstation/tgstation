@@ -173,7 +173,7 @@
 	pixel_x = -1;
 	pixel_y = 5
 	},
-/mob/living/basic/syndicate/melee/space,
+/mob/living/basic/trooper/syndicate/melee/space,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "eU" = (

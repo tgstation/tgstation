@@ -245,13 +245,6 @@
 /obj/machinery/atmospherics/components/return_analyzable_air()
 	return airs
 
-/obj/machinery/atmospherics/components/paint(paint_color)
-	if(paintable)
-		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-		set_pipe_color(paint_color)
-		update_node_icon()
-	return paintable
-
 /**
  * Disconnects all nodes from ourselves, remove us from the node's nodes.
  * Nullify our parent pipenet

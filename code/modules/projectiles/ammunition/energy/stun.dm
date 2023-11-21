@@ -4,6 +4,7 @@
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 	harmful = FALSE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
@@ -21,6 +22,12 @@
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/taser2.ogg'
 	harmful = FALSE
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+
+/obj/item/ammo_casing/energy/disabler/smg
+	projectile_type = /obj/projectile/beam/disabler/weak
+	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
+	fire_sound = 'sound/weapons/taser3.ogg'
 
 /obj/item/ammo_casing/energy/disabler/hos
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 1.2)

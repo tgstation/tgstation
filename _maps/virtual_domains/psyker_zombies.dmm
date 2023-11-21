@@ -9,7 +9,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "c" = (
 /obj/structure/sign/warning/directional/west,
-/turf/open/chasm/lavaland,
+/turf/open/chasm,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "h" = (
 /obj/structure/rack,
@@ -17,7 +17,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "i" = (
 /obj/structure/sign/warning/directional/east,
-/turf/open/chasm/lavaland,
+/turf/open/chasm,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "o" = (
 /turf/template_noop,
@@ -73,7 +73,7 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "Q" = (
-/turf/open/chasm/lavaland,
+/turf/open/chasm,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "R" = (
 /obj/effect/mine/explosive/light,

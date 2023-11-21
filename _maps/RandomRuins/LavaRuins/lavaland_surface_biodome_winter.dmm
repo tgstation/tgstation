@@ -145,7 +145,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aH" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "aI" = (
@@ -255,11 +255,11 @@
 /area/ruin/powered/snow_biodome)
 "gz" = (
 /obj/structure/chair/stool/directional/south,
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "hr" = (
-/mob/living/simple_animal/hostile/skeleton/eskimo,
+/mob/living/basic/skeleton/settler,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},

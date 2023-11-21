@@ -80,7 +80,7 @@
 			if(do_after(user, 50, target=src))
 				W.use(5)
 				var/turf/T = get_turf(src)
-				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
+				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
 				return
 	return ..()
@@ -234,7 +234,7 @@
 
 /obj/item/deployable_turret_folded/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, delete_on_use = TRUE)
+	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg)
 
 #undef SINGLE
 #undef VERTICAL

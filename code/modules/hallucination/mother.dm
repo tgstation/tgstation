@@ -16,11 +16,11 @@
 	mother = new(spawn_loc, hallucinator, src)
 	mother.AddComponent(/datum/component/leash, owner = hallucinator, distance = get_dist(hallucinator, mother)) //basically makes mother follow them
 	point_at(hallucinator)
-	talk("[hallucinator]!!!!")
+	talk("[capitalize(hallucinator.real_name)]!!!!") // Your mother won't be fooled by paltry disguises
 	var/list/scold_lines = list(
-		pick(list("CLEAN YOUR ROOM THIS INSTANT!", "IT'S TIME TO WAKE UP FOR SCHOOL!!")),
-		pick(list("YOU INSULT YOUR GRANDPARENTS!", "USELESS!")),
-		pick(list("I BROUGHT YOU INTO THIS WORLD, I CAN TAKE YOU OUT!!!", "YOU'RE GROUNDED!!")),
+		pick_list_replacements(MOTHER_FILE, "do_something"),
+		pick_list_replacements(MOTHER_FILE, "be_upset"),
+		pick_list_replacements(MOTHER_FILE, "get_reprimanded"),
 	)
 	var/delay = 2 SECONDS
 	for(var/line in scold_lines)
@@ -75,7 +75,19 @@
 	image_state = ""
 
 /obj/effect/client_image_holder/hallucination/your_mother/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
-	. = ..()
-	var/mob/living/carbon/hallucinator = parent.hallucinator
-	image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/yourmother, hallucinator.dna.species.type))
-	regenerate_image()
+	var/mob/living/hallucinator = parent.hallucinator
+	if (ishuman(hallucinator))
+		var/mob/living/carbon/dna_haver = hallucinator
+		image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/yourmother, dna_haver.dna.species.type))
+		return ..()
+
+	if (istype(hallucinator, /mob/living/basic/pet/dog/corgi/ian))
+		image_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/job/hop))
+		name = "Head of Personnel"
+		return ..()
+
+	image_icon = hallucinator.icon
+	image_state = hallucinator.icon_state
+	image_pixel_x = hallucinator.pixel_x
+	image_pixel_y = hallucinator.pixel_y
+	return ..()

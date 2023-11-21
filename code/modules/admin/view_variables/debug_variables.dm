@@ -30,7 +30,7 @@
 
 // This is split into a seperate proc mostly to make errors that happen not break things too much
 /proc/_debug_variable_value(name, value, level, datum/owner, sanitize, display_flags)
-	. = "<font color='red'>DISPLAY_ERROR</font>"
+	. = "<font color='red'>DISPLAY_ERROR:</font> ([value] [REF(value)])" // Make sure this line can never runtime
 
 	if(isnull(value))
 		return "<span class='value'>null</span>"
@@ -64,9 +64,14 @@
 		var/datum/datum_value = value
 		return datum_value.debug_variable_value(name, level, owner, sanitize, display_flags)
 
-	if(islist(value) || hascall(value, "Cut")) // Some special lists arent detectable as a list through istype, so we check if it has a list proc instead
+	if(islist(value) || (name in GLOB.vv_special_lists)) // Some special lists arent detectable as a list through istype
 		var/list/list_value = value
 		var/list/items = list()
+
+		// This is becuse some lists either dont count as lists or a locate on their ref will return null
+		var/link_vars = "Vars=[REF(value)]"
+		if(name in GLOB.vv_special_lists)
+			link_vars = "Vars=[REF(owner)];special_varname=[name]"
 
 		if (!(display_flags & VV_ALWAYS_CONTRACT_LIST) && list_value.len > 0 && list_value.len <= (IS_NORMAL_LIST(list_value) ? VV_NORMAL_LIST_NO_EXPAND_THRESHOLD : VV_SPECIAL_LIST_NO_EXPAND_THRESHOLD))
 			for (var/i in 1 to list_value.len)
@@ -80,9 +85,9 @@
 
 				items += debug_variable(key, val, level + 1, sanitize = sanitize)
 
-			return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(owner)];special_varname=[name]'>/list ([list_value.len])</a><ul>[items.Join()]</ul>"
+			return "<a href='?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a><ul>[items.Join()]</ul>"
 		else
-			return "<a href='?_src_=vars;[HrefToken()];Vars=[REF(owner)];special_varname=[name]'>/list ([list_value.len])</a>"
+			return "<a href='?_src_=vars;[HrefToken()];[link_vars]'>/list ([list_value.len])</a>"
 
 	if(name in GLOB.bitfields)
 		var/list/flags = list()

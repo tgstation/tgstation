@@ -116,7 +116,7 @@
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(affected_mob))
+	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || is_simian(affected_mob))
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
@@ -225,7 +225,7 @@
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 0, updating_health = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 1 * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/consumable/capsaicin, seconds_per_tick)
 	return ..() || .
 
 /datum/reagent/consumable/soymilk
@@ -251,10 +251,9 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1, 0)
-		. = TRUE
-	..()
+	. = ..()
+	if(SPT_PROB(10, seconds_per_tick) && affected_mob.heal_bodypart_damage(1, 0))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/coffee
 	name = "Coffee"
@@ -272,6 +271,7 @@
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
@@ -279,7 +279,6 @@
 	affected_mob.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5 * REM * seconds_per_tick)
-	return ..() || .
 
 /datum/reagent/consumable/tea
 	name = "Tea"
@@ -670,7 +669,7 @@
 
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	if(ismonkey(affected_mob))
+	if(is_simian(affected_mob))
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
 
 /datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/affected_mob)

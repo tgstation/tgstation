@@ -58,7 +58,7 @@
 /obj/effect/temp_visual/dir_setting/firing_effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect"
-	duration = 2
+	duration = 3
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
@@ -74,8 +74,14 @@
 			pixel_y = rand(-1,1)
 	..()
 
-/obj/effect/temp_visual/dir_setting/firing_effect/energy
-	icon_state = "firing_effect_energy"
+/obj/effect/temp_visual/dir_setting/firing_effect/blue
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_blue"
+	duration = 3
+
+/obj/effect/temp_visual/dir_setting/firing_effect/red
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_red"
 	duration = 3
 
 /obj/effect/temp_visual/dir_setting/firing_effect/magic
@@ -280,6 +286,10 @@
 	name = "bluespace fissure"
 	icon_state = "bluestream_fade"
 	duration = 9
+
+/obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
+	. = ..()
+	apply_wibbly_filters(src)
 
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'

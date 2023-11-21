@@ -3,7 +3,7 @@
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon = 'icons/mob/human/bodyparts.dmi'
 	icon_state = "default_human_head"
-	max_damage = 200
+	max_damage = LIMB_MAX_HP_CORE
 	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
 	plaintext_zone = "head"
@@ -23,7 +23,7 @@
 	unarmed_miss_sound = 'sound/weapons/bite.ogg'
 	unarmed_damage_low = 1 // Yeah, biteing is pretty weak, blame the monkey super-nerf
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
+	unarmed_effectiveness = 0
 	bodypart_trait_source = HEAD_TRAIT
 
 	var/mob/living/brain/brainmob //The current occupant.
@@ -267,7 +267,7 @@
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = 500
+	max_damage = LIMB_MAX_HP_ALIEN_CORE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/head/larva
@@ -280,5 +280,5 @@
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = 50
+	max_damage = LIMB_MAX_HP_ALIEN_LARVA
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

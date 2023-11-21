@@ -139,6 +139,9 @@
 #define COMSIG_LIVING_EARLY_UNARMED_ATTACK "human_pre_attack_hand"
 /// from mob/living/*/UnarmedAttack(): (mob/living/source, atom/target, proximity, modifiers)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
+///From base of mob/living/MobBump(): (mob/bumped, mob/living/bumper)
+#define COMSIG_LIVING_PRE_MOB_BUMP "movable_pre_bump"
+	#define COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP (1<<0)
 ///From base of mob/living/MobBump() (mob/living)
 #define COMSIG_LIVING_MOB_BUMP "living_mob_bump"
 ///From base of mob/living/Bump() (turf/closed)
@@ -219,9 +222,18 @@
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
 
+///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
+#define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define SUCCESSFUL_BLOCK (1<<0)
+
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
+
+/// Sent from a mob to their loc when starting to remove cuffs on itself
+#define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
+/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)

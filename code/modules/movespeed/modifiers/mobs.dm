@@ -109,6 +109,9 @@
 /datum/movespeed_modifier/average_web
 	multiplicative_slowdown = 1.2
 
+/datum/movespeed_modifier/below_average_web
+	multiplicative_slowdown = 2.5
+
 /datum/movespeed_modifier/slow_web
 	multiplicative_slowdown = 5
 

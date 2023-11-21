@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, list(/obj/structure/table, /obj/structure
 /mob/living/simple_animal/hostile/mimic/copy
 	health = 100
 	maxHealth = 100
+	mob_biotypes = MOB_SPECIAL
 	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0

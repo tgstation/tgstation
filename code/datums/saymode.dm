@@ -23,7 +23,7 @@
 	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!ling_sender)
 		return FALSE
-	if(HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
+	if(HAS_TRAIT(user, TRAIT_CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, span_warning("The poison in the air hinders our ability to interact with the hivemind."))
 		return FALSE
 
@@ -39,7 +39,7 @@
 		if(!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob))
 			continue
 		// can't recieve messages on the hivemind right now
-		if(HAS_TRAIT(ling_mob, CHANGELING_HIVEMIND_MUTE))
+		if(HAS_TRAIT(ling_mob, TRAIT_CHANGELING_HIVEMIND_MUTE))
 			continue
 		to_chat(ling_mob, msg)
 
