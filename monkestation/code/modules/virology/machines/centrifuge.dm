@@ -51,7 +51,7 @@
 	base_efficiency = 1 + upgrade_efficiency * (manipcount-2)
 
 
-/obj/machinery/disease2/centrifuge/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/disease2/centrifuge/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 
 	if(machine_stat & (BROKEN))
@@ -61,7 +61,7 @@
 	if(.)
 		return
 
-	if (istype(I,/obj/item/reagent_containers/cup/beaker/vial))
+	if (istype(I, /obj/item/reagent_containers/cup/beaker/vial))
 		special = CENTRIFUGE_LIGHTSPECIAL_OFF
 		if (on)
 			to_chat(user,"<span class='warning'>You cannot add or remove vials while the centrifuge is active. Turn it Off first.</span>")
@@ -71,9 +71,9 @@
 			if(!vials[i])
 				vials[i] = vial
 				vial_valid[i] = vial_has_antibodies(vial)
-				visible_message("<span class='notice'>\The [user] adds \the [vial] to \the [src].</span>","<span class='notice'>You add \the [vial] to \the [src].</span>")
+				visible_message(span_notice("\The [user] adds \the [vial] to \the [src]."),span_notice("You add \the [vial] to \the [src]."))
 				playsound(loc, 'sound/machines/click.ogg', 50, 1)
-				user.drop_item(vial, loc, 1)
+				user.transferItemToLoc(vial, loc)
 				vial.forceMove(src)
 				update_icon()
 				updateUsrDialog()
@@ -83,7 +83,7 @@
 		return FALSE
 
 
-/obj/machinery/disease2/centrifuge/proc/vial_has_antibodies(var/obj/item/reagent_containers/cup/beaker/vial/vial)
+/obj/machinery/disease2/centrifuge/proc/vial_has_antibodies(obj/item/reagent_containers/cup/beaker/vial/vial)
 	if (!vial)
 		return FALSE
 
@@ -116,7 +116,6 @@
 			set_light(2,2)
 			var/image/centrifuge_light = image(icon,"centrifuge_light")
 			centrifuge_light.plane = LIGHTING_PLANE
-			centrifuge_light.layer = ABOVE_LIGHTING_LAYER
 			overlays += centrifuge_light
 			var/image/centrifuge_glow = image(icon,"centrifuge_glow")
 			centrifuge_glow.plane = LIGHTING_PLANE
@@ -145,7 +144,6 @@
 	if(vial.reagents.total_volume)
 		var/image/filling = image(icon, "centrifuge_vial[slot]_filling[on ? "_moving" : ""]")
 		filling.icon += mix_color_from_reagents(vial.reagents.reagent_list)
-		filling.alpha = mix_alpha_from_reagents(vial.reagents.reagent_list)
 		overlays += filling
 
 /obj/machinery/disease2/centrifuge/proc/add_vial_dat(var/obj/item/reagent_containers/cup/beaker/vial/vial, var/list/vial_task = list(0,0,0,0,0), var/slot = 1)
@@ -187,11 +185,11 @@
 
 /obj/machinery/disease2/centrifuge/attack_hand(var/mob/user)
 	. = ..()
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		to_chat(user, "<span class='notice'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
 		return
 
-	if(stat & (NOPOWER))
+	if(machine_stat & (NOPOWER))
 		to_chat(user, "<span class='notice'>Deprived of power, \the [src] is unresponsive.</span>")
 		for (var/i = 1 to vials.len)
 			if(vials[i])
@@ -229,7 +227,7 @@
 	popup.open()
 
 /obj/machinery/disease2/centrifuge/process()
-	if(stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
 	if(on)
@@ -287,12 +285,11 @@
 				result[3] += (efficiency * 2)
 			if (result[3] >= 100)
 				special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
-				var/amt= vial.reagents.get_reagent_amount(BLOOD)
-				vial.reagents.remove_reagent(BLOOD,amt)
+				var/amt= vial.reagents.get_reagent_amount(/datum/reagent/blood)
+				vial.reagents.remove_reagent(/datum/reagent/blood, amt)
 				var/data = list("antigen" = list(result[2]))
-				vial.reagents.add_reagent(VACCINE,amt,data)
+				vial.reagents.add_reagent(/datum/reagent/vaccine, amt,data)
 				result = list(0,0,0,0,0)
-				alert_noise("ping")
 	return result
 
 /obj/machinery/disease2/centrifuge/Topic(href, href_list)
@@ -329,9 +326,9 @@
 				if (!vials[i])
 					vials[i] = vial
 					vial_valid[i] = vial_has_antibodies(vial)
-					visible_message("<span class='notice'>\The [user] adds \the [vial] to \the [src].</span>","<span class='notice'>You add \the [vial] to \the [src].</span>")
+					visible_message(span_notice("\The [user] adds \the [vial] to \the [src]."),span_notice("You add \the [vial] to \the [src]."))
 					playsound(loc, 'sound/machines/click.ogg', 50, 1)
-					user.drop_item(vial, loc, 1)
+					user.transferItemToLoc(vial, loc)
 					vial.forceMove(src)
 				else
 					to_chat(user,"<span class='warning'>There is already a vial in that slot.</span>")
@@ -380,13 +377,9 @@
 		var/list/blood_viruses = blood.data["virus2"]
 		if (istype(blood_viruses) && blood_viruses.len > 0)
 			var/list/pathogen_list = list()
-			for (var/ID in blood_viruses)
-				var/datum/disease2/disease/D = blood_viruses[ID]
+			for (var/datum/disease/D as anything  in blood_viruses)
 				var/pathogen_name = "Unknown [D.form]"
-				if(ID in virusDB)
-					var/datum/data/record/rec = virusDB[ID]
-					pathogen_name = rec.fields["name"]
-				pathogen_list[pathogen_name] = ID
+				pathogen_list[pathogen_name] = D
 
 			popup.close()
 			user.unset_machine()
@@ -395,20 +388,17 @@
 			if (!choice)
 				return result
 			var/ID = pathogen_list[choice]
-			var/datum/disease2/disease/target = blood_viruses[ID]
+			var/datum/disease/target = blood_viruses[ID]
 
 			result[1] = "dish"
 			result[2] = "Unknown [target.form]"
-			if(ID in virusDB)
-				var/datum/data/record/rec = virusDB[ID]
-				result[2] = rec.fields["name"]
 			result[3] = 0
 			result[4] = target
-			result[5] = pathogen_list.len
+			result[5] = length(pathogen_list)
 
 	return result
 
-/obj/machinery/disease2/centrifuge/proc/cure(var/obj/item/reagent_containers/cup/beaker/vial/vial,var/mob/user)
+/obj/machinery/disease2/centrifuge/proc/cure(obj/item/reagent_containers/cup/beaker/vial/vial, mob/user)
 	var/list/result = list(0,0,0,0,0)
 	if (!vial)
 		return result
@@ -454,11 +444,12 @@
 
 	return result
 
-/obj/machinery/disease2/centrifuge/proc/print_dish(var/datum/disease2/disease/D)
+/obj/machinery/disease2/centrifuge/proc/print_dish(var/datum/disease/D)
 	special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
-	alert_noise("ping")
+	/*
 	anim(target = src, a_icon = icon, flick_anim = "centrifuge_print", sleeptime = 10)
 	anim(target = src, a_icon = icon, flick_anim = "centrifuge_print_color", sleeptime = 10, col = D.color)
+	*/
 	visible_message("\The [src] prints a growth dish.")
 	spawn(10)
 		var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)

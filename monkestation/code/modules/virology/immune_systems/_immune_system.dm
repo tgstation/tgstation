@@ -1,6 +1,9 @@
 /mob/living/carbon
 	///our immune system
 	var/datum/immune_system/immune_system
+	/// our infected pathogen overlay
+	var/image/pathogen
+
 /datum/immune_system
 	var/mob/living/carbon/host = null
 	var/strength = 1
