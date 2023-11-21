@@ -44,9 +44,10 @@
 	RefreshParts()
 
 /obj/machinery/disease2/centrifuge/RefreshParts()
+	. = ..()
 	var/manipcount = 0
 	for(var/datum/stock_part/manipulator/M in component_parts)
-		manipcount += M.rating
+		manipcount += M.tier
 	base_efficiency = 1 + upgrade_efficiency * (manipcount-2)
 
 
@@ -139,7 +140,7 @@
 		if(vials[i])
 			add_vial_sprite(vials[i],i)
 
-/obj/machinery/disease2/centrifuge/proc/add_vial_sprite(obj/item/reagent_containers/cup/beaker/vial/vial, slot = 1)
+/obj/machinery/disease2/centrifuge/proc/add_vial_sprite(obj/item/reagent_containers/cup/beaker/vial/vial, 	slot = 1)
 	overlays += "centrifuge_vial[slot][on ? "_moving" : ""]"
 	if(vial.reagents.total_volume)
 		var/image/filling = image(icon, "centrifuge_vial[slot]_filling[on ? "_moving" : ""]")
