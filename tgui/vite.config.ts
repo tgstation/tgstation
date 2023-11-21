@@ -8,8 +8,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         tgui: path.resolve(__dirname, 'packages/tgui'),
-        "tgui-panel": path.resolve(__dirname, 'packages/tgui-panel'),
-        "tgui-say": path.resolve(__dirname, 'packages/tgui-say'),
+        'tgui-panel': path.resolve(__dirname, 'packages/tgui-panel'),
+        'tgui-say': path.resolve(__dirname, 'packages/tgui-say'),
       },
       output: {
         entryFileNames: `[name].js`,
@@ -26,7 +26,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "~tgui": path.resolve(__dirname, 'packages/tgui'),
-    }
+      '~tgui': path.resolve(__dirname, 'packages/tgui'),
+    },
   },
 });
