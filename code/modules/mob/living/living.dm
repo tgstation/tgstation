@@ -1162,7 +1162,6 @@
 
 	if (gloves)
 		. *= gloves.grab_resilience_mult
-		. += gloves.grab_resilience_increment
 
 	// if you get more hands you are better at grabbing. duh
 	var/base_hand_mult = ((max(num_hands, 2) - 2) * GRAB_RESILIENCE_PER_HAND) + 1 // the -2 ensures at 2 hands you have x1 resilience

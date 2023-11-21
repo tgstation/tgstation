@@ -43,8 +43,6 @@
 
 	/// If on the hands, the multiplier we will apply to our wearer's grab resilience mult, which decreases the chance of victims escaping grabs.
 	var/grab_resilience_mult = 1
-	/// If on the hands, the increment we will apply to our wearer's grab resilience mult, which decreases the chance of victims escaping grabs.
-	var/grab_resilience_increment = 0
 
 	/// A lazily initiated "food" version of the clothing for moths.
 	// This intentionally does not use the edible component, for a few reasons.
