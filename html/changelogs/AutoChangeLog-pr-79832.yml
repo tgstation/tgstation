@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "[Icebox] Atmos techs have access to the Engineering front desk windoor."
+  - qol: "[Icebox] Security's lower floor is not as easily cut off from the powernet anymore."
