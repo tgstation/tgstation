@@ -36,7 +36,8 @@
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
-
+	var/list/symptoms = list() // The symptoms of the disease.
+	
 /datum/disease/Destroy()
 	. = ..()
 	if(affected_mob)
@@ -129,13 +130,6 @@
 			return FALSE
 		end = Temp
 
-
-/datum/disease/proc/cure(add_resistance = TRUE)
-	if(affected_mob)
-		if(add_resistance && (disease_flags & CAN_RESIST))
-			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())
-	qdel(src)
-
 /datum/disease/proc/IsSame(datum/disease/D)
 	if(istype(D, type))
 		return TRUE
@@ -186,6 +180,9 @@
 		"infectionchance_base",
 		"ticks",
 		"speed",
+		"subID",
+		"uniqueID",
+		"childID",
 		)
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()

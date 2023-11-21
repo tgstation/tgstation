@@ -27,7 +27,6 @@
 
 	// NEW VARS
 	var/list/properties = list()
-	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology

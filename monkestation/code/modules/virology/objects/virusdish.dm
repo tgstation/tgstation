@@ -190,13 +190,14 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		contained_virus.incubate(src,mutatechance)
 
 /obj/item/weapon/virusdish/proc/on_reagent_change(datum/reagents/reagents)
+	SIGNAL_HANDLER
+
 	if (contained_virus)
 		var/datum/reagent/blood/blood = locate() in reagents.reagent_list
 		if (blood)
 			var/list/L = list()
 			L |= contained_virus
 			blood.data["diseases"] |= filter_disease_by_spread(L, required = SPREAD_BLOOD)
-	..()
 
 /obj/item/weapon/virusdish/proc/shatter(var/mob/user)
 	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))
@@ -256,9 +257,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			if(!bleeding)
 				bleeding = perp.check_bodypart_bleeding(BODY_ZONE_R_ARM)
 			if (!block)
-				if (contained_virus.spread & SPREAD_CONTACT)
+				if (contained_virus.spread & DISEASE_SPREAD_CONTACT_SKIN)
 					perp.infect_disease(contained_virus, notes="(Contact, from picking up \a [src])")
-				else if (bleeding && (contained_virus.spread & SPREAD_BLOOD))
+				else if (bleeding && (contained_virus.spread & DISEASE_SPREAD_BLOOD))
 					perp.infect_disease(contained_virus, notes="(Blood, from picking up \a [src])")
 		else if (isturf(loc) && loc == perp.loc)//is our perp standing over the open dish?
 			if (perp.body_position & LYING_DOWN)
