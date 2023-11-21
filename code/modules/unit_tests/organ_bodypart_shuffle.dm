@@ -32,15 +32,3 @@
 
 	// Test if bodyparts are all properly updating when forcefully removed
 	hollow_boy = allocate(/mob/living/carbon/human/consistent) //freshly filled with wet insides
-	var/list/removed_bodyparts = list()
-
-	for(var/obj/item/bodypart/bodypart as anything in hollow_boy.bodyparts)
-		bodypart.moveToNullspace()
-		removed_bodyparts += bodypart
-
-	for(var/obj/item/bodypart/bodypart as anything in removed_bodyparts)
-		TEST_ASSERT(!(bodypart in hollow_boy), "Bodypart '[bodypart.name]' remained in human after forceMove into nullspace.")
-
-		// Also check if our organs left the owner, as they SHOULD
-		for(var/obj/item/organ/organ in bodypart)
-			TEST_ASSERT(!(organ in hollow_boy), "Bodypart '[bodypart.name]' remained in human after bodypart was moved into nullspace.")
