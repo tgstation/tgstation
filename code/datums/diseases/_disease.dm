@@ -135,7 +135,12 @@
 		return TRUE
 	return FALSE
 
-
+/datum/disease/proc/cure(add_resistance = TRUE)
+	if(affected_mob)
+		if(add_resistance && (disease_flags & CAN_RESIST))
+			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())
+	qdel(src)
+	
 /datum/disease/proc/Copy()
 	//note that stage is not copied over - the copy starts over at stage 1
 	var/static/list/copy_vars = list(
@@ -183,6 +188,8 @@
 		"subID",
 		"uniqueID",
 		"childID",
+		"symptoms",
+		"stageprob",
 		)
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()

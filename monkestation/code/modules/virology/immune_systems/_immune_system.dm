@@ -70,14 +70,14 @@
 		var/mob/living/carbon/human/H = host
 		H.vomit(0,1)//hope you're wearing a biosuit or you'll get reinfected from your vomit, lol
 	for(var/ID in host.diseases)
-		var/datum/disease/D = host.diseases[ID]
+		var/datum/disease/advanced/D = host.diseases[ID]
 		D.cure(host,2)
 	strength = 0
 	overloaded = TRUE
 
 
 //If even one antibody hass sufficient concentration, the disease won't be able to infect
-/datum/immune_system/proc/CanInfect(datum/disease/disease)
+/datum/immune_system/proc/CanInfect(datum/disease/advanced/disease)
 	if (overloaded)
 		return TRUE
 
@@ -91,7 +91,7 @@
 		return
 
 	for (var/ID in host.diseases)
-		var/datum/disease/disease = host.diseases[ID]
+		var/datum/disease/advanced/disease = host.diseases[ID]
 		for (var/A in disease.antigen)
 			var/tally = 0.5
 			if (isturf(host.loc) && (host.body_position == LYING_DOWN))

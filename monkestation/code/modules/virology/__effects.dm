@@ -7,7 +7,7 @@
 	mouse_opacity = 1
 	layer = OBJ_LAYER
 	var/last_openner
-	var/datum/disease/contained_virus
+	var/datum/disease/advanced/contained_virus
 
 /obj/effect/decal/cleanable/virusdish/Entered(var/mob/living/perp)
 	..()
@@ -25,7 +25,7 @@
 		bleeding = perp.check_bodypart_bleeding(BODY_ZONE_L_LEG)
 
 	if (!block)
-		if (contained_virus.spread & SPREAD_CONTACT)
+		if (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a broken virus dish[last_openner ? " broken by [last_openner]" : ""])")
-		else if (bleeding && (contained_virus.spread & SPREAD_BLOOD))
+		else if (bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
 			perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a broken virus dish[last_openner ? " broken by [last_openner]" : ""])")

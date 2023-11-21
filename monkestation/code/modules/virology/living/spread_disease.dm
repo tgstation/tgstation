@@ -17,7 +17,7 @@
 				new /obj/effect/pathogen_cloud/core(get_turf(src), src, airborne_viruses)
 				strength -= 40
 
-/mob/living/carbon/infect_disease(datum/disease/disease, forced = FALSE, notes = "", decay = TRUE)
+/mob/living/carbon/infect_disease(datum/disease/advanced/disease, forced = FALSE, notes = "", decay = TRUE)
 	if(!istype(disease))
 		return FALSE
 	if(!disease.spread)

@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(infected_contact_mobs, list())
 
-/datum/disease/advanced
+/datum/disease
 	//the disease's antigens, that the body's immune_system will read to produce corresponding antibodies. Without antigens, a disease cannot be cured.
 	var/list/antigen = list()
 	///can we spread
@@ -39,6 +39,8 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 	var/ticks = 0
 	var/speed = 1
 
+	var/stageprob = 25
+
 	//when spreading to another mob, that new carrier has the disease's stage reduced by stage_variance
 	var/stage_variance = -1
 
@@ -59,7 +61,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 	return viable
 
 /datum/disease/advanced/proc/AddToGoggleView(mob/living/infectedMob)
-	if (spread & SPREAD_CONTACT)
+	if (spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 		GLOB.infected_contact_mobs |= infectedMob
 		if (!infectedMob.pathogen)
 			infectedMob.pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',infectedMob,"pathogen_contact")
@@ -225,14 +227,14 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		return e
 
 /datum/disease/advanced/proc/randomize_spread()
-	spread = SPREAD_BLOOD	//without blood spread, the disease cannot be extracted or cured, we don't want that for regular diseases
+	spread = DISEASE_SPREAD_BLOOD	//without blood spread, the disease cannot be extracted or cured, we don't want that for regular diseases
 	if (prob(5))			//5% chance of spreading through both contact and the air.
-		spread |= SPREAD_CONTACT
-		spread |= SPREAD_AIRBORNE
+		spread |= DISEASE_SPREAD_CONTACT_SKIN
+		spread |= DISEASE_SPREAD_AIRBORNE
 	else if (prob(40))		//38% chance of spreading through the air only.
-		spread |= SPREAD_AIRBORNE
+		spread |= DISEASE_SPREAD_AIRBORNE
 	else if (prob(60))		//34,2% chance of spreading through contact only.
-		spread |= SPREAD_CONTACT
+		spread |= DISEASE_SPREAD_CONTACT_SKIN
 							//22,8% chance of staying in blood
 
 /datum/disease/advanced/proc/minormutate(index)
@@ -323,7 +325,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		L += D.Copy()
 	return L
 
-/datum/disease/advanced/proc/cure(var/mob/living/carbon/mob,var/condition=0)
+/datum/disease/advanced/cure(var/mob/living/carbon/mob,var/condition=0)
 	/* TODO
 	switch (condition)
 		if (0)
@@ -343,10 +345,45 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		plague.update_hud_icons()
 	*/
 	//----------------
-	var/list/V = filter_disease_by_spread(mob.diseases, required = SPREAD_CONTACT)
+	var/list/V = filter_disease_by_spread(mob.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
 	if (V && V.len <= 0)
 		GLOB.infected_contact_mobs -= mob
 		if (mob.pathogen)
 			for (var/mob/living/L in GLOB.science_goggles_wearers)
 				if (L.client)
 					L.client.images -= mob.pathogen
+
+
+/datum/disease/advanced/virus
+	form = "Virus"
+	max_stages = 4
+	infectionchance = 70
+	infectionchance_base = 70
+	stageprob = 10
+	stage_variance = -1
+	can_kill = list("Bacteria")
+
+/datum/disease/advanced/bacteria//faster spread and progression, but only 3 stages max, and reset to stage 1 on every spread
+	form = "Bacteria"
+	max_stages = 3
+	infectionchance = 90
+	infectionchance_base = 90
+	stageprob = 30
+	stage_variance = -4
+	can_kill = list("Parasite")
+
+/datum/disease/advanced/parasite//slower spread. stage preserved on spread
+	form = "Parasite"
+	infectionchance = 50
+	infectionchance_base = 50
+	stageprob = 10
+	stage_variance = 0
+	can_kill = list("Virus")
+
+/datum/disease/advanced/prion//very fast progression, but very slow spread and resets to stage 1.
+	form = "Prion"
+	infectionchance = 10
+	infectionchance_base = 10
+	stageprob = 80
+	stage_variance = -10
+	can_kill = list()

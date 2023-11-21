@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 	var/list/viruses = list()
 
 //Called by disease_contact(), trying to infect people who pick us up
-/obj/item/infection_attempt(mob/living/perp, datum/disease/D, bodypart = null)
+/obj/item/infection_attempt(mob/living/perp, datum/disease/advanced/D, bodypart = null)
 	if (!istype(D))
 		return
 
@@ -17,12 +17,12 @@ GLOBAL_LIST_INIT(infected_items, list())
 		var/block = perp.check_contact_sterility(bodypart)
 		var/bleeding = bp.get_modified_bleed_rate()
 		if (!block)
-			if (D.spread & SPREAD_CONTACT)
+			if (D.spread_flags & DISEASE_SPREAD_AIRBORNE)
 				perp.infect_disease(D, notes="(Contact, from picking up \a [src])")
-			else if (bleeding && (D.spread & SPREAD_BLOOD))//if we're covered with a blood-spreading disease, we may infect people with bleeding hands.
+			else if (bleeding && (D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))//if we're covered with a blood-spreading disease, we may infect people with bleeding hands.
 				perp.infect_disease(D, notes="(Blood, from picking up \a [src])")
 
-/obj/item/infect_disease(datum/disease/disease, forced = FALSE, notes = "", decay = TRUE)
+/obj/item/infect_disease(datum/disease/advanced/disease, forced = FALSE, notes = "", decay = TRUE)
 	if(!istype(disease))
 		return FALSE
 	if(!disease.spread)
