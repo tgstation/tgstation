@@ -22,9 +22,11 @@ GLOBAL_LIST_EMPTY(tracked_generic_implants)
 	UnregisterSignal(parent, list(COMSIG_IMPLANT_IMPLANTED, COMSIG_IMPLANT_REMOVED))
 
 /datum/component/tracked_implant/proc/on_implant(datum/source, mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	SIGNAL_HANDLER
 	global_list += parent
 	GLOB.tracked_generic_implants += parent
 
 /datum/component/tracked_implant/proc/on_remove(datum/source, mob/target, silent = FALSE, special = FALSE)
+	SIGNAL_HANDLER
 	global_list -= parent
 	GLOB.tracked_generic_implants -= parent
