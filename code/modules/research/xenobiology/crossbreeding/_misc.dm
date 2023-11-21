@@ -102,7 +102,7 @@ Slimecrossing Items
 /obj/item/barriercube
 	name = "barrier cube"
 	desc = "A compressed cube of slime. When squeezed, it grows to massive size!"
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "barriercube"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -119,7 +119,7 @@ Slimecrossing Items
 /obj/structure/barricade/slime
 	name = "gelatinous barrier"
 	desc = "A huge chunk of grey slime. Bullets might get stuck in it."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "slimebarrier"
 	proj_pass_rate = 40
 	max_integrity = 60
@@ -128,7 +128,7 @@ Slimecrossing Items
 /obj/effect/forcefield/slimewall
 	name = "solidified gel"
 	desc = "A mass of solidified slime gel - completely impenetrable, but it's melting away!"
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "slimebarrier_thick"
 	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
@@ -144,7 +144,7 @@ Slimecrossing Items
 /obj/structure/ice_stasis
 	name = "ice block"
 	desc = "A massive block of ice. You can see something vaguely humanoid inside."
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
@@ -173,7 +173,7 @@ Slimecrossing Items
 	name = "gold capture device"
 	desc = "Bluespace technology packed into a roughly egg-shaped device, used to store nonhuman creatures. Can't catch them all, though - it only fits one."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
+	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "capturedevice"
 
 /obj/item/capturedevice/attack(mob/living/pokemon, mob/user)

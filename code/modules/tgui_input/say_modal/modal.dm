@@ -117,10 +117,10 @@
 		close()
 		return TRUE
 	if (type == "thinking")
-		if(payload["mode"] == TRUE)
+		if(payload["visible"] == TRUE)
 			start_thinking()
 			return TRUE
-		if(payload["mode"] == FALSE)
+		if(payload["visible"] == FALSE)
 			stop_thinking()
 			return TRUE
 		return FALSE

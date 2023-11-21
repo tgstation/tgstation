@@ -10,7 +10,7 @@
 /obj/item/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargeable electrochemical power cell."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -24,7 +24,7 @@
 	var/charge = 0
 	///Maximum charge in cell units
 	var/maxcharge = 1000
-	custom_materials = list(/datum/material/iron=700, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	///If the cell has been booby-trapped by injecting it with plasma. Chance on use() to explode.
 	var/rigged = FALSE
@@ -105,21 +105,21 @@
 /obj/item/stock_parts/cell/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
 /obj/item/stock_parts/cell/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
 	return NONE
 
 /obj/item/stock_parts/cell/update_overlays()
 	. = ..()
 	if(grown_battery)
-		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
+		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
-	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+	. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
 
 /obj/item/stock_parts/cell/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, charge))
@@ -138,13 +138,13 @@
 	return 100 * charge / maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/use(amount, force)
-	if(rigged && amount > 0)
+/obj/item/stock_parts/cell/use(used, force)
+	if(rigged && used > 0)
 		explode()
 		return FALSE
-	if(!force && charge < amount)
+	if(!force && charge < used)
 		return FALSE
-	charge = max(charge - amount, 0)
+	charge = max(charge - used, 0)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return TRUE
@@ -215,7 +215,7 @@
 /obj/item/stock_parts/cell/ex_act(severity, target)
 	. = ..()
 	if(QDELETED(src))
-		return
+		return FALSE
 
 	switch(severity)
 		if(EXPLODE_HEAVY)
@@ -224,6 +224,8 @@
 		if(EXPLODE_LIGHT)
 			if(prob(25))
 				corrupt()
+
+	return TRUE
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(ishuman(user))
@@ -280,7 +282,7 @@
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	maxcharge = 500
-	custom_materials = list(/datum/material/glass=40)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
 /obj/item/stock_parts/cell/crap/empty
 	empty = TRUE
@@ -289,7 +291,7 @@
 	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = 2500
-	custom_materials = list(/datum/material/glass=50)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = 1000
 
 /obj/item/stock_parts/cell/upgraded/plus
@@ -300,7 +302,7 @@
 /obj/item/stock_parts/cell/secborg
 	name = "security borg rechargeable D battery"
 	maxcharge = 600 //600 max charge / 100 charge per shot = six shots
-	custom_materials = list(/datum/material/glass=40)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
 /obj/item/stock_parts/cell/secborg/empty
 	empty = TRUE
@@ -330,14 +332,14 @@
 	name = "black power cell"
 	icon_state = "bscell"
 	maxcharge = 10000
-	custom_materials = list(/datum/material/glass=60)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = 2000
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
 	maxcharge = 10000
-	custom_materials = list(/datum/material/glass=60)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
 	chargerate = 1500
 
 /obj/item/stock_parts/cell/high/empty
@@ -347,7 +349,7 @@
 	name = "super-capacity power cell"
 	icon_state = "scell"
 	maxcharge = 20000
-	custom_materials = list(/datum/material/glass=300)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	chargerate = 2000
 
 /obj/item/stock_parts/cell/super/empty
@@ -357,7 +359,7 @@
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	custom_materials = list(/datum/material/glass=400)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	chargerate = 3000
 
 /obj/item/stock_parts/cell/hyper/empty
@@ -368,7 +370,7 @@
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
 	maxcharge = 40000
-	custom_materials = list(/datum/material/glass=600)
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
 	chargerate = 4000
 
 /obj/item/stock_parts/cell/bluespace/empty
@@ -378,17 +380,17 @@
 	name = "infinite-capacity power cell"
 	icon_state = "icell"
 	maxcharge = INFINITY //little disappointing if you examine it and it's not huge
-	custom_materials = list(/datum/material/glass=1000)
+	custom_materials = list(/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT)
 	chargerate = INFINITY
 	ratingdesc = FALSE
 
-/obj/item/stock_parts/cell/infinite/use()
+/obj/item/stock_parts/cell/infinite/use(used)
 	return TRUE
 
 /obj/item/stock_parts/cell/infinite/abductor
 	name = "void core"
 	desc = "An alien power cell that produces energy seemingly out of nowhere."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "cell"
 	maxcharge = 50000
 	ratingdesc = FALSE
@@ -400,7 +402,7 @@
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"
 	desc = "A rechargeable starch based power cell."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	charge = 100
 	maxcharge = 300
@@ -454,14 +456,15 @@
 	name = "miniature power cell"
 	desc = "A tiny power cell with a very low power capacity. Used in light fixtures to power them in the event of an outage."
 	maxcharge = 120 //Emergency lights use 0.2 W per tick, meaning ~10 minutes of emergency power from a cell
-	custom_materials = list(/datum/material/glass = 20)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*0.2)
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()
-	var/area/A = get_area(src)
-	if(!A.lightswitch || !A.light_power)
-		charge = 0 //For naturally depowered areas, we start with no power
+	var/area/area = get_area(src)
+	if(area)
+		if(!area.lightswitch || !area.light_power)
+			charge = 0 //For naturally depowered areas, we start with no power
 
 /obj/item/stock_parts/cell/crystal_cell
 	name = "crystal power cell"

@@ -12,7 +12,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 6, /datum/material/glass=SMALL_MATERIAL_AMOUNT *2)
 	///The implant in our implanter
 	var/obj/item/implant/imp = null
 	///Type of implant this will spawn as imp upon being spawned

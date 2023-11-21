@@ -14,7 +14,7 @@
 	/// An existing strip menus
 	var/list/strip_menus
 
-/datum/element/strippable/Attach(datum/target, list/items, should_strip_proc_path)
+/datum/element/strippable/Attach(datum/target, list/items = list(), should_strip_proc_path)
 	. = ..()
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -81,6 +81,9 @@
 	if (HAS_TRAIT(equipping, TRAIT_NODROP))
 		to_chat(user, span_warning("You can't put [equipping] on [source], it's stuck to your hand!"))
 		return FALSE
+
+	if (equipping.item_flags & ABSTRACT)
+		return FALSE //I don't know a sane-sounding feedback message for trying to put a slap into someone's hand
 
 	return TRUE
 
@@ -339,7 +342,7 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP)))
+		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || (item.item_flags & EXAMINE_SKIP)))
 			items[strippable_key] = result
 			continue
 

@@ -2,6 +2,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
+import { ObjectivePrintout, Objective } from './common/Objectives';
 
 const hereticRed = {
   color: '#e03c3c',
@@ -43,12 +44,6 @@ type KnowledgeInfo = {
   learnedKnowledge: Knowledge[];
 };
 
-type Objective = {
-  count: number;
-  name: string;
-  explanation: string;
-};
-
 type Info = {
   charges: number;
   total_sacrifices: number;
@@ -56,7 +51,10 @@ type Info = {
   objectives: Objective[];
 };
 
-const IntroductionSection = () => {
+const IntroductionSection = (props, context) => {
+  const { data } = useBackend<Info>(context);
+  const { objectives } = data;
+
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
       <Stack.Item grow>
@@ -71,7 +69,13 @@ const IntroductionSection = () => {
             <InformationSection />
             <Stack.Divider />
 
-            <ObjectivePrintout />
+            <Stack.Item>
+              <ObjectivePrintout
+                fill
+                titleMessage="In order to ascend, you have these tasks to fulfill:"
+                objectives={objectives}
+              />
+            </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
@@ -194,28 +198,6 @@ const InformationSection = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
-  const { objectives } = data;
-  return (
-    <Stack.Item>
-      <Stack vertical fill>
-        <Stack.Item bold>
-          In order to ascend, you have these tasks to fulfill:
-        </Stack.Item>
-        <Stack.Item>
-          {(!objectives && 'None!') ||
-            objectives.map((objective) => (
-              <Stack.Item key={objective.count}>
-                {objective.count}: {objective.explanation}
-              </Stack.Item>
-            ))}
-        </Stack.Item>
-      </Stack>
-    </Stack.Item>
-  );
-};
-
 const ResearchedKnowledge = (props, context) => {
   const { data } = useBackend<KnowledgeInfo>(context);
   const { learnedKnowledge } = data;
@@ -313,8 +295,6 @@ export const AntagInfoHeretic = (props, context) => {
     <Window width={675} height={625}>
       <Window.Content
         style={{
-          // 'font-family': 'Times New Roman',
-          // 'fontSize': '20px',
           'background-image': 'none',
           'background': ascended
             ? 'radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);'

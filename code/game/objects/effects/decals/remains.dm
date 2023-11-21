@@ -14,6 +14,9 @@
 	desc = "They look like human remains. They have a strange aura about them."
 	icon_state = "remains"
 
+/obj/effect/decal/remains/human/NeverShouldHaveComeHere(turf/here_turf)
+	return !istype(here_turf, /obj/structure/closet/crate/grave/filled) && ..()
+
 /obj/effect/decal/remains/human/smokey
 	desc = "They look like human remains. They have a strange, smokey aura about them..."
 	///Our proximity monitor, for detecting nearby looters.
@@ -34,7 +37,7 @@
 
 	if(iscarbon(tomb_raider))
 		var/mob/living/carbon/nearby_carbon = tomb_raider
-		if (nearby_carbon.m_intent != MOVE_INTENT_WALK || prob(15))
+		if (nearby_carbon.move_intent != MOVE_INTENT_WALK || prob(15))
 			release_smoke(nearby_carbon)
 			COOLDOWN_START(src, gas_cooldown, rand(20 SECONDS, 2 MINUTES))
 
@@ -48,6 +51,9 @@
 
 /obj/effect/decal/remains/plasma
 	icon_state = "remainsplasma"
+
+/obj/effect/decal/remains/plasma/NeverShouldHaveComeHere(turf/here_turf)
+	return isclosedturf(here_turf)
 
 /obj/effect/decal/remains/xeno
 	desc = "They look like the remains of something... alien. They have a strange aura about them."

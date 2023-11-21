@@ -37,6 +37,8 @@
 	else if(!originmastercommit)
 		msg += "No commit information"
 
+	msg += "Running rust-g version [rustg_get_version()]"
+
 	return msg.Join("\n")
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)

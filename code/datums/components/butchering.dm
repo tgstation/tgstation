@@ -34,6 +34,10 @@
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(onItemAttack))
 
+/datum/component/butchering/Destroy(force, silent)
+	butcher_callback = null
+	return ..()
+
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
 
@@ -52,9 +56,8 @@
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
-				user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
-								span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))
-				return COMPONENT_CANCEL_ATTACK_CHAIN
+				return
+
 			INVOKE_ASYNC(src, PROC_REF(startNeckSlice), source, H, user)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -89,8 +92,9 @@
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)
-			var/datum/wound/slash/critical/screaming_through_a_slit_throat = new
-			screaming_through_a_slit_throat.apply_wound(slit_throat)
+			var/datum/wound/slash/flesh/critical/screaming_through_a_slit_throat = new
+			if (!screaming_through_a_slit_throat.apply_wound(slit_throat, wound_source = "throat slit"))
+				qdel(screaming_through_a_slit_throat)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /**

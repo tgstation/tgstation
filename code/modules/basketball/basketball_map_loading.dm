@@ -36,6 +36,7 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
 
 /datum/map_template/basketball
+	should_place_on_top = FALSE
 	var/description = ""
 	/// The name of the basketball team
 	var/team_name
@@ -69,3 +70,31 @@
 	mappath = "_maps/map_files/basketball/greytide_worldwide.dmm"
 	team_name = "Greytide Worldwide"
 	home_team_uniform = /datum/outfit/basketball/greytide_worldwide
+
+/datum/map_template/basketball/ass_blast_usa
+	name = "Ass Blast USA Stadium"
+	description = "The homecourt of the Ass Blast USA."
+	mappath = "_maps/map_files/basketball/ass_blast_usa.dmm"
+	team_name = "Ass Blast USA"
+	home_team_uniform = /datum/outfit/basketball/ass_blast_usa
+
+/datum/map_template/basketball/soviet_bears
+	name = "Soviet Bears Stadium"
+	description = "The homecourt of the Soviet Bears."
+	mappath = "_maps/map_files/basketball/soviet_bears.dmm"
+	team_name = "Soviet Bears"
+	home_team_uniform = /datum/outfit/basketball/soviet_bears
+
+/datum/map_template/basketball/ash_gladiators
+	name = "Ash Gladiators Stadium"
+	description = "The homecourt of the Ash Gladiators."
+	mappath = "_maps/map_files/basketball/ash_gladiators.dmm"
+	team_name = "Ash Gladiators"
+	home_team_uniform = /datum/outfit/basketball/ash_gladiators
+
+/datum/map_template/basketball/beach_bums
+	name = "Beach Bums Stadium"
+	description = "The homecourt of the Beach Bums."
+	mappath = "_maps/map_files/basketball/beach_bums.dmm"
+	team_name = "Beach Bums"
+	home_team_uniform = /datum/outfit/basketball/beach_bums

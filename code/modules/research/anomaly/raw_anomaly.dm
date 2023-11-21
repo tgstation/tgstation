@@ -69,10 +69,10 @@
 	icon_state = "rawcore_dimensional"
 
 /obj/item/raw_anomaly_core/ectoplasm //Has no cargo order option, but can sometimes be a roundstart pick
-	name = "\improper ectoplasm anomaly core"
+	name = "raw ectoplasm core"
 	desc = "The raw core of an ectoplasmic anomaly. It wants to share its secrets with you."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/ectoplasm
-	icon_state = "dimensional_core"
+	icon_state = "rawcore_dimensional"
 
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()

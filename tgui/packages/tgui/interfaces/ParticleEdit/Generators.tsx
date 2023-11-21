@@ -181,7 +181,7 @@ export const GeneratorListEntry = (props: GeneratorProps, context) => {
         <Dropdown
           options={RandTypes}
           selected={rand_type}
-          onSelected={(e, value) =>
+          onSelected={(value) =>
             act('edit', {
               var: var_name,
               var_mod: P_DATA_GENERATOR,

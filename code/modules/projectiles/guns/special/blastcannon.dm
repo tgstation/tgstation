@@ -62,11 +62,11 @@
 	cached_target = null
 	return ..()
 
-/obj/item/gun/blastcannon/handle_atom_del(atom/A)
-	if(A == bomb)
+/obj/item/gun/blastcannon/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == bomb)
 		bomb = null
 		update_appearance()
-	return ..()
 
 /obj/item/gun/blastcannon/assume_air(datum/gas_mixture/giver)
 	qdel(giver)

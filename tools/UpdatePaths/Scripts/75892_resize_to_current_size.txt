@@ -1,0 +1,3 @@
+# In this PR, the resize variable was renamed to current_size.
+
+/mob/living/@SUBTYPES{resize = @ANY} : /mob/living/@SUBTYPES{@OLD;resize=@SKIP;current_size=@OLD:resize}

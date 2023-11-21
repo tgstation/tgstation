@@ -39,7 +39,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/item/reverse_bear_trap/process(delta_time)
+/obj/item/reverse_bear_trap/process(seconds_per_tick)
 	if(!ticking)
 		return
 	soundloop2.mid_length = max(0.5, COOLDOWN_TIMELEFT(src, kill_countdown) - 5) //beepbeepbeepbeepbeep

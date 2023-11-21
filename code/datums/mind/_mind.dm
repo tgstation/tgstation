@@ -65,7 +65,6 @@
 	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
 	var/datum/weakref/enslaved_to
 
-	var/datum/language_holder/language_holder
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 	/// has this mind ever been an AI
@@ -118,10 +117,28 @@
 	QDEL_LIST(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
-	QDEL_NULL(language_holder)
 	set_current(null)
 	return ..()
 
+/datum/mind/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["key"] = key
+	.["name"] = name
+	.["ghostname"] = ghostname
+	.["memories"] = memories
+	.["martial_art"] = martial_art
+	.["antag_datums"] = antag_datums
+	.["holy_role"] = holy_role
+	.["special_role"] = special_role
+	.["assigned_role"] = assigned_role.title
+	.["current"] = current
+
+	var/mob/enslaved_to = src.enslaved_to?.resolve()
+	.["enslaved_to"] = enslaved_to
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
 
 /datum/mind/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -138,19 +155,14 @@
 	if(new_current && QDELETED(new_current))
 		CRASH("Tried to set a mind's current var to a qdeleted mob, what the fuck")
 	if(current)
-		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(src, COMSIG_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
+		RegisterSignal(src, COMSIG_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
 	set_current(null)
-
-/datum/mind/proc/get_language_holder()
-	if(!language_holder)
-		language_holder = new (src)
-	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	set_original_character(null)
@@ -170,17 +182,29 @@
 
 	var/mob/living/old_current = current
 	if(current)
-		current.transfer_observers_to(new_character) //transfer anyone observing the old character to the new one
+		//transfer anyone observing the old character to the new one
+		current.transfer_observers_to(new_character)
+
+		// Offload all mind languages from the old holder to a temp one
+		var/datum/language_holder/empty/temp_holder = new()
+		var/datum/language_holder/old_holder = old_current.get_language_holder()
+		var/datum/language_holder/new_holder = new_character.get_language_holder()
+		// Off load mind languages to the temp holder momentarily
+		new_holder.transfer_mind_languages(temp_holder)
+		// Transfer the old holder's mind languages to the new holder
+		old_holder.transfer_mind_languages(new_holder)
+		// And finally transfer the temp holder's mind languages back to the old holder
+		temp_holder.transfer_mind_languages(old_holder)
+
 	set_current(new_character) //associate ourself with our new body
 	QDEL_NULL(antag_hud)
 	new_character.mind = src //and associate our new body with ourself
 	antag_hud = new_character.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/antagonist_hud, "combo_hud", src)
-	for(var/a in antag_datums) //Makes sure all antag datums effects are applied in the new body
-		var/datum/antagonist/A = a
-		A.on_body_transfer(old_current, current)
+	for(var/datum/antagonist/antag_datum as anything in antag_datums) //Makes sure all antag datums effects are applied in the new body
+		antag_datum.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
-		var/mob/living/carbon/C = new_character
-		C.last_mind = src
+		var/mob/living/carbon/carbon_character = new_character
+		carbon_character.last_mind = src
 	transfer_martial_arts(new_character)
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
@@ -188,7 +212,7 @@
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs
-	current.update_atom_languages()
+
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
 	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
 

@@ -13,31 +13,33 @@
 
 /datum/ai_controller/robot_customer/Destroy()
 	// clear possible datum refs
-	blackboard[BB_CUSTOMER_CURRENT_ORDER] = null
-	blackboard[BB_CUSTOMER_CUSTOMERINFO] = null
+	clear_blackboard_key(BB_CUSTOMER_CURRENT_ORDER)
+	clear_blackboard_key(BB_CUSTOMER_CUSTOMERINFO)
 	return ..()
 
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)
 	if(!istype(new_pawn, /mob/living/simple_animal/robot_customer))
 		return AI_CONTROLLER_INCOMPATIBLE
 	new_pawn.AddElement(/datum/element/relay_attackers)
-	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_GET_PULLED, PROC_REF(on_get_pulled))
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_get_punched))
 	return ..() //Run parent at end
 
 /datum/ai_controller/robot_customer/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_WAS_ATTACKED, COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_ATTACK_HAND))
+	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_WAS_ATTACKED, COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_ATTACK_HAND))
 	return ..() //Run parent at end
 
 /datum/ai_controller/robot_customer/proc/on_attackby(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	if(attending_venue.is_correct_order(I, blackboard[BB_CUSTOMER_CURRENT_ORDER]))
-		to_chat(user, span_notice("You hand [I] to [pawn]"))
+		to_chat(user, span_notice("You hand [I] to [pawn]."))
 		eat_order(I, attending_venue)
 		return COMPONENT_NO_AFTERATTACK
+	else if(!I.force)
+		INVOKE_ASYNC(src, PROC_REF(dont_want_that), I, user)
 	else
 		INVOKE_ASYNC(src, PROC_REF(warn_greytider), user)
 
@@ -46,13 +48,15 @@
 	INVOKE_ASYNC(src, PROC_REF(warn_greytider), attacker)
 
 /datum/ai_controller/robot_customer/proc/eat_order(obj/item/order_item, datum/venue/attending_venue)
-	if(!blackboard[BB_CUSTOMER_EATING])
-		blackboard[BB_CUSTOMER_EATING] = TRUE
-		attending_venue.on_get_order(pawn, order_item)
-		var/our_order = blackboard[BB_CUSTOMER_CURRENT_ORDER]
-		if(isdatum(our_order))
-			qdel(our_order)
-		blackboard[BB_CUSTOMER_CURRENT_ORDER] = null
+	if(blackboard[BB_CUSTOMER_EATING])
+		return
+
+	set_blackboard_key(BB_CUSTOMER_EATING, TRUE)
+	attending_venue.on_get_order(pawn, order_item)
+	var/our_order = blackboard[BB_CUSTOMER_CURRENT_ORDER]
+	if(isdatum(our_order))
+		qdel(our_order)
+	clear_blackboard_key(BB_CUSTOMER_CURRENT_ORDER)
 
 
 ///Called when
@@ -76,7 +80,10 @@
 	customer.resist()
 
 
-
+/datum/ai_controller/robot_customer/proc/dont_want_that(mob/living/chef, obj/item/thing)
+	var/mob/living/simple_animal/robot_customer/customer = pawn
+	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
+	customer.say(customer_data.wrong_item_line)
 
 /datum/ai_controller/robot_customer/proc/warn_greytider(mob/living/greytider)
 	var/mob/living/simple_animal/robot_customer/customer = pawn
@@ -94,7 +101,7 @@
 			return
 		if(3)
 			customer.say(customer_data.self_defense_line)
-	blackboard[BB_CUSTOMER_CURRENT_TARGET] = greytider
+	set_blackboard_key(BB_CUSTOMER_CURRENT_TARGET, greytider)
 
 	CancelActions()
 

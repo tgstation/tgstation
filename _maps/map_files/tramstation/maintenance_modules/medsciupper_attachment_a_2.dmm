@@ -6,7 +6,7 @@
 /turf/template_noop,
 /area/template_noop)
 "i" = (
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/science)
 "j" = (
@@ -23,7 +23,7 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/science)
 "m" = (
-/mob/living/simple_animal/crab{
+/mob/living/basic/crab{
 	name = "la creatura";
 	desc = "ay dios mios..."
 	},

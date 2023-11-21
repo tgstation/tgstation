@@ -37,11 +37,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	if(!id_tag)
 		id_tag = assign_random_name()
-		var/static/list/tool_screentips = list(
-			TOOL_MULTITOOL = list(
-				SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
-			)
-		)
+		var/static/list/tool_screentips
+		if(!tool_screentips)
+			tool_screentips = string_assoc_nested_list(list(
+				TOOL_MULTITOOL = list(
+					SCREENTIP_CONTEXT_LMB = "Log to link later with air sensor",
+				)
+			))
 		AddElement(/datum/element/contextual_screentip_tools, tool_screentips)
 	. = ..()
 	assign_to_area()
@@ -52,23 +54,17 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = ..()
-	if (!istype(multi_tool))
-		return .
+
+	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+		sensor.outlet_id = id_tag
+		multi_tool.set_buffer(null)
+		balloon_alert(user, "output linked to sensor")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	balloon_alert(user, "saved in buffer")
-	multi_tool.buffer = src
-	return TRUE
-
-/obj/machinery/atmospherics/components/unary/vent_pump/wrench_act(mob/living/user, obj/item/wrench)
-	. = ..()
-	if(.)
-		disconnect_chamber()
-
-///called when its either unwrenched or destroyed
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_chamber()
-	if(chamber_id != null)
-		GLOB.objects_by_id_tag -= CHAMBER_OUTPUT_FROM_ID(chamber_id)
-		chamber_id = null
+	multi_tool.set_buffer(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
@@ -76,8 +72,6 @@
 	var/area/vent_area = get_area(src)
 	if(vent_area)
 		vent_area.air_vents -= src
-
-	disconnect_chamber()
 
 	return ..()
 
@@ -177,6 +171,8 @@
 
 		if(pressure_delta > 0)
 			if(air_contents.temperature > 0)
+				if(environment_pressure >= 50 * ONE_ATMOSPHERE)
+					return FALSE
 				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -194,6 +190,8 @@
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
 		if(pressure_delta > 0 && environment.temperature > 0)
+			if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
+				return FALSE
 			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -212,7 +210,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!welder.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=1))
 		return TRUE
 	to_chat(user, span_notice("You begin welding the vent..."))
 	if(welder.use_tool(src, user, 20, volume=50))

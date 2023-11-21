@@ -4,6 +4,7 @@
  * Pretty much pokes the MC to make sure it's still alive.
  **/
 
+// See initialization order in /code/game/world.dm
 GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 
 /datum/controller/failsafe // This thing pretty much just keeps poking the master controller

@@ -6,7 +6,7 @@
 	name = "freeze cube"
 	desc = "A block of semi-clear ice treated with chemicals to behave as a throwable weapon. \
 		Somehow, it does not transfer its freezing temperatures until it comes into contact with a living creature."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "freeze_cube"
 	inhand_icon_state = "freeze_cube"
 	throwforce = 10

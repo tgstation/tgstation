@@ -45,16 +45,14 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "l" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/computer/station_alert{
 	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "m" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -67,9 +65,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "p" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -84,9 +80,7 @@
 "t" = (
 /obj/structure/table/glass,
 /obj/item/gun/energy/e_gun/mini/practice_phaser,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/recharger,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -94,18 +88,14 @@
 /obj/structure/table,
 /obj/item/folder,
 /obj/item/pen/blue,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "x" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/computer/arcade/orion_trail/kobayashi,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -116,15 +106,15 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "A" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "B" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/holofloor/hyperspace,
 /area/template_noop)
 "C" = (
@@ -143,8 +133,7 @@
 /obj/structure/rack,
 /obj/item/clothing/under/trek/engsec,
 /obj/item/clothing/under/trek/engsec,
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -160,8 +149,7 @@
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "J" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/directional/east{
 	layer = 2.9
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -172,16 +160,12 @@
 "L" = (
 /obj/structure/table/glass,
 /obj/item/gun/energy/e_gun/mini/practice_phaser,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "Q" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/folder,
 /obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -194,16 +178,14 @@
 /obj/item/clothing/under/trek/medsci,
 /obj/item/clothing/under/trek/medsci,
 /obj/item/clothing/under/trek/command,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/holofloor,
 /area/template_noop)
 "V" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/mass_driver{
 	dir = 1;
 	id = "trektorpedo2";

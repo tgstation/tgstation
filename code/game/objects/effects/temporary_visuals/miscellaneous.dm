@@ -490,11 +490,12 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	obj_flags = CAN_BE_HIT
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	var/status = 0
 	var/delay = 0
 
-/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status, rcd_upgrades)
 	. = ..()
 	status = rcd_status
 	delay = rcd_delay
@@ -504,6 +505,26 @@
 		icon_state = "rcd_end_reverse"
 	else
 		update_appearance()
+
+	if (rcd_upgrades & RCD_UPGRADE_ANTI_INTERRUPT)
+		color = list(
+			1.0, 0.5, 0.5, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.1, 0.0, 0.0, 0.0,
+			0.0, 0.0, 0.0, 1.0,
+			0.0, 0.0, 0.0, 0.0,
+		)
+
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
+
+/obj/effect/constructing_effect/update_name(updates)
+	. = ..()
+
+	if (status == RCD_DECONSTRUCT)
+		name = "deconstruction effect"
+	else
+		name = "construction effect"
 
 /obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
@@ -524,11 +545,25 @@
 	if (status == RCD_DECONSTRUCT)
 		qdel(src)
 	else
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
 		addtimer(CALLBACK(src, PROC_REF(end)), 15)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/constructing_effect/proc/attacked(mob/user)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	end()
+
+/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
+	attacked(user)
+
+/obj/effect/constructing_effect/attack_hand(mob/living/user, list/modifiers)
+	attacked(user)
 
 /obj/effect/temp_visual/electricity
 	icon_state = "electricity3"
@@ -553,6 +588,8 @@
 	var/image/modsuit_image
 	/// The person in the modsuit at the moment, really just used to remove this from their screen
 	var/datum/weakref/mod_man
+	/// The creature we're placing this on
+	var/datum/weakref/pinged_person
 	/// The icon state applied to the image created for this ping.
 	var/real_icon_state = "sonar_ping"
 
@@ -564,12 +601,15 @@
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
+	pinged_person = WEAKREF(creature)
 	add_mind(looker)
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/temp_visual/sonar_ping/Destroy()
 	var/mob/living/previous_user = mod_man?.resolve()
 	if(previous_user)
 		remove_mind(previous_user)
+	STOP_PROCESSING(SSfastprocess, src)
 	// Null so we don't shit the bed when we delete
 	modsuit_image = null
 	return ..()
@@ -581,3 +621,34 @@
 /// Remove the image from the modsuit wearer's screen
 /obj/effect/temp_visual/sonar_ping/proc/remove_mind(mob/living/looker)
 	looker?.client?.images -= modsuit_image
+
+/// Update the position of the ping while it's still up. Not sure if i need to use the full proc but just being safe
+/obj/effect/temp_visual/sonar_ping/process(seconds_per_tick)
+	var/mob/living/looker = mod_man?.resolve()
+	var/mob/living/creature = pinged_person?.resolve()
+	if(isnull(looker) || isnull(creature))
+		return PROCESS_KILL
+	modsuit_image.loc = looker.loc
+	modsuit_image.pixel_x = ((creature.x - looker.x) * 32)
+	modsuit_image.pixel_y = ((creature.y - looker.y) * 32)
+
+/obj/effect/temp_visual/block //color is white by default, set to whatever is needed
+	name = "blocking glow"
+	icon_state = "block"
+	duration = 6.7
+
+/obj/effect/temp_visual/block/Initialize(mapload, set_color)
+	if(set_color)
+		add_atom_colour(set_color, FIXED_COLOUR_PRIORITY)
+	. = ..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
+
+/obj/effect/temp_visual/crit
+	name = "critical hit"
+	icon_state = "crit"
+	duration = 15
+
+/obj/effect/temp_visual/crit/Initialize(mapload)
+	. = ..()
+	animate(src, pixel_y = pixel_y + 16, alpha = 0, time = duration)

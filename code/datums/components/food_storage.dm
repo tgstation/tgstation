@@ -18,9 +18,11 @@
 
 /datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(try_inserting_item))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(try_inserting_item))
 	RegisterSignal(parent, COMSIG_CLICK_CTRL, PROC_REF(try_removing_item))
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(consume_food_storage))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+
 
 	var/atom/food = parent
 	initial_volume = food.reagents.total_volume
@@ -28,6 +30,8 @@
 	minimum_weight_class = _minimum_weight_class
 	bad_chance_of_discovery = _bad_chance
 	good_chance_of_discovery = _good_chance
+
+	food.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/food_storage/Destroy(force, silent)
 	if(stored_item)
@@ -199,3 +203,26 @@
 	//if there's nothing else in the food, or we found nothing valid
 	stored_item = null
 	return FALSE
+
+/**
+ * Adds context sensitivy directly to the processable file for screentips
+ * Arguments:
+ * * source - refers to item that will display its screentip
+ * * context - refers to, in this case, an item that can be inserted into another item
+ * * held_item - refers to item in user's hand, typically the one that will be inserted into the food item
+ * * user - refers to user who will see the screentip when the proper context and tool are there
+ */
+
+/datum/component/food_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+	. = NONE
+
+	if(isnull(held_item) || held_item == source)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove embedded item (if any)"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item) && held_item.w_class <= WEIGHT_CLASS_SMALL && held_item != source && !IS_EDIBLE(held_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Embed item"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return .

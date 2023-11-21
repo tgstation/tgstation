@@ -13,17 +13,32 @@
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
 	box = /obj/item/storage/box/survival/syndie
+	/// Amount of TC to automatically store in this outfit's uplink.
 	var/tc = 25
+	/// Enables big voice on this outfit's headset, used for nukie leaders.
 	var/command_radio = FALSE
+	/// The type of uplink to be given on equip.
 	var/uplink_type = /obj/item/uplink/nuclear
 
 	id_trim = /datum/id_trim/chameleon/operative
+
+/datum/outfit/syndicate/plasmaman
+	name = "Syndicate Operative - Basic (Plasmaman)"
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
 	command_radio = TRUE
 
 	id_trim = /datum/id_trim/chameleon/operative/nuke_leader
+
+/datum/outfit/syndicate/leader/plasmaman
+	name = "Syndicate Leader - Basic (Plasmaman)"
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/nukie, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -40,7 +55,7 @@
 
 	if(ispath(uplink_type, /obj/item/uplink/nuclear) || tc) // /obj/item/uplink/nuclear understands 0 tc
 		var/obj/item/uplink = new uplink_type(nukie, nukie.key, tc)
-		nukie.equip_to_slot_or_del(uplink, ITEM_SLOT_BACKPACK)
+		nukie.equip_to_slot_or_del(uplink, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 
 	var/obj/item/implant/weapons_auth/weapons_implant = new/obj/item/implant/weapons_auth(nukie)
 	weapons_implant.implant(nukie)
@@ -64,6 +79,17 @@
 		/obj/item/pen/edagger = 1,
 	)
 
+/datum/outfit/syndicate/full/plasmaman
+	name = "Syndicate Operative - Full Kit (Plasmaman)"
+	back = /obj/item/mod/control/pre_equipped/nuclear/plasmaman
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_pocket = /obj/item/tank/internals/plasmaman/belt/full
+	mask = null
+
+/datum/outfit/syndicate/full/plasmaman/New()
+	backpack_contents += /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	return ..()
+
 /datum/outfit/syndicate/reinforcement
 	name = "Syndicate Operative - Reinforcement"
 	tc = 0
@@ -79,6 +105,13 @@
 		return
 	to_chat(H, span_notice("You're an agent of [faction], sent to accompany the nuclear squad on their mission. \
 		Support your allies, and remember: Down with Nanotrasen."))
+
+/datum/outfit/syndicate/reinforcement/plasmaman
+	name = "Syndicate Operative - Reinforcement (Plasmaman)"
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+	tc = 0
 
 /datum/outfit/syndicate/reinforcement/gorlex
 	name = "Syndicate Operative - Gorlex Reinforcement"

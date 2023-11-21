@@ -17,9 +17,6 @@
 	return data
 
 /datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
 	switch(action)
 		if("PRG_print")
 			if(computer) //This option should never be called if there is no printer
@@ -27,7 +24,7 @@
 								<br>
 								[GLOB.manifest ? GLOB.manifest.get_html(0) : ""]
 								"}
-				if(!computer.print_text(contents,text("crew manifest ([])", station_time_timestamp())))
+				if(!computer.print_text(contents, "crew manifest ([station_time_timestamp()])"))
 					to_chat(usr, span_notice("Printer is out of paper."))
 					return
 				else

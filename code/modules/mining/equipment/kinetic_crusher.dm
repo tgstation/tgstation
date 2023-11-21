@@ -14,7 +14,7 @@
 	throwforce = 5
 	throw_speed = 4
 	armour_penetration = 10
-	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
+	custom_materials = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT*1.15, /datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT*2.075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("smashes", "crushes", "cleaves", "chops", "pulps")
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
@@ -42,6 +42,10 @@
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
 	return ..()
+
+/obj/item/kinetic_crusher/Exited(atom/movable/gone, direction)
+	. = ..()
+	trophies -= gone
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
@@ -101,36 +105,40 @@
 			if(!QDELETED(C))
 				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
 			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
+			var/backstabbed = FALSE
+			var/combined_damage = detonation_damage
 			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = BOMB)
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-				if(!QDELETED(C))
-					C.total_damage += detonation_damage + backstab_bonus //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
-				L.apply_damage(detonation_damage + backstab_bonus, BRUTE, blocked = def_check)
+				backstabbed = TRUE
+				combined_damage += backstab_bonus
 				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
-			else
-				if(!QDELETED(C))
-					C.total_damage += detonation_damage
-				L.apply_damage(detonation_damage, BRUTE, blocked = def_check)
+
+			if(!QDELETED(C))
+				C.total_damage += combined_damage
+
+
+			SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, L, src, backstabbed)
+			L.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
 /obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target == user)
 		balloon_alert(user, "can't aim at yourself!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	fire_kinetic_blast(target, user, clickparams)
+	fire_kinetic_blast(target, user, click_parameters)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, click_parameters)
 	if(!charged)
 		return
-	var/modifiers = params2list(clickparams)
+	var/modifiers = params2list(click_parameters)
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))
 		return
@@ -208,7 +216,7 @@
 /obj/item/crusher_trophy
 	name = "tail spike"
 	desc = "A strange spike with no usage."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "tail_spike"
 	var/bonus_value = 10 //if it has a bonus effect, this is how much that effect is
 	var/denied_type = /obj/item/crusher_trophy
@@ -239,33 +247,12 @@
 
 /obj/item/crusher_trophy/proc/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	forceMove(get_turf(crusher))
-	crusher.trophies -= src
 	return TRUE
 
 /obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user
 /obj/item/crusher_trophy/proc/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user) //the projectile fired and the user
 /obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark) //the target, the mark applied, and if the target had a mark before
 /obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
-
-//goliath
-/obj/item/crusher_trophy/goliath_tentacle
-	name = "goliath tentacle"
-	desc = "A sliced-off goliath tentacle. Suitable as a trophy for a kinetic crusher."
-	icon_state = "goliath_tentacle"
-	denied_type = /obj/item/crusher_trophy/goliath_tentacle
-	bonus_value = 2
-	var/missing_health_ratio = 0.1
-	var/missing_health_desc = 10
-
-/obj/item/crusher_trophy/goliath_tentacle/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
-
-/obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
-	var/missing_health = user.maxHealth - user.health
-	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
-	missing_health *= bonus_value //multiply the remaining amount by bonus_value
-	if(missing_health > 0)
-		target.adjustBruteLoss(missing_health) //and do that much damage
 
 //watcher
 /obj/item/crusher_trophy/watcher_wing

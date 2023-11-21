@@ -92,3 +92,41 @@
 
 /datum/round_event/meteor_wave/meaty/announce(fake)
 	priority_announce("Meaty ores have been detected on collision course with the station.", "Oh crap, get the mop.", ANNOUNCER_METEORS)
+
+/datum/round_event_control/meteor_wave/dust_storm
+	name = "Major Space Dust"
+	typepath = /datum/round_event/meteor_wave/dust_storm
+	weight = 14
+	description = "The station is pelted by sand."
+	earliest_start = 15 MINUTES
+	min_wizard_trigger_potency = 4
+	max_wizard_trigger_potency = 7
+
+/datum/round_event/meteor_wave/dust_storm
+	announce_chance = 85
+	wave_name = "space dust"
+
+/datum/round_event/meteor_wave/dust_storm/announce(fake)
+	var/list/reasons = list()
+
+	reasons += "[station_name()] is passing through a debris cloud, expect minor damage \
+		to external fittings and fixtures."
+
+	reasons += "Nanotrasen Superweapons Division is testing a new prototype \
+		[pick("field","projection","nova","super-colliding","reactive")] \
+		[pick("cannon","artillery","tank","cruiser","\[REDACTED\]")], \
+		some mild debris is expected."
+
+	reasons += "A neighbouring station is throwing rocks at you. (Perhaps they've \
+		grown tired of your messages.)"
+
+	reasons += "[station_name()]'s orbit is passing through a cloud of remnants from an asteroid \
+		mining operation. Minor hull damage is to be expected."
+
+	reasons += "A large meteoroid on intercept course with [station_name()] has been demolished. \
+		Residual debris may impact the station exterior."
+
+	reasons += "[station_name()] has hit a particularly rough patch of space. \
+		Please mind any turbulence or damage from debris."
+
+	priority_announce(pick(reasons), "Collision Alert")

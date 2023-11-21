@@ -23,7 +23,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(explodable_attack))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(explodable_attack))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(detonate))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react))
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))
@@ -31,7 +31,7 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(explodable_impact))
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(explodable_bump))
 		if(isitem(parent))
-			RegisterSignals(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), PROC_REF(explodable_attack))
+			RegisterSignals(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM, COMSIG_ITEM_HIT_REACT), PROC_REF(explodable_attack))
 			if(isclothing(parent))
 				RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 				RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))

@@ -1,6 +1,6 @@
 /obj/item/keyboard_shell
 	name = "Keyboard Shell"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_small_keyboard"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"

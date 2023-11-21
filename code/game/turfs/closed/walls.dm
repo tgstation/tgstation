@@ -1,4 +1,5 @@
 #define MAX_DENT_DECALS 15
+#define LEANING_OFFSET 11
 
 /turf/closed/wall
 	name = "wall"
@@ -32,6 +33,50 @@
 	var/decon_type
 
 	var/list/dent_decals
+
+/turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
+	..()
+	if(carbon_mob != user)
+		return
+	if(carbon_mob.is_leaning == TRUE)
+		return
+	if(carbon_mob.pulledby)
+		return
+	if(!carbon_mob.density)
+		return
+	var/turf/checked_turf = get_step(carbon_mob, REVERSE_DIR(carbon_mob.dir))
+	if(checked_turf == src)
+		carbon_mob.start_leaning(src)
+
+/mob/living/carbon/proc/start_leaning(obj/wall)
+
+	switch(dir)
+		if(SOUTH)
+			pixel_y += LEANING_OFFSET
+		if(NORTH)
+			pixel_y += -LEANING_OFFSET
+		if(WEST)
+			pixel_x += LEANING_OFFSET
+		if(EAST)
+			pixel_x += -LEANING_OFFSET
+
+	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
+	visible_message(span_notice("[src] leans against \the [wall]!"), \
+						span_notice("You lean against \the [wall]!"))
+	RegisterSignals(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_leaning))
+	update_fov()
+	is_leaning = TRUE
+
+/mob/living/carbon/proc/stop_leaning()
+	SIGNAL_HANDLER
+	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE))
+	is_leaning = FALSE
+	pixel_y = base_pixel_y + body_position_pixel_x_offset
+	pixel_x = base_pixel_y + body_position_pixel_y_offset
+	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
+	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
@@ -101,21 +146,24 @@
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
 		dismantle_wall(1,1)
-		return
+		return TRUE
 
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			//SN src = null
 			var/turf/NT = ScrapeAway()
 			NT.contents_explosion(severity, target)
-			return
+			return TRUE
 		if(EXPLODE_HEAVY)
 			dismantle_wall(prob(50), TRUE)
 		if(EXPLODE_LIGHT)
 			if (prob(hardness))
 				dismantle_wall(0,1)
+
 	if(!density)
-		..()
+		return ..()
+
+	return TRUE
 
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
@@ -188,20 +236,18 @@
 
 	add_fingerprint(user)
 
-	var/turf/T = user.loc //get user's location for delay checks
-
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
+	if(try_clean(W, user) || try_wallmount(W, user) || try_decon(W, user))
 		return
 
 	return ..()
 
-/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user, turf/T)
+/turf/closed/wall/proc/try_clean(obj/item/W, mob/living/user)
 	if((user.combat_mode) || !LAZYLEN(dent_decals))
 		return FALSE
 
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(!W.tool_start_check(user, amount=0))
+		if(!W.tool_start_check(user, amount=1))
 			return FALSE
 
 		to_chat(user, span_notice("You begin fixing dents on the wall..."))
@@ -214,7 +260,7 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user, turf/T)
+/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
 	//check for wall mounted frames
 	if(istype(W, /obj/item/wallframe))
 		var/obj/item/wallframe/F = W
@@ -228,9 +274,9 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
+/turf/closed/wall/proc/try_decon(obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(!I.tool_start_check(user, amount=0))
+		if(!I.tool_start_check(user, amount=round(slicing_duration / 50)))
 			return FALSE
 
 		to_chat(user, span_notice("You begin slicing through the outer plating..."))
@@ -263,32 +309,23 @@
 /turf/closed/wall/get_dumping_location()
 	return null
 
-/turf/closed/wall/acid_act(acidpwr, acid_volume)
-	if(get_explosive_block() >= 2)
-		acidpwr = min(acidpwr, 50) //we reduce the power so strong walls never get melted.
-	return ..()
-
 /turf/closed/wall/acid_melt()
 	dismantle_wall(1)
 
 /turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 40, "cost" = 26)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 4 SECONDS, "cost" = 26)
 		if(RCD_WALLFRAME)
-			return list("mode" = RCD_WALLFRAME, "delay" = 10, "cost" = 25)
+			return list("mode" = RCD_WALLFRAME, "delay" = 1 SECONDS, "cost" = 8)
 	return FALSE
 
 /turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_WALLFRAME)
 			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
-			if(!try_wallmount(new_wallmount, user, src))
-				qdel(new_wallmount)
-				return FALSE
-			return TRUE
+			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the wall."))
 			ScrapeAway()
 			return TRUE
 	return FALSE
@@ -327,3 +364,4 @@
 	girder_type = /obj/structure/foamedmetal
 
 #undef MAX_DENT_DECALS
+#undef LEANING_OFFSET

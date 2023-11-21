@@ -149,7 +149,9 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   testOutputFile(`${dmeBaseName}.rsc`);
   const runWithWarningChecks = async (dmeFile, args) => {
     const execReturn = await Juke.exec(dmeFile, args);
-    if (options.warningsAsErrors && execReturn.combined.match(/\d+:warning: /)) {
+    const ignoredWarningCodes = options.ignoreWarningCodes ?? [];
+    const reg = ignoredWarningCodes.length > 0 ? new RegExp(`\d+:warning: (?!(${ignoredWarningCodes.join('|')}))`) : /\d+:warning: /;
+    if (options.warningsAsErrors && execReturn.combined.match(reg)) {
       Juke.logger.error(`Compile warnings treated as errors`);
       throw new Juke.ExitCode(2);
     }

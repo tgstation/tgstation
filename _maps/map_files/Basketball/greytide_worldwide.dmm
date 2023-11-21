@@ -628,7 +628,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Tc" = (
-/obj/structure/closet/mini_fridge,
+/obj/structure/closet/mini_fridge/grimy,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Tl" = (

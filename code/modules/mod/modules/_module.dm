@@ -53,13 +53,13 @@
 	if(ispath(device))
 		device = new device(src)
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
-		RegisterSignal(device, COMSIG_PARENT_QDELETING, PROC_REF(on_device_deletion))
+		RegisterSignal(device, COMSIG_QDELETING, PROC_REF(on_device_deletion))
 		RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
 	if(device)
-		UnregisterSignal(device, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(device, COMSIG_QDELETING)
 		QDEL_NULL(device)
 	return ..()
 
@@ -96,7 +96,7 @@
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
+	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE)
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
 		if(mod.selected_module && !mod.selected_module.on_deactivation(display_message = FALSE))
@@ -136,7 +136,7 @@
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
 	mod.wearer.update_clothing(mod.slot_flags)
-	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED)
+	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED, mod.wearer)
 	return TRUE
 
 /// Called when the module is used
@@ -151,7 +151,7 @@
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
 		return FALSE
-	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
+	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED, mod.wearer) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/mob, update_clothing), mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
@@ -175,18 +175,18 @@
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Called on the MODsuit's process
-/obj/item/mod/module/proc/on_process(delta_time)
+/obj/item/mod/module/proc/on_process(seconds_per_tick)
 	if(active)
-		if(!drain_power(active_power_cost * delta_time))
+		if(!drain_power(active_power_cost * seconds_per_tick))
 			on_deactivation()
 			return FALSE
-		on_active_process(delta_time)
+		on_active_process(seconds_per_tick)
 	else
-		drain_power(idle_power_cost * delta_time)
+		drain_power(idle_power_cost * seconds_per_tick)
 	return TRUE
 
 /// Called on the MODsuit's process if it is an active module
-/obj/item/mod/module/proc/on_active_process(delta_time)
+/obj/item/mod/module/proc/on_active_process(seconds_per_tick)
 	return
 
 /// Called from MODsuit's install() proc, so when the module is installed.
@@ -361,12 +361,12 @@
 		return
 	return ..()
 
-/obj/item/mod/module/anomaly_locked/on_process(delta_time)
+/obj/item/mod/module/anomaly_locked/on_process(seconds_per_tick)
 	. = ..()
 	if(!core)
 		return FALSE
 
-/obj/item/mod/module/anomaly_locked/on_active_process(delta_time)
+/obj/item/mod/module/anomaly_locked/on_active_process(seconds_per_tick)
 	if(!core)
 		return FALSE
 	return TRUE

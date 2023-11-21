@@ -4,7 +4,7 @@
 	helptext = "Will alert nearby crew if any external limbs are regenerated. Can be used while unconscious."
 	button_icon_state = "regenerate"
 	chemical_cost = 10
-	dna_cost = 0
+	dna_cost = CHANGELING_POWER_INNATE
 	req_stat = HARD_CRIT
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)

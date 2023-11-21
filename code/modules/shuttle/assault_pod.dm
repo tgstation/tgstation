@@ -54,7 +54,7 @@
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
 
-	for(var/obj/machinery/computer/shuttle/S in GLOB.machines)
+	for(var/obj/machinery/computer/shuttle/S in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/shuttle))
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.shuttle_id]"
 

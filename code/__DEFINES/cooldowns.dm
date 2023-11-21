@@ -37,6 +37,7 @@
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 #define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
 #define COOLDOWN_MECHA_MISSILE_STRIKE "mecha_missile_strike"
+#define COOLDOWN_MECHA_CABIN_SEAL "mecha_cabin_seal"
 
 //car cooldowns
 #define COOLDOWN_CAR_HONK "car_honk"
@@ -57,6 +58,9 @@
 
 // mob cooldowns
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
+
+// admin verb cooldowns
+#define COOLDOWN_INTERNET_SOUND "internet_sound"
 
 //Shared cooldowns for actions
 #define MOB_SHARED_COOLDOWN_NONE 0

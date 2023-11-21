@@ -27,7 +27,7 @@
 
 	experiment_handler = AddComponent( \
 		/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/dissection), \
+		allowed_experiments = list(/datum/experiment/autopsy), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
 		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
 	)

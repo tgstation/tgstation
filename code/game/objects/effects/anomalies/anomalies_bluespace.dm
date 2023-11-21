@@ -5,11 +5,15 @@
 	icon_state = "bluespace"
 	density = TRUE
 	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
+	///range from which we can teleport someone
+	var/teleport_range = 1
+	///Distance we can teleport someone passively
+	var/teleport_distance = 4
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
-	for(var/mob/living/M in range(1,src))
-		do_teleport(M, locate(M.x, M.y, M.z), 4, channel = TELEPORT_CHANNEL_BLUESPACE)
+	for(var/mob/living/M in range(teleport_range,src))
+		do_teleport(M, locate(M.x, M.y, M.z), teleport_distance, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/Bumped(atom/movable/AM)
 	if(isliving(AM))
@@ -66,3 +70,32 @@
 /obj/effect/anomaly/bluespace/proc/blue_effect(mob/make_sparkle)
 	make_sparkle.overlay_fullscreen("bluespace_flash", /atom/movable/screen/fullscreen/bluespace_sparkle, 1)
 	addtimer(CALLBACK(make_sparkle, TYPE_PROC_REF(/mob/, clear_fullscreen), "bluespace_flash"), 2 SECONDS)
+
+/obj/effect/anomaly/bluespace/stabilize(anchor, has_core)
+	. = ..()
+
+	teleport_range = 0 //bumping already teleports, so this just prevents people from being teleported when they don't expect it when interacting with stable bsanoms
+
+///Bigger, meaner, immortal bluespace anomaly
+/obj/effect/anomaly/bluespace/big
+	immortal = TRUE
+	teleport_range = 2
+	teleport_distance = 12
+	aSignal = null
+
+/obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+
+	transform *= 3
+
+/obj/effect/anomaly/bluespace/big/Bumped(atom/movable/bumpee)
+	if(iscarbon(bumpee))
+		var/mob/living/carbon/carbon = bumpee
+		carbon.reagents?.add_reagent(/datum/reagent/bluespace, 20)
+
+	if(!isliving(bumpee))
+		return ..()
+
+	var/mob/living/living = bumpee
+	living.apply_status_effect(/datum/status_effect/teleport_madness)
+

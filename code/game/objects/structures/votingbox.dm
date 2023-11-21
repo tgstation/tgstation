@@ -5,7 +5,7 @@
 	name = "voting box"
 	desc = "An automatic voting box."
 
-	icon = 'icons/obj/votebox.dmi'
+	icon = 'icons/obj/storage/box.dmi'
 	icon_state = "votebox_maint"
 
 	anchored = TRUE

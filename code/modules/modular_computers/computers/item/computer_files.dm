@@ -14,11 +14,10 @@
 	if(file_storing in stored_files)
 		return FALSE
 
-	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
 	file_storing.computer = src
-	stored_files.Add(file_storing)
 	used_capacity += file_storing.size
-	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDED)
+	SEND_SIGNAL(file_storing, COMSIG_COMPUTER_FILE_STORE, src)
+	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, file_storing)
 	return TRUE
 
 /**
@@ -35,15 +34,13 @@
 		return FALSE
 	if(istype(file_removing, /datum/computer_file/program))
 		var/datum/computer_file/program/program_file = file_removing
-		if(program_file.program_state != PROGRAM_STATE_KILLED)
-			program_file.kill_program(TRUE)
-		if(program_file.program_state == PROGRAM_STATE_ACTIVE)
-			active_program = null
+		program_file.kill_program()
 
-	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 	stored_files.Remove(file_removing)
 	used_capacity -= file_removing.size
-	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_FILE_DELETE, file_removing)
+	SEND_SIGNAL(file_removing, COMSIG_COMPUTER_FILE_DELETE)
+	qdel(file_removing)
 	return TRUE
 
 /**
@@ -78,14 +75,34 @@
  * If a computer disk is passed instead, it will check the disk over the computer.
  */
 /obj/item/modular_computer/proc/find_file_by_name(filename, obj/item/computer_disk/target_disk)
-	if(!filename)
+	if(!istext(filename))
 		return null
-	if(target_disk)
-		for(var/datum/computer_file/file as anything in target_disk.stored_files)
+	if(isnull(target_disk))
+		for(var/datum/computer_file/file as anything in stored_files)
 			if(file.filename == filename)
 				return file
 	else
-		for(var/datum/computer_file/file as anything in stored_files)
+		for(var/datum/computer_file/file as anything in target_disk.stored_files)
 			if(file.filename == filename)
+				return file
+	return null
+
+/**
+ * find_file_by_uid
+ *
+ * Will check all files in this computer and returns the file with the matching uid.
+ * A file's uid is always unique to them, so this proc is sometimes preferable over find_file_by_name.
+ * If a computer disk is passed instead, it will check the disk over the computer.
+ */
+/obj/item/modular_computer/proc/find_file_by_uid(uid, obj/item/computer_disk/target_disk)
+	if(!isnum(uid))
+		return null
+	if(isnull(target_disk))
+		for(var/datum/computer_file/file as anything in stored_files)
+			if(file.uid == uid)
+				return file
+	else
+		for(var/datum/computer_file/file as anything in target_disk.stored_files)
+			if(file.uid == uid)
 				return file
 	return null

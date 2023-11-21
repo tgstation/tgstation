@@ -50,10 +50,6 @@
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/engine/acid_act(acidpwr, acid_volume)
-	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
-	return ..()
-
 /turf/open/floor/engine/ex_act(severity, target)
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -75,6 +71,8 @@
 		if(EXPLODE_HEAVY)
 			if(prob(50))
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
+	return TRUE
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	..()

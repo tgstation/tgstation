@@ -2,11 +2,8 @@
 	name = "\improper Plasmaman"
 	plural_form = "Plasmamen"
 	id = SPECIES_PLASMAMAN
-	sexes = 0
+	sexes = FALSE
 	meat = /obj/item/stack/sheet/mineral/plasma
-	species_traits = list(
-		NOTRANSSTING,
-	)
 	// plasmemes get hard to wound since they only need a severe bone wound to dismember, but unlike skellies, they can't pop their bones back into place
 	inherent_traits = list(
 		TRAIT_GENELESS,
@@ -14,23 +11,21 @@
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_NOBLOOD,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_TRANSFORMATION_STING,
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/internal/lungs/plasmaman
 	mutanttongue = /obj/item/organ/internal/tongue/bone/plasmaman
-	mutantliver = /obj/item/organ/internal/liver/plasmaman
+	mutantliver = /obj/item/organ/internal/liver/bone/plasmaman
 	mutantstomach = /obj/item/organ/internal/stomach/bone/plasmaman
 	mutantappendix = null
 	mutantheart = null
-	burnmod = 1.5
 	heatmod = 1.5
-	brutemod = 1.5
-	payday_modifier = 0.75
-	breathid = "plas"
-	disliked_food = FRUIT | CLOTH
-	liked_food = VEGETABLES
+	payday_modifier = 1.0
+	breathid = GAS_PLASMA
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	species_cookie = /obj/item/reagent_containers/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
@@ -56,6 +51,13 @@
 
 	ass_image = 'icons/ass/assplasma.png'
 
+	outfit_override_registry = list(
+		/datum/outfit/syndicate = /datum/outfit/syndicate/plasmaman,
+		/datum/outfit/syndicate/full = /datum/outfit/syndicate/full/plasmaman,
+		/datum/outfit/syndicate/leader = /datum/outfit/syndicate/leader/plasmaman,
+		/datum/outfit/syndicate/reinforcement = /datum/outfit/syndicate/reinforcement/plasmaman,
+	)
+
 	/// If the bones themselves are burning clothes won't help you much
 	var/internal_fire = FALSE
 
@@ -63,7 +65,8 @@
 	. = ..()
 	C.set_safe_hunger_level()
 
-/datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
+/datum/species/plasmaman/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
+	. = ..()
 	var/atmos_sealed = TRUE
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
 		atmos_sealed = FALSE
@@ -94,10 +97,10 @@
 		if(environment?.total_moles())
 			if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
 				if(H.on_fire && H.fire_stacks > 0)
-					H.adjust_fire_stacks(-10 * delta_time)
+					H.adjust_fire_stacks(-10 * seconds_per_tick)
 			else if(!HAS_TRAIT(H, TRAIT_NOFIRE))
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
-					H.adjust_fire_stacks(0.25 * delta_time)
+					H.adjust_fire_stacks(0.25 * seconds_per_tick)
 					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message(span_danger("[H]'s body reacts with the atmosphere and bursts into flames!"),span_userdanger("Your body reacts with the atmosphere and bursts into flame!"))
 					H.ignite_mob()
@@ -113,7 +116,7 @@
 
 	H.update_fire()
 
-/datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, delta_time, times_fired, no_protection = FALSE)
+/datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, seconds_per_tick, no_protection = FALSE)
 	if(internal_fire)
 		no_protection = TRUE
 	. = ..()
@@ -134,47 +137,6 @@
 		randname += " [lastname]"
 
 	return randname
-
-/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
-	. = ..()
-	if(istype(chem, /datum/reagent/toxin/plasma) || istype(chem, /datum/reagent/toxin/hot_ice))
-		for(var/i in H.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(4 * REM * delta_time) // plasmamen use plasma to reform their bones or whatever
-		return FALSE // do normal metabolism
-
-	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		H.adjustStaminaLoss(7.5 * REM * delta_time, 0)
-		H.adjustBruteLoss(0.5 * REM * delta_time, 0)
-		if(DT_PROB(10, delta_time))
-			switch(rand(1, 3))
-				if(1)
-					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
-				if(2)
-					H.manual_emote(pick("oofs silently.", "looks like [H.p_their()] bones hurt.", "grimaces, as though [H.p_their()] bones hurt."))
-				if(3)
-					to_chat(H, span_warning("Your bones hurt!"))
-		if(chem.overdosed)
-			if(DT_PROB(2, delta_time) && iscarbon(H)) //big oof
-				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
-				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
-				if(bp)
-					playsound(H, get_sfx(SFX_DESECRATION), 50, TRUE, -1) //You just want to socialize
-					H.visible_message(span_warning("[H] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
-					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
-					bp.receive_damage(200, 0, 0) //But I don't think we should
-				else
-					to_chat(H, span_warning("Your missing arm aches from wherever you left it."))
-					H.emote("sigh")
-		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
-		return TRUE
-
-	if(istype(chem, /datum/reagent/gunpowder))
-		H.set_timed_status_effect(15 SECONDS * delta_time, /datum/status_effect/drugginess)
-		if(H.get_timed_status_effect_duration(/datum/status_effect/hallucination) / 10 < chem.volume)
-			H.adjust_hallucinations(2.5 SECONDS * delta_time)
-		// Do normal metabolism
-		return FALSE
 
 /datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
 	return pick(
@@ -240,12 +202,6 @@
 			SPECIES_PERK_ICON = "fire",
 			SPECIES_PERK_NAME = "Living Torch",
 			SPECIES_PERK_DESC = "Plasmamen instantly ignite when their body makes contact with oxygen.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "Plasma Breathing",
-			SPECIES_PERK_DESC = "Plasmamen must breathe plasma to survive. You receive a tank when you arrive.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

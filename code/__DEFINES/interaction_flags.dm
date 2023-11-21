@@ -18,6 +18,8 @@
 #define INTERACT_ATOM_NO_FINGERPRINT_INTERACT (1<<8)
 /// allows this atom to skip the adjacency check
 #define INTERACT_ATOM_ALLOW_USER_LOCATION (1<<9)
+/// ignores mobility check
+#define INTERACT_ATOM_IGNORE_MOBILITY (1<<10)
 
 /// attempt pickup on attack_hand for items
 #define INTERACT_ITEM_ATTACK_HAND_PICKUP (1<<0)

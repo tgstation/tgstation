@@ -4,6 +4,7 @@
 	name = "abandoned crate"
 	desc = "What could be inside?"
 	icon_state = "securecrate"
+	base_icon_state = "securecrate"
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
@@ -99,11 +100,13 @@
 			return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
 	if(locked)
-		boom(user)
-		return
-	return ..()
+		boom(user) // no feedback since it just explodes, thats its own feedback
+		return TRUE
+	return
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(!locked)
@@ -124,7 +127,7 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+/obj/structure/closet/crate/secure/loot/after_open(mob/living/user, force)
 	. = ..()
 	if(qdel_on_open)
 		qdel(src)
@@ -240,7 +243,7 @@
 			new /obj/item/ammo_box/foambox(src)
 		if(98)
 			for(var/i in 1 to 3)
-				new /mob/living/simple_animal/hostile/bee/toxin(src)
+				new /mob/living/basic/bee/toxin(src)
 		if(99)
 			new /obj/item/implanter/sad_trombone(src)
 		if(100)

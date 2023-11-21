@@ -68,7 +68,7 @@
 		"light_replacer",
 		"light_tube",
 		"mechfab",
-		"micro_mani",
+		"micro_servo",
 		"miniature_power_cell",
 		"newscaster_frame",
 		"oven_tray",
@@ -89,7 +89,6 @@
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
-		"receiver",
 		"recorder",
 		"rglass",
 		"roll",
@@ -165,7 +164,6 @@
 	display_name = "Mechanical Exosuits"
 	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
 	design_ids = list(
-		"mech_hydraulic_clamp",
 		"mech_recharger",
 		"mecha_tracking",
 		"mechacontrol",
@@ -179,6 +177,10 @@
 		"ripley_right_leg",
 		"ripley_torso",
 		"ripleyupgrade",
+		"mech_hydraulic_clamp",
+		"mech_radio",
+		"mech_air_tank",
+		"mech_thrusters",
 	)
 
 /datum/techweb_node/mod_basic
@@ -266,7 +268,9 @@
 		"bonesetter",
 		"cautery",
 		"circular_saw",
+		"cybernetic_ears",
 		"cybernetic_eyes",
+		"cybernetic_eyes_moth",
 		"cybernetic_heart",
 		"cybernetic_liver",
 		"cybernetic_lungs",
@@ -304,6 +308,8 @@
 		"comp_access_checker",
 		"comp_arithmetic",
 		"comp_assoc_list_pick",
+		"comp_assoc_list_remove",
+		"comp_assoc_list_set",
 		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
@@ -402,7 +408,7 @@
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/dissection/human)
+	required_experiments = list(/datum/experiment/autopsy/human)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -410,6 +416,7 @@
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
 	design_ids = list(
+		"autopsyscanner",
 		"crewpinpointer",
 		"defibrillator_compact",
 		"harvester",
@@ -423,7 +430,7 @@
 		"smoke_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/dissection/nonhuman)
+	required_experiments = list(/datum/experiment/autopsy/nonhuman)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000)
 
 /datum/techweb_node/xenoorgan_biotech
@@ -441,7 +448,18 @@
 	discount_experiments = list(
 		/datum/experiment/scanning/random/cytology/easy = 1000,
 		/datum/experiment/scanning/points/slime/hard = 5000,
-		/datum/experiment/dissection/xenomorph = 5000,
+		/datum/experiment/autopsy/xenomorph = 5000,
+	)
+
+/datum/techweb_node/morphological_theory
+	id = "morphological_theory"
+	display_name = "Anomalous Morphology"
+	description = "Use poorly understood energies to change your body."
+	prereq_ids = list("adv_biotech", "anomaly_research")
+	design_ids = list("polymorph_belt")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(
+		/datum/experiment/scanning/people/novel_organs = 5000,
 	)
 
 /datum/techweb_node/bio_process
@@ -459,8 +477,10 @@
 		"monkey_recycler",
 		"oven",
 		"processor",
+		"range", // should be in a further node, probably
 		"reagentgrinder",
 		"smartfridge",
+		"stove",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
@@ -572,7 +592,7 @@
 		"high_cell",
 		"high_micro_laser",
 		"mesons",
-		"nano_mani",
+		"nano_servo",
 		"oxygen_tank",
 		"pacman",
 		"plasma_tank",
@@ -643,7 +663,7 @@
 	description = "Finely-tooled manufacturing techniques allowing for picometer-perfect precision levels."
 	prereq_ids = list("engineering", "datatheory")
 	design_ids = list(
-		"pico_mani",
+		"pico_servo",
 		"super_matter_bin",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
@@ -663,6 +683,11 @@
 		"turbine_compressor",
 		"turbine_rotor",
 		"turbine_stator",
+		"modular_shield_generator",
+		"modular_shield_node",
+		"modular_shield_relay",
+		"modular_shield_charger",
+		"modular_shield_well",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)
@@ -706,7 +731,7 @@
 	design_ids = list(
 		"bluespace_matter_bin",
 		"bluespacebodybag",
-		"femto_mani",
+		"femto_servo",
 		"quantum_keycard",
 		"swapper",
 		"triphasic_scanning",
@@ -756,16 +781,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = 3000)
-
-/datum/techweb_node/regulated_bluespace
-	id = "regulated_bluespace"
-	display_name = "Regulated Bluespace Research"
-	description = "Bluespace technology using stable and balanced procedures. Required by galactic convention for public use."
-	prereq_ids = list("base")
-	design_ids = list(
-		"spaceship_navigation_beacon",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/unregulated_bluespace
 	id = "unregulated_bluespace"
@@ -872,7 +887,8 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"paicard",
-		"mecha_camera"
+		"mecha_camera",
+		"botnavbeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -940,6 +956,20 @@
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
 		design_ids += "borg_upgrade_disablercooler"
+
+/datum/techweb_node/cyborg_upg_serv
+	id = "cyborg_upg_serv"
+	display_name = "Cyborg Upgrades: Service"
+	description = "Service upgrades for cyborgs."
+	prereq_ids = list("adv_robotics")
+	design_ids = list(
+		"borg_upgrade_rolling_table",
+		"borg_upgrade_condiment_synthesizer",
+		"borg_upgrade_silicon_knife",
+		"borg_upgrade_service_apparatus",
+		"borg_upgrade_service_cookbook",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
 /datum/techweb_node/cyborg_upg_engiminer
 	id = "cyborg_upg_engiminer"
@@ -1118,6 +1148,7 @@
 		"cargo",
 		"cargorequest",
 		"comconsole",
+		"bankmachine",
 		"crewconsole",
 		"idcard",
 		"libraryconsole",
@@ -1192,6 +1223,7 @@
 		"s_server",
 		"s_transmitter",
 		"s_treatment",
+		"gigabeacon",
 	)
 
 /datum/techweb_node/integrated_hud
@@ -1230,6 +1262,7 @@
 	prereq_ids = list("biotech")
 	design_ids = list(
 		"dna_disk",
+		"dnainfuser",
 		"dnascanner",
 		"scan_console",
 	)
@@ -1269,8 +1302,9 @@
 	description = "We have the technology to rebuild him."
 	prereq_ids = list("biotech")
 	design_ids = list(
-		"cybernetic_ears",
+		"cybernetic_ears_u",
 		"cybernetic_eyes_improved",
+		"cybernetic_eyes_improved_moth",
 		"cybernetic_heart_tier2",
 		"cybernetic_liver_tier2",
 		"cybernetic_lungs_tier2",
@@ -1289,7 +1323,12 @@
 	description = "We have the technology to upgrade him."
 	prereq_ids = list("adv_biotech", "cyber_organs")
 	design_ids = list(
-		"cybernetic_ears_u",
+		"cybernetic_ears_whisper",
+		"cybernetic_ears_xray",
+		"ci-gloweyes",
+		"ci-welding",
+		"ci-gloweyes-moth",
+		"ci-welding-moth",
 		"cybernetic_heart_tier3",
 		"cybernetic_liver_tier3",
 		"cybernetic_lungs_tier3",
@@ -1310,11 +1349,9 @@
 	design_ids = list(
 		"ci-breather",
 		"ci-diaghud",
-		"ci-gloweyes",
 		"ci-medhud",
 		"ci-nutriment",
 		"ci-sechud",
-		"ci-welding",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1352,6 +1389,8 @@
 		"ci-thermals",
 		"ci-thrusters",
 		"ci-xray",
+		"ci-thermals-moth",
+		"ci-xray-moth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1476,6 +1515,8 @@
 	description = "Unlocks new designs that improve rapid devices."
 	prereq_ids = list("adv_engi")
 	design_ids = list(
+		"rcd_upgrade_anti_interrupt",
+		"rcd_upgrade_cooling",
 		"rcd_upgrade_frames",
 		"rcd_upgrade_furnishing",
 		"rcd_upgrade_simple_circuits",
@@ -1611,6 +1652,7 @@
 		"mod_clamp",
 		"mod_drill",
 		"mod_orebag",
+		"modlink_scryer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1644,6 +1686,12 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
+/datum/techweb_node/mod_advanced_engineering/New()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA)) //we'll really need the rad protection modsuit module
+		starting_node = TRUE
+
+	return ..()
+
 /datum/techweb_node/mod_medical
 	id = "mod_medical"
 	display_name = "Medical Modular Suits"
@@ -1670,6 +1718,7 @@
 		"mod_defib",
 		"mod_threadripper",
 		"mod_surgicalprocessor",
+		"mod_statusreadout",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
@@ -1862,7 +1911,6 @@
 	prereq_ids = list("adv_mecha")
 	design_ids = list(
 		"mech_rcd",
-		"mech_thrusters",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -2044,6 +2092,7 @@
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
 	boost_item_paths = list(
+		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
@@ -2153,6 +2202,9 @@
 		"donksoft_refill",
 		"donksofttoyvendor",
 		"largecrossbow",
+		"mag_autorifle",
+		"mag_autorifle_ap",
+		"mag_autorifle_ic",
 		"rapidsyringe",
 		"suppressor",
 		"super_pointy_tape",
@@ -2276,10 +2328,13 @@
 /datum/techweb_node/mod_experimental
 	id = "mod_experimental"
 	display_name = "Experimental Modular Suits"
-	description = "Applications of experimentality when creating MODsuits has created these..."
+	description = "Applications of experimentality when creating MODsuits have created these..."
 	prereq_ids = list("base")
 	design_ids = list(
 		"mod_disposal",
+		"mod_joint_torsion",
+		"mod_recycler",
+		"mod_shooting",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE
@@ -2291,7 +2346,9 @@
 	description = "Cutting edge fishing advancements."
 	prereq_ids = list("base")
 	design_ids = list(
-		"fishing_rod_tech"
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"fish_analyzer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

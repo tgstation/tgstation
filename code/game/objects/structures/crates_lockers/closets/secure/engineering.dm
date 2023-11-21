@@ -13,7 +13,7 @@
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/door_remote/chief_engineer(src)
-	new /obj/item/pipe_dispenser(src)
+
 	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
 	new /obj/item/extinguisher/advanced(src)
 	new /obj/item/storage/photo_album/ce(src)
@@ -24,6 +24,7 @@
 
 	// Traitor steal objective
 	new /obj/item/areaeditor/blueprints(src)
+	new /obj/item/pipe_dispenser(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
@@ -34,12 +35,17 @@
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
 	var/static/items_inside = list(
-		/obj/item/clothing/gloves/color/yellow = 2,
 		/obj/item/inducer = 2,
 		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/electronics/apc = 3,
 		/obj/item/multitool = 3)
 	generate_items_inside(items_inside,src)
+
+/obj/structure/closet/secure_closet/engineering_electrical/populate_contents_immediate()
+	. = ..()
+
+	new /obj/item/clothing/gloves/color/yellow(src)
+	new /obj/item/clothing/gloves/color/yellow(src)
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
@@ -79,7 +85,7 @@
 /obj/structure/closet/secure_closet/atmospherics/PopulateContents()
 	..()
 	new /obj/item/radio/headset/headset_eng(src)
-	new /obj/item/pipe_dispenser(src)
+
 	new /obj/item/storage/toolbox/mechanical(src)
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/holosign_creator/atmos(src)
@@ -90,3 +96,8 @@
 	new /obj/item/clothing/head/utility/hardhat/welding/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)
+
+/obj/structure/closet/secure_closet/atmospherics/populate_contents_immediate()
+	. = ..()
+
+	new /obj/item/pipe_dispenser(src)

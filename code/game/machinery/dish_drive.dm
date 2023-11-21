@@ -3,23 +3,28 @@
 	desc = "A culinary marvel that uses matter-to-energy conversion to store dishes and shards. Convenient! \
 	Additional features include a vacuum function to suck in nearby dishes, and an automatic transfer beam that empties its contents into nearby disposal bins every now and then. \
 	Or you can just drop your plates on the floor, like civilized folk."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "synthesizer"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.04
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
 	var/static/list/collectable_items = list(/obj/item/trash/waffles,
-		/obj/item/trash/tray,
+		/obj/item/broken_bottle,
+		/obj/item/kitchen/fork,
+		/obj/item/plate,
+		/obj/item/plate_shard,
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/glass/drinkingglass,
-		/obj/item/kitchen/fork,
 		/obj/item/shard,
-		/obj/item/broken_bottle)
-	var/static/list/disposable_items = list(/obj/item/trash/waffles,
 		/obj/item/trash/tray,
+	)
+	var/static/list/disposable_items = list(/obj/item/trash/waffles,
+		/obj/item/broken_bottle,
+		/obj/item/plate_shard,
 		/obj/item/shard,
-		/obj/item/broken_bottle)
+		/obj/item/trash/tray,
+	)
 	var/time_since_dishes = 0
 	var/suction_enabled = TRUE
 	var/transmit_enabled = TRUE
@@ -87,7 +92,7 @@
 	if(!suction_enabled)
 		return
 	for(var/obj/item/I in view(4, src))
-		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume))
+		if(is_type_in_list(I, collectable_items) && I.loc != src && (!I.reagents || !I.reagents.total_volume) && (I.contents.len < 1))
 			if(I.Adjacent(src))
 				LAZYADD(dish_drive_contents, I)
 				visible_message(span_notice("[src] beams up [I]!"))
@@ -133,5 +138,7 @@
 		bin.update_appearance()
 		flick("synthesizer_beam", src)
 	else
-		visible_message(span_notice("There are no disposable items in [src]!"))
+		if(manual)
+			visible_message(span_notice("There are no disposable items in [src]!"))
+		return
 	time_since_dishes = world.time + 600

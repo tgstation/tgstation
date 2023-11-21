@@ -20,6 +20,7 @@
 	gender = PLURAL
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
+	item_flags = SKIP_FANTASY_ON_SPAWN
 	/// A list to all recipies this stack item can create.
 	var/list/datum/stack_recipe/recipes
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
@@ -120,6 +121,9 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
+		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
+
 /** Sets the amount of materials per unit for this stack.
  *
  * Arguments:
@@ -149,7 +153,7 @@
 
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
-		to_chat(usr, span_warning("[src] is electronically synthesized in your chassis and can't be ground up!"))
+		to_chat(usr, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
 		return
 	return TRUE
 
@@ -182,10 +186,6 @@
 /obj/item/stack/examine(mob/user)
 	. = ..()
 	if(is_cyborg)
-		if(singular_name)
-			. += "There is enough energy for [get_amount()] [singular_name]\s."
-		else
-			. += "There is enough energy for [get_amount()]."
 		return
 	if(singular_name)
 		if(get_amount()>1)
@@ -390,8 +390,10 @@
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
-		covered_turf.PlaceOnTop(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		var/turf/created_turf = covered_turf.PlaceOnTop(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
+		if(recipe.applies_mats && LAZYLEN(mats_per_unit))
+			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
 		created = new recipe.result_type(builder.drop_location())
@@ -446,16 +448,14 @@
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
-	// If we're making a window, we have some special snowflake window checks to do.
-	if(ispath(recipe.result_type, /obj/structure/window))
-		var/obj/structure/window/result_path = recipe.result_type
-		if(!valid_window_location(dest_turf, builder.dir, is_fulltile = initial(result_path.fulltile)))
-			builder.balloon_alert(builder, "won't fit here!")
-			return FALSE
-
 	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
 		builder.balloon_alert(builder, "already one here!")
 		return FALSE
+
+	if(recipe.check_direction)
+		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = recipe.is_fulltile))
+			builder.balloon_alert(builder, "won't fit here!")
+			return FALSE
 
 	if(recipe.on_tram)
 		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
@@ -471,16 +471,9 @@
 			builder.balloon_alert(builder, "must be made on solid ground!")
 			return FALSE
 
+	if(recipe.check_density)
 		for(var/obj/object in dest_turf)
-			if(istype(object, /obj/structure/grille))
-				continue
-			if(istype(object, /obj/structure/table))
-				continue
-			if(istype(object, /obj/structure/window))
-				var/obj/structure/window/window_structure = object
-				if(!window_structure.fulltile)
-					continue
-			if(object.density || NO_BUILD & object.obj_flags)
+			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 				builder.balloon_alert(builder, "something is in the way!")
 				return FALSE
 
@@ -570,7 +563,8 @@
  * - [inhand][boolean]: Whether or not the stack to check should act like it's in a mob's hand.
  */
 /obj/item/stack/proc/can_merge(obj/item/stack/check, inhand = FALSE)
-	if(!istype(check, merge_type))
+	// We don't only use istype here, since that will match subtypes, and stack things that shouldn't stack
+	if(!istype(check, merge_type) || check.merge_type != merge_type)
 		return FALSE
 	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
 		return FALSE
@@ -582,6 +576,8 @@
 		var/obj/machinery/machine = loc
 		if(!(src in machine.component_parts) || !(check in machine.component_parts))
 			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_STACK_CAN_MERGE, check, inhand) & CANCEL_STACK_MERGE)
+		return FALSE
 	return TRUE
 
 /**

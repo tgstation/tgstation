@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	spell.projectile_type = spell_type
 	spell.button_icon_state = initial(spell_type.icon_state)
 	spell.Grant(src)
-	ai_controller.blackboard[BB_MAGICARP_SPELL] = WEAKREF(spell)
+	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL, spell)
 	assign_spell_ai(spell_type)
 
 /// If you have certain spells, use a different targetting datum
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 		/obj/projectile/magic/resurrection = MAGICARP_SPELL_CORPSES,
 	)
 
-	ai_controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING] = spell_special_targetting[spell_type]
+	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL_SPECIAL_TARGETTING, spell_special_targetting[spell_type])
 
 /// Shoot when you click away from you
 /mob/living/basic/carp/magic/RangedAttack(atom/atom_target, modifiers)
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	chaos_bolt.permitted_projectiles = allowed_projectile_types
 	chaos_bolt.Grant(src)
 	spell = chaos_bolt
-	ai_controller.blackboard[BB_MAGICARP_SPELL] = spell
+	ai_controller.set_blackboard_key(BB_MAGICARP_SPELL, spell)
 	RegisterSignal(spell, COMSIG_ACTION_TRIGGER, PROC_REF(apply_colour))
 
 /// Has a more limited spell pool but can appear from gold slime cores

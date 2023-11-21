@@ -85,6 +85,7 @@
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
+		/datum/heretic_knowledge/entropy_pulse,
 	)
 	cost = 1
 	route = PATH_RUST
@@ -117,7 +118,7 @@
  * Gradually heals the heretic ([source]) on rust,
  * including baton knockdown and stamina damage.
  */
-/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)
@@ -134,7 +135,7 @@
 	source.AdjustAllImmobility(-0.5 SECONDS)
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * delta_time
+		source.blood_volume += 2.5 * seconds_per_tick
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
@@ -155,7 +156,10 @@
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
-	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/area_conversion,
+		/datum/heretic_knowledge/rifle,
+	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 	route = PATH_RUST
@@ -195,9 +199,9 @@
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
-		/datum/heretic_knowledge/rifle,
 		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
+		/datum/heretic_knowledge/spell/rust_charge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
@@ -284,7 +288,7 @@
  *
  * Gradually heals the heretic ([source]) on rust.
  */
-/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)
@@ -335,8 +339,8 @@
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/datum/rust_spread/process(delta_time)
-	var/spread_amount = round(spread_per_sec * delta_time)
+/datum/rust_spread/process(seconds_per_tick)
+	var/spread_amount = round(spread_per_sec * seconds_per_tick)
 
 	if(length(edge_turfs) < spread_amount)
 		compile_turfs()

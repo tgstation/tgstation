@@ -5,7 +5,7 @@
 	name = "plant graft"
 	desc = "A carefully cut graft off of a freshly grown plant. Can be grafted onto a plant in order to share unique plant traits onto a plant."
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "graft_plant"
 	worn_icon_state = "graft"
 	attack_verb_continuous = list("plants", "vegitizes", "crops", "reaps", "farms")

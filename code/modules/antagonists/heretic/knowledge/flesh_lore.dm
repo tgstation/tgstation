@@ -253,6 +253,7 @@
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/raw_prophet
 	cost = 1
 	route = PATH_FLESH
+	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
 
 /datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
@@ -268,7 +269,7 @@
 
 	var/mob/living/carbon/carbon_target = target
 	var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-	var/datum/wound/slash/severe/crit_wound = new()
+	var/datum/wound/slash/flesh/severe/crit_wound = new()
 	crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
 
 /datum/heretic_knowledge/summon/stalker
@@ -292,6 +293,7 @@
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/stalker
 	cost = 1
 	route = PATH_FLESH
+	poll_ignore_define = POLL_IGNORE_STALKER
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"

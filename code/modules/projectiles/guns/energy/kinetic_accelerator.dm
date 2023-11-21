@@ -16,6 +16,14 @@
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
+	. = ..()
+	max_mod_capacity = modify_fantasy_variable("max_mod_capacity", max_mod_capacity, bonus * 10)
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/remove_fantasy_bonuses(bonus)
+	max_mod_capacity = reset_fantasy_variable("max_mod_capacity", max_mod_capacity)
+	return ..()
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 
@@ -223,7 +231,7 @@
 /obj/item/borg/upgrade/modkit
 	name = "kinetic accelerator modification kit"
 	desc = "An upgrade for kinetic accelerators."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "modkit"
 	w_class = WEIGHT_CLASS_SMALL
 	require_model = TRUE
@@ -342,7 +350,7 @@
 	name = "minebot cooldown decrease"
 	desc = "Decreases the cooldown of a kinetic accelerator. Only rated for minebot use."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/minebot
 	modifier = 10
 	cost = 0
@@ -586,5 +594,13 @@
 	name = "adjustable tracer bolts"
 	desc = "Causes kinetic accelerator bolts to have an adjustable-colored tracer trail and explosion. Use in-hand to change color."
 
-/obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
-	bolt_color = input(user,"","Choose Color",bolt_color) as color|null
+/obj/item/borg/upgrade/modkit/tracer/adjustable/interact(mob/user)
+	..()
+	choose_bolt_color(user)
+
+/obj/item/borg/upgrade/modkit/tracer/adjustable/proc/choose_bolt_color(mob/user)
+	set waitfor = FALSE
+
+	var/new_color = input(user,"","Choose Color",bolt_color) as color|null
+	bolt_color = new_color || bolt_color
+

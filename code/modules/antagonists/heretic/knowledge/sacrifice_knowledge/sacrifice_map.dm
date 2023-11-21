@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 /obj/structure/no_effect_signpost
 	name = "signpost"
 	desc = "Won't somebody give me a sign?"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "signpost"
 	anchored = TRUE
 	density = TRUE

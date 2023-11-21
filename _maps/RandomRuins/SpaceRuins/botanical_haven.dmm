@@ -1,0 +1,663 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"c" = (
+/obj/structure/flora/grass/both/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"d" = (
+/obj/structure/water_source/puddle,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"e" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"g" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"h" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"i" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/bottle/nutrient/ez{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/spray/pestspray{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"j" = (
+/turf/closed/wall/rock,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"k" = (
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner,
+/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+	dir = 1
+	},
+/turf/open/floor/iron/terracotta/small,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"m" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"o" = (
+/turf/closed/mineral/asteroid,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"p" = (
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"r" = (
+/obj/structure/flora/bush/snow/style_random,
+/obj/machinery/light/warm/directional/west,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"s" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"w" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"x" = (
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"y" = (
+/obj/item/cultivator/rake{
+	pixel_x = 6
+	},
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"z" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"A" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/light/red/dim/directional/north,
+/obj/structure/closet/crate/hydroponics,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/plant_analyzer,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"B" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"C" = (
+/obj/structure/flora/grass/green/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"D" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"G" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"H" = (
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"I" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"J" = (
+/obj/structure/flora/tree/jungle/style_6,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"K" = (
+/obj/structure/flora/grass/green/style_random,
+/obj/effect/spawner/random/decoration/flower,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"L" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/end{
+	dir = 8
+	},
+/turf/open/floor/iron/terracotta/small,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"M" = (
+/obj/structure/table/glass,
+/obj/effect/spawner/random/food_or_drink/seed_rare,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"N" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/watering_can/wood{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_x = 20;
+	pixel_y = 11
+	},
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"O" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/end{
+	dir = 4
+	},
+/turf/open/floor/iron/terracotta/small,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"P" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"Q" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"R" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"T" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"U" = (
+/obj/effect/turf_decal/stripes/asteroid/corner,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/red/dim/directional/south,
+/obj/item/kirbyplants/fern,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"V" = (
+/obj/structure/flora/bush/snow/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"W" = (
+/obj/effect/turf_decal/siding/thinplating_new/terracotta,
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/thinplating_new/terracotta{
+	dir = 1
+	},
+/turf/open/floor/iron/terracotta/small,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"Y" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+"Z" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light/warm/directional/east,
+/turf/open/misc/grass,
+/area/ruin/space/has_grav/powered/botanical_haven)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+o
+o
+o
+o
+o
+D
+r
+c
+D
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+o
+o
+o
+x
+c
+z
+T
+N
+s
+o
+j
+j
+m
+G
+o
+R
+R
+R
+a
+a
+"}
+(8,1,1) = {"
+a
+o
+o
+T
+D
+t
+C
+Y
+M
+C
+L
+G
+Q
+U
+G
+o
+R
+o
+R
+R
+a
+"}
+(9,1,1) = {"
+a
+o
+o
+x
+K
+x
+J
+x
+t
+x
+k
+w
+h
+B
+P
+R
+R
+o
+o
+o
+R
+"}
+(10,1,1) = {"
+a
+o
+o
+z
+x
+Y
+t
+Y
+V
+x
+W
+G
+p
+H
+G
+R
+R
+R
+o
+o
+R
+"}
+(11,1,1) = {"
+a
+o
+o
+o
+T
+z
+D
+d
+x
+C
+O
+G
+A
+R
+m
+o
+R
+R
+o
+R
+R
+"}
+(12,1,1) = {"
+a
+o
+o
+o
+o
+i
+V
+y
+D
+z
+o
+j
+R
+R
+j
+o
+b
+R
+R
+R
+a
+"}
+(13,1,1) = {"
+a
+a
+o
+o
+o
+o
+Z
+e
+g
+o
+o
+o
+R
+I
+b
+o
+o
+a
+R
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+j
+R
+R
+R
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+o
+o
+o
+o
+o
+o
+a
+a
+a
+a
+a
+a
+a
+a
+"}

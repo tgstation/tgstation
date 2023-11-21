@@ -145,7 +145,7 @@
 	name = "Pig in a Blanket"
 	reqs = list(
 		/obj/item/food/bun = 1,
-		/obj/item/food/butter = 1,
+		/obj/item/food/butterslice = 1,
 		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/pigblanket
@@ -294,4 +294,25 @@
 		/datum/reagent/consumable/ketchup = 10,
 	)
 	result = /obj/item/food/raw_meatloaf
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/sweet_and_sour_meatballs
+	name = "Sweet and sour meatballs"
+	reqs = list(
+		/obj/item/food/meatball = 3,
+		/obj/item/food/pineappleslice = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/datum/reagent/consumable/sugar = 5,
+	)
+	result = /obj/item/food/sweet_and_sour_meatballs
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/pineapple_skewer
+	name = "Pineapple skewer"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/food/pineappleslice = 2,
+		/obj/item/food/meat/cutlet = 2,
+	)
+	result = /obj/item/food/kebab/pineapple_skewer
 	category = CAT_MEAT

@@ -24,12 +24,20 @@
 	src.use_large_steam_sprite = use_large_steam_sprite
 
 /datum/component/grillable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED_ON, PROC_REF(on_grill_start))
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED, PROC_REF(on_grill_placed))
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_ON, PROC_REF(on_grill_turned_on))
+	RegisterSignal(parent, COMSIG_ITEM_GRILL_TURNED_OFF, PROC_REF(on_grill_turned_off))
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(on_grill))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/grillable/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_GRILL_PLACED_ON, COMSIG_ITEM_GRILL_PROCESS, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(
+		COMSIG_ATOM_EXAMINE,
+		COMSIG_ITEM_GRILL_TURNED_ON,
+		COMSIG_ITEM_GRILL_TURNED_OFF,
+		COMSIG_ITEM_GRILL_PROCESS,
+		COMSIG_ITEM_GRILL_PLACED,
+	))
 
 // Inherit the new values passed to the component
 /datum/component/grillable/InheritComponent(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)
@@ -44,26 +52,36 @@
 	if(use_large_steam_sprite)
 		src.use_large_steam_sprite = use_large_steam_sprite
 
-/// Signal proc for [COMSIG_ITEM_GRILL_PLACED_ON], starts the grilling process.
-/datum/component/grillable/proc/on_grill_start(datum/source, mob/griller)
+/// Signal proc for [COMSIG_ITEM_GRILL_PLACED], item is placed on the grill.
+/datum/component/grillable/proc/on_grill_placed(datum/source, mob/griller)
 	SIGNAL_HANDLER
 
 	if(griller && griller.mind)
 		who_placed_us = REF(griller.mind)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+
+/// Signal proc for [COMSIG_ITEM_GRILL_TURNED_ON], starts the grilling process.
+/datum/component/grillable/proc/on_grill_turned_on(datum/source)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_grilled_item_overlay))
 
 	var/atom/atom_parent = parent
 	atom_parent.update_appearance()
 
+/// Signal proc for [COMSIG_ITEM_GRILL_TURNED_OFF], stops the grilling process.
+/datum/component/grillable/proc/on_grill_turned_off(datum/source)
+	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance()
+
 ///Ran every time an item is grilled by something
-/datum/component/grillable/proc/on_grill(datum/source, atom/used_grill, delta_time = 1)
+/datum/component/grillable/proc/on_grill(datum/source, atom/used_grill, seconds_per_tick = 1)
 	SIGNAL_HANDLER
 
 	. = COMPONENT_HANDLED_GRILLING
 
-	current_cook_time += delta_time * 10 //turn it into ds
+	current_cook_time += seconds_per_tick * 10 //turn it into ds
 	if(current_cook_time >= required_cook_time)
 		finish_grilling(used_grill)
 
@@ -77,12 +95,13 @@
 		grilled_result = new cook_result(original_object.loc, stack_parent.amount)
 
 	else
-		grilled_result = new cook_result(original_object.loc)
+		grilled_result = new cook_result(original_object.loc, no_base_reagents = TRUE)
 		if(original_object.custom_materials)
 			grilled_result.set_custom_materials(original_object.custom_materials)
 
 	if(IS_EDIBLE(grilled_result))
 		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
+		original_object.reagents?.trans_to(grilled_result, original_object.reagents.total_volume)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	if(who_placed_us)

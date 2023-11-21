@@ -146,6 +146,14 @@ export const backendMiddleware = (store) => {
       globalEvents.emit('byond/mouseup');
     }
 
+    if (type === 'byond/ctrldown') {
+      globalEvents.emit('byond/ctrldown');
+    }
+
+    if (type === 'byond/ctrlup') {
+      globalEvents.emit('byond/ctrlup');
+    }
+
     if (type === 'backend/suspendStart' && !suspendInterval) {
       logger.log(`suspending (${Byond.windowId})`);
       // Keep sending suspend messages until it succeeds.

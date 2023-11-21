@@ -16,6 +16,7 @@ export const JOB2ICON = {
   'Chemist': 'prescription-bottle',
   'Chief Engineer': 'user-astronaut',
   'Chief Medical Officer': 'user-md',
+  'Coroner': 'skull',
   'Clown': 'face-grin-tears',
   'Cook': 'utensils',
   'Curator': 'book',

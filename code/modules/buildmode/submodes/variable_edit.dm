@@ -9,12 +9,12 @@
 	valueholder = null
 	return ..()
 
-/datum/buildmode_mode/varedit/show_help(client/c)
-	to_chat(c, span_notice("***********************************************************"))
-	to_chat(c, span_notice("Right Mouse Button on buildmode button = Select var(type) & value"))
-	to_chat(c, span_notice("Left Mouse Button on turf/obj/mob      = Set var(type) & value"))
-	to_chat(c, span_notice("Right Mouse Button on turf/obj/mob     = Reset var's value"))
-	to_chat(c, span_notice("***********************************************************"))
+/datum/buildmode_mode/varedit/show_help(client/builder)
+	to_chat(builder, span_purple(examine_block(
+		"[span_bold("Select var(type) & value")] -> Right Mouse Button on buildmode button\n\
+		[span_bold("Set var(type) & value")] -> Left Mouse Button on turf/obj/mob\n\
+		[span_bold("Reset var's value")] -> Right Mouse Button on turf/obj/mob"))
+	)
 
 /datum/buildmode_mode/varedit/Reset()
 	. = ..()

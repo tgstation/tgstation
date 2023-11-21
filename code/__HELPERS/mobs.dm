@@ -182,6 +182,10 @@ GLOBAL_LIST_INIT(skin_tones, sort_list(list(
 	"asian2",
 	"arab",
 	"indian",
+	"mixed1",
+	"mixed2",
+	"mixed3",
+	"mixed4",
 	"african1",
 	"african2"
 	)))
@@ -199,6 +203,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	"indian" = "Brown",
 	"latino" = "Light beige",
 	"mediterranean" = "Olive",
+	"mixed1" = "Chestnut",
+	"mixed2" = "Walnut",
+	"mixed3" = "Coffee",
+	"mixed4" = "Macadamia",
 ))
 
 /// An assoc list of species IDs to type paths
@@ -312,8 +320,20 @@ GLOBAL_LIST_EMPTY(species_list)
 		progbar.end_progress()
 
 	if(interaction_key)
+		var/reduced_interaction_count = (LAZYACCESS(user.do_afters, interaction_key) || 0) - 1
+		if(reduced_interaction_count > 0) // Not done yet!
+			LAZYSET(user.do_afters, interaction_key, reduced_interaction_count)
+			return
+		// all out, let's clear er out fully
 		LAZYREMOVE(user.do_afters, interaction_key)
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_ENDED)
+
+/// Returns the total amount of do_afters this mob is taking part in
+/mob/proc/do_after_count()
+	var/count = 0
+	for(var/key in do_afters)
+		count += do_afters[key]
+	return count
 
 /proc/is_species(A, species_datum)
 	. = FALSE

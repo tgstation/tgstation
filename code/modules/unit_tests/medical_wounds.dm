@@ -12,10 +12,10 @@
 	var/i = 1
 	var/list/iter_test_wound_list
 
-	for(iter_test_wound_list in list(list(/datum/wound/blunt/moderate, /datum/wound/blunt/severe, /datum/wound/blunt/critical),\
-										list(/datum/wound/slash/moderate, /datum/wound/slash/severe, /datum/wound/slash/critical),\
-										list(/datum/wound/pierce/moderate, /datum/wound/pierce/severe, /datum/wound/pierce/critical),\
-										list(/datum/wound/burn/moderate, /datum/wound/burn/severe, /datum/wound/burn/critical)))
+	for(iter_test_wound_list in list(list(/datum/wound/blunt/bone/moderate, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/critical),\
+										list(/datum/wound/slash/flesh/moderate, /datum/wound/slash/flesh/severe, /datum/wound/slash/flesh/critical),\
+										list(/datum/wound/pierce/bleed/moderate, /datum/wound/pierce/bleed/severe, /datum/wound/pierce/bleed/critical),\
+										list(/datum/wound/burn/flesh/moderate, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/critical)))
 
 		TEST_ASSERT_EQUAL(length(victim.all_wounds), 0, "Patient is somehow wounded before test")
 		var/datum/wound/iter_test_wound
@@ -52,10 +52,10 @@
 	var/list/iter_test_wound_list
 	tested_part.biological_state &= ~BIO_FLESH // take away the base limb's flesh (ouchie!) ((not actually ouchie, this just affects their wounds and dismemberment handling))
 
-	for(iter_test_wound_list in list(list(/datum/wound/blunt/moderate, /datum/wound/blunt/severe, /datum/wound/blunt/critical),\
-										list(/datum/wound/slash/moderate, /datum/wound/slash/severe, /datum/wound/slash/critical),\
-										list(/datum/wound/pierce/moderate, /datum/wound/pierce/severe, /datum/wound/pierce/critical),\
-										list(/datum/wound/burn/moderate, /datum/wound/burn/severe, /datum/wound/burn/critical)))
+	for(iter_test_wound_list in list(list(/datum/wound/blunt/bone/moderate, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/critical),\
+										list(/datum/wound/slash/flesh/moderate, /datum/wound/slash/flesh/severe, /datum/wound/slash/flesh/critical),\
+										list(/datum/wound/pierce/bleed/moderate, /datum/wound/pierce/bleed/severe, /datum/wound/pierce/bleed/critical),\
+										list(/datum/wound/burn/flesh/moderate, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/critical)))
 
 		TEST_ASSERT_EQUAL(length(victim.all_wounds), 0, "Patient is somehow wounded before test")
 		var/datum/wound/iter_test_wound
@@ -69,13 +69,15 @@
 				tested_part.receive_damage(0, WOUND_MINIMUM_DAMAGE, wound_bonus = threshold, sharpness=sharps[i])
 
 			// so if we just tried to deal a flesh wound, make sure we didn't actually suffer it. We may have suffered a bone wound instead, but we just want to make sure we don't have a flesh wound
-			if(initial(iter_test_wound.wound_flags) & FLESH_WOUND)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iter_test_wound]
+			if (pregen_data.required_limb_biostate & BIO_FLESH)
 				if(!length(victim.all_wounds)) // not having a wound is good news
 					continue
 				else // we have to check that it's actually a bone wound and not the intended wound type
 					TEST_ASSERT_EQUAL(length(victim.all_wounds), 1, "Patient has more than one wound when only one is expected. Severity: [initial(iter_test_wound.severity)]")
 					var/datum/wound/actual_wound = victim.all_wounds[1]
-					TEST_ASSERT((actual_wound.wound_flags & ~FLESH_WOUND), "Limb has flesh wound despite no BIO_FLESH biological_state, expected either no wound or bone wound. Offending wound: [actual_wound]")
+					var/datum/wound_pregen_data/actual_pregen_data = GLOB.all_wound_pregen_data[actual_wound.type]
+					TEST_ASSERT((actual_pregen_data.required_limb_biostate & ~BIO_FLESH), "Limb has flesh wound despite no BIO_FLESH biological_state, expected either no wound or bone wound. Offending wound: [actual_wound]")
 					threshold_penalty = actual_wound.threshold_penalty
 			else // otherwise if it's a bone wound, check that we have it per usual
 				TEST_ASSERT(length(victim.all_wounds), "Patient has no wounds when one wound is expected. Severity: [initial(iter_test_wound.severity)]")

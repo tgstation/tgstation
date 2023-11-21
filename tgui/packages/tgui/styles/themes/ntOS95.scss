@@ -32,7 +32,7 @@ $scrollbar-color-multiplier: 1;
     '../components/Button.scss',
     $with: (
       'color-default': #e8e4c9,
-      'color-disabled': #363636,
+      'color-disabled': #707070,
       'color-selected': #007c11,
       'color-caution': #be6209,
       'color-danger': #9d0808
@@ -71,12 +71,24 @@ $scrollbar-color-multiplier: 1;
   }
 
   .Section {
+    &__titleText {
+      color: black;
+    }
     color: black;
     background-color: #c0c0c0;
     outline: base.em(2px) outset #c3c3c3;
   }
 
   .Input {
+    background-color: white;
+    outline: base.em(2px) inset #c3c3c3;
+    color: black;
+    &__input:-ms-input-placeholder {
+      color: black;
+    }
+  }
+
+  .TextArea {
     background-color: white;
     outline: base.em(2px) inset #c3c3c3;
   }

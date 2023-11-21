@@ -3,6 +3,8 @@
 
 /// Called whenever the uplink handler receives any sort of update. Used by uplinks to update their UI. No arguments passed
 #define COMSIG_UPLINK_HANDLER_ON_UPDATE "uplink_handler_on_update"
+/// Sent from the uplink handler when the traitor uses the syndicate uplink beacon to order a replacement uplink.
+#define COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED "uplink_handler_replacement_ordered"
 
 /// Called before the traitor objective is generated
 #define COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE "traitor_objective_pre_generate"
@@ -30,3 +32,5 @@
 #define COMSIG_TRAITOR_GRAFFITI_DRAWN "traitor_rune_drawn"
 /// Called when someone slips on some seditious graffiti. Pass the mind of the viewer.
 #define COMSIG_TRAITOR_GRAFFITI_SLIPPED "traitor_demoralise_event"
+/// For when someone is injected with the EHMS virus from /datum/traitor_objective_category/infect
+#define COMSIG_EHMS_INJECTOR_INJECTED "after_ehms_inject"

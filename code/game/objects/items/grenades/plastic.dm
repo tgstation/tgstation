@@ -23,15 +23,28 @@
 	/// Maximum timer for c4 charges
 	var/maximum_timer = 60000
 
+/obj/item/grenade/c4/apply_grenade_fantasy_bonuses(quality)
+	var/devIncrease = round(quality / 10)
+	var/heavyIncrease = round(quality / 5)
+	var/lightIncrease = round(quality / 2)
+	boom_sizes[1] = modify_fantasy_variable("devIncrease", boom_sizes[1], devIncrease)
+	boom_sizes[2] = modify_fantasy_variable("heavyIncrease", boom_sizes[2], heavyIncrease)
+	boom_sizes[3] = modify_fantasy_variable("lightIncrease", boom_sizes[3], lightIncrease)
+
+/obj/item/grenade/c4/remove_grenade_fantasy_bonuses(quality)
+	boom_sizes[1] = reset_fantasy_variable("devIncrease", boom_sizes[1])
+	boom_sizes[2] = reset_fantasy_variable("heavyIncrease", boom_sizes[2])
+	boom_sizes[3] = reset_fantasy_variable("lightIncrease", boom_sizes[3])
+
 /obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
-	wires = new /datum/wires/explosive/c4(src)
+	set_wires(new /datum/wires/explosive/c4(src))
 
 /obj/item/grenade/c4/Destroy()
 	qdel(wires)
-	wires = null
+	set_wires(null)
 	target = null
 	return ..()
 

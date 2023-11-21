@@ -13,25 +13,29 @@
 	taste_mult = 4
 	inverse_chem_val = 0.1
 	inverse_chem = null
+	creation_purity = 0.5 // 50% pure by default. Below - synthetic food. Above - natural food.
 	/// How much nutrition this reagent supplies
-	var/nutriment_factor = 1 * REAGENTS_METABOLISM
-	var/quality = 0 //affects mood, typically higher for mixed drinks with more complex recipes'
+	var/nutriment_factor = 1
+	/// affects mood, typically higher for mixed drinks with more complex recipes'
+	var/quality = 0
 
-/datum/reagent/consumable/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	current_cycle++
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_nutrition(nutriment_factor * REM * delta_time)
+			H.adjust_nutrition(get_nutriment_factor() * REM * seconds_per_tick)
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * delta_time)
+	holder.remove_reagent(type, metabolization_rate * seconds_per_tick)
 
 /datum/reagent/consumable/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(!(methods & INGEST) || !quality || HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
 		return
 	switch(quality)
+		if (DRINK_REVOLTING)
+			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_revolting)
 		if (DRINK_NICE)
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_nice)
 		if (DRINK_GOOD)
@@ -48,25 +52,25 @@
 			if(isitem(the_real_food) && !is_reagent_container(the_real_food))
 				exposed_mob.add_mob_memory(/datum/memory/good_food, food = the_real_food)
 
+/datum/reagent/consumable/proc/get_nutriment_factor()
+	return nutriment_factor * REAGENTS_METABOLISM * (purity * 2)
+
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
 	var/brute_heal = 1
 	var/burn_heal = 0
 
-/datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
+/datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume * 0.2))
 
-	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.2))
-
-/datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(30, delta_time))
+/datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	if(SPT_PROB(30, seconds_per_tick))
 		M.heal_bodypart_damage(brute = brute_heal, burn = burn_heal, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
 		. = TRUE
 	..()
@@ -120,9 +124,9 @@
 	brute_heal = 1
 	burn_heal = 1
 
-/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(M.satiety < MAX_SATIETY)
-		M.satiety += 30 * REM * delta_time
+		M.satiety += 30 * REM * seconds_per_tick
 	. = ..()
 
 /// The basic resource of vat growing.
@@ -130,49 +134,21 @@
 	name = "Protein"
 	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
-	nutriment_factor = 9 * REAGENTS_METABOLISM //45% as calorie dense as corn oil.
+	nutriment_factor = 9 //45% as calorie dense as oil.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/nutriment/organ_tissue
-	name = "Organ Tissue"
-	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
-	taste_description = "rich earthy pungent"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/nutriment/cloth_fibers
-	name = "Cloth Fibers"
-	description = "It's not actually a form of nutriment but it does keep Mothpeople going for a short while..."
-	nutriment_factor = 30 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+/datum/reagent/consumable/nutriment/fat
+	name = "Fat"
+	description = "Triglycerides found in vegetable oils and fatty animal tissue."
+	color = "#f0eed7"
+	taste_description = "lard"
 	brute_heal = 0
-	burn_heal = 0
-	///Amount of satiety that will be drained when the cloth_fibers is fully metabolized
-	var/delayed_satiety_drain = 2 * CLOTHING_NUTRITION_GAIN
-
-/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.satiety < MAX_SATIETY)
-		M.adjust_nutrition(CLOTHING_NUTRITION_GAIN)
-		delayed_satiety_drain += CLOTHING_NUTRITION_GAIN
-	return ..()
-
-/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_delete(mob/living/carbon/M)
-	M.adjust_nutrition(-delayed_satiety_drain)
-	return ..()
-
-/datum/reagent/consumable/cooking_oil
-	name = "Cooking Oil"
-	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
-	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
-	taste_mult = 0.8
-	taste_description = "oil"
-	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own
-	metabolization_rate = 10 * REAGENTS_METABOLISM
-	penetrates_skin = NONE
-	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
+	burn_heal = 1
+	nutriment_factor = 18 // Twice as nutritious compared to protein and carbohydrates
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/quality_oil
+	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 
-/datum/reagent/consumable/cooking_oil/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
 	if(!holder || (holder.chem_temp <= fry_temperature))
 		return
@@ -187,17 +163,17 @@
 
 	exposed_obj.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
 	exposed_obj.AddElement(/datum/element/fried_item, volume)
-	exposed_obj.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
+	exposed_obj.reagents.add_reagent(src.type, reac_volume)
 
-/datum/reagent/consumable/cooking_oil/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/consumable/nutriment/fat/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if(!(methods & (VAPOR|TOUCH)) || isnull(holder) || (holder.chem_temp < fry_temperature)) //Directly coats the mob, and doesn't go into their bloodstream
 		return
 
-	var/oil_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
+	var/burn_damage = ((holder.chem_temp / fry_temperature) * 0.33) //Damage taken per unit
 	if(methods & TOUCH)
-		oil_damage *= max(1 - touch_protection, 0)
-	var/FryLoss = round(min(38, oil_damage * reac_volume))
+		burn_damage *= max(1 - touch_protection, 0)
+	var/FryLoss = round(min(38, burn_damage * reac_volume))
 	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
 		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
 		span_userdanger("You're covered in boiling oil!"))
@@ -209,14 +185,81 @@
 	if(FryLoss)
 		exposed_mob.adjustFireLoss(FryLoss)
 
-/datum/reagent/consumable/cooking_oil/expose_turf(turf/open/exposed_turf, reac_volume)
+/datum/reagent/consumable/nutriment/fat/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
-	if(!istype(exposed_turf) || isgroundlessturf(exposed_turf) || (reac_volume < 5))
+	if(!istype(exposed_turf))
 		return
+	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
+	if(hotspot)
+		var/datum/gas_mixture/lowertemp = exposed_turf.remove_air(exposed_turf.air.total_moles())
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+		lowertemp.react(src)
+		exposed_turf.assume_air(lowertemp)
+		qdel(hotspot)
 
-	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-	exposed_turf.name = "Deep-fried [initial(exposed_turf.name)]"
-	exposed_turf.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+/datum/reagent/consumable/nutriment/fat/oil
+	name = "Vegetable Oil"
+	description = "A variety of cooking oil derived from plant fats. Used in food preparation and frying."
+	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
+	taste_mult = 0.8
+	taste_description = "oil"
+	nutriment_factor = 7 //Not very healthy on its own
+	metabolization_rate = 10 * REAGENTS_METABOLISM
+	penetrates_skin = NONE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/vegetable_oil
+
+/datum/reagent/consumable/nutriment/fat/oil/olive
+	name = "Olive Oil"
+	description = "A high quality oil, suitable for dishes where the oil is a key flavour."
+	taste_description = "olive oil"
+	color = "#DBCF5C"
+	nutriment_factor = 10
+	default_container = /obj/item/reagent_containers/condiment/olive_oil
+
+/datum/reagent/consumable/nutriment/organ_tissue
+	name = "Organ Tissue"
+	description = "Natural tissues that make up the bulk of organs, providing many vitamins and minerals."
+	taste_description = "rich earthy pungent"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/nutriment/cloth_fibers
+	name = "Cloth Fibers"
+	description = "It's not actually a form of nutriment but it does keep Mothpeople going for a short while..."
+	nutriment_factor = 30
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	brute_heal = 0
+	burn_heal = 0
+	///Amount of satiety that will be drained when the cloth_fibers is fully metabolized
+	var/delayed_satiety_drain = 2 * CLOTHING_NUTRITION_GAIN
+
+/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	if(M.satiety < MAX_SATIETY)
+		M.adjust_nutrition(CLOTHING_NUTRITION_GAIN)
+		delayed_satiety_drain += CLOTHING_NUTRITION_GAIN
+	return ..()
+
+/datum/reagent/consumable/nutriment/cloth_fibers/on_mob_delete(mob/living/carbon/M)
+	M.adjust_nutrition(-delayed_satiety_drain)
+	return ..()
+
+/datum/reagent/consumable/nutriment/mineral
+	name = "Mineral Slurry"
+	description = "Minerals pounded into a paste, nutritious only if you too are made of rocks."
+	color = COLOR_WEBSAFE_DARK_GRAY
+	chemical_flags = NONE
+	brute_heal = 0
+	burn_heal = 0
+
+/datum/reagent/consumable/nutriment/mineral/on_mob_life(mob/living/carbon/eater, delta_time, times_fired)
+	current_cycle++
+	if (HAS_TRAIT(eater, TRAIT_ROCK_EATER) && !HAS_TRAIT(eater, TRAIT_NOHUNGER) && ishuman(eater))
+		var/mob/living/carbon/human/golem_eater = eater
+		golem_eater.adjust_nutrition(get_nutriment_factor() * REM * delta_time)
+	if(length(reagent_removal_skip_list))
+		return
+	holder.remove_reagent(type, metabolization_rate * delta_time)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
@@ -224,50 +267,44 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 200 // Hyperglycaemic shock
+	overdose_threshold = 100 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/sugar
 
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
-/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_weedlevel(rand(1,2))
-	mytray.adjust_pestlevel(rand(1,2))
+/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_weedlevel(rand(1, 2))
+	mytray.adjust_pestlevel(rand(1, 2))
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
 	M.AdjustSleeping(600)
 	. = TRUE
 
-/datum/reagent/consumable/sugar/overdose_process(mob/living/M, delta_time, times_fired)
-	M.AdjustSleeping(40 * REM * delta_time)
+/datum/reagent/consumable/sugar/overdose_process(mob/living/M, seconds_per_tick, times_fired)
+	M.AdjustSleeping(40 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
 	description = "A mixture of water and milk. Virus cells can use this mixture to reproduce."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	// Compost for EVERYTHING
-/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
-		return
-
-	mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.5))
+// Compost for EVERYTHING
+/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(-round(volume * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	description = "A salty sauce made from the soy plant."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#792300" // rgb: 121, 35, 0
 	taste_description = "umami"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -276,7 +313,7 @@
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "ketchup"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -290,13 +327,13 @@
 	taste_mult = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
 			heating = 5
 			if(holder.has_reagent(/datum/reagent/cryostylane))
-				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * delta_time)
+				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
 			if(isslime(M))
 				heating = rand(5, 20)
 		if(15 to 25)
@@ -311,7 +348,7 @@
 			heating = 20
 			if(isslime(M))
 				heating = rand(20, 25)
-	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time)
+	M.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/frostoil
@@ -325,13 +362,13 @@
 	specific_heat = 40
 	default_container = /obj/item/reagent_containers/cup/bottle/frostoil
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	var/cooling = 0
 	switch(current_cycle)
 		if(1 to 15)
 			cooling = -10
 			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * delta_time)
+				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
 			if(isslime(M))
 				cooling = -rand(5, 20)
 		if(15 to 25)
@@ -350,7 +387,7 @@
 				M.emote("shiver")
 			if(isslime(M))
 				cooling = -rand(20, 25)
-	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 50)
+	M.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
 	..()
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)
@@ -409,9 +446,9 @@
 			if(prob(5))
 				victim.vomit()
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
-		if(DT_PROB(5, delta_time))
+		if(SPT_PROB(5, seconds_per_tick))
 			M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
 	..()
 
@@ -429,8 +466,7 @@
 	. = ..()
 	if(!istype(exposed_turf) || (reac_volume < 1))
 		return
-
-	new/obj/effect/decal/cleanable/food/salt(exposed_turf)
+	exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/salt)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -445,7 +481,7 @@
 	name = "Coco Powder"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -466,16 +502,16 @@
 	. = ..()
 	REMOVE_TRAIT(L, TRAIT_GARLIC_BREATH, type)
 
-/datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
-		if(DT_PROB(min(current_cycle/2, 12.5), delta_time))
+		if(SPT_PROB(min(current_cycle/2, 12.5), seconds_per_tick))
 			to_chat(M, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
 			M.Paralyze(10)
 			M.set_jitter_if_lower(20 SECONDS)
 	else
 		var/obj/item/organ/internal/liver/liver = M.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
-			if(DT_PROB(10, delta_time)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
+			if(SPT_PROB(10, seconds_per_tick)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				M.heal_bodypart_damage(brute = 1, burn = 1)
 				. = TRUE
 	..()
@@ -507,33 +543,12 @@
 	taste_description = "childhood whimsy"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/liver/liver = M.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 0)
+		M.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick, 0)
 		. = TRUE
 	..()
-
-/datum/reagent/consumable/cornoil
-	name = "Corn Oil"
-	description = "An oil derived from various types of corn."
-	nutriment_factor = 20 * REAGENTS_METABOLISM
-	color = "#302000" // rgb: 48, 32, 0
-	taste_description = "slime"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/cornoil/expose_turf(turf/open/exposed_turf, reac_volume)
-	. = ..()
-	if(!istype(exposed_turf))
-		return
-	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
-	if(hotspot)
-		var/datum/gas_mixture/lowertemp = exposed_turf.remove_air(exposed_turf.air.total_moles())
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react(src)
-		exposed_turf.assume_air(lowertemp)
-		qdel(hotspot)
 
 /datum/reagent/consumable/enzyme
 	name = "Universal Enzyme"
@@ -555,7 +570,7 @@
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -564,25 +579,25 @@
 /datum/reagent/consumable/nutraslop
 	name = "Nutraslop"
 	description = "Mixture of leftover prison foods served on previous days."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#3E4A00" // rgb: 62, 74, 0
 	taste_description = "your imprisonment"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time, 0, M.get_body_temp_normal())
+/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 0, M.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/hell_ramen
 	name = "Hell Ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles on fire"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, delta_time, times_fired)
-	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * delta_time)
+/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/target_mob, seconds_per_tick, times_fired)
+	target_mob.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/flour
@@ -599,15 +614,14 @@
 	if(isspaceturf(exposed_turf))
 		return
 
-	var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(exposed_turf)
-	reagentdecal = locate() in exposed_turf //Might have merged with flour already there.
-	if(reagentdecal)
-		reagentdecal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
+	var/obj/effect/decal/cleanable/food/flour/flour_decal = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/food/flour)
+	if(flour_decal)
+		flour_decal.reagents.add_reagent(/datum/reagent/consumable/flour, reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_description = "cherry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -623,7 +637,7 @@
 	name = "Rice"
 	description = "tiny nutritious grains"
 	reagent_state = SOLID
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 3
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_description = "rice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -633,7 +647,7 @@
 	name = "Vanilla Powder"
 	description = "A fatty, bitter paste made from vanilla pods."
 	reagent_state = SOLID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#FFFACD"
 	taste_description = "vanilla"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -641,7 +655,7 @@
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
 	description = "It's full of protein."
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 8
 	color = "#FFB500"
 	taste_description = "egg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -649,7 +663,7 @@
 /datum/reagent/consumable/eggwhite
 	name = "Egg White"
 	description = "It's full of even more protein."
-	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	color = "#fffdf7"
 	taste_description = "bland egg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -668,34 +682,32 @@
 	taste_description = "sweet slime"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
+/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/honey
 	name = "Honey"
 	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 15
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/honey
 
-	// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
-/datum/reagent/consumable/honey/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!check_tray(chems, mytray))
+// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
+/datum/reagent/consumable/honey/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	if(!isnull(mytray.myseed) && prob(20))
+		mytray.pollinate(range = 1)
 		return
 
-	if(myseed && prob(20))
-		mytray.pollinate(1)
-	else
-		mytray.adjust_weedlevel(rand(1,2))
-		mytray.adjust_pestlevel(rand(1,2))
+	mytray.adjust_weedlevel(rand(1, 2))
+	mytray.adjust_pestlevel(rand(1, 2))
 
-/datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
-	if(DT_PROB(33, delta_time))
+/datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * seconds_per_tick)
+	if(SPT_PROB(33, seconds_per_tick))
 		M.adjustBruteLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		M.adjustOxyLoss(-1, FALSE, required_biotype = affected_biotype)
@@ -737,13 +749,13 @@
 	name = "Stabilized Nutriment"
 	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
 	reagent_state = SOLID
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
-		M.adjust_nutrition(-3 * REM * nutriment_factor * delta_time)
+		M.adjust_nutrition(-3 * REM * get_nutriment_factor() * seconds_per_tick)
 	..()
 
 ////Lavaland Flora Reagents////
@@ -757,11 +769,11 @@
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(current_cycle >= 10)
-		M.Unconscious(40 * REM * delta_time, FALSE)
+		M.Unconscious(40 * REM * seconds_per_tick, FALSE)
 		. = TRUE
-	if(DT_PROB(10, delta_time))
+	if(SPT_PROB(10, seconds_per_tick))
 		M.losebreath += 4
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)
 		M.adjustToxLoss(3*REM, FALSE, required_biotype = affected_biotype)
@@ -777,64 +789,45 @@
 	color = "#b5a213"
 	taste_description = "tingling mushroom"
 	ph = 11.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	//Lazy list of mobs affected by the luminosity of this reagent.
-	var/list/mobs_affected
+	self_consuming = TRUE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_DEAD_PROCESS
 
-/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob)
+/datum/reagent/consumable/tinlux/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
-	add_reagent_light(exposed_mob)
+	if(!exposed_mob.reagents) // they won't process the reagent, but still benefit from its effects for a duration.
+		var/amount = round(reac_volume * clamp(1 - touch_protection, 0, 1))
+		var/duration = (amount / metabolization_rate) * SSmobs.wait
+		if(duration > 1 SECONDS)
+			exposed_mob.adjust_timed_status_effect(duration, /datum/status_effect/tinlux_light)
 
-/datum/reagent/consumable/tinlux/on_mob_end_metabolize(mob/living/M)
-	remove_reagent_light(M)
+/datum/reagent/consumable/tinlux/on_mob_add(mob/living/living_mob)
+	. = ..()
+	living_mob.apply_status_effect(/datum/status_effect/tinlux_light) //infinite duration
 
-/datum/reagent/consumable/tinlux/proc/on_living_holder_deletion(mob/living/source)
-	SIGNAL_HANDLER
-	remove_reagent_light(source)
-
-/datum/reagent/consumable/tinlux/proc/add_reagent_light(mob/living/living_holder)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = living_holder.mob_light(2)
-	LAZYSET(mobs_affected, living_holder, mob_light_obj)
-	RegisterSignal(living_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_living_holder_deletion))
-
-/datum/reagent/consumable/tinlux/proc/remove_reagent_light(mob/living/living_holder)
-	UnregisterSignal(living_holder, COMSIG_PARENT_QDELETING)
-	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = LAZYACCESS(mobs_affected, living_holder)
-	LAZYREMOVE(mobs_affected, living_holder)
-	if(mob_light_obj)
-		qdel(mob_light_obj)
-
+/datum/reagent/consumable/tinlux/on_mob_delete(mob/living/living_mob)
+	. = ..()
+	living_mob.remove_status_effect(/datum/status_effect/tinlux_light)
 
 /datum/reagent/consumable/vitfro
 	name = "Vitrium Froth"
 	description = "A bubbly paste that heals wounds of the skin."
 	color = "#d3a308"
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 3
 	taste_description = "fruity mushroom"
 	ph = 10.4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(55, delta_time))
+/datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	if(SPT_PROB(55, seconds_per_tick))
 		M.adjustBruteLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		M.adjustFireLoss(-1, FALSE, required_bodytype = affected_bodytype)
 		. = TRUE
 	..()
 
-/datum/reagent/consumable/clownstears
-	name = "Clown's Tears"
-	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#eef442" // rgb: 238, 244, 66
-	taste_description = "mournful honking"
-	ph = 9.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-
 /datum/reagent/consumable/liquidelectricity
 	name = "Liquid Electricity"
 	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#97ee63"
 	taste_description = "pure electricity"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -852,10 +845,10 @@
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 30)
 
-/datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(isethereal(M))
-		M.blood_volume += 1 * delta_time
-	else if(DT_PROB(10, delta_time)) //lmao at the newbs who eat energy bars
+		M.blood_volume += 1 * seconds_per_tick
+	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
 		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(M, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
@@ -872,16 +865,16 @@
 	overdose_threshold = 17
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/astrotame/overdose_process(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(M.disgust < 80)
-		M.adjust_disgust(10 * REM * delta_time)
+		M.adjust_disgust(10 * REM * seconds_per_tick)
 	..()
 	. = TRUE
 
 /datum/reagent/consumable/secretsauce
 	name = "Secret Sauce"
 	description = "What could it be?"
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#792300"
 	taste_description = "indescribable"
 	quality = FOOD_AMAZING
@@ -893,7 +886,7 @@
 	color = "#BBD4D9"
 	taste_description = "mint frosting"
 	description = "These restorative peptides not only speed up wound healing, but are nutritious as well!"
-	nutriment_factor = 10 * REAGENTS_METABOLISM // 33% less than nutriment to reduce weight gain
+	nutriment_factor = 10 // 33% less than nutriment to reduce weight gain
 	brute_heal = 3
 	burn_heal = 1
 	inverse_chem = /datum/reagent/peptides_failed//should be impossible, but it's so it appears in the chemical lookup gui
@@ -903,7 +896,7 @@
 /datum/reagent/consumable/caramel
 	name = "Caramel"
 	description = "Who would have guessed that heated sugar could be so delicious?"
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	color = "#D98736"
 	taste_mult = 2
 	taste_description = "caramel"
@@ -914,15 +907,15 @@
 	name = "Char"
 	description = "Essence of the grill. Has strange properties when overdosed."
 	reagent_state = LIQUID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#C8C8C8"
 	taste_mult = 6
 	taste_description = "smoke"
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/char/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(13, delta_time))
+/datum/reagent/consumable/char/overdose_process(mob/living/M, seconds_per_tick, times_fired)
+	if(SPT_PROB(13, seconds_per_tick))
 		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/char)
 	..()
 	return
@@ -930,7 +923,7 @@
 /datum/reagent/consumable/bbqsauce
 	name = "BBQ Sauce"
 	description = "Sweet, smoky, savory, and gets everywhere. Perfect for grilling."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#78280A" // rgb: 120 40, 10
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
 	taste_description = "smokey sweetness"
@@ -942,7 +935,7 @@
 	description = "A great dessert for chocolate lovers."
 	color = "#800000"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	taste_description = "sweet chocolate"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
@@ -959,7 +952,7 @@
 	description = "A great dessert for vanilla lovers."
 	color = "#FAFAD2"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	taste_description = "sweet vanilla"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -974,7 +967,7 @@
 	name = "Laughin' Syrup"
 	description = "The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
 	color = "#803280"
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	taste_mult = 2
 	taste_description = "fizzy sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1012,7 +1005,7 @@
 	name = "Korta Nectar"
 	description = "A sweet, sugary syrup made from crushed sweet korta nuts."
 	color = "#d3a308"
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "peppery sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1021,7 +1014,7 @@
 	name = "Whipped Cream"
 	description = "A white fluffy cream made from whipping cream at intense speed."
 	color = "#efeff0"
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	taste_description = "fluffy sweet cream"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1031,14 +1024,14 @@
 	taste_description = "peanuts"
 	reagent_state = SOLID
 	color = "#D9A066"
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/peanut_butter
 
-/datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
+/datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired) //ET loves peanut butter
 	if(isabductor(M))
 		M.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, name)
-		M.set_drugginess(30 SECONDS * REM * delta_time)
+		M.set_drugginess(30 SECONDS * REM * seconds_per_tick)
 	..()
 
 /datum/reagent/consumable/vinegar
@@ -1048,15 +1041,6 @@
 	color = "#661F1E"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/vinegar
-
-//A better oil, representing choices like olive oil, argan oil, avocado oil, etc.
-/datum/reagent/consumable/quality_oil
-	name = "Quality Oil"
-	description = "A high quality oil, suitable for dishes where the oil is a key flavour."
-	taste_description = "olive oil"
-	color = "#DBCF5C"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	default_container = /obj/item/reagent_containers/condiment/quality_oil
 
 /datum/reagent/consumable/cornmeal
 	name = "Cornmeal"
@@ -1071,7 +1055,7 @@
 	description = "Creamy natural yoghurt, with applications in both food and drinks."
 	taste_description = "yoghurt"
 	color = "#efeff0"
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/yoghurt
 
@@ -1094,7 +1078,7 @@
 	description = "Powdered milk for cheap coffee. How delightful."
 	taste_description = "milk"
 	color = "#efeff0"
-	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	nutriment_factor = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/creamer
 
@@ -1105,8 +1089,55 @@
 	taste_description = "mint"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/mintextract/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+/datum/reagent/consumable/mintextract/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(HAS_TRAIT(affected_mob, TRAIT_FAT))
 		affected_mob.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
 		affected_mob.inflate_gib()
 	return ..()
+
+/datum/reagent/consumable/worcestershire
+	name = "Worcestershire Sauce"
+	description = "That's \"Woostershire\" sauce, by the way."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#572b26"
+	taste_description = "sweet fish"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/worcestershire
+
+/datum/reagent/consumable/red_bay
+	name = "Red Bay Seasoning"
+	description = "A secret blend of herbs and spices that goes well with anything- according to Martians, at least."
+	color = "#8E4C00"
+	taste_description = "spice"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/red_bay
+
+/datum/reagent/consumable/curry_powder
+	name = "Curry Powder"
+	description = "One of humanity's most common spices. Typically used to make curry."
+	color = "#F6C800"
+	taste_description = "dry curry"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/curry_powder
+
+/datum/reagent/consumable/dashi_concentrate
+	name = "Dashi Concentrate"
+	description = "A concentrated form of dashi. Simmer with water in a 1:8 ratio to produce a tasty dashi broth."
+	color = "#372926"
+	taste_description = "extreme umami"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/dashi_concentrate
+
+/datum/reagent/consumable/martian_batter
+	name = "Martian Batter"
+	description = "A thick batter made with dashi and flour, used for making dishes such as okonomiyaki and takoyaki."
+	color = "#D49D26"
+	taste_description = "umami dough"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/grounding_solution
+	name = "Grounding Solution"
+	description = "A food-safe ionic solution designed to neutralise the enigmatic \"liquid electricity\" that is common to food from Sprout, forming harmless salt on contact."
+	color = "#efeff0"
+	taste_description = "metallic salt"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

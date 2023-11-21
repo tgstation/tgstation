@@ -8,19 +8,19 @@
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "buckle",
+			"icon_state": "buttondown_obj_buckle",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "belt",
+			"icon_state": "buttondown_obj_belt",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "slacks",
+			"icon_state": "buttondown_obj_slacks",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		}

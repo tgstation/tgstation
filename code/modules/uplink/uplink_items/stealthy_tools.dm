@@ -92,6 +92,13 @@
 	surplus = 30
 	illegal_tech = FALSE
 
+/datum/uplink_item/stealthy_tools/mail_counterfeit
+	name = "GLA Brand Mail Counterfeit Device"
+	desc = "Device that actually able to counterfeit NT's mail. This device also able to place a trap inside of mail for malicious actions. Trap will \"activate\" any item inside of mail. Also it might be used for contraband purposes. Integrated micro-computer will give you great configuration optionality for your needs."
+	item = /obj/item/storage/mail_counterfeit_device
+	cost = 1
+	surplus = 30
+
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
@@ -104,8 +111,7 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_tools/telecomm_blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	var/datum/round_event_control/event = locate(/datum/round_event_control/communications_blackout) in SSevents.control
-	event.runEvent()
+	force_event(/datum/round_event_control/communications_blackout, "a syndicate virus")
 	return source //For log icon
 
 /datum/uplink_item/stealthy_tools/blackout
@@ -120,6 +126,5 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	var/datum/round_event_control/event = locate(/datum/round_event_control/grid_check) in SSevents.control
-	event.runEvent()
+	force_event(/datum/round_event_control/grid_check, "a syndicate virus")
 	return source //For log icon

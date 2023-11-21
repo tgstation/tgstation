@@ -9,7 +9,7 @@ import { DesignBrowser } from './Fabrication/DesignBrowser';
 
 export const Fabricator = (props, context) => {
   const { act, data } = useBackend<FabricatorData>(context);
-  const { fabName, onHold, designs, busy } = data;
+  const { fabName, onHold, designs, busy, SHEET_MATERIAL_AMOUNT } = data;
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -27,17 +27,20 @@ export const Fabricator = (props, context) => {
               busy={!!busy}
               designs={Object.values(designs)}
               availableMaterials={availableMaterials}
-              buildRecipeElement={(
-                design,
-                availableMaterials,
-                onPrintDesign
-              ) => <Recipe design={design} available={availableMaterials} />}
+              buildRecipeElement={(design, availableMaterials) => (
+                <Recipe
+                  design={design}
+                  available={availableMaterials}
+                  SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                />
+              )}
             />
           </Stack.Item>
           <Stack.Item>
             <Section>
               <MaterialAccessBar
                 availableMaterials={data.materials ?? []}
+                SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                 onEjectRequested={(material, amount) =>
                   act('remove_mat', { ref: material.ref, amount })
                 }
@@ -58,12 +61,13 @@ export const Fabricator = (props, context) => {
 type PrintButtonProps = {
   design: Design;
   quantity: number;
+  SHEET_MATERIAL_AMOUNT: number;
   available: MaterialMap;
 };
 
 const PrintButton = (props: PrintButtonProps, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
-  const { design, quantity, available } = props;
+  const { act } = useBackend<FabricatorData>(context);
+  const { design, quantity, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -76,6 +80,7 @@ const PrintButton = (props: PrintButtonProps, context) => {
         <MaterialCostSequence
           design={design}
           amount={quantity}
+          SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
           available={available}
         />
       }>
@@ -126,9 +131,15 @@ const CustomPrint = (props: CustomPrintProps, context) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
-  const { design, available } = props;
+type RecipeProps = {
+  design: Design;
+  available: MaterialMap;
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+const Recipe = (props: RecipeProps, context) => {
+  const { act } = useBackend<FabricatorData>(context);
+  const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -152,6 +163,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
           <MaterialCostSequence
             design={design}
             amount={1}
+            SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
         }>
@@ -160,7 +172,9 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { ref: design.id, amount: 1 })}>
+          onClick={() =>
+            canPrint && act('build', { ref: design.id, amount: 1 })
+          }>
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}
@@ -171,8 +185,18 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
           <div className="FabricatorRecipe__Label">{design.name}</div>
         </div>
       </Tooltip>
-      <PrintButton design={design} quantity={5} available={available} />
-      <PrintButton design={design} quantity={10} available={available} />
+      <PrintButton
+        design={design}
+        quantity={5}
+        available={available}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+      />
+      <PrintButton
+        design={design}
+        quantity={10}
+        available={available}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+      />
       <CustomPrint design={design} available={available} />
     </div>
   );

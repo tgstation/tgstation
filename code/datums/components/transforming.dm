@@ -37,24 +37,24 @@
 	/// If we get sharpened with a whetstone, save the bonus here for later use if we un/redeploy
 	var/sharpened_bonus = 0
 	/// Dictate whether we change inhands or not
-	var/inhand_icon_change
+	var/inhand_icon_change = TRUE
 	/// Cooldown in between transforms
 	COOLDOWN_DECLARE(transform_cooldown)
 
 /datum/component/transforming/Initialize(
-		start_transformed = FALSE,
-		transform_cooldown_time = 0 SECONDS,
-		force_on = 0,
-		throwforce_on = 0,
-		throw_speed_on = 2,
-		sharpness_on = NONE,
-		hitsound_on = 'sound/weapons/blade1.ogg',
-		w_class_on = WEIGHT_CLASS_BULKY,
-		clumsy_check = TRUE,
-		list/attack_verb_continuous_on,
-		list/attack_verb_simple_on,
-		inhand_icon_change = TRUE,
-		)
+	start_transformed = FALSE,
+	transform_cooldown_time = 0 SECONDS,
+	force_on = 0,
+	throwforce_on = 0,
+	throw_speed_on = 2,
+	sharpness_on = NONE,
+	hitsound_on = 'sound/weapons/blade1.ogg',
+	w_class_on = WEIGHT_CLASS_BULKY,
+	clumsy_check = TRUE,
+	list/attack_verb_continuous_on,
+	list/attack_verb_simple_on,
+	inhand_icon_change = TRUE,
+)
 
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -89,6 +89,23 @@
 		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(on_sharpen))
 
 	RegisterSignal(parent, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
+	RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
+	RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
+
+/datum/component/transforming/proc/apply_fantasy_bonuses(obj/item/source, bonus)
+	SIGNAL_HANDLER
+	active = FALSE
+	set_inactive(source)
+	force_on = source.modify_fantasy_variable("force_on", force_on, bonus)
+	throwforce_on = source.modify_fantasy_variable("throwforce_on", throwforce_on, bonus)
+
+/datum/component/transforming/proc/remove_fantasy_bonuses(obj/item/source, bonus)
+	SIGNAL_HANDLER
+	active = FALSE
+	set_inactive(source)
+	force_on = source.reset_fantasy_variable("force_on", force_on)
+	throwforce_on = source.reset_fantasy_variable("throwforce_on", throwforce_on)
+
 
 /datum/component/transforming/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT, COMSIG_DETECTIVE_SCANNED))
@@ -120,7 +137,7 @@
 
 	if(do_transform(source, user))
 		clumsy_transform_effect(user)
-		. = COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /*
  * Transform the weapon into its alternate form, calling [toggle_active].
@@ -153,7 +170,7 @@
 /datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
 	if(user)
 		source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
-	playsound(user ? user : source.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(source, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /*
  * Toggle active between true and false, and call
@@ -175,6 +192,7 @@
  * source - the item being transformed / parent
  */
 /datum/component/transforming/proc/set_active(obj/item/source)
+	ADD_TRAIT(source, TRAIT_TRANSFORM_ACTIVE, REF(src))
 	if(sharpness_on)
 		source.sharpness = sharpness_on
 	if(force_on)
@@ -194,9 +212,7 @@
 	source.icon_state = "[source.icon_state]_on"
 	if(inhand_icon_change && source.inhand_icon_state)
 		source.inhand_icon_state = "[source.inhand_icon_state]_on"
-	if(ismob(source.loc))
-		var/mob/loc_mob = source.loc
-		loc_mob.update_held_items()
+	source.update_inhand_icon()
 
 /*
  * Set our transformed item into its inactive state.
@@ -205,6 +221,7 @@
  * source - the item being un-transformed / parent
  */
 /datum/component/transforming/proc/set_inactive(obj/item/source)
+	REMOVE_TRAIT(source, TRAIT_TRANSFORM_ACTIVE, REF(src))
 	if(sharpness_on)
 		source.sharpness = initial(source.sharpness)
 	if(force_on)
@@ -247,8 +264,8 @@
 		var/hurt_self_verb_continuous = LAZYLEN(attack_verb_continuous_on) ? pick(attack_verb_continuous_on) : "hits"
 		user.visible_message(
 			span_warning("[user] triggers [parent] while holding it backwards and [hurt_self_verb_continuous] themself, like a doofus!"),
-			span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb_simple] yourself, like a doofus!")
-			)
+			span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb_simple] yourself, like a doofus!"),
+		)
 		user.take_bodypart_damage(10)
 		return TRUE
 	return FALSE

@@ -32,7 +32,7 @@
 	wanted_objects = list(/obj/item/stack/ore/diamond, /obj/item/stack/ore/gold, /obj/item/stack/ore/silver,
 						  /obj/item/stack/ore/plasma, /obj/item/stack/ore/uranium, /obj/item/stack/ore/iron,
 						  /obj/item/stack/ore/bananium, /obj/item/stack/ore/titanium)
-	healable = 0
+	mob_biotypes = MOB_ROBOTIC
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	del_on_death = TRUE
 	light_system = MOVABLE_LIGHT
@@ -75,7 +75,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/examine(mob/user)
 	. = ..()
-	var/t_He = p_they(TRUE)
+	var/t_He = p_They()
 	var/t_him = p_them()
 	var/t_s = p_s()
 	if(health < maxHealth)
@@ -273,7 +273,7 @@
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 
 /obj/item/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/minebot, mob/user, proximity)
 	. = ..()
@@ -310,7 +310,7 @@
 	name = "minebot AI upgrade"
 	desc = "Can be used to grant sentience to minebots. It's incompatible with minebot armor and melee upgrades, and will override them."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/assemblies/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
 	var/base_health_add = 5 //sentient minebots are penalized for beign sentient; they have their stats reset to normal plus these values
 	var/base_damage_add = 1 //this thus disables other minebot upgrades

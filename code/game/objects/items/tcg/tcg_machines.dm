@@ -306,7 +306,10 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 
 /obj/machinery/trading_card_button/Initialize(mapload)
 	. = ..()
-	display_panel_ref = new display_panel_type(locate(x + panel_offset_x, y + panel_offset_y, z))
+	var/obj/effect/decal/trading_card_panel/new_panel = new display_panel_type(get_turf(src))
+	new_panel.pixel_x = panel_offset_x
+	new_panel.pixel_y = panel_offset_y
+	display_panel_ref = new_panel
 
 /obj/machinery/trading_card_button/Destroy()
 	QDEL_NULL(display_panel_ref)
@@ -365,7 +368,7 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	desc = "A set of buttons that lets you keep track of your life shards when playing Tactical Game Cards."
 	icon_state = "health_buttons"
 	display_panel_type = /obj/effect/decal/trading_card_panel/health
-	panel_offset_x = -1
+	panel_offset_x = -24
 
 ///Global list containing all options used for the TGC health button.
 GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)

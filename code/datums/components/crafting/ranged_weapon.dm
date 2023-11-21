@@ -240,6 +240,49 @@
 	time = 30 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
 
+/datum/crafting_recipe/deagle_prime //When you factor in the makarov (7 tc), the toolbox (1 tc), and the emag (3 tc), this comes to a total of 17 TC or thereabouts. Igorning the 20k pricetag, obviously.
+	name = "Regal Condor"
+	always_available = FALSE
+	result = /obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
+	reqs = list(
+		/obj/item/gun/ballistic/automatic/pistol = 1,
+		/obj/item/stack/sheet/mineral/gold = 25,
+		/obj/item/stack/sheet/mineral/silver = 25,
+		/obj/item/food/donkpocket = 1,
+		/obj/item/stack/telecrystal = 3,
+		/obj/item/clothing/head/costume/crown/fancy = 1, //the captain's crown
+		/obj/item/storage/toolbox/syndicate = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	tool_paths = list(
+		/obj/item/clothing/under/syndicate,
+		/obj/item/clothing/mask/gas/syndicate,
+		/obj/item/card/emag
+	)
+	time = 30 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/deagle_prime/New()
+	..()
+	blacklist += subtypesof(/obj/item/gun/ballistic/automatic/pistol)
+
+/datum/crafting_recipe/deagle_prime_mag
+	name = "Regal Condor Magazine (10mm)"
+	always_available = FALSE
+	result = /obj/item/ammo_box/magazine/r10mm/empty
+	reqs = list(
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/telecrystal = 2,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	tool_paths = list(
+		/obj/item/clothing/under/syndicate,
+		/obj/item/clothing/mask/gas/syndicate,
+		/obj/item/card/emag
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_RANGED
+
 /datum/crafting_recipe/trash_cannon
 	name = "Trash Cannon"
 	always_available = FALSE
@@ -252,4 +295,65 @@
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/storage/toolbox = 1,
 	)
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/laser_musket
+	name = "Laser Musket"
+	result = /obj/item/gun/energy/laser/musket
+	reqs = list(
+		/obj/item/weaponcrafting/stock = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/rods = 4,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/clothing/glasses/regular = 1,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/laser_musket_prime
+	name = "Heroic Laser Musket"
+	always_available = FALSE
+	result = /obj/item/gun/energy/laser/musket/prime
+	reqs = list(
+		/obj/item/gun/energy/laser/musket = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/stack/sheet/mineral/silver = 5,
+		/obj/item/stock_parts/water_recycler = 1,
+		/datum/reagent/consumable/nuka_cola = 15,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	tool_paths = list(/obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy)
+	time = 30 SECONDS //contemplate for a bit
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/smoothbore_disabler
+	name = "Smoothbore Disabler"
+	result = /obj/item/gun/energy/disabler/smoothbore
+	reqs = list(
+		/obj/item/weaponcrafting/stock = 1, //it becomes the grip
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/pipe = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/cell = 1,
+		/obj/item/assembly/mousetrap = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/smoothbore_disabler_prime
+	name = "Elite Smoothbore Disabler"
+	always_available = FALSE
+	result = /obj/item/gun/energy/disabler/smoothbore/prime
+	reqs = list(
+		/obj/item/gun/energy/disabler/smoothbore = 1,
+		/obj/item/stack/sheet/mineral/gold = 5,
+		/obj/item/stock_parts/cell/hyper = 1,
+		/datum/reagent/reaction_agent/speed_agent = 10,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED

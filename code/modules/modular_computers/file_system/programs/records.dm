@@ -63,9 +63,7 @@
 
 	return all_records
 
-
-
-/datum/computer_file/program/records/ui_data(mob/user)
+/datum/computer_file/program/records/ui_static_data(mob/user)
 	var/list/data = list()
 	data["records"] = GetRecordsReadable()
 	data["mode"] = mode

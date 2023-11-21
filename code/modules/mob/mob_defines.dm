@@ -59,9 +59,6 @@
 	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
 	var/list/datum/action/actions
-	/// A list of chameleon actions we have specifically
-	/// This can be unified with the actions list
-	var/list/datum/action/item_action/chameleon/chameleon_item_actions
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
@@ -119,9 +116,6 @@
 
 	/// How many ticks this mob has been over reating
 	var/overeatduration = 0 // How long this guy is overeating //Carbon
-
-	/// The movement intent of the mob (run/wal)
-	var/m_intent = MOVE_INTENT_RUN//Living
 
 	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null

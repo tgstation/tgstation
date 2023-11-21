@@ -1,5 +1,6 @@
 /datum/surgery/plastic_surgery
 	name = "Plastic surgery"
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB | SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -65,6 +66,9 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.sec_hud_set_ID()
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
+		var/mob/living/carbon/human/morbid_weirdo = user
+		morbid_weirdo.add_mood_event("morbid_abominable_surgery_success", /datum/mood_event/morbid_abominable_surgery_success)
 	return ..()
 
 /datum/surgery_step/reshape_face/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

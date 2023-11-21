@@ -38,7 +38,7 @@
 /datum/traitor_objective/ultimate/dark_matteor/ui_perform_action(mob/living/user, action)
 	. = ..()
 	switch(action)
-		if("satellites")
+		if("satellite")
 			if(sent_satellites)
 				return
 			var/area/delivery_area = get_area(user)

@@ -19,12 +19,12 @@
 	src.tracked = tracked
 
 /datum/component/connect_mob_behalf/RegisterWithParent()
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, PROC_REF(handle_tracked_qdel))
+	RegisterSignal(tracked, COMSIG_QDELETING, PROC_REF(handle_tracked_qdel))
 	update_signals()
 
 /datum/component/connect_mob_behalf/UnregisterFromParent()
 	unregister_signals()
-	UnregisterSignal(tracked, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(tracked, COMSIG_QDELETING)
 
 	tracked = null
 	tracked_mob = null

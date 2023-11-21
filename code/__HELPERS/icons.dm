@@ -992,7 +992,7 @@ world
 			letter = lowertext(letter)
 
 	var/image/text_image = new(loc = A)
-	text_image.maptext = MAPTEXT("<font size = 4>[letter]</font>")
+	text_image.maptext = MAPTEXT("<span style='font-size: 24pt'>[letter]</span>")
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	qdel(atom_icon)
@@ -1016,7 +1016,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
 
-	if(ispath(SA, /mob/living/simple_animal/butterfly))
+	if(ispath(SA, /mob/living/basic/butterfly))
 		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
 
 	// For debugging
@@ -1133,6 +1133,23 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /proc/generate_asset_name(file)
 	return "asset.[md5(fcopy_rsc(file))]"
 
+/// Gets a dummy savefile for usage in icon generation.
+/// Savefiles generated from this proc will be empty.
+/proc/get_dummy_savefile(from_failure = FALSE)
+	var/static/next_id = 0
+	if(next_id++ > 9)
+		next_id = 0
+	var/savefile_path = "tmp/dummy-save-[next_id].sav"
+	try
+		if(fexists(savefile_path))
+			fdel(savefile_path)
+		return new /savefile(savefile_path)
+	catch(var/exception/error)
+		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldnt have
+		if(from_failure) // this *is* the retry, something fucked up
+			CRASH("get_dummy_savefile failed to create a dummy savefile: '[error]'")
+		return get_dummy_savefile(from_failure = TRUE)
+
 /**
  * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
  * exporting it as text, and then parsing the base64 from that.
@@ -1141,14 +1158,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 /proc/icon2base64(icon/icon)
 	if (!isicon(icon))
 		return FALSE
-	var/savefile/dummySave = new("tmp/dummySave.sav")
+	var/savefile/dummySave = get_dummy_savefile()
 	WRITE_FILE(dummySave["dummy"], icon)
 	var/iconData = dummySave.ExportText("dummy")
 	var/list/partial = splittext(iconData, "{")
-	. = replacetext(copytext_char(partial[2], 3, -5), "\n", "") //if cleanup fails we want to still return the correct base64
-	dummySave.Unlock()
-	dummySave = null
-	fdel("tmp/dummySave.sav") //if you get the idea to try and make this more optimized, make sure to still call unlock on the savefile after every write to unlock it.
+	return replacetext(copytext_char(partial[2], 3, -5), "\n", "") //if cleanup fails we want to still return the correct base64
 
 ///given a text string, returns whether it is a valid dmi icons folder path
 /proc/is_valid_dmi_file(icon_path)
@@ -1478,3 +1492,38 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		if(scream)
 			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
 		return FALSE
+
+/**
+ * Returns the size of the sprite in tiles.
+ * Takes the icon size and divides it by the world icon size (default 32).
+ * This gives the size of the sprite in tiles.
+ *
+ * @return size of the sprite in tiles
+ */
+/proc/get_size_in_tiles(obj/target)
+	var/icon/size_check = icon(target.icon, target.icon_state)
+	var/size = size_check.Width() / world.icon_size
+
+	return size
+
+/**
+ * Updates the bounds of a rotated object
+ * This ensures that the bounds are always correct,
+ * even if the object is rotated after init.
+ */
+/obj/proc/set_bounds()
+	var/size = get_size_in_tiles(src)
+
+	if(dir in list(NORTH, SOUTH))
+		bound_width = size * world.icon_size
+		bound_height = world.icon_size
+	else
+		bound_width = world.icon_size
+		bound_height = size * world.icon_size
+
+/// Returns a list containing the width and height of an icon file
+/proc/get_icon_dimensions(icon_path)
+	if (isnull(GLOB.icon_dimensions[icon_path]))
+		var/icon/my_icon = icon(icon_path)
+		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
+	return GLOB.icon_dimensions[icon_path]

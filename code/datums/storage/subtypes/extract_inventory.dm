@@ -4,7 +4,7 @@
 	insert_preposition = "in"
 	attack_hand_interact = FALSE
 	quickdraw = FALSE
-	locked = TRUE
+	locked = STORAGE_FULLY_LOCKED
 	rustle_sound = FALSE
 	silent = TRUE
 

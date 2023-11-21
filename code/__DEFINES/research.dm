@@ -54,6 +54,7 @@
 #define CELL_LINE_TABLE_AXOLOTL	"cell_line_axolotl_table"
 #define CELL_LINE_TABLE_WALKING_MUSHROOM "cell_line_walking_mushroom_table"
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
+#define CELL_LINE_TABLE_BUTTERFLY "cell_line_butterfly_table"
 #define CELL_LINE_TABLE_LEAPER	"cell_line_leaper_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
 

@@ -1,7 +1,7 @@
 /obj/machinery/mass_driver
 	name = "mass driver"
 	desc = "The finest in spring-loaded piston toy technology, now on a space station near you."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "mass_driver"
 	var/power = 1
 	var/code = 1
@@ -22,7 +22,7 @@
 	id = MASSDRIVER_SHACK
 
 /obj/machinery/mass_driver/Destroy()
-	for(var/obj/machinery/computer/pod/control in GLOB.machines)
+	for(var/obj/machinery/computer/pod/control as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/pod))
 		if(control.id == id)
 			control.connected = null
 	return ..()

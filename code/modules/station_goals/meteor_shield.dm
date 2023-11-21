@@ -43,10 +43,10 @@
 
 /datum/station_goal/proc/get_coverage()
 	var/list/coverage = list()
-	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
-		if(!A.active || !is_station_level(A.z))
+	for(var/obj/machinery/satellite/meteor_shield/shield_satt as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/satellite/meteor_shield))
+		if(!shield_satt.active || !is_station_level(shield_satt.z))
 			continue
-		coverage |= view(A.kill_range,A)
+		coverage |= view(shield_satt.kill_range, shield_satt)
 	return coverage.len
 
 /obj/machinery/satellite/meteor_shield
@@ -118,10 +118,11 @@
 /obj/machinery/satellite/meteor_shield/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		balloon_alert(user, "already emagged!")
-		return
+		return FALSE
 	if(!COOLDOWN_FINISHED(src, shared_emag_cooldown))
+		balloon_alert(user, "on cooldown!")
 		to_chat(user, span_warning("The last satellite emagged needs [DisplayTimeText(COOLDOWN_TIMELEFT(src, shared_emag_cooldown))] to recalibrate first. Emagging another so soon could damage the satellite network."))
-		return
+		return FALSE
 	var/cooldown_applied = METEOR_SHIELD_EMAG_COOLDOWN
 	if(istype(emag_card, /obj/item/card/emag/meteor_shield_recalibrator))
 		cooldown_applied /= 3
@@ -132,6 +133,7 @@
 	say("Recalibrating... ETA:[DisplayTimeText(cooldown_applied)].")
 	if(active) //if we allowed inactive updates a sat could be worth -1 active meteor shields on first emag
 		update_emagged_meteor_sat(user)
+	return TRUE
 
 /obj/machinery/satellite/meteor_shield/proc/update_emagged_meteor_sat(mob/user)
 	if(!active)
@@ -159,10 +161,7 @@
 			priority_announce("Warning. Tampering of meteor satellites puts the station at risk of exotic, deadly meteor collisions. Please intervene by checking your GPS devices for strange signals, and dismantling the tampered meteor shields.", "Strange Meteor Signal Warning")
 		if(EMAGGED_METEOR_SHIELD_THRESHOLD_FOUR)
 			say("Warning. Warning. Dark Matt-eor on course for station.")
-			var/datum/round_event_control/dark_matteor/dark_matteor_event = locate() in SSevents.control
-			if(!dark_matteor_event)
-				CRASH("meteor shields tried to spawn a dark matteor, but there was no dark matteor event in SSevents.control?")
-			INVOKE_ASYNC(dark_matteor_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+			force_event_async(/datum/round_event_control/dark_matteor, "an array of tampered meteor satellites")
 
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
 	// Update the weight of all meteor events

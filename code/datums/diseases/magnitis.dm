@@ -14,16 +14,16 @@
 	process_dead = TRUE
 
 
-/datum/disease/magnitis/stage_act(delta_time, times_fired)
+/datum/disease/magnitis/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your skin tingles with energy."))
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				for(var/obj/nearby_object in orange(2, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
 						continue
@@ -35,9 +35,9 @@
 					var/move_dir = get_dir(nearby_silicon, affected_mob)
 					nearby_silicon.Move(get_step(nearby_silicon, move_dir), move_dir)
 		if(3)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your hair stands on end."))
-			if(DT_PROB(2, delta_time))
+			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a light shock course through your body."))
 				for(var/obj/nearby_object in orange(4, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
@@ -50,9 +50,9 @@
 					for(var/i in 1 to rand(1, 2))
 						nearby_silicon.throw_at(affected_mob, 4, 3)
 		if(4)
-			if(DT_PROB(1, delta_time))
+			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You query upon the nature of miracles."))
-			if(DT_PROB(4, delta_time))
+			if(SPT_PROB(4, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a powerful shock course through your body."))
 				for(var/obj/nearby_object in orange(6, affected_mob))
 					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))

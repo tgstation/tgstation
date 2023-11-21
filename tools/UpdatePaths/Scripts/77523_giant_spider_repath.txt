@@ -1,0 +1,4 @@
+/mob/living/basic/spiderling/@SUBTYPES : /mob/living/basic/spider/growing/spiderling/@SUBTYPES{@OLD}
+/mob/living/basic/spider_young/@SUBTYPES : /mob/living/basic/spider/growing/young/@SUBTYPES{@OLD}
+/mob/living/basic/giant_spider/maintenance : /mob/living/basic/spider/maintenance{@OLD}
+/mob/living/basic/giant_spider/@SUBTYPES : /mob/living/basic/spider/giant/@SUBTYPES{@OLD}

@@ -11,8 +11,7 @@
 
 /datum/traitor_objective/ultimate/space_dragon/on_objective_taken(mob/user)
 	. = ..()
-	var/datum/round_event_control/carp_migration/carp_event = locate(/datum/round_event_control/carp_migration) in SSevents.control
-	carp_event.runEvent()
+	force_event(/datum/round_event_control/carp_migration, "[handler.owner]'s final objective")
 
 /datum/traitor_objective/ultimate/space_dragon/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/list/possible_areas = GLOB.the_station_areas.Copy()

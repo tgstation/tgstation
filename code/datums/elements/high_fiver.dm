@@ -21,20 +21,12 @@
 /datum/element/high_fiver/proc/on_offer(obj/item/source, mob/living/carbon/offerer)
 	SIGNAL_HANDLER
 
-	if(locate(/mob/living/carbon) in orange(1, offerer))
-		offerer.visible_message(
-			span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"),
-			span_notice("You post up, looking for a high-five!"),
-			vision_distance = 2,
-		)
-		offerer.apply_status_effect(/datum/status_effect/offering, source, /atom/movable/screen/alert/give/highfive)
-
-	else
-		offerer.visible_message(
-			span_danger("[offerer] raises [offerer.p_their()] arm, looking around for a high-five, but there's no one around!"),
-			span_warning("You post up, looking for a high-five, but find no one to accept it..."),
-			vision_distance = 4,
-		)
+	offerer.visible_message(
+		span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"),
+		span_notice("You post up, looking for a high-five!"),
+		vision_distance = 2,
+	)
+	offerer.apply_status_effect(/datum/status_effect/offering/no_item_received/high_five, source, /atom/movable/screen/alert/give/highfive)
 
 	return COMPONENT_OFFER_INTERRUPT
 
@@ -89,4 +81,5 @@
 		offerer.add_mood_event(descriptor, /datum/mood_event/high_five)
 		taker.add_mood_event(descriptor, /datum/mood_event/high_five)
 
+	offerer.remove_status_effect(/datum/status_effect/offering/no_item_received/high_five)
 	return COMPONENT_OFFER_INTERRUPT

@@ -5,7 +5,7 @@
 	name = "\improper Skillsoft station"
 	desc = "Learn skills with only minimal chance for brain damage."
 
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 	occupant_typecache = list(/mob/living/carbon) //todo make occupant_typecache per type
 	state_open = TRUE

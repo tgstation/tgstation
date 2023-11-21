@@ -1,6 +1,6 @@
 /mob/living/carbon/examine(mob/user)
-	var/t_He = p_they(TRUE)
-	var/t_His = p_their(TRUE)
+	var/t_He = p_They()
+	var/t_His = p_Their()
 	var/t_his = p_their()
 	var/t_him = p_them()
 	var/t_has = p_have()
@@ -149,7 +149,7 @@
 				. += "[t_He] look[p_s()] ecstatic."
 	. += "</span>"
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
 /mob/living/carbon/examine_more(mob/user)
 	. = ..()
@@ -161,8 +161,8 @@
 		for(var/obj/item/bodypart/part as anything in bodyparts)
 			if(part.body_zone in covered_zones)
 				continue
-			if(part.limb_id != (dna.species.examine_limb_id ? dna.species.examine_limb_id : dna.species.id))
-				. += "[span_info("[p_they(TRUE)] [p_have()] \an [part.name].")]"
+			if(part.limb_id != dna.species.examine_limb_id)
+				. += "[span_info("[p_They()] [p_have()] \an [part.name].")]"
 
 	var/list/visible_scars
 	for(var/i in all_scars)

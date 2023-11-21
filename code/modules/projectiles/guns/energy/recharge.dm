@@ -18,6 +18,14 @@
 	/// Do we recharge slower with more of our type?
 	var/unique_frequency = FALSE
 
+/obj/item/gun/energy/recharge/apply_fantasy_bonuses(bonus)
+	. = ..()
+	recharge_time = modify_fantasy_variable("recharge_time", recharge_time, -bonus, minimum = 0.2 SECONDS)
+
+/obj/item/gun/energy/recharge/remove_fantasy_bonuses(bonus)
+	recharge_time = reset_fantasy_variable("recharge_time", recharge_time)
+	return ..()
+
 /obj/item/gun/energy/recharge/Initialize(mapload)
 	. = ..()
 	if(!holds_charge)
@@ -99,7 +107,7 @@
 	inhand_icon_state = "crossbow"
 	no_charge_state = "crossbow_empty"
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	recharge_time = 2 SECONDS
@@ -124,6 +132,6 @@
 	base_icon_state = "crossbowlarge"
 	no_charge_state = "crossbowlarge_empty"
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=4000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)

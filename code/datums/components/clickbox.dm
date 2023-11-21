@@ -21,7 +21,7 @@
 	/// For simple animals that have different icon states when dead.
 	var/dead_state
 	/// the underlay that has been added to the parent.
-	var/mutable_appearance/clickbox_undelay
+	var/mutable_appearance/clickbox_underlay
 
 /datum/component/clickbox/Initialize(icon_state = "sphere", x_offset = 0, y_offset = 0, max_scale = 2, min_scale = 0.5, dead_state)
 	if(!isatom(parent))
@@ -33,63 +33,70 @@
 	src.max_scale = max_scale
 	src.min_scale = min_scale
 
-	RegisterSignal(parent, COMSIG_ATOM_VV_MODIFY_TRANSFORM, PROC_REF(on_modify_or_update_transform))
+	RegisterSignal(parent, COMSIG_ATOM_VV_MODIFY_TRANSFORM, PROC_REF(on_vv_modify_transform))
 
 	var/clickbox_icon_state = icon_state
-	if(dead_state && isliving(parent))
+	if(isliving(parent))
 		var/mob/living/living_parent = parent
-		src.dead_state = dead_state
-		RegisterSignal(living_parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_modify_or_update_transform))
-		RegisterSignal(living_parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-		RegisterSignal(living_parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-		if(living_parent.stat == DEAD)
-			clickbox_icon_state = dead_state
+		RegisterSignal(living_parent, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(on_update_transform))
+		if(dead_state)
+			src.dead_state = dead_state
+			RegisterSignal(living_parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+			RegisterSignal(living_parent, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
+			if(living_parent.stat == DEAD)
+				clickbox_icon_state = dead_state
+
 	update_underlay(clickbox_icon_state)
 
 /datum/component/clickbox/UnregisterFromParent()
 	var/atom/movable/mov_parent = parent
 	UnregisterSignal(mov_parent, list(COMSIG_ATOM_VV_MODIFY_TRANSFORM, COMSIG_LIVING_POST_UPDATE_TRANSFORM, COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE))
-	mov_parent.underlays -= clickbox_undelay
+	mov_parent.underlays -= clickbox_underlay
 
-/// Removes the old underlay and adds a new one if conditions are met. The underlay is scaled up/down if necessary
-/datum/component/clickbox/proc/update_underlay(clickbox_icon_state)
+/// Removes the old underlay and adds a new one. The underlay is scaled up/down if necessary
+/datum/component/clickbox/proc/update_underlay(clickbox_icon_state, width, height)
 	var/atom/movable/mov_parent = parent
 	if(!clickbox_icon_state)
-		clickbox_icon_state = clickbox_undelay?.icon_state || icon_state
-	mov_parent.underlays -= clickbox_undelay // Remove the previous underlay.
-
-	var/width = abs(mov_parent.transform.a) // Negative values flip the parent, so abs() is good to have here.
-	var/height = abs(mov_parent.transform.e) // Idem.
+		clickbox_icon_state = clickbox_underlay?.icon_state || icon_state
+	mov_parent.underlays -= clickbox_underlay // Remove the previous underlay.
 
 	var/clickbox_width = 1
-	if(width > max_scale)
+	var/abs_width = abs(width) //Taking into account inverted transform values.
+	if(abs_width > max_scale)
 		clickbox_width = max_scale/width
-	else if(width < min_scale && width)
+	else if(abs_width && abs_width < min_scale)
 		clickbox_width = min_scale/width
 
 	var/clickbox_height = 1
-	if(height > max_scale)
+	var/abs_height = abs(height) //Ditto
+	if(abs_height > max_scale)
 		clickbox_height = max_scale/height
-	else if(height < min_scale && height)
+	else if(abs_height && abs_height < min_scale)
 		clickbox_height = min_scale/height
 
-	clickbox_undelay = mutable_appearance('icons/misc/clickbox.dmi', clickbox_icon_state, CLICKBOX_LAYER, alpha = 1, appearance_flags = RESET_COLOR|RESET_ALPHA)
-	clickbox_undelay.transform = clickbox_undelay.transform.Scale(clickbox_width, clickbox_height)
+	clickbox_underlay = mutable_appearance('icons/misc/clickbox.dmi', clickbox_icon_state, CLICKBOX_LAYER, alpha = 1, appearance_flags = RESET_COLOR|RESET_ALPHA)
+	clickbox_underlay.transform = clickbox_underlay.transform.Scale(clickbox_width, clickbox_height)
 	//Keeps the underlay more or less centered.
-	clickbox_undelay.pixel_x = x_offset * 1/clickbox_width
-	clickbox_undelay.pixel_y = y_offset * 1/clickbox_height
-	mov_parent.underlays += clickbox_undelay
+	clickbox_underlay.pixel_x = x_offset * 1/clickbox_width
+	clickbox_underlay.pixel_y = y_offset * 1/clickbox_height
+	mov_parent.underlays += clickbox_underlay
 
-/datum/component/clickbox/proc/on_modify_or_update_transform(atom/source)
+/datum/component/clickbox/proc/on_vv_modify_transform(atom/source)
 	SIGNAL_HANDLER
-	update_underlay()
+	var/width = source.transform.a
+	var/height = source.transform.e
+	update_underlay(clickbox_underlay.icon_state, width, height)
+
+/datum/component/clickbox/proc/on_update_transform(mob/living/source, previous_size)
+	SIGNAL_HANDLER
+	update_underlay(clickbox_underlay.icon_state , source.current_size, source.current_size)
 
 /datum/component/clickbox/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
-	update_underlay(dead_state)
+	update_underlay(dead_state, source.current_size, source.current_size)
 
 /datum/component/clickbox/proc/on_revive(mob/living/source)
 	SIGNAL_HANDLER
-	update_underlay(icon_state)
+	update_underlay(icon_state, source.current_size, source.current_size)
 
 #undef CLICKBOX_LAYER

@@ -10,7 +10,7 @@
 	strip_delay = 20
 	equip_delay_other = 25
 	resistance_flags = NONE
-	custom_materials = list(/datum/material/glass = 250)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
 	gender = PLURAL
 	var/vision_flags = 0
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
@@ -200,6 +200,35 @@
 	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
 	user.update_worn_glasses()
 
+/obj/item/clothing/glasses/eyepatch/medical
+	name = "medical eyepatch"
+	desc = "Used by space weeaboos to pretend their eye isn't there, and crewmembers who actually lost their eye to pretend their eye is there."
+	icon_state = "eyepatch_medical"
+	base_icon_state = "eyepatch_medical"
+	inhand_icon_state = null
+
+/// wizard version
+/obj/item/clothing/glasses/eyepatch/medical/chuuni
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = CASTING_CLOTHES
+
+/obj/item/clothing/glasses/eyepatch/medical/chuuni/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_EYES)
+		ADD_TRAIT(src, TRAIT_NODROP, type)
+
+/obj/item/clothing/glasses/eyepatch/medical/chuuni/Initialize(mapload)
+	. = ..()
+	var/static/list/chuuni_backstories
+	if(!chuuni_backstories)
+		chuuni_backstories = list(
+			"This eyepatch is a seal that contains the power of the demon king. If I remove it, I will unleash a cataclysmic destruction upon the world.",
+			"This eyepatch is a gift from the angel of light. It allows me to see the true nature of things and protect the innocent from harm.",
+			"This eyepatch is a mark of my contract with the dragon god. It grants me access to his ancient wisdom and fiery breath.",
+			"This eyepatch is a symbol of my sacrifice for the sake of love. It hides the scar that I received from saving my beloved from a fatal attack.",
+		)
+	desc = pick(chuuni_backstories)
+
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
@@ -240,7 +269,7 @@
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
 	desc = "Made by Nerd. Co."
-	icon_state = "glasses"
+	icon_state = "glasses_regular"
 	inhand_icon_state = "glasses"
 	clothing_traits = list(TRAIT_NEARSIGHTED_CORRECTED)
 
@@ -261,8 +290,8 @@
 		return
 	if(isliving(movable))
 		var/mob/living/crusher = movable
-		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
-			playsound(src, 'sound/effects/glass_step.ogg', 30, TRUE)
+		if(crusher.move_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
+			playsound(src, 'sound/effects/footstep/glass_step.ogg', 30, TRUE)
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)
 
@@ -276,7 +305,7 @@
 		return
 	if(!I.tool_start_check(user, amount=1))
 		return
-	if(I.use_tool(src, user, 10, volume=30, amount=1))
+	if(I.use_tool(src, user, 10, volume=30))
 		user.visible_message(span_notice("[user] welds [src] back together."),\
 					span_notice("You weld [src] back together."))
 		repair()
@@ -294,19 +323,19 @@
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
-	icon_state = "jamjar_glasses"
-	inhand_icon_state = "jamjar_glasses"
+	icon_state = "glasses_jamjar"
+	inhand_icon_state = "glasses_jamjar"
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "prescription glasses"
 	desc = "Made by Uncool. Co."
-	icon_state = "hipster_glasses"
+	icon_state = "glasses_hipster"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/regular/circle
 	name = "circle glasses"
 	desc = "Why would you wear something so controversial yet so brave?"
-	icon_state = "circle_glasses"
+	icon_state = "glasses_circle"
 	inhand_icon_state = null
 
 //Here lies green glasses, so ugly they died. RIP
@@ -368,6 +397,29 @@
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+///Syndicate item that upgrades the flash protection of your eyes.
+/obj/item/syndicate_contacts
+	name = "suspicious contact lens case"
+	desc = "A sinister red case that contains two shiny black contact lenses."
+	w_class = WEIGHT_CLASS_TINY
+	icon = 'icons/obj/device.dmi'
+	icon_state = "contacts"
+
+/obj/item/syndicate_contacts/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
+		to_chat(user, span_warning("You have no eyes to apply the contacts to!"))
+		return
+	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+
+	to_chat(user, span_notice("You begin applying the contact lenses to your eyes..."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	to_chat(user, span_notice("The contacts seamlessly merge with your iris."))
+	eyes.flash_protect += FLASH_PROTECTION_WELDER
+	to_chat(user, span_warning("\The [src] disintegrates into nothing."))
+	qdel(src)
+
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
@@ -375,7 +427,7 @@
 	inhand_icon_state = "welding-g"
 	actions_types = list(/datum/action/item_action/toggle)
 	flash_protect = FLASH_PROTECTION_WELDER
-	custom_materials = list(/datum/material/iron = 250)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5)
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_cover = GLASSESCOVERSEYES
@@ -470,26 +522,10 @@
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
-/obj/item/clothing/glasses/thermal/syndi //These are now a traitor item, concealed as mesons. -Pete
+/obj/item/clothing/glasses/thermal/syndi
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
-
-	var/datum/action/item_action/chameleon/change/chameleon_action
-
-/obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
-	. = ..()
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/clothing/glasses
-	chameleon_action.chameleon_name = "Glasses"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
+	actions_types = list(/datum/action/item_action/chameleon/change/glasses/no_preset)
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"
@@ -595,19 +631,19 @@
 	. = ..()
 	if(ishuman(user))
 		if(xray)
-			vision_flags -= SEE_MOBS|SEE_OBJS
+			vision_flags &= ~SEE_MOBS|SEE_OBJS
 			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		else
-			vision_flags += SEE_MOBS|SEE_OBJS
+			vision_flags |= SEE_MOBS|SEE_OBJS
 			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
-		var/mob/living/carbon/human/H = user
-		H.update_sight()
+		var/mob/living/carbon/human/human_user = user
+		human_user.update_sight()
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
 	desc = "Shows you know how to sew a lapel and center a back vent."
-	icon_state = "binoclard_lenses"
+	icon_state = "glasses_binoclard"
 	inhand_icon_state = null
 
 /obj/item/clothing/glasses/salesman
@@ -650,6 +686,33 @@
 	inhand_icon_state = "glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/nightmare
 	forced_glass_color = TRUE
+	lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
+	/// Hallucination datum currently being used for seeing mares
+	var/datum/hallucination/stored_hallucination
+
+/obj/item/clothing/glasses/nightmare_vision/Destroy()
+	QDEL_NULL(stored_hallucination)
+	return ..()
+
+/obj/item/clothing/glasses/nightmare_vision/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_EYES))
+		return
+	//5% chance to get mare vision
+	if(prob(5))
+		stored_hallucination = 	user.cause_hallucination( \
+			/datum/hallucination/delusion/preset/mare, \
+			src.name, \
+			duration = 0, \
+			affects_us = TRUE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+			play_wabbajack = FALSE, \
+		)
+
+/obj/item/clothing/glasses/nightmare_vision/dropped(mob/living/user)
+	. = ..()
+	QDEL_NULL(stored_hallucination)
 
 /obj/item/clothing/glasses/osi
 	name = "O.S.I. Sunglasses"

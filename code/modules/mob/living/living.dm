@@ -1,5 +1,7 @@
 /mob/living/Initialize(mapload)
 	. = ..()
+	if(current_size != RESIZE_DEFAULT_SIZE)
+		update_transform(current_size)
 	AddElement(/datum/element/movetype_handler)
 	register_init_signals()
 	if(unique_name)
@@ -13,6 +15,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
+	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
 /mob/living/prepare_huds()
 	..()
@@ -83,7 +86,7 @@
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
 	//No bumping/swapping/pushing others if you are on walk intent
-	if(m_intent == MOVE_INTENT_WALK)
+	if(move_intent == MOVE_INTENT_WALK)
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
@@ -204,7 +207,7 @@
 	if(len)
 		for(var/obj/item/I in held_items)
 			if(!holding.len)
-				holding += "[p_they(TRUE)] [p_are()] holding \a [I]"
+				holding += "[p_They()] [p_are()] holding \a [I]"
 			else if(held_items.Find(I) == len)
 				holding += ", and \a [I]."
 			else
@@ -359,7 +362,7 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
-					C.grippedby(src)
+					C.grabbedby(src)
 
 			update_pull_movespeed()
 
@@ -379,24 +382,26 @@
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
 	M.setDir(get_dir(M, src))
+	var/target_pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
+	var/target_pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
 	switch(M.dir)
 		if(NORTH)
-			animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y + offset, 3)
+			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y + offset, 3)
 		if(SOUTH)
-			animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y - offset, 3)
+			animate(M, pixel_x = target_pixel_x, pixel_y = target_pixel_y - offset, 3)
 		if(EAST)
 			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
 				M.set_lying_angle(90)
-			animate(M, pixel_x = M.base_pixel_x + offset, pixel_y = M.base_pixel_y, 3)
+			animate(M, pixel_x = target_pixel_x + offset, pixel_y = target_pixel_y, 3)
 		if(WEST)
 			if(M.lying_angle == 90)
 				M.set_lying_angle(270)
-			animate(M, pixel_x = M.base_pixel_x - offset, pixel_y = M.base_pixel_y, 3)
+			animate(M, pixel_x = target_pixel_x - offset, pixel_y = target_pixel_y, 3)
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
 		return
-	animate(M, pixel_x = M.base_pixel_x, pixel_y = M.base_pixel_y, 1)
+	animate(M, pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset , pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset, 1)
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
@@ -605,8 +610,8 @@
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
-	set_lying_angle(0)
 	set_body_position(STANDING_UP)
+	set_lying_angle(0)
 
 
 /mob/living/proc/rest_checks_callback()
@@ -623,20 +628,32 @@
 /mob/living/proc/on_lying_down(new_lying_angle)
 	if(layer == initial(layer)) //to avoid things like hiding larvas.
 		layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), LYING_DOWN_TRAIT)
-	set_density(FALSE) // We lose density and stop bumping passable dense things.
+	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
-	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
+	if(rotate_on_lying)
+		body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
 
 
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_standing_up()
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
-	set_density(initial(density)) // We were prone before, so we become dense and things can bump into us again.
-	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), LYING_DOWN_TRAIT)
-	body_position_pixel_y_offset = 0
+	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
+	// Make sure it doesn't go out of the southern bounds of the tile when standing.
+	body_position_pixel_y_offset = get_pixel_y_offset_standing(current_size)
+
+/// Returns what the body_position_pixel_y_offset should be if the current size were `value`
+/mob/living/proc/get_pixel_y_offset_standing(value)
+	var/icon/living_icon = icon(icon)
+	var/height = living_icon.Height()
+	return (value-1) * height * 0.5
+
+/mob/living/proc/update_density()
+	if(HAS_TRAIT(src, TRAIT_UNDENSE))
+		set_density(FALSE)
+	else
+		set_density(TRUE)
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
@@ -925,6 +942,22 @@
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
 
+/**
+ * Called by mob/living attackby()
+ * Checks if there's active surgery on the mob that can be continued with the item
+ */
+/mob/living/proc/can_perform_surgery(mob/living/user, params)
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.combat_mode)
+			break
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
+			continue
+		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
+			continue
+		var/list/modifiers = params2list(params)
+		if(operations.next_step(user, modifiers))
+			return TRUE
+	return FALSE
 
 ///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
 /mob/living/proc/lying_angle_on_movement(direct)
@@ -960,7 +993,7 @@
 		else if(newdir == (EAST|WEST))
 			newdir = EAST
 	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = turn(get_dir(target_turf, start), 180)
+		newdir = REVERSE_DIR(get_dir(target_turf, start))
 	if(!blood_exists)
 		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
 
@@ -1172,10 +1205,8 @@
 		loc_temp = ((1 - occupied_space.contents_thermal_insulation) * loc_temp) + (occupied_space.contents_thermal_insulation * bodytemperature)
 	return loc_temp
 
-/mob/living/cancel_camera()
-	..()
-	cameraFollow = null
-
+/// Checks if this mob can be actively tracked by cameras / AI.
+/// Can optionally be passed a user, which is the mob who is tracking src.
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, user) & COMPONENT_CANT_TRACK)
@@ -1187,14 +1218,14 @@
 		return FALSE
 	if(is_away_level(T.z))
 		return FALSE
-	if(onSyndieBase() && !(ROLE_SYNDICATE in user.faction))
+	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
 		return FALSE
-	if(user != null && src == user)
+	if(!isnull(user) && src == user)
 		return FALSE
 	if(invisibility || alpha == 0)//cloaked
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
-	if(!near_camera(src))
+	if(!GLOB.cameranet.checkCameraVis(src))
 		return FALSE
 	return TRUE
 
@@ -1303,8 +1334,7 @@
 		// Disconnect AI's in shells
 		if(Robot.connected_ai)
 			Robot.connected_ai.disconnect_shell()
-		if(Robot.mmi)
-			qdel(Robot.mmi)
+		QDEL_NULL(Robot.mmi)
 		Robot.notify_ai(AI_NOTIFICATION_NEW_BORG)
 	else
 		for(var/obj/item/item in src)
@@ -1373,40 +1403,40 @@
 
 		if(WABBAJACK_ANIMAL)
 			var/picked_animal = pick(
+				/mob/living/basic/bat,
+				/mob/living/basic/bear,
+				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
-				/mob/living/simple_animal/hostile/bear,
-				/mob/living/simple_animal/hostile/mushroom,
-				/mob/living/basic/statue,
-				/mob/living/simple_animal/hostile/retaliate/bat,
-				/mob/living/simple_animal/hostile/retaliate/goat,
-				/mob/living/simple_animal/hostile/killertomato,
-				/mob/living/basic/giant_spider,
-				/mob/living/basic/giant_spider/hunter,
-				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/basic/carp/magic,
 				/mob/living/basic/carp/magic/chaos,
-				/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-				/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-				/mob/living/simple_animal/hostile/headcrab,
-				/mob/living/simple_animal/hostile/morph,
+				/mob/living/basic/chick,
+				/mob/living/basic/chicken,
+				/mob/living/basic/cow,
+				/mob/living/basic/crab,
+				/mob/living/basic/headslug,
+				/mob/living/basic/killer_tomato,
+				/mob/living/basic/lizard,
+				/mob/living/basic/mining/goliath,
+				/mob/living/basic/mining/watcher,
+				/mob/living/basic/morph,
+				/mob/living/basic/mouse,
+				/mob/living/basic/mushroom,
+				/mob/living/basic/pet/dog/breaddog,
+				/mob/living/basic/pet/dog/corgi,
+				/mob/living/basic/pet/dog/pug,
+				/mob/living/basic/pet/fox,
+				/mob/living/basic/spider/giant,
+				/mob/living/basic/spider/giant/hunter,
+				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 				/mob/living/simple_animal/hostile/gorilla,
+				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+				/mob/living/simple_animal/hostile/retaliate/goat,
 				/mob/living/simple_animal/parrot,
-				/mob/living/basic/pet/dog/corgi,
-				/mob/living/simple_animal/crab,
-				/mob/living/basic/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
-				/mob/living/basic/mouse,
-				/mob/living/simple_animal/chicken,
-				/mob/living/basic/cow,
-				/mob/living/simple_animal/hostile/lizard,
-				/mob/living/simple_animal/pet/fox,
-				/mob/living/simple_animal/butterfly,
 				/mob/living/simple_animal/pet/cat/cak,
-				/mob/living/basic/pet/dog/breaddog,
-				/mob/living/simple_animal/chick,
 			)
 			new_mob = new picked_animal(loc)
 
@@ -1453,6 +1483,12 @@
 	// transfering the mind and observerse, and other miscellaneous
 	// actions that should be done before we delete the original mob.
 	on_wabbajacked(new_mob)
+
+	// Valid polymorph types unlock the Lepton.
+	if((change_flags & (WABBAJACK|MIRROR_MAGIC|MIRROR_PRIDE|RACE_SWAP)) && (SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] != TRUE))
+		to_chat(new_mob, span_revennotice("You have the strangest feeling, for a moment. A fragile, dizzying memory wanders into your mind.. all you can make out is-"))
+		to_chat(new_mob, span_hypnophrase("You sleep so it may wake. You wake so it may sleep. It wakes. Do not sleep."))
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK] = TRUE
 
 	qdel(src)
 	return new_mob
@@ -1619,12 +1655,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * Handles effects happening when mob is on normal fire
  *
  * Vars:
- * * delta_time
+ * * seconds_per_tick
  * * times_fired
  * * fire_handler: Current fire status effect that called the proc
  */
 
-/mob/living/proc/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	return
 
 //Mobs on Fire end
@@ -1785,6 +1821,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(NAMEOF(src, body_position))
 			set_body_position(var_value)
 			. = TRUE
+		if(NAMEOF(src, current_size))
+			if(var_value == 0) //prevents divisions of and by zero.
+				return FALSE
+			update_transform(var_value/current_size)
+			. = TRUE
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -1795,8 +1836,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	switch(var_name)
 		if(NAMEOF(src, maxHealth))
 			updatehealth()
-		if(NAMEOF(src, resize))
-			update_transform()
 		if(NAMEOF(src, lighting_cutoff))
 			sync_lighting_plane_cutoff()
 
@@ -2072,7 +2111,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(CONSCIOUS)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED), STAT_TRAIT)
+			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_CRITICAL_CONDITION), STAT_TRAIT)
 		if(SOFT_CRIT)
 			if(pulledby)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
@@ -2241,7 +2280,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	overeatduration = 0
 
 
-/// Changes the value of the [living/body_position] variable.
+/// Changes the value of the [living/body_position] variable. Call this before set_lying_angle()
 /mob/living/proc/set_body_position(new_value)
 	if(body_position == new_value)
 		return
@@ -2259,8 +2298,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Proc to append behavior to the condition of being floored. Called when the condition starts.
 /mob/living/proc/on_floored_start()
 	if(body_position == STANDING_UP) //force them on the ground
-		set_lying_angle(pick(90, 270))
 		set_body_position(LYING_DOWN)
+		set_lying_angle(pick(90, 270))
 		on_fall()
 
 
@@ -2415,7 +2454,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	mob_mood.clear_mood_event(mood_events[chosen])
 
 /// Adds a mood event to the mob
-/mob/living/proc/add_mood_event(category, type, ...)
+/mob/living/proc/add_mood_event(category, type, timeout_mod, ...)
 	if(QDELETED(mob_mood))
 		return
 	mob_mood.add_mood_event(arglist(args))
@@ -2442,8 +2481,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	revive(HEAL_ALL)
 	befriend(reviver)
 	faction = (malfunctioning) ? list("[REF(reviver)]") : list(FACTION_NEUTRAL)
+	var/lazarus_policy = get_policy(ROLE_LAZARUS_GOOD) || "The lazarus injector has brought you back to life! You are now friendly to everyone."
 	if (malfunctioning)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
+		if(!isnull(src.mind))
+			src.mind.enslave_mind_to_creator(reviver)
+		to_chat(src, span_userdanger("Serve [reviver.real_name], and assist [reviver.p_them()] in completing [reviver.p_their()] goals at any cost."))
+		lazarus_policy = get_policy(ROLE_LAZARUS_BAD) || "You have been revived by a malfunctioning lazarus injector! You are now enslaved by whoever revived you."
+	to_chat(src, span_boldnotice(lazarus_policy))
 
 /// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)
@@ -2452,12 +2497,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (faction.Find(friend_ref))
 		return FALSE
 	faction |= friend_ref
-	if (ai_controller)
-		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
-		if (!friends)
-			friends = list()
-		friends[WEAKREF(new_friend)] = TRUE
-		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, new_friend)
+
 	SEND_SIGNAL(src, COMSIG_LIVING_BEFRIENDED, new_friend)
 	return TRUE
 
@@ -2468,12 +2509,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (!faction.Find(friend_ref))
 		return FALSE
 	faction -= friend_ref
-	if (ai_controller)
-		var/list/friends = ai_controller.blackboard[BB_FRIENDS_LIST]
-		if (!friends)
-			return
-		friends[WEAKREF(old_friend)] = FALSE
-		ai_controller.blackboard[BB_FRIENDS_LIST] = friends
+	ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, old_friend)
+
 	SEND_SIGNAL(src, COMSIG_LIVING_UNFRIENDED, old_friend)
 	return TRUE
 

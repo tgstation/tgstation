@@ -9,7 +9,7 @@
  */
 /datum/ai_planning_subtree/carp_migration
 
-/datum/ai_planning_subtree/carp_migration/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/carp_migration/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 
 	// If there's a rift nearby take a ride, then cancel everything else because it's not valid any more
@@ -22,8 +22,7 @@
 	if (!length(migration_points))
 		return
 
-	var/datum/weakref/weak_target = controller.blackboard[BB_CARP_MIGRATION_TARGET]
-	var/turf/moving_to = weak_target?.resolve()
+	var/turf/moving_to = controller.blackboard[BB_CARP_MIGRATION_TARGET]
 
 	// If we don't have a target or are close enough to it, pick a new one
 	if (isnull(moving_to) || get_dist(controller.pawn, moving_to) <= CARP_DESTINATION_SEARCH_RANGE)
@@ -44,17 +43,16 @@
  */
 /datum/ai_behavior/find_next_carp_migration_step
 
-/datum/ai_behavior/find_next_carp_migration_step/perform(delta_time, datum/ai_controller/controller, path_key, target_key)
+/datum/ai_behavior/find_next_carp_migration_step/perform(seconds_per_tick, datum/ai_controller/controller, path_key, target_key)
 	var/list/blackboard_points = controller.blackboard[path_key]
 	var/list/potential_migration_points = blackboard_points.Copy()
 	while (length(potential_migration_points))
-		var/datum/weakref/weak_destination = popleft(potential_migration_points)
-		var/turf/potential_destination = weak_destination.resolve()
+		var/turf/potential_destination = popleft(potential_migration_points)
 		if (!isnull(potential_destination) && get_dist(controller.pawn, potential_destination) > CARP_DESTINATION_SEARCH_RANGE)
-			controller.blackboard[target_key] = weak_destination
+			controller.set_blackboard_key(target_key, potential_destination)
 			finish_action(controller, succeeded = TRUE)
 			return
-		controller.blackboard[path_key] = potential_migration_points.Copy()
+		controller.set_blackboard_key(path_key, potential_migration_points.Copy())
 
 	finish_action(controller, succeeded = FALSE)
 

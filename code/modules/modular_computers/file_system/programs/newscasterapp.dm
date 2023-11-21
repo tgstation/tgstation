@@ -22,16 +22,10 @@
 	return ..()
 
 /datum/computer_file/program/newscaster/ui_data(mob/user)
-	var/list/data = list()
-	data += newscaster_ui.ui_data(user)
-	return data
+	return newscaster_ui.ui_data(user)
 
 /datum/computer_file/program/newscaster/ui_static_data(mob/user)
-	var/list/data = newscaster_ui.ui_static_data(user)
-	return data
+	return newscaster_ui.ui_static_data(user)
 
-/datum/computer_file/program/newscaster/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
-	return newscaster_ui.ui_act(action, params, ui)
+/datum/computer_file/program/newscaster/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	return newscaster_ui.ui_act(action, params, ui, state)

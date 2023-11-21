@@ -16,8 +16,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
-	obj_flags = USES_TGUI
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.25)
 
 	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
 	VAR_PRIVATE/on = TRUE
@@ -92,7 +91,7 @@
 	VAR_PRIVATE/should_update_icon = FALSE
 
 /obj/item/radio/Initialize(mapload)
-	wires = new /datum/wires/radio(src)
+	set_wires(new /datum/wires/radio(src))
 	secure_radio_connections = list()
 	. = ..()
 
@@ -160,7 +159,7 @@
 	for(var/channel_name in channels)
 		add_radio(src, GLOB.radiochannels[channel_name])
 
-	add_radio(src, FREQ_COMMON)
+	add_radio(src, frequency)
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -304,11 +303,8 @@
 		channel = null
 
 	// Nearby active jammers prevent the message from transmitting
-	var/turf/position = get_turf(src)
-	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
-		var/turf/jammer_turf = get_turf(jammer)
-		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range) && !syndie)
-			return
+	if(is_within_radio_jammer_range(src) && !syndie)
+		return
 
 	// Determine the identity information which will be attached to the signal.
 	var/atom/movable/virtualspeaker/speaker = new(null, talking_movable, src)
@@ -343,7 +339,7 @@
 	// Okay, the signal was never processed, send a mundane broadcast.
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
-	signal.levels = list(T.z)
+	signal.levels = SSmapping.get_connected_levels(T)
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)

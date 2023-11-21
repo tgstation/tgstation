@@ -49,7 +49,7 @@
 "E" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/canister,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "M" = (

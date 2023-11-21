@@ -50,7 +50,7 @@
 	target.adjustBruteLoss(-healing_amount)
 	target.adjustFireLoss(-healing_amount)
 	target.adjustOxyLoss(-healing_amount)
-	target.adjustToxLoss(-healing_amount)
+	target.adjustToxLoss(-healing_amount, forced = TRUE)
 	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal(get_turf(target))
 	heal_effect.color = guardian_color
 

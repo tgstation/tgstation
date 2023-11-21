@@ -49,7 +49,7 @@
 
 /obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/scanner_gate(src)
+	set_wires(new /datum/wires/scanner_gate(src))
 	set_scanline("passive")
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -58,7 +58,7 @@
 
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
-	wires = null
+	set_wires(null)
 	. = ..()
 
 /obj/machinery/scanner_gate/examine(mob/user)
@@ -105,13 +105,14 @@
 			wires.interact(user)
 	return ..()
 
-/obj/machinery/scanner_gate/emag_act(mob/user)
+/obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	locked = FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You fry the ID checking system."))
+	balloon_alert(user, "id checker disabled")
+	return TRUE
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
@@ -198,8 +199,8 @@
 	if(next_beep <= world.time)
 		next_beep = world.time + (2 SECONDS)
 		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
-	var/image/alarm_image = image(icon, src, "alarm_light", layer+1)
-	flick_overlay_view(alarm_image, 2 SECONDS)
+	var/mutable_appearance/alarm_display = mutable_appearance(icon, "alarm_light")
+	flick_overlay_view(alarm_display, 2 SECONDS)
 	set_scanline("alarm", 2 SECONDS)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)

@@ -310,7 +310,7 @@
 /datum/action/vehicle/ridden/wheelchair/bell
 	name = "Bell Ring"
 	desc = "Ring the bell."
-	button_icon = 'icons/obj/bureaucracy.dmi'
+	button_icon = 'icons/obj/service/bureaucracy.dmi'
 	button_icon_state = "desk_bell"
 	check_flags = AB_CHECK_CONSCIOUS
 	var/bell_cooldown

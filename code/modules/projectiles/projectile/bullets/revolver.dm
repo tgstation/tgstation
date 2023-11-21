@@ -109,6 +109,20 @@
 	damage = 60
 	wound_bonus = -30
 
+/obj/projectile/bullet/a357/phasic
+	name = ".357 phasic bullet"
+	icon_state = "gaussphase"
+	damage = 35
+	armour_penetration = 100
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+
+/obj/projectile/bullet/a357/heartseeker
+	name = ".357 heartseeker bullet"
+	icon_state = "gauss"
+	damage = 50
+	homing = TRUE
+	homing_turn_speed = 120
+
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match
 	name = ".357 match bullet"

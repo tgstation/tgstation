@@ -1,7 +1,7 @@
 /obj/structure/chess
 	anchored = FALSE
 	density = FALSE
-	icon = 'icons/obj/chess.dmi'
+	icon = 'icons/obj/toys/chess.dmi'
 	icon_state = "white_pawn"
 	name = "\improper Probably a White Pawn"
 	desc = "This is weird. Please inform administration on how you managed to get the parent chess piece. Thanks!"

@@ -93,9 +93,8 @@
 
 /obj/effect/spawner/random/structure/crate_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/crate/peek_a_boo = ..()
-	if(istype(peek_a_boo))
-		peek_a_boo.opened = prob(50)
-		peek_a_boo.update_appearance()
+	if(istype(peek_a_boo) && prob(50))
+		peek_a_boo.open(special_effects = FALSE) //the crate appears immediatly out of thin air so no need to animate anything
 
 	return peek_a_boo
 
@@ -127,9 +126,8 @@
 
 /obj/effect/spawner/random/structure/closet_empty/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/peek_a_boo = ..()
-	if(istype(peek_a_boo))
-		peek_a_boo.opened = prob(50)
-		peek_a_boo.update_appearance()
+	if(istype(peek_a_boo) && prob(50))
+		peek_a_boo.open(special_effects = FALSE) //the crate appears immediatly out of thin air so no need to animate anything
 
 	return peek_a_boo
 
@@ -144,7 +142,7 @@
 		/obj/structure/closet/l3closet = 1,
 		/obj/structure/closet/radiation = 1,
 		/obj/structure/closet/bombcloset = 1,
-		/obj/structure/closet/mini_fridge = 1,
+		/obj/structure/closet/mini_fridge/grimy = 1,
 	)
 
 /obj/effect/spawner/random/structure/chair_flipped
@@ -190,7 +188,7 @@
 
 /obj/effect/spawner/random/structure/billboard
 	name = "billboard spawner"
-	icon = 'icons/obj/billboard.dmi'
+	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_random"
 	loot = list(
 		/obj/structure/billboard/azik = 50,

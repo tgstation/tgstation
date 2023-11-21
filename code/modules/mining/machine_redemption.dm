@@ -15,6 +15,8 @@
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
+	///Boolean on whether the ORM can claim points without being connected to an ore silo.
+	var/requires_silo = TRUE
 	/// The current amount of unclaimed points in the machine
 	var/points = 0
 	/// Smelted ore's amount is multiplied by this
@@ -22,7 +24,18 @@
 	/// Increases the amount of points the miners gain
 	var/point_upgrade = 1
 	/// Details how many credits each smelted ore is worth
-	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
+	var/static/list/ore_values = list(
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
+		/datum/material/plasma = 15,
+		/datum/material/silver = 16,
+		/datum/material/gold = 18,
+		/datum/material/titanium = 30,
+		/datum/material/uranium = 30,
+		/datum/material/diamond = 50,
+		/datum/material/bluespace = 50,
+		/datum/material/bananium = 60,
+	)
 	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
 	var/console_notify_timer
 	/// References the alloys the smelter can create
@@ -30,12 +43,20 @@
 	/// Linkage to the ORM silo
 	var/datum/component/remote_materials/materials
 
+/obj/machinery/mineral/ore_redemption/offstation
+	circuit = /obj/item/circuitboard/machine/ore_redemption/offstation
+	requires_silo = FALSE
+
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		mat_container_flags = BREAKDOWN_FLAGS_ORM \
+	)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	stored_research = null
@@ -58,9 +79,6 @@
 	if(gathered_ore.refined_type == null)
 		return
 
-	if(gathered_ore?.refined_type)
-		points += gathered_ore.points * point_upgrade * gathered_ore.amount
-
 	var/material_amount = mat_container.get_item_material_amount(gathered_ore, BREAKDOWN_FLAGS_ORM)
 
 	if(!material_amount)
@@ -70,12 +88,12 @@
 		unload_mineral(gathered_ore)
 
 	else
-		var/list/stack_mats = gathered_ore.get_material_composition(BREAKDOWN_FLAGS_ORM)
-		var/mats = stack_mats & mat_container.materials
-		var/amount = gathered_ore.amount
-		mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
-		materials.silo_log(src, "smelted", amount, "someone", mats)
-		qdel(gathered_ore)
+		var/ore_amount = gathered_ore.amount
+		var/ore_points= gathered_ore.points
+		var/refined_type = gathered_ore?.refined_type
+		if(mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM, context = src) > 0) //increase points only if insertion was successfull
+			if(refined_type)
+				points += ore_points * point_upgrade * ore_amount
 
 	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
 
@@ -119,27 +137,29 @@
 
 	console_notify_timer = null
 
-	var/area/A = get_area(src)
-	var/msg = "Now available in [A]:<br>"
+	var/area/our_area = get_area(src)
+	var/message = "Now available in [our_area]:"
 
 	var/has_minerals = FALSE
+	var/list/appended_list = list()
 
-	for(var/mat in mat_container.materials)
-		var/datum/material/M = mat
-		var/mineral_amount = mat_container.materials[mat] / MINERAL_MATERIAL_AMOUNT
+	for(var/current_material in mat_container.materials)
+		var/datum/material/material_datum = current_material
+		var/mineral_amount = mat_container.materials[current_material] / SHEET_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE
-		msg += "[capitalize(M.name)]: [mineral_amount] sheets<br>"
+		appended_list["[capitalize(material_datum.name)]"] = "[mineral_amount] sheets"
 
 	if(!has_minerals)
 		return
 
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"ore_update" = TRUE,
-		"sender" = "Ore Redemption Machine",
-		"message" = msg,
-		"verified" = "<font color='green'><b>Verified by Ore Redemption Machine</b></font>",
-		"priority" = REQ_NORMAL_MESSAGE_PRIORITY
+		"sender_department" = "Ore Redemption Machine",
+		"message" = message,
+		"verified" = "Ore Redemption Machine",
+		"priority" = REQ_NORMAL_MESSAGE_PRIORITY,
+		"appended_list" = appended_list,
 	))
 	signal.send_to_receivers()
 
@@ -190,7 +210,8 @@
 		if(isnull(O.refined_type))
 			to_chat(user, span_warning("[O] has already been refined!"))
 			return
-
+		smelt_ore(O)
+		return TRUE
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
@@ -220,7 +241,7 @@
 	if (mat_container)
 		for(var/datum/material/material as anything in mat_container.materials)
 			var/amount = mat_container.materials[material]
-			var/sheet_amount = amount / MINERAL_MATERIAL_AMOUNT
+			var/sheet_amount = amount / SHEET_MATERIAL_AMOUNT
 			data["materials"] += list(list(
 				"name" = material.name,
 				"id" = REF(material),
@@ -238,12 +259,15 @@
 				"amount" = can_smelt_alloy(alloy),
 			))
 
+	data["disconnected"] = null
 	if (!mat_container)
-		data["disconnected"] = "local mineral storage is unavailable"
-	else if (!materials.silo)
-		data["disconnected"] = "no ore silo connection is available; storing locally"
+		data["disconnected"] = "Local mineral storage is unavailable"
+	else if (!materials.silo && requires_silo)
+		data["disconnected"] = "No ore silo connection is available; storing locally"
+	else if (!materials.check_z_level() && requires_silo)
+		data["disconnected"] = "Unable to connect to ore silo, too far away"
 	else if (materials.on_hold())
-		data["disconnected"] = "mineral withdrawal is on hold"
+		data["disconnected"] = "Mineral withdrawal is on hold"
 
 	var/obj/item/card/id/card
 	if(isliving(user))
@@ -297,6 +321,8 @@
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
+			if(!materials.check_z_level() && (requires_silo || !user_id_card.registered_account.replaceable))
+				return TRUE
 			if(points)
 				if(user_id_card)
 					user_id_card.registered_account.mining_points += points
@@ -320,18 +346,13 @@
 				if(!amount)
 					return
 
-				var/stored_amount = CEILING(amount / MINERAL_MATERIAL_AMOUNT, 0.1)
+				var/stored_amount = CEILING(amount / SHEET_MATERIAL_AMOUNT, 0.1)
 				if(!stored_amount)
 					return
 
 				var/desired = text2num(params["sheets"])
 				var/sheets_to_remove = round(min(desired, 50, stored_amount))
-
-				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
-				var/list/mats = list()
-				mats[mat] = MINERAL_MATERIAL_AMOUNT
-				materials.silo_log(src, "released", -count, "sheets", mats)
-				//Logging deleted for quick coding
+				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir))
 			return TRUE
 		if("Smelt")
 			if(!mat_container)
@@ -349,8 +370,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				mat_container.use_materials(alloy.materials, amount)
-				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
+				materials.use_materials(alloy.materials, action = "released", name = "sheets")
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)
@@ -374,7 +394,7 @@
 	if((machine_stat & NOPOWER))
 		return
 	var/image/ore_input = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[input_dir]")
-	var/image/ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[turn(input_dir, 180)]")
+	var/image/ore_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[REVERSE_DIR(input_dir)]")
 
 	switch(input_dir)
 		if(NORTH)

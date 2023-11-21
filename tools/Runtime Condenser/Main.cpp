@@ -131,6 +131,10 @@ inline void forward_progress(FILE * inputFile) {
 			else if (nextLine->length() >= 26 && ((*nextLine)[0] == '[' && (*nextLine)[5] == '-' && (*nextLine)[14] == ':' && (*nextLine)[20] == '.' && (*nextLine)[24] == ']'))
 				nextLine->erase(0, 26);
 		}
+		//strip out log cats
+		if (nextLine->length() >= 9 && safe_substr(nextLine, 0, 9) == "RUNTIME: ") {
+			nextLine->erase(0, 9);
+		}
 	} while (!endofbuffer && nextLine->length() < 1);
 
 }

@@ -37,16 +37,10 @@
 		cell = new cell(src)
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/Destroy()
-	if(isatom(cell))
-		QDEL_NULL(cell)
-	return ..()
-
-// Clean up the cell on destroy
-/obj/item/inspector/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/inspector/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/inspector/get_cell()
@@ -136,7 +130,7 @@
 /obj/item/paper/report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	///What area the inspector scanned when the report was made. Used to verify the security bounty.
 	var/area/scanned_area
@@ -334,7 +328,7 @@
 /obj/item/paper/fake_report
 	name = "encrypted station inspection"
 	desc = "Contains no information about the station's current status."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "slip"
 	show_written_words = FALSE
 	///What area the inspector scanned when the report was made. Used to generate the examine text of the report

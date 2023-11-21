@@ -16,7 +16,7 @@
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	resistance_flags = FLAMMABLE
-	custom_materials = list(/datum/material/cardboard = 2000)
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	/// Used by examine to report what this thing is holding.
 	var/contents_tag = "errors"
 	/// What type of thing to fill this storage with.
@@ -174,6 +174,9 @@
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
 
+/obj/item/storage/fancy/candle_box/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(/obj/item/flashlight/flare/candle))
 
 ////////////
 //CIG PACK//
@@ -504,7 +507,7 @@
 	spawn_count = 10
 	contents_tag = "pickle"
 	foldable_result = null
-	custom_materials = list(/datum/material/glass = 2000)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
@@ -533,7 +536,8 @@
 	name = "coffee condiments display"
 	desc = "A neat small wooden box, holding all your favorite coffee condiments."
 	contents_tag = "coffee condiment"
-	custom_materials = list(/datum/material/wood = 1000)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT/2)
+	resistance_flags = FLAMMABLE
 	foldable_result = /obj/item/stack/sheet/mineral/wood
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE

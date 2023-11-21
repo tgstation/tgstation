@@ -50,22 +50,22 @@
 	max_plasma = 100
 	actions_types = list(/datum/action/cooldown/alien/transfer)
 
-/obj/item/organ/internal/alien/plasmavessel/on_life(delta_time, times_fired)
+/obj/item/organ/internal/alien/plasmavessel/on_life(seconds_per_tick, times_fired)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
-			owner.adjustPlasma(plasma_rate * delta_time)
+			owner.adjustPlasma(plasma_rate * seconds_per_tick)
 		else
 			var/heal_amt = heal_rate
 			if(!isalien(owner))
 				heal_amt *= 0.2
-			owner.adjustPlasma(0.5 * plasma_rate * delta_time)
-			owner.adjustBruteLoss(-heal_amt * delta_time)
-			owner.adjustFireLoss(-heal_amt * delta_time)
-			owner.adjustOxyLoss(-heal_amt * delta_time)
-			owner.adjustCloneLoss(-heal_amt * delta_time)
+			owner.adjustPlasma(0.5 * plasma_rate * seconds_per_tick)
+			owner.adjustBruteLoss(-heal_amt * seconds_per_tick)
+			owner.adjustFireLoss(-heal_amt * seconds_per_tick)
+			owner.adjustOxyLoss(-heal_amt * seconds_per_tick)
+			owner.adjustCloneLoss(-heal_amt * seconds_per_tick)
 	else
-		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
+		owner.adjustPlasma(0.1 * plasma_rate * seconds_per_tick)
 
 /obj/item/organ/internal/alien/plasmavessel/on_insert(mob/living/carbon/organ_owner)
 	. = ..()
@@ -186,7 +186,7 @@
 	QDEL_LIST(stomach_contents)
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/on_life(delta_time, times_fired)
+/obj/item/organ/internal/stomach/alien/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!owner || SSmobs.times_fired % 3 != 0)
 		return
@@ -205,7 +205,7 @@
 
 /obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(content_deleted))
+	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
 		var/mob/living/lad = thing
 		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
@@ -228,7 +228,7 @@
 	if(source.loc == src || source.loc == owner) // not in us? out da list then
 		return
 	stomach_contents -= source
-	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
 /obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))

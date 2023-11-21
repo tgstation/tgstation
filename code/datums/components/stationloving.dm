@@ -18,7 +18,7 @@
 		relocate()
 
 /datum/component/stationloving/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, PROC_REF(on_parent_pre_qdeleted))
+	RegisterSignal(parent, COMSIG_PREQDELETED, PROC_REF(on_parent_pre_qdeleted))
 	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, PROC_REF(check_soul_imbue))
 	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, PROC_REF(check_mark_retrieval))
 	// Relocate when we become unreachable
@@ -33,7 +33,7 @@
 /datum/component/stationloving/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_Z_CHANGED,
-		COMSIG_PARENT_PREQDELETED,
+		COMSIG_PREQDELETED,
 		COMSIG_ITEM_IMBUE_SOUL,
 		COMSIG_ITEM_MARK_RETRIEVAL,
 		COMSIG_MOVABLE_MOVED,

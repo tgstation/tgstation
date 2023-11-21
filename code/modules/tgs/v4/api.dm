@@ -263,7 +263,12 @@
 		for(var/I in channels)
 			var/datum/tgs_chat_channel/channel = I
 			ids += channel.id
+
 	message = UpgradeDeprecatedChatMessage(message)
+
+	if (!length(channels))
+		return
+
 	message = list("message" = message.text, "channelIds" = ids)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
@@ -276,7 +281,12 @@
 		var/datum/tgs_chat_channel/channel = I
 		if (!channel.is_private_channel && ((channel.is_admin_channel && admin_only) || (!channel.is_admin_channel && !admin_only)))
 			channels += channel.id
+
 	message = UpgradeDeprecatedChatMessage(message)
+
+	if (!length(channels))
+		return
+
 	message = list("message" = message.text, "channelIds" = channels)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)

@@ -176,7 +176,7 @@
 	if(!factory)
 		to_chat(src, span_warning("You must be on a factory blob!"))
 		return FALSE
-	if(factory.naut) //if it already made a blobbernaut, it can't do it again
+	if(factory.blobbernaut || factory.is_creating_blobbernaut) //if it already made or making a blobbernaut, it can't do it again
 		to_chat(src, span_warning("This factory blob is already sustaining a blobbernaut."))
 		return FALSE
 	if(factory.get_integrity() < factory.max_integrity * 0.5)
@@ -185,7 +185,7 @@
 	if(!can_buy(BLOBMOB_BLOBBERNAUT_RESOURCE_COST))
 		return FALSE
 
-	factory.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
+	factory.is_creating_blobbernaut = TRUE
 	to_chat(src, span_notice("You attempt to produce a blobbernaut."))
 	pick_blobbernaut_candidate(factory)
 
@@ -196,10 +196,12 @@
 
 	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50)
 
+	factory.is_creating_blobbernaut = FALSE
+
 	if(!length(candidates))
 		to_chat(src, span_warning("You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later."))
 		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
-		factory.naut = null //players must answer rapidly
+		factory.blobbernaut = null //players must answer rapidly
 		return FALSE
 
 	factory.modify_max_integrity(initial(factory.max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
@@ -210,7 +212,7 @@
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(factory))
 	flick("blobbernaut_produce", blobber)
 
-	factory.naut = blobber
+	factory.blobbernaut = blobber
 	blobber.factory = factory
 	blobber.overmind = src
 	blobber.update_icons()

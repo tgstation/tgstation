@@ -43,6 +43,8 @@
 #define FACTION_MIMIC "mimic"
 /// Beasts found on the various mining environments
 #define FACTION_MINING "mining"
+/// Watchers don't like any creatures other than each other
+#define FACTION_WATCHER "watcher"
 /// Monkeys and gorillas
 #define FACTION_MONKEY "monkey"
 /// Mushrooms and mushroompeople

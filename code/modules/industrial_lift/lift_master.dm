@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	new_lift_platform.lift_master_datum = src
 	LAZYADD(lift_platforms, new_lift_platform)
-	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, PROC_REF(remove_lift_platforms))
+	RegisterSignal(new_lift_platform, COMSIG_QDELETING, PROC_REF(remove_lift_platforms))
 
 	check_for_landmarks(new_lift_platform)
 
@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	old_lift_platform.lift_master_datum = null
 	LAZYREMOVE(lift_platforms, old_lift_platform)
-	UnregisterSignal(old_lift_platform, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(old_lift_platform, COMSIG_QDELETING)
 	if(!length(lift_platforms))
 		qdel(src)
 
@@ -497,25 +497,23 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		on_z_level = list(on_z_level)
 
 	var/played_ding = FALSE
-	for(var/obj/machinery/door/poddoor/elevator_door in GLOB.machines)
-		if(elevator_door.id != specific_lift_id)
+	for(var/obj/machinery/door/elevator_door as anything in GLOB.elevator_doors)
+		if(elevator_door.elevator_linked_id != specific_lift_id)
 			continue
 		if(on_z_level && !(elevator_door.z in on_z_level))
 			continue
-
 		switch(action)
 			if(OPEN_DOORS)
-				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
-
+				elevator_door.elevator_status = LIFT_PLATFORM_UNLOCKED
+				if(!played_ding)
+					playsound(elevator_door, 'sound/machines/ping.ogg', 50, TRUE)
+					played_ding = TRUE
+				addtimer(CALLBACK(elevator_door, TYPE_PROC_REF(/obj/machinery/door, open)), 0.7 SECONDS)
 			if(CLOSE_DOORS)
-				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
-
+				elevator_door.elevator_status = LIFT_PLATFORM_LOCKED
+				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
 			else
 				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")
-
-		if(!played_ding)
-			playsound(elevator_door, 'sound/machines/ding.ogg', 50, TRUE)
-			played_ding = TRUE
 
 /// Helper used in callbacks to open all the doors our lift is on
 /datum/lift_master/proc/open_lift_doors_callback()

@@ -46,11 +46,11 @@
 
 /datum/chemical_reaction/medicine/oculine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	explode_flash(equilibrium.reacted_vol/10, 10)
+	explode_flash(holder, equilibrium, round(equilibrium.reacted_vol / 10), 10)
 
 /datum/chemical_reaction/medicine/oculine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	. = ..()
-	explode_flash(3, 30)
+	explode_flash(holder, equilibrium, 3, 30)
 
 
 /datum/chemical_reaction/medicine/inacusiate
@@ -380,3 +380,10 @@
 	results = list(/datum/reagent/consumable/sugar = 1)
 	required_reagents = list(/datum/reagent/medicine/coagulant/seraka_extract = 1, /datum/reagent/lye = 1)
 	reaction_tags = REACTION_TAG_EASY
+
+/datum/chemical_reaction/medicine/ondansetron
+	results = list(/datum/reagent/medicine/ondansetron = 3)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/nitrogen = 1, /datum/reagent/oxygen = 1)
+	required_catalysts = list(/datum/reagent/consumable/ethanol = 3)
+	optimal_ph_max = 11
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER | REACTION_TAG_DRUG

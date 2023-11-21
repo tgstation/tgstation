@@ -6,13 +6,14 @@
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
 	var/soft_type = "cargo"
+	var/soft_suffix = "soft"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
 
 	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()
-	icon_state = "[soft_type]soft"
+	icon_state = "[soft_type][soft_suffix]"
 	flipped = FALSE
 	..()
 
@@ -33,10 +34,10 @@
 	if(!user.incapacitated())
 		flipped = !flipped
 		if(flipped)
-			icon_state = "[soft_type]soft_flipped"
+			icon_state = "[soft_type][soft_suffix]_flipped"
 			to_chat(user, span_notice("You flip the hat backwards."))
 		else
-			icon_state = "[soft_type]soft"
+			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
 		usr.update_worn_head() //so our mob-overlays update
 
@@ -129,18 +130,9 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	soft_type = "sec"
-	armor_type = /datum/armor/soft_sec
+	armor_type = /datum/armor/cosmetic_sec
 	strip_delay = 60
 	dog_fashion = null
-
-/datum/armor/soft_sec
-	melee = 30
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 20
-	acid = 50
 
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
@@ -148,3 +140,24 @@
 	icon_state = "paramedicsoft"
 	soft_type = "paramedic"
 	dog_fashion = null
+
+/obj/item/clothing/head/soft/fishing_hat
+	name = "legendary fishing hat"
+	desc = "An ancient relic of a bygone era of bountiful catches and endless rivers. Printed on the front is a poem:<i>\n\
+		Women Fear Me\n\
+		Fish Fear Me\n\
+		Men Turn Their Eyes Away From Me\n\
+		As I Walk No Beast Dares Make A Sound In My Presence\n\
+		I Am Alone On This Barren Earth.</i>"
+	icon_state = "fishing_hat"
+	soft_type = "fishing_hat"
+	inhand_icon_state = "fishing_hat"
+	soft_suffix = null
+	worn_y_offset = 5
+	clothing_flags = SNUG_FIT
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
+	dog_fashion = null
+
+/obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/skill_reward, /datum/skill/fishing)

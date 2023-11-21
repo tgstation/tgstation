@@ -1,18 +1,28 @@
+/// Helper macro to check if the passed mob has jukebox sound preference enabled
+#define HAS_JUKEBOX_PREF(mob) (!QDELETED(mob) && !isnull(mob.client) && mob.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox))
+
 /obj/machinery/jukebox
 	name = "jukebox"
 	desc = "A classic music player."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/music.dmi'
 	icon_state = "jukebox"
 	verb_say = "states"
 	density = TRUE
 	req_access = list(ACCESS_BAR)
+	/// Whether we're actively playing music
 	var/active = FALSE
-	var/list/rangers = list()
+	/// List of weakrefs to mobs listening to the current song
+	var/list/datum/weakref/rangers = list()
+	/// World.time when the current song will stop playing, but also a cooldown between activations
 	var/stop = 0
+	/// List of /datum/tracks we can play
+	/// Inited from config every time a jukebox is instantiated
 	var/list/songs = list()
+	/// Current song selected
 	var/datum/track/selection = null
 	/// Volume of the songs played
 	var/volume = 50
+	/// Cooldown between "Error" sound effects being played
 	COOLDOWN_DECLARE(jukebox_error_cd)
 
 /obj/machinery/jukebox/disco
@@ -38,32 +48,46 @@
 	var/song_length = 0
 	var/song_beat = 0
 
-/datum/track/New(name, path, length, beat)
-	song_name = name
-	song_path = path
-	song_length = length
-	song_beat = beat
+/datum/track/default
+	song_path = 'sound/ambience/title3.ogg'
+	song_name = "Tintin on the Moon"
+	song_length = 3 MINUTES + 52 SECONDS
+	song_beat = 1 SECONDS
 
 /obj/machinery/jukebox/Initialize(mapload)
 	. = ..()
-	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
-
-	for(var/S in tracks)
-		var/datum/track/T = new()
-		T.song_path = file("[global.config.directory]/jukebox_music/sounds/[S]")
-		var/list/L = splittext(S,"+")
-		if(L.len != 3)
-			continue
-		T.song_name = L[1]
-		T.song_length = text2num(L[2])
-		T.song_beat = text2num(L[3])
-		songs |= T
-
-	if(songs.len)
+	songs = load_songs_from_config()
+	if(length(songs))
 		selection = pick(songs)
+
+/// Loads the config sounds once, and returns a copy of them.
+/obj/machinery/jukebox/proc/load_songs_from_config()
+	var/static/list/config_songs
+	if(isnull(config_songs))
+		config_songs = list()
+		var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
+		for(var/track_file in tracks)
+			var/datum/track/new_track = new()
+			new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
+			var/list/track_data = splittext(track_file, "+")
+			if(length(track_data) != 3)
+				continue
+			new_track.song_name = track_data[1]
+			new_track.song_length = text2num(track_data[2])
+			new_track.song_beat = text2num(track_data[3])
+			config_songs += new_track
+
+		if(!length(config_songs))
+			// Includes title3 as a default for testing / "no config" support, also because it's a banger
+			config_songs += new /datum/track/default()
+
+	// returns a copy so it can mutate if desired.
+	return config_songs.Copy()
 
 /obj/machinery/jukebox/Destroy()
 	dance_over()
+	selection = null
+	songs.Cut()
 	return ..()
 
 /obj/machinery/jukebox/attackby(obj/item/O, mob/user, params)
@@ -175,7 +199,7 @@
 /obj/machinery/jukebox/proc/activate_music()
 	active = TRUE
 	update_use_power(ACTIVE_POWER_USE)
-	update_appearance()
+	update_appearance(UPDATE_ICON_STATE)
 	START_PROCESSING(SSobj, src)
 	stop = world.time + selection.song_length
 
@@ -386,16 +410,20 @@
 		sleep(0.1 SECONDS)
 	M.lying_fix()
 
-/obj/machinery/jukebox/disco/proc/dance4(mob/living/M)
+/obj/machinery/jukebox/disco/proc/dance4(mob/living/lead_dancer)
 	var/speed = rand(1,3)
 	set waitfor = 0
 	var/time = 30
 	while(time)
 		sleep(speed)
 		for(var/i in 1 to speed)
-			M.setDir(pick(GLOB.cardinals))
-			for(var/mob/living/carbon/NS in rangers)
-				NS.set_resting(!NS.resting, TRUE, TRUE)
+			lead_dancer.setDir(pick(GLOB.cardinals))
+			// makes people dance with us nearby
+			for(var/datum/weakref/weak_dancer as anything in rangers)
+				var/mob/living/carbon/dancer = weak_dancer.resolve()
+				if(!istype(dancer))
+					continue
+				dancer.set_resting(!dancer.resting, silent = TRUE, instant = TRUE)
 		time--
 
 /obj/machinery/jukebox/disco/proc/dance5(mob/living/M)
@@ -438,11 +466,11 @@
 	lying_prev = 0
 
 /obj/machinery/jukebox/proc/dance_over()
-	for(var/mob/living/L in rangers)
-		if(!L || !L.client)
-			continue
-		L.stop_sound_channel(CHANNEL_JUKEBOX)
-	rangers = list()
+	for(var/datum/weakref/weak_to_hide_from as anything in rangers)
+		var/mob/to_hide_from = weak_to_hide_from?.resolve()
+		to_hide_from?.stop_sound_channel(CHANNEL_JUKEBOX)
+
+	rangers.Cut()
 
 /obj/machinery/jukebox/disco/dance_over()
 	..()
@@ -453,30 +481,44 @@
 	if(world.time < stop && active)
 		var/sound/song_played = sound(selection.song_path)
 
-		for(var/mob/M in range(10,src))
-			if(!M.client || !(M.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
+		// Goes through existing mobs in rangers to determine if they should not be played to
+		for(var/datum/weakref/weak_to_hide_from as anything in rangers)
+			var/mob/to_hide_from = weak_to_hide_from?.resolve()
+			if(!HAS_JUKEBOX_PREF(to_hide_from) || get_dist(src, get_turf(to_hide_from)) > 10)
+				rangers -= weak_to_hide_from
+				to_hide_from?.stop_sound_channel(CHANNEL_JUKEBOX)
+
+		// Collect mobs to play the song to, stores weakrefs of them in rangers
+		for(var/mob/to_play_to in range(world.view, src))
+			if(!HAS_JUKEBOX_PREF(to_play_to))
 				continue
-			if(!(M in rangers))
-				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
-		for(var/mob/L in rangers)
-			if(get_dist(src,L) > 10 || !(L.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
-				rangers -= L
-				if(!L || !L.client)
-					continue
-				L.stop_sound_channel(CHANNEL_JUKEBOX)
+			var/datum/weakref/weak_playing_to = WEAKREF(to_play_to)
+			if(rangers[weak_playing_to])
+				continue
+			rangers[weak_playing_to] = TRUE
+			// This plays the sound directly underneath the mob because otherwise it'd get stuck in their left ear or whatever
+			// Would be neat if it sourced from the box itself though
+			to_play_to.playsound_local(get_turf(to_play_to), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
+
 	else if(active)
 		active = FALSE
 		update_use_power(IDLE_POWER_USE)
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
-		update_appearance()
+		update_appearance(UPDATE_ICON_STATE)
 		stop = world.time + 100
 
 /obj/machinery/jukebox/disco/process()
 	. = ..()
-	if(active)
-		for(var/mob/living/M in rangers)
-			if(prob(5+(allowed(M)*4)) && (M.mobility_flags & MOBILITY_MOVE))
-				dance(M)
+	if(!active)
+		return
+
+	for(var/datum/weakref/weak_dancer as anything in rangers)
+		var/mob/living/to_dance = weak_dancer.resolve()
+		if(!istype(to_dance) || !(to_dance.mobility_flags & MOBILITY_MOVE))
+			continue
+		if(prob(5 + (allowed(to_dance) * 4)))
+			dance(to_dance)
+
+#undef HAS_JUKEBOX_PREF

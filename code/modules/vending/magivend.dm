@@ -13,6 +13,8 @@
 		/obj/item/clothing/suit/wizrobe/red = 1,
 		/obj/item/clothing/head/wizard/yellow = 1,
 		/obj/item/clothing/suit/wizrobe/yellow = 1,
+		/obj/item/clothing/head/wizard/black = 1,
+		/obj/item/clothing/suit/wizrobe/black = 1,
 		/obj/item/clothing/shoes/sandal/magic = 1,
 		/obj/item/staff = 2,
 	)

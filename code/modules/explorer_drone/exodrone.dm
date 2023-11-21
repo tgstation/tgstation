@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /// Exploration drone
 /obj/item/exodrone
 	name = "exploration drone"
-	desc = "long range semi-autonomous exploration drone"
+	desc = "A long range, semi-autonomous exploration drone."
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "drone"
 	w_class = WEIGHT_CLASS_BULKY
@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Tries to add loot to drone cargo while respecting space left
 /obj/item/exodrone/proc/try_transfer(obj/loot, delete_on_failure=TRUE)
-	if(space_left() > 1)
+	if(space_left())
 		loot.forceMove(src)
 		drone_log("Acquired [loot.name].")
 	else
@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(!fuel_canister)
 		return
 
-	to_chat(user, span_notice("You remove [fuel_canister] from [src]."))
+	to_chat(user, span_notice("You remove the [fuel_canister] from the [src]."))
 	fuel_canister.forceMove(drop_location())
 	fuel_canister = null
 	update_icon()
@@ -418,8 +418,9 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	playsound(src,'sound/effects/podwoosh.ogg',50, FALSE)
 	do_smoke(1, holder = src, location = get_turf(src))
 
-/obj/machinery/exodrone_launcher/handle_atom_del(atom/A)
-	if(A == fuel_canister)
+/obj/machinery/exodrone_launcher/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == fuel_canister)
 		fuel_canister = null
 		update_icon()
 
@@ -444,7 +445,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	/// The amount of uses left in this fuel pellet.
 	var/uses = 5
 
-/obj/item/fuel_pellet/use()
+/obj/item/fuel_pellet/use(used)
 	uses--
 	if(uses <= 0)
 		qdel(src)

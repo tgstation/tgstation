@@ -126,6 +126,7 @@
 	attack_text = "the attack",
 	attack_type = MELEE_ATTACK,
 	armour_penetration = 0,
+	damage_type = BRUTE,
 )
 
 	SIGNAL_HANDLER
@@ -224,7 +225,10 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
+	next_knowledge = list(
+		/datum/heretic_knowledge/duel_stance,
+		/datum/heretic_knowledge/rifle,
+	)
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 	route = PATH_BLADE
@@ -252,7 +256,7 @@
 
 /datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
-	RegisterSignal(user, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
 	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
 
@@ -263,7 +267,7 @@
 	if(in_duelist_stance)
 		user.remove_traits(list(TRAIT_HARDLY_WOUNDED, TRAIT_BATON_RESISTANCE), type)
 
-	UnregisterSignal(user, list(COMSIG_PARENT_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_HEALTH_UPDATE))
+	UnregisterSignal(user, list(COMSIG_ATOM_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_HEALTH_UPDATE))
 
 /datum/heretic_knowledge/duel_stance/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -371,7 +375,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/ultimate/blade_final,
-		/datum/heretic_knowledge/rifle,
+		/datum/heretic_knowledge/spell/rust_charge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1

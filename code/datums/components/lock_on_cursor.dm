@@ -62,12 +62,14 @@
 	mouse_tracker.assign_to_mob(owner)
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/lock_on_cursor/Destroy()
+/datum/component/lock_on_cursor/Destroy(force, silent)
 	clear_visuals()
 	STOP_PROCESSING(SSfastprocess, src)
 	mouse_tracker = null
 	var/mob/owner = parent
 	owner.clear_fullscreen("lock_on")
+	on_lock = null
+	can_target_callback = null
 	return ..()
 
 /// Adds overlays to all targets

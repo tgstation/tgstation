@@ -282,7 +282,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	return TRUE
 
-/obj/machinery/shower/process(delta_time)
+/obj/machinery/shower/process(seconds_per_tick)
 	// the TIMED mode cutoff feature. User has to manually reactivate.
 	if(intended_on && mode == SHOWER_MODE_TIMED && COOLDOWN_FINISHED(src, timed_cooldown))
 		// the TIMED mode cutoff feature. User has to manually reactivate.
@@ -302,7 +302,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	// Reclaim water
 	if(!actually_on)
 		if(has_water_reclaimer && reagents.total_volume < reagents.maximum_volume)
-			reagents.add_reagent(reagent_id, refill_rate * delta_time)
+			reagents.add_reagent(reagent_id, refill_rate * seconds_per_tick)
 			return 0
 
 		// FOREVER mode stays processing so it can cycle back on.

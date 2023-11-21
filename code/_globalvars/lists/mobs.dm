@@ -57,6 +57,8 @@ GLOBAL_LIST_EMPTY(narcd_underages)
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
+///List of all languages ("name" = type)
+GLOBAL_LIST_EMPTY(language_types_by_name)
 
 GLOBAL_LIST_EMPTY(sentient_disease_instances)
 

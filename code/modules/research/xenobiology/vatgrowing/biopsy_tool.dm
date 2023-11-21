@@ -2,7 +2,7 @@
 /obj/item/biopsy_tool
 	name = "biopsy tool"
 	desc = "Don't worry, it won't sting."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "biopsy"
 	worn_icon_state = "biopsy"
 

@@ -1,0 +1,23 @@
+{
+	"base_friend": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_friend",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "base_friend_mouth",
+			"blend_mode": "overlay"
+		}
+	],
+	"base_friend_dead": [
+		{
+			"type": "icon_state",
+			"icon_state": "base_friend_dead",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

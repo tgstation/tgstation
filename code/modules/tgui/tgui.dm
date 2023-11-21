@@ -278,7 +278,7 @@
  * Run an update cycle for this UI. Called internally by SStgui
  * every second or so.
  */
-/datum/tgui/process(delta_time, force = FALSE)
+/datum/tgui/process(seconds_per_tick, force = FALSE)
 	if(closing)
 		return
 	var/datum/host = src_object.ui_host(user)

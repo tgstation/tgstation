@@ -3,14 +3,17 @@
 	custom_commands = list()
 	for(var/I in typesof(/datum/tgs_chat_command) - /datum/tgs_chat_command)
 		var/datum/tgs_chat_command/stc = new I
+		if(stc.ignore_type == I)
+			continue
+
 		var/command_name = stc.name
 		if(!command_name || findtext(command_name, " ") || findtext(command_name, "'") || findtext(command_name, "\""))
-			TGS_WARNING_LOG("Custom command [command_name] ([I]) can't be used as it is empty or contains illegal characters!")
+			TGS_ERROR_LOG("Custom command [command_name] ([I]) can't be used as it is empty or contains illegal characters!")
 			continue
 
 		if(results[command_name])
 			var/datum/other = custom_commands[command_name]
-			TGS_WARNING_LOG("Custom commands [other.type] and [I] have the same name (\"[command_name]\"), only [other.type] will be available!")
+			TGS_ERROR_LOG("Custom commands [other.type] and [I] have the same name (\"[command_name]\"), only [other.type] will be available!")
 			continue
 		results += list(list(DMAPI5_CUSTOM_CHAT_COMMAND_NAME = command_name, DMAPI5_CUSTOM_CHAT_COMMAND_HELP_TEXT = stc.help_text, DMAPI5_CUSTOM_CHAT_COMMAND_ADMIN_ONLY = stc.admin_only))
 		custom_commands[command_name] = stc
@@ -32,11 +35,11 @@
 	if(sc)
 		var/datum/tgs_message_content/response = sc.Run(u, params)
 		response = UpgradeDeprecatedCommandResponse(response, command)
-		
-		var/list/topic_response = list()
-		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = response?.text
-		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE] = response?._interop_serialize()
-		return json_encode(topic_response)
+
+		var/list/topic_response = TopicResponse()
+		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE_MESSAGE] = response ? response.text : null
+		topic_response[DMAPI5_TOPIC_RESPONSE_COMMAND_RESPONSE] = response ? response._interop_serialize() : null
+		return topic_response
 	return TopicResponse("Unknown custom chat command: [command]!")
 
 // Common proc b/c it's used by the V3/V4 APIs

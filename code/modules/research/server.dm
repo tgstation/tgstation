@@ -102,7 +102,7 @@
 /obj/machinery/rnd/server/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!stored_research)
 		return
-	tool.buffer = stored_research
+	tool.set_buffer(stored_research)
 	to_chat(user, span_notice("Stored [src]'s techweb information in [tool]."))
 	return TRUE
 

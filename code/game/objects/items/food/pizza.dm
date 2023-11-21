@@ -13,6 +13,7 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 6 at a time and replaces this pizza when processed by cutting tool
 	var/obj/item/food/pizzaslice/slice_type
 	///What label pizza boxes use if this pizza spawns in them.
@@ -22,6 +23,7 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
 	burns_in_oven = FALSE
 	slice_type = null
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizza/raw/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
@@ -39,6 +41,7 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizzaslice/make_processable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
@@ -57,7 +60,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/margherita
 	boxtag = "Margherita Deluxe"
-
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/margherita/raw
 	name = "raw pizza margherita"
@@ -84,6 +87,7 @@
 	icon_state = "pizzamargheritaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizzaslice/margherita/Initialize(mapload)
 	. = ..()
@@ -102,6 +106,7 @@
 	foodtypes = GRAIN | VEGETABLES| DAIRY | MEAT
 	slice_type = /obj/item/food/pizzaslice/meat
 	boxtag = "Meatlovers' Supreme"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/meat/raw
 	name = "raw meatpizza"
@@ -119,6 +124,7 @@
 	icon_state = "meatpizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/mushroom
 	name = "mushroom pizza"
@@ -133,6 +139,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/mushroom
 	boxtag = "Mushroom Special"
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizza/mushroom/raw
 	name = "raw mushroom pizza"
@@ -150,6 +157,7 @@
 	icon_state = "mushroompizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 
 /obj/item/food/pizza/vegetable
@@ -173,6 +181,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 	burns_in_oven = FALSE
 	slice_type = null
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/vegetable/raw/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/vegetable, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
@@ -183,6 +192,7 @@
 	icon_state = "vegetablepizzaslice"
 	tastes = list("crust" = 1, "tomato" = 2, "cheese" = 1, "carrot" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/donkpocket
 	name = "donkpocket pizza"
@@ -199,6 +209,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
 	slice_type = /obj/item/food/pizzaslice/donkpocket
 	boxtag = "Bangin' Donk"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
@@ -231,6 +242,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/dank
 	boxtag = "Fresh Herb"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/dank/raw
 	name = "raw dank pizza"
@@ -263,6 +275,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
 	slice_type = /obj/item/food/pizzaslice/sassysage
 	boxtag = "Sausage Lovers"
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/sassysage/raw
 	name = "raw sassysage pizza"
@@ -280,6 +293,7 @@
 	icon_state = "sassysagepizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pizza/pineapple
 	name = "\improper Hawaiian pizza"
@@ -296,6 +310,7 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
 	slice_type = /obj/item/food/pizzaslice/pineapple
 	boxtag = "Honolulu Chew"
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/pineapple/raw
 	name = "raw Hawaiian pizza"
@@ -356,6 +371,7 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 	slice_type = /obj/item/food/pizzaslice/arnold
 	boxtag = "9mm Pepperoni"
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizza/arnold/raw
 	name = "raw Arnold pizza"
@@ -404,6 +420,7 @@
 	icon_state = "arnoldpizzaslice"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pizzaslice/arnold/attack(mob/living/target, mob/living/user)
 	. =..()
@@ -438,6 +455,7 @@
 	slice_type = /obj/item/food/pizzaslice/energy
 	foodtypes = TOXIC
 	boxtag = "24 Hour Energy"
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizza/energy/raw
 	name = "raw energy pizza"
@@ -455,6 +473,7 @@
 	icon_state ="energypizzaslice"
 	tastes = list("pure electricity" = 4, "pizza" = 2)
 	foodtypes = TOXIC
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_meat_calzone
 	name = "raw meat calzone"
@@ -468,6 +487,7 @@
 	tastes = list("raw dough" = 1, "raw meat" = 1, "cheese" = 1, "tomato sauce" = 1)
 	foodtypes = GRAIN | RAW | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/raw_meat_calzone/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/meat_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -485,6 +505,7 @@
 	foodtypes = GRAIN | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/raw_vegetarian_calzone
 	name = "raw vegetarian calzone"
@@ -497,6 +518,7 @@
 	tastes = list("raw dough" = 1, "vegetables" = 1, "tomato sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/raw_vegetarian_calzone/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/vegetarian_calzone, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -513,3 +535,4 @@
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
+	crafting_complexity = FOOD_COMPLEXITY_3

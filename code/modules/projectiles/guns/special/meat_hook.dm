@@ -34,7 +34,7 @@
 /obj/projectile/hook
 	name = "hook"
 	icon_state = "hook"
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	pass_flags = PASSTABLE
 	damage = 20
 	stamina = 20

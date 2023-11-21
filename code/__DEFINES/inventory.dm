@@ -181,6 +181,7 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
+	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
 ))
 
 GLOBAL_LIST_INIT(security_vest_allowed, list(
@@ -198,6 +199,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
+	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
 ))
 
 GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
@@ -211,6 +213,21 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
+	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+))
+
+//Allowed list for all chaplain suits (except the honkmother robe)
+
+GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
+	/obj/item/book/bible,
+	/obj/item/nullrod,
+	/obj/item/reagent_containers/cup/glass/bottle/holywater,
+	/obj/item/storage/fancy/candle_box,
+	/obj/item/flashlight/flare/candle,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman,
+	/obj/item/gun/ballistic/bow/divine,
+	/obj/item/gun/ballistic/revolver/chaplain,
 ))
 
 /// String for items placed into the left pocket.

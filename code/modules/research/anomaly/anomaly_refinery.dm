@@ -85,6 +85,7 @@
 		var/obj/item/raw_anomaly_core/raw_core = tool
 		if(!get_required_radius(raw_core.anomaly_type))
 			say("Unfortunately, due to diminishing supplies of condensed anomalous matter, [raw_core] and any cores of its type are no longer of a sufficient quality level to be compressed into a working core.")
+			return
 		inserted_core = raw_core
 		to_chat(user, span_notice("You insert [raw_core] into [src]."))
 		return

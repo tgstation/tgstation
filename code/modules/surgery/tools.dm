@@ -6,7 +6,7 @@
 	inhand_icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 1.5)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -26,7 +26,7 @@
 	inhand_icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -48,7 +48,7 @@
 	inhand_icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass = SMALL_MATERIAL_AMOUNT*7.5)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -72,7 +72,7 @@
 	inhand_icon_state = "e_cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT, /datum/material/uranium = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*1.5)
 	hitsound = 'sound/items/welder.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
@@ -82,12 +82,14 @@
 
 /obj/item/cautery/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
@@ -116,7 +118,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*3)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -163,7 +165,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -207,7 +209,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*3)
 	attack_verb_continuous = list("attacks", "slashes", "saws", "cuts")
 	attack_verb_simple = list("attack", "slash", "saw", "cut")
 	sharpness = SHARP_EDGED
@@ -252,9 +254,12 @@
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "spectrometer"
+	icon_state = "surgical_processor"
 	item_flags = NOBLUDGEON
+	// List of surgeries downloaded into the device.
 	var/list/loaded_surgeries = list()
+	// If a surgery has been downloaded in. Will cause the display to have a noticeable effect - helps to realize you forgot to load anything in.
+	var/downloaded = TRUE
 
 /obj/item/surgical_processor/Initialize(mapload)
 	. = ..()
@@ -302,7 +307,14 @@
 			var/obj/machinery/computer/operating/surgery_computer = design_holder
 			loaded_surgeries |= surgery_computer.advanced_surgeries
 		playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
+		downloaded = TRUE
+		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
+
+/obj/item/surgical_processor/update_overlays()
+	. = ..()
+	if(downloaded)
+		. += mutable_appearance(src.icon, "+downloaded")
 
 /obj/item/surgical_processor/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
 	SIGNAL_HANDLER
@@ -319,7 +331,7 @@
 	inhand_icon_state = "e_scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*2)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	w_class = WEIGHT_CLASS_NORMAL
@@ -331,14 +343,16 @@
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force + 1, \
 		throwforce_on = throwforce, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
@@ -368,7 +382,7 @@
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
-	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT * 2.5)
 	icon_state = "adv_retractor"
 	inhand_icon_state = "adv_retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -378,12 +392,14 @@
 
 /obj/item/retractor/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	AddComponent( \
+		/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
-		clumsy_check = FALSE)
+		clumsy_check = FALSE, \
+	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
@@ -416,7 +432,7 @@
 	throwforce = 6
 	throw_speed = 2
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=8000, /datum/material/titanium=6000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*4, /datum/material/titanium=SHEET_MATERIAL_AMOUNT*3)
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
@@ -471,6 +487,9 @@
 			limb_snip_candidate.dismember()
 		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
 
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID)) //Freak
+		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
+
 /obj/item/shears/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/timer = 1 SECONDS
@@ -490,7 +509,7 @@
 	icon_state = "bonesetter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500, /datum/material/silver = 2500)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,  /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL
@@ -506,7 +525,7 @@
 	icon_state = "bloodfilter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=1500, /datum/material/silver=500)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT, /datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver=SMALL_MATERIAL_AMOUNT*5)
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("pumps", "siphons")
@@ -554,3 +573,43 @@
 			var/chem_name = params["reagent"]
 			var/chem_id = get_chem_id(chem_name)
 			whitelist -= chem_id
+
+/*
+ * Cruel Surgery Tools
+ *
+ * This variety of tool has the CRUEL_IMPLEMENT flag.
+ *
+ * Bonuses if the surgery is being done by a morbid user and it is of their interest.
+ *
+ * Morbid users are interested in; autospies, revival surgery, plastic surgery, organ/feature manipulations, amputations
+ *
+ * Otherwise, normal tool.
+ */
+
+/obj/item/retractor/cruel
+	name = "twisted retractor"
+	desc = "Helps reveal secrets that would rather stay buried."
+	icon_state = "cruelretractor"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/hemostat/cruel
+	name = "cruel hemostat"
+	desc = "Clamping bleeders, but not so good at fixing breathers."
+	icon_state = "cruelhemostat"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/cautery/cruel
+	name = "savage cautery"
+	desc = "Chalk this one up as another successful vivisection."
+	icon_state = "cruelcautery"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/scalpel/cruel
+	name = "hungry scalpel"
+	desc = "I remember every time I hold you. My born companion..."
+	icon_state = "cruelscalpel"
+	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/scalpel/cruel/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity

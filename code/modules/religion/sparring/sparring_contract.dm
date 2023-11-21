@@ -1,7 +1,7 @@
 /obj/item/sparring_contract
 	desc = "A contract for setting up sparring matches. Both sparring partners must agree with the terms to begin."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "sparringcontract"
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	throw_range = 1
@@ -39,6 +39,7 @@
 	data["set_area"] = arena?.name
 	data["set_stakes"] = stakes_condition
 	data["possible_areas"] = get_possible_areas()
+	data["stakes_holy_match"] = STAKES_HOLY_MATCH
 
 	return data
 

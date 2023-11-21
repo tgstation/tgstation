@@ -10,7 +10,7 @@
 	*
 	* Pellet cloud currently works on two classes of sources: directed (ammo casings), and circular (grenades, landmines).
 	* -Directed: This means you're shooting multiple pellets, like buckshot. If an ammo casing is defined as having multiple pellets, it will automatically create a pellet cloud
-	* and call COMSIG_PELLET_CLOUD_INIT (see [/obj/item/ammo_casing/proc/fire_casing]). Thus, the only projectiles fired will be the ones fired here.
+	* and call COMSIG_FIRE_CASING (see [/obj/item/ammo_casing/proc/fire_casing]). Thus, the only projectiles fired will be the ones fired here.
 	* The magnitude var controls how many pellets are created.
 	* -Circular: This results in a big spray of shrapnel flying all around the detonation point when the grenade fires COMSIG_GRENADE_DETONATE or landmine triggers COMSIG_MINE_TRIGGERED.
 	* The magnitude var controls how big the detonation radius is (the bigger the magnitude, the more shrapnel is created). Grenades can be covered with bodies to reduce shrapnel output.
@@ -78,9 +78,9 @@
 	return ..()
 
 /datum/component/pellet_cloud/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, PROC_REF(nullspace_parent))
+	RegisterSignal(parent, COMSIG_PREQDELETED, PROC_REF(nullspace_parent))
 	if(isammocasing(parent))
-		RegisterSignal(parent, COMSIG_PELLET_CLOUD_INIT, PROC_REF(create_casing_pellets))
+		RegisterSignal(parent, COMSIG_FIRE_CASING, PROC_REF(create_casing_pellets))
 	else if(isgrenade(parent))
 		RegisterSignal(parent, COMSIG_GRENADE_ARMED, PROC_REF(grenade_armed))
 		RegisterSignal(parent, COMSIG_GRENADE_DETONATE, PROC_REF(create_blast_pellets))
@@ -90,15 +90,15 @@
 		RegisterSignal(parent, COMSIG_SUPPLYPOD_LANDED, PROC_REF(create_blast_pellets))
 
 /datum/component/pellet_cloud/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_DETONATE, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(COMSIG_PREQDELETED, COMSIG_FIRE_CASING, COMSIG_GRENADE_DETONATE, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
 
 /**
  * create_casing_pellets() is for directed pellet clouds for ammo casings that have multiple pellets (buckshot and scatter lasers for instance)
  *
  * Honestly this is mostly just a rehash of [/obj/item/ammo_casing/proc/fire_casing] for pellet counts > 1, except this lets us tamper with the pellets and hook onto them for tracking purposes.
- * The arguments really don't matter, this proc is triggered by COMSIG_PELLET_CLOUD_INIT which is only for this really, it's just a big mess of the state vars we need for doing the stuff over here.
+ * The arguments really don't matter, while this proc is triggered by COMSIG_FIRE_CASING, it's just a big mess of the state vars we need for doing the stuff over here.
  */
-/datum/component/pellet_cloud/proc/create_casing_pellets(obj/item/ammo_casing/shell, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro)
+/datum/component/pellet_cloud/proc/create_casing_pellets(obj/item/ammo_casing/shell, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro, obj/projectile/proj)
 	SIGNAL_HANDLER
 
 	shooter = user
@@ -120,7 +120,7 @@
 				spread = round((i / num_pellets - 0.5) * distro)
 
 		RegisterSignal(shell.loaded_projectile, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
-		RegisterSignals(shell.loaded_projectile, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), PROC_REF(pellet_range))
+		RegisterSignals(shell.loaded_projectile, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
 		shell.loaded_projectile.damage = original_damage
 		shell.loaded_projectile.wound_bonus = original_wb
 		shell.loaded_projectile.bare_wound_bonus = original_bwb
@@ -215,7 +215,7 @@
 
 		if(martyr.stat != DEAD && martyr.client)
 			LAZYADD(purple_hearts, martyr)
-			RegisterSignal(martyr, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
+			RegisterSignal(martyr, COMSIG_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
 
 		for(var/i in 1 to round(pellets_absorbed * 0.5))
 			pew(martyr)
@@ -254,8 +254,8 @@
 	LAZYADDASSOC(targets_hit[target], "hits", 1)
 	LAZYSET(targets_hit[target], "damage", damage)
 	if(targets_hit[target]["hits"] == 1)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
-	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
+	UnregisterSignal(P, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
@@ -264,7 +264,7 @@
 	SIGNAL_HANDLER
 	pellets -= P
 	terminated++
-	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+	UnregisterSignal(P, list(COMSIG_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
@@ -281,7 +281,7 @@
 	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
 	P.preparePixelProjectile(target, parent)
 	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))
-	RegisterSignals(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), PROC_REF(pellet_range))
+	RegisterSignals(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_QDELETING), PROC_REF(pellet_range))
 	pellets += P
 	P.fire()
 	if(landmine_victim)
@@ -295,7 +295,7 @@
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]["hits"]
 		var/damage = targets_hit[target]["damage"]
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(target, COMSIG_QDELETING)
 		var/obj/item/bodypart/hit_part
 		if(isbodypart(target))
 			hit_part = target
@@ -337,7 +337,7 @@
 		var/mob/living/martyr = M
 		if(martyr.stat == DEAD && martyr.client)
 			martyr.client.give_award(/datum/award/achievement/misc/lookoutsir, martyr)
-	UnregisterSignal(parent, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(parent, COMSIG_PREQDELETED)
 	if(queued_delete)
 		qdel(parent)
 	qdel(src)
@@ -369,7 +369,7 @@
 
 	LAZYCLEARLIST(bodies)
 	for(var/mob/living/L in get_turf(parent))
-		RegisterSignal(L, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
+		RegisterSignal(L, COMSIG_QDELETING, PROC_REF(on_target_qdel), override=TRUE)
 		bodies += L
 
 /// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
@@ -391,7 +391,7 @@
 /datum/component/pellet_cloud/proc/on_target_qdel(atom/target)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(target, COMSIG_QDELETING)
 	targets_hit -= target
 	LAZYREMOVE(bodies, target)
 	LAZYREMOVE(purple_hearts, target)

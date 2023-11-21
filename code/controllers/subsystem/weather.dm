@@ -81,3 +81,7 @@ SUBSYSTEM_DEF(weather)
 			A = W
 			break
 	return A
+
+///Returns an active storm by its type
+/datum/controller/subsystem/weather/proc/get_weather_by_type(type)
+	return locate(type) in processing

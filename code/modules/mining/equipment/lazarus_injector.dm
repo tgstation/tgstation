@@ -27,7 +27,13 @@
 
 /obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!loaded || !(isliving(target) && proximity_flag) )
+	if(!loaded || !proximity_flag)
+		return
+
+	if(SEND_SIGNAL(target, COMSIG_ATOM_ON_LAZARUS_INJECTOR, src, user) & LAZARUS_INJECTOR_USED)
+		return
+
+	if(!isliving(target))
 		return
 
 	var/mob/living/target_animal = target
@@ -39,9 +45,12 @@
 		return
 
 	target_animal.lazarus_revive(user, malfunctioning)
+	expend(target_animal, user)
+
+/obj/item/lazarus_injector/proc/expend(atom/revived_target, mob/user)
+	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))
+	SSblackbox.record_feedback("tally", "lazarus_injector", 1, revived_target.type)
 	loaded = FALSE
-	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
-	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)
 	playsound(src,'sound/effects/refill.ogg',50,TRUE)
 	icon_state = "lazarus_empty"
 

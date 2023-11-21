@@ -97,17 +97,19 @@
 	if(!ammo_type.len)
 		return
 	var/obj/projectile/exam_proj
-	readout += "\nStandard models of this projectile weapon have [span_warning("[ammo_type.len] mode\s")]"
+	readout += "\nStandard models of this projectile weapon have [span_warning("[ammo_type.len] mode\s")]."
 	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
+	if(projectile_damage_multiplier <= 0)
+		readout += "a theoretically infinite number of shots on [span_warning("every")] mode due to esoteric or nonexistent offensive potential."
+		return readout.Join("\n") // Sending over the singular string, rather than the whole list
 	for(var/obj/item/ammo_casing/energy/for_ammo as anything in ammo_type)
 		exam_proj = for_ammo.projectile_type
 		if(!ispath(exam_proj))
 			continue
-
 		if(initial(exam_proj.damage) > 0) // Don't divide by 0!!!!!
-			readout += "[span_warning("[HITS_TO_CRIT(initial(exam_proj.damage) * for_ammo.pellets)] shot\s")] on [span_warning("[for_ammo.select_name]")] mode before collapsing from [initial(exam_proj.damage_type) == STAMINA ? "immense pain" : "their wounds"]."
+			readout += "[span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * projectile_damage_multiplier) * for_ammo.pellets)] shot\s")] on [span_warning("[for_ammo.select_name]")] mode before collapsing from [initial(exam_proj.damage_type) == STAMINA ? "immense pain" : "their wounds"]."
 			if(initial(exam_proj.stamina) > 0) // In case a projectile does damage AND stamina damage (Energy Crossbow)
-				readout += "[span_warning("[HITS_TO_CRIT(initial(exam_proj.stamina) * for_ammo.pellets)] shot\s")] on [span_warning("[for_ammo.select_name]")] mode before collapsing from immense pain."
+				readout += "[span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * projectile_damage_multiplier) * for_ammo.pellets)] shot\s")] on [span_warning("[for_ammo.select_name]")] mode before collapsing from immense pain."
 		else
 			readout += "a theoretically infinite number of shots on [span_warning("[for_ammo.select_name]")] mode."
 
@@ -136,15 +138,15 @@
 
 	return ..()
 
-/obj/item/gun/energy/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/gun/energy/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		update_appearance()
-	return ..()
 
-/obj/item/gun/energy/process(delta_time)
+/obj/item/gun/energy/process(seconds_per_tick)
 	if(selfcharge && cell && cell.percent() < 100)
-		charge_timer += delta_time
+		charge_timer += seconds_per_tick
 		if(charge_timer < charge_delay)
 			return
 		charge_timer = 0
@@ -156,6 +158,7 @@
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1 && can_select)
 		select_fire(user)
+	return ..()
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
@@ -190,7 +193,7 @@
 		process_chamber() // If the gun was drained and then recharged, load a new shot.
 	return ..()
 
-/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
 	if(!chambered && can_shoot())
 		process_chamber() // Ditto.
 	return ..()

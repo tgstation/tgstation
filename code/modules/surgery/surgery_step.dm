@@ -64,6 +64,10 @@
 	return FALSE
 
 #define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
+///Modifier given to surgery speed for dissected bodies.
+#define SURGERY_SPEED_DISSECTION_MODIFIER 0.8
+///Modifier given to users with TRAIT_MORBID on certain surgeries
+#define SURGERY_SPEED_MORBID_CURIOSITY 0.7
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -82,6 +86,12 @@
 
 	if(tool)
 		speed_mod = tool.toolspeed
+
+	if(HAS_TRAIT(target, TRAIT_SURGICALLY_ANALYZED))
+		speed_mod *= SURGERY_SPEED_DISSECTION_MODIFIER
+
+	if(check_morbid_curiosity(user, tool, surgery))
+		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
 
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
@@ -215,6 +225,16 @@
 			chems += chemname
 	return english_list(chems, and_text = require_all_chems ? " and " : " or ")
 
+// Check if we are entitled to morbid bonuses
+/datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
+	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
+		return FALSE
+	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
+		return FALSE
+	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
+		return FALSE
+	return TRUE
+
 //Replaces visible_message during operations so only people looking over the surgeon can see them.
 /datum/surgery_step/proc/display_results(mob/user, mob/living/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
@@ -242,4 +262,6 @@
 		if(prob(30) && !mechanical_surgery)
 			target.emote("scream")
 
+#undef SURGERY_SPEED_DISSECTION_MODIFIER
+#undef SURGERY_SPEED_MORBID_CURIOSITY
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER

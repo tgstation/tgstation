@@ -62,7 +62,7 @@
 	playsound(user, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
 	if(harmful_strip)
 		user.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
-		user.emote("scream")
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 		to_chat(user, span_userdanger("You feel a massive pain as hundreds of tiny spikes tear free from your face!"))
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)

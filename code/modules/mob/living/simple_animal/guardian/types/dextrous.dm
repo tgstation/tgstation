@@ -12,6 +12,7 @@
 	creator_desc = "Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item."
 	creator_icon = "dextrous"
 	dextrous = TRUE
+	hud_type = /datum/hud/dextrous/guardian
 	held_items = list(null, null)
 	var/obj/item/internal_storage //what we're storing within ourself
 
@@ -52,7 +53,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/simple_animal/hostile/guardian/dextrous/can_equip(obj/item/equipped_item, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/living/simple_animal/hostile/guardian/dextrous/can_equip(obj/item/equipped_item, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	switch(slot)
 		if(ITEM_SLOT_DEX_STORAGE)
 			if(internal_storage)
@@ -70,13 +71,13 @@
 		return ITEM_SLOT_DEX_STORAGE
 	return ..()
 
-/mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/equipped_item, slot)
+/mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!..())
 		return
 
 	switch(slot)
 		if(ITEM_SLOT_DEX_STORAGE)
-			internal_storage = equipped_item
+			internal_storage = equipping
 			update_inv_internal_storage()
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))

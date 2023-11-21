@@ -1,6 +1,6 @@
-import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Collapsible, Divider, LabeledList, Section, Stack } from '../components';
+import { Objective } from './common/Objectives';
 
 import { Window } from '../layouts';
 
@@ -9,16 +9,7 @@ type Data = {
   description: string;
   effects: string;
   name: string;
-  objectives: Objectives[];
-};
-
-type Objectives = {
-  count: number;
-  name: string;
-  explanation: string;
-  complete: BooleanLike;
-  was_uncompleted: BooleanLike;
-  reward: number;
+  objectives: Objective[];
 };
 
 const BLOB_COLOR = '#556b2f';

@@ -32,7 +32,7 @@
 /obj/effect/nettingportal/Initialize(mapload)
 	. = ..()
 	var/obj/item/beacon/teletarget = null
-	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
+	for(var/obj/machinery/computer/teleporter/com as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/teleporter))
 		var/atom/target = com.target_ref?.resolve()
 		if(target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)

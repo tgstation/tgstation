@@ -42,7 +42,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
@@ -56,8 +56,8 @@
 	speed = 5
 	move_to_delay = 5
 	ranged = TRUE
-	pixel_x = -16
-	base_pixel_x = -16
+	pixel_x = -32
+	base_pixel_x = -32
 	maptext_height = 64
 	maptext_width = 64
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
@@ -73,7 +73,6 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	small_sprite_type = /datum/action/small_sprite/megafauna/drake
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -145,7 +144,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
 	if(activated == lava_swoop)
-		icon_state = "shadow"
+		icon_state = "dragon_shadow"
 		swooping = SWOOP_DAMAGEABLE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_invulnerability_started()
@@ -289,14 +288,14 @@
 	color = COLOR_DARK_ORANGE
 
 /obj/effect/temp_visual/lava_safe
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 13
 
 /obj/effect/temp_visual/fireball
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "fireball"
 	name = "fireball"
 	desc = "Get out of the way!"

@@ -20,3 +20,13 @@
 #define HILBERT_PORT 1
 #define HILBERT_CENTRAL 2
 #define HILBERT_STARBOARD 3
+
+#define BIRDSHOT_PRISON_WING 1
+#define BIRDSHOT_SECURITY_WING 2
+
+#define BIRDSHOT_MAINTENANCE_LEFT 1
+#define BRIDSHOT_MAINTENANCE_RIGHT 2
+
+/// Tram navigation directions
+#define OUTBOUND 1
+#define INBOUND -1

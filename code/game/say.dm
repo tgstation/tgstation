@@ -33,8 +33,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		language = get_selected_language()
 	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
 
+/// Called when this movable hears a message from a source.
+/// Returns TRUE if the message was received and understood.
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+	return TRUE
 
 
 /**
@@ -74,15 +77,35 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/can_speak(allow_mimes = FALSE)
 	return TRUE
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
-	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
+	var/found_client = FALSE
+	var/list/listeners = get_hearers_in_view(range, source)
+	var/list/listened = list()
+	for(var/atom/movable/hearing_movable as anything in listeners)
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
-		hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range)
+		if(hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range))
+			listened += hearing_movable
+		if(!found_client && length(hearing_movable.client_mobs_in_contents))
+			found_client = TRUE
 
-/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
-	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
+	var/tts_message_to_use = tts_message
+	if(!tts_message_to_use)
+		tts_message_to_use = message
+
+	var/list/filter = list()
+	if(length(voice_filter) > 0)
+		filter += voice_filter
+
+	if(length(tts_filter) > 0)
+		filter += tts_filter.Join(",")
+
+	if(voice && found_client)
+		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = range, pitch = pitch, silicon = tts_silicon_voice_effect)
+
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), visible_name = FALSE)
+	//This proc uses [] because it is faster than continually appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
 	//Start name span.
@@ -90,10 +113,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
-	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
-	if(face_name && ishuman(speaker))
-		var/mob/living/carbon/human/H = speaker
-		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
+	var/namepart
+	var/list/stored_name = list(null)
+	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
+	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
+
 	//End name span.
 	var/endspanpart = "</span>"
 
@@ -209,8 +233,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/GetVoice()
 	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
-
-/atom/movable/proc/get_alt_name()
 
 //HACKY VIRTUALSPEAKER STUFF BEYOND THIS POINT
 //these exist mostly to deal with the AIs hrefs and job stuff.

@@ -142,7 +142,7 @@
 		if(deprecise_zone(organ.zone) != zone_to_check)
 			continue
 		// Also, some organs to exclude. Don't remove vital (brains), don't remove synthetics, and don't remove unremovable
-		if(organ.organ_flags & (ORGAN_SYNTHETIC|ORGAN_VITAL|ORGAN_UNREMOVABLE))
+		if(organ.organ_flags & (ORGAN_ROBOTIC|ORGAN_VITAL|ORGAN_UNREMOVABLE))
 			continue
 
 		organs_we_can_remove[organ.name] = organ
@@ -229,5 +229,6 @@
 /obj/item/melee/touch_attack/flesh_surgery
 	name = "\improper knit flesh"
 	desc = "Let's go practice medicine."
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"

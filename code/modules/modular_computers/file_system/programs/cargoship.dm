@@ -27,9 +27,6 @@
 	return data
 
 /datum/computer_file/program/shipping/ui_act(action, list/params)
-	. = ..()
-	if(.)
-		return
 	if(!computer.computer_id_slot) //We need an ID to successfully run
 		return FALSE
 

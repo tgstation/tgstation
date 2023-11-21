@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
 	desc = "A machine used for recycling dead monkeys into monkey cubes."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
@@ -28,8 +28,8 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
 	. = ..()
 	cube_production = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		cube_production += manipulator.tier * 0.1
+	for(var/datum/stock_part/servo/servo in component_parts)
+		cube_production += servo.tier * 0.1
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		cube_production += matter_bin.tier * 0.1
 
@@ -99,5 +99,5 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	. = ..()
 	if(istype(I))
 		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
-		I.buffer = src
+		I.set_buffer(src)
 		return TRUE

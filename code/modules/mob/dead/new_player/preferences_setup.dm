@@ -55,7 +55,7 @@
 		var/datum/quirk/picked_quirk = pick(available_hardcore_quirks)
 
 		var/picked_quirk_blacklisted = FALSE
-		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted with our current quirks. quirk_blacklist is a list of lists.
+		for(var/bl in GLOB.quirk_blacklist) //Check if the quirk is blacklisted with our current quirks. quirk_blacklist is a list of lists.
 			var/list/blacklist = bl
 			if(!(picked_quirk in blacklist))
 				continue

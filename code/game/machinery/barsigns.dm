@@ -1,7 +1,7 @@
 /obj/machinery/barsign // All Signs are 64 by 32 pixels, they take two tiles
 	name = "bar sign"
 	desc = "A bar sign which has not been initialized, somehow. Complain at a coder!"
-	icon = 'icons/obj/barsigns.dmi'
+	icon = 'icons/obj/machines/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
@@ -169,15 +169,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 	set_sign(sign)
 
-/obj/machinery/barsign/emag_act(mob/user)
+/obj/machinery/barsign/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(machine_stat & (NOPOWER|BROKEN|EMPED))
 		balloon_alert(user, "controls are unresponsive!")
-		return
+		return FALSE
 
 	balloon_alert(user, "illegal barsign loaded")
-	sleep(10 SECONDS)
-	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
+	addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 10 SECONDS)
+	return TRUE
 
+/// Timer proc, called after ~10 seconds after [emag_act], since [emag_act] returns a value and cannot sleep
+/obj/machinery/barsign/proc/finish_emag_act()
+	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 
 /obj/machinery/barsign/proc/pick_sign(mob/user)
 	var/picked_name = tgui_input_list(user, "Available Signage", "Bar Sign", sort_list(get_bar_names()))

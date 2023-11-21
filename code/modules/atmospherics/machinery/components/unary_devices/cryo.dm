@@ -1,7 +1,7 @@
 ///Max temperature allowed inside the cryotube, should break before reaching this heat
 #define MAX_TEMPERATURE 4000
 // Multiply factor is used with efficiency to multiply Tx quantity
-// Tx quantity is how much volume should be removed from the cell's beaker - multiplied by delta_time
+// Tx quantity is how much volume should be removed from the cell's beaker - multiplied by seconds_per_tick
 // Throttle Counter Max is how many calls of process() between ones that inject reagents.
 // These three defines control how fast and efficient cryo is
 #define CRYO_MULTIPLY_FACTOR 25
@@ -109,6 +109,8 @@
 	var/message_cooldown
 	///Cryo will continue to treat people with 0 damage but existing wounds, but will sound off when damage healing is done in case doctors want to directly treat the wounds instead
 	var/treating_wounds = FALSE
+	/// Cryo should notify doctors if the patient is dead, and eject them if autoeject is enabled
+	var/patient_dead = FALSE
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
 
@@ -134,6 +136,7 @@
 	vis_contents += occupant_vis
 	if(airs[1])
 		airs[1].volume = CELL_VOLUME * 0.5
+	register_context()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -165,6 +168,20 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[state_open ? "Close" : "Open"] door"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
+
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	vis_contents.Cut()
 
@@ -193,9 +210,9 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
-	..()
-	if(A == beaker)
+/obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == beaker)
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
@@ -225,7 +242,7 @@
 	if(on && is_operational)
 		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 	else
-		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-off", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
 	open_machine()
@@ -251,21 +268,38 @@
 		begin_processing()
 
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/process(delta_time)
+/obj/machinery/atmospherics/components/unary/cryo_cell/process(seconds_per_tick)
 	..()
-
-	if(!on)
-		return
 	if(!occupant)
 		return
+
+	if(!on)
+		// Should turn on if set to auto
+		if(autoeject)
+			set_on(TRUE)
+		else
+			return
 
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant.on_fire)
 		mob_occupant.extinguish_mob()
 	if(!check_nap_violations())
 		return
-	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
+	if(mob_occupant.stat == DEAD) // Notify doctors and potentially eject if the patient is dead
+		set_on(FALSE)
+		var/msg = "Patient is deceased."
+		if(autoeject) // Eject if configured.
+			msg += " Auto ejecting patient now."
+			open_machine()
+		// Only need to tell them once
+		if(!patient_dead)
+			playsound(src, 'sound/machines/cryo_warning.ogg', volume)
+			patient_dead = TRUE
+			radio.talk_into(src, msg, radio_channel)
 		return
+
+	patient_dead = FALSE
+
 	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		if(iscarbon(mob_occupant))
 			var/mob/living/carbon/C = mob_occupant
@@ -292,7 +326,7 @@
 
 	if(air1.total_moles() > CRYO_MIN_GAS_MOLES)
 		if(beaker)
-			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
+			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * seconds_per_tick, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
 			consume_gas = TRUE
 	return TRUE
 
@@ -368,6 +402,9 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		if(loc == user?.loc)
+			to_chat(user, span_warning("You can't close [src] on yourself!"))
+			return
 		flick("pod-close-anim", src)
 		..(user)
 		return occupant
@@ -534,11 +571,13 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
-		set_on(!on)
+		if(set_on(!on))
+			balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(can_interact(user))
+		balloon_alert(user, "[state_open ? "closing" : "opening"] door")
 		if(state_open)
 			close_machine()
 		else

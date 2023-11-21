@@ -67,7 +67,7 @@ Okay, so we have blackboard variables, which are considered by subtrees to plan 
 
 ```dm
 /// this subtree checks if the mob has a target. if it doesn't, it plans looking for food. if it does, it tries to eat the food via attacking it.
-/datum/ai_planning_subtree/find_and_eat_food/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/find_and_eat_food/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	//get things out of blackboard
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/atom/target = weak_target?.resolve()
@@ -107,7 +107,7 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 	controller.current_movement_target = target
 
 ///perform will run every "action_cooldown" deciseconds as long as the conditions are good for it to do so (we set "AI_BEHAVIOR_REQUIRE_MOVEMENT", so it won't perform until in range).
-/datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	//targetting datum will kill the action if not real anymore

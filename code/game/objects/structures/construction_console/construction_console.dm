@@ -126,5 +126,4 @@
 /obj/item/construction/rcd/internal
 	name = "internal RCD"
 	max_matter = 600
-	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
 	delay_mod = 0.5

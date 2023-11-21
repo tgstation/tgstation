@@ -19,12 +19,12 @@
 		QDEL_NULL(bound_spirit)
 
 /datum/component/spirit_holding/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_destroy))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_destroy))
 
 /datum/component/spirit_holding/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SELF, COMSIG_QDELETING))
 
 ///signal fired on examining the parent
 /datum/component/spirit_holding/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -67,13 +67,15 @@
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
+	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
+		to_chat(chosen_spirit, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
+		return
 	bound_spirit = new(parent)
 	bound_spirit.ckey = chosen_spirit.ckey
 	bound_spirit.fully_replace_character_name(null, "The spirit of [parent]")
 	bound_spirit.status_flags |= GODMODE
 	bound_spirit.copy_languages(awakener, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the awakener.
-	bound_spirit.update_atom_languages()
-	bound_spirit.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
+	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
 
 	//Add new signals for parent and stop attempting to awaken
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))

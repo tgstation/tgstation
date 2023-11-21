@@ -81,7 +81,7 @@
 	TEST_ASSERT(HAS_TRAIT(trait_target, TRAIT_UNIT_TEST_C), "[TRAIT_UNIT_TEST_C] was unexpectedly removed when using REMOVE_TRAIT() using [UNIT_TEST_SOURCE_MAIN] (was added using add_traits())!")
 	REMOVE_TRAIT(trait_target, TRAIT_UNIT_TEST_C, UNIT_TEST_SOURCE_MAIN) //just for cleanliness+completeness
 
-	TEST_ASSERT(!length(trait_target.status_traits), "Failed to clean up all status traits at the end of the unit test!")
+	TEST_ASSERT(!length(trait_target._status_traits), "Failed to clean up all status traits at the end of the unit test!")
 
 #undef TRAIT_UNIT_TEST_MAIN
 #undef TRAIT_UNIT_TEST_ALT

@@ -3,19 +3,23 @@
 	"map_name": "MultiZ Debug",
 	"map_path": "map_files/debug",
 	"map_file": "multiz.dmm",
+	"ignored_unit_tests": [
+		"/datum/unit_test/job_roundstart_spawnpoints",
+		"/datum/unit_test/required_map_items"
+	],
 	"traits": [
 		{
-			"Up": 1,
+			"Up": true,
 			"Linkage": "Cross"
 		},
 		{
-			"Up": 1,
-			"Down": -1,
+			"Up": true,
+			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		},
 		{
-			"Down": -1,
+			"Down": true,
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": "Cross"
 		}
