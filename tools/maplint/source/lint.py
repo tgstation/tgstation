@@ -43,7 +43,7 @@ class TypepathExtra:
 
 class BannedNeighbor:
     identical: bool = False
-    ignore: Optional[list[Constant]] = None
+    ignore: Optional[Constant] = None
     typepath: Optional[TypepathExtra] = None
     pattern: Optional[re.Pattern] = None
 
