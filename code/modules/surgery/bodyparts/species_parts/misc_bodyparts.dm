@@ -17,7 +17,8 @@
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
-	unarmed_damage_high = 0.5 //snails are soft and squishy
+	unarmed_damage_low = 1
+	unarmed_damage_high = 2 //snails are soft and squishy
 	burn_modifier = 2
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 
@@ -25,20 +26,23 @@
 	limb_id = SPECIES_SNAIL
 	unarmed_attack_verb = "slap"
 	unarmed_attack_effect = ATTACK_EFFECT_DISARM
-	unarmed_damage_high = 0.5
+	unarmed_damage_low = 1
+	unarmed_damage_high = 2 //snails are soft and squishy
 	burn_modifier = 2
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 
 /obj/item/bodypart/leg/left/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_damage_high = 0.5
+	unarmed_damage_low = 1
+	unarmed_damage_high = 2 //snails are soft and squishy
 	burn_modifier = 2
 	speed_modifier = 3 //disgustingly slow
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 
 /obj/item/bodypart/leg/right/snail
 	limb_id = SPECIES_SNAIL
-	unarmed_damage_high = 0.5
+	unarmed_damage_low = 1
+	unarmed_damage_high = 2 //snails are soft and squishy
 	burn_modifier = 2
 	speed_modifier = 3 //disgustingly slow
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -400,7 +404,7 @@
 	unarmed_damage_high = 21
 	unarmed_effectiveness = 20
 	burn_modifier = 1.25
-	speed_modifier = 0.75 //big big fungus
+	speed_modifier = 0.75
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -408,7 +412,7 @@
 	unarmed_damage_high = 21
 	unarmed_effectiveness = 20
 	burn_modifier = 1.25
-	speed_modifier = 0.75 //big fungus big fungus
+	speed_modifier = 0.75
 
 /// Dullahan head preserves organs inside it
 /obj/item/bodypart/head/dullahan

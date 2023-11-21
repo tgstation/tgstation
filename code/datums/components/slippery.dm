@@ -161,7 +161,7 @@
 		if(HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLIPPERY))
 			return
 	var/mob/living/victim = arrived
-	if((victim.movement_type & (FLYING | FLOATING)))
+	if(victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
 	if(can_slip_callback && !can_slip_callback.Invoke(holder, victim))
 		return

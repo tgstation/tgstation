@@ -2,8 +2,8 @@
 	filename = "newscasterapp"
 	filedesc = "Newscaster"
 	download_access = list(ACCESS_LIBRARY)
-	category = PROGRAM_CATEGORY_CREW
-	program_icon_state = "bountyboard"
+	downloader_category = PROGRAM_CATEGORY_GAMES
+	program_open_overlay = "bountyboard"
 	extended_desc = "This program allows any user to access the Newscaster network from anywhere."
 	size = 2
 	requires_ntnet = TRUE

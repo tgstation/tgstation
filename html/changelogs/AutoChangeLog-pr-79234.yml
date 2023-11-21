@@ -1,0 +1,4 @@
+author: "Xackii"
+delete-after: True
+changes:
+  - bugfix: "Androids cannot have overdose effect by any chems."

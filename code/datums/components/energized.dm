@@ -113,7 +113,6 @@
 	notify_ghosts(
 		"[future_tram_victim] has fallen in the path of an oncoming tram!",
 		source = future_tram_victim,
-		action = NOTIFY_ORBIT,
 		header = "Electrifying!",
 	)
 	do_sparks(4, FALSE, source)

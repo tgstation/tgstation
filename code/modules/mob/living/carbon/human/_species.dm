@@ -256,9 +256,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Arguments:
  * * gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.
  * * unique - If true, ensures that this new name is not a duplicate of anyone else's name currently on the station.
- * * lastname - Does this species' naming system adhere to the last name system? Set to false if it doesn't.
+ * * last_name - Do we use a given last name or pick a random new one?
  */
-/datum/species/proc/random_name(gender,unique,lastname)
+/datum/species/proc/random_name(gender, unique, last_name)
 	if(unique)
 		return random_unique_name(gender)
 
@@ -268,8 +268,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else
 		randname = pick(GLOB.first_names_female)
 
-	if(lastname)
-		randname += " [lastname]"
+	if(last_name)
+		randname += " [last_name]"
 	else
 		randname += " [pick(GLOB.last_names)]"
 
@@ -1043,7 +1043,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		affected.blood_volume = min(affected.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		affected.reagents.del_reagent(chem.type)
 		return COMSIG_MOB_STOP_REAGENT_CHECK
-	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
+	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold && !HAS_TRAIT(affected, TRAIT_OVERDOSEIMMUNE))
 		chem.overdosed = TRUE
 		chem.overdose_start(affected)
 		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
