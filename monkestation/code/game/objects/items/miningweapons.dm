@@ -307,6 +307,7 @@
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
 	can_bayonet = FALSE
+	fire_sound = 'sound/weapons/batonextend.ogg'
 
 //Accelerator Casing
 /obj/item/ammo_casing/energy/kinetic/railgun
