@@ -1,5 +1,5 @@
 import { useBackend } from 'tgui/backend';
-import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from 'tgui/components';
+import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from '../../components';
 import { SOFTWARE_DESC } from './constants';
 import { PaiData } from './types';
 

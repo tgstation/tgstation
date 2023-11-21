@@ -211,17 +211,8 @@ export const TguiTarget = new Juke.Target({
   dependsOn: [YarnTarget],
   inputs: [
     'tgui/.yarn/install-target',
-    'tgui/webpack.config.js',
     'tgui/**/package.json',
     'tgui/packages/**/*.+(js|cjs|ts|tsx|scss)',
-  ],
-  outputs: [
-    'tgui/public/tgui.bundle.css',
-    'tgui/public/tgui.bundle.js',
-    'tgui/public/tgui-panel.bundle.css',
-    'tgui/public/tgui-panel.bundle.js',
-    'tgui/public/tgui-say.bundle.css',
-    'tgui/public/tgui-say.bundle.js',
   ],
   executes: () => yarn('tgui:build'),
 });
@@ -303,6 +294,7 @@ export const AllTarget = new Juke.Target({
 
 export const TguiCleanTarget = new Juke.Target({
   executes: async () => {
+    Juke.rm('tgui/dist', { recursive: true });
     Juke.rm('tgui/public/.tmp', { recursive: true });
     Juke.rm('tgui/public/*.map');
     Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');

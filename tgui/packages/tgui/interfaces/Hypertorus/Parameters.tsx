@@ -1,4 +1,4 @@
-import { Flex, LabeledControls, RoundGauge, Section } from 'tgui/components';
+import { Flex, LabeledControls, RoundGauge, Section } from '../../components';
 
 import { formatSiUnit } from 'tgui/format';
 import { toFixed } from 'common/math';

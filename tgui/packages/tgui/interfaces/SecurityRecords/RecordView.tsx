@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Table } from 'tgui/components';
+import { Box, Button, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Table } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
 import { CrimeWatcher } from './CrimeWatcher';

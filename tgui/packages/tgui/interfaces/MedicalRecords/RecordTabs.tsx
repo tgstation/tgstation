@@ -1,7 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon, Button } from 'tgui/components';
+import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon, Button } from '../../components';
 import { JOB2ICON } from '../common/JobToIcon';
 import { isRecordMatch } from '../SecurityRecords/helpers';
 import { MedicalRecord, MedicalRecordData } from './types';

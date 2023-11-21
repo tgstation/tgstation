@@ -27,6 +27,7 @@ export const KitchenSink = (props, context) => {
   const stories = getStories();
   const story = stories[pageIndex];
   const Layout = panel ? Pane : Window;
+
   return (
     <Layout title="Kitchen Sink" width={600} height={500} theme={theme}>
       <Flex height="100%">

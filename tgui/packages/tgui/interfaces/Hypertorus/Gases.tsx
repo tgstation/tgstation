@@ -1,4 +1,4 @@
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui/components';
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../../components';
 import { HelpDummy, HoverHelp } from './helpers';
 import { HypertorusFuel, HypertorusGas } from '.';
 import { filter, sortBy } from 'common/collections';

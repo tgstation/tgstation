@@ -1,5 +1,5 @@
 import { useLocalState } from 'tgui/backend';
-import { Stack, Tabs } from 'tgui/components';
+import { Stack, Tabs } from '../../components';
 import { Window } from 'tgui/layouts';
 import { PAI_TAB } from './constants';
 import { AvailableDisplay } from './Available';

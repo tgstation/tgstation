@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from 'tgui/components';
+import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from '../../components';
 import { HelpDummy, HoverHelp } from './helpers';
 
 import { BooleanLike } from 'common/react';

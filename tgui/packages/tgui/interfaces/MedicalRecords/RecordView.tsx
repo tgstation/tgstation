@@ -1,5 +1,5 @@
 import { NoteKeeper } from './NoteKeeper';
-import { Stack, Section, NoticeBox, Box, LabeledList, Button, RestrictedInput } from 'tgui/components';
+import { Stack, Section, NoticeBox, Box, LabeledList, Button, RestrictedInput } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { getMedicalRecord, getQuirkStrings } from './helpers';
 import { useBackend } from '../../backend';

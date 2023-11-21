@@ -1,5 +1,5 @@
 import { useBackend } from 'tgui/backend';
-import { Stack } from 'tgui/components';
+import { Stack } from '../../components';
 import { Window } from 'tgui/layouts';
 import { Data } from './types';
 import { BeakerDisplay } from './Beaker';

@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui/components';
+import { Button, NoticeBox, Section, Stack, Tabs } from '../../components';
 import { Data } from './types';
 import { SymptomDisplay } from './Symptom';
 import { VirusDisplay } from './Virus';

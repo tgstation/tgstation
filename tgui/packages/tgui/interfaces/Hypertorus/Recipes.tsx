@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Table, Tooltip } from 'tgui/components';
+import { Box, Button, Icon, Table, Tooltip } from '../../components';
 import { getGasColor, getGasLabel } from 'tgui/constants';
 
 import { HypertorusData } from '.';

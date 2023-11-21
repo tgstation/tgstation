@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
+import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
 import { Window } from 'tgui/layouts';
 
 type VendingData = {

@@ -2,7 +2,7 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { capitalizeFirst, multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from 'tgui/components';
+import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from '../../components';
 import { Window } from 'tgui/layouts';
 import { JOB2ICON } from '../common/JobToIcon';
 import { ANTAG2COLOR } from './constants';

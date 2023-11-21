@@ -1,5 +1,5 @@
 import { useBackend } from 'tgui/backend';
-import { Box, Button, Icon, NoticeBox, Stack } from 'tgui/components';
+import { Box, Button, Icon, NoticeBox, Stack } from '../../components';
 import { Window } from 'tgui/layouts';
 import { SecurityRecordsData } from './types';
 import { SecurityRecordView } from './RecordView';

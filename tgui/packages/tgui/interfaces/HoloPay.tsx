@@ -1,6 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from 'tgui/components';
+import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from '../components';
 import { Window } from 'tgui/layouts';
 
 type HoloPayData = {

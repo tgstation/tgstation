@@ -1,6 +1,6 @@
 import { Box, Stack, Button } from '../../components';
 import { Component } from 'inferno';
-import { shallowDiffers } from '../../../common/react';
+import { shallowDiffers } from 'common/react';
 import { ABSOLUTE_Y_OFFSET, noop } from './constants';
 import { Port } from './Port';
 

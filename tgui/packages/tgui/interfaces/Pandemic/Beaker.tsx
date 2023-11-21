@@ -1,6 +1,6 @@
 import { capitalizeFirst } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Button, LabeledList, NoticeBox, ProgressBar, Section, Stack } from 'tgui/components';
+import { Button, LabeledList, NoticeBox, ProgressBar, Section, Stack } from '../../components';
 import { Data } from './types';
 
 /** Displays loaded container info, if it exists */

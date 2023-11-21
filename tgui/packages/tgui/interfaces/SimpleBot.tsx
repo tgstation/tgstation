@@ -1,6 +1,6 @@
 import { capitalizeAll, multiline } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from 'tgui/components';
+import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from '../components';
 import { Window } from 'tgui/layouts';
 
 type SimpleBotContext = {

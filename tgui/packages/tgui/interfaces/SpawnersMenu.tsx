@@ -1,6 +1,6 @@
 import { capitalizeAll } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Button, LabeledList, Section, Stack } from 'tgui/components';
+import { Button, LabeledList, Section, Stack } from '../components';
 import { Window } from 'tgui/layouts';
 
 type SpawnersMenuContext = {

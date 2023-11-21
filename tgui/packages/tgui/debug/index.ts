@@ -5,6 +5,6 @@
  */
 
 export { useDebug } from './hooks';
-export { KitchenSink } from './KitchenSink';
+export { KitchenSink } from './KitchenSink.jsx';
 export { debugMiddleware, relayMiddleware } from './middleware';
 export { debugReducer } from './reducer';

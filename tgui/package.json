@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "tgui-workspace",
+  "type": "module",
   "version": "4.3.1",
   "packageManager": "yarn@3.3.1",
   "workspaces": [
@@ -9,7 +10,7 @@
   "scripts": {
     "tgui:analyze": "webpack --analyze",
     "tgui:bench": "webpack --env TGUI_BENCH=1 && node packages/tgui-bench/index.js",
-    "tgui:build": "BROWSERSLIST_IGNORE_OLD_DATA=true webpack",
+    "tgui:build": "tsc && vite build",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
     "tgui:prettier": "prettierx --check .",
@@ -28,10 +29,11 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/jest": "^29.2.4",
     "@types/jsdom": "^20.0.1",
-    "@types/node": "14.x",
+    "@types/node": "^20.9.2",
     "@types/webpack": "^5.28.0",
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/parser": "^5.47.1",
+    "@vitejs/plugin-legacy": "^5.0.0",
     "babel-jest": "^27.0.6",
     "babel-loader": "^8.2.2",
     "babel-plugin-inferno": "^6.3.0",
@@ -53,9 +55,12 @@
     "sass": "^1.37.5",
     "sass-loader": "^11.1.1",
     "style-loader": "^2.0.0",
+    "terser": "^5.24.0",
     "terser-webpack-plugin": "^5.1.4",
     "typescript": "^4.9.4",
     "url-loader": "^4.1.1",
+    "vite": "^5.0.0",
+    "vite-plugin-inferno": "^0.0.1",
     "webpack": "^5.75.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2"
