@@ -3,15 +3,19 @@
 	var/clothamnt = 0 //How much cloth
 
 /// Clothing + sharp = cloth sheet
-/obj/item/clothing/attackby(obj/item/W, mob/user, params, cloth/C)
+/obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness() && cuttable)
-		if(QDELETED(src))
-			to_chat(user, "<span class='notice'>The item doesn't exist anymore!.</span>")
-			return
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
-		to_chat(user, "<span class='notice'>You cut the [src] into strips with [W].</span>")
-		var/obj/item/stack/sheet/cloth/result = new (get_turf(src), clothamnt)
+		if (!(flags_1 & HOLOGRAM_1))
+			if(QDELETED(src))
+				to_chat(user, "<span class='notice'>The item doesn't exist anymore!.</span>")
+				return
+			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), clothamnt)
+			if(!QDELETED(shreds)) //stacks merged
+				transfer_fingerprints_to(shreds)
+				shreds.add_fingerprint(user)
 		qdel(src)
+		to_chat(user, span_notice("You tear [src] up."))
+		playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
 		return TRUE
 	..()
 
