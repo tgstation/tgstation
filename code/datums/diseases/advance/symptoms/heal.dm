@@ -327,7 +327,7 @@
 	resistance = 2
 	stage_speed = -3
 	transmittable = -2
-	level = 8
+	level = 7
 	passive_message = span_notice("The pain from your wounds makes you feel oddly sleepy...")
 	var/deathgasp = FALSE
 	var/stabilize = FALSE
@@ -501,7 +501,7 @@
 	resistance = 3
 	stage_speed = -2
 	transmittable = -2
-	level = 8
+	level = 7
 	passive_message = span_notice("You feel an odd attraction to plasma.")
 	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(

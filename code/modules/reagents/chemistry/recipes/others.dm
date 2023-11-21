@@ -213,14 +213,6 @@
 	results = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
 	required_reagents = list(/datum/reagent/uranium = 5, /datum/reagent/toxin/plasma/plasmavirusfood = 1)
 
-/datum/chemical_reaction/virus_food_uranium_plasma_gold
-	results = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
-	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/gold = 10, /datum/reagent/toxin/plasma = 1)
-
-/datum/chemical_reaction/virus_food_uranium_plasma_silver
-	results = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
-	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/silver = 10, /datum/reagent/toxin/plasma = 1)
-
 /datum/chemical_reaction/mix_virus
 	results = list(/datum/reagent/blood = 1)
 	required_reagents = list(/datum/reagent/consumable/virus_food = 1)
@@ -286,11 +278,6 @@
 	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/unstable = 1)
 	level_min = 7
 	level_max = 7
-
-/datum/chemical_reaction/mix_virus/mix_virus_12
-	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
-	level_min = 8
-	level_max = 8
 
 /datum/chemical_reaction/mix_virus/rem_virus
 	required_reagents = list(/datum/reagent/medicine/synaptizine = 1)

@@ -2370,12 +2370,6 @@
 	taste_description = "the inside of a reactor"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/uranium/uraniumvirusfood/stable
-	name = "Stable Uranium Gel"
-	color = "#04506C" // rgb: 4,80,108
-	taste_description = "the inside of a reactor"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
 // Bee chemicals
 
 /datum/reagent/royal_bee_jelly
