@@ -453,16 +453,13 @@
 	visible_message("\The [src] prints a growth dish.")
 	spawn(10)
 		var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
-		dish.contained_virus = D.getcopy()
+		dish.contained_virus = D.Copy()
 		dish.contained_virus.infectionchance = dish.contained_virus.infectionchance_base
 		dish.update_icon()
 		dish.name = "growth dish (Unknown [dish.contained_virus.form])"
-		if ("[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]" in virusDB)
-			var/datum/data/record/v = virusDB["[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]"]
-			dish.name = "growth dish ([v.fields["name"]][v.fields["nickname"] ? " \"[v.fields["nickname"]]\"" : ""])"
 
 
-/obj/machinery/disease2/centrifuge/breakdown()
+/obj/machinery/disease2/centrifuge/Destroy()
 	for (var/i = 1 to vials.len)
 		if(vials[i])
 			var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
