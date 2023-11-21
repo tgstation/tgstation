@@ -101,27 +101,25 @@
 
 	adjust_inflammation(-passive_inflammation_reduction * seconds_per_tick)
 
-	if (carbon_quirk_holder.has_reagent(/datum/reagent/toxin/histamine))
-		var/datum/reagent/toxin/histamine/holder_histimine = carbon_quirk_holder.reagents.get_reagent(/datum/reagent/toxin/histamine)
-		if (holder_histimine)
-			if (holder_histimine.overdosed) // uh oh!
-				if (SPT_PROB(15, seconds_per_tick))
-					to_chat(carbon_quirk_holder, span_boldwarning("You feel your neck swelling, squeezing on your windpipe more and more!"))
-				adjust_inflammation(histimine_OD_inflammation)
-			else
-				if (SPT_PROB(5, seconds_per_tick))
-					to_chat(carbon_quirk_holder, span_warning("You find yourself wheezing a little harder as your neck swells..."))
-				adjust_inflammation(histimine_inflammation)
-
-	if (carbon_quirk_holder.has_reagent(/datum/reagent/medicine/albuterol))
-		var/datum/reagent/medicine/albuterol/albuterol = carbon_quirk_holder.reagents.get_reagent(/datum/reagent/medicine/albuterol)
-		if (isnull(albuterol)) // sanity - couldve been purged
-			inhaled_albuterol = 0
+	var/datum/reagent/toxin/histamine/holder_histimine = carbon_quirk_holder.reagents.has_reagent(/datum/reagent/toxin/histamine)
+	if (holder_histimine)
+		if (holder_histimine.overdosed) // uh oh!
+			if (SPT_PROB(15, seconds_per_tick))
+				to_chat(carbon_quirk_holder, span_boldwarning("You feel your neck swelling, squeezing on your windpipe more and more!"))
+			adjust_inflammation(histimine_OD_inflammation)
 		else
-			inhaled_albuterol = min(albuterol.volume, inhaled_albuterol)
+			if (SPT_PROB(5, seconds_per_tick))
+				to_chat(carbon_quirk_holder, span_warning("You find yourself wheezing a little harder as your neck swells..."))
+			adjust_inflammation(histimine_inflammation)
 
-		if (inhaled_albuterol > 0)
-			adjust_inflammation(-(albuterol_inflammtion_reduction * seconds_per_tick))
+	var/datum/reagent/medicine/albuterol/albuterol = carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/albuterol)
+	if (isnull(albuterol)) // sanity - couldve been purged
+		inhaled_albuterol = 0
+	else
+		inhaled_albuterol = min(albuterol.volume, inhaled_albuterol)
+
+	if (inhaled_albuterol > 0)
+		adjust_inflammation(-(albuterol_inflammtion_reduction * seconds_per_tick))
 
 	// asthma attacks dont happen if theres no client, because they can just kill you and some need immediate response
 	else if (carbon_quirk_holder.client && isnull(current_attack) && world.time > time_next_attack_allowed && SPT_PROB(chance_for_attack_to_happen_per_second, seconds_per_tick))
@@ -136,7 +134,7 @@
 	RegisterSignal(current_attack, COMSIG_QDELETING, PROC_REF(attack_deleting))
 
 	if (current_attack.alert_ghosts)
-		notify_ghosts("[quirk_holder] is having an asthma attack: [current_attack.name]!", source = quirk_holder, action = NOTIFY_ORBIT, header = "Asthma attack!")
+		notify_ghosts("[quirk_holder] is having an asthma attack: [current_attack.name]!", source = quirk_holder, notify_flags = NOTIFY_CATEGORY_NOFLASH, header = "Asthma attack!")
 
 /// Setter proc for [inflammation]. Adjusts the amount by lung health, adjusts pressure mult, gives feedback messages if silent is FALSE.
 /datum/quirk/item_quirk/asthma/proc/adjust_inflammation(amount, silent = FALSE)
