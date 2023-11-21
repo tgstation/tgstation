@@ -3,11 +3,5 @@
   - /obj/effect/spawner/structure
   - /obj/structure
   - /turf/closed
-    ignore: [
-      /obj/structure/cable,
-      /obj/structure/transit_tube
-    ]
+    ignore: [/obj/structure/cable, /obj/structure/transit_tube]
 
-  # - /obj/structure/lattice
-  # - /obj/structure/window
-  #- /obj/structure/grille
