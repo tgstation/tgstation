@@ -129,7 +129,7 @@
 	else
 		var/json_file = file("data/npc_saves/Poly.json")
 		if(!fexists(json_file))
-			return
+			return list()
 		var/list/json = json_decode(file2text(json_file))
 		returnable_list = json["phrases"]
 		rounds_survived = json["roundssurvived"]
