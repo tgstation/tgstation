@@ -22,14 +22,14 @@
 	return ..()
 
 /datum/element/venomous/proc/do_venom(datum/element_owner, atom/venom_source, atom/target, hit_zone)
-	if(!iscarbon(target) || !ismecha(target) || !isvehicle(target))
+	if(!iscarbon(target) && !ismecha(target) && !isvehicle(target))
 		return
 
 	var/mob/living/carbon/victim
 
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/mech = target
-		if(mech.enclosed || !LAZYLEN(mech.occupants) || (mech.mech_flags & SILICON_PILOT))
+		if(mech.enclosed || !LAZYLEN(mech.occupants) || (LAZYLEN(mech.occupants) == 1 && mech.mecha_flags & SILICON_PILOT))
 			return
 
 		for(var/mob/living/carbon/target_victim as anything in mech.occupants)
@@ -46,7 +46,7 @@
 	else if(iscarbon(target))
 		victim = target
 
-	if(target.stat == DEAD)
+	if(victim.stat == DEAD)
 		return
 
 	var/final_amount_added
@@ -54,4 +54,4 @@
 		final_amount_added = rand(amount_added[1], amount_added[2])
 	else
 		final_amount_added = amount_added
-	target.reagents?.add_reagent(poison_type, final_amount_added)
+	victim.reagents?.add_reagent(poison_type, final_amount_added)
