@@ -496,11 +496,11 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/bot/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if (!.)
-		return
-	do_sparks(5, TRUE, src)
+/mob/living/simple_animal/bot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
+		do_sparks(5, TRUE, src)
+		. = TRUE
+	return ..() || .
 
 /mob/living/simple_animal/bot/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()

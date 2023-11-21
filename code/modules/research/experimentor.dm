@@ -641,10 +641,10 @@
 		/mob/living/basic/crab,
 		/mob/living/basic/lizard,
 		/mob/living/basic/mouse,
+		/mob/living/basic/parrot,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/basic/pet/fox,
-		/mob/living/simple_animal/parrot/natural,
 		/mob/living/simple_animal/pet/cat,
 	)
 	for(var/counter in 1 to rand(1, 25))

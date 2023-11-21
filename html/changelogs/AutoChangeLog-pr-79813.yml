@@ -1,0 +1,4 @@
+author: "Bumtickley00"
+delete-after: True
+changes:
+  - balance: "The CMO's hypospray now holds 60u, and can be set to inject smaller amounts of reagents"

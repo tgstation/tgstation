@@ -29,9 +29,10 @@
 		notify_ghosts(
 			"A drone shell has been created in \the [area.name].",
 			source = src,
-			action = NOTIFY_PLAY,
-			notify_flags = (GHOST_NOTIFY_IGNORE_MAPLOAD),
+			header = "Drone Shell Created",
+			click_interact = TRUE,
 			ignore_key = POLL_IGNORE_DRONE,
+			notify_flags = (GHOST_NOTIFY_IGNORE_MAPLOAD),
 		)
 
 /obj/effect/mob_spawn/ghost_role/drone/allow_spawn(mob/user, silent = FALSE)
