@@ -290,7 +290,7 @@
 	can_bayonet = FALSE
 	max_mod_capacity = 60
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/grapple
+/obj/item/gun/energy/recharge/grapple
 	name = "Miner Zip Hook"
 	desc = "During the pizza party for the Mining Research and Development team, the Mining Research Director went outside, and played with his favorite ball. \
 	Unfortunetly he accidently tossed it to the other side of a massive lavalake. Out of pure spite he decided that instead of getting an RCD like any sane individual \
@@ -302,13 +302,11 @@
 	base_icon_state = "kineticgrapple"
 	inhand_icon_state = "kineticgun"
 	recharge_time = 5 SECONDS
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hook)
+	ammo_type = list(/obj/item/ammo_casing/energy/hook)
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
 	weapon_weight = WEAPON_LIGHT
 	can_bayonet = FALSE
-	max_mod_capacity = 0
-	disablemodification = TRUE
 
 //Accelerator Casing
 /obj/item/ammo_casing/energy/kinetic/railgun
@@ -328,7 +326,7 @@
 	select_name = "kinetic"
 	e_cost = 500
 	pellets = 3
-	variance = 65
+	variance = 50
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 
 /obj/item/ammo_casing/energy/kinetic/glock
@@ -345,7 +343,7 @@
 	variance = 360
 	fire_sound = 'sound/weapons/gun/general/cannon.ogg'
 
-/obj/item/ammo_casing/energy/kinetic/hook
+/obj/item/ammo_casing/energy/hook
 	name = "grappling hook"
 	desc = "A mining grapple hook."
 	e_cost = 500
