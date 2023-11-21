@@ -165,8 +165,6 @@
 /obj/item/clothing/gloves/krav_maga
 	var/datum/martial_art/krav_maga/style = new
 
-	grab_resilience_mult = 1.5
-
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_GLOVES)

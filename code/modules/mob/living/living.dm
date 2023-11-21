@@ -1183,17 +1183,9 @@
 
 	. *= base_hand_mult
 
-	if (HAS_TRAIT(src, TRAIT_HULK))
-		. *= HULK_GRAB_RESILIENCE_MULT
-
 /// Returns a multiplier that will be put against our resist chance when we try to resist a grab.
 /mob/living/proc/get_resist_chance_mult()
-	var/mult = 1
-
-	if (HAS_TRAIT(src, TRAIT_HULK))
-		mult *= HULK_GRAB_RESIST_MULT
-
-	return mult
+	return 1
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
