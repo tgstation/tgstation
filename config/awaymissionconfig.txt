@@ -11,7 +11,7 @@
 #_maps/RandomZLevels/TheBeach.dmm
 #_maps/RandomZLevels/centcomAway.dmm
 #_maps/RandomZLevels/moonoutpost19.dmm
-#_maps/RandomZLevels/undergroundoutpost45.dmm
+#_maps/RandomZLevels/undergroundoutpost45MK1.dmm
 #_maps/RandomZLevels/caves.dmm
 #_maps/RandomZLevels/snowdin.dmm
 #_maps/RandomZLevels/research.dmm
