@@ -228,20 +228,25 @@
 
 		return TRUE
 
+/obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/autolathe/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(user.combat_mode) //so we can hit the machine
+		return ..()
+
 	if(busy)
 		balloon_alert(user, "it's busy!")
-		return TRUE
-
-	if(default_deconstruction_crowbar(attacking_item))
 		return TRUE
 
 	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE
-
-	if(user.combat_mode) //so we can hit the machine
-		return ..()
 
 	if(machine_stat)
 		return TRUE
@@ -271,32 +276,12 @@
 		balloon_alert(user, "close the panel first!")
 		return FALSE
 
-	if(istype(attacking_item, /obj/item/storage/bag/trash))
-		for(var/obj/item/content_item in attacking_item.contents)
-			if(!do_after(user, 0.5 SECONDS, src))
-				return FALSE
-			attackby(content_item, user)
+	//these 2 items open the UI
+	if(istype(attacking_item, /obj/item/modular_computer/pda) || istype(attacking_item, obj/item/card/id))
+		ui_interact(user)
 		return TRUE
 
 	return ..()
-
-/obj/machinery/autolathe/attackby_secondary(obj/item/weapon, mob/living/user, params)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(busy)
-		balloon_alert(user, "it's busy!")
-		return
-
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", weapon))
-		return
-
-	if(machine_stat)
-		return SECONDARY_ATTACK_CALL_NORMAL
-
-	if(panel_open)
-		balloon_alert(user, "close the panel first!")
-		return
-
-	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
