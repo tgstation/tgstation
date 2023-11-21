@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			EFFECT_DANGER_HARMFUL	= 2,
 			EFFECT_DANGER_DEADLY	= 0,
 			)
-		//contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
+		contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
 		growth = rand(5, 50)
 		name = "growth dish (Unknown [contained_virus.form])"
 		update_icon()
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			growth = min(growth + growthrate, 100)
 		if(!reagents.remove_reagent(/datum/reagent/water, 0.2))
 			growth = max(growth - growthrate, 0)
-		//contained_virus.incubate(src,mutatechance)
+		contained_virus.incubate(src,mutatechance)
 
 /obj/item/weapon/virusdish/proc/on_reagent_change(datum/reagents/reagents)
 	if (contained_virus)
