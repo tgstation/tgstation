@@ -25,6 +25,10 @@
 	var/peaked_cycles = 0
 	/// How many cycles do we need to have been active after hitting our max stage to start rolling back?
 	var/cycles_to_beat = 0
+	/// Number of cycles we've prevented symptoms from appearing
+	var/symptom_offsets = 0
+	/// Number of cycles we've benefited from chemical or other non-resting symptom protection
+	var/chemical_offsets = 0
 
 	//Other
 	var/list/viable_mobtypes = list() //typepaths of viable mobs
@@ -90,8 +94,6 @@
 		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
 			cure()
 			return FALSE
-	else if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
-		update_stage(min(stage + 1, max_stages))
 
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
@@ -100,7 +102,7 @@
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
 				cycles_to_beat = DISEASE_CYCLES_POSITIVE
-				if((affected_mob.satiety > 0 || HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) || slowdown == 1 ) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
+				if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) || !affected_mob.nutrition > NUTRITION_LEVEL_STARVING || affected_mob.satiety >= 0 || slowdown == 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
 					return TRUE
 			if(DISEASE_SEVERITY_NONTHREAT)
 				cycles_to_beat = DISEASE_CYCLES_NONTHREAT
@@ -114,12 +116,13 @@
 				cycles_to_beat = DISEASE_CYCLES_HARMFUL
 			if(DISEASE_SEVERITY_BIOHAZARD)
 				cycles_to_beat = DISEASE_CYCLES_BIOHAZARD
-		if(stage_peaked && !(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
+		if(stage_peaked)
 			peaked_cycles += stage/max_stages //every cycle we spend after hitting max stage counts towards eventually curing the virus, faster at higher stages
-		if(peaked_cycles > cycles_to_beat)
-			recovery_prob += 1 + (peaked_cycles / (cycles_to_beat/2)) //more severe viruses are beaten back more aggressively after the peak
-		if(slowdown) //using spaceacillin can help get them over the finish line to kill a virus
-			recovery_prob += ((1 - slowdown)*4)
+			if(peaked_cycles > cycles_to_beat)
+				recovery_prob += 1 + (peaked_cycles / (cycles_to_beat/2)) //more severe viruses are beaten back more aggressively after the peak
+		if(slowdown != 1) //using spaceacillin can help get them over the finish line to kill a virus with decreasing effect over time
+			recovery_prob += clamp((((1 - slowdown)*4) * ((100 - chemical_offsets) / 100)), 0, 2)
+			chemical_offsets = min(chemical_offsets + 1, 100)
 		if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER))
 			if(affected_mob.satiety < 0 || affected_mob.nutrition <= NUTRITION_LEVEL_STARVING) //being malnourished makes it a lot harder to defeat your illness
 				recovery_prob += -1.5
@@ -142,7 +145,7 @@
 				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.2
 
-		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition <= NUTRITION_LEVEL_STARVING)) && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) && !(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)//resting starved won't help, but resting helps
+		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition <= NUTRITION_LEVEL_STARVING)) && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
 			var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
@@ -169,20 +172,30 @@
 
 			recovery_prob *= 1.2 //any form of sleeping magnifies all effects a little bit
 
-	if(recovery_prob && !(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
-		if(SPT_PROB(recovery_prob, seconds_per_tick))
-			if(stage == 1 && prob(cure_chance * 2)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
-				if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition <= NUTRITION_LEVEL_STARVING))
-					if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
-						cure(add_resistance = FALSE)
+		recovery_prob = clamp(recovery_prob, 0, 100)
+
+		if(recovery_prob)
+			if(SPT_PROB(recovery_prob, seconds_per_tick))
+				if(stage == 1 && prob(cure_chance * 2)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
+					if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition <= NUTRITION_LEVEL_STARVING))
+						if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
+							cure(add_resistance = FALSE)
+							return FALSE
+						else if(prob(50)) //if you rode it out from the peak, challenge cure_chance on if you get resistance or not
+							cure(add_resistance = TRUE)
+							return FALSE
+					else
+						cure(add_resistance = TRUE) //stay fed and cure it at any point, you're immune
 						return FALSE
-					else if(prob(50)) //if you rode it out from the peak, challenge cure_chance on if you get resistance or not
-						cure(add_resistance = TRUE)
-						return FALSE
-				else
-					cure(add_resistance = TRUE) //stay fed and cure it at any point, you're immune
-					return FALSE
-			update_stage(max(stage - 1, 1))
+				update_stage(max(stage - 1, 1))
+
+		if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) || slowdown != 1) //sleeping and using spaceacillin lets us nosell applicable virus symptoms firing with decreasing effectiveness over time
+			if(prob(100 - min(symptom_offsets, 100 - cure_chance))) //viruses with higher cure_chance will ultimately be more possible to offset symptoms on
+				symptom_offsets = min(symptom_offsets + 1, 100)
+				return FALSE
+
+	if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
+		update_stage(min(stage + 1, max_stages))
 
 	return !carrier
 
