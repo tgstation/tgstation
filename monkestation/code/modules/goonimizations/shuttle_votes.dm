@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(autotransfer)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/autotransfer/fire()
+	if(length(GLOB.player_list) < 25)
+		return
 	if(world.time > targettime)
 		if(called)
 			return
@@ -27,6 +29,8 @@ SUBSYSTEM_DEF(autotransfer)
 
 /datum/vote/shuttle_call/can_be_initiated(mob/by_who, forced = FALSE)
 	if(!SSticker.HasRoundStarted() || SSautotransfer.called)
+		return FALSE
+	if(length(GLOB.player_list) < 25)
 		return FALSE
 	if(started_time)
 		var/next_allowed_time = SSautotransfer.targettime
