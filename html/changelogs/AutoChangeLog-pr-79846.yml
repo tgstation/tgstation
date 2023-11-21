@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Cursed/bad luck omen will now stick with the player for more than 1 incident"
