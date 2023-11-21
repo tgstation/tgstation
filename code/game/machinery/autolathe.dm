@@ -277,7 +277,7 @@
 		return FALSE
 
 	//these 2 items open the UI
-	if(istype(attacking_item, /obj/item/modular_computer/pda) || istype(attacking_item, obj/item/card/id))
+	if(istype(attacking_item, /obj/item/modular_computer/pda) || istype(attacking_item, /obj/item/card/id))
 		ui_interact(user)
 		return TRUE
 
