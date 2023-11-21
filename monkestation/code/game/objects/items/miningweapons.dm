@@ -290,7 +290,7 @@
 	can_bayonet = FALSE
 	max_mod_capacity = 60
 
-/obj/item/gun/energy/recharge/grapple //disabled because its not fucking working right now...
+/obj/item/gun/energy/recharge/grapple
 	name = "Miner Zip Hook"
 	desc = "During the pizza party for the Mining Research and Development team, the Mining Research Director went outside, and played with his favorite ball. \
 	Unfortunetly he accidently tossed it to the other side of a massive lavalake. Out of pure spite he decided that instead of getting an RCD like any sane individual \
@@ -421,8 +421,8 @@
 
 /obj/projectile/hook/mining/on_hit(atom/target)
 	. = ..()
-	var/atom/A = target
 	firer.forceMove(get_turf(src))
+	var/atom/A = target
 	A.visible_message(span_danger("[firer] zips towards [A] as the hook latches on!"))
 
 
