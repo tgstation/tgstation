@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(tracked_tracking_implants)
 				<b>Special Features:</b><BR>
 				<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
 				a malfunction occurs thereby securing safety of subject. The implant will melt and
-				disintegrate into bio-safe elements.<BR>
+				disintegrate into bio-safe elements.<BR>"}
 	return dat
 
 /obj/item/implant/tracking/c38
