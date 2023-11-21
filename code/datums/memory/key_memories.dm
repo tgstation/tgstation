@@ -211,5 +211,5 @@
 /datum/memory/key/permabrig_crimes/get_starts()
 	return list(
 		"[protagonist_name] being arrested by security for [crimes].",
-		"[protagonist_name] committing the crimes of [crimes].", // Same as the account code
+		"[protagonist_name] committing the crimes of [crimes].",
 	)
