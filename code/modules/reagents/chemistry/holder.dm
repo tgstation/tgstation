@@ -741,7 +741,7 @@
 		if(!reagent.metabolizing)
 			reagent.metabolizing = TRUE
 			reagent.on_mob_metabolize(owner)
-		if(can_overdose)
+		if(can_overdose && !HAS_TRAIT(owner, TRAIT_OVERDOSEIMMUNE))
 			if(reagent.overdose_threshold)
 				if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
 					reagent.overdosed = TRUE
