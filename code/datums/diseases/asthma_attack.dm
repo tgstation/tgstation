@@ -14,6 +14,7 @@
 	bypasses_immunity = TRUE
 	disease_flags = CURABLE|INCREMENTAL_CURE
 	required_organ = ORGAN_SLOT_LUNGS
+	infectable_biotypes = MOB_ROBOTIC|MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD
 
 	/// The world.time after which we will begin remission.
 	var/time_to_start_remission
