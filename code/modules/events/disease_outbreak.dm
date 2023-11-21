@@ -321,11 +321,8 @@
 
 		if(ADV_DISEASE_DANGEROUS)
 			possible_symptoms += list(
-				/datum/symptom/alkali,
-				/datum/symptom/asphyxiation,
 				/datum/symptom/fire,
 				/datum/symptom/flesh_death,
-				/datum/symptom/flesh_eating,
 				/datum/symptom/visionloss,
 			)
 
