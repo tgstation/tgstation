@@ -10,7 +10,7 @@
 		var/list/airborne_viruses = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_AIRBORNE)
 		if (airborne_viruses && airborne_viruses.len > 0)
 			var/strength = 0
-			for (var/datum/disease/V as anything in airborne_viruses)
+			for (var/datum/disease/advanced/V as anything in airborne_viruses)
 				strength += V.infectionchance
 			strength = round(strength/airborne_viruses.len)
 			while (strength > 0)//stronger viruses create more clouds at once
@@ -26,7 +26,7 @@
 	if(immune_system && !immune_system.CanInfect(disease))
 		return FALSE
 	if(prob(disease.infectionchance) || forced)
-		var/datum/disease/D = disease.Copy()
+		var/datum/disease/advanced/D = disease.Copy()
 		if (D.infectionchance > 10)
 			D.infectionchance = max(10, D.infectionchance - 10)//The virus gets weaker as it jumps from people to people
 

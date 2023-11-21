@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(infected_contact_mobs, list())
 
-/datum/disease
+/datum/disease/advanced
 	//the disease's antigens, that the body's immune_system will read to produce corresponding antibodies. Without antigens, a disease cannot be cured.
 	var/list/antigen = list()
 	///can we spread
@@ -52,13 +52,13 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		return list()
 
 	var/list/viable = list()
-	for(var/datum/disease/disease as anything in diseases)
+	for(var/datum/disease/advanced/disease as anything in diseases)
 		if(!(disease.spread_flags & required))
 			continue
 		viable += disease
 	return viable
 
-/datum/disease/proc/AddToGoggleView(mob/living/infectedMob)
+/datum/disease/advanced/proc/AddToGoggleView(mob/living/infectedMob)
 	if (spread & SPREAD_CONTACT)
 		GLOB.infected_contact_mobs |= infectedMob
 		if (!infectedMob.pathogen)
@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 			if (L.client)
 				L.client.images |= infectedMob.pathogen
 
-/datum/disease/proc/incubate(atom/incubator, mutatechance=1)
+/datum/disease/advanced/proc/incubate(atom/incubator, mutatechance=1)
 	mutatechance *= mutation_modifier
 
 	var/mob/living/body = null
@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 				if (machine)
 					machine.update_major(dish)
 
-/datum/disease/proc/makerandom(var/list/str = list(), var/list/rob = list(), var/list/anti = list(), var/list/bad = list(), var/atom/source = null)
+/datum/disease/advanced/proc/makerandom(var/list/str = list(), var/list/rob = list(), var/list/anti = list(), var/list/bad = list(), var/atom/source = null)
 	//ID
 	uniqueID = rand(0,9999)
 	subID = rand(0,9999)
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 				else if (istype(T.loc,/area/station/medical/virology))
 					origin = "Virology"
 
-/datum/disease/proc/new_effect(var/badness = 2, var/stage = 0)
+/datum/disease/advanced/proc/new_effect(var/badness = 2, var/stage = 0)
 	var/list/datum/symptom/list = list()
 	var/list/to_choose = subtypesof(/datum/symptom)
 	for(var/e in to_choose)
@@ -208,7 +208,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		e.chance = rand(1, e.max_chance)
 		return e
 
-/datum/disease/proc/new_random_effect(var/max_badness = 5, var/min_badness = 0, var/stage = 0, var/old_effect)
+/datum/disease/advanced/proc/new_random_effect(var/max_badness = 5, var/min_badness = 0, var/stage = 0, var/old_effect)
 	var/list/datum/symptom/list = list()
 	var/list/to_choose = subtypesof(/datum/symptom)
 	if(old_effect) //So it doesn't just evolve right back into the previous virus type
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		e.chance = rand(1, e.max_chance)
 		return e
 
-/datum/disease/proc/randomize_spread()
+/datum/disease/advanced/proc/randomize_spread()
 	spread = SPREAD_BLOOD	//without blood spread, the disease cannot be extracted or cured, we don't want that for regular diseases
 	if (prob(5))			//5% chance of spreading through both contact and the air.
 		spread |= SPREAD_CONTACT
@@ -235,19 +235,19 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		spread |= SPREAD_CONTACT
 							//22,8% chance of staying in blood
 
-/datum/disease/proc/minormutate(index)
+/datum/disease/advanced/proc/minormutate(index)
 	var/datum/symptom/e = get_effect(index)
 	e.minormutate()
 	infectionchance = min(50,infectionchance + rand(0,10))
 	log += "<br />[ROUND_TIME()] Infection chance now [infectionchance]%"
 
-/datum/disease/proc/get_effect(index)
+/datum/disease/advanced/proc/get_effect(index)
 	if(!index)
 		return pick(symptoms)
 	return symptoms[clamp(index,0,symptoms.len)]
 
 //Major Mutations
-/datum/disease/proc/effectmutate(var/inBody=FALSE)
+/datum/disease/advanced/proc/effectmutate(var/inBody=FALSE)
 	subID = rand(0,9999)
 	var/list/randomhexes = list("7","8","9","a","b","c","d","e")
 	var/colormix = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
@@ -262,19 +262,19 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 	symptoms[i] = f
 	log += "<br />[ROUND_TIME()] Mutated effect [e.name] [e.chance]% into [f.name] [f.chance]%."
 
-/datum/disease/proc/antigenmutate()
+/datum/disease/advanced/proc/antigenmutate()
 	subID = rand(0,9999)
 	var/old_dat = get_antigen_string()
 	roll_antigen()
 	log += "<br />[ROUND_TIME()] Mutated antigen [old_dat] into [get_antigen_string()]."
 
-/datum/disease/proc/get_antigen_string()
+/datum/disease/advanced/proc/get_antigen_string()
 	var/dat = ""
 	for (var/A in antigen)
 		dat += "[A]"
 	return dat
 
-/datum/disease/proc/roll_antigen(list/factors = list())
+/datum/disease/advanced/proc/roll_antigen(list/factors = list())
 	if (factors.len <= 0)
 		antigen = list(pick(GLOB.all_antigens))
 		antigen |= pick(GLOB.all_antigens)
@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		antigen |= pick(antigen_family(selected_second_antigen))
 
 
-/datum/disease/proc/activate(mob/living/mob,var/starved = FALSE)
+/datum/disease/advanced/proc/activate(mob/living/mob,var/starved = FALSE)
 	if(mob.stat == DEAD)
 		return
 
@@ -319,11 +319,11 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 	if(!length(list))
 		return list()
 	var/list/L = list()
-	for(var/datum/disease/D as anything in list)
+	for(var/datum/disease/advanced/D as anything in list)
 		L += D.Copy()
 	return L
 
-/datum/disease/proc/cure(var/mob/living/carbon/mob,var/condition=0)
+/datum/disease/advanced/proc/cure(var/mob/living/carbon/mob,var/condition=0)
 	/* TODO
 	switch (condition)
 		if (0)

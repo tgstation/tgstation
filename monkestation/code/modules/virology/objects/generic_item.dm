@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 	if(!disease.spread)
 		return FALSE
 	if(prob(disease.infectionchance) || forced)
-		var/datum/disease/D = disease.Copy()
+		var/datum/disease/advanced/D = disease.Copy()
 		D.log += "<br />[ROUND_TIME()] Infected \a [src] [notes]"
 
 		GLOB.infected_items |= src

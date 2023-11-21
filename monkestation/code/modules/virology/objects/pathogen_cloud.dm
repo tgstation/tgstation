@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		return
 
 	var/strength = 0
-	for (var/datum/disease/V as anything in viruses)
+	for (var/datum/disease/advanced/V as anything in viruses)
 		strength += V.infectionchance
 	strength = round(strength/viruses.len)
 	var/list/possible_turfs = list()
@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 				//This should prevent mobs breathing in hundreds of clouds at once
 				for (var/obj/effect/pathogen_cloud/other_C in src.loc)
 					if (!other_C.core)
-						for (var/datum/disease/V as anything in other_C.viruses)
+						for (var/datum/disease/advanced/V as anything in other_C.viruses)
 							if (!(V in viruses))
 								viruses |= V.Copy()
 								modified = TRUE
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 			else
 				for (var/obj/effect/pathogen_cloud/core/other_C in src.loc)
 					if (!other_C.moving)
-						for (var/datum/disease/V as anything in other_C.viruses)
+						for (var/datum/disease/advanced/V as anything in other_C.viruses)
 							if (!(V in viruses))
 								viruses |= V.Copy()
 								modified = TRUE
