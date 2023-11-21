@@ -37,12 +37,18 @@
 	if(isnull(crate_paint_jobs))
 		crate_paint_jobs = list(
 		"Internals" = list("icon_state" = "o2crate"),
-		"Medical" = list("icon_state" = "medicalcrate"),
+		"Medical" = list("icon_state" = "medical"),
+		"Medical Plus" = list("icon_state" = "medicalcrate"),
 		"Radiation" = list("icon_state" = "radiation"),
 		"Hydrophonics" = list("icon_state" = "hydrocrate"),
 		"Science" = list("icon_state" = "scicrate"),
+		"Robotics" = list("icon_state" = "robo"),
 		"Solar" = list("icon_state" = "engi_e_crate"),
-		"Engineering" = list("icon_state" = "engi_crate")
+		"Engineering" = list("icon_state" = "engi_crate"),
+		"Atmospherics" = list("icon_state" = "atmos"),
+		"Cargo" = list("icon_state" = "cargo"),
+		"Mining" = list("icon_state" = "mining"),
+		"Command" = list("icon_state" = "centcom")
 	)
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
@@ -203,6 +209,10 @@
 	icon_state = "medicalcrate"
 	base_icon_state = "medicalcrate"
 
+/obj/structure/closet/crate/medical/department
+	icon_state = "medical"
+	base_icon_state = "medical"
+
 /obj/structure/closet/crate/freezer
 	desc = "A freezer."
 	name = "freezer"
@@ -259,6 +269,11 @@
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 	new /obj/item/bodypart/leg/right/robot/surplus(src)
 
+/obj/structure/closet/crate/freezer/food
+	name = "food icebox"
+	icon_state = "food"
+	base_icon_state = "food"
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
@@ -271,6 +286,21 @@
 	icon_state = "hydrocrate"
 	base_icon_state = "hydrocrate"
 
+/obj/structure/closet/crate/centcom
+	name = "centcom crate"
+	icon_state = "centcom"
+	base_icon_state = "centcom"
+
+/obj/structure/closet/crate/cargo
+	name = "cargo crate"
+	icon_state = "cargo"
+	base_icon_state = "cargo"
+
+/obj/structure/closet/crate/cargo/mining
+	name = "mining crate"
+	icon_state = "mining"
+	base_icon_state = "mining"
+
 /obj/structure/closet/crate/engineering
 	name = "engineering crate"
 	icon_state = "engi_crate"
@@ -279,6 +309,11 @@
 /obj/structure/closet/crate/engineering/electrical
 	icon_state = "engi_e_crate"
 	base_icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/engineering/atmos
+	name = "atmospherics crate"
+	icon_state = "atmos"
+	base_icon_state = "atmos"
 
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of an RCD."
@@ -298,10 +333,15 @@
 	icon_state = "scicrate"
 	base_icon_state = "scicrate"
 
+/obj/structure/closet/crate/science/robo
+	name = "robotics crate"
+	icon_state = "robo"
+	base_icon_state = "robo"
+
 /obj/structure/closet/crate/mod
 	name = "MOD crate"
-	icon_state = "scicrate"
-	base_icon_state = "scicrate"
+	icon_state = "robo"
+	base_icon_state = "robo"
 
 /obj/structure/closet/crate/mod/PopulateContents()
 	..()
@@ -325,6 +365,8 @@
 
 /obj/structure/closet/crate/goldcrate
 	name = "gold crate"
+	icon_state = "gold"
+	base_icon_state = "gold"
 
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
@@ -338,6 +380,8 @@
 
 /obj/structure/closet/crate/silvercrate
 	name = "silver crate"
+	icon_state = "silver"
+	base_icon_state = "silver"
 
 /obj/structure/closet/crate/silvercrate/PopulateContents()
 	..()

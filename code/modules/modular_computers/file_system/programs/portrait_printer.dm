@@ -12,10 +12,10 @@
 /datum/computer_file/program/portrait_printer
 	filename = "PortraitPrinter"
 	filedesc = "Marlowe Treeby's Art Galaxy"
-	category = PROGRAM_CATEGORY_CREW
-	program_icon_state = "dummy"
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
+	program_open_overlay = "dummy"
 	extended_desc = "This program connects to a Spinward Sector community art site for viewing and printing art."
-	transfer_access = list(ACCESS_LIBRARY)
+	download_access = list(ACCESS_LIBRARY)
 	usage_flags = PROGRAM_CONSOLE
 	requires_ntnet = TRUE
 	size = 9

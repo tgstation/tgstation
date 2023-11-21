@@ -24,6 +24,8 @@
 
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
+	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers, so you're less anxious when you go non-verbal
+		return
 
 	var/moodmod
 	if(quirk_holder.mob_mood)

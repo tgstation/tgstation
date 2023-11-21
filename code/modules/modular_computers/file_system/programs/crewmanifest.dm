@@ -1,10 +1,10 @@
 /datum/computer_file/program/crew_manifest
 	filename = "plexagoncrew"
 	filedesc = "Plexagon Crew List"
-	category = PROGRAM_CATEGORY_CREW
-	program_icon_state = "id"
+	downloader_category = PROGRAM_CATEGORY_SECURITY
+	program_open_overlay = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
-	transfer_access = list(ACCESS_SECURITY, ACCESS_COMMAND)
+	download_access = list(ACCESS_SECURITY, ACCESS_COMMAND)
 	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosCrewManifest"

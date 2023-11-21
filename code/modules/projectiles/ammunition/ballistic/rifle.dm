@@ -49,3 +49,27 @@
 	name = "40mm rubber shell"
 	desc = "A cased rubber slug. The big brother of the beanbag slug, this thing will knock someone out in one. Doesn't do so great against anyone in armor."
 	projectile_type = /obj/projectile/bullet/shotgun_beanbag/a40mm
+
+/obj/item/ammo_casing/rebar
+	name = "sharpened iron rod"
+	desc = "A Sharpened Iron rod. It's Pointy!"
+	caliber = CALIBER_REBAR
+	icon_state = "rod_sharp"
+	base_icon_state = "rod_sharp"
+	projectile_type = /obj/projectile/bullet/rebar
+
+/obj/item/ammo_casing/rebar/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)
+
+/obj/item/ammo_casing/rebar/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
+
+/obj/item/ammo_casing/rebar/syndie
+	name = "Jagged iron rod"
+	desc = "An Iron rod, with notches cut into it. You really dont want this stuck in you."
+	caliber = CALIBER_REBAR_SYNDIE
+	icon_state = "rod_jagged"
+	base_icon_state = "rod_jagged"
+	projectile_type = /obj/projectile/bullet/rebarsyndie

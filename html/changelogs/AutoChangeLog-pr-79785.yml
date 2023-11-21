@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Atrocinating mobs will now behave more as you'd expect. Meaning they don't slip on wet patches, can't trigger bear traps / landmines / mouse traps, ignore conveyors, and can walk over tables and railings."
+  - bugfix: "Floating mobs are unaffected by conveyor belts, acid (on the ground), glass tables"
+  - bugfix: "Floating mobs won't squish stuff like roaches anymore"
+  - bugfix: "Fixes bear traps triggering on floating / flying mobs"

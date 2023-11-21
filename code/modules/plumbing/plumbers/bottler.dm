@@ -79,7 +79,7 @@
 		return PROCESS_KILL
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
-	if(reagents.total_volume + 0.01 >= wanted_amount && anchored && length(inputspot.contents))
+	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
 		use_power(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		//allowed containers
@@ -91,13 +91,13 @@
 			var/obj/item/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
-				reagents.trans_to(B, wanted_amount, transferred_by = src)
+				reagents.trans_to(B, wanted_amount)
 				B.forceMove(goodspot)
 				return
 			///glass was full so we move it away
 			AM.forceMove(badspot)
 		else if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
-			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
+			reagents.trans_to(AM, wanted_amount, methods = INJECT)
 		else if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
-			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
+			reagents.trans_to(AM, wanted_amount, methods = INJECT)

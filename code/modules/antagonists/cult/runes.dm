@@ -922,7 +922,12 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			fail_invoke()
 			log_game("Manifest rune failed - too many summoned ghosts")
 			return list()
-		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src, header = "Manifest rune")
+		notify_ghosts(
+			"Manifest rune invoked in [get_area(src)].",
+			source = src,
+			header = "Manifest rune",
+			ghost_sound = 'sound/effects/ghost2.ogg',
+		)
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)
 			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(isAdminObserver(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))

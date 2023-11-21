@@ -160,7 +160,7 @@
 
 /turf/open/lava/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
-		PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE
 
@@ -246,7 +246,7 @@
 		. = TRUE
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
-	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
+	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) //you're flying over it.
 		return LAVA_BE_IGNORING
 
 	if(isobj(burn_target))
@@ -265,7 +265,7 @@
 	var/mob/living/burn_living = burn_target
 	var/atom/movable/burn_buckled = burn_living.buckled
 	if(burn_buckled)
-		if(burn_buckled.movement_type & (FLYING|FLOATING))
+		if(burn_buckled.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 			return LAVA_BE_PROCESSING
 		if(isobj(burn_buckled))
 			var/obj/burn_buckled_obj = burn_buckled
@@ -368,37 +368,40 @@
 
 /turf/open/lava/plasma/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
 	. = TRUE
-	if(isobj(burn_target))
-		return FALSE // Does nothing against objects. Old code.
+	if(!isliving(burn_target))
+		return FALSE
 
 	var/mob/living/burn_living = burn_target
-	burn_living.adjustFireLoss(2)
-	if(QDELETED(burn_living))
-		return
-	burn_living.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
-	burn_living.adjust_bodytemperature(-rand(50,65)) //its cold, man
-	if(!ishuman(burn_living) || SPT_PROB(65, seconds_per_tick))
-		return
-	var/mob/living/carbon/human/burn_human = burn_living
-	var/datum/species/burn_species = burn_human.dna.species
-	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android)) //ignore plasmamen/robotic species
-		return
-
-	var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
-	var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
-	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
-		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
-			plasma_parts += burn_limb
-		if(IS_ROBOTIC_LIMB(burn_limb))
-			robo_parts += burn_limb
-
 	var/need_mob_update
-	need_mob_update += burn_human.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC) // This is from plasma, so it should obey plasma biotype requirements
-	need_mob_update += burn_human.adjustFireLoss(25, updating_health = FALSE)
+	// This is from plasma, so it should obey plasma biotype requirements
+	need_mob_update += burn_living.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+	need_mob_update += burn_living.adjustFireLoss(25, updating_health = FALSE)
 	if(need_mob_update)
-		burn_human.updatehealth()
-	if(plasma_parts.len)
-		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
+		burn_living.updatehealth()
+
+	if(QDELETED(burn_living) \
+		|| !ishuman(burn_living) \
+		|| HAS_TRAIT(burn_living, TRAIT_NODISMEMBER) \
+		|| HAS_TRAIT(burn_living, TRAIT_NO_PLASMA_TRANSFORM) \
+		|| SPT_PROB(65, seconds_per_tick) \
+	)
+		return
+
+	var/mob/living/carbon/human/burn_human = burn_living
+
+	var/list/immune_parts = list() // Parts we can't transform because they're not organic or can't be dismembered
+	var/list/transform_parts = list() // Parts we want to transform
+
+	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
+		if(!IS_ORGANIC_LIMB(burn_limb) || !burn_limb.can_dismember())
+			immune_parts += burn_limb
+			continue
+		if(burn_limb.limb_id == SPECIES_PLASMAMAN)
+			continue
+		transform_parts += burn_limb
+
+	if(length(transform_parts))
+		var/obj/item/bodypart/burn_limb = pick_n_take(transform_parts)
 		burn_human.emote("scream")
 		var/obj/item/bodypart/plasmalimb
 		switch(burn_limb.body_zone) //get plasmaman limb to swap in
@@ -414,16 +417,20 @@
 				plasmalimb = new /obj/item/bodypart/chest/plasmaman
 			if(BODY_ZONE_HEAD)
 				plasmalimb = new /obj/item/bodypart/head/plasmaman
+
 		burn_human.del_and_replace_bodypart(plasmalimb)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \
-			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
-	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
-		burn_human.ignite_mob()
-		burn_human.set_species(/datum/species/plasmaman)
-		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
-			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
+			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, held together only by strands of purple fungus!"))
+
+	// If all of your limbs are plasma then congrats: you are plasma man
+	if(length(immune_parts) || length(transform_parts))
+		return
+	burn_human.ignite_mob()
+	burn_human.set_species(/datum/species/plasmaman)
+	burn_human.visible_message(span_warning("[burn_human] bursts into flame as the last of [burn_human.p_their()] body is coated in fungus!"), \
+		span_userdanger("Your senses numb as what remains of your flesh sloughs off, revealing the plasma-encrusted bone beneath!"))
 
 //mafia specific tame happy plasma (normal atmos, no slowdown)
 /turf/open/lava/plasma/mafia
