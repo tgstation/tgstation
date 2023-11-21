@@ -419,7 +419,6 @@
 
 	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
-	cut_overlay(crack_overlay)
 	if(ratio > 75)
 		return
 	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
