@@ -206,7 +206,7 @@
 	return ..()
 
 /datum/memory/key/permabrig_crimes/get_names()
-	return list("[protagonist_name]'s crimes of \"[crimes]\".")
+	return list("[protagonist_name]'s crime of \"[crimes]\".")
 
 /datum/memory/key/permabrig_crimes/get_starts()
 	return list(
