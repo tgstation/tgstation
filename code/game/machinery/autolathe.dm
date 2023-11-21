@@ -276,11 +276,6 @@
 		balloon_alert(user, "close the panel first!")
 		return FALSE
 
-	//these 2 items open the UI
-	if(istype(attacking_item, /obj/item/modular_computer/pda) || istype(attacking_item, /obj/item/card/id))
-		ui_interact(user)
-		return TRUE
-
 	return ..()
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
