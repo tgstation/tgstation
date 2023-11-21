@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "The battle against Maint Khan's forces rages on in the periphery stations of the Spinward Sector. And with it, a new breed of unarmed warrior has emerged; the cybernetic martial artist. Nanotrasen, rather than quell the minor maintenance civil war brewing in their sector, have chosen to exploit this conflict to push their weapons and cybernetics research to new heights!"
-  - rscadd: "Advanced cybernetic arms can be printed at the Robotics exofabricator once researched. They are unlocked by researching the Advanced Robotics Research node."
-  - rscadd: "Advanced cybernetic arms are more durable than standard limbs, and also have higher unarmed potential."
-  - balance: "Strongarm implants now utilize the attacking limb's unarmed potential to determine damage and potential armor penetration. It also does additional stamina damage (1.5x punch damage)"
-  - balance: "Surplus prosthetic limbs contribute more of their carried damage to overall health (AKA they make you actively more vulnerable to damage), and deal less damage with unarmed attacks. Take Quadruple Amputee at your own risk."
