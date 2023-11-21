@@ -2405,6 +2405,7 @@
 	metabolization_rate = INFINITY
 	taste_description = "brains"
 	ph = 0.5
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/romerol/expose_mob(mob/living/carbon/human/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
