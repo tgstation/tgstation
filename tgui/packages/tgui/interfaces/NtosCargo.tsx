@@ -1,5 +1,5 @@
 import { CargoContent } from './Cargo.js';
-import { NtosWindow } from '../layouts';
+import { NtosWindow } from '../layouts/index.js';
 
 export const NtosCargo = (props, context) => {
   return (
