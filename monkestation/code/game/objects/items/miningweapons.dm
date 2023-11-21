@@ -328,7 +328,7 @@
 	select_name = "kinetic"
 	e_cost = 500
 	pellets = 3
-	variance = 80
+	variance = 65
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 
 /obj/item/ammo_casing/energy/kinetic/glock
@@ -424,8 +424,9 @@
 /obj/projectile/hook/mining/on_hit(atom/target)
 	. = ..()
 	var/atom/A = target
-	A.visible_message(span_danger("[firer] zips towards [A] as the hook latches on!"))
 	firer.forceMove(get_turf(src))
+	A.visible_message(span_danger("[firer] zips towards [A] as the hook latches on!"))
+
 
 //ADMIN ONLY MEMES
 /obj/item/gun/energy/recharge/kinetic_accelerator/meme
