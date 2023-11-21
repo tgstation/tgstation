@@ -10,6 +10,8 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	/// Selected barsign being used
 	var/datum/barsign/chosen_sign
+	/// Do we attempt to rename the area we occupy when the chosen sign is changed?
+	var/change_area_name = FALSE
 
 /datum/armor/sign_barsign
 	melee = 20
@@ -23,6 +25,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/Initialize(mapload)
 	. = ..()
+	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
+	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
 	find_and_hang_on_wall()
 
@@ -30,7 +34,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	if(!istype(sign))
 		return
 
-	if(sign.rename_area)
+	if(change_area_name && sign.rename_area)
 		rename_area(src, sign.name)
 
 	chosen_sign = sign
@@ -141,10 +145,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		return FALSE
 
 	tool.play_tool_sound(src)
-	if(do_after(user, (10 SECONDS), target = src))
-		tool.play_tool_sound(src)
-		deconstruct(disassembled = TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!do_after(user, (10 SECONDS), target = src))
+		return FALSE
+
+	tool.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 
 /obj/machinery/barsign/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
