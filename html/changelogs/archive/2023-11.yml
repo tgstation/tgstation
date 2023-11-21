@@ -853,3 +853,56 @@
       once friendly. Being rather large dogs, they also have access to most of the
       pet commands you'd expect, such as fetching things, and violently mauling people
       their owners point at.
+2023-11-21:
+  00-Steven:
+  - balance: signers no longer suffer from social anxiety's speech changes when they
+      go non-verbal. Other effects are maintained.
+  DaCoolBoss:
+  - bugfix: Removed a duplicate grille from the abandoned mime outpost space ruin,
+      and replaced the 'energy weapon lenses' with spent revolver rounds.
+  EuSouAFazer:
+  - bugfix: Meta's recycler works again
+  Hatterhat:
+  - balance: The SC/FISHER disruptor pistol is now more likely to show up in black
+      market uplinks.
+  - balance: The SC/FISHER now has more range (21 tiles up from 14), and is usable
+      by pacifists.
+  Melbert:
+  - bugfix: Atrocinating mobs will now behave more as you'd expect. Meaning they don't
+      slip on wet patches, can't trigger bear traps / landmines / mouse traps, ignore
+      conveyors, and can walk over tables and railings.
+  - bugfix: Floating mobs are unaffected by conveyor belts, acid (on the ground),
+      glass tables
+  - bugfix: Floating mobs won't squish stuff like roaches anymore
+  - bugfix: Fixes bear traps triggering on floating / flying mobs
+  OrionTheFox:
+  - qol: Allergy Dogtags (and any other dogtags, really) are now Tiny items and can
+      fit into wallets.
+  Thlumyn:
+  - bugfix: healing viruses can no longer have floor virus side effects
+  YesterdaysPromise:
+  - image: 'Following now have unique item sprites: syndicate war declaration radio,
+      curator and chief beacon''s, chaplain beacon.'
+  - image: 'Following now have unique inhand sprites: radio, export scanner, walkie-talkie,
+      syndicate war declaration radio, curator and chief beacon''s, chaplain beacon.'
+  dieamond13:
+  - bugfix: adds back one way exits to Tramstation science's entrance
+  necromanceranne:
+  - bugfix: When you successfully block a body collision, it does something rather
+      than nothing at all.
+  - rscadd: The battle against Maint Khan's forces rages on in the periphery stations
+      of the Spinward Sector. And with it, a new breed of unarmed warrior has emerged;
+      the cybernetic martial artist. Nanotrasen, rather than quell the minor maintenance
+      civil war brewing in their sector, have chosen to exploit this conflict to push
+      their weapons and cybernetics research to new heights!
+  - rscadd: Advanced cybernetic arms can be printed at the Robotics exofabricator
+      once researched. They are unlocked by researching the Advanced Robotics Research
+      node.
+  - rscadd: Advanced cybernetic arms are more durable than standard limbs, and also
+      have higher unarmed potential.
+  - balance: Strongarm implants now utilize the attacking limb's unarmed potential
+      to determine damage and potential armor penetration. It also does additional
+      stamina damage (1.5x punch damage)
+  - balance: Surplus prosthetic limbs contribute more of their carried damage to overall
+      health (AKA they make you actively more vulnerable to damage), and deal less
+      damage with unarmed attacks. Take Quadruple Amputee at your own risk.
