@@ -1,0 +1,602 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/flora/bush/snow/style_random,
+/turf/open/misc/snow,
+/area/template_noop)
+"fI" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"gr" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/obj/structure/chair/office/light,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"gS" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/misc/snow,
+/area/template_noop)
+"hA" = (
+/turf/closed/wall,
+/area/template_noop)
+"jO" = (
+/turf/template_noop,
+/area/template_noop)
+"jV" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/structure/hedge,
+/turf/open/misc/snow,
+/area/template_noop)
+"kM" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/spawner/random/decoration/flower,
+/turf/open/misc/snow,
+/area/template_noop)
+"ng" = (
+/obj/structure/flora/rock/pile/icy/style_3,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing,
+/obj/structure/flora/tree/dead/style_random{
+	pixel_y = 12
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"pV" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/decal/cleanable/blood/drip{
+	icon_state = "drip2"
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"qH" = (
+/obj/effect/spawner/random/trash/bin,
+/turf/open/misc/snow,
+/area/template_noop)
+"rS" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/decal/cleanable/blood/drip{
+	icon_state = "drip1"
+	},
+/obj/effect/decal/cleanable/blood/drip{
+	icon_state = "drip4"
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"tl" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/flora/tree/dead/style_random,
+/turf/open/misc/snow,
+/area/template_noop)
+"tN" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/flora/bush/flowers_pp,
+/obj/item/hatchet/wooden,
+/obj/machinery/light/cold/dim/directional/north,
+/turf/open/misc/snow,
+/area/template_noop)
+"ul" = (
+/turf/open/floor/holofloor/stairs/medium{
+	dir = 8
+	},
+/area/template_noop)
+"vs" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/spawner/random/decoration/flower,
+/turf/open/misc/snow,
+/area/template_noop)
+"vv" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/snow/style_random,
+/turf/open/misc/snow,
+/area/template_noop)
+"wW" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/structure/hedge,
+/turf/open/misc/snow,
+/area/template_noop)
+"yc" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"yg" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing,
+/obj/structure/hedge,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/misc/snow,
+/area/template_noop)
+"yk" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/decal/cleanable/plastic,
+/turf/open/misc/snow,
+/area/template_noop)
+"yK" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/end,
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/hedge,
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/misc/snow,
+/area/template_noop)
+"yS" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/structure/hedge,
+/turf/open/misc/snow,
+/area/template_noop)
+"zJ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Bo" = (
+/obj/effect/decal/cleanable/blood/drip{
+	icon_state = "floor7"
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"Bp" = (
+/obj/structure/flora/rock/icy/style_2,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/flora/bush/snow/style_random,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/misc/snow,
+/area/template_noop)
+"BX" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"Eb" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/structure/filingcabinet,
+/turf/open/misc/snow,
+/area/template_noop)
+"FS" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"HL" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"IF" = (
+/obj/structure/flora/grass/brown/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/flora/tree/dead/style_random,
+/turf/open/misc/snow,
+/area/template_noop)
+"JF" = (
+/obj/structure/flora/grass/green/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/bush/snow/style_random,
+/obj/structure/sign/clock/directional/south,
+/obj/machinery/light/cold/dim/directional/south,
+/turf/open/misc/snow,
+/area/template_noop)
+"Kb" = (
+/obj/effect/decal/cleanable/blood/drip{
+	icon_state = "floor4"
+	},
+/turf/open/misc/snow,
+/area/template_noop)
+"Lj" = (
+/obj/structure/flora/grass/green/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing,
+/obj/structure/flora/bush/snow/style_random,
+/obj/structure/sign/poster/random/directional/north,
+/turf/open/misc/snow,
+/area/template_noop)
+"Lo" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Ml" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Mr" = (
+/obj/structure/flora/grass/green/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/railing,
+/obj/structure/flora/bush/snow/style_random,
+/turf/open/misc/snow,
+/area/template_noop)
+"MO" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Nf" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/spawner/random/bureaucracy/folder,
+/obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Nk" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/hedge,
+/turf/open/misc/snow,
+/area/template_noop)
+"NJ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Pk" = (
+/obj/structure/flora/grass/green/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/flora/bush/snow/style_random,
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/misc/snow,
+/area/template_noop)
+"RA" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Tq" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/structure/displaycase/trophy,
+/turf/open/floor/carpet/blue,
+/area/template_noop)
+"Uo" = (
+/obj/effect/decal/cleanable/plastic,
+/turf/open/misc/snow,
+/area/template_noop)
+"UO" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/misc/snow,
+/area/template_noop)
+"VA" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"VD" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/decoration/ornament,
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"Xc" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/obj/structure/flora/bush/flowers_pp,
+/obj/structure/flora/rock/icy/style_3,
+/turf/open/misc/snow,
+/area/template_noop)
+"XH" = (
+/obj/structure/flora/grass/green/style_random,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/misc/snow,
+/area/template_noop)
+"XX" = (
+/turf/open/floor/holofloor/stairs/medium{
+	dir = 4
+	},
+/area/template_noop)
+"Yn" = (
+/obj/structure/barricade/wooden/crude/snow,
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/iron/dark/diagonal,
+/area/template_noop)
+"ZR" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+yc
+"}
+(2,1,1) = {"
+jO
+hA
+hA
+hA
+hA
+Yn
+hA
+hA
+hA
+hA
+jO
+"}
+(3,1,1) = {"
+jO
+hA
+yS
+Bp
+vs
+XX
+wW
+XH
+UO
+hA
+jO
+"}
+(4,1,1) = {"
+jO
+hA
+Lj
+VD
+RA
+pV
+NJ
+qH
+ah
+ZR
+jO
+"}
+(5,1,1) = {"
+jO
+hA
+ng
+gS
+rS
+FS
+Kb
+Uo
+Nk
+ZR
+jO
+"}
+(6,1,1) = {"
+jO
+hA
+tN
+yk
+BX
+Tq
+Bo
+zJ
+JF
+hA
+jO
+"}
+(7,1,1) = {"
+jO
+hA
+yg
+Eb
+HL
+BX
+gr
+MO
+tl
+ZR
+jO
+"}
+(8,1,1) = {"
+jO
+hA
+Mr
+Nf
+Lo
+Ml
+VA
+fI
+kM
+ZR
+jO
+"}
+(9,1,1) = {"
+jO
+hA
+Xc
+IF
+yK
+ul
+vv
+Pk
+jV
+hA
+jO
+"}
+(10,1,1) = {"
+jO
+hA
+hA
+hA
+hA
+Yn
+hA
+hA
+hA
+hA
+jO
+"}
+(11,1,1) = {"
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+jO
+"}

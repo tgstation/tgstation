@@ -69,10 +69,7 @@
 	name = odd_organ_name()
 	icon_state = FLY_INFUSED_ORGAN_ICON
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
-
-/obj/item/organ/internal/heart/fly/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
-	return //don't set icon thank you
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/internal/lungs/fly
 	desc = FLY_INFUSED_ORGAN_DESC

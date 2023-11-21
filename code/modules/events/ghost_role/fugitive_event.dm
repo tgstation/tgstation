@@ -137,14 +137,12 @@
 				notify_ghosts(
 					"[spawner.prompt_name] has awoken: [spawned_mob]!",
 					source = spawned_mob,
-					action = NOTIFY_ORBIT,
 					header = "Come look!",
 				)
 			else
 				notify_ghosts(
 					"[spawner.prompt_name] spawner has been created!",
 					source = spawner,
-					action = NOTIFY_ORBIT,
 					header = "Spawn Here!",
 				)
 

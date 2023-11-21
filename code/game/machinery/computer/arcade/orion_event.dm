@@ -172,7 +172,7 @@
 	game.say("A new floor suddenly appears around [game]. What the hell?")
 	playsound(game, 'sound/weapons/genhit.ogg', 100, TRUE)
 	for(var/turf/open/space/fixed in orange(1, game))
-		fixed.PlaceOnTop(/turf/open/floor/plating)
+		fixed.place_on_top(/turf/open/floor/plating)
 
 #define BUTTON_EXPLORE_SHIP "Explore Ship"
 #define BUTTON_LEAVE_THE_DERELICT "Leave the Derelict"

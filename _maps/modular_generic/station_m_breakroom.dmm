@@ -1,0 +1,220 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/machinery/light/small/blacklight/directional/west,
+/turf/open/floor/iron,
+/area/template_noop)
+"c" = (
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/toolbox,
+/turf/open/floor/iron,
+/area/template_noop)
+"i" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"j" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"r" = (
+/turf/closed/wall,
+/area/template_noop)
+"w" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"z" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"A" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"B" = (
+/obj/machinery/light/small/blacklight/directional/north,
+/turf/template_noop,
+/area/template_noop)
+"C" = (
+/obj/effect/spawner/random/trash/bin,
+/obj/machinery/light/small/blacklight/directional/north,
+/turf/open/floor/iron,
+/area/template_noop)
+"G" = (
+/obj/structure/sign/poster/random/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"I" = (
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/template_noop)
+"M" = (
+/obj/machinery/light/small/blacklight/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"N" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/template_noop)
+"O" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"P" = (
+/obj/effect/spawner/random/structure/chair_maintenance{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"Q" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/machinery/light/small/blacklight/directional/north,
+/turf/open/floor/iron,
+/area/template_noop)
+"R" = (
+/turf/open/floor/iron,
+/area/template_noop)
+"S" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"T" = (
+/obj/structure/sign/poster/random/directional/east,
+/obj/machinery/light/small/blacklight/directional/east,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"U" = (
+/obj/effect/spawner/random/trash/caution_sign,
+/turf/open/floor/iron/cafeteria,
+/area/template_noop)
+"V" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/template_noop)
+"W" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/iron,
+/area/template_noop)
+"Y" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+w
+"}
+(2,1,1) = {"
+a
+r
+r
+r
+N
+r
+r
+r
+a
+"}
+(3,1,1) = {"
+a
+r
+C
+I
+c
+b
+P
+r
+a
+"}
+(4,1,1) = {"
+M
+r
+G
+R
+S
+S
+P
+r
+a
+"}
+(5,1,1) = {"
+a
+Y
+j
+V
+S
+S
+S
+Y
+a
+"}
+(6,1,1) = {"
+a
+r
+W
+o
+A
+i
+O
+r
+B
+"}
+(7,1,1) = {"
+a
+r
+Q
+o
+z
+T
+U
+r
+a
+"}
+(8,1,1) = {"
+a
+r
+r
+r
+N
+r
+r
+r
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

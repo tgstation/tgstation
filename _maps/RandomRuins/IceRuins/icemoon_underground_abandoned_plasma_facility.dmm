@@ -358,7 +358,7 @@
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "gd" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "gj" = (
@@ -1263,7 +1263,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -1819,7 +1819,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "Hz" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "HA" = (
@@ -2655,7 +2655,7 @@
 	id = "fire_facility_car";
 	name = "Garage Door"
 	},
-/mob/living/simple_animal/hostile/asteroid/wolf,
+/mob/living/basic/mining/wolf,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "VD" = (
