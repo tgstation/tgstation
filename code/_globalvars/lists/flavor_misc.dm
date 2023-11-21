@@ -28,9 +28,9 @@ GLOBAL_LIST_EMPTY(legs_list)
 GLOBAL_LIST_EMPTY(animated_spines_list)
 
 	//Mutant Human bits
-GLOBAL_LIST_EMPTY(tails_list)
-GLOBAL_LIST_EMPTY(tails_list_human) //Only exists for preference choices. Use "tails_list" otherwise.
-GLOBAL_LIST_EMPTY(tails_list_lizard) //See above!
+GLOBAL_LIST_EMPTY(tails_list_human)
+GLOBAL_LIST_EMPTY(tails_list_lizard)
+GLOBAL_LIST_EMPTY(tails_list_monkey)
 GLOBAL_LIST_EMPTY(ears_list)
 GLOBAL_LIST_EMPTY(wings_list)
 GLOBAL_LIST_EMPTY(wings_open_list)
@@ -293,7 +293,12 @@ GLOBAL_LIST_INIT(status_display_approved_pictures, list(
 	"default",
 	"biohazard",
 	"lockdown",
+	"greenalert",
+	"bluealert",
 	"redalert",
+	"deltaalert",
+	"radiation",
+	"currentalert", //For automatic set of status display on current level
 ))
 
 // Members of status_display_approved_pictures that are actually states and not alert values

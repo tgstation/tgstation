@@ -88,7 +88,7 @@
 	return ..()
 
 
-/obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, quickstart = TRUE)
+/obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, gentle, quickstart = TRUE)
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback, quickstart = quickstart)
 
 /obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

@@ -55,6 +55,18 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
 
+/**
+ * Weak 1911 for syndicate chimps. It comes in a 4 TC kit.
+ * 15 damage every.. second? 7 shots to kill. Not fast.
+ */
+/obj/item/gun/ballistic/automatic/pistol/m1911/chimpgun
+	name = "\improper CH1M911"
+	desc = "For the monkey mafioso on-the-go. Uses .45 rounds and has the distinct smell of bananas."
+	projectile_damage_multiplier = 0.5
+	projectile_wound_bonus = -12
+	pin = /obj/item/firing_pin/monkey
+
+
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
 
@@ -94,9 +106,6 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/r10mm
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
-	spawnwithmagazine = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/aps
 	name = "\improper Stechkin APS machine pistol"

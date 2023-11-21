@@ -250,7 +250,6 @@
 	tastes = list("hard corn tortilla" = 1)
 	foodtypes = GRAIN | FRIED
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/hard_taco_shell/Initialize(mapload)
@@ -337,3 +336,4 @@
 	tastes = list("pineapple" = 4, "tomato" = 3, "onion" = 2, "chili" = 2)
 	foodtypes = VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - bugfix: "Ex-Interdyne pirates can now successfully spawn on case sensitive host systems, such as Linux"

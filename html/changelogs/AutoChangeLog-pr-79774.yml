@@ -1,0 +1,6 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "Emag overlay on lockers fixed"
+  - image: "New locker sprites"
+  - image: "Added new lockers"

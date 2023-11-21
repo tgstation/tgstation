@@ -5,7 +5,7 @@
 //
 // Thus, the two variables affect pump operation are set in New():
 //   air1.volume
-//     This is the volume of gas available to the pump that may be transfered to the output
+//     This is the volume of gas available to the pump that may be transferred to the output
 //   air2.volume
 //     Higher quantities of this cause more air to be perfected later
 //     but overall network volume is also increased as this increases...

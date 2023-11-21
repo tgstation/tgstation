@@ -3,6 +3,7 @@
 	desc = "An energy shield used to contain hull breaches."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
+	integrity_failure = 0.5
 	density = TRUE
 	move_resist = INFINITY
 	opacity = FALSE
@@ -130,9 +131,10 @@
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	set_density(!density)
 	air_update_turf(TRUE, !density)
-	invisibility = initial(invisibility)
 	if(!density)
-		invisibility = INVISIBILITY_OBSERVER
+		SetInvisibility(INVISIBILITY_OBSERVER, id=type)
+	else
+		RemoveInvisibility(type)
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -181,11 +183,6 @@
 	if((machine_stat & BROKEN) && active)
 		if(deployed_shields.len && SPT_PROB(2.5, seconds_per_tick))
 			qdel(pick(deployed_shields))
-
-
-/obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	atom_break()
-	locked = pick(0,1)
 
 /obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
@@ -504,7 +501,7 @@
 	for(var/mob/living/L in get_turf(src))
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-		L.gib()
+		L.gib(DROP_ALL_REMAINS)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 
 /obj/machinery/shieldwall/Destroy()

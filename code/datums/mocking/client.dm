@@ -27,14 +27,24 @@
 	var/tgui_say
 	var/typing_indicators
 
+/datum/client_interface/New()
+	..()
+	var/static/mock_client_uid = 0
+	mock_client_uid++
+
+	src.key = "[key]_[mock_client_uid]"
+	ckey = ckey(key)
+
+#ifdef UNIT_TESTS // otherwise this shit can leak into production servers which is drather bad
+	GLOB.directory[ckey] = src
+#endif
+
+/datum/client_interface/Destroy(force, ...)
+	GLOB.directory -= ckey
+	return ..()
+
 /datum/client_interface/proc/IsByondMember()
 	return FALSE
-
-/datum/client_interface/New(key)
-	..()
-	if(key)
-		src.key = key
-		ckey = ckey(key)
 
 /datum/client_interface/proc/set_macros()
 	return

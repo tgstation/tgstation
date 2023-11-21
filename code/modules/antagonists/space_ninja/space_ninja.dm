@@ -9,6 +9,9 @@
 	antag_moodlet = /datum/mood_event/focused
 	suicide_cry = "FOR THE SPIDER CLAN!!"
 	preview_outfit = /datum/outfit/ninja_preview
+	can_assign_self_objectives = TRUE
+	ui_name = "AntagInfoNinja"
+	default_custom_objective = "Destroy vital station infrastructure, without being seen."
 	///Whether or not this ninja will obtain objectives
 	var/give_objectives = TRUE
 
@@ -33,7 +36,7 @@
 	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing.<br>"
 
 /datum/objective/cyborg_hijack
-	explanation_text = "Use your gloves to convert at least one cyborg to aide you in sabotaging the station."
+	explanation_text = "Use your gloves to convert at least one cyborg to aid you in sabotaging the station."
 
 /datum/objective/door_jack
 	///How many doors that need to be opened using the gloves to pass the objective

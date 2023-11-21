@@ -1,7 +1,8 @@
-//Every time you got lost looking for keycards, incriment: 1
+//Every time you got lost looking for keycards, increment: 2
+
 //**************
-//*****Keys*******************
-//************** **  **
+//*****Keys*****
+//**************
 /obj/item/keycard
 	name = "security keycard"
 	desc = "This feels like it belongs to a door."
@@ -45,8 +46,10 @@
 	move_resist = MOVE_FORCE_OVERPOWERING
 	damage_deflection = 70
 	can_open_with_hands = FALSE
-	/// Make sure that the puzzle has the same puzzle_id as the keycard door!
+	/// Make sure that the puzzle has the same puzzle_id as the keycard door! (If this is null, queuelinks dont happen!)
 	var/puzzle_id = null
+	/// do we use queue_links?
+	var/uses_queuelinks = TRUE
 	/// Message that occurs when the door is opened
 	var/open_message = "The door beeps, and slides opens."
 
@@ -60,6 +63,21 @@
 	bio = 100
 	fire = 100
 	acid = 100
+
+/obj/machinery/door/puzzle/Initialize(mapload)
+	. = ..()
+	if(!isnull(puzzle_id) && uses_queuelinks)
+		SSqueuelinks.add_to_queue(src, puzzle_id)
+
+/obj/machinery/door/puzzle/MatchedLinks(id, list/partners)
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/machinery/door/puzzle/proc/try_signal(datum/source, try_id)
+	SIGNAL_HANDLER
+
+	puzzle_id = null //honestly these cant be closed anyway and im not fucking around with door code anymore
+	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), null)
 
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
@@ -88,6 +106,7 @@
 
 /obj/machinery/door/puzzle/keycard
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
+	uses_queuelinks = FALSE
 
 /obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -110,15 +129,6 @@
 
 /obj/machinery/door/puzzle/light
 	desc = "This door only opens when a linked mechanism is powered. It looks virtually indestructible."
-
-/obj/machinery/door/puzzle/light/Initialize(mapload)
-	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, PROC_REF(check_mechanism))
-
-/obj/machinery/door/puzzle/light/proc/check_mechanism(datum/source, try_id)
-	SIGNAL_HANDLER
-
-	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), try_id)
 
 //*************************
 //***Box Pushing Puzzles***
@@ -199,6 +209,8 @@
 	)
 	/// Banned combinations of the list in decimal
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
+	/// queue size, must match count of objects this activates!
+	var/queue_size = 2
 
 /datum/armor/structure_light_puzzle
 	melee = 100
@@ -220,6 +232,8 @@
 		var/position = !!(generated_board & (1<<i))
 		light_list[i+1] = position
 	update_icon(UPDATE_OVERLAYS)
+	if(!isnull(puzzle_id))
+		SSqueuelinks.add_to_queue(src, puzzle_id, queue_size)
 
 /obj/structure/light_puzzle/update_overlays()
 	. = ..()
@@ -268,5 +282,124 @@
 			return
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, puzzle_id)
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
 	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
+
+//
+// literally just buttons
+//
+
+/obj/machinery/puzzle_button
+	name = "control panel"
+	desc = "A panel that controls something nearby. I'm sure it being covered in hazard stripes is fine."
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "lockdown0"
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	base_icon_state = "lockdown"
+	/// have we been pressed already?
+	var/used = FALSE
+	/// can we be pressed only once?
+	var/single_use = TRUE
+	/// puzzle id we send on press
+	var/id = "0" //null would literally open every puzzle door without an id
+	/// queue size, must match count of objects this activates!
+	var/queue_size = 2
+
+/obj/machinery/puzzle_button/Initialize(mapload)
+	. = ..()
+	if(!isnull(id))
+		SSqueuelinks.add_to_queue(src, id, queue_size)
+
+/obj/machinery/puzzle_button/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(used && single_use)
+		return
+	used = single_use
+	update_icon_state()
+	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
+	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	open_doors()
+
+/obj/machinery/puzzle_button/proc/open_doors() //incase someone wants to make this do something else for some reason
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+
+/obj/machinery/puzzle_button/update_icon_state()
+	icon_state = "[base_icon_state][used]"
+	return ..()
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_button, 32)
+
+/obj/machinery/puzzle_keycardpad
+	name = "keycard panel"
+	desc = "A panel that controls something nearby. Accepts keycards."
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "keycardpad0"
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	base_icon_state = "keycardpad"
+	/// were we used successfully?
+	var/used = FALSE
+	/// puzzle id we send if the correct card is swiped
+	var/id = "0"
+	/// queue size, must match count of objects this activates!
+	var/queue_size = 2
+
+/obj/machinery/puzzle_keycardpad/Initialize(mapload)
+	. = ..()
+	if(!isnull(id))
+		SSqueuelinks.add_to_queue(src, id, queue_size)
+
+/obj/machinery/puzzle_keycardpad/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(!istype(attacking_item, /obj/item/keycard) || used)
+		return
+	var/obj/item/keycard/key = attacking_item
+	var/correct_card = key.puzzle_id == id
+	balloon_alert_to_viewers("[correct_card ? "correct" : "incorrect"] card swiped[correct_card ? "" : "!"]")
+	playsound(src, 'sound/machines/card_slide.ogg', 45, TRUE)
+	if(!correct_card)
+		return
+	used = TRUE
+	update_icon_state()
+	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+
+/obj/machinery/puzzle_keycardpad/update_icon_state()
+	icon_state = "[base_icon_state][used]"
+	return ..()
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
+
+//
+// blockade
+//
+
+///blockades destroy themselves if they receive COMSIG_GLOB_PUZZLE_COMPLETED with their ID
+/obj/structure/puzzle_blockade
+	name = "shield gate"
+	desc = "A wall of solid light, likely defending something important. Virtually indestructible, must be a way around, or to disable it."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "wave2"
+	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	move_resist = MOVE_FORCE_OVERPOWERING
+	opacity = FALSE
+	density = TRUE
+	anchored = TRUE
+	/// if we receive a puzzle signal with this id we get destroyed
+	var/id
+
+/obj/structure/puzzle_blockade/Initialize(mapload)
+	. = ..()
+	if(!isnull(id))
+		SSqueuelinks.add_to_queue(src, id)
+
+/obj/structure/puzzle_blockade/MatchedLinks(id, list/partners)
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/structure/puzzle_blockade/proc/try_signal(datum/source)
+	SIGNAL_HANDLER
+	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	do_sparks(3, cardinal_only = FALSE, source = src)
+	qdel(src)

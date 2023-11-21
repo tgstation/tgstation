@@ -216,6 +216,7 @@
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
+		/obj/item/mod/module/hat_stabilizer/syndicate,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
@@ -231,12 +232,15 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
+		/obj/item/mod/module/hat_stabilizer/syndicate,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 	)
 
 /obj/item/mod/control/pre_equipped/nuclear
@@ -249,12 +253,21 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/hat_stabilizer/syndicate,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 	)
+
+/obj/item/mod/control/pre_equipped/nuclear/no_jetpack
+
+/obj/item/mod/control/pre_equipped/nuclear/no_jetpack/Initialize(mapload, new_theme, new_skin, new_core)
+	applied_modules -= list(/obj/item/mod/module/jetpack/advanced, /obj/item/mod/module/jump_jet)
+	return ..()
 
 /obj/item/mod/control/pre_equipped/nuclear/plasmaman
 
@@ -275,11 +288,14 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/hat_stabilizer/syndicate,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 	)
 
 /obj/item/mod/control/pre_equipped/elite/flamethrower
@@ -289,12 +305,15 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/thermal_regulator,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/hat_stabilizer/syndicate,
 		/obj/item/mod/module/flamethrower,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
 		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/jump_jet,
 		/obj/item/mod/module/flamethrower,
 	)
 
@@ -307,6 +326,7 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/quick_carry,
 		/obj/item/mod/module/visor/diaghud,
+		/obj/item/mod/module/hat_stabilizer/syndicate,
 	)
 
 
@@ -321,7 +341,8 @@
 		/obj/item/mod/module/injector,
 		/obj/item/mod/module/surgical_processor/preloaded,
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/tether
+		/obj/item/mod/module/hat_stabilizer/syndicate,
+		/obj/item/mod/module/tether,
 	)
 
 /obj/item/mod/control/pre_equipped/enchanted

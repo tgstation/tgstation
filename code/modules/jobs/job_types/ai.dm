@@ -93,5 +93,5 @@
 /datum/job/ai/config_check()
 	return CONFIG_GET(flag/allow_ai)
 
-/datum/job/ai/radio_help_message(mob/M)
-	to_chat(M, "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>")
+/datum/job/ai/get_radio_information()
+	return "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>"

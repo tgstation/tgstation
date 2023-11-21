@@ -49,6 +49,12 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
+/obj/item/bag_of_holding_inert/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+		slapcraft_recipes = list(/datum/crafting_recipe/boh)\
+	)
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
@@ -241,6 +247,7 @@
 	throwforce = 15
 	attack_verb_continuous = list("MEATS", "MEAT MEATS")
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 25) // MEAT
 	///Sounds used in the squeak component
 	var/list/meat_sounds = list('sound/effects/blobattack.ogg' = 1)
 	///Reagents added to the edible component, ingested when you EAT the MEAT
@@ -257,13 +264,26 @@
 
 /obj/item/storage/backpack/meat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/edible,\
+	AddComponent(
+		/datum/component/edible,\
 		initial_reagents = meat_reagents,\
 		foodtypes = foodtypes,\
 		tastes = tastes,\
 		eatverbs = eatverbs,\
 	)
 	AddComponent(/datum/component/squeak, meat_sounds)
+	AddComponent(
+		/datum/component/blood_walk,\
+		blood_type = /obj/effect/decal/cleanable/blood,\
+		blood_spawn_chance = 15,\
+		max_blood = 300,\
+	)
+	AddComponent(
+		/datum/component/bloody_spreader,\
+		blood_left = INFINITY,\
+		blood_dna = list("MEAT DNA" = "MT+"),\
+		diseases = null,\
+	)
 
 /*
  * Satchel Types
@@ -509,44 +529,11 @@
 	icon_state = "duffel-medical"
 	inhand_icon_state = "duffel-med"
 
-/obj/item/storage/backpack/duffelbag/med/surgery
-	name = "surgical duffel bag"
-	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
-
-/obj/item/storage/backpack/duffelbag/med/surgery/PopulateContents()
-	new /obj/item/scalpel(src)
-	new /obj/item/hemostat(src)
-	new /obj/item/retractor(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgical_drapes(src)
-	new /obj/item/clothing/mask/surgical(src)
-	new /obj/item/razor(src)
-	new /obj/item/blood_filter(src)
-
 /obj/item/storage/backpack/duffelbag/coroner
 	name = "coroner duffel bag"
 	desc = "A large duffel bag for holding large amounts of organs at once."
 	icon_state = "duffel-coroner"
 	inhand_icon_state = "duffel-coroner"
-
-/obj/item/storage/backpack/duffelbag/coroner/surgery
-	name = "surgical coroner bag"
-	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding morbid surgical tools."
-
-/obj/item/storage/backpack/duffelbag/coroner/surgery/PopulateContents()
-	new /obj/item/scalpel/cruel(src)
-	new /obj/item/hemostat/cruel(src)
-	new /obj/item/retractor/cruel(src)
-	new /obj/item/circular_saw(src)
-	new /obj/item/surgicaldrill(src)
-	new /obj/item/cautery/cruel(src)
-	new /obj/item/bonesetter(src)
-	new /obj/item/surgical_drapes(src)
-	new /obj/item/razor(src)
-	new /obj/item/blood_filter(src)
 
 /obj/item/storage/backpack/duffelbag/explorer
 	name = "explorer duffel bag"
@@ -692,7 +679,7 @@
 	new /obj/item/blood_filter(src)
 	new /obj/item/stack/medical/bone_gel(src)
 	new /obj/item/stack/sticky_tape/surgical(src)
-	new /obj/item/roller(src)
+	new /obj/item/emergency_bed(src)
 	new /obj/item/clothing/suit/jacket/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)

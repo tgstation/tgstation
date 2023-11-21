@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 24
+#define DB_MINOR_VERSION 25
 
 
 //! ## Timing subsystem
@@ -119,8 +119,11 @@
 /// Subsystem initialized sucessfully.
 #define SS_INIT_SUCCESS 2
 
-/// Successful, but don't print anything. Useful if subsystem was disabled.
+/// If your system doesn't need to be initialized (by being disabled or something)
 #define SS_INIT_NO_NEED 3
+
+/// Succesfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
+#define SS_INIT_NO_MESSAGE 4
 
 //! ### SS initialization load orders
 // Subsystem init_order, from highest priority to lowest priority
@@ -164,6 +167,7 @@
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
 #define INIT_ORDER_SKILLS 15
+#define INIT_ORDER_QUEUELINKS 10
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
@@ -317,6 +321,9 @@
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)
 #define SSOBJ_DT (SSobj.wait/10)
+
+// The change in the world's time from the subsystem's last fire in seconds.
+#define DELTA_WORLD_TIME(ss) ((world.time - ss.last_fire) * 0.1)
 
 /// The timer key used to know how long subsystem initialization takes
 #define SS_INIT_TIMER_KEY "ss_init"

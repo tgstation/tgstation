@@ -142,7 +142,7 @@ export const ExperimentConfigure = (props, context) => {
                 </Flex.Item>
                 <Flex.Item>
                   {experiments.map((exp, i) => {
-                    return <Experiment key={i} exp={exp} controllable />;
+                    return <Experiment key={i} exp={exp} />;
                   })}
                 </Flex.Item>
               </Section>
@@ -168,44 +168,24 @@ export const ExperimentConfigure = (props, context) => {
 
 export const Experiment = (props, context) => {
   const { act, data } = useBackend(context);
-  const { exp, controllable } = props;
-  const {
-    name,
-    description,
-    tag,
-    selectable,
-    selected,
-    progress,
-    performance_hint,
-    ref,
-  } = exp;
+  const { exp } = props;
+  const { name, description, tag, selected, progress, performance_hint, ref } =
+    exp;
 
   return (
     <Box m={1} key={ref} className="ExperimentConfigure__ExperimentPanel">
       <Button
         fluid
         onClick={() =>
-          controllable &&
-          (selected
+          selected
             ? act('clear_experiment')
-            : act('select_experiment', { 'ref': ref }))
+            : act('select_experiment', { 'ref': ref })
         }
         backgroundColor={selected ? 'good' : '#40628a'}
-        className="ExperimentConfigure__ExperimentName"
-        disabled={controllable && !selectable}>
+        className="ExperimentConfigure__ExperimentName">
         <Flex align="center" justify="space-between">
-          <Flex.Item
-            color={
-              !controllable || selectable ? 'white' : 'rgba(0, 0, 0, 0.6)'
-            }>
-            {name}
-          </Flex.Item>
-          <Flex.Item
-            color={
-              !controllable || selectable
-                ? 'rgba(255, 255, 255, 0.5)'
-                : 'rgba(0, 0, 0, 0.5)'
-            }>
+          <Flex.Item color={'white'}>{name}</Flex.Item>
+          <Flex.Item color={'rgba(255, 255, 255, 0.5)'}>
             <Box className="ExperimentConfigure__TagContainer">
               {tag}
               <Tooltip content={performance_hint} position="bottom-start">

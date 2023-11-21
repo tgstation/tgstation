@@ -38,8 +38,8 @@
 	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
 	switch(advanced_disease.stage)
 		if(4, 5)
-			infected_mob.adjustOxyLoss(-7, 0)
 			infected_mob.losebreath = max(0, infected_mob.losebreath - 4)
+			infected_mob.adjustOxyLoss(-7)
 			if(regenerate_blood && infected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 				infected_mob.blood_volume += 1
 		else

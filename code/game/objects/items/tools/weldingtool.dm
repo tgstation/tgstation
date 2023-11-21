@@ -167,7 +167,7 @@
 
 	if(!status && attacked_atom.is_refillable())
 		. |= AFTERATTACK_PROCESSED_ITEM
-		reagents.trans_to(attacked_atom, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(attacked_atom, reagents.total_volume, transferred_by = user)
 		to_chat(user, span_notice("You empty [src]'s fuel tank into [attacked_atom]."))
 		update_appearance()
 

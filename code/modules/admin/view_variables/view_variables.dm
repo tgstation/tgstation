@@ -1,4 +1,4 @@
-/client/proc/debug_variables(datum/D in world)
+/client/proc/debug_variables(datum/thing in world)
 	set category = "Debug"
 	set name = "View Variables"
 	//set src in world
@@ -8,54 +8,58 @@
 		to_chat(usr, span_danger("You need to be an administrator to access this."), confidential = TRUE)
 		return
 
-	if(!D)
+	if(!thing)
 		return
 
 	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/simple/vv)
 	asset_cache_datum.send(usr)
 
-	var/islist = islist(D)
-	if(!islist && !istype(D))
+	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists dont count as lists, but can be detected by if they have list procs
+	if(!islist && !isdatum(thing))
 		return
 
 	var/title = ""
-	var/refid = REF(D)
+	var/refid = REF(thing)
 	var/icon/sprite
 	var/hash
 
-	var/type = islist? /list : D.type
+	var/type = islist? /list : thing.type
 	var/no_icon = FALSE
 
-	if(istype(D, /atom))
-		sprite = getFlatIcon(D)
-		if(sprite)
-			hash = md5(sprite)
-			src << browse_rsc(sprite, "vv[hash].png")
-		else
+	if(isatom(thing))
+		sprite = getFlatIcon(thing)
+		if(!sprite)
 			no_icon = TRUE
 
-	title = "[D] ([REF(D)]) = [type]"
-	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
+	else if(isimage(thing))
+		var/image/image_object = thing
+		sprite = icon(image_object.icon, image_object.icon_state)
 
 	var/sprite_text
 	if(sprite)
-		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
-	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
+		hash = md5(sprite)
+		src << browse_rsc(sprite, "vv[hash].png")
+		sprite_text = no_icon ? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
+
+	title = "[thing] ([REF(thing)]) = [type]"
+	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
+
+	var/list/header = islist ? list("<b>/list</b>") : thing.vv_get_header()
 
 	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
 	var/marked_line
-	if(holder && holder.marked_datum && holder.marked_datum == D)
+	if(holder && holder.marked_datum && holder.marked_datum == thing)
 		marked_line = VV_MSG_MARKED
 	var/tagged_line
-	if(holder && LAZYFIND(holder.tagged_datums, D))
-		var/tag_index = LAZYFIND(holder.tagged_datums, D)
+	if(holder && LAZYFIND(holder.tagged_datums, thing))
+		var/tag_index = LAZYFIND(holder.tagged_datums, thing)
 		tagged_line = VV_MSG_TAGGED(tag_index)
 	var/varedited_line
-	if(!islist && (D.datum_flags & DF_VAR_EDITED))
+	if(!islist && (thing.datum_flags & DF_VAR_EDITED))
 		varedited_line = VV_MSG_EDITED
 	var/deleted_line
-	if(!islist && D.gc_destroyed)
+	if(!islist && thing.gc_destroyed)
 		deleted_line = VV_MSG_DELETED
 
 	var/list/dropdownoptions
@@ -75,28 +79,29 @@
 			var/link = dropdownoptions[name]
 			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
 	else
-		dropdownoptions = D.vv_get_dropdown()
+		dropdownoptions = thing.vv_get_dropdown()
 
 	var/list/names = list()
 	if(!islist)
-		for(var/V in D.vars)
-			names += V
+		for(var/varname in thing.vars)
+			names += varname
+
 	sleep(1 TICKS)
 
 	var/list/variable_html = list()
 	if(islist)
-		var/list/L = D
-		for(var/i in 1 to L.len)
-			var/key = L[i]
+		var/list/list_value = thing
+		for(var/i in 1 to list_value.len)
+			var/key = list_value[i]
 			var/value
-			if(IS_NORMAL_LIST(L) && IS_VALID_ASSOC_KEY(key))
-				value = L[key]
-			variable_html += debug_variable(i, value, 0, L)
+			if(IS_NORMAL_LIST(list_value) && IS_VALID_ASSOC_KEY(key))
+				value = list_value[key]
+			variable_html += debug_variable(i, value, 0, list_value)
 	else
 		names = sort_list(names)
-		for(var/V in names)
-			if(D.can_vv_get(V))
-				variable_html += D.vv_get_var(V)
+		for(var/varname in names)
+			if(thing.can_vv_get(varname))
+				variable_html += thing.vv_get_var(varname)
 
 	var/html = {"
 <html>
@@ -274,5 +279,5 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 "}
 	src << browse(html, "window=variables[refid];size=475x650")
 
-/client/proc/vv_update_display(datum/D, span, content)
-	src << output("[span]:[content]", "variables[REF(D)].browser:replace_span")
+/client/proc/vv_update_display(datum/thing, span, content)
+	src << output("[span]:[content]", "variables[REF(thing)].browser:replace_span")

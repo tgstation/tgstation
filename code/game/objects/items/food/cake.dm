@@ -43,7 +43,6 @@
 	)
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
-	burns_in_oven = TRUE
 	slice_type = /obj/item/food/cakeslice/plain
 
 /obj/item/food/cakeslice/plain
@@ -691,6 +690,7 @@
 	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
 	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE
 	slice_type = /obj/item/food/cakeslice/pineapple_cream_cake
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cakeslice/pineapple_cream_cake
 	name = "pineapple cream cake slice"
@@ -703,3 +703,4 @@
 	)
 	tastes = list("cake" = 2, "cream" = 3, "pineapple" = 4)
 	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT | PINEAPPLE
+	crafting_complexity = FOOD_COMPLEXITY_3

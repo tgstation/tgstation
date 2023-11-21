@@ -5,12 +5,13 @@
 
 /// Global typecache of things which should never be fried.
 GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
-	/obj/item/reagent_containers/cup,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/reagent_containers/condiment,
+	/obj/item/bodybag/bluespace,
 	/obj/item/delivery,
 	/obj/item/his_grace,
-	/obj/item/bodybag/bluespace,
+	/obj/item/mod/control,
+	/obj/item/reagent_containers/condiment,
+	/obj/item/reagent_containers/cup,
+	/obj/item/reagent_containers/syringe,
 )))
 
 /obj/machinery/deepfryer
@@ -93,7 +94,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
 		user.visible_message(span_notice("[user] drops [weapon] into [src]."), span_notice("You dissolve [weapon] in [src]."))
-		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transfered_by = user)
+		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transferred_by = user)
 		qdel(weapon)
 		return
 	// Make sure we have cooking oil
@@ -216,7 +217,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		if(target_temp < TCMB + 10) // a tiny bit of leeway
 			dunking_target.visible_message(span_userdanger("[dunking_target] explodes from the entropic difference! Holy fuck!"))
 			dunking_target.investigate_log("has been gibbed by entropic difference (being dunked into [src]).", INVESTIGATE_DEATHS)
-			dunking_target.gib()
+			dunking_target.gib(DROP_ALL_REMAINS)
 			log_combat(user, dunking_target, "blew up", null, "by dunking them into [src]")
 			return
 

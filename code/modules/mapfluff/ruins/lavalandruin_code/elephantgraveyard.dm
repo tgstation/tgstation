@@ -60,6 +60,12 @@
 	if(prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,6)]"
 
+/turf/open/misc/asteroid/basalt/wasteland/basin
+	icon_state = "wasteland_dug"
+	base_icon_state = "wasteland_dug"
+	floor_variance = 0
+	dug = TRUE
+
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
 	color = "#B5651D"

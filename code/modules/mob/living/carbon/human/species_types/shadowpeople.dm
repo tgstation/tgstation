@@ -37,6 +37,9 @@
 		return TRUE
 	return ..()
 
+/datum/species/shadow/get_physical_attributes()
+	return "These cursed creatures heal in the dark, but suffer in the light much more heavily. Their eyes let them see in the dark as though it were day."
+
 /datum/species/shadow/get_species_description()
 	return "Victims of a long extinct space alien. Their flesh is a sickly \
 		seethrough filament, their tangled insides in clear view. Their form \

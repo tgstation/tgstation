@@ -47,13 +47,17 @@
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
 ///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
+///called before hearing a message from atom/movable/Hear():
+#define COMSIG_MOVABLE_PRE_HEAR "movable_pre_hear"
+	///cancel hearing the message because we're doing something else presumably
+	#define COMSIG_MOVABLE_CANCEL_HEARING (1<<0)
 ///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range))
 #define COMSIG_MOVABLE_HEAR "movable_hear"
-	//#define HEARING_MESSAGE 1 - (I'm pretty sure this is never really used and can be gutted)
+	#define HEARING_MESSAGE 1
 	#define HEARING_SPEAKER 2
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4
-	//#define HEARING_RADIO_FREQ 5
+	#define HEARING_RADIO_FREQ 5
 	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7
 	#define HEARING_RANGE 8
@@ -66,14 +70,6 @@
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
 ///from base of atom/movable/setGrabState(): (newstate)
 #define COMSIG_MOVABLE_SET_GRAB_STATE "living_set_grab_state"
-///Called when the movable tries to change its dynamic light color setting, from base atom/movable/lighting_overlay_set_color(): (color)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_RANGE "movable_light_overlay_set_color"
-///Called when the movable tries to change its dynamic light power setting, from base atom/movable/lighting_overlay_set_power(): (power)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_POWER "movable_light_overlay_set_power"
-///Called when the movable tries to change its dynamic light range setting, from base atom/movable/lighting_overlay_set_range(): (range)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_SET_COLOR "movable_light_overlay_set_range"
-///Called when the movable tries to toggle its dynamic light LIGHTING_ON status, from base atom/movable/lighting_overlay_toggle_on(): (new_state)
-#define COMSIG_MOVABLE_LIGHT_OVERLAY_TOGGLE_ON "movable_light_overlay_toggle_on"
 ///called when the movable's glide size is updated: (new_glide_size)
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 ///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_atom()

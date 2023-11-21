@@ -329,6 +329,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_CENT_SPECOPS]"] = "Code Black"
 	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "Code Gold"
 	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
+	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
 
 /**
  * Returns the access bitflags associated with any given access level.

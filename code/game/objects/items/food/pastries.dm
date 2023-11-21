@@ -34,6 +34,10 @@
 	foodtypes = GRAIN | FRUIT | SUGAR | BREAKFAST
 	crafting_complexity = FOOD_COMPLEXITY_4
 
+/obj/item/food/muffin/booberry/Initialize(mapload, starting_reagent_purity, no_base_reagents)
+	. = ..()
+	AddComponent(/datum/component/ghost_edible, bite_consumption = bite_consumption)
+
 /obj/item/food/muffin/moffin
 	name = "moffin"
 	icon_state = "moffin_1"
@@ -367,6 +371,9 @@
 	 */
 	var/list/prefill_flavours
 
+/obj/item/food/icecream/New(loc, list/prefill_flavours)
+	return ..()
+
 /obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
 	if(prefill_flavours)
 		src.prefill_flavours = prefill_flavours
@@ -440,7 +447,6 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/brownie_sheet/make_processable()
@@ -490,7 +496,6 @@
 	tastes = list("brownie" = 1, "chocolatey goodness" = 1, "peanut butter" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR | NUTS
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/peanut_butter_brownie_sheet/make_processable()
@@ -535,6 +540,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/snickerdoodle
 	name = "snickerdoodle"
@@ -545,6 +551,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/macaron
 	name = "macaron"
@@ -556,6 +563,7 @@
 	foodtypes = GRAIN | SUGAR | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
+	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/cookie/macaron/Initialize(mapload)
 	. = ..()
@@ -570,3 +578,4 @@
 	foodtypes = GRAIN | SUGAR | FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

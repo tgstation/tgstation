@@ -7,6 +7,8 @@
 #define COMSIG_MOB_LOGIN "mob_login"
 ///from base of /mob/Logout(): ()
 #define COMSIG_MOB_LOGOUT "mob_logout"
+///from base of /mob/mind_initialize
+#define COMSIG_MOB_MIND_INITIALIZED "mob_mind_inited"
 ///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
 ///from base of mob/reagent_check(): (datum/reagent/chem, seconds_per_tick, times_fired)
@@ -28,6 +30,9 @@
 	#define COMPONENT_MOB_BOT_BLOCK_PRE_STEP COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 /// From base of /mob/living/simple_animal/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
+
+/// From base of /mob/proc/update_held_items
+#define COMSIG_MOB_UPDATE_HELD_ITEMS "mob_update_held_items"
 
 /// From base of /client/Move(): (list/move_args)
 #define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"
@@ -85,11 +90,16 @@
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
 
-
-///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from /mob/living/proc/apply_damage(): (list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+/// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage
+/// not sent if the apply damage call was forced
+#define COMSIG_MOB_APPLY_DAMAGE_MODIFIERS "mob_apply_damage_modifiers"
+/// from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
-///from /mob/living/proc/apply_damage(), works like above but after the damage is actually inflicted: (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// works like above but after the damage is actually inflicted
 #define COMSIG_MOB_AFTER_APPLY_DAMAGE "mob_after_apply_damage"
+
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
@@ -214,3 +224,9 @@
 
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
+
+/// from /mob/proc/change_mob_type() : ()
+#define COMSIG_PRE_MOB_CHANGED_TYPE "mob_changed_type"
+	#define COMPONENT_BLOCK_MOB_CHANGE (1<<0)
+/// from /mob/proc/change_mob_type_unchecked() : ()
+#define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"

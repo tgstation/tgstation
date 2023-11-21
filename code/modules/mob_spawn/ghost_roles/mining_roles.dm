@@ -200,7 +200,7 @@
 	yolk.underwear = "Nude"
 	yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
 	yolk.update_body()
-	yolk.gib()
+	yolk.gib(DROP_ALL_REMAINS)
 	QDEL_NULL(egg)
 	return ..()
 
@@ -227,7 +227,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/ash_walker/allow_spawn(mob/user, silent = FALSE)
-	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
+	if(!(user.ckey in team.players_spawned))//one per person unless you get a bonus spawn
 		return TRUE
 	if(!silent)
 		to_chat(user, span_warning("You have exhausted your usefulness to the Necropolis."))
@@ -241,7 +241,7 @@
 	spawned_human.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
 	spawned_human.remove_language(/datum/language/common)
-	team.players_spawned += (spawned_human.key)
+	team.players_spawned += (spawned_human.ckey)
 	eggshell.egg = null
 	QDEL_NULL(eggshell)
 
@@ -253,7 +253,14 @@
 	eggshell.egg = src
 	src.forceMove(eggshell)
 	if(spawner_area)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [spawner_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
+		notify_ghosts(
+			"An ash walker egg is ready to hatch in \the [spawner_area.name].",
+			source = src,
+			header = "Ash Walker Egg",
+			click_interact = TRUE,
+			ignore_key = POLL_IGNORE_ASHWALKER,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 
 /datum/outfit/ashwalker
 	name = "Ash Walker"

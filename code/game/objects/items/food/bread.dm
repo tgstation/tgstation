@@ -48,17 +48,12 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	burns_in_oven = TRUE
 	slice_type = /obj/item/food/breadslice/plain
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
-
-// special subtype we use for the "Bread" Admin Smite (or the breadify proc)
-/obj/item/food/bread/plain/smite
-	desc = "If you hold it up to your ear, you can hear the screams of the damned."
 
 /obj/item/food/breadslice/plain
 	name = "bread slice"
@@ -520,7 +515,6 @@
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_breadstick
@@ -552,7 +546,6 @@
 	tastes = list("fluffy bread" = 1, "butter" = 2)
 	foodtypes = GRAIN | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/raw_croissant
@@ -578,7 +571,6 @@
 	tastes = list("fluffy bread" = 1, "butter" = 2)
 	foodtypes = GRAIN | DAIRY | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 // Enhanced weaponised bread

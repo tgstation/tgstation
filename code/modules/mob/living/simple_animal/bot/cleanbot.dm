@@ -92,7 +92,7 @@
 	)
 
 /mob/living/simple_animal/bot/cleanbot/autopatrol
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
@@ -291,7 +291,7 @@
 				return
 
 		if(target && path.len == 0 && (get_dist(src,target) > 1))
-			path = get_path_to(src, target, max_distance=30, mintargetdist=1, id=access_card)
+			path = get_path_to(src, target, max_distance=30, mintargetdist=1, access=access_card.GetAccess())
 			mode = BOT_MOVING
 			if(length(path) == 0)
 				add_to_ignore(target)

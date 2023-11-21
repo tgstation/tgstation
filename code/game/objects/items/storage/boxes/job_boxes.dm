@@ -44,6 +44,9 @@
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
 		new /obj/item/storage/pill_bottle/potassiodide(src)
+	
+	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
+		new /obj/item/climbing_hook/emergency(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
@@ -207,11 +210,23 @@
 	illustration = "heart"
 	foldable_result = null
 	mask_type = null
+	var/random_funny_internals = TRUE
+
+/obj/item/storage/box/survival/hug/PopulateContents()
+	if(!random_funny_internals)
+		return ..()
+	internal_type = pick(
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/bz,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/helium,
+			)
+	return ..()
 
 //Mime survival box
 /obj/item/storage/box/survival/hug/black
 	icon_state = "hugbox_black"
 	illustration = "heart_black"
+	random_funny_internals = FALSE
 
 //Duplicated suicide/attack self procs, since the survival boxes are a subtype of box/survival
 /obj/item/storage/box/survival/hug/suicide_act(mob/living/user)

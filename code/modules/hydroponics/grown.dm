@@ -38,10 +38,13 @@
 	var/wine_power = 10
 	/// Color of the grown object, for use in coloring greyscale splats.
 	var/filling_color
-	/// If the grown food has an alternaitve icon state to use in places.
+	/// If the grown food has an alternative icon state to use in places.
 	var/alt_icon
 	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
+
+/obj/item/food/grown/New(loc, obj/item/seeds/new_seed)
+	return ..()
 
 /obj/item/food/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	if(!tastes)
@@ -75,6 +78,7 @@
 
 	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
 
+	reagents.clear_reagents()
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 
@@ -110,7 +114,7 @@
 /obj/item/food/grown/proc/ferment()
 	var/reagent_purity = seed.get_reagent_purity()
 	var/purity_above_base = clamp((reagent_purity - 0.5) * 2, 0, 1)
-	var/quality_min = 0
+	var/quality_min = DRINK_NICE
 	var/quality_max = DRINK_FANTASTIC
 	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
 	for(var/datum/reagent/reagent in reagents.reagent_list)
@@ -125,7 +129,7 @@
 		else
 			var/data = list()
 			data["names"] = list("[initial(name)]" = 1)
-			data["color"] = filling_color
+			data["color"] = filling_color || reagent.color // filling_color is not guaranteed to be set for every plant. try to use it if we have it, otherwise use the reagent's color var
 			data["boozepwr"] = round(wine_power * reagent_purity * 2) // default boozepwr at 50% purity
 			data["quality"] = quality
 			if(wine_flavor)
@@ -142,14 +146,14 @@
 	var/grind_results_num = LAZYLEN(grind_results)
 	if(grind_results_num)
 		var/average_purity = reagents.get_average_purity()
-		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, include_subtypes = TRUE)
+		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_SUB_TYPE)
 		var/single_reagent_amount = grind_results_num > 1 ? round(total_nutriment_amount / grind_results_num, CHEMICAL_QUANTISATION_LEVEL) : total_nutriment_amount
-		reagents.remove_all_type(/datum/reagent/consumable/nutriment, total_nutriment_amount)
+		reagents.remove_reagent(/datum/reagent/consumable/nutriment, total_nutriment_amount, include_subtypes = TRUE)
 		for(var/reagent in grind_results)
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
 
 	if(reagents && target_holder)
-		reagents.trans_to(target_holder, reagents.total_volume, transfered_by = user)
+		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 	return TRUE
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER

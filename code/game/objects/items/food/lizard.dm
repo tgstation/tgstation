@@ -284,7 +284,6 @@
 	)
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
-	burns_on_grill = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -447,7 +446,6 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8)
 	tastes = list("bread" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
-	burns_on_grill = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/rootroll
@@ -459,7 +457,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("roll" = 1) // the roll tastes of roll.
 	foodtypes = VEGETABLES | NUTS
-	burns_in_oven = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 //Bread Dishes
@@ -474,7 +471,6 @@
 	foodtypes = VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
-	burns_in_oven = TRUE
 	slice_type = /obj/item/food/breadslice/root
 
 /obj/item/food/bread/root/Initialize(mapload)
@@ -814,3 +810,32 @@
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/rootbread_peanut_butter_jelly
+	name = "peanut butter and jelly rootwich"
+	desc = "A classic PB&J rootwich, just like the replicant that replaced your mom used to make."
+	icon_state = "peanutbutter-jelly"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("peanut butter" = 1, "jelly" = 1, "rootbread" = 2)
+	foodtypes = FRUIT | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/rootbread_peanut_butter_banana
+	name = "peanut butter and banana rootwich"
+	desc = "A peanut butter rootwich with banana slices mixed in, a good high protein treat."
+	icon_state = "peanutbutter-banana"
+	icon = 'icons/obj/food/lizard.dmi'
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 2,
+		/datum/reagent/consumable/nutriment/protein = 4,
+		/datum/reagent/consumable/banana = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("peanut butter" = 1, "banana" = 1, "rootbread" = 2)
+	foodtypes = FRUIT | NUTS
+	crafting_complexity = FOOD_COMPLEXITY_3

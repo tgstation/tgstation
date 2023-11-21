@@ -3,14 +3,6 @@
 /// A global assoc list of all landmarks that denote a heretic sacrifice location. [string heretic path] = [landmark].
 GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
-/**
- * A map template loaded in when heretics are created.
- * Hereteic sacrifices are sent here when completed.
- */
-/datum/map_template/heretic_sacrifice_level
-	name = "Heretic Sacrifice Level"
-	mappath = "_maps/templates/heretic_sacrifice_template.dmm"
-
 /// Lardmarks meant to designate where heretic sacrifices are sent.
 /obj/effect/landmark/heretic
 	name = "default heretic sacrifice landmark"
@@ -41,6 +33,10 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 /obj/effect/landmark/heretic/rust
 	name = "rust heretic sacrifice landmark"
 	for_heretic_path = PATH_RUST
+
+/obj/effect/landmark/heretic/lock
+	name = "lock heretic sacrifice landmark"
+	for_heretic_path = PATH_LOCK
 
 // A fluff signpost object that doesn't teleport you somewhere when you touch it.
 /obj/structure/no_effect_signpost
@@ -114,3 +110,8 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	name = "Mansus Rust Gate"
 	ambience_index = AMBIENCE_REEBE
 	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE
+
+/area/centcom/heretic_sacrifice/lock
+	name = "Mansus Lock Gate"
+	ambience_index = AMBIENCE_DANGER
+	sound_environment = SOUND_ENVIRONMENT_PSYCHOTIC

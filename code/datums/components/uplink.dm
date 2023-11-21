@@ -259,6 +259,7 @@
 	data["current_stock"] = remaining_stock
 	data["shop_locked"] = uplink_handler.shop_locked
 	data["purchased_items"] = length(uplink_handler.purchase_log?.purchase_log)
+	data["can_renegotiate"] = user.mind == uplink_handler.owner && uplink_handler.can_replace_objectives?.Invoke() == TRUE
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -300,6 +301,9 @@
 			if(!lockable)
 				return TRUE
 			lock_uplink()
+		if("renegotiate_objectives")
+			uplink_handler.replace_objectives?.Invoke()
+			SStgui.update_uis(src)
 
 	if(!uplink_handler.has_objectives)
 		return TRUE

@@ -8,6 +8,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/storage/belt/holster,
 		)
 	armor_type = /datum/armor/none
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
@@ -15,10 +16,6 @@
 	slot_flags = ITEM_SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	limb_integrity = 0 // disabled for most exo-suits
-
-/obj/item/clothing/suit/Initialize(mapload)
-	. = ..()
-	setup_shielding()
 
 /obj/item/clothing/suit/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -46,12 +43,3 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_worn_oversuit()
-
-/**
- * Wrapper proc to apply shielding through AddComponent().
- * Called in /obj/item/clothing/Initialize().
- * Override with an AddComponent(/datum/component/shielded, args) call containing the desired shield statistics.
- * See /datum/component/shielded documentation for a description of the arguments
- **/
-/obj/item/clothing/suit/proc/setup_shielding()
-	return

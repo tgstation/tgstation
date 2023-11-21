@@ -42,6 +42,21 @@
 
 // ~~ Weapon Categories ~~
 
+// Core Gear Box: This contains all the 'fundamental' equipment that most nuclear operatives probably should be buying. It isn't cheaper, but it is a quick and convenient method of acquiring all the gear necessary immediately.
+// Only allows one purchase, and doesn't prevent the purchase of the contained items. Focused on newer players to help them understand what items they need to succeed, and to help older players quickly purchase the baseline gear they need.
+
+/datum/uplink_item/weapon_kits/core
+	name = "Core Equipment Box (Essential)"
+	desc = "This box contains an airlock authentification override card, a C-4 explosive charge, a freedom implant and a stimpack injector. \
+		The most important support items for most operatives to succeed in their mission, bundled together. It is highly recommend you buy this kit. \
+		Note: This bundle is not at a discount. You can purchase all of these items separately. You do not NEED these items, but most operatives fail WITHOUT at \
+		least SOME of these items. More experienced operatives can do without."
+	item = /obj/item/storage/box/syndie_kit/core_gear
+	cost = 14 //freedom 5, doormag 3, c-4 1, stimpack 5
+	limited_stock = 1
+	cant_discount = TRUE
+	purchasable_from = UPLINK_NUKE_OPS
+
 //Low-cost firearms: Around 8 TC each. Meant for easy squad weapon purchases
 
 /datum/uplink_item/weapon_kits/low_cost
@@ -153,13 +168,20 @@
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
 
-// ~~ Energy Sword and Shield ~~
+// ~~ Energy Sword and Shield & CQC ~~
 
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
 	desc = "A case containing an energy sword and energy shield. The shield is capable of deflecting \
 		energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
+
+/datum/uplink_item/weapon_kits/medium_cost/cqc
+	name = "CQC Equipment Case (Very Hard)"
+	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant, a pack of smokes and a snazzy bandana (use it with the hat stabilizers in your MODsuit)."
+	item = /obj/item/storage/toolbox/guncase/cqc
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	surplus = 0
 
 // ~~ Syndicate Revolver ~~
 // Nuclear operatives get a special deal on their revolver purchase compared to traitors.
@@ -331,13 +353,6 @@
 		Blast your enemies with instant shots! Just watch out for the rebound..."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
-/datum/uplink_item/weapon_kits/high_cost/cqc
-	name = "CQC Equipment Case (Very Hard)"
-	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant and a snazzy bandana (and a hat stabilizer to go with it)."
-	item = /obj/item/storage/toolbox/guncase/cqc
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	surplus = 0
-
 /datum/uplink_item/weapon_kits/high_cost/doublesword
 	name = "Double-Energy Sword Case (Very Hard)"
 	desc = "A case containing a double-energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
@@ -468,7 +483,7 @@
 	name = "Cybernetic Implants Bundle"
 	desc = "A box containing x-ray eyes, a CNS Rebooter and Reviver implant. Comes with an autosurgeon for each."
 	item = /obj/item/storage/box/cyber_implants
-	cost = 25 //worth around 32 TC
+	cost = 20 //worth 24 TC
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/medical
@@ -496,6 +511,16 @@
 		*NOT* for usage with Reinforcements, and does not brainwash the target!"
 	item = /obj/item/storage/box/syndie_kit/induction_kit
 	cost = 10
+	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/bundles_tc/cowboy
+	name = "Syndicate Outlaw Kit"
+	desc = "There've been high tales of an outlaw 'round these parts. A fella so ruthless and efficient no ranger could ever capture 'em. \
+	Now you can be just like 'em! \
+	This kit contains armor-lined cowboy equipment, a custom revolver and holster, and a horse with a complimentary apple to tame. \
+	A lighter is also included, though you must supply your own smokes."
+	item = /obj/item/storage/box/syndie_kit/cowboy
+	cost = 18
 	purchasable_from = UPLINK_NUKE_OPS
 
 // Mech related gear
@@ -597,6 +622,14 @@
 	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
+/datum/uplink_item/device_tools/medgun_mod
+	name = "Medbeam Gun Module"
+	desc = "A wonder of Syndicate engineering, the Medbeam gun module, or Medi-Gun enables a medic to keep his fellow \
+		operatives in the fight, even while under fire. Don't cross the streams!"
+	item = /obj/item/mod/module/medbeam
+	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
 /datum/uplink_item/suits/syndi_intellicard
 	name = "Pre-Loaded Syndicate Intellicard"
 	desc = "A syndicate intellicard that can be activated to download a captured Nanotrasen AI, modified with the standard syndicate lawset. You can slot it into your modsuit for a conversational partner! It can additionally control the MODsuit's modules at will, and move your body around even if you're in critical condition or dead. \
@@ -632,14 +665,6 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
-/datum/uplink_item/device_tools/medgun
-	name = "Medbeam Gun"
-	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
-		operatives in the fight, even while under fire. Don't cross the streams!"
-	item = /obj/item/gun/medbeam
-	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/medkit
@@ -732,13 +757,6 @@
 	item = /obj/item/autosurgeon/syndicate/anti_stun
 	cost = 8
 
-/datum/uplink_item/implants/nuclear/antidrop
-	name = "Anti-Drop Implant"
-	desc = "This implant will keep you from dropping things from your hands. Be sure to hold onto the item before activating, and \
-		activate it again to turn it off. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/syndicate/anti_drop
-	cost = 8
-
 // Badass (meme items)
 
 /datum/uplink_item/badass/costumes
@@ -800,7 +818,7 @@
 
 /datum/uplink_item/badass/hats
 	name = "Hat Crate"
-	desc = "Hat crate! Contains hats, along with hat stabilizers to wear your hats while you're in your suit! HATS!!!"
+	desc = "Hat crate! Contains hats! HATS!!!"
 	item = /obj/structure/closet/crate/large/hats
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS

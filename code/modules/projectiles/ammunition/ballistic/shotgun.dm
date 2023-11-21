@@ -105,12 +105,12 @@
 
 /obj/item/ammo_casing/shotgun/improvised
 	name = "improvised shell"
-	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
+	desc = "A homemade shotgun casing filled with crushed glass, used to commmit vandalism and property damage."
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
-	pellets = 10
-	variance = 25
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
+	pellets = 6
+	variance = 30
 
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
@@ -121,19 +121,38 @@
 	pellets = 4
 	variance = 35
 
-/obj/item/ammo_casing/shotgun/laserslug
+/obj/item/ammo_casing/shotgun/scatterlaser
 	name = "scatter laser shell"
 	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/projectile/beam/weak
+	projectile_type = /obj/projectile/beam/scatter
 	pellets = 6
 	variance = 35
+
+/obj/item/ammo_casing/shotgun/scatterlaser/emp_act(severity)
+	. = ..()
+	if(isnull(loaded_projectile) || !prob(40/severity))
+		return
+	name = "malfunctioning laser shell"
+	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. The capacitor powering this assembly appears to be smoking."
+	projectile_type = /obj/projectile/beam/scatter/pathetic
+	loaded_projectile = new projectile_type(src)
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
 	desc = "A high-tech shotgun shell which can be loaded with materials to produce unique effects."
 	icon_state = "cshell"
 	projectile_type = null
+
+/obj/item/ammo_casing/shotgun/techshell/Initialize(mapload)
+	. = ..()
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/meteorslug, /datum/crafting_recipe/pulseslug, /datum/crafting_recipe/dragonsbreath, /datum/crafting_recipe/ionslug)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun dart"

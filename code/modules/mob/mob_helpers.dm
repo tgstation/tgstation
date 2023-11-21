@@ -84,7 +84,6 @@
 			CRASH("limbs is empty and the chest is blacklisted. this may not be intended!")
 	return (((chest_blacklisted && !base_zone) || even_weights) ? pick_weight(limbs) : ran_zone(base_zone, base_probability, limbs))
 
-
 ///Would this zone be above the neck
 /proc/above_neck(zone)
 	var/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
@@ -207,20 +206,38 @@
 	return ""
 
 // moved out of admins.dm because things other than admin procs were calling this.
-/// Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
-/proc/is_special_character(mob/M)
+/**
+ * Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
+ * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with FLAG_FAKE_ANTAG won't pass.
+*/
+/proc/is_special_character(mob/M, allow_fake_antags = FALSE)
 	if(!SSticker.HasRoundStarted())
 		return FALSE
 	if(!istype(M))
 		return FALSE
 	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext
 		return FALSE
+
+
+	// Returns TRUE if AI has a zeroth law *and* either has a special role *or* an antag datum.
 	if(isAI(M))
 		var/mob/living/silicon/ai/A = M
 		return (A.laws?.zeroth && (A.mind?.special_role || !isnull(M.mind?.antag_datums)))
-	if(M.mind?.special_role || !isnull(M.mind?.antag_datums)) //they have an antag datum!
+
+	if(M.mind?.special_role)
 		return TRUE
-	return FALSE
+
+	// Turns 'faker' to TRUE if the antag datum is fake. If it's not fake, returns TRUE directly.
+	var/faker = FALSE
+	for(var/datum/antagonist/antag_datum as anything in M.mind?.antag_datums)
+		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+			faker = TRUE
+		else
+			return TRUE
+
+	// If 'faker' was assigned TRUE in the above loop and the argument 'allow_fake_antags' is set to TRUE, this passes.
+	// Else, return FALSE.
+	return (faker && allow_fake_antags)
 
 /**
  * Fancy notifications for ghosts
@@ -228,74 +245,72 @@
  * The kitchen sink of notification procs
  *
  * Arguments:
- * * message
- * * ghost_sound sound to play
- * * enter_link Href link to enter the ghost role being notified for
- * * source The source of the notification
- * * alert_overlay The alert overlay to show in the alert message
- * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
- * * flashwindow Flash the byond client window
- * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
- * * header The header of the notifiaction
- * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
- * * notify_volume How loud the sound should be to spook the user
+ * * message: The message displayed in chat.
+ * * source: The source of the notification. This is required for an icon
+ * * header: The title text to display on the icon tooltip.
+ * * alert_overlay: Optional. Create a custom overlay if you want, otherwise it will use the source
+ * * click_interact: If true, adds a link + clicking the icon will attack_ghost the source
+ * * custom_link: Optional. If you want to add a custom link to the chat notification
+ * * ghost_sound: sound to play
+ * * ignore_key: Ignore keys if they're in the GLOB.poll_ignore list
+ * * notify_volume: How loud the sound should be to spook the user
  */
-/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
+/proc/notify_ghosts(
+	message,
+	atom/source,
+	header = "Something Interesting!",
+	mutable_appearance/alert_overlay,
+	click_interact = FALSE,
+	custom_link = "",
+	ghost_sound,
+	ignore_key,
+	notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	notify_volume = 100,
+)
 
-	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
+	if(notify_flags & GHOST_NOTIFY_IGNORE_MAPLOAD && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
-	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
-			continue
-		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
-			continue
-		var/orbit_link
-		if(source && action == NOTIFY_ORBIT)
-			orbit_link = " <a href='?src=[REF(ghost)];follow=[REF(source)]'>(Orbit)</a>"
-		to_chat(ghost, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
-		if(ghost_sound)
-			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
-		if(flashwindow)
-			window_flash(ghost.client)
-		if(!source)
-			continue
-		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
-		if(!alert)
-			continue
-		var/ui_style = ghost.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
-		if(ui_style)
-			alert.icon = ui_style2icon(ui_style)
-		if (header)
-			alert.name = header
-		alert.desc = message
-		alert.action = action
-		alert.target = source
-		if(!alert_overlay)
-			alert_overlay = new(source)
-			alert_overlay.pixel_x = 0
-			alert_overlay.pixel_y = 0
-			var/icon/size_check = icon(source.icon, source.icon_state)
-			var/scale = 1
-			var/width = size_check.Width()
-			var/height = size_check.Height()
-			if(width > world.icon_size)
-				alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
-			if(height > world.icon_size)
-				alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
-			if(width > world.icon_size || height > world.icon_size)
-				if(width >= height)
-					scale = world.icon_size / width
-				else
-					scale = world.icon_size / height
-			alert_overlay.transform = alert_overlay.transform.Scale(scale)
+
+	if(source)
+		if(isnull(alert_overlay))
+			alert_overlay = get_small_overlay(source)
+
 		alert_overlay.appearance_flags |= TILE_BOUND
 		alert_overlay.layer = FLOAT_LAYER
 		alert_overlay.plane = FLOAT_PLANE
-		alert.add_overlay(alert_overlay)
 
-/**
- * Heal a robotic body part on a mob
- */
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
+		if(!(notify_flags & GHOST_NOTIFY_NOTIFY_SUICIDERS) && HAS_TRAIT(ghost, TRAIT_SUICIDED))
+			continue
+		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
+			continue
+
+		if(notify_flags & GHOST_NOTIFY_FLASH_WINDOW)
+			window_flash(ghost.client)
+
+		if(ghost_sound)
+			SEND_SOUND(ghost, sound(ghost_sound, volume = notify_volume))
+
+		if(isnull(source))
+			to_chat(ghost, span_ghostalert(message))
+			continue
+
+		var/interact_link = click_interact ? " <a href='?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
+		var/view_link = " <a href='?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
+
+		to_chat(ghost, span_ghostalert("[message][custom_link][interact_link][view_link]"))
+
+		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
+			category = "[REF(source)]_notify_action",
+			type = /atom/movable/screen/alert/notify_action,
+		)
+		toast.add_overlay(alert_overlay)
+		toast.click_interact = click_interact
+		toast.desc = "Click to [click_interact ? "play" : "view"]."
+		toast.name = header
+		toast.target_ref = WEAKREF(source)
+
+/// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting || IS_ORGANIC_LIMB(affecting))
@@ -303,7 +318,7 @@
 		return FALSE
 	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
 	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-		if(affecting.heal_damage(brute_heal, burn_heal, BODYTYPE_ROBOTIC))
+		if(affecting.heal_damage(brute_heal, burn_heal, required_bodytype = BODYTYPE_ROBOTIC))
 			human.update_damage_overlays()
 		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
 			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] [affecting.name]."))
@@ -519,3 +534,51 @@
 		"[key_name(src)] manually changed selected zone",
 		data,
 	)
+
+/**
+ * Returns an associative list of the logs of a certain amount of lines spoken recently by this mob
+ * copy_amount - number of lines to return
+ * line_chance - chance to return a line, if you don't want just the most recent x lines
+ */
+/mob/proc/copy_recent_speech(copy_amount = LING_ABSORB_RECENT_SPEECH, line_chance = 100)
+	var/list/recent_speech = list()
+	var/list/say_log = list()
+	var/log_source = logging
+	for(var/log_type in log_source)
+		var/nlog_type = text2num(log_type)
+		if(nlog_type & LOG_SAY)
+			var/list/reversed = log_source[log_type]
+			if(islist(reversed))
+				say_log = reverse_range(reversed.Copy())
+				break
+
+	for(var/spoken_memory in say_log)
+		if(recent_speech.len >= copy_amount)
+			break
+		if(!prob(line_chance))
+			continue
+		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
+
+	var/list/raw_lines = list()
+	for (var/key as anything in recent_speech)
+		raw_lines += recent_speech[key]
+
+	return raw_lines
+
+/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key) and handles granting the action and adding it to the mob's AI controller blackboard.
+/// This is only useful in instances where you don't want to store the reference to the action on a variable on the mob.
+/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
+/// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
+/mob/proc/grant_actions_by_list(list/input)
+	if(length(input) <= 0)
+		return
+
+	for(var/action in input)
+		var/datum/action/ability = new action(src)
+		ability.Grant(src)
+
+		var/blackboard_key = input[action]
+		if(isnull(blackboard_key))
+			continue
+
+		ai_controller?.set_blackboard_key(blackboard_key, ability)

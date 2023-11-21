@@ -43,7 +43,7 @@
 		if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 			balloon_alert(user, "empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		reagents.trans_to(weapon, weapon.reagents.maximum_volume, transfered_by = user)
+		reagents.trans_to(weapon, weapon.reagents.maximum_volume, transferred_by = user)
 		balloon_alert(user, "doused mop")
 		playsound(src, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 

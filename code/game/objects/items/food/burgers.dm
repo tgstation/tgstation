@@ -226,10 +226,15 @@
 	verb_yell = "wails"
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
+	preserved_food = TRUE // It's made of ghosts
 
-/obj/item/food/burger/ghost/Initialize(mapload)
+/obj/item/food/burger/ghost/Initialize(mapload, starting_reagent_purity, no_base_reagents)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/ghost_edible, bite_consumption = bite_consumption)
+
+/obj/item/food/burger/ghost/make_germ_sensitive()
+	return // This burger moves itself so it shouldn't pick up germs from walking onto the floor
 
 /obj/item/food/burger/ghost/process()
 	if(!isturf(loc)) //no floating out of bags
@@ -255,8 +260,6 @@
 			visible_message("[src] spews out a glob of ectoplasm!")
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
 			playsound(loc, 'sound/effects/splat.ogg', 200, TRUE)
-
-		//If i was less lazy i would make the burger forcefeed itself to a nearby mob here.
 
 /obj/item/food/burger/ghost/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -685,3 +688,4 @@
 	tastes = list("juicy meat" = 4, "BBQ sauce" = 3, "onions" = 2, "bun" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_3

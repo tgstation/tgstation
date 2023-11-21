@@ -50,8 +50,6 @@
 	var/list/datum/design/cached_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		connect_techweb(SSresearch.science_tech)
 	rmat = AddComponent( \
 		/datum/component/remote_materials, \
 		mapload && link_on_init, \
@@ -59,20 +57,29 @@
 	)
 	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
-	if(stored_research)
-		update_menu_tech()
 	return ..()
+
+/obj/machinery/mecha_part_fabricator/LateInitialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+	if(stored_research)
+		on_connected_techweb()
 
 /obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
 		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
-
 	stored_research = new_techweb
+	if(!isnull(stored_research))
+		on_connected_techweb()
+
+/obj/machinery/mecha_part_fabricator/proc/on_connected_techweb()
 	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		PROC_REF(on_techweb_update)
 	)
+	update_menu_tech()
 
 /obj/machinery/mecha_part_fabricator/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
@@ -396,9 +403,6 @@
 
 	. = TRUE
 
-	add_fingerprint(usr)
-	usr.set_machine(src)
-
 	switch(action)
 		if("build")
 			var/designs = params["designs"]
@@ -491,16 +495,6 @@
 		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
 		return FALSE
 	return default_deconstruction_crowbar(I)
-
-/obj/machinery/mecha_part_fabricator/proc/is_insertion_ready(mob/user)
-	if(panel_open)
-		to_chat(user, span_warning("You can't load [src] while it's opened!"))
-		return FALSE
-	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
-		return FALSE
-
-	return TRUE
 
 /obj/machinery/mecha_part_fabricator/maint
 	link_on_init = FALSE
