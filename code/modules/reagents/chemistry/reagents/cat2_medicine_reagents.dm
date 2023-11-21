@@ -26,6 +26,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/death_is_coming = (affected_mob.getToxLoss() + affected_mob.getOxyLoss() + affected_mob.getFireLoss() + affected_mob.getBruteLoss())*normalise_creation_purity()
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
@@ -78,7 +79,6 @@
 				affected_mob.revive(HEAL_ALL)
 				holder.del_reagent(type)
 				return
-	return ..() || .
 
 /datum/reagent/medicine/c2/helbital/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

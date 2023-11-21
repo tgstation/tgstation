@@ -780,3 +780,129 @@
   - bugfix: '"Old Chat" (AKA: The old-styled non-TGUI raw-HTMLesque chat that you
       might see when it prods you with the "Failed to load fancy chat!" issue) should
       now get all text messages as expected.'
+2023-11-20:
+  EuSouAFazer:
+  - qol: Slightly moved the universal enzyme on meta's kitchen to a prettier spot.
+  - bugfix: The universal enzyme on meta's kitchen is no longer unecessarely varedited.
+  Ghommie:
+  - bugfix: Fixed the infinite growth serum exploit.
+  - bugfix: Fixed generic nutriment processing even when dead.
+  - bugfix: Fixed an issue with un-hidden (alien, syndie etc.) nodes not being researchable.
+  - bugfix: The aquarium auto-feeding feature now works correctly.
+  JohnFulpWillard:
+  - qol: NTNet Downloader now has a search bar, and programs are now better sorted.
+  KingkumaArt:
+  - bugfix: Stopped a DS crash when shooting a rebar crossbow in specific circumstances.
+  LT3:
+  - bugfix: Delam counter will correctly show 0 the shift after a delam
+  MTandi:
+  - bugfix: Hydrotrays consume nutrients according to their proportion in the mix,
+      instead of randomly picking reagents to consume every cycle.
+  Melbert:
+  - admin: Adds a button to check-antagonists that allows admins to send Nuke Op reinforcements
+      with a single button
+  - admin: Nuke Ops check antagonists now show you full war status (declared / not
+      declared)
+  - bugfix: Fixes multiple nuke teams (or an admin) being able to declare war at once
+  - rscdel: Heretic side path points are gone
+  Rhials:
+  - rscadd: Nuclear Operatives, in an attempt to appeal to the more "tacticool" members
+      of their cause, have begun using callsigns to designate themselves. Check your
+      preferences to set your Operative Alias!
+  - qol: At the request of the more vain members of the cause, hair dye has been added
+      to the Operative Firebase dorms.
+  SyncIt21:
+  - bugfix: debug chem synthesizer works again. cleaned up chem dispenser, portable
+      chem dispenser & debug chem synthesizer ui code
+  - qol: ui for displaying beaker reagents for debug chem synthesizer has been improved.
+      Now displays input list for adding reagents
+  - code_imp: Removes & merges `get_multiple_reagent_amounts()` proc with `get_reagent_amount()`
+      inside reagent holder
+  - code_imp: Removes & merges `get_reagent()` proc with `has_reagent()` inside reagent
+      holder
+  - code_imp: Removes & merges `has_chemical_flag()` proc with `has_reagent()` inside
+      reagent holder
+  - refactor: Reagent holder code has been further compressed. Report bugs on github
+  Tattle:
+  - bugfix: admin painting manager works again
+  jlsnow301:
+  - qol: Nearly every ghost alert should now feature a "VIEW" button, even those with
+      click interaction.
+  - rscdel: Ghost alerts no longer show the entire message in the tooltip, instead
+      have been replaced with titles.
+  - bugfix: Chat shouldn't bluescreen at the start of the round
+  - bugfix: Admins can spawn bitrunning events (again!)
+  lizardqueenlexi:
+  - bugfix: Hardcore Random will no longer assign incompatible quirks.
+  - spellcheck: Some roundstart tips have been made clearer regarding "suits" vs.
+      "exosuits".
+  san7890 and Ben10Omintrix/Kobsamobsa:
+  - refactor: Parrots (including Poly) have undergone a massive refactor, please report
+      any bugs or unexpected behavior that you may encounter.
+  - qol: Left-clicking a parrot with a cracker will tame it, right-clicking a parrot
+      with a cracker will now feed it the cracker.
+  vinylspiders:
+  - bugfix: fixed a race condition with mutations
+  - bugfix: fixes bug that was preventing high luminosity eyes' light from turning
+      on
+  - bugfix: fixes eyes being on the wrong side of the head when facing east/west
+  yooriss:
+  - refactor: Icemoon wolves now use the basic mob framework and should act more intelligently,
+      defending their pack.
+  - rscadd: Icemoon wolves can be tamed with slabs of meat and can be ridden as mounts
+      once friendly. Being rather large dogs, they also have access to most of the
+      pet commands you'd expect, such as fetching things, and violently mauling people
+      their owners point at.
+2023-11-21:
+  00-Steven:
+  - balance: signers no longer suffer from social anxiety's speech changes when they
+      go non-verbal. Other effects are maintained.
+  DaCoolBoss:
+  - bugfix: Removed a duplicate grille from the abandoned mime outpost space ruin,
+      and replaced the 'energy weapon lenses' with spent revolver rounds.
+  EuSouAFazer:
+  - bugfix: Meta's recycler works again
+  Hatterhat:
+  - balance: The SC/FISHER disruptor pistol is now more likely to show up in black
+      market uplinks.
+  - balance: The SC/FISHER now has more range (21 tiles up from 14), and is usable
+      by pacifists.
+  Melbert:
+  - bugfix: Atrocinating mobs will now behave more as you'd expect. Meaning they don't
+      slip on wet patches, can't trigger bear traps / landmines / mouse traps, ignore
+      conveyors, and can walk over tables and railings.
+  - bugfix: Floating mobs are unaffected by conveyor belts, acid (on the ground),
+      glass tables
+  - bugfix: Floating mobs won't squish stuff like roaches anymore
+  - bugfix: Fixes bear traps triggering on floating / flying mobs
+  OrionTheFox:
+  - qol: Allergy Dogtags (and any other dogtags, really) are now Tiny items and can
+      fit into wallets.
+  Thlumyn:
+  - bugfix: healing viruses can no longer have floor virus side effects
+  YesterdaysPromise:
+  - image: 'Following now have unique item sprites: syndicate war declaration radio,
+      curator and chief beacon''s, chaplain beacon.'
+  - image: 'Following now have unique inhand sprites: radio, export scanner, walkie-talkie,
+      syndicate war declaration radio, curator and chief beacon''s, chaplain beacon.'
+  dieamond13:
+  - bugfix: adds back one way exits to Tramstation science's entrance
+  necromanceranne:
+  - bugfix: When you successfully block a body collision, it does something rather
+      than nothing at all.
+  - rscadd: The battle against Maint Khan's forces rages on in the periphery stations
+      of the Spinward Sector. And with it, a new breed of unarmed warrior has emerged;
+      the cybernetic martial artist. Nanotrasen, rather than quell the minor maintenance
+      civil war brewing in their sector, have chosen to exploit this conflict to push
+      their weapons and cybernetics research to new heights!
+  - rscadd: Advanced cybernetic arms can be printed at the Robotics exofabricator
+      once researched. They are unlocked by researching the Advanced Robotics Research
+      node.
+  - rscadd: Advanced cybernetic arms are more durable than standard limbs, and also
+      have higher unarmed potential.
+  - balance: Strongarm implants now utilize the attacking limb's unarmed potential
+      to determine damage and potential armor penetration. It also does additional
+      stamina damage (1.5x punch damage)
+  - balance: Surplus prosthetic limbs contribute more of their carried damage to overall
+      health (AKA they make you actively more vulnerable to damage), and deal less
+      damage with unarmed attacks. Take Quadruple Amputee at your own risk.

@@ -6,8 +6,8 @@
 /datum/computer_file/program/atmosscan
 	filename = "atmosscan"
 	filedesc = "AtmoZphere"
-	category = PROGRAM_CATEGORY_ENGI
-	program_icon_state = "air"
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
+	program_open_overlay = "air"
 	extended_desc = "A small built-in sensor reads out the atmospheric conditions around the device."
 	size = 4
 	tgui_id = "NtosGasAnalyzer"
