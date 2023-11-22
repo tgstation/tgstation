@@ -22,7 +22,7 @@
 /datum/status_effect/staggered/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/staggered)
-	// Resetting both X and Y positioning when we remove, even though we only animates on the X axis
+	// Resetting both X on remove so we're back to normal
 	owner.pixel_x = owner.base_pixel_x
 
 /// Signal proc that self deletes our staggered effect
