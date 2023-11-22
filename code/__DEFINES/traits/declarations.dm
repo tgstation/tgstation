@@ -980,4 +980,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
 
+/// Trait given to foam darts that have an insert in them
+#define TRAIT_DART_HAS_INSERT "dart_has_insert"
 // END TRAIT DEFINES

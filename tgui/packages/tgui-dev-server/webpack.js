@@ -7,10 +7,10 @@
 import fs from 'fs';
 import { createRequire } from 'module';
 import { dirname } from 'path';
-import { loadSourceMaps, setupLink } from './link/server.js';
-import { createLogger } from './logging.js';
-import { reloadByondCache } from './reloader.js';
-import { resolveGlob } from './util.js';
+import { loadSourceMaps, setupLink } from './link/server';
+import { createLogger } from './logging';
+import { reloadByondCache } from './reloader';
+import { resolveGlob } from './util';
 
 const logger = createLogger('webpack');
 
