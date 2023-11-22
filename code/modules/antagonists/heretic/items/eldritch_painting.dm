@@ -265,7 +265,7 @@
 	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
 	// After loosing this trauma you also loose the ability to taste, sad!
 	ADD_TRAIT(owner, TRAIT_AGEUSIA, REF(src))
-	..()
+	return ..()
 
 
 
