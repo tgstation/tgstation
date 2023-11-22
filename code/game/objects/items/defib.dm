@@ -109,7 +109,6 @@
 	if(!safety && emagged_state)
 		. += emagged_state
 
-
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
