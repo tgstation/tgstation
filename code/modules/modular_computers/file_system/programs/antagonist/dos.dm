@@ -42,7 +42,7 @@
 /datum/computer_file/program/ntnet_dos/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_target_relay")
-			for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+			for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))
 				if(relays.uid == params["targid"])
 					target = relays
 					break
@@ -76,7 +76,7 @@
 	else
 		data["target"] = FALSE
 		data["relays"] = list()
-		for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+		for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))
 			data["relays"] += list(list("id" = relays.uid))
 		data["focus"] = target ? target.uid : null
 

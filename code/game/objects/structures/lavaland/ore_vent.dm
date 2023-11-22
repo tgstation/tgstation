@@ -2,6 +2,9 @@
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
+#define LARGE_VENT_TYPE "large"
+#define MEDIUM_VENT_TYPE "medium"
+#define SMALL_VENT_TYPE "small"
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -35,6 +38,12 @@
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
 	/// String of ores that this vent can produce.
 	var/ore_string = ""
+	/// Associated list of vent size weights to pick from.
+	var/list/ore_vent_options = list(
+		LARGE_VENT_TYPE,
+		MEDIUM_VENT_TYPE,
+		SMALL_VENT_TYPE,
+	)
 
 	/// What string do we use to warn the player about the excavation event?
 	var/excavation_warning = "Are you ready to excavate this ore vent?"
@@ -90,12 +99,13 @@
 	. = ..()
 	if(.)
 		return
-	if(is_type_in_list(attacking_item, scanning_equipment))
-		if(tapped)
-			balloon_alert_to_viewers("vent tapped!")
-			return TRUE
-		scan_and_confirm(user)
+	if(!is_type_in_list(attacking_item, scanning_equipment))
+		return
+	if(tapped)
+		balloon_alert_to_viewers("vent tapped!")
 		return TRUE
+	scan_and_confirm(user)
+	return TRUE
 
 /obj/structure/ore_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -115,11 +125,11 @@
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
 	return TRUE
 
-/obj/structure/ore_vent/buckle_mob(mob/living/M, force, check_loc)
+/obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
 	if(tapped)
 		return FALSE
-	if(istype(M, /mob/living/basic/node_drone))
+	if(istype(target, /mob/living/basic/node_drone))
 		return TRUE
 
 /obj/structure/ore_vent/examine(mob/user)
@@ -154,7 +164,6 @@
 	return refined_list
 
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
-	say("spawned! [map_loading] called with [max_minerals]")
 	var/iterator = 1
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
@@ -219,10 +228,10 @@
  * Also gives xp and mining points to all nearby miners in equal measure.
  */
 /obj/structure/ore_vent/proc/handle_wave_conclusion()
-	SEND_SIGNAL(src, COMSIG_MINING_SPAWNER_STOP)
+	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
 	particles = null
-	if(node && !QDELING(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
+	if(!QDELETED(node)) ///The Node Drone has survived the wave defense, and the ore vent is tapped.
 		tapped = TRUE
 		SSore_generation.processed_vents += src
 		balloon_alert_to_viewers("vent tapped!")
@@ -261,9 +270,12 @@
 	if(!discovered)
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
-		if(do_after(user, 4 SECONDS) || scan_only)
+		if(scan_only)
 			discovered = TRUE
-			balloon_alert(user, "vent scanned!")
+		if(!discovered)
+			if(do_after(user, 4 SECONDS))
+				discovered = TRUE
+				balloon_alert(user, "vent scanned!")
 
 			if(ishuman(user))
 				var/mob/living/carbon/human/scanning_miner = user
@@ -372,7 +384,7 @@
 	if(!unique_vent && !mapload)
 		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
-	var/string_boulder_size = pick_weight(SSore_generation.ore_vent_sizes)
+	var/string_boulder_size = pick_weight(ore_vent_options)
 	name = "[string_boulder_size] ore vent"
 	switch(string_boulder_size)
 		if("large")
@@ -390,7 +402,7 @@
 
 
 
-/obj/structure/ore_vent/random/icebox
+/obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
 	icon_state = "ore_vent_ice"
 	icon_state_tapped = "ore_vent_ice_active"
 	defending_mobs = list(
@@ -401,6 +413,25 @@
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
+	ore_vent_options = list(
+		"small",
+	)
+
+/obj/structure/ore_vent/random/icebox/lower
+	defending_mobs = list(
+		/mob/living/basic/mining/ice_whelp,
+		/mob/living/basic/mining/lobstrosity,
+		/mob/living/basic/mining/legion/snow/spawner_made,
+		/mob/living/basic/mining/ice_demon,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/simple_animal/hostile/asteroid/wolf,
+	)
+	ore_vent_options = list(
+		"small",
+		"medium",
+		"large",
+	)
+
 
 /obj/structure/ore_vent/boss
 	name = "menacing ore vent"
@@ -473,3 +504,6 @@
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
+#undef LARGE_VENT_TYPE
+#undef MEDIUM_VENT_TYPE
+#undef SMALL_VENT_TYPE

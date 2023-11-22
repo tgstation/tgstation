@@ -62,12 +62,12 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize(mapload)
 	. = ..()
-	frost_orbs = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel()
-	hard_frost_orbs = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/strong()
-	snowball_machine_gun = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire()
-	hard_snowball_machine_gun = new /datum/action/cooldown/mob_cooldown/direct_and_aoe()
-	ice_shotgun = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern()
-	hard_ice_shotgun = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular()
+	frost_orbs = new(src)
+	hard_frost_orbs = new(src)
+	snowball_machine_gun = new(src)
+	hard_snowball_machine_gun = new(src)
+	ice_shotgun = new(src)
+	hard_ice_shotgun = new(src)
 	frost_orbs.Grant(src)
 	hard_frost_orbs.Grant(src)
 	snowball_machine_gun.Grant(src)
@@ -83,16 +83,19 @@ Difficulty: Extremely Hard
 	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
-	QDEL_NULL(frost_orbs)
-	QDEL_NULL(hard_frost_orbs)
-	QDEL_NULL(snowball_machine_gun)
-	QDEL_NULL(hard_snowball_machine_gun)
-	QDEL_NULL(ice_shotgun)
-	QDEL_NULL(hard_ice_shotgun)
+	frost_orbs = null
+	hard_frost_orbs = null
+	snowball_machine_gun = null
+	hard_snowball_machine_gun = null
+	ice_shotgun = null
+	hard_ice_shotgun = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	if(client)
+		return
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD) //don't go out of our way to fire our disintegrating attacks at corpses
 		return
 
 	var/easy_attack = prob(80 - enraged * 40)

@@ -139,6 +139,9 @@
 #define COMSIG_LIVING_EARLY_UNARMED_ATTACK "human_pre_attack_hand"
 /// from mob/living/*/UnarmedAttack(): (mob/living/source, atom/target, proximity, modifiers)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
+///From base of mob/living/MobBump(): (mob/bumped, mob/living/bumper)
+#define COMSIG_LIVING_PRE_MOB_BUMP "movable_pre_bump"
+	#define COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP (1<<0)
 ///From base of mob/living/MobBump() (mob/living)
 #define COMSIG_LIVING_MOB_BUMP "living_mob_bump"
 ///From base of mob/living/Bump() (turf/closed)
@@ -225,3 +228,8 @@
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
+
+/// Sent from a mob to their loc when starting to remove cuffs on itself
+#define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
+/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)

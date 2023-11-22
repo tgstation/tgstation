@@ -27,7 +27,7 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "i" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -171,7 +171,7 @@
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 6
 	},
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "T" = (

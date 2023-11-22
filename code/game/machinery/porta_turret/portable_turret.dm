@@ -326,7 +326,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
 			set_anchored(TRUE)
-			SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
+			RemoveInvisibility(id=type)
 			update_appearance()
 			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
 			if(has_cover)
@@ -336,7 +336,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			set_anchored(FALSE)
 			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
 			power_change()
-			RemoveInvisibility(type)
+			SetInvisibility(INVISIBILITY_NONE, id=type)
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
 
 	else if(I.GetID())
@@ -407,7 +407,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	. = ..()
 	if(.)
 		power_change()
-		RemoveInvisibility(type)
+		SetInvisibility(INVISIBILITY_NONE, id=type)
 		spark_system.start() //creates some sparks because they look cool
 		qdel(cover) //deletes the cover - no need on keeping it there!
 
@@ -514,7 +514,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return
 	if(machine_stat & BROKEN)
 		return
-	RemoveInvisibility(type)
+	SetInvisibility(INVISIBILITY_NONE, id=type)
 	raising = 1
 	if(cover)
 		flick("popup", cover)

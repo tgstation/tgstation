@@ -59,7 +59,7 @@
  * Chemical inputs can be used to boost the refinery's efficiency, but produces industrial waste, which eats through the station and is generally difficult to store.
  */
 /obj/machinery/bouldertech/refinery/smelter
-	name = "boulder smeltery"
+	name = "boulder smelter"
 	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
 	icon_state = "smelter"
 	processable_materials = list(

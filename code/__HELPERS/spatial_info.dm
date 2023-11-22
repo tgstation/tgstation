@@ -442,3 +442,24 @@
 		if(our_area == get_area(carbon))
 			return FALSE
 	return TRUE
+
+/**
+ * Behaves like the orange() proc, but only looks in the outer range of the function (The "peel" of the orange).
+ * Can't think of a better place to put this.
+ */
+/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
+	var/list/peel = list()
+	var/list/outer
+	var/list/inner
+	if(view_based)
+		outer = circle_view_turfs(center, outer_range)
+		inner = circle_view_turfs(center, inner_range)
+	else
+		outer = circle_range_turfs(center, outer_range)
+		inner = circle_range_turfs(center, inner_range)
+	for(var/turf/possible_spawn in outer)
+		if(possible_spawn in inner)
+			continue
+		peel += possible_spawn
+	return peel
+

@@ -598,6 +598,13 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+/area/ruin/space/has_grav/powered/biooutpost
+	name = "\improper Bioresearch Outpost"
+	area_flags = UNIQUE_AREA | NOTELEPORT
+
+/area/ruin/space/has_grav/powered/biooutpost/vault
+	name = "\improper Bioresearch Outpost Secure Testing"
+
 // Space Ghost Kitchen
 /area/ruin/space/space_ghost_restaurant
 	name = "\improper Space Ghost Restaurant"
@@ -682,3 +689,13 @@
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
+
+//garbage trucks
+/area/ruin/space/has_grav/garbagetruck
+	name = "decommissioned garbage truck"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_MAINT
+/area/ruin/space/has_grav/garbagetruck/foodwaste
+/area/ruin/space/has_grav/garbagetruck/medicalwaste
+/area/ruin/space/has_grav/garbagetruck/squat
+/area/ruin/space/has_grav/garbagetruck/toystore

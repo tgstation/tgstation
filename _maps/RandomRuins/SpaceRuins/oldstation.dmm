@@ -2842,9 +2842,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "mm" = (
 /obj/machinery/power/supermatter_crystal/shard,
-/obj/structure/closet/crate/engineering{
-	name = "supermatter shard crate"
-	},
+/obj/structure/closet/crate/radiation,
 /turf/open/floor/iron/white/textured,
 /area/ruin/space/ancientstation/delta/proto)
 "mo" = (
@@ -5154,7 +5152,6 @@
 /area/ruin/space/ancientstation/beta/hall)
 "By" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/monitor,
 /obj/machinery/computer/monitor,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1

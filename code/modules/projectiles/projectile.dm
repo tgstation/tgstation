@@ -194,6 +194,10 @@
 	var/hit_prone_targets = FALSE
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
+	///How much we want to drop damage per tile as it travels through the air
+	var/damage_falloff_tile
+	///How much we want to drop stamina damage (defined by the stamina variable) per tile as it travels through the air
+	var/stamina_falloff_tile
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
@@ -221,8 +225,16 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	if(damage_falloff_tile && damage >= 0)
+		damage += damage_falloff_tile
+	if(stamina_falloff_tile && stamina >= 0)
+		stamina += stamina_falloff_tile
+
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
+		on_range()
+
+	if(damage_falloff_tile && damage <= 0 || stamina_falloff_tile && stamina <= 0)
 		on_range()
 
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
@@ -305,8 +317,8 @@
 
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(hit_limb_zone)
-		if (damage)
-			if (living_target.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+		if (damage && damage_type == BRUTE)
+			if (living_target.blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 				var/splatter_dir = dir
 				if(starting)
 					splatter_dir = get_dir(starting, target_turf)
@@ -316,7 +328,7 @@
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
 				if(prob(33))
 					living_target.add_splatter_floor(target_turf)
-			else if (!isnull(hit_bodypart) && (hit_bodypart.biological_state & (BIO_METAL|BIO_WIRED)))
+			else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
 				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
 				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
 

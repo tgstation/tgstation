@@ -291,6 +291,7 @@ const MECHA_SNOWFLAKE_ID_AIR_TANK = 'air_tank_snowflake';
 const MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC = 'ballistic_weapon_snowflake';
 const MECHA_SNOWFLAKE_ID_GENERATOR = 'generator_snowflake';
 const MECHA_SNOWFLAKE_ID_ORE_SCANNER = 'orescanner_snowflake';
+const MECHA_SNOWFLAKE_ID_CLAW = 'lawclaw_snowflake';
 
 export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
   const module = props.module;
@@ -311,6 +312,8 @@ export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
       return <SnowflakeGeneraor module={module} />;
     case MECHA_SNOWFLAKE_ID_ORE_SCANNER:
       return <SnowflakeOreScanner module={module} />;
+    case MECHA_SNOWFLAKE_ID_CLAW:
+      return <SnowflakeLawClaw module={module} />;
     default:
       return null;
   }
@@ -915,5 +918,30 @@ const SnowflakeOreScanner = (props, context) => {
         </Button>
       </NoticeBox>
     </LabeledList.Item>
+  );
+};
+
+
+const SnowflakeLawClaw = (props, context) => {
+  const { act, data } = useBackend<MainData>(context);
+  const { ref } = props.module;
+  const { autocuff } = props.module.snowflake;
+  return (
+    <LabeledList.Item
+      label="Handcuff Suspects"
+      buttons={
+        <Button
+          content={'Toggle'}
+          color={autocuff ? 'green' : 'blue'}
+          icon={'handcuffs'}
+          onClick={() =>
+            act('equip_act', {
+              ref: ref,
+              gear_action: 'togglecuff',
+            })
+          }
+        />
+      }
+    />
   );
 };

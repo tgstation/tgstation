@@ -166,6 +166,9 @@
 	PlaceOnTop(/turf/open/floor/plating, flags = flags)
 	PlaceOnTop(new_floor_path, flags = flags)
 
+/turf/open/openspace/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
+
 /turf/open/openspace/icemoon
 	name = "ice chasm"
 	baseturfs = /turf/open/openspace/icemoon
