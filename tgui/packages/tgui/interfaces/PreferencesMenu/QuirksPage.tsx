@@ -210,7 +210,7 @@ const QuirkList = (props: {
         );
 
         if (quirk.failTooltip) {
-          return <Tooltip content={quirk.failTooltip}>{child}</Tooltip>;
+          return <Tooltip key={quirkKey} content={quirk.failTooltip}>{child}</Tooltip>;
         } else {
           return child;
         }
