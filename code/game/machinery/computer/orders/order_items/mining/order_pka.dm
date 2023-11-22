@@ -25,10 +25,11 @@
 	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/railgun
 	cost_per_order = 1250
 
+/* disabled until fixed...
 /datum/orderable_item/accelerator/gun/hook //monke edit
 	item_path = /obj/item/gun/energy/recharge/grapple
 	cost_per_order = 1250
-
+*/
 /datum/orderable_item/accelerator/range
 	item_path = /obj/item/borg/upgrade/modkit/range
 	cost_per_order = 1000
