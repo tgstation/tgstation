@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Heads impaled on spears now render in the correct place on the tip, instead of halfway down the shaft."
-  - bugfix: "Blind personnel are no longer able to magically see heads impaled on spears from a distance."
