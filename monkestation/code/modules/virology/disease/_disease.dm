@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		antigen |= pick(antigen_family(selected_second_antigen))
 
 
-/datum/disease/advanced/proc/activate(mob/living/mob,var/starved = FALSE)
+/datum/disease/advanced/proc/activate(mob/living/mob, starved = FALSE)
 	if(mob.stat == DEAD)
 		return
 
@@ -316,6 +316,76 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 	//Freezing body temperatures halt diseases completely
 	if(mob.bodytemperature < min_bodytemperature)
 		return
+	//Virus food speeds up disease progress
+	if(mob.reagents.has_reagent(VIRUSFOOD))
+		mob.reagents.remove_reagent(VIRUSFOOD,0.1)
+		if(!logged_virusfood)
+			log += "<br />[timestamp()] Virus Fed ([mob.reagents.get_reagent_amount(VIRUSFOOD)]U)"
+			logged_virusfood=1
+		ticks += 10
+	else
+		logged_virusfood=0
+
+	//Moving to the next stage
+	if(ticks > stage*100 && prob(stageprob) && stage < max_stage)
+		stage++
+		log += "<br />[timestamp()] NEXT STAGE ([stage])"
+		ticks = 0
+
+	//Pathogen killing each others
+	for (var/datum/disease/advanced/enemy_pathogen as anything in mob.diseases)
+		if(enemy_pathogen == src)
+			continue
+
+		if ((enemy_pathogen.form in can_kill) && strength > enemy_pathogen.strength)
+			log += "<br />[ROUND_TIME()] destroyed enemy [enemy_pathogen.form] #[enemy_pathogen.uniqueID]-[enemy_pathogen.subID] ([strength] > [enemy_pathogen.strength])"
+			enemy_pathogen.cure(mob)
+
+	// This makes it so that <mob> only ever gets affected by the equivalent of one virus so antags don't just stack a bunch
+	if(starved)
+		return
+
+	var/list/immune_data = GetImmuneData(mob)
+
+	for(var/datum/symptom/e in symptoms)
+		if (e.can_run_effect(immune_data[1]))
+			e.run_effect(mob)
+
+	//fever is a reaction of the body's immune system to the infection. The higher the antibody concentration (and the disease still not cured), the higher the fever
+	if (mob.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)//but we won't go all the way to burning up just because of a fever, probably
+		var/fever = round((robustness / 100) * (immune_data[2] / 10) * (stage / max_stage))
+		switch (mob.size)
+			if (SIZE_TINY)
+				mob.bodytemperature += fever*0.2
+			if (SIZE_SMALL)
+				mob.bodytemperature += fever*0.5
+			if (SIZE_NORMAL)
+				mob.bodytemperature += fever
+			if (SIZE_BIG)
+				mob.bodytemperature += fever*1.5
+			if (SIZE_HUGE)
+				mob.bodytemperature += fever*2
+
+		if (fever > 0  && prob(3))
+			switch (fever_warning)
+				if (0)
+					to_chat(mob, "<span class='warning'>You feel a fever coming on, your body warms up and your head hurts a bit.</span>")
+					fever_warning++
+				if (1)
+					if (mob.bodytemperature > 320)
+						to_chat(mob, "<span class='warning'>Your palms are sweaty.</span>")
+						fever_warning++
+				if (2)
+					if (mob.bodytemperature > 335)
+						to_chat(mob, "<span class='warning'>Your knees are weak.</span>")
+						fever_warning++
+				if (3)
+					if (mob.bodytemperature > 350)
+						to_chat(mob, "<span class='warning'>Your arms are heavy.</span>")
+						fever_warning++
+
+
+	ticks += speed
 
 /proc/virus_copylist(list/list)
 	if(!length(list))
@@ -352,6 +422,29 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 			for (var/mob/living/L in GLOB.science_goggles_wearers)
 				if (L.client)
 					L.client.images -= mob.pathogen
+
+
+/datum/disease/advanced/proc/GetImmuneData(mob/living/mob)
+	var/lowest_stage = stage
+	var/highest_concentration = 0
+
+	if (mob.immune_system)
+		var/immune_system = mob.immune_system.GetImmunity()
+		var/immune_str = immune_system[1]
+		var/list/antibodies = immune_system[2]
+		var/subdivision = (strength - ((robustness * strength) / 100)) / max_stage
+		//for each antigen, we measure the corresponding antibody concentration in the carrier's immune system
+		//the less robust the pathogen, the more likely that further stages' effects won't activate at a given concentration
+		for (var/A in antigen)
+			var/concentration = immune_str * antibodies[A]
+			highest_concentration = max(highest_concentration,concentration)
+			var/i = lowest_stage
+			while (i > 0)
+				if (concentration > (strength - i * subdivision))
+					lowest_stage = i-1
+				i--
+
+	return list(lowest_stage,highest_concentration)
 
 
 /datum/disease/advanced/virus
