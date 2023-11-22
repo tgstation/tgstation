@@ -1767,7 +1767,6 @@
 			return
 		var/client/user_client = target
 		user_client.client_token_holder.approve_antag_token()
-		message_admins("[user_client]'s token has been approved by [owner].")
 		log_admin("[user_client]'s token has been approved by [owner].")
 
 	else if(href_list["reject_antag_token"])
@@ -1778,7 +1777,6 @@
 			return
 		var/client/user_client = target
 		user_client.client_token_holder.reject_antag_token()
-		message_admins("[user_client]'s token has been rejected by [owner].")
 		log_admin("[user_client]'s token has been rejected by [owner].")
 
 	else if(href_list["open_music_review"])
