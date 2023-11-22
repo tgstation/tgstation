@@ -21,9 +21,9 @@
 	var/stat_multi = 1
 	switch(stat)
 		if(SOFT_CRIT)
-			stat_multi = 2
+			stat_multi = 8
 		if(HARD_CRIT)
-			stat_multi = 4
+			stat_multi = 16
 		else
 			stat_multi = 1
 	next_move = world.time + ((num+next_move_adjust) * next_move_modifier * stat_multi)
