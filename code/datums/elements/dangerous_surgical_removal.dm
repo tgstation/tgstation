@@ -7,7 +7,6 @@
 /datum/element/dangerous_surgical_removal
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// If not null, can snap cable restraints and similar.
 	var/fuse_time = 3 SECONDS
 	/// If not null, can snap handcuffs.
 	var/explosion_strength = 1
