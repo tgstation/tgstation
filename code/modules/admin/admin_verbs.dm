@@ -1195,9 +1195,10 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!check_rights(R_DEBUG))
 		return
 
-	if(mob)
-		var/curr_loc = mob.loc
-		var/obj/item/mmi/new_mmi = new(curr_loc)
-		var/obj/item/organ/internal/brain/B = new(curr_loc)//client_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
-		mob.mind.transfer_to(B.brainmob)
-		new_mmi.attackby(B,mob)
+	if(ishuman(mob))
+		var/mob/living/carbon/human/client_mob = client.mob
+		var/curr_loc = usr.loc
+		var/obj/item/mmi/new_mmi = new(loc)
+		var/obj/item/organ/internal/brain/B = client_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
+		B.Remove(client_mob)
+		new_mmi.attackby(B)
