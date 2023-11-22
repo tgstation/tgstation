@@ -4,7 +4,7 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 	///Used for topic calls. Just because you have a HUD display doesn't mean you should be able to interact with stuff.
-	var/hud_trait = null
+	var/hud_trait = list()
 
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
@@ -15,11 +15,8 @@
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
 		our_hud.show_to(user)
 	if(hud_trait)
-		if(islist(hud_trait))
-			for(var/trait in hud_trait)
-				ADD_TRAIT(user, trait, GLASSES_TRAIT)
-		else
-			ADD_TRAIT(user, hud_trait, GLASSES_TRAIT)
+		for(var/trait in hud_trait)
+			ADD_TRAIT(user, trait, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	..()
@@ -29,11 +26,8 @@
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
 		our_hud.hide_from(user)
 	if(hud_trait)
-		if(islist(hud_trait))
-			for(var/trait in hud_trait)
-				REMOVE_TRAIT(user, trait, GLASSES_TRAIT)
-		else
-			REMOVE_TRAIT(user, hud_trait, GLASSES_TRAIT)
+		for(var/trait in hud_trait)
+			REMOVE_TRAIT(user, trait, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	. = ..()
@@ -69,7 +63,7 @@
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."
 	icon_state = "healthhud"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
-	hud_trait = TRAIT_MEDICAL_HUD
+	hud_trait = list(TRAIT_MEDICAL_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/hud/health/night
@@ -117,7 +111,7 @@
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	hud_trait = TRAIT_DIAGNOSTIC_HUD
+	hud_trait = list(TRAIT_DIAGNOSTIC_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/hud/diagnostic/night
@@ -154,7 +148,7 @@
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
-	hud_trait = TRAIT_SECURITY_HUD
+	hud_trait = list(TRAIT_SECURITY_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/security/chameleon
