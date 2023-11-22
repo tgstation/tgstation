@@ -65,6 +65,7 @@
 /obj/item/clothing/neck/heretic_focus/moon_amulette/attack(mob/living/target, mob/living/user, params)
 	var/mob/living/carbon/human/hit = target
 	if(IS_HERETIC(user))
+		if(hit.can_block_magic(antimagic_flags))
 		if(hit.mob_mood)
 			switch(hit.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT, SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_DISTURBED)
