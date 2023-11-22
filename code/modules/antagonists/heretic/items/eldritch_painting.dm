@@ -189,7 +189,7 @@
 		if("heretic_eldritch_hunger" in user.mob_mood.mood_events)
 			return
 		// A list made of the organs and bodyparts the heretic possess
-		var/list/random_bodypart_or_organ = list(
+		var/static/list/random_bodypart_or_organ = list(
 			/obj/item/organ/internal/brain,
 			/obj/item/organ/internal/lungs,
 			/obj/item/organ/internal/eyes,
