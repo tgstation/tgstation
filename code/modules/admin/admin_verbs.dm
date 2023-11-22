@@ -68,6 +68,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
 	/client/proc/cmd_change_command_name,
 	/client/proc/create_mob_worm,
+	/client/proc/spawn_as_mmi,
 	/client/proc/fax_panel, /*send a paper to fax*/
 	/client/proc/force_load_lazy_template,
 	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
@@ -1186,3 +1187,17 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
+
+/client/proc/spawn_as_mmi()
+	set category = "Debug"
+	set name = "Spawn as MMI"
+	set desc = "Turns you into an MMI"
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(mob)
+		var/curr_loc = mob.loc
+		var/obj/item/mmi/new_mmi = new(curr_loc)
+		var/obj/item/organ/internal/brain/B = new(curr_loc)//client_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
+		mob.mind.transfer_to(B.brainmob)
+		new_mmi.attackby(B,mob)

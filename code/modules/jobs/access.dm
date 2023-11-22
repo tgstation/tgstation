@@ -45,11 +45,16 @@
 		var/mob/living/simple_animal/animal = accessor
 		if(check_access(animal.access_card))
 			return TRUE
-	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
-		var/obj/item/mmi/brain_mmi = accessor.loc
-		if(ismecha(brain_mmi.loc))
-			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
-			return check_access_list(big_stompy_robot.accesses)
+	else if(isbrain(accessor))
+		var/obj/item/mmi/brain_mmi = null
+		if(istype(accessor.loc, /obj/item/mmi))
+			brain_mmi = accessor.loc
+		else if(istype(accessor.loc.loc, /obj/item/mmi))//because the brainmob is inside organ/internal/brain which is inside the MMI
+			brain_mmi = accessor.loc.loc
+		if(brain_mmi)
+			if(ismecha(brain_mmi.loc))
+				var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
+				return check_access_list(big_stompy_robot.accesses)
 	return FALSE
 
 /obj/item/proc/GetAccess()
