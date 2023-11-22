@@ -882,6 +882,7 @@
 	pixel_x = 3
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
+/obj/item/portable_recharger/loaded,
 /obj/item/gun/energy/e_gun/dragnet{
 	pixel_y = 4
 	},
