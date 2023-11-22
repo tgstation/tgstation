@@ -1,5 +1,6 @@
 #include "code\__HELPERS\names.dm"
 #include "code\_globalvars\lists\names.dm"
+#include "code\modules\clothing\clothing.dm"
 #include "code\modules\reagents\chemistry\drinks.dm"
 #include "code\modules\reagents\containers\cups.dm"
 #include "code\modules\surgery\organs\tongue.dm"
