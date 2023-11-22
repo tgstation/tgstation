@@ -410,9 +410,7 @@
 	src.avoid = avoid
 	src.skip_first = skip_first
 	movement_path = initial_path?.Copy()
-	if(isidcard(id))
-		RegisterSignal(id, COMSIG_PARENT_QDELETING, PROC_REF(handle_no_id)) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
-
+	
 /datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, initial_path)
 	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid)
 		return TRUE
