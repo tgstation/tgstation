@@ -3358,7 +3358,7 @@
 /area/awaymission/moonoutpost19/research)
 "vu" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/taperecorder{
 	pixel_x = -3
 	},
@@ -6844,7 +6844,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "Tx" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/pen,
 /obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note,

@@ -60,8 +60,9 @@
 			var/list/blacklist = bl
 			if(!(picked_quirk in blacklist))
 				continue
-			for(var/iterator_quirk in all_quirks) //Go through all the quirks we've already selected to see if theres a blacklist match
-				if((iterator_quirk in blacklist) && !(iterator_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+			for(var/quirk_name in all_quirks) //Go through all the quirks we've already selected to see if theres a blacklist match
+				var/selected_quirk = SSquirks.quirks[quirk_name]
+				if((selected_quirk in blacklist) && !(selected_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
 					picked_quirk_blacklisted = TRUE
 					break
 			if(picked_quirk_blacklisted)

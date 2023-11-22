@@ -428,6 +428,12 @@
 /obj/item/organ/internal/brain/felinid //A bit smaller than average
 	brain_size = 0.8
 
+/obj/item/organ/internal/brain/abductor
+	name = "grey brain"
+	desc = "A piece of juicy meat found in an ayy lmao's head."
+	icon_state = "brain-x"
+	brain_size = 1.3
+
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
 /obj/item/organ/internal/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)

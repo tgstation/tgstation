@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Stop, drop, and roll no longer instantly clears 5 fire stacks off of you - Instead, it will clear 1 fire stack off of you every time you roll, with a roll every 0.8 seconds."
-  - balance: "Stop, drop, and roll no longer stuns you for 6 seconds. Instead, it will knock you to the floor while you are rolling. Moving around or getting up will cancel the roll, and you cannot use items while rolling around."
-  - balance: "Stop, drop, and roll will now repeat until the fire is put out or you get up."

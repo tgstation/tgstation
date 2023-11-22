@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
  * Arguments:
  * * M The mob choosing a reskin option
  */
-/obj/proc/reskin_obj(mob/M)
+/obj/proc/reskin_obj(mob/user)
 	if(!LAZYLEN(unique_reskin))
 		return
 
@@ -302,14 +302,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		items += list("[reskin_option]" = item_image)
 	sort_list(items)
 
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), user), radius = 38, require_near = TRUE)
 	if(!pick)
 		return
 	if(!unique_reskin[pick])
 		return
 	current_skin = pick
 	icon_state = unique_reskin[pick]
-	to_chat(M, "[src] is now skinned as '[pick].'")
+	to_chat(user, "[src] is now skinned as '[pick].'")
+	SEND_SIGNAL(src, COMSIG_OBJ_RESKIN, user, pick)
 
 /**
  * Checks if we are allowed to interact with a radial menu for reskins

@@ -61,8 +61,9 @@
 		notify_ghosts(
 			"Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.",
 			source = src,
+			header = "Nar'Sie has risen!",
+			click_interact = TRUE,
 			alert_overlay = alert_overlay,
-			action = NOTIFY_PLAY,
 		)
 
 	narsie_spawn_animation()

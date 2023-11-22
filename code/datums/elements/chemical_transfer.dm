@@ -58,7 +58,7 @@
 		return
 	var/built_attacker_message = replacetext(attacker_message, "%VICTIM", transfer_victim)
 	var/built_victim_message = replacetext(attacker_message, "%ATTACKER", transfer_attacker)
-	transfer_attacker.reagents?.trans_to(transfer_victim, transfer_attacker.reagents.total_volume, multiplier = 1, preserve_data = 1, no_react = 0, transferred_by = transfer_attacker)
+	transfer_attacker.reagents?.trans_to(transfer_victim, transfer_attacker.reagents.total_volume, transferred_by = transfer_attacker)
 	to_chat(transfer_attacker, built_attacker_message)
 	to_chat(transfer_victim, built_victim_message)
 

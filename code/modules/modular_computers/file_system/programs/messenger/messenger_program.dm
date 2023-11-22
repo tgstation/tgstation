@@ -8,14 +8,14 @@
 /datum/computer_file/program/messenger
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "command"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "command"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
 	header_program = TRUE
 	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_TABLET
+	usage_flags = PROGRAM_PDA
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
 	program_icon = "comment-alt"
