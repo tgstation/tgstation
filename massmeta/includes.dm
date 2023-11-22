@@ -12,3 +12,4 @@
 #include "code\obj\structures\display_case.dm"
 #include "code\modules\antags\uplink_items.dm"
 #include "code\obj\items\clothing\belt.dm"
+#include "code\modules\announcers.dm"
