@@ -1796,7 +1796,6 @@
 			return
 		var/client/user_client = target
 		user_client.client_token_holder.approve_token_event()
-		message_admins("[user_client]'s token event has been approved by [owner].")
 		log_admin("[user_client]'s token event has been approved by [owner].")
 
 	else if(href_list["reject_token_event"])
@@ -1807,6 +1806,5 @@
 			return
 		var/client/user_client = target
 		user_client.client_token_holder.reject_token_event()
-		message_admins("[user_client]'s token event has been rejected by [owner].")
 		log_admin("[user_client]'s token event has been rejected by [owner].")
 //monkestation edit end
