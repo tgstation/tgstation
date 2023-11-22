@@ -128,8 +128,9 @@
 
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !(movement_flags & NO_ID_TRANSFER))
 		transfer_identity(organ_owner)
-	organ_owner.update_body_parts()
-	organ_owner.clear_mood_event("brain_damage")
+	if(!special)
+		organ_owner.update_body_parts()
+		organ_owner.clear_mood_event("brain_damage")
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"

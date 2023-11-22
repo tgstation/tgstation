@@ -75,8 +75,9 @@
 	receiver.update_body_parts()
 
 /obj/item/organ/external/mob_remove(mob/living/carbon/organ_owner, special, moving)
-	organ_owner.synchronize_bodytypes()
-	organ_owner.update_body_parts()
+	if(!special)
+		organ_owner.synchronize_bodytypes()
+		organ_owner.update_body_parts()
 	return ..()
 
 /obj/item/organ/external/on_bodypart_insert(obj/item/bodypart/bodypart)

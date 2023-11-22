@@ -104,7 +104,8 @@
 			human_owner.eye_color_right = old_eye_color_right
 		if(native_fov)
 			eye_owner.remove_fov_trait(type)
-		human_owner.update_body()
+		if(!special)
+			human_owner.update_body()
 
 	// Cure blindness from eye damage
 	eye_owner.cure_blind(EYE_DAMAGE)
