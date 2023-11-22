@@ -21,7 +21,7 @@ export const gameMiddleware = (store) => {
   let lastPingedAt;
 
   setInterval(() => {
-    const state = store.getState();
+    const state = zustandStore.getState();
     if (!state) {
       return;
     }

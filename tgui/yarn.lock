@@ -9525,6 +9525,7 @@ resolve@^2.0.0-next.3:
     webpack: ^5.75.0
     webpack-bundle-analyzer: ^4.4.2
     webpack-cli: ^4.7.2
+    zustand: ^4.4.6
   languageName: unknown
   linkType: soft
 
@@ -9548,6 +9549,7 @@ resolve@^2.0.0-next.3:
     react-dom: ^18.2.0
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
+    zustand: ^4.4.6
   languageName: unknown
   linkType: soft
 
@@ -10062,6 +10064,15 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"use-sync-external-store@npm:1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5c639e0f8da3521d605f59ce5be9e094ca772bd44a4ce7322b055a6f58eeed8dda3c94cabd90c7a41fb6fa852210092008afe48f7038792fd47501f33299116a
+  languageName: node
+  linkType: hard
+
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -10555,5 +10566,25 @@ resolve@^2.0.0-next.3:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^4.4.6":
+  version: 4.4.6
+  resolution: "zustand@npm:4.4.6"
+  dependencies:
+    use-sync-external-store: 1.2.0
+  peerDependencies:
+    "@types/react": ">=16.8"
+    immer: ">=9.0"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+  checksum: da7b00cc6dbe5cf5fc2e3fbca745317da4bbaf53bf4a6909bbd3e335242704df9689027f613461aff07eb5f672d5570bc1a2ef99d0ad7bc868920a3b331613d4
   languageName: node
   linkType: hard

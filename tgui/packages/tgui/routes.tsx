@@ -9,6 +9,7 @@ import { Window } from './layouts';
 import { selectBackend } from './backend';
 import { selectDebug } from './debug/selectors';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
+import { zustandStore } from '.';
 
 const requireInterface = require.context('./interfaces');
 
@@ -54,7 +55,7 @@ const RefreshingWindow = () => {
 
 // Get the component for the current route
 export const getRoutedComponent = (store: Store) => {
-  const state = store.getState();
+  const state = zustandStore.getState();
   const { suspended, config } = selectBackend(state);
   if (suspended) {
     return SuspendedWindow;

@@ -5,7 +5,7 @@
  */
 
 import { BooleanLike, classes } from 'common/react';
-import { createElement, ReactNode, FC } from 'react';
+import { createElement, ReactNode } from 'react';
 import { CSS_COLORS } from '../constants';
 
 export type BoxProps = {
@@ -61,7 +61,7 @@ export type BoxProps = {
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
  */
-export const unit = (value: unknown): string | undefined => {
+export const unit = (value: unknown) => {
   if (typeof value === 'string') {
     // Transparently convert pixels into rem units
     if (value.endsWith('px') && !Byond.IS_LTE_IE8) {
@@ -80,7 +80,7 @@ export const unit = (value: unknown): string | undefined => {
 /**
  * Same as `unit`, but half the size for integers numbers.
  */
-export const halfUnit = (value: unknown): string | undefined => {
+export const halfUnit = (value: unknown) => {
   if (typeof value === 'string') {
     return unit(value);
   }
@@ -91,7 +91,7 @@ export const halfUnit = (value: unknown): string | undefined => {
 
 const isColorCode = (str: unknown) => !isColorClass(str);
 
-const isColorClass = (str: unknown): boolean => {
+const isColorClass = (str: unknown) => {
   return typeof str === 'string' && CSS_COLORS.includes(str);
 };
 
@@ -251,7 +251,7 @@ export const computeBoxClassName = (props: BoxProps) => {
   ]);
 };
 
-export const Box: FC<BoxProps> = (props: BoxProps) => {
+export const Box = (props: BoxProps) => {
   const { as = 'div', className, children, ...rest } = props;
   // Render props
   if (typeof children === 'function') {
@@ -263,5 +263,5 @@ export const Box: FC<BoxProps> = (props: BoxProps) => {
       : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
   // Render a wrapper element
-  return createElement(as, computedClassName, children, undefined);
+  return createElement(as, { className: computedClassName }, children);
 };

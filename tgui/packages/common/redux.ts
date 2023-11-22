@@ -55,10 +55,10 @@ export const createStore = <State, ActionType extends Action = AnyAction>(
     return enhancer(createStore)(reducer);
   }
 
-  let currentState: State;
+  let currentState = {} as State;
   let listeners: Array<() => void> = [];
 
-  const getState = (): State => currentState;
+  const getState = () => currentState;
 
   const subscribe = (listener: () => void): void => {
     listeners.push(listener);
@@ -201,12 +201,12 @@ export const createAction = <TAction extends string>(
 export const useDispatch = <TAction extends Action = AnyAction>(context: {
   store: Store<unknown, TAction>;
 }): Dispatch<TAction> => {
-  return context.store.dispatch;
+  return context?.store?.dispatch;
 };
 
 export const useSelector = <State, Selected>(
   context: { store: Store<State, Action> },
   selector: (state: State) => Selected
 ): Selected => {
-  return selector(context.store.getState());
+  return selector(context?.store?.getState());
 };

@@ -12,6 +12,7 @@ import { Component } from 'react';
 import { assetMiddleware } from './assets';
 import { createLogger } from './logging';
 import { flow } from 'common/fp';
+import { zustandStore } from '.';
 
 type ConfigureStoreOptions = {
   sideEffects?: boolean;
@@ -88,7 +89,7 @@ const createStackAugmentor =
     error.stack = error.stack || stack;
 
     logger.log('FatalError:', error);
-    const state = store.getState();
+    const state = zustandStore.getState();
     const config = state?.backend?.config;
 
     return (

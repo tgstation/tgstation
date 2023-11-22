@@ -69,7 +69,7 @@ export const settingsMiddleware = (store) => {
       }
       // Pass action to get an updated state
       next(action);
-      const settings = selectSettings(store.getState());
+      const settings = selectSettings(zustandStore.getState());
       // Update global UI font size
       setGlobalFontSize(settings.fontSize);
       setGlobalFontFamily(settings.fontFamily);

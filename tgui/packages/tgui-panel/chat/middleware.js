@@ -13,12 +13,13 @@ import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { createMessage, serializeMessage } from './model';
 import { chatRenderer } from './renderer';
 import { selectChat, selectCurrentChatPage } from './selectors';
+import { zustandStore } from 'tgui';
 
 // List of blacklisted tags
 const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
 
 const saveChatToStorage = async (store) => {
-  const state = selectChat(store.getState());
+  const state = selectChat(zustandStore.getState());
   const fromIndex = Math.max(
     0,
     chatRenderer.messages.length - MAX_PERSISTED_MESSAGES
@@ -126,7 +127,7 @@ export const chatMiddleware = (store) => {
     }
     if (type === loadChat.type) {
       next(action);
-      const page = selectCurrentChatPage(store.getState());
+      const page = selectCurrentChatPage(zustandStore.getState());
       chatRenderer.changePage(page);
       chatRenderer.onStateLoaded();
       loaded = true;
@@ -139,7 +140,7 @@ export const chatMiddleware = (store) => {
       type === toggleAcceptedType.type
     ) {
       next(action);
-      const page = selectCurrentChatPage(store.getState());
+      const page = selectCurrentChatPage(zustandStore.getState());
       chatRenderer.changePage(page);
       return;
     }
@@ -156,7 +157,7 @@ export const chatMiddleware = (store) => {
       type === updateHighlightSetting.type
     ) {
       next(action);
-      const settings = selectSettings(store.getState());
+      const settings = selectSettings(zustandStore.getState());
       chatRenderer.setHighlight(
         settings.highlightSettings,
         settings.highlightSettingById

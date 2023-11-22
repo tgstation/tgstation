@@ -13,6 +13,7 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
+import { zustandStore } from '.';
 import { setupDrag } from './drag';
 import { globalEvents } from './events';
 import { focusMap } from './focus';
@@ -120,7 +121,7 @@ export const backendMiddleware = (store) => {
   let suspendInterval;
 
   return (next) => (action) => {
-    const { suspended } = selectBackend(store.getState());
+    const { suspended } = selectBackend(zustandStore.getState());
     const { type, payload } = action;
 
     if (type === 'update') {
@@ -203,7 +204,7 @@ export const backendMiddleware = (store) => {
       setImmediate(() => {
         perf.mark('resume/start');
         // Doublecheck if we are not re-suspended.
-        const { suspended } = selectBackend(store.getState());
+        const { suspended } = selectBackend(zustandStore.getState());
         if (suspended) {
           return;
         }
@@ -281,10 +282,10 @@ export const selectBackend = <TData>(state: any): BackendState<TData> =>
  * Includes the `act` function for performing DM actions.
  */
 export const useBackend = <TData>(context: any) => {
-  const { store } = context;
-  const state = selectBackend<TData>(store.getState());
+  const backend = zustandStore.getState()?.backend;
+
   return {
-    ...state,
+    ...backend,
     act: sendAct,
   };
 };
@@ -313,7 +314,7 @@ export const useLocalState = <T>(
   initialState: T
 ): StateWithSetter<T> => {
   const { store } = context;
-  const state = selectBackend(store.getState());
+  const state = selectBackend(zustandStore.getState());
   const sharedStates = state.shared ?? {};
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
@@ -352,7 +353,7 @@ export const useSharedState = <T>(
   initialState: T
 ): StateWithSetter<T> => {
   const { store } = context;
-  const state = selectBackend(store.getState());
+  const state = selectBackend(zustandStore.getState());
   const sharedStates = state.shared ?? {};
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [

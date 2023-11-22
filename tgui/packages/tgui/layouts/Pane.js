@@ -14,6 +14,8 @@ export const Pane = (props, context) => {
   const { theme, children, className, ...rest } = props;
   const { suspended } = useBackend(context);
   const { debugLayout } = useDebug(context);
+  if (!debugLayout) return <> </>;
+
   return (
     <Layout className={classes(['Window', className])} theme={theme} {...rest}>
       <Box fillPositionedParent className={debugLayout && 'debug-layout'}>
