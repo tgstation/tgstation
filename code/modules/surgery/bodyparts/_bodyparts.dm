@@ -229,7 +229,7 @@
 	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
-	if(owner && !QDELETED(owner))
+	if(owner)
 		owner.remove_bodypart(src)
 		update_owner(null)
 	for(var/wound in wounds)
