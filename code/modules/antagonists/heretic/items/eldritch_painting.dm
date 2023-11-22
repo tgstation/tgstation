@@ -55,7 +55,7 @@
 	on_seen(crossed)
 
 /datum/proximity_monitor/advanced/eldritch_painting/proc/on_seen(mob/living/carbon/human/viewer)
-	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
+	if (!viewer.mind || !viewer.mob_mood || viewer.stat != CONSCIOUS || viewer.is_blind())
 		return
 	if (viewer.has_trauma_type(applied_trauma))
 		return
