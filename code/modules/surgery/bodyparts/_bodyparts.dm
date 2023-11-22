@@ -229,7 +229,7 @@
 	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
-	if(owner)
+	if(owner && !QDELETED(owner))
 		owner.remove_bodypart(src)
 		update_owner(null)
 	for(var/wound in wounds)
@@ -237,6 +237,8 @@
 	if(length(wounds))
 		stack_trace("[type] qdeleted with [length(wounds)] uncleared wounds")
 		wounds.Cut()
+
+	owner = null
 
 	for(var/atom/movable/movable in contents)
 		qdel(movable)
