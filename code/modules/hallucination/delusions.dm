@@ -389,11 +389,13 @@
 	delusion_icon_file = 'icons/mob/nonhuman-player/spacedragon.dmi'
 	delusion_icon_state = "spacedragon"
 	delusion_name = "space dragon"
+	random_hallucination_weight = 1
 
 /datum/hallucination/delusion/preset/alien_queen
 	delusion_icon_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 	delusion_icon_state = "alienq"
 	delusion_name = "alien queen"
+	random_hallucination_weight = 1
 
 /datum/hallucination/delusion/preset/facehugger
 	delusion_icon_file = 'icons/mob/nonhuman-player/alien.dmi'
@@ -474,21 +476,25 @@
 	delusion_icon_file = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	delusion_icon_state = "mega_legion"
 	delusion_name = "mega legion"
+	random_hallucination_weight = 1
 
 /datum/hallucination/delusion/preset/eva
 	delusion_icon_file = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	delusion_icon_state = "eva"
 	delusion_name = "eva"
+	random_hallucination_weight = 1
 
 /datum/hallucination/delusion/preset/dragon
 	delusion_icon_file = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	delusion_icon_state = "dragon"
 	delusion_name = "dragon"
+	random_hallucination_weight = 1
 
 /datum/hallucination/delusion/preset/bubblegum
 	delusion_icon_file = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	delusion_icon_state = "bubblegum"
 	delusion_name = "bubblegum"
+	random_hallucination_weight = 1
 
 /datum/hallucination/delusion/preset/carp
 	delusion_icon_file = 'icons/mob/simple/carp.dmi'

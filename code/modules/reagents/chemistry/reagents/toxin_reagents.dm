@@ -1421,23 +1421,12 @@
 /datum/reagent/toxin/spider/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 
-	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_hallucinations_up_to(10 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_delusions_up_to(10 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drugginess_up_to(10 SECONDS * REM * seconds_per_tick, 30 SECONDS * REM * seconds_per_tick)
 
 	if(SPT_PROB(3.5, seconds_per_tick))
 		affected_mob.emote(pick("twitch","drool","moan","giggle"))
-
-	affected_mob.cause_hallucination( \
-		/datum/hallucination/delusion/preset, \
-		"spider mindbreaker toxin", \
-		duration = 5 SECONDS, \
-		affects_us = FALSE, \
-		affects_all_humans = FALSE, \
-		skip_nearby = FALSE, \
-		play_wabbajack = FALSE, \
-		include_nearby_mobs = TRUE, \
-		randomize = TRUE, \
-	)
 
 /datum/reagent/toxin/tetrodotoxin
 	name = "Tetrodotoxin"

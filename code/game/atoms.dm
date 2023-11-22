@@ -2128,6 +2128,8 @@
 
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 		active_hud.screentip_text.maptext = ""
+	else if(isliving(src) && user.has_status_effect(/datum/status_effect/delusion))
+		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>???</span>"
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
 		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"

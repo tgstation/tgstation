@@ -1714,6 +1714,7 @@
 #include "code\datums\status_effects\debuffs\cyborg.dm"
 #include "code\datums\status_effects\debuffs\debuffs.dm"
 #include "code\datums\status_effects\debuffs\decloning.dm"
+#include "code\datums\status_effects\debuffs\delusion.dm"
 #include "code\datums\status_effects\debuffs\dizziness.dm"
 #include "code\datums\status_effects\debuffs\dna_transformation.dm"
 #include "code\datums\status_effects\debuffs\drowsiness.dm"

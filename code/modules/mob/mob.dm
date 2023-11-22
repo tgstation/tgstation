@@ -564,6 +564,9 @@
 		get_dist(src, examine_turf) > 1 && \
 		!has_nightvision()) // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
 		return
+	else if(has_status_effect(/datum/status_effect/delusion) && isliving(examinify))
+		to_chat(src, span_hypnophrase("It doesn't look quite right..."))
+		return FALSE
 
 	face_atom(examinify)
 	var/list/result

@@ -139,6 +139,11 @@
 #define set_hallucinations(duration) set_timed_status_effect(duration, /datum/status_effect/hallucination)
 #define set_hallucinations_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/hallucination, TRUE)
 
+#define adjust_delusions(duration) adjust_timed_status_effect(duration, /datum/status_effect/delusion)
+#define adjust_delusions_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/delusion, up_to)
+#define set_delusions(duration) set_timed_status_effect(duration, /datum/status_effect/delusion)
+#define set_delusions_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/delusion, TRUE)
+
 #define adjust_drowsiness(duration) adjust_timed_status_effect(duration, /datum/status_effect/drowsiness)
 #define adjust_drowsiness_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/drowsiness, up_to)
 #define set_drowsiness(duration) set_timed_status_effect(duration, /datum/status_effect/drowsiness)
