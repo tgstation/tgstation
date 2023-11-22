@@ -31,10 +31,19 @@
 /mob/living/changeNext_move(num)
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
+	var/stat_multi = 1
+	switch(stat)
+		if(SOFT_CRIT)
+			stat_multi = 4
+		if(HARD_CRIT)
+			stat_multi = 8
+		else
+			stat_multi = 1
+
 	for(var/datum/status_effect/effect as anything in status_effects)
 		mod *= effect.nextmove_modifier()
 		adj += effect.nextmove_adjust()
-	next_move = world.time + ((num + adj)*mod)
+	next_move = world.time + ((num + adj)*mod * stat_multi)
 
 /**
  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to
