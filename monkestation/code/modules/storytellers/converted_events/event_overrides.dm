@@ -5,32 +5,6 @@
 
 /datum/round_event_control/anomaly
 	track = EVENT_TRACK_MODERATE
-
-/datum/round_event_control/anomaly/anomaly_vortex
-	track = EVENT_TRACK_MAJOR
-	enemy_roles = list(
-		JOB_STATION_ENGINEER,
-		JOB_CHIEF_ENGINEER,
-	)
-	required_enemies = 3
-	tags = list(TAG_DESTRUCTIVE)
-
-/datum/round_event_control/anomaly/anomaly_pyro
-	track = EVENT_TRACK_MAJOR
-	enemy_roles = list(
-		JOB_STATION_ENGINEER,
-		JOB_CHIEF_ENGINEER,
-	)
-	required_enemies = 3
-	tags = list(TAG_DESTRUCTIVE)
-
-/datum/round_event_control/anomaly/anomaly_flux
-	track = EVENT_TRACK_MAJOR
-	enemy_roles = list(
-		JOB_STATION_ENGINEER,
-		JOB_CHIEF_ENGINEER,
-	)
-	required_enemies = 3
 	tags = list(TAG_DESTRUCTIVE)
 
 /datum/round_event_control/alien_infestation
