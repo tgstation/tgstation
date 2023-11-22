@@ -1,0 +1,14 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Judo Joe, archnemesis of Maint Khan, has begun re-airing his midnight infomercials shilling his extremely expensive Tackle Supreme Judo Karate Training video tapes. Unable to pass up a 'bargain', Nanotrasen has purchased these tapes en masse. Tackling techniques have started to improve, as well as Nanotrasen's tackling instructional algorithms within tackle gloves."
+  - balance: "The outcomes for tackling are more equalized. It isn't as feast or famine, and should be somewhat more controllable without becoming too severe."
+  - rscadd: "Blocking successfully against a tackle will force the tackle to be a neutral outcome."
+  - rscadd: "Unarmed effectiveness from arms now contributes to attacking with and defending from tackles."
+  - rscadd: "Those who refuse to use firearms (like Sleeping Carp users and insane unholy berzerkers) are better at tackling others."
+  - rscadd: "Riot specialized armor, and not just riot armor, now contributes meaningfully to tackling effectiveness."
+  - balance: "MK.1 Swat Suits, the ones that come in SWAT crates, now functions similarly to riot armor."
+  - rscadd: "Settlers from the outer rims have noticed they aren't very good at protecting themselves against Judo Joe's clearly discriminatory tackling techniques."
+  - rscadd: "Security lockers come with gripper gloves, security vendors now sell them as standard items, and the HoS' garment bag now has a pair of gorilla gloves. Gripper gloves have a positive skill bonus to tackling."
+  - rscadd: "Being insane also makes you INSANELY good at tackling but also INSANELY likely to eat shit on a whiff. DO OR DIE, BITCH."
+  - refactor: "Shoving slowdown and all its implementations now use a status effect, Staggered."
