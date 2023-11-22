@@ -5,6 +5,7 @@ import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from '../../compo
 import { Antagonist, Category } from './antagonists/base';
 import { PreferencesMenuData } from './data';
 
+// @ts-ignore
 const requireAntag = require.context(
   './antagonists/antagonists',
   false,

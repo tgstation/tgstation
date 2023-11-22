@@ -8,6 +8,7 @@ import { Feature } from './base';
 // while also preventing downstreams from needing to mutate existing files.
 const features: Record<string, Feature<unknown>> = {};
 
+// @ts-ignore
 const requireFeature = require.context('./', true, /.tsx$/);
 
 for (const key of requireFeature.keys()) {

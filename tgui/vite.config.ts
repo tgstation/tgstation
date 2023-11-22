@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import inferno from 'vite-plugin-inferno';
-import legacy from '@vitejs/plugin-legacy';
 import path from 'path';
+import legacy from '@vitejs/plugin-legacy';
 
 export default defineConfig({
   build: {
@@ -13,14 +13,14 @@ export default defineConfig({
       },
       output: {
         entryFileNames: `[name].js`,
-        assetFileNames: `[name].[ext]`,
       },
     },
   },
   plugins: [
     inferno(),
     legacy({
-      targets: ['ie 11'],
+      targets: ['ie >= 11'],
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
       renderModernChunks: false,
     }),
   ],

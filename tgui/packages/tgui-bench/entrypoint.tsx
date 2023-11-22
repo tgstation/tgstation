@@ -27,6 +27,7 @@ const setupApp = async () => {
     ignoreWindowFocus: true,
   });
 
+  // @ts-ignore
   const requireTest = require.context('./tests', false, /\.test\./);
 
   for (const file of requireTest.keys()) {

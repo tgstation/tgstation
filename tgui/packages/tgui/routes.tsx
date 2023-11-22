@@ -10,6 +10,7 @@ import { selectBackend } from './backend';
 import { selectDebug } from './debug/selectors';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
 
+// @ts-ignore
 const requireInterface = require.context('./interfaces');
 
 const routingError =

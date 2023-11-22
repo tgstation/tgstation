@@ -9,6 +9,7 @@
 <meta id="tgui:strictMode" content="[tgui:strictMode]">
 
 <!-- Early setup -->
+
 <script type="text/javascript">
 (function () {
   // Utility functions
@@ -511,6 +512,7 @@ window.replaceHtml = function (inline_html) {
   );
 };
 </script>
+<script crossorigin id="vite-legacy-polyfill" src="/polyfills-legacy.js"></script>
 
 <style>
 /* Blink polyfill, originally authored on /tg/ by @iamgoofball */
@@ -613,8 +615,8 @@ blink {
 </head>
 <body>
 
-<!-- tgui:inline-polyfill -->
 <!-- tgui:assets -->
+<!-- tgui:inline-polyfill -->
 <!-- tgui:inline-html-start -->
 <!-- tgui:inline-html -->
 <!-- tgui:inline-html-end -->
@@ -653,11 +655,10 @@ Thank you for your cooperation.
     <div>Please enable Javascript and restart the game.</div>
   </div>
 </noscript>
-
 <script>
 // Signal tgui that we're ready to receive updates
 Byond.sendMessage('ready');
 </script>
-  
+
 </body>
 </html>

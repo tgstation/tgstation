@@ -68,9 +68,11 @@ const setupApp = () => {
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
   // Enable hot module reloading
+  // @ts-ignore
   if (module.hot) {
     setupHotReloading();
     // prettier-ignore
+    // @ts-ignore
     module.hot.accept([
       './components',
       './debug',
