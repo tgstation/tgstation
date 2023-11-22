@@ -46,11 +46,7 @@
 		if(check_access(animal.access_card))
 			return TRUE
 	else if(isbrain(accessor))
-		var/obj/item/mmi/brain_mmi = null
-		if(istype(accessor.loc, /obj/item/mmi))
-			brain_mmi = accessor.loc
-		else if(istype(accessor.loc.loc, /obj/item/mmi))//because the brainmob is inside organ/internal/brain which is inside the MMI
-			brain_mmi = accessor.loc.loc
+		var/obj/item/mmi/brain_mmi = get(accessor.loc, /obj/item/mmi)
 		if(brain_mmi)
 			if(ismecha(brain_mmi.loc))
 				var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
