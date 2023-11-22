@@ -398,7 +398,7 @@
 		give_blood(10)
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
-	if(soul.ckey && !soul.faction_check_mob(user))
+	if(soul.ckey && !soul.faction_check_atom(user))
 		to_chat(user, span_warning("You can't pick up [src]!"))
 		return
 	return ..()
@@ -606,7 +606,7 @@
 	light_power = 1
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
-/obj/projectile/soulscythe/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ishostile(target))
 		damage *= 2
 	return ..()

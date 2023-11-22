@@ -31,7 +31,7 @@
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/projectile/magic/death/on_hit(atom/target)
+/obj/projectile/magic/death/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 
 	if(isliving(target))
@@ -57,7 +57,7 @@
 	name = "bolt of resurrection"
 	icon_state = "ion"
 
-/obj/projectile/magic/resurrection/on_hit(atom/target)
+/obj/projectile/magic/resurrection/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 
 	if(isliving(target))
@@ -85,7 +85,7 @@
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/projectile/magic/teleport/on_hit(mob/target)
+/obj/projectile/magic/teleport/on_hit(mob/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/teleammount = 0
 	var/teleloc = target
@@ -104,7 +104,7 @@
 	name = "bolt of safety"
 	icon_state = "bluespace"
 
-/obj/projectile/magic/safety/on_hit(atom/target)
+/obj/projectile/magic/safety/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isturf(target))
 		return BULLET_ACT_HIT
@@ -123,7 +123,7 @@
 	icon_state = "energy"
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
-/obj/projectile/magic/door/on_hit(atom/target)
+/obj/projectile/magic/door/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
@@ -153,7 +153,7 @@
 	/// If set, this projectile will only pass certain changeflags to wabbajack
 	var/set_wabbajack_changeflags
 
-/obj/projectile/magic/change/on_hit(atom/target)
+/obj/projectile/magic/change/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 
 	if(isliving(target))
@@ -171,7 +171,7 @@
 	icon_state = "red_1"
 	damage_type = BURN
 
-/obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/magic/animate/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	target.animate_atom_living(firer)
 
@@ -251,7 +251,7 @@
 		target.forceMove(src)
 		return PROJECTILE_PIERCE_PHASE
 
-/obj/projectile/magic/locker/on_hit(target)
+/obj/projectile/magic/locker/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(created)
 		return ..()
 	if(LAZYLEN(contents))
@@ -313,7 +313,7 @@
 	name = "bolt of flying"
 	icon_state = "flight"
 
-/obj/projectile/magic/flying/on_hit(mob/living/target)
+/obj/projectile/magic/flying/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/atom/throw_target = get_edge_target_turf(target, angle2dir(Angle))
@@ -323,7 +323,7 @@
 	name = "bolt of bounty"
 	icon_state = "bounty"
 
-/obj/projectile/magic/bounty/on_hit(mob/living/target)
+/obj/projectile/magic/bounty/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/bounty, firer)
@@ -332,16 +332,16 @@
 	name = "bolt of antimagic"
 	icon_state = "antimagic"
 
-/obj/projectile/magic/antimagic/on_hit(mob/living/target)
+/obj/projectile/magic/antimagic/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(isliving(target))
+	if(istype(target))
 		target.apply_status_effect(/datum/status_effect/song/antimagic)
 
 /obj/projectile/magic/fetch
 	name = "bolt of fetching"
 	icon_state = "fetch"
 
-/obj/projectile/magic/fetch/on_hit(mob/living/target)
+/obj/projectile/magic/fetch/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/atom/throw_target = get_edge_target_turf(target, get_dir(target, firer))
@@ -351,7 +351,7 @@
 	name = "bolt of babel"
 	icon_state = "babel"
 
-/obj/projectile/magic/babel/on_hit(mob/living/carbon/target)
+/obj/projectile/magic/babel/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		if(curse_of_babel(target))
@@ -361,7 +361,7 @@
 	name = "bolt of necropotence"
 	icon_state = "necropotence"
 
-/obj/projectile/magic/necropotence/on_hit(mob/living/target)
+/obj/projectile/magic/necropotence/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(!isliving(target))
 		return
@@ -378,7 +378,7 @@
 	name = "bolt of possession"
 	icon_state = "wipe"
 
-/obj/projectile/magic/wipe/on_hit(mob/living/carbon/target)
+/obj/projectile/magic/wipe/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		for(var/x in target.get_traumas())//checks to see if the victim is already going through possession
@@ -494,7 +494,7 @@
 		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]")
 	return ..()
 
-/obj/projectile/magic/aoe/lightning/on_hit(target)
+/obj/projectile/magic/aoe/lightning/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 
@@ -522,7 +522,7 @@
 	/// Flash radius of the fireball
 	var/exp_flash = 3
 
-/obj/projectile/magic/fireball/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/magic/fireball/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/mob_target = target
@@ -577,7 +577,7 @@
 	speed = 1
 	pixel_speed_multiplier = 1/7
 
-/obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked)
+/obj/projectile/magic/aoe/juggernaut/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/target_turf = get_turf(src)
 	playsound(target_turf, 'sound/weapons/resonator_blast.ogg', 100, FALSE)

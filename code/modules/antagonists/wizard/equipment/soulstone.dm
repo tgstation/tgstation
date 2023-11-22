@@ -35,20 +35,14 @@
 
 /obj/item/soulstone/update_appearance(updates)
 	. = ..()
-	for(var/mob/living/simple_animal/shade/sharded_shade in src)
+	for(var/mob/living/basic/shade/sharded_shade in src)
 		switch(theme)
 			if(THEME_HOLY)
 				sharded_shade.name = "Purified [sharded_shade.real_name]"
-				sharded_shade.icon_state = "shade_holy"
-				sharded_shade.loot = list(/obj/item/ectoplasm/angelic)
-			if(THEME_CULT)
+			else
 				sharded_shade.name = sharded_shade.real_name
-				sharded_shade.icon_state = "shade_cult"
-				sharded_shade.loot = list(/obj/item/ectoplasm)
-			if(THEME_WIZARD)
-				sharded_shade.name = sharded_shade.real_name
-				sharded_shade.icon_state = "shade_wizard"
-				sharded_shade.loot = list(/obj/item/ectoplasm/mystic)
+		sharded_shade.theme = theme
+		sharded_shade.update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/soulstone/update_icon_state()
 	. = ..()
@@ -70,7 +64,7 @@
 		// "dull soulstone"
 		name = "dull [name]"
 
-	var/mob/living/simple_animal/shade/shade = locate() in src
+	var/mob/living/basic/shade/shade = locate() in src
 	if(shade)
 		// "(dull) soulstone: Urist McCaptain"
 		name = "[name]: [shade.real_name]"
@@ -159,7 +153,7 @@
 			. += span_cult("This shard is spent; it is now just a creepy rock.")
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
-	for(var/mob/living/simple_animal/shade/shade in src)
+	for(var/mob/living/basic/shade/shade in src)
 		INVOKE_ASYNC(shade, TYPE_PROC_REF(/mob/living, death))
 	return ..()
 
@@ -212,7 +206,7 @@
 	release_shades(user)
 
 /obj/item/soulstone/proc/release_shades(mob/user, silent = FALSE)
-	for(var/mob/living/simple_animal/shade/captured_shade in src)
+	for(var/mob/living/basic/shade/captured_shade in src)
 		captured_shade.forceMove(get_turf(user))
 		captured_shade.cancel_camera()
 		update_appearance()
@@ -229,7 +223,7 @@
 		on_release_spirits()
 
 /obj/item/soulstone/pre_attack(atom/A, mob/living/user, params)
-	var/mob/living/simple_animal/shade/occupant = (locate() in src)
+	var/mob/living/basic/shade/occupant = (locate() in src)
 	var/obj/item/storage/toolbox/mechanical/target_toolbox = A
 	if(!occupant || !istype(target_toolbox) || target_toolbox.has_soul)
 		return ..()
@@ -322,7 +316,7 @@
 	return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
-/obj/item/soulstone/proc/capture_shade(mob/living/simple_animal/shade/shade, mob/living/user)
+/obj/item/soulstone/proc/capture_shade(mob/living/basic/shade/shade, mob/living/user)
 	if(isliving(user) && !role_check(user))
 		user.Unconscious(10 SECONDS)
 		to_chat(user, span_userdanger("Your body is wracked with debilitating pain!"))
@@ -345,7 +339,7 @@
 
 ///transfer the mind of the shade to a construct mob selected by the user, then deletes both the shade and src.
 /obj/item/soulstone/proc/transfer_to_construct(obj/structure/constructshell/shell, mob/user)
-	var/mob/living/simple_animal/shade/shade = locate() in src
+	var/mob/living/basic/shade/shade = locate() in src
 	if(!shade)
 		to_chat(user, "[span_userdanger("Creation failed!")]: [src] is empty! Go kill someone!")
 		return FALSE
@@ -377,7 +371,7 @@
 	if(!shade_controller)
 		shade_controller = victim
 	victim.stop_sound_channel(CHANNEL_HEARTBEAT)
-	var/mob/living/simple_animal/shade/soulstone_spirit = new /mob/living/simple_animal/shade(src)
+	var/mob/living/basic/shade/soulstone_spirit = new /mob/living/basic/shade(src)
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [victim.real_name]"
 	soulstone_spirit.real_name = "Shade of [victim.real_name]"
@@ -464,42 +458,42 @@
 	switch(construct_class)
 		if(CONSTRUCT_JUGGERNAUT)
 			if(IS_CULTIST(creator))
-				makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
+				makeNewConstruct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 				return
 			switch(theme)
 				if(THEME_WIZARD)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/mystic, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/juggernaut/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/angelic, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/juggernaut/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/noncult, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/juggernaut, target, creator, cultoverride, loc_override)
 		if(CONSTRUCT_WRAITH)
 			if(IS_CULTIST(creator))
-				makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
+				makeNewConstruct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 				return
 			switch(theme)
 				if(THEME_WIZARD)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/mystic, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/wraith/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/angelic, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/wraith/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/wraith, target, creator, cultoverride, loc_override)
 		if(CONSTRUCT_ARTIFICER)
 			if(IS_CULTIST(creator))
-				makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
+				makeNewConstruct(/mob/living/basic/construct/artificer, target, creator, cultoverride, loc_override) // ignore themes, the actual giving of cult info is in the makeNewConstruct proc
 				return
 			switch(theme)
 				if(THEME_WIZARD)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/mystic, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/artificer/mystic, target, creator, cultoverride, loc_override)
 				if(THEME_HOLY)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/angelic, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/artificer/angelic, target, creator, cultoverride, loc_override)
 				if(THEME_CULT)
-					makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/noncult, target, creator, cultoverride, loc_override)
+					makeNewConstruct(/mob/living/basic/construct/artificer/noncult, target, creator, cultoverride, loc_override)
 
-/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
+/proc/makeNewConstruct(mob/living/basic/construct/ctype, mob/target, mob/stoner = null, cultoverride = FALSE, loc_override = null)
 	if(QDELETED(target))
 		return
-	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
+	var/mob/living/basic/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	var/makeicon = newstruct.icon_state
 	var/theme = newstruct.theme
 	flick("make_[makeicon][theme]", newstruct)

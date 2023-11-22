@@ -292,7 +292,7 @@
   YoYoBatty:
   - rscadd: Blurry eyes now actually blur instead of an overlay.
   anconfuzedrock:
-  - tweak: slapping now doesn't require a specific intent or limb to be targetted.
+  - tweak: slapping now doesn't require a specific intent or limb to be targeted.
   coiax:
   - rscadd: Robotics can print cybernetic hearts, lungs and livers at their exofabricators
       (along with their upgraded versions).

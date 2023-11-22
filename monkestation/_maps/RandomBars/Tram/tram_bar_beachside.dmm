@@ -274,7 +274,7 @@
 /turf/open/water/beach/biodome/sinking,
 /area/station/commons/lounge)
 "js" = (
-/mob/living/simple_animal/parrot,
+/mob/living/basic/parrot,
 /obj/structure/fluff/beach_umbrella/security,
 /turf/open/misc/beach/sand,
 /area/station/commons/lounge)

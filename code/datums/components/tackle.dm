@@ -365,7 +365,7 @@
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	if(istype(hit, /obj/machinery/vending)) // before we do anything else-
 		var/obj/machinery/vending/darth_vendor = hit
-		darth_vendor.tilt(user, TRUE)
+		darth_vendor.tilt(user, 100)
 		return
 	else if(istype(hit, /obj/structure/window))
 		var/obj/structure/window/W = hit

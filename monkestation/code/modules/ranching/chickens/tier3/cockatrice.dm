@@ -41,7 +41,8 @@
 	damage = 5
 	damage_type = BURN
 
-/obj/projectile/magic/venomous_spit/on_hit(atom/target, blocked)
+/obj/projectile/magic/venomous_spit/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/user = target
 		user.petrify(10)

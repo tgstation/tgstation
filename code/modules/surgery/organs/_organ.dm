@@ -45,6 +45,8 @@
 	var/list/organ_traits
 	/// Status Effects that are given to the holder of the organ.
 	var/list/organ_effects
+	/// String displayed when the organ has decayed.
+	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.

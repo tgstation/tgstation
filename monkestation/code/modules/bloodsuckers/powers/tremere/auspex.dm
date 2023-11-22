@@ -110,7 +110,7 @@
 			continue
 		if(level_current >= 4)
 			var/obj/item/bodypart/bodypart = pick(living_mob.bodyparts)
-			bodypart.force_wound_upwards(/datum/wound/slash/critical)
+			living_mob.cause_wound_of_type_and_severity(WOUND_SLASH, bodypart, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_CRITICAL)
 			living_mob.adjustBruteLoss(15)
 		if(level_current >= 5)
 			living_mob.Knockdown(10 SECONDS, ignore_canstun = TRUE)

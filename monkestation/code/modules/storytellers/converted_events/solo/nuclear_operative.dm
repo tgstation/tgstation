@@ -64,6 +64,8 @@
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
 		nuke_team = leader_antag_datum.nuke_team
 		most_experienced.add_antag_datum(leader_antag_datum)
+		var/mob/living/carbon/human/leader = most_experienced.current
+		leader.equip_species_outfit(/datum/outfit/syndicate/leader)
 
 	if(antag_mind == most_experienced)
 		return
