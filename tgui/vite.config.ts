@@ -22,6 +22,7 @@ export default defineConfig({
       targets: ['ie >= 11'],
       additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
       renderModernChunks: false,
+      externalSystemJS: true,
     }),
   ],
   resolve: {

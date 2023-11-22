@@ -3,14 +3,12 @@
   "name": "tgui-polyfill",
   "version": "4.3.1",
   "scripts": {
-    "tgui-polyfill:build": "terser 00-html5shiv.js 01-ie8.js 02-dom4.js 03-css-om.js 10-misc.js --ie8 -f ascii_only,comments=false -o ../../public/tgui-polyfill.min.js"
+    "tgui-polyfill:build": "terser 00-html5shiv.js 01-ie8.js 02-dom4.js 03-css-om.js 10-misc.js --ie8 -f ascii_only,comments=false -o ../../public/tgui-polyfill.js"
   },
   "dependencies": {
-    "core-js": "^3.16.1",
-    "regenerator-runtime": "^0.13.9",
-    "unfetch": "^4.2.0"
+    "unfetch": "^5.0.0"
   },
   "devDependencies": {
-    "terser": "^5.14.2"
+    "terser": "^5.24.0"
   }
 }

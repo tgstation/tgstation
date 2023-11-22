@@ -25,11 +25,8 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml
 
 /datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text('tgui/dist/tgui.html')
-	// Inject inline polyfills
-	var/polyfill = file2text('tgui/dist/tgui-polyfill.min.js')
-	polyfill = "<script>\n[polyfill]\n</script>"
-	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
+	basehtml = file2text('tgui/src/tgui.html')
+
 	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
 
 /datum/controller/subsystem/tgui/Shutdown()

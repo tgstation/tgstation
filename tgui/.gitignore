@@ -13,12 +13,9 @@ package-lock.json
 !/.yarn/lock.yml
 
 ## Build artifacts
-/public/.tmp/**/*
-/public/**/*
-!/public/*.html
-!/public/tgui-polyfill.min.js
 /coverage
 /dist
+!/dist/tgui.html
 
 ## Previously ignored locations that are kept to avoid confusing git
 ## while transitioning to a new project structure.
