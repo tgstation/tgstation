@@ -28,6 +28,10 @@ SUBSYSTEM_DEF(autotransfer)
 	message = "Should we go home?!"
 
 /datum/vote/shuttle_call/can_be_initiated(mob/by_who, forced = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+		
 	if(!SSticker.HasRoundStarted() || SSautotransfer.called)
 		return FALSE
 	if(length(GLOB.player_list) < 25)
@@ -39,8 +43,6 @@ SUBSYSTEM_DEF(autotransfer)
 			return FALSE
 
 	message = initial(message)
-	. = ..()
-
 
 /datum/vote/shuttle_call/New()
 	. = ..()
