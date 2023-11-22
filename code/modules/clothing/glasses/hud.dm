@@ -15,7 +15,11 @@
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
 		our_hud.show_to(user)
 	if(hud_trait)
-		ADD_TRAIT(user, hud_trait, GLASSES_TRAIT)
+		if(islist(hud_trait))
+			for(var/trait in hud_trait)
+				ADD_TRAIT(user, trait, GLASSES_TRAIT)
+		else
+			ADD_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	..()
@@ -25,7 +29,11 @@
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
 		our_hud.hide_from(user)
 	if(hud_trait)
-		REMOVE_TRAIT(user, hud_trait, GLASSES_TRAIT)
+		if(islist(hud_trait))
+			for(var/trait in hud_trait)
+				REMOVE_TRAIT(user, trait, GLASSES_TRAIT)
+		else
+			REMOVE_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	. = ..()
