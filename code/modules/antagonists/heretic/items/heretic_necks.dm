@@ -66,6 +66,7 @@
 	var/mob/living/carbon/human/hit = target
 	if(IS_HERETIC(user))
 		if(hit.can_block_magic(antimagic_flags))
+			return
 		if(hit.mob_mood)
 			switch(hit.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT, SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_DISTURBED)
