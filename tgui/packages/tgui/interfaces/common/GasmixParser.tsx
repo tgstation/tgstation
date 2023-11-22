@@ -114,7 +114,7 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
           {reactions.length
             ? reactions.map((reaction, index) =>
               reactionOnClick ? (
-                <Box key={index}  mb="0.5em">
+                <Box key={index} mb="0.5em">
                   <Button
                     content={reaction[1]}
                     onClick={() => reactionOnClick(reaction[0])}
