@@ -351,7 +351,7 @@ const DisplayDetails = (props: DisplayDetailsProps, context) => {
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
           <Stack.Item key={index}>
-            <Icon color={color}  name={icon} />
+            <Icon color={color} name={icon} />
           </Stack.Item>
         ))}
       </Stack>
