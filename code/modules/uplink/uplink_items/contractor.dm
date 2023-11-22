@@ -98,9 +98,10 @@
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT,
 	)
-	if(!LAZYLEN(candidates))
+	if(!LAZYLEN(candidates)) // Failed; refund spent telecrystals and item stock
 		to_chat(user, span_notice("No available agents at this time, please try again later."))
-		limited_stock++
+		uplink_handler.item_stock[stock_key]++
+		uplink_handler.telecrystals += cost
 		return //bobux no icon
 	var/mob/dead/observer/selected_player = pick(candidates)
 	uplink_handler.contractor_hub.contractor_teammate = spawn_contractor_partner(user, selected_player.key)
