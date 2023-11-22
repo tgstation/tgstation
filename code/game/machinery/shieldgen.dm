@@ -445,8 +445,8 @@
 		connect_to_network()
 
 /obj/machinery/power/shieldwallgen/screwdriver_act(mob/user, obj/item/tool)
-	if(active || locked)
-		balloon_alert(user, "deactivate and unlock first!")
+	if(!panel_open && locked)
+		balloon_alert(user, "unlock first!")
 		return
 	update_appearance(UPDATE_OVERLAYS)
 	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
