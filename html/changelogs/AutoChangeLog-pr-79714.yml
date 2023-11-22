@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Safeties in the code have been added to prevent things in disposals going into nullspace whenever they get ejected from a pipe - you will just magically spawn at the turf that you were meant to be flung towards."

@@ -6,8 +6,8 @@
 
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { createLogger } from './logging.js';
-import { require } from './require.js';
+import { createLogger } from './logging';
+import { require } from './require';
 
 const axios = require('axios');
 const logger = createLogger('dreamseeker');

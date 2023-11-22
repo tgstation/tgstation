@@ -99,7 +99,6 @@
 		You can use it in-hand to change its form to a card you fused. \
 		Does not preserve the card used in the ritual."
 	gain_text = "The Keeper sneered. \"These plastic rectangles are a mockery of keys, and I curse every door that desires them.\""
-	adds_sidepath_points = 1
 	required_atoms = list(
 		/obj/item/storage/wallet = 1,
 		/obj/item/stack/rods = 1,
@@ -144,7 +143,6 @@
 	desc = "Grants you Burglar's Finesse, a single-target spell \
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
@@ -173,7 +171,6 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	adds_sidepath_points = 1
 	next_knowledge = list(/datum/heretic_knowledge/ultimate/lock_final)
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker

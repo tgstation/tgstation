@@ -6,3 +6,6 @@
 
 /obj/item/computer_disk/syndicate/camera_app
 	starting_programs = list(/datum/computer_file/program/secureye/syndicate)
+
+/obj/item/computer_disk/syndicate/contractor
+	starting_programs = list(/datum/computer_file/program/contract_uplink)

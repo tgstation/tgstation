@@ -90,14 +90,12 @@
 				notify_ghosts(
 					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
 					source = spawned_mob,
-					action = NOTIFY_ORBIT,
 					header = "Pirates!",
 				)
 			else
 				notify_ghosts(
 					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
 					source = spawner,
-					action = NOTIFY_ORBIT,
 					header = "Pirate Spawn Here!",
 				)
 

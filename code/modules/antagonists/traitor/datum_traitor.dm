@@ -17,6 +17,10 @@
 	can_assign_self_objectives = TRUE
 	default_custom_objective = "Perform an overcomplicated heist on valuable Nanotrasen assets."
 	hardcore_random_bonus = TRUE
+
+	///The flag of uplink that this traitor is supposed to have.
+	var/uplink_flag_given = UPLINK_TRAITORS
+
 	var/give_objectives = TRUE
 	/// Whether to give secondary objectives to the traitor, which aren't necessary but can be completed for a progression and TC boost.
 	var/give_secondary_objectives = TRUE
@@ -53,6 +57,7 @@
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
+	uplink_flag_given = UPLINK_TRAITORS | UPLINK_INFILTRATORS
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
@@ -75,6 +80,7 @@
 			uplink.uplink_handler = uplink_handler
 		else
 			uplink_handler = uplink.uplink_handler
+		uplink_handler.uplink_flag = uplink_flag_given
 		uplink_handler.primary_objectives = objectives
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
@@ -351,6 +357,8 @@
 	result += objectives_text
 
 	if(uplink_handler)
+		if (uplink_handler.contractor_hub)
+			result += contractor_round_end()
 		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
 	var/special_role_text = lowertext(name)
@@ -362,6 +370,23 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
+
+///Tells how many contracts have been completed.
+/datum/antagonist/traitor/proc/contractor_round_end()
+	var/completed_contracts = uplink_handler.contractor_hub.contracts_completed
+	var/tc_total = uplink_handler.contractor_hub.contract_TC_payed_out + uplink_handler.contractor_hub.contract_TC_to_redeem
+
+	var/datum/antagonist/traitor/contractor_support/contractor_support_unit = uplink_handler.contractor_hub.contractor_teammate
+
+	if(completed_contracts <= 0)
+		return
+	var/plural_check = "contract"
+	if (completed_contracts > 1)
+		plural_check = "contracts"
+	var/sent_data = "Completed [span_greentext("[completed_contracts]")] [plural_check] for a total of [span_greentext("[tc_total] TC")]!<br>"
+	if(contractor_support_unit)
+		sent_data += "<b>[contractor_support_unit.owner.key]</b> played <b>[contractor_support_unit.owner.current.name]</b>, their contractor support unit.<br>"
+	return sent_data
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
