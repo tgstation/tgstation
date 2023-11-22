@@ -275,7 +275,7 @@
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
-		if(prob(malf_chance) || !EMP_PROTECT_SELF)
+		if(prob(malf_chance) || !(. && EMP_PROTECT_SELF))
 			malfunction(holder)
 			return
 
