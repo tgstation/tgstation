@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - qol: "Allergy Dogtags (and any other dogtags, really) are now actually whitelisted to fit into wallets."
