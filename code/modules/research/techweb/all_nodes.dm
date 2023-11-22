@@ -384,6 +384,7 @@
 		"comp_tonumber",
 		"comp_tostring",
 		"comp_trigonometry",
+		"comp_arctan2",
 		"comp_typecast",
 		"comp_typecheck",
 		"comp_view_sensor",
