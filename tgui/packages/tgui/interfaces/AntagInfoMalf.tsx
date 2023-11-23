@@ -195,6 +195,7 @@ export const AntagInfoMalf = (props, context) => {
         cost: `${item.cost} PT`,
         desc: item.desc,
         disabled: processingTime < item.cost,
+        is_locked: null,
       });
     }
   }

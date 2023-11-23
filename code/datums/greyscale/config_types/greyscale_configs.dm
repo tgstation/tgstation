@@ -1096,6 +1096,19 @@
 	name = "simian Hardsuit"
 	json_config = 'code/datums/greyscale/json_configs/simian_fallbacks/hardsuit.json'
 
+/datum/greyscale_config/lizard
+	name = "lizard Clothing"
+	icon_file = 'monkestation/icons/mob/gags/clothing/lizard_fallbacks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/lizard_fallbacks/shoes.json'
+
+/datum/greyscale_config/lizard/shoes
+	name = "lizard Shoes"
+	json_config = 'code/datums/greyscale/json_configs/lizard_fallbacks/shoes.json'
+
+/datum/greyscale_config/lizard/under
+	name = "lizard Under"
+	json_config = 'code/datums/greyscale/json_configs/lizard_fallbacks/under.json'
+
 
 /datum/greyscale_config/polycloak
 	name = "cloak"
@@ -1141,3 +1154,49 @@
 	name = "Worn Fish Analyzer"
 	icon_file = 'icons/mob/clothing/belt.dmi'
 	json_config = 'code/datums/greyscale/json_configs/fish_analyzer_worn.json'
+
+/*
+*	MASKS
+*/
+
+// BANDANAS
+
+/datum/greyscale_config/bandana_worn/snouted
+	name = "Worn Bandana"
+	icon_file = SNOUTED_MASK_FILE
+
+/datum/greyscale_config/bandstriped_worn/snouted
+	name = "Worn Striped Bandana"
+	icon_file = SNOUTED_MASK_FILE
+
+/datum/greyscale_config/bandskull_worn/snouted
+	name = "Worn Skull Bandana"
+	icon_file = SNOUTED_MASK_FILE
+
+/*
+*	SUITS
+*/
+
+// JUMPSUITS
+
+/datum/greyscale_config/jumpsuit_worn/digitigrade
+	name = "Worn Jumpsuit - Digitigrade"
+	icon_file = DIGITIGRADE_UNIFORM_FILE
+
+/datum/greyscale_config/jumpsuit_prison_worn/digitigrade
+	name = "Worn Prison Jumpsuit - Digitigrade"
+	icon_file = DIGITIGRADE_UNIFORM_FILE
+
+/*
+*	SHOES
+*/
+
+// SNEAKERS
+
+/datum/greyscale_config/sneakers_worn/digitigrade
+	name = "Worn Sneakers - Digitigrade"
+	icon_file = DIGITIGRADE_SHOES_FILE
+
+/datum/greyscale_config/sneakers_orange_worn/digitigrade
+	name = "Worn Orange Sneakers - Digitigrade"
+	icon_file = DIGITIGRADE_SHOES_FILE

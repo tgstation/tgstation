@@ -15,12 +15,23 @@
 	var/obj/item/weapon_of_choice = /obj/item/storage/toolbox
 	///the wager in monkecoins thats paid out to the winner
 	var/payout = 0
+	///list of weakrefs to spawned weapons for deletion on duel end
+	var/list/spawned_weapons = list()
 
+	///what weapons can players choose to duel with
 	var/list/weapon_choices = list(
 		/obj/item/storage/toolbox,
 		/obj/item/knife/shiv,
 		/obj/item/grenade/clusterbuster,
 		/obj/item/spear/bamboospear,
+		/obj/item/reagent_containers/spray/chemsprayer/magical, //unsure if this would cause issues but they do already have access to a full chem lab so it should be fine
+		/obj/item/gun/energy/laser/instakill, //first to hit the other wins, very fast matches
+		/obj/item/melee/baton/security/loaded,
+		/obj/item/chainsaw,
+		/obj/item/melee/energy/sword/saber,
+		/obj/item/book/granter/martial/cqc/fast_read,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/melee/energy/axe,
 	)
 
 /obj/structure/fight_button/Initialize(mapload)
@@ -138,6 +149,7 @@
 	player_two.fully_heal()
 
 	var/obj/item/one_weapon = new weapon_of_choice(src)
+	spawned_weapons += WEAKREF(one_weapon)
 	var/turf/one_spot = locate(148, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
 	player_one.forceMove(one_spot)
 	player_one.equipOutfit(/datum/outfit/job/assistant)
@@ -145,6 +157,7 @@
 	player_one.dueling = TRUE
 
 	var/obj/item/two_weapon = new weapon_of_choice(src)
+	spawned_weapons += WEAKREF(two_weapon)
 	var/turf/two_spot = locate(164, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
 	player_two.forceMove(two_spot)
 	player_two.equipOutfit(/datum/outfit/job/assistant)
@@ -168,3 +181,7 @@
 
 	payout = 0
 	update_maptext()
+	for(var/datum/weakref/weapon in spawned_weapons)
+		var/obj/item/spawned_weapon = weapon?.resolve()
+		if(spawned_weapon)
+			qdel(spawned_weapon)

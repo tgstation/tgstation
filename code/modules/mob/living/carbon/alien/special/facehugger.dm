@@ -25,6 +25,7 @@
 	plane = GAME_PLANE_FOV_HIDDEN
 	max_integrity = 100
 	item_flags = XENOMORPH_HOLDABLE
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
@@ -103,7 +104,7 @@
 	if(CanHug(AM) && Adjacent(AM))
 		return Leap(AM)
 
-/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, quickstart = TRUE)
+/obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE)
 	. = ..()
 	if(!.)
 		return

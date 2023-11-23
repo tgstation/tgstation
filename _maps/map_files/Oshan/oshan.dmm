@@ -18608,7 +18608,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "jCm" = (
-/mob/living/simple_animal/hostile/retaliate/clown{
+/mob/living/basic/clown{
 	limb_destroyer = 1;
 	health = 200;
 	desc = "This clown was hired to entertain visitors.";
@@ -24103,7 +24103,7 @@
 	dir = 1;
 	icon_state = "pink2_1"
 	},
-/mob/living/simple_animal/sloth/citrus,
+/mob/living/basic/sloth/citrus,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "mlu" = (

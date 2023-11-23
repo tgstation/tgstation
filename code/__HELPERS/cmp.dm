@@ -176,3 +176,11 @@
 	var/datum/award/award_a = SSachievements.awards[type_a]
 	var/datum/award/award_b = SSachievements.awards[type_b]
 	return award_b?.load_priority - award_a?.load_priority
+
+/// Passed a list of assoc lists, sorts them by the list's "name" keys.
+/proc/cmp_assoc_list_name(list/A, list/B)
+	return sorttext(B["name"], A["name"])
+
+/// Orders mobs by health
+/proc/cmp_mob_health(mob/living/mob_a, mob/living/mob_b)
+	return mob_b.health - mob_a.health

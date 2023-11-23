@@ -18,6 +18,14 @@
 	/// Do we recharge slower with more of our type?
 	var/unique_frequency = FALSE
 
+/obj/item/gun/energy/recharge/apply_fantasy_bonuses(bonus)
+	. = ..()
+	recharge_time = modify_fantasy_variable("recharge_time", recharge_time, -bonus, minimum = 0.2 SECONDS)
+
+/obj/item/gun/energy/recharge/remove_fantasy_bonuses(bonus)
+	recharge_time = reset_fantasy_variable("recharge_time", recharge_time)
+	return ..()
+
 /obj/item/gun/energy/recharge/Initialize(mapload)
 	. = ..()
 	if(!holds_charge)

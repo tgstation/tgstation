@@ -146,7 +146,7 @@
 	owner.balloon_alert(owner, "you lunge at [target]!")
 	if(target.stat == DEAD)
 		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-		var/datum/wound/slash/moderate/crit_wound = new
+		var/datum/wound/slash/flesh/moderate/crit_wound = new
 		crit_wound.apply_wound(chest)
 		owner.visible_message(
 			span_warning("[owner] tears into [target]'s chest!"),

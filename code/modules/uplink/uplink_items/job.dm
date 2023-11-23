@@ -23,7 +23,7 @@
 	limited_stock = 1
 	item = /obj/item/devices/bureaucratic_error_remote
 	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
-	surplus = 5
+	surplus = 40 //monkestation edit: from 5 to 40
 
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
@@ -57,7 +57,7 @@
 	item = /obj/item/firing_pin/clown/ultra
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
-	surplus = 25
+	surplus = 0 //monkestation edit: from 25 to 0
 
 /datum/uplink_item/role_restricted/clownsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
@@ -66,7 +66,7 @@
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
-	surplus = 25
+	surplus = 0 //monkestation edit: from 25 to 0
 
 /datum/uplink_item/role_restricted/syndimmi
 	name = "Syndicate Brand MMI"
@@ -99,7 +99,7 @@
 			The acid only affects carbon-based creatures."
 	item = /obj/item/storage/box/syndie_kit/ez_clean
 	cost = 6
-	surplus = 20
+	surplus = 40 //monkestation edit: from 20 to 40
 	restricted_roles = list(JOB_JANITOR)
 
 /datum/uplink_item/role_restricted/reverse_bear_trap
@@ -238,7 +238,7 @@
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	restricted_roles = list(JOB_CLOWN)
-	surplus = 10
+	surplus = 50 //monkestation edit: from 10 to 50
 
 /datum/uplink_item/role_restricted/clown_bomb/New()
 	. = ..()
@@ -311,3 +311,10 @@
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	surplus = 5
+
+/datum/uplink_item/role_restricted/evil_seedling
+	name = "Evil Seedling"
+	desc = "A rare seed we have recovered that grows into a dangerous species that will aid you with your tasks!"
+	item = /obj/item/seeds/seedling/evil
+	cost = 8
+	restricted_roles = list(JOB_BOTANIST)

@@ -1,6 +1,16 @@
 #define DEFAULT_DOOMSDAY_TIMER 4500
 #define DOOMSDAY_ANNOUNCE_INTERVAL 600
 
+#define VENDOR_TIPPING_USES 8
+#define MALF_VENDOR_TIPPING_TIME 0.5 SECONDS //within human reaction time
+#define MALF_VENDOR_TIPPING_CRIT_CHANCE 100 //percent - guaranteed
+
+#define MALF_AI_ROLL_TIME 0.5 SECONDS
+#define MALF_AI_ROLL_COOLDOWN 1 SECONDS + MALF_AI_ROLL_TIME
+#define MALF_AI_ROLL_DAMAGE 75
+#define MALF_AI_ROLL_CRIT_CHANCE 5 //percent
+#define MALF_AI_ROLL_MAX_DISTANCE 1 //anything further away than this, and the roll will fail
+
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
 		/obj/machinery/power/supermatter_crystal,
@@ -1010,3 +1020,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL
+
+#undef VENDOR_TIPPING_USES
+#undef MALF_VENDOR_TIPPING_TIME
+#undef MALF_VENDOR_TIPPING_CRIT_CHANCE
+
+#undef MALF_AI_ROLL_COOLDOWN
+#undef MALF_AI_ROLL_TIME
+#undef MALF_AI_ROLL_DAMAGE
+#undef MALF_AI_ROLL_CRIT_CHANCE
+#undef MALF_AI_ROLL_MAX_DISTANCE

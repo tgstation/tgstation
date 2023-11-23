@@ -66,7 +66,8 @@
 
 	var/datum/action/cooldown/mob_cooldown/watcher_gaze/gaze = new gaze_attack(src)
 	gaze.Grant(src)
-	ai_controller.set_blackboard_key(BB_WATCHER_GAZE, gaze)
+	ai_controller.set_blackboard_key(BB_GENERIC_ACTION, gaze)
+	AddComponent(/datum/component/revenge_ability, gaze, targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY]))
 
 /mob/living/basic/mining/watcher/update_overlays()
 	. = ..()
