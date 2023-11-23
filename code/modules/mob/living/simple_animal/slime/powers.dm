@@ -145,7 +145,7 @@
 		if(istype(victim))
 			var/bio_protection = 100 - victim.getarmor(null, BIO)
 			if(prob(bio_protection))
-				victim.apply_status_effect(/datum/status_effect/slimed, slime_type.get_rgb(), slime_type.colour == SLIME_TYPE_RAINBOW)
+				victim.apply_status_effect(/datum/status_effect/slimed, slime_type.rgb_code, slime_type.colour == SLIME_TYPE_RAINBOW)
 
 		if(!silent)
 			visible_message(span_warning("[src] lets go of [buckled]!"), \
