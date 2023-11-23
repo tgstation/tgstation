@@ -107,8 +107,8 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/chicken,
-		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/point_targeting/attack/chicken,
+		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/play_dead,
 	)
 	///how much extra fertile we are
@@ -153,5 +153,5 @@
 	melee_cooldown_time =  1 // dumb
 	var/datum/ai_behavior/targeted_mob_ability/min_range/chicken/what_range = /datum/ai_behavior/targeted_mob_ability/min_range/chicken/melee
 
-/datum/pet_command/point_targetting/attack/chicken
+/datum/pet_command/point_targeting/attack/chicken
 	attack_behaviour = /datum/ai_behavior/basic_melee_attack/chicken

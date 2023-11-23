@@ -131,7 +131,7 @@
 /area/ruin/space)
 "E" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /turf/open/floor/carpet/airless,
 /area/ruin/space)
 "F" = (
@@ -171,7 +171,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "N" = (
-/mob/living/simple_animal/hostile/construct/proteon,
+/mob/living/basic/construct/proteon,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "O" = (

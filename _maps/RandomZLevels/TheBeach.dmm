@@ -930,7 +930,7 @@
 /turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "da" = (
-/mob/living/simple_animal/parrot,
+/mob/living/basic/parrot,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "db" = (

@@ -55,7 +55,7 @@
 			/mob/living/basic/mining/basilisk = 4,
 			/mob/living/basic/mining/goldgrub = 1,
 			/mob/living/basic/mining/goliath/ancient = 5,
-			/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
+			/mob/living/basic/mining/hivelord = 3,
 		)
 	mob_spawn_list = expand_weights(weighted_mob_spawn_list)
 	mob_spawn_no_mega_list = expand_weights(weighted_mob_spawn_list - SPAWN_MEGAFAUNA)

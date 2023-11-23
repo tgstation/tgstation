@@ -752,7 +752,7 @@
 /area/virtual_domain/powered)
 "Pz" = (
 /obj/structure/table/wood,
-/mob/living/simple_animal/parrot{
+/mob/living/basic/parrot{
 	name = "pepper"
 	},
 /turf/open/floor/carpet/blue,

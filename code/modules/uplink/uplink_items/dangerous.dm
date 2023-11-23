@@ -12,7 +12,7 @@
 			darts effective at incapacitating a target."
 	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	cost = 2
-	surplus = 10
+	surplus = 50 //monkestation edit: from 10 to 50
 	purchasable_from = ~UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/pistol
@@ -84,9 +84,9 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	progression_minimum = 30 MINUTES
-	item = /obj/item/guardiancreator/tech/choose/traitor
+	item = /obj/item/guardian_creator/tech
 	cost = 18
-	surplus = 0
+	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	restricted = TRUE
 

@@ -8,11 +8,12 @@
 	anchored = TRUE
 	density = TRUE
 
+	faction = list(FACTION_HOSTILE)
+
 	var/max_mobs = 5
 	var/spawn_time = 30 SECONDS
 	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_text = "emerges from"
-	var/faction = list(FACTION_HOSTILE)
 	var/spawner_type = /datum/component/spawner
 
 /obj/structure/spawner/Initialize(mapload)
@@ -30,7 +31,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 	spawn_text = "warps in from"
-	mob_types = list(/mob/living/basic/syndicate/ranged)
+	mob_types = list(/mob/living/basic/trooper/syndicate/ranged)
 	faction = list(ROLE_SYNDICATE)
 
 /obj/structure/spawner/skeleton
@@ -41,7 +42,7 @@
 	max_integrity = 150
 	max_mobs = 15
 	spawn_time = 15 SECONDS
-	mob_types = list(/mob/living/simple_animal/hostile/skeleton)
+	mob_types = list(/mob/living/basic/skeleton)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_SKELETON)
 
@@ -54,16 +55,16 @@
 	max_mobs = 15
 	spawn_time = 15 SECONDS
 	mob_types = list(
-		/mob/living/simple_animal/hostile/retaliate/clown,
-		/mob/living/simple_animal/hostile/retaliate/clown/banana,
-		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk,
-		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown,
-		/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus,
-		/mob/living/simple_animal/hostile/retaliate/clown/fleshclown,
-		/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton,
-		/mob/living/simple_animal/hostile/retaliate/clown/honkling,
-		/mob/living/simple_animal/hostile/retaliate/clown/longface,
-		/mob/living/simple_animal/hostile/retaliate/clown/lube,
+		/mob/living/basic/clown,
+		/mob/living/basic/clown/banana,
+		/mob/living/basic/clown/clownhulk,
+		/mob/living/basic/clown/clownhulk/chlown,
+		/mob/living/basic/clown/clownhulk/honkmunculus,
+		/mob/living/basic/clown/fleshclown,
+		/mob/living/basic/clown/mutant/glutton,
+		/mob/living/basic/clown/honkling,
+		/mob/living/basic/clown/longface,
+		/mob/living/basic/clown/lube,
 	)
 	spawn_text = "climbs out of"
 	faction = list(FACTION_CLOWN)
@@ -80,8 +81,8 @@
 		/mob/living/basic/mining/basilisk,
 		/mob/living/basic/mining/goldgrub,
 		/mob/living/basic/mining/goliath/ancient,
+		/mob/living/basic/mining/legion,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/asteroid/hivelord,
 	)
 	faction = list(FACTION_MINING)
 
@@ -98,7 +99,7 @@
 /obj/structure/spawner/mining/hivelord
 	name = "hivelord den"
 	desc = "A den housing a nest of hivelords."
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord)
+	mob_types = list(/mob/living/basic/mining/hivelord)
 
 /obj/structure/spawner/mining/basilisk
 	name = "basilisk den"

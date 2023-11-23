@@ -15,7 +15,7 @@
 	if(fugu_blacklist)
 		return
 	fugu_blacklist = typecacheof(list(
-		/mob/living/simple_animal/hostile/guardian,
+		/mob/living/basic/guardian,
 	))
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
@@ -32,6 +32,7 @@
 		return
 
 	ADD_TRAIT(animal, TRAIT_FUGU_GLANDED, type)
+	animal.AddComponent(/datum/component/seethrough_mob)
 	animal.maxHealth *= 1.5
 	animal.health = min(animal.maxHealth, animal.health * 1.5)
 	animal.melee_damage_lower = max((animal.melee_damage_lower * 2), 10)
