@@ -270,6 +270,9 @@ Behavior that's still missing from this component that original food items had t
 	checkLiked(fraction, user)
 	if (!owner.reagents.get_reagent_amount(/datum/reagent/consumable/salt))
 		examine_list += span_notice("It could use a little more Sodium Chloride...")
+	if (isliving(user))
+		var/mob/living/living_user = user
+		living_user.taste(owner.reagents)
 
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
