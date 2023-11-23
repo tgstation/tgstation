@@ -415,6 +415,11 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/item/reagent_containers/condiment/cornmeal,
+/obj/item/reagent_containers/condiment/cornmeal,
+/obj/item/reagent_containers/condiment/olive_oil,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "rZ" = (
@@ -669,6 +674,11 @@
 /obj/item/food/grown/tomato,
 /obj/item/food/grown/tomato,
 /obj/item/food/grown/tomato,
+/obj/item/food/grown/herbs,
+/obj/item/food/grown/herbs,
+/obj/item/food/grown/herbs,
+/obj/item/food/grown/herbs,
+/obj/item/food/grown/herbs,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "Di" = (
@@ -1127,9 +1137,14 @@
 /obj/structure/table,
 /obj/item/plate/small,
 /obj/structure/sign/poster/official/moth_meth/directional/north,
-/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme{
+	pixel_x = -7
+	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
+	},
+/obj/item/reagent_containers/condiment/vinegar{
+	pixel_x = 4
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
@@ -1279,9 +1294,17 @@
 /area/ruin/pizzeria)
 "WT" = (
 /obj/structure/table,
-/obj/item/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin{
+	pixel_x = 6
+	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
+	},
+/obj/item/food/canned/tomatoes{
+	pixel_x = -3
+	},
+/obj/item/food/canned/tomatoes{
+	pixel_x = -4
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
