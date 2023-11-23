@@ -4356,13 +4356,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "csstype@npm:3.1.2"
-  checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
-  languageName: node
-  linkType: hard
-
 "cubic2quad@npm:^1.0.0":
   version: 1.1.1
   resolution: "cubic2quad@npm:1.1.1"
@@ -6408,13 +6401,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inferno-vnode-flags@npm:8.2.2, inferno-vnode-flags@npm:^8.2.2":
-  version: 8.2.2
-  resolution: "inferno-vnode-flags@npm:8.2.2"
-  checksum: 2b4688c0e1606af3ed16e39d6eb4703505ede787786a3637d38eea9b0c75920fdcf1de8f7e27787fdc5e1e19c3ee4a713c07ab7e6c5b5eaf5696ab9464a8de05
-  languageName: node
-  linkType: hard
-
 "inferno@npm:^7.4.11":
   version: 7.4.11
   resolution: "inferno@npm:7.4.11"
@@ -6423,17 +6409,6 @@ __metadata:
     inferno-vnode-flags: 7.4.11
     opencollective-postinstall: ^2.0.3
   checksum: 1651aad357995170c135520ff09d6e24311e05f0b0736b66d50dba5e68ff521b6c9dff13eec64effd6b79455d39f06176f0a5be50a1aaa979384721ae9b9862c
-  languageName: node
-  linkType: hard
-
-"inferno@npm:^8.2.2":
-  version: 8.2.2
-  resolution: "inferno@npm:8.2.2"
-  dependencies:
-    csstype: ^3.1.2
-    inferno-vnode-flags: 8.2.2
-    opencollective-postinstall: ^2.0.3
-  checksum: 6667d0800279b197180151d371e3d974fb83533e61dfd5369eb71082d95bf5375332f43c9dee6185aac3ae9044434cc1aba59e18f9b56ee93f72d752cf638abc
   languageName: node
   linkType: hard
 
@@ -10957,8 +10932,8 @@ __metadata:
     dateformat: ^4.6.2
     dompurify: ^2.4.4
     highlight.js: ^11.9.0
-    inferno: ^8.2.2
-    inferno-vnode-flags: ^8.2.2
+    inferno: ^7.4.11
+    inferno-vnode-flags: ^7.4.11
     js-yaml: ^4.1.0
     marked: ^4.2.12
     tgui-dev-server: "workspace:*"
