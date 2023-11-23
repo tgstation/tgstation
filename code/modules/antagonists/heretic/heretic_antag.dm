@@ -213,7 +213,6 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current, src)
 
-	GLOB.reality_smash_track.remove_tracked_mind(owner)
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
 
