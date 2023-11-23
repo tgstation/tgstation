@@ -3,6 +3,7 @@
 GLOBAL_LIST_INIT(reagent_containers, list(
 	CAT_CONDIMENTS = list(
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/condiment/pack,
 		/obj/item/reagent_containers/condiment/flour,
 		/obj/item/reagent_containers/condiment/sugar,
 		/obj/item/reagent_containers/condiment/rice,
@@ -24,7 +25,14 @@ GLOBAL_LIST_INIT(reagent_containers, list(
 		/obj/item/reagent_containers/condiment/peanut_butter,
 		/obj/item/reagent_containers/condiment/cherryjelly,
 		/obj/item/reagent_containers/condiment/honey,
-		/obj/item/reagent_containers/condiment/pack,
+		/obj/item/reagent_containers/condiment/kortanectar,
+		/obj/item/reagent_containers/condiment/cream,
+		/obj/item/reagent_containers/condiment/kortamilk,
+		/obj/item/reagent_containers/condiment/kortaflour,
+		/obj/item/reagent_containers/condiment/vinvert,
+		/obj/item/reagent_containers/condiment/vinbrun,
+		/obj/item/reagent_containers/condiment/vinrouge,
+		/obj/item/reagent_containers/condiment/vinviolette,
 	),
 	CAT_TUBES = list(
 		/obj/item/reagent_containers/cup/tube
