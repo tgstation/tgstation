@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "autolathe does not diminish materials from custom material items like toolboxes when printing them in bulk. Also does not gray out that item in the UI"
-  - bugfix: "autloathe correctly updates UI after inserting items into it"
