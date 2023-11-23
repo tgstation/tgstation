@@ -8,6 +8,7 @@
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
