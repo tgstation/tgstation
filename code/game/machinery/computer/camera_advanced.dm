@@ -24,7 +24,7 @@
 	///Should we supress any view changes?
 	var/should_supress_view_changes = TRUE
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/camera_advanced/Initialize(mapload)
 	. = ..()
@@ -76,12 +76,10 @@
 /obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
 	if(!user)
 		return
-	for(var/V in actions)
-		var/datum/action/A = V
-		A.Remove(user)
-	for(var/V in eyeobj.visibleCameraChunks)
-		var/datum/camerachunk/C = V
-		C.remove(eyeobj)
+	for(var/datum/action/actions_removed as anything in actions)
+		actions_removed.Remove(user)
+	for(var/datum/camerachunk/camerachunks_gone as anything in eyeobj.visibleCameraChunks)
+		camerachunks_gone.remove(eyeobj)
 	if(user.client)
 		user.reset_perspective(null)
 		if(eyeobj.visible_icon && user.client)
@@ -91,12 +89,12 @@
 	eyeobj.eye_user = null
 	user.remote_control = null
 	current_user = null
-	user.unset_machine()
+	unset_machine(user)
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
 	if(!can_use(user) || (issilicon(user) && !user.has_unlimited_silicon_privilege))
-		user.unset_machine()
+		unset_machine(user)
 
 /obj/machinery/computer/camera_advanced/Destroy()
 	if(eyeobj)
@@ -105,7 +103,7 @@
 	current_user = null
 	return ..()
 
-/obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
+/obj/machinery/computer/camera_advanced/proc/unset_machine(mob/M)
 	if(M == current_user)
 		remove_eye_control(M)
 
@@ -155,7 +153,7 @@
 			give_eye_control(L)
 			eyeobj.setLoc(camera_location)
 		else
-			user.unset_machine()
+			unset_machine(user)
 	else
 		give_eye_control(L)
 		eyeobj.setLoc(eyeobj.loc)

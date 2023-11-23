@@ -1,0 +1,6 @@
+author: "Autisem"
+delete-after: True
+changes:
+  - rscadd: "Cyborg inducer for engineering borgs"
+  - balance: "The borg RPED can hold as many part as the BSRPED now"
+  - balance: "Cyborg chargers now draw from the power net as cell chargers do"

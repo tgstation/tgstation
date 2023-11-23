@@ -465,10 +465,8 @@
 	return ..()
 
 // Prosthetics - Cheap, mediocre, and worse than organic limbs
-// The fact they dont have a internal biotype means theyre a lot weaker defensively,
-// since they skip slash and go right to blunt
-// They are VERY easy to delimb as a result
-// HP is also reduced just in case this isnt enough
+// Actively make you less healthy by being on your body, contributing a whopping 250% to overall health at only 20 max health
+// They also suck to punch with.
 
 /obj/item/bodypart/arm/left/robot/surplus
 	name = "surplus prosthetic left arm"
@@ -477,7 +475,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0 //Bro, you look huge.
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -488,7 +490,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -499,7 +505,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -510,9 +520,59 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+
+// Advanced Limbs: More durable, high punching force
+
+/obj/item/bodypart/arm/left/robot/advanced
+	name = "advanced robotic left arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+
+/obj/item/bodypart/arm/right/robot/advanced
+	name = "advanced robotic right arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+
+/obj/item/bodypart/leg/left/robot/advanced
+	name = "advanced robotic left leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+
+/obj/item/bodypart/leg/right/robot/advanced
+	name = "heavy robotic right leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

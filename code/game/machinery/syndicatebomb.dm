@@ -254,7 +254,6 @@
 	notify_ghosts(
 		"\A [src] has been activated at [get_area(src)]!",
 		source = src,
-		action = NOTIFY_ORBIT,
 		header = "Bomb Planted",
 	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
@@ -481,7 +480,7 @@
 		var/datum/reagents/reactants = new(time_release)
 		reactants.my_atom = src
 		for(var/obj/item/reagent_containers/RC in beakers)
-			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
+			RC.reagents.trans_to(reactants, RC.reagents.total_volume * fraction, no_react = TRUE)
 		chem_splash(get_turf(src), reagents, spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
