@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "removes & merges `expose_multiple()` proc into `expose()` proc inside reagent holder"
+  - code_imp: "removes `conditonal_update()` proc & `on_update()` proc inside reagent holder and reagent"
+  - refactor: "Reagent code has been trimmed and split into multiple files. report bugs on github"
