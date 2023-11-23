@@ -2,7 +2,7 @@
 	/// Extra stuff that cannot be purchased by an uplink, regardless of flag.
 	var/list/locked_entries = list()
 	///how much contractor rep we have
-	var/contractor_rep = 10 //SET THIS BACK TO 0
+	var/contractor_rep = 0
 	///list of our contractor market items
 	var/list/contractor_market_items = list()
 	///list of purchased contractor items
