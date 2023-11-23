@@ -334,8 +334,7 @@
 	. = ..()
 	if(!panel_open)
 		return
-	var/mutable_appearance/overlay = mutable_appearance(icon, "shieldgen_wires")
-	. += overlay
+	. += "shieldgen_wires"
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
