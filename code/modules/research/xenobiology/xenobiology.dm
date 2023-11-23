@@ -12,7 +12,7 @@
 	throw_range = 6
 	grind_results = list()
 	///uses before it goes inert
-	var/Uses = 1
+	var/extract_uses = 1
 	///deletion timer, for delayed reactions
 	var/qdel_timer = null
 	///Which type of crossbred
@@ -23,20 +23,20 @@
 
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
-	if(Uses > 1)
-		. += "It has [Uses] uses remaining."
+	if(extract_uses > 1)
+		. += "It has [extract_uses] uses remaining."
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
-		if(Uses >= 5 || recurring)
+		if(extract_uses >= 5 || recurring)
 			to_chat(user, span_warning("You cannot enhance this extract further!"))
 			return ..()
 		if(O.type == /obj/item/slimepotion/enhancer) //Seriously, why is this defined here...?
 			to_chat(user, span_notice("You apply the enhancer to the slime extract. It may now be reused one more time."))
-			Uses++
+			extract_uses++
 		if(O.type == /obj/item/slimepotion/enhancer/max)
 			to_chat(user, span_notice("You dump the maximizer on the slime extract. It can now be used a total of 5 times!"))
-			Uses = 5
+			extract_uses = 5
 		qdel(O)
 	..()
 
@@ -46,7 +46,7 @@
 
 /obj/item/slime_extract/on_grind()
 	. = ..()
-	if(Uses)
+	if(extract_uses)
 		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
 /**
