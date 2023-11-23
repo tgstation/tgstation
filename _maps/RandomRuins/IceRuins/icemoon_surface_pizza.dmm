@@ -355,10 +355,6 @@
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"nJ" = (
-/obj/effect/mapping_helpers/airalarm/all_access,
-/turf/closed/wall,
-/area/ruin/pizzeria/kitchen)
 "om" = (
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -679,6 +675,11 @@
 /obj/item/food/grown/herbs,
 /obj/item/food/grown/herbs,
 /obj/item/food/grown/herbs,
+/obj/item/food/grown/garlic,
+/obj/item/food/grown/garlic,
+/obj/item/food/grown/garlic,
+/obj/item/food/grown/garlic,
+/obj/item/food/grown/garlic,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "Di" = (
@@ -966,7 +967,6 @@
 /obj/machinery/airalarm/directional/south{
 	pixel_y = 4
 	},
-/obj/effect/mapping_helpers/airalarm/all_access,
 /turf/closed/wall,
 /area/ruin/pizzeria)
 "Oy" = (
@@ -1509,7 +1509,7 @@ Ze
 kG
 kG
 KL
-nJ
+iK
 IR
 kG
 kG
