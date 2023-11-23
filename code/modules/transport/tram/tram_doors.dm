@@ -23,6 +23,12 @@
 	var/crushing_in_progress = FALSE
 	bound_width = 64
 
+/obj/machinery/door/airlock/tram/half
+	icon = 'icons/obj/doors/airlocks/tram/tram-half.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram-half-overlays.dmi'
+	multi_tile = FALSE
+	bound_width = 32
+
 /obj/machinery/door/airlock/tram/Initialize(mapload)
 	. = ..()
 	if(!id_tag)
