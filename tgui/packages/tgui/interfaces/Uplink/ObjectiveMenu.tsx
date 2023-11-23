@@ -461,7 +461,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                     width="100%"
                     textAlign="center">
                     {telecrystalReward} TC,
-                    {!!contractorRep ? ' ' + contractorRep + ' REP,' : ''}
+                    {contractorRep ? ' ' + contractorRep + ' REP,' : ''}
                     <Box ml={1} as="span">
                       {calculateProgression(progressionReward)} Threat Level
                       {Math.abs(progressionDiff) > 10 && (
