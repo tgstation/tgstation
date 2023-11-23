@@ -259,6 +259,7 @@
 		properties["severity"] += round((properties["resistance"] / 10), 1)
 		properties["severity"] += round((properties["stage_rate"] / 10), 1)
 		properties["severity"] += round((properties["transmittable"] / 6), 1)
+		properties["severity"] = ROUND_UP(properties["severity"] / 2)
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/assign_properties()

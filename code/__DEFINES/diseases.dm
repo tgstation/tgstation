@@ -69,3 +69,38 @@ DEFINE_BITFIELD(spread_flags, list(
 #define DISEASE_CYCLES_HARMFUL 60
 /// Roughly 1 minute for a biohazard kill-death-evil-bad virus
 #define DISEASE_CYCLES_BIOHAZARD 30
+
+//Natural Immunity/Recovery Balance Levers
+/// Recovery Constant - starting point, 'base' recovery when you get initially infected.
+//// Minimum stage_prob is 1 for most advanced diseases. Don't raise it above that if you don't want those diseases to start naturally curing themselves.
+#define DISEASE_RECOVERY_CONSTANT 0
+/// Recovery Scaling - the divisor of the number of adjusted cycles at max_stages divided by Severity Guaranteed Cycles.
+//// Raise to make over-time scaling more aggressive as you get further away from Severity Guaranteed Cycles.
+//// Basically, once you hit Severity Guaranteed Cycles or equivalent, this will be your flat recovery chance, increasing by 1% for every Severity Guaranteed Cycles/this value cycles. So, if SGC = 30 and this = 3, every 10 cycles should give you another 1% per-cycle chance to recover.
+#define DISEASE_RECOVERY_SCALING 2
+/// Peaked Recovery Multiplier - Once we hit max_stages, multiplicative bonus to recovery scaling.
+//// Adjust to make it faster or slower to cure once the virus has reached its peak.
+#define DISEASE_PEAKED_RECOVERY_MULTIPLIER 1.2
+/// Slowdown Recovery Bonus - set this to the maximum extra chance per tick you want people to get to recover from spaceacillin or other slowdown/virus resistance effects
+#define DISEASE_SLOWDOWN_RECOVERY_BONUS 2
+/// Slowdown Recovery Bonus Duration - set this to the maximum # of cycles you want things that cause slowdown/virus resistance to be able to add a bonus up to DISEASE_SLOWDOWN_RECOVERY_BONUS.______qdel_list_wrapper(list/L)
+//// Scales down linearly over time.
+#define DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION 100
+/// Negative Malnutrition Recovery Penalty
+//// Flat penalty to recovery chance if malnourished or starving
+#define DISEASE_MALNUTRITION_RECOVERY_PENALTY 1.5
+/// Satiety Recovery Multiplier - added chance to recover based on positive satiety
+//// Multiplier of satiety/max_satiety if satiety is positive or zero. Increase to make satiety more valuable, decrease for less.
+#define DISEASE_SATIETY_RECOVERY_MULTIPLIER 1
+/// Good Sleeping Recovery Bonus - additive benefits for various types of good sleep (blanket, bed, darkness, pillows.)
+//// Raise to make each factor add this much chance to recover.
+#define DISEASE_GOOD_SLEEPING_RECOVERY_BONUS 0.2
+/// Sleeping Recovery Multiplier - multiplies ALL recovery chance effects by this amount.
+//// Set to 1 for no effect on recovery chances from sleeping.
+#define DISEASE_SLEEPING_RECOVERY_MULTIPLIER 2
+/// Final Cure Chance Multiplier - multiplies the disease's cure chance to get the probability of moving from stage 1 to a final cure.
+//// Must be greater than zero for diseases to self cure.
+#define DISEASE_FINAL_CURE_CHANCE_MULTIPLIER 3
+/// Symptom Offset Duration - number of cycles over which sleeping/having spaceacillin or a slowdown effect can prevent symptoms appearing
+//// Set to maximum # of cycles you want to be able to offset symptoms. Scales down linearly over time.
+#define DISEASE_SYMPTOM_OFFSET_DURATION 100
