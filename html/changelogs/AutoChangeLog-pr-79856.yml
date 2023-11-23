@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Mafia panel no longer shows vote buttons if you're on stand, shows the roles of revealed players, and list out who is on the stand, if any."
