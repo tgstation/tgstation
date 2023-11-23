@@ -503,7 +503,7 @@
 	auto_traits = list(TRAIT_REMOTE_TASTING)
 	skill_name = "Mental Flavour Calculus"
 	skill_description = "When examining food, you can experience the flavours just as well as if you were eating it."
-	skill_icon = FA_ICON_WHEAT_AWN_CIRCLE_EXCLAMATION
+	skill_icon = FA_ICON_DRUMSTICK_BITE
 	activate_message = span_notice("You think of your favourite food and realise that you can rotate its flavour in your mind.")
 	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
 
