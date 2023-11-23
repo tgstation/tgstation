@@ -499,19 +499,5 @@
 /// from /datum/component/dart_insert/remove_from_dart() : (obj/ammo_casing/dart, mob/user)
 #define COMSIG_DART_INSERT_REMOVED "dart_insert_removed"
 
-/**
- * from /datum/component/dart_insert/get_dart_var_modifiers() : (list/out_modifiers)
- *
- * valid indices for `out_modifiers` are:
- * - `damage`: number
- * - `speed`: number
- * - `armour_penetration`: number
- * - `wound_bonus`: number
- * - `bare_wound_bonus`: number
- * - `demolition_mod`: number
- * - `embedding`: list with embedding params
- */
-#define COMSIG_DART_INSERT_GET_VAR_MODIFIERS "dart_insert_get_var_modifiers"
-
 /// from /datum/component/dart_insert/on_reskin()
 #define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"
