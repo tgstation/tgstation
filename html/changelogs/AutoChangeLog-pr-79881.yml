@@ -1,0 +1,4 @@
+author: "dieamond13"
+delete-after: True
+changes:
+  - qol: "gives roundstart prisoners a key memory of what their crime is"
