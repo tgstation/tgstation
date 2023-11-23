@@ -103,6 +103,8 @@
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
 // /atom/movable
+#define VV_HK_OBSERVE_FOLLOW "observe_follow"
+#define VV_HK_GET_MOVABLE "get_movable"
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
 
 // /obj
