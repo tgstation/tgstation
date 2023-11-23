@@ -13,6 +13,7 @@
 		#include "map_files\Mining\Lavaland.dmm"
 		#include "map_files\NorthStar\north_star.dmm"
 		#include "map_files\tramstation\tramstation.dmm"
+		#include "map_files\CatwalkStation\CatwalkStation_2023.dmm"
 
 		#ifdef CIBUILDING
 			#include "templates.dm"
