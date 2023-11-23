@@ -135,14 +135,14 @@ const RecipeListBox = (props: RecipeListProps) => {
         const recipe = recipes[title];
         if (isRecipeList(recipe)) {
           return (
-            <Collapsible key={index} ml={1} color="label" title={title}>
+            <Collapsible key={title} ml={1} color="label" title={title}>
               <Box ml={2}>
                 <RecipeListBox recipes={recipe} />
               </Box>
             </Collapsible>
           );
         } else {
-          return <RecipeBox key={index} title={title} recipe={recipe} />;
+          return <RecipeBox key={title} title={title} recipe={recipe} />;
         }
       })}
     </>
