@@ -6,72 +6,40 @@
 		Remove an inserted baton by using a wrench on the module while it is removed from the suit."
 	icon_state = "holster"
 	icon = 'monkestation/icons/obj/items/modsuit_modules.dmi'
+	module_type = MODULE_ACTIVE
 	complexity = 3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	device = /obj/item/melee/baton/telescopic/contractor_baton
 	incompatible_modules = list(/obj/item/mod/module/baton_holster)
-	module_type = MODULE_USABLE
-	/// Ref to the baton
-	var/obj/item/melee/baton/telescopic/contractor_baton/stored_batong
-	/// If the baton is out or not
-	var/deployed = FALSE
+	cooldown_time = 0.5 SECONDS
+	allow_flags = MODULE_ALLOW_INACTIVE
+	/// Have they sacrificed a baton to actually be able to use this?
+	var/eaten_baton = FALSE
 
-// doesn't give a shit if it's deployed or not
-/obj/item/mod/module/baton_holster/on_select()
-	on_use()
-	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED, src)
-
-/obj/item/mod/module/baton_holster/wrench_act(mob/living/user, obj/item/tool)
+/obj/item/mod/module/baton_holster/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(!stored_batong)
+	if(!istype(attacking_item, /obj/item/melee/baton/telescopic/contractor_baton) || eaten_baton)
 		return
-	balloon_alert(user, "[stored_batong] removed")
-	stored_batong.forceMove(get_turf(src))
-	stored_batong.holster = null
-	stored_batong = null
-	tool.play_tool_sound(src)
+	balloon_alert(user, "[attacking_item] inserted")
+	eaten_baton = TRUE
+	for(var/obj/item/melee/baton/telescopic/contractor_baton/device_baton as anything in src)
+		for(var/obj/item/item_contents as anything in attacking_item)
+			if(istype(item_contents, /obj/item/baton_upgrade))
+				device_baton.add_upgrade(item_contents)
+			else
+				item_contents.forceMove(device_baton)
+	qdel(attacking_item)
 
-/obj/item/mod/module/baton_holster/Destroy()
-	if(stored_batong)
-		stored_batong.forceMove(get_turf(src))
-		stored_batong.holster = null
-		stored_batong = null
-	. = ..()
-
-/obj/item/mod/module/baton_holster/on_use()
-	var/obj/item/held_item = mod.wearer.get_active_held_item()
-	if(istype(held_item, /obj/item/melee/baton/telescopic/contractor_baton) && !stored_batong)
-		balloon_alert(mod.wearer, "[held_item] inserted")
-		held_item.forceMove(src)
-		stored_batong = held_item
-		stored_batong.holster = src
+/obj/item/mod/module/baton_holster/on_activation()
+	if(!eaten_baton)
+		balloon_alert(mod.wearer, "no baton inserted")
 		return
-
-	if(!deployed)
-		deploy(mod.wearer)
-	else
-		undeploy(mod.wearer)
-
-/obj/item/mod/module/baton_holster/proc/deploy(mob/living/user)
-	if(!(stored_batong in src))
-		return
-	if(!user.put_in_hands(stored_batong))
-		to_chat(user, span_warning("You need a free hand to hold [stored_batong]!"))
-		return
-	deployed = TRUE
-	balloon_alert(user, "[stored_batong] deployed")
-
-/obj/item/mod/module/baton_holster/proc/undeploy(mob/living/user)
-	if(QDELETED(stored_batong))
-		return
-	stored_batong.forceMove(src)
-	deployed = FALSE
-	balloon_alert(user, "[stored_batong] retracted")
+	return ..()
 
 /obj/item/mod/module/baton_holster/preloaded
+	eaten_baton = TRUE
+	device = /obj/item/melee/baton/telescopic/contractor_baton/upgraded
 
-/obj/item/mod/module/baton_holster/preloaded/Initialize(mapload)
-	. = ..()
-	stored_batong = new/obj/item/melee/baton/telescopic/contractor_baton/upgraded(src)
-	stored_batong.holster = src
 //making this slow you down this will most likely not get used, might rework this
 /obj/item/mod/module/armor_booster/contractor // Much flatter distribution because contractor suit gets a shitton of armor already
 	armor_mod = /datum/armor/mod_module_armor_booster_contractor
@@ -85,3 +53,36 @@
 	bullet = 20
 	laser = 20
 	energy = 20
+
+/// Non-deathtrap contractor springlock module
+/obj/item/mod/module/springlock/contractor
+	name = "MOD magnetic deployment module"
+	desc = "A much more modern version of a springlock system. \
+	This is a module that uses magnets to speed up the deployment and retraction time of your MODsuit."
+	icon_state = "magnet_springlock"
+
+/obj/item/mod/module/springlock/contractor/on_suit_activation() // This module is actually *not* a death trap
+	return
+
+/obj/item/mod/module/springlock/contractor/on_suit_deactivation(deleting = FALSE)
+	return
+
+/// This exists for the adminbus contractor modsuit. Do not use otherwise
+/obj/item/mod/module/springlock/contractor/no_complexity
+	complexity = 0
+
+/// SCORPION - hook a target into baton range quickly and non-lethally
+/obj/item/mod/module/scorpion_hook
+	name = "MOD SCORPION hook module"
+	desc = "A module installed in the wrist of a MODSuit, this highly \
+			illegal module uses a hardlight hook to forcefully pull \
+			a target towards you at high speed, knocking them down and \
+			partially exhausting them."
+	icon_state = "hook"
+	incompatible_modules = list(/obj/item/mod/module/scorpion_hook)
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	device = /obj/item/gun/magic/hook/contractor
+	cooldown_time = 0.5 SECONDS
+	allowed_inactive = TRUE

@@ -1,7 +1,7 @@
 #define STARTING_COMMON_OBJECTIVES
 /datum/traitor_objective/target_player/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
-	description = "%TARGET% holds extremely important information regarding secret NT projects - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
+	description = "%TARGET% %CRIMES% - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
 		If %TARGET% is delivered alive, you will be rewarded with an additional %TC% telecrystals."
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
@@ -147,7 +147,8 @@
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_PARENT_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
-		if(ispath(possible_area, /area/station/hallway) || ispath(possible_area, /area/station/security) || initial(possible_area.outdoors))
+		if(ispath(possible_area, /area/station/hallway) || ispath(possible_area, /area/station/security) || initial(possible_area.outdoors) \
+			|| ispath(possible_area, /area/station/science/ordnance))
 			possible_areas -= possible_area
 
 	dropoff_area = pick(possible_areas)
@@ -155,6 +156,11 @@
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 	replace_in_name("%AREA%", initial(dropoff_area.name))
 	replace_in_name("%TC%", alive_bonus)
+	var/base = pick_list(WANTED_FILE, "basemessage")
+	var/verb_string = pick_list(WANTED_FILE, "verb")
+	var/noun = pick_list_weighted(WANTED_FILE, "noun")
+	var/location = pick_list_weighted(WANTED_FILE, "location")
+	replace_in_name("%CRIMES%", "[base] [verb_string] [noun] [location].")
 	return TRUE
 
 /datum/traitor_objective/target_player/kidnapping/ungenerate_objective()
@@ -225,9 +231,10 @@
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 	if(cargo_account) //Just in case
-		cargo_account.adjust_money(-min(rand(1000, 3000), cargo_account.account_balance)) //Not so much, especially for competent cargo. Plus this can't be mass-triggered like it has been done with contractors
+		cargo_account.adjust_money(-min(rand(1000, 3000), cargo_account.account_balance)) //Not so much, especially for competent cargo.
 
-	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
+	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
+					As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(handle_target), sent_mob), 1.5 SECONDS)
 
@@ -252,6 +259,7 @@
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
+	sent_mob.reagents?.add_reagent(/datum/reagent/medicine/omnizine, 20)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
 		so it's only a matter of time before we ship you back...\"</i>")))

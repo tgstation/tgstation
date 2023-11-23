@@ -28,7 +28,7 @@
 
 /obj/item/storage/box/syndie_kit/contractor_loadout
 	name = "Standard Loadout"
-	desc = "Supplied to Syndicate contractors, providing their specialised space suit and chameleon uniform."
+	desc = "Supplied to Syndicate contractors, providing their specialised MODsuit and chameleon uniform."
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 

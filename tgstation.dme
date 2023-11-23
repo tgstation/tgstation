@@ -373,7 +373,6 @@
 #include "code\__DEFINES\~monkestation\access.dm"
 #include "code\__DEFINES\~monkestation\ai.dm"
 #include "code\__DEFINES\~monkestation\antagonists.dm"
-#include "code\__DEFINES\~monkestation\baton_upgrades.dm"
 #include "code\__DEFINES\~monkestation\clock_cult.dm"
 #include "code\__DEFINES\~monkestation\colors.dm"
 #include "code\__DEFINES\~monkestation\combat.dm"

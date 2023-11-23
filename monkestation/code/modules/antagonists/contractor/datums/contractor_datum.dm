@@ -23,3 +23,62 @@
 	result += "<br>"
 
 	return result
+
+// USED FOR THE MIDROUND ANTAGONIST
+/datum/antagonist/traitor/contractor
+	name = "Drifting Contractor"
+	antagpanel_category = "Drifting Contractor"
+	preview_outfit = /datum/outfit/contractor_preview
+	job_rank = ROLE_DRIFTING_CONTRACTOR
+	antag_hud_name = "contractor"
+	antag_moodlet = /datum/mood_event/focused
+	show_to_ghosts = TRUE
+	suicide_cry = "FOR THE CONTRACTS!!"
+	/// The outfit the contractor is equipped with
+	var/contractor_outfit = /datum/outfit/contractor
+
+/datum/antagonist/traitor/contractor/proc/equip_guy()
+	if(!ishuman(owner.current))
+		return
+
+	var/mob/living/carbon/human/person = owner.current
+	person.equipOutfit(contractor_outfit)
+	var/datum/component/uplink/found_uplink = owner.find_syndicate_uplink()
+	if(!found_uplink)
+		CRASH("Unable to find uplink for contractor [owner].")
+
+	found_uplink.become_contractor()
+	return TRUE
+
+/datum/antagonist/traitor/contractor/on_gain()
+	. = ..()
+	equip_guy()
+
+/datum/antagonist/traitor/contractor/forge_traitor_objectives()
+	var/datum/objective/contractor_total/contract_objective = new
+	contract_objective.owner = owner
+	objectives += contract_objective
+	. = ..()
+
+/// Used by drifting contractors
+/datum/objective/contractor_total
+	name = "contractor"
+	martyr_compatible = TRUE
+	/// How many contracts are needed, rand(1, 3)
+	var/contracts_needed
+
+/datum/objective/contractor_total/New(text)
+	. = ..()
+	contracts_needed = rand(1, 3)
+	explanation_text = "Complete at least [contracts_needed] contract\s."
+
+/datum/objective/contractor_total/check_completion()
+	var/datum/antagonist/traitor/antag_datum = owner.has_antag_datum(/datum/antagonist/traitor)
+	var/datum/uplink_handler/handler = antag_datum?.uplink_handler
+	if(!handler)
+		return FALSE
+
+	return length(handler.completed_objectives) >= contracts_needed //only given to contractors so we can assume any completed objectives are contracts
+
+/datum/job/drifting_contractor
+	title = ROLE_DRIFTING_CONTRACTOR

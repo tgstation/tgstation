@@ -363,7 +363,8 @@
 	playsound(src, on_sound, 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/melee/baton/telescopic/contractor_baton
+//monkestation removal start
+/*/obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
 	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
 	icon = 'icons/obj/weapons/baton.dmi'
@@ -391,8 +392,8 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
-	target.set_stutter_if_lower(40 SECONDS)
-	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = TRUE) //monkestation edit
+	target.set_stutter_if_lower(40 SECONDS)*/
+//monkestation removal end
 
 /obj/item/melee/baton/security
 	name = "stun baton"
