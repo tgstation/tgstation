@@ -4,6 +4,7 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 
+	// NOTE: Just because you have a HUD display doesn't mean you should be able to interact with stuff.
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
