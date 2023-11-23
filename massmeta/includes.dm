@@ -5,7 +5,6 @@
 #include "code\modules\reagents\containers\cups.dm"
 #include "code\modules\surgery\organs\tongue.dm"
 #include "code\modules\clothing\suits\chaplainsuits.dm"
-#include "code\modules\admin\verbs\adminhelp.dm"
 #include "code\obj\items\clothing\gloves.dm"
 #include "code\obj\items\clothing\masks.dm"
 #include "code\datums\components\crafting\makeshift.dm"
