@@ -516,3 +516,80 @@
 	originalname = "sugar"
 	volume = 5
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
+
+/obj/item/reagent_containers/condiment/kortanectar
+	name = "korta nectar"
+	desc = "A squeezy bottle of korta nectar, ungodly sweet."
+	icon_state = "kortanectar"
+	list_reagents = list(/datum/reagent/consumable/korta_nectar = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/cream
+	name = "cream"
+	desc = "It's cream. White, thick cream!"
+	icon_state = "cream"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/cream = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/kortamilk
+	name = "korta milk"
+	desc = "It's korta milk. How do you milk a nut?"
+	icon_state = "kortamilk"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/korta_milk = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/kortaflour
+	name = "korta flour sack"
+	desc = "A big bag of korta flour. Good for rootdough!"
+	icon_state = "kortaflour"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/korta_flour = 30)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/vinvert
+	name = "green wine bottle"
+	desc = "A little bottle of vin, not big enough to be wine!"
+	icon_state = "vinvert"
+	inhand_icon_state = "atoxinbottle"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = null
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/vinrouge
+	name = "red wine bottle"
+	desc = "A little bottle of vin, not big enough to be wine!"
+	icon_state = "vinrouge"
+	inhand_icon_state = "atoxinbottle"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = null
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/vinviolette
+	name = "purple wine bottle"
+	desc = "A little bottle of vin, not big enough to be wine!"
+	icon_state = "vinviolette"
+	inhand_icon_state = "atoxinbottle"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = null
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/vinbrun
+	name = "brown wine bottle"
+	desc = "A little bottle of vin, not big enough to be wine!"
+	icon_state = "vinbrun"
+	inhand_icon_state = "atoxinbottle"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = null
+	fill_icon_thresholds = null
