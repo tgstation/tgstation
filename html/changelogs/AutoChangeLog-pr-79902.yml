@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "A new skill chip can be found in maintenance or purchased from the vendor, allowing you to experience food in new and exciting ways."
+  - rscadd: "Abductors also have access to this incredible power, simply using their genius level brains."
