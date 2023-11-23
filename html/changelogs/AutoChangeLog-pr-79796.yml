@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "Removes & merges `get_multiple_reagent_amounts()` proc with `get_reagent_amount()` inside reagent holder"
-  - code_imp: "Removes & merges `get_reagent()` proc with `has_reagent()` inside reagent holder"
-  - code_imp: "Removes & merges `has_chemical_flag()` proc with `has_reagent()` inside reagent holder"
-  - refactor: "Reagent holder code has been further compressed. Report bugs on github"

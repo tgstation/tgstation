@@ -217,3 +217,8 @@
 		return max(new_value, threshold)
 	if(sign == -1)
 		return min(new_value, threshold * -1)
+
+/// Takes two values x and y, and returns 1/((1/x) + y)
+/// Useful for providing an additive modifier to a value that is used as a divisor, such as `/obj/projectile/var/speed`
+/proc/reciprocal_add(x, y)
+	return 1/((1/x)+y)

@@ -7,7 +7,7 @@
 	name = "circuit board"
 	/// extension that is applied after the initial name AKA (Computer/Machine Board)
 	var/name_extension = null
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
 	icon_state = "circuit_map"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

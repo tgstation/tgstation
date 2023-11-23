@@ -1,5 +1,0 @@
-author: "yooriss"
-delete-after: True
-changes:
-  - refactor: "Icemoon wolves now use the basic mob framework and should act more intelligently, defending their pack."
-  - rscadd: "Icemoon wolves can be tamed with slabs of meat and can be ridden as mounts once friendly. Being rather large dogs, they also have access to most of the pet commands you'd expect, such as fetching things, and violently mauling people their owners point at."
