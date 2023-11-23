@@ -5,4 +5,4 @@
 
 /obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
 	new /obj/item/extraction_pack/contractor(src)
-	new /obj/item/fulton_core(src)
+	generate_items_inside(list(/obj/item/fulton_core = 3), src)

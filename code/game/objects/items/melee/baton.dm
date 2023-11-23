@@ -322,9 +322,11 @@
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
+//monkestation edit start
 /obj/item/melee/baton/telescopic/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	. = ..()
 	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = FALSE)
+//monkestation edit end
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
@@ -375,7 +377,7 @@
 	force = 5
 	cooldown = 2.5 SECONDS
 	force_say_chance = 80 //very high force say chance because it's funny
-	stamina_damage = 170
+	stamina_damage = 170 //monkestation edit: stam damage increased
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
@@ -390,6 +392,7 @@
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.set_jitter_if_lower(40 SECONDS)
 	target.set_stutter_if_lower(40 SECONDS)
+	target.Disorient(6 SECONDS, 5, paralyze = 3 SECONDS, stack_status = TRUE) //monkestation edit
 
 /obj/item/melee/baton/security
 	name = "stun baton"

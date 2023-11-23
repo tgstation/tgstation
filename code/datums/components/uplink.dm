@@ -253,7 +253,22 @@
 	data["current_stock"] = remaining_stock
 	data["shop_locked"] = uplink_handler.shop_locked
 	data["purchased_items"] = length(uplink_handler.purchase_log?.purchase_log)
-	data["locked_entries"] = uplink_handler.locked_entries //monkestation edit
+//monkestation edit start
+	data["locked_entries"] = uplink_handler.locked_entries
+	data["is_contractor"] = (uplink_handler.uplink_flag == UPLINK_CONTRACTORS)
+	var/list/contractor_items = list()
+	for(var/datum/contractor_item/item in uplink_handler.contractor_market_items)
+		contractor_items += list(list(
+			"id" = item.type,
+			"name" = item.name,
+			"desc" = item.desc,
+			"cost" = item.cost,
+			"stock" = item.stock,
+			"item_icon" = item.item_icon,
+		))
+	data["contractor_items"] = contractor_items
+	data["contractor_rep"] = uplink_handler.contractor_rep
+//monkestation edit end
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -301,6 +316,15 @@
 
 	if(uplink_handler.owner?.current != ui.user || !uplink_handler.can_take_objectives)
 		return TRUE
+
+//monkestation edit start
+	switch(action)
+		if("buy_contractor")
+			var/item = params["item"]
+			for(var/datum/contractor_item/hub_item in uplink_handler.contractor_market_items)
+				if(hub_item.name == item)
+					hub_item.handle_purchase(uplink_handler, ui.user)
+//monkestation edit end
 
 	switch(action)
 		if("regenerate_objectives")

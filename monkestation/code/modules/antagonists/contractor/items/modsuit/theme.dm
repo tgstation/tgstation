@@ -56,7 +56,7 @@
 			),
 		),
 	)
-
+//ICONS BORKED
 /datum/armor/mod_contractor_armor
 	melee = 40
 	bullet = 50

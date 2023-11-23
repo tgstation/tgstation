@@ -1,11 +1,13 @@
-//MONKESTATIONFILE REMOVAL, CHECK THE FILE IN THE MODULAR DIRECTORY
-/*
+#define STARTING_COMMON_OBJECTIVES
 /datum/traitor_objective/target_player/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
 	description = "%TARGET% holds extremely important information regarding secret NT projects - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
 		If %TARGET% is delivered alive, you will be rewarded with an additional %TC% telecrystals."
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
+	valid_uplinks = UPLINK_CONTRACTORS
+	given_contractor_rep = 1
+	progression_minimum = 0 MINUTES
 
 	/// The jobs that this objective is targetting.
 	var/list/target_jobs
@@ -18,26 +20,9 @@
 	/// All stripped targets belongings
 	var/list/target_belongings = list()
 
-	duplicate_type = /datum/traitor_objective/target_player
-
-/datum/traitor_objective/target_player/kidnapping/supported_configuration_changes()
-	. = ..()
-	. += NAMEOF(src, objective_period)
-	. += NAMEOF(src, maximum_objectives_in_period)
-
-/datum/traitor_objective/target_player/kidnapping/New(datum/uplink_handler/handler)
-	. = ..()
-	AddComponent(/datum/component/traitor_objective_limit_per_time, \
-		/datum/traitor_objective/target_player, \
-		time_period = objective_period, \
-		maximum_objectives = maximum_objectives_in_period \
-	)
-
 /datum/traitor_objective/target_player/kidnapping/common
-	progression_minimum = 0 MINUTES
-	progression_maximum = 30 MINUTES
 	progression_reward = list(2 MINUTES, 4 MINUTES)
-	telecrystal_reward = list(4, 5)
+	telecrystal_reward = list(2, 3)
 	target_jobs = list(
 		// Cargo
 		/datum/job/cargo_technician,
@@ -63,20 +48,18 @@
 		/datum/job/lawyer,
 		/datum/job/mime,
 	)
-	alive_bonus = 2
+	alive_bonus = 3
 
 /datum/traitor_objective/target_player/kidnapping/common/assistant
-	progression_minimum = 0 MINUTES
-	progression_maximum = 15 MINUTES
 	target_jobs = list(
 		/datum/job/assistant
 	)
+	telecrystal_reward = 3 //go bully the assistants
 
 /datum/traitor_objective/target_player/kidnapping/uncommon //Hard to fish out targets
-	progression_minimum = 0 MINUTES
-	progression_maximum = 45 MINUTES
 	progression_reward = list(4 MINUTES, 8 MINUTES)
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(3, 4)
+	given_contractor_rep = 2
 
 	target_jobs = list(
 		// Cargo
@@ -87,13 +70,13 @@
 		// Service
 		/datum/job/cook,
 	)
-	alive_bonus = 3
+	alive_bonus = 4
 
 /datum/traitor_objective/target_player/kidnapping/rare
-	progression_minimum = 15 MINUTES
-	progression_maximum = 60 MINUTES
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(4, 5)
+	given_contractor_rep = 3
+
 	target_jobs = list(
 		// Heads of staff
 		/datum/job/chief_engineer,
@@ -105,17 +88,18 @@
 		/datum/job/security_officer,
 		/datum/job/warden,
 	)
-	alive_bonus = 4
+	alive_bonus = 5
 
 /datum/traitor_objective/target_player/kidnapping/captain
-	progression_minimum = 30 MINUTES
 	progression_reward = list(12 MINUTES, 16 MINUTES)
-	telecrystal_reward = list(2, 3)
+	telecrystal_reward = list(5, 6)
+	given_contractor_rep = 4
+
 	target_jobs = list(
 		/datum/job/captain,
 		/datum/job/head_of_security,
 	)
-	alive_bonus = 5
+	alive_bonus = 6
 
 /datum/traitor_objective/target_player/kidnapping/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 
@@ -323,4 +307,3 @@
 	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
 		belongings += internal_bag.contents
 	return belongings
-*/

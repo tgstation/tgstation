@@ -18,3 +18,4 @@
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		purchasable_from |= UPLINK_TRAITORS
+		purchasable_from |= UPLINK_CONTRACTORS //monkestation edit

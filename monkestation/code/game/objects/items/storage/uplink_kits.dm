@@ -24,7 +24,7 @@
 		/obj/item/clothing/under/syndicate/skirt/maid = 1,
 		/obj/item/clothing/gloves/combat/maid = 1,
 		/obj/item/clothing/accessory/maidapron/syndicate = 1,)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/syndie_kit/contractor_loadout
 	name = "Standard Loadout"
@@ -41,7 +41,7 @@
 	new /obj/item/jammer(src)
 
 /obj/item/storage/box/syndie_kit/contract_kit/PopulateContents()
-	new /obj/item/storage/box/syndicate/contractor_loadout(src)
+	new /obj/item/storage/box/syndie_kit/contractor_loadout(src)
 	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
 	// You get one item from each sub list
@@ -84,9 +84,9 @@
 	)
 
 	var/list/items_to_give = list()
-	items_to_give += pick(item_list[KIT_ITEM_CATEGORY_SUPPORT])
-	items_to_give += pick(item_list[KIT_ITEM_CATEGORY_WEAPONS])
-	items_to_give += pick(item_list[KIT_ITEM_CATEGORY_MISC])
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_SUPPORT])] = 1
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_WEAPONS])] = 1
+	items_to_give[pick(item_list[KIT_ITEM_CATEGORY_MISC])] = 1
 	generate_items_inside(items_to_give, src)
 
 	// Paper guide

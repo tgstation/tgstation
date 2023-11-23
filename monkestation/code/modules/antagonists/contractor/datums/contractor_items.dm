@@ -6,6 +6,21 @@
 	var/stock = -1 // Any number above 0 for how many times it can be bought in a round for a single traitor. -1 is unlimited.
 	var/cost // Cost of the item in contract rep.
 
+/datum/contractor_item/contract_reroll
+	name = "Contract Reroll"
+	desc = "Request a reroll of your current contract list. Will generate a new target, payment, and dropoff for the contracts you currently have available."
+	item_icon = "dice"
+	stock = 2
+	cost = 0
+
+/datum/contractor_item/contract_reroll/handle_purchase(datum/uplink_handler/handler, mob/living/user)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	handler.clear_secondaries()
+	handler.generate_objectives()
+
 /datum/contractor_item/contractor_pinpointer
 	name = "Contractor Pinpointer"
 	desc = "A pinpointer that finds targets even without active suit sensors. Due to taking advantage of an exploit within the system, \
@@ -21,7 +36,7 @@
 			Activating the pack on your target will send them over to the beacon - make sure they're not just going to run away though!"
 	item = /obj/item/storage/box/contractor/fulton_extraction
 	item_icon = "parachute-box"
-	stock = 1
+	stock = 2
 	cost = 1
 
 /datum/contractor_item/contractor_partner
@@ -33,10 +48,10 @@
 	cost = 2
 	var/datum/mind/partner_mind = null
 
-/datum/contractor_item/contractor_partner/handle_purchase(datum/contractor_hub/hub, mob/living/user)
+/datum/contractor_item/contractor_partner/handle_purchase(datum/uplink_handler/handler, mob/living/user)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
 	to_chat(user, span_notice("The uplink vibrates quietly, connecting to nearby agents..."))
 
@@ -51,8 +66,8 @@
 
 		// refund and add the limit back.
 		stock += 1
-		hub.contract_rep += cost
-		hub.purchased_items -= src
+		handler.contractor_rep += cost
+		handler.purchased_contractor_items -= src
 
 /datum/contractor_item/contractor_partner/proc/spawn_contractor_partner(mob/living/user, key)
 	var/mob/living/carbon/human/partner = new()
@@ -91,28 +106,29 @@
 	stock = 2
 	cost = 3
 
-/datum/contractor_item/blackout/handle_purchase(datum/contractor_hub/hub)
+/datum/contractor_item/blackout/handle_purchase(datum/uplink_handler/handler)
 	. = ..()
 
-	if (.)
-		power_fail(35, 50)
-		priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", \
-							"Critical Power Failure", ANNOUNCER_POWEROFF)
+	if(!.)
+		return FALSE
+
+	power_fail(35, 50)
+	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", \
+						"Critical Power Failure", ANNOUNCER_POWEROFF)
 
 // Subtract cost, and spawn if it's an item.
-/datum/contractor_item/proc/handle_purchase(datum/contractor_hub/hub, mob/living/user)
-
-	if (hub.contract_rep >= cost)
-		hub.contract_rep -= cost
+/datum/contractor_item/proc/handle_purchase(datum/uplink_handler/handler, mob/living/user)
+	if(handler.contractor_rep >= cost)
+		handler.contractor_rep -= cost
 	else
 		return FALSE
 
-	if (stock >= 1)
+	if(stock >= 1)
 		stock -= 1
-	else if (stock == 0)
+	else if(stock == 0)
 		return FALSE
 
-	hub.purchased_items.Add(src)
+	handler.purchased_contractor_items.Add(src)
 
 	user.playsound_local(user, 'sound/machines/uplinkpurchase.ogg', 100)
 
@@ -126,24 +142,6 @@
 
 		return item_to_create
 	return TRUE
-
-/obj/item/pinpointer/crew/contractor
-	name = "contractor pinpointer"
-	desc = "A handheld tracking device that locks onto certain signals. Ignores suit sensors, but is much less accurate."
-	icon_state = "pinpointer_syndicate"
-	worn_icon_state = "pinpointer_black"
-	minimum_range = 25
-	has_owner = TRUE
-	ignore_suit_sensor_level = TRUE
-
-/obj/item/storage/box/contractor/fulton_extraction
-	name = "Fulton Extraction Kit"
-	icon_state = "syndiebox"
-	illustration = "writing_syndie"
-
-/obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
-	new /obj/item/extraction_pack(src)
-	new /obj/item/fulton_core(src)
 
 /datum/contractor_item/baton_holster
 	name = "Baton Holster Module"

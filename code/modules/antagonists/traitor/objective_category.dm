@@ -12,27 +12,31 @@
 			// Category should just get autoGC'd here if they don't have any length, this may not be necessary
 			qdel(category)
 
-/datum/traitor_category_handler/proc/objective_valid(datum/traitor_objective/objective_path, progression_points)
+/datum/traitor_category_handler/proc/objective_valid(datum/traitor_objective/objective_path, progression_points, uplink_flag) //monkestation edit: adds uplink_flag
 	if(initial(objective_path.abstract_type) == objective_path)
 		return FALSE
 	if(progression_points < initial(objective_path.progression_minimum))
 		return FALSE
 	if(progression_points > initial(objective_path.progression_maximum))
 		return FALSE
+//monkestation edit start
+	if(!(initial(objective_path.valid_uplinks) & uplink_flag))
+		return FALSE
+//monkestation edit end
 	return TRUE
 
-/datum/traitor_category_handler/proc/get_possible_objectives(progression_points)
+/datum/traitor_category_handler/proc/get_possible_objectives(progression_points, uplink_flag) //monkestation edit: adds uplink_flag
 	var/list/valid_objectives = list()
 	for(var/datum/traitor_objective_category/category as anything in all_categories)
 		var/list/category_list = list()
 		for(var/value in category.objectives)
 			if(islist(value))
-				var/list/objective_category = filter_invalid_objective_list(value, progression_points)
+				var/list/objective_category = filter_invalid_objective_list(value, progression_points, uplink_flag) //monkestation edit:: adds uplink_flag
 				if(!length(objective_category))
 					continue
 				category_list[objective_category] = category.objectives[value]
 			else
-				if(!objective_valid(value, progression_points))
+				if(!objective_valid(value, progression_points, uplink_flag)) //monkestation edit: adds uplink_flag
 					continue
 				category_list[value] = category.objectives[value]
 		if(!length(category_list))
@@ -41,7 +45,7 @@
 
 	return valid_objectives
 
-/datum/traitor_category_handler/proc/filter_invalid_objective_list(list/objectives, progression_points)
+/datum/traitor_category_handler/proc/filter_invalid_objective_list(list/objectives, progression_points, uplink_flag) //monkestation edit: adds uplink_flag
 	var/list/filtered_objectives = list()
 	for(var/value in objectives)
 		if(islist(value))
@@ -50,7 +54,7 @@
 				continue
 			filtered_objectives[result] = objectives[value]
 		else
-			if(!objective_valid(value, progression_points))
+			if(!objective_valid(value, progression_points, uplink_flag)) //monkestation edit: adds uplink_flag
 				continue
 			filtered_objectives[value] = objectives[value]
 	return filtered_objectives

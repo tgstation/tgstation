@@ -228,6 +228,10 @@
 /datum/traitor_objective/proc/completion_payout()
 	handler.progression_points += progression_reward
 	handler.telecrystals += telecrystal_reward
+//monkestation edit start
+	if(given_contractor_rep)
+		handler.contractor_rep += given_contractor_rep
+//monkestation edit end
 
 /// Used for sending data to the uplink UI
 /datum/traitor_objective/proc/uplink_ui_data(mob/user)
@@ -241,6 +245,7 @@
 		"objective_state" = objective_state,
 		"original_progression" = original_progression,
 		"telecrystal_penalty" = telecrystal_penalty,
+		"contractor_rep" = given_contractor_rep, //monkestation edit
 	)
 
 /datum/traitor_objective/proc/on_objective_taken(mob/user)

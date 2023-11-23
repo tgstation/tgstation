@@ -5,7 +5,6 @@
 	show_in_roundend = FALSE // We're already adding them in to the contractor's roundend.
 	give_objectives = TRUE // We give them their own custom objective.
 	show_in_antagpanel = FALSE // Not a proper/full antag.
-	give_uplink = FALSE // Don't give them an uplink.
 	give_secondary_objectives = FALSE
 	/// Team datum that contains the contractor and the support unit
 	var/datum/team/contractor_team/contractor_team
