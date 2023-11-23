@@ -11,6 +11,7 @@
 	desc = "This disease disrupts the magnetic field of your body, making it act as if a powerful magnet. Injections of iron help stabilize the field."
 	severity = DISEASE_SEVERITY_MEDIUM
 	infectable_biotypes = MOB_ORGANIC|MOB_ROBOTIC
+	bypasses_immunity = TRUE
 	process_dead = TRUE
 
 

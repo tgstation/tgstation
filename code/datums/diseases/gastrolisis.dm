@@ -9,6 +9,7 @@
 	stage_prob = 0.5
 	disease_flags = CURABLE
 	cures = list(/datum/reagent/consumable/salt,  /datum/reagent/medicine/mutadone)
+	bypasses_immunity = TRUE
 
 
 /datum/disease/gastrolosis/stage_act(seconds_per_tick, times_fired)
