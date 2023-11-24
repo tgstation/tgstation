@@ -205,7 +205,6 @@
 	inhand_icon_state = "kineticgun"
 	w_class = WEIGHT_CLASS_HUGE
 	pin = /obj/item/firing_pin/wastes
-	pin_removable = FALSE
 	recharge_time = 3 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/railgun)
 	item_flags = NONE
@@ -383,6 +382,7 @@
 	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon."
 	fail_message = "Wastes check failed! - Try getting further from the station first."
 	pin_hot_swappable = FALSE
+	pin_removable = FALSE
 
 /obj/item/firing_pin/wastes/pin_auth(mob/living/user)
 	if(!istype(user))
