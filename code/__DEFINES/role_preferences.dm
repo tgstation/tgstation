@@ -128,6 +128,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 
+	ROLE_DARKSPAWN = 14, //Massmeta edit
+
 	// Midround
 	ROLE_ABDUCTOR = 0,
 	ROLE_ALIEN = 0,

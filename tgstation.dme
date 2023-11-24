@@ -1731,6 +1731,7 @@
 #include "code\datums\status_effects\buffs\stop_drop_roll.dm"
 #include "code\datums\status_effects\buffs\stun_absorption.dm"
 #include "code\datums\status_effects\debuffs\blindness.dm"
+#include "code\datums\status_effects\debuffs\broken_will.dm"
 #include "code\datums\status_effects\debuffs\choke.dm"
 #include "code\datums\status_effects\debuffs\confusion.dm"
 #include "code\datums\status_effects\debuffs\cursed.dm"
