@@ -15,8 +15,8 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_inactive = 0.5
+	slowdown_active = 0
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster/contractor, /obj/item/mod/module/chameleon)
 	allowed_suit_storage = list(
@@ -58,10 +58,10 @@
 	)
 //ICONS BORKED
 /datum/armor/mod_contractor_armor
-	melee = 40
-	bullet = 50
-	laser = 30
-	energy = 40
+	melee = 30
+	bullet = 40
+	laser = 20
+	energy = 30
 	bomb = 30
 	bio = 40
 	fire = 80

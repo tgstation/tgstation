@@ -1,6 +1,6 @@
 #define CUFF_MAXIMUM 3
-#define MUTE_CYCLES 5
-#define MUTE_MAX_MOD 2
+#define MUTE_APPLIED 10 SECONDS
+#define MUTE_MAX 30 SECONDS
 #define BONUS_STAMINA_DAM 25
 #define BONUS_STUTTER 10 SECONDS
 #define BATON_CUFF_UPGRADE (1<<0)
@@ -47,8 +47,7 @@
 
 	var/mob/living/carbon/carbon_target = target
 	if(upgrade_flags & BATON_MUTE_UPGRADE)
-		if(carbon_target.silent < (MUTE_CYCLES * MUTE_MAX_MOD))
-			carbon_target.silent = min((carbon_target.silent + MUTE_CYCLES), (MUTE_CYCLES * MUTE_MAX_MOD))
+		carbon_target.adjust_silence_up_to(MUTE_APPLIED, MUTE_MAX)
 
 	if(upgrade_flags & BATON_FOCUS_UPGRADE)
 		var/datum/antagonist/traitor/traitor_datum = IS_TRAITOR(user)
@@ -58,12 +57,6 @@
 				if(carbon_target == objective.target)
 					carbon_target.stamina.adjust(-BONUS_STAMINA_DAM)
 					carbon_target.adjust_timed_status_effect(BONUS_STUTTER, /datum/status_effect/speech/stutter)
-
-/obj/item/melee/baton/telescopic/contractor_baton/dropped(mob/user, silent)
-	. = ..()
-	if(!holster)
-		return
-	holster.undeploy(user)
 
 /obj/item/melee/baton/telescopic/contractor_baton/attack_secondary(mob/living/victim, mob/living/user, params)
 	if(!(upgrade_flags & BATON_CUFF_UPGRADE) || !active)
@@ -131,7 +124,7 @@
 	return
 
 /obj/item/baton_upgrade
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'monkestation/icons/obj/items/baton_upgrades.dmi'
 	var/upgrade_flag
 
 /obj/item/baton_upgrade/cuff
@@ -153,8 +146,8 @@
 	upgrade_flag = BATON_FOCUS_UPGRADE
 
 #undef CUFF_MAXIMUM
-#undef MUTE_CYCLES
-#undef MUTE_MAX_MOD
+#undef MUTE_APPLIED
+#undef MUTE_MAX
 #undef BONUS_STAMINA_DAM
 #undef BONUS_STUTTER
 #undef BATON_CUFF_UPGRADE

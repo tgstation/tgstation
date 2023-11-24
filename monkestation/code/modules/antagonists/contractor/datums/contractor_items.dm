@@ -13,18 +13,18 @@
 	var/cost
 
 /// Subtract cost, and spawn if it's an item.
-/datum/contractor_item/proc/handle_purchase(datum/contractor_hub/hub, mob/living/user)
-	if(hub.contract_rep >= cost)
-		hub.contract_rep -= cost
+/datum/contractor_item/proc/handle_purchase(datum/uplink_handler/handler, mob/living/user)
+	if(handler.contractor_rep >= cost)
+		handler.contractor_rep -= cost
 	else
 		return FALSE
 
-	if(limited >= 1)
-		limited -= 1
-	else
+	if(stock >= 1)
+		stock -= 1
+	else if(stock != -1)
 		return FALSE
 
-	hub.purchased_items.Add(src)
+	handler.purchased_contractor_items.Add(src)
 
 	user.playsound_local(user, 'sound/machines/uplinkpurchase.ogg', 100)
 
@@ -34,7 +34,7 @@
 			to_chat(user, span_notice("Your purchase materializes into your hands!"))
 		else
 			to_chat(user, span_notice("Your purchase materializes onto the floor."))
-		return item_to_create
+
 	return TRUE
 
 /datum/contractor_item/contract_reroll
@@ -151,10 +151,10 @@
 	name = "Comms Outage"
 	desc = "Request Syndicate Command to disable station Telecommunications. Disables telecommunications across the station for a medium duration."
 	item_icon = "phone-slash"
-	limited = 2
+	stock = 2
 	cost = 2
 
-/datum/contractor_item/comms_blackout/handle_purchase(datum/contractor_hub/hub)
+/datum/contractor_item/comms_blackout/handle_purchase(datum/uplink_handler/handler)
 	. = ..()
 	if(!.)
 		return

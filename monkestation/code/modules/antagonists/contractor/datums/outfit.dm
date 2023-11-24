@@ -12,7 +12,7 @@
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/radio/headset/syndicate/alt
-	l_pocket = /obj/item/modular_computer/tablet/syndicate_contract_uplink
+	l_pocket = /obj/item/pinpointer/crew/contractor
 	id = /obj/item/card/id/advanced/chameleon
 	backpack_contents = list(
 		/obj/item/storage/box/survival/syndie,
@@ -35,8 +35,8 @@
 	uniform = /obj/item/clothing/under/syndicate
 	glasses = /obj/item/clothing/glasses/night
 
-/datum/outfit/contractor/fully_upgraded
-	name = "Syndicate Contractor - Fully Upgraded"
+/datum/outfit/contractor/upgraded
+	name = "Syndicate Contractor (Upgraded)"
 	back = /obj/item/mod/control/pre_equipped/contractor/upgraded/adminbus
 
 /datum/id_trim/chameleon/contractor

@@ -23,12 +23,12 @@
 	balloon_alert(user, "[attacking_item] inserted")
 	eaten_baton = TRUE
 	for(var/obj/item/melee/baton/telescopic/contractor_baton/device_baton as anything in src)
-		for(var/obj/item/item_contents as anything in attacking_item)
-			if(istype(item_contents, /obj/item/baton_upgrade))
-				device_baton.add_upgrade(item_contents)
-			else
-				item_contents.forceMove(device_baton)
-	qdel(attacking_item)
+		for(var/obj/item/baton_upgrade/original_upgrade in attacking_item)
+			var/obj/item/baton_upgrade/new_upgrade = new original_upgrade.type(device_baton)
+			device_baton.add_upgrade(new_upgrade)
+		for(var/obj/item/restraints/handcuffs/cable/baton_cuffs in attacking_item)
+			baton_cuffs.forceMove(device_baton)
+	qdel(attacking_item) //TEST CUFFS
 
 /obj/item/mod/module/baton_holster/on_activation()
 	if(!eaten_baton)
@@ -85,4 +85,4 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	device = /obj/item/gun/magic/hook/contractor
 	cooldown_time = 0.5 SECONDS
-	allowed_inactive = TRUE
+	allow_flags = MODULE_ALLOW_INACTIVE

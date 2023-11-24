@@ -4,7 +4,6 @@
 
 	show_in_roundend = FALSE // We're already adding them in to the contractor's roundend.
 	give_objectives = TRUE // We give them their own custom objective.
-	show_in_antagpanel = FALSE // Not a proper/full antag.
 	give_secondary_objectives = FALSE
 	/// Team datum that contains the contractor and the support unit
 	var/datum/team/contractor_team/contractor_team
@@ -39,10 +38,14 @@
 
 	backpack_contents = list(
 	/obj/item/storage/box/survival,
-	/obj/item/implanter/uplink,
+//	/obj/item/implanter/uplink,
 	/obj/item/clothing/mask/chameleon,
 	/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 	/obj/item/lighter
+	)
+
+	implants = list(
+		/obj/item/implant/uplink/precharged, //may need to make this not be precharged, we will see
 	)
 
 /datum/outfit/contractor_partner/post_equip(mob/living/carbon/human/partner, visualsOnly)
