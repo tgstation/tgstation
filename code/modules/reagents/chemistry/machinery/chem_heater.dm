@@ -273,7 +273,7 @@
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
 		var/_reagent = equilibrium.reaction.results[1]
-		var/datum/reagent/reagent = beaker?.reagents.get_reagent(_reagent) //Reactions are named after their primary products
+		var/datum/reagent/reagent = beaker?.reagents.has_reagent(_reagent) //Reactions are named after their primary products
 		if(!reagent)
 			continue
 		var/overheat = FALSE
@@ -438,11 +438,11 @@ To continue set your target temperature to 390K."}
 		return
 	if(buffer_type == "acid")
 		if(volume < 0)
-			var/datum/reagent/acid_reagent = beaker.reagents.get_reagent(/datum/reagent/reaction_agent/acidic_buffer)
+			var/datum/reagent/acid_reagent = beaker.reagents.has_reagent(/datum/reagent/reaction_agent/acidic_buffer)
 			if(!acid_reagent)
 				say("Unable to find acidic buffer in beaker to draw from! Please insert a beaker containing acidic buffer.")
 				return
-			var/datum/reagent/acid_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/acidic_buffer)
+			var/datum/reagent/acid_reagent_heater = reagents.has_reagent(/datum/reagent/reaction_agent/acidic_buffer)
 			var/cur_vol = 0
 			if(acid_reagent_heater)
 				cur_vol = acid_reagent_heater.volume
@@ -455,11 +455,11 @@ To continue set your target temperature to 390K."}
 
 	if(buffer_type == "basic")
 		if(volume < 0)
-			var/datum/reagent/basic_reagent = beaker.reagents.get_reagent(/datum/reagent/reaction_agent/basic_buffer)
+			var/datum/reagent/basic_reagent = beaker.reagents.has_reagent(/datum/reagent/reaction_agent/basic_buffer)
 			if(!basic_reagent)
 				say("Unable to find basic buffer in beaker to draw from! Please insert a beaker containing basic buffer.")
 				return
-			var/datum/reagent/basic_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/basic_buffer)
+			var/datum/reagent/basic_reagent_heater = reagents.has_reagent(/datum/reagent/reaction_agent/basic_buffer)
 			var/cur_vol = 0
 			if(basic_reagent_heater)
 				cur_vol = basic_reagent_heater.volume
@@ -472,7 +472,7 @@ To continue set your target temperature to 390K."}
 
 /obj/machinery/chem_heater/proc/get_purity_color(datum/equilibrium/equilibrium)
 	var/_reagent = equilibrium.reaction.results[1]
-	var/datum/reagent/reagent = equilibrium.holder.get_reagent(_reagent)
+	var/datum/reagent/reagent = equilibrium.holder.has_reagent(_reagent)
 	// Can't be a switch due to http://www.byond.com/forum/post/2750423
 	if(reagent.purity in 1 to INFINITY)
 		return "blue"

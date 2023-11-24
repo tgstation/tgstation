@@ -2,7 +2,7 @@
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
 
 /obj/item/mine_bot_upgrade/afterattack(mob/living/basic/mining_drone/minebot, mob/user, proximity)
 	. = ..()
@@ -39,7 +39,7 @@
 	name = "minebot AI upgrade"
 	desc = "Can be used to grant sentience to minebots. It's incompatible with minebot armor and melee upgrades, and will override them."
 	icon_state = "door_electronics"
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
 	sentience_type = SENTIENCE_MINEBOT
 	///health boost to add
 	var/base_health_add = 5

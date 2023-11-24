@@ -235,7 +235,8 @@
 	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
 	if(QDELETED(victim))
 		return
-	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT])
+	// cancel the action if they're below our given crit stat, OR if we're trying to attack ourselves (this can happen on tamed mobs w/ protect subtree rarely)
+	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT] || victim == controller.pawn)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
 	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETING_STRATEGY)

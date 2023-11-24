@@ -3,7 +3,7 @@
 	name = BODY_ZONE_CHEST
 	desc = "It's impolite to stare at a person's chest."
 	icon_state = "default_human_chest"
-	max_damage = 200
+	max_damage = LIMB_MAX_HP_CORE
 	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
 	plaintext_zone = "chest"
@@ -81,7 +81,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = 500
+	max_damage = LIMB_MAX_HP_ALIEN_CORE
 	acceptable_bodytype = BODYTYPE_HUMANOID
 	wing_types = NONE
 
@@ -93,7 +93,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = 50
+	max_damage = LIMB_MAX_HP_ALIEN_LARVA
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_LARVA_PLACEHOLDER
 	wing_types = NONE
@@ -104,9 +104,9 @@
 	desc = "Hey buddy give me a HAND and report this to the github because you shouldn't be seeing this."
 	attack_verb_continuous = list("slaps", "punches")
 	attack_verb_simple = list("slap", "punch")
-	max_damage = 50
+	max_damage = LIMB_MAX_HP_DEFAULT
 	aux_layer = BODYPARTS_HIGH_LAYER
-	body_damage_coeff = 0.75
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	can_be_disabled = TRUE
 	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
 	unarmed_damage_low = 5
@@ -228,7 +228,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
-	max_damage = 100
+	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
 	should_draw_greyscale = FALSE
 	appendage_noun = "scythe-like hand"
 
@@ -333,7 +333,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
-	max_damage = 100
+	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
 	should_draw_greyscale = FALSE
 	appendage_noun = "scythe-like hand"
 
@@ -343,8 +343,8 @@
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
-	max_damage = 50
-	body_damage_coeff = 0.75
+	max_damage = LIMB_MAX_HP_DEFAULT
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	can_be_disabled = TRUE
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
@@ -451,7 +451,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
-	max_damage = 100
+	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right
@@ -545,7 +545,7 @@
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
 	can_be_disabled = FALSE
-	max_damage = 100
+	max_damage = LIMB_MAX_HP_ALIEN_LIMBS
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right/tallboy

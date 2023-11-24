@@ -24,7 +24,7 @@
 		),
 		JOB_CAPTAIN = /mob/living/basic/pet/fox/renault,
 		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
-		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
+		JOB_CHIEF_ENGINEER = /mob/living/basic/parrot/poly,
 		JOB_QUARTERMASTER = list(
 			/mob/living/basic/gorilla/cargorilla,
 			/mob/living/basic/sloth/citrus,
