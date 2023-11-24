@@ -24,12 +24,6 @@
 	// Set to false since we don't want this to persist
 	persistence_id = FALSE
 
-// Mood applied for ripping the painting
-/datum/mood_event/eldritch_painting
-	description = "YOU, I SHOULD NOT HAVE DONE THAT!!!"
-	mood_change = -6
-	timeout = 3 MINUTES
-
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
 	if(sensor_type)
 		painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
@@ -71,23 +65,6 @@
 	icon_state = "eldritch_painting_weeping"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/weeping
 
-// Some mood events related to this painting
-
-/datum/mood_event/eldritch_painting/weeping
-	description = "HE IS HERE, AND HE WEEPS!"
-	mood_change = -3
-	timeout = 11 SECONDS
-
-/datum/mood_event/eldritch_painting/weeping_heretic
-	description = "Oh such arts! They truly inspire me!"
-	mood_change = 5
-	timeout = 3 MINUTES
-
-/datum/mood_event/eldritch_painting/weeping_withdrawl
-	description = "My mind is clear from his influence."
-	mood_change = 1
-	timeout = 3 MINUTES
-
 /obj/structure/sign/painting/eldritch/weeping/examine_effects(mob/living/carbon/examiner)
 	if(IS_HERETIC(examiner))
 		to_chat(examiner, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
@@ -115,17 +92,6 @@
 	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
 	icon_state = "eldritch_painting_desire"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/desire
-
-// Moodlets used to track hunger and provide feedback
-/datum/mood_event/eldritch_painting/desire_heretic
-	description = "A part gained, the manus takes and gives. What did it take from me?"
-	mood_change = -2
-	timeout = 3 MINUTES
-
-/datum/mood_event/eldritch_painting/desire_examine
-	description = "A hunger kept at bay..."
-	mood_change = 3
-	timeout = 3 MINUTES
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/desire/examine_effects(mob/living/carbon/examiner)
@@ -187,11 +153,6 @@
 		/obj/item/food/grown/harebell,
 	)
 
-/datum/mood_event/eldritch_painting/heretic_vines
-	description = "Oh what a lovely flower!"
-	mood_change = 3
-	timeout = 3 MINUTES
-
 /obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
 	return ..()
@@ -207,7 +168,6 @@
 	else
 		new /datum/spacevine_controller(get_turf(examiner), mutations, 0, 10)
 		to_chat(examiner, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
-
 
 
 // Lady out of gates, gives a brain trauma causing the person to scratch themselves
@@ -250,17 +210,6 @@
 	desc = "A painting depicting something climbing a mountain of rust, it gives you an eerie feeling. Destroyable with wirecutters."
 	icon_state = "eldritch_painting_rust"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/rust
-
-// Moodlets used to prevent rust and give a positive moodlet for heretics
-/datum/mood_event/eldritch_painting/rust_examine
-	description = "The rusted climb can wait..."
-	mood_change = -2
-	timeout = 3 MINUTES
-
-/datum/mood_event/eldritch_painting/rust_heretic_examine
-	description = "I must hurry the rusted climb!"
-	mood_change = 6
-	timeout = 3 MINUTES
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/rust/examine_effects(mob/living/carbon/examiner)
