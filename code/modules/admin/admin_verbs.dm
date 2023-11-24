@@ -1188,7 +1188,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
 
-/client/proc/spawn_as_mmi(/mob/living/carbon/human/target in GLOB.human_list)
+/client/proc/spawn_as_mmi(mob/living/carbon/human/target in GLOB.human_list)
 	set category = "Debug"
 	set name = "Turn target into MMI"
 	set desc = "Turns something into an MMI, must be used on humans"
