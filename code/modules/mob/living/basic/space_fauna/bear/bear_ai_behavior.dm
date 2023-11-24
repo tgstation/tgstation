@@ -1,6 +1,3 @@
-/datum/ai_behavior/basic_melee_attack/bear
-	action_cooldown = 2 SECONDS
-
 /datum/ai_behavior/find_hunt_target/find_hive
 
 /datum/ai_behavior/find_hunt_target/find_hive/valid_dinner(mob/living/source, obj/structure/beebox/hive, radius)

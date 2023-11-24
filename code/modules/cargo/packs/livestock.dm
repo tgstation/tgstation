@@ -6,13 +6,13 @@
 	name = "Bird Crate"
 	desc = "Contains five expert telecommunication birds."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/mob/living/simple_animal/parrot)
+	contains = list(/mob/living/basic/parrot)
 	crate_name = "parrot crate"
 
 /datum/supply_pack/critter/parrot/generate()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /mob/living/simple_animal/parrot(.)
+		new /mob/living/basic/parrot(.)
 
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
@@ -135,7 +135,7 @@
 	name = "Goat Crate"
 	desc = "The goat goes baa! Contains one goat. Warranty void if used as a replacement for Pete."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
+	contains = list(/mob/living/basic/goat)
 	crate_name = "goat crate"
 
 /datum/supply_pack/critter/rabbit
@@ -185,7 +185,7 @@
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? \
 		Then this isn't the crate for you. Contains three venomous snakes."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/mob/living/simple_animal/hostile/retaliate/snake = 3)
+	contains = list(/mob/living/basic/snake = 3)
 	crate_name = "snake crate"
 
 /datum/supply_pack/critter/amphibians

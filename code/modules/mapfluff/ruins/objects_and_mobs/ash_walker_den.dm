@@ -13,8 +13,8 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	max_integrity = 200
 
+	faction = list(FACTION_ASHWALKER)
 
-	var/faction = list(FACTION_ASHWALKER)
 	var/meat_counter = 6
 	var/datum/team/ashwalkers/ashies
 	var/datum/linked_objective

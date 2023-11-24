@@ -59,7 +59,7 @@
 		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
 		return FALSE
 	if(isguardian(cast_on))
-		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
+		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner && stand.summoner == owner)
 			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
 			return FALSE
@@ -86,7 +86,7 @@
 
 	var/mob/living/to_swap = cast_on
 	if(isguardian(cast_on))
-		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
+		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner)
 			to_swap = stand.summoner
 

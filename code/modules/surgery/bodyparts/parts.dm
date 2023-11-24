@@ -31,7 +31,7 @@
 	if(cavity_item)
 		cavity_item.forceMove(drop_location())
 		cavity_item = null
-	..()
+	return ..()
 
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'
@@ -87,6 +87,11 @@
 	unarmed_damage_high = 10
 	unarmed_stun_threshold = 10
 	body_zone = BODY_ZONE_L_ARM
+
+	biological_state = BIO_STANDARD_JOINTED
+
+/obj/item/bodypart/arm/Destroy()
+	return ..()
 
 /obj/item/bodypart/arm/left
 	name = "left arm"
@@ -301,7 +306,7 @@
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_MONKEY | BODYTYPE_ORGANIC
+	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	max_damage = 50
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
@@ -311,6 +316,17 @@
 	unarmed_damage_low = 2
 	unarmed_damage_high = 15
 	unarmed_stun_threshold = 10
+
+	/// Can these legs be digitigrade? See digitigrade.dm
+	var/can_be_digitigrade = FALSE
+	///Set limb_id to this when in "digi mode". MUST BE UNIQUE LIKE ALL LIMB IDS
+	var/digitigrade_id
+	/// Used solely by digitigrade limbs to remember what their old limb ID was.
+	var/old_limb_id
+	biological_state = BIO_STANDARD_JOINTED
+
+/obj/item/bodypart/leg/Destroy()
+	return ..()
 
 /obj/item/bodypart/leg/left
 	name = "left leg"

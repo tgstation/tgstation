@@ -233,7 +233,7 @@
 			holo_cooldown = world.time + 10 SECONDS
 			return
 
-// see: [/datum/wound/burn/proc/uv()]
+// see: [/datum/wound/burn/flesh/proc/uv()]
 /obj/item/flashlight/pen/paramedic
 	name = "paramedic penlight"
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."

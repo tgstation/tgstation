@@ -15,8 +15,8 @@
 		BB_CHICKEN_NESTING_BOX = null,
 		BB_CHICKEN_FEED = null,
 
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETTING_DATUM = /datum/targeting_strategy/basic/not_friends,
 	)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -49,8 +49,8 @@
 		BB_CHICKEN_NESTING_BOX = null,
 		BB_CHICKEN_FEED = null,
 
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETTING_DATUM = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	planning_subtrees = list(
@@ -76,8 +76,8 @@
 		BB_CHICKEN_NESTING_BOX = null,
 		BB_CHICKEN_FEED = null,
 
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETTING_DATUM = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	planning_subtrees = list(

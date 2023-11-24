@@ -52,8 +52,8 @@
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -85,10 +85,21 @@
 	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
 	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
+	///number of burst shots
+	var/burst_shots
+	///cooldown between attacks
+	var/ranged_cooldown = 1 SECONDS
 
 /mob/living/basic/cockroach/glockroach/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/glockroach, cooldown_time = 1 SECONDS)
+	AddComponent(\
+		/datum/component/ranged_attacks,\
+		casing_type = /obj/item/ammo_casing/glockroach,\
+		burst_shots = burst_shots,\
+		cooldown_time = ranged_cooldown,\
+	)
+	if (ranged_cooldown <= 1 SECONDS)
+		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(
@@ -114,6 +125,7 @@
 	melee_damage_lower = 2.5
 	melee_damage_upper = 10
 	obj_damage = 10
+	melee_attack_cooldown = 1 SECONDS
 	gold_core_spawnable = HOSTILE_SPAWN
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
@@ -141,36 +153,26 @@
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,  //If we are attacking someone, this will prevent us from hunting
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/hauberoach
-
-/datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
-	action_cooldown = 1 SECONDS
 
 /datum/ai_controller/basic_controller/cockroach/sewer
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/sewer
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/sewer
-
-/datum/ai_behavior/basic_melee_attack/sewer
-	action_cooldown = 0.8 SECONDS
 
 /mob/living/basic/cockroach/glockroach/mobroach
 	name = "mobroach"
 	desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
 	icon_state = "mobroach"
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/mobroach
+	burst_shots = 4
+	ranged_cooldown = 2 SECONDS
 
 /datum/ai_controller/basic_controller/cockroach/mobroach
 	planning_subtrees = list(
@@ -185,5 +187,4 @@
 	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/mobroach
 
 /datum/ai_behavior/basic_ranged_attack/mobroach
-	shots = 4
 	action_cooldown = 2 SECONDS
