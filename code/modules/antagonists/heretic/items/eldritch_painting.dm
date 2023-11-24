@@ -1,7 +1,6 @@
 // The basic eldritch painting
 /obj/item/wallframe/painting/eldritch
 	name = "The debug and a coder who slept"
-	desc = "This shouldn't be shown..."
 	icon = 'icons/obj/signs.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
@@ -11,7 +10,6 @@
 
 /obj/structure/sign/painting/eldritch
 	name = "The debug and a coder who slept"
-	desc = "This shouldn't be shown..."
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
@@ -44,6 +42,21 @@
 	QDEL_NULL(painting_proximity_sensor)
 	qdel(src)
 
+// On examine eldritch paintings give a trait showing you have examined them
+/obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE))
+		return
+
+	ADD_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE, REF(src))
+	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_ELDRITCH_PAINTING_EXAMINE, REF(src)), 3 MINUTES)
+	examine_effects(user)
+
+/obj/structure/sign/painting/eldritch/proc/examine_effects(mob/living/carbon/examiner)
+	if(IS_HERETIC(examiner))
+		to_chat(examiner, span_notice("Oh, what arts!"))
+	else
+		to_chat(examiner, span_notice("Kinda strange painting."))
 
 // The sister and He Who Wept eldritch painting
 /obj/item/wallframe/painting/eldritch/weeping
@@ -58,72 +71,36 @@
 	icon_state = "eldritch_painting_weeping"
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/weeping
 
-// These moods are here to check hallucinations and provide easier user feedback
+// Some mood events related to this painting
 
 /datum/mood_event/eldritch_painting/weeping
 	description = "HE IS HERE, AND HE WEEPS!"
 	mood_change = -3
-	timeout = 10 SECONDS
+	timeout = 11 SECONDS
 
 /datum/mood_event/eldritch_painting/weeping_heretic
 	description = "Oh such arts! They truly inspire me!"
 	mood_change = 5
-	timeout = 5 MINUTES
+	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/weeping_withdrawl
 	description = "My mind is clear from his influence."
 	mood_change = 1
-	timeout = 5 MINUTES
+	timeout = 3 MINUTES
 
-/obj/structure/sign/painting/eldritch/weeping/examine(mob/living/carbon/user)
-	..()
-	if(IS_HERETIC(user))
-		// If they already have the positive moodlet return
-		if("heretic_eldritch_painting" in user.mob_mood.mood_events)
-			return
-		to_chat(user, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
-		// Adjusts every hallucination by -300, thus removing them if we have any
-		user.adjust_hallucinations(-300 SECONDS)
+/obj/structure/sign/painting/eldritch/weeping/examine_effects(mob/living/carbon/examiner)
+	if(IS_HERETIC(examiner))
+		to_chat(examiner, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
+		// Removes the hallucination debuff if we have it
+		examiner.remove_status_effect(/datum/status_effect/hallucination)
 		// Adds a very good mood event to the heretic
-		user.add_mood_event("heretic_eldritch_painting", /datum/mood_event/eldritch_painting/weeping_heretic)
-	// Do they have the mood event added with the hallucination?
-	if("eldritch_weeping" in user.mob_mood.mood_events)
-		to_chat(user, span_notice("Respite, for now...."))
+		examiner.add_mood_event("heretic_eldritch_painting", /datum/mood_event/eldritch_painting/weeping_heretic)
+	else
+		to_chat(examiner, span_notice("Respite, for now...."))
 		// Remove the mood event associated with the hallucinations
-		user.mob_mood.mood_events.Remove("eldritch_weeping")
+		examiner.mob_mood.mood_events.Remove("eldritch_weeping")
 		// Add a mood event that causes the hallucinations to not trigger anymore
-		user.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
-
-/*
- * A brain trauma that this eldritch paintings apply
- * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
- */
-/datum/brain_trauma/severe/weeping
-	name = "The Weeping"
-	desc = "Patient hallucinates everyone as a figure called He Who Wept"
-	scan_desc = "H_E##%%%WEEP6%11S!!,)()"
-	gain_text = span_warning("HE WEEPS AND I WILL SEE HIM ONCE MORE")
-	lose_text = span_notice("You feel the tendrils of something slip from your mind.")
-	random_gain = FALSE
-
-/datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
-		return
-	// If they have the weeping withdrawl mood event return
-	if("weeping_withdrawl" in owner.mob_mood.mood_events)
-		return
-	// If they already have the weeping mood event return, its duration is the same as the hallucination so this is done to prevent large amounts of lag
-	if("eldritch_weeping" in owner.mob_mood.mood_events)
-		return
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
-	..()
-
-/datum/brain_trauma/severe/weeping/on_gain()
-	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	..()
-
+		examiner.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
 
 
 // The First Desire painting, using a lot of the painting/eldritch framework
@@ -143,20 +120,16 @@
 /datum/mood_event/eldritch_painting/desire_heretic
 	description = "A part gained, the manus takes and gives. What did it take from me?"
 	mood_change = -2
-	timeout = 1 MINUTES
+	timeout = 3 MINUTES
 
 /datum/mood_event/eldritch_painting/desire_examine
 	description = "A hunger kept at bay..."
 	mood_change = 3
-	timeout = 1 MINUTES
+	timeout = 3 MINUTES
 
 // The special examine interaction for this painting
-/obj/structure/sign/painting/eldritch/desire/examine(mob/living/carbon/user)
-	..()
-	if(IS_HERETIC(user))
-		// If they already have the negative moodlet return
-		if("heretic_eldritch_hunger" in user.mob_mood.mood_events)
-			return
+/obj/structure/sign/painting/eldritch/desire/examine_effects(mob/living/carbon/examiner)
+	if(IS_HERETIC(examiner))
 		// A list made of the organs and bodyparts the heretic possess
 		var/static/list/random_bodypart_or_organ = list(
 			/obj/item/organ/internal/brain,
@@ -174,64 +147,18 @@
 		)
 		var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
 		new organ_or_bodypart_to_spawn(drop_location())
-		to_chat(user, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
+		to_chat(examiner, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 		// Adds a negative mood event to our heretic
-		user.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
+		examiner.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
 
-	// Do they have the mood event added on examine, if so return
-	if ("respite_eldritch_hunger" in user.mob_mood.mood_events)
-		to_chat(user, span_notice("You are still full from your last viewing!"))
-		return
-
-	if (user.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
+	if (examiner.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
 		// Gives them some nutrition
-		user.adjust_nutrition(50)
-		to_chat(user, warning("You feel a searing pain in your stomach!"))
-		user.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
-		to_chat(user, span_notice("You feel less hungry, but more empty somehow?"))
-		user.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
+		examiner.adjust_nutrition(50)
+		to_chat(examiner, warning("You feel a searing pain in your stomach!"))
+		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
+		to_chat(examiner, span_notice("You feel less hungry, but more empty somehow?"))
+		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
 	return ..()
-
-
-/*
- * A brain trauma that this eldritch paintings apply
- * This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
- */
-/datum/brain_trauma/severe/flesh_desire
-	name = "The Desire for Flesh"
-	desc = "Patient seems to only be able to eat organs or raw flesh for nutrients, also seems to become hungrier at a faster rate"
-	scan_desc = "H_(82882)G3E:__))9R"
-	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
-	lose_text = span_notice("Your stomach no longer craves flesh, and your tongue feels duller.")
-	random_gain = FALSE
-	/// How much faster we loose hunger
-	var/hunger_rate = 15
-
-/datum/brain_trauma/severe/flesh_desire/on_gain()
-	// Allows them to eat faster, mainly for flavor
-	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	// We don't want this to be bypassed by the Ageusia quirk
-	if(HAS_TRAIT(owner, TRAIT_AGEUSIA))
-		REMOVE_TRAIT(owner, TRAIT_AGEUSIA, QUIRK_TRAIT)
-	// If they have a tongue, make it crave meat
-	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(tongue)
-		tongue.liked_foodtypes = GORE | MEAT
-	..()
-
-/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
-	// Causes them to need to eat at 10x the normal rate
-	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
-	if(SPT_PROB(20, seconds_per_tick))
-		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
-	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
-
-/datum/brain_trauma/severe/flesh_desire/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	// After loosing this trauma you also loose the ability to taste, sad!
-	ADD_TRAIT(owner, TRAIT_AGEUSIA, REF(src))
-	return ..()
-
 
 
 // Great chaparral over rolling hills, this one doesn't have the sensor type
@@ -263,26 +190,23 @@
 /datum/mood_event/eldritch_painting/heretic_vines
 	description = "Oh what a lovely flower!"
 	mood_change = 3
-	timeout = 1 MINUTES
+	timeout = 3 MINUTES
 
 /obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
 	return ..()
 
-/obj/structure/sign/painting/eldritch/vines/examine(mob/living/carbon/user)
-	..()
-	if("heretic_vines" in user.mob_mood.mood_events)
-		return
-
-	if(IS_HERETIC(user))
+/obj/structure/sign/painting/eldritch/vines/examine_effects(mob/living/carbon/examiner)
+	. = ..()
+	if(IS_HERETIC(examiner))
 		var/item_to_spawn = pick(items_to_spawn)
-		to_chat(user, span_notice("You picture yourself in the thicket picking flowers.."))
+		to_chat(examiner, span_notice("You picture yourself in the thicket picking flowers.."))
 		// Spawns one of two flowers that often are used by heretics
-		new item_to_spawn(user.drop_location())
-		user.add_mood_event("heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
+		new item_to_spawn(examiner.drop_location())
+		examiner.add_mood_event("heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
 	else
-		new /datum/spacevine_controller(get_turf(user), mutations, 0, 10)
-		to_chat(user, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
+		new /datum/spacevine_controller(get_turf(examiner), mutations, 0, 10)
+		to_chat(examiner, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
 
 
 
@@ -302,42 +226,16 @@
 	var/list/reagents_to_add = list(/datum/reagent/medicine/mutadone)
 
 // The special examine interaction for this painting
-/obj/structure/sign/painting/eldritch/beauty/examine(mob/living/carbon/human/user)
-	..()
-	if(IS_HERETIC(user))
-		to_chat(user, "Your imperfections shed and you are restored.")
-		user.reagents.add_reagent(reagents_to_add, 5)
-	if(!user.has_dna())
+/obj/structure/sign/painting/eldritch/beauty/examine_effects(mob/living/carbon/examiner)
+	. = ..()
+	if(IS_HERETIC(examiner))
+		to_chat(examiner, "Your imperfections shed and you are restored.")
+		examiner.reagents.add_reagent(reagents_to_add, 5)
+	if(!examiner.has_dna())
 		return
-	if(user.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
-		to_chat(user, "You feel changed, more perfect....")
-		user.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
-
-/datum/brain_trauma/severe/eldritch_beauty
-	name = "The Pursuit of Perfection"
-	desc = "Patient seems to furiously scratch at their body, the only way to make them cease is for them to remove their jumpsuit."
-	scan_desc = "I_)8(P_E##R&&F(E)C__T)"
-	gain_text = span_warning("I WILL RID MY FLESH FROM IMPERFECTION!! I WILL BE PERFECT WITHOUT MY SUITS!!")
-	lose_text = span_notice("You feel the influence of something slip your mind, and you feel content as you are.")
-	random_gain = FALSE
-	/// How much damage we deal with each scratch
-	var/scratch_damage = 0.5
-
-/datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
-	// If they don't have a jumpsuit, return. They are encouraged to remove their jumpsuit to avoid damage.
-	if(!owner.get_item_by_slot(ITEM_SLOT_ICLOTHING))
-		return
-
-	// Scratching code
-	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
-	if(!(bodypart && IS_ORGANIC_LIMB(bodypart)) && bodypart.bodypart_flags & BODYPART_PSEUDOPART)
-		return
-	if(owner.incapacitated())
-		return
-	bodypart.receive_damage(scratch_damage)
-	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at [bodypart] to ruin the cloth that hides the beauty!"))
-
+	if(examiner.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
+		to_chat(examiner, "You feel changed, more perfect....")
+		examiner.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 
 
 // Climb over the rusted mountain, gives a brain trauma causing the person to randomly rust tiles beneath them
@@ -362,41 +260,16 @@
 /datum/mood_event/eldritch_painting/rust_heretic_examine
 	description = "I must hurry the rusted climb!"
 	mood_change = 6
-	timeout = 5 MINUTES
+	timeout = 3 MINUTES
 
 // The special examine interaction for this painting
-/obj/structure/sign/painting/eldritch/rust/examine(mob/living/carbon/human/user)
-	..()
-	if("rusted_examine" in user.mob_mood.mood_events)
-		return
+/obj/structure/sign/painting/eldritch/rust/examine_effects(mob/living/carbon/examiner)
+	. = ..()
 
-	if(IS_HERETIC(user))
-		to_chat(user, "You see the climber, and are inspired by it!")
-		user.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)
+	if(IS_HERETIC(examiner))
+		to_chat(examiner, "You see the climber, and are inspired by it!")
+		examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)
 
-	if(user.has_trauma_type(/datum/brain_trauma/severe/rusting))
-		to_chat(user, "It can wait...")
-		user.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
-
-
-/*
- * A brain trauma that this eldritch paintings apply
- * This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
- */
-/datum/brain_trauma/severe/rusting
-	name = "The Rusted Climb"
-	desc = "Patient seems to oxidise things around them at random, and seem to believe they are aiding a creature in climbing a mountin."
-	scan_desc = "C_)L(#_I_##M;B"
-	gain_text = span_warning("The rusted climb shall finish at the peak")
-	lose_text = span_notice("The rusted climb? Whats that? An odd dream to be sure.")
-	random_gain = FALSE
-
-/datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
-	var/atom/tile = get_turf(owner)
-	// If they have the special mood event for rusted climb they don't start randomly rusting tiles beneath them
-	if("rusted_examine" in owner.mob_mood.mood_events)
-		return
-
-	if(SPT_PROB(50, seconds_per_tick))
-		to_chat(owner, span_notice("You feel eldritch energies pulse from your body!"))
-		tile.rust_heretic_act()
+	if(examiner.has_trauma_type(/datum/brain_trauma/severe/rusting))
+		to_chat(examiner, "It can wait...")
+		examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
