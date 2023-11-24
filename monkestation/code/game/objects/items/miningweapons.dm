@@ -197,13 +197,15 @@
 	team. Many were failures, including this one, which came out too bulky and too ineffective. Well recently the MR&D Team got drunk and said 'fuck it we ball' and \
 	went back to the bulky design, overclocked it, and made it functional, turning it into what is essentially a literal man portable particle accelerator. \
 	The design results in a massive hard to control blast of kinetic energy, with the power to punch right through creatures and cause massive damage. The \
-	only problem with the design is that it is so bulky you need to carry it with two hands, and the technology has no optimization for a pressured enviorment, \
-	resulting in a near zero force value in pressurized areas."
+	only problem with the design is that it is so bulky you need to carry it with two hands, and the technology has been outfitted with a special firing pin \
+	that denies use near or on the station, due to its destructive nature."
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "kineticrailgun"
 	base_icon_state = "kineticrailgun"
 	inhand_icon_state = "kineticgun"
 	w_class = WEIGHT_CLASS_HUGE
+	pin = /obj/item/firing_pin/wastes
+	pin_removable = FALSE
 	recharge_time = 3 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/railgun)
 	item_flags = NONE
@@ -329,7 +331,7 @@
 /obj/projectile/kinetic/railgun
 	name = "hyper kinetic force"
 	icon_state = null
-	damage = 80
+	damage = 100
 	damage_type = BRUTE
 	armor_flag = BOMB
 	range = 7
@@ -373,6 +375,22 @@
 	armor_flag = BOMB
 	range = 1
 	log_override = TRUE
+
+//Wastes firing pin - restricts a weapon to only outside when mining - space not included - used in railgun
+
+/obj/item/firing_pin/wastes
+	name = "Wastes firing pin"
+	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon."
+	fail_message = "Wastes check failed! - Try getting further from the station first."
+	pin_hot_swappable = FALSE
+
+/obj/item/firing_pin/wastes/pin_auth(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if (istype(get_area(user), /area/icemoon/underground/unexplored/rivers || /area/icemoon/underground/explored || /area/icemoon/surface/outdoors/nospawn || /area/icemoon/surface/outdoors || /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters || /area/icemoon/underground/unexplored/rivers/deep/shoreline || /area/lavaland/surface/outdoors || /area/lavaland/surface/outdoors/unexplored/danger || /area/lavaland/surface/outdoors/explored))
+		return TRUE
+	return FALSE
+
 
 //ADMIN ONLY MEMES
 /obj/item/gun/energy/recharge/kinetic_accelerator/meme
