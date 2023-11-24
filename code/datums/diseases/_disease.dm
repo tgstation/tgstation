@@ -98,6 +98,9 @@
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
+	if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
+		update_stage(min(stage + 1, max_stages))
+
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
@@ -193,9 +196,6 @@
 			if(prob(100 - min((100 * (symptom_offsets / DISEASE_SYMPTOM_OFFSET_DURATION)), 100 - cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER))) //viruses with higher cure_chance will ultimately be more possible to offset symptoms on
 				symptom_offsets = min(symptom_offsets + 1, DISEASE_SYMPTOM_OFFSET_DURATION)
 				return FALSE
-
-	if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
-		update_stage(min(stage + 1, max_stages))
 
 	return !carrier
 
