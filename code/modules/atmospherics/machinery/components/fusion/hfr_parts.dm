@@ -40,9 +40,46 @@
 			return
 	if(default_change_direction_wrench(user, I))
 		return
-	if(default_deconstruction_crowbar(I))
-		return
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	var/unsafe_wrenching = FALSE
+	var/filled_pipe = FALSE
+	var/datum/gas_mixture/env_air = loc.return_air()
+	var/datum/gas_mixture/ins_air = airs[1]
+	var/internal_pressure = 0
+	if(istype(src, /obj/machinery/atmospherics/components/unary/hypertorus/core))
+		var/obj/machinery/atmospherics/components/unary/hypertorus/core/core_part = src
+		internal_pressure = max(core_part.internal_fusion.return_pressure(), core_part.moderator_internal.return_pressure())
+		if(internal_pressure)
+			filled_pipe = TRUE
+
+	if(!nodes[1])
+		internal_pressure = max(internal_pressure, ins_air.return_pressure()) - env_air.return_pressure()	
+	
+	if(ins_air.total_moles() > 0)
+		filled_pipe = TRUE
+
+	default_deconstruction_crowbar(tool, custom_deconstruct = filled_pipe)
+		
+	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+	
+	if(internal_pressure > 2 * ONE_ATMOSPHERE)
+		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		unsafe_wrenching = TRUE
+	
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	if(unsafe_wrenching)
+		unsafe_pressure_release(user, internal_pressure)
+	
+	tool.play_tool_sound(src, 50)
+	deconstruct(TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
 	if(!cracked)
@@ -207,6 +244,7 @@
 			ui.open()
 	else
 		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
+		ui.close()
 
 /obj/machinery/hypertorus/interface/proc/gas_list_to_gasid_list(list/gas_list)
 	var/list/gasid_list = list()
