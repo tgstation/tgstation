@@ -5,11 +5,15 @@
 	sexes = FALSE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE
 	siemens_coeff = 0
-	brutemod = 0.9
+	death_sound = 'massmeta/sounds/creatures/darkspawn_death.ogg'
+	//brutemod = 0.9
 	heatmod = 1.5
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
-	species_traits = list(NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
 	inherent_traits = list(
+		//NOTRANSSTING, i guess it should be here but its no longer exist
+		//NOEYESPRITES,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_RESISTCOLD,
@@ -47,6 +51,7 @@
 	. = ..()
 
 /datum/species/darkspawn/spec_life(mob/living/carbon/human/H)
+	. = ..()
 	handle_upgrades(H)
 	var/turf/T = H.loc
 	if(istype(T))
@@ -79,8 +84,10 @@
 				H.playsound_local(H, 'sound/weapons/sear.ogg', max(30, 50 * light_amount), TRUE)
 				H.adjustFireLoss(DARKSPAWN_LIGHT_BURN * 0.5)
 
+/* moved to species death_sound
 /datum/species/darkspawn/spec_death(gibbed, mob/living/carbon/human/H)
 	playsound(H, 'massmeta/sounds/creatures/darkspawn_death.ogg', 50, FALSE)
+*/
 
 /datum/species/darkspawn/proc/handle_upgrades(mob/living/carbon/human/H)
 	var/datum/antagonist/darkspawn/darkspawn

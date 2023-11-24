@@ -4,7 +4,7 @@
 	desc = "What are you hiding?!"
 	icon_state = "static"
 	density = TRUE
-	atom_integrity = 25
+	max_integrity = 25 // was atom_integrity
 	var/mob/living/mimicking
 
 /obj/effect/simulacrum/Initialize()

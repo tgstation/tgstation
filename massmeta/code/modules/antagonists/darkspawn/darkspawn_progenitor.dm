@@ -61,7 +61,7 @@
 	if(time_to_next_roar + 10 SECONDS <= world.time) //gives time to roar manually if you like want to do that
 		roar()
 
-/mob/living/simple_animal/hostile/darkspawn_progenitor/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/darkspawn_progenitor/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null,  filterproof = FALSE, message_range = 7, datum/saymode/saymode = null)
 	..()
 	if(time_to_next_roar <= world.time)
 		roar()
@@ -70,7 +70,7 @@
 	playsound(src, 'massmeta/sounds/creatures/progenitor_roar.ogg', 50, TRUE)
 	for(var/mob/M in GLOB.player_list)
 		if(get_dist(M, src) > 7)
-			M.playsound_local(src, 'massmeta/sounds/creatures/progenitor_distant.ogg', 25, FALSE, falloff = 5)
+			M.playsound_local(src, 'massmeta/sounds/creatures/progenitor_distant.ogg', 25, FALSE) //falloff = 5
 		else if(isliving(M))
 			var/mob/living/L = M
 			if(L != src) //OH GOD OH FUCK I'M SCARING MYSELF
@@ -91,6 +91,7 @@
 	return ..() && ishuman(cast_on)
 
 /datum/action/cooldown/spell/pointed/progenitor_curse/cast(mob/living/carbon/human/cast_on)
+	. = ..()
 	var/zoinks = pick(0.1, 0.5, 1)//like, this isn't even my final form!
 	usr.visible_message(span_warning("[usr]'s sigils flare as it glances at [cast_on]!"), \
 						span_velvet("You direct [zoinks]% of your psionic power into [cast_on]'s mind!."))
@@ -106,5 +107,5 @@
 	return
 
 /datum/action/small_sprite/progenitor
-	small_icon = 'massmeta/icons/mob/mob.dmi'
-	small_icon_state = "smol_progenitor"
+	button_icon = 'massmeta/icons/mob/mob.dmi'
+	button_icon_state = "smol_progenitor"

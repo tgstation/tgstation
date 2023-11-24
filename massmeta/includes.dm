@@ -29,6 +29,7 @@
 #include "code\modules\surgery\organs\bodyparts\species_parts\misc_bodyparts.dm"
 #include "code\modules\projectiles\projectile\special\curse.dm"
 #include "code\modules\movespeed\modifiers\status_effects.dm"
+#include "code\modules\actionspeed\modifiers\status_effects.dm"
 #include "code\datums\status_effects\debuffs\debuffs.dm"
 #include "code\datums\status_effects\neutral.dm"
 #include "code\datums\status_effects\buffs.dm"

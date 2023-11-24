@@ -2,7 +2,7 @@
 /obj/structure/psionic_barrier
 	name = "psionic barrier"
 	desc = "Shimmering violet particles dancing in the air. They're impossible to move past."
-	atom_integrity = 200
+	//atom_integrity = 200 //we have max_integrity already
 	max_integrity = 200
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "purplesparkles"

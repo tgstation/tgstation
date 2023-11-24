@@ -21,7 +21,8 @@
 	playsound(owner, 'massmeta/sounds/magic/devour_will_form.ogg', 50, TRUE)
 	owner.setDir(SOUTH)
 
-/datum/status_effect/tagalong/process()
+//tick instead of process
+/datum/status_effect/tagalong/tick(seconds_between_ticks)
 	if(!shadowing)
 		owner.forceMove(cached_location)
 		qdel(src)

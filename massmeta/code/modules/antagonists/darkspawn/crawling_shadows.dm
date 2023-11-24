@@ -129,7 +129,7 @@
 	qdel(owner) //edgi
 	qdel(src)
 
-/datum/action/innate/darkspawn/end_shadows/IsAvailable()
+/datum/action/innate/darkspawn/end_shadows/IsAvailable(feedback = FALSE)
 	if(istype(owner, /mob/living/simple_animal/hostile/crawling_shadows))
 		return TRUE
 	return FALSE

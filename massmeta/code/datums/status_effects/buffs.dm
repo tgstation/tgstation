@@ -13,7 +13,8 @@
 		return
 	src.darkspawn = darkspawn
 
-/datum/status_effect/creep/process()
+//tick instead of process
+/datum/status_effect/creep/tick(seconds_between_ticks)
 	if(!darkspawn)
 		qdel(src)
 		return

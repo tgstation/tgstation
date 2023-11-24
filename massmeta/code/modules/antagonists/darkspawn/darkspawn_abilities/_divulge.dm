@@ -34,7 +34,13 @@
 		in_use = FALSE
 		return
 	var/image/alert_overlay = image('massmeta/icons/mob/actions/actions_darkspawn.dmi', "divulge")
-	notify_ghosts("Darkspawn [user.real_name] has begun divulging at [get_area(user)]! ", source = user, ghost_sound = 'massmeta/sounds/magic/devour_will_victim.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
+	notify_ghosts(
+		"Darkspawn [user.real_name] has begun divulging at [get_area(user)]! ",
+		source = user,
+		ghost_sound = 'massmeta/sounds/magic/devour_will_victim.ogg',
+		alert_overlay = alert_overlay,
+		//action = NOTIFY_ORBIT
+	)
 	user.visible_message(span_warning("A vortex of violet energies surrounds [user]!"), span_velvet("Your barrier will keep you shielded to a point.."))
 	user.visible_message(span_danger("[user] slowly rises into the air, their belongings falling away, and begins to shimmer..."), \
 						"<span class='velvet big'><b>You begin the removal of your human disguise. You will be completely vulnerable during this time.</b></span>")

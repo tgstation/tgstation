@@ -34,7 +34,12 @@
 		in_use = FALSE
 		return
 	var/image/alert_overlay = image('massmeta/icons/mob/actions/actions_darkspawn.dmi', "sacrament")
-	notify_ghosts("Darkspawn [user.real_name] has begun the Sacrament at [get_area(user)]! ", source = user, ghost_sound = 'massmeta/sounds/magic/devour_will_victim.ogg', alert_overlay = alert_overlay, action = NOTIFY_ORBIT)
+	notify_ghosts(
+		"Darkspawn [user.real_name] has begun the Sacrament at [get_area(user)]! ",
+		source = user, ghost_sound = 'massmeta/sounds/magic/devour_will_victim.ogg',
+		alert_overlay = alert_overlay,
+		//action = NOTIFY_ORBIT
+	)
 	user.visible_message(span_warning("A vortex of violet energies surrounds [user]!"), span_velvet("Your barrier will protect you."))
 	user.visible_message(span_danger("[user] suddenly jolts into the air, pulsing with screaming violet light."), \
 						"<span class='velvet big'><b>You begin the Sacrament.</b></span>")

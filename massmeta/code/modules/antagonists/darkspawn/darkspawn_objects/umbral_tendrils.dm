@@ -53,7 +53,7 @@
 /obj/item/umbral_tendrils/attack(mob/living/target, mob/living/user, twinned_attack = TRUE)
 	set waitfor = FALSE
 	..()
-	sleep(0.1 SECONDS)
+	//sleep(0.1 SECONDS) - SHOULD_NOT_SLEEP
 	if(twin && twinned_attack && user.Adjacent(target))
 		twin.attack(target, user, FALSE)
 
@@ -74,7 +74,7 @@
 				if(!user.combat_mode)
 					opening.balloon_alert(user, "bolted!")
 					return
-				while(opening.atom_integrity > opening.max_integrity * 0.25 && !QDELETED(src))
+				while(opening.get_integrity() > opening.max_integrity * 0.25 && !QDELETED(src))
 					if(twin)
 						if(!do_after(user, rand(4, 6), target = opening))
 							darkspawn.use_psi(30)
@@ -169,7 +169,8 @@
 	qdel(beam)
 	. = ..()
 
-/obj/projectile/umbral_tendrils/on_hit(atom/movable/target, blocked = FALSE)
+/obj/projectile/umbral_tendrils/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
 	if(blocked >= 100)
 		return
 	. = TRUE
@@ -183,7 +184,8 @@
 				L.Knockdown(6 SECONDS)
 			else
 				L.Immobilize(0.15 SECONDS) // so they cant cancel the throw by moving
-				target.throw_at(get_step_towards(firer, target), 7, 2) //pull them towards us!
+				//why use target instead of L?
+				L.throw_at(get_step_towards(firer, target), 7, 2) //pull them towards us!
 				target.visible_message(span_warning("[firer]'s [name] slam into [target] and drag them across the ground!"), \
 				span_userdanger("You're suddenly dragged across the floor!"))
 				L.Knockdown(8 SECONDS) //these can't hit people who are already on the ground but they can be spammed to all shit
