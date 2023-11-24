@@ -1,4 +1,4 @@
-output_name = "light"
+output_name = "light-nodots"
 template = "bitmask/diagonal_32x32.toml"
 
 [icon_size]

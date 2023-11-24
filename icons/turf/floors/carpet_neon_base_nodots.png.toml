@@ -1,4 +1,4 @@
-output_name = "base"
+output_name = "base-nodots"
 template = "bitmask/diagonal_32x32.toml"
 
 [icon_size]

@@ -1,4 +1,4 @@
-output_name = "glow"
+output_name = "glow-nodots"
 template = "bitmask/diagonal_32x32.toml"
 
 [icon_size]
