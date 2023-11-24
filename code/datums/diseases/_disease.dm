@@ -229,7 +229,7 @@
 	if(HAS_TRAIT(affected_mob, TRAIT_NOBREATH)) //also if you don't breathe
 		return
 
-	if(!disease.has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
+	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
 		return
 
 	if(!affected_mob.CanSpreadAirborneDisease()) //should probably check this huh
