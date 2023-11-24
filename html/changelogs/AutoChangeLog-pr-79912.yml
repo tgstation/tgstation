@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Gives Cargo areas its own wire layout, instead of having it use the same wires as Service areas."
