@@ -66,7 +66,7 @@
 	desc = "A much more modern version of a springlock system. \
 	This is a module that uses magnets to speed up the deployment and retraction time of your MODsuit."
 	complexity = 0 //we have fast deploy already, we dont need this to cost anything
-//a
+
 /obj/item/mod/module/springlock/contractor/on_suit_activation() // This module is actually *not* a death trap
 	return
 
