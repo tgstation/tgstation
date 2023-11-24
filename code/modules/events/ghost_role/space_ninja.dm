@@ -5,7 +5,7 @@
 	weight = 10
 	earliest_start = 45 MINUTES //monke edit: 20 to 45
 	min_players = 25 //monke edit: 20 to 25
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "A space ninja infiltrates the station."
 	track = EVENT_TRACK_ROLESET

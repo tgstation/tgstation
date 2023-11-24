@@ -4,7 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 	min_players = 20
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "One or more abductor teams spawns, and they plan to experiment on the crew."
 	track = EVENT_TRACK_MAJOR

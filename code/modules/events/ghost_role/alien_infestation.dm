@@ -6,7 +6,7 @@
 	min_players = 35 //monkie edit: 10 to 35 (tg what the fuck)
 
 	earliest_start = 60 MINUTES //monkie edit: 20 to 90
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A xenomorph larva spawns on a random vent."
 	track = EVENT_TRACK_MAJOR
