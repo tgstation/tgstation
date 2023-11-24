@@ -220,7 +220,7 @@
 	desc = "During the pizza party celebrating the release of the new crusher designs, the Mining Research and Development team members were only allowed one slice. \
 	One member exclaimed 'I wish we could have more than one slice' and another replied 'I wish we could shoot the accelerator more than once' and thus, the repeater \
 	on the spot. The repeater trades a bit of power for the ability to fire three shots before becoming empty, while retaining the ability to fully recharge in one \
-	go. The extra technology packed inside to make this possible unfortunately reduces mod space meaning you cnat carry as many mods compared to a regular accelerator."
+	go. The extra technology packed inside to make this possible unfortunately reduces mod space meaning you cant carry as many mods compared to a regular accelerator."
 	icon = 'monkestation/icons/obj/guns/guns.dmi'
 	icon_state = "kineticrepeater"
 	base_icon_state = "kineticrepeater"
