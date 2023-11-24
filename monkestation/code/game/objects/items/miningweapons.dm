@@ -329,7 +329,7 @@
 /obj/projectile/kinetic/railgun
 	name = "hyper kinetic force"
 	icon_state = null
-	damage = 100
+	damage = 80
 	damage_type = BRUTE
 	armor_flag = BOMB
 	range = 7
@@ -359,7 +359,7 @@
 /obj/projectile/kinetic/glock
 	name = "light kinetic force"
 	icon_state = null
-	damage = 15
+	damage = 10
 	damage_type = BRUTE
 	armor_flag = BOMB
 	range = 3
