@@ -223,7 +223,19 @@
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/2)))
+	if(affected_mob.internal) //if you keep your internals on, no airborne spread at least
+		return
+
+	if(HAS_TRAIT(affected_mob, TRAIT_NOBREATH)) //also if you don't breathe
+		return
+
+	if(!disease.has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
+		return
+
+	if(!affected_mob.CanSpreadAirborneDisease()) //should probably check this huh
+		return
+
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/2))) //being full or on spaceacillin makes you less likely to spread a virus
 		return
 
 	var/spread_range = 2
