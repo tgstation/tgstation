@@ -33,6 +33,7 @@
 	antag_hud_name = "contractor"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
+	give_uplink = FALSE
 	suicide_cry = "FOR THE CONTRACTS!!"
 	/// The outfit the contractor is equipped with
 	var/contractor_outfit = /datum/outfit/contractor
@@ -43,22 +44,23 @@
 
 	var/mob/living/carbon/human/person = owner.current
 	person.equipOutfit(contractor_outfit)
+	return TRUE
+
+/datum/antagonist/traitor/contractor/on_gain()
+	equip_guy()
+	. = ..()
+
 	var/datum/component/uplink/found_uplink = owner.find_syndicate_uplink()
 	if(!found_uplink)
 		CRASH("Unable to find uplink for contractor [owner].")
 
 	found_uplink.become_contractor()
-	return TRUE
-
-/datum/antagonist/traitor/contractor/on_gain()
-	. = ..()
-	equip_guy()
 
 /datum/antagonist/traitor/contractor/forge_traitor_objectives()
 	var/datum/objective/contractor_total/contract_objective = new
 	contract_objective.owner = owner
 	objectives += contract_objective
-	. = ..()
+	objectives += forge_single_generic_objective()
 
 /// Used by drifting contractors
 /datum/objective/contractor_total

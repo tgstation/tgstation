@@ -3,6 +3,7 @@
 	antag_moodlet = /datum/mood_event/focused
 
 	show_in_roundend = FALSE // We're already adding them in to the contractor's roundend.
+	give_uplink = FALSE
 	give_objectives = TRUE // We give them their own custom objective.
 	give_secondary_objectives = FALSE
 	/// Team datum that contains the contractor and the support unit
@@ -38,7 +39,6 @@
 
 	backpack_contents = list(
 	/obj/item/storage/box/survival,
-//	/obj/item/implanter/uplink,
 	/obj/item/clothing/mask/chameleon,
 	/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 	/obj/item/lighter

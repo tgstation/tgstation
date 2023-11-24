@@ -38,7 +38,13 @@
 
 /obj/item/mod/module/baton_holster/preloaded
 	eaten_baton = TRUE
+	device = /obj/item/melee/baton/telescopic/contractor_baton
+
+/obj/item/mod/module/baton_holster/preloaded/upgraded
 	device = /obj/item/melee/baton/telescopic/contractor_baton/upgraded
+
+/obj/item/mod/module/chameleon/contractor // zero complexity module to match pre-TGification
+	complexity = 0
 
 //making this slow you down this will most likely not get used, might rework this
 /obj/item/mod/module/armor_booster/contractor // Much flatter distribution because contractor suit gets a shitton of armor already
@@ -60,16 +66,13 @@
 	desc = "A much more modern version of a springlock system. \
 	This is a module that uses magnets to speed up the deployment and retraction time of your MODsuit."
 	icon_state = "magnet_springlock"
+	complexity = 0 //we have fast deploy already, we dont need this to cost anything
 
 /obj/item/mod/module/springlock/contractor/on_suit_activation() // This module is actually *not* a death trap
 	return
 
 /obj/item/mod/module/springlock/contractor/on_suit_deactivation(deleting = FALSE)
 	return
-
-/// This exists for the adminbus contractor modsuit. Do not use otherwise
-/obj/item/mod/module/springlock/contractor/no_complexity
-	complexity = 0
 
 /// SCORPION - hook a target into baton range quickly and non-lethally
 /obj/item/mod/module/scorpion_hook

@@ -1,7 +1,7 @@
-#define STARTING_COMMON_OBJECTIVES
+#define CONTRACTOR_RANSOM_CUT 0.35
 /datum/traitor_objective/target_player/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
-	description = "%TARGET% %CRIMES% - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
+	description = "%TARGET% %CRIMES% You'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
 		If %TARGET% is delivered alive, you will be rewarded with an additional %TC% telecrystals."
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
@@ -231,7 +231,19 @@
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
 	if(cargo_account) //Just in case
-		cargo_account.adjust_money(-min(rand(1000, 3000), cargo_account.account_balance)) //Not so much, especially for competent cargo.
+		var/ransom = rand(5000, 10000) //technically the contractor can get overpayed even if cargo cant pay, but lets just say CC covers the tab, we will see if this is too much
+		cargo_account.adjust_money(-min(ransom, cargo_account.account_balance))
+		var/obj/item/card/id/owner_id = handler.owner.current?.get_idcard(TRUE)
+		if(owner_id?.registered_account.account_id) //why do we check for account id? because apparently unset agent IDs have existing bank accounts that can't be accessed. this is suboptimal
+			owner_id.registered_account.adjust_money(ransom * CONTRACTOR_RANSOM_CUT)
+
+			owner_id.registered_account.bank_card_talk("We've processed the ransom, agent. Here's your cut - your balance is now \
+			[owner_id.registered_account.account_balance] credits.", TRUE)
+		else
+			to_chat(handler.owner.current, span_notice("A briefcase appears at your feet!"))
+			var/obj/item/storage/secure/briefcase/case = new(get_turf(handler.owner.current))
+			for(var/i in 1 to (round((ransom * CONTRACTOR_RANSOM_CUT) / 1000))) // Gets slightly less/more but whatever
+				new /obj/item/stack/spacecash/c1000(case)
 
 	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
 					As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
@@ -259,7 +271,7 @@
 	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.set_eye_blur_if_lower(100 SECONDS)
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
-	sent_mob.reagents?.add_reagent(/datum/reagent/medicine/omnizine, 20)
+	sent_mob.reagents?.add_reagent(/datum/reagent/medicine/omnizine, 20) //if people end up going with contractors too often(I doubt they will) we can port skyrats wounding stuff
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
 		so it's only a matter of time before we ship you back...\"</i>")))
@@ -315,3 +327,5 @@
 	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
 		belongings += internal_bag.contents
 	return belongings
+
+#undef CONTRACTOR_RANSOM_CUT
