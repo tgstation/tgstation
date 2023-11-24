@@ -268,14 +268,13 @@
 				var/datum/reagent/RGNT
 				while(amt > 0)
 					var/obj/item/reagent_containers/RC = locate() in surroundings
-					RG = RC.reagents.get_reagent(path_key)
+					RG = RC.reagents.has_reagent(path_key)
 					if(RG)
 						if(!locate(RG.type) in Deletion)
 							Deletion += new RG.type()
 						if(RG.volume > amt)
 							RG.volume -= amt
 							data = RG.data
-							RC.reagents.conditional_update(RC)
 							RC.update_appearance(UPDATE_ICON)
 							RG = locate(RG.type) in Deletion
 							RG.volume = amt
@@ -285,7 +284,6 @@
 							surroundings -= RC
 							amt -= RG.volume
 							RC.reagents.reagent_list -= RG
-							RC.reagents.conditional_update(RC)
 							RC.update_appearance(UPDATE_ICON)
 							RGNT = locate(RG.type) in Deletion
 							RGNT.volume += RG.volume

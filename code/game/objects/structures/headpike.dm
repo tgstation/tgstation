@@ -47,11 +47,11 @@
 	. = ..()
 	if(!victim)
 		return
-	var/mutable_appearance/MA = new()
-	MA.copy_overlays(victim)
-	MA.pixel_y = 12
-	MA.pixel_x = pixel_x
-	. += victim
+	var/mutable_appearance/appearance = new()
+	appearance.copy_overlays(victim)
+	appearance.pixel_y = 12
+	appearance.layer = layer + 0.1
+	. += appearance
 
 /obj/structure/headpike/Exited(atom/movable/gone, direction)
 	. = ..()

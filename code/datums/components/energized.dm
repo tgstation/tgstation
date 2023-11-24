@@ -87,11 +87,11 @@
 	// Try to be agnostic about N-S vs E-W movement
 	if(tram.travel_direction & (NORTH|SOUTH))
 		plate_pos = source.y
-		tram_pos = source.y
+		tram_pos = tram_part.y
 		tram_velocity_sign = tram.travel_direction & NORTH ? 1 : -1
 	else
 		plate_pos = source.x
-		tram_pos = source.x
+		tram_pos = tram_part.x
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
@@ -113,7 +113,6 @@
 	notify_ghosts(
 		"[future_tram_victim] has fallen in the path of an oncoming tram!",
 		source = future_tram_victim,
-		action = NOTIFY_ORBIT,
 		header = "Electrifying!",
 	)
 	do_sparks(4, FALSE, source)
