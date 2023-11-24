@@ -11,7 +11,6 @@
 #include "code\obj\items\clothing\gloves.dm"
 #include "code\obj\items\clothing\masks.dm"
 #include "code\datums\components\crafting\makeshift.dm"
-#include "code\datums\mood_events\generic_positive_events.dm"
 #include "code\game\objects\items\devices\radio\radio.dm"
 #include "code\game\objects\items\storage\belt.dm"
 #include "code\game\objects\items\tools\crowbar.dm"
