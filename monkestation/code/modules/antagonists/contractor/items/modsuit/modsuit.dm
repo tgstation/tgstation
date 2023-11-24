@@ -34,17 +34,9 @@
 
 // I absolutely fuckin hate having to do this
 /obj/item/clothing/head/mod/contractor
-	worn_icon = 'monkestation/icons/mob/clothing/worn_modsuit.dmi'
-	icon = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi'
 
 /obj/item/clothing/suit/mod/contractor
-	worn_icon = 'monkestation/icons/mob/clothing/worn_modsuit.dmi'
-	icon = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi'
 
 /obj/item/clothing/gloves/mod/contractor
-	worn_icon = 'monkestation/icons/mob/clothing/worn_modsuit.dmi'
-	icon = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi'
 
 /obj/item/clothing/shoes/mod/contractor
-	worn_icon = 'monkestation/icons/mob/clothing/worn_modsuit.dmi'
-	icon = 'monkestation/icons/obj/clothing/modsuits/modsuit.dmi'
