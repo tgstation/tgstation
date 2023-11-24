@@ -181,9 +181,12 @@
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)
+	var/turf/T = loc
 	if(internal_fusion)
+		T.assume_air(internal_fusion)
 		internal_fusion = null
 	if(moderator_internal)
+		T.assume_air(moderator_internal)
 		moderator_internal = null
 	if(linked_input)
 		QDEL_NULL(linked_input)

@@ -215,7 +215,35 @@
 	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	
+	var/unsafe_wrenching = FALSE
+	var/filled_pipe = FALSE
+	var/datum/gas_mixture/env_air = loc.return_air()
+	var/datum/gas_mixture/ins_air = airs[1]
+	var/internal_pressure = ins_air.return_pressure() - env_air.return_pressure()
+	
+	if(ins_air.total_moles() > 0)
+		filled_pipe = TRUE
+
+	default_deconstruction_crowbar(tool, custom_deconstruct = filled_pipe)
+	
+	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+	
+	if(internal_pressure > 2 * ONE_ATMOSPHERE)
+		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		unsafe_wrenching = TRUE
+	
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	if(unsafe_wrenching)
+		unsafe_pressure_release(user, internal_pressure)
+	
+	tool.play_tool_sound(src, 50)
+	deconstruct(TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
