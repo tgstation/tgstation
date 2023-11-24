@@ -931,13 +931,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
-	icon_state = "single"
+	icon_state = "clockwork_window-single"
 	glass_type = /obj/item/stack/sheet/bronze
 
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE
 
 /obj/structure/window/bronze/fulltile
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window-0"
 	base_icon_state = "clockwork_window"
 	smoothing_flags = SMOOTH_BITMASK
