@@ -489,7 +489,7 @@
 	icon = 'icons/turf/floors/carpet_neon_base.dmi'
 	icon_state = "base-255"
 	base_icon_state = "base"
-	icon = 'icons/turf/floors/carpet_neon_light.dmi'
+	neon_icon = 'icons/turf/floors/carpet_neon_light.dmi'
 	neon_icon_state = "light"
 	floor_tile = /obj/item/stack/tile/carpet/neon/simple
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_SIMPLE_NEON
