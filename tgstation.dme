@@ -5994,6 +5994,4 @@
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
 #include "massmeta\includes.dm"
-#include "massmeta\code\_DEFINES\radio.dm"
-#include "massmeta\code\_DEFINES\say.dm"
 // END_INCLUDE
