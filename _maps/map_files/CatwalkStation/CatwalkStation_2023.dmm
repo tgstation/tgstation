@@ -1816,7 +1816,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain/private)
 "aQa" = (
@@ -2618,11 +2618,7 @@
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
 "bix" = (
-/obj/machinery/camera{
-	c_tag = "Science - Xenobiology Pen 6 & 8";
-	dir = 8;
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "bji" = (
@@ -4147,12 +4143,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/surgery)
-"bPo" = (
-/obj/machinery/computer/records/medical{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/station/security/detectives_office)
 "bPw" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
@@ -5084,9 +5074,11 @@
 /area/station/service/kitchen)
 "ckG" = (
 /obj/structure/table,
-/obj/machinery/fax{
-	fax_name = "Law Office";
-	name = "Law Office Fax Machine"
+/obj/item/clothing/glasses/sunglasses/big{
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_y = -3
 	},
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
@@ -5872,9 +5864,8 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "czk" = (
-/obj/machinery/newscaster/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain/private)
 "czt" = (
@@ -6503,11 +6494,10 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
 "cJD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /obj/machinery/light/small/directional/east,
-/obj/effect/landmark/start/detective,
+/obj/machinery/computer/records/medical{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "cJE" = (
@@ -6735,6 +6725,12 @@
 /obj/machinery/air_sensor/oxygen_tank,
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
+"cPf" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/station/command/heads_quarters/captain/private)
 "cPk" = (
 /obj/structure/closet/crate/coffin,
 /obj/effect/decal/cleanable/dirt,
@@ -6755,10 +6751,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
-"cPC" = (
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/security/eva)
 "cPX" = (
 /obj/structure/chair/comfy/carp,
 /turf/open/floor/iron/dark/smooth_large,
@@ -7261,9 +7253,12 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "dbR" = (
-/obj/structure/rack,
-/obj/item/storage/secure/briefcase,
-/obj/item/taperecorder,
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Law Office";
+	name = "Law Office Fax Machine";
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "dcb" = (
@@ -10948,6 +10943,9 @@
 /turf/closed/wall/r_wall,
 /area/station/security/eva)
 "eBx" = (
+/obj/machinery/computer/records/security{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "eBQ" = (
@@ -11026,6 +11024,12 @@
 	},
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
+"eDr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/station/security/detectives_office)
 "eEi" = (
 /obj/structure/ladder,
 /turf/open/floor/circuit/green{
@@ -14576,10 +14580,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "ghe" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
+/obj/structure/table,
+/obj/item/pen/fountain{
+	pixel_x = -1
 	},
-/obj/effect/landmark/start/detective,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "ghm" = (
@@ -16544,7 +16548,6 @@
 /obj/item/gun/grenadelauncher,
 /obj/item/toy/plush/moth,
 /obj/effect/spawner/random/entertainment/money_large,
-/obj/effect/spawner/random/entertainment/money_small,
 /obj/item/grenade/chem_grenade/holy,
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/command/nuke_storage)
@@ -18468,6 +18471,11 @@
 /mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/space/basic,
 /area/space)
+"hKJ" = (
+/obj/item/radio/intercom/directional/west,
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/security/eva)
 "hKK" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -24557,7 +24565,7 @@
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
 	name = "\improper APLU \";
-	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -24690,19 +24698,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
-"kjq" = (
-/obj/structure/table,
-/obj/machinery/button/door/directional/north{
-	id = "detective_shutters";
-	name = "detective's office shutters control";
-	pixel_x = 11;
-	pixel_y = -1
-	},
-/obj/item/pen/fountain{
-	pixel_x = -1
-	},
-/turf/open/floor/carpet,
-/area/station/security/detectives_office)
 "kjF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -25578,8 +25573,7 @@
 /area/station/commons/storage/primary)
 "kBA" = (
 /obj/structure/mirror/directional/north{
-	pixel_x = 2;
-	pixel_y = 30
+	pixel_y = 31
 	},
 /obj/structure/sink/directional/south,
 /obj/machinery/button/door/directional/east{
@@ -25589,10 +25583,6 @@
 	pixel_x = -11;
 	pixel_y = 32;
 	specialfunctions = 4
-	},
-/obj/structure/toilet{
-	dir = 8;
-	pixel_y = 4
 	},
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain/private)
@@ -25794,6 +25784,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
+"kIz" = (
+/obj/effect/landmark/start/detective,
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/station/security/detectives_office)
 "kJp" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -25922,8 +25919,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/fax{
 	fax_name = "Detective's Office";
-	name = "Detective's Fax Machine"
+	name = "Detective's Fax Machine";
+	pixel_y = 5
 	},
+/obj/structure/table,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "kMO" = (
@@ -31531,9 +31530,6 @@
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
 "nct" = (
-/obj/machinery/computer/records/security{
-	dir = 1
-	},
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
@@ -32492,13 +32488,9 @@
 /area/station/command/heads_quarters/cmo)
 "nvc" = (
 /obj/structure/rack,
-/obj/item/clothing/glasses/sunglasses/big{
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/sunglasses{
-	pixel_y = -3
-	},
 /obj/machinery/newscaster/directional/south,
+/obj/item/taperecorder,
+/obj/item/storage/secure/briefcase,
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
 "nvp" = (
@@ -34629,14 +34621,6 @@
 	dir = 8
 	},
 /area/station/cargo/storage)
-"oqU" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/fax{
-	fax_name = "Head of Security's Office";
-	name = "Head of Security's Fax Machine"
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/central)
 "ora" = (
 /obj/structure/railing/corner/end,
 /obj/effect/turf_decal/stripes/corner{
@@ -35995,6 +35979,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/openspace,
 /area/station/engineering/atmos/upper)
+"oVK" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/station/security/detectives_office)
 "oWh" = (
 /obj/effect/decal/cleanable/glitter/pink,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39617,11 +39607,7 @@
 /turf/open/floor/plating/airless,
 /area/station/maintenance/starboard/lesser)
 "qxI" = (
-/obj/machinery/camera{
-	c_tag = "Science - Xenobiology Pen 5 & 7";
-	dir = 4;
-	network = list("ss13","rd","xeno")
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qxQ" = (
@@ -43088,15 +43074,15 @@
 /obj/effect/turf_decal/trimline/red/filled/mid_joiner{
 	dir = 4
 	},
-/obj/item/clothing/shoes/magboots{
-	pixel_x = 3;
-	pixel_y = 8
-	},
-/obj/item/clothing/shoes/magboots{
-	pixel_x = -3;
-	pixel_y = 4
-	},
 /obj/machinery/airalarm/directional/east,
+/obj/item/mod/module/longfall{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/mod/module/longfall{
+	pixel_y = 11;
+	pixel_x = 3
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/eva)
 "rOk" = (
@@ -45382,10 +45368,6 @@
 	name = "Lawyer Requests Console"
 	},
 /obj/machinery/light_switch/directional/west,
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 5
-	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "sQu" = (
@@ -47341,6 +47323,14 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"tHr" = (
+/obj/machinery/computer/security{
+	dir = 8;
+	name = "prison camera console";
+	network = list("prison")
+	},
+/turf/open/floor/wood,
+/area/station/security/detectives_office)
 "tHs" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Nanotransen Museum"
@@ -48254,6 +48244,15 @@
 	dir = 8
 	},
 /area/station/command/corporate_showroom)
+"ucs" = (
+/obj/machinery/button/door/directional/north{
+	id = "detective_shutters";
+	name = "detective's office shutters control";
+	pixel_x = 11;
+	pixel_y = -1
+	},
+/turf/open/floor/carpet,
+/area/station/security/detectives_office)
 "ucC" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -48961,10 +48960,18 @@
 /turf/open/floor/iron/large,
 /area/station/maintenance/starboard/aft)
 "uqy" = (
-/obj/machinery/computer/security{
-	dir = 1;
-	name = "prison camera console";
-	network = list("prison")
+/obj/structure/table,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/restraints/handcuffs{
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
@@ -50716,10 +50723,6 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/pen/red{
-	pixel_x = 5;
-	pixel_y = 13
-	},
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
 "vdW" = (
@@ -51527,7 +51530,6 @@
 /area/station/command/heads_quarters/hop)
 "vuQ" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/storage/secure/safe/directional/east,
 /obj/machinery/camera{
 	c_tag = "Detective's Office"
@@ -52492,16 +52494,11 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/eva)
 "vQB" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/button/door/directional/south{
 	id = "lawyer_shutters";
 	name = "law office shutter control";
 	pixel_x = 24;
 	pixel_y = 7
-	},
-/obj/machinery/camera{
-	c_tag = "Law Office";
-	dir = 8
 	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching Prison Wing holding areas.";
@@ -52510,6 +52507,11 @@
 	network = list("prison");
 	pixel_y = -30
 	},
+/obj/machinery/camera{
+	c_tag = "Cargo Bay - Reception";
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
 "vQH" = (
@@ -55426,8 +55428,16 @@
 /turf/open/floor/iron/airless,
 /area/station/maintenance/starboard/lesser)
 "wWA" = (
-/obj/machinery/disposal/bin,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/pen/red{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
 "wWV" = (
@@ -56022,38 +56032,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/carpet,
 /area/space)
-"xhN" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp/green{
-	pixel_x = -3;
-	pixel_y = 11
-	},
-/obj/item/paper{
-	pixel_x = 17;
-	pixel_y = 4
-	},
-/obj/item/paper{
-	pixel_x = 17;
-	pixel_y = 4
-	},
-/obj/item/paper{
-	pixel_x = 17;
-	pixel_y = 4
-	},
-/obj/item/paper{
-	pixel_x = 17;
-	pixel_y = 4
-	},
-/obj/item/paper{
-	pixel_x = 17;
-	pixel_y = 4
-	},
-/obj/item/restraints/handcuffs{
-	pixel_x = 13;
-	pixel_y = 2
-	},
-/turf/open/floor/carpet,
-/area/station/security/detectives_office)
 "xhO" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydropony_shutters";
@@ -57046,10 +57024,6 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/item/mod/module/longfall{
-	pixel_y = 20;
-	pixel_x = 5
-	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/eva)
 "xFu" = (
@@ -87134,9 +87108,9 @@ eYr
 eYr
 jOE
 jOE
-rNG
-rNG
-rNG
+jOE
+jOE
+jOE
 jOE
 jOE
 hWw
@@ -92531,7 +92505,7 @@ ndK
 opj
 wXU
 aWV
-aWV
+iZH
 iZH
 gmE
 lsW
@@ -93045,8 +93019,8 @@ ndK
 oHE
 cIl
 aWV
-aWV
 wkt
+cPf
 aWV
 oET
 iLn
@@ -142127,7 +142101,7 @@ eBw
 eBw
 vQy
 nPl
-eBw
+hKJ
 gRG
 dqH
 stm
@@ -142384,7 +142358,7 @@ mas
 bbF
 jTO
 jTO
-cPC
+jTO
 gif
 stm
 aqk
@@ -151643,8 +151617,8 @@ cba
 usP
 xXY
 gNi
-xhN
 gNi
+oVK
 nct
 sSw
 gTp
@@ -151900,7 +151874,7 @@ cba
 usP
 kMI
 gUv
-kjq
+pwB
 ghe
 uqy
 usP
@@ -152156,10 +152130,10 @@ cba
 cba
 usP
 kip
+eDr
+ucs
+kIz
 gNi
-pwB
-gNi
-bPo
 usP
 gTp
 gTp
@@ -152414,7 +152388,7 @@ cba
 sSw
 vuQ
 cJD
-eBx
+tHr
 eBx
 ufo
 sSw
@@ -152670,9 +152644,9 @@ khF
 khF
 sSw
 sSw
-usP
-usP
-usP
+sSw
+sSw
+sSw
 sSw
 sSw
 pQa
@@ -153430,7 +153404,7 @@ dfn
 dfn
 dfn
 dfn
-oqU
+dfn
 dfn
 dfn
 dfn
