@@ -97,3 +97,12 @@
   - refactor: Hardlight spears use projectiles instead of throws now.
   NicoDeLuna:
   - bugfix: adjusting sprites of the ascot
+2023-11-21:
+  NicoDeLuna:
+  - rscadd: Added World Champion's Gi and Cape
+  lmenvs:
+  - rscadd: Rickdude's donator rewards
+2023-11-23:
+  wraith-54321:
+  - rscadd: Added teleporters to centcom
+  - rscadd: added a firing range for ghosts on centcom

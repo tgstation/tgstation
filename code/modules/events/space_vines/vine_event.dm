@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/spacevine
 	weight = 15
 	max_occurrences = 3
-	min_players = 10
+	min_players = 25 //MONKESTATION CHANGE: 10 ==> 25
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Kudzu begins to overtake the station. Might spawn man-traps."
 	min_wizard_trigger_potency = 4
@@ -14,9 +14,6 @@
 		/datum/event_admin_setup/input_number/spacevine_potency,
 		/datum/event_admin_setup/input_number/spacevine_production,
 	)
-	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMMUNAL, TAG_COMBAT)
-	checks_antag_cap = TRUE
 
 /datum/round_event/spacevine
 	fakeable = FALSE

@@ -338,16 +338,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/experimentor
-	name = "E.X.P.E.R.I-MENTOR Board"
-	desc = "The circuit board for an E.X.P.E.R.I-MENTOR."
-	id = "experimentor"
-	build_path = /obj/item/circuitboard/machine/experimentor
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/protolathe
 	name = "Protolathe Board"
 	desc = "The circuit board for a protolathe."
@@ -1105,3 +1095,24 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+
+/datum/design/board/artifact_xray
+	name = "Artifact XRay Board"
+	desc = "The circuit board for a xray machine for artifacts"
+	id = "artifact_xray"
+	build_path = /obj/item/circuitboard/machine/artifactxray
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/artifact_heater
+	name = "Artifact Heating Pad Board"
+	desc = "The circuit board for a heating pad for artifact"
+	id = "artifact_heater"
+	build_path = /obj/item/circuitboard/machine/artifactheater
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

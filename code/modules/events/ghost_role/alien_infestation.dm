@@ -9,11 +9,8 @@
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "A xenomorph larva spawns on a random vent."
-	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT)
-	checks_antag_cap = TRUE
 
-/datum/round_event_control/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/alien_infestation/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .
@@ -37,7 +34,7 @@
 	announce_when = rand(announce_when, announce_when + 50)
 	if(prob(50))
 		spawncount++
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 /datum/round_event/ghost_role/alien_infestation/announce(fake)
 	var/living_aliens = FALSE
 	for(var/mob/living/carbon/alien/A in GLOB.player_list)

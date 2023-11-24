@@ -153,10 +153,6 @@
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
-"M" = (
-/obj/item/relic,
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
 "O" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/barricade/wooden,
@@ -719,7 +715,7 @@ V
 G
 A
 z
-M
+A
 z
 l
 l

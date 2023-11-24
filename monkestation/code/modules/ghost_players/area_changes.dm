@@ -55,6 +55,13 @@
 /area/centcom/central_command_areas/admin
 	area_flags = NOTELEPORT | GHOST_AREA | NO_EXPLOSIONS_DURING | NO_GHOSTS_DURING_ROUND
 
+/area/centcom/central_command_areas/firing_range
+	name = "Centcom Firing Range"
+	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | NO_EXPLOSIONS_DURING
+
+/area/centcom/central_command_areas/firing_range_checkpoint_control
+	area_flags = UNIQUE_AREA | NOTELEPORT | NO_EXPLOSIONS_DURING
+
 /area/Entered(mob/M)
 	. = ..()
 	if(!(area_flags & GHOST_AREA) && istype(M, /mob/living/carbon/human/ghost))
