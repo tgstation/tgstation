@@ -6,7 +6,7 @@
 	weight = 7
 	max_occurrences = 1
 	min_players = 5
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns an angry, soul sucking ghost."
 	min_wizard_trigger_potency = 4

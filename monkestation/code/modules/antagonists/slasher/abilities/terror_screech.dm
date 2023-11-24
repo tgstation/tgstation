@@ -31,8 +31,6 @@
 		human.Shake(duration = 5 SECONDS)
 		human.stamina.adjust(-60)
 		human.emote("scream")
-		if(prob(25))
-			human.emote("piss")
 		human.SetParalyzed(1.5 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(remove_overlay), human), 5 SECONDS)
 
