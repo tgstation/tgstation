@@ -18,11 +18,11 @@
 	var/block = 0
 	var/bleeding = 0
 	if (perp.body_position & LYING_DOWN)
-		block = perp.check_contact_sterility(BODY_ZONE_CHEST)
-		bleeding = perp.check_bodypart_bleeding(BODY_ZONE_CHEST)
+		block = perp.check_contact_sterility(BODY_ZONE_EVERYTHING)
+		bleeding = perp.check_bodypart_bleeding(BODY_ZONE_EVERYTHING)
 	else
-		block = perp.check_contact_sterility(BODY_ZONE_L_LEG)
-		bleeding = perp.check_bodypart_bleeding(BODY_ZONE_L_LEG)
+		block = perp.check_contact_sterility(BODY_ZONE_LEGS)
+		bleeding = perp.check_bodypart_bleeding(BODY_ZONE_LEGS)
 
 	if (!block)
 		if (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)

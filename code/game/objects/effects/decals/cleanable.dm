@@ -16,6 +16,8 @@
 	///The amount of reagent this decal holds, if decal_reagent is defined
 	var/reagent_amount = 0
 
+	var/list/diseases = list()
+
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)

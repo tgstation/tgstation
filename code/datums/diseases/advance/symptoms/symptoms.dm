@@ -38,7 +38,6 @@
 	///If this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 	var/naturally_occuring = TRUE
 
-
 ///Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
 /datum/symptom/proc/Start(datum/disease/advance/A)
 	if(neutered)
@@ -68,6 +67,7 @@
 /datum/symptom/proc/Copy()
 	var/datum/symptom/new_symp = new type
 	new_symp.name = name
+	new_symp.id = id
 	new_symp.neutered = neutered
 	return new_symp
 

@@ -12,7 +12,9 @@ This PR aims to make virology not ass to play with
 ### TG Proc/File Changes:
 
 <!-- If you had to edit, or append to any core procs in the process of making this PR, list them here. APPEND: Also, please include any files that you've changed. .DM files that is. -->
-	- N/A
+	- code\modules\mob\living\carbon\life.dm
+	- code\datums\diseases\_disease.dm
+	- code\game\objects\effects\decals\cleanable.dm
 
 ### Defines:
 

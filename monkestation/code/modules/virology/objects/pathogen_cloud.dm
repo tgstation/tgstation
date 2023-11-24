@@ -80,8 +80,10 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 				//This should prevent mobs breathing in hundreds of clouds at once
 				for (var/obj/effect/pathogen_cloud/other_C in src.loc)
 					if (!other_C.core)
-						for (var/datum/disease/advanced/V as anything in other_C.viruses)
-							if (!(V in viruses))
+						for (var/datum/disease/advanced/B as anything in viruses)
+							for(var/datum/disease/advanced/V as anything in other_C.viruses)
+								if("[B.uniqueID]-[B.subID]" == "[V.uniqueID]-[V.subID]")
+									continue
 								viruses |= V.Copy()
 								modified = TRUE
 						qdel(other_C)
@@ -99,8 +101,10 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 			else
 				for (var/obj/effect/pathogen_cloud/core/other_C in src.loc)
 					if (!other_C.moving)
-						for (var/datum/disease/advanced/V as anything in other_C.viruses)
-							if (!(V in viruses))
+						for (var/datum/disease/advanced/B as anything in viruses)
+							for(var/datum/disease/advanced/V as anything in other_C.viruses)
+								if("[B.uniqueID]-[B.subID]" == "[V.uniqueID]-[V.subID]")
+									continue
 								viruses |= V.Copy()
 								modified = TRUE
 						qdel(other_C)

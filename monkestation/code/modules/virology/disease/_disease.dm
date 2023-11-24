@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 	//the disease's antigens, that the body's immune_system will read to produce corresponding antibodies. Without antigens, a disease cannot be cured.
 	var/list/antigen = list()
 	///can we spread
-	var/spread = FALSE
+	var/spread = TRUE
 	//alters a pathogen's propensity to mutate. Set to FALSE to forbid a pathogen from ever mutating.
 	var/mutation_modifier = TRUE
 	//the antibody concentration at which the disease will fully exit the body
@@ -317,19 +317,19 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 	if(mob.bodytemperature < min_bodytemperature)
 		return
 	//Virus food speeds up disease progress
-	if(mob.reagents.has_reagent(VIRUSFOOD))
-		mob.reagents.remove_reagent(VIRUSFOOD,0.1)
+	if(mob.reagents.has_reagent(/datum/reagent/consumable/virus_food))
+		mob.reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.1)
 		if(!logged_virusfood)
-			log += "<br />[timestamp()] Virus Fed ([mob.reagents.get_reagent_amount(VIRUSFOOD)]U)"
+			log += "<br />[ROUND_TIME()] Virus Fed ([mob.reagents.get_reagent_amount(/datum/reagent/consumable/virus_food)]U)"
 			logged_virusfood=1
 		ticks += 10
 	else
 		logged_virusfood=0
 
 	//Moving to the next stage
-	if(ticks > stage*100 && prob(stageprob) && stage < max_stage)
+	if(ticks > stage*100 && prob(stageprob) && stage < max_stages)
 		stage++
-		log += "<br />[timestamp()] NEXT STAGE ([stage])"
+		log += "<br />[ROUND_TIME()] NEXT STAGE ([stage])"
 		ticks = 0
 
 	//Pathogen killing each others
@@ -353,17 +353,17 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 
 	//fever is a reaction of the body's immune system to the infection. The higher the antibody concentration (and the disease still not cured), the higher the fever
 	if (mob.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)//but we won't go all the way to burning up just because of a fever, probably
-		var/fever = round((robustness / 100) * (immune_data[2] / 10) * (stage / max_stage))
-		switch (mob.size)
-			if (SIZE_TINY)
+		var/fever = round((robustness / 100) * (immune_data[2] / 10) * (stage / max_stages))
+		switch (mob.mob_size)
+			if (MOB_SIZE_TINY)
 				mob.bodytemperature += fever*0.2
-			if (SIZE_SMALL)
+			if (MOB_SIZE_SMALL)
 				mob.bodytemperature += fever*0.5
-			if (SIZE_NORMAL)
+			if (MOB_SIZE_HUMAN)
 				mob.bodytemperature += fever
-			if (SIZE_BIG)
+			if (MOB_SIZE_LARGE)
 				mob.bodytemperature += fever*1.5
-			if (SIZE_HUGE)
+			if (MOB_SIZE_HUGE)
 				mob.bodytemperature += fever*2
 
 		if (fever > 0  && prob(3))
@@ -432,7 +432,7 @@ GLOBAL_LIST_INIT(infected_contact_mobs, list())
 		var/immune_system = mob.immune_system.GetImmunity()
 		var/immune_str = immune_system[1]
 		var/list/antibodies = immune_system[2]
-		var/subdivision = (strength - ((robustness * strength) / 100)) / max_stage
+		var/subdivision = (strength - ((robustness * strength) / 100)) / max_stages
 		//for each antigen, we measure the corresponding antibody concentration in the carrier's immune system
 		//the less robust the pathogen, the more likely that further stages' effects won't activate at a given concentration
 		for (var/A in antigen)

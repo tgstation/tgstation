@@ -42,7 +42,7 @@
 	. = ..()
 	if(affected_mob)
 		remove_disease()
-	SSdisease.active_diseases.Remove(src)
+	//SSdisease.active_diseases.Remove(src)
 
 //add this disease if the host does not already have too many
 /datum/disease/proc/try_infect(mob/living/infectee, make_copy = TRUE)
@@ -54,7 +54,7 @@
 	var/datum/disease/D = make_copy ? Copy() : src
 	LAZYADD(infectee.diseases, D)
 	D.affected_mob = infectee
-	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
+	//SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
 	D.after_add()
 	infectee.med_hud_set_status()

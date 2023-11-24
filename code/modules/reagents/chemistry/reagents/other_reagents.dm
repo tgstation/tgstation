@@ -48,13 +48,25 @@
 		for(var/thing in data["viruses"])
 			var/datum/disease/strain = thing
 
-			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-				continue
+			if(istype(strain, /datum/disease/advanced))
+				var/datum/disease/advanced/advanced = strain
+				if(methods & (INJECT|INGEST|PATCH))
+					exposed_mob.infect_disease(advanced, notes="(Contact, splashed with infected blood)")
+				if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
+					if(!exposed_mob.check_contact_sterility(BODY_ZONE_EVERYTHING))
+						return
+					if(exposed_mob.check_bodypart_bleeding(BODY_ZONE_EVERYTHING))
+						exposed_mob.infect_disease(advanced, notes="(Blood, splashed with infected blood)")
 
-			if(methods & (INJECT|INGEST|PATCH))
-				exposed_mob.ForceContractDisease(strain)
-			else if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
+			else
+
+				if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+					continue
+
+				if(methods & (INJECT|INGEST|PATCH))
+					exposed_mob.ForceContractDisease(strain)
+				else if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+					exposed_mob.ContactContractDisease(strain)
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob

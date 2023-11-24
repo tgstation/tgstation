@@ -24,9 +24,39 @@
 	var/max_multiplier = 1
 		// Maximum multiplier.
 
+	var/count = 0
+		// How many times the effect has activated so far.
+	var/max_count = -1
+		// How many times the effect should be allowed to activate. If -1, always activate.
+
+
 /datum/symptom/proc/minormutate()
 	if (prob(20))
 		chance = rand(initial(chance), max_chance)
 
 /datum/symptom/proc/multiplier_tweak(tweak)
 	multiplier = clamp(multiplier+tweak,1,max_multiplier)
+
+
+/datum/symptom/proc/can_run_effect(active_stage = -1)
+	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1) && prob(chance))
+		return 1
+	return 0
+
+/datum/symptom/proc/run_effect(mob/living/mob)
+	activate(mob)
+	count += 1
+
+// The actual guts of the effect. Has a prob(chance)% to get called per tick.
+/datum/symptom/proc/activate(mob/living/carbon/mob)
+
+// If activation makes any permanent changes to the effect, this is where you undo them.
+// Will not get called if the virus has never been activated.
+/datum/symptom/proc/deactivate(mob/living/carbon/mob)
+
+/datum/symptom/proc/on_touch(mob/living/carbon/mob, toucher, touched, touch_type)
+	// Called when the sufferer of the symptom bumps, is bumped, or is touched by hand.
+/datum/symptom/proc/on_death(mob/living/carbon/mob)
+	// Called when the sufferer of the symptom dies
+/datum/symptom/proc/side_effect(mob/living/mob)
+	// Called on every Life() while the body is alive

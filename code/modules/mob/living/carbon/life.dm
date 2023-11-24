@@ -21,6 +21,7 @@
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(seconds_per_tick, times_fired)
+		handle_virus_updates()
 
 		. = ..()
 		if(QDELETED(src))
@@ -150,6 +151,7 @@
 				loc_as_obj.handle_internal_lifeform(src,0)
 
 	check_breath(breath)
+	breath_airborne_diseases() //monkestation edit - VIROLOGY
 
 	if(breath)
 		loc.assume_air(breath)
