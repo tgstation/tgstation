@@ -21,7 +21,6 @@
 	spawned.pixel_x += rand(-24, 24)
 	spawned.pixel_y += rand(-6, 6)
 	first.Turn(rand(-90, 90))
-	first.Scale(2, 2)
 	spawned.transform = first
 
 	second = first
