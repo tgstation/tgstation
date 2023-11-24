@@ -350,8 +350,8 @@ const DisplayDetails = (props: DisplayDetailsProps, context) => {
     <TableCell>
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
-          <Stack.Item>
-            <Icon color={color} key={index} name={icon} />
+          <Stack.Item key={index}>
+            <Icon color={color} name={icon} />
           </Stack.Item>
         ))}
       </Stack>
