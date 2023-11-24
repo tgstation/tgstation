@@ -398,6 +398,9 @@
 			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
 			if(!(gas_mix.total_moles() > 0))
 				empty_mixes++
+			if(!nodes[gas_mix_number])
+				var/pressure_delta = all_gas_mixes[gas_mix_number].return_pressure() - env_air.return_pressure()
+				internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
 		if(empty_mixes == device_type)
 			empty_pipe = TRUE
 	if(!(int_air.total_moles() > 0))
