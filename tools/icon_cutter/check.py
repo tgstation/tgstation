@@ -7,7 +7,6 @@ import platform
 import subprocess
 from PIL import Image
 import numpy as np
-import cv2
 import difflib
 
 BUF_SIZE = 65536  # lets read stuff in 64kb chunks!
