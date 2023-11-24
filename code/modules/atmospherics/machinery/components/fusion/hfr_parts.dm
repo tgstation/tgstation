@@ -59,8 +59,10 @@
 			filled_pipe = TRUE
 
 	if(!nodes[1])
-		internal_pressure = max(internal_pressure, ins_air.return_pressure()) - env_air.return_pressure()	
+		internal_pressure = max(internal_pressure, ins_air.return_pressure())	
 	
+	internal_pressure -= env_air.return_pressure()
+
 	if(ins_air.total_moles() > 0)
 		filled_pipe = TRUE
 
