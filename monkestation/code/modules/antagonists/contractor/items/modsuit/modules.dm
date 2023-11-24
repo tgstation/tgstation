@@ -65,7 +65,6 @@
 	name = "MOD magnetic deployment module"
 	desc = "A much more modern version of a springlock system. \
 	This is a module that uses magnets to speed up the deployment and retraction time of your MODsuit."
-	icon_state = "magnet_springlock"
 	complexity = 0 //we have fast deploy already, we dont need this to cost anything
 
 /obj/item/mod/module/springlock/contractor/on_suit_activation() // This module is actually *not* a death trap
@@ -82,7 +81,7 @@
 			a target towards you at high speed, knocking them down and \
 			partially exhausting them."
 	icon = 'monkestation/icons/obj/guns/magic.dmi'
-	icon_state = "hook"
+	icon_state = "contractor_hook"
 	incompatible_modules = list(/obj/item/mod/module/scorpion_hook)
 	module_type = MODULE_ACTIVE
 	complexity = 3
