@@ -207,6 +207,15 @@
 	/// used for narcing on underages
 	var/obj/item/radio/sec_radio
 
+// Structures / Items vendors don't crush on landing on them
+// Currently conveyors and chairs.
+var/list/vendor_nocrush = list(
+	//WALLITEMS_EXTERIOR,
+	//WALLITEMS_INTERIOR,
+	/obj/structure/chair,
+	/obj/machinery/conveyor,
+)
+
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
@@ -819,7 +828,7 @@
 				post_crush_living(living_target, was_alive)
 				flags_to_return |= (SUCCESSFULLY_CRUSHED_MOB|SUCCESSFULLY_CRUSHED_ATOM)
 
-			else if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) && !(istype(atom_target, /obj/structure/chair)) && !(istype(atom_target, /obj/machinery/conveyor)) && !(is_type_in_typecache(atom_target, GLOB.WALLITEMS_INTERIOR) || is_type_in_typecache(atom_target, GLOB.WALLITEMS_EXTERIOR)))
+			else if (atom_target.uses_integrity && !(atom_target.invisibility > SEE_INVISIBLE_LIVING) && !(is_type_in_list(atom_target, vendor_nocrush)))
 				atom_target.take_damage(adjusted_damage, damage_type, damage_flag, FALSE, crush_dir)
 				crushed = TRUE
 				flags_to_return |= SUCCESSFULLY_CRUSHED_ATOM
