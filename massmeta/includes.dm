@@ -25,5 +25,3 @@
 #include "code\modules\antags\uplink_items.dm"
 #include "code\obj\items\clothing\belt.dm"
 #include "code\modules\announcers.dm"
-#include "code\_DEFINES\radio.dm"
-#include "code\_DEFINES\say.dm"
