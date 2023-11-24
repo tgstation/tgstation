@@ -10,8 +10,6 @@
 	/// Cooldown for the announement associated with this event.
 	/// Necessary due to the fact that this event is player triggerable.
 	COOLDOWN_DECLARE(announcement_spam_protection)
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_COMMUNAL, TAG_SPOOKY)
 
 /datum/round_event/grid_check
 	announce_when = 1
