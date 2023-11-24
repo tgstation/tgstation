@@ -39,6 +39,7 @@
 	loadout_tabs += list(list("name" = "Toys", "title" = "Toys! ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_toys)))
 	loadout_tabs += list(list("name" = "Other", "title" = "Backpack Items ([MAX_ALLOWED_MISC_ITEMS] max)", "contents" = list_to_data(GLOB.loadout_pocket_items)))
 	loadout_tabs += list(list("name" = "Effects", "title" = "Unique Effects", "contents" = list_to_data(GLOB.loadout_effects)))
+	loadout_tabs += list(list("name" = "Unusuals", "title" = "Unusual Hats", "contents" = convert_stored_unusuals_to_data()))
 
 	return list("loadout_tabs" = loadout_tabs)
 
@@ -49,12 +50,16 @@
 	var/list/all_selected_paths = list()
 	for(var/path in preferences.loadout_list)
 		all_selected_paths += path
+	
+	var/list/all_selected_unusuals = list()
+	if(length(preferences.special_loadout_list["unusual"]))
+		all_selected_unusuals = preferences.special_loadout_list["unusual"]
+
 	data["selected_loadout"] = all_selected_paths
+	data["selected_unusuals"] = all_selected_unusuals
 	data["user_is_donator"] = !!(preferences.parent.patreon?.is_donator() || is_admin(preferences.parent))
 	data["mob_name"] = preferences.read_preference(/datum/preference/name/real_name)
 	data["ismoth"] = istype(preferences.parent.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
-	data["preivew_options"] = list(PREVIEW_PREF_JOB, PREVIEW_PREF_LOADOUT, PREVIEW_PREF_NAKED)
-	data["preview_selection"] = PREVIEW_PREF_JOB
 	data["total_coins"] = preferences.metacoins
 
 	return data
@@ -83,6 +88,10 @@
 	return interacted_item
 
 /datum/preference_middleware/loadout/proc/select_item(list/params, mob/user)
+	if(params["unusual_spawning_requirements"])
+		unusual_selection(params, user)
+		return
+		
 	var/datum/loadout_item/interacted_item = return_item(params)
 	if(!interacted_item)
 		return
@@ -104,6 +113,20 @@
 			continue
 
 	LAZYSET(preferences.loadout_list, interacted_item.item_path, list())
+	var/datum/tgui/ui = SStgui.get_open_ui(user, preferences)
+	ui.send_update()
+	preferences.character_preview_view?.update_body()
+
+/datum/preference_middleware/proc/unusual_selection(list/params, mob/user)
+	if("[params["unusual_placement"]]" in preferences.special_loadout_list["unusual"])
+		preferences.special_loadout_list["unusual"] -= params["unusual_placement"]
+		preferences.save_preferences()
+		return
+
+	if(!islist(preferences.special_loadout_list["unusual"]))
+		preferences.special_loadout_list["unusual"] = list()
+
+	preferences.special_loadout_list["unusual"] += "[params["unusual_placement"]]"
 	var/datum/tgui/ui = SStgui.get_open_ui(user, preferences)
 	ui.send_update()
 	preferences.character_preview_view?.update_body()
@@ -152,6 +175,30 @@
 		formatted_item["is_ckey_whitelisted"] = !isnull(item.ckeywhitelist)
 		if(LAZYLEN(item.additional_tooltip_contents))
 			formatted_item["tooltip_text"] = item.additional_tooltip_contents.Join("\n")
+
+		formatted_list[array_index++] = formatted_item
+
+	return formatted_list
+
+/datum/preference_middleware/proc/convert_stored_unusuals_to_data()
+	var/list/data = preferences.extra_stat_inventory["unusual"]
+	if(!length(data))
+		return
+
+	var/list/formatted_list = new(length(data))
+
+	var/array_index = 1
+	for(var/iter as anything in data)
+		var/list/formatted_item = list()
+		formatted_item["name"] = data[array_index]["name"]
+		formatted_item["path"] = data[array_index]["unusual_type"]
+		formatted_item["unusual_placement"] = "[array_index]"
+		formatted_item["is_greyscale"] = FALSE
+		formatted_item["is_renamable"] = FALSE
+		formatted_item["is_job_restricted"] = FALSE
+		formatted_item["is_donator_only"] = FALSE
+		formatted_item["is_ckey_whitelisted"] = FALSE
+		formatted_item["unusual_spawning_requirements"] = TRUE
 
 		formatted_list[array_index++] = formatted_item
 
@@ -251,6 +298,7 @@
 
 /datum/preference_middleware/loadout/proc/clear_all_items()
 	LAZYNULL(preferences.loadout_list)
+	preferences.special_loadout_list["unusual"] = list()
 	preferences.character_preview_view.update_body()
 
 /datum/preference_middleware/loadout/proc/ckey_explain(list/params, mob/user)

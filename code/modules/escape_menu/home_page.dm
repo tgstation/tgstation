@@ -28,13 +28,22 @@
 			CALLBACK(src, PROC_REF(start_redeem)),
 		)
 	)
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			src,
+			"Open Lootbox",
+			/* offset = */ 3,
+			CALLBACK(src, PROC_REF(try_open_lootbox)),
+		)
+	)
 
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,
 			src,
 			"Open Map",
-			/* offset = */ 3,
+			/* offset = */ 4,
 			CALLBACK(src, PROC_REF(open_map)),
 		)
 	)
@@ -43,7 +52,7 @@
 			null,
 			src,
 			"Admin Help",
-			/* offset = */ 4,
+			/* offset = */ 5,
 		)
 	)
 
@@ -52,7 +61,7 @@
 			null,
 			src,
 			"Leave Body",
-			/* offset = */ 5,
+			/* offset = */ 6,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
@@ -62,6 +71,9 @@
 
 /datum/escape_menu/proc/start_redeem()
 	client?.redeem_code()
+
+/datum/escape_menu/proc/try_open_lootbox()
+	client?.try_open_or_buy_lootbox()
 
 /datum/escape_menu/proc/open_map()
 	var/redirect = ""

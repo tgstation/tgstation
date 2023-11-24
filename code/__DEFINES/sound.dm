@@ -17,6 +17,7 @@
 #define CHANNEL_MOB_SOUNDS 1009
 #define CHANNEL_Z 1008
 #define CHANNEL_WALKMAN 1007 //monkestation edit
+#define CHANNEL_MASTER_VOLUME 1006
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
