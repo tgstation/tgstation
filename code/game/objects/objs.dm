@@ -227,50 +227,52 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	VV_DROPDOWN_OPTION(VV_HK_OSAY, "Object Say")
 
 /obj/vv_do_topic(list/href_list)
-	if(!(. = ..()))
+	. = ..()
+
+	if(!.)
 		return
+
 	if(href_list[VV_HK_OSAY])
-		if(check_rights(R_FUN, FALSE))
-			usr.client.object_say(src)
+		if(!check_rights(R_FUN, FALSE))
+			return
+		usr.client.object_say(src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
-		if(check_rights(R_DEBUG|R_SERVER))
-			var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
-			if(action_type == "Cancel" || !action_type)
-				return
-
-			if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [type]?",,list("Yes","No")) != "Yes")
-				return
-
-			if(tgui_alert(usr, "Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
-				return
-
-			var/O_type = type
-			switch(action_type)
-				if("Strict type")
-					var/i = 0
-					for(var/obj/Obj in world)
-						if(Obj.type == O_type)
-							i++
-							qdel(Obj)
-						CHECK_TICK
-					if(!i)
-						to_chat(usr, "No objects of this type exist")
-						return
-					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
-					message_admins(span_notice("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) "))
-				if("Type and subtypes")
-					var/i = 0
-					for(var/obj/Obj in world)
-						if(istype(Obj,O_type))
-							i++
-							qdel(Obj)
-						CHECK_TICK
-					if(!i)
-						to_chat(usr, "No objects of this type exist")
-						return
-					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
-					message_admins(span_notice("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) "))
+		if(!check_rights(R_DEBUG|R_SERVER))
+			return
+		var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
+		if(action_type == "Cancel" || !action_type)
+			return
+		if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [type]?",,list("Yes","No")) != "Yes")
+			return
+		if(tgui_alert(usr, "Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
+			return
+		var/O_type = type
+		switch(action_type)
+			if("Strict type")
+				var/i = 0
+				for(var/obj/Obj in world)
+					if(Obj.type == O_type)
+						i++
+						qdel(Obj)
+					CHECK_TICK
+				if(!i)
+					to_chat(usr, "No objects of this type exist")
+					return
+				log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
+				message_admins(span_notice("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) "))
+			if("Type and subtypes")
+				var/i = 0
+				for(var/obj/Obj in world)
+					if(istype(Obj,O_type))
+						i++
+						qdel(Obj)
+					CHECK_TICK
+				if(!i)
+					to_chat(usr, "No objects of this type exist")
+					return
+				log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
+				message_admins(span_notice("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) "))
 
 /obj/examine(mob/user)
 	. = ..()
