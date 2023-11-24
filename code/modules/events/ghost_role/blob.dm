@@ -5,7 +5,6 @@
 	max_occurrences = 1
 
 	min_players = 35  //monkie edit: 20 to 35
-s
 	earliest_start = 60 MINUTES //monkie edit: 20 to 90
 	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
