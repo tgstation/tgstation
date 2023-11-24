@@ -20,14 +20,17 @@
 	var/projectile_overlay_icon
 	/// The icon state used for the overlay applied over the containing projectile
 	var/projectile_overlay_icon_state
+	/// Optional callback to invoke when acquiring projectile var modifiers
+	var/datum/callback/modifier_getter
 
-/datum/component/dart_insert/Initialize(_casing_overlay_icon, _casing_overlay_icon_state, _projectile_overlay_icon, _projectile_overlay_icon_state)
+/datum/component/dart_insert/Initialize(_casing_overlay_icon, _casing_overlay_icon_state, _projectile_overlay_icon, _projectile_overlay_icon_state, datum/callback/_modifier_getter)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	casing_overlay_icon = _casing_overlay_icon
 	casing_overlay_icon_state = _casing_overlay_icon_state
 	projectile_overlay_icon = _projectile_overlay_icon
 	projectile_overlay_icon_state = _projectile_overlay_icon_state
+	modifier_getter = _modifier_getter
 
 /datum/component/dart_insert/RegisterWithParent()
 	. = ..()
@@ -130,8 +133,7 @@
 	new_overlays += mutable_appearance(projectile_overlay_icon, projectile_overlay_icon_state)
 
 /datum/component/dart_insert/proc/apply_var_modifiers(obj/projectile/projectile)
-	LAZYINITLIST(var_modifiers)
-	SEND_SIGNAL(parent, COMSIG_DART_INSERT_GET_VAR_MODIFIERS, var_modifiers)
+	var_modifiers = istype(modifier_getter) ? modifier_getter.Invoke() : list()
 	projectile.damage += var_modifiers["damage"]
 	if(var_modifiers["speed"])
 		var_modifiers["speed"] = reciprocal_add(projectile.speed, var_modifiers["speed"]) - projectile.speed
