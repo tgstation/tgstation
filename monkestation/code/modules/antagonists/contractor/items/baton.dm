@@ -130,19 +130,19 @@
 /obj/item/baton_upgrade/cuff
 	name = "handcuff baton upgrade"
 	desc = "Allows the user to apply restraints to a target via baton, requires to be loaded with up to three prior."
-	icon_state = "contractor_cuff_upgrade"
+	icon_state = "cuff_upgrade"
 	upgrade_flag = BATON_CUFF_UPGRADE
 
 /obj/item/baton_upgrade/mute
 	name = "mute baton upgrade"
 	desc = "Use of the baton on a target will mute them for a short period."
-	icon_state = "contractor_mute_upgrade"
+	icon_state = "mute_upgrade"
 	upgrade_flag = BATON_MUTE_UPGRADE
 
 /obj/item/baton_upgrade/focus
 	name = "focus baton upgrade"
 	desc = "Use of the baton on a target, should they be the subject of your contract, will be extra exhausted."
-	icon_state = "contractor_focus_upgrade"
+	icon_state = "focus_upgrade"
 	upgrade_flag = BATON_FOCUS_UPGRADE
 
 #undef CUFF_MAXIMUM

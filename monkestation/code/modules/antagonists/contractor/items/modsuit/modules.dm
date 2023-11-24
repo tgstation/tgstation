@@ -81,6 +81,7 @@
 			illegal module uses a hardlight hook to forcefully pull \
 			a target towards you at high speed, knocking them down and \
 			partially exhausting them."
+	icon = 'monkestation/icons/obj/guns/magic.dmi'
 	icon_state = "hook"
 	incompatible_modules = list(/obj/item/mod/module/scorpion_hook)
 	module_type = MODULE_ACTIVE
