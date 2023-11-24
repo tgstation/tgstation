@@ -32,6 +32,24 @@
 		component_mixture.volume = 200
 		airs[i] = component_mixture
 
+/obj/machinery/atmospherics/components/Destroy(mob/user)
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/to_release
+	for(var/i in 1 to device_type)
+		var/datum/gas_mixture/air = airs[i]
+		if(nodes[i])
+			var/datum/gas_mixture/parents_air = parents[i].air
+			if(parents_air.volume > 0)
+				parents_air.merge(air)
+				continue
+		if(!to_release)
+			to_release = air
+			continue
+		to_release.merge(air)
+	if(to_release)
+		T.assume_air(to_release)
+	return ..()
+
 /obj/machinery/atmospherics/components/Initialize(mapload)
 	. = ..()
 
@@ -171,31 +189,6 @@
 
 /obj/machinery/atmospherics/components/replace_pipenet(datum/pipeline/Old, datum/pipeline/New)
 	parents[parents.Find(Old)] = New
-
-/obj/machinery/atmospherics/components/unsafe_pressure_release(mob/user, pressures)
-	. = ..()
-
-	var/turf/current_turf = get_turf(src)
-	if(!current_turf)
-		return
-	//Remove the gas from airs and assume it
-	var/datum/gas_mixture/environment = current_turf.return_air()
-	var/lost = null
-	var/times_lost = 0
-	for(var/i in 1 to device_type)
-		var/datum/gas_mixture/air = airs[i]
-		lost += pressures*environment.volume/(air.temperature * R_IDEAL_GAS_EQUATION)
-		times_lost++
-	var/shared_loss = lost/times_lost
-
-	var/datum/gas_mixture/to_release
-	for(var/i in 1 to device_type)
-		var/datum/gas_mixture/air = airs[i]
-		if(!to_release)
-			to_release = air.remove(shared_loss)
-			continue
-		to_release.merge(air.remove(shared_loss))
-	current_turf.assume_air(to_release)
 
 // Helpers
 
