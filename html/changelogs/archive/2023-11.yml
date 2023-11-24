@@ -981,3 +981,34 @@
       Staggered.
   vinylspiders:
   - bugfix: fullupgrade chem dispensers will now spawn with all their chems
+2023-11-24:
+  Autisem:
+  - rscadd: Cyborg inducer for engineering borgs
+  - balance: The borg RPED can hold as many part as the BSRPED now
+  - balance: Cyborg chargers now draw from the power net as cell chargers do
+  Jacquerel:
+  - rscadd: A new skill chip can be found in maintenance or purchased from the vendor,
+      allowing you to experience food in new and exciting ways.
+  - rscadd: Abductors also have access to this incredible power, simply using their
+      genius level brains.
+  JohnFulpWillard:
+  - qol: Mafia panel no longer shows vote buttons if you're on stand, shows the roles
+      of revealed players, and list out who is on the stand, if any.
+  SyncIt21:
+  - bugfix: RCD can build directional windows on top of existing grills & without
+      them.
+  - code_imp: removes & merges `expose_multiple()` proc into `expose()` proc inside
+      reagent holder
+  - code_imp: removes `conditonal_update()` proc & `on_update()` proc inside reagent
+      holder and reagent
+  - refactor: Reagent code has been trimmed and split into multiple files. report
+      bugs on github
+  TwistedSilicon:
+  - bugfix: Window damage overlays have been fixed.
+  Xander3359:
+  - admin: Remove "Make AI" from VV dropdown
+  dieamond13:
+  - qol: gives roundstart prisoners a key memory of what their crime is
+  jjpark-kb:
+  - bugfix: gutlunches now produce miner salve instead of milk, as well as the other
+      reagents if fed the correct ore
