@@ -13,11 +13,6 @@
 	var/skip_nearby = FALSE
 	/// If TRUE, we will play the wabbajack sound effect to the hallucinator
 	var/play_wabbajack = FALSE
-	/// If TRUE, any mob (even nonhumans) in view of our hallcuinator will be affected
-	var/include_nearby_mobs = FALSE
-	/// If TRUE, the delusion will constantly polymorph affected mobs
-	var/randomize = FALSE
-
 	/// The file the delusion image is made from
 	var/delusion_icon_file
 	/// The icon state of the delusion image
@@ -37,8 +32,6 @@
 	affects_all_humans,
 	skip_nearby,
 	play_wabbajack,
-	include_nearby_mobs,
-	randomize,
 )
 
 	if(isnum(duration))
@@ -51,10 +44,6 @@
 		src.skip_nearby = skip_nearby
 	if(!isnull(play_wabbajack))
 		src.play_wabbajack = play_wabbajack
-	if(!isnull(include_nearby_mobs))
-		src.include_nearby_mobs = include_nearby_mobs
-	if(!isnull(randomize))
-		src.randomize = randomize
 
 	return ..()
 
@@ -90,28 +79,8 @@
 				continue
 			funny_looking_mobs -= nearby_mob
 
-	// The delusion includes all mobs within view (even ones that aren't human)
-	if(include_nearby_mobs)
-		for(var/mob/living/nearby_mob in get_hearers_in_view(15, hallucinator))
-			if(nearby_mob == hallucinator) // Already handled by affects_us
-				continue
-			funny_looking_mobs |= nearby_mob
-
 	for(var/mob/living/found_mob in funny_looking_mobs)
-		var/image/funny_image
-		if(randomize)
-			var/datum/hallucination/delusion/random_delusion
-			while(!random_delusion)
-				random_delusion = get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset)
-				if(initial(random_delusion.dynamic_icon))
-					random_delusion = null // try again
-
-			funny_image = image(initial(random_delusion.delusion_icon_file), found_mob, initial(random_delusion.delusion_icon_state))
-			funny_image.name = initial(random_delusion.delusion_name)
-			funny_image.override = TRUE
-		else
-			funny_image = make_delusion_image(found_mob)
-
+		var/image/funny_image = make_delusion_image(found_mob)
 		LAZYADD(delusions, funny_image)
 		hallucinator.client.images |= funny_image
 

@@ -210,8 +210,6 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 	var/affects_all_humans = (tgui_alert(user, "Should they see everyone else delusion?", "Delusion: Affects others", options) == "Yes")
 	var/skip_nearby = (tgui_alert(user, "Should the delusion only affect people outside of their view?", "Delusion: Skip in view", options) == "Yes")
 	var/play_wabbajack = (tgui_alert(user, "Play the wabbajack sound when it happens?", "Delusion: Wabbajack sound", options) == "Yes")
-	var/include_nearby_mobs = (tgui_alert(user, "Should the delusion affect all mobs within view?", "Delusion: All mobs in view", options) == "Yes")
-	var/randomize = (tgui_alert(user, "Should the delusion keep polymoprhing during the duration?", "Delusion: Randomize", options) == "Yes")
 
 	delusion_args = list(
 		chosen,
@@ -221,8 +219,6 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 		affects_all_humans = affects_all_humans,
 		skip_nearby = skip_nearby,
 		play_wabbajack = play_wabbajack,
-		include_nearby_mobs = include_nearby_mobs,
-		randomize = randomize,
 	)
 
 	if(ispath(chosen, /datum/hallucination/delusion/custom))
