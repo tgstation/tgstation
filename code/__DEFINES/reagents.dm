@@ -33,7 +33,7 @@
 #define PATCH (1<<3)
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
-/// Used for inhalation of reagents. Used by cigarettes, inhale, smoke,I and VAPOR.
+/// Used for inhalation of reagents. Used by cigarettes, inhale, smoke, and VAPOR.
 #define INHALE (1<<5)
 
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
