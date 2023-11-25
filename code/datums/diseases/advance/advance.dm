@@ -130,8 +130,8 @@
 		sortTim(advance_diseases, GLOBAL_PROC_REF(cmp_advdisease_resistance_asc))
 		for(var/i in 1 to replace_num)
 			var/datum/disease/advance/competition = advance_diseases[i]
-			if(competition.bypasses_immunity != TRUE)
-				if(bypasses_immunity == TRUE && competition.bypasses_immunity == FALSE) //viruses with bypasses_immunity get a free pass on beating normal advanced diseases
+			if(!competition.bypasses_immunity)
+				if(bypasses_immunity) //viruses with bypasses_immunity get a free pass on beating normal advanced diseases
 					competition.cure(FALSE)
 				if(totalTransmittable() > competition.totalResistance())
 					competition.cure(FALSE)
