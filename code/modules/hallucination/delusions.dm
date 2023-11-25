@@ -55,7 +55,7 @@
 	return ..()
 
 /datum/hallucination/delusion/start()
-	if(!hallucinator.client || (!delusion_icon_file && !randomize))
+	if(!hallucinator.client || (!delusion_icon_file))
 		return FALSE
 
 	feedback_details += "Delusion: [delusion_name]"
@@ -110,8 +110,6 @@
 	affects_all_humans,
 	skip_nearby,
 	play_wabbajack,
-	include_nearby_mobs,
-	randomize,
 	custom_icon_file,
 	custom_icon_state,
 	custom_name,
