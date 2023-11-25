@@ -92,92 +92,93 @@
 	update_icon()
 
 
-/obj/machinery/disease2/incubator/Topic(href, href_list)
+/obj/machinery/disease2/incubator/ui_act(action, params)
 	. = ..()
 	if (.)
 		return
 
-	if (href_list["power"])
-		on = !on
-		if (on)
-			for (var/dish_incubator_dish/dish_datum in dish_data)
-				if (dish_datum.dish.contained_virus)
-					dish_datum.dish.contained_virus.log += "<br />[ROUND_TIME()] Incubation started by [key_name(usr)]"
+	switch(action)
+		if ("power")
+			on = !on
+			if (on)
+				for (var/dish_incubator_dish/dish_datum in dish_data)
+					if (dish_datum.dish.contained_virus)
+						dish_datum.dish.contained_virus.log += "<br />[ROUND_TIME()] Incubation started by [key_name(usr)]"
 
-		update_icon()
-		return TRUE
-
-	if (href_list["ejectdish"])
-		var/slot = text2num(href_list["ejectdish"])
-		if (slot == null || slot < 1 || slot > dish_data.len)
+			update_icon()
 			return TRUE
 
-		var/dish_incubator_dish/dish_datum = dish_data[slot]
-		if (dish_datum == null)
+		if ("ejectdish")
+			var/slot = text2num(params["ejectdish"])
+			if (slot == null || slot < 1 || slot > dish_data.len)
+				return TRUE
+
+			var/dish_incubator_dish/dish_datum = dish_data[slot]
+			if (dish_datum == null)
+				return TRUE
+
+			dish_datum.dish.forceMove(loc)
+			if (Adjacent(usr))
+				usr.put_in_hands(dish_datum.dish)
+
+			dish_datum.dish.update_icon()
+			dish_data[slot] = null
+			update_icon()
 			return TRUE
 
-		dish_datum.dish.forceMove(loc)
-		if (Adjacent(usr))
-			usr.put_in_hands(dish_datum.dish)
+		if ("insertdish")
+			var/slot = text2num(params["insertdish"])
+			if (slot == null || slot < 1 || slot > dish_data.len)
+				return TRUE
 
-		dish_datum.dish.update_icon()
-		dish_data[slot] = null
-		update_icon()
-		return TRUE
+			var/mob/living/user = usr
+			if (!isliving(user))
+				return TRUE
 
-	if (href_list["insertdish"])
-		var/slot = text2num(href_list["insertdish"])
-		if (slot == null || slot < 1 || slot > dish_data.len)
+			var/obj/item/weapon/virusdish/VD = user.get_active_hand()
+			if (istype(VD))
+				addDish(VD, user, slot)
+
+			update_icon()
 			return TRUE
 
-		var/mob/living/user = usr
-		if (!isliving(user))
+		if ("examinedish")
+			var/slot = text2num(params["examinedish"])
+			if (slot == null || slot < 1 || slot > dish_data.len)
+				return TRUE
+
+			var/dish_incubator_dish/dish_datum = dish_data[slot]
+			if (dish_datum == null)
+				return TRUE
+
+			dish_datum.dish.examine(usr)
 			return TRUE
 
-		var/obj/item/weapon/virusdish/VD = user.get_active_hand()
-		if (istype(VD))
-			addDish(VD, user, slot)
+		if ("flushdish")
+			var/slot = text2num(params["flushdish"])
+			if (slot == null || slot < 1 || slot > dish_data.len)
+				return TRUE
 
-		update_icon()
-		return TRUE
+			var/dish_incubator_dish/dish_datum = dish_data[slot]
+			if (dish_datum == null)
+				return TRUE
 
-	if (href_list["examinedish"])
-		var/slot = text2num(href_list["examinedish"])
-		if (slot == null || slot < 1 || slot > dish_data.len)
+			dish_datum.dish.reagents.clear_reagents()
 			return TRUE
-
-		var/dish_incubator_dish/dish_datum = dish_data[slot]
-		if (dish_datum == null)
+		if ("changefocus")
+			var/slot = text2num(params["changefocus"])
+			if(slot == null || slot < 1 || slot > dish_data.len)
+				return TRUE
+			var/dish_incubator_dish/dish_datum = dish_data[slot]
+			if (dish_datum == null)
+				return TRUE
+			var/stage_to_focus = input(usr, "Choose a stage to focus on. This will block symptoms from other stages from being mutated. Input 0 to disable effect focusing.", "Choose a stage.") as num
+			if(!stage_to_focus)
+				to_chat(usr, "<span class='notice'>The effect focusing is now turned off.</span>")
+			else
+				to_chat(usr, "span class='notice'>\The [src] will now focus on stage [stage_to_focus].</span>")
+			effect_focus = stage_to_focus
 			return TRUE
-
-		dish_datum.dish.examine(usr)
-		return TRUE
-
-	if (href_list["flushdish"])
-		var/slot = text2num(href_list["flushdish"])
-		if (slot == null || slot < 1 || slot > dish_data.len)
-			return TRUE
-
-		var/dish_incubator_dish/dish_datum = dish_data[slot]
-		if (dish_datum == null)
-			return TRUE
-
-		dish_datum.dish.reagents.clear_reagents()
-		return TRUE
-	if (href_list["changefocus"])
-		var/slot = text2num(href_list["changefocus"])
-		if(slot == null || slot < 1 || slot > dish_data.len)
-			return TRUE
-		var/dish_incubator_dish/dish_datum = dish_data[slot]
-		if (dish_datum == null)
-			return TRUE
-		var/stage_to_focus = input(usr, "Choose a stage to focus on. This will block symptoms from other stages from being mutated. Input 0 to disable effect focusing.", "Choose a stage.") as num
-		if(!stage_to_focus)
-			to_chat(usr, "<span class='notice'>The effect focusing is now turned off.</span>")
-		else
-			to_chat(usr, "span class='notice'>\The [src] will now focus on stage [stage_to_focus].</span>")
-		effect_focus = stage_to_focus
-		return TRUE
 
 /obj/machinery/disease2/incubator/attack_hand(var/mob/user)
 	. = ..()
@@ -205,8 +206,14 @@
 	ui_interact(user)
 
 
-/*
-/obj/machinery/disease2/incubator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open=NANOUI_FOCUS)
+
+/obj/machinery/disease2/incubator/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "DiseaseIncubator", "Incubator")
+		ui.open()
+
+/obj/machinery/disease2/incubator/ui_data(mob/user)
 	// this is the data which will be sent to the ui
 	var/list/data = list()
 
@@ -234,13 +241,7 @@
 		dish_ui_datum["minor_mutations_robustness"] = dish_datum.minor_mutation_robustness
 		dish_ui_datum["minor_mutations_effects"] = dish_datum.minor_mutation_effects
 
-
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "dish_incubator.tmpl", "Pathogenic Incubator", 800, 400)
-		ui.set_initial_data(data)
-		ui.open()
-*/
+	return data
 
 /obj/machinery/disease2/incubator/process()
 	if (machine_stat & (NOPOWER|BROKEN))

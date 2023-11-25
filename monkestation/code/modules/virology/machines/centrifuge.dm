@@ -175,8 +175,8 @@
 					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (synthesizing vaccine ([target]): [round(progress)]%)</a> <A href='?src=\ref[src];interrupt=[slot]'>X</a>"
 
 		else
-			if(blood.data && blood.data["virus2"])
-				var/list/blood_diseases = blood.data["virus2"]
+			if(blood.data && blood.data["viruses"])
+				var/list/blood_diseases = blood.data["viruses"]
 				if (blood_diseases && blood_diseases.len > 0)
 					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (pathogen detected)</a> <A href='?src=\ref[src];isolate=[slot]'>ISOLATE TO DISH</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 				else
@@ -373,8 +373,8 @@
 		return result
 
 	var/datum/reagent/blood/blood = locate() in vial.reagents.reagent_list
-	if (blood && blood.data && blood.data["virus2"])
-		var/list/blood_viruses = blood.data["virus2"]
+	if (blood && blood.data && blood.data["viruses"])
+		var/list/blood_viruses = blood.data["viruses"]
 		if (istype(blood_viruses) && blood_viruses.len > 0)
 			var/list/pathogen_list = list()
 			for (var/datum/disease/advanced/D as anything  in blood_viruses)
@@ -387,8 +387,7 @@
 			user.set_machine()
 			if (!choice)
 				return result
-			var/ID = pathogen_list[choice]
-			var/datum/disease/advanced/target = blood_viruses[ID]
+			var/datum/disease/advanced/target = pathogen_list[choice]
 
 			result[1] = "dish"
 			result[2] = "Unknown [target.form]"

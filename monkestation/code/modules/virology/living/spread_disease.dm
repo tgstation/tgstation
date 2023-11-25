@@ -38,7 +38,7 @@
 
 		LAZYADD(diseases, D)
 		D.affected_mob = src
-		SSdisease.active_diseases += D
+		//SSdisease.active_diseases += D
 		D.after_add()
 		src.med_hud_set_status()
 
