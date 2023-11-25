@@ -1351,21 +1351,21 @@
 	name = "Exhaustion Spider Toxin"
 	description = "A toxic chemical produced by spiders to exhaust prey while hunting."
 	metabolization_rate = 2 * REAGENTS_METABOLISM
-	data = 15
+	var/stamina_drain = 15
 
 /datum/reagent/toxin/spider/exhaustion/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 
 	if(HAS_TRAIT_FROM(affected_mob, TRAIT_INCAPACITATED, STAMINA))
-		data = initial(data)
+		stamina_drain = initial(stamina_drain)
 		return
 
-	if(affected_mob.adjustStaminaLoss(data * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(affected_mob.adjustStaminaLoss(stamina_drain * REM * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 
 	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(affected_mob, "You feel tired.")
-	data = max(data - 1, 3)
+	stamina_drain = max(stamina_drain - 1, 3)
 
 /datum/reagent/toxin/spider/confusion
 	name = "Confusion Spider Toxin"
