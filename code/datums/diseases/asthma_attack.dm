@@ -42,7 +42,7 @@
 		DISEASE_SEVERITY_MEDIUM = "Minor",
 		DISEASE_SEVERITY_HARMFUL = "Moderate",
 		DISEASE_SEVERITY_DANGEROUS = "Severe",
-		DISEASE_SEVERITY_BIOHAZARD = "EXTREME"
+		DISEASE_SEVERITY_BIOHAZARD = "EXTREME",
 	)
 	/// A assoc list of (stringified number -> number), where the key is the stage and the number is how much inflammation we will cause the asthmatic per second.
 	var/list/stage_to_inflammation_per_second

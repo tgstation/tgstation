@@ -34,15 +34,17 @@
 /obj/item/inhaler/examine(mob/user)
 	. = ..()
 
-	if (!isnull(canister))
-		. += span_blue("It seems to have <b>[canister]</b> inserted.")
-		if (show_puffs_left)
-			var/puffs_left = canister.get_puffs_left()
-			if (puffs_left > 0)
-				puffs_left = span_blue("[puffs_left]")
-			else
-				puffs_left = span_danger("[puffs_left]")
-			. += "Its rotary display shows its canister can be used [puffs_left] more times."
+	if (isnull(canister))
+		return
+
+	. += span_blue("It seems to have <b>[canister]</b> inserted.")
+	if (show_puffs_left)
+		var/puffs_left = canister.get_puffs_left()
+		if (puffs_left > 0)
+			puffs_left = span_blue("[puffs_left]")
+		else
+			puffs_left = span_danger("[puffs_left]")
+		. += "Its rotary display shows its canister can be used [puffs_left] more times."
 
 /obj/item/inhaler/Exited(atom/movable/gone, direction)
 	. = ..()

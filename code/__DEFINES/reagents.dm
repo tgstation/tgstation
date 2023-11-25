@@ -27,13 +27,13 @@
 #define TOUCH (1<<0)
 /// Used for ingesting the reagents. Food, drinks.
 #define INGEST (1<<1)
-/// Used by foams, sprays, and blob attacks.
+/// Used by foams, sprays, and blob attacks. If the target can breathe reagents, also adds INHALE.
 #define VAPOR (1<<2)
 /// Used by medical patches and gels.
 #define PATCH (1<<3)
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
-/// Used for inhalation of reagents. Smoke, foam (when breathed in), inhalers.
+/// Used for inhalation of reagents. Used by cigarettes, inhale, smoke,I and VAPOR.
 #define INHALE (1<<5)
 
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
