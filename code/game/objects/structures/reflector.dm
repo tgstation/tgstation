@@ -80,7 +80,7 @@
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/structure/reflector/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	if(admin && tool_type)
+	if(admin && tool.tool_behaviour)
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

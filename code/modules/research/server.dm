@@ -155,7 +155,7 @@
 			. += "The front panel is dangling open. The hdd inside is destroyed and the wires are all burned."
 
 /obj/machinery/rnd/server/master/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	if(!tool_type)
+	if(!tool.tool_behaviour)
 		return ..()
 	// Only antags are given the training and knowledge to disassemble this thing.
 	if(is_special_character(user))

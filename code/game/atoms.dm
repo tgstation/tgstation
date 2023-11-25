@@ -1562,7 +1562,9 @@
 
 	var/is_left_clicking = !is_right_clicking
 
-	var/interact_return = is_left_clicking ? tool.interact_with_atom(src, user) : tool.interact_with_atom_secondary(src, user)
+	var/interact_return = is_left_clicking \
+		? tool.interact_with_atom(src, user) \
+		: tool.interact_with_atom_secondary(src, user)
 	if(interact_return)
 		return interact_return
 
@@ -1610,11 +1612,6 @@
 		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
 		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
 	return act_result
-
-/atom/proc/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	return is_right_clicking \
-		? tool.ranged_interact_with_atom_secondary(src, user) \
-		: tool.ranged_interact_with_atom(src, user)
 
 /atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
 	//Only one recipe? use the first
@@ -1676,17 +1673,27 @@
 	if(user.mind)
 		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
+/**
+ * Called when this item is being used to interact with an atom,
+ * IE, a mob is clicking on an atom with this item.
+ *
+ * Return an ITEM_INTERACT_ flag in the event the interaction was handled, to cancel further interaction code.
+ * Return NONE to allow default interaction / tool handling.
+ */
 /obj/item/proc/interact_with_atom(atom/interacting_with, mob/living/user)
 	return NONE
 
+/**
+ * Called when this item is being used to interact with an atom WITH RIGHT CLICK,
+ * IE, a mob is right clicking on an atom with this item.
+ *
+ * Default behavior has it run the same code as left click.
+ *
+ * Return an ITEM_INTERACT_ flag in the event the interaction was handled, to cancel further interaction code.
+ * Return NONE to allow default interaction / tool handling.
+ */
 /obj/item/proc/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
 	return interact_with_atom(interacting_with, user)
-
-/obj/item/proc/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
-	return NONE
-
-/obj/item/proc/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user)
-	return ranged_interact_with_atom(interacting_with, user)
 
 //! Tool-specific behavior procs.
 ///
