@@ -227,7 +227,7 @@
 
 		var/datum/reagent/spider_poison = initial(spider.poison_type)
 		var/spider_description = initial(spider.menu_description)
-		if(initial(spider.poison_per_bite))
+		if(spider_poison && initial(spider.poison_per_bite))
 			spider_description += " [initial(spider_poison.name)] injection of [initial(spider.poison_per_bite)]u per bite."
 		else
 			spider_description += " Does not inject poison."

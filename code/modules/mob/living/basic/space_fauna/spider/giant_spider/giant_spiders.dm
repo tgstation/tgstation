@@ -48,7 +48,7 @@
 	poison_per_bite = 3
 	poison_type = /datum/reagent/toxin/spider/paralysis
 	player_speed_modifier = -3.1
-	menu_description = "Slow spider, with a strong disarming pull and above average health and damage."
+	menu_description = "Slow spider, with a strong disarming pull and above average health."
 	innate_actions = list(/datum/action/cooldown/mob_cooldown/sneak/spider)
 
 /mob/living/basic/spider/giant/ambush/Initialize(mapload)
