@@ -140,3 +140,20 @@
 #define BB_BASIC_MOB_REINFORCEMENT_TARGET "BB_basic_mob_reinforcement_target"
 /// The next time at which this mob can call for reinforcements
 #define BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN "BB_basic_mob_reinforcements_cooldown"
+
+// bot keys
+#define BB_BEACON_TARGET "beacon_target"
+#define BB_PREVIOUS_BEACON_TARGET "previous_beacon_target"
+#define BB_BOT_SUMMON_TARGET "bot_summon_target"
+#define BB_SALUTE_MESSAGES "salute_messages"
+#define BB_SALUTE_TARGET "salute_target"
+#define BB_ANNOUNCE_ABILITY "announce_ability"
+
+// medbot keys
+#define BB_PATIENT_TARGET "patient_target"
+#define BB_WAIT_SPEECH "wait_speech"
+#define BB_AFTERHEAL_SPEECH "afterheal_speech"
+#define BB_IDLE_SPEECH "idle_speech"
+#define BB_EMAGGED_SPEECH "emagged_speech"
+#define BB_WORRIED_ANNOUNCEMENTS "worried_announcements"
+#define BB_NEAR_DEATH_SPEECH "near_death_speech"

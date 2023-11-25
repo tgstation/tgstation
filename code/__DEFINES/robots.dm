@@ -203,6 +203,8 @@ DEFINE_BITFIELD(security_mode_flags, list(
 #define MEDBOT_STATIONARY_MODE (1<<1)
 ///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
 #define MEDBOT_SPEAK_MODE (1<<2)
+///can we heal all damage?
+#define HEAL_ALL_DAMAGE "all_damage"
 
 DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_DECLARE_CRIT" = MEDBOT_DECLARE_CRIT,
