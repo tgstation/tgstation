@@ -29,13 +29,6 @@
 
 	assign_twitch_rank()
 
-//I do not believe keys are required for this as we are pulling the streamer's data, not the subscriber's.
-// /datum/twitch_data/proc/fetch_key(ckey)
-// 	var/datum/db_query/query_get_key = SSdbcore.NewQuery("SELECT twitch_key FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
-// 	if(query_get_key.warn_execute())
-// 		if(query_get_key.NextRow())
-// 			client_key = query_get_key.item[1]
-// 	qdel(query_get_key)
 
 /datum/twitch_data/proc/fetch_rank(ckey)
 	var/datum/db_query/query_get_rank = SSdbcore.NewQuery("SELECT twitch_rank FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
@@ -43,7 +36,7 @@
 		if(query_get_rank.NextRow())
 			if(query_get_rank.item[1])
 				owned_rank = query_get_rank.item[1]
-				if(owned_rank == "UNSUBBED2")
+				if(owned_rank == "")
 					owned_rank = NO_TWITCH_SUB
 			else
 				owned_rank = NO_TWITCH_SUB
