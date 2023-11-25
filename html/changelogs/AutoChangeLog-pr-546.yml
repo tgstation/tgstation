@@ -1,0 +1,4 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - bugfix: "The fax machine on tram is once again usable without opening QM's locker"
