@@ -25,9 +25,9 @@
 	persistence_id = FALSE
 
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
+	. = ..()
 	if(sensor_type)
 		painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
-	return ..()
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	if(!user.can_block_magic(MAGIC_RESISTANCE))
@@ -95,35 +95,37 @@
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/desire/examine_effects(mob/living/carbon/examiner)
-	if(IS_HERETIC(examiner))
-		// A list made of the organs and bodyparts the heretic possess
-		var/static/list/random_bodypart_or_organ = list(
-			/obj/item/organ/internal/brain,
-			/obj/item/organ/internal/lungs,
-			/obj/item/organ/internal/eyes,
-			/obj/item/organ/internal/ears,
-			/obj/item/organ/internal/heart,
-			/obj/item/organ/internal/liver,
-			/obj/item/organ/internal/stomach,
-			/obj/item/organ/internal/appendix,
-			/obj/item/bodypart/arm/left,
-			/obj/item/bodypart/arm/right,
-			/obj/item/bodypart/leg/left,
-			/obj/item/bodypart/leg/right
-		)
-		var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
-		new organ_or_bodypart_to_spawn(drop_location())
-		to_chat(examiner, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
-		// Adds a negative mood event to our heretic
-		examiner.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
-
-	if (examiner.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
+	if(!IS_HERETIC(examiner))
+		if (!examiner.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
+			return ..()
 		// Gives them some nutrition
 		examiner.adjust_nutrition(50)
 		to_chat(examiner, warning("You feel a searing pain in your stomach!"))
 		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 		to_chat(examiner, span_notice("You feel less hungry, but more empty somehow?"))
 		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
+		return ..()
+		
+	// A list made of the organs and bodyparts the heretic possess
+	var/static/list/random_bodypart_or_organ = list(
+		/obj/item/organ/internal/brain,
+		/obj/item/organ/internal/lungs,
+		/obj/item/organ/internal/eyes,
+		/obj/item/organ/internal/ears,
+		/obj/item/organ/internal/heart,
+		/obj/item/organ/internal/liver,
+		/obj/item/organ/internal/stomach,
+		/obj/item/organ/internal/appendix,
+		/obj/item/bodypart/arm/left,
+		/obj/item/bodypart/arm/right,
+		/obj/item/bodypart/leg/left,
+		/obj/item/bodypart/leg/right
+	)
+	var/organ_or_bodypart_to_spawn = pick(random_bodypart_or_organ)
+	new organ_or_bodypart_to_spawn(drop_location())
+	to_chat(examiner, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
+	// Adds a negative mood event to our heretic
+	examiner.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
 	return ..()
 
 
@@ -154,8 +156,8 @@
 	)
 
 /obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
+	. = ..()
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
-	return ..()
 
 /obj/structure/sign/painting/eldritch/vines/examine_effects(mob/living/carbon/examiner)
 	. = ..()

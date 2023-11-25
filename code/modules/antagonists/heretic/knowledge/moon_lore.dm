@@ -201,7 +201,7 @@
 
 	var/brain_damage = sacrifice.get_organ_loss(ORGAN_SLOT_BRAIN)
 	// Checks if our target has enough brain damage
-	if(brain_damage<50)
+	if(brain_damage < 50)
 		return FALSE
 
 	return ..()
@@ -258,7 +258,8 @@
 	visible_hallucination_pulse(
 		center = get_turf(source),
 		radius = 7,
-		hallucination_duration = 60 SECONDS)
+		hallucination_duration = 60 SECONDS
+	)
 
 	for(var/mob/living/carbon/carbon_view in view(7, source))
 		var/carbon_sanity=carbon_view.mob_mood.sanity
@@ -272,7 +273,8 @@
 		if(carbon_sanity<10)
 			to_chat(carbon_view, span_warning("it echoes through you!"))
 			visible_hallucination_pulse(
-			center = get_turf(carbon_view),
-			radius = 7,
-			hallucination_duration = 50 SECONDS)
+				center = get_turf(carbon_view),
+				radius = 7,
+				hallucination_duration = 50 SECONDS
+			)
 			carbon_view.adjust_temp_blindness(5 SECONDS)

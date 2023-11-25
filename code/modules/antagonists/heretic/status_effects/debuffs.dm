@@ -238,8 +238,8 @@
 	icon_state = "lastresort"
 
 /datum/status_effect/moon_converted/on_creation()
+	. = ..()
 	moon_insanity_overlay = mutable_appearance(effect_icon, effect_icon_state, ABOVE_MOB_LAYER)
-	return ..()
 
 /datum/status_effect/moon_converted/Destroy()
 	QDEL_NULL(moon_insanity_overlay)
@@ -283,7 +283,6 @@
 
 /datum/status_effect/moon_converted/proc/update_owner_overlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
-
 	overlays += moon_insanity_overlay
 
 /datum/status_effect/moon_converted/on_remove()

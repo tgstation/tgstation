@@ -39,9 +39,9 @@
 	var/list/mobs_hit = list()
 
 /obj/projectile/moon_parade/Initialize(mapload)
-	soundloop = new(src,  TRUE)
 	. = ..()
-
+	soundloop = new(src,  TRUE)
+	
 /obj/projectile/moon_parade/prehit_pierce(atom/A)
 	. = ..()
 

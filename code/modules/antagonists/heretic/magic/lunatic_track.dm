@@ -10,7 +10,6 @@
 /datum/action/cooldown/lunatic_track/Grant(mob/granted)
 	if(!IS_LUNATIC(granted))
 		return
-
 	return ..()
 
 /datum/action/cooldown/lunatic_track/Activate(atom/target)
