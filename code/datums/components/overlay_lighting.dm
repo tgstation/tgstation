@@ -266,7 +266,8 @@
 ///Used to determine the new valid current_holder from the parent's loc.
 /datum/component/overlay_lighting/proc/check_holder()
 	var/atom/movable/movable_parent = GET_PARENT
-	if(QDELETED(movable_parent)) // holder should already be set to null, don't change it back
+	if(QDELETED(movable_parent))
+		set_holder(null)
 		return
 	if(isturf(movable_parent.loc))
 		set_holder(movable_parent)
