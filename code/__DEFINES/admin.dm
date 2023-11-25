@@ -170,3 +170,5 @@ GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 #define INTERVIEW_DENIED "interview_denied"
 /// State when an interview has had no action on it yet
 #define INTERVIEW_PENDING "interview_pending"
+
+#define BLACKBOX_LOG_ADMIN_VERB(the_verb) SSblackbox.record_feedback("tally", "admin_verb", 1, the_verb)

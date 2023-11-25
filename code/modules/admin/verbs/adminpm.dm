@@ -30,7 +30,7 @@
 			confidential = TRUE)
 		return
 	cmd_admin_pm(M.client, null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Admin PM Mob")
 
 /// Shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
 /client/proc/cmd_admin_pm_panel()
@@ -63,7 +63,7 @@
 	if (isnull(target))
 		return
 	cmd_admin_pm(targets[target], null)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Admin PM")
 
 /// Replys to some existing ahelp, reply to whom, which can be a client or ckey
 /client/proc/cmd_ahelp_reply(whom)
