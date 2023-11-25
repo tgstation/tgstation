@@ -76,7 +76,7 @@
 
 	// Damage variables
 	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
-	var/body_damage_coeff = 1
+	var/body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_TOTAL
 	///The current amount of brute damage the limb has
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
@@ -175,8 +175,8 @@
 	var/unarmed_damage_low = 1
 	///Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Damage at which attacks from this bodypart will stun
-	var/unarmed_stun_threshold = 2
+	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	var/unarmed_effectiveness = 10
 	/// How many pixels this bodypart will offset the top half of the mob, used for abnormally sized torsos and legs
 	var/top_offset = 0
 

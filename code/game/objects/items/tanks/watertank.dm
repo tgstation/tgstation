@@ -205,11 +205,6 @@
 	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "affix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
 
 //ATMOS FIRE FIGHTING BACKPACK
-
-#define EXTINGUISHER 0
-#define RESIN_LAUNCHER 1
-#define RESIN_FOAM 2
-
 /obj/item/watertank/atmos
 	name = "backpack firefighter tank"
 	desc = "A refrigerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, resin launcher and a smaller scale resin foamer."
@@ -467,7 +462,7 @@
 
 	var/inj_am = injection_amount * seconds_per_tick
 	var/used_amount = inj_am / usage_ratio
-	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
+	reagents.trans_to(user, used_amount, usage_ratio, methods = INJECT)
 	update_appearance()
 	user.update_worn_back() //for overlays update
 

@@ -3,11 +3,11 @@
 /datum/computer_file/program/power_monitor
 	filename = "ampcheck"
 	filedesc = "AmpCheck"
-	category = PROGRAM_CATEGORY_ENGI
-	program_icon_state = "power_monitor"
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
+	program_open_overlay = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
-	transfer_access = list(ACCESS_ENGINEERING)
+	download_access = list(ACCESS_ENGINEERING)
 	usage_flags = PROGRAM_CONSOLE
 	requires_ntnet = FALSE
 	size = 8

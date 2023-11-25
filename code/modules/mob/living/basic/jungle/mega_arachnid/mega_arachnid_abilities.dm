@@ -22,7 +22,7 @@
 	if(!iscarbon(target) || blocked >= 100)
 		return
 	var/obj/item/restraints/legcuffs/beartrap/mega_arachnid/restraint = new(get_turf(target))
-	restraint.spring_trap(null, target)
+	restraint.spring_trap(target)
 
 /obj/item/restraints/legcuffs/beartrap/mega_arachnid
 	name = "fleshy restraints"

@@ -1,8 +1,8 @@
 /datum/computer_file/program/nt_pay
 	filename = "ntpay"
 	filedesc = "Nanotrasen Pay System"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "generic"
 	extended_desc = "An application that locally (in your sector) helps to transfer money or track your expenses and profits."
 	size = 2
 	tgui_id = "NtosPay"

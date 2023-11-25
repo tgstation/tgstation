@@ -71,7 +71,8 @@
 /obj/item/choice_beacon/ingredient
 	name = "ingredient delivery beacon"
 	desc = "Summon a box of ingredients to help you get started cooking."
-	icon_state = "gangtool-white"
+	icon_state = "sb_delivery"
+	inhand_icon_state = "sb_delivery"
 	company_source = "Sophronia Broadcasting"
 	company_message = span_bold("Please enjoy your Sophronia Broadcasting's 'Plasteel Chef' Ingredients Box, exactly as shown in the hit show!")
 
@@ -86,6 +87,8 @@
 /obj/item/choice_beacon/hero
 	name = "heroic beacon"
 	desc = "To summon heroes from the past to protect the future."
+	icon_state = "sb_delivery"
+	inhand_icon_state = "sb_delivery"
 	company_source = "Sophronia Broadcasting"
 	company_message = span_bold("Please enjoy your Sophronia Broadcasting's 'History Comes Alive branded' Costume Set, exactly as shown in the hit show!")
 
@@ -129,7 +132,11 @@
 
 /obj/item/choice_beacon/holy
 	name = "armaments beacon"
-	desc = "Contains a set of armaments for the chaplain."
+	desc = "Summon a set of standard issue chaplain armaments, as dictated by I.C.R.A."
+	icon_state = "icra_delivery"
+	inhand_icon_state = "icra_delivery"
+	company_source = "Interstellar Conservation of Religion Association"
+	company_message = span_bold("A choice has already been made.")
 
 /obj/item/choice_beacon/holy/can_use_beacon(mob/living/user)
 	if(user.mind?.holy_role)
@@ -141,7 +148,6 @@
 // Overrides generate options so that we can show a neat radial instead
 /obj/item/choice_beacon/holy/open_options_menu(mob/living/user)
 	if(GLOB.holy_armor_type)
-		to_chat(user, span_warning("A selection has already been made."))
 		consume_use(GLOB.holy_armor_type, user)
 		return
 

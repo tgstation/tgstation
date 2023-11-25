@@ -312,4 +312,4 @@
 		/obj/item/stock_parts/card_reader = 1
 	)
 	crate_name = "materials market crate"
-	crate_type = /obj/structure/closet/crate
+	crate_type = /obj/structure/closet/crate/cargo

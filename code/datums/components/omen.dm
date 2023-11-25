@@ -17,7 +17,7 @@
 	/// Base damage from negative events. Cursed take 25% of this damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(obj/vessel, incidents_left = 1, luck_mod, damage_mod)
+/datum/component/omen/Initialize(obj/vessel, incidents_left, luck_mod, damage_mod)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -30,6 +30,8 @@
 		src.luck_mod = luck_mod
 	if(!isnull(damage_mod))
 		src.damage_mod = damage_mod
+
+	ADD_TRAIT(parent, TRAIT_CURSED, SMITE_TRAIT)
 
 /**
  * This is a omen eat omen world! The stronger omen survives.
@@ -50,6 +52,7 @@
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
+	REMOVE_TRAIT(person, TRAIT_CURSED, SMITE_TRAIT)
 	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
 
 	if(vessel)

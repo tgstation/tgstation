@@ -68,7 +68,13 @@
 			var/cost = 0
 			var/delay = 0
 
-			if(the_rcd.rcd_design_path  == /obj/structure/window/fulltile)
+			if(the_rcd.rcd_design_path  == /obj/structure/window)
+				cost = 4
+				delay = 2 SECONDS
+			else if(the_rcd.rcd_design_path  == /obj/structure/window/reinforced)
+				cost = 6
+				delay = 2.5 SECONDS
+			else if(the_rcd.rcd_design_path  == /obj/structure/window/fulltile)
 				cost = 8
 				delay = 3 SECONDS
 			else if(the_rcd.rcd_design_path  == /obj/structure/window/reinforced/fulltile)
@@ -101,8 +107,13 @@
 			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
-			if(!initial(window_path.fulltile)) //only fulltile windows can be built here
-				return FALSE
+
+			//checks if its a valid build direction
+			if(!initial(window_path.fulltile))
+				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "window already here!")
+					return FALSE
+
 			var/obj/structure/window/WD = new window_path(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE

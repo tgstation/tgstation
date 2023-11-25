@@ -627,6 +627,9 @@
 	begin_day = 11
 	holiday_hat = /obj/item/food/grown/poppy
 
+/datum/holiday/remembrance_day/greet()
+	return "Lest we forget."
+
 /datum/holiday/remembrance_day/getStationPrefix()
 	return pick("Peace", "Armistice", "Poppy")
 

@@ -45,6 +45,7 @@
 	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
 	target_record.crimes += past_crime
 	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
+	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
@@ -69,7 +70,6 @@
 	if(!crime_name)
 		return
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
-
 	var/list/limbs_to_tat = new_prisoner.bodyparts.Copy()
 	for(var/i in 1 to crime.tattoos)
 		if(!length(SSpersistence.prison_tattoos_to_use) || visualsOnly)

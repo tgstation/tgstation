@@ -674,19 +674,12 @@
 
 	notify_ghosts(
 		"[user] is raising [user.p_their()] [name], calling for your help!",
-		action = NOTIFY_ORBIT,
 		source = user,
 		ignore_key = POLL_IGNORE_SPECTRAL_BLADE,
 		header = "Spectral blade",
 	)
 
 	summon_cooldown = world.time + 600
-
-/obj/item/melee/ghost_sword/Topic(href, href_list)
-	if(href_list["orbit"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			ghost.ManualFollow(src)
 
 /obj/item/melee/ghost_sword/process()
 	ghost_check()
