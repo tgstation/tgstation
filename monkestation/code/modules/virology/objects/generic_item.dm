@@ -4,13 +4,32 @@ GLOBAL_LIST_INIT(infected_items, list())
 	var/image/pathogen
 	var/list/viruses = list()
 
+
+//Called by attack_hand(), transfers diseases between the mob and the item
+/obj/item/proc/disease_contact(mob/living/carbon/M, bodypart = null)
+	//first let's try to infect them with our viruses
+	for(var/datum/disease/advanced/V as anything in viruses)
+		infection_attempt(M, V, bodypart)
+
+	if (!bodypart)//no bodypart specified? that should mean we're being held.
+		bodypart = BODY_ZONE_ARMS
+
+	//secondly, do they happen to carry contact-spreading viruses themselves?
+	var/list/contact_diseases = filter_disease_by_spread(M.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
+	if (contact_diseases?.len)
+		//if so are their hands protected?
+		var/block = M.check_contact_sterility(bodypart)
+		for (var/datum/disease/advanced/D in contact_diseases)
+			if(!block)
+				infect_disease(D, notes="(Contact, from being touched by [M])")
+
 //Called by disease_contact(), trying to infect people who pick us up
 /obj/item/infection_attempt(mob/living/perp, datum/disease/advanced/D, bodypart = null)
 	if (!istype(D))
 		return
 
 	if (src in perp.held_items)
-		bodypart = HANDS
+		bodypart = BODY_ZONE_ARMS
 
 	var/obj/item/bodypart/bp = perp.get_bodypart(bodypart)
 	if (bodypart)
@@ -38,7 +57,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 		D.after_add()
 
 		if (!pathogen)
-			pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',src,"pathogen_contact")
+			pathogen = image('monkestation/code/modules/virology/icons/effects.dmi', src, "pathogen_contact")
 			pathogen.plane = HUD_PLANE
 			pathogen.appearance_flags = RESET_COLOR|RESET_ALPHA
 		for (var/mob/L in GLOB.science_goggles_wearers)
@@ -56,3 +75,12 @@ GLOBAL_LIST_INIT(infected_items, list())
 			for (var/mob/L in GLOB.science_goggles_wearers)
 				if(L.client)
 					L.client.images -= pathogen
+
+
+/obj/item/try_infect_with_mobs_diseases(mob/living/carbon/infectee)
+	if(!length(infectee.diseases))
+		return
+	var/list/blood_diseases = filter_disease_by_spread(infectee.diseases, required = DISEASE_SPREAD_BLOOD)
+	if(length(blood_diseases))
+		for(var/datum/disease/advanced/V as anything in blood_diseases)
+			infect_disease(V, notes="(Blood, coming from [infectee])")

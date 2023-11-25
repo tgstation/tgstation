@@ -15,14 +15,12 @@
 /obj/item/clothing/glasses/science/proc/enable(mob/M)
 	if (toggled)
 		GLOB.science_goggles_wearers.Add(M)
-		/*
-		for (var/obj/item/I in infected_items)
+		for (var/obj/item/I in GLOB.infected_items)
 			if (I.pathogen)
 				M.client.images |= I.pathogen
-		for (var/mob/living/L in infected_contact_mobs)
+		for (var/mob/living/L in GLOB.infected_contact_mobs)
 			if (L.pathogen)
-				M.client.images |= L.pathogen\
-		*/
+				M.client.images |= L.pathogen
 		for (var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
 			if (C.pathogen)
 				M.client.images |= C.pathogen
@@ -34,12 +32,10 @@
 
 /obj/item/clothing/glasses/science/proc/disable(mob/M)
 	GLOB.science_goggles_wearers.Remove(M)
-	/*
-	for (var/obj/item/I in infected_items)
+	for (var/obj/item/I in GLOB.infected_items)
 		M.client.images -= I.pathogen
-	for (var/mob/living/L in infected_contact_mobs)
+	for (var/mob/living/L in GLOB.infected_contact_mobs)
 		M.client.images -= L.pathogen
-	*/
 	for(var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
 		M.client.images -= C.pathogen
 	/*
@@ -58,7 +54,9 @@
 
 /obj/item/clothing/glasses/science/proc/clear_effects(mob/living/source, obj/item/dropped_item)
 	SIGNAL_HANDLER
-
+	if(dropped_item != src)
+		return
+		
 	if (!source.client)
 		return
 	disable(source)

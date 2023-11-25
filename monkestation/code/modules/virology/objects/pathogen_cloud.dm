@@ -2,8 +2,9 @@ GLOBAL_LIST_INIT(pathogen_clouds, list())
 GLOBAL_LIST_INIT(science_goggles_wearers, list())
 
 /obj/effect/pathogen_cloud
-	name = "pathogenic cloud"
+	name = ""
 	icon = 'monkestation/code/modules/virology/icons/96x96.dmi'
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon_state = ""
 	color = COLOR_GREEN
 	pixel_x = -32
@@ -39,7 +40,6 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 
 	source = sourcemob
 	viruses = virus
-	animate(src, alpha = 25, time = lifetime)
 	addtimer(CALLBACK(src, PROC_REF(delete_self)), lifetime)
 
 /obj/effect/pathogen_cloud/proc/delete_self()

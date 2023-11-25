@@ -1015,6 +1015,9 @@
 ///to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/injected_mob)
 	var/list/blood_dna = injected_mob.get_blood_dna_list()
+	if(iscarbon(injected_mob))
+		var/mob/living/carbon/mob
+		try_infect_with_mobs_diseases(mob.diseases)
 	if(!blood_dna)
 		return FALSE
 	return add_blood_DNA(blood_dna)

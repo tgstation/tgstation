@@ -15,6 +15,8 @@ This PR aims to make virology not ass to play with
 	- code\modules\mob\living\carbon\life.dm
 	- code\datums\diseases\_disease.dm
 	- code\game\objects\effects\decals\cleanable.dm
+	- code\game\atoms.dm
+	- code\modules\mob\living\carbon\human\human_defense.dm
 
 ### Defines:
 

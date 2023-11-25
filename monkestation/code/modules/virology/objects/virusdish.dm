@@ -115,8 +115,6 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	if(.)
 		return
 	if (open)
-		if (istype(target,/obj/structure/reagent_dispensers))
-			var/obj/structure/reagent_dispensers/S = target
 		if (istype(target,/obj/item/reagent_containers))
 			var/success = 0
 			var/obj/container = target
