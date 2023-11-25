@@ -299,13 +299,13 @@
 		return
 	hud.mymob.client << link("https://discord.gg/monkestation")
 
-/atom/movable/screen/lobby/button/monke
+/atom/movable/screen/lobby/button/twitch
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "info"
 	base_icon_state = "info"
 	screen_loc = "TOP:-126,CENTER:14"
 
-/atom/movable/screen/lobby/button/monke/Click(location, control, params)
+/atom/movable/screen/lobby/button/twitch/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
