@@ -298,13 +298,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/fire/Click()
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
 	var/mob/living/living_owner = owner
+	if(!living_owner.can_resist())
+		return FALSE
 
 	living_owner.changeNext_move(CLICK_CD_RESIST)
-	if(living_owner.mobility_flags & MOBILITY_MOVE)
-		return living_owner.resist_fire()
+	if(!(living_owner.mobility_flags & MOBILITY_MOVE))
+		return FALSE
+
+	return living_owner.resist_fire()
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
@@ -780,28 +784,23 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	timeout = 30 SECONDS
 	/// Weakref to the target atom to use the action on
 	var/datum/weakref/target_ref
-	/// Which on click action to use
-	var/action = NOTIFY_JUMP
+	/// If we want to interact on click rather than jump/orbit
+	var/click_interact = FALSE
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
+
 	var/atom/target = target_ref?.resolve()
-	if(isnull(target))
+	if(isnull(target) || !isobserver(owner) || target == owner)
 		return
 
 	var/mob/dead/observer/ghost_owner = owner
-	if(!istype(ghost_owner))
+
+	if(click_interact)
+		ghost_owner.jump_to_interact(target)
 		return
 
-	switch(action)
-		if(NOTIFY_PLAY)
-			target.attack_ghost(ghost_owner)
-		if(NOTIFY_JUMP)
-			var/turf/target_turf = get_turf(target)
-			if(target_turf && isturf(target_turf))
-				ghost_owner.abstract_move(target_turf)
-		if(NOTIFY_ORBIT)
-			ghost_owner.ManualFollow(target)
+	ghost_owner.observer_view(target)
 
 //OBJECT-BASED
 

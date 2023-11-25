@@ -94,9 +94,9 @@
 		return
 
 	. = list(FOOTSTEP_MOB_SHOE = turf.footstep, FOOTSTEP_MOB_BAREFOOT = turf.barefootstep, FOOTSTEP_MOB_HEAVY = turf.heavyfootstep, FOOTSTEP_MOB_CLAW = turf.clawfootstep, STEP_SOUND_PRIORITY = STEP_SOUND_NO_PRIORITY)
-	SEND_SIGNAL(turf, COMSIG_TURF_PREPARE_STEP_SOUND, .)
+	var/overriden = SEND_SIGNAL(turf, COMSIG_TURF_PREPARE_STEP_SOUND, .) & FOOTSTEP_OVERRIDEN
 	//The turf has no footstep sound (e.g. open space) and none of the objects on that turf (e.g. catwalks) overrides it
-	if(isnull(turf.footstep))
+	if(!overriden && isnull(turf.footstep))
 		return null
 	return .
 
@@ -155,11 +155,11 @@
 			heard_clients = playsound(source.loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
 			var/static/list/bare_footstep_sounds = GLOB.barefootstep
-
-			heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),
-				bare_footstep_sounds[barefoot_type][2] * volume * volume_multiplier,
-				TRUE,
-				bare_footstep_sounds[barefoot_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+			if(!isnull(barefoot_type) && bare_footstep_sounds[barefoot_type]) // barefoot_type can be null
+				heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),
+					bare_footstep_sounds[barefoot_type][2] * volume * volume_multiplier,
+					TRUE,
+					bare_footstep_sounds[barefoot_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
