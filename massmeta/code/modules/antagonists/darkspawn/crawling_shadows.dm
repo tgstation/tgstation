@@ -14,6 +14,12 @@
 	maxHealth = 125
 	health = 125
 
+	lighting_cutoff_red = 20
+	lighting_cutoff_green = 10
+	lighting_cutoff_blue = 40
+
+	sight = SEE_MOBS
+
 	harm_intent_damage = 5
 	obj_damage = 50
 	melee_damage_lower = 5 //it has a built in stun if you want to kill someone kill them like a man

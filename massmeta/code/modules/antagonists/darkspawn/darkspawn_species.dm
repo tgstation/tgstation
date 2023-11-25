@@ -38,6 +38,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/darkspawn,
 	)
 	mutanteyes = /obj/item/organ/internal/eyes/shadow
+	mutantbrain = /obj/item/organ/internal/brain/darkspawn
 	var/list/upgrades = list()
 
 /datum/species/darkspawn/on_species_gain(mob/living/carbon/C, datum/species/old_species)
