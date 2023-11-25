@@ -277,7 +277,11 @@
 		set_holder(null)
 		return
 	if(isturf(inside.loc))
-		set_holder(inside)
+		var/obj/item/storage/stored_inside
+		if(istype(stored_inside) && !stored_inside.allows_light_through)
+			set_holder(null)
+		else
+			set_holder(inside)
 		return
 	set_holder(null)
 
