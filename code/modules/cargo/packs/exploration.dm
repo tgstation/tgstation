@@ -8,9 +8,11 @@
 	name = "Scrapyard Crate"
 	desc = "Outsourced crate containing various junk."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/relic,
-					/obj/item/broken_bottle,
-					/obj/item/pickaxe/rusted)
+	contains = list(
+		/obj/item/broken_bottle,
+		/obj/item/pickaxe/rusted,
+		/obj/effect/artifact_spawner,
+	)
 	crate_name = "scrapyard crate"
 
 /datum/supply_pack/exploration/catering

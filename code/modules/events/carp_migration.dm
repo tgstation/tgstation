@@ -10,8 +10,6 @@
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
 	admin_setup = list(/datum/event_admin_setup/carp_migration)
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_COMMUNAL)
 
 /datum/round_event_control/carp_migration/New()
 	. = ..()
@@ -37,7 +35,7 @@
 
 /datum/round_event/carp_migration/setup()
 	start_when = rand(40, 60)
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/carp_migration/announce(fake)
 	priority_announce("[fluff_signal] have been detected near [station_name()], please stand-by.", "Lifesign Alert")

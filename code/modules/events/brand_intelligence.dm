@@ -9,8 +9,6 @@
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
 	admin_setup = list(/datum/event_admin_setup/listed_options/brand_intelligence)
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_DESTRUCTIVE, TAG_COMMUNAL)
 
 /datum/round_event/brand_intelligence
 	announce_when = 21
@@ -48,7 +46,7 @@
 		kill()
 		return
 	origin_machine = pick_n_take(vending_machines)
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/brand_intelligence/announce(fake)
 	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please inspect any [origin_machine] brand vendors for aggressive marketing tactics, and reboot them if necessary.", "Machine Learning Alert")

@@ -16,7 +16,7 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity_flag)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && stat < SOFT_CRIT)
 		if(src == A)
 			check_self_for_injuries()
 		return

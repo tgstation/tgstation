@@ -5,14 +5,11 @@
 	max_occurrences = 1
 	min_players = 30 //monke edit: 20 to 30
 	earliest_start = 60 MINUTES //monke edit: 20 to 60
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a space dragon, which will try to take over the station."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
-	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT)
-	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1

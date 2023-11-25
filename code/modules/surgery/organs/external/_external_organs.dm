@@ -17,16 +17,9 @@
 	///If not null, overrides the appearance with this sprite accessory datum
 	var/sprite_accessory_override
 
-	/// The savefile_key of the preference this relates to. Used for the preferences UI.
-	var/preference
-	///With what DNA block do we mutate in mutate_feature() ? For genetics
-	var/dna_block
-
 	///Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
 	///This will not work if it doesn't have a limb to generate it's icon with
 	var/use_mob_sprite_as_obj_sprite = FALSE
-	///Does this organ have any bodytypes to pass to it's ownerlimb?
-	var/external_bodytypes = NONE
 	///Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
 	var/restyle_flags = NONE
 
@@ -221,9 +214,15 @@
 	desc = "Take a closer look at that snout!"
 	icon_state = "snout"
 
+	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
+	visual = TRUE
+	cosmetic_only = TRUE
+
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
+	layers = list(BODY_ADJ_LAYER)
 
+	feature_key = "snout"
 	preference = "feature_lizard_snout"
 	external_bodytypes = BODYTYPE_SNOUTED
 

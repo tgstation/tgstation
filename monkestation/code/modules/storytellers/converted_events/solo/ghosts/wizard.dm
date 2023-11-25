@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/wizard
 	name = "Ghost Wizard"
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL)
 	typepath = /datum/round_event/antagonist/solo/ghost/wizard
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard

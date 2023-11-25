@@ -30,6 +30,8 @@
 #define IGNORE_STASIS (1<<1)
 /// If the incapacitated status effect will ignore a mob being agressively grabbed
 #define IGNORE_GRAB (1<<2)
+/// If the incapacited status effect will ignore a mob in cirt
+#define IGNORE_CRIT (1<<3)
 
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 

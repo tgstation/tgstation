@@ -5,16 +5,12 @@
 	max_occurrences = 1
 
 	min_players = 35  //monkie edit: 20 to 35
-
 	earliest_start = 60 MINUTES //monkie edit: 20 to 90
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a new blob overmind."
-	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT)
-	checks_antag_cap = TRUE
 
-/datum/round_event_control/blob/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/blob/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // no blobs if the shuttle is past the point of no return
 		return FALSE
 

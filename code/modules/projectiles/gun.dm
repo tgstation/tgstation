@@ -201,8 +201,8 @@
 /obj/item/gun/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
-		for(var/obj/O in contents)
-			O.emp_act(severity)
+		for(var/obj/inside in contents)
+			inside.emp_act(severity)
 
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))

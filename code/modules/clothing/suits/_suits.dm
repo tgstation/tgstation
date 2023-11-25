@@ -17,6 +17,7 @@
 	var/blood_overlay_type = "suit"
 	limb_integrity = 0 // disabled for most exo-suits
 	var/suittoggled = FALSE // sec duster toggling and more
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/suit/Initialize(mapload)
 	. = ..()
