@@ -276,12 +276,16 @@
 	if(isnull(inside))
 		set_holder(null)
 		return
-	if(isturf(inside.loc))
-		var/obj/item/storage/stored_inside
-		if(istype(stored_inside) && !stored_inside.allows_light_through)
-			set_holder(null)
-		else
+	// storage items are a special case. sometimes we might want the light to come through.
+	var/obj/item/storage/stored_inside
+	if(istype(stored_inside))
+		if(stored_inside.allows_light_through)
 			set_holder(inside)
+		else
+			set_holder(null)
+		return
+	if(isturf(inside.loc))
+		set_holder(inside)
 		return
 	set_holder(null)
 
