@@ -38,6 +38,12 @@
 "il" = (
 /turf/open/floor/sepia,
 /area/virtual_domain)
+"it" = (
+/obj/modular_map_root/generic{
+	key = "station_medium"
+	},
+/turf/open/floor/sepia,
+/area/virtual_domain)
 "iJ" = (
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/structure/table,
@@ -258,6 +264,18 @@
 "PE" = (
 /turf/template_noop,
 /area/virtual_domain)
+"Qi" = (
+/obj/modular_map_root/generic{
+	key = "station_small"
+	},
+/turf/open/floor/sepia,
+/area/virtual_domain)
+"QM" = (
+/obj/modular_map_root/generic{
+	key = "station_large"
+	},
+/turf/open/floor/sepia,
+/area/virtual_domain)
 "QO" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/sepia,
@@ -358,7 +376,7 @@ OX
 OX
 OX
 OX
-il
+Qi
 il
 cU
 cU
@@ -474,7 +492,7 @@ OX
 OX
 il
 il
-il
+it
 il
 il
 il
@@ -626,7 +644,7 @@ OX
 OX
 il
 il
-il
+it
 il
 sX
 il
@@ -778,7 +796,7 @@ OX
 OX
 il
 il
-il
+it
 il
 il
 il
@@ -930,7 +948,7 @@ OX
 OX
 VX
 il
-il
+it
 il
 il
 il
@@ -1082,7 +1100,7 @@ OX
 OX
 il
 il
-il
+it
 uW
 il
 Wp
@@ -1236,7 +1254,7 @@ VX
 il
 il
 il
-il
+QM
 il
 Wd
 KN
@@ -1424,7 +1442,7 @@ OX
 OX
 il
 il
-il
+it
 il
 il
 il
@@ -1578,7 +1596,7 @@ VX
 il
 il
 il
-il
+QM
 uW
 Wd
 KN
