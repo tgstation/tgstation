@@ -27,8 +27,6 @@
 	var/datum/action/cooldown/mob_cooldown/guardian_alarm_snare/snare = new (src)
 	snare.Grant(src)
 
-	RegisterSignal(src, COMPONENT_CANCEL_RANGED_ATTACK, PROC_REF(on_ranged_attack))
-
 /mob/living/basic/guardian/ranged/toggle_modes()
 	if(is_deployed() && !isnull(summoner))
 		balloon_alert(src, "must not be manifested!")
@@ -63,12 +61,6 @@
 			msg = "You deactivate your night vision."
 	sync_lighting_plane_cutoff()
 	to_chat(src, span_notice(msg))
-
-/// Safety to prevent us from using ranged attacks while unleashed. Typically the status effect will catch stuff like this but we want to be extra sure with unleashing schenanigans
-/mob/living/basic/guardian/ranged/proc/on_ranged_attack(datum/source, atom/target, modifiers)
-	SIGNAL_HANDLER
-	if(!HAS_TRAIT_FROM(src, TRAIT_LEASHED, REF(summoner)))
-		return COMPONENT_CANCEL_RANGED_ATTACK
 
 /// Become an incorporeal scout
 /datum/status_effect/guardian_scout_mode
