@@ -24819,10 +24819,9 @@
 /area/station/engineering/storage/tech)
 "gSi" = (
 /obj/structure/table,
-/obj/item/folder/yellow,
-/obj/item/pen{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/machinery/fax{
+	fax_name = "Quartermaster's Office";
+	name = "Quartermaster's Fax Machine"
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
@@ -52713,12 +52712,14 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "pUV" = (
-/obj/structure/table,
-/obj/item/clipboard,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/structure/table,
+/obj/item/folder/yellow,
+/obj/item/pen{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
@@ -53961,7 +53962,10 @@
 /turf/open/floor/iron,
 /area/station/security/prison)
 "qqw" = (
-/obj/machinery/pdapainter/supply,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/clipboard,
+/obj/structure/table,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "qqx" = (
@@ -73604,15 +73608,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "wuC" = (
-/obj/structure/table,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
 /obj/structure/sign/calendar/directional/west,
-/obj/machinery/fax{
-	fax_name = "Quartermaster's Office";
-	name = "Quartermaster's Fax Machine"
-	},
+/obj/machinery/pdapainter/supply,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "wuF" = (
