@@ -33,5 +33,5 @@
 	source.minimum_distance = controller.get_minimum_distance()
 
 /datum/ai_movement/jps/bot
-	max_pathing_attempts = 100
+	max_pathing_attempts = 25
 	maximum_length = AI_BOT_PATH_LENGTH

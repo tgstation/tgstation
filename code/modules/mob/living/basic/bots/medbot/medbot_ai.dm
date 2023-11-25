@@ -1,7 +1,7 @@
 #define BOT_PATIENT_PATH_LIMIT 20
-
 /datum/ai_controller/basic_controller/bot/medbot
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/handle_medbot_speech,
 		/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit,
@@ -40,20 +40,24 @@
 	controller.queue_behavior(/datum/ai_behavior/find_suitable_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, (bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE))
 
 /datum/ai_behavior/find_suitable_patient
-	action_cooldown = 5 SECONDS
 	var/search_range = 7
+	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, heal_type, is_stationary)
 	. = ..()
 	search_range = (is_stationary) ? 1 : initial(search_range)
-
+	var/list/ignore_keys = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
+		if(LAZYACCESS(ignore_keys, treatable_target))
+			continue
 		if((heal_type == HEAL_ALL_DAMAGE))
-			if(treatable_target.get_total_damage() > threshold && (controller.set_if_can_reach(target_key, treatable_target, search_range)))
+			if(treatable_target.get_total_damage() > threshold)
+				controller.set_blackboard_key(BB_PATIENT_TARGET, treatable_target)
 				finish_action(controller, TRUE)
 				return
 			continue
-		if(treatable_target.get_current_damage_of_type(damagetype = heal_type) > threshold && controller.set_if_can_reach(target_key, treatable_target, search_range))
+		if(treatable_target.get_current_damage_of_type(damagetype = heal_type) > threshold)
+			controller.set_blackboard_key(BB_PATIENT_TARGET, treatable_target)
 			finish_action(controller, TRUE)
 			return
 
@@ -120,12 +124,12 @@
 	if(!(bot_pawn.medical_mode_flags & MEDBOT_SPEAK_MODE))
 		return
 
-	speech_chance = ((bot_pawn.bot_cover_flags & BOT_COVER_EMAGGED) || bot_pawn.mode == BOT_TIPPED) ? 15 : initial(speech_chance)
+	speech_chance = ((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) || bot_pawn.mode == BOT_TIPPED) ? 15 : initial(speech_chance)
 
 	if(!SPT_PROB(speech_chance, seconds_per_tick))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY, bot_pawn.mode, bot_pawn.bot_cover_flags)
+	controller.queue_behavior(/datum/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY, bot_pawn.mode, bot_pawn.bot_access_flags)
 
 /datum/ai_behavior/handle_medbot_speech
 
@@ -152,11 +156,12 @@
 	target_key = BB_PATIENT_IN_CRIT
 	hunting_behavior = /datum/ai_behavior/announce_patient
 	finding_behavior = /datum/ai_behavior/find_hunt_target/patient_in_crit
+	hunt_targets = list(/mob/living/carbon/human)
 	finish_planning = FALSE
 
 /datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	if(bot_pawn.medical_mode_flags & MEDBOT_DECLARE_CRIT)
+	if(!(bot_pawn.medical_mode_flags & MEDBOT_DECLARE_CRIT))
 		return
 	return ..()
 
@@ -183,5 +188,10 @@
 		return
 	var/text_to_announce = "Medical emergency! [living_target] is in critical condition at [get_area(living_target)]!"
 	announcement.announce(text_to_announce, controller.blackboard[BB_RADIO_CHANNEL])
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/announce_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
 
 #undef BOT_PATIENT_PATH_LIMIT

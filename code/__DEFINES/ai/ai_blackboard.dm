@@ -149,6 +149,7 @@
 #define BB_SALUTE_TARGET "salute_target"
 #define BB_ANNOUNCE_ABILITY "announce_ability"
 #define BB_RADIO_CHANNEL "radio_channel"
+#define BB_TEMPORARY_IGNORE_LIST "temporary_ignore_list"
 
 // medbot keys
 #define BB_PATIENT_TARGET "patient_target"

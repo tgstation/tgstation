@@ -139,7 +139,8 @@
 		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
-
+	var/static/list/hat_offsets = list(4,-9)
+	AddElement(/datum/element/hat_wearer, offsets = hat_offsets)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 	return INITIALIZE_HINT_LATELOAD
@@ -182,7 +183,7 @@
 // Variables sent to TGUI
 /mob/living/basic/bot/medbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["heal_threshold"] = heal_threshold
 		data["custom_controls"]["speaker"] = medical_mode_flags & MEDBOT_SPEAK_MODE
 		data["custom_controls"]["crit_alerts"] = medical_mode_flags & MEDBOT_DECLARE_CRIT
@@ -193,7 +194,7 @@
 // Actions received from TGUI
 /mob/living/basic/bot/medbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !usr.has_unlimited_silicon_privilege)
 		return
 
 	switch(action)
@@ -230,8 +231,7 @@
 
 /mob/living/basic/bot/medbot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
-	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
-		balloon_alert(user, "already emagged!")
+	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	medical_mode_flags &= ~MEDBOT_DECLARE_CRIT
 	balloon_alert(user, "reagent synthesis circuits shorted")
@@ -289,7 +289,7 @@
 	if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
-	if(bot_cover_flags & BOT_COVER_EMAGGED)
+	if(bot_access_flags & BOT_COVER_EMAGGED)
 		patient.reagents?.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 	else if(damage_type_healer == HEAL_ALL_DAMAGE)
 		patient.heal_overall_damage(heal_amount)

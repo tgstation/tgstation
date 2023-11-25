@@ -104,6 +104,9 @@
 ///The Bot has been hacked by a Silicon, emagging them, but revertable.
 #define BOT_COVER_HACKED (1<<3)
 
+#define BOT_MAINTS_PANEL_OPEN (1<<0)
+#define BOT_CONTROL_PANEL_OPEN (1<<1)
+
 //Bot types
 /// Secutritrons (Beepsky)
 #define SEC_BOT "Securitron"

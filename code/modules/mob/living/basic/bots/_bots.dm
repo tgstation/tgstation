@@ -5,6 +5,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 	"go" = "GO",
 	"home" = "RETURN HOME",
 ))
+DEFINE_BITFIELD(bot_access_flags, list(
+	"MAINTS OPEN" = BOT_MAINTS_PANEL_OPEN,
+	"CONTROL OPEN" = BOT_CONTROL_PANEL_OPEN,
+	"COVER EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER HACKED" = BOT_COVER_HACKED,
+))
+
 
 /mob/living/basic/bot
 	icon = 'icons/mob/silicon/aibots.dmi'
@@ -54,8 +61,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/list/prev_access = list()
 	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
-	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_COVER_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
-	var/bot_cover_flags = BOT_COVER_LOCKED
+	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_MAINTS_PANEL_OPEN | BOT_CONTROL_PANEL_OPEN | BOT_COVER_EMAGGED | BOT_COVER_HACKED
+	var/bot_access_flags = NONE
 	///Small name of what the bot gets messed with when getting hacked/emagged.
 	var/hackables = "system circuits"
 	///Standardizes the vars that indicate the bot is busy with its function.
@@ -203,7 +210,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		ban_type = ROLE_BOT, \
 		poll_candidates = can_announce, \
 		poll_ignore_key = POLL_IGNORE_BOTS, \
-		assumed_control_message = (bot_cover_flags & BOT_COVER_EMAGGED) ? get_emagged_message() : possessed_message, \
+		assumed_control_message = (bot_access_flags & BOT_COVER_EMAGGED) ? get_emagged_message() : possessed_message, \
 		extra_control_checks = CALLBACK(src, PROC_REF(check_possession)), \
 		after_assumed_control = CALLBACK(src, PROC_REF(post_possession)), \
 	)
@@ -267,7 +274,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return TRUE
 	if(!length(maints_access_required)) // No requirements to access it.
 		return TRUE
-	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
+	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN) // Unlocked.
 		return TRUE
 
 	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
@@ -299,15 +306,16 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
-	if(bot_cover_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
-		bot_cover_flags &= ~BOT_COVER_LOCKED
+	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN)) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
+		bot_access_flags &= BOT_CONTROL_PANEL_OPEN
 		balloon_alert(user, "cover unlocked")
 		return TRUE
-	if((bot_cover_flags & BOT_COVER_LOCKED) || !(bot_cover_flags & BOT_COVER_OPEN)) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
+	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN) || !(bot_access_flags & BOT_MAINTS_PANEL_OPEN)) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		balloon_alert(user, "open maintenance panel first!")
 		return FALSE
-	bot_cover_flags |= (BOT_COVER_EMAGGED | BOT_COVER_LOCKED)
-	bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
+	bot_access_flags |= (BOT_COVER_EMAGGED)
+	bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN
+	bot_access_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
 	bot_reset()
 	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
@@ -326,17 +334,17 @@ GLOBAL_LIST_INIT(command_strings, list(
 	else
 		. += "[src] is in pristine condition."
 
-	. += span_notice("Its maintenance panel is [bot_cover_flags & BOT_COVER_OPEN ? "open" : "closed"].")
-	. += span_info("You can use a <b>screwdriver</b> to [bot_cover_flags & BOT_COVER_OPEN ? "close" : "open"] it.")
+	. += span_notice("Its maintenance panel is [bot_access_flags & BOT_MAINTS_PANEL_OPEN ? "open" : "closed"].")
+	. += span_info("You can use a <b>screwdriver</b> to [bot_access_flags & BOT_MAINTS_PANEL_OPEN ? "close" : "open"] it.")
 
-	if(bot_cover_flags & BOT_COVER_OPEN)
-		. += span_notice("Its control panel is [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
+	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
+		. += span_notice("Its control panel is [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "unlocked" : "locked"].")
 		var/is_sillycone = issilicon(user)
-		if(!(bot_cover_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
-			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
+		if(!(bot_access_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
+			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "" : "un"]lock its control panel.")
 	if(paicard)
 		. += span_notice("It has a pAI device installed.")
-		if(!(bot_cover_flags & BOT_COVER_OPEN))
+		if(!(bot_access_flags & BOT_MAINTS_PANEL_OPEN))
 			. += span_info("You can use a <b>hemostat</b> to remove it.")
 
 /mob/living/basic/bot/updatehealth()
@@ -376,28 +384,28 @@ GLOBAL_LIST_INIT(command_strings, list(
 	unlock_with_id(user)
 
 /mob/living/basic/bot/proc/unlock_with_id(mob/living/user)
-	if(bot_cover_flags & BOT_COVER_EMAGGED)
+	if(bot_access_flags & BOT_COVER_EMAGGED)
 		balloon_alert(user, "error!")
 		return
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
 		balloon_alert(user, "access panel must be closed!")
 		return
 	if(!check_access(user))
 		balloon_alert(user, "no access")
 		return
-	bot_cover_flags ^= BOT_COVER_LOCKED
-	to_chat(user, span_notice("Controls are now [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]."))
+	bot_access_flags ^= BOT_CONTROL_PANEL_OPEN
+	to_chat(user, span_notice("Controls are now [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "unlocked" : "locked"]."))
 	return TRUE
 
 /mob/living/basic/bot/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TOOL_ACT_TOOLTYPE_SUCCESS
-	if(bot_cover_flags & BOT_COVER_LOCKED)
+	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN))
 		to_chat(user, span_warning("The maintenance panel is locked!"))
 		return
 
 	tool.play_tool_sound(src)
-	bot_cover_flags ^= BOT_COVER_OPEN
-	to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
+	bot_access_flags ^= BOT_MAINTS_PANEL_OPEN
+	to_chat(user, span_notice("The maintenance panel is now [bot_access_flags & BOT_MAINTS_PANEL_OPEN ? "opened" : "closed"]."))
 
 /mob/living/basic/bot/welder_act(mob/living/user, obj/item/tool)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -410,7 +418,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		user.balloon_alert(user, "no repairs needed!")
 		return
 
-	if(!(bot_cover_flags & BOT_COVER_OPEN))
+	if(!(bot_access_flags & BOT_MAINTS_PANEL_OPEN))
 		user.balloon_alert(user, "maintenance panel closed!")
 		return
 
@@ -432,7 +440,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(attacking_item.tool_behaviour != TOOL_HEMOSTAT || !paicard)
 		return ..()
 
-	if(bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
 		balloon_alert(user, "open the access panel!")
 		return
 
@@ -558,7 +566,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/basic/bot/proc/bot_control(command, mob/user, list/user_access = list())
-	if(!(bot_mode_flags & BOT_MODE_ON) || bot_cover_flags & BOT_COVER_EMAGGED || !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+	if(!(bot_mode_flags & BOT_MODE_ON) || bot_access_flags & BOT_COVER_EMAGGED || !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
 	if(client && command != "ejectpai")
 		bot_control_message(command, user)
@@ -592,16 +600,16 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/list/data = list()
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
-	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
+	data["emagged"] = bot_access_flags & BOT_COVER_EMAGGED
 	data["has_access"] = check_access(user)
-	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
+	data["locked"] = !(bot_access_flags & BOT_CONTROL_PANEL_OPEN)
 	data["settings"] = list()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN || issilicon(user) || isAdminGhostAI(user))
 		data["settings"]["pai_inserted"] = !!paicard
 		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
 		data["settings"]["possession_enabled"] = can_be_possessed
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
-		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_OPEN)
+		data["settings"]["maintenance_lock"] = !(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
 		data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON
 		data["settings"]["patrol_station"] = bot_mode_flags & BOT_MODE_AUTOPATROL
 	return data
@@ -616,7 +624,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 
 	if(action == "lock")
-		bot_cover_flags ^= BOT_COVER_LOCKED
+		bot_access_flags ^= BOT_CONTROL_PANEL_OPEN
 
 	switch(action)
 		if("power")
@@ -625,7 +633,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 			else
 				turn_on()
 		if("maintenance")
-			bot_cover_flags ^= BOT_COVER_OPEN
+			bot_access_flags ^= BOT_MAINTS_PANEL_OPEN
 		if("patrol")
 			bot_mode_flags ^= BOT_MODE_AUTOPATROL
 			bot_reset()
@@ -634,8 +642,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("hack")
 			if(!(issilicon(usr) || isAdminGhostAI(usr)))
 				return
-			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
-				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
+			if(!(bot_access_flags & BOT_COVER_EMAGGED))
+				bot_access_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED)
+				bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
 				usr.log_message("disabled safety lock of [src]", LOG_GAME)
@@ -643,10 +652,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 				to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
-			if(!(bot_cover_flags & BOT_COVER_HACKED))
+			if(!(bot_access_flags & BOT_COVER_HACKED))
 				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
 				return
-			bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
+			bot_access_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 			to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
 			usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
 			bot_reset()
@@ -674,9 +683,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return TRUE
 	// 0 for access, 1 for denied.
-	if(!(bot_cover_flags & BOT_COVER_EMAGGED)) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
+	if(!(bot_access_flags & BOT_COVER_EMAGGED)) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		return FALSE
-	if(!(bot_cover_flags & BOT_COVER_HACKED)) //Manually emagged by a human - access denied to all.
+	if(!(bot_access_flags & BOT_COVER_HACKED)) //Manually emagged by a human - access denied to all.
 		return TRUE
 	if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
 		return TRUE
@@ -691,7 +700,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(key)
 		balloon_alert(user, "personality already present!")
 		return
-	if(!(bot_cover_flags & BOT_COVER_OPEN))
+	if(!(bot_access_flags & BOT_COVER_OPEN))
 		balloon_alert(user, "slot inaccessible!")
 		return
 	if(!(bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT))

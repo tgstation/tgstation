@@ -11,6 +11,7 @@
 	ai_movement = /datum/ai_movement/jps/bot
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/salute_beepsky,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -62,15 +63,34 @@
 		return FALSE
 	return TRUE
 
-///check if the target is too far away, and delete them if so
+///check if the target is too far away, and delete them if so and add them to the unreachables list
 /datum/ai_controller/basic_controller/bot/proc/reachable_key(key, distance = 10)
 	var/datum/target = blackboard[key]
 	if(QDELETED(target))
 		return FALSE
 	if(!can_reach_target(target, distance))
 		clear_blackboard_key(key)
+		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
 		return FALSE
 	return TRUE
+
+/// subtree to manage our list of unreachables, we reset it every 15 seconds
+/datum/ai_planning_subtree/manage_unreachable_list
+
+/datum/ai_planning_subtree/manage_unreachable_list/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	controller.queue_behavior(/datum/ai_behavior/manage_unreachable_list, BB_TEMPORARY_IGNORE_LIST)
+
+/datum/ai_behavior/manage_unreachable_list
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	action_cooldown = 15 SECONDS
+
+/datum/ai_behavior/manage_unreachable_list/perform(seconds_per_tick, datum/ai_controller/controller, list_key)
+	. = ..()
+	if(!isnull(controller.blackboard[list_key]))
+		controller.clear_blackboard_key(list_key)
+	finish_action(controller, TRUE)
+	return
+
 
 /datum/ai_planning_subtree/find_patrol_beacon
 
@@ -89,7 +109,6 @@
 	controller.queue_behavior(/datum/ai_behavior/find_first_beacon_target, BB_BEACON_TARGET)
 
 /datum/ai_behavior/find_first_beacon_target
-	action_cooldown = 20 SECONDS
 
 /datum/ai_behavior/find_first_beacon_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -165,7 +184,7 @@
 /datum/ai_planning_subtree/salute_beepsky/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are criminals, dont salute the dirty pigs
-	if(bot_pawn.bot_cover_flags & BOT_COVER_EMAGGED)
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_SALUTE_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/salute_beepsky, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)
