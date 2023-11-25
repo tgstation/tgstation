@@ -29,9 +29,6 @@
 		/obj/item/mod/module/jetpack,
 	)
 
-/obj/item/mod/control/pre_equipped/syndicate_empty/contractor //for some reason this is acting weird in the screenshots, can fix it later
-	theme = /datum/mod_theme/contractor
-
 // I absolutely fuckin hate having to do this
 /obj/item/clothing/head/mod/contractor
 
