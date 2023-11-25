@@ -19806,6 +19806,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"gnH" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/sign/painting/large/library{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "gnL" = (
 /obj/structure/closet/bombcloset/security,
 /turf/open/floor/iron/smooth,
@@ -34050,12 +34059,8 @@
 	pixel_x = 32
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window{
-	dir = 8;
-	name = "Secure Art Exhibition";
-	req_access = list("library")
-	},
 /obj/effect/spawner/random/structure/table_fancy,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/wood,
 /area/station/service/library)
 "kVM" = (
@@ -57169,15 +57174,15 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "spW" = (
-/obj/structure/sign/painting/library_secure{
-	pixel_x = 32
-	},
+/obj/effect/spawner/random/structure/table_fancy,
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Secure Art Exhibition";
 	req_access = list("library")
 	},
-/obj/effect/spawner/random/structure/table_fancy,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 32
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "sqs" = (
@@ -74780,11 +74785,10 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Library Art Gallery"
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/spawner/random/structure/table_fancy,
 /obj/machinery/light/blacklight/directional/north,
-/obj/structure/sign/painting/large/library{
-	dir = 4
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -252512,7 +252516,7 @@ kKL
 xUT
 uZn
 kKL
-ttv
+gnH
 prg
 prg
 caY
