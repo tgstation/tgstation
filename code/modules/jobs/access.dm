@@ -47,10 +47,9 @@
 			return TRUE
 	else if(isbrain(accessor))
 		var/obj/item/mmi/brain_mmi = get(accessor.loc, /obj/item/mmi)
-		if(brain_mmi)
-			if(ismecha(brain_mmi.loc))
-				var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
-				return check_access_list(big_stompy_robot.accesses)
+		if(brain_mmi && ismecha(brain_mmi.loc))
+			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
+			return check_access_list(big_stompy_robot.accesses)
 	return FALSE
 
 /obj/item/proc/GetAccess()
