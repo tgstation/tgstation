@@ -31,6 +31,7 @@
 #include "code\modules\movespeed\modifiers\status_effects.dm"
 #include "code\modules\actionspeed\modifiers\status_effects.dm"
 #include "code\datums\status_effects\debuffs\debuffs.dm"
+#include "code\datums\status_effects\debuffs\broken_will.dm"
 #include "code\datums\status_effects\neutral.dm"
 #include "code\datums\status_effects\buffs.dm"
 #include "code\datums\mood_events\generic_positive_events.dm"
