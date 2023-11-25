@@ -68,11 +68,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.3":
-=======
 "@babel/core@npm:*, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.3":
->>>>>>> upstream/master
   version: 7.23.3
   resolution: "@babel/core@npm:7.23.3"
   dependencies:
@@ -6050,7 +6046,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "get-tsconfig@npm:^4.7.0":
   version: 4.7.2
   resolution: "get-tsconfig@npm:4.7.2"
@@ -6060,8 +6055,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> upstream/master
 "getpass@npm:^0.1.1":
   version: 0.1.7
   resolution: "getpass@npm:0.1.7"
@@ -9791,7 +9784,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "resolve-pkg-maps@npm:^1.0.0":
   version: 1.0.0
   resolution: "resolve-pkg-maps@npm:1.0.0"
@@ -9799,8 +9791,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> upstream/master
 "resolve.exports@npm:^2.0.0":
   version: 2.0.2
   resolution: "resolve.exports@npm:2.0.2"
@@ -10376,10 +10366,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "source-map-js@npm:1.0.2"
-  checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
+"source-list-map@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "source-list-map@npm:2.0.1"
+  checksum: 806efc6f75e7cd31e4815e7a3aaf75a45c704871ea4075cb2eb49882c6fca28998f44fc5ac91adb6de03b2882ee6fb02f951fdc85e6a22b338c32bfe19557938
   languageName: node
   linkType: hard
 
@@ -10904,11 +10894,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "terser-webpack-plugin@npm:^5.3.7":
-=======
-"terser-webpack-plugin@npm:^5.3.7, terser-webpack-plugin@npm:^5.3.9":
->>>>>>> upstream/master
   version: 5.3.9
   resolution: "terser-webpack-plugin@npm:5.3.9"
   dependencies:
@@ -11068,10 +11054,7 @@ __metadata:
     babel-plugin-transform-remove-console: ^6.9.4
     common: "workspace:*"
     css-loader: ^6.8.1
-<<<<<<< HEAD
     esbuild-loader: ^4.0.2
-=======
->>>>>>> upstream/master
     eslint: ^7.32.0
     eslint-config-prettier: ^9.0.0
     eslint-plugin-radar: ^0.2.1
@@ -11087,10 +11070,6 @@ __metadata:
     sass: ^1.69.5
     sass-loader: ^13.3.2
     style-loader: ^3.3.3
-<<<<<<< HEAD
-=======
-    terser-webpack-plugin: ^5.3.9
->>>>>>> upstream/master
     typescript: ^4.9.4
     url-loader: ^4.1.1
     webpack: ^5.89.0
@@ -11903,7 +11882,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
 "webpack-sources@npm:^1.4.3":
   version: 1.4.3
   resolution: "webpack-sources@npm:1.4.3"
@@ -11914,8 +11892,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-=======
->>>>>>> upstream/master
 "webpack-sources@npm:^3.2.3":
   version: 3.2.3
   resolution: "webpack-sources@npm:3.2.3"
