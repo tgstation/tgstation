@@ -742,17 +742,33 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			reenter_corpse()
 			return
 
-		if(href_list["jump"])
-			var/atom/movable/target = locate(href_list["jump"])
-			var/turf/target_turf = get_turf(target)
-			if(target_turf && isturf(target_turf))
-				abstract_move(target_turf)
+		if(href_list["view"])
+			var/atom/target = locate(href_list["view"])
+			observer_view(target)
+			return
 
 		if(href_list["play"])
 			var/atom/movable/target = locate(href_list["play"])
-			if(istype(target) && (target != src))
-				target.attack_ghost(usr)
-				return
+			jump_to_interact(target)
+
+/// We orbit and interact with the target
+/mob/dead/observer/proc/jump_to_interact(atom/target)
+	if(isnull(target) || target == src)
+		return
+
+	ManualFollow(target)
+	target.attack_ghost(usr)
+
+/// We orbit the target or jump if its a turf
+/mob/dead/observer/proc/observer_view(atom/target)
+	if(isnull(target) || target == src)
+		return
+
+	if(isturf(target))
+		abstract_move(target)
+		return
+
+	ManualFollow(target)
 
 //We don't want to update the current var
 //But we will still carry a mind.

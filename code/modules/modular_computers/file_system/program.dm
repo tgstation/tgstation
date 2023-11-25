@@ -9,31 +9,34 @@
 
 	///How much power running this program costs.
 	var/power_cell_use = PROGRAM_BASIC_CELL_USE
-	/// List of required accesses to *run* the program. Any match will do.
-	var/list/required_access = list()
-	/// List of required access to download or file host the program. Any match will do.
-	var/list/transfer_access = list()
+	///List of required accesses to *run* the program. Any match will do.
+	///This also acts as download_access if that is not set, making this more draconic and restrictive.
+	var/list/run_access = list()
+	///List of required access to download or file host the program. Any match will do.
+	var/list/download_access = list()
 	/// User-friendly name of this program.
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
 	var/extended_desc = "N/A"
-	/// Category in the NTDownloader.
-	var/category = PROGRAM_CATEGORY_MISC
-	/// Program-specific screen icon state
-	var/program_icon_state = null
+	///What category this program can be found in within NTNetDownloader.
+	var/downloader_category = PROGRAM_CATEGORY_DEVICE
+	///The overlay to add ontop of the ModPC running the app while it's open.
+	///This is taken from the same file as the ModPC, so you can use usage_flags to prevent
+	///the program from being used on devices that don't have sprites for it.
+	var/program_open_overlay = null
 	///Boolean on whether the program will appear at the top on PDA menus, or in the app list with everything else.
 	var/header_program = FALSE
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
 	var/requires_ntnet = FALSE
 	/// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
 	var/ntnet_status = 1
-	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
+	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_PDA combination) or PROGRAM_ALL
 	var/usage_flags = PROGRAM_ALL
 	/// Whether the program can be downloaded from NTNet. Set to FALSE to disable.
 	var/available_on_ntnet = TRUE
 	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to TRUE to enable.
 	var/available_on_syndinet = FALSE
-	/// Name of the tgui interface
+	/// Name of the tgui interface. If this is not defined, this will not be available in NTNet.
 	var/tgui_id
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images must also be inserted into /datum/asset/simple/headers.
 	var/ui_header = null
@@ -52,9 +55,9 @@
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
-	temp.required_access = required_access
+	temp.run_access = run_access
 	temp.filedesc = filedesc
-	temp.program_icon_state = program_icon_state
+	temp.program_open_overlay = program_open_overlay
 	temp.requires_ntnet = requires_ntnet
 	temp.usage_flags = usage_flags
 	if(unique_copy)
@@ -83,9 +86,9 @@
 
 ///Attempts to generate an Ntnet log, returns the log on success, FALSE otherwise.
 /datum/computer_file/program/proc/generate_network_log(text)
-	if(computer)
-		return computer.add_log(text)
-	return FALSE
+	if(!computer || computer.obj_flags & EMAGGED)
+		return FALSE
+	return computer.add_log(text)
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
@@ -115,33 +118,32 @@
 	return TRUE
 
 /**
- *Check if the user can run program. Only humans and silicons can operate computer. Automatically called in on_start()
- *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
- *NT Software Hub is checking available software), a list can be given to be used instead.
- *Arguments:
- *user is a ref of the mob using the device.
- *loud is a bool deciding if this proc should use to_chats
- *access_to_check is an access level that will be checked against the ID
- *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
- *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
-*/
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access)
+ * Checks if the user can run program. Only humans and silicons can operate computer. Automatically called in on_start()
+ * ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
+ * NT Software Hub is checking available software), a list can be given to be used instead.
+ * Args:
+ * user is a ref of the mob using the device.
+ * loud is a bool deciding if this proc should use to_chats
+ * access_to_check is an access level that will be checked against the ID
+ * downloading: Boolean on whether it's downloading the app or not. If it is, it will check download_access instead of run_access.
+ * access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
+ */
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, downloading = FALSE, list/access)
 	if(issilicon(user) && !ispAI(user))
 		return TRUE
 
 	if(isAdminGhostAI(user))
 		return TRUE
 
-	if(computer && (computer.obj_flags & EMAGGED) && (available_on_syndinet || !transfer)) //emagged can run anything on syndinet, and can bypass execution locks, but not download.
+	if(computer && (computer.obj_flags & EMAGGED) && (available_on_syndinet || !downloading)) //emagged can run anything on syndinet, and can bypass execution locks, but not download.
 		return TRUE
 
-	// Defaults to required_access
 	if(!access_to_check)
-		if(transfer && length(transfer_access))
-			access_to_check = transfer_access
+		if(downloading && length(download_access))
+			access_to_check = download_access
 		else
-			access_to_check = required_access
-	if(!length(access_to_check)) // No required_access, allow it.
+			access_to_check = run_access
+	if(!length(access_to_check)) // No access requirements, allow it.
 		return TRUE
 
 	if(!length(access))

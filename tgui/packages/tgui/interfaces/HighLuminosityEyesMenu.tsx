@@ -91,11 +91,11 @@ const EyeColorDisplay = (props, context) => {
   const { eyeColor } = data;
   return (
     <>
-      <LabeledList.Item label="Match Colors">
+      <LabeledList.Item label="Match Color">
         <Button.Checkbox
           checked={eyeColor.mode}
           onClick={() => act('toggle_eye_color')}
-          tooltip="Toggle the eye color mode."
+          tooltip="Toggles whether eyecolor matches the color of the light."
         />
       </LabeledList.Item>
       {!eyeColor.mode && (
@@ -112,7 +112,7 @@ const EyeColorDisplay = (props, context) => {
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.LeftEye })
               }
-              tooltip="Randomizes the light color."
+              tooltip="Randomizes the eye color."
             />
             <Input
               value={eyeColor.left}
@@ -140,7 +140,7 @@ const EyeColorDisplay = (props, context) => {
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.RightEye })
               }
-              tooltip="Randomizes the light color."
+              tooltip="Randomizes the eye color."
             />
             <Input
               value={eyeColor.right}

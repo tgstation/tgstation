@@ -104,10 +104,11 @@
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team?.syndicate_name)
-		var/mob/living/carbon/human/H = owner.current
-		if(istype(H)) // Reinforcements get a real name
-			var/chosen_name = H.dna.species.random_name(H.gender,0,nuke_team.syndicate_name)
-			H.fully_replace_character_name(H.real_name,chosen_name)
+		var/mob/living/carbon/human/human_to_rename = owner.current
+		if(istype(human_to_rename)) // Reinforcements get a real name
+			var/first_name = owner.current.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
+			var/chosen_name = "[first_name] [nuke_team.syndicate_name]"
+			human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
 		else
 			var/number = 1
 			number = nuke_team.members.Find(owner)
@@ -259,13 +260,6 @@
 			H.put_in_hands(nuke_code_paper, TRUE)
 			H.update_icons()
 
-/datum/antagonist/nukeop/leader/give_alias()
-	title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
-	if(nuke_team?.syndicate_name)
-		owner.current.real_name = "[nuke_team.syndicate_name] [title]"
-	else
-		owner.current.real_name = "Syndicate [title]"
-
 /datum/antagonist/nukeop/leader/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
 	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
@@ -293,11 +287,12 @@
 	name = "[syndicate_name] Team"
 	for(var/I in members)
 		var/datum/mind/synd_mind = I
-		var/mob/living/carbon/human/H = synd_mind.current
-		if(!istype(H))
+		var/mob/living/carbon/human/human_to_rename = synd_mind.current
+		if(!istype(human_to_rename))
 			continue
-		var/chosen_name = H.dna.species.random_name(H.gender,0,syndicate_name)
-		H.fully_replace_character_name(H.real_name,chosen_name)
+		var/first_name = human_to_rename.client?.prefs?.read_preference(/datum/preference/name/operative_alias) || pick(GLOB.operative_aliases)
+		var/chosen_name = "[first_name] [syndicate_name]"
+		human_to_rename.fully_replace_character_name(human_to_rename.real_name, chosen_name)
 
 /datum/antagonist/nukeop/leader/proc/ask_name()
 	var/randomname = pick(GLOB.last_names)
@@ -521,12 +516,116 @@
 			disk_loc = disk_loc.loc
 		disk_report += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td><td><a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(N)]'>FLW</a></td></tr>"
 	disk_report += "</table>"
-	var/common_part = ..()
-	var/challenge_report
-	var/obj/item/nuclear_challenge/war_button = war_button_ref?.resolve()
-	if(war_button)
-		challenge_report += "<b>War not declared.</b> <a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
-	return common_part + disk_report + challenge_report
+
+	var/post_report
+
+	var/war_declared = FALSE
+	for(var/obj/item/circuitboard/computer/syndicate_shuttle/board as anything in GLOB.syndicate_shuttle_boards)
+		if(board.challenge)
+			war_declared = TRUE
+
+	var/force_war_button = ""
+
+	if(war_declared)
+		post_report += "<b>War declared.</b>"
+		force_war_button = "\[Force war\]"
+	else
+		post_report += "<b>War not declared.</b>"
+		var/obj/item/nuclear_challenge/war_button = war_button_ref?.resolve()
+		if(war_button)
+			force_war_button = "<a href='?_src_=holder;[HrefToken()];force_war=[REF(war_button)]'>\[Force war\]</a>"
+		else
+			force_war_button = "\[Cannot declare war, challenge button missing!\]"
+
+	post_report += "\n[force_war_button]"
+	post_report += "\n<a href='?_src_=holder;[HrefToken()];give_reinforcement=[REF(src)]'>\[Send Reinforcement\]</a>"
+
+	var/final_report = ..()
+	final_report += disk_report
+	final_report += post_report
+	return final_report
+
+#define SPAWN_AT_BASE "Nuke base"
+#define SPAWN_AT_INFILTRATOR "Infiltrator"
+
+/datum/team/nuclear/proc/admin_spawn_reinforcement(mob/admin)
+	if(!check_rights_for(admin.client, R_ADMIN))
+		return
+
+	var/infil_or_nukebase = tgui_alert(
+		admin,
+		"Spawn them at the nuke base, or in the Infiltrator?",
+		"Where to reinforce?",
+		list(SPAWN_AT_BASE, SPAWN_AT_INFILTRATOR, "Cancel"),
+	)
+
+	if(!infil_or_nukebase || infil_or_nukebase == "Cancel")
+		return
+
+	var/tc_to_spawn = tgui_input_number(admin, "How much TC to spawn with?", "TC", 0, 100)
+
+	var/list/nuke_candidates = poll_ghost_candidates(
+		"Do you want to play as an emergency syndicate reinforcement?",
+		ROLE_OPERATIVE,
+		ROLE_OPERATIVE,
+		30 SECONDS,
+		POLL_IGNORE_SYNDICATE,
+	)
+
+	nuke_candidates -= admin // may be easy to fat-finger say yes. so just don't
+
+	if(!length(nuke_candidates))
+		tgui_alert(admin, "No candidates found.", "Recruitment Shortage", list("OK"))
+		return
+
+
+	var/turf/spawn_loc
+	if(infil_or_nukebase == SPAWN_AT_INFILTRATOR)
+		var/area/spawn_in
+		// Prioritize EVA then hallway, if neither can be found default to the first area we can find
+		for(var/area_type in list(/area/shuttle/syndicate/eva, /area/shuttle/syndicate/hallway, /area/shuttle/syndicate))
+			spawn_in = locate(area_type) in GLOB.areas // I'd love to use areas_by_type but the Infiltrator is a unique area
+			if(spawn_in)
+				break
+
+		var/list/turf/options = list()
+		for(var/turf/open/open_turf in spawn_in?.get_contained_turfs())
+			if(open_turf.is_blocked_turf())
+				continue
+			options += open_turf
+
+		if(length(options))
+			spawn_loc = pick(options)
+		else
+			infil_or_nukebase = SPAWN_AT_BASE
+
+	if(infil_or_nukebase == SPAWN_AT_BASE)
+		spawn_loc = pick(GLOB.nukeop_start)
+
+	var/mob/dead/observer/picked = pick(nuke_candidates)
+	var/mob/living/carbon/human/nukie = new(spawn_loc)
+	picked.client.prefs.safe_transfer_prefs_to(nukie, is_antag = TRUE)
+	nukie.key = picked.key
+
+	var/datum/antagonist/nukeop/antag_datum = new()
+	antag_datum.send_to_spawnpoint = FALSE
+	antag_datum.nukeop_outfit = /datum/outfit/syndicate/reinforcement
+
+	nukie.mind.add_antag_datum(antag_datum, src)
+
+	var/datum/component/uplink/uplink = nukie.mind.find_syndicate_uplink()
+	uplink?.set_telecrystals(tc_to_spawn)
+
+	// add some pizzazz
+	do_sparks(4, FALSE, spawn_loc)
+	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(spawn_loc)
+	playsound(spawn_loc, SFX_SPARKS, 50, TRUE)
+	playsound(spawn_loc, 'sound/effects/phasein.ogg', 50, TRUE)
+
+	tgui_alert(admin, "Reinforcement spawned at [infil_or_nukebase] with [tc_to_spawn].", "Reinforcements have arrived", list("God speed"))
+
+#undef SPAWN_AT_BASE
+#undef SPAWN_AT_INFILTRATOR
 
 /// Returns whether or not syndicate operatives escaped.
 /proc/is_infiltrator_docked_at_syndiebase()

@@ -52,11 +52,12 @@
 				/obj/item/skillchip/appraiser = 2,
 				/obj/item/skillchip/basketweaving = 2,
 				/obj/item/skillchip/bonsai = 2,
+				/obj/item/skillchip/intj = 2,
 				/obj/item/skillchip/light_remover = 2,
+				/obj/item/skillchip/master_angler = 2,
 				/obj/item/skillchip/sabrage = 2,
 				/obj/item/skillchip/useless_adapter = 5,
 				/obj/item/skillchip/wine_taster = 2,
-				/obj/item/skillchip/master_angler = 2,
 			),
 		),
 		list(

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "The Stethoscope no longer tells you if the target is missing a heart or lungs. Now, it will simply say the target is lacking a pulse or not breathing."
