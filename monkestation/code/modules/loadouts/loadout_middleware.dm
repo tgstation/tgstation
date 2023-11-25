@@ -50,14 +50,14 @@
 	var/list/all_selected_paths = list()
 	for(var/path in preferences.loadout_list)
 		all_selected_paths += path
-	
+
 	var/list/all_selected_unusuals = list()
 	if(length(preferences.special_loadout_list["unusual"]))
 		all_selected_unusuals = preferences.special_loadout_list["unusual"]
 
 	data["selected_loadout"] = all_selected_paths
 	data["selected_unusuals"] = all_selected_unusuals
-	data["user_is_donator"] = !!(preferences.parent.patreon?.is_donator() || is_admin(preferences.parent))
+	data["user_is_donator"] = !!(preferences.parent.patreon?.is_donator() || preferences.parent.twitch?.is_donator() || is_admin(preferences.parent))
 	data["mob_name"] = preferences.read_preference(/datum/preference/name/real_name)
 	data["ismoth"] = istype(preferences.parent.prefs.read_preference(/datum/preference/choiced/species), /datum/species/moth) // Moth's humanflaticcon isn't the same dimensions for some reason
 	data["total_coins"] = preferences.metacoins
@@ -73,7 +73,7 @@
 			return null
 
 	//Here we will perform basic checks to ensure there are no exploits happening
-	if(interacted_item.donator_only && !preferences.parent.patreon?.is_donator() && !is_admin(preferences.parent))
+	if(interacted_item.donator_only && (!preferences.parent.patreon?.is_donator() || !preferences.parent.twitch?.is_donator()) && !is_admin(preferences.parent))
 		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent.ckey] tried loading [interacted_item.item_path], but this is donator only.")
 		return null
 
@@ -91,7 +91,7 @@
 	if(params["unusual_spawning_requirements"])
 		unusual_selection(params, user)
 		return
-		
+
 	var/datum/loadout_item/interacted_item = return_item(params)
 	if(!interacted_item)
 		return
@@ -151,7 +151,7 @@
 				formatted_list.len--
 				continue
 		if(item.donator_only) //These checks are also performed in the backend.
-			if(!preferences.parent.patreon?.is_donator() && !is_admin(preferences.parent))
+			if((!preferences.parent.patreon?.is_donator() || !preferences.parent.twitch?.is_donator())&& !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
@@ -305,7 +305,7 @@
 	to_chat(preferences.parent, examine_block(span_green("This item is restricted to your ckey only. Thank you!")))
 
 /datum/preference_middleware/loadout/proc/donator_explain(list/params, mob/user)
-	if(preferences.parent.patreon?.is_donator())
+	if(preferences.parent.patreon?.is_donator() || preferences.parent.twitch?.is_donator())
 		to_chat(preferences.parent, examine_block("<b><font color='#f566d6'>Thank you for donating, this item is for you <3!</font></b>"))
 	else
 		to_chat(preferences.parent, examine_block(span_boldnotice("This item is restricted to donators only, for more information, please check the discord(#server-info) for more information!")))
