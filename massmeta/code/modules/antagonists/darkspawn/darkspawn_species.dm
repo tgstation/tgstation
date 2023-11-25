@@ -6,6 +6,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE
 	siemens_coeff = 0
 	death_sound = 'massmeta/sounds/creatures/darkspawn_death.ogg'
+	damage_modifier = 40
 	//brutemod = 0.9
 	heatmod = 1.5
 	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
