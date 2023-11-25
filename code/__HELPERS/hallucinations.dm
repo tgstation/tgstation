@@ -104,6 +104,22 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 
 	return weighted_list
 
+/// Global weighted list of all delusions that can show up randomly.
+GLOBAL_LIST_INIT(random_delusion_weighted_list, generate_delusion_weighted_list())
+
+/// Generates the global weighted list of random delusions.
+/proc/generate_delusion_weighted_list()
+	var/list/weighted_list = list()
+
+	for(var/datum/hallucination/delusion/preset/delusion_type as anything in subtypesof(/datum/hallucination/delusion/preset))
+		var/weight = initial(delusion_type.random_hallucination_weight)
+		if(weight <= 0)
+			continue
+
+		weighted_list[delusion_type] = weight
+
+	return weighted_list
+
 /// Debug proc for getting the total weight of the random_hallucination_weighted_list
 /proc/debug_hallucination_weighted_list()
 	var/total_weight = 0

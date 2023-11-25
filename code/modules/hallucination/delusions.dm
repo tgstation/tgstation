@@ -438,6 +438,7 @@
 	delusion_icon_file = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
 	delusion_icon_state = "bubblegum"
 	delusion_name = "bubblegum"
+	random_hallucination_weight = 1
 
 /datum/hallucination/delusion/preset/mega_legion
 	delusion_icon_file = 'icons/mob/simple/lavaland/96x96megafauna.dmi'
