@@ -31,7 +31,7 @@
 /datum/outfit/contractor_preview
 	name = "Syndicate Contractor (Preview only)"
 
-//	back = /obj/item/mod/control/pre_equipped/contractor/upgraded
+	back = /obj/item/mod/control/pre_equipped/empty/contractor
 	uniform = /obj/item/clothing/under/syndicate
 	glasses = /obj/item/clothing/glasses/night
 

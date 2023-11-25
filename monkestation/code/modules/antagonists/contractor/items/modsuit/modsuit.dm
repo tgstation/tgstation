@@ -29,6 +29,9 @@
 		/obj/item/mod/module/jetpack,
 	)
 
+/obj/item/mod/control/pre_equipped/empty/contractor
+	theme = /datum/mod_theme/contractor
+
 // I absolutely fuckin hate having to do this
 /obj/item/clothing/head/mod/contractor
 
