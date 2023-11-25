@@ -148,6 +148,7 @@
 #define BB_SALUTE_MESSAGES "salute_messages"
 #define BB_SALUTE_TARGET "salute_target"
 #define BB_ANNOUNCE_ABILITY "announce_ability"
+#define BB_RADIO_CHANNEL "radio_channel"
 
 // medbot keys
 #define BB_PATIENT_TARGET "patient_target"
@@ -157,3 +158,4 @@
 #define BB_EMAGGED_SPEECH "emagged_speech"
 #define BB_WORRIED_ANNOUNCEMENTS "worried_announcements"
 #define BB_NEAR_DEATH_SPEECH "near_death_speech"
+#define BB_PATIENT_IN_CRIT "patient_in_crit"

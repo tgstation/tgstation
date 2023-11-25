@@ -2,7 +2,9 @@
 
 /datum/ai_controller/basic_controller/bot/medbot
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/handle_medbot_speech,
+		/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit,
 		/datum/ai_planning_subtree/treat_wounded_target,
 		/datum/ai_planning_subtree/salute_beepsky,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -81,7 +83,7 @@
 	if(QDELETED(patient))
 		finish_action(controller, FALSE, target_key)
 		return
-	if(check_if_healed(threshold, damage_type_healer, patient))
+	if(check_if_healed(patient, threshold, damage_type_healer))
 		finish_action(controller, TRUE, target_key, healed_target = TRUE)
 		return
 
@@ -145,5 +147,41 @@
 
 	announcement.announce(pick(speech_to_pick_from))
 	finish_action(controller, TRUE)
+
+/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit
+	target_key = BB_PATIENT_IN_CRIT
+	hunting_behavior = /datum/ai_behavior/announce_patient
+	finding_behavior = /datum/ai_behavior/find_hunt_target/patient_in_crit
+	finish_planning = FALSE
+
+/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
+	if(bot_pawn.medical_mode_flags & MEDBOT_DECLARE_CRIT)
+		return
+	return ..()
+
+/datum/ai_behavior/find_hunt_target/patient_in_crit
+
+/datum/ai_behavior/find_hunt_target/patient_in_crit/valid_dinner(mob/living/source, mob/living/carbon/human/patient, radius)
+	if(patient.stat >= UNCONSCIOUS && patient.mind)
+		return TRUE
+
+	return can_see(source, patient, radius)
+
+/datum/ai_behavior/announce_patient
+	action_cooldown = 30 SECONDS
+
+/datum/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
+	. = ..()
+	var/mob/living/living_target = controller.blackboard[target_key]
+	if(QDELETED(living_target))
+		finish_action(controller, FALSE)
+		return
+	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
+	if(QDELETED(announcement))
+		finish_action(controller, FALSE)
+		return
+	var/text_to_announce = "Medical emergency! [living_target] is in critical condition at [get_area(living_target)]!"
+	announcement.announce(text_to_announce, controller.blackboard[BB_RADIO_CHANNEL])
 
 #undef BOT_PATIENT_PATH_LIMIT

@@ -129,6 +129,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	pa_system = (isnull(announcement_type)) ? new(src, automated_announcements = generate_speak_list()) : new announcement_type(src, automated_announcements = generate_speak_list())
 	pa_system.Grant(src)
 	ai_controller.set_blackboard_key(BB_ANNOUNCE_ABILITY, pa_system)
+	ai_controller.set_blackboard_key(BB_RADIO_CHANNEL, radio_channel)
 	update_appearance()
 
 /mob/living/basic/bot/proc/get_mode()
