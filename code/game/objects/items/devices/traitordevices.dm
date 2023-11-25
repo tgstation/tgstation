@@ -89,7 +89,7 @@ effective or pretty fucking useless.
 		return . | TOOL_ACT_SIGNAL_BLOCKING
 
 	if(!used)
-		log_combat(user, M, "irradiated", src)
+		log_combat(user, interacting_with, "irradiated", src)
 		var/cooldown = get_cooldown()
 		used = TRUE
 		icon_state = "health1"

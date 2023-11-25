@@ -40,12 +40,6 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][atom_storage?.locked ? "_locked" : null]"
 
-/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	if(can_hack_open && atom_storage.locked)
-		return ..()
-	else
-		return FALSE
-
 /obj/item/storage/secure/wirecutter_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
 	return
@@ -57,6 +51,9 @@
 		return TRUE
 
 /obj/item/storage/secure/multitool_act(mob/living/user, obj/item/tool)
+	if(!can_hack_open || !atom_storage.locked)
+		return
+
 	. = TRUE
 	if(lock_hacking)
 		balloon_alert(user, "already hacking!")

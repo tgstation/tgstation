@@ -156,12 +156,31 @@
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/attackby(obj/item/attacking_item, mob/user, params)
-	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
+	if(..())
+		return TRUE
+	if(!(obj_flags & CAN_BE_HIT))
+		return FALSE
+	return attacking_item.attack_atom(src, user, params)
+
+/mob/living/item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+	. = ..()
+	if(. & TOOL_ACT_TOOLTYPE_SUCCESS)
+		return .
+	if(user.combat_mode)
+		return .
+
+	for(var/datum/surgery/operation as anything in surgeries)
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
+			continue
+		if(!(operation.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
+			continue
+		var/list/modifiers = params2list(params)
+		if(operation.next_step(user, modifiers))
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	return .
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(can_perform_surgery(user, params))
-		return TRUE
-
 	if(..())
 		return TRUE
 	user.changeNext_move(attacking_item.attack_speed)

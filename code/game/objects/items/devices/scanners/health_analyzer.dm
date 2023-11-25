@@ -586,16 +586,16 @@
 	if(!user.can_read(src) || user.is_blind())
 		return TOOL_ACT_SIGNAL_BLOCKING
 
-	add_fingerprint(user) // melbert todo
-	user.visible_message(span_notice("[user] scans [patient] for serious injuries."), span_notice("You scan [patient] for serious injuries."))
+	add_fingerprint(user)
+	user.visible_message(span_notice("[user] scans [interacting_with] for serious injuries."), span_notice("You scan [interacting_with] for serious injuries."))
 
 	if(!iscarbon(interacting_with))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [patient]."))
+		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [interacting_with]."))
 		show_emotion(AI_EMOTION_SAD)
 		return TOOL_ACT_SIGNAL_BLOCKING
 
-	woundscan(user, patient, src, simple_scan = TRUE)
+	woundscan(user, interacting_with, src, simple_scan = TRUE)
 	flick(icon_state + "_pinprick", src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

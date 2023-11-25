@@ -79,9 +79,9 @@
 	P.decayedRange = max(P.decayedRange--, 0)
 	return BULLET_ACT_FORCE_PIERCE
 
-/obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	if(admin)
-		return FALSE
+/obj/structure/reflector/item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+	if(admin && tool_type)
+		return TOOL_ACT_SIGNAL_BLOCKING
 	return ..()
 
 /obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)

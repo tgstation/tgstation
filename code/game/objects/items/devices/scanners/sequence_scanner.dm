@@ -33,7 +33,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 
-	add_fingerprint(user) // melbert todo : determine if this is necessary
+	add_fingerprint(user)
 
 	//no scanning if its a husk or DNA-less Species
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
@@ -50,7 +50,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 
-	add_fingerprint(user) // melbert todo : determine if this is necessary
+	add_fingerprint(user)
 
 	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))

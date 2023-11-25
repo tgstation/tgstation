@@ -18,10 +18,10 @@
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
 		return TOOL_ACT_SIGNAL_BLOCKING
-	if (!isslime(M))
+	if (!isslime(interacting_with))
 		to_chat(user, span_warning("This device can only scan slimes!"))
 		return TOOL_ACT_SIGNAL_BLOCKING
-	var/mob/living/simple_animal/slime/T = M
+	var/mob/living/simple_animal/slime/T = interacting_with
 	slime_scan(T, user)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

@@ -188,9 +188,9 @@
 		return
 	return ..()
 
-/obj/structure/window/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/structure/window/item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(!can_be_reached(user))
-		return TRUE //skip the afterattack
+		return TOOL_ACT_SKIP_TO_ATTACK //skip the afterattack
 	add_fingerprint(user)
 	return ..()
 

@@ -137,7 +137,7 @@
 /obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!ishuman(interacting_with))
 		return NONE
-	if(user.combat_mode) // melbert todo : consider if this is necessary
+	if(user.combat_mode)
 		return NONE
 
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with

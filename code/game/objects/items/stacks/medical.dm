@@ -37,7 +37,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 
-	try_heal(patient, user)
+	try_heal(interacting_with, user)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/stack/medical/apply_fantasy_bonuses(bonus)

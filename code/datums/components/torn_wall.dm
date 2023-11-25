@@ -72,7 +72,7 @@
 		qdel(src)
 		return
 	source.update_appearance(UPDATE_ICON)
-	source.tool_act(user, tool, TOOL_WELDER, is_right_clicking = FALSE) // Keep going
+	source.item_interaction(user, tool, TOOL_WELDER, is_right_clicking = FALSE) // Keep going
 
 /// Give them a hint
 /datum/component/torn_wall/proc/on_examined(atom/source, mob/user, list/examine_list)
