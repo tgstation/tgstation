@@ -1,0 +1,4 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - rscadd: "Clicking the Twitch icon in the menu will now allow you to link your Twitch account to your ckey.  Twitch subs who link their account in this way have access to donator items."
