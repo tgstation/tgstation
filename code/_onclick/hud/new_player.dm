@@ -309,7 +309,9 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client << link("https://www.twitch.tv/thedukeofook")
+	if(!CONFIG_GET(string/twitch_link_website))
+		return
+	hud.mymob.client << link("[CONFIG_GET(string/twitch_link_website)]?ckey=[hud.mymob.client.ckey]")
 
 /atom/movable/screen/lobby/button/settings
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'

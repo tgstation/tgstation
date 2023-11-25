@@ -5614,6 +5614,7 @@
 #include "monkestation\code\datums\interaction_particle.dm"
 #include "monkestation\code\datums\patreon_data.dm"
 #include "monkestation\code\datums\stamina_container.dm"
+#include "monkestation\code\datums\twitch_data.dm"
 #include "monkestation\code\datums\ai\idle_behaviors\idle_dukeman.dm"
 #include "monkestation\code\datums\ai\monkey\dukeman_controller.dm"
 #include "monkestation\code\datums\ai_laws\laws_monke.dm"
