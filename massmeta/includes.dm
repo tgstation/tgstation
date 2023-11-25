@@ -35,6 +35,7 @@
 #include "code\datums\status_effects\neutral.dm"
 #include "code\datums\status_effects\buffs.dm"
 #include "code\datums\mood_events\generic_positive_events.dm"
+#include "code\datums\saymode.dm"
 #include "code\modules\antagonists\darkspawn\crawling_shadows.dm"
 #include "code\modules\antagonists\darkspawn\darkspawn.dm"
 #include "code\modules\antagonists\darkspawn\darkspawn_ability.dm"

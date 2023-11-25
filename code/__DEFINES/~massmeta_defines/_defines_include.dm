@@ -2,3 +2,4 @@
 #include "status_effects.dm"
 #include "antagonists.dm"
 #include "span.dm"
+#include "say.dm"

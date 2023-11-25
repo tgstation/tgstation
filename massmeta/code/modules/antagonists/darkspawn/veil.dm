@@ -69,7 +69,7 @@
 	Eyes filled with stars. \n\
 	You feel the vast consciousness slowly consume your own and the veil falls away. \n\
 	Serve the darkspawn above all else. Your former allegiances are now forfeit. Their goal is yours, and yours is theirs.</b>")
-	to_chat(owner, "<i>Use <b>:a or .a</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>")
+	to_chat(owner, "<i>Use <b>:w or .w</b> before your messages to speak over the Mindlink. This only works across your current z-level.</i>")
 	to_chat(owner, "<i>Ask for help from your masters or fellows if you're new to this role.</i>")
 	to_chat(owner, span_danger("Your drained will has left you feeble and weak! You will go down with many fewer hits!"))
 	SEND_SOUND(owner.current, sound ('massmeta/sounds/ambience/antag/become_veil.ogg', volume = 50))
