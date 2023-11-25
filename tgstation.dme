@@ -5907,6 +5907,7 @@
 #include "code\modules\wiremod\components\list\list_pick.dm"
 #include "code\modules\wiremod\components\list\list_remove.dm"
 #include "code\modules\wiremod\components\list\split.dm"
+#include "code\modules\wiremod\components\math\arctan2.dm"
 #include "code\modules\wiremod\components\math\arithmetic.dm"
 #include "code\modules\wiremod\components\math\binary_conversion.dm"
 #include "code\modules\wiremod\components\math\comparison.dm"

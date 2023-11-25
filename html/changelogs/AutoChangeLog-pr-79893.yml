@@ -1,4 +1,0 @@
-author: "jjpark-kb"
-delete-after: True
-changes:
-  - bugfix: "gutlunches now produce miner salve instead of milk, as well as the other reagents if fed the correct ore"

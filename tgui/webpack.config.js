@@ -44,6 +44,7 @@ module.exports = (env = {}, argv) => {
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
+      publicPath: '/',
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx'],

@@ -1,4 +1,0 @@
-author: "TwistedSilicon"
-delete-after: True
-changes:
-  - bugfix: "Window damage overlays have been fixed."

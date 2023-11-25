@@ -651,7 +651,7 @@ rules:
   ## Enforce ES5 or ES6 class for React Components
   react/prefer-es6-class: error
   ## Enforce that props are read-only
-  react/prefer-read-only-props: error
+  react/prefer-read-only-props: off
   ## Enforce stateless React Components to be written as a pure function
   react/prefer-stateless-function: error
   ## Prevent missing props validation in a React component definition
