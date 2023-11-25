@@ -1557,7 +1557,7 @@
  *
  * This can be overridden to add custom item interactions to this atom
  */
-/atom/proc/item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/atom/proc/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/is_left_clicking = !is_right_clicking
@@ -1565,6 +1565,10 @@
 	var/interact_return = is_left_clicking ? tool.interact_with_atom(src, user) : tool.interact_with_atom_secondary(src, user)
 	if(interact_return)
 		return interact_return
+
+	var/tool_type = tool.tool_behaviour
+	if(!tool_type) // here on only deals with ... tools
+		return NONE
 
 	var/list/processing_recipes = list()
 	var/signal_result = is_left_clicking \
@@ -1575,7 +1579,7 @@
 	if(length(processing_recipes))
 		process_recipes(user, tool, processing_recipes)
 	if(QDELETED(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS // Safe-ish to assume that if we deleted our item something succeeded
+		return ITEM_INTERACT_SUCCESS // Safe-ish to assume that if we deleted our item something succeeded
 
 	var/act_result = NONE // or FALSE, or null, as some things may return
 
@@ -1607,7 +1611,7 @@
 		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
 	return act_result
 
-/atom/proc/ranged_item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/atom/proc/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	return is_right_clicking \
 		? tool.ranged_interact_with_atom_secondary(src, user) \
 		: tool.ranged_interact_with_atom(src, user)

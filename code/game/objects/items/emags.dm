@@ -47,7 +47,7 @@
 
 /obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user)
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
-	return TOOL_ACT_SKIP_TO_ATTACK
+	return ITEM_INTERACT_SKIP_TO_ATTACK
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
@@ -55,10 +55,10 @@
 
 /obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!can_emag(interacting_with, user))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	log_combat(user, interacting_with, "attempted to emag")
 	interacting_with.emag_act(user, src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!prox_check)

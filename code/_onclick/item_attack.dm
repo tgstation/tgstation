@@ -2,18 +2,19 @@
  * This is the proc that handles the order of an item_attack.
  *
  * The order of procs called is:
- * * [/atom/proc/tool_act] on the target. If it returns TOOL_ACT_TOOLTYPE_SUCCESS or TOOL_ACT_SIGNAL_BLOCKING, the chain will be stopped.
+ * * [/atom/proc/tool_act] on the target. If it returns ITEM_INTERACT_SUCCESS or ITEM_INTERACT_BLOCKING, the chain will be stopped.
  * * [/obj/item/proc/pre_attack] on src. If this returns TRUE, the chain will be stopped.
  * * [/atom/proc/attackby] on the target. If it returns TRUE, the chain will be stopped.
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	var/list/modifiers = params2list(params)
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 
-	var/item_interact_result = target.item_interaction(user, src, tool_behaviour, is_right_clicking)
-	if(item_interact_result & TOOL_ACT_TOOLTYPE_SUCCESS)
+	var/item_interact_result = target.item_interaction(user, src, modifiers, is_right_clicking)
+	if(item_interact_result & ITEM_INTERACT_SUCCESS)
 		return TRUE
-	if(item_interact_result & TOOL_ACT_SIGNAL_BLOCKING)
+	if(item_interact_result & ITEM_INTERACT_BLOCKING)
 		return FALSE
 
 	var/pre_attack_result
@@ -162,9 +163,9 @@
 		return FALSE
 	return attacking_item.attack_atom(src, user, params)
 
-/mob/living/item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
-	if(. & TOOL_ACT_TOOLTYPE_SUCCESS)
+	if(. & ITEM_INTERACT_SUCCESS)
 		return .
 	if(user.combat_mode)
 		return .
@@ -174,9 +175,8 @@
 			continue
 		if(!(operation.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
 			continue
-		var/list/modifiers = params2list(params)
 		if(operation.next_step(user, modifiers))
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 
 	return .
 

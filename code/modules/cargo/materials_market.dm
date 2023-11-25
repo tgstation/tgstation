@@ -38,7 +38,7 @@
 /obj/machinery/materials_market/wrench_act(mob/living/user, obj/item/tool)
 	..()
 	default_unfasten_wrench(user, tool, time = 1.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/materials_market/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", O))
@@ -265,4 +265,3 @@
 	icon_state = "stock_block_liquid"
 	update_appearance(UPDATE_ICON_STATE)
 	visible_message(span_warning("\The [src] becomes liquid!"))
-

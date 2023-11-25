@@ -114,7 +114,7 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(try_fix_machine), source, user, tool)
-	return TOOL_ACT_SIGNAL_BLOCKING
+	return ITEM_INTERACT_BLOCKING
 
 /// Attempts a do_after, and if successful, stops the event
 /obj/machinery/transport/proc/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)

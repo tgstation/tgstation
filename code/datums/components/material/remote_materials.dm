@@ -136,15 +136,15 @@ handles linking back and forth.
 	SIGNAL_HANDLER
 
 	if(!I.multitool_check_buffer(user, I))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	var/obj/item/multitool/M = I
 	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 		if (silo == M.buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
-			return TOOL_ACT_SIGNAL_BLOCKING
+			return ITEM_INTERACT_BLOCKING
 		if(!check_z_level(M.buffer))
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
-			return TOOL_ACT_SIGNAL_BLOCKING
+			return ITEM_INTERACT_BLOCKING
 
 		var/obj/machinery/ore_silo/new_silo = M.buffer
 		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
@@ -168,7 +168,7 @@ handles linking back and forth.
 		mat_container = new_container
 		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc

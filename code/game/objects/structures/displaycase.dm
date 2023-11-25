@@ -272,7 +272,7 @@
 			electronics.forceMove(drop_location())
 			electronics = null
 		qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/electronics/airlock))

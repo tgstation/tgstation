@@ -112,7 +112,7 @@
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
 	flamethrower_screwdriver(tool, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
 	if(istype(tool, /obj/item/stack/rods))
@@ -143,9 +143,9 @@
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
 	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 
 	if(use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
 		if(user == attacked_humanoid)

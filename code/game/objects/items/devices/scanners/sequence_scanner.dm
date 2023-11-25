@@ -41,10 +41,10 @@
 		balloon_alert(user, "sequence analyzed")
 		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough
 		gene_scan(interacting_with, user)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
-	return TOOL_ACT_SIGNAL_BLOCKING
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
 	if(!isliving(interacting_with))
@@ -58,13 +58,13 @@
 		if(!do_after(user, 3 SECONDS))
 			balloon_alert(user, "scan failed!")
 			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
-			return TOOL_ACT_SIGNAL_BLOCKING
+			return ITEM_INTERACT_BLOCKING
 		makeup_scan(interacting_with, user)
 		balloon_alert(user, "makeup scanned")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic makeup."), span_warning("[interacting_with] has no readable genetic makeup!"))
-	return TOOL_ACT_SIGNAL_BLOCKING
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/afterattack_secondary(obj/object, mob/user, proximity)
 	. = ..()

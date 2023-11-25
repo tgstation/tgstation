@@ -86,7 +86,7 @@ effective or pretty fucking useless.
 	var/mob/living/carbon/human/human_target = interacting_with
 	if(istype(human_target) && !used && SSradiation.wearing_rad_protected_clothing(human_target)) //intentionally not checking for TRAIT_RADIMMUNE here so that tatortot can still fuck up and waste their cooldown.
 		to_chat(user, span_warning("[interacting_with]'s clothing is fully protecting [interacting_with.p_them()] from irradiation!"))
-		return . | TOOL_ACT_SIGNAL_BLOCKING
+		return . | ITEM_INTERACT_BLOCKING
 
 	if(!used)
 		log_combat(user, interacting_with, "irradiated", src)
@@ -97,10 +97,10 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, span_warning("Successfully irradiated [interacting_with]."))
 		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (wavelength+(intensity*4))*5)
-		return . | TOOL_ACT_TOOLTYPE_SUCCESS
+		return . | ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
-	return . | TOOL_ACT_SIGNAL_BLOCKING
+	return . | ITEM_INTERACT_BLOCKING
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
 	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))

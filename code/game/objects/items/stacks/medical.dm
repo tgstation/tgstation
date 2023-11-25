@@ -38,7 +38,7 @@
 		return NONE
 
 	try_heal(interacting_with, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/medical/apply_fantasy_bonuses(bonus)
 	. = ..()

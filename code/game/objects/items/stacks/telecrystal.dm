@@ -24,7 +24,7 @@
 			hidden_uplink.add_telecrystals(amount)
 			use(amount)
 			to_chat(user, span_notice("You press [src] onto yourself and charge your hidden uplink."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/telecrystal/five
 	amount = 5

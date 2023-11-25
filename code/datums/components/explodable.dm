@@ -81,7 +81,7 @@
 	SIGNAL_HANDLER
 
 	if(check_if_detonate(tool))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 /// Shot by something
 /datum/component/explodable/proc/projectile_react(datum/source, obj/projectile/shot)

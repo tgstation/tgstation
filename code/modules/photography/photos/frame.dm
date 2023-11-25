@@ -143,7 +143,7 @@
 	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
 	framed = null
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)

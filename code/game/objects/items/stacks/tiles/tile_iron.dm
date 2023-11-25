@@ -117,7 +117,7 @@
 		)
 		use(4)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/tile/iron/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(get_amount() < 2)
@@ -133,7 +133,7 @@
 		)
 		use(2)
 		user.put_in_inactive_hand(new_item)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
 	merge_type = /obj/item/stack/tile/iron/base

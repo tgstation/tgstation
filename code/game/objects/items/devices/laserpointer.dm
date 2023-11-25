@@ -71,7 +71,7 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
 	if(. & TOOL_ACT_MELEE_CHAIN_BLOCKING)
 		return .
@@ -83,7 +83,7 @@
 	balloon_alert(user, "removed crystal lens")
 	crystal_lens.forceMove(drop_location())
 	crystal_lens = null
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, params)
 	if(istype(attack_item, /obj/item/stock_parts/micro_laser))

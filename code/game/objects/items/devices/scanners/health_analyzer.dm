@@ -58,11 +58,11 @@
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	var/mob/living/M = interacting_with
 
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 
 	flick("[icon_state]-scan", src) //makes it so that it plays the scan animation upon scanning, including clumsy scanning
 
@@ -96,10 +96,10 @@
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	chemscan(user, interacting_with)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/healthanalyzer/add_item_context(
 	obj/item/source,
@@ -584,7 +584,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] scans [interacting_with] for serious injuries."), span_notice("You scan [interacting_with] for serious injuries."))
@@ -593,11 +593,11 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		to_chat(user, span_notice("\The [src] makes a sad buzz and briefly displays an unhappy face, indicating it can't scan [interacting_with]."))
 		show_emotion(AI_EMOTION_SAD)
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	woundscan(user, interacting_with, src, simple_scan = TRUE)
 	flick(icon_state + "_pinprick", src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/healthanalyzer/simple/update_overlays()
 	. = ..()

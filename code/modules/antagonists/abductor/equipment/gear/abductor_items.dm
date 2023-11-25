@@ -50,10 +50,10 @@
 
 /obj/item/abductor/gizmo/interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!ScientistCheck(user))
-		return TOOL_ACT_SKIP_TO_ATTACK // So you slap them with it
+		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 	if(!console)
 		to_chat(user, span_warning("The device is not linked to console!"))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	switch(mode)
 		if(GIZMO_SCAN)
@@ -61,7 +61,7 @@
 		if(GIZMO_MARK)
 			mark(interacting_with, user)
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor/gizmo/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
 	return interact_with_atom(interacting_with, user)
@@ -106,10 +106,10 @@
 
 /obj/item/abductor/silencer/interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!AbductorCheck(user))
-		return TOOL_ACT_SKIP_TO_ATTACK // So you slap them with it
+		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 
 	radio_off(interacting_with, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor/silencer/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
 	return interact_with_atom(interacting_with, user)
@@ -496,7 +496,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 // Stops humans from disassembling abductor headsets.
 /obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"
