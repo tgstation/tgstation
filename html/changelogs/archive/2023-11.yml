@@ -1012,3 +1012,11 @@
   jjpark-kb:
   - bugfix: gutlunches now produce miner salve instead of milk, as well as the other
       reagents if fed the correct ore
+2023-11-25:
+  MTandi:
+  - image: SM shard sprite updated
+  Rhials:
+  - qol: Gives Cargo areas its own wire layout, instead of having it use the same
+      wires as Service areas.
+  Time-Green:
+  - rscadd: Adds an arctangent2 component to circuitry!

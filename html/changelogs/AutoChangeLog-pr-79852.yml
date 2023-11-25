@@ -1,0 +1,7 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - refactor: "Slimes's colour, core type and mutation list is now held in a slime type datum"
+  - code_imp: "Slime's variables have been documented, and renamed a bit to add clarity. Please report bugs that might stem from renaming."
+  - bugfix: "Slimes are not longer prevented from attacking pacifist humans."
+  - qol: "Slime scans now display the actual amount of genetic instability, instead of hiding it if a slime doesn't mutate further, or tweaking it if it might mutate back into itself. This will make it easier to parse which slime to breed further to get a rainbow slime."

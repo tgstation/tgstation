@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "Rebar crossbow bolts are now reuseable again, without risking crashing clients when fired at point-blank range."
