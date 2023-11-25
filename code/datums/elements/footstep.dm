@@ -107,7 +107,7 @@
 		return
 
 	var/list/prepared_steps = prepare_step(source)
-	if(!prepared_steps)
+	if(isnull(prepared_steps))
 		return
 
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
@@ -133,7 +133,7 @@
 		range_adjustment = -2
 
 	var/list/prepared_steps = prepare_step(source)
-	if(!prepared_steps)
+	if(isnull(prepared_steps))
 		return
 
 	//cache for sanic speed (lists are references anyways)
