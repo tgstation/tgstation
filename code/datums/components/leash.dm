@@ -55,6 +55,8 @@
 
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_owner_qdel))
 
+	ADD_TRAIT(parent, TRAIT_LEASHED, REF(owner))
+
 	var/static/list/container_connections = list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_owner_moved),
 	)
@@ -66,6 +68,7 @@
 	check_distance()
 
 /datum/component/leash/Destroy()
+	REMOVE_TRAIT(parent, TRAIT_LEASHED, REF(owner))
 	owner = null
 	return ..()
 

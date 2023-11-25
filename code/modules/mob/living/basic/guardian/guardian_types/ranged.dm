@@ -27,6 +27,8 @@
 	var/datum/action/cooldown/mob_cooldown/guardian_alarm_snare/snare = new (src)
 	snare.Grant(src)
 
+	RegisterSignal(src, COMPONENT_CANCEL_RANGED_ATTACK, PROC_REF(on_ranged_attack))
+
 /mob/living/basic/guardian/ranged/toggle_modes()
 	if(is_deployed() && !isnull(summoner))
 		balloon_alert(src, "must not be manifested!")
@@ -62,6 +64,12 @@
 	sync_lighting_plane_cutoff()
 	to_chat(src, span_notice(msg))
 
+/// Safety to prevent us from using ranged attacks while unleashed. Typically the status effect will catch stuff like this but we want to be extra sure with unleashing schenanigans
+/mob/living/basic/guardian/ranged/proc/on_ranged_attack(datum/source, atom/target, modifiers)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT_FROM(src, TRAIT_LEASHED, REF(summoner)))
+		return COMPONENT_CANCEL_RANGED_ATTACK
+
 /// Become an incorporeal scout
 /datum/status_effect/guardian_scout_mode
 	id = "guardian_scout"
@@ -72,6 +80,7 @@
 	RegisterSignal(owner, COMSIG_GUARDIAN_MANIFESTED, PROC_REF(on_manifest))
 	RegisterSignal(owner, COMSIG_GUARDIAN_RECALLED, PROC_REF(on_recall))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(on_click))
+	RegisterSignal(owner, COMSIG_BASICMOB_PRE_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.unleash()
@@ -80,7 +89,12 @@
 
 /datum/status_effect/guardian_scout_mode/on_remove()
 	animate(owner, alpha = initial(owner.alpha), time = 0.5 SECONDS)
-	UnregisterSignal(owner, list(COMSIG_GUARDIAN_MANIFESTED, COMSIG_GUARDIAN_RECALLED, COMSIG_MOB_CLICKON))
+	UnregisterSignal(owner, list(
+		COMSIG_BASICMOB_PRE_ATTACK_RANGED,
+		COMSIG_GUARDIAN_MANIFESTED,
+		COMSIG_GUARDIAN_RECALLED,
+		COMSIG_MOB_CLICKON,
+	))
 	to_chat(owner, span_bolddanger("You return to your normal mode."))
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.leash_to(owner, guardian_mob.summoner)
@@ -100,6 +114,11 @@
 	SIGNAL_HANDLER
 	return COMSIG_MOB_CANCEL_CLICKON
 
+/// We can't do any ranged attacks while in scout mode.
+/datum/status_effect/guardian_scout_mode/proc/on_ranged_attack()
+	SIGNAL_HANDLER
+	owner.balloon_alert(owner, "need to be in ranged mode!")
+	return COMPONENT_CANCEL_RANGED_ATTACK
 
 /// Place an invisible trap which alerts the guardian when it is crossed
 /datum/action/cooldown/mob_cooldown/guardian_alarm_snare

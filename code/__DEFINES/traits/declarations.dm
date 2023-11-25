@@ -276,6 +276,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
 
+/// Trait that we have while leashed, source should be a REF() to the mob that we are currently leashed to.
+#define TRAIT_LEASHED "leashed"
+
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
 /// Lets us scan machine parts and tech unlocks
