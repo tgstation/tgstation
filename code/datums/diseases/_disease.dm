@@ -104,21 +104,21 @@
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
-				cycles_to_beat = min(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE) //because of the way we later check for recovery_prob, we need to floor this at least equal to the scaling to avoid infinitely getting less likely to cure
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE) //because of the way we later check for recovery_prob, we need to floor this at least equal to the scaling to avoid infinitely getting less likely to cure
 				if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) || affected_mob.nutrition < NUTRITION_LEVEL_STARVING || affected_mob.satiety < 0 || slowdown == 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
 					return TRUE
 			if(DISEASE_SEVERITY_NONTHREAT)
-				cycles_to_beat = DISEASE_CYCLES_NONTHREAT
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_NONTHREAT)
 			if(DISEASE_SEVERITY_MINOR)
-				cycles_to_beat = DISEASE_CYCLES_MINOR
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_MINOR)
 			if(DISEASE_SEVERITY_MEDIUM)
-				cycles_to_beat = DISEASE_CYCLES_MEDIUM
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_MEDIUM)
 			if(DISEASE_SEVERITY_DANGEROUS)
-				cycles_to_beat = DISEASE_CYCLES_DANGEROUS
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_DANGEROUS)
 			if(DISEASE_SEVERITY_HARMFUL)
-				cycles_to_beat = DISEASE_CYCLES_HARMFUL
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_HARMFUL)
 			if(DISEASE_SEVERITY_BIOHAZARD)
-				cycles_to_beat = DISEASE_CYCLES_BIOHAZARD
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_BIOHAZARD)
 		peaked_cycles += stage/max_stages //every cycle we spend sick counts towards eventually curing the virus, faster at higher stages
 		recovery_prob += DISEASE_RECOVERY_CONSTANT + (peaked_cycles / (cycles_to_beat / DISEASE_RECOVERY_SCALING)) //more severe viruses are beaten back more aggressively after the peak
 		if(stage_peaked)
