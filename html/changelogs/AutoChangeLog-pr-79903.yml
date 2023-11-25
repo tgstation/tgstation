@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a runtime in footstep code that would prevent the fov effect from playing to nearby mobs"
