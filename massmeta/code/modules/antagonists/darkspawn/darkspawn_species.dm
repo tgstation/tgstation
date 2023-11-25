@@ -9,7 +9,7 @@
 	damage_modifier = 40
 	//brutemod = 0.9
 	heatmod = 1.5
-	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
+	no_equip_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING | ITEM_SLOT_SUITSTORE
 	inherent_traits = list(
 		//NOTRANSSTING, i guess it should be here but its no longer exist
 		//NOEYESPRITES,
