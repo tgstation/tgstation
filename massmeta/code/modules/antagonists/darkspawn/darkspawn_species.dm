@@ -57,7 +57,7 @@
 	. = ..()
 	handle_upgrades(H)
 	var/turf/T = H.loc
-	if(istype(T))
+	if(istype(T) && H.stat != DEAD)
 		var/light_amount = T.get_lumcount()
 		if(light_amount < DARKSPAWN_DIM_LIGHT) //rapid healing and stun reduction in the darkness
 			var/healing_amount = DARKSPAWN_DARK_HEAL
