@@ -12,4 +12,3 @@
 		/datum/modular_mob_segment/syndicate_elite,
 	)
 	reward_points = BITRUNNER_REWARD_HIGH
-	test_only = TRUE
