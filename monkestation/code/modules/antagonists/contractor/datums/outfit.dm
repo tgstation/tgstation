@@ -28,7 +28,7 @@
 
 	id_trim = /datum/id_trim/chameleon/contractor
 
-/datum/outfit/contractor_preview
+/datum/outfit/contractor_preview //might give them an extended baton in hand
 	name = "Syndicate Contractor (Preview only)"
 
 	back = /obj/item/mod/control/pre_equipped/empty/contractor
