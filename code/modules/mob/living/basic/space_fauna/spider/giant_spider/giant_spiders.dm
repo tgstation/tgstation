@@ -104,7 +104,7 @@
 	poison_type = /datum/reagent/toxin/spider/exhaustion
 	speed = 3
 	player_speed_modifier = -3.1
-	menu_description = "Fast spider with toxin injection, but has less health and damage."
+	menu_description = "Fast spider but has less health and damage."
 
 /mob/living/basic/spider/giant/hunter/Initialize(mapload)
 	. = ..()
