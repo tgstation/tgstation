@@ -1377,8 +1377,8 @@
 	. = ..()
 
 	if(SPT_PROB(15, seconds_per_tick))
-		affected_mob.adjust_confusion_up_to(rand(5 SECONDS, 7 SECONDS) * REM * seconds_per_tick, 7 SECONDS)
-		affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
+		affected_mob.adjust_confusion_up_to(rand(5 SECONDS, 7 SECONDS) * REM * seconds_per_tick, 10 SECONDS)
+		affected_mob.set_jitter_if_lower(rand(3 SECONDS, 5 SECONDS) * REM * seconds_per_tick)
 
 		if(SPT_PROB(10, seconds_per_tick))
 			to_chat(affected_mob, "You feel confused and disoriented.")
