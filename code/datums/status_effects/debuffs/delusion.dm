@@ -63,7 +63,7 @@
 			random_delusion = pick_weight(GLOB.random_delusion_weighted_list)
 			// initializing a delusion is tedious when we only need the icon info
 			// so let's skip any dynamic icon delusions that require initilaization to process
-			if(random_delusion.dynamic_icon)
+			if(initial(random_delusion.dynamic_icon))
 				random_delusion = null
 				continue
 
