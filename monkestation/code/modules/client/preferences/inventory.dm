@@ -48,9 +48,8 @@
 		amount += DONATOR_ROUNDEND_BONUS
 
 	//Twitch Flat Roundend Bonus
-	if((parent.twitch?.has_access(2)) && donator_multipler)
-		switch(parent.twitch.has_access(1))
-			amount += DONATOR_ROUNDEND_BONUS
+	if((parent.twitch?.has_access(1)) && donator_multipler)
+		amount += DONATOR_ROUNDEND_BONUS
 
 	//Donator Multiplier
 	if(amount > 0 && donator_multipler)
