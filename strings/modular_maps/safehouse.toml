@@ -24,5 +24,8 @@ modules = ["shuttle.dmm"]
 [rooms.shuttle_space]
 modules = ["shuttle_space.dmm"]
 
+[rooms.test_only]
+modules = ["test_only_safehouse.dmm"]
+
 [rooms.wood]
 modules = ["wood.dmm"]

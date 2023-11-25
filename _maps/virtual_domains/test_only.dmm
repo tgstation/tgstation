@@ -12,7 +12,7 @@
 /area/virtual_domain)
 "U" = (
 /obj/modular_map_root/safehouse{
-	key = "wood"
+	key = "test_only"
 	},
 /turf/open/floor,
 /area/virtual_domain/safehouse)
