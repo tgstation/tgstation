@@ -277,10 +277,10 @@
 		set_holder(null)
 		return
 	// storage items are a special case. sometimes we might want the light to come through.
-	var/obj/item/storage/stored_inside
+	var/obj/item/storage/stored_inside = inside
 	if(istype(stored_inside))
 		if(stored_inside.allows_light_through)
-			set_holder(inside)
+			set_holder(stored_inside)
 		else
 			set_holder(null)
 		return
