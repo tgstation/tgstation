@@ -79,12 +79,6 @@
 "mu" = (
 /turf/closed/wall,
 /area/virtual_domain)
-"nC" = (
-/obj/modular_map_root/virtual_domain{
-	key = "station_large"
-	},
-/turf/open/floor/sepia,
-/area/virtual_domain)
 "on" = (
 /obj/structure/table/greyscale,
 /obj/machinery/recharger{
@@ -105,15 +99,11 @@
 /area/virtual_domain)
 "po" = (
 /obj/effect/baseturf_helper/virtual_domain,
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "den"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"rP" = (
-/obj/modular_map_root/virtual_domain{
-	key = "station_small"
-	},
-/turf/open/floor/sepia,
-/area/virtual_domain)
 "sX" = (
 /obj/effect/spawner/random/decoration/statue,
 /turf/open/floor/sepia,
@@ -160,12 +150,6 @@
 "AF" = (
 /obj/effect/turf_decal/tile/dark_red/half,
 /obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/sepia,
-/area/virtual_domain)
-"AQ" = (
-/obj/modular_map_root/virtual_domain{
-	key = "station_medium"
-	},
 /turf/open/floor/sepia,
 /area/virtual_domain)
 "Bi" = (
@@ -374,7 +358,7 @@ OX
 OX
 OX
 OX
-rP
+il
 il
 cU
 cU
@@ -490,7 +474,7 @@ OX
 OX
 il
 il
-AQ
+il
 il
 il
 il
@@ -642,7 +626,7 @@ OX
 OX
 il
 il
-AQ
+il
 il
 sX
 il
@@ -794,7 +778,7 @@ OX
 OX
 il
 il
-AQ
+il
 il
 il
 il
@@ -946,7 +930,7 @@ OX
 OX
 VX
 il
-AQ
+il
 il
 il
 il
@@ -1098,7 +1082,7 @@ OX
 OX
 il
 il
-AQ
+il
 uW
 il
 Wp
@@ -1252,7 +1236,7 @@ VX
 il
 il
 il
-nC
+il
 il
 Wd
 KN
@@ -1440,7 +1424,7 @@ OX
 OX
 il
 il
-AQ
+il
 il
 il
 il
@@ -1594,7 +1578,7 @@ VX
 il
 il
 il
-nC
+il
 uW
 Wd
 KN
