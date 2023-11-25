@@ -4,8 +4,10 @@ import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Apc = (props, context) => {
+  const { act, data } = useBackend(context);
+  const emagStatus = data.emagStatus;
   return (
-    <Window width={450} height={445}>
+    <Window width={450} height={445} theme={emagStatus ? 'syndicate' : 'ntos'}>
       <Window.Content scrollable>
         <ApcContent />
       </Window.Content>
@@ -57,6 +59,7 @@ const malfMap = {
 const ApcContent = (props, context) => {
   const { act, data } = useBackend(context);
   const locked = data.locked && !data.siliconUser;
+  const emagStatus = data.emagStatus;
   const externalPowerStatus =
     powerStatusMap[data.externalPower] || powerStatusMap[0];
   const chargingStatus =

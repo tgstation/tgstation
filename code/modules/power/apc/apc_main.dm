@@ -328,6 +328,7 @@
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
 		"disable_nightshift_toggle" = low_power_nightshift_lights,
+		"emagStatus" = obj_flags & EMAGGED || malfhack,
 
 		"powerChannels" = list(
 			list(
