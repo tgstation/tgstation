@@ -16,6 +16,9 @@
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
 	use_mod_colors = TRUE
+	suit_supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION | CLOTHING_SNOUTED_VARIATION
+	has_head_sprite = TRUE
+	head_only_when_active = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
 	/// Speed added to the control unit.
@@ -80,6 +83,8 @@
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
+	if((mod.wearer?.dna.species.bodytype & BODYTYPE_SNOUTED) && (suit_supports_variations_flags & CLOTHING_SNOUTED_VARIATION))
+		overlay_icon_file = 'monkestation/icons/mob/mod.dmi' //if the user has a snout, and the module supports a snout, we'll shift to the digi/snout icon file instead
 	return ..()
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.

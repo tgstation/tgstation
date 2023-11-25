@@ -944,15 +944,6 @@
 		/datum/stock_part/manipulator = 1,
 		/datum/stock_part/micro_laser = 1)
 
-/obj/item/circuitboard/machine/experimentor
-	name = "E.X.P.E.R.I-MENTOR"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/rnd/experimentor
-	req_components = list(
-		/datum/stock_part/scanning_module = 1,
-		/datum/stock_part/manipulator = 2,
-		/datum/stock_part/micro_laser = 2)
-
 /obj/item/circuitboard/machine/mech_recharger
 	name = "Mechbay Recharger"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -1477,6 +1468,35 @@
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/artifactxray
+	name = "Artifact X-Ray Machine"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/artifact_xray
+	req_components = list(
+		/obj/item/stock_parts/capacitor = 1, 
+		/datum/stock_part/scanning_module = 1, 
+		/obj/item/stock_parts/micro_laser = 1)
+
+/obj/item/circuitboard/machine/artifactheater
+	name = "Artifact Heating Pad"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/atmospherics/components/unary/artifact_heatingpad
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/artifactzapper
+	name = "Artifact Zapper"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/artifact_zapper
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 3)
+		
 /obj/item/circuitboard/machine/navbeacon
 	name = "Bot Navigational Beacon"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

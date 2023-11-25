@@ -12,6 +12,7 @@
 	armor_type = /datum/armor/obj_structure
 	burning_particles = /particles/smoke/burning
 	var/broken = FALSE
+	var/w_class = WEIGHT_CLASS_GIGANTIC //lol
 
 /datum/armor/obj_structure
 	fire = 50

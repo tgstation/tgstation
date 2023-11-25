@@ -1,8 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aah" = (
-/obj/machinery/rnd/experimentor,
-/turf/open/floor/engine,
-/area/station/science/explab)
 "aak" = (
 /obj/structure/displaycase/labcage,
 /turf/open/floor/engine,
@@ -7989,16 +7985,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"bVQ" = (
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/cable,
-/obj/machinery/computer/security/telescreen/engine{
-	name = "Engineering and atmospherics monitor"
-	},
-/mob/living/basic/parrot/poly,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/station/command/heads_quarters/ce)
 "bVT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -9151,6 +9137,14 @@
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard)
+"cls" = (
+/mob/living/basic/sloth/paperwork,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/cargo/storage)
 "clv" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Stairwell Access"
@@ -18236,6 +18230,12 @@
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
+"eMC" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/mob/living/basic/goat/pete,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "eMR" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/pod/light,
@@ -30013,14 +30013,6 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/maintenance/floor3/starboard/fore)
-"idf" = (
-/mob/living/basic/sloth/paperwork,
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "idn" = (
 /obj/structure/sign/directions/science/directional/west,
 /turf/open/floor/iron/dark/side{
@@ -57669,12 +57661,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor2/port/aft)
-"pmG" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/mob/living/basic/goat/pete,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen/coldroom)
 "pmO" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -86386,6 +86372,16 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
+"xdT" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/cable,
+/obj/machinery/computer/security/telescreen/engine{
+	name = "Engineering and atmospherics monitor"
+	},
+/mob/living/basic/parrot/poly,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/station/command/heads_quarters/ce)
 "xdV" = (
 /obj/machinery/vending/coffee,
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -115025,7 +115021,7 @@ gWv
 new
 jbl
 nzL
-idf
+cls
 oUH
 npD
 lyw
@@ -133035,7 +133031,7 @@ nPb
 rCO
 cjc
 aRI
-bVQ
+xdT
 vMJ
 vgn
 kzE
@@ -180035,7 +180031,7 @@ cwq
 vlV
 xuv
 xOe
-aah
+qyx
 qyx
 lRi
 tGa
@@ -248694,7 +248690,7 @@ xsQ
 xUj
 diA
 sGW
-pmG
+eMC
 nVy
 awV
 sGW

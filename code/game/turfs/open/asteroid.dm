@@ -29,6 +29,11 @@
 	/// Percentage chance of receiving a bonus worm
 	var/worm_chance = 30
 
+	/// Set to TRUE to call ex_act parent
+	var/explodable = FALSE
+
+
+
 /turf/open/misc/asteroid/break_tile()
 	icon_state = broken_state
 
@@ -63,7 +68,9 @@
 	return
 
 /turf/open/misc/asteroid/ex_act(severity, target)
-	return
+	if(!explodable)
+		return
+	return ..()
 
 /turf/open/misc/asteroid/attackby(obj/item/W, mob/user, params)
 	. = ..()

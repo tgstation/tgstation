@@ -44,6 +44,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/toggleoocdead, /*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/trophy_manager,
 	/datum/admins/proc/view_all_circuits,
+	/datum/admins/proc/open_artifactpanel,
 	/datum/verbs/menu/Admin/verb/playerpanel, /* It isn't /datum/admin but it fits no less */
 // Client procs
 	/client/proc/admin_call_shuttle, /*allows us to call the emergency shuttle*/

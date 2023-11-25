@@ -23,6 +23,8 @@
 		/area/shuttle/abandoned,
 		// Solars have lattices over space turfs, and are a valid placement for space turfs in a station area.
 		/area/station/solars,
+		// magnet area is designed specifically to hold the asteroid
+		/area/station/cargo/mining/asteroid_magnet,
 	))
 
 	// We aren't planetary, so let's check area placements and ensure stuff lines up.

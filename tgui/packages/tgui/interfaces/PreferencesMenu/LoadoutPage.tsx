@@ -44,7 +44,13 @@ const CharacterControls = (props: {
 
 export const LoadoutManager = (props, context) => {
   const { act, data } = useBackend<PreferencesMenuData>(context);
-  const { selected_loadout, loadout_tabs, user_is_donator, total_coins } = data;
+  const {
+    selected_loadout,
+    loadout_tabs,
+    user_is_donator,
+    total_coins,
+    selected_unusuals,
+  } = data;
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
     context,
     'multiNameInputOpen',
@@ -228,7 +234,13 @@ export const LoadoutManager = (props, context) => {
                             )}
                             <Stack.Item>
                               <Button.Checkbox
-                                checked={selected_loadout.includes(item.path)}
+                                checked={
+                                  selected_loadout.includes(item.path) ||
+                                  (selected_unusuals.includes(
+                                    item.unusual_placement
+                                  ) &&
+                                    item.unusual_spawning_requirements)
+                                }
                                 content="Select"
                                 disabled={
                                   item.is_donator_only && !user_is_donator
@@ -237,6 +249,9 @@ export const LoadoutManager = (props, context) => {
                                 onClick={() =>
                                   act('select_item', {
                                     path: item.path,
+                                    unusual_spawning_requirements:
+                                      item.unusual_spawning_requirements,
+                                    unusual_placement: item.unusual_placement,
                                     deselect: selected_loadout.includes(
                                       item.path
                                     ),
