@@ -1,4 +1,3 @@
-#define TRAIT_DREAMING "currently_dreaming"
 #define DREAMING_SOURCE "dreaming_source"
 
 /**
@@ -184,5 +183,4 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 /datum/dream/hear_something/proc/StopSound(mob/living/carbon/dreamer)
 	SEND_SOUND(dreamer, sound(channel=reserved_sound_channel))
 
-#undef TRAIT_DREAMING
 #undef DREAMING_SOURCE
