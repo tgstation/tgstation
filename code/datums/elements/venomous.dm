@@ -37,9 +37,6 @@
 			break // only get the 1st occupant
 	else if(isvehicle(target))
 		var/obj/vehicle/ridden_vehicle = target
-		if(!ridden_vehicle.are_legs_exposed)
-			return
-
 		for(var/mob/living/carbon/target_victim as anything in ridden_vehicle.occupants)
 			victim = target_victim
 			break // only get the 1st occupant
