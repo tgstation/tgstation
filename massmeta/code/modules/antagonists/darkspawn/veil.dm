@@ -38,13 +38,13 @@
 	veil_sigils = mutable_appearance('massmeta/icons/mob/actions/actions_darkspawn.dmi', "veil_sigils", -UNDER_SUIT_LAYER) //show them sigils
 	current_mob.add_overlay(veil_sigils)
 	current_mob.maxHealth -= 40
-	RegisterSignal(current_mob, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(current_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	add_team_hud(current_mob)
 
 /datum/antagonist/veil/remove_innate_effects(mob/living/mob_override)
 	owner.current.maxHealth += 40
 	var/mob/living/current_mob = mob_override || owner.current
-	UnregisterSignal(current_mob, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(current_mob, COMSIG_ATOM_EXAMINE)
 	current_mob.maxHealth += 40
 	current_mob.cut_overlay(veil_sigils)
 
