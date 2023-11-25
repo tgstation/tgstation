@@ -34,6 +34,19 @@
 	back = /obj/item/mod/control/pre_equipped/empty/contractor
 	uniform = /obj/item/clothing/under/syndicate
 	glasses = /obj/item/clothing/glasses/night
+	l_hand = /obj/item/melee/baton/telescopic/contractor_baton
+
+/datum/outfit/contractor_preview/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/melee/baton/telescopic/contractor_baton/baton = locate() in H.held_items
+	if(baton.flags_1 & INITIALIZED_1)
+		baton.attack_self()
+	else
+		baton.icon_state = "contractor_baton_on"
+		baton.inhand_icon_state = "contractor_baton_on"
+		baton.worn_icon_state = "contractor_baton_on"
+
+		H.update_held_items()
+
 
 /datum/id_trim/chameleon/contractor
 	assignment = "Syndicate Contractor"
