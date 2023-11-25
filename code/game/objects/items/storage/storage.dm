@@ -9,8 +9,6 @@
 	var/preload = FALSE
 	/// What storage type to use for this item
 	var/datum/storage/storage_type = /datum/storage
-	/// Whether or not this storage item lets light coming from within it shine through (such as a flashlight stored inside of a backpack). Defaults to blocking light.
-	var/allows_light_through
 
 /obj/item/storage/apply_fantasy_bonuses(bonus)
 	. = ..()
