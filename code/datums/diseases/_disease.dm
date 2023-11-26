@@ -268,6 +268,9 @@
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())
+		if(affected_mob.ckey)
+			var/cure_turf = get_turf(affected_mob)
+			log_virus("[key_name(affected_mob)] was cured of virus: [src.admin_details()] at [loc_name(cure_turf)]")
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
