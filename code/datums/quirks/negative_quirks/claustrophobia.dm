@@ -12,7 +12,7 @@
 	quirk_holder.clear_mood_event("claustrophobia")
 
 /datum/quirk/claustrophobia/process(seconds_per_tick)
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious() || HAS_TRAIT(quirk_holder, TRAIT_MIND_TEMPORARILY_GONE))
 		return
 
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
