@@ -57,7 +57,7 @@
 	/// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
 	/// Reference to the mode, use this instead of SSticker.mode.
-	var/datum/game_mode/dynamic/mode = null
+	var/datum/controller/subsystem/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null
 	/// If set, will check this preference instead of antag_flag.

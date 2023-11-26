@@ -1,7 +1,7 @@
 /// Returns the world.time of the next midround injection.
 /// Will return a cached result from `next_midround_injection`, the variable.
 /// If that variable is null, will generate a new one.
-/datum/game_mode/dynamic/proc/next_midround_injection()
+/datum/controller/subsystem/dynamic/proc/next_midround_injection()
 	if (!isnull(next_midround_injection))
 		return next_midround_injection
 
@@ -16,7 +16,7 @@
 
 	return last_midround_injection_attempt + distance
 
-/datum/game_mode/dynamic/proc/try_midround_roll()
+/datum/controller/subsystem/dynamic/proc/try_midround_roll()
 	if (!forced_injection && next_midround_injection() > world.time)
 		return
 
@@ -90,7 +90,7 @@
 		log_dynamic_and_announce("No midround rulesets could be drafted. ([heavy_light_log_count])")
 
 /// Gets the chance for a heavy ruleset midround injection, the dry_run argument is only used for forced injection.
-/datum/game_mode/dynamic/proc/get_heavy_midround_injection_chance(dry_run)
+/datum/controller/subsystem/dynamic/proc/get_heavy_midround_injection_chance(dry_run)
 	var/chance_modifier = 1
 	var/next_midround_roll = next_midround_injection() - SSticker.round_start_time
 

@@ -861,7 +861,7 @@
 	hacker.log_message("hacked a communications console, resulting in: [picked_option].", LOG_GAME, log_globally = TRUE)
 	switch(picked_option)
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			var/datum/controller/subsystem/dynamic/dynamic = SSticker.mode
 			var/list/pirate_rulesets = list(
 				/datum/dynamic_ruleset/midround/pirates,
 				/datum/dynamic_ruleset/midround/dangerous_pirates,
@@ -891,12 +891,12 @@
 					continue
 				shake_camera(crew_member, 15, 1)
 
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			var/datum/controller/subsystem/dynamic/dynamic = SSticker.mode
 			dynamic.unfavorable_situation()
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/from_living/autotraitor
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			var/datum/controller/subsystem/dynamic/dynamic = SSticker.mode
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 20), 1, 3)
 			var/num_agents_created = 0
 			for(var/num_agents in 1 to rand(1, max_number_of_sleepers))

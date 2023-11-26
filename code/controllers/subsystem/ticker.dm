@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(ticker)
 	var/setup_done = FALSE
 
 	// mbtodo: remove, and replace everything with SSdynamic
-	var/datum/game_mode/dynamic/mode = null
+	var/datum/controller/subsystem/dynamic/mode = null
 
 	var/login_music //music played in pregame lobby
 	var/round_end_sound //music/jingle played when the world reboots
