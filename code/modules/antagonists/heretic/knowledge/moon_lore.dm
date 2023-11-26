@@ -244,12 +244,12 @@
 
 	var/datum/action/cooldown/spell/pointed/projectile/moon_parade/lunar_parade = locate() in user.actions
 	if(lunar_parade)
-		lunar_parade.cooldown_time * = 0.66 // Lower cooldown
+		lunar_parade.cooldown_time *= 0.66 // Lower cooldown
 
 	var/datum/action/cooldown/spell/aoe/moon_ringleader/ringleader_rise = locate() in user.actions
 	if(ringleader_rise)
-		ringleader_rise.cooldown_time * = 0.66 // Lower cooldown
-		ringleader_rise.aoe_radius + =3 // Bigger AoE
+		ringleader_rise.cooldown_time *= 0.66 // Lower cooldown
+		ringleader_rise.aoe_radius +=3 // Bigger AoE
 
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
