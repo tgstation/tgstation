@@ -21,36 +21,39 @@
 	if (!isslime(interacting_with))
 		to_chat(user, span_warning("This device can only scan slimes!"))
 		return ITEM_INTERACT_BLOCKING
-	var/mob/living/simple_animal/slime/T = interacting_with
-	slime_scan(T, user)
+	var/mob/living/simple_animal/slime/scanned_slime = interacting_with
+	slime_scan(scanned_slime, user)
 	return ITEM_INTERACT_SUCCESS
 
-/proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
+/proc/slime_scan(mob/living/simple_animal/slime/scanned_slime, mob/living/user)
 	var/to_render = "<b>Slime scan results:</b>\
-					\n[span_notice("[T.colour] [T.is_adult ? "adult" : "baby"] slime")]\
-					\nNutrition: [T.nutrition]/[T.get_max_nutrition()]"
-	if (T.nutrition < T.get_starve_nutrition())
+					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.is_adult ? "adult" : "baby"] slime")]\
+					\nNutrition: [scanned_slime.nutrition]/[scanned_slime.get_max_nutrition()]"
+
+	if (scanned_slime.nutrition < scanned_slime.get_starve_nutrition())
 		to_render += "\n[span_warning("Warning: slime is starving!")]"
-	else if (T.nutrition < T.get_hunger_nutrition())
+	else if (scanned_slime.nutrition < scanned_slime.get_hunger_nutrition())
 		to_render += "\n[span_warning("Warning: slime is hungry")]"
-	to_render += "\nElectric change strength: [T.powerlevel]\nHealth: [round(T.health/T.maxHealth,0.01)*100]%"
-	if (T.slime_mutation[4] == T.colour)
-		to_render += "\nThis slime does not evolve any further."
-	else
-		if (T.slime_mutation[3] == T.slime_mutation[4])
-			if (T.slime_mutation[2] == T.slime_mutation[1])
-				to_render += "\nPossible mutation: [T.slime_mutation[3]]\
-							  \nGenetic destability: [T.mutation_chance/2] % chance of mutation on splitting"
-			else
-				to_render += "\nPossible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]] (x2)\
-							  \nGenetic destability: [T.mutation_chance] % chance of mutation on splitting"
-		else
-			to_render += "\nPossible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]\
-						  \nGenetic destability: [T.mutation_chance] % chance of mutation on splitting"
-	if (T.cores > 1)
+
+	to_render += "\nElectric charge strength: [scanned_slime.powerlevel]\nHealth: [round(scanned_slime.health/scanned_slime.maxHealth,0.01)*100]%"
+
+	to_render += "\nPossible mutation[scanned_slime.slime_type.mutations.len > 1 ? "s" : ""]: "
+	var/list/mutation_text = list()
+	for(var/datum/slime_type/key as anything in scanned_slime.slime_type.mutations)
+		mutation_text += initial(key.colour)
+
+	if(!mutation_text.len)
+		to_render += " None detected."
+
+	to_render += "[mutation_text.Join(", ")]"
+	to_render += "\nGenetic instability: [scanned_slime.mutation_chance] % chance of mutation attempt on splitting."
+
+	if (scanned_slime.cores > 1)
 		to_render += "\nMultiple cores detected"
-	to_render += "\nGrowth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
-	if(T.effectmod)
-		to_render += "\n[span_notice("Core mutation in progress: [T.effectmod]")]\
-					  \n[span_notice("Progress in core mutation: [T.applied] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
-	to_chat(user, examine_block(to_render))
+	to_render += "\nGrowth progress: [scanned_slime.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
+
+	if(scanned_slime.crossbreed_modification)
+		to_render += "\n[span_notice("Core mutation in progress: [scanned_slime.crossbreed_modification]")]\
+					  \n[span_notice("Progress in core mutation: [scanned_slime.applied_crossbreed_amount] / [SLIME_EXTRACT_CROSSING_REQUIRED]")]"
+
+	to_chat(user, examine_block(jointext(to_render,"")))

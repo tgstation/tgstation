@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "You can once again repaint robotic limbs to use alternate skins"

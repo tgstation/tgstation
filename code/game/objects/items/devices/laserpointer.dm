@@ -73,7 +73,7 @@
 
 /obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
-	if(. & TOOL_ACT_MELEE_CHAIN_BLOCKING)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
 	if(isnull(crystal_lens))
 		return .

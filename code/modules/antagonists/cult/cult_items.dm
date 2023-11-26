@@ -377,8 +377,15 @@ Striking a noncultist, however, will tear their flesh."}
 	fire = 50
 	acid = 60
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
-	AddComponent(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize(mapload)
+	. = ..()
+	AddComponent( \
+		/datum/component/shielded, \
+		recharge_start_delay = 0 SECONDS, \
+		shield_icon_file = 'icons/effects/cult/effects.dmi', \
+		shield_icon = "shield-cult", \
+		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
+	)
 
 /// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
@@ -451,6 +458,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
 	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
+	flags_cover = GLASSESCOVERSEYES
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
@@ -628,8 +636,8 @@ Striking a noncultist, however, will tear their flesh."}
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
-	on = TRUE
 	var/charges = 5
+	start_on = TRUE
 
 /obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)

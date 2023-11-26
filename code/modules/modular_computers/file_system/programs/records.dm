@@ -2,12 +2,12 @@
 	filename = "ntrecords"
 	filedesc = "Records"
 	extended_desc = "Allows the user to view several basic records from the crew."
-	category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_SECURITY
 	program_icon = "clipboard"
-	program_icon_state = "crew"
+	program_open_overlay = "crew"
 	tgui_id = "NtosRecords"
 	size = 4
-	usage_flags = PROGRAM_TABLET | PROGRAM_LAPTOP
+	usage_flags = PROGRAM_PDA | PROGRAM_LAPTOP
 	available_on_ntnet = FALSE
 	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
@@ -18,7 +18,7 @@
 	filename = "medrecords"
 	program_icon = "book-medical"
 	extended_desc = "Allows the user to view several basic medical records from the crew."
-	transfer_access = list(ACCESS_MEDICAL, ACCESS_FLAG_COMMAND)
+	download_access = list(ACCESS_MEDICAL, ACCESS_FLAG_COMMAND)
 	available_on_ntnet = TRUE
 	mode = "medical"
 
@@ -26,7 +26,7 @@
 	filedesc = "Security Records"
 	filename = "secrecords"
 	extended_desc = "Allows the user to view several basic security records from the crew."
-	transfer_access = list(ACCESS_SECURITY, ACCESS_FLAG_COMMAND)
+	download_access = list(ACCESS_SECURITY, ACCESS_FLAG_COMMAND)
 	available_on_ntnet = TRUE
 	mode = "security"
 

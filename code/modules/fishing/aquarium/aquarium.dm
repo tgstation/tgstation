@@ -79,7 +79,7 @@
 	if(!reagents.total_volume)
 		RegisterSignal(reagents, COMSIG_REAGENTS_NEW_REAGENT, PROC_REF(start_autofeed))
 		return PROCESS_KILL
-	if(world.time + feeding_interval > last_feeding)
+	if(world.time < last_feeding + feeding_interval)
 		return
 	last_feeding = world.time
 	var/list/fishes = get_fishes()

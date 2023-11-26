@@ -26,7 +26,6 @@
 	var/fulltile = FALSE
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
-	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/break_sound = SFX_SHATTER
 	var/knock_sound = 'sound/effects/glassknock.ogg'
@@ -79,6 +78,9 @@
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+
 	switch(state)
 		if(WINDOW_SCREWED_TO_FRAME)
 			. += span_notice("The window is <b>screwed</b> to the frame.")
@@ -416,11 +418,9 @@
 
 	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
-	cut_overlay(crack_overlay)
 	if(ratio > 75)
 		return
-	crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-	. += crack_overlay
+	. += mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 
 /obj/structure/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > T0C + heat_resistance
@@ -480,6 +480,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..()
+
 	switch(state)
 		if(RWINDOW_SECURE)
 			if(tool.tool_behaviour == TOOL_WELDER)
@@ -558,6 +561,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
 	switch(state)
 		if(RWINDOW_SECURE)
 			. += span_notice("It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.")

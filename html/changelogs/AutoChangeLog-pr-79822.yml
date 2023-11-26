@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes:
+  - bugfix: "the dismemberment moodlet will now properly clear for ethereals who regrew a limb in their resurrection crystals"

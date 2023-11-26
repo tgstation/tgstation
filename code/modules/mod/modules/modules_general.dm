@@ -751,6 +751,15 @@
 		return
 	mod.core.add_charge(power_per_step)
 
+/obj/item/mod/module/hat_stabilizer/syndicate
+	name = "MOD elite hat stabilizer module"
+	desc = "A simple set of deployable stands, directly atop one's head; \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
+		You still need to take the hat off your head while the helmet deploys, though. This is a must-have for \
+		Syndicate Operatives and Agents alike, enabling them to continue to style on the opposition even while in their MODsuit."
+	complexity = 0
+	removable = FALSE
+
 /// Module that shoves garbage inside its material container when the user crosses it, and eject the recycled material with MMB.
 /obj/item/mod/module/recycler
 	name = "MOD recycler module"

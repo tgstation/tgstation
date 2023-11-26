@@ -29,9 +29,9 @@
 "bg" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp{
-	on = 0;
 	pixel_x = -5;
-	pixel_y = 2
+	pixel_y = 2;
+	start_on = 0
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
@@ -184,9 +184,9 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/flashlight/lamp{
-	on = 0;
 	pixel_x = -5;
-	pixel_y = 2
+	pixel_y = 2;
+	start_on = 0
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/securestorage)
@@ -1388,17 +1388,6 @@
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/template_noop,
 /area/template_noop)
-"xk" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 1;
-	max_integrity = 80
-	},
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 1;
-	max_integrity = 80
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/waystation/assaultpod)
 "xq" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -1916,9 +1905,9 @@
 	pixel_y = 2
 	},
 /obj/item/flashlight/lamp{
-	on = 0;
 	pixel_x = -5;
-	pixel_y = 2
+	pixel_y = 2;
+	start_on = 0
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
@@ -2116,9 +2105,9 @@
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/lamp{
-	on = 0;
 	pixel_x = -5;
-	pixel_y = 2
+	pixel_y = 2;
+	start_on = 0
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/dorms)
@@ -4714,7 +4703,7 @@ Qx
 SL
 jG
 my
-xk
+lM
 tb
 FM
 TW

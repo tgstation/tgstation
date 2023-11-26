@@ -10,10 +10,11 @@
 	var/datum/callback/on_milk_callback
 
 //udder_type and reagent_produced_typepath are typepaths, not reference
-/datum/component/udder/Initialize(udder_type = /obj/item/udder, datum/callback/on_milk_callback, datum/callback/on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
+/datum/component/udder/Initialize(udder_type = /obj/item/udder, datum/callback/on_milk_callback, datum/callback/on_generate_callback, reagent_produced_override)
 	if(!isliving(parent)) //technically is possible to drop this on carbons... but you wouldn't do that to me, would you?
 		return COMPONENT_INCOMPATIBLE
-	udder = new udder_type(null, parent, on_generate_callback, reagent_produced_typepath)
+	udder = new udder_type(null)
+	udder.add_features(parent, on_generate_callback, reagent_produced_override)
 	src.on_milk_callback = on_milk_callback
 
 /datum/component/udder/RegisterWithParent()
@@ -66,18 +67,75 @@
 	var/reagent_produced_typepath = /datum/reagent/consumable/milk
 	///how much the udder holds
 	var/size = 50
+	///the probability that the udder will produce the reagent (0 - 100)
+	var/production_probability = 5
 	///mob that has the udder component
 	var/mob/living/udder_mob
 	///optional proc to callback to when the udder generates milk
 	var/datum/callback/on_generate_callback
+	///do we require some food to generate milk?
+	var/require_consume_type
+	///how long does each food consumption allow us to make milk
+	var/require_consume_timer = 2 MINUTES
+	///hunger key we set to look for food
+	var/hunger_key = BB_CHECK_HUNGRY
 
-/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
-	src.udder_mob = udder_mob
-	src.on_generate_callback = on_generate_callback
+/obj/item/udder/proc/add_features(parent, callback, reagent_override)
+	udder_mob = parent
+	on_generate_callback = callback
 	create_reagents(size, REAGENT_HOLDER_ALIVE)
-	src.reagent_produced_typepath = reagent_produced_typepath
+	if(reagent_override)
+		reagent_produced_typepath = reagent_override
 	initial_conditions()
+	if(isnull(require_consume_type))
+		return
+	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_mob_consume))
+	RegisterSignal(udder_mob, COMSIG_ATOM_ATTACKBY, PROC_REF(on_mob_feed))
+	udder_mob.ai_controller?.set_blackboard_key(BB_CHECK_HUNGRY, TRUE)
+
+/obj/item/udder/proc/on_mob_consume(datum/source, atom/feed)
+	SIGNAL_HANDLER
+
+	if(!istype(feed, require_consume_type))
+		return
+	INVOKE_ASYNC(src, PROC_REF(handle_consumption), feed)
+	return COMPONENT_HOSTILE_NO_ATTACK
+
+/obj/item/udder/proc/on_mob_feed(datum/source, atom/used_item, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(!istype(used_item, require_consume_type))
+		return
+	INVOKE_ASYNC(src, PROC_REF(handle_consumption), used_item, user)
+	return COMPONENT_NO_AFTERATTACK
+
+/obj/item/udder/proc/handle_consumption(atom/movable/food, mob/user)
+	if(locate(food.type) in src)
+		if(user)
+			user.balloon_alert(user, "already full!")
+		return
+	playsound(udder_mob.loc,'sound/items/eatfood.ogg', 50, TRUE)
+	udder_mob.visible_message(span_notice("[udder_mob] gobbles up [food]!"), span_notice("You gobble up [food]!"))
+	var/atom/movable/final_food = food
+	if(isstack(food)) //if stack, only consume 1
+		var/obj/item/stack/food_stack = food
+		final_food = food_stack.split_stack(udder_mob, 1)
+	final_food.forceMove(src)
+
+/obj/item/udder/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(!istype(arrived, require_consume_type))
+		return ..()
+
+	udder_mob.ai_controller?.set_blackboard_key(hunger_key, FALSE)
+	QDEL_IN(arrived, require_consume_timer)
+	return ..()
+
+/obj/item/udder/Exited(atom/movable/gone, direction)
 	. = ..()
+	if(!istype(gone, require_consume_type))
+		return
+	udder_mob.ai_controller?.set_blackboard_key(hunger_key, TRUE)
+
 
 /obj/item/udder/Destroy()
 	. = ..()
@@ -101,10 +159,14 @@
  * Proc called every 2 seconds from SSMobs to add whatever reagent the udder is generating.
  */
 /obj/item/udder/proc/generate()
-	if(prob(5))
-		reagents.add_reagent(reagent_produced_typepath, rand(5, 10), added_purity = 1)
-		if(on_generate_callback)
-			on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
+	if(!isnull(require_consume_type) && !(locate(require_consume_type) in src))
+		return FALSE
+	if(!prob(production_probability))
+		return FALSE
+	reagents.add_reagent(reagent_produced_typepath, rand(5, 10), added_purity = 1)
+	if(on_generate_callback)
+		on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
+	return TRUE
 
 /**
  * Proc called from attacking the component parent with the correct item, moves reagents into the glass basically.
@@ -125,48 +187,20 @@
 
 /**
  * # gutlunch udder subtype
- *
- * Used by gutlunches, and generates healing reagents instead of milk on eating gibs instead of a process. Starts empty!
- * Female gutlunches (ahem, guthens if you will) make babies when their udder is full under processing, instead of milk generation
  */
+
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
-
-/obj/item/udder/gutlunch/initial_conditions()
-	if(!udder_mob)
-		return
-	if(udder_mob.gender == FEMALE)
-		START_PROCESSING(SSobj, src)
-	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_mob_attacking))
-
-/obj/item/udder/gutlunch/process(seconds_per_tick)
-	var/mob/living/simple_animal/hostile/asteroid/gutlunch/gutlunch = udder_mob
-	if(reagents.total_volume != reagents.maximum_volume)
-		return
-	if(gutlunch.make_babies())
-		reagents.clear_reagents()
-		//usually this would be a callback but this is a specifically gutlunch feature so fuck it, gutlunch specific proccall
-		gutlunch.regenerate_icons(reagents.total_volume, reagents.maximum_volume)
-
-/**
- * signal called on parent attacking an atom
-*/
-/obj/item/udder/gutlunch/proc/on_mob_attacking(mob/living/simple_animal/hostile/gutlunch, atom/target)
-	SIGNAL_HANDLER
-
-	if(is_type_in_typecache(target, gutlunch.wanted_objects)) //we eats
-		generate()
-		gutlunch.visible_message(span_notice("[udder_mob] slurps up [target]."))
-		qdel(target)
-	return COMPONENT_HOSTILE_NO_ATTACK //there is no longer a target to attack
+	require_consume_type = /obj/item/stack/ore
+	reagent_produced_typepath = /datum/reagent/medicine/mine_salve
 
 /obj/item/udder/gutlunch/generate()
-	var/made_something = FALSE
-	if(prob(60))
+	. = ..()
+	if(!.)
+		return
+	if(locate(/obj/item/stack/ore/gold) in src)
 		reagents.add_reagent(/datum/reagent/consumable/cream, rand(2, 5), added_purity = 1)
-		made_something = TRUE
-	if(prob(45))
+	if(locate(/obj/item/stack/ore/bluespace_crystal) in src)
 		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
-		made_something = TRUE
-	if(made_something && on_generate_callback)
+	if(on_generate_callback)
 		on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)

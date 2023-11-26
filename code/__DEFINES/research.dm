@@ -1,9 +1,5 @@
-#define RDSCREEN_NOBREAK "<NO_HTML_BREAK>"
-
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
-
-#define RESEARCH_MATERIAL_DESTROY_ID "__destroy"
 
 //! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
@@ -55,7 +51,6 @@
 #define CELL_LINE_TABLE_WALKING_MUSHROOM "cell_line_walking_mushroom_table"
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
 #define CELL_LINE_TABLE_BUTTERFLY "cell_line_butterfly_table"
-#define CELL_LINE_TABLE_LEAPER	"cell_line_leaper_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
 
 //! All cell virus types

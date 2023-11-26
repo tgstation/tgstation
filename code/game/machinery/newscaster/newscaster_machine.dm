@@ -12,7 +12,7 @@
 	armor_type = /datum/armor/machinery_newscaster
 	max_integrity = 200
 	integrity_failure = 0.25
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///Name of the logged in user.

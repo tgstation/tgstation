@@ -90,7 +90,7 @@
  */
 /turf/open/proc/replace_floor(turf/open/new_floor_path, flags)
 	if (!overfloor_placed && initial(new_floor_path.overfloor_placed))
-		PlaceOnTop(new_floor_path, flags = flags)
+		place_on_top(new_floor_path, flags = flags)
 		return
 	ChangeTurf(new_floor_path, flags = flags)
 
@@ -123,9 +123,6 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
-
-/turf/open/indestructible/plating
-	icon_state = "plating"
 
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
@@ -223,6 +220,29 @@
 	init_air = FALSE
 	baseturfs = /turf/open/indestructible/airblock
 
+/turf/open/indestructible/meat
+	icon_state = "meat"
+	footstep = FOOTSTEP_MEAT
+	barefootstep = FOOTSTEP_MEAT
+	clawfootstep = FOOTSTEP_MEAT
+	heavyfootstep = FOOTSTEP_MEAT
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/indestructible/meat
+
+/turf/open/indestructible/meat/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/indestructible/plating
+	name = "plating"
+	icon_state = "plating"
+	desc = "The attachment points are all bent to uselessness, looks nigh-impervious to damage."
+	overfloor_placed = FALSE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	footstep = FOOTSTEP_PLATING
+
+/turf/open/indestructible/plating/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/Initalize_Atmos(time)
 	excited = FALSE
 	update_visuals()
@@ -265,7 +285,7 @@
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
-	if(slipper.movement_type & (FLYING | FLOATING))
+	if(slipper.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 	if(!has_gravity(src))
 		return FALSE
@@ -329,8 +349,8 @@
 			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
 	return TRUE
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
-	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
+/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent = FALSE, should_display_overlay = TRUE)
+	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent, should_display_overlay)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
 	SEND_SIGNAL(src, COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
@@ -380,7 +400,7 @@
 		return
 
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-	var/turf/open/floor/plating/new_plating = PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/open/floor/plating/new_plating = place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	if(lattice)
 		qdel(lattice)
 	else
@@ -418,4 +438,3 @@
 
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	new /obj/structure/girder/tram(src)
-

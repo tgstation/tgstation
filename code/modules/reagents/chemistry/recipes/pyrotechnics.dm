@@ -17,7 +17,7 @@
 
 	if(holder.has_reagent(/datum/reagent/exotic_stabilizer,round(created_volume / 25, CHEMICAL_QUANTISATION_LEVEL)))
 		return
-	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume*2)
+	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume * 2)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin_explosion
@@ -35,7 +35,7 @@
 /datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/rdx, created_volume*2)
+	holder.remove_reagent(/datum/reagent/rdx, created_volume * 2)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion
@@ -242,7 +242,7 @@
 /datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/sorium, created_volume*4)
+	holder.remove_reagent(/datum/reagent/sorium, created_volume * 4)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = clamp(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
@@ -265,7 +265,7 @@
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume*3)
+	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume * 3)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = clamp(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
@@ -301,7 +301,7 @@
 				C.Paralyze(60)
 			else
 				C.Stun(100)
-	holder.remove_reagent(/datum/reagent/flash_powder, created_volume*3)
+	holder.remove_reagent(/datum/reagent/flash_powder, created_volume * 3)
 
 /datum/chemical_reaction/flash_powder_flash
 	required_reagents = list(/datum/reagent/flash_powder = 1)
@@ -331,7 +331,7 @@
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume*3)
+	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/fluid_spread/smoke/chem/S = new
 	S.attach(location)
@@ -368,7 +368,7 @@
 /datum/chemical_reaction/sonic_powder/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume*3)
+	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
@@ -542,9 +542,9 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/T1 = created_volume * 8e3		//100 units : Zap 3 times, with powers 8e5/2e6/4.8e6. Tesla revolvers have a power of 10000 for comparison.
-	var/T2 = created_volume * 2e4
-	var/T3 = created_volume * 4.8e4
+	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 8e5/2e6/4.8e6. Tesla revolvers have a power of 10000 for comparison.
+	var/T2 = created_volume * 50
+	var/T3 = created_volume * 120
 	var/added_delay = 0.5 SECONDS
 	if(created_volume >= 75)
 		addtimer(CALLBACK(src, PROC_REF(zappy_zappy), holder, T1), added_delay)
@@ -557,10 +557,11 @@
 	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), added_delay)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/proc/zappy_zappy(datum/reagents/holder, power)
-	if(QDELETED(holder.my_atom))
+	var/atom/holder_atom = holder.my_atom
+	if(QDELETED(holder_atom))
 		return
-	tesla_zap(holder.my_atom, 7, power, zap_flags)
-	playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
+	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1e3, zap_flags = zap_flags)
+	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474
@@ -573,7 +574,7 @@
 	modifier = 1
 
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.remove_reagent(/datum/reagent/sorium, created_volume*2)
+	holder.remove_reagent(/datum/reagent/sorium, created_volume * 2)
 	var/turf/turfie = get_turf(holder.my_atom)
 	//generally half as strong as sorium.
 	var/range = clamp(sqrt(created_volume*2), 1, 6)

@@ -48,6 +48,7 @@
 		"experimentor",
 		"extinguisher",
 		"fax",
+		"fish_case",
 		"fishing_rod",
 		"fishing_portal_generator",
 		"flashlight",
@@ -97,6 +98,7 @@
 		"sec_dart",
 		"sec_Islug",
 		"sec_rshot",
+		"sec_pen",
 		"servingtray",
 		"shaker",
 		"shot_glass",
@@ -297,6 +299,7 @@
 		"plumbing_rcd_service",
 		"plumbing_rcd_sci",
 		"portable_chem_mixer",
+		"penlight",
 		"retractor",
 		"scalpel",
 		"stethoscope",
@@ -316,6 +319,7 @@
 	design_ids = list(
 		"circuit_multitool",
 		"comp_access_checker",
+		"comp_arctan2",
 		"comp_arithmetic",
 		"comp_assoc_list_pick",
 		"comp_assoc_list_remove",
@@ -415,6 +419,7 @@
 		"medigel",
 		"medipen_refiller",
 		"pandemic",
+		"penlight_paramedic",
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -919,9 +924,13 @@
 /datum/techweb_node/adv_robotics
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
-	description = "Machines using actual neural networks to simulate human lives."
+	description = "Advanced synthetic neural networks and synaptic pathways allows for extraordinary leaps in cybernetic intelligence and interfacing."
 	prereq_ids = list("robotics")
 	design_ids = list(
+		"advanced_l_arm",
+		"advanced_r_arm",
+		"advanced_l_leg",
+		"advanced_r_leg",
 		"mmi_posi",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -1008,6 +1017,7 @@
 		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
 		"borg_upgrade_hypermod",
+		"borg_upgrade_inducer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1599,6 +1609,7 @@
 	design_ids = list(
 		"pin_testing",
 		"tele_shield",
+		"lasershell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/pressurebomb = 10000)
@@ -1872,6 +1883,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/paddy
+	id = "mech_paddy"
+	display_name = "EXOSUIT: APLU \"Paddy\""
+	description = "Paddy exosuit designs"
+	prereq_ids = list("adv_mecha", "adv_mecha_armor")
+	design_ids = list(
+		"paddyupgrade",
+		"mech_hydraulic_claw"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 5000)
+
 /datum/techweb_node/gygax
 	id = "mech_gygax"
 	display_name = "EXOSUIT: Gygax"
@@ -2143,7 +2166,7 @@
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
 	prereq_ids = list("biotech","engineering")
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
@@ -2186,7 +2209,7 @@
 		"alien_scalpel",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/cautery/alien,
 		/obj/item/circuitboard/machine/abductor,
@@ -2225,7 +2248,7 @@
 		"alien_wrench",
 	)
 
-	boost_item_paths = list(
+	required_items_to_unlock = list(
 		/obj/item/abductor,
 		/obj/item/circuitboard/machine/abductor,
 		/obj/item/crowbar/abductor,
@@ -2278,12 +2301,12 @@
 /datum/techweb_node/syndicate_basic/proc/register_uplink_items()
 	SIGNAL_HANDLER
 	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	boost_item_paths = list()
+	required_items_to_unlock = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
 		if(!item.item || !item.illegal_tech)
 			continue
-		boost_item_paths |= item.item //allows deconning to unlock.
+		required_items_to_unlock |= item.item //allows deconning to unlock.
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////

@@ -14,10 +14,10 @@ Chilling extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
-	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))
 		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
 		return
-	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/glassbr1.ogg', 50, TRUE)
@@ -231,9 +231,9 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/red/do_effect(mob/user)
 	var/slimesfound = FALSE
-	for(var/mob/living/simple_animal/slime/S in view(get_turf(user), 7))
+	for(var/mob/living/simple_animal/slime/slimes_in_view in view(get_turf(user), 7))
 		slimesfound = TRUE
-		S.docile = TRUE
+		slimes_in_view.docile = TRUE
 	if(slimesfound)
 		user.visible_message(span_notice("[src] lets out a peaceful ring as it shatters, and nearby slimes seem calm."))
 	else

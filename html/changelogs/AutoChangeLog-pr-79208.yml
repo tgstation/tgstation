@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored zombies to use the regenerator component. Now they'll have a slight glow/animation when the regeneration actually kicks in."

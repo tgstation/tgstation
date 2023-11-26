@@ -78,7 +78,7 @@
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
-	T.PlaceOnTop(walltype)
+	T.place_on_top(walltype)
 	if(delete)
 		qdel(src)
 	return T
@@ -404,7 +404,7 @@
 
 /obj/structure/falsewall/material/ChangeToWall(delete = 1)
 	var/turf/current_turf = get_turf(src)
-	var/turf/closed/wall/material/new_wall = current_turf.PlaceOnTop(/turf/closed/wall/material)
+	var/turf/closed/wall/material/new_wall = current_turf.place_on_top(/turf/closed/wall/material)
 	new_wall.set_custom_materials(custom_materials)
 	if(delete)
 		qdel(src)
