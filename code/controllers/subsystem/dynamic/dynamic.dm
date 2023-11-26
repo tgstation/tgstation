@@ -579,9 +579,6 @@ SUBSYSTEM_DEF(dynamic)
 	if(SSdbcore.Connect())
 		var/list/to_set = list()
 		var/arguments = list()
-		if(SSticker.mode)
-			to_set += "game_mode = :game_mode"
-			arguments["game_mode"] = SSticker.mode
 		if(GLOB.revdata.originmastercommit)
 			to_set += "commit_hash = :commit_hash"
 			arguments["commit_hash"] = GLOB.revdata.originmastercommit
@@ -676,7 +673,6 @@ SUBSYSTEM_DEF(dynamic)
 		configure_ruleset(rule)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_dynamic("Drafting players for forced ruleset [rule.name].")
-		rule.mode = src
 		rule.acceptable(roundstart_pop_ready, threat_level) // Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()

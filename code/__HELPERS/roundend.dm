@@ -242,7 +242,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	CHECK_TICK
 
 	//Set news report and mode result
-	mode.set_round_result()
+	SSdynamic.set_round_result()
 
 	to_chat(world, span_infoplain(span_big(span_bold("<BR><BR><BR>The round has ended."))))
 	log_game("The round has ended.")
