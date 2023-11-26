@@ -17,3 +17,12 @@
 		"threshold" = 50,
 		)
 
+/datum/reagent/consumable/nutriment/soup/chicken_noodle_soup
+	data = list(
+		"threshhold" = 20
+	)
+
+/datum/reagent/consumable/nutriment/soup/chicken_noodle_soup/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	if(..())
+		return TRUE
+	M.immune_system.ApplyAntipathogenics(data["threshold"])
