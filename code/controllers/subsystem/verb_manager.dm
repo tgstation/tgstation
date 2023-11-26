@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(verb_manager)
 		return world.push_usr(incoming_callback.object, new_us)
 #endif
 
-	if(QDELETED(usr) || !usr.client)
+	if(QDELETED(usr) || isnull(usr.client))
 		stack_trace("_queue_verb() returned false because it wasnt called from player input!")
 		return FALSE
 
