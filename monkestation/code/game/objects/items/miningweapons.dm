@@ -191,7 +191,7 @@
 
 //Proto-Kinetic Accelerators
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/railgun
+/obj/item/gun/energy/recharge/kinetic_accelerator/railgun //disabled because firing pin is fucking stupid and wont work
 	name = "proto-kinetic railgun"
 	desc = "Before the nice streamlined and modern day Proto-Kinetic Accelerator was created, multiple designs were drafted by the Mining Research and Development \
 	team. Many were failures, including this one, which came out too bulky and too ineffective. Well recently the MR&D Team got drunk and said 'fuck it we ball' and \
@@ -377,7 +377,7 @@
 
 //Wastes firing pin - restricts a weapon to only outside when mining - space not included - used in railgun
 
-/obj/item/firing_pin/wastes
+/obj/item/firing_pin/wastes //needs fixing, code appears correct but it dosn't actually function on lavaland or icemoon surface
 	name = "Wastes firing pin"
 	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon."
 	fail_message = "Wastes check failed! - Try getting further from the station first."
