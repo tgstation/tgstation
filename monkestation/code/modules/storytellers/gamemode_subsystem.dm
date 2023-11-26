@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(gamemode)
 
 	/// List of our event tracks for fast access during for loops.
 	var/list/event_tracks = EVENT_TRACKS
-	/// Our storyteller. He progresses our trackboards and picks out events
+	/// Our storyteller. They progresses our trackboards and picks out events
 	var/datum/storyteller/storyteller
 	/// Result of the storyteller vote. Defaults to the guide.
 	var/voted_storyteller = /datum/storyteller/guide

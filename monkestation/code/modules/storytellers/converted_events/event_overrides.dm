@@ -1,6 +1,6 @@
 /datum/round_event_control/abductor
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_TARGETED, TAG_SPOOKY, TAG_EXTERNAL)
+	tags = list(TAG_TARGETED, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/anomaly
@@ -9,7 +9,7 @@
 
 /datum/round_event_control/alien_infestation
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/aurora_caelus
@@ -18,7 +18,7 @@
 
 /datum/round_event_control/blob
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/brain_trauma
@@ -39,11 +39,12 @@
 
 /datum/round_event_control/carp_migration
 	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN)
 
-/datum/round_event_control/changeling //THIS IS THE METEOR EVENT, IT NEEDS TO BE A METEOR, DO NOT SPAWN THIS ON PLANETARY MAPS
+//THIS IS THE METEOR EVENT, IT NEEDS TO BE A METEOR, DO NOT SPAWN THIS ON PLANETARY MAPS(the spawn works fine on planets, the actual issue is the ling passes out due to CO2)
+/datum/round_event_control/changeling
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/communications_blackout
@@ -53,7 +54,7 @@
 
 /datum/round_event_control/disease_outbreak
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL)
+	tags = list(TAG_TARGETED, TAG_COMMUNAL, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/electrical_storm
 	track = EVENT_TRACK_MUNDANE
@@ -106,16 +107,16 @@
 
 /datum/round_event_control/mice_migration
 	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_DESTRUCTIVE)
+	tags = list(TAG_DESTRUCTIVE, TAG_ALIEN) //not really alien but rat lords kind of are
 
 /datum/round_event_control/morph
 	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/nightmare
 	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_SPOOKY, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/obsessed
@@ -155,11 +156,11 @@
 
 /datum/round_event_control/scrubber_clog
 	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_COMMUNAL)
+	tags = list(TAG_COMMUNAL, TAG_ALIEN)
 
 /datum/round_event_control/scrubber_clog/critical
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL)
+	tags = list(TAG_COMMUNAL, TAG_COMBAT, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/scrubber_overflow
 	track = EVENT_TRACK_MUNDANE
@@ -171,7 +172,7 @@
 
 /datum/round_event_control/sentient_disease
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/shuttle_catastrophe
@@ -193,7 +194,7 @@
 
 /datum/round_event_control/space_dragon
 	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_SPACE, TAG_EXTERNAL, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/space_ninja
@@ -203,12 +204,12 @@
 
 /datum/round_event_control/spacevine
 	track = EVENT_TRACK_MAJOR
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_ALIEN)
 	checks_antag_cap = TRUE
 
 /datum/round_event_control/spider_infestation
 	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_ALIEN)
 
 /datum/round_event_control/stray_cargo
 	track = EVENT_TRACK_MUNDANE
