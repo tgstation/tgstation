@@ -76,15 +76,16 @@
 /obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
 	if(isnull(user?.client))
 		return
+
 	for(var/datum/action/actions_removed as anything in actions)
 		actions_removed.Remove(user)
 	for(var/datum/camerachunk/camerachunks_gone as anything in eyeobj.visibleCameraChunks)
 		camerachunks_gone.remove(eyeobj)
-	if(user.client)
-		user.reset_perspective(null)
-		if(eyeobj.visible_icon && user.client)
-			user.client.images -= eyeobj.user_image
-		user.client.view_size.unsupress()
+
+	user.reset_perspective(null)
+	if(eyeobj.visible_icon && user.client)
+		user.client.images -= eyeobj.user_image
+	user.client.view_size.unsupress()
 
 	eyeobj.eye_user = null
 	user.remote_control = null
@@ -168,8 +169,6 @@
 
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	if(isnull(user?.client))
-		return
-	if(isnull(user.client))
 		return
 	GrantActions(user)
 	current_user = user
