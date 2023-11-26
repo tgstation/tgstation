@@ -39,6 +39,7 @@
 		/obj/item/ammo_box/magazine/sniper_rounds/penetrator,
 		/obj/item/ammo_box/magazine,
 		/obj/item/ammo_box/magazine/toy,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
 	)
 	blacklisted_types = list(
 		/obj/item/ammo_box/magazine/internal,
