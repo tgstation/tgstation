@@ -20,7 +20,11 @@ GLOBAL_LIST_EMPTY(dynamic_station_traits)
 /// Rulesets which have been forcibly enabled or disabled
 GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 
-/datum/game_mode/dynamic
+SUBSYSTEM_DEF(dynamic)
+	name = "Dynamic"
+	flags = SS_NO_INIT
+	wait = 1 SECONDS
+
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0
@@ -828,7 +832,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 	new_rule.forget_startup()
 	return FALSE
 
-/datum/game_mode/dynamic/process()
+/datum/game_mode/dynamic/fire()
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
