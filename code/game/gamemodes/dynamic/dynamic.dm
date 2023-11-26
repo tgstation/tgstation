@@ -193,7 +193,7 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 
 	VAR_PRIVATE/next_midround_injection
 
-/datum/game_mode/dynamic/admin_panel()
+/datum/game_mode/dynamic/proc/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=[text_ref(src)];[HrefToken()]'>\[Refresh\]</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
@@ -289,8 +289,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 
 	admin_panel() // Refreshes the window
 
-// Checks if there are HIGH_IMPACT_RULESETs and calls the rule's round_result() proc
-/datum/game_mode/dynamic/set_round_result()
+// Set result and news report here
+/datum/game_mode/dynamic/proc/set_round_result()
 	// If it got to this part, just pick one high impact ruleset if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGH_IMPACT_RULESET)
@@ -299,7 +299,18 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 			if(SSticker.news_report)
 				return
 
-	return ..()
+	SSticker.mode_result = "undefined"
+
+	// Something nuked the station - it wasn't nuke ops (they set their own via their rulset)
+	if(GLOB.station_was_nuked)
+		SSticker.news_report = STATION_NUKED
+
+	if(SSsupermatter_cascade.cascade_initiated)
+		SSticker.news_report = SUPERMATTER_CASCADE
+
+	// Only show this one if we have nothing better to show
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED && !SSticker.news_report)
+		SSticker.news_report = SSshuttle.emergency?.is_hijacked() ? SHUTTLE_HIJACK : STATION_EVACUATED
 
 /datum/game_mode/dynamic/proc/send_intercept()
 	if(SScommunications.block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
@@ -316,11 +327,33 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 		min_threat = min(ruleset.cost, min_threat)
 	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
 
-	generate_station_goals(greenshift)
-	. += generate_station_goal_report()
-	. += generate_station_trait_report()
+	generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
+
+	if (GLOB.station_goals.len > 0)
+		var/list/texts = list("<hr><b>Special Orders for [station_name()]:</b><BR>")
+		for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
+			station_goal.on_report()
+			texts += station_goal.get_report()
+
+		. += texts.Join("<hr>")
+
+	var/list/trait_list_strings = list()
+	for(var/datum/station_trait/station_trait as anything in SSstation.station_traits)
+		if(!station_trait.show_in_report)
+			continue
+		trait_list_strings += "[station_trait.get_report()]<BR>"
+	if(trait_list_strings.len > 0)
+		. += "<hr><b>Identified shift divergencies:</b><BR>" + trait_list_strings.Join()
+
 	if(length(SScommunications.command_report_footnotes))
-		. += generate_report_footnote()
+		var/footnote_pile = ""
+
+		for(var/datum/command_footnote/footnote in SScommunications.command_report_footnotes)
+			footnote_pile += "[footnote.message]<BR>"
+			footnote_pile += "<i>[footnote.signature]</i><BR>"
+			footnote_pile += "<BR>"
+
+		. += "<hr><b>Additional Notes: </b><BR><BR>" + footnote_pile
 
 	print_command_report(., "[command_name()] Status Summary", announce=FALSE)
 	if(greenshift)
@@ -329,6 +362,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 		priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
 			SSsecurity_level.set_level(SEC_LEVEL_BLUE)
+
+	return .
 
 /// Generate the advisory level depending on the shown threat level.
 /datum/game_mode/dynamic/proc/generate_advisory_level()
@@ -458,7 +493,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 
-/datum/game_mode/dynamic/pre_setup()
+// Called BEFORE everyone is equipped with their job
+/datum/game_mode/dynamic/proc/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
 		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
@@ -517,7 +553,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 	candidates.Cut()
 	return TRUE
 
-/datum/game_mode/dynamic/post_setup(report)
+// Called AFTER everyone is equipped with their job
+/datum/game_mode/dynamic/proc/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_roundstart_rule), rule), rule.delay)
@@ -525,7 +562,84 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 	if (!CONFIG_GET(flag/no_intercept_report))
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(waittime_l, waittime_h))
 
-	..()
+		addtimer(CALLBACK(src, PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
+
+	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
+		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
+		if(delay)
+			delay *= (1 SECONDS)
+		else
+			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reopen_roundstart_suicide_roles)), delay)
+
+	if(SSdbcore.Connect())
+		var/list/to_set = list()
+		var/arguments = list()
+		if(SSticker.mode)
+			to_set += "game_mode = :game_mode"
+			arguments["game_mode"] = SSticker.mode
+		if(GLOB.revdata.originmastercommit)
+			to_set += "commit_hash = :commit_hash"
+			arguments["commit_hash"] = GLOB.revdata.originmastercommit
+		if(to_set.len)
+			arguments["round_id"] = GLOB.round_id
+			var/datum/db_query/query_round_game_mode = SSdbcore.NewQuery(
+				"UPDATE [format_table_name("round")] SET [to_set.Join(", ")] WHERE id = :round_id",
+				arguments
+			)
+			query_round_game_mode.Execute()
+			qdel(query_round_game_mode)
+	return TRUE
+
+/datum/game_mode/dynamic/proc/display_roundstart_logout_report()
+	var/list/msg = list("[span_boldnotice("Roundstart logout report")]\n\n")
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
+		var/mob/living/carbon/C = L
+		if (istype(C) && !C.last_mind)
+			continue  // never had a client
+
+		if(L.ckey && !GLOB.directory[L.ckey])
+			msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
+
+
+		if(L.ckey && L.client)
+			var/failed = FALSE
+			if(L.client.inactivity >= ROUNDSTART_LOGOUT_AFK_THRESHOLD) //Connected, but inactive (alt+tabbed or something)
+				msg += "<b>[L.name]</b> ([L.key]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
+				failed = TRUE //AFK client
+			if(!failed && L.stat)
+				if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
+					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_boldannounce("Suicide")])\n"
+					failed = TRUE //Disconnected client
+				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
+					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dying)\n"
+					failed = TRUE //Unconscious
+				if(!failed && L.stat == DEAD)
+					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dead)\n"
+					failed = TRUE //Dead
+
+			continue //Happy connected client
+		for(var/mob/dead/observer/D in GLOB.dead_mob_list)
+			if(D.mind && D.mind.current == L)
+				if(L.stat == DEAD)
+					if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Suicide")])\n"
+						continue //Disconnected client
+					else
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
+						continue //Dead mob, ghost abandoned
+				else
+					if(D.can_reenter_corpse)
+						continue //Adminghost, or cult/wizard ghost
+					else
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Ghosted")])\n"
+						continue //Ghosted while alive
+
+	var/concatenated_message = msg.Join()
+	log_admin(concatenated_message)
+	to_chat(GLOB.admins, concatenated_message)
+
 
 /// Initializes the internal ruleset variables
 /datum/game_mode/dynamic/proc/setup_rulesets()
@@ -739,7 +853,8 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 					return TRUE
 	return FALSE
 
-/datum/game_mode/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
+/// Handles late-join antag assignments
+/datum/game_mode/dynamic/proc/make_antag_chance(mob/living/carbon/human/newPlayer)
 	if (GLOB.dynamic_forced_extended)
 		return
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
@@ -887,6 +1002,44 @@ GLOBAL_LIST_EMPTY(dynamic_forced_rulesets)
 	var/lower_deviation = max(std_threat * (location-centre)/MAXIMUM_DYN_DISTANCE, 0)
 	var/upper_deviation = max((max_threat - std_threat) * (centre-location)/MAXIMUM_DYN_DISTANCE, 0)
 	return clamp(round(std_threat + upper_deviation - lower_deviation, interval), 0, 100)
+
+/proc/reopen_roundstart_suicide_roles()
+	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
+	var/list/reopened_jobs = list()
+
+	for(var/mob/living/quitter in GLOB.suicided_mob_list)
+		var/datum/job/job = SSjob.GetJob(quitter.job)
+		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
+			continue
+		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			continue
+		job.current_positions = max(job.current_positions - 1, 0)
+		reopened_jobs += quitter.job
+
+	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_report))
+		if(reopened_jobs.len)
+			var/reopened_job_report_positions
+			for(var/dead_dudes_job in reopened_jobs)
+				reopened_job_report_positions = "[reopened_job_report_positions ? "[reopened_job_report_positions]\n":""][dead_dudes_job]"
+
+			var/suicide_command_report = {"
+				<font size = 3><b>[command_name()] Human Resources Board</b><br>
+				Notice of Personnel Change</font><hr>
+				To personnel management staff aboard [station_name()]:<br><br>
+				Our medical staff have detected a series of anomalies in the vital sensors
+				of some of the staff aboard your station.<br><br>
+				Further investigation into the situation on our end resulted in us discovering
+				a series of rather... unforturnate decisions that were made on the part of said staff.<br><br>
+				As such, we have taken the liberty to automatically reopen employment opportunities for the positions of the crew members
+				who have decided not to partake in our research. We will be forwarding their cases to our employment review board
+				to determine their eligibility for continued service with the company (and of course the
+				continued storage of cloning records within the central medical backup server.)<br><br>
+				<i>The following positions have been reopened on our behalf:<br><br>
+				[reopened_job_report_positions]</i>
+			"}
+
+			print_command_report(suicide_command_report, "Central Command Personnel Update")
+
 
 #undef MAXIMUM_DYN_DISTANCE
 

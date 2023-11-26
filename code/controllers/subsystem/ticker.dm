@@ -20,7 +20,8 @@ SUBSYSTEM_DEF(ticker)
 	/// Boolean to track and check if our subsystem setup is done.
 	var/setup_done = FALSE
 
-	var/datum/game_mode/mode = null
+	// mbtodo: remove, and replace everything with SSdynamic
+	var/datum/game_mode/dynamic/mode = null
 
 	var/login_music //music played in pregame lobby
 	var/round_end_sound //music/jingle played when the world reboots
@@ -209,13 +210,25 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 			check_queue()
 
-			if(!roundend_check_paused && (mode.check_finished() || force_ending))
+			if(!roundend_check_paused && (check_finished() || force_ending))
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+
+/// Checks if the round should be ending, called every ticker tick
+/datum/controller/subsystem/ticker/proc/check_finished()
+	if(!setup_done)
+		return FALSE
+	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if(GLOB.station_was_nuked)
+		return TRUE
+	if(GLOB.revolutionary_win)
+		return TRUE
+	return FALSE
 
 
 /datum/controller/subsystem/ticker/proc/setup()
