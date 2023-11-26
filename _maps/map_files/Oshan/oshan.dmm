@@ -17248,7 +17248,6 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "iuZ" = (
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -32398,7 +32397,6 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/medbay/central)
