@@ -23,7 +23,7 @@
 	/// A list of REFs to people who recently examined us
 	var/list/recent_examiner_refs = list()
 
-/mob/living/basic/heretic_summon/Initialize(mapload)
+/mob/living/basic/heretic_summon/maid_in_the_mirror/Initialize(mapload)
 	. = ..()
 	var/static/list/loot = list(
 		/obj/effect/decal/cleanable/ash,
