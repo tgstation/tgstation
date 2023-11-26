@@ -61,7 +61,7 @@
 	var/list/mob/living/carbon/human/victims = list()
 
 	for(var/mob/living/carbon/human/target in GLOB.alive_mob_list)
-		if((ruins_spaceworthiness && !is_station_level(target.z)) || isspaceturf(target.loc) || isplasmaman(target))
+		if(isspaceturf(target.loc) || !isnull(target.dna.species.outfit_important_for_life) || (ruins_spaceworthiness && !is_station_level(target.z)))
 			continue //#savetheminers
 		if(ruins_wizard_loadout && IS_WIZARD(target))
 			continue
