@@ -278,7 +278,7 @@
 	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
 	charge.Grant(src)
 
-	AddElement(/datum/element/tear_wall)
+	AddElement(/datum/element/wall_tearer)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/slow_web)
 
 /mob/living/basic/spider/giant/tarantula/Destroy()

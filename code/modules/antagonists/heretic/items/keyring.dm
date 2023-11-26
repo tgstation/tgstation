@@ -7,7 +7,8 @@
 	light_power = 1
 	light_on = TRUE
 	light_color = COLOR_GREEN
-	light_range = 3
+	light_inner_range = 1
+	light_outer_range = 2
 	opacity = TRUE
 	density = FALSE //so we dont block doors closing
 	layer = OBJ_LAYER //under doors
@@ -22,8 +23,8 @@
 	. = ..()
 	if(target)
 		our_airlock = target
-		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(delete_on_door_delete))
-		
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(delete_on_door_delete))
+
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -44,7 +45,7 @@
 /obj/effect/knock_portal/Destroy()
 	if(!isnull(destination) && !QDELING(destination))
 		QDEL_NULL(destination)
-	
+
 	destination = null
 	our_airlock = null
 	return ..()
@@ -140,7 +141,7 @@
 ///Deletes and nulls our portal pair
 /obj/item/card/id/advanced/heretic/proc/clear_portals()
 	QDEL_NULL(portal_one)
-	QDEL_NULL(portal_two)	
+	QDEL_NULL(portal_two)
 
 ///Clears portal references
 /obj/item/card/id/advanced/heretic/proc/clear_portal_refs()
@@ -154,11 +155,11 @@
 	if(portal_one || portal_two)
 		clear_portals()
 		message += ", previous cleared"
-	
+
 	portal_one = new(get_turf(door2), door2, inverted)
 	portal_two = new(get_turf(door1), door1, inverted)
 	portal_one.destination = portal_two
-	RegisterSignal(portal_one, COMSIG_QDELETING, PROC_REF(clear_portal_refs))  //we only really need to register one because they already qdel both portals if one is destroyed
+	RegisterSignal(portal_one, COMSIG_PARENT_QDELETING, PROC_REF(clear_portal_refs))  //we only really need to register one because they already qdel both portals if one is destroyed
 	portal_two.destination = portal_one
 	balloon_alert(user, "[message]")
 

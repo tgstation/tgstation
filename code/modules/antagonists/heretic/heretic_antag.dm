@@ -426,7 +426,7 @@
 	target_image.overlays = target.overlays
 
 	LAZYSET(sac_targets, target, target_image)
-	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_deleted))
 	all_sac_targets += target.real_name
 
 /**
