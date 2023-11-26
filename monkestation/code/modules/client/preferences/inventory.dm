@@ -1,3 +1,5 @@
+#define DONATOR_ROUNDEND_BONUS 25 //25 monkecoin for donators
+
 /datum/preferences/proc/load_inventory(ckey)
 	if(!ckey || !SSdbcore.IsConnected())
 		return
@@ -40,6 +42,14 @@
 		if(max_round_coins <= amount)
 			amount = max_round_coins
 		max_round_coins -= amount
+
+	//Patreon Flat Roundend Bonus
+	if((parent.patreon?.has_access(2)) && donator_multipler)
+		amount += DONATOR_ROUNDEND_BONUS
+
+	//Twitch Flat Roundend Bonus
+	if((parent.twitch?.has_access(1)) && donator_multipler)
+		amount += DONATOR_ROUNDEND_BONUS
 
 	//Donator Multiplier
 	if(amount > 0 && donator_multipler)
