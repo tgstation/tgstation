@@ -21,6 +21,6 @@
 	to_chat(owner, span_warning("You feel nauseated!"))
 	owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 20)
 
-	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
+	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), /datum/slime_type/grey)
 	Slime.set_friends(list(owner))
 	Slime.set_leader(owner)

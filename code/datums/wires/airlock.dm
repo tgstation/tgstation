@@ -38,6 +38,10 @@
 	dictionary_key = /datum/wires/airlock/ai
 	proper_name = "AI Airlock"
 
+/datum/wires/airlock/cargo
+	dictionary_key = /datum/wires/airlock/cargo
+	proper_name = "Cargo Airlock"
+
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
 		WIRE_AI,

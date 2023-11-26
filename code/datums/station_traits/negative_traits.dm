@@ -594,7 +594,7 @@
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
-	if(effect_strength > 0)
+	if(effect_strength > 0 && !SSmapping.is_planetary()) //admins can force this
 		if(!SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
 			COOLDOWN_START(src, send_care_package_at, send_care_package_time)
 			SSweather.run_weather(/datum/weather/rad_storm/nebula)
