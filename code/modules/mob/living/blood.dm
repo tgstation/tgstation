@@ -249,6 +249,9 @@
 			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
+		if (immune_system)
+			blood_data["immunity"] = immune_system.GetImmunity()
+
 		blood_data["blood_DNA"] = dna.unique_enzymes
 		if(LAZYLEN(disease_resistances))
 			blood_data["resistances"] = disease_resistances.Copy()

@@ -6520,6 +6520,7 @@
 #include "monkestation\code\modules\virology\objects\science_goggles.dm"
 #include "monkestation\code\modules\virology\objects\vials.dm"
 #include "monkestation\code\modules\virology\objects\virusdish.dm"
+#include "monkestation\code\modules\virology\reagents\antipathenogenics.dm"
 #include "monkestation\code\modules\virology\reagents\vaccine.dm"
 #include "monkestation\code\modules\wiki_templater\templates.dm"
 #include "monkestation\code\modules\wiki_templater\test_generate.dm"

@@ -64,8 +64,8 @@
 
 	//Handle debuffing growth based on viruses here.
 	for(var/datum/micro_organism/virus/active_virus in biological_sample.micro_organisms)
-		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM))
-			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM)
+		if(reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin, REAGENTS_METABOLISM))
+			reagents.remove_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin, REAGENTS_METABOLISM)
 			continue //This virus is stopped, We have antiviral stuff
 		. -= virus_suspectibility
 

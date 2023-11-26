@@ -192,7 +192,7 @@
 
 	name = "Xenomorph Transformation"
 	cure_text = "Spaceacillin & Glycerol"
-	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
+	cures = list(/datum/reagent/medicine/antipathogenic/spaceacillin, /datum/reagent/glycerol)
 	cure_chance = 2.5
 	agent = "Rip-LEY Alien Microbes"
 	desc = "This disease changes the victim into a xenomorph."

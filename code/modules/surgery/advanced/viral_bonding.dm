@@ -26,7 +26,7 @@
 		TOOL_WELDER = 50,
 		/obj/item = 30) // 30% success with any hot item.
 	time = 100
-	chems_needed = list(/datum/reagent/medicine/spaceacillin,/datum/reagent/consumable/virus_food,/datum/reagent/toxin/formaldehyde)
+	chems_needed = list(/datum/reagent/medicine/antipathogenic/spaceacillin,/datum/reagent/consumable/virus_food,/datum/reagent/toxin/formaldehyde)
 
 /datum/surgery_step/viral_bond/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
