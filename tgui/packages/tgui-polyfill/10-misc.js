@@ -9,25 +9,6 @@
 (function () {
   'use strict';
 
-  // Necessary polyfill to make Webpack code splitting work on IE8
-  if (!Function.prototype.bind) (function () {
-    var slice = Array.prototype.slice;
-    Function.prototype.bind = function () {
-      var thatFunc = this, thatArg = arguments[0];
-      var args = slice.call(arguments, 1);
-      if (typeof thatFunc !== 'function') {
-        // closest thing possible to the ECMAScript 5
-        // internal IsCallable function
-        throw new TypeError('Function.prototype.bind - ' +
-          'what is trying to be bound is not callable');
-      }
-      return function () {
-        var funcArgs = args.concat(slice.call(arguments))
-        return thatFunc.apply(thatArg, funcArgs);
-      };
-    };
-  })();
-
   if (!Array.prototype['forEach']) {
     Array.prototype.forEach = function (callback, thisArg) {
       if (this == null) {
