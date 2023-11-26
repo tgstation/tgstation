@@ -10,7 +10,7 @@
 
 /datum/callback/verb_callback/Invoke(...)
 	var/mob/our_user = user?.resolve()
-	if(QDELETED(our_user) || !our_user.client)
+	if(QDELETED(our_user) || isnull(our_user.client))
 		return
 	var/mob/temp = usr
 	. = ..()
@@ -18,7 +18,7 @@
 
 /datum/callback/verb_callback/InvokeAsync(...)
 	var/mob/our_user = user?.resolve()
-	if(QDELETED(our_user) || !our_user.client)
+	if(QDELETED(our_user) || isnull(our_user.client))
 		return
 	var/mob/temp = usr
 	. = ..()
