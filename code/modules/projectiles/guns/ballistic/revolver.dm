@@ -300,7 +300,6 @@
 
 /obj/item/gun/ballistic/revolver/reverse/Initialize(mapload)
 	. = ..()
-	var/obj/item/gun/ballistic/revolver/syndicate/syndie_revolver = /obj/item/gun/ballistic/revolver/syndicate
 	name = /obj/item/gun/ballistic/revolver/syndicate::name
 	desc = /obj/item/gun/ballistic/revolver/syndicate::desc
 
