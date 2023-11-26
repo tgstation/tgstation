@@ -101,7 +101,7 @@
 		return CHASM_NOT_DROPPING
 	if(is_type_in_typecache(dropped_thing, forbidden_types) || (!isliving(dropped_thing) && !isobj(dropped_thing)))
 		return CHASM_NOT_DROPPING
-	if(dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
+	if(dropped_thing.throwing || (dropped_thing.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return CHASM_REGISTER_SIGNALS
 
 	//Flies right over the chasm

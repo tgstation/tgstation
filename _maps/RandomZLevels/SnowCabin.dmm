@@ -4459,7 +4459,7 @@
 /obj/structure/signpost/salvation{
 	density = 0;
 	desc = "An intercomm. Someone seems to be on the other end. I should use it.";
-	icon = 'icons/obj/radio.dmi';
+	icon = 'icons/obj/device.dmi';
 	icon_state = "intercom";
 	max_integrity = 99999;
 	name = "\proper Fun Jail intercom";

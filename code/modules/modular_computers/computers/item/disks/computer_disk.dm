@@ -1,7 +1,7 @@
 /obj/item/computer_disk
 	name = "data disk"
 	desc = "Removable disk used to store data."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
 	icon_state = "datadisk6"
 	w_class = WEIGHT_CLASS_TINY
 	///The amount of storage space is on the disk
