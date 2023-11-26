@@ -291,6 +291,7 @@
 /datum/component/overlay_lighting/proc/on_holder_qdel(atom/movable/source, force)
 	SIGNAL_HANDLER
 	if(QDELETED(current_holder))
+		set_holder(null)
 		return
 	UnregisterSignal(current_holder, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(directional)
