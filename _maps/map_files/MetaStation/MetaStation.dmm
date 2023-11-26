@@ -2326,7 +2326,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "aQR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -5712,7 +5712,7 @@
 "bZz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "bZB" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -9317,7 +9317,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "duu" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -23760,7 +23760,7 @@
 /obj/machinery/byteforge,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "iGT" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -24870,7 +24870,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "iXt" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/purple,
@@ -41918,7 +41918,7 @@
 /area/station/security/brig)
 "paD" = (
 /turf/closed/wall,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "pbb" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -43622,7 +43622,7 @@
 /obj/machinery/light/directional/west,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "pGn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -43828,7 +43828,7 @@
 /obj/machinery/light/directional/north,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "pJu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45464,7 +45464,7 @@
 /obj/effect/landmark/start/bitrunner,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "qos" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -45595,7 +45595,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "qrO" = (
 /obj/machinery/chem_dispenser/drinks{
 	dir = 1
@@ -47152,7 +47152,7 @@
 	c_tag = "Mining Dock"
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "qRV" = (
 /obj/structure/chair{
 	dir = 1
@@ -49565,7 +49565,7 @@
 "rKe" = (
 /obj/machinery/netpod,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "rKf" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -49923,7 +49923,7 @@
 /obj/machinery/netpod,
 /obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/catwalk_floor/iron_dark,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "rQS" = (
 /obj/structure/table,
 /obj/item/storage/box/evidence{
@@ -50839,7 +50839,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/bitrunner,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/bitrunning/den)
+/area/station/cargo/bitrunning/den)
 "sgX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
