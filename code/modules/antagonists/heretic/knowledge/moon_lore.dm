@@ -208,7 +208,8 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! The truth shall finally devour the lie! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce("[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! \
+					The truth shall finally devour the lie! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
 	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, REF(src))
@@ -227,29 +228,28 @@
 		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE)) // Mindshielded and anti-magic folks are immune against this effect
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
-		if(amount_of_lunatics<length(GLOB.human_list)/5)
-			var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
-			lunatic.set_master(user.mind, user)
-			var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
-			crewmate.put_in_active_hand(moon_amulette)
-			crewmate.emote("laugh")
-		else
-			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you." ))
+		if(amount_of_lunatics > length(GLOB.human_list) / 5)
+			continue
+		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
+		lunatic.set_master(user.mind, user)
+		var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
+		crewmate.put_in_active_hand(moon_amulette)
+		crewmate.emote("laugh")
 
 	// Spells get a lower cooldown
 	var/datum/action/cooldown/spell/pointed/moon_smile/smile = locate() in user.actions
 	if(smile)
-		smile.cooldown_time *= 0.66 // Lower cooldown
-		smile.cast_range +=6 // Longer cast range
+		smile.cooldown_time * = 0.66 // Lower cooldown
+		smile.cast_range + =6 // Longer cast range
 
 	var/datum/action/cooldown/spell/pointed/projectile/moon_parade/lunar_parade = locate() in user.actions
 	if(lunar_parade)
-		lunar_parade.cooldown_time *= 0.66 // Lower cooldown
+		lunar_parade.cooldown_time * = 0.66 // Lower cooldown
 
 	var/datum/action/cooldown/spell/aoe/moon_ringleader/ringleader_rise = locate() in user.actions
 	if(ringleader_rise)
-		ringleader_rise.cooldown_time *= 0.66 // Lower cooldown
-		ringleader_rise.aoe_radius +=3 // Bigger AoE
+		ringleader_rise.cooldown_time * = 0.66 // Lower cooldown
+		ringleader_rise.aoe_radius + =3 // Bigger AoE
 
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
@@ -262,15 +262,15 @@
 	)
 
 	for(var/mob/living/carbon/carbon_view in view(7, source))
-		var/carbon_sanity=carbon_view.mob_mood.sanity
+		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
 		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.set_sanity(carbon_sanity-5)
-		if(carbon_sanity<30)
+		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
+		if(carbon_sanity < 30)
 			to_chat(carbon_view, span_warning("you feel your mind begining to rend!"))
 			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-		if(carbon_sanity<10)
+		if(carbon_sanity < 10)
 			to_chat(carbon_view, span_warning("it echoes through you!"))
 			visible_hallucination_pulse(
 				center = get_turf(carbon_view),

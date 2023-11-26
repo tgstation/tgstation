@@ -17,8 +17,6 @@
 	spell_requirements = NONE
 	cast_range = 6
 
-
-
 	active_msg = "You prepare to let them see the true face..."
 
 /datum/action/cooldown/spell/pointed/moon_smile/can_cast_spell(feedback = TRUE)
@@ -30,7 +28,7 @@
 /datum/action/cooldown/spell/pointed/moon_smile/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	/// The duration of most of these effects
-	var/moon_smile_duration = (150-cast_on.mob_mood.sanity)/10
+	var/moon_smile_duration = (150 - cast_on.mob_mood.sanity) / 10
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("The moon turns, its smile no longer set on you."))
 		to_chat(owner, span_warning("The moon does not smile upon them."))

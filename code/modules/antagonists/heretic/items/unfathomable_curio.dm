@@ -59,12 +59,13 @@
 		/datum/brain_trauma/severe/monophobia
 	)
 	wearer.visible_message(span_danger("[wearer]'s veil makes [attack_text] miss, but the force behind the blow causes it to disperse!"))
-	if(!IS_HERETIC(wearer))
-		to_chat(wearer, span_warning("Laughter echoes in your mind...."))
-		wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
-		wearer.dropItemToGround(src, TRUE)
-		wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
+	if(IS_HERETIC(wearer))
 		return
+
+	to_chat(wearer, span_warning("Laughter echoes in your mind...."))
+	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
+	wearer.dropItemToGround(src, TRUE)
+	wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
 
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	. = ..()

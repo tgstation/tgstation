@@ -269,7 +269,7 @@
 	var/damage_sustained = 0
 
 /datum/status_effect/eldritch/moon/on_apply()
-	.=..()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, id)
 	owner.emote(pick("giggle", "laugh"))
 	owner.balloon_alert(owner, "you feel unable to hurt a soul!")
@@ -284,14 +284,12 @@
 	if(damagetype == STAMINA)
 		return
 
-	// Adds damage to the damage sustained
 	damage_sustained += damage
 
-	// If the damage_sustained is equal or below 15 don't remove the trait
 	if(damage_sustained<15)
 		return
 
-	// Remove the pacifism and give them a balloon alert
+	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, id)
 	owner.balloon_alert(owner, "you feel able to once again strike!")
 
@@ -302,7 +300,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/moon/on_remove()
-	.=..()
+	. = ..()
 	UnregisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE)
 
 	// Incase the trait was not removed earlier

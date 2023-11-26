@@ -79,7 +79,6 @@
 		// Add a mood event that causes the hallucinations to not trigger anymore
 		examiner.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
 
-
 // The First Desire painting, using a lot of the painting/eldritch framework
 /obj/item/wallframe/painting/eldritch/desire
 	name = "The First Desire"
@@ -95,17 +94,17 @@
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/desire/examine_effects(mob/living/carbon/examiner)
-	if(!IS_HERETIC(examiner))
-		if (!examiner.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
-			return ..()
+	if (examiner.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
 		// Gives them some nutrition
 		examiner.adjust_nutrition(50)
 		to_chat(examiner, warning("You feel a searing pain in your stomach!"))
 		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 		to_chat(examiner, span_notice("You feel less hungry, but more empty somehow?"))
 		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
-		return ..()
-		
+
+	if(!IS_HERETIC(examiner))
+		return
+
 	// A list made of the organs and bodyparts the heretic possess
 	var/static/list/random_bodypart_or_organ = list(
 		/obj/item/organ/internal/brain,
@@ -127,7 +126,6 @@
 	// Adds a negative mood event to our heretic
 	examiner.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
 	return ..()
-
 
 // Great chaparral over rolling hills, this one doesn't have the sensor type
 /obj/item/wallframe/painting/eldritch/vines
@@ -171,7 +169,6 @@
 		new /datum/spacevine_controller(get_turf(examiner), mutations, 0, 10)
 		to_chat(examiner, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
 
-
 // Lady out of gates, gives a brain trauma causing the person to scratch themselves
 /obj/item/wallframe/painting/eldritch/beauty
 	name = "Lady out of gates"
@@ -198,7 +195,6 @@
 	if(examiner.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
 		to_chat(examiner, "You feel changed, more perfect....")
 		examiner.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
-
 
 // Climb over the rusted mountain, gives a brain trauma causing the person to randomly rust tiles beneath them
 /obj/item/wallframe/painting/eldritch/rust

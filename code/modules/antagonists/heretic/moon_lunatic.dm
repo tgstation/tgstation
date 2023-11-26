@@ -13,7 +13,6 @@
 	// The body of the ascended heretic who created us
 	var/mob/living/carbon/human/ascended_body
 
-
 /// Runs when the moon heretic creates us, used to give the lunatic a master
 /datum/antagonist/lunatic/proc/set_master(datum/mind/heretic_master, mob/living/carbon/human/heretic_body)
 	src.ascended_heretic = heretic_master
@@ -25,17 +24,16 @@
 	to_chat(owner, span_boldnotice("Ruin the lie, save the truth through obeying [heretic_master] the ringleader!"))
 
 /datum/antagonist/lunatic/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/moon_parade.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
+	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/moon_parade.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	return ..()
-
 
 /datum/antagonist/lunatic/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge from the moon has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
 
-	var/datum/action/cooldown/lunatic_track/moon_track = new/datum/action/cooldown/lunatic_track()
-	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new/datum/action/cooldown/spell/touch/mansus_grasp()
+	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
+	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
 	mad_touch.Grant(our_mob)
 	moon_track.Grant(our_mob)
 

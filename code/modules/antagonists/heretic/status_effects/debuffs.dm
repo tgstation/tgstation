@@ -247,22 +247,17 @@
 
 /datum/status_effect/moon_converted/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
-	// Healing based on how low their sanity is
-	owner.adjustBruteLoss(-150+owner.mob_mood.sanity)
-	owner.adjustFireLoss(-150+owner.mob_mood.sanity)
+	// Heals them so people who are in crit can have this affect applied on them and still be of some use for the heretic
+	owner.adjustBruteLoss( -150 + owner.mob_mood.sanity)
+	owner.adjustFireLoss(-150 + owner.mob_mood.sanity)
+
 	to_chat(owner, span_warning(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
 	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
 	owner.AdjustUnconscious(7 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, REF(src))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
 	owner.update_appearance(UPDATE_OVERLAYS)
-	owner.cause_hallucination( \
-		/datum/hallucination/delusion/preset/moon, \
-		"[id] status effect", \
-		duration = duration, \
-		affects_us = FALSE, \
-		affects_others = TRUE, \
-	)
+	owner.cause_hallucination(/datum/hallucination/delusion/preset/moon, "[id] status effect", duration = duration, affects_us = FALSE, affects_others = TRUE)
 	return TRUE
 
 /datum/status_effect/moon_converted/proc/on_damaged(datum/source, damage, damagetype)
@@ -272,13 +267,10 @@
 	if(damagetype == STAMINA)
 		return
 
-	// Adds damage to the damage sustained
 	damage_sustained += damage
 
-	// If the damage_sustained is less than 75 don't remove the status effect
-	if (damage_sustained<75)
+	if (damage_sustained < 75)
 		return
-	// Remove the status effect
 	qdel(src)
 
 /datum/status_effect/moon_converted/proc/update_owner_overlay(atom/source, list/overlays)
