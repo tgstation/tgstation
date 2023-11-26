@@ -121,7 +121,7 @@
 		return
 	if(!can_use(user))
 		return
-	if(isnull(client))
+	if(isnull(user.client))
 		return
 	if(current_user)
 		to_chat(user, span_warning("The console is already in use!"))
@@ -169,7 +169,7 @@
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	if(isnull(user))
 		return
-	if(isnull(client))
+	if(isnull(user.client))
 		return
 	GrantActions(user)
 	current_user = user
