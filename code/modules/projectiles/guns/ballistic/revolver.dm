@@ -301,8 +301,8 @@
 /obj/item/gun/ballistic/revolver/reverse/Initialize(mapload)
 	. = ..()
 	var/obj/item/gun/ballistic/revolver/syndicate/syndie_revolver = /obj/item/gun/ballistic/revolver/syndicate
-	name = initial(syndie_revolver.name)
-	desc = initial(syndie_revolver.desc)
+	name = /obj/item/gun/ballistic/revolver/syndicate::name
+	desc = /obj/item/gun/ballistic/revolver/syndicate::desc
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)
