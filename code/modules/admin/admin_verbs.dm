@@ -68,7 +68,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
 	/client/proc/cmd_change_command_name,
 	/client/proc/create_mob_worm,
-	/client/proc/spawn_as_mmi,
 	/client/proc/fax_panel, /*send a paper to fax*/
 	/client/proc/force_load_lazy_template,
 	/client/proc/game_panel, /*game panel, allows to change game-mode etc*/
@@ -223,6 +222,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/run_empty_query,
 	/client/proc/SDQL2_query,
 	/client/proc/set_dynex_scale,
+	/client/proc/spawn_as_mmi,
 	/client/proc/spawn_debug_full_crew,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/test_movable_UI,
@@ -1196,6 +1196,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		return
 
 	var/obj/item/mmi/new_mmi = new(target.loc)
-	var/obj/item/organ/internal/brain/B = target.get_organ_slot(ORGAN_SLOT_BRAIN)
-	B.Remove(target)
-	new_mmi.attackby(B,target)
+	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
+	target_brain.Remove(target)
+	new_mmi.attackby(target_brain,target)
+	qdel(target)
