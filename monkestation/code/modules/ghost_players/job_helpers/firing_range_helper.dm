@@ -83,3 +83,7 @@
 			return FALSE
 	return ..()
 
+/obj/effect/gun_check_blocker/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/gun))
+		qdel(arrived)
