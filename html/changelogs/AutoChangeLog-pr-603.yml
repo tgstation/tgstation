@@ -1,0 +1,4 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - rscadd: "Twitch subs and Patrons at Assistant tier and above can enjoy a 25 monkecoin bonus at round end.  These bonuses do stack if you are both subbed and a patron, AND they both are affected by monkecoin multipliers."
