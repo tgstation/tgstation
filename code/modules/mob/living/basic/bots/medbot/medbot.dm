@@ -85,6 +85,9 @@
 		MEDIBOT_VOICED_THE_END = 'sound/voice/medbot/is_this_the_end.ogg',
 		MEDIBOT_VOICED_NOOO = 'sound/voice/medbot/nooo.ogg',
 	)
+	var/static/list/misc_announcements= list(
+		MEDIBOT_VOICED_CHICKEN = 'sound/voice/medbot/i_am_chicken.ogg',
+	)
 	/// drop determining variable
 	var/health_analyzer = /obj/item/healthanalyzer
 	/// drop determining variable
@@ -170,7 +173,7 @@
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()
-	return (idle_lines + wait_announcements + afterheal_announcements + near_death_announcements + emagged_announcements + tipped_announcements + untipped_announcements + worried_announcements)
+	return (idle_lines + wait_announcements + afterheal_announcements + near_death_announcements + emagged_announcements + tipped_announcements + untipped_announcements + worried_announcements + misc_announcements)
 
 /mob/living/basic/bot/medbot/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

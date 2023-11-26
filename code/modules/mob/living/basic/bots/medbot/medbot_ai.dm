@@ -144,6 +144,10 @@
 		speech_to_pick_from = controller.blackboard[BB_EMAGGED_SPEECH]
 	else if(mode == BOT_IDLE)
 		speech_to_pick_from = controller.blackboard[BB_IDLE_SPEECH]
+	var/mob/living/living_pawn = controller.pawn
+
+	if(locate(/obj/item/clothing/head/costume/chicken) in living_pawn)
+		speech_to_pick_from += MEDIBOT_VOICED_CHICKEN
 
 	if(!length(speech_to_pick_from))
 		finish_action(controller, FALSE)
@@ -175,6 +179,7 @@
 
 /datum/ai_behavior/announce_patient
 	action_cooldown = 30 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
 	. = ..()

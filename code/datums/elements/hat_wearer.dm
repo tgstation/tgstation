@@ -16,7 +16,6 @@
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(exited))
 	RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attack_by))
-	RegisterSignal(target, COMSIG_ATOM_HITBY, PROC_REF(thrown_at))
 
 /datum/element/hat_wearer/Detach(datum/target)
 	var/obj/item/hat = (locate(/obj/item/clothing/head) in target)
@@ -34,10 +33,10 @@
 /datum/element/hat_wearer/proc/on_overlays_updated(atom/source, list/overlays)
 	SIGNAL_HANDLER
 
-	var/obj/item/hat = (locate(/obj/item/clothing/head/hats/tophat) in source)
+	var/obj/item/hat = (locate(/obj/item/clothing/head) in source)
 	if(isnull(hat))
 		return
-	var/mutable_appearance/hat_overlay = mutable_appearance(hat.icon, hat.icon_state)
+	var/mutable_appearance/hat_overlay = mutable_appearance(hat.worn_icon, hat.icon_state)
 	hat_overlay.pixel_x = offsets[1]
 	hat_overlay.pixel_y = offsets[2]
 	overlays += hat_overlay
@@ -55,7 +54,7 @@
 	if(!istype(arrived, /obj/item/clothing/head))
 		return
 	for(var/obj/item/clothing/head/already_worn in source)
-		if(source == arrived)
+		if(already_worn == arrived)
 			continue
 		already_worn.forceMove(get_turf(source))
 	source.update_appearance(UPDATE_OVERLAYS)
@@ -65,15 +64,10 @@
 	if(!istype(item, /obj/item/clothing/head))
 		return
 	INVOKE_ASYNC(src, PROC_REF(place_hat), source, item, attacker)
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/element/hat_wearer/proc/place_hat(atom/movable/source, obj/item/item, mob/living/attacker)
 	if(!do_after(attacker, delay = 3 SECONDS, target = source))
 		source.balloon_alert(attacker, "must stay still!")
 		return
 	item.forceMove(source)
-
-/datum/element/hat_wearer/proc/thrown_at(atom/movable/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	SIGNAL_HANDLER
-	if(!istype(thrown_movable, /obj/item/clothing/head))
-		return
-	thrown_movable.forceMove(source)

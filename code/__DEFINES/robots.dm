@@ -104,8 +104,21 @@
 ///The Bot has been hacked by a Silicon, emagging them, but revertable.
 #define BOT_COVER_HACKED (1<<3)
 
+
+//basic bots defines
+
+///is our maintenancle panel currently open
 #define BOT_MAINTS_PANEL_OPEN (1<<0)
+///is our control panel currently open
 #define BOT_CONTROL_PANEL_OPEN (1<<1)
+
+///bitfield for our access flags
+DEFINE_BITFIELD(bot_access_flags, list(
+	"MAINTS OPEN" = BOT_MAINTS_PANEL_OPEN,
+	"CONTROL OPEN" = BOT_CONTROL_PANEL_OPEN,
+	"COVER EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER HACKED" = BOT_COVER_HACKED,
+))
 
 //Bot types
 /// Secutritrons (Beepsky)
@@ -305,3 +318,4 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MEDIBOT_VOICED_THIS_HURTS "This hurts, my pain is real!"
 #define MEDIBOT_VOICED_THE_END "Is this the end?"
 #define MEDIBOT_VOICED_NOOO	"Nooo!"
+#define MEDIBOT_VOICED_CHICKEN "LOOK AT ME??? i am a chicken"

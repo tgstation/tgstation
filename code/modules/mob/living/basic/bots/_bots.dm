@@ -5,12 +5,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	"go" = "GO",
 	"home" = "RETURN HOME",
 ))
-DEFINE_BITFIELD(bot_access_flags, list(
-	"MAINTS OPEN" = BOT_MAINTS_PANEL_OPEN,
-	"CONTROL OPEN" = BOT_CONTROL_PANEL_OPEN,
-	"COVER EMAGGED" = BOT_COVER_EMAGGED,
-	"COVER HACKED" = BOT_COVER_HACKED,
-))
 
 
 /mob/living/basic/bot
@@ -307,13 +301,13 @@ DEFINE_BITFIELD(bot_access_flags, list(
 /mob/living/basic/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN)) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
-		bot_access_flags &= BOT_CONTROL_PANEL_OPEN
+		bot_access_flags |= BOT_CONTROL_PANEL_OPEN
 		balloon_alert(user, "cover unlocked")
 		return TRUE
 	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN) || !(bot_access_flags & BOT_MAINTS_PANEL_OPEN)) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		balloon_alert(user, "open maintenance panel first!")
 		return FALSE
-	bot_access_flags |= (BOT_COVER_EMAGGED)
+	bot_access_flags |= BOT_COVER_EMAGGED
 	bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN
 	bot_access_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
 	bot_reset()

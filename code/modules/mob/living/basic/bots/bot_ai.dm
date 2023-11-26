@@ -3,7 +3,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_SALUTE_MESSAGES = list(
 			"salutes",
-			"nods in appreciation",
+			"nods in appreciation towards",
 			"fist bumps",
 		)
 	)
@@ -11,10 +11,10 @@
 	ai_movement = /datum/ai_movement/jps/bot
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/salute_beepsky,
 		/datum/ai_planning_subtree/find_patrol_beacon,
+		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
 	max_target_distance = AI_BOT_PATH_LENGTH
 	///keys to be reset when the bot is reseted
@@ -89,7 +89,6 @@
 	if(!isnull(controller.blackboard[list_key]))
 		controller.clear_blackboard_key(list_key)
 	finish_action(controller, TRUE)
-	return
 
 
 /datum/ai_planning_subtree/find_patrol_beacon
@@ -206,14 +205,6 @@
 	return null
 
 /datum/ai_behavior/salute_beepsky
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
-
-/datum/ai_behavior/salute_beepsky/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
 
 /datum/ai_behavior/salute_beepsky/perform(seconds_per_tick, datum/ai_controller/controller, target_key, salute_keys)
 	. = ..()
@@ -226,10 +217,11 @@
 		return
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//special interaction if we are wearing a fedora
-	if(locate(/obj/item/clothing/head/fedora) in bot_pawn)
-		salute_list += "tips fedora"
+	var/obj/item/our_hat = (locate(/obj/item/clothing/head) in bot_pawn)
+	if(our_hat)
+		salute_list += "tips [our_hat] at "
 
-	bot_pawn.manual_emote(pick(salute_list))
+	bot_pawn.manual_emote(pick(salute_list) + " [controller.blackboard[target_key]]")
 	finish_action(controller, TRUE, target_key)
 	return
 
