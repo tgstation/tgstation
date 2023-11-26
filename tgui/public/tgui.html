@@ -510,6 +510,29 @@ window.replaceHtml = function (inline_html) {
       + "<!-- tgui:inline-html-end -->"
   );
 };
+
+!(function () {
+    function t() {
+      var e = Array.prototype.slice.call(arguments),
+        n = document.createDocumentFragment();
+      e.forEach(function (e) {
+        var t = e instanceof Node;
+        n.appendChild(t ? e : document.createTextNode(String(e)));
+      }),
+        this.appendChild(n);
+    }
+    [Element.prototype, Document.prototype, DocumentFragment.prototype].forEach(
+      function (e) {
+        e.hasOwnProperty('append') ||
+          Object.defineProperty(e, 'append', {
+            configurable: !0,
+            enumerable: !0,
+            writable: !0,
+            value: t,
+          });
+      }
+    );
+  })();
 </script>
 
 <style>
@@ -658,6 +681,6 @@ Thank you for your cooperation.
 // Signal tgui that we're ready to receive updates
 Byond.sendMessage('ready');
 </script>
-  
+
 </body>
 </html>

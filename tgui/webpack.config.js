@@ -24,14 +24,13 @@ const createStats = (verbose) => ({
   version: verbose,
 });
 
-// prettier-ignore
 module.exports = (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
   const config = {
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
-    target: ['web', 'es3', 'browserslist:ie 8'],
+    target: ['web', 'es5', 'browserslist:ie 11'],
     entry: {
       'tgui': ['./packages/tgui-polyfill', './packages/tgui'],
       'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
@@ -140,8 +139,8 @@ module.exports = (env = {}, argv) => {
       new TerserPlugin({
         extractComments: false,
         terserOptions: {
-          ie8: true,
           output: {
+            ie8: true,
             ascii_only: true,
             comments: false,
           },
