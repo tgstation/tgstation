@@ -83,11 +83,14 @@ SUBSYSTEM_DEF(verb_manager)
 		incoming_callback.user = WEAKREF(incoming_callback.object)
 		var/datum/callback/new_us = CALLBACK(arglist(list(GLOBAL_PROC, GLOBAL_PROC_REF(_queue_verb)) + args.Copy()))
 		return world.push_usr(incoming_callback.object, new_us)
-#endif
+
+#else
 
 	if(QDELETED(usr) || !usr.client)
 		stack_trace("_queue_verb() returned false because it wasnt called from player input!")
 		return FALSE
+
+#endif
 
 	if(!istype(subsystem_to_use))
 		stack_trace("_queue_verb() returned false because it was given an invalid subsystem to queue for!")
