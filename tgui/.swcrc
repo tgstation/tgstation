@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "dynamicImport": false,
+      "decorators": false
+    },
+    "experimental": {
+      "plugins": [
+        [
+          "swc-plugin-inferno",
+          {
+            "pure": true // Enable or disable /*#__PURE__*/ statements
+          }
+        ]
+      ]
+    },
+    "target": "es5",
+    "loose": false,
+    "externalHelpers": false,
+    // Requires v1.2.50 or upper and requires target to be es2016 or upper.
+    "keepClassNames": false
+  },
+  "minify": true
+}
