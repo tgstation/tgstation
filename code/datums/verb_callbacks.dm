@@ -8,6 +8,7 @@
 	creation_time = DS2TICKS(world.time)
 	. = ..()
 
+#ifndef UNIT_TESTS
 /datum/callback/verb_callback/Invoke(...)
 	var/mob/our_user = user?.resolve()
 	if(QDELETED(our_user) || isnull(our_user.client))
@@ -23,6 +24,6 @@
 	var/mob/temp = usr
 	. = ..()
 	usr = temp
-
+#endif
 
 
