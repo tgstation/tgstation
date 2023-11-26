@@ -1,9 +1,0 @@
-author: "KittyNoodle"
-delete-after: True
-changes:
-  - rscadd: "The Observer, a more roundstart focused storyteller that prefers to watch idly"
-  - rscadd: "The Nobleman, a less destructive variant of warrior that lets pacifists enjoy the game too."
-  - qol: "No more lowpop kudzu spam"
-  - balance: "Jester and warrior are now highpop/midpop only."
-  - balance: "Changed a lot of storyteller tags to make more sense"
-  - code_imp: "Modularizes a lot of storyteller code"
