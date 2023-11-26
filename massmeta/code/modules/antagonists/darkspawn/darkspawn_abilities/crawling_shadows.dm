@@ -1,3 +1,4 @@
+/* this shit is fucking buggy
 //Assumes a stealthier form for sixty seconds or until cancelled.
 /datum/action/innate/darkspawn/crawling_shadows
 	name = "Crawling Shadows"
@@ -23,3 +24,4 @@
 	var/mob/living/simple_animal/hostile/crawling_shadows/CS = new /mob/living/simple_animal/hostile/crawling_shadows(get_turf(owner))
 	CS.darkspawn_mob = owner
 	return TRUE
+*/
