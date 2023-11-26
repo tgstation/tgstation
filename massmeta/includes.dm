@@ -7,6 +7,7 @@
 #include "code\modules\surgery\organs\tongue.dm"
 #include "code\modules\clothing\suits\chaplainsuits.dm"
 #include "code\modules\admin\verbs\adminhelp.dm"
+#include "code\modules\mob\living\carbon\human\emote.dm"
 #include "code\obj\items\clothing\gloves.dm"
 #include "code\obj\items\clothing\masks.dm"
 #include "code\datums\components\crafting\makeshift.dm"
