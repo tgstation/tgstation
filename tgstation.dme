@@ -2791,6 +2791,7 @@
 #include "code\modules\antagonists\heretic\magic\mirror_walk.dm"
 #include "code\modules\antagonists\heretic\magic\nightwatcher_rebirth.dm"
 #include "code\modules\antagonists\heretic\magic\realignment.dm"
+#include "code\modules\antagonists\heretic\magic\rust_charge.dm"
 #include "code\modules\antagonists\heretic\magic\rust_construction.dm"
 #include "code\modules\antagonists\heretic\magic\rust_wave.dm"
 #include "code\modules\antagonists\heretic\magic\shadow_cloak.dm"
