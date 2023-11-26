@@ -167,6 +167,8 @@
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	if(isnull(user))
 		return
+	if(isnull(client))
+		return
 	GrantActions(user)
 	current_user = user
 	eyeobj.eye_user = user
