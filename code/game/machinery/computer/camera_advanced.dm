@@ -83,7 +83,7 @@
 		camerachunks_gone.remove(eyeobj)
 
 	user.reset_perspective(null)
-	if(eyeobj.visible_icon && user.client)
+	if(eyeobj.visible_icon)
 		user.client.images -= eyeobj.user_image
 	user.client.view_size.unsupress()
 
