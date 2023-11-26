@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - code_imp: "Bitrunning/Bitrunning Den areas are now cargo area subtypes, rather than station area subtypes."

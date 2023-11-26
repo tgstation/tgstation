@@ -1,4 +1,0 @@
-author: "Momo8289"
-delete-after: True
-changes:
-  - bugfix: "MOD quick carry modules now give the correct carry speed bonus"
