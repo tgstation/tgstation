@@ -74,7 +74,7 @@
 	CRASH("[type] does not implement ai eye handling")
 
 /obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
-	if(isnull(user))
+	if(isnull(user?.client))
 		return
 	for(var/datum/action/actions_removed as anything in actions)
 		actions_removed.Remove(user)
@@ -84,7 +84,7 @@
 		user.reset_perspective(null)
 		if(eyeobj.visible_icon && user.client)
 			user.client.images -= eyeobj.user_image
-		user.client?.view_size.unsupress()
+		user.client.view_size.unsupress()
 
 	eyeobj.eye_user = null
 	user.remote_control = null
@@ -167,7 +167,7 @@
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
 
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
-	if(isnull(user))
+	if(isnull(user?.client))
 		return
 	if(isnull(user.client))
 		return
@@ -179,7 +179,7 @@
 	user.reset_perspective(eyeobj)
 	eyeobj.setLoc(eyeobj.loc)
 	if(should_supress_view_changes)
-		user.client?.view_size.supress()
+		user.client.view_size.supress()
 
 /mob/camera/ai_eye/remote
 	name = "Inactive Camera Eye"
