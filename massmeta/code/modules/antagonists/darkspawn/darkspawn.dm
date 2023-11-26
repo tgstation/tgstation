@@ -19,8 +19,6 @@
 	var/psi_regen = 20 //How much Psi will regenerate after using an ability
 	var/psi_regen_delay = 5 //How many ticks need to pass before Psi regenerates
 	var/psi_regen_ticks = 0 //When this hits 0, regenerate Psi and return to psi_regen_delay
-	var/psi_used_since_regen = 0 //How much Psi has been used since we last regenerated
-	var/psi_regenerating = FALSE //Used to prevent duplicate regen proc calls
 
 	//Lucidity variables
 	var/lucidity = 3 //Lucidity is used to buy abilities and is gained by using Devour Will
@@ -228,7 +226,7 @@
 
 // Darkspawn-related things like Psi //
 
-/datum/antagonist/darkspawn/process() //This is here since it controls most of the Psi stuff
+/datum/antagonist/darkspawn/process(seconds_per_tick) //This is here since it controls most of the Psi stuff
 	psi = min(psi, psi_cap)
 	if(psi != psi_cap)
 		psi_regen_ticks--
@@ -243,28 +241,14 @@
 	if(!has_psi(amt))
 		return
 	psi_regen_ticks = psi_regen_delay
-	psi_used_since_regen += amt
 	psi -= amt
 	psi = round(psi, 0.2)
 	update_psi_hud()
 	return TRUE
 
 /datum/antagonist/darkspawn/proc/regenerate_psi()
-	set waitfor = FALSE
-	if(psi_regenerating)
-		return
-	psi_regenerating = TRUE
-	var/total_regen = min(psi_regen, psi_used_since_regen)
-	for(var/i in 1 to psi_cap) //tick it up very quickly instead of just increasing it by the regen; also include a failsafe to avoid infinite loops
-		if(!total_regen || psi >= psi_cap)
-			break
-		psi = min(psi + 1, psi_cap)
-		total_regen--
-		update_psi_hud()
-		sleep(0.05 SECONDS)
-	psi_used_since_regen = 0
+	psi = min(psi + 20, psi_cap)
 	psi_regen_ticks = psi_regen_delay
-	psi_regenerating = FALSE
 	return TRUE
 
 /datum/antagonist/darkspawn/proc/update_psi_hud()
