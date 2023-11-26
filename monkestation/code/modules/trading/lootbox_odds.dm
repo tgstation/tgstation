@@ -29,15 +29,15 @@
 		if("High Tier")
 			temp = new /obj/item/coin/antagtoken
 			temp.name = "High Tier Antag Token"
-			user.client.saved_tokens.adjust_tokens(HIGH_THREAT, 1)
+			user.client.client_token_holder.adjust_antag_tokens(HIGH_THREAT, 1)
 		if("Medium Tier")
 			temp = new /obj/item/coin/antagtoken
 			temp.name = "Medium Tier Antag Token"
-			user.client.saved_tokens.adjust_tokens(MEDIUM_THREAT, 1)
+			user.client.client_token_holder.adjust_antag_tokens(MEDIUM_THREAT, 1)
 		if("Low Tier")
 			temp = new /obj/item/coin/antagtoken
 			temp.name = "Low Tier Antag Token"
-			user.client.saved_tokens.adjust_tokens(LOW_THREAT, 1)
+			user.client.client_token_holder.adjust_antag_tokens(LOW_THREAT, 1)
 
 		if("Loadout Item")
 			var/static/list/viable_types = list()

@@ -16,3 +16,13 @@
 #define T_EVENT_GIVE_EVERYONE_ITEM "give-everyone-item"
 #define T_EVENT_ROD_OOK "rod-ook"
 #define T_EVENT_SKINNY_5 "skinny-5"
+
+//For linking twitch account to ss13
+#define NO_TWITCH_SUB "" //these are the possible values for the twitch subs
+#define TWITCH_SUB_TIER_1 "1000"
+#define TWITCH_SUB_TIER_2 "2000"
+#define TWITCH_SUB_TIER_3 "3000"
+
+#define ACCESS_TWITCH_SUB_TIER_1 1
+#define ACCESS_TWITCH_SUB_TIER_2 2
+#define ACCESS_TWITCH_SUB_TIER_3 3

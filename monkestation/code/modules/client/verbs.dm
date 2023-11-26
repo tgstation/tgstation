@@ -91,8 +91,8 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	var/static/list/event_list
 	if(!event_list)
 		event_list = list()
-		for(var/event as anything in GLOB.twitch_events_by_type)
-			var/datum/twitch_event/event_instance = GLOB.twitch_events_by_type[event]
+		for(var/event as anything in SStwitch.twitch_events_by_type)
+			var/datum/twitch_event/event_instance = SStwitch.twitch_events_by_type[event]
 			if(!event_instance.token_cost)
 				continue
 			event_list += event_instance
