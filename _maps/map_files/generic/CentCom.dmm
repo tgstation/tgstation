@@ -2007,6 +2007,9 @@
 	id = "CC_firing_range_checkpoint"
 	},
 /obj/machinery/light/floor/has_bulb,
+/obj/effect/gun_check_blocker{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/firing_range)
 "fP" = (
@@ -2913,6 +2916,9 @@
 /area/centcom/central_command_areas/ghost_spawn)
 "iv" = (
 /obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
+/obj/effect/gun_check_blocker{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -58426,13 +58432,13 @@ ae
 ew
 Fo
 QC
-Bo
-Bo
-Bo
+la
+la
+la
 tU
-Bo
-Bo
-Bo
+la
+la
+la
 mw
 Ra
 GM
@@ -58940,13 +58946,13 @@ pq
 ew
 Ik
 QC
-Bo
-Bo
-Bo
+la
+la
+la
 tU
-Bo
-Bo
-Bo
+la
+la
+la
 mw
 UU
 GM
@@ -59718,7 +59724,7 @@ Bo
 Bo
 Bo
 Bo
-oF
+mw
 GM
 GM
 EY
