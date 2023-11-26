@@ -70689,18 +70689,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
-"vxe" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 1"
-	},
-/obj/effect/landmark/navigate_destination{
-	location = "Arrival Shuttle"
-	},
-/turf/open/floor/plating,
-/area/station/hallway/secondary/entry)
 "vxD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery/white{
@@ -154578,7 +154566,7 @@ jhd
 jhd
 bfM
 tCT
-vxe
+hEb
 nQG
 dfL
 nmY
