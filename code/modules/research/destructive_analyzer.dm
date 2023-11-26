@@ -171,6 +171,7 @@
 	if(isnull(id))
 		return FALSE
 
+	var/item_type = loaded_item.type
 	if(id == DESTRUCTIVE_ANALYZER_DESTROY_POINTS)
 		if(!destroy_item(gain_research_points = TRUE))
 			return FALSE
