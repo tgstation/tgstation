@@ -121,6 +121,8 @@
 		return
 	if(!can_use(user))
 		return
+	if(isnull(client))
+		return
 	if(current_user)
 		to_chat(user, span_warning("The console is already in use!"))
 		return
