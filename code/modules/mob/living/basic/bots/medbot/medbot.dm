@@ -128,13 +128,8 @@
 		skin = new_skin
 	update_appearance()
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) && mapload && is_station_level(z))
-		skin = "advanced"
-		update_appearance(UPDATE_OVERLAYS)
-		damage_type_healer = HEAL_ALL_DAMAGE
-		if(prob(50))
-			name += ", PhD."
-
+	var/static/list/death_loot = list(health_analyzer, medkit_type)
+	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
@@ -145,6 +140,15 @@
 	var/static/list/hat_offsets = list(4,-9)
 	AddElement(/datum/element/hat_wearer, offsets = hat_offsets)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
+
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
+		return
+	skin = "advanced"
+	update_appearance(UPDATE_OVERLAYS)
+	damage_type_healer = HEAL_ALL_DAMAGE
+	if(prob(50))
+		name += ", PhD."
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -267,12 +271,15 @@
  * user - the mob who righted us. Can be null.
  */
 /mob/living/basic/bot/medbot/proc/after_righted(mob/user)
-	if(tipper?.resolve() == user)
-		speak(MEDIBOT_VOICED_FORGIVE)
-	else
-		speak(pick(untipped_announcements))
+	var/mob/tipper_mob = isnull(user) ? null : tipper?.resolve()
 	tipper = null
 	mode = BOT_IDLE
+	if(isnull(tipper_mob))
+		return
+	if(tipper_mob == user)
+		speak(MEDIBOT_VOICED_FORGIVE)
+		return
+	speak(pick(untipped_announcements))
 
 /mob/living/basic/bot/medbot/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
@@ -304,7 +311,6 @@
 /mob/living/basic/bot/proc/update_bot_mode(new_mode)
 	mode = new_mode
 	update_appearance()
-
 
 /mob/living/basic/bot/medbot/autopatrol
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION

@@ -56,7 +56,7 @@
 
 /datum/crafting_recipe/medbot
 	name = "Medbot"
-	result = /mob/living/simple_animal/bot/medbot
+	result = /mob/living/basic/bot/medbot
 	reqs = list(
 		/obj/item/healthanalyzer = 1,
 		/obj/item/storage/medkit = 1,
@@ -74,7 +74,7 @@
 	var/mob/living/basic/bot/medbot/bot = result
 	var/obj/item/storage/medkit/medkit = bot.contents[3]
 	bot.medkit_type = medkit
-	bot.healthanalyzer = bot.contents[4]
+	bot.health_analyzer = bot.contents[4]
 
 	///if you add a new one don't forget to update /obj/item/storage/medkit/attackby()
 	if (istype(medkit, /obj/item/storage/medkit/fire))
