@@ -127,9 +127,6 @@
 	if(!isnull(new_skin))
 		skin = new_skin
 	update_appearance()
-
-	var/static/list/death_loot = list(health_analyzer, medkit_type)
-	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
