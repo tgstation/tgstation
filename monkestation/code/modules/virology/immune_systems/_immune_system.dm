@@ -90,8 +90,7 @@
 	if (overloaded)
 		return
 
-	for (var/ID in host.diseases)
-		var/datum/disease/advanced/disease = host.diseases[ID]
+	for (var/datum/disease/advanced/disease as anything in host.diseases)
 		for (var/A in disease.antigen)
 			var/tally = 0.5
 			if (isturf(host.loc) && (host.body_position == LYING_DOWN))

@@ -190,6 +190,7 @@
 		"childID",
 		"symptoms",
 		"stageprob",
+		"antigen",
 		)
 
 	var/datum/disease/D = copy_type ? new copy_type() : new type()

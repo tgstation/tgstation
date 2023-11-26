@@ -31,10 +31,9 @@ GLOBAL_LIST_INIT(infected_items, list())
 	if (src in perp.held_items)
 		bodypart = BODY_ZONE_ARMS
 
-	var/obj/item/bodypart/bp = perp.get_bodypart(bodypart)
 	if (bodypart)
 		var/block = perp.check_contact_sterility(bodypart)
-		var/bleeding = bp.get_modified_bleed_rate()
+		var/bleeding = perp.check_bodypart_bleeding(bodypart)
 		if (!block)
 			if (D.spread_flags & DISEASE_SPREAD_AIRBORNE)
 				perp.infect_disease(D, notes="(Contact, from picking up \a [src])")
