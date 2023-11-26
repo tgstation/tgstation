@@ -53,6 +53,10 @@
 		/obj/item/gun/medbeam,
 	)
 
+/obj/structure/centcom_item_spawner/gun_and_ammo_creator/spawn_chosen_item(type_to_spawn)
+	var/obj/spawned_obj = new type_to_spawn(get_turf(src))
+	spawned_obj.AddElement(/datum/element/area_locked, list(/area/centcom/central_command_areas/firing_range))
+
 /obj/structure/centcom_item_spawner/gun_and_ammo_creator/build_items_to_spawn()
 	items_to_spawn["Ballistic"] = subtypesof(/obj/item/gun/ballistic)
 	items_to_spawn["Energy"] = subtypesof(/obj/item/gun/energy)
@@ -82,8 +86,3 @@
 		if(istype(object, /obj/item/gun))
 			return FALSE
 	return ..()
-
-/obj/effect/gun_check_blocker/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(istype(arrived, /obj/item/gun))
-		qdel(arrived)
