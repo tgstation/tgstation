@@ -214,7 +214,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(isnull(event))
 				return
 			if(length(event.admin_setup))
-				for(var/datum/event_admin_setup/admin_setup_datum in event.admin_setup)
+				for(var/datum/event_admin_setup/admin_setup_datum as anything in event.admin_setup)
 					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
 						return
 			event.run_event(admin_forced = TRUE)
