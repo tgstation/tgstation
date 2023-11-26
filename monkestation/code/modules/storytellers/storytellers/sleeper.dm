@@ -10,3 +10,4 @@
 		)
 	guarantees_roundstart_roleset = FALSE
 	tag_multipliers = list(TAG_COMBAT = 0.6, TAG_DESTRUCTIVE = 0.7)
+	always_votable = TRUE //good for low pop

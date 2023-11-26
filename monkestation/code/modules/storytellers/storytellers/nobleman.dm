@@ -9,3 +9,4 @@
 		EVENT_TRACK_OBJECTIVES = 1
 		)
 	tag_multipliers = list(TAG_COMBAT = 1.4, TAG_DESTRUCTIVE = 0.4)
+	population_min = 25 //combat based so we should have some kind of min pop(even if low)

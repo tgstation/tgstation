@@ -20,10 +20,11 @@
 
 /datum/vote/storyteller/create_vote()
 	. = ..()
-	if((length(choices) == 1)) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining map because it would just happen anyways.
+	if((length(choices) == 1)) // Only one choice, no need to vote. Let's just auto-rotate it to the only remaining storyteller because it would just happen anyways.
 		var/de_facto_winner = choices[1]
 		SSgamemode.storyteller_vote_result(de_facto_winner)
-		to_chat(world, span_boldannounce("The storyteller vote has been skipped because there is only one storyteller left to vote for. The map has been changed to [de_facto_winner]."))
+		to_chat(world, span_boldannounce("The storyteller vote has been skipped because there is only one storyteller left to vote for. \
+									The storyteller has been changed to [de_facto_winner]."))
 		return FALSE
 
 /datum/vote/storyteller/finalize_vote(winning_option)

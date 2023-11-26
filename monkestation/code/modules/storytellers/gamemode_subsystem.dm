@@ -1,4 +1,6 @@
 #define INIT_ORDER_GAMEMODE 70
+///how many storytellers can be voted for along with always_votable ones
+#define DEFAULT_STORYTELLER_VOTE_OPTIONS 4
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
@@ -776,17 +778,26 @@ SUBSYSTEM_DEF(gamemode)
 	point_thresholds[EVENT_TRACK_OBJECTIVES] = CONFIG_GET(number/objectives_point_threshold)
 
 /datum/controller/subsystem/gamemode/proc/storyteller_vote_choices()
-	var/client_amount = GLOB.clients.len
-	var/list/choices = list()
+	var/client_amount = length(GLOB.clients)
+	var/list/final_choices = list()
+	var/list/pick_from = list()
 	for(var/storyteller_type in storytellers)
 		var/datum/storyteller/storyboy = storytellers[storyteller_type]
 		if(!storyboy.votable)
 			continue
 		if((storyboy.population_min && storyboy.population_min > client_amount) || (storyboy.population_max && storyboy.population_max < client_amount))
 			continue
-		choices += storyboy.name
-		choices[storyboy.name] = 0
-	return choices
+
+		if(storyboy.always_votable)
+			final_choices[storyboy.name] = 0
+		else
+			pick_from[storyboy.name] = 0
+
+	while(length(pick_from) > DEFAULT_STORYTELLER_VOTE_OPTIONS)
+		pick_n_take(pick_from)
+
+	final_choices += pick_from
+	return final_choices
 
 /datum/controller/subsystem/gamemode/proc/storyteller_desc(storyteller_name)
 	for(var/storyteller_type in storytellers)
@@ -1158,3 +1169,5 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			listed.occurrences++
 			listed.occurrences++
+
+#undef DEFAULT_STORYTELLER_VOTE_OPTIONS

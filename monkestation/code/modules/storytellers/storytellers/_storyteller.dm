@@ -54,6 +54,8 @@
 	var/roundstart_prob = 25
 	///do we ignore ran_roundstart
 	var/ignores_roundstart = FALSE
+	///is a storyteller always able to be voted for(also does not count for the amount of storytellers to pick from)
+	var/always_votable = FALSE
 
 /datum/storyteller/process(delta_time)
 	if(!round_started) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
@@ -177,3 +179,4 @@
 /datum/storyteller/guide
 	name = "The Guide"
 	desc = "The Guide will provide a balanced and varied experience. Consider this the default experience."
+	always_votable = TRUE
