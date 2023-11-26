@@ -30,4 +30,4 @@ export AUXLUA_VERSION=1.4.1
 export CUTTER_REPO=actioninja/hypnagogic
 
 #hypnagogic git tag
-export CUTTER_VERSION=v3.0.0
+export CUTTER_VERSION=v3.0.1
