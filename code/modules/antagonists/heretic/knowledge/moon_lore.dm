@@ -239,8 +239,8 @@
 	// Spells get a lower cooldown
 	var/datum/action/cooldown/spell/pointed/moon_smile/smile = locate() in user.actions
 	if(smile)
-		smile.cooldown_time * = 0.66 // Lower cooldown
-		smile.cast_range + =6 // Longer cast range
+		smile.cooldown_time *= 0.66 // Lower cooldown
+		smile.cast_range +=6 // Longer cast range
 
 	var/datum/action/cooldown/spell/pointed/projectile/moon_parade/lunar_parade = locate() in user.actions
 	if(lunar_parade)
