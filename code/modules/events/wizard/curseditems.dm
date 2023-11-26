@@ -8,7 +8,7 @@
 #define BOXING "boxing"
 /// Gives them a chameleon mask
 #define VOICE_MODULATORS "voicemodulators"
-/// Gives them kitty ears and also modifiers their gender to FEMALE
+/// Gives them kitty ears and also modifies their gender to FEMALE
 #define CATGIRLS_2015 "catgirls2015"
 
 /datum/round_event_control/wizard/cursed_items //fashion disasters
