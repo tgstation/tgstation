@@ -1020,3 +1020,38 @@
       wires as Service areas.
   Time-Green:
   - rscadd: Adds an arctangent2 component to circuitry!
+2023-11-26:
+  DaydreamIQ:
+  - qol: Mothuchi's pizzeria has been improved slightly! Order yourself a fresh mothic
+      pizza today!
+  Majkl-J:
+  - code_imp: HUDs no longer use their own trait variable
+  Momo8289:
+  - bugfix: MOD quick carry modules now give the correct carry speed bonus
+  Profakos:
+  - refactor: Slimes's colour, core type and mutation list is now held in a slime
+      type datum
+  - code_imp: Slime's variables have been documented, and renamed a bit to add clarity.
+      Please report bugs that might stem from renaming.
+  - bugfix: Slimes are not longer prevented from attacking pacifist humans.
+  - qol: Slime scans now display the actual amount of genetic instability, instead
+      of hiding it if a slime doesn't mutate further, or tweaking it if it might mutate
+      back into itself. This will make it easier to parse which slime to breed further
+      to get a rainbow slime.
+  Rhials:
+  - code_imp: Bitrunning/Bitrunning Den areas are now cargo area subtypes, rather
+      than station area subtypes.
+  - qol: The area preceding Metastation Cargo's front door is now denoted as being
+      the "cargo lobby".
+  SuperNovaa41:
+  - bugfix: Fixes cyborged heretics seeing influences.
+  Time-Green:
+  - bugfix: Fixes nebula killing everyone when forced by an admin on icebox
+  Y0SH1M4S73R:
+  - bugfix: Rebar crossbow bolts are now reuseable again, without risking crashing
+      clients when fired at point-blank range.
+  - qol: Bitrunning glitches will not show up in the roundend report unless they escape
+      the virtual domain.
+  vinylspiders:
+  - bugfix: fixes a runtime in footstep code that would prevent the fov effect from
+      playing to nearby mobs

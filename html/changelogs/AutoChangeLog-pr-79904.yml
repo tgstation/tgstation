@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Fixes nebula killing everyone when forced by an admin on icebox"
