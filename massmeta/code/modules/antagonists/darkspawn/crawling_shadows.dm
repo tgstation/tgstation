@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/hostile/crawling_shadows/New()
 	..()
-	addtimer(CALLBACK(src, .proc/check_darkspawn), 1)
+	addtimer(CALLBACK(src, PROC_REF(check_darkspawn)), 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/crawling_shadows/Destroy()

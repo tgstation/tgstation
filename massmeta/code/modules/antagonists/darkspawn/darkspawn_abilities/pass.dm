@@ -35,7 +35,7 @@
 		owner.visible_message(span_warning("[owner]'s arms contort into tentacles!"), "<span class='velvet'><b>ikna ikna</b><br>\
 		You transform both arms into umbral tendrils. Examine them to see possible uses.</span>")
 		playsound(owner, 'massmeta/sounds/magic/pass_create.ogg', 50, TRUE)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, owner, 'massmeta/sounds/magic/pass_create.ogg', 50, TRUE), 1)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'massmeta/sounds/magic/pass_create.ogg', 50, TRUE), 1)
 		for(var/i in 1 to 2)
 			var/obj/item/umbral_tendrils/T = new(owner, darkspawn)
 			owner.put_in_hands(T)

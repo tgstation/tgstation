@@ -13,8 +13,8 @@
 	owner.visible_message(span_boldwarning("[owner] begins to growl as their chitin hardens..."), "<span class='velvet bold'>cap...</span><br>\
 	[span_danger("You begin harnessing your power...")]")
 	playsound(owner, 'massmeta/sounds/magic/demented_outburst_charge.ogg', 50, 0)
-	addtimer(CALLBACK(src, .proc/outburst, owner), 50)
-	addtimer(CALLBACK(src, .proc/reset), 50)
+	addtimer(CALLBACK(src, PROC_REF(outburst), owner), 50)
+	addtimer(CALLBACK(src, PROC_REF(reset)), 50)
 	return TRUE
 
 /datum/action/innate/darkspawn/demented_outburst/IsAvailable(feedback = FALSE)

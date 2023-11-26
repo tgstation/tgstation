@@ -38,7 +38,7 @@
 	owner.current.hud_used.psi_counter.invisibility = 0
 	update_psi_hud()
 	add_ability("divulge")
-	addtimer(CALLBACK(src, .proc/begin_force_divulge), 13800) //this won't trigger if they've divulged when the proc runs
+	addtimer(CALLBACK(src, PROC_REF(begin_force_divulge)), 23 MINUTES) //this won't trigger if they've divulged when the proc runs
 	START_PROCESSING(SSprocessing, src)
 	var/datum/objective/darkspawn/O = new
 	objectives += O
@@ -127,17 +127,17 @@
 
 /datum/antagonist/darkspawn/get_admin_commands()
 	. = ..()
-	.["Give Ability"] = CALLBACK(src,.proc/admin_give_ability)
-	.["Take Ability"] = CALLBACK(src,.proc/admin_take_ability)
+	.["Give Ability"] = CALLBACK(src,PROC_REF(admin_give_ability))
+	.["Take Ability"] = CALLBACK(src,PROC_REF(admin_take_ability))
 	if(darkspawn_state == MUNDANE)
-		.["Divulge"] = CALLBACK(src, .proc/divulge)
-		.["Force-Divulge (Obvious)"] = CALLBACK(src, .proc/force_divulge)
+		.["Divulge"] = CALLBACK(src, PROC_REF(divulge))
+		.["Force-Divulge (Obvious)"] = CALLBACK(src, PROC_REF(force_divulge))
 	else if(darkspawn_state == DIVULGED)
-		.["Give Upgrade"] = CALLBACK(src, .proc/admin_give_upgrade)
-		.["[psi]/[psi_cap] Psi"] = CALLBACK(src, .proc/admin_edit_psi)
-		.["[lucidity] Lucidity"] = CALLBACK(src, .proc/admin_edit_lucidity)
-		.["[lucidity_drained] / [GLOB.required_succs] Unique Lucidity"] = CALLBACK(src, .proc/admin_edit_lucidity_drained)
-		.["Sacrament (ENDS THE ROUND)"] = CALLBACK(src, .proc/sacrament)
+		.["Give Upgrade"] = CALLBACK(src, PROC_REF(admin_give_upgrade))
+		.["[psi]/[psi_cap] Psi"] = CALLBACK(src, PROC_REF(admin_edit_psi))
+		.["[lucidity] Lucidity"] = CALLBACK(src, PROC_REF(admin_edit_lucidity))
+		.["[lucidity_drained] / [GLOB.required_succs] Unique Lucidity"] = CALLBACK(src, PROC_REF(admin_edit_lucidity_drained))
+		.["Sacrament (ENDS THE ROUND)"] = CALLBACK(src, PROC_REF(sacrament))
 
 /datum/antagonist/darkspawn/proc/admin_give_ability(mob/admin)
 	var/id = stripped_input(admin, "Enter an ability ID, for \"all\" to give all of them.", "Give Ability")
@@ -335,7 +335,7 @@
 		return
 	to_chat(owner.current, span_userdanger("You feel the skin you're wearing crackling like paper - you will forcefully divulge soon! Get somewhere hidden and dark!"))
 	owner.current.playsound_local(owner.current, 'massmeta/sounds/magic/divulge_01.ogg', 50, FALSE, pressure_affected = FALSE)
-	addtimer(CALLBACK(src, .proc/force_divulge), 1200)
+	addtimer(CALLBACK(src, PROC_REF(force_divulge)), 1200)
 
 /datum/antagonist/darkspawn/proc/force_divulge()
 	if(darkspawn_state != MUNDANE)
@@ -355,8 +355,8 @@
 		if(M.stat != DEAD && isdarkspawn(M))
 			to_chat(M, processed_message)
 	deadchat_broadcast(processed_message, null, H)
-	addtimer(CALLBACK(src, .proc/divulge), 25)
-	addtimer(CALLBACK(/atom/.proc/visible_message, H, span_boldwarning("[H]'s skin sloughs off, revealing black flesh covered in symbols!"), \
+	addtimer(CALLBACK(src, PROC_REF(divulge)), 25)
+	addtimer(CALLBACK(TYPE_PROC_REF(/atom, visible_message), H, span_boldwarning("[H]'s skin sloughs off, revealing black flesh covered in symbols!"), \
 	span_userdanger("You have forcefully divulged!")), 25)
 
 /datum/antagonist/darkspawn/proc/divulge()
@@ -379,7 +379,7 @@
 	if(SSsecurity_level != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		sound_to_playing_players('sound/machines/alarm.ogg')
-		addtimer(CALLBACK(src, .proc/sacrament_shuttle_call), 50)
+		addtimer(CALLBACK(src, PROC_REF(sacrament_shuttle_call)), 50)
 	for(var/V in abilities)
 		remove_ability(abilities[V], TRUE)
 	for(var/datum/action/innate/darkspawn/leftover_ability in user.actions)

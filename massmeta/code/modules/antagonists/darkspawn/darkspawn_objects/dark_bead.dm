@@ -99,7 +99,7 @@
 		to_chat(user, "<span class ='warning'> You have already drained this individual previously, and their lucidity will not contribute any more to the sacrament!</span>")
 	else
 		to_chat(user, "<span class ='velvet'> This individual's lucidity brings you one step closer to the sacrament...</span>")
-		darkspawn.lucidity++ 
+		darkspawn.lucidity++
 		darkspawn.lucidity_drained++
 	darkspawn.update_psi_hud()
 	linked_ability.victims[L] = TRUE
@@ -109,6 +109,6 @@
 	L.Unconscious(15)
 	L.adjust_stutter(20 SECONDS)
 	L.apply_status_effect(STATUS_EFFECT_BROKEN_WILL)
-	addtimer(CALLBACK(linked_ability, /datum/action/innate/darkspawn/devour_will/.proc/make_eligible, L), 600)
+	addtimer(CALLBACK(linked_ability, TYPE_PROC_REF(/datum/action/innate/darkspawn/devour_will, make_eligible), L), 600)
 	qdel(src, force = TRUE)
 	return TRUE
