@@ -43,6 +43,8 @@
 	var/high_value_sacrifices = 0
 	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
+	/// List of all sacrifice target's names, used for end of round report
+	var/list/all_sac_targets = list()
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
@@ -407,7 +409,8 @@
 	target_image.overlays = target.overlays
 
 	LAZYSET(sac_targets, target, target_image)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_deleted))
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
+	all_sac_targets += target.real_name
 
 /**
  * Removes [target] from the heretic's sacrifice list.
@@ -447,7 +450,7 @@
 
 	parts += printplayer(owner)
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
-
+	parts += "The heretic's sacrifice targets were: [english_list(all_sac_targets, nothing_text = "No one")]."
 	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective as anything in objectives)
@@ -759,17 +762,3 @@
 
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
-
-/datum/antagonist/heretic/antag_token(datum/mind/hosts_mind, mob/spender)
-	. = ..()
-	var/datum/antagonist/heretic/new_heretic = new()
-	if(isobserver(spender))
-		var/mob/living/carbon/human/newmob = spender.change_mob_type( /mob/living/carbon/human , null, null, TRUE )
-		newmob.equipOutfit(/datum/outfit/job/assistant)
-		newmob.mind.add_antag_datum(new_heretic)
-	else
-		hosts_mind.add_antag_datum(new_heretic)
-
-	if(!new_heretic.has_living_heart())
-		var/datum/heretic_knowledge/living_heart/heart_knowledge = new_heretic.get_knowledge(/datum/heretic_knowledge/living_heart)
-		heart_knowledge.on_research(hosts_mind.current)
