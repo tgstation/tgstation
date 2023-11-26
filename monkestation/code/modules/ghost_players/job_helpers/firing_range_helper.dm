@@ -8,6 +8,7 @@
 	blacklisted_items = list(
 		/obj/item/gun/ballistic,
 		/obj/item/gun/ballistic/automatic,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/death,
 		/obj/item/gun/blastcannon,
 		/obj/item/gun/energy,
 		/obj/item/gun/energy/minigun, //might runtime
