@@ -10,6 +10,9 @@
 #define NUKE_RESULT_HIJACK_DISK 9
 #define NUKE_RESULT_HIJACK_NO_DISK 10
 
+/// Min players requireed for nukes to declare war
+#define CHALLENGE_MIN_PLAYERS 50
+
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
 #define FUGITIVE_RESULT_POSTMORTEM_HUNTER 1

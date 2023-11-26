@@ -337,7 +337,6 @@
 			if(!reagents)
 				reagents = new()
 			reagents.reagent_list.Add(part)
-			reagents.conditional_update()
 		else if(ismovable(part))
 			var/atom/movable/object = part
 			if(isliving(object.loc))

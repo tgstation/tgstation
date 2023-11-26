@@ -36,14 +36,14 @@ export type FeatureValueProps<
   TReceiving,
   TSending = TReceiving,
   TServerData = undefined
-> = {
+> = Readonly<{
   act: typeof sendAct;
   featureId: string;
   handleSetValue: (newValue: TSending) => void;
   serverData: TServerData | undefined;
   shrink?: boolean;
   value: TReceiving;
-};
+}>;
 
 export const FeatureColorInput = (props: FeatureValueProps<string>) => {
   return (

@@ -1003,7 +1003,7 @@
 		victim.blood_volume -= 5 * seconds_between_ticks
 	// This has been hell to try and balance so that you'll actually get anything out of it
 	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
-	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
+	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
 	switch(current_gold_amount)
 		if(-INFINITY to 50)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/soft, update = TRUE)

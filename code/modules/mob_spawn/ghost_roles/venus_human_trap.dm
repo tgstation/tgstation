@@ -36,7 +36,8 @@
 	notify_ghosts(
 		"[src] has borne fruit!",
 		source = src,
-		action = NOTIFY_PLAY,
+		header = "Venus Human Trap",
+		click_interact = TRUE,
 		ignore_key = POLL_IGNORE_VENUSHUMANTRAP,
 	)
 
