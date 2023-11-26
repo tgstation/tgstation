@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return FALSE
 	bot_access_flags |= BOT_COVER_EMAGGED
 	bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN
-	bot_access_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
+	bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
 	bot_reset()
 	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))

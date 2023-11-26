@@ -71,7 +71,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
-	var/mob/living/simple_animal/bot/medbot/bot = result
+	var/mob/living/basic/bot/medbot/bot = result
 	var/obj/item/storage/medkit/medkit = bot.contents[3]
 	bot.medkit_type = medkit
 	bot.healthanalyzer = bot.contents[4]
@@ -90,7 +90,7 @@
 	else if (istype(src, /obj/item/storage/medkit/tactical))
 		bot.skin = "bezerk"
 
-	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+	bot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot

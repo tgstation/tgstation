@@ -34,34 +34,35 @@
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
 	var/reach_distance = (bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : BOT_PATIENT_PATH_LIMIT
 	if(controller.reachable_key(BB_PATIENT_TARGET, reach_distance))
-		controller.queue_behavior(/datum/ai_behavior/tend_to_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer)
+		controller.queue_behavior(/datum/ai_behavior/tend_to_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.bot_access_flags)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	controller.queue_behavior(/datum/ai_behavior/find_suitable_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, (bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE))
+	controller.queue_behavior(/datum/ai_behavior/find_suitable_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.medical_mode_flags, bot_pawn.bot_access_flags)
 
 /datum/ai_behavior/find_suitable_patient
 	var/search_range = 7
 	action_cooldown = 2 SECONDS
 
-/datum/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, heal_type, is_stationary)
+/datum/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, heal_type, mode_flags, access_flags)
 	. = ..()
-	search_range = (is_stationary) ? 1 : initial(search_range)
+	search_range = (mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : initial(search_range)
 	var/list/ignore_keys = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_keys, treatable_target))
+		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
 			continue
+		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
+			controller.set_blackboard_key(BB_PATIENT_TARGET, treatable_target)
+			break
 		if((heal_type == HEAL_ALL_DAMAGE))
 			if(treatable_target.get_total_damage() > threshold)
 				controller.set_blackboard_key(BB_PATIENT_TARGET, treatable_target)
-				finish_action(controller, TRUE)
-				return
+				break
 			continue
 		if(treatable_target.get_current_damage_of_type(damagetype = heal_type) > threshold)
 			controller.set_blackboard_key(BB_PATIENT_TARGET, treatable_target)
-			finish_action(controller, TRUE)
-			return
+			break
 
-	finish_action(controller, FALSE)
+	finish_action(controller, controller.blackboard_key_exists(BB_PATIENT_TARGET))
 
 /datum/ai_behavior/find_suitable_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -80,14 +81,13 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/tend_to_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, damage_type_healer)
+/datum/ai_behavior/tend_to_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, damage_type_healer, access_flags)
 	. = ..()
 	var/mob/living/carbon/human/patient = controller.blackboard[target_key]
-	//target got healed by the time we got there?
-	if(QDELETED(patient))
+	if(QDELETED(patient) || patient.stat == DEAD)
 		finish_action(controller, FALSE, target_key)
 		return
-	if(check_if_healed(patient, threshold, damage_type_healer))
+	if(check_if_healed(patient, threshold, damage_type_healer, access_flags))
 		finish_action(controller, TRUE, target_key, healed_target = TRUE)
 		return
 
@@ -110,7 +110,9 @@
 	announcement?.announce(pick(controller.blackboard[BB_AFTERHEAL_SPEECH]))
 	controller.clear_blackboard_key(target_key)
 
-/datum/ai_behavior/tend_to_patient/proc/check_if_healed(mob/living/carbon/human/patient, threshold, damage_type_healer)
+/datum/ai_behavior/tend_to_patient/proc/check_if_healed(mob/living/carbon/human/patient, threshold, damage_type_healer, access_flags)
+	if(access_flags & BOT_COVER_EMAGGED)
+		return (patient.stat > CONSCIOUS)
 	var/patient_damage = (damage_type_healer == HEAL_ALL_DAMAGE) ? patient.get_total_damage() : patient.get_current_damage_of_type(damagetype = damage_type_healer)
 	return (patient_damage <= threshold)
 
