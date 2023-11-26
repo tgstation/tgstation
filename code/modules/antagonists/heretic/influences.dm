@@ -257,7 +257,8 @@
 	// Using a codex will give you two knowledge points for draining.
 	if(!being_drained && istype(weapon, /obj/item/codex_cicatrix))
 		var/obj/item/codex_cicatrix/codex = weapon
-		codex.open_animation()
+		if(!codex.book_open)
+			codex.attack_self(user) // open booke
 		INVOKE_ASYNC(src, PROC_REF(drain_influence), user, 2)
 		return TRUE
 

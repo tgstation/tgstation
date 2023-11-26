@@ -46,7 +46,7 @@
 	if(!IS_HERETIC(user))
 		return
 
-	if(!(source.slot_flags & slot))
+	if(source.slot_flags && !(source.slot_flags & slot))
 		return
 
 	ADD_TRAIT(user, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(source))

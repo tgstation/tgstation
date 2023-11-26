@@ -25,11 +25,16 @@
 	var/list/banned_knowledge = list()
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
+	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
 	var/list/required_atoms
 	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
+	/// If set, required_atoms checks for these *exact* types and doesn't allow them to be ingredients.
+	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
 	var/cost = 0
+	/// If true, adds side path points according to value. Only main branch powers that split into sidepaths should have this.
+	var/adds_sidepath_points = 0
 	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
 	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
 	var/priority = 0
@@ -58,6 +63,8 @@
 
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
+	// Usually zero
+	our_heretic.side_path_points += adds_sidepath_points
 	on_gain(user, our_heretic)
 
 /**
@@ -113,6 +120,18 @@
 	return TRUE
 
 /**
+ * Parses specific items into a more reaadble form.
+ * Can be overriden by knoweldge subtypes.
+ */
+/datum/heretic_knowledge/proc/parse_required_item(atom/item_path, number_of_things)
+	// If we need a human, there is a high likelihood we actually need a (dead) body
+	if(ispath(item_path, /mob/living/carbon/human))
+		return "bod[number_of_things > 1 ? "ies" : "y"]"
+	if(ispath(item_path, /mob/living))
+		return "carcass[number_of_things > 1 ? "es" : ""] of any kind"
+	return "[initial(item_path.name)]\s"
+
+/**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
  * Creates atoms from types in result_atoms.
@@ -158,9 +177,12 @@
 			var/obj/item/stack/sac_stack = sacrificed
 			var/how_much_to_use = 0
 			for(var/requirement in required_atoms)
-				if(istype(sacrificed, requirement))
-					how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
-					break
+				if(islist(requirement) && !is_type_in_list(sacrificed, requirement))
+					continue
+				if(!istype(sacrificed, requirement))
+					continue
+				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
+				break
 
 			sac_stack.use(how_much_to_use)
 			continue
@@ -264,7 +286,7 @@
 /datum/heretic_knowledge/mark
 	abstract_parent_type = /datum/heretic_knowledge/mark
 	mutually_exclusive = TRUE
-	cost = 2
+	cost = 1
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 
