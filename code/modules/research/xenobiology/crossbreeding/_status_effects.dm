@@ -473,10 +473,10 @@
 	colour = SLIME_TYPE_GREY
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
-	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
-		if(!(owner in S.Friends))
-			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [S]."))
-			S.set_friendship(owner, 1)
+	for(var/mob/living/simple_animal/slime/slimes_in_range in range(1, get_turf(owner)))
+		if(!(owner in slimes_in_range.Friends))
+			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
+			slimes_in_range.set_friendship(owner, 1)
 	return ..()
 
 /datum/status_effect/stabilized/orange
