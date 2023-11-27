@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "Ranged Guardians (Holoparasites/Power Miners/etc.) can no longer use ranged attacks in scouting (incorporeal) mode."
