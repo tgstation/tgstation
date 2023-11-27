@@ -85,8 +85,13 @@
 /obj/item/proc/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
 	return interact_with_atom(interacting_with, user)
 
-//! Tool-specific behavior procs.
-///
+/*
+ * Tool-specific behavior procs.
+ *
+ * Return an ITEM_INTERACT_ flag to handle the event, or NONE to allow the mob to attack the atom.
+ * Returning TRUE will also cancel attacks. It is equivalent to an ITEM_INTERACT_ flag. (This is legacy behavior, and is not to be relied on)
+ * Returning FALSE or null will also allow the mob to attack the atom. (This is also legacy behavior)
+ */
 
 /// Called on an object when a tool with crowbar capabilities is used to left click an object
 /atom/proc/crowbar_act(mob/living/user, obj/item/tool)

@@ -63,8 +63,14 @@
 
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/abductor/gizmo/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
-	return interact_with_atom(interacting_with, user)
+/obj/item/abductor/gizmo/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	// Proximity is already handled via the interact_with_atom proc
+	if(proximity_flag)
+		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+	interact_with_atom(target, user)
 
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
@@ -111,8 +117,14 @@
 	radio_off(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/abductor/silencer/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
-	return interact_with_atom(interacting_with, user)
+/obj/item/abductor/silencer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	// Proximity is already handled via the interact_with_atom proc
+	if(proximity_flag)
+		return
+
+	. |= AFTERATTACK_PROCESSED_ITEM
+	interact_with_atom(target, user)
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )

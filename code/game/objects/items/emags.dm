@@ -47,7 +47,7 @@
 
 /obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user)
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
-	return ITEM_INTERACT_SKIP_TO_ATTACK
+	return ITEM_INTERACT_SKIP_TO_ATTACK // So it does the attack animation.
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
@@ -60,11 +60,15 @@
 	interacting_with.emag_act(user, src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user)
-	if(!prox_check)
-		return NONE
+/obj/item/card/emag/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	// Proximity based emagging is handled by above
+	// This is only for ranged emagging
+	if(proximity_flag || prox_check)
+		return
 
-	return interact_with_atom(interacting_with, user)
+	. |= AFTERATTACK_PROCESSED_ITEM
+	interact_with_atom(target, user)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)
