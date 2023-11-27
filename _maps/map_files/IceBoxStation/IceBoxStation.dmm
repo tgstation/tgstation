@@ -29863,7 +29863,6 @@
 "jko" = (
 /obj/structure/railing,
 /obj/structure/rack,
-/obj/item/portable_recharger/loaded,
 /obj/item/gun/energy/e_gun/dragnet{
 	pixel_y = 4
 	},
