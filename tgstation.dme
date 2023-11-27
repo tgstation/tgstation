@@ -1611,6 +1611,7 @@
 #include "code\datums\quirks\negative_quirks\indebted.dm"
 #include "code\datums\quirks\negative_quirks\insanity.dm"
 #include "code\datums\quirks\negative_quirks\junkie.dm"
+#include "code\datums\quirks\negative_quirks\lifesupport.dm"
 #include "code\datums\quirks\negative_quirks\light_drinker.dm"
 #include "code\datums\quirks\negative_quirks\mute.dm"
 #include "code\datums\quirks\negative_quirks\nearsighted.dm"

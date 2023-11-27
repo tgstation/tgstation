@@ -223,3 +223,50 @@
 		if(owner.reagents.get_reagent_amount(/datum/reagent/medicine/ephedrine) < 20)
 			owner.reagents.add_reagent(/datum/reagent/medicine/ephedrine, 10)
 
+/obj/item/organ/internal/heart/cybernetic/lifesupport
+	name = "life suppport heart"
+	desc = "An outdated and fragile heart with the purpose to mimic the functions of an organic human heart. \
+		Known for needing constant maintenance and extremely sensitive to external damage."
+	organ_flags = ORGAN_ROBOTIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD* 0.5
+	emp_vulnerability = 100
+	COOLDOWN_DECLARE(breakdown_cooldown)
+	COOLDOWN_DECLARE(breakdown_dmg_cooldown)
+
+/obj/item/organ/internal/heart/cybernetic/lifesupport/on_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_owner_damage))
+
+/obj/item/organ/internal/heart/cybernetic/lifesupport/on_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_owner_damage))
+
+/obj/item/organ/internal/heart/cybernetic/lifesupport/proc/on_owner_damage(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+	SIGNAL_HANDLER
+
+	if(isbodypart(def_zone))
+		var/obj/item/bodypart/hitting = def_zone
+		def_zone = hitting.body_zone
+
+	if(damagetype == BRUTE && def_zone  == BODY_ZONE_CHEST)
+		apply_organ_damage(damage * 0.7)
+
+/obj/item/organ/internal/heart/cybernetic/lifesupport/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	if(COOLDOWN_FINISHED(src, breakdown_cooldown))
+		COOLDOWN_START(src, breakdown_cooldown, rand(30 SECONDS, 1 MINUTES))
+		apply_organ_damage(10)
+		to_chat(owner, span_warning("Your heart seems to skip a beat!"))
+
+	if(COOLDOWN_FINISHED(src, breakdown_dmg_cooldown) && damage == maxHealth)
+		to_chat(owner, span_userdanger(pick("Your broken heart carves the flesh surrounding it!","Your chest is carved hollow from the inside by your hearth!","You feel your heart shake uncontrolable inside of you!")))
+		owner.apply_damage(10, BRUTE)
+		owner.emote("scream")
+		COOLDOWN_START(src, breakdown_dmg_cooldown, rand(2 SECONDS, 4 SECONDS))
+
+
+/obj/item/organ/internal/heart/cybernetic/lifesupport/apply_organ_damage(damage_amount, maximum, required_organ_flag)
+	. = ..()
+	if(damage == maxHealth)
+		to_chat(owner, span_userdanger("Your heart has completely malfunctioned!"))
+
