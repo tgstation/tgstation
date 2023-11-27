@@ -375,6 +375,7 @@
 
 	//Check for ID
 	var/obj/item/card/id/idcard = get_idcard(FALSE)
+	threatcount += idcard?.trim.threat_modifier || 0
 	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name == "Unknown")
 		threatcount += 4
 
