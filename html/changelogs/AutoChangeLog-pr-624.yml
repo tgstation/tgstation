@@ -1,0 +1,5 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - bugfix: "cyborgs should no longer go invisible upon changing model"
+  - bugfix: "the expand module for cyborgs should once again work properly"
