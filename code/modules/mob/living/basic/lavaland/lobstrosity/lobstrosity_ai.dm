@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/lobstrosity
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_LOBSTROSITY_EXPLOIT_TRAITS = list(TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT),
 		BB_LOBSTROSITY_FINGER_LUST = 0
@@ -34,7 +34,7 @@
 
 /datum/ai_behavior/basic_melee_attack/lobster
 
-/datum/ai_behavior/basic_melee_attack/lobster/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/basic_melee_attack/lobster/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	if (isnull(target))
 		return ..()
