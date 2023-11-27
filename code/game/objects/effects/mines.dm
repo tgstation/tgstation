@@ -9,7 +9,7 @@
 	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
 	var/triggered = FALSE
 	/// Can be set to FALSE if we want a short 'coming online' delay, then set to TRUE. Can still be set off by damage
-	var/armed = TRUE
+	var/armed = FALSE
 	/// If set, we default armed to FALSE and set it to TRUE after this long from initializing
 	var/arm_delay
 
@@ -19,6 +19,7 @@
 	var/datum/weakref/foot_on_mine
 
 /obj/effect/mine/Initialize(mapload)
+	armed = TRUE
 	. = ..()
 	if(arm_delay)
 		armed = FALSE
