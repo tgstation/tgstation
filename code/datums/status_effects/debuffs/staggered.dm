@@ -6,13 +6,12 @@
 
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
+	if(new_owner.stat == DEAD)
+		return FALSE
 	return ..()
 
 /datum/status_effect/staggered/on_apply()
-
-	//a very mild animation, but you can't stagger the dead.
 	if(owner.stat == DEAD)
-		owner.do_stagger_animation(duration / 10)
 		return FALSE
 
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_staggered))
