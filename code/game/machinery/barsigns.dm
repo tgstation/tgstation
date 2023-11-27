@@ -153,9 +153,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
-/obj/machinery/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/wire = I
+/obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
+
+	if(istype(attacking_item, /obj/item/areaeditor/blueprints) && !change_area_name)
+		if(!panel_open)
+			balloon_alert(user, "open the panel first!")
+			return TRUE
+
+		change_area_name = TRUE
+		balloon_alert(user, "sign registered")
+		return TRUE
+
+	if(istype(attacking_item, /obj/item/stack/cable_coil) && panel_open)
+		var/obj/item/stack/cable_coil/wire = attacking_item
 
 		if(atom_integrity >= max_integrity)
 			balloon_alert(user, "doesn't need repairs!")
@@ -484,6 +494,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
 	)
 	pixel_shift = 32
+
+/obj/item/wallframe/barsign/Initialize(mapload)
+	. = ..()
+	desc += " Can be registered with a set of [span_bold("station blueprints")] to associate the sign with the area it occupies."
 
 /obj/item/wallframe/barsign/try_build(turf/on_wall, mob/user)
 	. = ..()
