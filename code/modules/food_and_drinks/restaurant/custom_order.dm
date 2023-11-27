@@ -171,8 +171,7 @@
 
 	var/datum/reagents/holder = object_used.reagents
 	// The container must be majority reagent
-	var/datum/reagent/master_reagent = holder.get_master_reagent()
-	if(master_reagent?.type != reagent_type)
+	if(holder.get_master_reagent_id() != reagent_type)
 		return FALSE
 	// We must fulfill the sample size threshold
 	if(reagents_needed > holder.total_volume)

@@ -4,7 +4,7 @@ export const ANTAG2COLOR = {
   'Biohazards': 'brown',
   'Bounty Hunters': 'yellow',
   'CentCom': 'teal',
-  'Digital Anomalies': 'teal',
+  'Cyber Authority': 'teal',
   'Emergency Response Team': 'teal',
   'Escaped Fugitives': 'orange',
   'Xenomorph Infestation': 'violet',

@@ -518,16 +518,14 @@
 		message_admins("CTF has finished a round and automatically restarted.")
 		notify_ghosts(
 			"CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",
-			ghost_sound = 'sound/effects/ghost2.ogg',
-			header = "CTF Restarted"
+			'sound/effects/ghost2.ogg',
 		)
 	else
 		message_admins("The players have spoken! Voting has enabled CTF!")
 	if(!automated)
 		notify_ghosts(
 			"CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",
-			ghost_sound = 'sound/effects/ghost2.ogg',
-			header = "CTF [ctf_enabled? "Enabled" : "Disabled"]"
+			'sound/effects/ghost2.ogg',
 		)
 
 #undef CTF_LOADING_UNLOADED

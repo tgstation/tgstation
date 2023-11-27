@@ -784,23 +784,28 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	timeout = 30 SECONDS
 	/// Weakref to the target atom to use the action on
 	var/datum/weakref/target_ref
-	/// If we want to interact on click rather than jump/orbit
-	var/click_interact = FALSE
+	/// Which on click action to use
+	var/action = NOTIFY_JUMP
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
-
 	var/atom/target = target_ref?.resolve()
-	if(isnull(target) || !isobserver(owner) || target == owner)
+	if(isnull(target))
 		return
 
 	var/mob/dead/observer/ghost_owner = owner
-
-	if(click_interact)
-		ghost_owner.jump_to_interact(target)
+	if(!istype(ghost_owner))
 		return
 
-	ghost_owner.observer_view(target)
+	switch(action)
+		if(NOTIFY_PLAY)
+			target.attack_ghost(ghost_owner)
+		if(NOTIFY_JUMP)
+			var/turf/target_turf = get_turf(target)
+			if(target_turf && isturf(target_turf))
+				ghost_owner.abstract_move(target_turf)
+		if(NOTIFY_ORBIT)
+			ghost_owner.ManualFollow(target)
 
 //OBJECT-BASED
 

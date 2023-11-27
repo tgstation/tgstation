@@ -5,24 +5,27 @@
 	damage_type = OXY
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foamdart_proj"
-	base_icon_state = "foamdart"
+	base_icon_state = "foamdart_proj"
 	range = 10
-	shrapnel_type = null
 	embedding = null
 	var/modified = FALSE
 	var/obj/item/pen/pen = null
 
 /obj/projectile/bullet/foam_dart/Initialize(mapload)
 	. = ..()
-	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 
 /obj/projectile/bullet/foam_dart/proc/handle_drop(datum/source, obj/item/ammo_casing/foam_dart/newcasing)
 	SIGNAL_HANDLER
 	newcasing.modified = modified
-	newcasing.update_appearance()
 	var/obj/projectile/bullet/foam_dart/newdart = newcasing.loaded_projectile
 	newdart.modified = modified
 	newdart.damage_type = damage_type
+	if(pen)
+		newdart.pen = pen
+		pen.forceMove(newdart)
+		pen = null
+		newdart.damage = 5
 	newdart.update_appearance()
 
 /obj/projectile/bullet/foam_dart/Destroy()
@@ -32,5 +35,5 @@
 /obj/projectile/bullet/foam_dart/riot
 	name = "riot foam dart"
 	icon_state = "foamdart_riot_proj"
-	base_icon_state = "foamdart_riot"
+	base_icon_state = "foamdart_riot_proj"
 	stamina = 25

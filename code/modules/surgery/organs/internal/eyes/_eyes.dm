@@ -401,13 +401,13 @@
 	/// base icon state for eye overlays
 	var/base_eye_state = "eyes_glow_gs"
 	/// Whether or not to match the eye color to the light or use a custom selection
-	var/eye_color_mode = USE_CUSTOM_COLOR
+	var/eye_color_mode = MATCH_LIGHT_COLOR
 	/// The selected color for the light beam itself
-	var/light_color_string = "#ffffff"
+	var/current_color_string = "#ffffff"
 	/// The custom selected eye color for the left eye. Defaults to the mob's natural eye color
-	var/left_eye_color_string
+	var/current_left_color_string
 	/// The custom selected eye color for the right eye. Defaults to the mob's natural eye color
-	var/right_eye_color_string
+	var/current_right_color_string
 
 /obj/item/organ/internal/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
@@ -427,9 +427,9 @@
 /// Set the initial color of the eyes on insert to be the mob's previous eye color.
 /obj/item/organ/internal/eyes/robotic/glow/Insert(mob/living/carbon/eye_recipient, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	left_eye_color_string = old_eye_color_left
-	right_eye_color_string = old_eye_color_right
-	update_mob_eye_color(eye_recipient)
+	current_color_string = old_eye_color_left
+	current_left_color_string = old_eye_color_left
+	current_right_color_string = old_eye_color_right
 
 /obj/item/organ/internal/eyes/robotic/glow/on_insert(mob/living/carbon/eye_recipient)
 	. = ..()
@@ -438,8 +438,7 @@
 
 /obj/item/organ/internal/eyes/robotic/glow/on_remove(mob/living/carbon/eye_owner)
 	deactivate(eye_owner, close_ui = TRUE)
-	if(!QDELETED(eye))
-		eye.forceMove(src)
+	eye.forceMove(src)
 	return ..()
 
 /obj/item/organ/internal/eyes/robotic/glow/ui_state(mob/user)
@@ -468,10 +467,10 @@
 	data["eyeColor"] = list(
 		mode = eye_color_mode,
 		hasOwner = owner ? TRUE : FALSE,
-		left = left_eye_color_string,
-		right = right_eye_color_string,
+		left = current_left_color_string,
+		right = current_right_color_string,
 	)
-	data["lightColor"] = light_color_string
+	data["lightColor"] = current_color_string
 	data["range"] = eye.light_range
 
 	return data
@@ -491,7 +490,7 @@
 				usr,
 				"Choose eye color color:",
 				"High Luminosity Eyes Menu",
-				light_color_string
+				current_color_string
 			) as color|null
 			if(new_color)
 				var/to_update = params["to_update"]
@@ -522,10 +521,9 @@
  * Turns on the attached flashlight object, updates the mob overlay to be added.
  */
 /obj/item/organ/internal/eyes/robotic/glow/proc/activate()
-	if(eye.light_range)
+	eye.light_on = TRUE
+	if(eye.light_range) // at range 0 we are just going to make the eyes glow emissively, no light overlay
 		eye.set_light_on(TRUE)
-	else
-		eye.light_on = TRUE // at range 0 we are just going to make the eyes glow emissively, no light overlay
 	update_mob_eye_color()
 
 /**
@@ -587,12 +585,12 @@
 		newcolor_string = newcolor
 	switch(to_update)
 		if(UPDATE_LIGHT)
-			light_color_string = newcolor_string
+			current_color_string = newcolor_string
 			eye.set_light_color(newcolor_string)
 		if(UPDATE_EYES_LEFT)
-			left_eye_color_string = newcolor_string
+			current_left_color_string = newcolor_string
 		if(UPDATE_EYES_RIGHT)
-			right_eye_color_string = newcolor_string
+			current_right_color_string = newcolor_string
 
 	update_mob_eye_color()
 
@@ -624,11 +622,11 @@
 /obj/item/organ/internal/eyes/robotic/glow/proc/update_mob_eye_color(mob/living/carbon/eye_owner = owner)
 	switch(eye_color_mode)
 		if(MATCH_LIGHT_COLOR)
-			eye_color_left = light_color_string
-			eye_color_right = light_color_string
+			eye_color_left = current_color_string
+			eye_color_right = current_color_string
 		if(USE_CUSTOM_COLOR)
-			eye_color_left = left_eye_color_string
-			eye_color_right = right_eye_color_string
+			eye_color_left = current_left_color_string
+			eye_color_right = current_right_color_string
 
 	if(QDELETED(eye_owner) || !ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return

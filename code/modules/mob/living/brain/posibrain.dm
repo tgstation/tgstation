@@ -45,13 +45,12 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
 		notify_ghosts(
 			"[name] [msg] in [get_area(src)]! [ask_role ? "Personality requested: \[[ask_role]\]" : ""]",
-			source = src,
-			header = "Ghost in the Machine",
-			click_interact = TRUE,
 			ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null,
-			ignore_key = POLL_IGNORE_POSIBRAIN,
-			notify_flags = (GHOST_NOTIFY_IGNORE_MAPLOAD),
 			notify_volume = 75,
+			source = src,
+			action = NOTIFY_PLAY,
+			notify_flags = (GHOST_NOTIFY_IGNORE_MAPLOAD),
+			ignore_key = POLL_IGNORE_POSIBRAIN,
 		)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + ask_delay

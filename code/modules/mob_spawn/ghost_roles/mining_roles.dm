@@ -256,10 +256,9 @@
 		notify_ghosts(
 			"An ash walker egg is ready to hatch in \the [spawner_area.name].",
 			source = src,
-			header = "Ash Walker Egg",
-			click_interact = TRUE,
-			ignore_key = POLL_IGNORE_ASHWALKER,
+			action = NOTIFY_PLAY,
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			ignore_key = POLL_IGNORE_ASHWALKER,
 		)
 
 /datum/outfit/ashwalker

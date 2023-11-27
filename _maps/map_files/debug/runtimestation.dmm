@@ -2431,7 +2431,6 @@
 "SN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
-/obj/item/bitrunning_debug,
 /turf/open/floor/iron,
 /area/station/bitrunning/den)
 "Td" = (
@@ -3109,12 +3108,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+uI
+uI
+uI
+uI
+uI
+uI
 aa
 aa
 aa
@@ -3202,10 +3201,10 @@ aa
 aa
 aa
 uI
-uI
-uI
-uI
-uI
+hU
+hU
+jR
+Oq
 uI
 aa
 aa

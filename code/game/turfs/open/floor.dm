@@ -274,7 +274,7 @@
 			if(girder)
 				return girder.rcd_act(user, the_rcd, rcd_data)
 
-			place_on_top(/turf/closed/wall)
+			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			//check if we are building a window

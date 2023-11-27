@@ -702,7 +702,7 @@
 "Ry" = (
 /obj/structure/rack,
 /obj/item/storage/bag/money/vault,
-/mob/living/basic/parrot{
+/mob/living/simple_animal/parrot{
 	faction = list("pirate");
 	name = "Pegwing"
 	},

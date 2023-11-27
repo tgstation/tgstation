@@ -26,5 +26,3 @@
 #define MOOK_ATTACK_ACTIVE 2
 #define MOOK_ATTACK_STRIKE 3
 
-///keeps track of how many gutlunches are born
-GLOBAL_VAR_INIT(gutlunch_count, 0)

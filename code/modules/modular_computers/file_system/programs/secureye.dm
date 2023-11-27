@@ -3,9 +3,9 @@
 /datum/computer_file/program/secureye
 	filename = "secureye"
 	filedesc = "SecurEye"
-	downloader_category = PROGRAM_CATEGORY_SECURITY
+	category = PROGRAM_CATEGORY_MISC
 	ui_header = "borg_mon.gif"
-	program_open_overlay = "generic"
+	program_icon_state = "generic"
 	extended_desc = "This program allows access to standard security camera networks."
 	requires_ntnet = TRUE
 	download_access = list(ACCESS_SECURITY)

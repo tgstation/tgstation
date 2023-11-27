@@ -1,7 +1,7 @@
 import { sortBy } from 'common/collections';
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+import { Beaker } from './ChemDispenser';
 import { useBackend } from '../backend';
-import { Box, Button, Section } from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type DispensableReagent = {
@@ -21,6 +21,7 @@ export const PortableChemMixer = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { beaker } = data;
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
+  const beakerContents = beaker ? beaker.contents : [];
   const chemicals = sortBy((chem: DispensableReagent) => chem.id)(
     data.chemicals
   );
@@ -70,7 +71,45 @@ export const PortableChemMixer = (props, context) => {
               onClick={() => act('remove', { amount })}
             />
           ))}>
-          <BeakerDisplay beaker={beaker} showpH />
+          <LabeledList>
+            <LabeledList.Item
+              label="Beaker"
+              buttons={
+                !!beaker && (
+                  <Button
+                    icon="eject"
+                    content="Eject"
+                    onClick={() => act('eject')}
+                  />
+                )
+              }>
+              {(!!beaker && (
+                <>
+                  <AnimatedNumber initial={0} value={beaker.currentVolume} />/
+                  {beaker.maxVolume} units
+                </>
+              )) ||
+                'No beaker'}
+            </LabeledList.Item>
+            <LabeledList.Item label="Contents">
+              <Box color="label">
+                {(!beaker && 'N/A') ||
+                  (beakerContents.length === 0 && 'Nothing')}
+              </Box>
+              {beakerContents.map((chemical) => (
+                <Box key={chemical.name} color="label">
+                  <AnimatedNumber initial={0} value={chemical.volume} /> units
+                  of {chemical.name}
+                </Box>
+              ))}
+              {beakerContents.length > 0 && (
+                <Box>
+                  pH:
+                  <AnimatedNumber value={beaker.pH} />
+                </Box>
+              )}
+            </LabeledList.Item>
+          </LabeledList>
         </Section>
       </Window.Content>
     </Window>

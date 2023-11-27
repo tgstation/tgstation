@@ -2,7 +2,7 @@
 	var/locs = block(run_loc_floor_bottom_left, run_loc_floor_top_right)
 
 	for(var/I in 1 to 5)
-		allocate(/mob/living/carbon/human/consistent, pick(locs))
+		new /mob/living/carbon/human/consistent(pick(locs))
 
 	sleep(5 SECONDS)
 

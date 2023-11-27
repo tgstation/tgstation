@@ -2,7 +2,7 @@
 	filename = "themeify"
 	filedesc = "Themeify"
 	extended_desc = "This program allows configuration of your device's theme."
-	program_open_overlay = "generic"
+	program_icon_state = "generic"
 	undeletable = TRUE
 	size = 0
 	header_program = TRUE

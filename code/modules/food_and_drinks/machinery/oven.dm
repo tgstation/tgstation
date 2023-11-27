@@ -237,7 +237,6 @@
 	desc = "Time to bake cookies!"
 	icon_state = "oven_tray"
 	max_items = 6
-	biggest_w_class = WEIGHT_CLASS_BULKY
 
 #undef OVEN_SMOKE_STATE_NONE
 #undef OVEN_SMOKE_STATE_GOOD

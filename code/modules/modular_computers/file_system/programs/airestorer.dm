@@ -1,8 +1,8 @@
 /datum/computer_file/program/ai_restorer
 	filename = "ai_restore"
 	filedesc = "AI Manager & Restorer"
-	downloader_category = PROGRAM_CATEGORY_SCIENCE
-	program_open_overlay = "generic"
+	category = PROGRAM_CATEGORY_SCI
+	program_icon_state = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE

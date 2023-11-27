@@ -44,3 +44,7 @@
 // Ladder
 /// from /obj/structure/hololadder/disconnect()
 #define COMSIG_BITRUNNER_LADDER_SEVER "bitrunner_ladder_sever"
+
+
+/// deprecated
+#define COMSIG_BITRUNNER_SPAWN_GLITCH "bitrunner_spawn_glitch"

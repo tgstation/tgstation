@@ -130,12 +130,13 @@
 	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
 		return
 
+	. = ..()
 	for(var/obj/item/organ/organ_being_healed as anything in breather.organs)
 		if(!organ_being_healed.damage)
 			continue
 
 		if(organ_being_healed.apply_organ_damage(-0.5 * REM * seconds_per_tick, required_organ_flag = ORGAN_ORGANIC))
-			. = UPDATE_MOB_HEALTH
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/zauker
 	name = "Zauker"

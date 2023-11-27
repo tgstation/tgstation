@@ -380,6 +380,7 @@
 	notify_ghosts(
 		"[cultist] has begun scribing a Nar'Sie rune!",
 		source = cultist,
+		action = NOTIFY_ORBIT,
 		header = "Maranax Infirmux!",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)

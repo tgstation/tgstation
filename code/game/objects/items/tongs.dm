@@ -73,7 +73,7 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/item/kitchen/tongs/pre_attack(obj/item/attacked, mob/living/user, params)
-	if (!isnull(tonged) && tonged.force <= 0) // prevents tongs from giving food-weapons extra range
+	if (!isnull(tonged))
 		attacked.attackby(tonged, user)
 		return TRUE
 	if (isliving(attacked))
@@ -86,7 +86,6 @@
 	attacked.do_pickup_animation(src)
 	attacked.forceMove(src)
 	update_appearance(UPDATE_ICON)
-	return TRUE
 
 /obj/item/kitchen/tongs/update_overlays()
 	. = ..()

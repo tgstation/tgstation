@@ -110,9 +110,6 @@
 
 	score += time_score * base
 
-	// Increases the chance for glitches to spawn based on how well they're doing
-	threat += score
-
 	switch(score)
 		if(1 to 4)
 			return "D"
@@ -124,4 +121,3 @@
 			return "A"
 		else
 			return "S"
-

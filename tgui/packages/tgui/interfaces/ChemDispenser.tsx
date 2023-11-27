@@ -2,9 +2,21 @@ import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
+import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+
+export type BeakerReagent = {
+  name: string;
+  volume: number;
+};
+
+export type Beaker = {
+  maxVolume: number;
+  transferAmounts: number[];
+  pH: number;
+  currentVolume: number;
+  contents: BeakerReagent[];
+};
 
 type DispensableReagent = {
   title: string;
@@ -32,13 +44,15 @@ export const ChemDispenser = (props, context) => {
   const [hasCol, setHasCol] = useLocalState(context, 'has_col', false);
 
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
-  const recordedContents =
-    recording &&
-    Object.keys(data.recordingRecipe).map((id) => ({
-      id,
-      name: toTitleCase(id.replace(/_/, ' ')),
-      volume: data.recordingRecipe[id],
-    }));
+  const beakerContents =
+    (recording &&
+      Object.keys(data.recordingRecipe).map((id) => ({
+        id,
+        name: toTitleCase(id.replace(/_/, ' ')),
+        volume: data.recordingRecipe[id],
+      }))) ||
+    beaker?.contents ||
+    [];
   return (
     <Window width={565} height={620}>
       <Window.Content scrollable>
@@ -191,12 +205,46 @@ export const ChemDispenser = (props, context) => {
               onClick={() => act('remove', { amount })}
             />
           ))}>
-          <BeakerDisplay
-            beaker={beaker}
-            title_label={recording && 'Virtual beaker'}
-            replace_contents={recordedContents}
-            showpH={data.showpH}
-          />
+          <LabeledList>
+            <LabeledList.Item
+              label="Beaker"
+              buttons={
+                !!beaker && (
+                  <Button
+                    icon="eject"
+                    content="Eject"
+                    onClick={() => act('eject')}
+                  />
+                )
+              }>
+              {(recording && 'Virtual beaker') ||
+                (!!beaker && (
+                  <>
+                    <AnimatedNumber initial={0} value={beaker.currentVolume} />/
+                    {beaker.maxVolume} units
+                  </>
+                )) ||
+                'No beaker'}
+            </LabeledList.Item>
+            <LabeledList.Item label="Contents">
+              <Box color="label">
+                {(!beaker && !recording && 'N/A') ||
+                  (beakerContents.length === 0 && 'Nothing')}
+              </Box>
+              {beakerContents.map((chemical) => (
+                <Box key={chemical.name} color="label">
+                  <AnimatedNumber initial={0} value={chemical.volume} /> units
+                  of {chemical.name}
+                </Box>
+              ))}
+              {beakerContents.length > 0 && !!data.showpH && (
+                <Box>
+                  pH:
+                  <AnimatedNumber value={beaker.pH} />
+                </Box>
+              )}
+            </LabeledList.Item>
+          </LabeledList>
         </Section>
       </Window.Content>
     </Window>

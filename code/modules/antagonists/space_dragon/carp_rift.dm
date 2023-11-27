@@ -44,8 +44,9 @@
 	notify_ghosts(
 		"The Space Dragon has opened a rift!",
 		source = new_rift,
-		header = "Carp Rift Opened",
+		action = NOTIFY_ORBIT,
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		header = "Carp Rift Opened",
 	)
 	ASSERT(dragon.rift_ability == src) // Badmin protection.
 	QDEL_NULL(dragon.rift_ability) // Deletes this action when used successfully, we re-gain a new one on success later.
@@ -197,8 +198,9 @@
 		notify_ghosts(
 			"The carp rift can summon an additional carp!",
 			source = src,
-			header = "Carp Spawn Available",
+			action = NOTIFY_ORBIT,
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+			header = "Carp Spawn Available",
 		)
 		last_carp_inc -= carp_interval
 

@@ -17,7 +17,6 @@
 /obj/structure/closet/boxinggloves
 	name = "boxing gloves closet"
 	desc = "It's a storage unit for gloves for use in the boxing ring."
-	icon_door = "mixed"
 
 /obj/structure/closet/boxinggloves/PopulateContents()
 	..()
@@ -42,7 +41,6 @@
 	name = "red laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
 	icon_door = "red"
-	icon_state = "rack"
 
 /obj/structure/closet/lasertag/red/PopulateContents()
 	..()
@@ -57,7 +55,6 @@
 	name = "blue laser tag equipment"
 	desc = "It's a storage unit for laser tag equipment."
 	icon_door = "blue"
-	icon_state = "rack"
 
 /obj/structure/closet/lasertag/blue/PopulateContents()
 	..()

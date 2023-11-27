@@ -1,1 +1,0 @@
-/mob/living/simple_animal/hostile/asteroid/wolf : /mob/living/basic/mining/wolf{@OLD}

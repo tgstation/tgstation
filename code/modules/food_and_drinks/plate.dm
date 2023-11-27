@@ -14,9 +14,6 @@
 	var/placement_offset = -15
 	/// If the plate will shatter when thrown
 	var/fragile = TRUE
-	/// The largest weight class we can carry, inclusive.
-	/// IE, if we this is normal, we can carry normal items or smaller.
-	var/biggest_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/plate/Initialize(mapload)
 	. = ..()
@@ -26,13 +23,10 @@
 
 /obj/item/plate/attackby(obj/item/I, mob/user, params)
 	if(!IS_EDIBLE(I))
-		balloon_alert(user, "not food!")
-		return
-	if(I.w_class > biggest_w_class)
-		balloon_alert(user, "too big!")
+		to_chat(user, span_notice("[src] is made for food, and food alone!"))
 		return
 	if(contents.len >= max_items)
-		balloon_alert(user, "can't fit!")
+		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
 	var/list/modifiers = params2list(params)
 	//Center the icon where the user clicked.
@@ -68,9 +62,6 @@
 	item_to_plate.pixel_x = 0
 	item_to_plate.pixel_y = 0
 	update_appearance()
-	// If the incoming item is the same weight class as the plate, bump us up a class
-	if(item_to_plate.w_class == w_class)
-		w_class += 1
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
 /obj/item/plate/proc/ItemRemovedFromPlate(obj/item/removed_item)
@@ -78,18 +69,11 @@
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	// Reset item offsets
+	// Resettt
 	removed_item.pixel_x = removed_item.pixel_w
 	removed_item.pixel_y = removed_item.pixel_z
 	removed_item.pixel_w = 0
 	removed_item.pixel_z = 0
-	// We need to ensure the weight class is accurate now that we've lost something
-	// that may or may not have been of equal weight
-	w_class = initial(w_class)
-	for(var/obj/item/on_board in src)
-		if(on_board.w_class == w_class)
-			w_class += 1
-			break
 
 ///This proc is called by signals that remove the food from the plate.
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
@@ -103,7 +87,6 @@
 	max_items = 12
 	max_x_offset = 8
 	max_height_offset = 12
-	biggest_w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/plate/small
 	name = "appetizer plate"
@@ -112,7 +95,6 @@
 	max_items = 4
 	max_x_offset = 4
 	max_height_offset = 5
-	biggest_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/plate_shard
 	name = "ceramic shard"

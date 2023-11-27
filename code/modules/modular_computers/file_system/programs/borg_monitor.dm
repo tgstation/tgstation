@@ -1,9 +1,9 @@
 /datum/computer_file/program/borg_monitor
 	filename = "siliconnect"
 	filedesc = "SiliConnect"
-	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	category = PROGRAM_CATEGORY_SCI
 	ui_header = "borg_mon.gif"
-	program_open_overlay = "generic"
+	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
 	download_access = list(ACCESS_ROBOTICS)
@@ -148,9 +148,9 @@
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"
 	filedesc = "Roboverlord"
-	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	category = PROGRAM_CATEGORY_SCI
 	ui_header = "borg_mon.gif"
-	program_open_overlay = "generic"
+	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE

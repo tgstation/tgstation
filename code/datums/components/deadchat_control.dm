@@ -42,7 +42,8 @@
 	notify_ghosts(
 		"[parent] is now deadchat controllable!",
 		source = parent,
-		header = "Ghost Possession!",
+		action = NOTIFY_ORBIT,
+		header = "Something Interesting!",
 	)
 	if(!ismob(parent) && !SSpoints_of_interest.is_valid_poi(parent))
 		SSpoints_of_interest.make_point_of_interest(parent)

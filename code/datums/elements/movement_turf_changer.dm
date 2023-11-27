@@ -29,4 +29,4 @@
 	if(!isturf(destination) || istype(destination, turf_type) || isgroundlessturf(destination))
 		return
 
-	destination.place_on_top(turf_type)
+	destination.PlaceOnTop(turf_type)

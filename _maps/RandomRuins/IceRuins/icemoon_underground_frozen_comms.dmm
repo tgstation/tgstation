@@ -7,7 +7,7 @@
 /turf/open/genturf,
 /area/icemoon/underground/unexplored/rivers)
 "bh" = (
-/mob/living/basic/mining/wolf,
+/mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "cv" = (
@@ -69,7 +69,7 @@
 	},
 /area/ruin/powered/shuttle)
 "oD" = (
-/mob/living/basic/mining/wolf,
+/mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -99,7 +99,7 @@
 	},
 /area/ruin/powered/shuttle)
 "rn" = (
-/mob/living/basic/mining/wolf,
+/mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "rS" = (
@@ -249,7 +249,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "FK" = (
-/mob/living/basic/mining/wolf,
+/mob/living/simple_animal/hostile/asteroid/wolf,
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/shuttle)

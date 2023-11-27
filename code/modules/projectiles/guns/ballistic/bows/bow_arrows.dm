@@ -32,7 +32,6 @@
 	damage = 50
 	speed = 1
 	range = 25
-	shrapnel_type = null
 	embedding = list(
 		embed_chance = 90,
 		fall_chance = 2,
@@ -43,6 +42,7 @@
 		jostle_pain_mult = 3,
 		rip_time = 1 SECONDS
 	)
+	shrapnel_type = /obj/item/ammo_casing/arrow
 
 /// holy arrows
 /obj/item/ammo_casing/arrow/holy
@@ -59,6 +59,7 @@
 	desc = "Here it comes, cultist scum!"
 	icon_state = "holy_arrow_projectile"
 	damage = 20 //still a lot but this is roundstart gear so far less
+	shrapnel_type =/obj/item/ammo_casing/arrow/holy
 	embedding = list(
 		embed_chance = 50,
 		fall_chance = 2,

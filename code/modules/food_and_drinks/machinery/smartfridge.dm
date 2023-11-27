@@ -592,13 +592,7 @@
 	contents_icon_state = "food"
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/weapon)
-	if(weapon.w_class >= WEIGHT_CLASS_BULKY)
-		return FALSE
-	if(IS_EDIBLE(weapon))
-		return TRUE
-	if(istype(weapon, /obj/item/reagent_containers/cup/bowl) && weapon.reagents?.total_volume > 0)
-		return TRUE
-	return FALSE
+	return (IS_EDIBLE(weapon) || (istype(weapon,/obj/item/reagent_containers/cup/bowl) && length(weapon.reagents?.reagent_list)))
 
 // -------------------------------------
 // Xenobiology Slime-Extract Smartfridge

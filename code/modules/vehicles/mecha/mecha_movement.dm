@@ -49,11 +49,6 @@
 		return TRUE
 	return FALSE
 
-///Called when the driver turns with the movement lock key
-/obj/vehicle/sealed/mecha/proc/on_turn(mob/living/driver, direction)
-	SIGNAL_HANDLER
-	return COMSIG_IGNORE_MOVEMENT_LOCK
-
 /obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
 	. = TRUE
 	if(!canmove || !(user in return_drivers()))
@@ -126,11 +121,11 @@
 				break
 
 	//if we're not facing the way we're going rotate us
-	if(dir != direction && (!strafe || forcerotate || keyheld))
+	if(dir != direction && !strafe || forcerotate || keyheld)
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
-		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
+		if(!pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
 			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))

@@ -59,6 +59,7 @@
 		header = "Haunted Tarot Deck",
 		ghost_sound = 'sound/effects/ghost2.ogg',
 		notify_volume = 75,
+		action = NOTIFY_ORBIT,
 	)
 
 /obj/item/toy/cards/deck/tarot/haunted/proc/on_unwield(obj/item/source, mob/living/carbon/user)

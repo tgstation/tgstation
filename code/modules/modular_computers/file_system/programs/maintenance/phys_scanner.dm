@@ -1,10 +1,10 @@
 /datum/computer_file/program/maintenance/phys_scanner
 	filename = "phys_scanner"
 	filedesc = "Physical Scanner"
-	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
+	category = PROGRAM_CATEGORY_MISC
 	extended_desc = "This program allows the tablet to scan physical objects and display a data output."
 	size = 2
-	usage_flags = PROGRAM_PDA
+	usage_flags = PROGRAM_TABLET
 	tgui_id = "NtosPhysScanner"
 	program_icon = "barcode"
 	/// Information from the last scanned person, to display on the app.

@@ -13,11 +13,11 @@
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
 "v" = (
-/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/effect/bitrunning/exit_spawn,
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
 "N" = (
-/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/bitrunning/goal_turf,
 /turf/open/floor/plating,
 /area/virtual_domain/safehouse)
 "R" = (

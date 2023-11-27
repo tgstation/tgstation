@@ -19,7 +19,6 @@
 	name = "encrypted cache"
 	desc = "Needs decrypted at the safehouse to be opened."
 	locked = TRUE
-	damage_deflection = 30
 
 /obj/structure/closet/crate/secure/bitrunning/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
 	return FALSE
@@ -73,7 +72,7 @@
 /obj/structure/closet/crate/secure/bitrunning/decrypted/proc/spawn_loot(list/extra_loot)
 	for(var/path in extra_loot)
 		if(!ispath(path))
-			return FALSE
+			continue
 
 		if(isnull(extra_loot[path]))
 			return FALSE

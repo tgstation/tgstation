@@ -49,6 +49,7 @@
 		notify_ghosts(
 			"[owner] has developed spontaneous appendicitis!",
 			source = owner,
+			action = NOTIFY_ORBIT,
 			header = "Whoa, Sick!",
 		)
 

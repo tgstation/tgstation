@@ -17,13 +17,17 @@
 /obj/machinery/computer/quantum_console/LateInitialize()
 	. = ..()
 
-	find_server()
+	if(isnull(server_ref?.resolve()))
+		find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
 	if(!is_operational)
 		return
+
+	if(isnull(server_ref?.resolve()))
+		find_server()
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -72,13 +76,17 @@
 
 	switch(action)
 		if("random_domain")
-			server.cold_boot_map(server.get_random_domain_id())
+			var/map_id = server.get_random_domain_id()
+			if(!map_id)
+				return TRUE
+
+			server.cold_boot_map(usr, map_id)
 			return TRUE
 		if("refresh")
 			ui.send_full_update()
 			return TRUE
 		if("set_domain")
-			server.cold_boot_map(params["id"])
+			server.cold_boot_map(usr, params["id"])
 			return TRUE
 		if("stop_domain")
 			server.begin_shutdown(usr)

@@ -173,7 +173,7 @@
  * returns an instance of a power if modification was complete
  */
 /datum/mutation/human/proc/modify()
-	if(modified || !power_path || QDELETED(owner))
+	if(modified || !power_path || !owner)
 		return
 	var/datum/action/cooldown/modified_power = locate(power_path) in owner.actions
 	if(!modified_power)

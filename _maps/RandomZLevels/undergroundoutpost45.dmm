@@ -4042,7 +4042,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "pg" = (
-/obj/structure/secure_safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 5;
 	pixel_y = -27
 	},
