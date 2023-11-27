@@ -61,7 +61,7 @@
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, PROC_REF(new_implant))
 	else if(istype(parent, /obj/item/modular_computer/pda))
 		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, PROC_REF(new_ringtone))
-		RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(check_detonate))
+		parent.AddElement(/datum/element/pda_bomb_proof)
 	else if(istype(parent, /obj/item/radio))
 		RegisterSignal(parent, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(new_message))
 	else if(istype(parent, /obj/item/pen))
@@ -396,11 +396,6 @@
 	interact(null, user)
 	to_chat(user, span_hear("The computer softly beeps."))
 	return COMPONENT_STOP_RINGTONE_CHANGE
-
-/datum/component/uplink/proc/check_detonate()
-	SIGNAL_HANDLER
-
-	return COMPONENT_TABLET_NO_DETONATE
 
 // Radio signal responses
 

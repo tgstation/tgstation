@@ -259,6 +259,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define OBJECTIVE_ITEM_TYPE_NORMAL "normal"
 /// Only appears in traitor objectives
 #define OBJECTIVE_ITEM_TYPE_TRAITOR "traitor"
+/// Only appears for spy bounties
+#define OBJECTIVE_ITEM_TYPE_SPY "spy"
 
 // Progression traitor defines
 
@@ -372,3 +374,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BATON_MODES 4
 
 #define FREEDOM_IMPLANT_CHARGES 4
+
+#define SPY_DIFFICULTY_EASY "easy"
+#define SPY_DIFFICULTY_MEDIUM "medium"
+#define SPY_DIFFICULTY_HARD "hard"
