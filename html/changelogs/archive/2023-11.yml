@@ -127,3 +127,13 @@
       to donator items.
   moocowswag:
   - qol: Apc covers can now be repaired with a welder and replaced with an apc frame.
+2023-11-27:
+  KoboldCommando:
+  - bugfix: Some lurid posters have been 1984'd
+  MomoBerri:
+  - qol: more radiation shutter directionals
+  lmenvs:
+  - rscadd: Twitch subs and Patrons at Assistant tier and above can enjoy a 25 monkecoin
+      bonus at round end.  These bonuses do stack if you are both subbed and a patron,
+      AND they both are affected by monkecoin multipliers.
+  - rscadd: Kon Chieko's Donator rewards! Thank you!!
