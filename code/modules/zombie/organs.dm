@@ -47,7 +47,8 @@
 
 /obj/item/organ/internal/zombie_infection/proc/organ_owner_died(mob/living/carbon/source, gibbed)
 	SIGNAL_HANDLER
-	qdel(src) // Congrats you somehow died so hard you stopped being a zombie
+	if(iszombie(source))
+		qdel(src) // Congrats you somehow died so hard you stopped being a zombie
 
 /obj/item/organ/internal/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, span_warning("Inside the head is a disgusting black \

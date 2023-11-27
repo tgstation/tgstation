@@ -16,4 +16,4 @@
 	else
 		to_chat(usr, span_warning("Job configuration file could not be generated. Check the server logs / runtimes / above warning messages for more information."))
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Generate Job Configuration") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Generate Job Configuration")
