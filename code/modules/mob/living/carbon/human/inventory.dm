@@ -319,12 +319,6 @@
 		if(clothing.tint)
 			update_tint()
 
-	// Not an else-if because we're probably equipped in another slot
-	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
-		cutoff_internals()
-		if(!QDELETED(src))
-			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
-
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.
 	var/obj/item/existing_tank = is_external ? external : internal

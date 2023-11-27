@@ -168,6 +168,12 @@
 	else
 		not_handled = TRUE
 
+	// Not an else-if because we're probably equipped in another slot
+	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
+		cutoff_internals()
+		if(!QDELETED(src))
+			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
+
 	if(not_handled)
 		return
 
@@ -178,12 +184,6 @@
 		var/obj/item/clothing/clothing = I
 		if(clothing.tint)
 			update_tint()
-
-	// Not an else-if because we're probably equipped in another slot
-	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
-		cutoff_internals()
-		if(!QDELETED(src))
-			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 
 /// Returns TRUE if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
