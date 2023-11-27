@@ -255,12 +255,12 @@
 	. = ..()
 	if(COOLDOWN_FINISHED(src, breakdown_cooldown))
 		COOLDOWN_START(src, breakdown_cooldown, rand(30 SECONDS, 1 MINUTES))
-		apply_organ_damage(10)
+		apply_organ_damage(0.5)
 		to_chat(owner, span_warning("Your heart seems to skip a beat!"))
 
 	if(COOLDOWN_FINISHED(src, breakdown_dmg_cooldown) && damage == maxHealth)
 		to_chat(owner, span_userdanger(pick("Your broken heart carves the flesh surrounding it!","Your chest is carved hollow from the inside by your hearth!","You feel your heart shake uncontrolable inside of you!")))
-		owner.apply_damage(10, BRUTE)
+		owner.apply_damage(10, BRUTE, sharpness = SHARP_EDGED)
 		owner.emote("scream")
 		COOLDOWN_START(src, breakdown_dmg_cooldown, rand(2 SECONDS, 4 SECONDS))
 
