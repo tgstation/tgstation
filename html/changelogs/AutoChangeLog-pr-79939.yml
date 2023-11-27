@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an overlay lighting hard del"
+  - bugfix: "flashlights placed inside of backpacks and other storage items that were on the floor will no longer allow light to shine through"
