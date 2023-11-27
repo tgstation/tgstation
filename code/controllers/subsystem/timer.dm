@@ -531,7 +531,7 @@ SUBSYSTEM_DEF(timer)
 		7 = text_ref(callBack.object),
 		8 = getcallingtype(),
 		9 = callBack.delegate,
-		10 = callBack.arguments.Copy(),
+		10 = callBack.arguments ? callBack.arguments.Copy() : null,
 		11 = "[source]"
 	)
 #else
