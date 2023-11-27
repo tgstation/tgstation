@@ -291,6 +291,25 @@
 	can_bayonet = FALSE
 	max_mod_capacity = 60
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/m79
+	name = "proto-kinetic grenade launcher"
+	desc = "Made in a drunk frenzy during the creation of the kinetic railgun, the kinetic grenade launcher fires the same bombs used by \
+	the mining modsuit. Due to the technology needed to pack the bombs into this weapon, there is no space for modification."
+	icon = 'monkestation/icons/obj/guns/guns.dmi'
+	icon_state = "kineticglauncher"
+	base_icon_state = "kineticglauncher"
+	inhand_icon_state = "kineticgun"
+	pin = /obj/item/firing_pin/wastes
+	recharge_time = 2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/m79)
+	item_flags = NONE
+	obj_flags = UNIQUE_RENAME
+	w_class = WEIGHT_CLASS_HUGE
+	weapon_weight = WEAPON_HEAVY
+	can_bayonet = FALSE
+	max_mod_capacity = 0
+	disablemodification = TRUE
+
 //Accelerator Casing
 /obj/item/ammo_casing/energy/kinetic/railgun
 	projectile_type = /obj/projectile/kinetic/railgun
@@ -325,6 +344,12 @@
 	pellets = 8
 	variance = 360
 	fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+
+/obj/item/ammo_casing/energy/kinetic/m79
+	projectile_type = /obj/projectile/bullet/reusable/mining_bomb //uses the mining bomb projectile from the mining modsuit
+	select_name = "kinetic"
+	e_cost = 500
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 
 //Accelerator Projectiles
 /obj/projectile/kinetic/railgun
