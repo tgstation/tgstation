@@ -7118,7 +7118,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central/fore)
 "dxq" = (
-/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "dxr" = (
@@ -10660,7 +10659,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "fgS" = (
@@ -10954,12 +10952,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
-"fpv" = (
-/obj/effect/turf_decal/trimline/red/filled/warning,
-/obj/effect/turf_decal/trimline/yellow/filled/warning,
-/obj/effect/landmark/start/prisoner,
-/turf/open/floor/iron/dark,
-/area/station/security/office)
 "fpx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19486,7 +19478,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 4
 	},
-/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "jAN" = (
@@ -24513,6 +24504,10 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
+"lNp" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plating/ocean/pit,
+/area/ocean)
 "lNA" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/dark/textured,
@@ -75674,8 +75669,8 @@ kYB
 bBi
 fKl
 aYY
-aYY
-aYY
+lNp
+lNp
 aYY
 aYY
 aYY
@@ -75932,7 +75927,7 @@ meJ
 fKl
 aYY
 aYY
-aYY
+lNp
 aYY
 aYY
 aYY
@@ -76961,7 +76956,7 @@ hzn
 nYP
 fgA
 dxq
-fpv
+tVQ
 yfj
 meJ
 meJ
