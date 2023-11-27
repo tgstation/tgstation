@@ -140,7 +140,6 @@ module.exports = (env = {}, argv) => {
         extractComments: false,
         terserOptions: {
           output: {
-            ie8: true,
             ascii_only: true,
             comments: false,
           },
