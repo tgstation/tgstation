@@ -18,13 +18,13 @@
 	for(var/datum/round_event_control/possible_event as anything in SSevents.control)
 		if(!possible_event.wizardevent || !possible_event.can_spawn_event(player_count, allow_magic = TRUE))
 			continue
-		possible_events += possible_event
+		possible_events[possible_event] = possible_event.weight
 
 	if(!length(possible_events))
 		kill()
 		return
 
-	triggered_event = pick(possible_events)
+	triggered_event = pick_weight(possible_events)
 	setup = TRUE
 
 /datum/round_event/summon_wizard_event/start()
