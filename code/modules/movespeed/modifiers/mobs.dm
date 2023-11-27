@@ -81,9 +81,6 @@
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
-/datum/movespeed_modifier/shove
-	multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH
-
 /datum/movespeed_modifier/human_carry
 	multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN
 	blacklisted_movetypes = FLOATING

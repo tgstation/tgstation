@@ -1161,13 +1161,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		user.do_attack_animation(target, atk_effect)
 
 		//has our target been shoved recently? If so, they're off-balance and we get an easy hit.
-		var/off_balance = FALSE
+		var/staggered = FALSE
 
 		//Someone in a grapple is much more vulnerable to being harmed by punches.
 		var/grappled = FALSE
 
-		if(target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-			off_balance = TRUE
+		if(target.has_status_effect(/datum/status_effect/staggered))
+			staggered = TRUE
 
 		if(target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
 			grappled = TRUE
@@ -1179,7 +1179,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(attacking_bodypart.unarmed_damage_low)
-			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || off_balance) //kicks and attacks against off-balance targets never miss (provided your species deals more than 0 damage)
+			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered) //kicks and attacks against off-balance targets never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
 				miss_chance = clamp(UNARMED_MISS_CHANCE_BASE - limb_accuracy + user.getStaminaLoss() + (user.getBruteLoss()*0.5), 0, UNARMED_MISS_CHANCE_MAX) //Limb miss chance + various damage. capped at 80 so there is at least a chance to land a hit.
@@ -1195,6 +1195,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/armor_block = target.run_armor_check(affecting, MELEE)
 
 		playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
+
+		if(grappled)
+			atk_verb = "pummel"
 
 		target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
 						span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
@@ -1222,7 +1225,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			log_combat(user, target, "punched")
 
 		//If we rolled a punch high enough to hit our stun threshold, or our target is off-balance and they have at least 40 damage+stamina loss, we knock them down
-		if((target.stat != DEAD) && prob(limb_accuracy) || (target.stat != DEAD) && off_balance && (target.getStaminaLoss() + user.getBruteLoss()) >= 40)
+		if((target.stat != DEAD) && prob(limb_accuracy) || (target.stat != DEAD) && staggered && (target.getStaminaLoss() + user.getBruteLoss()) >= 40)
 			target.visible_message(span_danger("[user] knocks [target] down!"), \
 							span_userdanger("You're knocked down by [user]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You knock [target] down!"))

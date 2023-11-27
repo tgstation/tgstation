@@ -1,3 +1,6 @@
+/datum/movespeed_modifier/status_effect/staggered
+	multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH
+
 /datum/movespeed_modifier/status_effect/bloodchill
 	multiplicative_slowdown = 3
 

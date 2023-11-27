@@ -354,21 +354,20 @@
 	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
 		target_held_item = null
 
-	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		target.emote("sway")
-		if(target_held_item)
+	target.apply_status_effect(/datum/status_effect/staggered, 3 SECONDS)
+
+	if(target_held_item)
+		if (target.has_status_effect(/datum/status_effect/staggered)) // if we are already staggered, drop the weapon
+			target.dropItemToGround(target_held_item)
+			append_message = "causing [target.p_them()] to drop [target_held_item]"
+			target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
+				span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+		else // otherwise we just give some feedback
 			append_message = "loosening [target.p_their()] grip on [target_held_item]"
 			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
 				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
 
-	else if(target_held_item)
-		target.dropItemToGround(target_held_item)
-		append_message = "causing [target.p_them()] to drop [target_held_item]"
-		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
-			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
-
+	target.apply_status_effect(/datum/status_effect/staggered)
 	log_combat(src, target, "shoved", append_message)
 
 /mob/living/carbon/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
@@ -376,12 +375,6 @@
 		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
 			return TRUE
 	return FALSE
-
-/mob/living/carbon/proc/clear_shove_slowdown()
-	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
-	var/active_item = get_active_held_item()
-	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
-		visible_message(span_warning("[name] regains their grip on \the [active_item]!"), span_warning("You regain your grip on \the [active_item]"), null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)

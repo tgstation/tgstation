@@ -96,7 +96,7 @@
 		to_chat(user, span_warning("You're not ready to tackle!"))
 		return
 
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved
+	if(user.has_status_effect(/datum/status_effect/staggered)) // can't tackle if you just got shoved
 		to_chat(user, span_warning("You're too off balance to tackle!"))
 		return
 
@@ -179,9 +179,8 @@
 			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, briefly knocking you off-balance!"))
 
 			user.Knockdown(30)
-			if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
-				addtimer(CALLBACK(T, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH * 2)
+			if(ishuman(target))
+				target.apply_status_effect(/datum/status_effect/staggered, SHOVE_SLOWDOWN_LENGTH * 2)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
 			user.visible_message(span_warning("[user] lands a passable [tackle_word] on [target], sending them both tumbling!"), span_userdanger("You land a passable [tackle_word] on [target], sending you both tumbling!"), ignored_mobs = target)
