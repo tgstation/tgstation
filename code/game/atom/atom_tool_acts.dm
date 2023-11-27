@@ -6,11 +6,23 @@
  * or scanning someone with a health analyzer
  *
  * This can be overridden to add custom item interactions to this atom
+ *
+ * Do not call this directly
  */
 /atom/proc/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	var/is_left_clicking = !is_right_clicking
+	var/early_sig_return = NONE
+	if(is_left_clicking)
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION, user, tool, modifiers) \
+			| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
+	else
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, user, tool, modifiers) \
+			| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, user, src, modifiers)
+	if(early_sig_return)
+		return early_sig_return
 
 	var/interact_return = is_left_clicking \
 		? tool.interact_with_atom(src, user) \
