@@ -191,7 +191,7 @@
 
 //Proto-Kinetic Accelerators
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/railgun //disabled because firing pin is fucking stupid and wont work
+/obj/item/gun/energy/recharge/kinetic_accelerator/railgun
 	name = "proto-kinetic railgun"
 	desc = "Before the nice streamlined and modern day Proto-Kinetic Accelerator was created, multiple designs were drafted by the Mining Research and Development \
 	team. Many were failures, including this one, which came out too bulky and too ineffective. Well recently the MR&D Team got drunk and said 'fuck it we ball' and \
