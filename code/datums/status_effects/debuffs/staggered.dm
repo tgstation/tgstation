@@ -3,6 +3,7 @@
 	duration = SHOVE_SLOWDOWN_LENGTH
 	remove_on_fullheal = TRUE
 	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
 
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
