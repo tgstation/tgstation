@@ -409,6 +409,8 @@
 	if(!istype(node))
 		return FALSE
 	hidden_nodes -= node.id
+	///Make it available if the prereq ids are already researched
+	update_node_status(node)
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)

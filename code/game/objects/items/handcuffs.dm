@@ -380,7 +380,7 @@
 	. = ..()
 	update_appearance()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(spring_trap),
+		COMSIG_ATOM_ENTERED = PROC_REF(trap_stepped_on),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -412,10 +412,23 @@
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, atom/movable/target, thrown_at = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/trap_stepped_on(datum/source, atom/movable/entering, ...)
 	SIGNAL_HANDLER
+
+	spring_trap(entering)
+
+/**
+ * Tries to spring the trap on the target movable.
+ *
+ * This proc is safe to call without knowing if the target is valid or if the trap is armed.
+ *
+ * Does not trigger on tiny mobs.
+ * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
+ */
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE)
 	if(!armed || !isturf(loc) || !isliving(target))
 		return
+
 	var/mob/living/victim = target
 	if(istype(victim.buckled, /obj/vehicle))
 		var/obj/vehicle/ridden_vehicle = victim.buckled
@@ -424,12 +437,14 @@
 			ridden_vehicle.visible_message(span_danger("[ridden_vehicle] triggers \the [src]."))
 			return
 
-	//don't close the trap if they're as small as a mouse, or not touching the ground
-	if(victim.mob_size <= MOB_SIZE_TINY || (!thrown_at && victim.movement_type & (FLYING|FLOATING)))
+	//don't close the trap if they're as small as a mouse
+	if(victim.mob_size <= MOB_SIZE_TINY)
+		return
+	if(!ignore_movetypes && (victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return
 
 	close_trap()
-	if(thrown_at)
+	if(ignore_movetypes)
 		victim.visible_message(span_danger("\The [src] ensnares [victim]!"), \
 				span_userdanger("\The [src] ensnares you!"))
 	else
@@ -477,7 +492,7 @@
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
-	spring_trap(null, user)
+	spring_trap(user)
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
@@ -554,7 +569,7 @@
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
 	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
-	B.spring_trap(null, hit_atom, TRUE)
+	B.spring_trap(hit_atom, ignore_movetypes = TRUE)
 	qdel(src)
 
 /**

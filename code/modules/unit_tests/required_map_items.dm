@@ -15,10 +15,11 @@
 /datum/unit_test/required_map_items/proc/setup_expected_types()
 	expected_types += subtypesof(/obj/item/stamp/head)
 	expected_types += subtypesof(/obj/machinery/computer/department_orders)
-	expected_types += /obj/machinery/computer/communications
-	expected_types += /mob/living/carbon/human/species/monkey/punpun
+
+	expected_types += /mob/living/basic/parrot/poly
 	expected_types += /mob/living/basic/pet/dog/corgi/ian
-	expected_types += /mob/living/simple_animal/parrot/poly
+	expected_types += /mob/living/carbon/human/species/monkey/punpun
+	expected_types += /obj/machinery/computer/communications
 	expected_types += /obj/machinery/drone_dispenser
 
 /datum/unit_test/required_map_items/Run()

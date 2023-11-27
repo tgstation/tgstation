@@ -660,7 +660,7 @@
 		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
 		return
 
-	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	var/amount_nutriment = target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE)
 	if(amount_nutriment <= 0)
 		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
 		return
