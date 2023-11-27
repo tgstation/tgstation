@@ -368,3 +368,5 @@
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(speak), pick(emagged_announcements))
+
+#undef TEND_DAMAGE_INTERACTION
