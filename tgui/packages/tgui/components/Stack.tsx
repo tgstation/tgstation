@@ -11,7 +11,7 @@ import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, c
 type StackProps = FlexProps & {
   vertical?: boolean;
   fill?: boolean;
-  zebra?; boolean;
+  zebra?: boolean;
 };
 
 export const Stack = (props: StackProps) => {
