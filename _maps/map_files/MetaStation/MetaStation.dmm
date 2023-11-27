@@ -53427,11 +53427,11 @@
 /area/station/maintenance/starboard/fore)
 "tbl" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Kitchen"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/door/airlock/public/glass{
+	name = "Bar"
+	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "tbp" = (
