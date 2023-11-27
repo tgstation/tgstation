@@ -192,7 +192,10 @@
 			to_chat(attacker, span_danger("In a swift motion, you snap the neck of [defender]!"))
 			log_combat(attacker, defender, "snapped neck")
 			defender.apply_damage(100, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND)
-			defender.death()
+			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
+				defender.death()
+				defender.investigate_log("has had [defender.p_their()] neck snapped by [attacker].", INVESTIGATE_DEATHS)
+
 			return TRUE
 
 	add_to_streak("H", defender)
