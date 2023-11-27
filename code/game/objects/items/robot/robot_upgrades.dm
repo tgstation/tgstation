@@ -567,8 +567,9 @@
 		robot.SetLockdown(FALSE)
 	robot.set_anchored(FALSE)
 	REMOVE_TRAIT(robot, TRAIT_NO_TRANSFORM, REF(src))
+	robot.resize = 2
 	robot.hasExpanded = TRUE
-	robot.update_transform(2)
+	robot.update_transform()
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()

@@ -21,8 +21,6 @@
 	var/model_select_icon = "nomod"
 	///Produces the icon for the borg and, if no special_light_key is set, the lights
 	var/cyborg_base_icon = "robot"
-	///Keeps track of alternate icon files for the borg
-	var/cyborg_base_icon_file = 'icons/mob/silicon/robots.dmi'
 	///If we want specific lights, use this instead of copying lights in the dmi
 	var/special_light_key
 	///Holds all the usable modules (tools)
@@ -228,6 +226,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	new_model.robot = cyborg
+	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
 	if(!new_model.be_transformed_to(src, forced))
 		qdel(new_model)
 		return
