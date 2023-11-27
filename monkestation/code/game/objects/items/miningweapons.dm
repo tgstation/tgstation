@@ -375,19 +375,31 @@
 	range = 1
 	log_override = TRUE
 
-//Wastes firing pin - restricts a weapon to only outside when mining - space not included - used in railgun
+//Wastes firing pin - restricts a weapon to only outside when mining - based on area defines not z-level
 
-/obj/item/firing_pin/wastes //needs fixing, code appears correct but it dosn't actually function on lavaland or icemoon surface
+/obj/item/firing_pin/wastes
 	name = "Wastes firing pin"
 	desc = "This safety firing pin allows weapons to be fired only outside on the wastes of lavaland or icemoon."
 	fail_message = "Wastes check failed! - Try getting further from the station first."
 	pin_hot_swappable = FALSE
 	pin_removable = FALSE
+	var/list/wastes = list(/area/icemoon/underground/unexplored/rivers,
+							/area/icemoon/surface/outdoors,
+							/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters,
+							/area/icemoon/underground/unexplored/rivers/deep/shoreline,
+							/area/icemoon/underground/explored,
+							/area/lavaland/surface/outdoors,
+							/area/lavaland/surface/outdoors/unexplored/danger,
+							/area/lavaland/surface/outdoors/unexplored,
+							/area/lavaland/surface/outdoors/explored,
+							/area/ocean/generated,
+							/area/ocean/generated_above,
+							/area/ruin/)
 
 /obj/item/firing_pin/wastes/pin_auth(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if (istype(get_area(user), /area/icemoon/underground/unexplored/rivers || /area/icemoon/underground/explored || /area/icemoon/surface/outdoors/nospawn || /area/icemoon/surface/outdoors || /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters || /area/icemoon/underground/unexplored/rivers/deep/shoreline || /area/lavaland/surface/outdoors || /area/lavaland/surface/outdoors/unexplored/danger || /area/lavaland/surface/outdoors/explored))
+	if (is_type_in_list(get_area(user), wastes))
 		return TRUE
 	return FALSE
 
