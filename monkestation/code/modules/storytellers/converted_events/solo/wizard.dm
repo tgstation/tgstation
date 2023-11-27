@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/wizard
 	name = "Wizard"
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_MAGICAL)
 	typepath = /datum/round_event/antagonist/solo/wizard
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
@@ -11,7 +11,7 @@
 	maximum_antags = 1
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 2
+	weight = 3
 	min_players = 35
 	max_occurrences = 1
 

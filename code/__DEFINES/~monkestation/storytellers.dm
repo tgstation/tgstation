@@ -28,6 +28,8 @@
 #define TAG_EXTERNAL "external"
 /// When the event is an alien threat (blob, xenos)
 #define TAG_ALIEN "alien"
+/// When the event is magical in nature
+#define TAG_MAGICAL "magical"
 
 #define EVENT_TRACK_MUNDANE "Mundane"
 #define EVENT_TRACK_MODERATE "Moderate"

@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/changeling
 	antag_flag = ROLE_CHANGELING
-	tags = list(TAG_COMBAT)
+	tags = list(TAG_COMBAT, TAG_ALIEN)
 	antag_datum = /datum/antagonist/changeling
 	protected_roles = list(
 		JOB_CAPTAIN,
