@@ -152,7 +152,7 @@
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
 	adjust_visor(user)
 
-/obj/item/clothing/head/helmet/toggleable/visor_toggling()
+/obj/item/clothing/head/helmet/toggleable/update_icon_state()
 	. = ..()
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 

@@ -72,8 +72,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_obscured_slots(obj/item/worn_item)
 	..()
-	var/obscured_slots = worn_item.flags_inv
-	if(obscured_slots & HIDEFACE)
+	if(worn_item.flags_inv & HIDEFACE)
 		sec_hud_set_security_status()
 
 /* --------------------------------------- */

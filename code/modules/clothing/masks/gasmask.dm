@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	if(.)
 		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
-/obj/item/clothing/mask/gas/welding/visor_toggling()
+/obj/item/clothing/mask/gas/welding/update_icon_state()
 	. = ..()
 	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 

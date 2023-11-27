@@ -69,12 +69,15 @@
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/visor_toggling(mob/living/user)
 	. = ..()
-	icon_state = "[initial(icon_state)][up ? "_up" : ""]" //generic behavior, if you add a mask that doesnt do this then remove it and manually add it to subtypes
 	if(up)
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
 	else
 		slot_flags = initial(slot_flags)
+
+/obj/item/clothing/mask/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "_up" : ""]"
 
 /**
  * Proc called in lungs.dm to act if wearing a mask with filters, used to reduce the filters durability, return a changed gas mixture depending on the filter status

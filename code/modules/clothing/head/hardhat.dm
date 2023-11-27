@@ -132,10 +132,6 @@
 		return
 	return ..()
 
-/obj/item/clothing/head/utility/hardhat/welding/visor_toggling()
-	. = ..()
-	update_appearance()
-
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)

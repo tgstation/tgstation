@@ -45,8 +45,6 @@
 	if(up)
 		undyeable = TRUE
 	else
-		inhand_icon_state = initial(inhand_icon_state)
-		worn_icon_state = initial(worn_icon_state)
 		undyeable = initial(undyeable)
 
 /obj/item/clothing/mask/bandana/AltClick(mob/user)
