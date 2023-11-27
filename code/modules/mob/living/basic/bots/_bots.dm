@@ -38,9 +38,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	light_range = 3
 	light_power = 0.9
 	speed = 3
-
-	///Will other (noncommissioned) bots salute this bot?
-	var/commissioned = FALSE
 	///Access required to access this Bot's maintenance protocols
 	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
@@ -465,8 +462,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	var/was_on = bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE
-	stat |= EMPED
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
@@ -478,22 +473,14 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
+	else
+		addtimer(CALLBACK(src, PROC_REF(turn_on)), severity * 30 SECONDS)
 
-	addtimer(CALLBACK(src, PROC_REF(emp_reset), was_on), severity * 30 SECONDS)
-
-	if(!prob(70/severity))
-		return
-
-	if (!length(GLOB.uncommon_roundstart_languages))
+	if(!prob(70/severity) || !length(GLOB.uncommon_roundstart_languages))
 		return
 
 	remove_all_languages(source = LANGUAGE_EMP)
 	grant_random_uncommon_language(source = LANGUAGE_EMP)
-
-/mob/living/basic/bot/proc/emp_reset(was_on)
-	stat &= ~EMPED
-	if(was_on)
-		turn_on()
 
 /**
  * Pass a message to have the bot say() it, passing through our announcement action to potentially also play a sound.
