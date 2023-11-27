@@ -1045,7 +1045,6 @@
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
-	VV_DROPDOWN_OPTION(VV_HK_MAKE_AI, "Make AI")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_BODYPART, "Modify bodypart")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_ORGANS, "Modify organs")
 	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
@@ -1103,12 +1102,6 @@
 						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
 						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
 
-	if(href_list[VV_HK_MAKE_AI])
-		if(!check_rights(R_SPAWN))
-			return
-		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
-			return
-		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_MODIFY_ORGANS])
 		if(!check_rights(NONE))
 			return

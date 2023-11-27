@@ -319,6 +319,7 @@
 	design_ids = list(
 		"circuit_multitool",
 		"comp_access_checker",
+		"comp_arctan2",
 		"comp_arithmetic",
 		"comp_assoc_list_pick",
 		"comp_assoc_list_remove",
@@ -1016,6 +1017,7 @@
 		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
 		"borg_upgrade_hypermod",
+		"borg_upgrade_inducer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 

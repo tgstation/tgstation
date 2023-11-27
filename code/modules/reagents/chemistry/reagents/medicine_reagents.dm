@@ -706,7 +706,7 @@
 	reagent_state = LIQUID
 	color = "#404040" //oculine is dark grey, inacusiate is light grey
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	taste_description = "dull toxin"
+	taste_description = "earthy bitterness"
 	purity = REAGENT_STANDARD_PURITY
 	ph = 10
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

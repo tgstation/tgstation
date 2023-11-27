@@ -214,6 +214,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
 
+/// Added to a mob, allows that mob to experience flavour-based moodlets when examining food
+#define TRAIT_REMOTE_TASTING "remote_tasting"
+
 /// Stops the mob from slipping on water, or banana peels, or pretty much anything that doesn't have [GALOSHES_DONT_HELP] set
 #define TRAIT_NO_SLIP_WATER "noslip_water"
 /// Stops the mob from slipping on permafrost ice (not any other ice) (but anything with [SLIDE_ICE] set)
