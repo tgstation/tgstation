@@ -2514,7 +2514,6 @@
 	name = "HoP Queue Shutters"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "blR" = (
@@ -2782,6 +2781,7 @@
 "brz" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/junction/yjunction,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
 "bsd" = (
@@ -9098,6 +9098,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "brig-entrance"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "exF" = (
@@ -12745,7 +12746,7 @@
 /area/station/security/brig)
 "geV" = (
 /obj/machinery/smartfridge/extract/preloaded,
-/turf/open/floor/iron,
+/turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
 "gfg" = (
 /obj/machinery/airalarm/directional/north,
@@ -17911,14 +17912,6 @@
 /obj/machinery/requests_console/auto_name/directional/north,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/office)
-"iKa" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/iron/dark/textured,
-/area/station/hallway/primary/aft)
 "iKC" = (
 /obj/structure/cable,
 /obj/machinery/plumbing/floor_pump/input/on/waste/directional/east,
@@ -22536,7 +22529,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass_large{
 	name = "Head Of Personel Lobby"
 	},
@@ -68968,7 +68960,7 @@ gUe
 owJ
 sTn
 sVJ
-iJt
+sTn
 nTa
 gUe
 epx
@@ -69227,7 +69219,7 @@ iaP
 sJj
 iaP
 gxe
-nRh
+ngm
 bMR
 qaa
 uDo
@@ -71797,7 +71789,7 @@ pEa
 acI
 twN
 jfI
-iKa
+owJ
 pHp
 hCB
 hCB
