@@ -53,13 +53,13 @@
 /obj/item/portable_recharger/equipped(mob/user, slot, initial)
 	. = ..()
 	if(slot & slot_flags)
-		RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_attacked))
+		RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_attacked))
 	else
-		UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
+		UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/portable_recharger/dropped(mob/user, silent)
 	. = ..()
-	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
+	UnregisterSignal(user, COMSIG_LIVING_CHECK_BLOCK)
 
 /obj/item/portable_recharger/CheckParts(list/parts_list)
 	..()
