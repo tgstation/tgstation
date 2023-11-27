@@ -11,14 +11,14 @@ type Info = {
 
 export const AntagInfoBrother = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { antag_name, brothers, objectives } = data;
+  const { antag_name, objectives } = data;
   return (
     <Window width={620} height={250}>
       <Window.Content>
         <Section scrollable fill>
           <Stack vertical>
             <Stack.Item textColor="red" fontSize="20px">
-              You are the {antag_name} of {brothers}!
+              You are the {antag_name}!
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout objectives={objectives} />

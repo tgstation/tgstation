@@ -212,6 +212,7 @@
 	/// Return to stop the flash entirely
 	#define STOP_FLASH (1<<3)
 /// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
+/// (mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation (from code/__DEFINES/mobs.dm))
 #define COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON "mob_success_flashed_carbon"
 
 /// from mob/get_status_tab_items(): (list/items)
