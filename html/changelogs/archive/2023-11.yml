@@ -1055,3 +1055,18 @@
   vinylspiders:
   - bugfix: fixes a runtime in footstep code that would prevent the fov effect from
       playing to nearby mobs
+2023-11-27:
+  DaCoolBoss:
+  - qol: Oculine now tastes bitter, and not like toxin.
+  LemonInTheDark:
+  - server: Minimum compile version has been bumped to 515. clients still support
+      514 but we're gonna start using 515 restricted features for serverside now.
+  Profakos:
+  - bugfix: You can once again repaint robotic limbs to use alternate skins
+  SyncIt21:
+  - code_imp: removes unused proc `generate_possible_reactions()` from reagent holder
+  san7890:
+  - bugfix: Poly should now remember phrases between shifts.
+  wesoda25:
+  - bugfix: the dismemberment moodlet will now properly clear for ethereals who regrew
+      a limb in their resurrection crystals
