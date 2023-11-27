@@ -418,13 +418,11 @@
 
 
 /obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	. |= default_unfasten_wrench(user, tool, time = 0) // melbert todo
-	var/turf/T = get_turf(src)
-	update_cable_icons_on_turf(T)
-	if(. == SUCCESSFUL_UNFASTEN && anchored)
+	var/unfasten_result = default_unfasten_wrench(user, tool, time = 0)
+	update_cable_icons_on_turf(get_turf(src))
+	if(unfasten_result == SUCCESSFUL_UNFASTEN && anchored)
 		connect_to_network()
-
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
 	if(W.GetID())
