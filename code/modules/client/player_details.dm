@@ -43,4 +43,6 @@ GLOBAL_LIST_EMPTY(player_details)
 		var/mob_tag = data[name]
 		var/encoded_name = html_encode(name)
 		if(writable.played_names.Find("[encoded_name]"))
-			writable.played_names += list("[encoded_name]" = mob_tag)
+			continue
+
+		writable.played_names += list("[encoded_name]" = mob_tag)
