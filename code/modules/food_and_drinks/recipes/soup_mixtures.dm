@@ -62,19 +62,17 @@
 	if(!length(required_ingredients))
 		return TRUE
 
-	// This is very unoptimized for something ran every handle-reaction for every soup recipe.
-	// Look into ways for improving this, cause bleh
 	var/list/reqs_copy = required_ingredients.Copy()
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
 		// See if we fulfill all reqs
-		for(var/ingredient_type in required_ingredients)
-			if(!istype(ingredient, ingredient_type))
-				continue
+		var/ingredient_count = reqs_copy[ingredient.type]
+		if(ingredient_count && ingredient_count > 0)
 			if(isstack(ingredient))
 				var/obj/item/stack/stack_ingredient = ingredient
-				reqs_copy[ingredient_type] -= stack_ingredient.amount
+				ingredient_count -= stack_ingredient.amount
 			else
-				reqs_copy[ingredient_type] -= 1
+				ingredient_count -= 1
+			reqs_copy[ingredient.type] = ingredient_count
 
 	for(var/fulfilled in reqs_copy)
 		if(reqs_copy[fulfilled] > 0)
@@ -139,7 +137,7 @@
 	testing("Soup reaction started of type [type]! [length(pot.added_ingredients)] inside.")
 
 /datum/chemical_reaction/food/soup/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
-	if(!length(required_ingredients))
+	if(!length(required_ingredients) || reaction.data["boiled_over"])
 		return
 	testing("Soup reaction step progressing with an increment volume of [step_reaction_vol] and delta_t of [delta_t].")
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
@@ -153,7 +151,7 @@
 	// An ingredient was removed during the mixing process.
 	// Stop reacting immediately, we can't verify the reaction is correct still.
 	// If it is still correct it will restart shortly.
-	if(num_current_ingredients < num_cached_ingredients)
+	if(!num_current_ingredients)
 		testing("Soup reaction ended due to losing ingredients.")
 		return END_REACTION
 
@@ -167,24 +165,22 @@
 			new_ingredient.reagents?.chem_temp = holder.chem_temp
 			cached_ingredients[new_ref] = new_ingredient.reagents?.total_volume || 1
 
-	for(var/datum/weakref/ingredient_ref as anything in cached_ingredients)
-		var/obj/item/ingredient = ingredient_ref.resolve()
-		// An ingredient has gone missing, stop the reaction
-		if(QDELETED(ingredient) || ingredient.loc != holder.my_atom)
-			testing("Soup reaction ended due to having an invalid ingredient present.")
-			return END_REACTION
+	var/datum/weakref/ingredient_ref = cached_ingredients[1]
+	var/obj/item/ingredient = ingredient_ref.resolve()
+	// An ingredient has gone missing, stop the reaction
+	if(QDELETED(ingredient) || ingredient.loc != holder.my_atom)
+		testing("Soup reaction ended due to having an invalid ingredient present.")
+		return END_REACTION
 
-		// Don't add any more reagents if we've boiled over
-		if(reaction.data["boiled_over"])
-			continue
+	// Transfer 20% of the initial reagent volume of the ingredient to the soup
+	if(transfer_ingredient_reagents(ingredient, holder, max(cached_ingredients[ingredient_ref] * 0.2, 2)))
+		LAZYREMOVE(pot.added_ingredients, ingredient)
+		qdel(ingredient)
 
-		// Transfer 20% of the initial reagent volume of the ingredient to the soup
-		transfer_ingredient_reagents(ingredient, holder, max(cached_ingredients[ingredient_ref] * 0.2, 2))
-
-		// Uh oh we reached the top of the pot, the soup's gonna boil over.
-		if(holder.total_volume >= holder.maximum_volume * 0.95)
-			boil_over(holder)
-			reaction.data["boiled_over"] = TRUE
+	// Uh oh we reached the top of the pot, the soup's gonna boil over.
+	if(holder.total_volume >= holder.maximum_volume * 0.95)
+		boil_over(holder)
+		reaction.data["boiled_over"] = TRUE
 
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
@@ -243,11 +239,11 @@
  */
 /datum/chemical_reaction/food/soup/proc/transfer_ingredient_reagents(obj/item/ingredient, datum/reagents/holder, amount)
 	if(ingredient_reagent_multiplier <= 0)
-		return
+		return TRUE
 	var/datum/reagents/ingredient_pool = ingredient.reagents
 	// Some ingredients are purely flavor (no pun intended) and will have reagents
 	if(isnull(ingredient_pool) || ingredient_pool.total_volume <= 0)
-		return
+		return TRUE
 	if(isnull(amount))
 		amount = ingredient_pool.total_volume
 		testing("Soup reaction has made it to the finishing step with ingredients that still contain reagents. [amount] reagents left in [ingredient].")
@@ -258,6 +254,7 @@
 	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment/vitamin, amount * percentage_of_nutriment_converted)
 	// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
 	ingredient_pool.trans_to(holder, amount, ingredient_reagent_multiplier, no_react = TRUE)
+	return FALSE
 
 /// Called whenever the soup pot overfills with reagent.
 /datum/chemical_reaction/food/soup/proc/boil_over(datum/reagents/holder)
