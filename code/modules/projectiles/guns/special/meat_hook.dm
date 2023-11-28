@@ -28,6 +28,18 @@
 		return FALSE
 	return TRUE
 
+/obj/item/gun/magic/hook/suicide_act(mob/living/user)
+	var/obj/item/bodypart/head/removable = user.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(removable))
+		user.visible_message(span_suicide("[user] stuffs the chain of the [src] down the hole where their head should be! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return OXYLOSS
+
+	playsound(get_turf(src), fire_sound, 50, TRUE, -1)
+	user.visible_message(span_suicide("[user] is using the [src] on their [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(get_turf(src), 'sound/weapons/bladeslice.ogg', 70)
+	removable.dismember(silent = FALSE)
+	return BRUTELOSS
+
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
 	desc = "A hook."
