@@ -34,7 +34,7 @@
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
-	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
+	log_access("Mob Login: [key_name(src)] was assigned to a [type] ([tag])")
 	world.update_status()
 	client.clear_screen() //remove hud items just in case
 	client.images = list()
