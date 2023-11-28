@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(player_details)
 /datum/player_details/proc/get_played_names()
 	var/list/previous_names = list()
 	for(var/previous_name in played_names)
-		previous_names += html_encode("[previous_name] ([accessed_names[previous_name]])")
+		previous_names += html_encode("[previous_name] ([played_names[previous_name]])")
 	return previous_names.Join("; ")
 
 /// Adds the new names to the player's played_names list on their /datum/player_details for use of admins.
