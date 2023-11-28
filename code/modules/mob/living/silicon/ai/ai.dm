@@ -1040,7 +1040,7 @@
 	apc.malfhack = TRUE
 	apc.locked = TRUE
 	apc.coverlocked = TRUE
-
+	apc.flicker_hacked_icon()
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 

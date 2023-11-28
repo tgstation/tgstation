@@ -71,6 +71,8 @@
 	var/malfhack = FALSE //New var for my changes to AI malf. --NeoFite
 	///Reference to our ai hacker
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
+	///Counter for displaying the hacked overlay to mobs within view
+	var/hacked_flicker_counter = 0
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -328,7 +330,6 @@
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
 		"disable_nightshift_toggle" = low_power_nightshift_lights,
-		"emagStatus" = obj_flags & EMAGGED || malfhack,
 
 		"powerChannels" = list(
 			list(
@@ -482,6 +483,11 @@
 		failure_timer--
 		force_update = TRUE
 		return
+
+	if((obj_flags & EMAGGED || malfai) && icon_state == "apc0") //apc0 means we're not broken and the cover's not open.
+		hacked_flicker_counter = hacked_flicker_counter - 1
+		if(hacked_flicker_counter <= 0)
+			flicker_hacked_icon()
 
 	//dont use any power from that channel if we shut that power channel off
 	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.power_usage[AREA_USAGE_LIGHT] + area.power_usage[AREA_USAGE_STATIC_LIGHT] : 0
