@@ -27,6 +27,13 @@ GLOBAL_LIST_EMPTY(player_details)
 /datum/player_details/New(key)
 	achievements = new(key)
 
+/// Writes all of the `played_names` into an HTML-escaped string.
+/datum/player_details/proc/get_played_names()
+	var/list/previous_names = list()
+	for(var/previous_name in played_names)
+		previous_names += html_encode("[previous_name] ([accessed_names[previous_name]])")
+	return previous_names.Join("; ")
+
 /// Adds the new names to the player's played_names list on their /datum/player_details for use of admins.
 /// `ckey` should be their ckey, and `data` should be an associative list with the keys being the names they played under and the values being the unique mob ID tied to that name.
 /proc/log_played_names(ckey, data)
