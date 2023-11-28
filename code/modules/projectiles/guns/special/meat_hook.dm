@@ -216,5 +216,11 @@
 	damage = 0
 	stamina = 40
 
+/// Debug hook for fun (AKA admin abuse). doesn't do any more damage or anything just lets you wildfire it.
+/obj/item/gun/magic/hook/debug
+	name = "super meat hook"
+	max_charges = 100
+	recharge_rate = 1
+
 #undef TRAIT_HOOKED
 #undef IMMOBILIZATION_TIMER
