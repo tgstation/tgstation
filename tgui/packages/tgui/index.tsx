@@ -34,6 +34,7 @@ import { perf } from 'common/perf';
 import { setupGlobalEvents } from './events';
 import { setupHotKeys } from './hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setGlobalState } from './backend';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -41,6 +42,8 @@ perf.mark('init');
 const store = configureStore();
 
 const renderApp = createRenderer(() => {
+  setGlobalState(store.getState());
+
   const { getRoutedComponent } = require('./routes');
   const Component = getRoutedComponent(store);
   return (

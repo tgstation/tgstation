@@ -21,6 +21,12 @@ import { resumeRenderer, suspendRenderer } from './renderer';
 
 const logger = createLogger('backend');
 
+let globalState;
+
+export const setGlobalState = (state) => {
+  globalState = state;
+};
+
 export const backendUpdate = createAction('backend/update');
 export const backendSetSharedState = createAction('backend/setSharedState');
 export const backendSuspendStart = createAction('backend/suspendStart');
@@ -280,9 +286,9 @@ export const selectBackend = <TData>(state: any): BackendState<TData> =>
  *
  * Includes the `act` function for performing DM actions.
  */
-export const useBackend = <TData>(context: any) => {
-  const { store } = context;
-  const state = selectBackend<TData>(store.getState());
+export const useBackend = <TData>() => {
+  const state: Record<string, any> & { data: TData } = globalState.backend;
+
   return {
     ...state,
     act: sendAct,
@@ -371,3 +377,12 @@ export const useSharedState = <T>(
     },
   ];
 };
+
+// export const useStore = <TData>() => {
+//   const state: Record<string, any> & { data: TData } = globalState.backend;
+
+//   return {
+//     ...state,
+//     act: sendAct,
+//   };
+// };

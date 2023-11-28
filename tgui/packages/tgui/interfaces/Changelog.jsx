@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
+import { useStore } from '../backend';
 import { Component, Fragment } from 'inferno';
 import { Box, Button, Dropdown, Icon, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
@@ -58,7 +58,7 @@ export class Changelog extends Component {
   }
 
   getData = (date, attemptNumber = 1) => {
-    const { act } = useBackend(this.context);
+    const { act } = useStore();
     const self = this;
     const maxAttempts = 6;
 
@@ -90,7 +90,7 @@ export class Changelog extends Component {
   componentDidMount() {
     const {
       data: { dates = [] },
-    } = useBackend(this.context);
+    } = useStore();
 
     if (dates) {
       dates.forEach((date) =>
@@ -105,7 +105,7 @@ export class Changelog extends Component {
     const { data, selectedDate, selectedIndex } = this.state;
     const {
       data: { dates },
-    } = useBackend(this.context);
+    } = useStore();
     const { dateChoices } = this;
 
     const dateDropdown = dateChoices.length > 0 && (
