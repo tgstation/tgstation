@@ -174,6 +174,7 @@
 	AddElement(/datum/element/dextrous, hud_type = hud_type)
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
+	AddComponent(/datum/component/personal_crafting) // Kind of hard to be a drone and not be able to make tiles
 
 	if(default_storage)
 		var/obj/item/storage = new default_storage(src)
@@ -348,6 +349,7 @@
 
 	var/static/list/not_shy_of = typecacheof(list(/mob/living/basic/drone, /mob/living/simple_animal/bot))
 	if(shy)
+		REMOVE_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // To shy to touch someone elses hat
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", keyless_shy=FALSE, clientless_shy=TRUE, dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
@@ -356,6 +358,7 @@
 		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, PROC_REF(blacklist_on_try_use_machine))
 		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, PROC_REF(blacklist_on_try_wires_interact))
 	else
+		ADD_TRAIT(src, TRAIT_CAN_STRIP, DRONE_SHY_TRAIT) // ...I wonder if I can ware pants like a hat
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))
 		qdel(GetComponent(/datum/component/shy_in_room))
