@@ -13,27 +13,21 @@
 		handler = new()
 
 /datum/component/spy_uplink/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_pre_attack_secondary))
+	RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(block_pda_bombs))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
-
-	if(istype(parent, /obj/item/modular_computer/pda))
-		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, PROC_REF(new_ringtone))
-		parent.AddElement(/datum/element/pda_bomb_proof)
-	if(istype(parent, /obj/item/radio))
-		RegisterSignal(parent, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(new_message))
-	if(istype(parent, /obj/item/pen))
-		RegisterSignal(parent, COMSIG_PEN_ROTATED, PROC_REF(pen_rotation))
+	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_pre_attack_secondary))
 
 /datum/component/spy_uplink/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY)
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
-	UnregisterSignal(parent, list(COMSIG_TABLET_CHANGE_ID, COMSIG_RADIO_NEW_MESSAGE, COMSIG_PEN_ROTATED))
+	UnregisterSignal(parent, list(
+		COMSIG_ITEM_PRE_ATTACK_SECONDARY,
+		COMSIG_ITEM_ATTACK_SELF,
+		COMSIG_TABLET_CHECK_DETONATE,
+	))
 
-/datum/component/spy_uplink/proc/new_ringtone()
+/datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
+	SIGNAL_HANDLER
 
-/datum/component/spy_uplink/proc/new_message()
-
-/datum/component/spy_uplink/proc/pen_rotation()
+	return COMPONENT_TABLET_NO_DETONATE
 
 /datum/component/spy_uplink/proc/on_attack_self(obj/item/source, mob/user)
 	SIGNAL_HANDLER
