@@ -1,0 +1,6 @@
+author: "WarlockD"
+delete-after: True
+changes:
+  - bugfix: "All drones now can craft again"
+  - rscadd: "Non-Shy drones can now strip people of their things"
+  - bugfix: "Centered the \"pull\" button properly over the drop button"
