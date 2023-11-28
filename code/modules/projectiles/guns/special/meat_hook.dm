@@ -95,6 +95,13 @@
 	/// How long we knockdown the victim for.
 	var/knockdown_time = (0.5 SECONDS)
 
+	/// List of traits that prevent the user from moving. More restrictive than attempting to fire the hook by design.
+	var/static/list/prevent_movement_traits = list(
+		TRAIT_HANDS_BLOCKED,
+		TRAIT_IMMOBILIZED,
+		TRAIT_UI_BLOCKED,
+	)
+
 /datum/hook_and_move/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
 	QDEL_NULL(return_chain)
@@ -107,7 +114,7 @@
 
 	firer_ref_string = REF(firer)
 	ADD_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
-	ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
+	firer.add_traits(prevent_movement_traits, REF(src))
 	if(isliving(victim))
 		var/mob/living/fresh_meat = victim
 		fresh_meat.Knockdown(knockdown_time)
@@ -115,6 +122,7 @@
 	destination_ref = WEAKREF(destination)
 	victim_ref = WEAKREF(victim)
 	hook_ref = WEAKREF(hook)
+	firer_ref = WEAKREF(firer)
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -122,7 +130,7 @@
 /datum/hook_and_move/proc/end_movement()
 	var/atom/movable/firer = firer_ref?.resolve()
 	if(!QDELETED(firer))
-		REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
+		firer.remove_traits(prevent_movement_traits, REF(src))
 
 	var/atom/movable/victim = victim_ref?.resolve()
 	if(!QDELETED(victim))
