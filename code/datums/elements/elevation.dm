@@ -120,8 +120,8 @@
 	 * it's necessary to clear them here.
 	 */
 	UnregisterSignal(source, list(
-		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON,
+		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXITED,
 		COMSIG_TURF_RESET_ELEVATION,
 	))
