@@ -36,6 +36,6 @@
 
 			var/datum/quirk/quirk = patient.get_quirk(quirk_type)
 
-			TEST_ASSERT(!isnull(quirk.medical_record_text),"[quirk_type] has no medical record description!")
+			TEST_ASSERT_NOTNULL(quirk.medical_record_text,"[quirk_type] has no medical record description!")
 
 			patient.remove_quirk(quirk_type)
