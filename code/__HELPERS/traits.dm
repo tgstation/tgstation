@@ -11,9 +11,7 @@
 			ADD_TRAIT(listed_target, trait, source)
 		return
 
-	if(!isdatum(target))
-		stack_trace("Invalid target used in TRAIT_CALLBACK_ADD! Expected a datum reference, got [target] instead.")
-		return
+	ASSERT(isdatum(target), "Invalid target used in TRAIT_CALLBACK_ADD! Expected a datum reference, got [target] instead.")
 
 	var/datum/datum_target = target
 	ADD_TRAIT(datum_target, trait, source)
@@ -28,9 +26,7 @@
 			REMOVE_TRAIT(listed_target, trait, source)
 		return
 
-	if(!isdatum(target))
-		stack_trace("Invalid target used in TRAIT_CALLBACK_REMOVE! Expected a datum reference, got [target] instead.")
-		return
+	ASSERT(isdatum(target), "Invalid target used in TRAIT_CALLBACK_REMOVE! Expected a datum reference, got [target] instead.")
 
 	var/datum/datum_target = target
 	REMOVE_TRAIT(datum_target, trait, source)
