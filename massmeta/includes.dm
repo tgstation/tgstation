@@ -28,3 +28,4 @@
 #include "code\modules\announcers.dm"
 #include "code\game\objects\items\maintenance_loot.dm"
 #include "code\modules\reagents\chemistry\reagents\nitrium.dm"
+#include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
