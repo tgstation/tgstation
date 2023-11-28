@@ -4,11 +4,12 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
 		/datum/ai_planning_subtree/haul_food_to_young,
+		/datum/ai_planning_subtree/random_speech/cats,
 	)
 
 /datum/ai_planning_subtree/find_and_hunt_target/turn_off_stove
 	target_key = BB_STOVE_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/stove_target
 	finding_behavior = /datum/ai_behavior/find_hunt_target/stove
 	hunt_targets = list(/obj/machinery/oven/range)
 	hunt_range = 9
@@ -24,6 +25,13 @@
 			return FALSE
 	return TRUE
 
+/datum/ai_behavior/hunt_target/unarmed_attack_target/stove_target
+	always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/stove_target/target_caught(mob/living/hunter, obj/machinery/oven/range/stove)
+	if(stove.open)
+		return
+	return ..()
 
 /datum/ai_controller/basic_controller/cat/cake
 	planning_subtrees = list(
@@ -32,6 +40,7 @@
 		/datum/ai_planning_subtree/find_and_hunt_target/hunt_mice,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_cat_food,
 		/datum/ai_planning_subtree/haul_food_to_young,
+		/datum/ai_planning_subtree/random_speech/cats,
 	)
 
 /datum/ai_planning_subtree/find_and_hunt_target/decorate_donuts

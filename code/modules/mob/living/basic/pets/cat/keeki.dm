@@ -20,6 +20,7 @@
 	death_message = "loses her false life and collapses!"
 	death_sound = SFX_BODYFALL
 	held_state = "cak"
+	can_interact_with_stove = TRUE
 
 /mob/living/basic/pet/cat/cak/Initialize(mapload)
 	. = ..()

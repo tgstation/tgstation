@@ -37,6 +37,8 @@
 	var/can_breed = TRUE
 	///can hold items?
 	var/can_hold_item = TRUE
+	///can this cat interact with stoves?
+	var/can_interact_with_stove = FALSE
 	///list of items we can carry
 	var/static/list/huntable_items = list(
 		/obj/item/fish,
@@ -50,7 +52,7 @@
 
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/relay_attackers)
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -59,12 +61,21 @@
 		add_breeding_component()
 	if(can_hold_item)
 		RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	if(can_interact_with_stove)
+		RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_unarmed_attack))
 
 /mob/living/basic/pet/cat/proc/pre_attack(mob/living/source, atom/movable/target)
 	SIGNAL_HANDLER
 	if(!is_type_in_list(target, huntable_items) || held_food)
 		return
 	target.forceMove(src)
+
+/mob/living/basic/pet/cat/proc/pre_unarmed_attack(mob/living/hitter, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(istype(target, /obj/machinery/oven/range))
+		target.attack_hand(src)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/basic/pet/cat/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -128,23 +139,13 @@
 	ai_controller = /datum/ai_controller/basic_controller/cat/bread
 	collar_icon_state = null
 	held_state = "breadcat"
+	can_interact_with_stove = TRUE
 	butcher_results = list(
 		/obj/item/food/meat/slab = 2,
 		/obj/item/organ/internal/ears/cat = 1,
 		/obj/item/organ/external/tail/cat = 1,
 		/obj/item/food/breadslice/plain = 1
 	)
-
-/mob/living/basic/pet/cat/breadcat/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_unarmed_attack))
-
-/mob/living/basic/pet/cat/breadcat/proc/pre_unarmed_attack(mob/living/hitter, atom/target, proximity, modifiers)
-	SIGNAL_HANDLER
-
-	if(istype(target, /obj/machinery/oven/range))
-		target.attack_hand(src)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
 /mob/living/basic/pet/cat/original
