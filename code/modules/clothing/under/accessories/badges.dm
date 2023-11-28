@@ -119,6 +119,7 @@
 	name = "Dogtag"
 	desc = "Can't wear a collar, but this is fine?"
 	icon_state = "allergy"
+	w_class = WEIGHT_CLASS_TINY
 	attachment_slot = NONE // actually NECK but that doesn't make sense
 	/// What message is displayed when our dogtags / its clothes / its wearer is examined
 	var/display = "Nothing!"

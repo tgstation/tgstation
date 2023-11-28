@@ -15,10 +15,10 @@ Charged extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
-	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))
 		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
 		return
-	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, TRUE)
@@ -278,6 +278,6 @@ Charged extracts:
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/simple_animal/slime/S = new(get_turf(user))
-		S.random_colour()
+		var/mob/living/simple_animal/slime/new_slime = new(get_turf(user))
+		new_slime.random_colour()
 	return ..()

@@ -168,7 +168,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 		var/list/pdata = painting.to_json()
 		pdata["ref"] = REF(painting)
-		admin_painting_data += pdata
+		UNTYPED_LIST_ADD(admin_painting_data, pdata)
 
 /**
  * Generates painting data ready to be consumed by ui.
