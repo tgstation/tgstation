@@ -89,16 +89,15 @@
  * * Returns [NONE] if the name was reset to initial state
  */
 /datum/component/takes_reagent_appearance/proc/update_name(datum/glass_style/style)
-	var/obj/item/item_parent = parent
-	if(item_parent.renamedByPlayer)
+	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
 	if(isnull(style))
 		// no style (reset)
-		item_parent.name = initial(item_parent.name)
+		parent.name = initial(parent.name)
 	else if(style.name)
 		// style
-		style.set_name(item_parent)
+		style.set_name(parent)
 		return COMSIG_ATOM_NO_UPDATE_NAME
 
 	return NONE
@@ -111,16 +110,15 @@
  * * Returns [NONE] if the description was reset to initial state
  */
 /datum/component/takes_reagent_appearance/proc/update_desc(datum/glass_style/style)
-	var/obj/item/item_parent = parent
-	if(item_parent.renamedByPlayer)
+	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
 	if(isnull(style))
 		// no style (reset)
-		item_parent.desc = initial(item_parent.desc)
+		parent.desc = initial(parent.desc)
 	else if(style.desc)
 		// style
-		style.set_desc(item_parent)
+		style.set_desc(parent)
 		return COMSIG_ATOM_NO_UPDATE_DESC
 
 	return NONE
