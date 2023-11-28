@@ -140,7 +140,7 @@
 	var/atom/movable/victim = victim_ref?.resolve()
 	var/atom/destination = destination_ref?.resolve()
 	if(QDELETED(victim) || QDELETED(destination))
-		end_movement(victim)
+		end_movement()
 		return
 
 	var/steps_to_take = round(steps_per_tick * (world.time - last_movement))
