@@ -1,4 +1,6 @@
 #define TRAIT_HOOKED "hooked"
+#define IMMOBILIZATION_TIMER (2 SECONDS) //! How long we immobilize the firer after firing - we do cancel the immobilization early if nothing is hit.
+#define LOCAL_SIGNAL_HOOK_MOVEMENT_ENDED "movement_ended_from_hook_and_move"
 
 /// Meat Hook
 /obj/item/gun/magic/hook
@@ -42,14 +44,13 @@
 	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	var/datum/beam/chain
-	var/knockdown_time = (0.5 SECONDS)
+	var/datum/beam/initial_chain
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "chain", emissive = FALSE)
-	..()
-	//TODO: root the firer until the chain returns
+		initial_chain = firer.Beam(src, icon_state = "chain", emissive = FALSE)
+		ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
+	return ..()
 
 /obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -63,17 +64,12 @@
 	victim.visible_message(span_danger("[victim] is snagged by [firer]'s hook!"))
 
 	var/datum/hook_and_move/puller = new
-	puller.register_victim(firer, victim, get_turf(firer))
+	puller.register_victim(src, firer, victim, get_turf(firer))
 
-	if (isliving(victim))
-		var/mob/living/fresh_meat = target
-		fresh_meat.Knockdown(knockdown_time)
+	REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src)) // we add our own TRAIT_IMMOBILIZED in register_victim
 
-	//TODO: keep the chain beamed to victim
-	//TODO: needs a callback to delete the chain
-
-/obj/projectile/hook/Destroy()
-	qdel(chain)
+/obj/projectile/hook/Destroy(force)
+	QDEL_NULL(initial_chain)
 	return ..()
 
 /// Lightweight datum that just handles moving a target for the hook.
@@ -81,36 +77,58 @@
 /datum/hook_and_move
 	/// How many steps we force the victim to take per tick
 	var/steps_per_tick = 5
-	/// String to the REF() of the dude that fired us so we can ensure we always cleanup our traits
-	var/firer_ref_string = null
+	/// Weakref to the projectile hook that fired us
+	var/datum/weakref/hook_ref = null
 	/// Weakref to the victim we are dragging
 	var/datum/weakref/victim_ref = null
 	/// Destination that the victim is heading towards.
 	var/datum/weakref/destination_ref = null
+	/// String to the REF() of the dude that fired us so we can ensure we always cleanup our traits
+	var/firer_ref_string = null
 	/// The last time our movement fired.
 	var/last_movement = 0
+	/// The chain beam we currently own.
+	var/datum/beam/chain = null
+	/// How long we knockdown the victim for.
+	var/knockdown_time = (0.5 SECONDS)
+
+/datum/hook_and_move/Destroy(force)
+	STOP_PROCESSING(SSfastprocess, src)
+	QDEL_NULL(chain)
+	return ..()
 
 /// Uses fastprocessing to move our victim to the destination at a rather fast speed.
 /// TODO is to replace this with a movement loop, but the visual effects of this are pretty scuffed so we're just reliant on this old method for now :(
-/datum/hook_and_move/proc/register_victim(atom/movable/firer, atom/movable/victim, atom/destination)
+/datum/hook_and_move/proc/register_victim(obj/projectile/hook, atom/movable/firer, atom/movable/victim, atom/destination)
+	chain = firer.Beam(victim, icon_state = "chain", emissive = FALSE)
+
 	firer_ref_string = REF(firer)
 	ADD_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
+	ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
+	if(isliving(victim))
+		var/mob/living/fresh_meat = victim
+		fresh_meat.Knockdown(knockdown_time)
 
 	destination_ref = WEAKREF(destination)
 	victim_ref = WEAKREF(victim)
+	hook_ref = WEAKREF(hook)
 
 	START_PROCESSING(SSfastprocess, src)
 
 /// Cancels processing and removes the trait from the victim.
 /datum/hook_and_move/proc/end_movement()
-	STOP_PROCESSING(SSfastprocess, src)
-	var/atom/movable/victim = victim_ref?.resolve()
-	if(QDELETED(victim))
-		return
+	var/atom/movable/firer = firer_ref?.resolve()
+	if(!QDELETED(firer))
+		REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
 
-	REMOVE_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
-	victim_ref = null
-	destination_ref = null
+	var/atom/movable/victim = victim_ref?.resolve()
+	if(!QDELETED(victim))
+		REMOVE_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
+
+	var/datum/potential_hook = hook_ref?.resolve() // it doesn't matter to get the typeref fully typed here now does it
+	if(!QDELETED(potential_hook))
+		SEND_SIGNAL(potential_hook, LOCAL_SIGNAL_HOOK_MOVEMENT_ENDED)
+
 	qdel(src)
 
 /datum/hook_and_move/process(seconds_per_tick)
@@ -181,3 +199,4 @@
 	stamina = 40
 
 #undef TRAIT_HOOKED
+#undef LOCAL_SIGNAL_HOOK_MOVEMENT_ENDED
