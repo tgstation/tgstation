@@ -52,7 +52,7 @@
 	if(firer)
 		initial_chain = firer.Beam(src, icon_state = "chain", emissive = FALSE)
 		ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
-		addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IMMOBILIZED, REF(src)), IMMOBILIZATION_TIMER) // safety if we miss, if we get a hit we stay immobilized
+		addtimer(TRAIT_CALLBACK_REMOVE(firer, TRAIT_IMMOBILIZED, REF(src)), IMMOBILIZATION_TIMER) // safety if we miss, if we get a hit we stay immobilized
 	return ..()
 
 /obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
