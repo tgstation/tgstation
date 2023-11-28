@@ -45,12 +45,14 @@
 	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
+	/// The chain we send out while we are in motion, referred to as "initial" to not get confused with the chain we use to reel the victim in.
 	var/datum/beam/initial_chain
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
 		initial_chain = firer.Beam(src, icon_state = "chain", emissive = FALSE)
 		ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
+		RegisterSignal(firer, COMSIG_PREQDELETED, PROC_REF(early_cleanup))
 	return ..()
 
 /obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -67,11 +69,14 @@
 	var/datum/hook_and_move/puller = new
 	puller.register_victim(src, firer, victim, get_turf(firer))
 
-	REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src)) // we add our own TRAIT_IMMOBILIZED in register_victim
-
 /obj/projectile/hook/Destroy(force)
 	QDEL_NULL(initial_chain)
 	return ..()
+
+/// In case our lad misses, we need to clean up the immobilization trait.
+/obj/projectile/hook/proc/early_cleanup()
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
 
 /// Lightweight datum that just handles moving a target for the hook.
 /// For the love of God, do not use this outside this file.
