@@ -42,16 +42,8 @@
 	armour_penetration = 60
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	var/chain
+	var/datum/beam/chain
 	var/knockdown_time = (0.5 SECONDS)
-	/// How many steps we force the victim to take per tick
-	var/steps_per_tick = 5
-	/// The last time our movement fired.
-	var/last_movement = 0
-	/// Weakref to the victim we are dragging
-	var/datum/weakref/victim_ref = null
-	/// Destination that the victim is heading towards.
-	var/datum/weakref/destination_ref = null
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
@@ -65,32 +57,47 @@
 		return
 
 	var/atom/movable/victim = target
-	if(victim.anchored || HAS_TRAIT_FROM(victim, TRAIT_HOOKED, REF(src)))
+	if(victim.anchored || HAS_TRAIT(victim, TRAIT_HOOKED))
 		return
 
 	victim.visible_message(span_danger("[victim] is snagged by [firer]'s hook!"))
-	move_victim(victim, get_turf(firer))
+
+	var/datum/hook_and_move/puller = new
+	puller.register_victim(victim, get_turf(firer))
+
 	if (isliving(victim))
 		var/mob/living/fresh_meat = target
 		fresh_meat.Knockdown(knockdown_time)
 
-	//TODO: keep the chain beamed to A
+	//TODO: keep the chain beamed to victim
 	//TODO: needs a callback to delete the chain
 
 /obj/projectile/hook/Destroy()
 	qdel(chain)
 	return ..()
 
+/// Lightweight datum that just handles moving a target for the hook.
+/// For the love of God, do not use this outside this file.
+/datum/hook_and_move
+	/// How many steps we force the victim to take per tick
+	var/steps_per_tick = 5
+	/// Weakref to the victim we are dragging
+	var/datum/weakref/victim_ref = null
+	/// Destination that the victim is heading towards.
+	var/datum/weakref/destination_ref = null
+	/// The last time our movement fired.
+	var/last_movement = 0
+
 /// Uses fastprocessing to move our victim to the destination at a rather fast speed.
 /// TODO is to replace this with a movement loop, but the visual effects of this are pretty scuffed so we're just reliant on this old method for now :(
-/obj/projectile/hook/proc/move_victim(atom/movable/victim, atom/destination)
+/datum/hook_and_move/proc/register_victim(atom/movable/victim, atom/destination)
 	ADD_TRAIT(victim, TRAIT_HOOKED, REF(src))
 	destination_ref = WEAKREF(destination)
 	victim_ref = WEAKREF(victim)
 	START_PROCESSING(SSfastprocess, src)
 
 /// Cancels processing and removes the trait from the victim.
-/obj/projectile/hook/proc/end_movement()
+/datum/hook_and_move/proc/end_movement()
 	STOP_PROCESSING(SSfastprocess, src)
 	var/atom/movable/victim = victim_ref?.resolve()
 	if(QDELETED(victim))
@@ -98,8 +105,10 @@
 
 	REMOVE_TRAIT(victim, TRAIT_HOOKED, REF(src))
 	victim_ref = null
+	destination_ref = null
+	qdel(src)
 
-/obj/projectile/hook/process(seconds_per_tick)
+/datum/hook_and_move/process(seconds_per_tick)
 	var/atom/movable/victim = victim_ref?.resolve()
 	var/atom/destination = destination_ref?.resolve()
 	if(QDELETED(victim) || QDELETED(destination))
@@ -114,10 +123,9 @@
 	if(!movement_result || (victim.loc == destination.loc)) // either we failed our movement or our mission is complete
 		end_movement()
 
-
 /// Attempts to move the victim towards the destination. Returns TRUE if we do a successful movement, FALSE otherwise.
 /// second_attempt is a boolean to prevent infinite recursion.
-/obj/projectile/hook/proc/attempt_movement(atom/movable/subject, atom/target, second_attempt = FALSE)
+/datum/hook_and_move/proc/attempt_movement(atom/movable/subject, atom/target, second_attempt = FALSE)
 	var/actually_moved = FALSE
 	if(!second_attempt)
 		actually_moved = step_towards(subject, target)
@@ -155,8 +163,6 @@
 
 	return attempt_movement(subject, target, second_attempt = TRUE)
 
-#undef TRAIT_HOOKED
-
 //just a nerfed version of the real thing for the bounty hunters.
 /obj/item/gun/magic/hook/bounty
 	name = "hook"
@@ -168,3 +174,5 @@
 /obj/projectile/hook/bounty
 	damage = 0
 	stamina = 40
+
+#undef TRAIT_HOOKED
