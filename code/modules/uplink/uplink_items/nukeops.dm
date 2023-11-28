@@ -591,7 +591,7 @@
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 		provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
@@ -599,28 +599,28 @@
 		within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/mod/module/energy_shield
 	cost = 15
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/emp_shield
 	name = "MODsuit Advanced EMP Shield Module"
 	desc = "An advanced EMP shield module for a MODsuit. It protects your entire body from electromagnetic pulses."
 	item = /obj/item/mod/module/emp_shield/advanced
 	cost = 5
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/injector
 	name = "MODsuit Injector Module"
 	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
 	item = /obj/item/mod/module/injector
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medgun_mod
 	name = "Medbeam Gun Module"
@@ -665,7 +665,7 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
@@ -674,7 +674,7 @@
 		for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
@@ -692,7 +692,7 @@
 	desc = "A potion recovered at great risk by undercover Syndicate operatives and then subsequently modified with Syndicate technology. \
 		Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 	restricted = TRUE
 
 // Implants
@@ -717,6 +717,7 @@
 		This will permanently destroy your body, however."
 	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/macrobomb
 	name = "Macrobomb Implant"
@@ -732,18 +733,21 @@
 			Prevents collapsing from critical condition, but explodes after a while."
 	item = /obj/item/storage/box/syndie_kit/imp_deniability
 	cost = 6
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/reviverplus
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/reviver
 	cost = 8
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/thermals
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes
 	cost = 8
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/implants/xray
 	name = "X-ray Vision Implant"
@@ -756,6 +760,7 @@
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_stun
 	cost = 8
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 // Badass (meme items)
 

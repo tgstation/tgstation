@@ -400,7 +400,7 @@
 /datum/component/uplink/proc/check_detonate()
 	SIGNAL_HANDLER
 
-	return COMPONENT_TABLET_NO_DETONAT
+	return COMPONENT_TABLET_NO_DETONATE
 
 // Radio signal responses
 

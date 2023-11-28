@@ -12,6 +12,9 @@
 /// This item is purchasable to infiltrators (midround traitors)
 #define UPLINK_INFILTRATORS (1 << 3)
 
+/// Can be randomly given to spies for their bounties
+#define UPLINK_SPY (1 << 4)
+
 /// Progression gets turned into a user-friendly form. This is just an abstract equation that makes progression not too large.
 #define DISPLAY_PROGRESSION(time) round(time/60, 0.01)
 

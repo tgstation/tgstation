@@ -19,12 +19,21 @@
 		SPY_DIFFICULTY_HARD = list(),
 	)
 
+	var/list/possible_uplink_items = list()
+
 /datum/spy_bounty_handler/New()
 	for(var/datum/spy_bounty/bounty as anything in subtypesof(/datum/spy_bounty))
 		var/difficulty = bounty::difficulty
 		if(!islist(bounty_types[difficulty]))
 			continue
 		bounty_types[difficulty] += bounty
+
+	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
+		if(isnull(item.item))
+			continue
+		if(!(item.purchasable_from & UPLINK_SPY))
+			continue
+		possible_uplink_items += item
 
 	refresh_bounty_list()
 
@@ -56,7 +65,10 @@
 	addtimer(CALLBACK(src, PROC_REF(refresh_bounty_list)), refresh_time)
 
 /datum/spy_bounty_handler/proc/complete_bounty(atom/stealing, mob/living/spy, datum/spy_bounty/completed)
-	bounties[completed.difficulty] -= completed
+	if(completed.claimed)
+		CRASH("completed_bounty called on already claimed bounty.")
+
 	completed.clean_up_stolen_item(stealing, stealing)
+	completed.claimed = TRUE
+
 	new completed.reward_item.item(spy.loc)
-	qdel(completed)

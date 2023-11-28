@@ -4,21 +4,29 @@
 	var/difficulty = "unset"
 	var/theft_time = 2 SECONDS
 	VAR_FINAL/initalized = FALSE
+	VAR_FINAL/claimed = FALSE
 	VAR_FINAL/datum/uplink_item/reward_item
 
-/datum/spy_bounty/New()
+/datum/spy_bounty/New(datum/spy_bounty_handler/handler)
 	. = ..()
-	if(init_bounty())
+	if(init_bounty(handler))
 		initalized = TRUE
-		select_reward()
+		select_reward(handler)
 
-/datum/spy_bounty/proc/init_bounty()
+/datum/spy_bounty/proc/to_ui_data()
+	return list(
+		"name" = name,
+		"help" = help,
+		"difficulty" = difficulty,
+		"reward" = reward_item.name,
+		"claimed" = claimed,
+	)
+
+/datum/spy_bounty/proc/init_bounty(datum/spy_bounty_handler/handler)
 	return FALSE
 
-/datum/spy_bounty/proc/select_reward()
-	reward_item = pick(SStraitor.uplink_items)
-	if(!reward_item.item)
-		select_reward()
+/datum/spy_bounty/proc/select_reward(datum/spy_bounty_handler/handler)
+	return
 
 /datum/spy_bounty/proc/is_stealable(atom/movable/stealing)
 	return FALSE
@@ -31,7 +39,7 @@
 	difficulty = SPY_DIFFICULTY_EASY
 	VAR_FINAL/datum/objective_item/desired_item
 
-/datum/spy_bounty/item/init_bounty()
+/datum/spy_bounty/item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
 		if(length(item.special_equipment))
@@ -48,13 +56,7 @@
 	return TRUE
 
 /datum/spy_bounty/item/is_stealable(atom/movable/stealing)
-	if(istype(stealing, desired_item.targetitem))
-		return TRUE
-
-	if(desired_item.check_special_completion(stealing))
-		return TRUE
-
-	return FALSE
+	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
 
 /datum/spy_bounty/machine
 	difficulty = SPY_DIFFICULTY_MEDIUM
@@ -67,7 +69,7 @@
 		/obj/machinery/computer/security,
 	)
 
-/datum/spy_bounty/machine/init_bounty()
+/datum/spy_bounty/machine/init_bounty(datum/spy_bounty_handler/handler)
 	target_type = pick(possible_machines)
 
 	var/list/obj/machinery/all_possible = list()
@@ -82,7 +84,7 @@
 	var/obj/machinery/machine = pick(all_possible)
 	var/area/machine_area = get_area(machine)
 	location_type = machine_area.type
-	name = "Steal \the [machine_area]'s [machine.name]."
+	name = "Steal \the [machine_area]'s [machine.name]"
 	help = "Steal [machine], found in [machine_area]."
 	return TRUE
 
@@ -100,7 +102,7 @@
 	difficulty = SPY_DIFFICULTY_HARD
 	VAR_FINAL/datum/weakref/target_ref
 
-/datum/spy_bounty/targets_person/init_bounty()
+/datum/spy_bounty/targets_person/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/mob/possible_targets = list()
 	for(var/datum/mind/crew_mind as anything in get_crewmember_minds())
 		if(is_valid_crewmember(crew_mind.current))
@@ -128,7 +130,7 @@
 	/// Weakref to the item that matches our desired type within the target at the time of bounty creation
 	VAR_FINAL/datum/weakref/target_original_desired_ref
 
-/datum/spy_bounty/targets_person/limb_or_organ/init_bounty()
+/datum/spy_bounty/targets_person/limb_or_organ/init_bounty(datum/spy_bounty_handler/handler)
 	desired_type = pick(
 		/obj/item/bodypart/arm/left,
 		/obj/item/bodypart/arm/right,
@@ -148,7 +150,7 @@
 	var/obj/item/desired_part = find_desired_thing(crewmember)
 	target_original_desired_ref = WEAKREF(desired_part)
 
-	name = "Steal [crewmember.real_name]'s [desired_part]."
+	name = "Steal [crewmember.real_name]'s [desired_part]"
 	help = "Steal [desired_part] from [crewmember.real_name]. \
 		You can do accomplish this via brute force, or simply by hitting them with your uplink while they are incapacitated."
 	return TRUE

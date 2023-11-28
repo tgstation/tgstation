@@ -375,6 +375,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 #define FREEDOM_IMPLANT_CHARGES 4
 
-#define SPY_DIFFICULTY_EASY "easy"
-#define SPY_DIFFICULTY_MEDIUM "medium"
-#define SPY_DIFFICULTY_HARD "hard"
+#define SPY_DIFFICULTY_EASY "Easy"
+#define SPY_DIFFICULTY_MEDIUM "Medium"
+#define SPY_DIFFICULTY_HARD "Hard"
