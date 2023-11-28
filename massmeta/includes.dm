@@ -26,6 +26,5 @@
 #include "code\modules\antags\uplink_items.dm"
 #include "code\obj\items\clothing\belt.dm"
 #include "code\modules\announcers.dm"
+#include "code\game\objects\items\maintenance_loot.dm"
 #include "code\modules\reagents\chemistry\reagents\nitrium.dm"
-
-
