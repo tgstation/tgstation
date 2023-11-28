@@ -36,7 +36,7 @@
 	name = "Contract Reroll"
 	desc = "Request a reroll of your current contract list. Will generate a new target, \
 		payment, and dropoff for the contracts you currently have available."
-	item = /obj/effect/gibspawner/generic
+	item = DUMMY_UPLINK_ITEM
 	limited_stock = 2
 	cost = 0
 
@@ -85,7 +85,7 @@
 	name = "Reinforcements"
 	desc = "Upon purchase we'll contact available units in the area. Should there be an agent free, \
 		we'll send them down to assist you immediately. If no units are free, we give a full refund."
-	item = /obj/effect/gibspawner/generic
+	item = DUMMY_UPLINK_ITEM
 	limited_stock = 1
 	cost = 2
 

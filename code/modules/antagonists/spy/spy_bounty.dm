@@ -88,9 +88,6 @@
 		return // melbert todo : how to handle indestructible items
 
 	// Don't mess with it while it's going away
-	if(isitem(stealing))
-		var/obj/item/stealing_item = stealing
-		stealing_item.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
 	stealing.anchored = TRUE
 	// Add some pizzazz
@@ -101,7 +98,7 @@
 /datum/spy_bounty/item
 	difficulty = SPY_DIFFICULTY_EASY // melbert todo : re-add objective item difficulty
 
-	/// Objective item datum that we want stolen.
+	/// Reference to an objective item datum that we want stolen.
 	VAR_FINAL/datum/objective_item/desired_item
 
 /datum/spy_bounty/item/init_bounty(datum/spy_bounty_handler/handler)
@@ -130,6 +127,7 @@
 /datum/spy_bounty/machine
 	difficulty = SPY_DIFFICULTY_MEDIUM // melbert todo : change based on location
 	theft_time = 10 SECONDS
+
 	/// What area (typepath) the desired machine is in.
 	VAR_FINAL/area/location_type
 	/// What machine (typepath) we want to steal.
@@ -268,16 +266,16 @@
 
 // Steal someone's ID card
 /datum/spy_bounty/targets_person/some_item/id
-	desired_type = /obj/item/card/id/advanced // melbert todo : should have logic to ensure it gets their actual PDA
+	desired_type = /obj/item/card/id/advanced // melbert todo : should have logic to ensure it gets their actual ID
 
 // Steal someone's PDA
 /datum/spy_bounty/targets_person/some_item/pda
-	desired_type = /obj/item/modular_computer/pda
+	desired_type = /obj/item/modular_computer/pda // melbert todo : should have logic to ensure it gets their actual PDA
 
 // Steal someone's heirloom
 /datum/spy_bounty/targets_person/some_item/heirloom
 	difficulty = "unset"
-	desired_type = /obj/item // melbert todo
+	desired_type = /obj/item // melbert todo : make this work
 
 // Steal a limb or organ off someone
 /datum/spy_bounty/targets_person/some_item/limb_or_organ
@@ -300,3 +298,4 @@
 		return locate(desired_type) in crewmember.bodyparts
 	if(ispath(desired_type, /obj/item/organ))
 		return locate(desired_type) in crewmember.organs
+	return null

@@ -10,7 +10,7 @@
 	/// Whether an uplink has been created (successfully or at all)
 	var/uplink_created = FALSE
 	/// String displayed in the antag panel pointing the spy to where their uplink is.
-	var/uplink_location = null
+	var/uplink_location
 	/// Whether we give them some random objetives to aim for.
 	var/spawn_with_objectives = TRUE
 
@@ -37,11 +37,21 @@
 
 	var/obj/item/spy_uplink = spy.get_uplink_location(spy_uplink_loc)
 	if(isnull(spy_uplink))
-		// Back up case?
-	else
-		spy_uplink.AddComponent(/datum/component/spy_uplink, spy)
-		uplink_location = "[spy_uplink]"
-		uplink_created = TRUE
+		return // melbert todo : Back up case?
+
+	spy_uplink.AddComponent(/datum/component/spy_uplink, spy)
+	uplink_created = TRUE
+	if(istype(spy_uplink, /obj/item/modular_computer/pda))
+		uplink_location = "your PDA"
+
+	else if(istype(spy_uplink, /obj/item/pen))
+		if(istype(spy_uplink.loc, /obj/item/modular_computer/pda))
+			uplink_location = "your PDA's pen"
+		else
+			uplink_location = "a pen"
+
+	else if(istype(spy_uplink, /obj/item/radio))
+		uplink_location = "your radio headset"
 
 /datum/antagonist/spy/proc/give_random_objectives()
 	// melbert todo : make this a json

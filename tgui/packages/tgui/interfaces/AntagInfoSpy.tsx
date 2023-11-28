@@ -30,12 +30,12 @@ export const AntagInfoSpy = (props, context) => {
           textAlign="justify">
           <Stack vertical fill ml={1} mr={1}>
             <Stack.Item fontSize={1.2}>
-              You have been equipped with a special device disguised as{' '}
+              You have been equipped with a special uplink device disguised as{' '}
               {uplink_location || 'something'} that will allow you to steal from
               the station.
             </Stack.Item>
             <Stack.Item>
-              <span class={greenText}>
+              <span style={greenText}>
                 <b>Use it in hand</b> to access your uplink, and{' '}
                 <b>right click</b> on bounty objects to steal them.
               </span>
@@ -46,7 +46,7 @@ export const AntagInfoSpy = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               Work together or work against them: The choice is yours, but{' '}
-              <span class={redText}>you cannot share the rewards.</span>
+              <span style={redText}>you cannot share the rewards.</span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>

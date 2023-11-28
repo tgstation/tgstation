@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
-import { BlockQuote, Box, Dimmer, Section, Stack } from '../components';
+import { BlockQuote, Box, Dimmer, Icon, Section, Stack } from '../components';
 
 type Bounty = {
   name: string;
@@ -16,25 +16,32 @@ type Data = {
   bounties: Bounty[];
 };
 
-const BountyDisplay = (props: { bounty: Bounty }, context) => {
+const BountyDisplay = (props: { bounty: Bounty }) => {
   const { bounty } = props;
 
-  const difficult_to_color = {
-    'Easy': 'good',
-    'Medium': 'average',
-    'Hard': 'bad',
+  const difficulty_to_color = {
+    'easy': 'good',
+    'medium': 'average',
+    'hard': 'bad',
   };
 
   return (
     <Section>
       {!!bounty.claimed && (
         <Dimmer>
-          <i>Claimed!</i>
+          <Stack>
+            <Stack.Item>
+              <Icon name="user-secret" color="bad" />
+            </Stack.Item>
+            <Stack.Item>
+              <i>Claimed!</i>
+            </Stack.Item>
+          </Stack>
         </Dimmer>
       )}
       <Stack vertical ml={1}>
         <Stack.Item>
-          <Box color={difficult_to_color[bounty.difficulty]}>
+          <Box color={difficulty_to_color[bounty.difficulty.toLowerCase()]}>
             {bounty.name}.
           </Box>
         </Stack.Item>
@@ -59,7 +66,7 @@ export const SpyUplink = (props, context) => {
           fill
           title="Spy Bounties"
           scrollable
-          buttons={<Box>Time until refresh: {time_left}</Box>}>
+          buttons={<Box width="50%">Time until refresh: {time_left}</Box>}>
           <Stack vertical fill>
             <Stack.Item>
               {bounties.map((bounty) => (
