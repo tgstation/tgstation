@@ -305,7 +305,7 @@ apples--
 
 ### initial() versus ::
 `::` is a compile time scope operator which we use as an alternative to `initial()`.
-It's used within the definition of a datum as opposed to `Intialize` or other procs.
+It's used within the definition of a datum as opposed to `Initialize` or other procs.
 
 ```dm
 // Bad
