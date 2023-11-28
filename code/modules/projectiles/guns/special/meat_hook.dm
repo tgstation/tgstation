@@ -57,13 +57,13 @@
 		return
 
 	var/atom/movable/victim = target
-	if(victim.anchored || HAS_TRAIT(victim, TRAIT_HOOKED))
+	if(victim.anchored || HAS_TRAIT_FROM(victim, TRAIT_HOOKED, REF(firer)))
 		return
 
 	victim.visible_message(span_danger("[victim] is snagged by [firer]'s hook!"))
 
 	var/datum/hook_and_move/puller = new
-	puller.register_victim(victim, get_turf(firer))
+	puller.register_victim(firer, victim, get_turf(firer))
 
 	if (isliving(victim))
 		var/mob/living/fresh_meat = target
@@ -81,6 +81,8 @@
 /datum/hook_and_move
 	/// How many steps we force the victim to take per tick
 	var/steps_per_tick = 5
+	/// String to the REF() of the dude that fired us so we can ensure we always cleanup our traits
+	var/firer_ref_string = null
 	/// Weakref to the victim we are dragging
 	var/datum/weakref/victim_ref = null
 	/// Destination that the victim is heading towards.
@@ -90,10 +92,13 @@
 
 /// Uses fastprocessing to move our victim to the destination at a rather fast speed.
 /// TODO is to replace this with a movement loop, but the visual effects of this are pretty scuffed so we're just reliant on this old method for now :(
-/datum/hook_and_move/proc/register_victim(atom/movable/victim, atom/destination)
-	ADD_TRAIT(victim, TRAIT_HOOKED, REF(src))
+/datum/hook_and_move/proc/register_victim(atom/movable/firer, atom/movable/victim, atom/destination)
+	firer_ref_string = REF(firer)
+	ADD_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
+
 	destination_ref = WEAKREF(destination)
 	victim_ref = WEAKREF(victim)
+
 	START_PROCESSING(SSfastprocess, src)
 
 /// Cancels processing and removes the trait from the victim.
@@ -103,7 +108,7 @@
 	if(QDELETED(victim))
 		return
 
-	REMOVE_TRAIT(victim, TRAIT_HOOKED, REF(src))
+	REMOVE_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
 	victim_ref = null
 	destination_ref = null
 	qdel(src)
