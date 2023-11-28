@@ -351,10 +351,11 @@
 	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
 	return ..()
 
-/datum/triple_ai_controller/proc/on_occupations_divided(datum/source, pure, allow_all)
+/datum/station_trait/triple_ai/proc/on_occupations_divided(datum/source, pure, allow_all)
 	SIGNAL_HANDLER
 
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
-	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-		secondary_ai_spawn.latejoin_active = TRUE
+	if(!pure)
+		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+			secondary_ai_spawn.latejoin_active = TRUE
