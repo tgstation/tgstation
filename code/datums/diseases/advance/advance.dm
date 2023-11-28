@@ -262,7 +262,7 @@
 		properties["severity"] += round((properties["resistance"] / 10), 1)
 		properties["severity"] += round((properties["stage_rate"] / 10), 1)
 		properties["severity"] += round((properties["transmittable"] / 6), 1)
-		properties["severity"] = ROUND_UP(properties["severity"] / 2)
+		properties["severity"] = round((properties["severity"] / 2), 1)
 		properties["severity"] = clamp(properties["severity"], 1, 7)
 
 // Assign the properties that are in the list.
