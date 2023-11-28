@@ -1,6 +1,5 @@
 #define TRAIT_HOOKED "hooked"
 #define IMMOBILIZATION_TIMER (2 SECONDS) //! How long we immobilize the firer after firing - we do cancel the immobilization early if nothing is hit.
-#define LOCAL_SIGNAL_HOOK_MOVEMENT_ENDED "movement_ended_from_hook_and_move"
 
 /// Meat Hook
 /obj/item/gun/magic/hook
@@ -129,10 +128,6 @@
 	if(!QDELETED(victim))
 		REMOVE_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
 
-	var/datum/potential_hook = hook_ref?.resolve() // it doesn't matter to get the typeref fully typed here now does it
-	if(!QDELETED(potential_hook))
-		SEND_SIGNAL(potential_hook, LOCAL_SIGNAL_HOOK_MOVEMENT_ENDED)
-
 	qdel(src)
 
 /datum/hook_and_move/process(seconds_per_tick)
@@ -203,4 +198,4 @@
 	stamina = 40
 
 #undef TRAIT_HOOKED
-#undef LOCAL_SIGNAL_HOOK_MOVEMENT_ENDED
+
