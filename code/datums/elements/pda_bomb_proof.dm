@@ -11,6 +11,6 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_TABLET_CHECK_DETONATE)
 
-/datum/element/pda_bomb_proof/proc/check_detonate()
+/datum/element/pda_bomb_proof/proc/block_pda_bomb()
 	SIGNAL_HANDLER
 	return COMPONENT_TABLET_NO_DETONATE

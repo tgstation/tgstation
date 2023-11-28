@@ -178,7 +178,7 @@
 
 	unlock_text = "Your Uplink is cunningly disguised as your [uplink_loc.name]. "
 	if(istype(uplink_loc, /obj/item/modular_computer/pda))
-		unlock_text += Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
+		unlock_text += "Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
 		add_memory(/datum/memory/key/traitor_uplink, uplink_loc = "PDA", uplink_code = new_uplink.unlock_code)
 
 	else if(istype(uplink_loc, /obj/item/radio))

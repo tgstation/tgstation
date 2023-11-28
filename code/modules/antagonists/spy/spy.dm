@@ -7,12 +7,17 @@
 	hijack_speed = 1
 	ui_name = "AntagInfoSpy"
 	preview_outfit = /datum/outfit/spy
+	var/uplink_created = FALSE
 
 /datum/antagonist/spy/on_gain()
 	. = ..()
-	create_spy_uplink(owner.current)
+	if(!uplink_created)
+		create_spy_uplink(owner.current)
 
-/datum/antagonist/spy/proc/create_spy_uplink(mob/living/spy)
+/datum/antagonist/spy/proc/create_spy_uplink(mob/living/carbon/spy)
+	if(!iscarbon(spy))
+		return
+
 	var/spy_uplink_loc = spy.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
 	if(isnull(spy_uplink_loc) || spy_uplink_loc == UPLINK_IMPLANT)
 		spy_uplink_loc = pick(UPLINK_PEN, UPLINK_PDA)
@@ -22,6 +27,7 @@
 		// Back up case?
 	else
 		spy_uplink.AddComponent(/datum/component/spy_uplink, spy)
+		uplink_created = TRUE
 
 /datum/outfit/spy
 	name = "Spy (Preview only)"
