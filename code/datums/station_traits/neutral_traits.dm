@@ -235,11 +235,8 @@
 	. = ..()
 	if (!cargorilla)
 		return // We already assigned him...
-	if (!LAZYLEN(lobby_candidates))
-		addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
 	lobby_candidates = null
-	for (var/atom/button as anything in lobby_buttons)
-		button.update_appearance(UPDATE_ICON)
+	QDEL_NULL(cargorilla) // Leave it to the latejoin menu
 
 /// Get us a ghost for the gorilla.
 /datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
