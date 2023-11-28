@@ -27,14 +27,21 @@ GLOBAL_LIST_EMPTY(player_details)
 /datum/player_details/New(key)
 	achievements = new(key)
 
-/proc/log_played_names(ckey, ...)
+/// Adds the new names to the player's played_names list on their /datum/player_details for use of admins.
+/// `ckey` should be their ckey, and `data` should be an associative list with the keys being the names they played under and the values being the unique mob ID tied to that name.
+/proc/log_played_names(ckey, data)
 	if(!ckey)
 		return
-	if(args.len < 2)
+
+	var/datum/player_details/writable = GLOB.player_details[ckey]
+	if(isnull(writable))
 		return
-	var/list/names = args.Copy(2)
-	var/datum/player_details/P = GLOB.player_details[ckey]
-	if(P)
-		for(var/name in names)
-			if(name)
-				P.played_names |= name
+
+	for(var/name in data)
+		if(!name)
+			stack_trace("Attempted to log an invalid/empty name for Client with [ckey]! Got [isnull(name) ? "null" : name] instead.")
+			continue
+		var/mob_tag = data[name]
+		var/encoded_name = html_encode(name)
+		if(writable.played_names.Find("[encoded_name]"))
+			writable.played_names += list("[encoded_name]" = mob_tag)

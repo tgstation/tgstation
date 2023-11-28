@@ -280,12 +280,14 @@
 			if(M_rname == M_rname_as_key)
 				M_rname_as_key = null
 			var/M_key = html_encode(M.key)
-			var/previous_names = ""
+			var/list/previous_names = list()
 			if(M_key)
-				var/datum/player_details/P = GLOB.player_details[ckey(M_key)]
-				if(P)
-					previous_names = P.played_names.Join(",")
-			previous_names = html_encode(previous_names)
+				var/datum/player_details/readable = GLOB.player_details[ckey(M_key)]
+				if(readable)
+					var/list/detailed_names = readable.played_names
+					for(var/previous_name in detailed_names)
+						previous_names += "[previous_name] ([detailed_names[previous_name]])"
+			previous_names = html_encode(jointext(previous_names, "; "))
 
 			//output for each mob
 			dat += {"
