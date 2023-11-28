@@ -127,18 +127,18 @@
 	if(!istype(parent) || parent.get_organ_by_type(/obj/item/organ/internal/eyes) != src)
 		CRASH("Generating a body overlay for [src] targeting an invalid parent '[parent]'.")
 
-	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
-
-	if(isnull(eye_icon_state) || my_head?.eyes_hidden || (parent.check_obscured_slots(TRUE) & ITEM_SLOT_EYES))
+	if(isnull(eye_icon_state))
 		return list()
 
 	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_l", -BODY_LAYER)
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER)
 	var/list/overlays = list(eye_left, eye_right)
-	if(overlay_ignore_lighting)
+
+	var/obscured = parent.check_obscured_slots(TRUE)
+	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -BODY_LAYER, alpha = eye_left.alpha)
 		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -BODY_LAYER, alpha = eye_right.alpha)
-
+	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	if(my_head)
 		if(my_head.head_flags & HEAD_EYECOLOR)
 			eye_right.color = eye_color_right

@@ -75,7 +75,7 @@
 	return "Unknown"
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
-/mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
+/mob/living/carbon/human/proc/get_face_name(if_no_face = "Unknown")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return if_no_face //We're Unknown, no face information for you
 	for(var/obj/item/worn_item in get_all_worn_items())
@@ -83,7 +83,7 @@
 			continue
 		return if_no_face
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (head.brutestate+head.burnstate)>2 || getCloneLoss()>50 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if(isnull(head) || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (head.brutestate + head.burnstate) > 2 || getCloneLoss() > 50 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 

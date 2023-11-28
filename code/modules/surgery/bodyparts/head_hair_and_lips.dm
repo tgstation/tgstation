@@ -8,15 +8,12 @@
 	//HIDDEN CHECKS START
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
-	eyes_hidden = FALSE
 	if(human_head_owner)
 		for(var/obj/item/worn_item in human_head_owner.get_all_worn_items())
 			if(worn_item.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
 			if(worn_item.flags_inv & HIDEFACIALHAIR)
 				facial_hair_hidden = TRUE
-			if(worn_item.flags_inv & HIDEEYES)
-				eyes_hidden = TRUE
 		//invisibility and husk stuff
 		if(HAS_TRAIT(human_head_owner, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(human_head_owner, TRAIT_HUSK))
 			hair_hidden = TRUE
@@ -32,7 +29,7 @@
 		else
 			show_debrained = FALSE
 
-		if(!eyes_hidden && !owner.get_organ_slot(ORGAN_SLOT_EYES))
+		if(!owner.get_organ_slot(ORGAN_SLOT_EYES))
 			show_eyeless = TRUE
 		else
 			show_eyeless = FALSE
@@ -42,7 +39,7 @@
 		else
 			show_debrained = FALSE
 
-		if(!eyes_hidden && !eyes)
+		if(!eyes)
 			show_eyeless = TRUE
 		else
 			show_eyeless = FALSE

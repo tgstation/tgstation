@@ -7,6 +7,7 @@
 	slot_flags = ITEM_SLOT_MASK
 	strip_delay = 40
 	equip_delay_other = 40
+	visor_vars_to_toggle = NONE
 	var/modifies_speech = FALSE
 	var/adjusted_flags = null
 	///Did we install a filtering cloth?

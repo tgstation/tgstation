@@ -480,14 +480,15 @@ BLIND     // can't see anything
 
 	if(user.is_holding(src))
 		user.update_held_items()
-	else
-		user.update_clothing(slot_flags)
-		if(iscarbon(user))
-			var/mob/living/carbon/carbon_user = user
-			if(visor_vars_to_toggle & VISOR_TINT)
-				carbon_user.update_tint()
-			if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
-				carbon_user.cutoff_internals()
+		return TRUE
+	user.update_clothing(slot_flags)
+	if(!iscarbon(user))
+		return TRUE
+	var/mob/living/carbon/carbon_user = user
+	if(visor_vars_to_toggle & VISOR_TINT)
+		carbon_user.update_tint()
+	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
+		carbon_user.cutoff_internals()
 	return TRUE
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
