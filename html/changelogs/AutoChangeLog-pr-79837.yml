@@ -1,6 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "Bar signs can now be purchased from cargo. Neat!"
-  - qol: "Bar signs can now be deconstructed with a screwdriver and wrench."
-  - qol: "Bar signs can now be smashed to pieces, rather than just disabled."
