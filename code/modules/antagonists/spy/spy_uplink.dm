@@ -85,8 +85,10 @@
 
 	var/obj/item/reward = new bounty.reward_item.item(spy.loc)
 	spy.put_in_hands(reward)
-	to_chat(spy, span_notice("Bounty complete! You have been rewarded with [reward]. Your reward has \
-		<b>[reward.loc == spy ? "appeared in your hands" : "been deposited below you"].</b>"))
+	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
+		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
+
+	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /datum/component/spy_uplink/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
