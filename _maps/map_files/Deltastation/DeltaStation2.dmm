@@ -44031,7 +44031,6 @@
 /area/station/maintenance/port)
 "kUj" = (
 /obj/effect/decal/cleanable/oil/streak,
-/obj/machinery/camera/directional/south,
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 7
@@ -44039,6 +44038,7 @@
 /obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
 	pixel_x = 5
 	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/bitrunning/den)
 "kUn" = (
