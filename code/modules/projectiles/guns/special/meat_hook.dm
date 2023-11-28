@@ -75,32 +75,36 @@
 /// Lightweight datum that just handles moving a target for the hook.
 /// For the love of God, do not use this outside this file.
 /datum/hook_and_move
-	/// How many steps we force the victim to take per tick
-	var/steps_per_tick = 5
 	/// Weakref to the projectile hook that fired us
 	var/datum/weakref/hook_ref = null
 	/// Weakref to the victim we are dragging
 	var/datum/weakref/victim_ref = null
-	/// Destination that the victim is heading towards.
+	/// Weakref of the destination that the victim is heading towards.
 	var/datum/weakref/destination_ref = null
+	/// Weakref to the firer of the hook
+	var/datum/weakref/firer_ref = null
 	/// String to the REF() of the dude that fired us so we can ensure we always cleanup our traits
 	var/firer_ref_string = null
+
 	/// The last time our movement fired.
 	var/last_movement = 0
 	/// The chain beam we currently own.
-	var/datum/beam/chain = null
+	var/datum/beam/return_chain = null
+
+	/// How many steps we force the victim to take per tick
+	var/steps_per_tick = 5
 	/// How long we knockdown the victim for.
 	var/knockdown_time = (0.5 SECONDS)
 
 /datum/hook_and_move/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
-	QDEL_NULL(chain)
+	QDEL_NULL(return_chain)
 	return ..()
 
 /// Uses fastprocessing to move our victim to the destination at a rather fast speed.
 /// TODO is to replace this with a movement loop, but the visual effects of this are pretty scuffed so we're just reliant on this old method for now :(
 /datum/hook_and_move/proc/register_victim(obj/projectile/hook, atom/movable/firer, atom/movable/victim, atom/destination)
-	chain = firer.Beam(victim, icon_state = "chain", emissive = FALSE)
+	return_chain = firer.Beam(victim, icon_state = "chain", emissive = FALSE)
 
 	firer_ref_string = REF(firer)
 	ADD_TRAIT(victim, TRAIT_HOOKED, firer_ref_string)
