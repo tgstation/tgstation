@@ -104,8 +104,6 @@
 				var/x_dist = (text2num(LAZYACCESS(modifiers, ICON_X)) - world.icon_size/2) * (climbed_thing.dir & WEST ? -1 : 1)
 				var/y_dist = (text2num(LAZYACCESS(modifiers, ICON_Y)) - world.icon_size/2) * (climbed_thing.dir & SOUTH ? -1 : 1)
 				dir_step = (x_dist >= y_dist ? (EAST|WEST) : (NORTH|SOUTH)) & climbed_thing.dir
-			else //user is being moved by a forced_movement datum. dir_step will be the direction to the forced movement target.
-				dir_step = get_dir(user, user.force_moving.target)
 		else
 			dir_step = get_dir(user, get_step(climbed_thing, climbed_thing.dir))
 	. = step(user, dir_step)
@@ -127,5 +125,4 @@
 	SIGNAL_HANDLER
 	if(!istype(bumpee))
 		return
-	if(bumpee.force_moving?.allow_climbing)
-		do_climb(source, bumpee)
+	do_climb(source, bumpee)

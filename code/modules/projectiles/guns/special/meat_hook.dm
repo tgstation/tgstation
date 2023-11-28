@@ -1,5 +1,6 @@
-//Meat Hook
+#define TRAIT_HOOKED "hooked"
 
+/// Meat Hook
 /obj/item/gun/magic/hook
 	name = "meat hook"
 	desc = "Mid or feed."
@@ -43,6 +44,8 @@
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain
 	var/knockdown_time = (0.5 SECONDS)
+	/// How many steps we force the victim to take per tick
+	var/steps_per_tick = 5
 	/// The last time our movement fired.
 	var/last_movement = 0
 	/// Weakref to the victim we are dragging
@@ -78,11 +81,9 @@
 	qdel(chain)
 	return ..()
 
-#define TRAIT_HOOKED "hooked"
-
 /// Uses fastprocessing to move our victim to the destination at a rather fast speed.
 /// TODO is to replace this with a movement loop, but the visual effects of this are pretty scuffed so we're just reliant on this old method for now :(
-/obj/projectile/hook/proc/move_victim(atom/movable/victim, atom/destination, steps_per_tick = 5)
+/obj/projectile/hook/proc/move_victim(atom/movable/victim, atom/destination)
 	ADD_TRAIT(victim, TRAIT_HOOKED, REF(src))
 	destination_ref = WEAKREF(destination)
 	victim_ref = WEAKREF(victim)
@@ -119,7 +120,7 @@
 /obj/projectile/hook/proc/attempt_movement(atom/movable/subject, atom/target, second_attempt = FALSE)
 	var/actually_moved = FALSE
 	if(!second_attempt)
-		actually_moved = step_towards(vic, tar)
+		actually_moved = step_towards(subject, target)
 
 	if(actually_moved)
 		return TRUE
