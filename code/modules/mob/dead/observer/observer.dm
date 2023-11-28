@@ -304,7 +304,13 @@ Works together with spawning an observer, noted above.
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
-	ghost.client?.player_details.time_of_death = ghost.mind?.current ? mind.current.timeofdeath : world.time
+
+	var/recordable_time = world.time
+	var/mob/living/former_mob = ghost.mind?.current
+	if(isliving(former_mob))
+		recordable_time = former_mob.timeofdeath
+
+	ghost.client?.player_details.time_of_death = recordable_time
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
