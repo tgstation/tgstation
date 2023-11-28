@@ -46,7 +46,7 @@
 	to_chat(src, "[span_boldbig("You are a cak!")]<b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free cake to the station!</b>")
-	var/default_name = "Keeki"
+	var/default_name = initial(name)
 	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))

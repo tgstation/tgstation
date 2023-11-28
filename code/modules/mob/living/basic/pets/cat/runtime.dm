@@ -84,7 +84,7 @@
 			family[kitten.type] = 1
 	file_data["family"] = family
 	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	WRITE_FILE(json_file, json_encode(file_data, JSON_PRETTY_PRINT))
 
 /mob/living/basic/pet/cat/runtime/proc/deploy_the_cats()
 	cats_deployed = TRUE
