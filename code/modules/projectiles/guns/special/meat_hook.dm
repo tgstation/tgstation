@@ -43,6 +43,12 @@
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain
 	var/knockdown_time = (0.5 SECONDS)
+	/// The last time our movement fired.
+	var/last_movement = 0
+	/// Weakref to the victim we are dragging
+	var/datum/weakref/victim_ref = null
+	/// Destination that the victim is heading towards.
+	var/datum/weakref/destination_ref = null
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
@@ -52,24 +58,103 @@
 
 /obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(ismovable(target))
-		var/atom/movable/A = target
-		if(A.anchored)
-			return
-		A.visible_message(span_danger("[A] is snagged by [firer]'s hook!"))
-		//Should really be a movement loop, but I don't want to support moving 5 tiles a tick
-		//It just looks bad
-		new /datum/forced_movement(A, get_turf(firer), 5, TRUE)
-		if (isliving(target))
-			var/mob/living/fresh_meat = target
-			fresh_meat.Knockdown(knockdown_time)
-			return
-		//TODO: keep the chain beamed to A
-		//TODO: needs a callback to delete the chain
+	if(!ismovable(target))
+		return
+
+	var/atom/movable/victim = target
+	if(victim.anchored || HAS_TRAIT_FROM(victim, TRAIT_HOOKED, REF(src)))
+		return
+
+	victim.visible_message(span_danger("[victim] is snagged by [firer]'s hook!"))
+	move_victim(victim, get_turf(firer))
+	if (isliving(victim))
+		var/mob/living/fresh_meat = target
+		fresh_meat.Knockdown(knockdown_time)
+
+	//TODO: keep the chain beamed to A
+	//TODO: needs a callback to delete the chain
 
 /obj/projectile/hook/Destroy()
 	qdel(chain)
 	return ..()
+
+#define TRAIT_HOOKED "hooked"
+
+/// Uses fastprocessing to move our victim to the destination at a rather fast speed.
+/// TODO is to replace this with a movement loop, but the visual effects of this are pretty scuffed so we're just reliant on this old method for now :(
+/obj/projectile/hook/proc/move_victim(atom/movable/victim, atom/destination, steps_per_tick = 5)
+	ADD_TRAIT(victim, TRAIT_HOOKED, REF(src))
+	destination_ref = WEAKREF(destination)
+	victim_ref = WEAKREF(victim)
+	START_PROCESSING(SSfastprocess, src)
+
+/// Cancels processing and removes the trait from the victim.
+/obj/projectile/hook/proc/end_movement()
+	STOP_PROCESSING(SSfastprocess, src)
+	var/atom/movable/victim = victim_ref?.resolve()
+	if(QDELETED(victim))
+		return
+
+	REMOVE_TRAIT(victim, TRAIT_HOOKED, REF(src))
+	victim_ref = null
+
+/obj/projectile/hook/process(seconds_per_tick)
+	var/atom/movable/victim = victim_ref?.resolve()
+	var/atom/destination = destination_ref?.resolve()
+	if(QDELETED(victim) || QDELETED(destination))
+		end_movement(victim)
+		return
+
+	var/steps_to_take = round(steps_per_tick * (world.time - last_movement))
+	if(steps_to_take <= 0)
+		return
+
+	var/movement_result = attempt_movement(victim, destination)
+	if(!movement_result || (victim.loc == destination.loc)) // either we failed our movement or our mission is complete
+		end_movement()
+
+
+/// Attempts to move the victim towards the destination. Returns TRUE if we do a successful movement, FALSE otherwise.
+/// second_attempt is a boolean to prevent infinite recursion.
+/obj/projectile/hook/proc/attempt_movement(atom/movable/subject, atom/target, second_attempt = FALSE)
+	var/actually_moved = FALSE
+	if(!second_attempt)
+		actually_moved = step_towards(vic, tar)
+
+	if(actually_moved)
+		return TRUE
+
+	// alright now the code fucking sucks
+	var/subject_x = subject.x
+	var/subject_y = subject.y
+	var/target_x = target.x
+	var/target_y = target.y
+
+	//If we're going x, step x
+	if((target_x > subject_x) && step(subject, EAST))
+		actually_moved = TRUE
+	else if((target_x < subject_x) && step(subject, WEST))
+		actually_moved = TRUE
+
+	if(actually_moved)
+		return TRUE
+
+	//If the x step failed, go y
+	if((target_y > subject_y) && step(subject, NORTH))
+		actually_moved = TRUE
+	else if((target_y < subject_y) && step(subject, SOUTH))
+		actually_moved = TRUE
+
+	if(actually_moved)
+		return TRUE
+
+	// if we fail twice, abort. otherwise queue up the second attempt.
+	if(second_attempt)
+		return FALSE
+
+	return attempt_movement(subject, target, second_attempt = TRUE)
+
+#undef TRAIT_HOOKED
 
 //just a nerfed version of the real thing for the bounty hunters.
 /obj/item/gun/magic/hook/bounty
