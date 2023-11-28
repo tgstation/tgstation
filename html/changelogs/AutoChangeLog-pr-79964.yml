@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes:
-  - code_imp: "verb callbacks will no longer execute if the original client disconnected"
