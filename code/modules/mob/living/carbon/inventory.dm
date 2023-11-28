@@ -126,6 +126,11 @@
 	if(!not_handled)
 		has_equipped(equipping, slot, initial)
 
+		if(isclothing(equipping))
+			var/obj/item/clothing/clothing = equipping
+			if(clothing.tint)
+				update_tint()
+
 	return not_handled
 
 /// This proc is called after an item has been successfully handled and equipped to a slot.

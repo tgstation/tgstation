@@ -248,12 +248,8 @@
 	if (!istype(user))
 		return
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		if(iscarbon(user))
-			var/mob/living/carbon/carbon_user = user
-			if(tint)
-				carbon_user.update_tint()
-			if(LAZYLEN(zones_disabled))
-				RegisterSignal(carbon_user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
+		if(iscarbon(user) && LAZYLEN(zones_disabled))
+			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 		for(var/trait in clothing_traits)
 			ADD_CLOTHING_TRAIT(user, trait)
 		if (LAZYLEN(user_vars_to_edit))
