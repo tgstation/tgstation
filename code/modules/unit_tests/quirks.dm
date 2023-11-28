@@ -1,5 +1,6 @@
 /// Ensure every quirk has a unique icon
 /datum/unit_test/quirk_icons
+// Make sure all quirks start with a description in medical records
 /datum/unit_test/quirk_initial_medical_records
 
 /datum/unit_test/quirk_icons/Run()
@@ -31,13 +32,13 @@
 	for(var/datum/quirk/quirk_type as anything in subtypesof(/datum/quirk))
 		if (initial(quirk_type.abstract_parent_type) == quirk_type)
 			continue
-			//Add quirk to a patient - so we can pass quirks that add a medical record after being assigned someone
-			patient.add_quirk(quirk_type);
+		//Add quirk to a patient - so we can pass quirks that add a medical record after being assigned someone
+		patient.add_quirk(quirk_type);
 
-			// Get added quirk from patient
-			var/datum/quirk/quirk = patient.get_quirk(quirk_type);
+		// Get added quirk from patient
+		var/datum/quirk/quirk = patient.get_quirk(quirk_type);
 
-			if(isnull(quirk.medical_record_text))
-				TEST_FAIL("[quirk_type] has no medical record description!")
+		if(isnull(quirk.medical_record_text))
+			TEST_FAIL("[quirk_type] has no medical record description!")
 
-			patient.remove_quirk(quirk_type);
+		patient.remove_quirk(quirk_type);
