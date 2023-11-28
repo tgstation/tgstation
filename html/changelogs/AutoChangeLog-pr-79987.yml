@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Renames a bar door from \"Kitchen\" to \"Bar\" on Metastation."

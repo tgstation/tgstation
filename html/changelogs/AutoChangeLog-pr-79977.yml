@@ -1,0 +1,5 @@
+author: "itseasytosee"
+delete-after: True
+changes:
+  - bugfix: "staggered targets now have the correct chance for escaping grapples."
+  - spellcheck: "changed attack verb for punching a grappled target"
