@@ -342,8 +342,6 @@
 	show_in_report = TRUE
 	weight = 1
 	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
-	/// If admins want to they can make it so AIs can be latejoined as
-	var/latejoinable = FALSE
 
 /datum/station_trait/triple_ai/New()
 	. = ..()
@@ -358,6 +356,5 @@
 
 	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
 		ai_datum.spawn_positions = 3
-	if(latejoinable)
-		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-			secondary_ai_spawn.latejoin_active = TRUE
+	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+		secondary_ai_spawn.latejoin_active = TRUE
