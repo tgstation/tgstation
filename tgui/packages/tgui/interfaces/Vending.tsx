@@ -349,7 +349,7 @@ const ProductButton = (props, context) => {
         })
       }>
       {customPrice}
-      {displayed_currency_name}
+      {!access && displayed_currency_name}
     </Button>
   ) : (
     <Button
@@ -361,7 +361,7 @@ const ProductButton = (props, context) => {
         })
       }>
       {standardPrice}
-      {displayed_currency_name}
+      {!free && displayed_currency_name}
     </Button>
   );
 };
