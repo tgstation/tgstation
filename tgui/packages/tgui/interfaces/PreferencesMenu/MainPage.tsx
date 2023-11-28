@@ -593,8 +593,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                     randomizations={getRandomization(
                       contextualPreferences,
                       serverData,
-                      randomBodyEnabled,
-
+                      randomBodyEnabled
                     )}
                     preferences={contextualPreferences}
                     maxHeight="auto"
@@ -605,8 +604,7 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                     randomizations={getRandomization(
                       nonContextualPreferences,
                       serverData,
-                      randomBodyEnabled,
-
+                      randomBodyEnabled
                     )}
                     preferences={nonContextualPreferences}
                     maxHeight="auto"

@@ -102,8 +102,7 @@ export const ghost_orbit: FeatureChoiced = {
     Requires BYOND membership.
   `,
   component: (
-    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
-
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>
   ) => {
     const { data } = useBackend<PreferencesMenuData>();
 
