@@ -12,7 +12,7 @@ type Bounty = {
 };
 
 type Data = {
-  time_left: string;
+  time_left: number;
   bounties: Bounty[];
 };
 
@@ -31,9 +31,9 @@ const BountyDisplay = (props: { bounty: Bounty }) => {
         <Dimmer>
           <Stack>
             <Stack.Item>
-              <Icon name="user-secret" color="bad" />
+              <Icon name="user-secret" size={2} color="bad" />
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item align={'center'}>
               <i>Claimed!</i>
             </Stack.Item>
           </Stack>
@@ -59,14 +59,35 @@ const BountyDisplay = (props: { bounty: Bounty }) => {
 export const SpyUplink = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { bounties, time_left } = data;
+
+  const format_deciseconds = (deciseconds: number) => {
+    const seconds = Math.floor(deciseconds / 10);
+    const minutes = Math.floor(seconds / 60);
+
+    const seconds_left = seconds % 60;
+    const minutes_left = minutes % 60;
+
+    const seconds_string = seconds_left.toString().padStart(2, '0');
+    const minutes_string = minutes_left.toString().padStart(2, '0');
+
+    return `${minutes_string}:${seconds_string}`;
+  };
+
   return (
-    <Window width={450} height={615} theme={'ntos_darkmode'}>
-      <Window.Content>
+    <Window width={450} height={615} theme="ntos_darkmode">
+      <Window.Content
+        style={{
+          'background-image': 'none',
+        }}>
         <Section
           fill
           title="Spy Bounties"
           scrollable
-          buttons={<Box width="50%">Time until refresh: {time_left}</Box>}>
+          buttons={
+            <Box mt={0.4}>
+              Time until refresh: {format_deciseconds(time_left)}
+            </Box>
+          }>
           <Stack vertical fill>
             <Stack.Item>
               {bounties.map((bounty) => (

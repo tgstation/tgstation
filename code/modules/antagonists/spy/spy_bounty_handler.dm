@@ -43,7 +43,7 @@
 		bounty_types[difficulty] += bounty
 
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-		if(isnull(item.item) || istype(item, DUMMY_UPLINK_ITEM))
+		if(isnull(item.item) || istype(item.item, DUMMY_UPLINK_ITEM))
 			continue
 		if(!(item.purchasable_from & UPLINK_SPY))
 			continue

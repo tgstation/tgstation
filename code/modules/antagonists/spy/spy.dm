@@ -17,7 +17,7 @@
 /datum/antagonist/spy/on_gain()
 	. = ..()
 	if(!uplink_created)
-		create_spy_uplink(owner.current)
+		auto_create_spy_uplink(owner.current)
 	if(spawn_with_objectives)
 		give_random_objectives()
 		update_static_data(owner.current)
@@ -27,7 +27,7 @@
 	data["uplink_location"] = uplink_location
 	return data
 
-/datum/antagonist/spy/proc/create_spy_uplink(mob/living/carbon/spy)
+/datum/antagonist/spy/proc/auto_create_spy_uplink(mob/living/carbon/spy)
 	if(!iscarbon(spy))
 		return
 
@@ -37,8 +37,14 @@
 
 	var/obj/item/spy_uplink = spy.get_uplink_location(spy_uplink_loc)
 	if(isnull(spy_uplink))
-		return // melbert todo : Back up case?
+		var/datum/action/backup_uplink/backup = new(src)
+		backup.Grant(spy)
+		to_chat(spy, span_boldnotice("You were unable to be supplied with an uplink, so you have been given the ability to create one yourself."))
+		return
 
+	create_spy_uplink(spy, spy_uplink)
+
+/datum/antagonist/spy/proc/create_spy_uplink(mob/living/carbon/spy, obj/item/spy_uplink)
 	spy_uplink.AddComponent(/datum/component/spy_uplink, spy)
 	uplink_created = TRUE
 	if(istype(spy_uplink, /obj/item/modular_computer/pda))
@@ -66,7 +72,7 @@
 	for(var/i in 1 to rand(1, 3))
 		var/datum/objective/custom/your_mission = new()
 		your_mission.owner = owner
-		your_mission.explanation_text = "[pick_n_take(random_garbage)] (This objective is untracked, and will auto-succeed - have fun with it!)"
+		your_mission.explanation_text = pick_n_take(random_garbage)
 		objectives += your_mission
 
 	if(prob(MARTYR_PROB))
@@ -91,3 +97,39 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/balaclava
 	shoes = /obj/item/clothing/shoes/jackboots
+
+/datum/action/backup_uplink
+	name = "Create Uplink"
+	desc = "Fashion a PDA, Pen or Radio Headset into a swanky Spy Uplink."
+	var/list/valid_types = list(
+		/obj/item/modular_computer/pda,
+		/obj/item/pen,
+		/obj/item/radio,
+	)
+
+/datum/action/backup_uplink/New(Target)
+	. = ..()
+	if(!istype(Target, /datum/antagonist/spy))
+		stack_trace("[type] created on invalid target [Target || "null"]")
+		qdel(src)
+
+/datum/action/backup_uplink/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/spy = usr
+	var/obj/item/held_thing = spy.get_active_held_item()
+	if(isnull(held_thing))
+		spy.balloon_alert(spy, "you need to hold something!")
+		return
+
+	if(!is_type_in_list(held_thing, valid_types))
+		held_thing.balloon_alert(spy, "invalid item!")
+		return
+
+	var/datum/antagonist/spy/spy_datum = target
+	spy_datum.create_spy_uplink(spy, held_thing)
+	held_thing.balloon_alert(spy, "uplink created")
+
+	qdel(src)

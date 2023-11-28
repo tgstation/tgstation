@@ -23,8 +23,11 @@ export const AntagInfoSpy = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { antag_name, uplink_location, objectives } = data;
   return (
-    <Window width={360} height={420} theme={'ntos_darkmode'}>
-      <Window.Content>
+    <Window width={360} height={420} theme="ntos_darkmode">
+      <Window.Content
+        style={{
+          'background-image': 'none',
+        }}>
         <Section
           title={`You are the ${antag_name || 'Spy'}.`}
           textAlign="justify">
