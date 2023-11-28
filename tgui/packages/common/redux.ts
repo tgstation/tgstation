@@ -201,7 +201,6 @@ export const createAction = <TAction extends string>(
 export const useDispatch = <TAction extends Action = AnyAction>(context: {
   store: Store<unknown, TAction>;
 }): Dispatch<TAction> => {
-
   return context?.store?.dispatch;
 };
 
