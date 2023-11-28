@@ -9,6 +9,7 @@
 	new /obj/item/clothing/head/bio_hood/general(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/reagent_containers/syringe/antiviral(src)
 
 
 /obj/structure/closet/l3closet/virology
@@ -20,6 +21,7 @@
 	new /obj/item/clothing/head/bio_hood/virology(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/reagent_containers/syringe/antiviral(src)
 
 
 /obj/structure/closet/l3closet/security
@@ -30,6 +32,7 @@
 	new /obj/item/clothing/head/bio_hood/security(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/reagent_containers/syringe/antiviral(src)
 
 
 /obj/structure/closet/l3closet/janitor
@@ -40,6 +43,7 @@
 	new /obj/item/clothing/head/bio_hood/janitor(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/reagent_containers/syringe/antiviral(src)
 
 
 /obj/structure/closet/l3closet/scientist
@@ -51,4 +55,5 @@
 	new /obj/item/clothing/head/bio_hood/scientist(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/tank/internals/oxygen(src)
+	new /obj/item/reagent_containers/syringe/antiviral(src)
 
