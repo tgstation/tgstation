@@ -12,7 +12,7 @@
 		return
 
 	if(!isdatum(target))
-		stack_trace("Invalid target used in TRAIT_CALLBACK_ADD! Expected a datum reference, got [isnull(target) ? "null" : target] instead.")
+		stack_trace("Invalid target used in TRAIT_CALLBACK_ADD! Expected a datum reference, got [target] instead.")
 		return
 
 	var/datum/datum_target = target
@@ -29,7 +29,7 @@
 		return
 
 	if(!isdatum(target))
-		stack_trace("Invalid target used in TRAIT_CALLBACK_REMOVE! Expected a datum reference, got [isnull(target) ? "null" : target] instead.")
+		stack_trace("Invalid target used in TRAIT_CALLBACK_REMOVE! Expected a datum reference, got [target] instead.")
 		return
 
 	var/datum/datum_target = target
