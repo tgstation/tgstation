@@ -92,12 +92,13 @@
 	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
+	var/obj/item/item_parent = parent
 	if(isnull(style))
 		// no style (reset)
-		parent.name = initial(parent.name)
+		item_parent.name = initial(item_parent.name)
 	else if(style.name)
 		// style
-		style.set_name(parent)
+		style.set_name(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_NAME
 
 	return NONE
@@ -113,12 +114,13 @@
 	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
+	var/obj/item/item_parent = parent
 	if(isnull(style))
 		// no style (reset)
-		parent.desc = initial(parent.desc)
+		item_parent.desc = initial(item_parent.desc)
 	else if(style.desc)
 		// style
-		style.set_desc(parent)
+		style.set_desc(item_parent)
 		return COMSIG_ATOM_NO_UPDATE_DESC
 
 	return NONE
