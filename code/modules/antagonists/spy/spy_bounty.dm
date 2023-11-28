@@ -8,10 +8,11 @@
 	VAR_FINAL/datum/uplink_item/reward_item
 
 /datum/spy_bounty/New(datum/spy_bounty_handler/handler)
-	. = ..()
-	if(init_bounty(handler))
-		initalized = TRUE
-		select_reward(handler)
+	if(!init_bounty(handler))
+		return
+
+	initalized = TRUE
+	select_reward(handler)
 
 /datum/spy_bounty/proc/to_ui_data()
 	return list(
@@ -26,7 +27,7 @@
 	return FALSE
 
 /datum/spy_bounty/proc/select_reward(datum/spy_bounty_handler/handler)
-	return
+	reward_item = prob(33) ? pick(handler.possible_uplink_items) : pick_n_take(handler.possible_uplink_items)
 
 /datum/spy_bounty/proc/is_stealable(atom/movable/stealing)
 	return FALSE
@@ -64,13 +65,14 @@
 	VAR_FINAL/area/location_type
 	VAR_FINAL/obj/machinery/target_type
 
-	var/static/list/possible_machines = list(
-		/obj/machinery/computer/communications,
-		/obj/machinery/computer/security,
-	)
-
 /datum/spy_bounty/machine/init_bounty(datum/spy_bounty_handler/handler)
-	target_type = pick(possible_machines)
+	target_type = pick(
+		/obj/machinery/computer/bank_machine,
+		/obj/machinery/computer/communications,
+		/obj/machinery/computer/crew,
+		/obj/machinery/computer/security,
+		/obj/machinery/computer/upload,
+	)
 
 	var/list/obj/machinery/all_possible = list()
 	for(var/obj/machinery/found_machine as anything in SSmachines.get_machines_by_type_and_subtypes(target_type))
@@ -150,7 +152,7 @@
 	var/obj/item/desired_part = find_desired_thing(crewmember)
 	target_original_desired_ref = WEAKREF(desired_part)
 
-	name = "Steal [crewmember.real_name]'s [desired_part]"
+	name = "Steal [crewmember.real_name]'s [desired_part.name]"
 	help = "Steal [desired_part] from [crewmember.real_name]. \
 		You can do accomplish this via brute force, or simply by hitting them with your uplink while they are incapacitated."
 	return TRUE
@@ -169,10 +171,12 @@
 /datum/spy_bounty/targets_person/limb_or_organ/clean_up_stolen_item(atom/stealing, mob/living/spy)
 	if(IS_WEAKREF_OF(stealing, target_original_desired_ref))
 		qdel(stealing)
+		return
 
-	else
-		var/obj/item/real_stolen_item = find_desired_thing(stealing)
-		qdel(real_stolen_item)
+	var/obj/item/real_stolen_item = find_desired_thing(stealing)
+	spy.Unconscious(10 SECONDS)
+	to_chat(stealing, span_warning("You feel something missing where your [real_stolen_item.name] once was."))
+	qdel(real_stolen_item)
 
 /datum/spy_bounty/targets_person/limb_or_organ/proc/find_desired_thing(mob/living/carbon/human/crewmember)
 	if(ispath(desired_type, /obj/item/bodypart))

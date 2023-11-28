@@ -12,6 +12,7 @@ type Bounty = {
 };
 
 type Data = {
+  time_left: string;
   bounties: Bounty[];
 };
 
@@ -19,16 +20,16 @@ const BountyDisplay = (props: { bounty: Bounty }, context) => {
   const { bounty } = props;
 
   const difficult_to_color = {
-    'easy': 'good',
-    'medium': 'average',
-    'hard': 'bad',
+    'Easy': 'good',
+    'Medium': 'average',
+    'Hard': 'bad',
   };
 
   return (
     <Section>
       {!!bounty.claimed && (
         <Dimmer>
-          <i>Claimed</i>
+          <i>Claimed!</i>
         </Dimmer>
       )}
       <Stack vertical ml={1}>
@@ -50,11 +51,15 @@ const BountyDisplay = (props: { bounty: Bounty }, context) => {
 
 export const SpyUplink = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { bounties } = data;
+  const { bounties, time_left } = data;
   return (
     <Window width={450} height={600} theme={'neutral'}>
       <Window.Content>
-        <Section fill title="Spy Bounties" scrollable>
+        <Section
+          fill
+          title="Spy Bounties"
+          scrollable
+          buttons={<Box>Time until refresh: {time_left}</Box>}>
           <Stack vertical fill>
             <Stack.Item>
               {bounties.map((bounty) => (

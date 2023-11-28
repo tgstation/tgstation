@@ -81,5 +81,6 @@
 	data["bounties"] = list()
 	for(var/datum/spy_bounty/bounty as anything in handler.get_all_bounties())
 		UNTYPED_LIST_ADD(data["bounties"], bounty.to_ui_data())
+	data["time_left"] = DisplayTimeText(timeleft(handler.refresh_timer))
 
 	return data

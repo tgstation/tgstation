@@ -1,5 +1,6 @@
 /datum/spy_bounty_handler
 	var/refresh_time = 10 MINUTES
+	var/refresh_timer
 
 	var/list/bounties_to_give = list(
 		SPY_DIFFICULTY_EASY = 6,
@@ -29,7 +30,7 @@
 		bounty_types[difficulty] += bounty
 
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-		if(isnull(item.item))
+		if(isnull(item.item) || istype(item, /obj/effect/gibspawner/generic)) // gibspawner is a placeholder becuase uplink items are cringe and use gibspawners for placehodlers
 			continue
 		if(!(item.purchasable_from & UPLINK_SPY))
 			continue
@@ -53,7 +54,7 @@
 		var/failed_attempts = 8
 		while(amount_to_give > 0 && failed_attempts > 0)
 			var/picked_bounty = pick(pool)
-			var/datum/spy_bounty/bounty = new picked_bounty()
+			var/datum/spy_bounty/bounty = new picked_bounty(src)
 			if(bounty.initalized)
 				amount_to_give -= 1
 				bounties[difficulty] += bounty
@@ -62,7 +63,7 @@
 				failed_attempts -= 1
 				qdel(bounty)
 
-	addtimer(CALLBACK(src, PROC_REF(refresh_bounty_list)), refresh_time)
+	refresh_timer = addtimer(CALLBACK(src, PROC_REF(refresh_bounty_list)), refresh_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
 /datum/spy_bounty_handler/proc/complete_bounty(atom/stealing, mob/living/spy, datum/spy_bounty/completed)
 	if(completed.claimed)
