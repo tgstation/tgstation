@@ -1070,3 +1070,24 @@
   wesoda25:
   - bugfix: the dismemberment moodlet will now properly clear for ethereals who regrew
       a limb in their resurrection crystals
+2023-11-28:
+  FeudeyTF:
+  - code_imp: Removed currency value for free products
+  Kylerace:
+  - code_imp: verb callbacks will no longer execute if the original client disconnected
+  Rhials:
+  - qol: Bar signs can now be purchased from cargo. Neat!
+  - qol: Bar signs can now be deconstructed with a screwdriver and wrench.
+  - qol: Bar signs can now be smashed to pieces, rather than just disabled.
+  Y0SH1M4S73R:
+  - bugfix: People exposed to romerol while alive will once again revive as zombies
+      on death.
+  san7890:
+  - bugfix: Ranged Guardians (Holoparasites/Power Miners/etc.) can no longer use ranged
+      attacks in scouting (incorporeal) mode.
+  vinylspiders:
+  - bugfix: fixes an overlay lighting hard del
+  - bugfix: flashlights placed inside of backpacks and other storage items that were
+      on the floor will no longer allow light to shine through
+  - bugfix: fixed a null client runtime in advanced camera console
+  - bugfix: fixed a runtime in handle_dead_metabolism()
