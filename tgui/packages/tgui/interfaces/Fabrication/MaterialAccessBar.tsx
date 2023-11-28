@@ -49,7 +49,7 @@ const LABEL_FORMAT = (value: number) => formatSiUnit(value, 0);
  * the ore silo. Has pop-out docks for each material type for ejecting up to
  * fifty sheets.
  */
-export const MaterialAccessBar = (props: MaterialAccessBarProps, context) => {
+export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
   const { availableMaterials, SHEET_MATERIAL_AMOUNT, onEjectRequested } = props;
 
   return (
@@ -77,11 +77,10 @@ type MaterialCounterProps = {
   onEjectRequested: (quantity: number) => void;
 };
 
-const MaterialCounter = (props: MaterialCounterProps, context) => {
+const MaterialCounter = (props: MaterialCounterProps) => {
   const { material, onEjectRequested, SHEET_MATERIAL_AMOUNT } = props;
 
   const [hovering, setHovering] = useLocalState(
-    context,
     `MaterialCounter__${material.name}`,
     false
   );
@@ -147,7 +146,7 @@ type EjectButtonProps = {
   onEject: (quantity: number) => void;
 };
 
-const EjectButton = (props: EjectButtonProps, context) => {
+const EjectButton = (props: EjectButtonProps) => {
   const { amount, sheets, onEject } = props;
 
   return (

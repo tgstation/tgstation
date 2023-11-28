@@ -17,8 +17,8 @@ type Data = {
   beaker: Beaker;
 };
 
-export const PortableChemMixer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const PortableChemMixer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { beaker } = data;
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const chemicals = sortBy((chem: DispensableReagent) => chem.id)(

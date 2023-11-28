@@ -21,10 +21,15 @@ import { resumeRenderer, suspendRenderer } from './renderer';
 
 const logger = createLogger('backend');
 
-let globalState;
+export let globalState;
+export let globalStore;
 
 export const setGlobalState = (state) => {
   globalState = state;
+};
+
+export const setGlobalStore = (store) => {
+  globalStore = store;
 };
 
 export const backendUpdate = createAction('backend/update');
@@ -273,6 +278,10 @@ type BackendState<TData> = {
   shared: Record<string, any>;
   suspending: boolean;
   suspended: boolean;
+  debug?: {
+    debugLayout: boolean;
+    kitchenSink: boolean;
+  };
 };
 
 /**
@@ -287,7 +296,7 @@ export const selectBackend = <TData>(state: any): BackendState<TData> =>
  * Includes the `act` function for performing DM actions.
  */
 export const useBackend = <TData>() => {
-  const state: Record<string, any> & { data: TData } = globalState.backend;
+  const state: BackendState<TData> = globalState.backend;
 
   return {
     ...state,
@@ -314,18 +323,16 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
  * @param initialState Initializes your global variable with this value.
  */
 export const useLocalState = <T>(
-  context: any,
   key: string,
   initialState: T
 ): StateWithSetter<T> => {
-  const { store } = context;
-  const state = selectBackend(store.getState());
+  const state = globalState.backend;
   const sharedStates = state.shared ?? {};
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
     (nextState) => {
-      store.dispatch(
+      globalStore.dispatch(
         backendSetSharedState({
           key,
           nextState:
@@ -353,36 +360,23 @@ export const useLocalState = <T>(
  * @param initialState Initializes your global variable with this value.
  */
 export const useSharedState = <T>(
-  context: any,
   key: string,
   initialState: T
 ): StateWithSetter<T> => {
-  const { store } = context;
-  const state = selectBackend(store.getState());
+  const state = globalState.backend;
   const sharedStates = state.shared ?? {};
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
     (nextState) => {
-      // prettier-ignore
       Byond.sendMessage({
         type: 'setSharedState',
         key,
-        value: JSON.stringify(
-          typeof nextState === 'function'
-            ? nextState(sharedState)
-            : nextState
-        ) || '',
+        value:
+          JSON.stringify(
+            typeof nextState === 'function' ? nextState(sharedState) : nextState
+          ) || '',
       });
     },
   ];
 };
-
-// export const useStore = <TData>() => {
-//   const state: Record<string, any> & { data: TData } = globalState.backend;
-
-//   return {
-//     ...state,
-//     act: sendAct,
-//   };
-// };

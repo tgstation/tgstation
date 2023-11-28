@@ -17,8 +17,8 @@ const dangerMap = {
   },
 };
 
-export const AiAirlock = (props, context) => {
-  const { act, data } = useBackend(context);
+export const AiAirlock = (props) => {
+  const { act, data } = useBackend();
   const statusMain = dangerMap[data.power.main] || dangerMap[0];
   const statusBackup = dangerMap[data.power.backup] || dangerMap[0];
   const statusElectrify = dangerMap[data.shock] || dangerMap[0];
