@@ -13,7 +13,9 @@
     window.Int32Array = Array;
   }
 
+  // ie11 polyfills
   !(function () {
+    // append
     function t() {
       var e = Array.prototype.slice.call(arguments),
         n = document.createDocumentFragment();
@@ -23,6 +25,12 @@
       }),
         this.appendChild(n);
     }
+    // remove
+    function n() {
+      this.parentNode && this.parentNode.removeChild(this);
+    }
+
+    // add to prototype
     [Element.prototype, Document.prototype, DocumentFragment.prototype].forEach(
       function (e) {
         e.hasOwnProperty('append') ||
@@ -31,6 +39,13 @@
             enumerable: !0,
             writable: !0,
             value: t,
+          });
+        e.hasOwnProperty('remove') ||
+          Object.defineProperty(e, 'remove', {
+            configurable: !0,
+            enumerable: !0,
+            writable: !0,
+            value: n,
           });
       }
     );
