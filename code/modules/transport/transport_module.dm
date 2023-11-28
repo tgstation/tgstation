@@ -464,6 +464,7 @@
 	SSpersistence.tram_hits_this_round += points
 	SSblackbox.record_feedback("amount", "tram_collision", points)
 	var/datum/transport_controller/linear/tram/tram_controller = transport_controller_datum
+	ASSERT(istype(tram_controller))
 	tram_controller.register_collision(points)
 
 ///move the movers list of movables on our tile to destination if we successfully move there first.
