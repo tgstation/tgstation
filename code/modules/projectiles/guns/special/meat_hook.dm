@@ -24,6 +24,8 @@
 /obj/item/gun/magic/hook/can_trigger_gun(mob/living/user, akimbo_usage) // This isn't really a gun, so it shouldn't be checking for TRAIT_NOGUNS, a firing pin (pinless), or a trigger guard (guardless)
 	if(akimbo_usage)
 		return FALSE //this would be kinda weird while shooting someone down.
+	if(HAS_TRAIT(user, TRAIT_IMMOBILIZED))
+		return FALSE
 	return TRUE
 
 /obj/item/ammo_casing/magic/hook
@@ -97,7 +99,6 @@
 
 	/// List of traits that prevent the user from moving. More restrictive than attempting to fire the hook by design.
 	var/static/list/prevent_movement_traits = list(
-		TRAIT_HANDS_BLOCKED,
 		TRAIT_IMMOBILIZED,
 		TRAIT_UI_BLOCKED,
 	)
