@@ -39,7 +39,6 @@ GLOBAL_LIST_EMPTY(player_details)
 
 	for(var/name in data)
 		if(!name)
-			stack_trace("Attempted to log an invalid/empty name for Client with [ckey]! Got [isnull(name) ? "null" : name] instead.")
 			continue
 		var/mob_tag = data[name]
 		var/encoded_name = html_encode(name)

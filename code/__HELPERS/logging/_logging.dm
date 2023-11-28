@@ -244,9 +244,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	return key_name(whom, TRUE, include_name)
 
 /proc/key_name_and_tag(whom, include_link = null, include_name = TRUE)
-	var/tag = "*no tag available*"
-	if(ismob(whom)) // tags work on the datum level but that's junk that we don't really need here
-		var/mob/subject = whom
+	var/tag = "!tagless!" // whom can be null in key_name() so lets set this as a safety
+	if(isatom(whom))
+		var/atom/subject = whom
 		tag = subject.tag
 	return "[key_name(whom, include_link, include_name)] ([tag])"
 
