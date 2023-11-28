@@ -67,7 +67,7 @@
 	victim.visible_message(span_danger("[victim] is snagged by [firer]'s hook!"))
 
 	var/datum/hook_and_move/puller = new
-	puller.register_victim(src, firer, victim, get_turf(firer))
+	puller.begin_pulling(firer, victim, get_turf(firer))
 	REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
 
 /obj/projectile/hook/Destroy(force)
@@ -77,8 +77,6 @@
 /// Lightweight datum that just handles moving a target for the hook.
 /// For the love of God, do not use this outside this file.
 /datum/hook_and_move
-	/// Weakref to the projectile hook that fired us
-	var/datum/weakref/hook_ref = null
 	/// Weakref to the victim we are dragging
 	var/datum/weakref/victim_ref = null
 	/// Weakref of the destination that the victim is heading towards.
@@ -110,8 +108,7 @@
 	return ..()
 
 /// Uses fastprocessing to move our victim to the destination at a rather fast speed.
-/// TODO is to replace this with a movement loop, but the visual effects of this are pretty scuffed so we're just reliant on this old method for now :(
-/datum/hook_and_move/proc/register_victim(obj/projectile/hook, atom/movable/firer, atom/movable/victim, atom/destination)
+/datum/hook_and_move/proc/begin_pulling(atom/movable/firer, atom/movable/victim, atom/destination)
 	return_chain = firer.Beam(victim, icon_state = "chain", emissive = FALSE)
 
 	firer_ref_string = REF(firer)
@@ -123,7 +120,6 @@
 
 	destination_ref = WEAKREF(destination)
 	victim_ref = WEAKREF(victim)
-	hook_ref = WEAKREF(hook)
 	firer_ref = WEAKREF(firer)
 
 	START_PROCESSING(SSfastprocess, src)
@@ -157,6 +153,7 @@
 
 /// Attempts to move the victim towards the destination. Returns TRUE if we do a successful movement, FALSE otherwise.
 /// second_attempt is a boolean to prevent infinite recursion.
+/// If this whole series of events wasn't reliant on SSfastprocess firing as fast as it does, it would have been more useful to make this a move loop datum. But, we need the speed.
 /datum/hook_and_move/proc/attempt_movement(atom/movable/subject, atom/target, second_attempt = FALSE)
 	var/actually_moved = FALSE
 	if(!second_attempt)
