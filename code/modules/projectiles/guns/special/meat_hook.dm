@@ -1,5 +1,5 @@
 #define TRAIT_HOOKED "hooked"
-#define IMMOBILIZATION_TIMER (2 SECONDS) //! How long we immobilize the firer after firing - we do cancel the immobilization early if nothing is hit.
+#define IMMOBILIZATION_TIMER (0.25 SECONDS) //! How long we immobilize the firer after firing - we do cancel the immobilization early if nothing is hit.
 
 /// Meat Hook
 /obj/item/gun/magic/hook
@@ -52,7 +52,7 @@
 	if(firer)
 		initial_chain = firer.Beam(src, icon_state = "chain", emissive = FALSE)
 		ADD_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
-		RegisterSignal(firer, COMSIG_PREQDELETED, PROC_REF(early_cleanup))
+		addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_IMMOBILIZED, REF(src)), IMMOBILIZATION_TIMER) // safety if we miss, if we get a hit we stay immobilized
 	return ..()
 
 /obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -68,15 +68,11 @@
 
 	var/datum/hook_and_move/puller = new
 	puller.register_victim(src, firer, victim, get_turf(firer))
+	REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
 
 /obj/projectile/hook/Destroy(force)
 	QDEL_NULL(initial_chain)
 	return ..()
-
-/// In case our lad misses, we need to clean up the immobilization trait.
-/obj/projectile/hook/proc/early_cleanup()
-	SIGNAL_HANDLER
-	REMOVE_TRAIT(firer, TRAIT_IMMOBILIZED, REF(src))
 
 /// Lightweight datum that just handles moving a target for the hook.
 /// For the love of God, do not use this outside this file.
