@@ -1,6 +1,14 @@
+/**
+ * ## Spy uplink
+ *
+ * Applied to items similar to traitor uplinks.
+ *
+ * Used for spies to complete bounties.
+ */
 /datum/component/spy_uplink
+	/// Weakref to the spy which owns this uplink
 	var/datum/weakref/spy_ref
-
+	/// The handler which manages all bounties across all spies.
 	var/static/datum/spy_bounty_handler/handler
 
 /datum/component/spy_uplink/Initialize(mob/living/spy)
@@ -47,6 +55,8 @@
 
 	return NONE
 
+/// Checks if the passed atom is something that can be stolen according to one of the active bounties.
+/// If so, starts the stealing process.
 /datum/component/spy_uplink/proc/try_steal(atom/stealing, mob/living/spy)
 	for(var/datum/spy_bounty/bounty as anything in handler.get_all_bounties())
 		if(bounty.claimed)
@@ -57,6 +67,8 @@
 
 	return FALSE
 
+/// Attempts to steal the passed atom in accordance with the passed bounty.
+/// If successful, proceeds to complete the bounty.
 /datum/component/spy_uplink/proc/start_stealing(atom/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	stealing.visible_message(
 		span_warning("[spy] starts scanning [stealing] with a strange device..."),
@@ -67,7 +79,14 @@
 	if(bounty.claimed)
 		to_chat(spy, span_warning("The bounty for [stealing] has been claimed by another spy!"))
 		return
-	handler.complete_bounty(stealing, spy, bounty)
+
+	bounty.clean_up_stolen_item(stealing, spy)
+	bounty.claimed = TRUE
+
+	var/obj/item/reward = new bounty.reward_item.item(spy.loc)
+	spy.put_in_hands(reward)
+	to_chat(spy, span_notice("Bounty complete! You have been rewarded with [reward]. Your reward has \
+		<b>[reward.loc == spy ? "appeared in your hands" : "been deposited below you"].</b>"))
 
 /datum/component/spy_uplink/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
