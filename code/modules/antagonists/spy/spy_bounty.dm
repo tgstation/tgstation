@@ -154,7 +154,7 @@
 
 	name = "Steal [crewmember.real_name]'s [desired_part.name]"
 	help = "Steal [desired_part] from [crewmember.real_name]. \
-		You can do accomplish this via brute force, or simply by hitting them with your uplink while they are incapacitated."
+		You can accomplish this via brute force, or by scanning them with your uplink while they are incapacitated."
 	return TRUE
 
 /datum/spy_bounty/targets_person/limb_or_organ/is_stealable(atom/movable/stealing)
