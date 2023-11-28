@@ -7,12 +7,12 @@
 	/// Timer between when all bounties are refreshed.
 	var/refresh_time = 10 MINUTES
 	/// timerID of the active refresh timer.
-	var/refresh_timer
+	var/refresh_timer // melbert todo : admin button to force refresh
 
 	/// Assoc list that dictates how much of each bounty difficulty to give out at once.
 	var/list/bounties_to_give = list(
-		SPY_DIFFICULTY_EASY = 6,
-		SPY_DIFFICULTY_MEDIUM = 4,
+		SPY_DIFFICULTY_EASY = 4,
+		SPY_DIFFICULTY_MEDIUM = 2,
 		SPY_DIFFICULTY_HARD = 2,
 	)
 

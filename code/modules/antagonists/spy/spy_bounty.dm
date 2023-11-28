@@ -41,7 +41,7 @@
 		"name" = name,
 		"help" = help,
 		"difficulty" = difficulty,
-		"reward" = reward_item.name,
+		"reward" = reward_item.name, // melbert todo : description as tooltip?
 		"claimed" = claimed,
 	)
 
@@ -58,6 +58,9 @@
 /// Selects what uplink item the bounty will reward on completion.
 /datum/spy_bounty/proc/select_reward(datum/spy_bounty_handler/handler)
 	reward_item = prob(33) ? pick(handler.possible_uplink_items) : pick_n_take(handler.possible_uplink_items)
+	// melbert todo : scale items based on difficulty to tc cost
+	// melbert todo : add some junk items for when we run out of items (for campbell)
+	// melbert todo : dupe protection?
 
 /**
  * Checks if the passed movable is a valid target for this bounty.
@@ -78,13 +81,26 @@
  * * stealing - The item that was stolen.
  * * spy - The spy that stole the item.
  */
-/datum/spy_bounty/proc/clean_up_stolen_item(atom/stealing, mob/living/spy)
+/datum/spy_bounty/proc/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
 	do_sparks(3, FALSE, stealing)
-	qdel(stealing)
+
+	if(stealing.resistance_flags & INDESTRUCTIBLE)
+		return // melbert todo : how to handle indestructible items
+
+	// Don't mess with it while it's going away
+	if(isitem(stealing))
+		var/obj/item/stealing_item = stealing
+		stealing_item.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
+	stealing.anchored = TRUE
+	// Add some pizzazz
+	animate(stealing, time = 0.5 SECONDS, transform = matrix(stealing.transform).Scale(0.01), easing = CUBIC_EASING)
+	QDEL_IN(stealing, 0.5 SECONDS)
 
 /// Steal an item
 /datum/spy_bounty/item
-	difficulty = SPY_DIFFICULTY_EASY
+	difficulty = SPY_DIFFICULTY_EASY // melbert todo : re-add objective item difficulty
+
 	/// Objective item datum that we want stolen.
 	VAR_FINAL/datum/objective_item/desired_item
 
@@ -105,14 +121,14 @@
 
 	desired_item = pick(valid_possible_items)
 	name = "Steal [desired_item]"
-	help = "Steal [desired_item]."
+	help = "Steal [desired_item]." // melbert todo : needs to give hints.
 	return TRUE
 
 /datum/spy_bounty/item/is_stealable(atom/movable/stealing)
 	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
 
 /datum/spy_bounty/machine
-	difficulty = SPY_DIFFICULTY_MEDIUM
+	difficulty = SPY_DIFFICULTY_MEDIUM // melbert todo : change based on location
 	theft_time = 10 SECONDS
 	/// What area (typepath) the desired machine is in.
 	VAR_FINAL/area/location_type
@@ -209,7 +225,7 @@
 /// Subtype for a bounty that targets a specific crew member and a specific item on them
 /datum/spy_bounty/targets_person/some_item
 	/// Typepath of the item we want from the target
-	VAR_FINAL/obj/item/desired_type
+	var/obj/item/desired_type
 	/// Weakref to the item that matches our desired type within the target at the time of bounty creation
 	VAR_FINAL/datum/weakref/target_original_desired_ref
 
@@ -227,12 +243,11 @@
 			return TRUE
 	return FALSE
 
-/datum/spy_bounty/targets_person/some_item/clean_up_stolen_item(atom/stealing, mob/living/spy)
-	do_sparks(3, FALSE, stealing)
+/datum/spy_bounty/targets_person/some_item/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
 	if(IS_WEAKREF_OF(stealing, target_original_desired_ref))
-		qdel(stealing)
-		return
+		return ..()
 
+	do_sparks(2, FALSE, stealing)
 	var/mob/living/carbon/human/stolen_from = stealing
 	var/obj/item/real_stolen_item = find_desired_thing(stealing)
 	stolen_from.Unconscious(10 SECONDS)

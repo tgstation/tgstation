@@ -709,3 +709,37 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
 
 	GLOB.round_default_lawset = /datum/ai_laws/united_nations
+
+/datum/dynamic_ruleset/roundstart/spies
+	name = "Spies"
+	antag_flag = ROLE_SPY
+	antag_datum = /datum/antagonist/spy
+	minimum_required_age = 0
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 4
+	cost = 8
+	scaling_cost = 8
+	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
+
+/datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
+	for(var/i in 1 to get_antag_cap(population) * (scaled_times + 1))
+		if(length(candidates) <= 0)
+			break
+		var/mob/picked_player = pick_n_take(candidates)
+		assigned += picked_player.mind
+		picked_player.mind.special_role = ROLE_SPY
+		picked_player.mind.restricted_roles = restricted_roles
+		GLOB.pre_setup_antags += picked_player.mind
+	return TRUE

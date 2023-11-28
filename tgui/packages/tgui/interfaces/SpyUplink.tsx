@@ -53,7 +53,7 @@ export const SpyUplink = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { bounties, time_left } = data;
   return (
-    <Window width={450} height={600} theme={'neutral'}>
+    <Window width={450} height={615} theme={'ntos_darkmode'}>
       <Window.Content>
         <Section
           fill
