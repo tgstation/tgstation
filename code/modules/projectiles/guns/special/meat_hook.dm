@@ -198,4 +198,4 @@
 	stamina = 40
 
 #undef TRAIT_HOOKED
-
+#undef IMMOBILIZATION_TIMER
