@@ -186,9 +186,13 @@
 	if((attacker.grab_state == GRAB_KILL) && attacker.zone_selected == BODY_ZONE_HEAD && defender.stat != DEAD)
 		var/obj/item/bodypart/head = defender.get_bodypart("head")
 		if(head)
-			playsound(defender, 'sound/effects/wounds/crack1.ogg', 160)
-			defender.visible_message(span_danger("[attacker] snaps the neck of [defender]!"), \
-						span_userdanger("Your neck is snapped by [attacker]!"), span_hear("You hear a sickening snap!"), null, attacker)
+			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
+			defender.visible_message(
+				span_danger("[attacker] snaps the neck of [defender]!"),
+				span_userdanger("Your neck is snapped by [attacker]!"),
+				span_hear("You hear a sickening snap!"),
+				ignored_mobs = attacker
+			)
 			to_chat(attacker, span_danger("In a swift motion, you snap the neck of [defender]!"))
 			log_combat(attacker, defender, "snapped neck")
 			defender.apply_damage(100, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND)
