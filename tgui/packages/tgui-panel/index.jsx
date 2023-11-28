@@ -22,7 +22,7 @@ import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
-import { setGlobalState, setGlobalStore } from 'tgui/backend';
+import { setGlobalStore } from 'tgui/backend';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -48,7 +48,6 @@ const store = configureStore({
 });
 
 const renderApp = createRenderer(() => {
-  setGlobalState(store.getState());
   setGlobalStore(store);
 
   const { Panel } = require('./Panel');

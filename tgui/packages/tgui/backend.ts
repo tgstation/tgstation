@@ -21,12 +21,7 @@ import { resumeRenderer, suspendRenderer } from './renderer';
 
 const logger = createLogger('backend');
 
-export let globalState;
 export let globalStore;
-
-export const setGlobalState = (state) => {
-  globalState = state;
-};
 
 export const setGlobalStore = (store) => {
   globalStore = store;
@@ -296,7 +291,7 @@ export const selectBackend = <TData>(state: any): BackendState<TData> =>
  * Includes the `act` function for performing DM actions.
  */
 export const useBackend = <TData>() => {
-  const state: BackendState<TData> = globalState.backend;
+  const state: BackendState<TData> = globalStore?.getState()?.backend;
 
   return {
     ...state,
@@ -326,8 +321,8 @@ export const useLocalState = <T>(
   key: string,
   initialState: T
 ): StateWithSetter<T> => {
-  const state = globalState.backend;
-  const sharedStates = state.shared ?? {};
+  const state = globalStore?.getState()?.backend;
+  const sharedStates = state?.shared ?? {};
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
@@ -363,8 +358,8 @@ export const useSharedState = <T>(
   key: string,
   initialState: T
 ): StateWithSetter<T> => {
-  const state = globalState.backend;
-  const sharedStates = state.shared ?? {};
+  const state = globalStore?.getState()?.backend;
+  const sharedStates = state?.shared ?? {};
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
   return [
     sharedState,
