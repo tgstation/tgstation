@@ -864,9 +864,7 @@
 /area/centcom/central_command_areas/holding)
 "uw" = (
 /mob/living/basic/bot/medbot/stationary{
-	desc = "A little medical robot. You can make out the word \";
-	sincerity\" on its chassis.";
-	 = None;
+	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
 	name = "Hijikata";
 	radio_key = null
 	},
