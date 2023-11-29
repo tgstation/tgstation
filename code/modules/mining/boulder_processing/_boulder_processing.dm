@@ -323,7 +323,6 @@
  * Checks if a custom_material is in a list of processable materials in the machine.
  */
 /obj/machinery/bouldertech/proc/check_for_processable_materials(list/boulder_mats)
-	var/contains_mats = FALSE // Check that it's something we actually care about first!
 	for(var/material as anything in boulder_mats)
 		if(is_type_in_list(material, processable_materials))
 			contains_mats = TRUE

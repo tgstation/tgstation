@@ -30,6 +30,7 @@
 	var/mineralAmt = 3
 	///Holder for the image we display when we're pinged by a mining scanner
 	var/scan_state = ""
+	///If true, this turf will not call AfterChange during change_turf calls.
 	var/defer_change = FALSE
 	/// If true you can mine the mineral turf without tools.
 	var/weak_turf = FALSE
