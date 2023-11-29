@@ -59,18 +59,19 @@
 		update_appearance(UPDATE_ICON_STATE)
 		return PROCESS_KILL
 	for(var/i in 1 to boulders_processing_max)
-		if(!pre_collect_boulder())
+		if(pre_collect_boulder())
+			continue
 			toggled_on = FALSE
 			update_appearance(UPDATE_ICON_STATE)
 			return PROCESS_KILL
-	for(var/ground_rocks in loc.contents)
-		if(istype(ground_rocks, /obj/item/boulder))
-			boulders_contained += ground_rocks
-			if(boulders_contained.len > boulders_held_max)
-				toggled_on = FALSE
-				boulders_contained = list()
-				update_appearance(UPDATE_ICON_STATE)
-				return PROCESS_KILL
+	for(var/obj/item/boulder/ground_rocks in loc.contents)
+		boulders_contained += ground_rocks
+		if(boulders_contained.len < boulders_held_max)
+			continue
+		toggled_on = FALSE
+		boulders_contained = list()
+		update_appearance(UPDATE_ICON_STATE)
+		return PROCESS_KILL
 
 /obj/machinery/bouldertech/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
