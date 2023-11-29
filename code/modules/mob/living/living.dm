@@ -52,13 +52,41 @@
 		message = FALSE
 	return ..()
 
+/**
+ * Called when this mob is receiving damage from falling
+ *
+ * * T - the turf we are falling onto
+ * * levels - the number of levels we are falling
+ */
 /mob/living/proc/ZImpactDamage(turf/T, levels)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
 		return
-	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
-					span_userdanger("You crash into [T] with a sickening noise!"))
-	adjustBruteLoss((levels * 5) ** 1.5)
-	Knockdown(levels * 50)
+
+	if(levels <= 1)
+		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
+		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
+			visible_message(
+				span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."),
+				span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."),
+			)
+			Knockdown(levels * 4 SECONDS)
+			return
+
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE))
+		visible_message(
+			span_danger("[src] makes a hard landing on [T], but lands on [p_their()] feet!"),
+			span_userdanger("You make a hard landing on [T], but land on your feet!"),
+		)
+		return
+
+	visible_message(
+		span_danger("[src] crashes into [T] with a sickening noise!"),
+		span_userdanger("You crash into [T] with a sickening noise!"),
+	)
+	var/incoming_damage = (levels * 5) ** 1.5
+	apply_damage(incoming_damage / 2, BRUTE, BODY_ZONE_L_LEG, wound_bonus = CANT_WOUND) // remove the wound bonus if you want
+	apply_damage(incoming_damage / 2, BRUTE, BODY_ZONE_R_LEG, wound_bonus = CANT_WOUND) // people to break their legs from falling
+	Knockdown(levels * 5 SECONDS)
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)

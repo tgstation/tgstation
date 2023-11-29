@@ -11,6 +11,7 @@
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(
+		TRAIT_CATLIKE_GRACE,
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_USES_SKINTONES,
 	)
