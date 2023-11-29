@@ -51,3 +51,6 @@
 #define COMSIG_MODULAR_COMPUTER_FILE_DELETING "comsig_modular_computer_file_deleting"
 /// From /obj/item/modular_computer/proc/store_file: ()
 #define COMSIG_MODULAR_COMPUTER_FILE_DELETED "comsig_modular_computer_file_deleted"
+
+///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
+#define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
