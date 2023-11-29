@@ -1116,10 +1116,10 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we've been shoved and we have some amount of stamina loss, we must resist
-	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || has_movespeed_modifier(/datum/movespeed_modifier/shove) && getStaminaLoss() >= 30)
+	//If we're in an aggressive grab or higher, we're lying down, we're vulnerable to grabs, or we're staggered and we have some amount of stamina loss, we must resist
+	if(pulledby.grab_state || body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered) && getStaminaLoss() >= 30)
 		var/altered_grab_state = pulledby.grab_state
-		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
+		if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_GRABWEAKNESS) || get_timed_status_effect_duration(/datum/status_effect/staggered)) && pulledby.grab_state < GRAB_KILL) //If prone, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE /// see defines/combat.dm, this should be baseline 60%
 		resist_chance = (resist_chance/altered_grab_state) ///Resist chance divided by the value imparted by your grab state. It isn't until you reach neckgrab that you gain a penalty to escaping a grab.
@@ -1145,7 +1145,7 @@
 	buckled.user_unbuckle_mob(src,src)
 
 /mob/living/proc/resist_fire()
-	return
+	return FALSE
 
 /mob/living/proc/resist_restraints()
 	return
@@ -1167,6 +1167,7 @@
 		if(-INFINITY to NEGATIVE_GRAVITY)
 			if(!istype(gravity_alert, /atom/movable/screen/alert/negative))
 				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
+				ADD_TRAIT(src, TRAIT_MOVE_UPSIDE_DOWN, NEGATIVE_GRAVITY_TRAIT)
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
@@ -1191,6 +1192,7 @@
 	if(istype(gravity_alert, /atom/movable/screen/alert/weightless))
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 	if(istype(gravity_alert, /atom/movable/screen/alert/negative))
+		REMOVE_TRAIT(src, TRAIT_MOVE_UPSIDE_DOWN, NEGATIVE_GRAVITY_TRAIT)
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
@@ -1439,6 +1441,7 @@
 				/mob/living/basic/morph,
 				/mob/living/basic/mouse,
 				/mob/living/basic/mushroom,
+				/mob/living/basic/parrot,
 				/mob/living/basic/pet/dog/breaddog,
 				/mob/living/basic/pet/dog/corgi,
 				/mob/living/basic/pet/dog/pug,
@@ -1449,7 +1452,6 @@
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-				/mob/living/simple_animal/parrot,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/pet/cat/cak,
 			)
@@ -1884,13 +1886,22 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
 
+	if(!.)
+		return
+
 	if(href_list[VV_HK_GIVE_SPEECH_IMPEDIMENT])
 		if(!check_rights(NONE))
 			return
 		admin_give_speech_impediment(usr)
-	if (href_list[VV_HK_ADD_MOOD])
+
+	if(href_list[VV_HK_ADD_MOOD])
+		if(!check_rights(NONE))
+			return
 		admin_add_mood_event(usr)
-	if (href_list[VV_HK_REMOVE_MOOD])
+
+	if(href_list[VV_HK_REMOVE_MOOD])
+		if(!check_rights(NONE))
+			return
 		admin_remove_mood_event(usr)
 
 	if(href_list[VV_HK_GIVE_HALLUCINATION])
@@ -1902,6 +1913,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_delusion(usr)
+
 	if(href_list[VV_HK_GIVE_GUARDIAN_SPIRIT])
 		if(!check_rights(NONE))
 			return
@@ -2601,4 +2613,4 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		qdel(old_mob)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")
+	BLACKBOX_LOG_ADMIN_VERB("Give Guardian Spirit")

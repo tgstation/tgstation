@@ -110,11 +110,10 @@
 	notify_ghosts(
 		"[user] put a reverse bear trap on [target]!",
 		source = src,
-		action = NOTIFY_ORBIT,
+		header = "Reverse bear trap armed",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		ghost_sound = 'sound/machines/beep.ogg',
 		notify_volume = 75,
-		header = "Reverse bear trap armed",
 	)
 
 /obj/item/reverse_bear_trap/proc/snap()

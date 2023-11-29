@@ -551,7 +551,7 @@
 
 /obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
 	build_path = smartfridge.base_build_path
-	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
+	if(!fridges_name_paths.Find(build_path))
 		name = "[initial(smartfridge.name)]" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
@@ -961,7 +961,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/servo = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR"

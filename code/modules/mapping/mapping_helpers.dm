@@ -153,11 +153,11 @@
 			if(1 to 9)
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
-					here.PlaceOnTop(T.type)
+					here.place_on_top(T.type)
 					qdel(airlock)
 					qdel(src)
 					return
-				here.PlaceOnTop(/turf/closed/wall)
+				here.place_on_top(/turf/closed/wall)
 				qdel(airlock)
 				qdel(src)
 				return
@@ -702,9 +702,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/trait_injector/check_validity()
 	if(!istext(trait_name))
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
-	if(!GLOB.trait_name_map)
-		GLOB.trait_name_map = generate_trait_name_map()
-	if(!GLOB.trait_name_map.Find(trait_name))
+	if(!GLOB.global_trait_name_map)
+		GLOB.global_trait_name_map = generate_global_trait_name_map()
+	if(!GLOB.global_trait_name_map.Find(trait_name))
 		stack_trace("Possibly wrong trait in [type] - [trait_name] is not a trait in the global trait list")
 	return TRUE
 

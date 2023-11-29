@@ -72,6 +72,7 @@
 	RegisterSignal(owner, COMSIG_GUARDIAN_MANIFESTED, PROC_REF(on_manifest))
 	RegisterSignal(owner, COMSIG_GUARDIAN_RECALLED, PROC_REF(on_recall))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(on_click))
+	RegisterSignal(owner, COMSIG_BASICMOB_PRE_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.unleash()
@@ -80,7 +81,12 @@
 
 /datum/status_effect/guardian_scout_mode/on_remove()
 	animate(owner, alpha = initial(owner.alpha), time = 0.5 SECONDS)
-	UnregisterSignal(owner, list(COMSIG_GUARDIAN_MANIFESTED, COMSIG_GUARDIAN_RECALLED, COMSIG_MOB_CLICKON))
+	UnregisterSignal(owner, list(
+		COMSIG_BASICMOB_PRE_ATTACK_RANGED,
+		COMSIG_GUARDIAN_MANIFESTED,
+		COMSIG_GUARDIAN_RECALLED,
+		COMSIG_MOB_CLICKON,
+	))
 	to_chat(owner, span_bolddanger("You return to your normal mode."))
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.leash_to(owner, guardian_mob.summoner)
@@ -100,6 +106,11 @@
 	SIGNAL_HANDLER
 	return COMSIG_MOB_CANCEL_CLICKON
 
+/// We can't do any ranged attacks while in scout mode.
+/datum/status_effect/guardian_scout_mode/proc/on_ranged_attack()
+	SIGNAL_HANDLER
+	owner.balloon_alert(owner, "need to be in ranged mode!")
+	return COMPONENT_CANCEL_RANGED_ATTACK
 
 /// Place an invisible trap which alerts the guardian when it is crossed
 /datum/action/cooldown/mob_cooldown/guardian_alarm_snare

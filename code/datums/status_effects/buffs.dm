@@ -173,6 +173,7 @@
 	/// Having any of these reagents in your system extends the duration
 	var/static/list/supplementary_reagents_bonus = list(
 		/datum/reagent/consumable/ethanol/protein_blend = 30 SECONDS, // protein shakes are very robust
+		/datum/reagent/inverse/oxandrolone = 25 SECONDS,
 		/datum/reagent/consumable/eggwhite = 20 SECONDS,
 		/datum/reagent/consumable/eggyolk = 15 SECONDS,
 		/datum/reagent/consumable/nutriment/protein = 15 SECONDS,
@@ -200,6 +201,9 @@
 
 	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods? yes please!
 		modifier += 3
+
+	if(new_owner.reagents.has_reagent(/datum/reagent/inverse/oxandrolone)) // MOREEEEE
+		modifier += 2
 
 	var/food_boost = 0
 	for(var/datum/reagent/workout_reagent in supplementary_reagents_bonus)
@@ -557,7 +561,7 @@
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
-	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -575,7 +579,7 @@
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
-	remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
 
 /// Gives you a brief period of anti-gravity
 /datum/status_effect/jump_jet

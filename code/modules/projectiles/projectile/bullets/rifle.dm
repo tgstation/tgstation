@@ -46,7 +46,7 @@
 	bare_wound_bonus = 80
 	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 	wound_falloff_tile = -5
-	shrapnel_type = /obj/item/ammo_casing/harpoon
+	shrapnel_type = null
 
 // Rebar (Rebar Crossbow)
 /obj/projectile/bullet/rebar
@@ -75,4 +75,3 @@
 	embedding = list(embed_chance=80, fall_chance=1, jostle_chance=3, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=2, rip_time=14)
 	embed_falloff_tile = -3
 	shrapnel_type = /obj/item/stack/rods
-
