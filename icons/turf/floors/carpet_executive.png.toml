@@ -4,14 +4,3 @@ template = "bitmask/diagonal_32x32.toml"
 [prefabs]
 255 = 5
 
-[icon_size]
-x = 32
-y = 32
-
-[output_icon_size]
-x = 32
-y = 32
-
-[cut_pos]
-x = 16
-y = 16
