@@ -571,7 +571,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 			speak("Responding.", radio_channel)
 		if("ejectpai")
 			eject_pai_remote(user)
-	return
 
 
 /mob/living/basic/bot/proc/bot_control_message(command, user)
