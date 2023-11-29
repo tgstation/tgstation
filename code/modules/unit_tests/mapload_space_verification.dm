@@ -31,7 +31,7 @@
 		if(!isspaceturf(iterated_turf) || is_type_in_typecache(turf_area, excluded_area_typecache))
 			continue // Alright, so let's assume we have intended behavior. If something yorks, we'll get a bare `/area` (maploader?) or a mapper is doing something they shouldn't be doing.
 		// We need turf_area.type for the error message because we have fifteen million ruin areas named "Unexplored Location" and it's completely unhelpful here.
-		TEST_FAIL("Space turf found in non-allowed area ([turf_area.type]) at [AREACOORD(iterated_turf)]! Please ensure that all space turfs are in an /area/space!")
+		TEST_FAIL("Space turf [iterated_turf.type] found in non-allowed area ([turf_area.type]) at [AREACOORD(iterated_turf)]! Please ensure that all space turfs are in an /area/space!")
 
 
 /// Verifies that there are ZERO space turfs on a valid planetary station. We NEVER want space turfs here, so we do not check for /area/space here since something completely undesirable is happening.

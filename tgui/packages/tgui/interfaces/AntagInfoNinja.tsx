@@ -13,8 +13,8 @@ type NinjaInfo = {
   can_change_objective: BooleanLike;
 };
 
-export const AntagInfoNinja = (props, context) => {
-  const { data } = useBackend<NinjaInfo>(context);
+export const AntagInfoNinja = (props) => {
+  const { data } = useBackend<NinjaInfo>();
   const { objectives, can_change_objective } = data;
   return (
     <Window width={550} height={450} theme="hackerman">

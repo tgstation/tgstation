@@ -16,7 +16,7 @@ type Transactions = {
 };
 let name_to_token, money_to_send, token;
 
-export const NtosPay = (props, context) => {
+export const NtosPay = (props) => {
   return (
     <NtosWindow width={495} height={655}>
       <NtosWindow.Content>
@@ -26,8 +26,8 @@ export const NtosPay = (props, context) => {
   );
 };
 
-export const NtosPayContent = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const NtosPayContent = (props) => {
+  const { data } = useBackend<Data>();
   const { name } = data;
 
   if (!name) {
@@ -55,8 +55,8 @@ export const NtosPayContent = (props, context) => {
 };
 
 /** Displays the user's name and balance. */
-const Introduction = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const Introduction = (props) => {
+  const { data } = useBackend<Data>();
   const { name, owner_token, money } = data;
   return (
     <Section textAlign="center">
@@ -72,8 +72,8 @@ const Introduction = (props, context) => {
 };
 
 /** Displays the transfer section. */
-const TransferSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TransferSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { money, wanted_token } = data;
 
   return (
@@ -139,8 +139,8 @@ const TransferSection = (props, context) => {
 };
 
 /** Displays the transaction history. */
-const TransactionHistory = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TransactionHistory = (props) => {
+  const { data } = useBackend<Data>();
   const { transaction_list = [] } = data;
 
   return (
@@ -166,7 +166,7 @@ const TransactionHistory = (props, context) => {
 };
 
 /** Renders a set of sticky headers */
-const TableHeaders = (props, context) => {
+const TableHeaders = (props) => {
   return (
     <Table>
       <Table.Row>

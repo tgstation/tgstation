@@ -214,14 +214,11 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
   );
 };
 
-const SpeciesPageInner = (
-  props: {
-    handleClose: () => void;
-    species: ServerData['species'];
-  },
-  context
-) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+const SpeciesPageInner = (props: {
+  handleClose: () => void;
+  species: ServerData['species'];
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const setSpecies = createSetPreference(act, 'species');
 
   let species: [string, Species][] = Object.entries(props.species).map(

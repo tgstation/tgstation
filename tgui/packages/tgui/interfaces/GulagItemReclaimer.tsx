@@ -8,8 +8,8 @@ type Data = {
   mobs: { mob: string; name: string }[];
 };
 
-export const GulagItemReclaimer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const GulagItemReclaimer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { can_reclaim, mobs = [] } = data;
 
   return (

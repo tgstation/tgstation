@@ -9,8 +9,8 @@ type MarkdownViewerData = {
   author: string;
 };
 
-export const MarkdownViewer = (_: any, context: any) => {
-  const { data } = useBackend<MarkdownViewerData>(context);
+export const MarkdownViewer = (_: any) => {
+  const { data } = useBackend<MarkdownViewerData>();
   return (
     <Window theme="paper" title={data.title}>
       <Window.Content scrollable backgroundColor={'#FFFFFF'}>

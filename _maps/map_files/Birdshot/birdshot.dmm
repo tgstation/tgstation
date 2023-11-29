@@ -36376,7 +36376,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/white/small,
 /area/station/command/heads_quarters/cmo)
 "mVt" = (

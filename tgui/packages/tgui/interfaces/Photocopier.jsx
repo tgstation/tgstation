@@ -3,8 +3,8 @@ import { useBackend } from '../backend';
 import { Box, Button, Dropdown, Flex, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const Photocopier = (props, context) => {
-  const { data } = useBackend(context);
+export const Photocopier = (props) => {
+  const { data } = useBackend();
   const {
     isAI,
     has_toner,
@@ -52,8 +52,8 @@ export const Photocopier = (props, context) => {
   );
 };
 
-const Toner = (props, context) => {
-  const { act, data } = useBackend(context);
+const Toner = (props) => {
+  const { act, data } = useBackend();
   const { max_toner, current_toner } = data;
 
   const average_toner = max_toner * 0.66;
@@ -81,8 +81,8 @@ const Toner = (props, context) => {
   );
 };
 
-const Options = (props, context) => {
-  const { act, data } = useBackend(context);
+const Options = (props) => {
+  const { act, data } = useBackend();
   const { color_mode, is_photo, num_copies } = data;
 
   return (
@@ -160,8 +160,8 @@ const Options = (props, context) => {
   );
 };
 
-const Blanks = (props, context) => {
-  const { act, data } = useBackend(context);
+const Blanks = (props) => {
+  const { act, data } = useBackend();
   const { blanks, categories, category } = data;
 
   const sortedBlanks = sortBy((blank) => blank.name)(blanks || []);
@@ -201,8 +201,8 @@ const Blanks = (props, context) => {
   );
 };
 
-const AIOptions = (props, context) => {
-  const { act, data } = useBackend(context);
+const AIOptions = (props) => {
+  const { act, data } = useBackend();
   const { can_AI_print } = data;
 
   return (
