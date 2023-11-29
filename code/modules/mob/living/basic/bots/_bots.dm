@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/examine(mob/user)
 	. = ..()
 	if(health < maxHealth)
-		if(health > maxHealth/3)
+		if(health > (maxHealth * 0.3))
 			. += "[src]'s parts look loose."
 		else
 			. += "[src]'s parts look very loose!"
@@ -321,13 +321,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	if(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
 		. += span_notice("Its control panel is [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "unlocked" : "locked"].")
-		var/is_sillycone = issilicon(user)
-		if(!(bot_access_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
-			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "" : "un"]lock its control panel.")
-	if(paicard)
-		. += span_notice("It has a pAI device installed.")
-		if(!(bot_access_flags & BOT_MAINTS_PANEL_OPEN))
-			. += span_info("You can use a <b>hemostat</b> to remove it.")
+		if(!(bot_access_flags & BOT_COVER_EMAGGED) && (issilicon(user) || user.Adjacent(src)))
+			. += span_info("Alt-click [issilicon(user) ? "" : "or use your ID on "]it to [bot_access_flags & BOT_CONTROL_PANEL_OPEN ? "" : "un"]lock its control panel.")
+	if(isnull(paicard))
+		return
+	. += span_notice("It has a pAI device installed.")
+	if(!(bot_access_flags & BOT_MAINTS_PANEL_OPEN))
+		. += span_info("You can use a <b>hemostat</b> to remove it.")
 
 /mob/living/basic/bot/updatehealth()
 	. = ..()
