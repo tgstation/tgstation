@@ -60,13 +60,14 @@
 
 // Unique
 
-/datum/reagent/impurity/eigenswap
+/datum/reagent/inverse/eigenswap
 	name = "Eigenswap"
 	description = "This reagent is known to swap the handedness of a patient."
 	ph = 3.3
 	chemical_flags = REAGENT_DONOTSPLIT
+	tox_damage = 0
 
-/datum/reagent/impurity/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
+/datum/reagent/inverse/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
 	. = ..()
 	if(!prob(creation_purity * 100))
 		return
