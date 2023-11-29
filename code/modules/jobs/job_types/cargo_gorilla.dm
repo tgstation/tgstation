@@ -31,9 +31,17 @@
 
 /datum/job/cargo_gorilla/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
+	// Gorilla with a wage, what's he buyin?
+	var/datum/bank_account/bank_account = new(spawned.real_name, src)
+	bank_account.payday(STARTING_PAYCHECKS, TRUE)
+	bank_account.replaceable = FALSE
+	spawned.add_mob_memory(/datum/memory/key/account, remembered_id = bank_account.account_id)
+
 	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(spawned.loc)
 	gorilla_id.registered_name = spawned.name
 	gorilla_id.update_label()
+	gorilla_id.registered_account = bank_account
+	bank_account.bank_cards += gorilla_id
 	spawned.put_in_hands(gorilla_id, del_on_fail = TRUE)
 
 	to_chat(spawned, span_boldnotice("You are Cargorilla, a pacifist friend of the station and carrier of freight."))
