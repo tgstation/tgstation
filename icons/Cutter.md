@@ -51,7 +51,7 @@ Modify the png, then recompile the game/run build.bat, it will automatically gen
 
 Make a png file called `{dmi_name}.png`. It should be 5 times as wide as the dmi's width, and as tall as the dmi's height
 
-Create a config file called `{dmi_name}.png.toml`, set its template to one you want to use.
+Create a config file called `{dmi_name}.png.toml`, set its [template](../cutter_templates/bitmask) to one you want to use.
 
 If you want to make something with nonstandard bounds you'll need to set the relevant variables, you can read the examples found [here](https://github.com/actioninja/hypnagogic/tree/master/examples) to understand different mode's configs.
 

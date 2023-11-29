@@ -1,9 +1,9 @@
 template = "bitmask/standard_32x32"
 
-mode = "BitmaskSlice"
-
+# We're diagonal
 smooth_diagonally = true
 
+# And because of that we need a state for all directions
 [positions]
 convex = 0
 vertical = 1
