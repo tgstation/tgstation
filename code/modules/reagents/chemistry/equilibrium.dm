@@ -105,14 +105,14 @@
 * otherwise, generally, don't call this directed except internally
 */
 /datum/equilibrium/proc/check_reagent_properties()
-	//Have we exploded from on_reaction?
-	if(!holder.my_atom || holder.reagent_list.len == 0)
-		return FALSE
 	if(!holder)
 		stack_trace("an equilibrium is missing it's holder.")
 		return FALSE
 	if(!reaction)
 		stack_trace("an equilibrium is missing it's reaction.")
+		return FALSE
+	//Have we exploded from on_reaction or did we run out of reagents?
+	if(QDELETED(holder.my_atom) || holder.reagent_list.len == 0)
 		return FALSE
 
 	//set up catalyst checks
@@ -130,7 +130,7 @@
 			if(reagent.volume >= catalyst_agent.min_volume)
 				catalyst_agent.consider_catalyst(src)
 
-	if(!(total_matching_catalysts == reaction.required_catalysts.len))
+	if(total_matching_catalysts != reaction.required_catalysts.len)
 		return FALSE
 
 	//All good!
@@ -151,53 +151,27 @@
 	multiplier = INFINITY
 	for(var/reagent in reaction.required_reagents)
 		multiplier = min(multiplier, round((holder.get_reagent_amount(reagent) / reaction.required_reagents[reagent]), CHEMICAL_QUANTISATION_LEVEL))
+	if(multiplier == 0 || multiplier == INFINITY) //0 means missing or very small reagents present, INFINITY means no required reagents
+		return FALSE
 
-	if(!length(reaction.results)) //Incase of no reagent product
+	//Incase of no reagent product
+	if(!length(reaction.results))
 		product_ratio = 1
 		step_target_vol = INFINITY
 		for(var/reagent in reaction.required_reagents)
 			step_target_vol = min(step_target_vol, multiplier * reaction.required_reagents[reagent])
-		if(step_target_vol == 0 || multiplier == 0)
-			return FALSE
-		//Sanity Check
-		if(step_target_vol == INFINITY || multiplier == INFINITY) //I don't see how this can happen, but I'm not bold enough to let infinities roll around for free
-			to_delete = TRUE
-			CRASH("Tried to calculate target vol for [reaction.type] with no products, but could not find required reagents for the reaction. If it got here, something is really broken with the recipe.")
 		return TRUE
 
+	//If we have reagent products
 	product_ratio = 0
 	step_target_vol = 0
-	var/true_reacted_vol //Because volumes can be lost mid reactions
+	reacted_vol = 0 //Because volumes can be lost mid reactions
 	for(var/product in reaction.results)
-		step_target_vol += (reaction.results[product]*multiplier)
+		step_target_vol += (reaction.results[product] * multiplier)
 		product_ratio += reaction.results[product]
-		true_reacted_vol += holder.get_reagent_amount(product)
-	if(step_target_vol == 0 || multiplier == INFINITY)
-		return FALSE
-	target_vol = step_target_vol + true_reacted_vol
-	reacted_vol = true_reacted_vol
+		reacted_vol += holder.get_reagent_amount(product)
+	target_vol = reacted_vol + step_target_vol
 	return TRUE
-
-/*
-* Deals with lag - allows a reaction to speed up to 3x from seconds_per_tick
-* "Charged" time (time_deficit) discharges by incrementing reactions by doubling them
-* If seconds_per_tick is greater than 1.5, then we save the extra time for the next ticks
-*
-* Arguments:
-* * seconds_per_tick - the time between the last proc in world.time
-*/
-/datum/equilibrium/proc/deal_with_time(seconds_per_tick)
-	if(seconds_per_tick > 1)
-		time_deficit += seconds_per_tick - 1
-		seconds_per_tick = 1 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
-	else if (time_deficit)
-		if(time_deficit < 0.25)
-			seconds_per_tick += time_deficit
-			time_deficit = 0
-		else
-			seconds_per_tick += 0.25
-			time_deficit -= 0.25
-	return seconds_per_tick
 
 /*
 * Main method of checking for explosive - or failed states
@@ -226,10 +200,31 @@
 			SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[reaction.type] overly impure reaction steps")
 			reaction.overly_impure(holder, src, step_volume_added)
 
-	//did we explode?
-	if(!holder.my_atom || holder.reagent_list.len == 0)
+	//did we explode or run out of reagents?
+	if(QDELETED(holder.my_atom) || holder.reagent_list.len == 0)
 		return FALSE
 	return TRUE
+
+/*
+* Deals with lag - allows a reaction to speed up to 3x from seconds_per_tick
+* "Charged" time (time_deficit) discharges by incrementing reactions by doubling them
+* If seconds_per_tick is greater than 1.5, then we save the extra time for the next ticks
+*
+* Arguments:
+* * seconds_per_tick - the time between the last proc in world.time
+*/
+/datum/equilibrium/proc/deal_with_time(seconds_per_tick)
+	if(seconds_per_tick > 1)
+		time_deficit += seconds_per_tick - 1
+		seconds_per_tick = 1 //Lets make sure reactions aren't super speedy and blow people up from a big lag spike
+	else if (time_deficit)
+		if(time_deficit < 0.25)
+			seconds_per_tick += time_deficit
+			time_deficit = 0
+		else
+			seconds_per_tick += 0.25
+			time_deficit -= 0.25
+	return seconds_per_tick
 
 /*
 * Main reaction processor - Increments the reaction by a timestep
@@ -319,16 +314,15 @@
 	purity *= purity_modifier
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/delta_chem_factor = (reaction.rate_up_lim*delta_t)*seconds_per_tick//add/remove factor
+	var/delta_chem_factor = (reaction.rate_up_lim * delta_t) * seconds_per_tick//add/remove factor
 	var/total_step_added = 0
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
-	else if (delta_chem_factor < CHEMICAL_VOLUME_ROUNDING)
+	else if(delta_chem_factor < CHEMICAL_VOLUME_ROUNDING)
 		delta_chem_factor = CHEMICAL_VOLUME_ROUNDING
 	//Normalise to multiproducts
 	delta_chem_factor /= product_ratio
-	delta_chem_factor = round(delta_chem_factor, CHEMICAL_VOLUME_ROUNDING) // Might not be needed - left here incase testmerge shows that it does. Remove before full commit.
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
