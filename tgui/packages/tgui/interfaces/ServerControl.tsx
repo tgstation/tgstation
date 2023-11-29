@@ -31,8 +31,8 @@ type LogData = {
   node_research_location: string;
 };
 
-export const ServerControl = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ServerControl = (props) => {
+  const { act, data } = useBackend<Data>();
   const { server_connected, servers, consoles, logs } = data;
   if (!server_connected) {
     return (

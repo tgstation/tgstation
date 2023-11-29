@@ -36,7 +36,7 @@ export class DisplayComponent extends Component {
     return false;
   }
 
-  render(props, context) {
+  render(props) {
     const { component, fixedSize, ...rest } = props;
     return (
       <Box {...rest}>

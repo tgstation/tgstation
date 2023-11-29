@@ -46,8 +46,8 @@ const PuzzgridButton: SFC<{
   );
 };
 
-export const Puzzgrid = (props, context) => {
-  const { act, data } = useBackend<PuzzgridData>(context);
+export const Puzzgrid = (props) => {
+  const { act, data } = useBackend<PuzzgridData>();
 
   const answersLeft = data.answers.filter(
     (answer) =>
