@@ -27,8 +27,6 @@
 
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
-	///If set to true, we can reskin this item as much as we want.
-	var/infinite_reskin = FALSE
 
 	// Access levels, used in modules\jobs\access.dm
 	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
@@ -282,12 +280,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		. += span_notice(desc_controls)
 	if(obj_flags & UNIQUE_RENAME)
 		. += span_notice("Use a pen on it to rename it or change its description.")
-	if(unique_reskin && (!current_skin || infinite_reskin))
+	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)))
 		. += span_notice("Alt-click it to reskin it.")
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
+	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /**
@@ -325,7 +323,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
-	if(!infinite_reskin && current_skin)
+	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
 		return FALSE
 	if(!istype(user))
 		return FALSE
