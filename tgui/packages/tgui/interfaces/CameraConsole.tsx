@@ -70,7 +70,7 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
   ])(cameras);
 };
 
-export const CameraConsole = (props, context) => {
+export const CameraConsole = (props) => {
   return (
     <Window width={850} height={708}>
       <Window.Content>
@@ -80,7 +80,7 @@ export const CameraConsole = (props, context) => {
   );
 };
 
-export const CameraContent = (props, context) => {
+export const CameraContent = (props) => {
   return (
     <Stack fill>
       <Stack.Item grow>
@@ -93,9 +93,9 @@ export const CameraContent = (props, context) => {
   );
 };
 
-const CameraSelector = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+const CameraSelector = (props) => {
+  const { act, data } = useBackend<Data>();
+  const [searchText, setSearchText] = useLocalState('searchText', '');
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
 
@@ -141,10 +141,10 @@ const CameraSelector = (props, context) => {
   );
 };
 
-const CameraControls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CameraControls = (props) => {
+  const { act, data } = useBackend<Data>();
   const { activeCamera, can_spy, mapRef } = data;
-  const [searchText] = useLocalState(context, 'searchText', '');
+  const [searchText] = useLocalState('searchText', '');
 
   const cameras = selectCameras(data.cameras, searchText);
 

@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Box, Button, Dropdown, Flex, Icon, LabeledList, Modal, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ShuttleConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ShuttleConsole = (props) => {
+  const { act, data } = useBackend();
   const { type = 'shuttle', blind_drop } = props;
   const { authorization_required } = data;
   return (
@@ -61,8 +61,8 @@ const STATUS_COLOR_KEYS = {
   'Locked': 'bad',
 };
 
-export const ShuttleConsoleContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ShuttleConsoleContent = (props) => {
+  const { act, data } = useBackend();
   const { type, blind_drop } = props;
   const {
     status,

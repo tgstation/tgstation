@@ -2,8 +2,8 @@ import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Dimmer, Icon, LabeledList, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
-export const Limbgrower = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Limbgrower = (props) => {
+  const { act, data } = useBackend();
   const {
     reagents = [],
     total_reagents,
@@ -11,11 +11,7 @@ export const Limbgrower = (props, context) => {
     categories = [],
     busy,
   } = data;
-  const [tab, setTab] = useSharedState(
-    context,
-    'category',
-    categories[0]?.name
-  );
+  const [tab, setTab] = useSharedState('category', categories[0]?.name);
   const designList =
     categories.find((category) => category.name === tab)?.designs || [];
 

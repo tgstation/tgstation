@@ -289,7 +289,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Hf" = (
-/mob/living/simple_animal/pet/cat/kitten,
+/mob/living/basic/pet/cat/kitten,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "IH" = (

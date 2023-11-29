@@ -3,9 +3,9 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, NoticeBox, Section, Stack, Input } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosPortraitPrinter = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
+export const NtosPortraitPrinter = (props) => {
+  const { act, data } = useBackend();
+  const [listIndex, setListIndex] = useLocalState('listIndex', 0);
   const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex]['title'];

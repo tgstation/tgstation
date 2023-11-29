@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, Section, Table, BlockQuote, ProgressBar, AnimatedNumber } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosSkillTracker = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosSkillTracker = (props) => {
+  const { act, data } = useBackend();
   const { skills = {} } = data;
   return (
     <NtosWindow width={500} height={600}>

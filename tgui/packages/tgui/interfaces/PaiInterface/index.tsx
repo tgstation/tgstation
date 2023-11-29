@@ -7,8 +7,8 @@ import { DirectiveDisplay } from './Directives';
 import { InstalledDisplay } from './Installed';
 import { SystemDisplay } from './System';
 
-export const PaiInterface = (props, context) => {
-  const [tab] = useLocalState(context, 'tab', PAI_TAB.System);
+export const PaiInterface = (props) => {
+  const [tab] = useLocalState('tab', PAI_TAB.System);
 
   return (
     <Window title="pAI Software Interface v2.5" width={380} height={480}>
@@ -33,8 +33,8 @@ export const PaiInterface = (props, context) => {
  * Tabs at bottom of screen. YES THIS IS INTENTIONAL. It's a phone screen
  * and the buttons are on the bottom. Android!
  */
-const TabDisplay = (props, context) => {
-  const [tab, setTab] = useLocalState(context, 'tab', PAI_TAB.System);
+const TabDisplay = (props) => {
+  const [tab, setTab] = useLocalState('tab', PAI_TAB.System);
 
   return (
     <Tabs fluid>
