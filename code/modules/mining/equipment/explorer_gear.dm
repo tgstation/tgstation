@@ -85,9 +85,9 @@
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
-	adjustmask(user)
+	try_adjustmask(user)
 
-/obj/item/clothing/mask/gas/explorer/adjustmask(mob/user)
+/obj/item/clothing/mask/gas/explorer/do_adjustmask(mob/user)
 	. = ..()
 	// adjusted = out of the way = smaller = can fit in boxes
 	w_class = mask_adjusted ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL
@@ -107,7 +107,7 @@
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
-	adjustmask()
+	try_adjustmask()
 
 /obj/item/clothing/suit/hooded/cloak
 	icon = 'icons/obj/clothing/suits/armor.dmi'

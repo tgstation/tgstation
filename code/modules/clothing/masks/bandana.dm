@@ -34,7 +34,7 @@
 	if(slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
-	adjustmask(user)
+	try_adjustmask(user)
 
 /obj/item/clothing/mask/bandana/do_adjustmask(mob/living/user)
 	. = ..()

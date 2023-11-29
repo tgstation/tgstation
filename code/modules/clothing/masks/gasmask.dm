@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	cig?.equipped(equipee, slot)
 	return ..()
 
-/obj/item/clothing/mask/gas/adjustmask(mob/living/carbon/user)
+/obj/item/clothing/mask/gas/do_adjustmask(mob/living/carbon/user)
 	if(isnull(cig))
 		return ..()
 	balloon_alert(user, "there's a cig in the way!")

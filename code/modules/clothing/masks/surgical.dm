@@ -15,4 +15,4 @@
 	bio = 100
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
-	adjustmask(user)
+	try_adjustmask(user)

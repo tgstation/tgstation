@@ -326,7 +326,7 @@
 	if(isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
 		// Adjust dishevelled breathing mask back onto face.
 		if (wear_mask.mask_adjusted)
-			wear_mask.adjustmask(src)
+			wear_mask.try_adjustmask(src)
 		return toggle_open_internals(tank, is_external)
 	// Use helmet in absence of tube or valid mask.
 	if(can_breathe_helmet())
