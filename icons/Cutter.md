@@ -12,11 +12,11 @@ The cutter has a bunch of different modes, different ways to operate on images. 
 
 The .toml file will knoe the cutter mode to use, alongside any config settings. Smoothing configs can use templates instead of copying out a bunch of information, templates are stored in the cutter_templates folder.
 
-The toml file will be named like this. {name}.{input_extension}.toml. So if I have a config mode that uses pngs as input (almost all of them) it'll look like {name}.png.toml
+The toml file will be named like this. `{name}.{input_extension}.toml`. So if I have a config mode that uses pngs as input (almost all of them) it'll look like `{name}.png.toml`
 
-It'll then use the {name}.png file to make {name}.dmi (or whatever the cutter mode outputs)
+It'll then use the `{name}.png` file to make `{name}.dmi` (or whatever the cutter mode outputs)
 
-You should NEVER modify the cutter's output, it'll be erased. only want to modify the input. 
+You should NEVER modify the cutter's output, it'll be erased. You only want to modify the inputs (configs, pngs, etc). 
 
 As I mentioned our cutter has several different modes that do different things with different inputs.
 
@@ -27,8 +27,7 @@ Most cutter stuff in our repo uses the BitmaskSlice mode, you can find info abou
 We use bitmask smoothing to make things in the world merge with each other, "smoothing" them together.
 
 This is done by checking around these objects for things that we want to smooth into, and then encoding that as a set of directions.
-
-We need icon states for every possible combination of smoothing directions, but it would be impossible to make those manually.
+Now, we need icon states for every possible combination of smoothing directions, but it would be impossible to make those manually.
 
 So instead we take a base set of directions, typically no connections, north/south, east/west, north/south/east/west, and all connections, and then slice them up and stitch them together.
 
@@ -46,9 +45,9 @@ Modify the png, then recompile the game/run build.bat, it will automatically gen
 
 ### How do I make a smoothed icon?
 
-Make a png file called {dmi_name}.png. It should be 5 times as wide as the dmi's width, and as tall as the dmi's height
+Make a png file called `{dmi_name}.png`. It should be 5 times as wide as the dmi's width, and as tall as the dmi's height
 
-Create a config file called {dmi_name}.png.toml, set its template to one you want to use.
+Create a config file called `{dmi_name}.png.toml`, set its template to one you want to use.
 
 If you want to make something with nonstandard bounds you'll need to set the relevant variables, you can read the examples found [here](https://github.com/actioninja/hypnagogic/tree/master/examples) to understand different mode's configs.
 
@@ -68,4 +67,4 @@ If you want to make the smoothed icon animated, add another row of states below 
 >
 >[<img alt="Grass Template (50x50)" src="turf/floors/lava.png" width="320px"/>](turf/floors/lava.png)
 
-Once you're done, just run build.bat or recompile, and it'll be generated.
+Once you're done, just run build.bat or recompile, and it'll generate your cut dmi files for you.
