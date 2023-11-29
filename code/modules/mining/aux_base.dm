@@ -256,7 +256,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
-	icon_state = "gangtool-purple"
+	icon = 'icons/obj/remote.dmi'
+	icon_state = "landing_designator"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'

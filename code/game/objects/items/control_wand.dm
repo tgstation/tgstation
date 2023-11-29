@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	icon = 'icons/obj/devices/remote.dmi'
 	name = "control wand"
-	desc = "Remotely controls airlocks."
+	desc = "A remote for controlling a set of airlocks."
 	w_class = WEIGHT_CLASS_TINY
 	var/mode = WAND_OPEN
 	var/region_access = REGION_GENERAL
@@ -85,44 +85,45 @@
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
-	desc = "This control wand can access any door on the station."
-	icon_state = "gangtool-yellow"
+	desc = "A remote for controlling any airlock on the station."
+	icon_state = "omni_door"
 	region_access = REGION_ALL_STATION
 
 /obj/item/door_remote/captain
 	name = "command door remote"
-	icon_state = "gangtool-yellow"
+	desc = "A remote for controlling a set of airlocks. This remote has additional AI Upload access."
+	icon_state = "command_door"
 	region_access = REGION_COMMAND
 
 /obj/item/door_remote/chief_engineer
 	name = "engineering door remote"
-	icon_state = "gangtool-orange"
+	icon_state = "engineering_door"
 	region_access = REGION_ENGINEERING
 
 /obj/item/door_remote/research_director
 	name = "research door remote"
-	icon_state = "gangtool-purple"
+	icon_state = "research_door"
 	region_access = REGION_RESEARCH
 
 /obj/item/door_remote/head_of_security
 	name = "security door remote"
-	icon_state = "gangtool-red"
+	icon_state = "security_door"
 	region_access = REGION_SECURITY
 
 /obj/item/door_remote/quartermaster
 	name = "supply door remote"
-	desc = "Remotely controls airlocks. This remote has additional Vault access."
-	icon_state = "gangtool-green"
+	desc = "A remote for controlling a set of airlocks. This remote has additional Vault access."
+	icon_state = "supply_door"
 	region_access = REGION_SUPPLY
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
-	icon_state = "gangtool-blue"
+	icon_state = "medical_door"
 	region_access = REGION_MEDBAY
 
 /obj/item/door_remote/civilian
 	name = "civilian door remote"
-	icon_state = "gangtool-white"
+	icon_state = "public_door"
 	region_access = REGION_GENERAL
 
 #undef WAND_OPEN

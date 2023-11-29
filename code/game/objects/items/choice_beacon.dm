@@ -68,6 +68,35 @@
 		"spawn" = choice_path,
 	))
 
+/obj/item/choice_beacon/music
+	name = "instrument delivery beacon"
+	desc = "Summon your tool of art."
+	icon_state = "music_delivery"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/choice_beacon/music/generate_display_names()
+	var/static/list/instruments
+	if(!instruments)
+		instruments = list()
+		var/list/possible_instruments = list(
+			/obj/item/instrument/violin,
+			/obj/item/instrument/piano_synth,
+			/obj/item/instrument/banjo,
+			/obj/item/instrument/guitar,
+			/obj/item/instrument/eguitar,
+			/obj/item/instrument/glockenspiel,
+			/obj/item/instrument/accordion,
+			/obj/item/instrument/trumpet,
+			/obj/item/instrument/saxophone,
+			/obj/item/instrument/trombone,
+			/obj/item/instrument/recorder,
+			/obj/item/instrument/harmonica,
+			/obj/item/instrument/piano_synth/headphones,
+		)
+		for(var/obj/item/instrument/instrument as anything in possible_instruments)
+			instruments[initial(instrument.name)] = instrument
+	return instruments
+
 /obj/item/choice_beacon/ingredient
 	name = "ingredient delivery beacon"
 	desc = "Summon a box of ingredients to help you get started cooking."
@@ -103,9 +132,10 @@
 /obj/item/choice_beacon/augments
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"
+	icon_state = "self_delivery"
 	uses = 3
 	company_source = "S.E.L.F."
-	company_message = span_bold("Item request received. Your package has been teleported, use the autosurgeon supplied to apply the upgrade.")
+	company_message = span_bold("Request status: Recieved. Package status: Delivered. Notes: To assure optimal value, use supplied Interdyne-brand autosurgeons to change implantment status.")
 
 /obj/item/choice_beacon/augments/generate_display_names()
 	var/static/list/augment_list
