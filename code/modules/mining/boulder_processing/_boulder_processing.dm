@@ -67,7 +67,7 @@
 		icon_state ="[initial(icon_state)]-off"
 
 /obj/machinery/bouldertech/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
 		update_appearance(UPDATE_ICON_STATE)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -92,7 +92,7 @@
 		if(!accept_boulder(my_boulder))
 			balloon_alert_to_viewers("full!")
 			return
-		balloon_alert_to_viewers("accepted!")
+		balloon_alert_to_viewers("accepted")
 		START_PROCESSING(SSmachines, src)
 		return TRUE
 	if(istype(attacking_item, /obj/item/card/id))
@@ -136,7 +136,7 @@
 	. = ..()
 	if(holds_minerals)
 		qdel(silo_materials)
-	if(contents.len)
+	if(length(contents))
 		for(var/obj/item/boulder/boulder in contents)
 			remove_boulder(boulder)
 
@@ -146,7 +146,7 @@
 	var/stop_processing_check = FALSE
 	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
 	for(var/obj/item/potential_boulder as anything in boulders_contained)
-		if(!potential_boulder || QDELETED(potential_boulder))
+		if(QDELETED(potential_boulder))
 			boulders_contained -= potential_boulder
 			break
 		if(boulders_concurrent <= 0)
@@ -167,7 +167,7 @@
 		boulder.durability-- //One less durability to the processed boulder.
 		if(COOLDOWN_FINISHED(src, sound_cooldown))
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-		playsound(loc, usage_sound, 40, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
+			playsound(loc, usage_sound, 40, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
 		stop_processing_check = TRUE
 		if(boulder.durability <= 0)
 			breakdown_boulder(boulder) //Crack that bouwlder open!
@@ -216,7 +216,8 @@
 	var/tripped = FALSE
 	//If a material is in the boulder's custom_materials, but not in the processable_materials list, we add it to the processable_ores list to add back to a leftover boulder.
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
-		if(is_type_in_list(possible_mat, processable_materials))
+		if(!is_type_in_list(possible_mat, processable_materials))
+			continue
 			var/quantity = chosen_boulder.custom_materials[possible_mat]
 			points_held = round(points_held + (quantity * possible_mat.points_per_unit)) // put point total here into machine
 			processable_ores += possible_mat
@@ -291,15 +292,15 @@
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
 	specific_boulder.reset_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
-	if(drop_turf && isturf(drop_turf))
+	if(isturf(drop_turf))
 		specific_boulder.forceMove(drop_turf)
 	else
 		specific_boulder.forceMove(drop_location())
 	if(!update_boulder_count())
-		STOP_PROCESSING(SSmachines, src)
-		balloon_alert_to_viewers("clear!")
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
 		return TRUE
+	STOP_PROCESSING(SSmachines, src)
+	balloon_alert_to_viewers("clear!")
+	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 	return TRUE
 
 /obj/machinery/bouldertech/proc/update_boulder_count()
@@ -326,9 +327,8 @@
 	var/contains_mats = FALSE // Check that it's something we actually care about first!
 	for(var/material as anything in boulder_mats)
 		if(is_type_in_list(material, processable_materials))
-			contains_mats = TRUE
-			break
-	return contains_mats
+			return TRUE
+	return FALSE
 
 ///Beacon to launch a new mining setup when activated. For testing and speed!
 /obj/item/boulder_beacon

@@ -92,7 +92,7 @@
 			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
 		else
 			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
-		scanner.balloon_alert_to_viewers("ore vent nearby!")
+		scanner.balloon_alert_to_viewers("ore vent nearby")
 		scanner.spasm_animation(1.5 SECONDS)
 
 /obj/effect/temp_visual/mining_overlay
