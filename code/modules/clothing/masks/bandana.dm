@@ -5,7 +5,6 @@
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_cover = MASKCOVERSMOUTH
 	slot_flags = ITEM_SLOT_MASK
-	adjusted_flags = ITEM_SLOT_HEAD
 	species_exception = list(/datum/species/golem)
 	dying_key = DYE_REGISTRY_BANDANA
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -37,10 +36,11 @@
 		return
 	adjustmask(user)
 
-/obj/item/clothing/mask/bandana/adjustmask(mob/living/user)
+/obj/item/clothing/mask/bandana/do_adjustmask(mob/living/user)
 	. = ..()
 	if(mask_adjusted)
 		undyeable = TRUE
+		slot_flags = ITEM_SLOT_HEAD
 	else
 		inhand_icon_state = initial(inhand_icon_state)
 		worn_icon_state = initial(worn_icon_state)

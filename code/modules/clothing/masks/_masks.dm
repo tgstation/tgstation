@@ -9,7 +9,6 @@
 	equip_delay_other = 40
 	var/modifies_speech = FALSE
 	var/mask_adjusted = FALSE
-	var/adjusted_flags = null
 	///Did we install a filtering cloth?
 	var/has_filter = FALSE
 	/// If defined, what voice should we override with if TTS is active?
@@ -67,10 +66,8 @@
 		var/mob/M = loc
 		M.update_worn_mask()
 
-//Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
-/obj/item/clothing/mask/proc/adjustmask(mob/living/carbon/user)
-	if(user?.incapacitated())
-		return
+/// Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
+/obj/item/clothing/mask/proc/do_adjustmask(mob/living/carbon/user)
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
 		icon_state = initial(icon_state)
@@ -85,8 +82,14 @@
 		clothing_flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
 		flags_cover &= ~visor_flags_cover
-		if(adjusted_flags)
-			slot_flags = adjusted_flags
+
+//// Verifies that that user can adjust the mask, and updates the mob afterwards
+/obj/item/clothing/mask/proc/try_adjustmask(mob/living/carbon/user)
+	if(user?.incapacitated())
+		return
+
+	do_adjustmask(user)
+
 	if(!istype(user))
 		return
 	// Update the mob if it's wearing the mask.
