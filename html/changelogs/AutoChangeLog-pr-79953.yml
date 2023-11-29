@@ -1,4 +1,0 @@
-author: "Iajret"
-delete-after: True
-changes:
-  - bugfix: "You can now destructively analyze syndicate and abductor items. It works this time, I promise!"

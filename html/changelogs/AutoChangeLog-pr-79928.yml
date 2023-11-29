@@ -1,4 +1,0 @@
-author: "Momo8289"
-delete-after: True
-changes:
-  - bugfix: "The quick carry module should now correctly apply the appropriate traits"

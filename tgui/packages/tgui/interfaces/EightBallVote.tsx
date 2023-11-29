@@ -16,8 +16,8 @@ type Answer = {
   selected: BooleanLike;
 };
 
-export const EightBallVote = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const EightBallVote = (props) => {
+  const { act, data } = useBackend<Data>();
   const { shaking } = data;
   return (
     <Window width={400} height={600}>
@@ -30,8 +30,8 @@ export const EightBallVote = (props, context) => {
   );
 };
 
-const EightBallVoteQuestion = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const EightBallVoteQuestion = (props) => {
+  const { act, data } = useBackend<Data>();
   const { question, answers = [] } = data;
   return (
     <Section>

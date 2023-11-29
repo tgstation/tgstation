@@ -2,7 +2,7 @@ import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, LabeledList, ProgressBar, Section, Slider, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosRobotact = (props, context) => {
+export const NtosRobotact = (props) => {
   return (
     <NtosWindow width={800} height={600}>
       <NtosWindow.Content>
@@ -12,10 +12,10 @@ export const NtosRobotact = (props, context) => {
   );
 };
 
-export const NtosRobotactContent = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
-  const [tab_sub, setTab_sub] = useSharedState(context, 'tab_sub', 1);
+export const NtosRobotactContent = (props) => {
+  const { act, data } = useBackend();
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
+  const [tab_sub, setTab_sub] = useSharedState('tab_sub', 1);
   const {
     charge,
     maxcharge,
