@@ -46,10 +46,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/obj/item/pai_card/paicard
 	///The type of bot it is, for radio control.
 	var/bot_type = NONE
-	///Additonal access given to player-controlled bots.
-	var/list/player_access = list()
 	///All initial access this bot started with.
-	var/list/prev_access = list()
+	var/list/initial_access = list()
 	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_MAINTS_PANEL_OPEN | BOT_CONTROL_PANEL_OPEN | BOT_COVER_EMAGGED | BOT_COVER_HACKED
@@ -79,8 +77,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 	/// Message to display upon possession
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
-	/// List of strings to sound effects corresponding to automated messages the bot can play
-	var/list/automated_announcements
 	/// Action we use to say voice lines out loud, also we just pass anything we try to say through here just in case it plays a voice line
 	var/datum/action/cooldown/bot_announcement/pa_system
 	/// Type of bot_announcement ability we want
@@ -175,11 +171,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	bot_reset() //Resets an AI's call, should it exist.
 	balloon_alert(src, "turned off")
 	update_appearance()
-
-/mob/living/basic/bot/proc/get_bot_flag(checked_mode, checked_flag)
-	if(checked_mode & checked_flag)
-		return TRUE
-	return FALSE
 
 /mob/living/basic/bot/Destroy()
 	GLOB.bots_list -= src
@@ -533,16 +524,12 @@ GLOBAL_LIST_INIT(command_strings, list(
 	dropped_gun.cell.charge = 0
 	dropped_gun.update_appearance()
 
-/mob/living/basic/bot/proc/check_bot_access()
-	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
-		access_card.set_access(prev_access)
-
 /mob/living/basic/bot/proc/bot_reset()
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
 		to_chat(calling_ai, span_danger("Call command to a bot has been reset."))
 		calling_ai = null
-	if(length(prev_access))
-		access_card.set_access(prev_access)
+	if(length(initial_access))
+		access_card.set_access(initial_access)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
@@ -566,8 +553,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 			bot_reset()
 			ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, get_turf(user))
 			if(length(user_access))
-				access_card.set_access(user_access + prev_access) //Adds the user's access, if any.
-			mode = BOT_SUMMON
+				access_card.set_access(user_access + initial_access) //Adds the user's access, if any.
+			update_bot_mode(new_mode = BOT_SUMMON)
 			speak("Responding.", radio_channel)
 		if("ejectpai")
 			eject_pai_remote(user)
@@ -657,7 +644,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 			rename(usr)
 
 /mob/living/basic/bot/update_icon_state()
-	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
+	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][bot_mode_flags & BOT_MODE_ON]"
 	return ..()
 
 /// Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
@@ -728,13 +715,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 	key = null
 	paicard.forceMove(drop_location())
 	if(user)
-		log_combat(user, paicard.pai, "ejected from [initial(src.name)],")
+		log_combat(user, paicard.pai, "ejected from [initial(name)],")
 	else
 		log_combat(src, paicard.pai, "ejected")
 	if(announce)
-		to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(src.name)]."))
+		to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(name)]."))
 	paicard = null
-	name = initial(src.name)
+	name = initial(name)
 	faction = initial(faction)
 	remove_all_languages(source = LANGUAGE_PAI)
 	get_selected_language()
@@ -750,9 +737,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	. = ..()
 	if(!. || isnull(client))
 		return FALSE
-	// If we have any bonus player accesses, add them to our internal ID card.
-	if(length(player_access))
-		access_card.add_access(player_access)
 	diag_hud_set_botmode()
 
 /mob/living/basic/bot/Logout()
@@ -783,4 +767,15 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(isnull(additional_trim))
 		return
 	access_card.add_access(additional_trim.access + additional_trim.wildcard_access)
-	prev_access = access_card.access.Copy()
+	initial_access = access_card.access.Copy()
+
+
+/mob/living/basic/bot/proc/call_bot(mob/living/caller, turf/waypoint)
+	calling_ai = caller
+	access_card.set_access(REGION_ACCESS_ALL_STATION)
+	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, caller)
+	update_bot_mode(new_mode = BOT_SUMMON)
+
+/mob/living/basic/bot/proc/update_bot_mode(new_mode)
+	mode = new_mode
+	update_appearance()

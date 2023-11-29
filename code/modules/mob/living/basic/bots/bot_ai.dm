@@ -58,7 +58,7 @@
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
 	if(!isdatum(target)) //we dont need to check if its not a datum!
 		return TRUE
-	var/list/path = get_path_to(pawn, target, max_distance = distance, access = get_access())
+	var/list/path = get_path_to(pawn, target, max_distance = distance, access = get_access(), skip_first = FALSE)
 	if(!length(path))
 		return FALSE
 	return TRUE
@@ -114,10 +114,11 @@
 	var/closest_distance = INFINITY
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/atom/final_target
+	var/atom/previous_target = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
 	for(var/obj/machinery/navbeacon/beacon as anything in GLOB.navbeacons["[bot_pawn.z]"])
-		var/dist = get_dist(bot_pawn, beacon)
-		if(dist <= 1)
+		if(beacon == previous_target)
 			continue
+		var/dist = get_dist(bot_pawn, beacon)
 		if(dist > closest_distance)
 			continue
 		closest_distance = dist
@@ -162,8 +163,7 @@
 /datum/ai_planning_subtree/respond_to_summon
 
 /datum/ai_planning_subtree/respond_to_summon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(bot_pawn.mode != BOT_SUMMON)
+	if(!controller.blackboard_key_exists(BB_BOT_SUMMON_TARGET))
 		return
 	controller.clear_blackboard_key(BB_PREVIOUS_BEACON_TARGET)
 	controller.clear_blackboard_key(BB_BEACON_TARGET)
@@ -174,9 +174,11 @@
 	clear_target = TRUE
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
-	. = ..()
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	bot_pawn.mode = BOT_IDLE
+	if(controller.blackboard[target_key] == bot_pawn.calling_ai)
+		bot_pawn.calling_ai = null
+	bot_pawn.update_bot_mode(new_mode = BOT_IDLE)
+	return ..()
 
 /datum/ai_planning_subtree/salute_beepsky
 

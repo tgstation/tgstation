@@ -180,9 +180,8 @@
 /datum/ai_behavior/find_hunt_target/patient_in_crit
 
 /datum/ai_behavior/find_hunt_target/patient_in_crit/valid_dinner(mob/living/source, mob/living/carbon/human/patient, radius)
-	if(patient.stat >= UNCONSCIOUS && patient.mind)
-		return TRUE
-
+	if(patient.stat < UNCONSCIOUS || isnull(patient.mind))
+		return FALSE
 	return can_see(source, patient, radius)
 
 /datum/ai_behavior/announce_patient

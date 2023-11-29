@@ -163,9 +163,9 @@
 		icon_state = "[base_icon_state]a"
 		return
 	if(mode == BOT_HEALING)
-		icon_state = "[base_icon_state]s[get_bot_flag(medical_mode_flags, MEDBOT_STATIONARY_MODE)]"
+		icon_state = "[base_icon_state]s[medical_mode_flags & MEDBOT_STATIONARY_MODE]"
 		return
-	icon_state = "[base_icon_state][get_bot_flag(medical_mode_flags, MEDBOT_STATIONARY_MODE) ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
+	icon_state = "[base_icon_state][medical_mode_flags & MEDBOT_STATIONARY_MODE ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
 
 /mob/living/basic/bot/medbot/update_overlays()
 	. = ..()
@@ -307,11 +307,6 @@
 	else
 		patient.heal_damage_type(heal_amount = heal_amount, damagetype = damage_type_healer)
 	update_bot_mode(new_mode = BOT_IDLE)
-
-
-/mob/living/basic/bot/medbot/proc/update_bot_mode(new_mode)
-	mode = new_mode
-	update_appearance()
 
 /mob/living/basic/bot/medbot/autopatrol
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
