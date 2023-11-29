@@ -38,7 +38,7 @@ Looks something like this
 >
 > [None, North + South, East + West, North + South + East + West, All]
 >
->[<img alt="Bamboo Template" src="turf/floors/bamboo_mat.png" width="300px">](turf/floors/bamboo_mat.png)
+>[<img alt="Bamboo Template" src="turf/floors/bamboo_mat.png" width="320px">](turf/floors/bamboo_mat.png)
 
 ### How do I modify a smoothed icon?
 
@@ -54,18 +54,18 @@ If you want to make something with nonstandard bounds you'll need to set the rel
 
 > Example: [Grass](turf/floors/grass.png.toml)
 >
->[<img alt="Grass Template (50x50)" src="turf/floors/grass.png" />](turf/floors/grass.png)
+>[<img alt="Grass Template (50x50)" src="turf/floors/grass.png" width="320px"/>](turf/floors/grass.png)
 
 If you want to give a particular smoothing junction a unique icon state use the prefabs var, and add a new state to the png.
 
 > Example: [Donk Carpets (Big Pocket)](turf/floors/carpet_donk.png.toml)
 >
->[<img alt="Grass Template (50x50)" src="turf/floors/carpet_donk.png" />](turf/floors/carpet_donk.png)
+>[<img alt="Grass Template (50x50)" src="turf/floors/carpet_donk.png" width="384x"/>](turf/floors/carpet_donk.png)
 
 If you want to make the smoothed icon animated, add another row of states below your first one. Each new row is a new frame, you define delays inside the config file as deciseconds.
 
 > Example: [Lava (Animated)](turf/floors/lava.png.toml)
 >
->[<img alt="Grass Template (50x50)" src="turf/floors/lava.png" />](turf/floors/lava.png)
+>[<img alt="Grass Template (50x50)" src="turf/floors/lava.png" width="320px"/>](turf/floors/lava.png)
 
 Once you're done, just run build.bat or recompile, and it'll be generated.
