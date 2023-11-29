@@ -55,13 +55,15 @@ Make a png file called `{dmi_name}.png`. It should be 5 times as wide as the dmi
 
 Create a config file called `{dmi_name}.png.toml`, set its [template](../cutter_templates/bitmask) to the style you want. Don't forget to set the output_name var to the base icon state you're using.
 
+Once you're done, just run build.bat or recompile, and it'll generate your cut dmi files for you.
+
 If you want to make something with nonstandard bounds you'll need to set the relevant variables, you can read the examples found [here](https://github.com/actioninja/hypnagogic/tree/master/examples) to understand different mode's configs.
 
 > Example: [Grass (50x50)](turf/floors/grass.png.toml)
 >
 >[<img alt="Grass Template (50x50)" src="turf/floors/grass.png" width="320px"/>](turf/floors/grass.png)
 
-If you want to give a particular smoothing junction a unique icon state use the prefabs var, and add a new "state" to the png, and modify the config so it knows how to use it.
+If you want to give a particular smoothing junction a unique icon state use the prefabs var, add a new "state" to the png, and modify the config so it knows how to use it.
 
 > Example: [Donk Carpets (Big Pocket)](turf/floors/carpet_donk.png.toml)
 >
@@ -72,5 +74,3 @@ If you want to make the smoothed icon animated, add another row of states below 
 > Example: [Lava (Animated, 4 Frames)](turf/floors/lava.png.toml)
 >
 >[<img alt="Lava (Animated)" src="turf/floors/lava.png" width="320px"/>](turf/floors/lava.png)
-
-Once you're done, just run build.bat or recompile, and it'll generate your cut dmi files for you.
