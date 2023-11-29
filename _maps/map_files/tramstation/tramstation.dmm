@@ -5424,7 +5424,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/asteroid)
+/area/station/maintenance/starboard/lesser)
 "aKy" = (
 /obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -23303,15 +23303,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
-"gtM" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/asteroid)
 "gtQ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -122468,13 +122459,13 @@ qXI
 wQP
 gUD
 qFq
-gtM
-gtM
-gtM
-gtM
-gtM
+qFq
+qFq
+qFq
+qFq
+qFq
 aKr
-iZl
+ocx
 aaa
 aaa
 aaa
