@@ -128,7 +128,7 @@ Bonus
 			to_chat(M, span_userdanger("[pick("Your lungs hurt!", "It hurts to breathe!")]"))
 			Asphyxiate(M, A)
 			M.emote("gasp")
-			if(M.getOxyLoss() >= 120)
+			if(M.getOxyLoss() >= (M.maxHealth / (200/120)))
 				M.visible_message(span_warning("[M] stops breathing, as if their lungs have totally collapsed!"))
 				Asphyxiate_death(M, A)
 	return

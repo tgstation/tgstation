@@ -40,12 +40,12 @@
 	total_requirement = 3
 	max_requirement_per_type = 2
 	possible_types = list(
+		/mob/living/basic/pet/cat,
 		/mob/living/basic/carp,
 		/mob/living/basic/chicken,
 		/mob/living/basic/cow,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/snake,
-		/mob/living/simple_animal/pet/cat,
 	)
 
 /datum/experiment/scanning/random/cytology/medium/one

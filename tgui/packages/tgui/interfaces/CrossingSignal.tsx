@@ -10,12 +10,8 @@ type Data = {
   outboundPlatform: number;
 };
 
-type Props = {
-  context: any;
-};
-
-export const CrossingSignal = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const CrossingSignal = (props) => {
+  const { data } = useBackend<Data>();
 
   const { sensorStatus, operatingStatus, inboundPlatform, outboundPlatform } =
     data;

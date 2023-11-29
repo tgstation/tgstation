@@ -3,8 +3,8 @@ import { Button, Icon, Modal, Section, Stack, LabeledList, Box } from '../compon
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
 
-export const AnomalyRefinery = (props, context) => {
-  const { act, data } = useBackend(context);
+export const AnomalyRefinery = (props) => {
+  const { act, data } = useBackend();
   return (
     <Window title="Anomaly Refinery" width={550} height={350}>
       <Window.Content>
@@ -14,9 +14,9 @@ export const AnomalyRefinery = (props, context) => {
   );
 };
 
-const AnomalyRefineryContent = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [currentTab, changeTab] = useSharedState(context, 'exploderTab', 1);
+const AnomalyRefineryContent = (props) => {
+  const { act, data } = useBackend();
+  const [currentTab, changeTab] = useSharedState('exploderTab', 1);
   const { core, valvePresent, active } = data;
   return (
     <Stack vertical fill>
@@ -59,8 +59,8 @@ const AnomalyRefineryContent = (props, context) => {
   );
 };
 
-const CoreCompressorContent = (props, context) => {
-  const { act, data } = useBackend(context);
+const CoreCompressorContent = (props) => {
+  const { act, data } = useBackend();
   const { core, requiredRadius, gasList, valveReady, active, valvePresent } =
     data;
   return (
@@ -160,8 +160,8 @@ const CoreCompressorContent = (props, context) => {
     </>
   );
 };
-const BombProcessorContent = (props, context) => {
-  const { act, data } = useBackend(context);
+const BombProcessorContent = (props) => {
+  const { act, data } = useBackend();
   const { gasList, reactionIncrement } = data;
   return (
     <>

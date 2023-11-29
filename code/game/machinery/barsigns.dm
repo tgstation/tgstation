@@ -10,6 +10,8 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	/// Selected barsign being used
 	var/datum/barsign/chosen_sign
+	/// Do we attempt to rename the area we occupy when the chosen sign is changed?
+	var/change_area_name = FALSE
 
 /datum/armor/sign_barsign
 	melee = 20
@@ -23,6 +25,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/Initialize(mapload)
 	. = ..()
+	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
+	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
 	find_and_hang_on_wall()
 
@@ -30,7 +34,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	if(!istype(sign))
 		return
 
-	if(sign.rename_area)
+	if(change_area_name && sign.rename_area)
 		rename_area(src, sign.name)
 
 	chosen_sign = sign
@@ -86,8 +90,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron(drop_location(), 2)
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(disassembled)
+			new /obj/item/wallframe/barsign(loc)
+		else
+			new /obj/item/stack/sheet/iron(drop_location(), 2)
+			new /obj/item/stack/cable_coil(drop_location(), 2)
+
 	qdel(src)
 
 /obj/machinery/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -129,9 +138,34 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/wire = I
+/obj/machinery/barsign/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!panel_open)
+		balloon_alert(user, "open the panel first!")
+		return FALSE
+
+	tool.play_tool_sound(src)
+	if(!do_after(user, (10 SECONDS), target = src))
+		return FALSE
+
+	tool.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+
+/obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
+
+	if(istype(attacking_item, /obj/item/areaeditor/blueprints) && !change_area_name)
+		if(!panel_open)
+			balloon_alert(user, "open the panel first!")
+			return TRUE
+
+		change_area_name = TRUE
+		balloon_alert(user, "sign registered")
+		return TRUE
+
+	if(istype(attacking_item, /obj/item/stack/cable_coil) && panel_open)
+		var/obj/item/stack/cable_coil/wire = attacking_item
 
 		if(atom_integrity >= max_integrity)
 			balloon_alert(user, "doesn't need repairs!")
@@ -145,10 +179,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_appearance()
-		return TRUE
-
-	// if barsigns ever become a craftable or techweb wall mount then remove this
-	if(machine_stat & BROKEN)
 		return TRUE
 
 	return ..()
@@ -459,3 +489,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	req_access = null
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
+
+/obj/item/wallframe/barsign
+	name = "bar sign frame"
+	desc = "Used to help draw the rabble into your bar. Some assembly required."
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "barsign"
+	result_path = /obj/machinery/barsign
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+	)
+	pixel_shift = 32
+
+/obj/item/wallframe/barsign/Initialize(mapload)
+	. = ..()
+	desc += " Can be registered with a set of [span_bold("station blueprints")] to associate the sign with the area it occupies."
+
+/obj/item/wallframe/barsign/try_build(turf/on_wall, mob/user)
+	. = ..()
+	if(!.)
+		return .
+
+	if(isopenturf(get_step(on_wall, EAST))) //This takes up 2 tiles so we want to make sure we have two tiles to hang it from.
+		balloon_alert(user, "needs more support!")
+		return FALSE
