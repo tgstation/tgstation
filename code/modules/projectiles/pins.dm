@@ -1,7 +1,7 @@
 /obj/item/firing_pin
 	name = "electronic firing pin"
 	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/gunmod.dmi'
 	icon_state = "firing_pin"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"

@@ -1,7 +1,7 @@
 /obj/item/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "slime_scanner"
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'

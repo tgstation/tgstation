@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade
 	name = "borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
@@ -640,7 +640,7 @@
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinpointer_crew"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
@@ -954,7 +954,7 @@
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade1"
 
 /obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)
