@@ -3,8 +3,8 @@ import { BlockQuote, Button, LabeledList, NoticeBox, Section, Stack } from '../.
 import { decodeHtmlEntities } from 'common/string';
 import { RequestMessage, RequestPriority, RequestsData, RequestType } from './types';
 
-export const MessageViewTab = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
+export const MessageViewTab = (props) => {
+  const { act, data } = useBackend<RequestsData>();
   const { messages = [] } = data;
   return (
     <Section fill scrollable>
@@ -17,13 +17,8 @@ export const MessageViewTab = (props, context) => {
   );
 };
 
-const MessageDisplay = (
-  props: {
-    message: RequestMessage;
-  },
-  context
-) => {
-  const { act } = useBackend(context);
+const MessageDisplay = (props: { message: RequestMessage }) => {
+  const { act } = useBackend();
   const { message } = props;
   const append_list_keys = message.appended_list
     ? Object.keys(message.appended_list)

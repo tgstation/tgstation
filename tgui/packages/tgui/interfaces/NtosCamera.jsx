@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { Button, Box, NoticeBox, Stack } from '../components';
 
-export const NtosCamera = (props, context) => {
+export const NtosCamera = (props) => {
   return (
     <NtosWindow width={400} height={350}>
       <NtosWindow.Content scrollable>
@@ -12,8 +12,8 @@ export const NtosCamera = (props, context) => {
   );
 };
 
-export const NtosCameraContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosCameraContent = (props) => {
+  const { act, data } = useBackend();
   const { photo, paper_left } = data;
 
   if (!photo) {

@@ -89,11 +89,11 @@ const filterRecipeList = (
   return Object.keys(filteredList).length ? filteredList : undefined;
 };
 
-export const StackCrafting = (_props, context) => {
-  const { data } = useBackend<StackCraftingProps>(context);
+export const StackCrafting = (_props) => {
+  const { data } = useBackend<StackCraftingProps>();
   const { amount, recipes = {} } = data;
 
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const [searchText, setSearchText] = useLocalState('searchText', '');
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
@@ -157,8 +157,8 @@ const buildMultiplier = (recipe: Recipe, amount: number) => {
   return Math.floor(amount / recipe.req_amount);
 };
 
-const Multipliers = (props: MultiplierProps, context) => {
-  const { act } = useBackend(context);
+const Multipliers = (props: MultiplierProps) => {
+  const { act } = useBackend();
 
   const { recipe, maxMultiplier } = props;
 
@@ -204,8 +204,8 @@ const Multipliers = (props: MultiplierProps, context) => {
   return <>{finalResult.map((x) => x)}</>;
 };
 
-const RecipeBox = (props: RecipeBoxProps, context) => {
-  const { act, data } = useBackend<StackCraftingProps>(context);
+const RecipeBox = (props: RecipeBoxProps) => {
+  const { act, data } = useBackend<StackCraftingProps>();
 
   const { amount } = data;
 

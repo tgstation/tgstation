@@ -17,16 +17,11 @@ export type MixingData = {
   isReacting: BooleanLike;
 };
 
-export const ChemMixingChamber = (props, context) => {
-  const { act, data } = useBackend<MixingData>(context);
+export const ChemMixingChamber = (props) => {
+  const { act, data } = useBackend<MixingData>();
 
-  const [reagentName, setReagentName] = useLocalState(
-    context,
-    'reagentName',
-    ''
-  );
+  const [reagentName, setReagentName] = useLocalState('reagentName', '');
   const [reagentQuantity, setReagentQuantity] = useLocalState(
-    context,
     'reagentQuantity',
     1
   );
