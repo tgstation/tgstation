@@ -105,6 +105,8 @@
 				user.visible_message(span_notice("[user] playfully boops [attacked_mob] on the head!"), \
 								span_notice("You playfully boop [attacked_mob] on the head!"))
 				user.do_attack_animation(attacked_mob, ATTACK_EFFECT_BOOP)
+				if(HAS_TRAIT(attacked_mob, TRAIT_CYBORG_LOVER))
+					attacked_mob.add_mood_event("borg_touch", /datum/mood_event/borg_touch)
 				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
 			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
@@ -113,6 +115,8 @@
 				else
 					user.visible_message(span_notice("[user] hugs [attacked_mob] to make [attacked_mob.p_them()] feel better!"), \
 							span_notice("You hug [attacked_mob] to make [attacked_mob.p_them()] feel better!"))
+					if(HAS_TRAIT(attacked_mob, TRAIT_CYBORG_LOVER))
+						attacked_mob.add_mood_event("borg_touch", /datum/mood_event/borg_touch)
 				if(attacked_mob.resting)
 					attacked_mob.set_resting(FALSE, TRUE)
 			else
@@ -128,10 +132,17 @@
 				else if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message(span_warning("[user] bops [attacked_mob] on the head!"), \
 									span_warning("You bop [attacked_mob] on the head!"))
+					if(HAS_TRAIT(attacked_mob, TRAIT_CYBORG_LOVER))
+						attacked_mob.add_mood_event("borg_touch", /datum/mood_event/borg_touch)
 					user.do_attack_animation(attacked_mob, ATTACK_EFFECT_PUNCH)
 				else
-					user.visible_message(span_warning("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks uncomfortable..."), \
-							span_warning("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks uncomfortable..."))
+					if(HAS_TRAIT(attacked_mob, TRAIT_CYBORG_LOVER))
+						user.visible_message(span_info("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks satisfied!"), \
+								span_info("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks satisfied!"))
+						attacked_mob.add_mood_event("borg_hug", /datum/mood_event/borg_hug)
+					else
+						user.visible_message(span_warning("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks uncomfortable..."), \
+								span_warning("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks uncomfortable..."))
 				if(attacked_mob.resting)
 					attacked_mob.set_resting(FALSE, TRUE)
 			else
