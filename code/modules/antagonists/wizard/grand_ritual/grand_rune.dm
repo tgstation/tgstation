@@ -196,6 +196,7 @@
 	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE)
 	flick("activate", src)
 	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
+	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
 /obj/effect/grand_rune/proc/remove_rune()
 	new remains_typepath(get_turf(src))
@@ -354,8 +355,10 @@
 	add_filter("finale_picked_glow", 2, list("type" = "outline", "color" = spell_colour, "size" = 2))
 
 /obj/effect/grand_rune/finale/summon_round_event(mob/living/user)
+	user.client?.give_award(/datum/award/achievement/misc/grand_ritual_finale, user)
 	if (!finale_effect)
 		return ..()
+	SSblackbox.record_feedback("tally", "grand_ritual_finale", 1, finale_effect)
 	finale_effect.trigger(user)
 
 /obj/effect/grand_rune/finale/get_invoke_time()
