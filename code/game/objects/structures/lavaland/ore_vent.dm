@@ -253,7 +253,7 @@
 				var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
 				user_id_card.registered_account.mining_points += (point_reward_val)
 				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
-	node.escape() //Visually show the drone is done and flies away.
+	node.pre_escape() //Visually show the drone is done and flies away.
 	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
 /**

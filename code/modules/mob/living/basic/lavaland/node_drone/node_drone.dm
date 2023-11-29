@@ -85,12 +85,6 @@
  */
 /mob/living/basic/node_drone/proc/escape()
 	var/funny_ending = FALSE
-	attached_vent?.unbuckle_mob(src)
-	if(!escaping)
-		escaping = TRUE
-		flick("mining_node_escape", src)
-		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
-		return
 	flying_state = FLY_OUT_STATE
 	update_appearance(UPDATE_ICON_STATE)
 	if(prob(1))
@@ -103,6 +97,14 @@
 		playsound(src, 'sound/effects/explosion3.ogg', 50, FALSE) //node drone died on the way back to his home planet.
 	qdel(src)
 
+
+/mob/living/basic/node_drone/proc/pre_escape()
+	attached_vent?.unbuckle_mob(src)
+	if(!escaping)
+		escaping = TRUE
+		flick("mining_node_escape", src)
+		addtimer(CALLBACK(src, PROC_REF(escape)), 1.9 SECONDS)
+		return
 
 /// The node drone AI controller
 //	Generally, this is a very simple AI that will try to find a vent and latch onto it, unless attacked by a lavaland mob, who it will try to flee from.
