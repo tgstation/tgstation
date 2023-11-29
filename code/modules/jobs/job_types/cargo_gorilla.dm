@@ -25,4 +25,17 @@
 /datum/job/cargo_gorilla/get_spawn_mob(client/player_client, atom/spawn_point)
 	if (!player_client)
 		return
-	return new spawn_type(get_turf(spawn_point))
+	var/mob/living/the_big_man = new spawn_type(get_turf(spawn_point))
+	the_big_man.fully_replace_character_name(the_big_man.real_name, pick(GLOB.cargorilla_names))
+	return the_big_man
+
+/datum/job/cargo_gorilla/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(spawned.loc)
+	gorilla_id.registered_name = spawned.name
+	gorilla_id.update_label()
+	spawned.put_in_hands(gorilla_id, del_on_fail = TRUE)
+
+	to_chat(spawned, span_boldnotice("You are Cargorilla, a pacifist friend of the station and carrier of freight."))
+	to_chat(spawned, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
+	spawned.mind.special_role = "Cargorilla"

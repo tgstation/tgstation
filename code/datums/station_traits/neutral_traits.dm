@@ -147,15 +147,14 @@
 	weight = 1
 	sign_up_button = TRUE
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
+	force = TRUE
 	/// Who signed up to this in the lobby
 	var/list/lobby_candidates
-	/// The gorilla we created, we only hold this ref until the round starts.
-	var/mob/living/basic/gorilla/cargorilla/cargorilla
 
 /datum/station_trait/cargorilla/New()
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
-	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_GAMEMODE_SETUP, PROC_REF(on_gamemode_setup))
+	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_JOBS_ASSIGNED, PROC_REF(pre_jobs_assigned))
 
 /datum/station_trait/cargorilla/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
 	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
@@ -163,8 +162,6 @@
 	return ..()
 
 /datum/station_trait/cargorilla/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
-	if (isnull(cargorilla))
-		return
 	if (LAZYFIND(lobby_candidates, user))
 		LAZYREMOVE(lobby_candidates, user)
 	else
@@ -196,73 +193,28 @@
 		sign_up_button = FALSE
 		return
 
-	cargorilla = new(cargo_sloth.loc)
-	cargorilla.name = cargo_sloth.name
-	RegisterSignals(cargorilla, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING), PROC_REF(unassign_gorilla))
-	// We do a poll on roundstart, don't let ghosts in early
-	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
 	// hm our sloth looks funny today
 	qdel(cargo_sloth)
-
 	// monkey carries the crates, the age of robot is over
 	if(GLOB.cargo_ripley)
 		qdel(GLOB.cargo_ripley)
 
-/// Makes an ID card for the gorilla
-/datum/station_trait/cargorilla/proc/make_id_for_gorilla()
-	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
-	gorilla_id.registered_name = cargorilla.name
-	gorilla_id.update_label()
-
-	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
-
 /// Called before we start assigning roles
-/datum/station_trait/cargorilla/proc/on_gamemode_setup()
+/datum/station_trait/cargorilla/proc/pre_jobs_assigned()
 	SIGNAL_HANDLER
+	sign_up_button = FALSE
+	destroy_lobby_buttons()
 	if (!LAZYLEN(lobby_candidates))
 		return // Nobody signed up :(
-	if (QDELETED(cargorilla) || cargorilla.key || cargorilla.stat == DEAD)
-		return // Something weird happened to our buddy Cargorilla
-
-	for (var/mob/dead/signee in lobby_candidates)
-		if (!signee.client || !signee.mind)
+	for (var/mob/dead/new_player/signee in lobby_candidates)
+		if (!signee.client || !signee.mind || signee.ready != PLAYER_READY_TO_PLAY)
 			LAZYREMOVE(lobby_candidates, signee)
 	if (!LAZYLEN(lobby_candidates))
 		return // They logged out I guess
-	assign_gorilla(pick(lobby_candidates))
-
-/datum/station_trait/cargorilla/on_round_start()
-	. = ..()
-	if (!cargorilla)
-		return // We already assigned him...
+	var/mob/dead/new_player/picked_player = pick(lobby_candidates)
+	picked_player.mind.assigned_role = new /datum/job/cargo_gorilla()
+	// assign_gorilla(pick(lobby_candidates))
 	lobby_candidates = null
-	QDEL_NULL(cargorilla) // Leave it to the latejoin menu
-
-/// Get us a ghost for the gorilla.
-/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
-	if(!QDELETED(gorilla))
-		gorilla.poll_for_gorilla()
-
-/// Puts our lucky winner into the gorilla
-/datum/station_trait/cargorilla/proc/assign_gorilla(mob/dead/volunteer)
-	if (QDELETED(cargorilla) || cargorilla.mind)
-		to_chat(volunteer, span_warning("You missed your chance to become the gorilla..."))
-		return
-	// Make another reference because we'll drop ours when we log someone into the mob
-	var/mob/living/basic/gorilla/cargorilla/our_boy = cargorilla
-	volunteer.log_message("was assigned control of [cargorilla].", LOG_GAME)
-	our_boy.key = volunteer.key
-	to_chat(our_boy, span_boldnotice(our_boy.on_possessed_message))
-	our_boy.became_player_controlled()
-	LAZYCLEARLIST(lobby_candidates)
-
-/// Called when we no longer need a gorilla
-/datum/station_trait/cargorilla/proc/unassign_gorilla()
-	SIGNAL_HANDLER
-	UnregisterSignal(cargorilla, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING))
-	cargorilla = null
-	sign_up_button = FALSE
-	destroy_lobby_buttons()
 
 /datum/station_trait/birthday
 	name = "Employee Birthday"

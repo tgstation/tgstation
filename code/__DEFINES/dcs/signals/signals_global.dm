@@ -87,6 +87,9 @@
 /// Global signal sent before the gamemode is set up
 #define COMSIG_GLOB_PRE_GAMEMODE_SETUP "!pre_gamemode_setup"
 
+/// Global signal sent before we decide what job everyone has
+#define COMSIG_GLOB_PRE_JOBS_ASSIGNED "!pre_roles_assigned"
+
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
 
