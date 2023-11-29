@@ -41,37 +41,34 @@
 /obj/projectile/moon_parade/Initialize(mapload)
 	. = ..()
 	soundloop = new(src,  TRUE)
-	
+
 /obj/projectile/moon_parade/prehit_pierce(atom/A)
 	. = ..()
 
-	// So we don't hit any corpses as they will be dragged along
-	if(isliving(A) && isliving(firer))
+	var/mob/living/caster = firer
+	var/mob/living/victim = A
 
-		var/mob/living/caster = firer
-		var/mob/living/victim = A
-
-		// The caster shouldn't hit themselves
-		if(caster == victim)
-			return PROJECTILE_PIERCE_PHASE
-
-		// Also shouldn't hit any heretic monsters we are masters over OR any lunatics we have
-		if(caster.mind)
-			var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
-			if(monster?.master == caster.mind)
-				return PROJECTILE_PIERCE_PHASE
-			var/datum/antagonist/lunatic/lunatic = victim.mind?.has_antag_datum(/datum/antagonist/lunatic)
-			if(lunatic?.ascended_heretic == caster.mind)
-				return PROJECTILE_PIERCE_PHASE
-
-		// Anti-magic destroys the projectile
-		if(victim.can_block_magic(MAGIC_RESISTANCE))
-			visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
-			return PROJECTILE_DELETE_WITHOUT_HITTING
-	else if(istype(A, /turf/closed))
-		return PROJECTILE_PIERCE_NONE
-	else
+	// The caster shouldn't hit themselves
+	if(caster == victim)
 		return PROJECTILE_PIERCE_PHASE
+
+	// Also shouldn't hit any heretic monsters we are masters over OR any lunatics we have
+	if(!caster.mind)
+		return PROJECTILE_PIERCE_HIT
+
+	var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+	if(monster?.master == caster.mind)
+		return PROJECTILE_PIERCE_PHASE
+
+	var/datum/antagonist/lunatic/lunatic = victim.mind?.has_antag_datum(/datum/antagonist/lunatic)
+	if(lunatic?.ascended_heretic == caster.mind)
+		return PROJECTILE_PIERCE_PHASE
+
+	// Anti-magic destroys the projectile
+	if(victim.can_block_magic(MAGIC_RESISTANCE))
+		visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
+		return PROJECTILE_DELETE_WITHOUT_HITTING
+
 
 /obj/projectile/moon_parade/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
