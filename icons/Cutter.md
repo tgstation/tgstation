@@ -38,6 +38,10 @@ Looks something like this
 > [None, North + South, East + West, North + South + East + West, All]
 >
 >[<img alt="Bamboo Template" src="turf/floors/bamboo_mat.png" width="320px">](turf/floors/bamboo_mat.png)
+>
+> And its output, as an example
+>
+>[<img alt="Bamboo Output" src="turf/floors/bamboo_mat.dmi" width="320px">](turf/floors/bamboo_mat.dmi)
 
 ### How do I modify a smoothed icon?
 
