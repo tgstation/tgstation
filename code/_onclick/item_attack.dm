@@ -155,7 +155,7 @@
 /obj/attackby(obj/item/attacking_item, mob/user, params)
 	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
-/mob/living/proc/can_preform_surgery(mob/living/user, params)
+/mob/living/proc/can_perform_surgery(mob/living/user, params)
 	for(var/datum/surgery/operations as anything in surgeries)
 		if(user.istate & ISTATE_HARM)
 			break
@@ -170,7 +170,7 @@
 
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(can_preform_surgery(user, params))
+	if(can_perform_surgery(user, params))
 		return TRUE
 
 	if(..())
