@@ -62,17 +62,19 @@
 	if(!length(required_ingredients))
 		return TRUE
 
+	// See if we fulfill all reqs
 	var/list/reqs_copy = required_ingredients.Copy()
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// See if we fulfill all reqs
-		var/ingredient_count = reqs_copy[ingredient.type]
+		var/ingredient_type = ingredient.type
+
+		var/ingredient_count = reqs_copy[ingredient_type]
 		if(ingredient_count)
 			if(isstack(ingredient))
 				var/obj/item/stack/stack_ingredient = ingredient
 				ingredient_count -= stack_ingredient.amount
 			else
 				ingredient_count -= 1
-			reqs_copy[ingredient.type] = ingredient_count
+			reqs_copy[ingredient_type] = ingredient_count
 
 	for(var/fulfilled in reqs_copy)
 		if(reqs_copy[fulfilled] > 0)
