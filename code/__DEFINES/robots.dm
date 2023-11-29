@@ -147,8 +147,6 @@ DEFINE_BITFIELD(bot_access_flags, list(
 #define BOT_IDLE "Idle"
 /// Found target, hunting
 #define BOT_HUNT "In Pursuit"
-/// Currently tipped over.
-#define BOT_TIPPED "Tipped"
 /// Start patrol
 #define BOT_START_PATROL "Beginning Patrol"
 /// Patrolling
@@ -219,6 +217,9 @@ DEFINE_BITFIELD(security_mode_flags, list(
 #define MEDBOT_STATIONARY_MODE (1<<1)
 ///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
 #define MEDBOT_SPEAK_MODE (1<<2)
+/// is the bot currently tipped over?
+#define MEDBOT_TIPPED_MODE (1<<3)
+
 ///can we heal all damage?
 #define HEAL_ALL_DAMAGE "all_damage"
 
@@ -226,6 +227,7 @@ DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_DECLARE_CRIT" = MEDBOT_DECLARE_CRIT,
 	"MEDBOT_STATIONARY_MODE" = MEDBOT_STATIONARY_MODE,
 	"MEDBOT_SPEAK_MODE" = MEDBOT_SPEAK_MODE,
+	"MEDBOT_TIPPED_MODE" = MEDBOT_TIPPED_MODE,
 ))
 
 //cleanBOT defines on what to clean

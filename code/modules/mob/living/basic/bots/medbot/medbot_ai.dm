@@ -32,6 +32,9 @@
 
 /datum/ai_planning_subtree/treat_wounded_target/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
+	if(bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE)
+		controller.clear_blackboard_key(BB_PATIENT_TARGET)
+		return
 	var/reach_distance = (bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : BOT_PATIENT_PATH_LIMIT
 	if(controller.reachable_key(BB_PATIENT_TARGET, reach_distance))
 		controller.queue_behavior(/datum/ai_behavior/tend_to_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.bot_access_flags)
@@ -126,21 +129,24 @@
 	if(!(bot_pawn.medical_mode_flags & MEDBOT_SPEAK_MODE))
 		return
 
-	speech_chance = ((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) || bot_pawn.mode == BOT_TIPPED) ? 15 : initial(speech_chance)
+	var/currently_tipped = bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE
+	speech_chance = ((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED) || currently_tipped) ? 15 : initial(speech_chance)
 
 	if(!SPT_PROB(speech_chance, seconds_per_tick))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY, bot_pawn.mode, bot_pawn.bot_access_flags)
+	controller.queue_behavior(/datum/ai_behavior/handle_medbot_speech, BB_ANNOUNCE_ABILITY, bot_pawn.mode, bot_pawn.bot_access_flags, currently_tipped)
 
 /datum/ai_behavior/handle_medbot_speech
+	action_cooldown = 20 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller, announce_key, mode, cover_flags)
+/datum/ai_behavior/handle_medbot_speech/perform(seconds_per_tick, datum/ai_controller/controller, announce_key, mode, cover_flags, currently_tipped)
 	. = ..()
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[announce_key]
 	var/list/speech_to_pick_from
 
-	if(mode == BOT_TIPPED)
+	if(currently_tipped)
 		speech_to_pick_from = controller.blackboard[BB_WORRIED_ANNOUNCEMENTS]
 	else if(cover_flags & BOT_COVER_EMAGGED)
 		speech_to_pick_from = controller.blackboard[BB_EMAGGED_SPEECH]

@@ -103,7 +103,7 @@
 
 	///Flags Medbots use to decide how they should be acting.
 	var/medical_mode_flags = MEDBOT_DECLARE_CRIT | MEDBOT_SPEAK_MODE
-	//Selections:  MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE
+	//Selections:  MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE | MEDBOT_TIPPED_MODE
 
 	/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb
@@ -262,7 +262,7 @@
  * user - the mob who tipped us over
  */
 /mob/living/basic/bot/medbot/proc/after_tip_over(mob/user)
-	mode = BOT_TIPPED
+	medical_mode_flags |= MEDBOT_TIPPED_MODE
 	tipper = WEAKREF(user)
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
 
@@ -274,7 +274,7 @@
 /mob/living/basic/bot/medbot/proc/after_righted(mob/user)
 	var/mob/tipper_mob = isnull(user) ? null : tipper?.resolve()
 	tipper = null
-	mode = BOT_IDLE
+	medical_mode_flags &= ~MEDBOT_TIPPED_MODE
 	if(isnull(tipper_mob))
 		return
 	if(tipper_mob == user)
