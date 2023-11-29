@@ -7,7 +7,7 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;
@@ -78,7 +78,7 @@ export const Icon = (props: IconProps) => {
 Icon.defaultHooks = pureComponentHooks;
 
 type IconStackUnique = {
-  children: InfernoNode;
+  children: ReactNode;
   className?: string;
 };
 

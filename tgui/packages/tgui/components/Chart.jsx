@@ -6,7 +6,7 @@
 
 import { map, zipWith } from 'common/collections';
 import { pureComponentHooks } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { Box } from './Box';
 
 const normalizeData = (data, scale, rangeX, rangeY) => {

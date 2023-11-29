@@ -1,9 +1,10 @@
 import { createPopper, Placement, VirtualElement } from '@popperjs/core';
-import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { Component, ReactNode, createRef } from 'react';
+import { render } from 'react-dom';
 
 type TooltipProps = {
-  children?: InfernoNode;
-  content: InfernoNode;
+  children?: ReactNode;
+  content: ReactNode;
   position?: Placement;
 };
 
@@ -47,17 +48,10 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
         ?? NULL_RECT
     ),
   };
+  tooltipRef = createRef<HTMLDivElement>();
 
   getDOMNode() {
-    // HACK: We don't want to create a wrapper, as it could break the layout
-    // of consumers, so we do the inferno equivalent of `findDOMNode(this)`.
-    // My attempt to avoid this was a render prop that passed in
-    // callbacks to onmouseenter and onmouseleave, but this was unwiedly
-    // to consumers, specifically buttons.
-    // This code is copied from `findDOMNode` in inferno-extras.
-    // Because this component is written in TypeScript, we will know
-    // immediately if this internal variable is removed.
-    return findDOMfromVNode(this.$LI, true);
+    return this.tooltipRef.current;
   }
 
   componentDidMount() {

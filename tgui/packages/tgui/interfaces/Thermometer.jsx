@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { useBackend } from '../backend';
 import { Box, Stack } from '../components';
 import { Window } from '../layouts';

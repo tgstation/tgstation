@@ -5,7 +5,7 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 import { Box, unit } from './Box';
 import { Divider } from './Divider';
 import { Tooltip } from './Tooltip';
@@ -23,15 +23,15 @@ LabeledList.defaultHooks = pureComponentHooks;
 
 type LabeledListItemProps = Partial<{
   className: string | BooleanLike;
-  label: string | InfernoNode | BooleanLike;
+  label: string | ReactNode | BooleanLike;
   labelColor: string | BooleanLike;
   labelWrap: boolean;
   color: string | BooleanLike;
   textAlign: string | BooleanLike;
-  buttons: InfernoNode;
+  buttons: ReactNode;
   /** @deprecated */
   content: any;
-  children: InfernoNode;
+  children: ReactNode;
   verticalAlign: string;
   tooltip: string;
 }>;

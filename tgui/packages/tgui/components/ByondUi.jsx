@@ -6,7 +6,7 @@
 
 import { shallowDiffers } from 'common/react';
 import { debounce } from 'common/timer';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { createLogger } from '../logging';
 import { computeBoxProps } from './Box';
 

@@ -25,6 +25,7 @@
     "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-transform-jscript": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
+    "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@types/jest": "^29.5.10",
     "@types/jsdom": "^21.1.6",

@@ -1,4 +1,4 @@
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Flex, Input, LabeledList, Section, Stack, Tooltip } from '../../components';
 
@@ -37,7 +37,7 @@ type Gas = {
 };
 
 const GasSearchBar = (props: {
-  title: InfernoNode;
+  title: ReactNode;
   onChange: (inputValue: string) => void;
   activeInput: boolean;
   setActiveInput: (toggle: boolean) => void;

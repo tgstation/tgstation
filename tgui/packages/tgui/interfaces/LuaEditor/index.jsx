@@ -9,7 +9,7 @@ import { Log } from './Log';
 import { TaskManager } from './TaskManager';
 import { sanitizeText } from '../../sanitize';
 import { marked } from 'marked';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import hljs from 'highlight.js/lib/core';
 import lua from 'highlight.js/lib/languages/lua';
 hljs.registerLanguage('lua', lua);

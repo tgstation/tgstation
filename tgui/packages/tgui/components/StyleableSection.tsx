@@ -1,14 +1,13 @@
-import { SFC } from 'inferno';
 import { Box } from './Box';
 
 // The cost of flexibility and prettiness.
-export const StyleableSection: SFC<{
+export const StyleableSection = (props: {
   style?;
   titleStyle?;
   textStyle?;
   title?;
   titleSubtext?;
-}> = (props) => {
+}) => {
   return (
     <Box style={props.style}>
       {/* Yes, this box (line above) is missing the "Section" class. This is very intentional, as the layout looks *ugly* with it.*/}

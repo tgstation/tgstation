@@ -5,7 +5,7 @@
  */
 
 import { classes } from 'common/react';
-import { RefObject } from 'inferno';
+import { RefObject } from 'react';
 import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
 
 type StackProps = FlexProps & {

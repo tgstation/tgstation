@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { Box, Button, KeyListener, Stack, Tooltip, TrackOutsideClicks } from '../../components';
 import { resolveAsset } from '../../assets';
 import { PreferencesMenuData } from './data';
@@ -198,8 +198,8 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     rebindingHotkey: undefined,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
