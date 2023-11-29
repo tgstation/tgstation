@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 			default = real_name,
 			max_length = MAX_NAME_LEN,
 		)),
-		allow_numbers = TRUE
+		allow_numbers = TRUE,
 	)
 	if (isnull(new_name) || QDELETED(src))
 		return
@@ -439,7 +439,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(!do_after(user, 3 SECONDS, target = src) || !paicard)
 		return
 
-	user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"),span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
+	user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"), \
+		span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
+
 	ejectpai(user)
 
 /mob/living/basic/bot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
@@ -694,8 +696,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 	paicard = card
 	disable_possession()
-	if(paicard.pai.holoform)
-		paicard.pai.fold_in()
+	paicard.pai.fold_in()
 	copy_languages(paicard.pai, source_override = LANGUAGE_PAI)
 	set_active_language(paicard.pai.get_selected_language())
 	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
@@ -714,14 +715,17 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Ejects a pAI from this bot
 /mob/living/basic/bot/proc/ejectpai(mob/user = null, announce = TRUE)
-	if(!paicard)
+	if(isnull(paicard))
 		return
-	if(mind && paicard.pai)
-		mind.transfer_to(paicard.pai)
-	else if(paicard.pai)
-		paicard.pai.key = key
+
+	if(paicard.pai)
+		if(isnull(mind))
+			mind.transfer_to(paicard.pai)
+		else
+			paicard.pai.key = key
 	else
 		ghostize(FALSE) // The pAI card that just got ejected was dead.
+
 	key = null
 	paicard.forceMove(drop_location())
 	if(user)
@@ -745,7 +749,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/Login()
 	. = ..()
-	if(!. || !client)
+	if(!. || isnull(client))
 		return FALSE
 	// If we have any bonus player accesses, add them to our internal ID card.
 	if(length(player_access))
@@ -777,5 +781,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/proc/provide_additional_access()
 	var/datum/id_trim/additional_trim = SSid_access.trim_singletons_by_path[additional_access]
+	if(isnull(additional_trim))
+		return
 	access_card.add_access(additional_trim.access + additional_trim.wildcard_access)
 	prev_access = access_card.access.Copy()

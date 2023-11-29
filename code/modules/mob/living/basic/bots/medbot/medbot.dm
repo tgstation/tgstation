@@ -103,7 +103,7 @@
 
 	///Flags Medbots use to decide how they should be acting.
 	var/medical_mode_flags = MEDBOT_DECLARE_CRIT | MEDBOT_SPEAK_MODE
-//	Selections:  MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE
+	//Selections:  MEDBOT_DECLARE_CRIT | MEDBOT_STATIONARY_MODE | MEDBOT_SPEAK_MODE
 
 	/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb
@@ -174,7 +174,11 @@
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()
-	return (idle_lines + wait_announcements + afterheal_announcements + near_death_announcements + emagged_announcements + tipped_announcements + untipped_announcements + worried_announcements + misc_announcements)
+	var/static/list/finalized_speak_list = null
+	if(isnull(finalized_speak_list))
+		finalized_speak_list = (idle_lines + wait_announcements + afterheal_announcements + near_death_announcements + emagged_announcements + tipped_announcements + untipped_announcements + worried_announcements + misc_announcements)
+	return finalized_speak_list
+
 
 /mob/living/basic/bot/medbot/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -305,7 +309,7 @@
 	update_bot_mode(new_mode = BOT_IDLE)
 
 
-/mob/living/basic/bot/proc/update_bot_mode(new_mode)
+/mob/living/basic/bot/medbot/proc/update_bot_mode(new_mode)
 	mode = new_mode
 	update_appearance()
 

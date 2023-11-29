@@ -253,6 +253,7 @@
 #include "code\__DEFINES\xenobiology.dm"
 #include "code\__DEFINES\ai\ai.dm"
 #include "code\__DEFINES\ai\ai_blackboard.dm"
+#include "code\__DEFINES\ai\bot_keys.dm"
 #include "code\__DEFINES\ai\carp.dm"
 #include "code\__DEFINES\ai\haunted.dm"
 #include "code\__DEFINES\ai\monkey.dm"
