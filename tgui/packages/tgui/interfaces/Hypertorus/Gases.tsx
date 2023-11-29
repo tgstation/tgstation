@@ -68,8 +68,8 @@ const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
   }
 };
 
-const GasList = (props: GasListProps, context) => {
-  const { act, data } = useBackend<GasListData>(context);
+const GasList = (props: GasListProps) => {
+  const { act, data } = useBackend<GasListData>();
   const {
     input_max,
     input_min,
@@ -145,8 +145,8 @@ const GasList = (props: GasListProps, context) => {
   );
 };
 
-export const HypertorusGases = (props, context) => {
-  const { data } = useBackend<HypertorusData>(context);
+export const HypertorusGases = (props) => {
+  const { data } = useBackend<HypertorusData>();
   const {
     fusion_gases = [],
     moderator_gases = [],

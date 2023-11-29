@@ -30,8 +30,8 @@ type Pai = {
   range: number;
 };
 
-export const PaiCard = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const PaiCard = (props) => {
+  const { data } = useBackend<Data>();
   const { pai } = data;
 
   return (
@@ -44,8 +44,8 @@ export const PaiCard = (props, context) => {
 };
 
 /** Gives a list of candidates as cards */
-const PaiDownload = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const PaiDownload = (props) => {
+  const { act, data } = useBackend<Data>();
   const { candidates = [] } = data;
 
   return (
@@ -82,11 +82,8 @@ const PaiDownload = (props, context) => {
 /**
  * Renders a custom section that displays a candidate.
  */
-const CandidateDisplay = (
-  props: { candidate: Candidate; index: number },
-  context
-) => {
-  const { act } = useBackend<Data>(context);
+const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
+  const { act } = useBackend<Data>();
   const {
     candidate: { comments, ckey, description, name },
     index,
@@ -140,8 +137,8 @@ const CandidateDisplay = (
 };
 
 /** Once a pAI has been loaded, you can alter its settings here */
-const PaiOptions = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const PaiOptions = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     range_max,
     range_min,

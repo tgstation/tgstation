@@ -173,6 +173,7 @@
 	/// Having any of these reagents in your system extends the duration
 	var/static/list/supplementary_reagents_bonus = list(
 		/datum/reagent/consumable/ethanol/protein_blend = 30 SECONDS, // protein shakes are very robust
+		/datum/reagent/inverse/oxandrolone = 25 SECONDS,
 		/datum/reagent/consumable/eggwhite = 20 SECONDS,
 		/datum/reagent/consumable/eggyolk = 15 SECONDS,
 		/datum/reagent/consumable/nutriment/protein = 15 SECONDS,
@@ -200,6 +201,9 @@
 
 	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods? yes please!
 		modifier += 3
+
+	if(new_owner.reagents.has_reagent(/datum/reagent/inverse/oxandrolone)) // MOREEEEE
+		modifier += 2
 
 	var/food_boost = 0
 	for(var/datum/reagent/workout_reagent in supplementary_reagents_bonus)

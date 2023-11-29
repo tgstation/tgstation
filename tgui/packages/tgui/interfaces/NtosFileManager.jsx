@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosFileManager = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosFileManager = (props) => {
+  const { act, data } = useBackend();
   const { usbconnected, files = [], usbfiles = [] } = data;
   return (
     <NtosWindow>

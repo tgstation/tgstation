@@ -21,7 +21,8 @@
 	waddling_animation(moved)
 
 /datum/element/waddling/proc/waddling_animation(atom/movable/target)
-	animate(target, pixel_z = 4, time = 0)
-	var/prev_trans = matrix(target.transform)
-	animate(pixel_z = 0, transform = turn(target.transform, pick(-12, 0, 12)), time=2)
-	animate(pixel_z = 0, transform = prev_trans, time = 0)
+	var/prev_pixel_z = target.pixel_z
+	animate(target, pixel_z = target.pixel_z + 4, time = 0)
+	var/prev_transform = target.transform
+	animate(pixel_z = prev_pixel_z, transform = turn(target.transform, pick(-12, 0, 12)), time=2)
+	animate(transform = prev_transform, time = 0)

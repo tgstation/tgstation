@@ -18,8 +18,21 @@
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 
+/obj/machinery/stasis/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/elevation, pixel_shift = 6)
+
 /obj/machinery/stasis/Destroy()
 	. = ..()
+
+///Just like beds, the elevation looks good while standing, but not when buckled to the bed.
+/obj/machinery/stasis/post_buckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y -= 6
+
+/obj/machinery/stasis/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y += 6
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()

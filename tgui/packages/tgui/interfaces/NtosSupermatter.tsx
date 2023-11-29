@@ -5,10 +5,10 @@ import { Button, ProgressBar, Section, Table } from '../components';
 
 type NtosSupermatterData = SupermatterData & { focus_uid?: number };
 
-export const NtosSupermatter = (props, context) => {
-  const { act, data } = useBackend<NtosSupermatterData>(context);
+export const NtosSupermatter = (props) => {
+  const { act, data } = useBackend<NtosSupermatterData>();
   const { sm_data, gas_metadata, focus_uid } = data;
-  const [activeUID, setActiveUID] = useLocalState(context, 'activeUID', 0);
+  const [activeUID, setActiveUID] = useLocalState('activeUID', 0);
   const activeSM = sm_data.find((sm) => sm.uid === activeUID);
   return (
     <NtosWindow height={400} width={700}>
