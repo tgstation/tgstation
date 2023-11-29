@@ -73,6 +73,8 @@
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	///Counter for displaying the hacked overlay to mobs within view
 	var/hacked_flicker_counter = 0
+	///Permanent hacked overlay, for the owning Malf AI to see
+	var/obj/effect/client_image_holder/apc_hacked/hacked_overlay
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -229,7 +231,8 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
-
+	if(hacked_overlay)
+		QDEL_NULL(hacked_overlay)
 	return ..()
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
