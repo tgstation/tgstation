@@ -57,10 +57,15 @@
 
 /// Selects what uplink item the bounty will reward on completion.
 /datum/spy_bounty/proc/select_reward(datum/spy_bounty_handler/handler)
-	reward_item = prob(33) ? pick(handler.possible_uplink_items) : pick_n_take(handler.possible_uplink_items)
-	// melbert todo : scale items based on difficulty to tc cost
-	// melbert todo : add some junk items for when we run out of items (for campbell)
-	// melbert todo : dupe protection?
+	var/list/loot_pool = handler.possible_uplink_items[difficulty]
+
+	if(!length(loot_pool))
+		reward_item = /datum/uplink_item/bundles_tc/telecrystal
+		return // melbert todo : add some junk items for when we run out of items (for campbell)
+
+	reward_item = pick(loot_pool)
+	if(prob(80))
+		loot_pool -= reward_item
 
 /**
  * Checks if the passed movable is a valid target for this bounty.

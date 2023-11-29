@@ -31,23 +31,34 @@
 		SPY_DIFFICULTY_HARD = list(),
 	)
 
-	/// List of all uplink items possible to be given as bounties.
+	/// Assoc list of all uplink items possible to be given as bounties for each difficulty.
 	/// This is not static, as bounties are complete uplink items will be removed from this list.
-	var/list/possible_uplink_items = list()
+	var/list/list/possible_uplink_items = list(
+		SPY_DIFFICULTY_EASY = list(),
+		SPY_DIFFICULTY_MEDIUM = list(),
+		SPY_DIFFICULTY_HARD = list(),
+	)
 
 /datum/spy_bounty_handler/New()
 	for(var/datum/spy_bounty/bounty as anything in subtypesof(/datum/spy_bounty))
-		var/difficulty = bounty::difficulty
+		var/difficulty = initial(bounty.difficulty)
 		if(!islist(bounty_types[difficulty]))
 			continue
 		bounty_types[difficulty] += bounty
 
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-		if(isnull(item.item) || istype(item.item, DUMMY_UPLINK_ITEM))
+		if(isnull(item.item) || item.item == DUMMY_UPLINK_ITEM)
 			continue
 		if(!(item.purchasable_from & UPLINK_SPY))
 			continue
-		possible_uplink_items += item
+		// This will have some overlap, and that's intentional -
+		// Adds some variety, rare moments where you can get a hard reward for an easier bounty (or visa versa)
+		if(item.cost <= 5)
+			possible_uplink_items[SPY_DIFFICULTY_EASY] += item
+		if(item.cost >= 5 && item.cost <= 12)
+			possible_uplink_items[SPY_DIFFICULTY_MEDIUM] += item
+		if(item.cost >= 12)
+			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
 
 	refresh_bounty_list()
 
