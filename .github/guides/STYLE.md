@@ -322,6 +322,18 @@ It's used within the definition of a datum as opposed to `Initialize` or other p
 	desc = /atom/thing::desc
 ```
 
+Another good use for it easy access of the parent's variables.
+```dm
+/obj/item/fork/dangerous
+	damage = parent_type::damage * 2
+```
+
+```dm
+/obj/item/fork
+	flags_1 = parent_type::flags_1 | FLAG_COOLER
+```
+
+
 It's important to note that `::` does not apply to every application of `initial()`.
 Primarily in cases where the type you're using for the initial value is not static.
 
