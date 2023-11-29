@@ -137,8 +137,8 @@
 					user.do_attack_animation(attacked_mob, ATTACK_EFFECT_PUNCH)
 				else
 					if(HAS_TRAIT(attacked_mob, TRAIT_CYBORG_LOVER))
-						user.visible_message(span_info("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks satisfied!"), \
-								span_info("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks satisfied!"))
+						user.visible_message(span_notice("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks satisfied!"), \
+								span_notice("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks satisfied!"))
 						attacked_mob.add_mood_event("borg_hug", /datum/mood_event/borg_hug)
 					else
 						user.visible_message(span_warning("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks uncomfortable..."), \
