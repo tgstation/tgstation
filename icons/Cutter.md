@@ -35,11 +35,13 @@ Looks something like this
 
 >Example: [Bamboo](turf/floors/bamboo_mat.png.toml)
 >
+> png of 32x32 blocks, representing connections.
+>
 > [None, North + South, East + West, North + South + East + West, All]
 >
 >[<img alt="Bamboo Template" src="turf/floors/bamboo_mat.png" width="320px">](turf/floors/bamboo_mat.png)
 >
-> And its output, as an example
+> And its output dmi
 >
 >[<img alt="Bamboo Output" src="turf/floors/bamboo_mat.dmi" width="320px">](turf/floors/bamboo_mat.dmi)
 
