@@ -13,7 +13,7 @@
 /obj/item/locator
 	name = "bluespace locator"
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
-	icon = 'icons/obj/devices/scanner.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/temp = null
 	flags_1 = CONDUCT_1
