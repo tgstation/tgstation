@@ -15096,11 +15096,11 @@
 	name = "monkey cube";
 	pixel_y = 17
 	},
-/obj/item/food/monkeycube/gorilla{
-	desc = "Just add water!";
+/obj/item/food/monkeycube/chicken{
+	pixel_y = 15;
+	pixel_x = 6;
 	name = "monkey cube";
-	pixel_x = 3;
-	pixel_y = 13
+	desc = "A new Nanotrasen classic, the monkey cube. Tastes like everything!"
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/tools)
@@ -18747,6 +18747,7 @@
 	},
 /obj/structure/fluff/broken_canister_frame,
 /obj/machinery/camera/autoname/directional/north,
+/obj/item/stack/sticky_tape/super,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/plating,
 /area/station/commons/storage/tools)
@@ -91460,7 +91461,7 @@ wbi
 hrY
 wbi
 wbi
-wbi
+dDB
 wbi
 wbi
 wbi
