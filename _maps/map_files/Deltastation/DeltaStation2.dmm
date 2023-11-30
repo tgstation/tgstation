@@ -17231,10 +17231,6 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/item/book/manual/wiki/telescience{
-	pixel_x = -2;
-	pixel_y = 2
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "sci_experimentor";
 	name = "Experimentor Blast Door"
