@@ -154,13 +154,13 @@
 	if(target.buckled && isvehicle(target.buckled))
 		animate(target.buckled, pixel_z = z_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 
-///Vehicles or other things the mob is buckled too also are shifted.
+///Vehicles the mob is buckled to also are shifted.
 /datum/element/elevation_core/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
 	if(source.buckled && isvehicle(source.buckled))
 		animate(source.buckled, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	if(new_buckled && isvehicle(new_buckled))
-		animate(source.buckled, pixel_z = pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		animate(new_buckled, pixel_z = pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 
 /datum/element/elevation_core/proc/on_reset_elevation(turf/source, list/current_values)
 	SIGNAL_HANDLER
