@@ -32,17 +32,6 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
 
-/atom/movable/screen/plane_master/wall_upper
-	name = "Upper wall"
-	documentation = "There are some walls that want to render above most things (mostly minerals since they shift over.\
-		<br>We draw them to their own plane so we can hijack them for our emissive mask stuff"
-	plane = WALL_PLANE_UPPER
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, LIGHT_MASK_PLANE)
-
-/atom/movable/screen/plane_master/wall_upper/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_WALL_LAYER, relay_color = GLOB.em_block_color)
-
 //-------------------- AREA PLANE --------------------
 
 /atom/movable/screen/plane_master/area
