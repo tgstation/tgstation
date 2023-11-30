@@ -120,7 +120,7 @@
 
 // Overlay for malf AIs to see their own hacked APCs. These are always visible, rather than flickering occationally. This is assigned during the AI's malfhacked() proc.
 /obj/effect/client_image_holder/apc_hacked
-	name = "//remote-host/access_override.bin" //If a name for the hacked APC image HAS to show in the AI's context menu, let's give it a fluff name
+	name = "APC Access Override" //If a name for the hacked APC image HAS to show in the AI's context menu, let's give it a fluff name
 	desc = ""
 	image_icon = 'icons/obj/machines/wallmounts.dmi'
 	image_state = "apcemag"

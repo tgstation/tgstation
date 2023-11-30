@@ -4,7 +4,6 @@ import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Apc = (props, context) => {
-  const { act, data } = useBackend(context);
   return (
     <Window width={450} height={445}>
       <Window.Content scrollable>
