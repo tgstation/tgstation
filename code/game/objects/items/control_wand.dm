@@ -85,45 +85,44 @@
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
-	desc = "A remote for controlling any airlock on the station."
-	icon_state = "omni_door"
+	desc = "This control wand can access any door on the station."
+	icon_state = "gangtool-yellow"
 	region_access = REGION_ALL_STATION
 
 /obj/item/door_remote/captain
 	name = "command door remote"
-	desc = "A remote for controlling a set of airlocks. This remote has additional AI Upload access."
-	icon_state = "command_door"
+	icon_state = "gangtool-yellow"
 	region_access = REGION_COMMAND
 
 /obj/item/door_remote/chief_engineer
 	name = "engineering door remote"
-	icon_state = "engineering_door"
+	icon_state = "gangtool-orange"
 	region_access = REGION_ENGINEERING
 
 /obj/item/door_remote/research_director
 	name = "research door remote"
-	icon_state = "research_door"
+	icon_state = "gangtool-purple"
 	region_access = REGION_RESEARCH
 
 /obj/item/door_remote/head_of_security
 	name = "security door remote"
-	icon_state = "security_door"
+	icon_state = "gangtool-red"
 	region_access = REGION_SECURITY
 
 /obj/item/door_remote/quartermaster
 	name = "supply door remote"
-	desc = "A remote for controlling a set of airlocks. This remote has additional Vault access."
-	icon_state = "supply_door"
+	desc = "Remotely controls airlocks. This remote has additional Vault access."
+	icon_state = "gangtool-green"
 	region_access = REGION_SUPPLY
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
-	icon_state = "medical_door"
+	icon_state = "gangtool-blue"
 	region_access = REGION_MEDBAY
 
 /obj/item/door_remote/civilian
 	name = "civilian door remote"
-	icon_state = "public_door"
+	icon_state = "gangtool-white"
 	region_access = REGION_GENERAL
 
 #undef WAND_OPEN

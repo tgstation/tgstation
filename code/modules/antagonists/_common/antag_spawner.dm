@@ -183,7 +183,7 @@
 	name = "syndicate cyborg beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
 	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "self_delivery"
+	icon_state = "gangtool-red"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	name = "syndicate assault cyborg beacon"

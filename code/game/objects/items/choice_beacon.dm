@@ -71,7 +71,6 @@
 /obj/item/choice_beacon/music
 	name = "instrument delivery beacon"
 	desc = "Summon your tool of art."
-	icon_state = "music_delivery"
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/choice_beacon/music/generate_display_names()
@@ -132,7 +131,6 @@
 /obj/item/choice_beacon/augments
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"
-	icon_state = "self_delivery"
 	uses = 3
 	company_source = "S.E.L.F."
 	company_message = span_bold("Request status: Recieved. Package status: Delivered. Notes: To assure optimal value, use supplied Interdyne-brand autosurgeons to change implantment status.")

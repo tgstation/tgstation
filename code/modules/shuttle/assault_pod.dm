@@ -17,7 +17,7 @@
 /obj/item/assault_pod
 	name = "Assault Pod Targeting Device"
 	icon = 'icons/obj/devices/remote.dmi'
-	icon_state = "syndie_landing_designator"
+	icon_state = "gangtool-red"
 	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
