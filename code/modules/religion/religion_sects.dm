@@ -39,7 +39,7 @@
 	/// Currently Active (non-deleted) rites
 	var/list/active_rites
 	/// Chance that we fail a bible blessing.
-	var/smack_chance = 60
+	var/smack_chance = DEFAULT_SMACK_CHANCE
 	/// Whether the structure has CANDLE OVERLAYS!
 	var/candle_overlay = TRUE
 

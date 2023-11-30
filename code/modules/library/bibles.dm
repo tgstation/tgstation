@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		balloon_alert(user, "can't heal yourself!")
 		return
 
-	var/smack_chance = 60
+	var/smack_chance = DEFAULT_SMACK_CHANCE
 	if(GLOB.religious_sect)
 		smack_chance = GLOB.religious_sect.smack_chance
 	var/success = !prob(smack_chance) && bless(target_mob, user)

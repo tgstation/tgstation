@@ -9,6 +9,8 @@
 #define ALIGNMENT_NEUT "neutral"
 #define ALIGNMENT_EVIL "evil"
 
+#define DEFAULT_SMACK_CHANCE 60
+
 //## which weapons should we use?
 
 // unused but for clarity
