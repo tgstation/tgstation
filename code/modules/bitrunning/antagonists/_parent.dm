@@ -61,9 +61,9 @@
 	return TRUE
 
 /// Sets up the agent so that they look like cyber police && don't have an account ID
-/datum/antagonist/bitrunning_glitch/proc/convert_agent(mob/living/carbon/human/player)
+/datum/antagonist/bitrunning_glitch/proc/convert_agent(mob/living/carbon/human/player, datum/outfit/agent_outfit)
 	player.set_service_style()
-	player.equipOutfit(/datum/outfit/cyber_police/tactical)
+	player.equipOutfit(agent_outfit)
 	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
 
 	var/obj/item/card/id/outfit_id = player.wear_id

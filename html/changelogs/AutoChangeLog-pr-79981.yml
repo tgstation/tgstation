@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "The Radioactive Nebula station trait will now respect its upper intensity cap set at one hour and forty minutes, no longer scaling past that, as was initially intended."
