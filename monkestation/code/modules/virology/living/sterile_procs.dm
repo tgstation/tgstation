@@ -50,6 +50,8 @@
 
 	for(var/item in checks)
 		var/obj/item/bodypart/bodypart = get_bodypart(item)
+		if(!bodypart)
+			return FALSE
 		if(bodypart.get_modified_bleed_rate())	
 			bleeding = TRUE
 
