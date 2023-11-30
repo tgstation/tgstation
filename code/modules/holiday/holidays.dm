@@ -843,7 +843,7 @@
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/clothing/head/costume/santa = 1,
-			/obj/item/gift/anything = 1
+			/obj/item/gift/anything = 1,
 			/obj/item/toy/xmas_cracker = 3,
 		) = maint_holiday_weight,
 	)
