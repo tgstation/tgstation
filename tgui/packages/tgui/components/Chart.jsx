@@ -116,9 +116,6 @@ class LineChart extends Component {
   }
 }
 
-const Stub = (props) => null;
-
-// IE8: No inline svg support
 export const Chart = {
-  Line: Byond.IS_LTE_IE8 ? Stub : LineChart,
+  Line: LineChart,
 };

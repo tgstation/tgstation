@@ -28,7 +28,7 @@ export const FaxMainPanel = (props) => {
     data.stamps.unshift('None');
   }
   return (
-    <div class="faxmenu">
+    <div className="faxmenu">
       <Section
         title="Fax Menu"
         buttons={

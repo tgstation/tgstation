@@ -10,11 +10,6 @@ import { AnimatedNumber } from './AnimatedNumber';
 import { Box, computeBoxClassName, computeBoxProps } from './Box';
 
 export const RoundGauge = (props) => {
-  // Support for IE8 is for losers sorry B)
-  if (Byond.IS_LTE_IE8) {
-    return <AnimatedNumber {...props} />;
-  }
-
   const {
     value,
     minValue = 1,

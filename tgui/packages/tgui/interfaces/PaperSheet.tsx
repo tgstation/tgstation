@@ -944,7 +944,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     }
 
     const textHTML = {
-      __html: `<span class='paper-text'>${previewText}</span>`,
+      __html: `<span className='paper-text'>${previewText}</span>`,
     };
 
     const { scrollableRef, handleOnScroll } = this.props;
