@@ -27,9 +27,9 @@
 /obj/vehicle/ridden/wheelchair/motorized/Initialize(mapload)
 	. = ..()
 	// Add tier 1 stock parts so that non-crafted wheelchairs aren't empty
-	component_parts += new /datum/stock_part/capacitor
-	component_parts += new /datum/stock_part/servo
-	component_parts += new /datum/stock_part/servo
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	power_cell = new /obj/item/stock_parts/cell(src)
 	refresh_parts()
 
