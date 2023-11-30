@@ -68,16 +68,6 @@
 
 //-------------------- FOV PLANES --------------------
 
-/atom/movable/screen/plane_master/game_world_fov_hidden
-	name = "lower game world fov hidden"
-	documentation = "If you want something to be hidden by fov, stick it on this plane. We're masked by the fov blocker plane, so the items on us can actually well, disappear."
-	plane = GAME_PLANE_FOV_HIDDEN
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/atom/movable/screen/plane_master/game_world_fov_hidden/Initialize(mapload, datum/hud/hud_owner)
-	. = ..()
-	//add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
-
 /atom/movable/screen/plane_master/field_of_vision_blocker
 	name = "Field of vision blocker"
 	documentation = "This is one of those planes that's only used as a filter. It masks out things that want to be hidden by fov.\

@@ -23,7 +23,6 @@
 
 #define WALL_PLANE -9
 #define GAME_PLANE -8
-#define GAME_PLANE_FOV_HIDDEN -7
 #define GAME_PLANE_UPPER -6
 #define WALL_PLANE_UPPER -5
 #define GAME_PLANE_UPPER_FOV_HIDDEN -4
