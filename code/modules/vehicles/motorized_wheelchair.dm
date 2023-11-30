@@ -103,11 +103,6 @@
 	power_cell = null
 
 /obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/attacking_item, mob/user, params)
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		attacking_item.play_tool_sound(src)
-		panel_open = !panel_open
-		user.visible_message(span_notice("[user] [panel_open ? "opens" : "closes"] the maintenance panel on [src]."), span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
-		return
 	if(!panel_open)
 		return ..()
 
@@ -135,7 +130,6 @@
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
 			if(newstockpart.tier > oldstockpart.tier)
 				// delete the part in the users hand and add the datum part to the component_list
-				attacking_item.moveToNullspace()
 				qdel(attacking_item)
 				component_parts += newstockpart
 				// create an new instance of the old datum stock part physical type & put it in the users hand
@@ -147,10 +141,10 @@
 				break
 	refresh_parts()
 
-/obj/vehicle/ridden/wheelchair/motorized/wrench_act(mob/living/user, obj/item/I)
-	to_chat(user, span_notice("You begin to detach the wheels..."))
-	if(!I.use_tool(src, user, 40, volume=50))
-		return TRUE
+/obj/vehicle/ridden/wheelchair/motorized/wrench_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You begin to disassemble the wheelchair..."))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
+		return
 	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
 	new /obj/item/stack/rods(drop_location(), 8)
 	new /obj/item/stack/sheet/iron(drop_location(), 10)
@@ -160,7 +154,13 @@
 		power_cell.forceMove(drop_location())
 		power_cell = null
 	qdel(src)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	panel_open = !panel_open
+	user.visible_message(span_notice("[user] [panel_open ? "opens" : "closes"] the maintenance panel on [src]."), span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/vehicle/ridden/wheelchair/motorized/examine(mob/user)
 	. = ..()

@@ -52,15 +52,16 @@
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I) //Attackby should stop it attacking the wheelchair after moving away during decon
+/obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/tool) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
-	to_chat(user, span_notice("You begin to detach the wheels..."))
-	if(I.use_tool(src, user, 40, volume=50))
-		to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
-		new /obj/item/stack/rods(drop_location(), 6)
-		new /obj/item/stack/sheet/iron(drop_location(), 4)
-		qdel(src)
-	return TRUE
+	to_chat(user, span_notice("You begin to disassemble the wheelchair..."))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
+		return
+	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
+	new /obj/item/stack/rods(drop_location(), 6)
+	new /obj/item/stack/sheet/iron(drop_location(), 4)
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/vehicle/ridden/wheelchair/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
