@@ -93,4 +93,7 @@
 	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list
 
 	var/list/data = list()
-	data["immunity"] = B.data["immunity"]
+	data["antigen"] = B.data["immunity"]
+	
+	product.reagents.add_reagent(/datum/reagent/vaccine , 30, data)
+
