@@ -51,7 +51,7 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
 	has_variable_transfer_amount = FALSE
 	volume = 5
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCTIVE
 	spillable = TRUE
 	resistance_flags = FIRE_PROOF
 	isGlass = FALSE

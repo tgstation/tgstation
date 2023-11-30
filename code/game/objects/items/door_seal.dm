@@ -6,7 +6,7 @@
 	inhand_icon_state = "pneumatic_seal"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCTIVE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force = 5
 	throwforce = 5
