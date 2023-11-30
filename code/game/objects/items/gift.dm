@@ -10,7 +10,7 @@
 
 GLOBAL_LIST_EMPTY(possible_gifts)
 
-/obj/item/a_gift
+/obj/item/gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
 	icon = 'icons/obj/storage/wrapping.dmi'
@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	var/obj/item/contains_type
 
-/obj/item/a_gift/Initialize(mapload)
+/obj/item/gift/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
@@ -28,16 +28,16 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	contains_type = get_gift_type()
 
-/obj/item/a_gift/suicide_act(mob/living/user)
+/obj/item/gift/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] peeks inside [src] and cries [user.p_them()]self to death! It looks like [user.p_they()] [user.p_were()] on the naughty list..."))
 	return BRUTELOSS
 
-/obj/item/a_gift/examine(mob/M)
+/obj/item/gift/examine(mob/M)
 	. = ..()
 	if(HAS_MIND_TRAIT(M, TRAIT_PRESENT_VISION) || isobserver(M))
 		. += span_notice("It contains \a [initial(contains_type.name)].")
 
-/obj/item/a_gift/attack_self(mob/M)
+/obj/item/gift/attack_self(mob/M)
 	if(HAS_MIND_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
 		to_chat(M, span_warning("You're supposed to be spreading gifts, not opening them yourself!"))
 		return
@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	else
 		M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
 
-/obj/item/a_gift/proc/get_gift_type()
+/obj/item/gift/proc/get_gift_type()
 	var/gift_type_list = list(/obj/item/sord,
 		/obj/item/storage/wallet,
 		/obj/item/storage/photo_album,
@@ -99,11 +99,11 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	return gift_type
 
 
-/obj/item/a_gift/anything
+/obj/item/gift/anything
 	name = "christmas gift"
 	desc = "It could be anything!"
 
-/obj/item/a_gift/anything/get_gift_type()
+/obj/item/gift/anything/get_gift_type()
 	if(!GLOB.possible_gifts.len)
 		var/list/gift_types_list = subtypesof(/obj/item)
 		for(var/V in gift_types_list)
