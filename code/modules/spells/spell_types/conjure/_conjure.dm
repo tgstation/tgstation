@@ -44,7 +44,7 @@
 				if (spawn_place.overfloor_placed)
 					spawn_place.ChangeTurf(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
 				else
-					spawn_place.PlaceOnTop(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
+					spawn_place.place_on_top(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
 				return
 			var/turf/open/open_turf = spawn_place
 			open_turf.replace_floor(summoned_object_type, flags = CHANGETURF_INHERIT_AIR)
@@ -61,3 +61,28 @@
 /// Called on atoms summoned after they are created, allows extra variable editing and such of created objects
 /datum/action/cooldown/spell/conjure/proc/post_summon(atom/summoned_object, atom/cast_on)
 	return
+
+///limits the amount of summons
+/datum/action/cooldown/spell/conjure/limit_summons
+	///max number of after images
+	var/max_summons
+	///How many clones do we have summoned
+	var/number_of_summons = 0
+
+/datum/action/cooldown/spell/conjure/limit_summons/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(number_of_summons >= max_summons)
+		return FALSE
+	return TRUE
+
+/datum/action/cooldown/spell/conjure/limit_summons/post_summon(atom/summoned_object, atom/cast_on)
+	RegisterSignals(summoned_object, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(delete_copy))
+	number_of_summons++
+
+/datum/action/cooldown/spell/conjure/limit_summons/proc/delete_copy(datum/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
+	number_of_summons--

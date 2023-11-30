@@ -38,12 +38,12 @@
 	icon_state = "base_machine[busy_processing ? "_processing" : ""]"
 	return ..()
 
-/obj/machinery/sheetifier/proc/CanInsertMaterials(obj/machinery/machine, held_item, user)
+/obj/machinery/sheetifier/proc/CanInsertMaterials(container, held_item, user)
 	SIGNAL_HANDLER
 
 	return busy_processing ? MATCONTAINER_BLOCK_INSERT : TRUE
 
-/obj/machinery/sheetifier/proc/AfterInsertMaterials(obj/machinery/machine, item_inserted, id_inserted, amount_inserted, container)
+/obj/machinery/sheetifier/proc/AfterInsertMaterials(container, item_inserted, id_inserted, mats_consumed, amount_inserted, atom/context)
 	busy_processing = TRUE
 	update_appearance()
 	var/datum/material/last_inserted_material = id_inserted

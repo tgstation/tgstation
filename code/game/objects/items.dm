@@ -171,7 +171,8 @@
 	var/sharpness = NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
-	var/tool_behaviour = NONE
+	var/tool_behaviour = null
+
 	///How fast does the tool work
 	var/toolspeed = 1
 
@@ -207,10 +208,8 @@
 
 	///Grinder var:A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/grind_results
-	//Grinder var:A reagent list containing blah blah... but when JUICED in a grinder!
-	var/list/juice_results
-
-	var/canMouseDown = FALSE
+	///A reagent the nutriments are converted into when the item is juiced.
+	var/datum/reagent/consumable/juice_typepath
 
 	/// Used in obj/item/examine to give additional notes on what the weapon does, separate from the predetermined output variables
 	var/offensive_notes
@@ -241,7 +240,6 @@
 	// Handle adding item associated actions
 	for(var/path in actions_types)
 		add_item_action(path)
-
 	actions_types = null
 
 	if(force_string)
@@ -423,7 +421,7 @@
 	///Separator between the items on the list
 	var/sep = ""
 	///Nodes that can be boosted
-	var/list/boostable_nodes = techweb_item_boost_check(src)
+	var/list/boostable_nodes = techweb_item_unlock_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
@@ -471,8 +469,9 @@
 	if(!.)
 		return
 
-	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
-
+	if(href_list[VV_HK_ADD_FANTASY_AFFIX])
+		if(!check_rights(R_FUN))
+			return
 		//gathering all affixes that make sense for this item
 		var/list/prefixes = list()
 		var/list/suffixes = list()
@@ -485,13 +484,11 @@
 					prefixes[affix_choice.name] = affix_choice
 				else
 					suffixes[affix_choice.name] = affix_choice
-
 		//making it more presentable here
 		var/list/affixes = list("---PREFIXES---")
 		affixes.Add(prefixes)
 		affixes.Add("---SUFFIXES---")
 		affixes.Add(suffixes)
-
 		//admin picks, cleanup the ones we didn't do and handle chosen
 		var/picked_affix_name = tgui_input_list(usr, "Affix to add to [src]", "Enchant [src]", affixes)
 		if(isnull(picked_affix_name))
@@ -500,13 +497,11 @@
 			return
 		var/datum/fantasy_affix/affix = affixes[picked_affix_name]
 		affixes.Remove(affix)
-		QDEL_LIST_ASSOC(affixes) //remove the rest, we didn't use them
 		var/fantasy_quality = 0
 		if(affix.alignment & AFFIX_GOOD)
 			fantasy_quality++
 		else
 			fantasy_quality--
-
 		//name gets changed by the component so i want to store it for feedback later
 		var/before_name = name
 		//naming these vars that i'm putting into the fantasy component to make it more readable
@@ -516,7 +511,6 @@
 		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, span_warning("Fantasy component not compatible with [src]."))
 			CRASH("fantasy component incompatible with object of type: [type]")
-
 		to_chat(usr, span_notice("[before_name] now has [picked_affix_name]!"))
 		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
 		message_admins(span_notice("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]"))
@@ -598,9 +592,6 @@
 		if(!R.low_power_mode) //can't equip modules with an empty cell.
 			R.activate_module(src)
 			R.hud_used.update_robot_modules_display()
-
-/obj/item/proc/GetDeconstructableContents()
-	return get_all_contents() - src
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -845,6 +836,13 @@
 		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
 
+/**
+ * Extend this to give the item an appearance when placed in a surgical tray. Uses an icon state in `medicart.dmi`.
+ * * tray_extended - If true, the surgical tray the item is placed on is in "table mode"
+ */
+/obj/item/proc/get_surgery_tool_overlay(tray_extended)
+	return null
+
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
 		return
@@ -950,12 +948,35 @@
 /obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
 	return TRUE
 
-///Called BEFORE the object is ground up - use this to change grind results based on conditions. Use "return -1" to prevent the grinding from occurring
+///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_GRIND)
 
+///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
+/obj/item/proc/grind(datum/reagents/target_holder, mob/user)
+	if(on_grind() == -1)
+		return FALSE
+	if(target_holder)
+		target_holder.add_reagent_list(grind_results)
+		if(reagents)
+			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	return TRUE
+
+///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
+	if(!juice_typepath)
+		return -1
 	return SEND_SIGNAL(src, COMSIG_ITEM_ON_JUICE)
+
+///Juice item, converting nutriments into juice_typepath and transfering to target_holder if specified
+/obj/item/proc/juice(datum/reagents/target_holder, mob/user)
+	if(on_juice() == -1)
+		return FALSE
+	if(reagents)
+		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
+		if(target_holder)
+			reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+	return TRUE
 
 /obj/item/proc/set_force_string()
 	switch(force)
@@ -1131,7 +1152,8 @@
 	return ..()
 
 /obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDED, embedded_target, part)
 
 /obj/item/proc/unembedded()
 	if(item_flags & DROPDEL && !QDELETED(src))
@@ -1152,6 +1174,8 @@
 
 ///In case we want to do something special (like self delete) upon failing to embed in something.
 /obj/item/proc/failedEmbed()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_FAILED_EMBED)
 	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
 
@@ -1166,7 +1190,7 @@
 	return src
 
 /**
- * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.
+ * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targeting the target.
  *
  * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
  *
@@ -1288,7 +1312,7 @@
 		// victim's chest (for cavity implanting the item)
 		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
 		if(victim_cavity.cavity_item)
-			victim.vomit(5, FALSE, FALSE, distance = 0)
+			victim.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = 5, distance = 0)
 			forceMove(drop_location())
 			to_chat(victim, span_warning("You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]"))
 		else
@@ -1319,12 +1343,9 @@
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
-
-	SEND_SIGNAL(src, COMSIG_ATOM_WASHED)
-
 	if(ismob(loc))
 		var/mob/mob_loc = loc
-		mob_loc.regenerate_icons()
+		mob_loc.update_clothing(slot_flags)
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
 /obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
@@ -1607,3 +1628,9 @@
 	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
+
+//automatically finds tool behavior if there is only one. requires an extension of the proc if a tool has multiple behaviors
+/obj/item/proc/get_all_tool_behaviours()
+	if (!isnull(tool_behaviour))
+		return list(tool_behaviour)
+	return null

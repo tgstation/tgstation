@@ -17,16 +17,18 @@
 	var/list/required_atoms = list()
 	/// The list of atoms with sub-lists of atom references for scanned atoms contributing to the experiment (Or a count of atoms destoryed for destructive expiriments)
 	var/list/scanned = list()
+	/// If set, it'll be used in place of the generic "Scan samples of \a [initial(target.name)]" in serialize_progress_stage()
+	var/scan_message
 
 /**
  * Initializes the scanned atoms lists
  *
  * Initializes the internal scanned atoms list to keep track of which atoms have already been scanned
  */
-/datum/experiment/scanning/New()
+/datum/experiment/scanning/New(datum/techweb/techweb)
 	. = ..()
 	for (var/req_atom in required_atoms)
-		scanned[req_atom] = traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? 0 : list()
+		scanned[req_atom] = (traits & EXPERIMENT_TRAIT_DESTRUCTIVE && !(traits & EXPERIMENT_TRAIT_TYPECACHE)) ? 0 : list()
 
 /**
  * Checks if the scanning experiment is complete
@@ -37,8 +39,12 @@
 /datum/experiment/scanning/is_complete()
 	. = TRUE
 	var/destructive = traits & EXPERIMENT_TRAIT_DESTRUCTIVE
+	var/typecache = traits & EXPERIMENT_TRAIT_TYPECACHE
 	for (var/req_atom in required_atoms)
 		var/list/seen = scanned[req_atom]
+		///typecache experiments work all the same whether it's destructive or not
+		if(typecache && length(seen) == required_atoms[req_atom])
+			continue
 		if (destructive && (!(req_atom in scanned) || scanned[req_atom] != required_atoms[req_atom]))
 			return FALSE
 		if (!destructive && (!seen || seen.len != required_atoms[req_atom]))
@@ -65,8 +71,9 @@
  * * seen_instances - The number of instances seen of this atom
  */
 /datum/experiment/scanning/proc/serialize_progress_stage(atom/target, list/seen_instances)
-	var/scanned_total = traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len
-	return EXPERIMENT_PROG_INT("Scan samples of \a [initial(target.name)]", scanned_total, required_atoms[target])
+	var/scanned_total = (traits & EXPERIMENT_TRAIT_DESTRUCTIVE && !(traits & EXPERIMENT_TRAIT_TYPECACHE)) ? scanned[target] : seen_instances.len
+	var/message = scan_message || "Scan samples of \a [initial(target.name)]"
+	return EXPERIMENT_PROG_INT(message, scanned_total, required_atoms[target])
 
 /**
  * Attempts to scan an atom towards the experiment's goal
@@ -79,7 +86,10 @@
 /datum/experiment/scanning/perform_experiment_actions(datum/component/experiment_handler/experiment_handler, atom/target)
 	var/contributing_index_value = get_contributing_index(target)
 	if (contributing_index_value)
-		scanned[contributing_index_value] += traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? 1 : WEAKREF(target)
+		if(traits & EXPERIMENT_TRAIT_TYPECACHE)
+			scanned[contributing_index_value][target.type] = TRUE
+		else
+			scanned[contributing_index_value] += traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? 1 : WEAKREF(target)
 		if(traits & EXPERIMENT_TRAIT_DESTRUCTIVE && !isliving(target))//only qdel things when destructive scanning and they're not living (living things get gibbed)
 			qdel(target)
 		do_after_experiment(target, contributing_index_value)

@@ -55,7 +55,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return
 	var/obj/item/multitool/M = I
 	M.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/bsa/front
@@ -72,7 +72,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return
 	var/obj/item/multitool/M = I
 	M.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/bsa/middle
@@ -241,7 +241,12 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	point.Beam(target, icon_state = "bsa_beam", time = 5 SECONDS, maxdistance = world.maxx) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
-	notify_ghosts("The Bluespace Artillery has been fired!", source = bullseye, header = "KABOOM!")
+	notify_ghosts(
+		"The Bluespace Artillery has been fired!",
+		source = bullseye,
+		header = "KABOOM!",
+	)
+
 	if(!blocker)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")
 		user.log_message("has launched an artillery strike targeting [AREACOORD(bullseye)].", LOG_GAME)

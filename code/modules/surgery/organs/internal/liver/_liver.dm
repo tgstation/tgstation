@@ -172,18 +172,18 @@
 			to_chat(owner, span_userdanger("You feel stabbing pain in your abdomen!"))
 		if(2)
 			to_chat(owner, span_userdanger("You feel a burning sensation in your gut!"))
-			owner.vomit()
+			owner.vomit(VOMIT_CATEGORY_DEFAULT)
 		if(3)
 			to_chat(owner, span_userdanger("You feel painful acid in your throat!"))
-			owner.vomit(blood = TRUE)
+			owner.vomit(VOMIT_CATEGORY_BLOOD)
 		if(4)
 			to_chat(owner, span_userdanger("Overwhelming pain knocks you out!"))
-			owner.vomit(blood = TRUE, distance = rand(1,2))
+			owner.vomit(VOMIT_CATEGORY_BLOOD, distance = rand(1,2))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(2.5 SECONDS)
 		if(5)
 			to_chat(owner, span_userdanger("You feel as if your guts are about to melt!"))
-			owner.vomit(blood = TRUE,distance = rand(1,3))
+			owner.vomit(VOMIT_CATEGORY_BLOOD, distance = rand(1,3))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(5 SECONDS)
 
@@ -245,6 +245,7 @@
 /obj/item/organ/internal/liver/cybernetic
 	name = "basic cybernetic liver"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
+	failing_desc = "seems to be broken."
 	icon_state = "liver-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5

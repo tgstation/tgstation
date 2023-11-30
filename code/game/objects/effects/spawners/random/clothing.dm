@@ -172,6 +172,16 @@
 		/obj/item/storage/backpack/duffelbag/sec,
 		/obj/item/storage/backpack/duffelbag/engineering,
 		/obj/item/storage/backpack/duffelbag/clown,
+		/obj/item/storage/backpack/messenger,
+		/obj/item/storage/backpack/messenger/eng,
+		/obj/item/storage/backpack/messenger/med,
+		/obj/item/storage/backpack/messenger/vir,
+		/obj/item/storage/backpack/messenger/chem,
+		/obj/item/storage/backpack/messenger/gen,
+		/obj/item/storage/backpack/messenger/science,
+		/obj/item/storage/backpack/messenger/hyd,
+		/obj/item/storage/backpack/messenger/sec,
+		/obj/item/storage/backpack/messenger/explorer,
 	)
 
 /obj/effect/spawner/random/clothing/funny_hats

@@ -49,6 +49,7 @@
 	var/emagged = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
+	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
 

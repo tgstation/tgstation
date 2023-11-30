@@ -354,6 +354,18 @@
 	icon_file = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/buttondown_skirt_worn.json'
 
+//
+// LABCOATS
+//
+
+/datum/greyscale_config/labcoat
+	name = "Labcoat"
+	icon_file = 'icons/obj/clothing/suits/labcoat.dmi'
+	json_config = 'code/datums/greyscale/json_configs/labcoat.json'
+
+/datum/greyscale_config/labcoat/worn
+	name = "Labcoat (Worn)"
+	icon_file = 'icons/mob/clothing/suits/labcoat.dmi'
 
 //
 // SUITS
@@ -497,6 +509,15 @@
 	name = "Worn Marisa Sneakers (Worn)"
 	icon_file = 'icons/mob/clothing/feet.dmi'
 
+/datum/greyscale_config/glow_shoes
+	name = "Glow Shoes"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/glow_shoes.json'
+
+/datum/greyscale_config/glow_shoes/worn
+	name = "Glow Shoes (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
 //
 // ACCESSORIES
 //
@@ -628,3 +649,51 @@
 /datum/greyscale_config/witch_hat/worn
 	name = "Witch Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/wizard.dmi'
+
+/datum/greyscale_config/wellworn_shirt
+	name = "Well-Worn Shirt"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wellworn_shirt.json'
+
+/datum/greyscale_config/wellworn_shirt/worn
+	name = "Well-Worn Shirt (Worn)"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
+/datum/greyscale_config/wellworn_shirt_graphic
+	name = "Well-Worn Shirt (Graphic)"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wellworn_shirt_graphic.json'
+
+/datum/greyscale_config/wellworn_shirt_graphic/worn
+	name = "Well-Worn Shirt (Graphic)(Worn)"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
+/datum/greyscale_config/wellworn_shirt/wornout
+	name = "Worn-Out Shirt"
+
+/datum/greyscale_config/wellworn_shirt/worn/wornout
+	name = "Worn-Out Shirt (Worn)"
+
+/datum/greyscale_config/wornout_shirt_graphic
+	name = "Worn-Out Shirt (Graphic)"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/wornout_shirt_graphic.json'
+
+/datum/greyscale_config/wornout_shirt_graphic/worn
+	name = "Worn-Out Shirt (Graphic)(Worn)"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
+/datum/greyscale_config/wellworn_shirt/messy
+	name = "Messy Worn Shirt"
+
+/datum/greyscale_config/wellworn_shirt/worn/messy
+	name = "Messy Worn Shirt (Worn)"
+
+/datum/greyscale_config/messyworn_shirt_graphic
+	name = "Messy Shirt (Graphic)"
+	icon_file = 'icons/obj/clothing/suits/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/messyworn_shirt_graphic.json'
+
+/datum/greyscale_config/messyworn_shirt_graphic/worn
+	name = "Messy Shirt (Graphic (Worn)"
+	icon_file = 'icons/mob/clothing/suits/costume.dmi'

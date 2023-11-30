@@ -18,7 +18,7 @@
 	icon_state = null
 	density = FALSE
 	move_resist = INFINITY
-	invisibility = 0
+	invisibility = INVISIBILITY_NONE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	logging = null
 	held_items = null //all of these are list objects that should not exist for something like us

@@ -206,8 +206,9 @@ Difficulty: Hard
 	COOLDOWN_START(src, scream_cooldown, scream_cooldown_time)
 	SLEEP_CHECK_DEATH(5, src)
 	playsound(loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
-	animate(src, pixel_z = rand(5, 15), time = 1, loop = 20)
-	animate(pixel_z = 0, time = 1)
+	var/pixel_shift = rand(5, 15)
+	animate(src, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)
 	for(var/mob/living/dizzy_target in get_hearers_in_view(7, src) - src)
 		dizzy_target.set_dizzy_if_lower(12 SECONDS)
 		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))
@@ -267,6 +268,10 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
+
+	if(!true_spawn)
+		return ..()
+
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
 	exit.id = "wendigo arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)

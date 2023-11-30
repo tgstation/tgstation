@@ -35,7 +35,7 @@ All ShuttleMove procs go here
 				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
 				log_shuttle("[key_name(M)] was shuttle gibbed by [shuttle].")
 				M.investigate_log("has been gibbed by [shuttle].", INVESTIGATE_DEATHS)
-				M.gib()
+				M.gib(DROP_ALL_REMAINS)
 
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else

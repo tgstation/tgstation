@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes:
+  - balance: "The Meat Hook will now \"ground\" you whenever you fire it out at someone. You get a very small immobilization every time you fire, which \"upgrades\" to a full immobilization whenever you actually hit an atom and start to drag it in."
+  - bugfix: "A chain should now show up as you drag in something with the meat hooks."
+  - bugfix: "Meat hooks should no longer play the \"magical gun\" suicide if you were to use it, but instead do their own unique thing."

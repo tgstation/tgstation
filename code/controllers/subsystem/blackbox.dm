@@ -14,7 +14,9 @@ SUBSYSTEM_DEF(blackbox)
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2,
-							"testmerged_prs" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"testmerged_prs" = 2,
+							"dynamic_threat" = 2,
+						) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time

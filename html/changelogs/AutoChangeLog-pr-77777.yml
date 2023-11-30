@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Bots that can't be controlled (like beepsky) no longer has a stray 0 at the very right side of its UI."

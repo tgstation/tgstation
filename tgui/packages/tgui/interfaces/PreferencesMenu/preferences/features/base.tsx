@@ -36,14 +36,14 @@ export type FeatureValueProps<
   TReceiving,
   TSending = TReceiving,
   TServerData = undefined
-> = {
+> = Readonly<{
   act: typeof sendAct;
   featureId: string;
   handleSetValue: (newValue: TSending) => void;
   serverData: TServerData | undefined;
   shrink?: boolean;
   value: TReceiving;
-};
+}>;
 
 export const FeatureColorInput = (props: FeatureValueProps<string>) => {
   return (
@@ -323,23 +323,19 @@ export const FeatureSliderInput = (
   );
 };
 
-export const FeatureValueInput = (
-  props: {
-    feature: Feature<unknown>;
-    featureId: string;
-    shrink?: boolean;
-    value: unknown;
+export const FeatureValueInput = (props: {
+  feature: Feature<unknown>;
+  featureId: string;
+  shrink?: boolean;
+  value: unknown;
 
-    act: typeof sendAct;
-  },
-  context
-) => {
-  const { data } = useBackend<PreferencesMenuData>(context);
+  act: typeof sendAct;
+}) => {
+  const { data } = useBackend<PreferencesMenuData>();
 
   const feature = props.feature;
 
   const [predictedValue, setPredictedValue] = useLocalState(
-    context,
     `${props.featureId}_predictedValue_${data.active_slot}`,
     props.value
   );

@@ -1,6 +1,6 @@
 /obj/item/radio/intercom
 	name = "station intercom"
-	desc = "Talk through this."
+	desc = "A trusty station intercom, ready to spring into action even when the headsets go silent."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
 	anchored = TRUE
@@ -16,12 +16,17 @@
 	overlay_mic_idle = "intercom_m"
 	overlay_mic_active = null
 
+	///The icon of intercom while its turned off
+	var/icon_off = "intercom-p"
+
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 
 /obj/item/radio/intercom/prison
-	name = "prison intercom"
+	name = "receive-only intercom"
 	desc = "A station intercom. It looks like it has been modified to not broadcast."
+	icon_state = "intercom_prison"
+	icon_off = "intercom_prison-p"
 
 /obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
 	. = ..()
@@ -34,6 +39,9 @@
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	GLOB.intercoms_list += src
+	if(!unscrewed)
+		find_and_hang_on_wall(directional = TRUE, \
+			custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 
 /obj/item/radio/intercom/Destroy()
 	. = ..()
@@ -79,8 +87,7 @@
 	if(tool.use_tool(src, user, 80))
 		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		new/obj/item/wallframe/intercom(get_turf(src))
-		qdel(src)
+		knock_down()
 
 /**
  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
@@ -155,7 +162,7 @@
 			return
 
 /obj/item/radio/intercom/update_icon_state()
-	icon_state = on ? initial(icon_state) : "intercom-p"
+	icon_state = on ? initial(icon_state) : icon_off
 	return ..()
 
 /**
@@ -174,6 +181,13 @@
 		set_on(current_area.powered(AREA_USAGE_EQUIP)) // set "on" to the equipment power status of our area.
 	update_appearance()
 
+/**
+ * Called by the wall mount component and reused during the tool deconstruction proc.
+ */
+/obj/item/radio/intercom/proc/knock_down()
+	new/obj/item/wallframe/intercom(get_turf(src))
+	qdel(src)
+
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
@@ -184,7 +198,7 @@
 	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.75, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.25)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
@@ -199,11 +213,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 /obj/item/radio/intercom/command
 	name = "command intercom"
-	desc = "The command team's special extended-frequency intercom. Mostly just used for eavesdropping, gossiping about subordinates, and complaining about the higher-ups."
-	icon = 'icons/obj/machines/wallmounts.dmi'
+	desc = "The command's special free-frequency intercom. It's a versatile tool that can be tuned to any frequency, granting you access to channels you're not supposed to be on. Plus, it comes equipped with a built-in voice amplifier for crystal-clear communication."
 	icon_state = "intercom_command"
 	freerange = TRUE
+	command = TRUE
+	icon_off = "intercom_command-p"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)
-MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)

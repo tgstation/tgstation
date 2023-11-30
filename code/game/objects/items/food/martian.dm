@@ -166,9 +166,8 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 15
 	)
-	burns_in_oven = TRUE
 	tastes = list("bread" = 10)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN 
 	venue_value = FOOD_PRICE_TRASH
 
 /obj/item/food/bread/reispan/make_processable()
@@ -306,7 +305,7 @@
 		/datum/reagent/consumable/capsaicin = 2,
 	)
 	tastes = list("barbecue meat" = 1, "noodles" = 1, "chilli heat" = 1)
-	foodtypes = MEAT | GRAIN | VEGETABLES
+	foodtypes = MEAT | GRAIN | VEGETABLES | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/yakisoba_katsu
@@ -468,7 +467,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("egg" = 1, "toast" = 1, "bacon" = 1, "pickles" = 1, "cheese" = 1)
-	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | PINEAPPLE | BREAKFAST
+	foodtypes = MEAT | DAIRY | VEGETABLES | GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
 // Snacks
@@ -480,10 +479,10 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("octopus" = 1, "batter" = 1, "onion" = 1, "worcestershire sauce" = 1)
-	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES
+	foodtypes = SEAFOOD | GRAIN | FRIED | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/takoyaki/russian
@@ -497,7 +496,7 @@
 		/datum/reagent/consumable/capsaicin = 10,
 	)
 	tastes = list("octopus" = 1, "batter" = 1, "onion" = 1, "chilli heat" = 1)
-	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES
+	foodtypes = SEAFOOD | GRAIN | FRIED | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/takoyaki/taco
@@ -508,7 +507,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 4,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 	)
 	tastes = list("taco meat" = 1, "batter" = 1, "corn" = 1, "cheese" = 1)
 	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES | DAIRY
@@ -524,7 +523,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("batter" = 1, "cabbage" = 1, "onion" = 1, "worcestershire sauce" = 1)
-	foodtypes = MEAT | GRAIN | FRIED | VEGETABLES | DAIRY
+	foodtypes = SEAFOOD | GRAIN | FRIED | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 //hey, the name literally means "grilled how you like it", it'd be crazy to not make it customisable
@@ -670,7 +669,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("fries" = 1, "duck" = 1, "ketchup" = 1, "mayo" = 1, "spicy seasoning" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/little_hawaii_hotdog
@@ -783,7 +782,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("chicken" = 1, "coconut" = 1, "curry" = 1)
-	foodtypes = MEAT | VEGETABLES | DAIRY
+	foodtypes = MEAT | VEGETABLES | FRUIT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/huoxing_tofu
@@ -943,7 +942,6 @@
 	)
 	tastes = list("winter spices" = 2, "ambrosia vulgaris" = 2, "cake" = 5)
 	foodtypes = GRAIN | SUGAR | DAIRY
-	burns_in_oven = TRUE
 
 /obj/item/food/cake/spekkoek/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/spekkoek, 5, 3 SECONDS, table_required = TRUE)
@@ -1142,7 +1140,7 @@
 	icon_state = "frickles"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
-		/datum/reagent/consumable/cooking_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil = 2,
 		/datum/reagent/consumable/capsaicin = 1,
 	)
 	tastes = list("frickles" = 1)
@@ -1177,8 +1175,6 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/salt = 1,
 	)
-	burns_on_grill = TRUE
-	burns_in_oven = TRUE
 	tastes = list("bread" = 1, "salt" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
@@ -1208,7 +1204,6 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment = 4,
 	)
-	burns_on_grill = TRUE
 	tastes = list("chicken" = 1, "umami sauce" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL

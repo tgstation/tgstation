@@ -131,19 +131,27 @@
  * - [source][/obj/item]: The source of the materials we are inserting.
  * - multiplier: The multiplier for the materials extract from this item being inserted.
  * - breakdown_flags: The breakdown bitflags that will be used to retrieve the materials from the source
+ * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, breakdown_flags = mat_container_flags)
+/datum/component/material_container/proc/insert_item_materials(obj/item/source, multiplier = 1, breakdown_flags = mat_container_flags, atom/context = parent)
 	var/primary_mat
 	var/max_mat_value = 0
+	var/material_amount = 0
 
 	var/list/item_materials = source.get_material_composition(breakdown_flags)
+	var/list/mats_consumed = list()
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
 			continue
-		materials[MAT] += OPTIMAL_COST(item_materials[MAT] * multiplier)
+		var/mat_amount = OPTIMAL_COST(item_materials[MAT] * multiplier)
+		materials[MAT] += mat_amount
 		if(item_materials[MAT] > max_mat_value)
 			max_mat_value = item_materials[MAT]
 			primary_mat = MAT
+		mats_consumed[MAT] = mat_amount
+		material_amount += mat_amount
+	if(length(mats_consumed))
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_ITEM_CONSUMED, source, primary_mat, mats_consumed, material_amount, context)
 
 	return primary_mat
 //===================================================================================
@@ -188,15 +196,16 @@
  * - [weapon][obj/item]: the item you are trying to insert
  * - multiplier: The multiplier for the materials being inserted
  * - breakdown_flags: The breakdown bitflags that will be used to retrieve the materials from the source
+ * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, breakdown_flags = mat_container_flags)
+/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, breakdown_flags = mat_container_flags, atom/context = parent)
 	if(QDELETED(weapon))
 		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
 
 	var/obj/item/target = weapon
 
-	var/material_amount = get_item_material_amount(target, breakdown_flags) * multiplier
+	var/material_amount = OPTIMAL_COST(get_item_material_amount(target, breakdown_flags) * multiplier)
 	if(!material_amount)
 		return MATERIAL_INSERT_ITEM_NO_MATS
 	var/obj/item/stack/item_stack
@@ -218,9 +227,8 @@
 		return MATERIAL_INSERT_ITEM_NO_SPACE
 
 	//do the insert
-	var/last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags)
+	var/last_inserted_id = insert_item_materials(target, multiplier, breakdown_flags, context)
 	if(!isnull(last_inserted_id))
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_ITEM_CONSUMED, target, last_inserted_id, material_amount, src)
 		qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
@@ -242,8 +250,9 @@
  * * held_item - the item to insert
  * * user - the mob inserting this item
  * * breakdown_flags - how this item and all it's contents inside are broken down during insertion. This is unique to the machine doing the insertion
+ * * context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, breakdown_flags = mat_container_flags)
+/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, breakdown_flags = mat_container_flags, atom/context = parent)
 	set waitfor = FALSE
 	. = 0
 
@@ -327,7 +336,7 @@
 
 		//insert the item
 		var/item_name = target.name
-		var/inserted = insert_item(target, breakdown_flags = mat_container_flags)
+		var/inserted = insert_item(target, 1, mat_container_flags, context)
 		if(inserted > 0)
 			. += inserted
 			inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
@@ -438,7 +447,7 @@
  *
  * Arguments:
  * -[mat][datum/material] : the material type to check for 3 cases
- * a) If it's an path its ref is retrived
+ * a) If it's an path its ref is retrieved
  * b) If it's text then its an category material & there is no way to deal with it so return 0
  * c) If normal material proceeds as usual
  */
@@ -452,8 +461,8 @@
  * if this container does not support glass, any glass in 'I' will not be taken into account
  *
  * Arguments:
- * - [I][obj/item]: the item whos materials must be retrived
- * - breakdown_flags: how this item must be broken down to retrive its materials
+ * - [I][obj/item]: the item whos materials must be retrieved
+ * - breakdown_flags: how this item must be broken down to retrieve its materials
  */
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I, breakdown_flags = mat_container_flags)
 	if(!istype(I) || !I.custom_materials)
@@ -564,44 +573,62 @@
  * sheet_amt: number of sheets to extract
  * [material][datum/material]: type of sheets present in this container to extract
  * [target][atom]: drop location
+ * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_SHEETS_RETRIEVED and is used mostly for silo logging
  */
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null)
+/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null, atom/context = parent)
+	//do we support sheets of this material
 	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
-	if(sheet_amt <= 0)
+	if(!can_hold_material(material))
 		return 0
 
+	//requested amount greater than available amount or just an invalid value
+	sheet_amt = min(round(materials[material] / SHEET_MATERIAL_AMOUNT), sheet_amt)
+	if(sheet_amt <= 0)
+		return 0
+	//auto drop location
 	if(!target)
 		var/atom/parent_atom = parent
 		target = parent_atom.drop_location()
-	if(materials[material] < (sheet_amt * SHEET_MATERIAL_AMOUNT))
-		sheet_amt = round(materials[material] / SHEET_MATERIAL_AMOUNT)
-	var/count = 0
-	while(sheet_amt > MAX_STACK_SIZE)
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, MAX_STACK_SIZE, null, list((material) = SHEET_MATERIAL_AMOUNT))
-		count += MAX_STACK_SIZE
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
-		sheet_amt -= MAX_STACK_SIZE
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets)
-	if(sheet_amt >= 1)
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, sheet_amt, null, list((material) = SHEET_MATERIAL_AMOUNT))
-		count += sheet_amt
-		use_amount_mat(sheet_amt * SHEET_MATERIAL_AMOUNT, material)
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIVED, new_sheets)
-	return count
+		if(!target)
+			return 0
 
+	//eject sheets based on available amount after each iteration
+	var/count = 0
+	while(sheet_amt > 0)
+		//don't merge yet. we need to do stuff with it first
+		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, min(sheet_amt, MAX_STACK_SIZE), FALSE)
+		count += new_sheets.amount
+		//use material & deduct work needed
+		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
+		sheet_amt -= new_sheets.amount
+		//send signal
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIEVED, new_sheets, context)
+		//no point merging anything into an already full stack
+		if(new_sheets.amount == new_sheets.max_amount)
+			continue
+		//now we can merge since we are done with it
+		for(var/obj/item/stack/item_stack in target)
+			if(item_stack == new_sheets || item_stack.type != material.sheet_type) //don't merge with self or different type
+				continue
+			//speed merge
+			var/merge_amount = min(item_stack.amount, new_sheets.max_amount - new_sheets.get_amount())
+			item_stack.use(merge_amount)
+			new_sheets.add(merge_amount)
+			break
+	return count
 
 /**
  * Proc to get all the materials and dump them as sheets
  *
  * Arguments:
  * - target: drop location of the sheets
+ * - context: the atom which is ejecting the sheets. Used mostly in silo logging
  */
-/datum/component/material_container/proc/retrieve_all(target = null)
+/datum/component/material_container/proc/retrieve_all(target = null, atom/context = parent)
 	var/result = 0
 	for(var/MAT in materials)
-		var/amount = materials[MAT]
-		result += retrieve_sheets(amount2sheet(amount), MAT, target)
+		result += retrieve_sheets(amount2sheet(materials[MAT]), MAT, target, context)
 	return result
 //============================================================================================
 

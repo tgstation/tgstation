@@ -62,7 +62,7 @@
 	access = ACCESS_ATMOSPHERICS
 	contains = list(/obj/item/watertank/atmos)
 	crate_name = "firefighting backpack crate"
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/emergency/internals
 	name = "Internals Crate"
@@ -117,8 +117,6 @@
 	contains = list(/obj/item/clothing/head/utility/radiation = 2,
 					/obj/item/clothing/suit/utility/radiation = 2,
 					/obj/item/geiger_counter = 2,
-					/obj/item/clothing/suit/utility/radiation,
-					/obj/item/geiger_counter,
 					/obj/item/reagent_containers/cup/glass/bottle/vodka,
 					/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass = 2,
 				)

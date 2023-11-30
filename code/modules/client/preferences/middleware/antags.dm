@@ -116,6 +116,7 @@
 /datum/asset/spritesheet/antagonists/create_spritesheets()
 	// Antagonists that don't have a dynamic ruleset, but do have a preference
 	var/static/list/non_ruleset_antagonists = list(
+		ROLE_GLITCH = /datum/antagonist/bitrunning_glitch,
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
 		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,

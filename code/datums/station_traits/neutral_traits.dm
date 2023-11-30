@@ -148,7 +148,7 @@
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 
 	/// The gorilla we created, we only hold this ref until the round starts.
-	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla
+	var/mob/living/basic/gorilla/cargorilla/cargorilla
 
 /datum/station_trait/cargorilla/New()
 	. = ..()
@@ -158,8 +158,8 @@
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/simple_animal/sloth/cargo_sloth = GLOB.cargo_sloth
-	if(!cargo_sloth)
+	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
+	if(isnull(cargo_sloth))
 		return
 
 	cargorilla = new(cargo_sloth.loc)
@@ -189,7 +189,7 @@
 	cargorilla = null
 
 /// Get us a ghost for the gorilla.
-/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/simple_animal/hostile/gorilla/cargo_domestic/gorilla)
+/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
 	if(QDELETED(gorilla))
 		return
 
@@ -336,3 +336,26 @@
 	show_in_report = TRUE
 	report_message = "There sure are a lot of trees out there."
 
+/datum/station_trait/triple_ai
+	name = "AI Triumvirate"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = TRUE
+	weight = 1
+	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
+
+/datum/station_trait/triple_ai/New()
+	. = ..()
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, PROC_REF(on_occupations_divided))
+
+/datum/station_trait/triple_ai/revert()
+	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
+	return ..()
+
+/datum/station_trait/triple_ai/proc/on_occupations_divided(datum/source, pure, allow_all)
+	SIGNAL_HANDLER
+
+	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
+		ai_datum.spawn_positions = 3
+	if(!pure)
+		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+			secondary_ai_spawn.latejoin_active = TRUE

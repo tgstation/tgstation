@@ -44,13 +44,6 @@
 	/// Datum level flags
 	var/datum_flags = NONE
 
-#ifndef EXPERIMENT_515_DONT_CACHE_REF
-	/// A cached version of our \ref
-	/// The brunt of \ref costs are in creating entries in the string tree (a tree of immutable strings)
-	/// This avoids doing that more then once per datum by ensuring ref strings always have a reference to them after they're first pulled
-	var/cached_ref
-#endif
-
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
@@ -74,6 +67,10 @@
 	var/list/found_refs
 	#endif
 #endif
+
+	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
+	// Create and destroy is weird and I wanna cover my bases
+	var/harddel_deets_dumped = FALSE
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
@@ -406,5 +403,6 @@
 
 /// Return text from this proc to provide extra context to hard deletes that happen to it
 /// Optional, you should use this for cases where replication is difficult and extra context is required
+/// Can be called more then once per object, use harddel_deets_dumped to avoid duplicate calls (I am so sorry)
 /datum/proc/dump_harddel_info()
 	return

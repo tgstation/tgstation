@@ -6,6 +6,10 @@
 	custom_price = PAYCHECK_CREW
 	var/max_occupants = 4
 	can_be_tied = FALSE
+	/// Do these boots have spur sounds?
+	var/has_spurs = FALSE
+	/// The jingle jangle jingle of our spurs
+	var/list/spur_sound = list('sound/effects/footstep/spurs1.ogg'=1,'sound/effects/footstep/spurs2.ogg'=1,'sound/effects/footstep/spurs3.ogg'=1)
 
 /datum/armor/shoes_cowboy
 	bio = 90
@@ -17,7 +21,10 @@
 
 	if(prob(2))
 		//There's a snake in my boot
-		new /mob/living/simple_animal/hostile/retaliate/snake(src)
+		new /mob/living/basic/snake(src)
+
+	if(has_spurs)
+		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)
 
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
@@ -31,11 +38,7 @@
 			occupant.forceMove(user.drop_location())
 			user.visible_message(span_warning("[user] recoils as something slithers out of [src]."), span_userdanger("You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!"))
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
-			user.apply_damage(5, BRUTE, target_zone)
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
-				user.reagents.add_reagent(/datum/reagent/toxin, 7)
-
-
+			occupant.UnarmedAttack(user, proximity_flag = TRUE)
 
 /obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
 	. = ..()
@@ -56,7 +59,7 @@
 	if(contents.len >= max_occupants)
 		to_chat(user, span_warning("[src] are full!"))
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/basic/headslug) || islarva(target))
+	if(istype(target, /mob/living/basic/snake) || istype(target, /mob/living/basic/headslug) || islarva(target))
 		target.forceMove(src)
 		to_chat(user, span_notice("[target] slithers into [src]."))
 
@@ -97,3 +100,10 @@
 	name = "\improper Hugs-The-Feet lizard skin boots"
 	desc = "A pair of masterfully crafted lizard skin boots. Finally a good application for the station's most bothersome inhabitants."
 	icon_state = "lizardboots_blue"
+
+/// Shoes for the nuke-ops cowboy fit
+/obj/item/clothing/shoes/cowboy/black/syndicate
+	name = "black spurred cowboy boots"
+	desc = "And they sing, oh, ain't you glad you're single? And that song ain't so very far from wrong."
+	armor_type = /datum/armor/shoes_combat
+	has_spurs = TRUE

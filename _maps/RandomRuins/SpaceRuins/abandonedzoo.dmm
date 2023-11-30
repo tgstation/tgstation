@@ -364,9 +364,7 @@
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "vU" = (
-/mob/living/simple_animal/hostile/asteroid/goldgrub{
-	will_burrow = 0
-	},
+/mob/living/basic/mining/goldgrub,
 /turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "wc" = (

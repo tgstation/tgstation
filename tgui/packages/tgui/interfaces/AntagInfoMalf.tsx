@@ -4,7 +4,7 @@ import { GenericUplink, Item } from './Uplink/GenericUplink';
 import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
 
 const allystyle = {
   fontWeight: 'bold',
@@ -32,11 +32,12 @@ type Info = {
   processingTime: string;
   objectives: Objective[];
   categories: any[];
+  can_change_objective: BooleanLike;
 };
 
-const IntroductionSection = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
-  const { intro, objectives } = data;
+const IntroductionSection = (props) => {
+  const { act, data } = useBackend<Info>();
+  const { intro, objectives, can_change_objective } = data;
   return (
     <Section fill title="Intro" scrollable>
       <Stack vertical fill>
@@ -46,6 +47,13 @@ const IntroductionSection = (props, context) => {
             objectives={objectives}
             titleMessage="Your prime objectives:"
             objectivePrefix="&#8805-"
+            objectiveFollowup={
+              <ReplaceObjectivesButton
+                can_change_objective={can_change_objective}
+                button_title={'Overwrite Objectives Data'}
+                button_colour={'green'}
+              />
+            }
           />
         </Stack.Item>
       </Stack>
@@ -53,8 +61,8 @@ const IntroductionSection = (props, context) => {
   );
 };
 
-const FlavorSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const FlavorSection = (props) => {
+  const { data } = useBackend<Info>();
   const { allies, goal } = data;
   return (
     <Section
@@ -108,8 +116,8 @@ const FlavorSection = (props, context) => {
   );
 };
 
-const CodewordsSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const CodewordsSection = (props) => {
+  const { data } = useBackend<Info>();
   const { has_codewords, phrases, responses } = data;
   return (
     <Section title="Codewords" mb={!has_codewords && -1}>
@@ -154,14 +162,10 @@ const CodewordsSection = (props, context) => {
   );
 };
 
-export const AntagInfoMalf = (props, context) => {
-  const { act, data } = useBackend<Info>(context);
+export const AntagInfoMalf = (props) => {
+  const { act, data } = useBackend<Info>();
   const { processingTime, categories } = data;
-  const [antagInfoTab, setAntagInfoTab] = useLocalState(
-    context,
-    'antagInfoTab',
-    0
-  );
+  const [antagInfoTab, setAntagInfoTab] = useLocalState('antagInfoTab', 0);
   const categoriesList: string[] = [];
   const items: Item[] = [];
   for (let i = 0; i < categories.length; i++) {

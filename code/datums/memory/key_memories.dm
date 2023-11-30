@@ -191,3 +191,25 @@
 		"[protagonist_name] being implanted by a scientist.",
 		"[protagonist_name] having surgery done on them by a scientist.",
 	)
+
+/datum/memory/key/permabrig_crimes
+	var/crimes
+
+/datum/memory/key/permabrig_crimes/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	crimes,
+)
+	src.crimes = crimes
+	return ..()
+
+/datum/memory/key/permabrig_crimes/get_names()
+	return list("[protagonist_name]'s crime of \"[crimes]\".")
+
+/datum/memory/key/permabrig_crimes/get_starts()
+	return list(
+		"[protagonist_name] being arrested by security for [crimes].",
+		"[protagonist_name] committing the crimes of [crimes].",
+	)

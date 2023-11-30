@@ -29,7 +29,7 @@
 	name = "lime"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
-	juice_results = list(/datum/reagent/consumable/limejuice = 0)
+	juice_typepath = /datum/reagent/consumable/limejuice
 
 // Orange
 /obj/item/seeds/orange
@@ -56,7 +56,7 @@
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
 	foodtypes = ORANGES
-	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
+	juice_typepath = /datum/reagent/consumable/orangejuice
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 
 // Lemon
@@ -82,7 +82,7 @@
 	name = "lemon"
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
-	juice_results = list(/datum/reagent/consumable/lemonjuice = 0)
+	juice_typepath = /datum/reagent/consumable/lemonjuice
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
@@ -137,7 +137,7 @@
 	foodtypes = ORANGES
 	alt_icon = "orange"
 	bite_consumption_mod = 2
-	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
+	juice_typepath = /datum/reagent/consumable/orangejuice
 	distill_reagent = /datum/reagent/toxin/mindbreaker
 	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)
 

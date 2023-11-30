@@ -88,8 +88,8 @@ const KeyBinding = (props: KeyBindingBoxProps) => (
   <>{processColorModifiers(props.keycode)}</>
 );
 
-export const HotkeysHelp = (props, context) => {
-  const { data } = useBackend<HotkeysHelpData>(context);
+export const HotkeysHelp = (props) => {
+  const { data } = useBackend<HotkeysHelpData>();
 
   return (
     <Window title="Hotkeys Help" width={500} height={800}>
@@ -121,7 +121,12 @@ export const HotkeysHelp = (props, context) => {
                         </Box>
                       </Tooltip>
                     ) : (
-                      <Box p={1} m={1} inline className="HotkeysHelp__pill">
+                      <Box
+                        key={binding.name}
+                        p={1}
+                        m={1}
+                        inline
+                        className="HotkeysHelp__pill">
                         {binding.name}
                       </Box>
                     )

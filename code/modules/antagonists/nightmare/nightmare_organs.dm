@@ -27,16 +27,31 @@
 		terrorize_spell = new(src)
 		terrorize_spell.Grant(brain_owner)
 
+	RegisterSignal(brain_owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
+
 /obj/item/organ/internal/brain/shadow/nightmare/on_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
+	UnregisterSignal(brain_owner, COMSIG_ATOM_PRE_BULLET_ACT)
+
+/obj/item/organ/internal/brain/shadow/nightmare/proc/dodge_bullets(mob/living/carbon/human/source, obj/projectile/hitting_projectile, def_zone)
+	SIGNAL_HANDLER
+	var/turf/dodge_turf = source.loc
+	if(!istype(dodge_turf) || dodge_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)
+		return NONE
+	source.visible_message(
+		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
+		span_danger("You evade [hitting_projectile] with the cover of darkness!"),
+	)
+	playsound(source, SFX_BULLET_MISS, 75, TRUE)
+	return COMPONENT_BULLET_PIERCED
 
 /obj/item/organ/internal/heart/nightmare
 	name = "heart of darkness"
 	desc = "An alien organ that twists and writhes when exposed to light."
-	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "demon_heart-on"
+	base_icon_state = "demon_heart"
 	visual = TRUE
 	color = "#1C1C1C"
 	decay_factor = 0
@@ -44,10 +59,6 @@
 	var/respawn_progress = 0
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
-
-/obj/item/organ/internal/heart/nightmare/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
-	return ..()
 
 /obj/item/organ/internal/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -79,7 +90,7 @@
 		QDEL_NULL(blade)
 
 /obj/item/organ/internal/heart/nightmare/Stop()
-	return 0
+	return FALSE
 
 /obj/item/organ/internal/heart/nightmare/on_death(seconds_per_tick, times_fired)
 	if(!owner)

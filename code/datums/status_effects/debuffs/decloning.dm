@@ -50,11 +50,11 @@
 	strikes_left = max(strikes_left - strike_reduce, 0)
 
 	if(prob(50))
-		to_chat(owner, span_danger(pick( \
-			"Your body is giving in.", \
-			"You feel some muscles twitching.", \
-			"Your skin feels sandy.", \
-			"You feel your limbs shifting around.", \
+		to_chat(owner, span_danger(pick(
+			"Your body is giving in.",
+			"You feel some muscles twitching.",
+			"Your skin feels sandy.",
+			"You feel your limbs shifting around.",
 		)))
 	else if(prob(33))
 		to_chat(owner, span_danger("You are twitching uncontrollably."))
@@ -72,12 +72,11 @@
 		if(34 to 67)
 			return span_warning("[owner.p_Their()] body looks <b>very</b> deformed.")
 		if(-INFINITY to 33)
-			return span_warning("<b>[owner.p_Their()] body looks severely deformed!</b>")
+			return span_boldwarning("[owner.p_Their()] body looks severely deformed!")
 
 /atom/movable/screen/alert/status_effect/decloning
 	name = "Cellular Meltdown"
-	desc = "Your body is deforming, and doesn't feel like it's going to hold up much longer. \
-		You are going to need treatment soon."
+	desc = "Your body is deforming, and doesn't feel like it's going to hold up much longer. You are going to need treatment soon."
 	icon_state = "dna_melt"
 
 /datum/movespeed_modifier/decloning

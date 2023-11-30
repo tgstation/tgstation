@@ -9,10 +9,10 @@
 	///Connected techweb node the server is connected to.
 	var/datum/techweb/stored_research
 
-/obj/machinery/computer/rdservercontrol/Initialize(mapload, obj/item/circuitboard/C)
+/obj/machinery/computer/rdservercontrol/LateInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
-		stored_research = SSresearch.science_tech
+		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 
 /obj/machinery/computer/rdservercontrol/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))

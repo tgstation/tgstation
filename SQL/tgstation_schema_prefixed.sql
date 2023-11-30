@@ -638,19 +638,6 @@ CREATE TABLE `SS13_discord_links` (
 ) ENGINE=InnoDB;
 
 --
--- Table structure for table `text_adventures`
---
-DROP TABLE IF EXISTS `SS13_text_adventures`;
-CREATE TABLE `SS13_text_adventures` (
-	`id` int(11) NOT NULL AUTO_INCREMENT,
-	`adventure_data` LONGTEXT NOT NULL,
-	`uploader` VARCHAR(32) NOT NULL,
-	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`approved` TINYINT(1) NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
-
---
 -- Table structure for table `admin_connections`
 --
 DROP TABLE IF EXISTS `SS13_admin_connections`;

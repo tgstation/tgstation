@@ -26,8 +26,8 @@ type NtosMessengerData = {
   sending_virus: BooleanLike;
 };
 
-export const NtosMessenger = (props, context) => {
-  const { data } = useBackend<NtosMessengerData>(context);
+export const NtosMessenger = (props) => {
+  const { data } = useBackend<NtosMessengerData>();
   const {
     is_silicon,
     saved_chats,
@@ -43,19 +43,23 @@ export const NtosMessenger = (props, context) => {
     const openChat = saved_chats[open_chat];
     const temporaryRecipient = messengers[open_chat];
 
-    content = (
-      <ChatScreen
-        storedPhotos={stored_photos}
-        selectedPhoto={selected_photo_path}
-        isSilicon={is_silicon}
-        sendingVirus={sending_virus}
-        canReply={openChat ? openChat.can_reply : !!temporaryRecipient}
-        messages={openChat ? openChat.messages : []}
-        recipient={openChat ? openChat.recipient : temporaryRecipient}
-        unreads={openChat ? openChat.unread_messages : 0}
-        chatRef={openChat?.ref}
-      />
-    );
+    if (!openChat && !temporaryRecipient) {
+      content = <ContactsScreen />;
+    } else {
+      content = (
+        <ChatScreen
+          storedPhotos={stored_photos}
+          selectedPhoto={selected_photo_path}
+          isSilicon={is_silicon}
+          sendingVirus={sending_virus}
+          canReply={openChat ? openChat.can_reply : !!temporaryRecipient}
+          messages={openChat ? openChat.messages : []}
+          recipient={openChat ? openChat.recipient : temporaryRecipient}
+          unreads={openChat ? openChat.unread_messages : 0}
+          chatRef={openChat?.ref}
+        />
+      );
+    }
   } else {
     content = <ContactsScreen />;
   }
@@ -67,8 +71,8 @@ export const NtosMessenger = (props, context) => {
   );
 };
 
-const ContactsScreen = (props: any, context: any) => {
-  const { act, data } = useBackend<NtosMessengerData>(context);
+const ContactsScreen = (props: any) => {
+  const { act, data } = useBackend<NtosMessengerData>();
   const {
     owner,
     alert_silenced,
@@ -83,7 +87,7 @@ const ContactsScreen = (props: any, context: any) => {
     sending_virus,
   } = data;
 
-  const [searchUser, setSearchUser] = useLocalState(context, 'searchUser', '');
+  const [searchUser, setSearchUser] = useLocalState('searchUser', '');
 
   const sortByUnreads = sortBy<NtChat>((chat) => chat.unread_messages);
 
@@ -258,8 +262,8 @@ type ChatButtonProps = {
   chatRef: string;
 };
 
-const ChatButton = (props: ChatButtonProps, context) => {
-  const { act } = useBackend(context);
+const ChatButton = (props: ChatButtonProps) => {
+  const { act } = useBackend();
   const unreadMessages = props.unreads;
   const hasUnreads = unreadMessages > 0;
   return (
@@ -279,11 +283,11 @@ const ChatButton = (props: ChatButtonProps, context) => {
   );
 };
 
-const SendToAllSection = (props, context) => {
-  const { data, act } = useBackend<NtosMessengerData>(context);
+const SendToAllSection = (props) => {
+  const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
-  const [message, setmessage] = useLocalState(context, 'everyoneMessage', '');
+  const [message, setmessage] = useLocalState('everyoneMessage', '');
 
   return (
     <>

@@ -29,6 +29,7 @@
 		merely a vessel for the arcane flow. Soon, all that is left is not pain, but hunger."))
 
 	cast_on.set_species(/datum/species/vampire)
+	cast_on.blood_volume = BLOOD_VOLUME_NORMAL ///for predictable blood total amounts when the spell is first cast.
 
 	cast_on.AddComponent(/datum/component/splattercasting)
 

@@ -15,9 +15,6 @@
 	//Value returned on db connection failure, in case we want to differ 0 and nonexistent later on
 	var/default_value = FALSE
 
-	///Whether the award has to be loaded before or after other awards on [/datum/achievement_data/load_all_achievements()]
-	var/load_priority = AWARD_PRIORITY_DEFAULT
-
 ///This proc loads the achievement data from the hub.
 /datum/award/proc/load(key)
 	if(!SSdbcore.Connect())
@@ -72,14 +69,36 @@
 /datum/award/proc/on_unlock(mob/user)
 	return
 
+///returns additional ui data for the Check Achievements menu
+/datum/award/proc/get_ui_data()
+	return list(
+		"score" = FALSE,
+		"achieve_info" = null,
+		"achieve_tooltip" = null,
+	)
+
 ///Achievements are one-off awards for usually doing cool things.
 /datum/award/achievement
 	desc = "Achievement for epic people"
 	icon = "" // This should warn contributors that do not declare an icon when contributing new achievements.
+	///How many players have earned this achievement
+	var/times_achieved = 0
 
 /datum/award/achievement/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "achievement"
+
+/datum/award/achievement/get_ui_data()
+	. = ..()
+	.["achieve_info"] = "Unlocked by [times_achieved] players so far"
+	if(!SSachievements.most_unlocked_achievement)
+		.["achieve_tooltip"] = "No achievement has been unlocked yet. Be the first today!"
+		return
+	if(SSachievements.most_unlocked_achievement == src)
+		.["achieve_tooltip"] = "This is the most unlocked achievement"
+		return
+	var/percent = FLOOR(times_achieved / SSachievements.most_unlocked_achievement.times_achieved * 100, 0.01)
+	.["achieve_tooltip"] = "[(times_achieved && !percent) ? "Less than 0.01" : percent]% compared to the achievement unlocked by the most players: \"[SSachievements.most_unlocked_achievement.name])\""
 
 /datum/award/achievement/parse_value(raw_value)
 	return raw_value > 0
@@ -87,7 +106,26 @@
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
-	user.client.give_award(/datum/award/score/achievements_score, user, 1)
+	var/sound/sound_to_send = LAZYACCESS(GLOB.achievement_sounds, user.client.prefs.read_preference(/datum/preference/choiced/sound_achievement))
+	if(sound_to_send)
+		SEND_SOUND(user, sound_to_send)
+
+	times_achieved++
+	if(SSachievements.most_unlocked_achievement?.times_achieved < times_achieved)
+		SSachievements.most_unlocked_achievement = src
+
+	var/datum/achievement_report/new_report = new /datum/achievement_report()
+
+	new_report.winner = "[(user.real_name == user.name) ? user.real_name : "[user.real_name], as [user.name]"]"
+	new_report.cheevo = name
+	if(user.ckey)
+		new_report.winner_key = user.ckey
+	else
+		stack_trace("[name] achievement earned by [user], who did not have a ckey.")
+
+	new_report.award_location = "[get_area_name(user)]"
+
+	GLOB.achievements_unlocked += new_report
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
@@ -106,6 +144,10 @@
 /datum/award/score/get_metadata_row()
 	. = ..()
 	.["achievement_type"] = "score"
+
+/datum/award/score/get_ui_data()
+	. = ..()
+	.["score"] = TRUE
 
 /datum/award/score/proc/LoadHighScores()
 	var/datum/db_query/Q = SSdbcore.NewQuery(
@@ -131,20 +173,45 @@
 	desc = "Don't worry, metagaming is all that matters."
 	icon = "elephant" //Obey the reference
 	database_id = ACHIEVEMENTS_SCORE
-	load_priority = AWARD_PRIORITY_LAST //See below
 
-/**
- * If the raw value is not numerical, it's likely this is the first time the score is being loaded for a ckey.
- * So, let's start counting how many achievements have been unlocked so far and return its value instead,
- * which is why this award should always be loaded last.
- */
+/datum/award/score/achievements_score/get_ui_data(key)
+	. = ..()
+	var/datum/db_query/get_unlocked_count = SSdbcore.NewQuery(
+		"SELECT COUNT(m.achievement_key) FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' WHERE a.ckey = :ckey",
+		list("ckey" = key)
+	)
+	if(!get_unlocked_count.Execute(async = TRUE))
+		qdel(get_unlocked_count)
+		.["value"] = default_value
+		return .
+	if(get_unlocked_count.NextRow())
+		.["value"] = text2num(get_unlocked_count.item[1])
+	qdel(get_unlocked_count)
+	return .
+
+/datum/award/score/achievements_score/LoadHighScores()
+	var/datum/db_query/get_unlocked_highscore = SSdbcore.NewQuery(
+		"SELECT ckey, COUNT(ckey) AS c FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' GROUP BY ckey ORDER BY c DESC LIMIT 50",
+	)
+	if(!get_unlocked_highscore.Execute(async = TRUE))
+		qdel(get_unlocked_highscore)
+		return
+	else
+		while(get_unlocked_highscore.NextRow())
+			var/key = get_unlocked_highscore.item[1]
+			var/score = text2num(get_unlocked_highscore.item[2])
+			high_scores[key] = score
+		qdel(get_unlocked_highscore)
+
 /datum/award/score/achievements_score/on_achievement_data_init(datum/achievement_data/holder, database_value)
-	if(isnum(database_value))
-		return ..()
-	//We need to keep the value differents so that it's properly saved at the end of the round.
-	holder.original_cached_data[type] = 0
-	var/value = 0
-	for(var/award_type in holder.data)
-		if(ispath(award_type, /datum/award/achievement) && holder.data[award_type])
-			value++
-	holder.data[type] = value
+	var/datum/db_query/get_unlocked_load = SSdbcore.NewQuery(
+		"SELECT COUNT(m.achievement_key) FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' WHERE a.ckey = :ckey",
+		list("ckey" = holder.owner_ckey)
+	)
+	if(!get_unlocked_load.Execute(async = TRUE))
+		qdel(get_unlocked_load)
+		return
+	if(get_unlocked_load.NextRow())
+		holder.data[type] = text2num(get_unlocked_load.item[1]) || 0
+		holder.original_cached_data[type] = 0
+	qdel(get_unlocked_load)

@@ -96,12 +96,12 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		B.modify_max_integrity(B.max_integrity * max_structure_health_multiplier)
 		B.update_appearance()
 
-	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
-		BM.maxHealth *= max_mob_health_multiplier
-		BM.health *= max_mob_health_multiplier
-		BM.update_icons() //If it's getting a new strain, tell it what it does!
-		to_chat(BM, "Your overmind's blob strain is now: <b><font color=\"[color]\">[name]</b></font>!")
-		to_chat(BM, "The <b><font color=\"[color]\">[name]</b></font> strain [shortdesc ? "[shortdesc]" : "[description]"]")
+	for(var/mob/living/blob_mob as anything in overmind.blob_mobs)
+		blob_mob.maxHealth *= max_mob_health_multiplier
+		blob_mob.health *= max_mob_health_multiplier
+		blob_mob.update_icons() //If it's getting a new strain, tell it what it does!
+		to_chat(blob_mob, "Your overmind's blob strain is now: <b><font color=\"[color]\">[name]</b></font>!")
+		to_chat(blob_mob, "The <b><font color=\"[color]\">[name]</b></font> strain [shortdesc ? "[shortdesc]" : "[description]"]")
 
 /datum/blobstrain/proc/on_lose()
 	if(overmind.blob_core)
@@ -122,9 +122,9 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	for(var/obj/structure/blob/B as anything in overmind.all_blobs)
 		B.modify_max_integrity(B.max_integrity / max_structure_health_multiplier)
 
-	for(var/mob/living/simple_animal/hostile/blob/BM as anything in overmind.blob_mobs)
-		BM.maxHealth /= max_mob_health_multiplier
-		BM.health /= max_mob_health_multiplier
+	for(var/mob/living/blob_mob as anything in overmind.blob_mobs)
+		blob_mob.maxHealth /= max_mob_health_multiplier
+		blob_mob.health /= max_mob_health_multiplier
 
 
 /datum/blobstrain/proc/on_sporedeath(mob/living/spore)

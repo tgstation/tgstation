@@ -1,0 +1,3 @@
+/mob/living/simple_animal/hostile/asteroid/hivelord : /mob/living/basic/mining/hivelord{@OLD}
+/mob/living/simple_animal/hostile/big_legion : /mob/living/basic/mining/legion/big{@OLD}
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/@SUBTYPES : /mob/living/basic/mining/legion/@SUBTYPES{@OLD}

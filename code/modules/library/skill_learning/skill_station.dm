@@ -9,7 +9,8 @@
 	icon_state = "implantchair"
 	occupant_typecache = list(/mob/living/carbon) //todo make occupant_typecache per type
 	state_open = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND //Don't call ui_interac by default - we only want that when inside
+	// Only opens UI when inside; also, you can use the machine while lying down (for paraplegics and the like)
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_IGNORE_MOBILITY
 	circuit = /obj/item/circuitboard/machine/skill_station
 	/// Currently implanting/removing
 	var/working = FALSE

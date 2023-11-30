@@ -139,8 +139,9 @@
  * Arguments:
  * * category - (text) category of the mood event - see /datum/mood_event for category explanation
  * * type - (path) any /datum/mood_event
+ * * timeout_mod - (number) /datum/mood_event timeout modifier
  */
-/datum/mood/proc/add_mood_event(category, type, ...)
+/datum/mood/proc/add_mood_event(category, type, timeout_mod = 1, ...)
 	if (!ispath(type, /datum/mood_event))
 		CRASH("A non path ([type]), was used to add a mood event. This shouldn't be happening.")
 	if (!istext(category))
@@ -153,6 +154,7 @@
 			clear_mood_event(category)
 		else
 			if (the_event.timeout)
+				the_event.timeout = initial(the_event.timeout) * timeout_mod
 				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 			return // Don't need to update the event.
 	var/list/params = args.Copy(3)
@@ -162,8 +164,9 @@
 	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
 		return
 
-	mood_events[category] = the_event
+	the_event.timeout *= timeout_mod
 	the_event.category = category
+	mood_events[category] = the_event
 	update_mood()
 
 	if (the_event.timeout)

@@ -240,8 +240,8 @@ type CanvasData = {
   show_grid: boolean;
 };
 
-export const Canvas = (props, context) => {
-  const { act, data } = useBackend<CanvasData>(context);
+export const Canvas = (props) => {
+  const { act, data } = useBackend<CanvasData>();
   const [width, height] = getImageSize(data.grid);
   const scaled_width = width * data.px_per_unit;
   const scaled_height = height * data.px_per_unit;
@@ -264,13 +264,13 @@ export const Canvas = (props, context) => {
               <Tooltip
                 content={
                   multiline`
-                  You can Right-Click the canvas to change the color of  
-                  the painting tool to that of the clicked pixel. 
+                  You can Right-Click the canvas to change the color of
+                  the painting tool to that of the clicked pixel.
                 ` +
                   (data.editable
-                    ? multiline` 
-                  \n You can also select a color from the 
-                  palette at the bottom of the UI, 
+                    ? multiline`
+                  \n You can also select a color from the
+                  palette at the bottom of the UI,
                   or input a new one with Right-Click.
                 `
                     : '')

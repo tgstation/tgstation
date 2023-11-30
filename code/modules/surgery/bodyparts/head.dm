@@ -3,7 +3,7 @@
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon = 'icons/mob/human/bodyparts.dmi'
 	icon_state = "default_human_head"
-	max_damage = 200
+	max_damage = LIMB_MAX_HP_CORE
 	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
 	plaintext_zone = "head"
@@ -23,7 +23,7 @@
 	unarmed_miss_sound = 'sound/weapons/bite.ogg'
 	unarmed_damage_low = 1 // Yeah, biteing is pretty weak, blame the monkey super-nerf
 	unarmed_damage_high = 3
-	unarmed_stun_threshold = 4
+	unarmed_effectiveness = 0
 	bodypart_trait_source = HEAD_TRAIT
 
 	var/mob/living/brain/brainmob //The current occupant.
@@ -165,7 +165,6 @@
 				user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
 			if(brainmob)
 				brainmob.container = null
-				brainmob.forceMove(brain)
 				brain.brainmob = brainmob
 				brainmob = null
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
@@ -191,9 +190,11 @@
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
-	real_name = owner.real_name
-	if(HAS_TRAIT(owner, TRAIT_HUSK))
-		real_name = "Unknown"
+	if(!isnull(owner))
+		if(HAS_TRAIT(owner, TRAIT_HUSK))
+			real_name = "Unknown"
+		else
+			real_name = owner.real_name
 	update_hair_and_lips(dropping_limb, is_creating)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,7 +267,7 @@
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = 500
+	max_damage = LIMB_MAX_HP_ALIEN_CORE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/head/larva
@@ -279,5 +280,5 @@
 	px_x = 0
 	px_y = 0
 	bodypart_flags = BODYPART_UNREMOVABLE
-	max_damage = 50
+	max_damage = LIMB_MAX_HP_ALIEN_LARVA
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

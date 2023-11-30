@@ -133,7 +133,7 @@
 /obj/machinery/rnd/server/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!do_after(ninja, 30 SECONDS, target = src))
 		return
-	SSresearch.science_tech.modify_points_all(0)
+	stored_research.modify_points_all(0)
 	to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
@@ -318,10 +318,14 @@
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
-		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		spark_system.start()
 		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
-		Knockdown(3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(ninja_knockdown)), 0.3 SECONDS)
 	return NONE
+
+/mob/living/carbon/proc/ninja_knockdown()
+	Knockdown(3 SECONDS)
+	set_jitter_if_lower(3 SECONDS)
 
 //CAMERAS//
 /obj/machinery/camera/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -428,7 +432,7 @@
 		balloon_alert(ninja, "tram is already malfunctioning!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(specific_lift_id != MAIN_STATION_TRAM)
+	if(specific_transport_id != TRAMSTATION_LINE_1)
 		balloon_alert(ninja, "cannot hack this tram!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -439,7 +443,11 @@
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
 	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	malfunction_event.end_when *= 3
+	malfunction_event.end_when *= 2
+	for(var/obj/machinery/transport/guideway_sensor/sensor as anything in SStransport.sensors)
+		// Since faults are now used instead of straight event end_when var, we make a few of them malfunction
+		if(prob(rand(15, 30)))
+			sensor.local_fault()
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

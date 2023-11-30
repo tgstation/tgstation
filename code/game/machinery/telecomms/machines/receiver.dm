@@ -1,11 +1,10 @@
-/*
-	The receiver idles and receives messages from subspace-compatible radio equipment;
-	primarily headsets. Then they just relay this information to all linked devices,
-	which would probably be network hubs.
-
-	Link to Processor Units in case receiver can't send to bus units.
-*/
-
+/**
+ * The receiver idles and receives messages from subspace-compatible radio equipment,
+ * primarily headsets. Then they just relay this information to all linked devices,
+ * which would usually be through the telecommunications hub.
+ *
+ * Link to Processor Units in case receiver can't send to a telecommunication hub.
+ */
 /obj/machinery/telecomms/receiver
 	name = "subspace receiver"
 	icon_state = "broadcast receiver"
@@ -21,27 +20,39 @@
 	if(!is_freq_listening(signal))
 		return
 
-	// send the signal to the hub if possible, or a bus otherwise
-	if(!relay_information(signal, /obj/machinery/telecomms/hub))
-		relay_information(signal, /obj/machinery/telecomms/bus)
+	// Make a copy of the signal so that other recievers can still recieve this signal
+	var/datum/signal/subspace/signal_copy = signal.copy()
+
+	// Signal has been recieved, so remove receiving levels. This list will be used later on to determine broadcasting levels.
+	signal_copy.levels = list()
+
+	// Send the signal to a hub if possible, or a bus otherwise.
+	if(!relay_information(signal_copy, /obj/machinery/telecomms/hub))
+		relay_information(signal_copy, /obj/machinery/telecomms/bus)
 
 	use_power(idle_power_usage)
 
+/**
+ * Checks whether the signal can be received by this receiver or not, based on
+ * if it's in the signal's `levels`, or if there's a liked hub with a linked
+ * relay that can receive the signal for it.
+ *
+ * Returns `TRUE` if it can receive the signal, `FALSE` if not.
+ */
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/subspace/signal)
 	if (z in signal.levels)
 		return TRUE
 
-	for(var/obj/machinery/telecomms/hub/H in links)
-		for(var/obj/machinery/telecomms/relay/R in H.links)
-			if(R.can_receive(signal) && (R.z in signal.levels))
+	for(var/obj/machinery/telecomms/hub/linked_hub in links)
+		for(var/obj/machinery/telecomms/relay/linked_relay in linked_hub.links)
+			if(linked_relay.can_receive(signal) && (linked_relay.z in signal.levels))
 				return TRUE
 
 	return FALSE
 
-//Preset Receivers
+// Preset Receivers
 
 //--PRESET LEFT--//
-
 /obj/machinery/telecomms/receiver/preset_left
 	id = "Receiver A"
 	network = "tcommsat"
@@ -50,16 +61,16 @@
 
 
 //--PRESET RIGHT--//
-
 /obj/machinery/telecomms/receiver/preset_right
 	id = "Receiver B"
 	network = "tcommsat"
 	autolinkers = list("receiverB") // link to relay
 	freq_listening = list(FREQ_COMMAND, FREQ_ENGINEERING, FREQ_SECURITY)
 
-	//Common and other radio frequencies for people to freely use
 /obj/machinery/telecomms/receiver/preset_right/Initialize(mapload)
 	. = ..()
+	// Also add common and other freely-available radio frequencies for people
+	// to have access to.
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i
 

@@ -18,8 +18,21 @@
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 
+/obj/machinery/stasis/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/elevation, pixel_shift = 6)
+
 /obj/machinery/stasis/Destroy()
 	. = ..()
+
+///Just like beds, the elevation looks good while standing, but not when buckled to the bed.
+/obj/machinery/stasis/post_buckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y -= 6
+
+/obj/machinery/stasis/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y += 6
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
@@ -52,7 +65,7 @@
 /obj/machinery/stasis/Exited(atom/movable/gone, direction)
 	if(gone == occupant)
 		var/mob/living/L = gone
-		if(IS_IN_STASIS(L))
+		if(HAS_TRAIT(L, TRAIT_STASIS))
 			thaw_them(L)
 	return ..()
 
@@ -139,9 +152,9 @@
 		return
 	var/mob/living/L_occupant = occupant
 	if(stasis_running())
-		if(!IS_IN_STASIS(L_occupant))
+		if(!HAS_TRAIT(L_occupant, TRAIT_STASIS))
 			chill_out(L_occupant)
-	else if(IS_IN_STASIS(L_occupant))
+	else if(HAS_TRAIT(L_occupant, TRAIT_STASIS))
 		thaw_them(L_occupant)
 
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)

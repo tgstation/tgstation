@@ -85,6 +85,7 @@
 //////////////////////
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human/human_face.dmi'   // default icon for all hairs
+	var/y_offset = 0 // Y offset to apply so we can have hair that reaches above the player sprite's visual bounding box
 
 	// please make sure they're sorted alphabetically and, where needed, categorized
 	// try to capitalize the names please~
@@ -102,6 +103,11 @@
 /datum/sprite_accessory/hair/afro_large
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
+
+/datum/sprite_accessory/hair/afro_huge
+	name = "Afro (Huge)"
+	icon_state = "hair_hugeafro"
+	y_offset = 6
 
 /datum/sprite_accessory/hair/allthefuzz
 	name = "All The Fuzz"
@@ -839,6 +845,10 @@
 /datum/sprite_accessory/gradient/none
 	name = "None"
 	icon_state = "none"
+
+/datum/sprite_accessory/gradient/full
+	name = "Full"
+	icon_state = "full"
 
 /datum/sprite_accessory/gradient/fadeup
 	name = "Fade Up"
@@ -1770,10 +1780,12 @@
 	color_src = HAIR_COLOR
 
 /datum/sprite_accessory/tails/monkey
-	name = "Monkey"
 	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
-	icon_state = "monkey"
 	color_src = FALSE
+
+/datum/sprite_accessory/tails/monkey/standard
+	name = "Monkey"
+	icon_state = "monkey"
 
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/human/species/podperson_hair.dmi'
@@ -2085,11 +2097,11 @@
 	name = "Long + Membrane"
 	icon_state = "longmeme"
 
-/datum/sprite_accessory/spines/aqautic
+/datum/sprite_accessory/spines/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/spines_animated/aqautic
+/datum/sprite_accessory/spines_animated/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 

@@ -28,8 +28,9 @@
 	if(client)
 		stack_trace("Mob with client has been deleted.")
 	else if(ckey)
-		stack_trace("Mob without client but with associated ckey has been deleted.")
+		stack_trace("Mob without client but with associated ckey, [ckey], has been deleted.")
 
+	unset_machine()
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -46,7 +47,7 @@
 
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
-	ghostize() //False, since we're deleting it currently
+	ghostize(can_reenter_corpse = FALSE) //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
 		mind.set_current(null)
 
@@ -560,7 +561,7 @@
 	if(is_blind()) //blind people see things differently (through touch)
 		if(!blind_examine_check(examinify))
 			return
-	else if(!(examine_turf.luminosity || examine_turf.dynamic_lumcount) && \
+	else if(examine_turf && !(examine_turf.luminosity || examine_turf.dynamic_lumcount) && \
 		get_dist(src, examine_turf) > 1 && \
 		!has_nightvision()) // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
 		return
@@ -615,7 +616,7 @@
 	//you can only initiate exaimines if you have a hand, it's not disabled, and only as many examines as you have hands
 	/// our active hand, to check if it's disabled/detatched
 	var/obj/item/bodypart/active_hand = has_active_hand()? get_active_hand() : null
-	if(!active_hand || active_hand.bodypart_disabled || LAZYLEN(do_afters) >= usable_hands)
+	if(!active_hand || active_hand.bodypart_disabled || do_after_count() >= usable_hands)
 		to_chat(src, span_warning("You don't have a free hand to examine this!"))
 		return FALSE
 
@@ -768,18 +769,26 @@
  *
  * This sends you back to the lobby creating a new dead mob
  *
- * Only works if flag/norespawn is allowed in config
+ * Only works if flag/allow_respawn is allowed in config
  */
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (CONFIG_GET(flag/norespawn))
-		if (!check_rights_for(usr.client, R_ADMIN))
-			to_chat(usr, span_boldnotice("Respawning is not enabled!"))
-			return
-		else if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
-			return
+	switch(CONFIG_GET(flag/allow_respawn))
+		if(RESPAWN_FLAG_NEW_CHARACTER)
+			if(tgui_alert(usr, "Note, respawning is only allowed as another character. If you don't have another free slot you may not be able to respawn.", "Respawn", list("Ok", "Nevermind")) != "Ok")
+				return
+
+		if(RESPAWN_FLAG_FREE)
+			pass() // Normal respawn
+
+		if(RESPAWN_FLAG_DISABLED)
+			if (!check_rights_for(usr.client, R_ADMIN))
+				to_chat(usr, span_boldnotice("Respawning is not enabled!"))
+				return
+			if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+				return
 
 	if (stat != DEAD)
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
@@ -809,15 +818,14 @@
 
 	M.key = key
 
+/// Checks if the mob can respawn yet according to the respawn delay
 /mob/proc/check_respawn_delay(override_delay = 0)
 	if(!override_delay && !CONFIG_GET(number/respawn_delay))
 		return TRUE
 
 	var/death_time = world.time - client.player_details.time_of_death
 
-	var/required_delay = override_delay
-	if(!required_delay)
-		required_delay = CONFIG_GET(number/respawn_delay)
+	var/required_delay = override_delay || CONFIG_GET(number/respawn_delay)
 
 	if(death_time < required_delay)
 		if(!check_rights_for(usr.client, R_ADMIN))
@@ -930,10 +938,45 @@
 /// Performs the actual ritual of swapping hands, such as setting the held index variables
 /mob/proc/perform_hand_swap(held_index)
 	PROTECTED_PROC(TRUE)
+	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
+		return FALSE
+
+	if(!held_index)
+		held_index = (active_hand_index % held_items.len) + 1
+
+	if(!isnum(held_index))
+		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
+
+	var/previous_index = active_hand_index
+	active_hand_index = held_index
+	if(hud_used)
+		var/atom/movable/screen/inventory/hand/held_location
+		held_location = hud_used.hand_slots["[previous_index]"]
+		if(!isnull(held_location))
+			held_location.update_appearance()
+		held_location = hud_used.hand_slots["[held_index]"]
+		if(!isnull(held_location))
+			held_location.update_appearance()
 	return TRUE
 
-/mob/proc/activate_hand(selhand)
-	return
+/mob/proc/activate_hand(selected_hand)
+	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
+		return
+
+	if(!selected_hand)
+		selected_hand = (active_hand_index % held_items.len)+1
+
+	if(istext(selected_hand))
+		selected_hand = lowertext(selected_hand)
+		if(selected_hand == "right" || selected_hand == "r")
+			selected_hand = 2
+		if(selected_hand == "left" || selected_hand == "l")
+			selected_hand = 1
+
+	if(selected_hand != active_hand_index)
+		swap_hand(selected_hand)
+	else
+		mode()
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
 	return 0
@@ -1113,21 +1156,7 @@
 ///Can this mob use storage
 /mob/proc/canUseStorage()
 	return FALSE
-/**
- * Check if the other mob has any factions the same as us
- *
- * If exact match is set, then all our factions must match exactly
- */
-/mob/proc/faction_check_mob(mob/target, exact_match)
-	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
-		var/list/faction_src = faction.Copy()
-		var/list/faction_target = target.faction.Copy()
-		if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
-			faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
-		if(!("[REF(target)]" in faction_src))
-			faction_target -= "[REF(target)]" //same thing here.
-		return faction_check(faction_src, faction_target, TRUE)
-	return faction_check(faction, target.faction, FALSE)
+
 /*
  * Compare two lists of factions, returning true if any match
  *
@@ -1358,8 +1387,11 @@
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_GIB, "Gib")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVE_SPELL, "Remove Spell")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPELL, "Give Spell")
 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_SPELL, "Remove Spell")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_MOB_ACTION, "Give Mob Ability")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOB_ACTION, "Remove Mob Ability")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DISEASE, "Give Disease")
 	VV_DROPDOWN_OPTION(VV_HK_GODMODE, "Toggle Godmode")
 	VV_DROPDOWN_OPTION(VV_HK_DROP_ALL, "Drop Everything")
@@ -1373,54 +1405,80 @@
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
+
+	if(!.)
+		return
+
 	if(href_list[VV_HK_REGEN_ICONS])
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
 		if(!check_rights(NONE))
 			return
 		usr.client.holder.show_player_panel(src)
+
 	if(href_list[VV_HK_GODMODE])
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+
+	if(href_list[VV_HK_GIVE_MOB_ACTION])
+		if(!check_rights(NONE))
+			return
+		usr.client.give_mob_action(src)
+
+	if(href_list[VV_HK_REMOVE_MOB_ACTION])
+		if(!check_rights(NONE))
+			return
+		usr.client.remove_mob_action(src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_spell(src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
 		if(!check_rights(NONE))
 			return
 		usr.client.remove_spell(src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_disease(src)
+
 	if(href_list[VV_HK_GIB])
 		if(!check_rights(R_FUN))
 			return
 		usr.client.cmd_admin_gib(src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_admin_drop_everything(src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_assume_direct_control(src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_give_direct_control(src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
 		offer_control(src)
+
 	if(href_list[VV_HK_VIEW_PLANES])
 		if(!check_rights(R_DEBUG))
 			return

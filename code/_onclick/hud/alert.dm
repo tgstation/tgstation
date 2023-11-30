@@ -17,13 +17,17 @@
 	if(!category || QDELETED(src))
 		return
 
+	var/datum/weakref/master_ref
+	if(isdatum(new_master))
+		master_ref = WEAKREF(new_master)
 	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
 			return thealert
-		if(new_master && new_master != thealert.master)
-			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
+		if(master_ref && thealert.master_ref && master_ref != thealert.master_ref)
+			var/datum/current_master = thealert.master_ref.resolve()
+			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [current_master]")
 
 			clear_alert(category)
 			return .()
@@ -55,7 +59,7 @@
 		new_master.layer = old_layer
 		new_master.plane = old_plane
 		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
-		thealert.master = new_master
+		thealert.master_ref = master_ref
 	else
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
@@ -294,13 +298,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/fire/Click()
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
 	var/mob/living/living_owner = owner
+	if(!living_owner.can_resist())
+		return FALSE
 
 	living_owner.changeNext_move(CLICK_CD_RESIST)
-	if(living_owner.mobility_flags & MOBILITY_MOVE)
-		return living_owner.resist_fire()
+	if(!(living_owner.mobility_flags & MOBILITY_MOVE))
+		return FALSE
+
+	return living_owner.resist_fire()
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
@@ -502,7 +510,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "cult"
 	var/static/image/narnar
 	var/angle = 0
-	var/mob/living/simple_animal/hostile/construct/Cviewer = null
+	var/mob/living/basic/construct/Cviewer
 
 /atom/movable/screen/alert/bloodsense/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -607,19 +615,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //GUARDIANS
 
-/atom/movable/screen/alert/cancharge
-	name = "Charge Ready"
-	desc = "You are ready to charge at a location!"
-	icon_state = "guardian_charge"
-	alerttooltipstyle = "parasite"
-
 /atom/movable/screen/alert/canstealth
 	name = "Stealth Ready"
 	desc = "You are ready to enter stealth!"
 	icon_state = "guardian_canstealth"
 	alerttooltipstyle = "parasite"
 
-/atom/movable/screen/alert/instealth
+/atom/movable/screen/alert/status_effect/instealth
 	name = "In Stealth"
 	desc = "You are in stealth and your next attack will do bonus damage!"
 	icon_state = "guardian_instealth"
@@ -776,31 +778,29 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	dead_owner.reenter_corpse()
 
 /atom/movable/screen/alert/notify_action
-	name = "Body created"
-	desc = "A body was created. You can enter it."
+	name = "Something interesting is happening!"
+	desc = "This can be clicked on to perform an action."
 	icon_state = "template"
-	timeout = 300
-	var/atom/target = null
-	var/action = NOTIFY_JUMP
+	timeout = 30 SECONDS
+	/// Weakref to the target atom to use the action on
+	var/datum/weakref/target_ref
+	/// If we want to interact on click rather than jump/orbit
+	var/click_interact = FALSE
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
-	if(!.)
+
+	var/atom/target = target_ref?.resolve()
+	if(isnull(target) || !isobserver(owner) || target == owner)
 		return
-	if(!target)
-		return
+
 	var/mob/dead/observer/ghost_owner = owner
-	if(!istype(ghost_owner))
+
+	if(click_interact)
+		ghost_owner.jump_to_interact(target)
 		return
-	switch(action)
-		if(NOTIFY_ATTACK)
-			target.attack_ghost(ghost_owner)
-		if(NOTIFY_JUMP)
-			var/turf/target_turf = get_turf(target)
-			if(target_turf && isturf(target_turf))
-				ghost_owner.abstract_move(target_turf)
-		if(NOTIFY_ORBIT)
-			ghost_owner.ManualFollow(target)
+
+	ghost_owner.observer_view(target)
 
 //OBJECT-BASED
 
@@ -914,14 +914,15 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, span_boldnotice("[name]</span> - <span class='info'>[desc]"))
 		return FALSE
-	if(master && click_master)
-		return usr.client.Click(master, location, control, params)
+	var/datum/our_master = master_ref?.resolve()
+	if(our_master && click_master)
+		return usr.client.Click(our_master, location, control, params)
 
 	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
 	severity = 0
-	master = null
+	master_ref = null
 	owner = null
 	screen_loc = ""

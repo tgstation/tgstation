@@ -31,6 +31,10 @@
 	var/times_invoked = 0
 	/// What colour you glow while channeling
 	var/spell_colour = "#de3aff48"
+	/// How much cheese was sacrificed to the other realm, if any
+	var/cheese_sacrificed = 0
+	/// What kind of remains this rune leaves behind after completing invokation
+	var/remains_typepath = /obj/effect/decal/cleanable/grand_remains
 	/// Magic words you say to invoke the ritual
 	var/list/magic_words = list()
 	/// Things you might yell when invoking a rune
@@ -67,7 +71,8 @@
 	. = ..()
 	src.potency = potency
 	invoke_time = get_invoke_time()
-	magic_words = pick(possible_magic_words)
+	if(!length(magic_words))
+		magic_words = pick(possible_magic_words)
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
@@ -114,6 +119,7 @@
 	is_in_use = TRUE
 	add_channel_effect(user)
 	user.balloon_alert(user, "invoking rune...")
+
 	if(!do_after(user, invoke_time, src))
 		remove_channel_effect(user)
 		user.balloon_alert(user, "interrupted!")
@@ -121,6 +127,30 @@
 		return
 
 	times_invoked++
+
+	//fetch cheese on the rune
+	var/list/obj/item/food/cheese/wheel/cheese_list = list()
+	for(var/obj/item/food/cheese/wheel/nearby_cheese in range(1, src))
+		if(HAS_TRAIT(nearby_cheese, TRAIT_HAUNTED)) //already haunted
+			continue
+		cheese_list += nearby_cheese
+	//handle cheese sacrifice - haunt a part of all cheese on the rune with each invocation, then delete it
+	var/list/obj/item/food/cheese/wheel/cheese_to_haunt = list()
+	cheese_list = shuffle(cheese_list)
+	//the intent here is to sacrifice cheese in parts, roughly in thirds since we invoke the rune three times
+	//so hopefully this will properly do that, and on the third invocation it will just eat all remaining cheese
+	cheese_to_haunt = cheese_list.Copy(1, min(round(length(cheese_list) * times_invoked * 0.4), max(length(cheese_list), 3)))
+	for(var/obj/item/food/cheese/wheel/sacrifice as anything in cheese_to_haunt)
+		sacrifice.AddComponent(\
+			/datum/component/haunted_item, \
+			haunt_color = spell_colour, \
+			haunt_duration = 10 SECONDS, \
+			aggro_radius = 0, \
+			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldy energies..."), \
+		)
+		addtimer(CALLBACK(sacrifice, TYPE_PROC_REF(/obj/item/food/cheese/wheel, consume_cheese)), 10 SECONDS)
+	cheese_sacrificed += length(cheese_to_haunt)
+
 	user.say(magic_words[times_invoked], forced = "grand ritual invocation")
 	remove_channel_effect(user)
 
@@ -130,7 +160,7 @@
 	if(times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
 		on_invocation_complete(user)
 		return
-	flick("wizard_rune_flash", src)
+	flick("[icon_state]_flash", src)
 	playsound(src,'sound/magic/staff_animation.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(invoke_rune), user)
 
@@ -154,13 +184,13 @@
 	INVOKE_ASYNC(src, PROC_REF(summon_round_event), user) // Running the event sleeps
 	trigger_side_effects()
 	tear_reality()
-	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE)
-	flick("activate", src)
+	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE, cheese_sacrificed)
+	flick("[icon_state]_activate", src)
 	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
 	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
 /obj/effect/grand_rune/proc/remove_rune()
-	new /obj/effect/decal/cleanable/grand_remains(get_turf(src))
+	new remains_typepath(get_turf(src))
 	qdel(src)
 
 /// Triggers some form of event somewhere on the station
@@ -273,9 +303,15 @@
 	return ..()
 
 /obj/effect/grand_rune/finale/interact(mob/living/user)
-	if (chosen_effect)
-		return ..()
-	select_finale(user)
+	if (!chosen_effect)
+		select_finale(user)
+		return
+	var/round_time_passed = world.time - SSticker.round_start_time
+	if (chosen_effect && finale_effect.minimum_time >= round_time_passed)
+		to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(finale_effect.minimum_time - round_time_passed)]</b>!"))
+		return
+	return ..()
+
 
 #define PICK_NOTHING "Continuation"
 
@@ -308,6 +344,7 @@
 	invoke_time = get_invoke_time()
 	if (finale_effect.glow_colour)
 		spell_colour = finale_effect.glow_colour
+	add_filter("finale_picked_glow", 2, list("type" = "outline", "color" = spell_colour, "size" = 2))
 
 /obj/effect/grand_rune/finale/summon_round_event(mob/living/user)
 	user.client?.give_award(/datum/award/achievement/misc/grand_ritual_finale, user)
@@ -320,6 +357,26 @@
 	if (!finale_effect)
 		return ..()
 	return finale_effect.ritual_invoke_time
+
+
+/**
+ * Spawned when 50 or more cheese was sacrificed during previous grand rituals.
+ * Will spawn instead of the usual grand ritual rune, and its effect is already set and can't be changed.
+ * Sorry, no narwal fighting on the open ocean this time.
+ */
+/obj/effect/grand_rune/finale/cheesy
+	name = "especially grand rune"
+	desc = "A ritual circle of maddening shapes and outlines, its mere presence an insult to reason."
+	icon_state = "wizard_rune_cheese"
+	magic_words = list("Greetings! Salutations!", "Welcome! Now go away.", "Leave. Run. Or die.")
+	remains_typepath = /obj/effect/decal/cleanable/grand_remains/cheese
+
+/obj/effect/grand_rune/finale/cheesy/Initialize(mapload, potency)
+	. = ..()
+	finale_effect = new /datum/grand_finale/cheese()
+	chosen_effect = TRUE
+	add_filter("finale_picked_glow", 2, list("type" = "outline", "color" = spell_colour, "size" = 2))
+
 
 /**
  * Spawned when we are done with the rune
@@ -336,5 +393,10 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
 	layer = SIGIL_LAYER
+
+/obj/effect/decal/cleanable/grand_remains/cheese
+	name = "cheese soot marks"
+	desc = "The bizarre shapes on the ground turn out to be a cheese crust burned to black tar."
+	icon_state = "wizard_rune_cheese_burned"
 
 #undef PICK_NOTHING
