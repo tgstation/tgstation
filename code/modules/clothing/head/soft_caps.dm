@@ -181,7 +181,7 @@
 
 /obj/item/clothing/head/soft/propeller_hat/attack_self(mob/user)
 	active = !active
-	to_chat(user, span_notice("You [active ? "start" : "stop"] spinning the propeller."))
+	balloon_alert(user, span_notice(active ? "started propeller" : "stopped propeller"))
 	update_icon()
 	user.update_worn_head()
 	add_fingerprint(user)
