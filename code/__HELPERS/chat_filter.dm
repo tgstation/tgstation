@@ -64,7 +64,7 @@
 /// Given a text, will return what word is on the IC filter, ignoring words allowed on the PDA, with the reason.
 /// Returns null if the message is OK.
 /proc/is_ic_filtered_for_pdas(message)
-	if (config.ic_outside_pda_filter_regex?.Find_charlowertext((message))) //MASSMETA EDIT
+	if (config.ic_outside_pda_filter_regex?.Find_char(lowertext(message))) //MASSMETA EDIT
 		var/matched_group = GET_MATCHED_GROUP(config.ic_outside_pda_filter_regex)
 		return list(
 			matched_group,
