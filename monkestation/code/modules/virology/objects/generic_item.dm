@@ -77,6 +77,8 @@ GLOBAL_LIST_INIT(infected_items, list())
 
 
 /obj/item/try_infect_with_mobs_diseases(mob/living/carbon/infectee)
+	if(!infectee)
+		return
 	if(!length(infectee.diseases))
 		return
 	var/list/blood_diseases = filter_disease_by_spread(infectee.diseases, required = DISEASE_SPREAD_BLOOD)

@@ -455,7 +455,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		.= V.fields["name"]
 	
 /datum/disease/advanced/proc/real_name()
-	.= "[form] #[add_zero("[uniqueID]", 4)]-[add_zero("[subID]", 4)]"
+	.= "[form] #["[uniqueID]"]-["[subID]"]"
 	if ("[uniqueID]-[subID]" in GLOB.virusDB)
 		var/datum/data/record/v = GLOB.virusDB["[uniqueID]-[subID]"]
 		var/nickname = v.fields["nickname"] ? " \"[v.fields["nickname"]]\"" : ""
