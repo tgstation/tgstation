@@ -64,7 +64,7 @@
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
 	if(joining_now in honor.guilty)
 		honor.guilty -= joining_now
-	GLOB.religious_sect.adjust_favor(200, user)
+	GLOB.religious_sect.adjust_favor(300, user)
 	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
 	joining_now.mind.holy_role = HOLY_ROLE_DEACON
 	GLOB.religious_sect.on_conversion(joining_now)
@@ -151,7 +151,8 @@
 	<br>
 	1.) Thou shalt not attack the unready!<br>
 	Those who are not ready for battle should not be wrought low. The evil of this world must lose
-	in a fair battle if you are to conquer them completely.
+	in a fair battle if you are to conquer them completely. Lesser creatures are given the benefit of
+	being unready, keep that in mind.
 	<br>
 	<br>
 	2.) Thou shalt not attack the just!<br>
@@ -162,7 +163,9 @@
 	<br>
 	3.) Thou shalt not attack the innocent!<br>
 	There is no honor on a pre-emptive strike, unless they are truly evil vermin.
-	Those who are guilty will either lay a hand on you first, or you may declare their evil.
+	Those who are guilty will either lay a hand on you first, or you may declare their evil. Mindless, lesser
+	creatures cannot be considered innocent, nor evil. They are beings of passion and function, and
+	may be dispatched as such if their passions misalign with the pursuits of a better world.
 	<br>
 	<br>
 	4.) Thou shalt not use profane magicks!<br>

@@ -54,8 +54,17 @@
 		return
 	if(!honorbound.combat_mode && (HAS_TRAIT(clickedmob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
 		return
+	check_visible_guilt(clickedmob)
 	if(!is_honorable(honorbound, clickedmob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
+
+/datum/brain_trauma/special/honorbound/proc/check_visible_guilt(var/mob/living/clickedmob)
+	if(ROLE_SYNDICATE in clickedmob.faction)
+		// as a reminder, ROLE_SYNDICATE is given to obvious and outward syndicates like nuke ops and mobs,
+		// NOT given to traitors. this should be just fine
+		guilty(clickedmob, "for their misaligned association with the Syndicate!")
+	if(HAS_TRAIT(clickedmob, TRAIT_CULT_HALO))
+		guilty(clickedmob, "for blasphemous worship!")
 
 /**
  * Called by hooked signals whenever someone attacks the person with this trauma
@@ -63,9 +72,9 @@
  *
  * Arguments:
  * * user: person who attacked the honorbound
- * * declaration: if this wasn't an attack, but instead the honorbound spending favor on declaring this person guilty
+ * * reason: why this person is now guilty (future pr idea: letting honorbound print a receipt for why someone is guilty? lol)
  */
-/datum/brain_trauma/special/honorbound/proc/guilty(mob/living/user, declaration = FALSE)
+/datum/brain_trauma/special/honorbound/proc/guilty(mob/living/user, reason = "for no particular reason!")
 	if(user in guilty)
 		return
 	var/datum/mind/guilty_conscience = user.mind
@@ -73,10 +82,9 @@
 		var/datum/job/job = guilty_conscience.assigned_role
 		if(job.departments_bitflags & (DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY))
 			return
+	to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] [reason]"))
 	if(declaration)
-		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] from your declaration."))
-	else
-		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] for attacking you first."))
+		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] "))
 	to_chat(user, span_danger("[GLOB.deity] no longer considers you innocent!"))
 	guilty += user
 
@@ -84,7 +92,7 @@
 /datum/brain_trauma/special/honorbound/proc/on_attacked(mob/source, mob/attacker, attack_flags)
 	SIGNAL_HANDLER
 	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
-		guilty(attacker)
+		guilty(attacker, "for attacking [source] first.")
 
 /**
  * Called by attack_honor signal to check whether an attack should be allowed or not
@@ -95,6 +103,7 @@
  */
 /datum/brain_trauma/special/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
 	var/is_guilty = (target_creature in guilty)
+	var/is_human = ishuman(target_creature)
 	//THE UNREADY (Applies over ANYTHING else!)
 	if(honorbound_human == target_creature)
 		return TRUE //oh come on now
@@ -102,7 +111,7 @@
 		to_chat(honorbound_human, span_warning("There is no honor in attacking the <b>unready</b>."))
 		return FALSE
 	//THE JUST (Applies over guilt except for med, so you best be careful!)
-	if(ishuman(target_creature))
+	if(is_human)
 		var/mob/living/carbon/human/target_human = target_creature
 		var/datum/job/job = target_human.mind?.assigned_role
 		var/is_holy = target_human.mind?.holy_role
@@ -112,10 +121,10 @@
 		if(job?.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL && !is_guilty)
 			to_chat(honorbound_human, span_warning("If you truly think this healer is not <b>innocent</b>, declare them guilty."))
 			return FALSE
-	//THE INNOCENT
-	if(!is_guilty)
-		to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>innocent</b>."))
-		return FALSE
+		//THE INNOCENT (human exclusive)
+		if(!is_guilty)
+			to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>innocent</b>."))
+			return FALSE
 	return TRUE
 
 //spell checking
@@ -262,4 +271,4 @@
 /datum/action/cooldown/spell/pointed/declare_evil/cast(mob/living/cast_on)
 	. = ..()
 	GLOB.religious_sect.adjust_favor(-required_favor, owner)
-	honor_trauma.guilty(cast_on, declaration = TRUE)
+	honor_trauma.guilty(cast_on, "from your declaration.")
