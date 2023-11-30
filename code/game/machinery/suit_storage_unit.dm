@@ -811,3 +811,10 @@
 	. = (!locked && panel_open && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR)
 	if(.)
 		return ..()
+
+/// If the SSU needs to have any communications wires cut.
+/obj/machinery/suit_storage_unit/proc/disable_modlink()
+	if(isnull(mod))
+		return
+
+	mod.disable_modlink()
