@@ -15,6 +15,7 @@
 		/obj/item/food/grown/banana = 1,
 	)
 	rpg_title = "Bananasmith"
+	allow_bureaucratic_error = FALSE
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS | JOB_HIDE_WHEN_EMPTY | JOB_LATEJOIN_ONLY
 
 /datum/job/cargo_gorilla/get_roundstart_spawn_point()
