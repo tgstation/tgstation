@@ -100,8 +100,12 @@
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 100
-#define RENDER_PLANE_NON_GAME 101
+#define RENDER_PLANE_GAME 90
+/// If fov is enabled we'll draw game to this and do shit to it
+#define RENDER_PLANE_GAME_MASKED 91
+/// The bit of the game plane that is let alone is sent here
+#define RENDER_PLANE_GAME_UNMASKED 92
+#define RENDER_PLANE_NON_GAME 100
 
 // Only VERY special planes should be here, as they are above not just the game, but the UI planes as well.
 
