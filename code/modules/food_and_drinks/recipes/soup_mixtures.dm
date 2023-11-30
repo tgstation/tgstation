@@ -62,24 +62,45 @@
 	if(!length(required_ingredients))
 		return TRUE
 
-	// See if we fulfill all reqs
+	//copy of all ingredients to check out
 	var/list/reqs_copy = required_ingredients.Copy()
+	//number of ingredients who's requested amounts has been satisfied
+	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
 		var/ingredient_type = ingredient.type
+		do
+		{
+			var/ingredient_count = reqs_copy[ingredient_type]
 
-		var/ingredient_count = reqs_copy[ingredient_type]
-		if(ingredient_count)
-			if(isstack(ingredient))
-				var/obj/item/stack/stack_ingredient = ingredient
-				ingredient_count -= stack_ingredient.amount
+			//means we still have left over ingredients
+			if(ingredient_count)
+				//decode ingredient type i.e. stack or not and fulfill request
+				if(ispath(ingredient_type, /obj/item/stack))
+					var/obj/item/stack/stack_ingredient = ingredient
+					ingredient_count -= stack_ingredient.amount
+				else
+					ingredient_count -= 1
+
+				//assign final values
+				if(ingredient_count <= 0)
+					completed_ingredients += 1
+					ingredient_count = 0
+				reqs_copy[ingredient_type] = ingredient_count
+
+				//work complete
+				break
+
+			//means we have to look for subtypes
+			else if(isnull(ingredient_count))
+				ingredient_type = type2parent(ingredient_type)
+
+			//means we have no more remaining ingredients so bail, can happen if multiple ingredients of the same type/subtype are in the pot
 			else
-				ingredient_count -= 1
-			reqs_copy[ingredient_type] = ingredient_count
+				break
+		}
+		while(ingredient_type != /obj/item)
 
-	for(var/fulfilled in reqs_copy)
-		if(reqs_copy[fulfilled] > 0)
-			return FALSE
-	return TRUE
+	return completed_ingredients == reqs_copy.len
 
 /datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(!length(required_ingredients))
