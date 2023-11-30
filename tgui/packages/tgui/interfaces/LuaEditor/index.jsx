@@ -48,11 +48,11 @@ export class LuaEditor extends Component {
   }
 
   componentDidMount() {
-    const { data } = useBackend(this.context);
+    const { data } = useBackend();
     const { forceModal, forceViewChunk } = data;
     if (forceModal || forceViewChunk) {
-      const [, setModal] = useLocalState(this.context, 'modal');
-      const [, setViewedChunk] = useLocalState(this.context, 'viewedChunk');
+      const [, setModal] = useLocalState('modal');
+      const [, setViewedChunk] = useLocalState('viewedChunk');
       setModal(forceModal);
       setViewedChunk(forceViewChunk);
     }
@@ -63,7 +63,7 @@ export class LuaEditor extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend();
     const {
       noStateYet,
       globals,
@@ -102,7 +102,6 @@ export class LuaEditor extends Component {
     }
 
     const [modal, setModal] = useLocalState(
-      this.context,
       'modal',
       noStateYet ? 'states' : null
     );

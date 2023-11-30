@@ -10,8 +10,8 @@ type Data = {
   status_report: string;
 };
 
-export const CargoHoldTerminal = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const CargoHoldTerminal = (props) => {
+  const { act, data } = useBackend<Data>();
   const { points, pad, sending, status_report } = data;
 
   return (

@@ -47,11 +47,11 @@ type SeedExtractorData = {
   cycle_seconds: number;
 };
 
-export const SeedExtractor = (props, context) => {
-  const { act, data } = useBackend<SeedExtractorData>(context);
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const [sortField, setSortField] = useLocalState(context, 'sortField', 'name');
-  const [action, toggleAction] = useLocalState(context, 'action', true);
+export const SeedExtractor = (props) => {
+  const { act, data } = useBackend<SeedExtractorData>();
+  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [sortField, setSortField] = useLocalState('sortField', 'name');
+  const [action, toggleAction] = useLocalState('action', true);
   const search = createSearch(searchText, (item: SeedData) => item.name);
   const seeds_filtered =
     searchText.length > 0 ? data.seeds.filter(search) : data.seeds;

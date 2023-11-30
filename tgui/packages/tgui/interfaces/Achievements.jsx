@@ -2,11 +2,10 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Flex, Icon, Table, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-export const Achievements = (props, context) => {
-  const { data } = useBackend(context);
+export const Achievements = (props) => {
+  const { data } = useBackend();
   const { categories } = data;
   const [selectedCategory, setSelectedCategory] = useLocalState(
-    context,
     'category',
     categories[0]
   );
@@ -39,7 +38,7 @@ export const Achievements = (props, context) => {
   );
 };
 
-const AchievementTable = (props, context) => {
+const AchievementTable = (props) => {
   const { achievements } = props;
   return (
     <Table>
@@ -90,14 +89,10 @@ const Achievement = (props) => {
   );
 };
 
-const HighScoreTable = (props, context) => {
-  const { data } = useBackend(context);
+const HighScoreTable = (props) => {
+  const { data } = useBackend();
   const { highscore: highscores, user_ckey } = data;
-  const [highScoreIndex, setHighScoreIndex] = useLocalState(
-    context,
-    'highscore',
-    0
-  );
+  const [highScoreIndex, setHighScoreIndex] = useLocalState('highscore', 0);
   const highscore = highscores[highScoreIndex];
   if (!highscore) {
     return null;

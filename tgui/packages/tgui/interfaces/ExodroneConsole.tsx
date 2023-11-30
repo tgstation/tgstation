@@ -147,12 +147,11 @@ type ToolData = {
   icon: string;
 };
 
-export const ExodroneConsole = (props, context) => {
-  const { data } = useBackend<ExodroneConsoleData>(context);
+export const ExodroneConsole = (props) => {
+  const { data } = useBackend<ExodroneConsoleData>();
   const { signal_lost } = data;
 
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
     false
   );
@@ -168,8 +167,8 @@ export const ExodroneConsole = (props, context) => {
   );
 };
 
-const SignalLostModal = (props, context) => {
-  const { act } = useBackend(context);
+const SignalLostModal = (props) => {
+  const { act } = useBackend();
   return (
     <Modal
       backgroundColor="red"
@@ -203,13 +202,10 @@ const SignalLostModal = (props, context) => {
   );
 };
 
-const DroneSelectionSection = (
-  props: {
-    all_drones: Array<DroneBasicData>;
-  },
-  context
-) => {
-  const { act } = useBackend<ExodroneConsoleData>(context);
+const DroneSelectionSection = (props: {
+  all_drones: Array<DroneBasicData>;
+}) => {
+  const { act } = useBackend<ExodroneConsoleData>();
   const { all_drones } = props;
 
   return (
@@ -249,12 +245,11 @@ const DroneSelectionSection = (
   );
 };
 
-const ToolSelectionModal = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+const ToolSelectionModal = (props) => {
+  const { act, data } = useBackend<ExodroneConsoleData>();
   const { all_tools = {} } = data;
 
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
     false
   );
@@ -297,14 +292,8 @@ const ToolSelectionModal = (props, context) => {
   );
 };
 
-const EquipmentBox = (
-  props: {
-    cargo: CargoData;
-    drone: DroneData;
-  },
-  context
-) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
+  const { act, data } = useBackend<ExodroneConsoleData>();
   const { all_tools = {} } = data;
   const { configurable } = props.drone;
   const cargo = props.cargo;
@@ -382,16 +371,10 @@ const EquipmentBox = (
   );
 };
 
-const EquipmentGrid = (
-  props: {
-    drone: ActiveDrone & DroneData;
-  },
-  context
-) => {
-  const { act } = useBackend<ExodroneConsoleData>(context);
+const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
+  const { act } = useBackend<ExodroneConsoleData>();
   const { cargo, configurable } = props.drone;
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
     false
   );
@@ -453,13 +436,10 @@ const EquipmentGrid = (
   );
 };
 
-const DroneStatus = (
-  props: {
-    drone_integrity: number;
-    drone_max_integrity: number;
-  },
-  context
-) => {
+const DroneStatus = (props: {
+  drone_integrity: number;
+  drone_max_integrity: number;
+}) => {
   const { drone_integrity, drone_max_integrity } = props;
 
   return (
@@ -501,15 +481,12 @@ const NoSiteDimmer = () => {
   );
 };
 
-const TravelTargetSelectionScreen = (
-  props: {
-    drone: (DroneExploration | DroneIdle | DroneTravel) & DroneData;
-    showCancelButton?: boolean;
-  },
-  context
-) => {
+const TravelTargetSelectionScreen = (props: {
+  drone: (DroneExploration | DroneIdle | DroneTravel) & DroneData;
+  showCancelButton?: boolean;
+}) => {
   // List of sites and eta travel times to each
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+  const { act, data } = useBackend<ExodroneConsoleData>();
   const { drone } = props;
   const { all_bands } = data;
   const { can_travel, travel_error, drone_travel_coefficent } = drone;
@@ -528,12 +505,10 @@ const TravelTargetSelectionScreen = (
     }
   };
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
     false
   );
   const [TravelDimmerShown, setTravelDimmerShown] = useLocalState(
-    context,
     'TravelDimmerShown',
     false
   );
@@ -632,12 +607,7 @@ const TravelTargetSelectionScreen = (
   );
 };
 
-const TravelDimmer = (
-  props: {
-    drone: DroneTravel;
-  },
-  context
-) => {
+const TravelDimmer = (props: { drone: DroneTravel }) => {
   const { travel_time_left } = props.drone;
   return (
     <Section fill>
@@ -674,18 +644,12 @@ const TimeoutScreen = (props: { drone: DroneBusy }) => {
   );
 };
 
-const ExplorationScreen = (
-  props: {
-    drone: DroneExploration & DroneData;
-  },
-  context
-) => {
-  const { act } = useBackend(context);
+const ExplorationScreen = (props: { drone: DroneExploration & DroneData }) => {
+  const { act } = useBackend();
   const { drone } = props;
   const { site } = drone;
 
   const [TravelDimmerShown, setTravelDimmerShown] = useLocalState(
-    context,
     'TravelDimmerShown',
     false
   );
@@ -734,14 +698,8 @@ const ExplorationScreen = (
   );
 };
 
-const EventScreen = (
-  props: {
-    drone: DroneData;
-    event: FullEventData;
-  },
-  context
-) => {
-  const { act } = useBackend(context);
+const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
+  const { act } = useBackend();
   const { drone, event } = props;
 
   return (
@@ -799,16 +757,13 @@ const EventScreen = (
   );
 };
 
-export const AdventureScreen = (
-  props: {
-    adventure_data: AdventureData;
-    drone_integrity: number;
-    drone_max_integrity: number;
-    hide_status?: boolean;
-  },
-  context
-) => {
-  const { act } = useBackend(context);
+export const AdventureScreen = (props: {
+  adventure_data: AdventureData;
+  drone_integrity: number;
+  drone_max_integrity: number;
+  hide_status?: boolean;
+}) => {
+  const { act } = useBackend();
   const { adventure_data, drone_integrity, drone_max_integrity } = props;
   const rawData = adventure_data.raw_image;
   const imgSource = rawData ? rawData : resolveAsset(adventure_data.image);
@@ -890,8 +845,8 @@ const DroneScreen = (props: { drone: ActiveDrone & DroneData }) => {
   }
 };
 
-const ExodroneConsoleContent = (props, context) => {
-  const { data } = useBackend<ExodroneConsoleData>(context);
+const ExodroneConsoleContent = (props) => {
+  const { data } = useBackend<ExodroneConsoleData>();
 
   if (!data.drone) {
     return <DroneSelectionSection all_drones={data.all_drones} />;

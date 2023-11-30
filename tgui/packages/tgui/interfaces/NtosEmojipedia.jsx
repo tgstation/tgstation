@@ -3,10 +3,10 @@ import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosEmojipedia = (props, context) => {
-  const { data } = useBackend(context);
+export const NtosEmojipedia = (props) => {
+  const { data } = useBackend();
   const { emoji_list } = data;
-  const [filter, updatefilter] = useSharedState(context, 'filter', '');
+  const [filter, updatefilter] = useSharedState('filter', '');
 
   let filtered_emoji_list = filter
     ? emoji_list.filter((emoji) => {

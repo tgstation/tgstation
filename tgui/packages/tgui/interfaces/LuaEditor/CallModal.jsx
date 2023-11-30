@@ -2,11 +2,11 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, Modal, Section } from '../../components';
 import { ListMapper } from './ListMapper';
 
-export const CallModal = (props, context) => {
-  const { act, data } = useBackend(context);
+export const CallModal = (props) => {
+  const { act, data } = useBackend();
   const { callArguments } = data;
-  const [, setModal] = useLocalState(context, 'modal');
-  const [toCall, setToCall] = useLocalState(context, 'toCallTaskInfo');
+  const [, setModal] = useLocalState('modal');
+  const [toCall, setToCall] = useLocalState('toCallTaskInfo');
   const { type, params } = toCall;
   return (
     <Modal

@@ -180,33 +180,24 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
 
     const to_render = ops.length ? ops : 'No Options Found';
 
-    render(
-      <div>{to_render}</div>,
-      renderedMenu,
-      () => {
-        let singletonPopper = Dropdown.singletonPopper;
-        if (singletonPopper === undefined) {
-          singletonPopper = createPopper(
-            Dropdown.virtualElement,
-            renderedMenu!,
-            {
-              ...DEFAULT_OPTIONS,
-              placement: 'bottom-start',
-            }
-          );
+    render(<div>{to_render}</div>, renderedMenu, () => {
+      let singletonPopper = Dropdown.singletonPopper;
+      if (singletonPopper === undefined) {
+        singletonPopper = createPopper(Dropdown.virtualElement, renderedMenu!, {
+          ...DEFAULT_OPTIONS,
+          placement: 'bottom-start',
+        });
 
-          Dropdown.singletonPopper = singletonPopper;
-        } else {
-          singletonPopper.setOptions({
-            ...DEFAULT_OPTIONS,
-            placement: 'bottom-start',
-          });
+        Dropdown.singletonPopper = singletonPopper;
+      } else {
+        singletonPopper.setOptions({
+          ...DEFAULT_OPTIONS,
+          placement: 'bottom-start',
+        });
 
-          singletonPopper.update();
-        }
-      },
-      this.context
-    );
+        singletonPopper.update();
+      }
+    });
   }
 
   setOpen(open: boolean) {
