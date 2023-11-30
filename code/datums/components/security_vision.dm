@@ -27,13 +27,12 @@
 	judgement_criteria = update_judgement_criteria?.Invoke() || judgement_criteria
 
 	var/threat_level = perp.assess_threat(judgement_criteria)
-	if (threat_level >= THREAT_ASSESS_MAXIMUM)
-		examine_strings += span_boldwarning("Assessed threat level of [threat_level]! Extreme danger of criminal activity!")
-		return
-	if (threat_level >= THREAT_ASSESS_DANGEROUS)
-		examine_strings += span_warning("Assessed threat level of [threat_level]. Criminal scum detected!")
-		return
-	if (threat_level > 0)
-		examine_strings += span_notice("Assessed threat level of [threat_level]. Probably not dangerous... yet.")
-		return
-	examine_strings += span_notice("Seems to be a trustworthy individual.")
+	switch(threat_level)
+		if (THREAT_ASSESS_MAXIMUM to INFINITY)
+			examine_strings += span_boldwarning("Assessed threat level of [threat_level]! Extreme danger of criminal activity!")
+		if (THREAT_ASSESS_DANGEROUS to THREAT_ASSESS_MAXIMUM)
+			examine_strings += span_warning("Assessed threat level of [threat_level]. Criminal scum detected!")
+		if (1 to THREAT_ASSESS_DANGEROUS)
+			examine_strings += span_notice("Assessed threat level of [threat_level]. Probably not dangerous... yet.")
+		else
+			examine_strings += span_notice("Seems to be a trustworthy individual.")
