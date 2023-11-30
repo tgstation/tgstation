@@ -66,27 +66,43 @@
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
 			visible_message(
-				span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."),
-				span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."),
+				span_notice("[src] makes a hard landing on [T] but remains unharmed from the fall."),
+				span_notice("You brace for the fall. You make a hard landing on [T], but remain unharmed."),
 			)
 			Knockdown(levels * 4 SECONDS)
 			return
 
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE))
-		visible_message(
-			span_danger("[src] makes a hard landing on [T], but lands on [p_their()] feet!"),
-			span_userdanger("You make a hard landing on [T], but land on your feet!"),
-		)
-		return
-
-	visible_message(
-		span_danger("[src] crashes into [T] with a sickening noise!"),
-		span_userdanger("You crash into [T] with a sickening noise!"),
-	)
 	var/incoming_damage = (levels * 5) ** 1.5
-	apply_damage(incoming_damage / 2, BRUTE, BODY_ZONE_L_LEG, wound_bonus = CANT_WOUND) // remove the wound bonus if you want
-	apply_damage(incoming_damage / 2, BRUTE, BODY_ZONE_R_LEG, wound_bonus = CANT_WOUND) // people to break their legs from falling
+	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || num_legs >= 2))
+		if(small_surface_area)
+			visible_message(
+				span_notice("[src] makes a hard landing on [T], but lands on [p_their()] feet!"),
+				span_notice("You make a hard landing on [T], but land on your feet!"),
+			)
+			return
+
+		incoming_damage *= 1.66
+		add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, remove_movespeed_modifier)), levels * 3 SECONDS)
+		visible_message(
+			span_danger("[src] makes a hard landing on [T], landing on [p_their()] feet painfully!"),
+			span_userdanger("You make a hard landing on [T], and instinctively land on your feet - painfully!"),
+		)
+	else
+		visible_message(
+			span_danger("[src] crashes into [T] with a sickening noise!"),
+			span_userdanger("You crash into [T] with a sickening noise!"),
+		)
+
+	var/damage_for_each_leg = round(incoming_damage / 2)
+	apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = CANT_WOUND) // remove the wound bonus if you want
+	apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = CANT_WOUND) // people to break their legs from falling
 	Knockdown(levels * 5 SECONDS)
+
+/datum/movespeed_modifier/landed_on_feet
+	movetypes = GROUND|UPSIDE_DOWN
+	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN / 2
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
