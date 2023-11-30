@@ -31,13 +31,13 @@
 
 /// Display buttons for relevant station traits
 /datum/hud/new_player/proc/add_station_trait_buttons()
-	if (!mymob || !mymob.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
+	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
 		return
 	var/position_iterator = 1
 	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
 		if (!trait.can_display_lobby_button())
 			continue
-		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(null, /* our_hud = */ src)
+		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
 		sign_up_button.SlowInit()
 		sign_up_button.owner = REF(mymob)
 		sign_up_button.screen_loc = "TOP:-[42 + 28 * position_iterator],CENTER:-86"
