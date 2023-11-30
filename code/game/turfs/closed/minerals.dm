@@ -6,6 +6,8 @@
 	name = "rock"
 	icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock"
+	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
+	canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	baseturfs = /turf/open/misc/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -37,27 +39,15 @@
 
 
 /turf/closed/mineral/Initialize(mapload)
-	var/static/list/smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
-	var/static/list/canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
-
-	// The cost of the list() being in the type def is very large for something as common as minerals
-	src.smoothing_groups = smoothing_groups
-	src.canSmoothWith = canSmoothWith
-
-	return ..()
-
-/turf/closed/mineral/update_overlays()
 	. = ..()
 	// Mineral turfs are big, so they need to be on the game plane at a high layer
 	// But they're also turfs, so we need to cut them out from the light mask plane
 	// So we draw them as if they were on the game plane, and then overlay a copy onto
 	// The wall plane (so emissives/light masks behave)
 	// I am so sorry
-	var/static/mutable_appearance/wall_overlay = mutable_appearance()
-	wall_overlay.icon = icon
-	wall_overlay.icon_state = icon_state
-	SET_PLANE_EXPLICIT(wall_overlay, WALL_PLANE, src)
-	. += wall_overlay
+	var/static/mutable_appearance/wall_overlay = mutable_appearance('icons/turf/mining.dmi', "rocks")
+	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
+	overlays += wall_overlay
 
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
