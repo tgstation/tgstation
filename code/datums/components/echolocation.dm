@@ -70,6 +70,12 @@
 	echolocator.remove_traits(list(TRAIT_ECHOLOCATION_RECEIVER, TRAIT_TRUE_NIGHT_VISION), echo_group)
 	echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen("echo")
+	for(var/mob/living/echolocate_receiver as anything in receivers)
+		if(!echolocate_receiver.client)
+			continue
+		for(var/atom/rendered_atom as anything in receivers[echolocate_receiver])
+			echolocate_receiver.client.images -= receivers[echolocate_receiver][rendered_atom]["image"]
+		receivers -= list(echolocate_receiver)
 	return ..()
 
 /datum/component/echolocation/process()
