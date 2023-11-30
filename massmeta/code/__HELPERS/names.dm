@@ -12,6 +12,13 @@
 		25; 5
 	)
 
+	var/jobs = world.file2list("massmeta/strings/names/jobs.txt")
+	var/cocktails = world.file2list("massmeta/strings/names/cocktails.txt")
+	var/locations = world.file2list("massmeta/strings/names/locations.txt")
+	var/ru_nouns = world.file2list("massmeta/strings/names/ru_nouns.txt")
+	var/ru_adjectives = world.file2list("massmeta/strings/names/ru_adjectives.txt")
+	var/ru_verbs = world.file2list("massmeta/strings/names/ru_verbs.txt")
+
 	var/list/safety = list(1,2,3)//Tells the proc which options to remove later on.
 
 	var/list/names = list()
@@ -42,23 +49,23 @@
 								new_name += pick(GLOB.last_names)
 								. += new_name
 					if(2)
-						. += pick(GLOB.jobs)//Returns a job.
+						. += pick(jobs)//Returns a job.
 				safety -= 1
 			if(2)
 				switch(rand(1,2))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += pick(GLOB.cocktails)
+						. += pick(cocktails)
 					if(2)
-						. += pick(GLOB.locations)
+						. += pick(locations)
 				safety -= 2
 			if(3)
 				switch(rand(1,3))//Abstract nouns, adjectives, verbs. Can be selected more than once.
 					if(1)
-						. += pick(GLOB.ru_nouns)
+						. += pick(ru_nouns)
 					if(2)
-						. += pick(GLOB.ru_adjectives)
+						. += pick(ru_adjectives)
 					if(3)
-						. += pick(GLOB.ru_verbs)
+						. += pick(ru_verbs)
 		if(!return_list)
 			if(words == 1)
 				. += "."
