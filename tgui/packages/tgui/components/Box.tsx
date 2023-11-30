@@ -20,7 +20,6 @@ type CommonProps = {
   color: string;
   key: string | number;
   onClick: () => void;
-  style: Partial<HTMLDivElement['style']>;
 };
 
 type MappedProps = {
@@ -30,11 +29,17 @@ type MappedProps = {
 
 type AsType =
   | {
-      as: 'div' | 'span';
+      as: 'div';
+      style: Partial<HTMLDivElement['style']>;
     }
   | {
       as: 'img';
       src: string;
+      style: Partial<HTMLImageElement['style']>;
+    }
+  | {
+      as: 'span';
+      style: Partial<HTMLSpanElement['style']>;
     };
 
 /**
