@@ -46235,15 +46235,6 @@
 "nPe" = (
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
-"nPv" = (
-/obj/machinery/autolathe,
-/obj/machinery/door/window/left/directional/west{
-	dir = 1;
-	name = "Cargo Autolathe";
-	req_access = list("cargo")
-	},
-/turf/open/floor/plating,
-/area/station/cargo/office)
 "nPA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -189983,7 +189974,7 @@ cwG
 sFc
 cwG
 ccj
-nPv
+vYl
 tRT
 cbH
 kMc
