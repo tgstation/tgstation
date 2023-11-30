@@ -1,3 +1,6 @@
+/// one reason for declaring guilty is specifically checked for, keeping it as a define to avoid future mistakes
+#define GUILT_REASON_DECLARATION "from your declaration."
+
 ///Honorbound prevents you from attacking the unready, the just, or the innocent
 /datum/brain_trauma/special/honorbound
 	name = "Dogmatic Compulsions"
@@ -78,13 +81,11 @@
 	if(user in guilty)
 		return
 	var/datum/mind/guilty_conscience = user.mind
-	if(guilty_conscience && !declaration) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
+	if(guilty_conscience && reason != GUILT_REASON_DECLARATION) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
 		var/datum/job/job = guilty_conscience.assigned_role
 		if(job.departments_bitflags & (DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY))
 			return
 	to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] [reason]"))
-	if(declaration)
-		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] "))
 	to_chat(user, span_danger("[GLOB.deity] no longer considers you innocent!"))
 	guilty += user
 
@@ -271,4 +272,6 @@
 /datum/action/cooldown/spell/pointed/declare_evil/cast(mob/living/cast_on)
 	. = ..()
 	GLOB.religious_sect.adjust_favor(-required_favor, owner)
-	honor_trauma.guilty(cast_on, "from your declaration.")
+	honor_trauma.guilty(cast_on, GUILT_REASON_DECLARATION)
+
+#undef GUILT_REASON_DECLARATION
