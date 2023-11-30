@@ -14,7 +14,7 @@
 
 	var/jobs = world.file2list("massmeta/strings/names/jobs.txt")
 	var/cocktails = world.file2list("massmeta/strings/names/cocktails.txt")
-	var/locations = world.file2list("massmeta/strings/names/locations.txt")
+	var/locations = world.file2list("vstrings/names/locations.txt")
 	var/ru_nouns = world.file2list("massmeta/strings/names/ru_nouns.txt")
 	var/ru_adjectives = world.file2list("massmeta/strings/names/ru_adjectives.txt")
 	var/ru_verbs = world.file2list("massmeta/strings/names/ru_verbs.txt")
