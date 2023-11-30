@@ -15,6 +15,7 @@ export type FlexProps = BoxProps &
     justify: string | boolean;
     inline: boolean;
     scrollable: boolean;
+    style: Partial<HTMLDivElement['style']>;
   }>;
 
 export const computeFlexClassName = (props: FlexProps) => {
@@ -56,9 +57,10 @@ export type FlexItemProps = BoxProps &
   Partial<{
     grow: number | boolean;
     order: number;
-    shrink: number;
+    shrink: number | boolean;
     basis: string | number;
     align: string | boolean;
+    style: Partial<HTMLDivElement['style']>;
   }>;
 
 export const computeFlexItemClassName = (props: FlexItemProps) => {

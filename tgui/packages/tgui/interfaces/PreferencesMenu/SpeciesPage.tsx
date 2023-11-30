@@ -191,7 +191,7 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
         </Stack>
       </Stack.Item>
 
-      <Stack grow>
+      <Stack>
         {neutral.map((perk) => {
           return (
             <Stack.Item key={perk.name}>
@@ -276,7 +276,7 @@ const SpeciesPageInner = (props: {
           </Stack.Item>
 
           <Stack.Item grow>
-            <Box fill>
+            <Box>
               <Box>
                 <Stack fill>
                   <Stack.Item width="70%">

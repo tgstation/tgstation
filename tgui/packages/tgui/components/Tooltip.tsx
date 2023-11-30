@@ -1,5 +1,5 @@
 import { createPopper, Placement, VirtualElement } from '@popperjs/core';
-import { Component, ReactNode, createRef } from 'react';
+import { Component, ReactNode, createRef, RefObject } from 'react';
 import { render } from 'react-dom';
 
 type TooltipProps = {
@@ -48,13 +48,15 @@ export class Tooltip extends Component<TooltipProps, TooltipState> {
         ?? NULL_RECT
     ),
   };
-  tooltipRef = createRef<HTMLDivElement>();
+  tooltipRef: RefObject<HTMLDivElement>;
 
   getDOMNode() {
     return this.tooltipRef.current;
   }
 
   componentDidMount() {
+    this.tooltipRef = createRef<HTMLDivElement>();
+
     const domNode = this.getDOMNode();
 
     if (!domNode) {

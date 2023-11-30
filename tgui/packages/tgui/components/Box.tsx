@@ -19,7 +19,7 @@ type CommonProps = {
   className: string | boolean;
   color: string;
   key: string | number;
-  onClick: () => void;
+  onClick: (event?) => void;
 };
 
 type MappedProps = {
@@ -40,6 +40,9 @@ type AsType =
   | {
       as: 'span';
       style: Partial<HTMLSpanElement['style']>;
+    }
+  | {
+      as: string;
     };
 
 /**

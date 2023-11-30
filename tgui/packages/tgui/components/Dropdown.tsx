@@ -1,6 +1,6 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, ReactNode, createRef } from 'react';
+import { Component, ReactNode, createRef, RefObject } from 'react';
 import { render } from 'react-dom';
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
@@ -13,21 +13,24 @@ export interface DropdownEntry {
 }
 
 type DropdownUniqueProps = {
-  options: string[] | DropdownEntry[];
+  buttons?: boolean;
+  clipSelectedText?: boolean;
+  color?: string;
+  disabled?: boolean;
+  displayText?: string | number | ReactNode;
+  dropdownStyle?: any;
   icon?: string;
   iconRotation?: number;
-  clipSelectedText?: boolean;
-  width?: string;
+  iconSpin?: boolean;
   menuWidth?: string;
-  over?: boolean;
-  color?: string;
   nochevron?: boolean;
-  displayText?: string | number | ReactNode;
   onClick?: (event) => void;
+  onSelected?: (selected: any) => void;
+  options: string[] | DropdownEntry[];
+  over?: boolean;
   // you freaks really are just doing anything with this shit
   selected?: any;
-  onSelected?: (selected: any) => void;
-  buttons?: boolean;
+  width?: string;
 };
 
 export type DropdownProps = BoxProps & DropdownUniqueProps;
@@ -74,7 +77,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     open: false,
     selected: this.props.selected,
   };
-  dropdownRef = createRef<HTMLDivElement>();
+  dropdownRef: RefObject<HTMLDivElement>;
 
   handleClick = () => {
     if (this.state.open) {
@@ -87,6 +90,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   }
 
   componentDidMount() {
+    this.dropdownRef = createRef();
     const domNode = this.getDOMNode();
 
     if (!domNode) {
@@ -107,7 +111,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     Dropdown.currentOpenMenu = domNode;
 
     renderedMenu.scrollTop = 0;
-    renderedMenu.style.width = this.props.menuWidth || '10px';
+    renderedMenu.style.width = this.props.menuWidth || '10rem';
     renderedMenu.style.opacity = '1';
     renderedMenu.style.pointerEvents = 'auto';
 

@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { ReactNode } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
 import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
@@ -218,12 +218,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   }
 
   return (
-    <Stack.Item
-      className={className}
-      height="100%"
-      style={{
-        marginTop: 0,
-      }}>
+    <Stack.Item className={className} height="100%" mt={0}>
       <Stack fill align="center">
         <Tooltip content={job.description} position="bottom-start">
           <Stack.Item
@@ -244,7 +239,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
   );
 };
 
-const Department = (props: { department: string }) => {
+const Department = (props: { department: string } & PropsWithChildren) => {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 

@@ -86,17 +86,16 @@ const QuirkList = (props: {
 
               <Stack.Item
                 align="stretch"
+                ml={0}
                 style={{
                   borderRight: '1px solid black',
-                  marginLeft: 0,
                 }}
               />
 
               <Stack.Item
                 grow
+                ml={0}
                 style={{
-                  marginLeft: 0,
-
                   // Fixes an IE bug for text overflowing in Flex boxes
                   minWidth: '0%',
                 }}>
@@ -125,8 +124,8 @@ const QuirkList = (props: {
                   <Stack.Item
                     grow
                     basis="content"
+                    mt={0}
                     style={{
-                      marginTop: 0,
                       padding: '3px',
                     }}>
                     {quirk.description}
@@ -216,7 +215,7 @@ const QuirkList = (props: {
   );
 };
 
-const StatDisplay: StatelessComponent<{}> = (props) => {
+const StatDisplay = (props) => {
   return (
     <Box
       backgroundColor="#eee"

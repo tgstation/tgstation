@@ -1,15 +1,17 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import { Component, PropsWithChildren, ReactNode } from 'react';
+import { Component, createRef, JSXElementConstructor, PropsWithChildren, ReactElement, RefObject } from 'react';
+import { render } from 'react-dom';
 
 type PopperProps = {
-  popperContent: ReactNode;
+  popperContent: ReactElement<any, string | JSXElementConstructor<any>>;
   options?: ArgumentsOf<typeof createPopper>[2];
   additionalStyles?: CSSProperties;
 } & PropsWithChildren;
 
 export class Popper extends Component<PopperProps> {
   static id: number = 0;
+  popperRef: RefObject<HTMLDivElement>;
 
   renderedContent: HTMLDivElement;
   popperInstance: ReturnType<typeof createPopper>;
@@ -23,6 +25,8 @@ export class Popper extends Component<PopperProps> {
   componentDidMount() {
     const { additionalStyles, options } = this.props;
 
+    this.popperRef = createRef();
+
     this.renderedContent = document.createElement('div');
 
     if (additionalStyles) {
@@ -34,7 +38,7 @@ export class Popper extends Component<PopperProps> {
     this.renderPopperContent(() => {
       document.body.appendChild(this.renderedContent);
 
-      const domNode = findDOMfromVNode(this.$LI, true);
+      const domNode = this.popperRef.current;
       if (!domNode) {
         return;
       }
@@ -53,7 +57,7 @@ export class Popper extends Component<PopperProps> {
 
   componentWillUnmount() {
     this.popperInstance?.destroy();
-    render(null, this.renderedContent, () => {
+    render(<> </>, this.renderedContent, () => {
       this.renderedContent.remove();
     });
   }
@@ -61,7 +65,7 @@ export class Popper extends Component<PopperProps> {
   renderPopperContent(callback: () => void) {
     // `render` errors when given false, so we convert it to `null`,
     // which is supported.
-    render(this.props.popperContent || null, this.renderedContent, callback);
+    render(this.props.popperContent, this.renderedContent, callback);
   }
 
   render() {
