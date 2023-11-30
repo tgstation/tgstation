@@ -17,7 +17,7 @@
 	var/blocking_trait
 	/// Ref of the client color we give to the echolocator.
 	var/client_color
-	/// Associative list of world.time when created to a list of receivers.
+	/// Associative list of receivers to lists of atoms they are rendering (those atoms are associated to data of the image and time they were rendered at).
 	var/list/receivers = list()
 	/// All the saved appearances, keyed by icon-icon_state.
 	var/static/list/saved_appearances = list()
