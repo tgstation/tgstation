@@ -38,6 +38,8 @@
 	var/altar_icon_state
 	/// Currently Active (non-deleted) rites
 	var/list/active_rites
+	/// Chance that we fail a bible blessing.
+	var/smack_chance = 60
 	/// Whether the structure has CANDLE OVERLAYS!
 	var/candle_overlay = TRUE
 
@@ -291,6 +293,7 @@
 	altar_icon_state = "convertaltar-burden"
 	alignment = ALIGNMENT_NEUT
 	candle_overlay = FALSE
+	smack_chance = 0
 	rites_list = list(/datum/religion_rites/nullrod_transformation)
 
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
@@ -298,11 +301,11 @@
 	if(!ishuman(new_convert))
 		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
 		return
-	new_convert.gain_trauma(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_MAGIC)
+	new_convert.gain_trauma(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/religion_sect/burden/on_deconversion(mob/living/carbon/human/new_convert)
 	if (ishuman(new_convert))
-		new_convert.cure_trauma_type(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_MAGIC)
+		new_convert.cure_trauma_type(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_ABSOLUTE)
 	return ..()
 
 /datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
@@ -327,15 +330,16 @@
 		if(IS_ORGANIC_LIMB(possible_limb))
 			chaplains_limbs += possible_limb
 	if(length(chaplains_limbs))
-		for(var/obj/item/bodypart/affected_limb in hurt_limbs)
+		for(var/obj/item/bodypart/affected_limb as anything in hurt_limbs)
 			var/obj/item/bodypart/chaplains_limb = chaplain.get_bodypart(affected_limb.body_zone)
 			if(!chaplains_limb || !IS_ORGANIC_LIMB(chaplains_limb))
 				chaplains_limb = pick(chaplains_limbs)
 			var/brute_damage = affected_limb.brute_dam
 			var/burn_damage = affected_limb.burn_dam
-			if((brute_damage || burn_damage) && affected_limb.heal_damage(brute_damage, burn_damage, required_bodytype = BODYTYPE_ORGANIC))
+			if((brute_damage || burn_damage))
 				transferred = TRUE
-				chaplains_limb.receive_damage(brute_damage * burden_modifier, burn_damage * burden_modifier, wound_bonus = CANT_WOUND)
+				affected_limb.heal_damage(brute_damage, burn_damage, required_bodytype = BODYTYPE_ORGANIC)
+				chaplains_limb.receive_damage(brute_damage * burden_modifier, burn_damage * burden_modifier, forced = TRUE, wound_bonus = CANT_WOUND)
 			for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
 				transferred = TRUE
 				iter_wound.remove_wound()
@@ -359,6 +363,13 @@
 		transferred = TRUE
 		target.adjustCloneLoss(-clone_damage)
 		chaplain.adjustCloneLoss(clone_damage * burden_modifier, forced = TRUE)
+	if(target.blood_volume < BLOOD_VOLUME_SAFE && !HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
+		var/target_blood_data = target.get_blood_data(target.get_blood_id())
+		var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
+		var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
+		if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
+			transferred = TRUE
+			chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
 	if(transferred)
