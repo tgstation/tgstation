@@ -48,26 +48,27 @@
 	if(!isliving(clickingon))
 		return
 
-	var/mob/living/clickedmob = clickingon
+	var/mob/living/clicked_mob = clickingon
 	var/obj/item/weapon = honorbound.get_active_held_item()
 
-	if(!honorbound.DirectAccess(clickedmob) && !isgun(weapon))
+	if(!honorbound.DirectAccess(clicked_mob) && !isgun(weapon))
 		return
 	if(weapon?.item_flags & NOBLUDGEON)
 		return
-	if(!honorbound.combat_mode && (HAS_TRAIT(clickedmob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
+	if(!honorbound.combat_mode && (HAS_TRAIT(clicked_mob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
 		return
-	check_visible_guilt(clickedmob)
-	if(!is_honorable(honorbound, clickedmob))
+	check_visible_guilt(clicked_mob)
+	if(!is_honorable(honorbound, clicked_mob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
-/datum/brain_trauma/special/honorbound/proc/check_visible_guilt(var/mob/living/clickedmob)
-	if(ROLE_SYNDICATE in clickedmob.faction)
+/// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
+/datum/brain_trauma/special/honorbound/proc/check_visible_guilt(var/mob/living/attacked_mob)
+	if(ROLE_SYNDICATE in attacked_mob.faction)
 		// as a reminder, ROLE_SYNDICATE is given to obvious and outward syndicates like nuke ops and mobs,
 		// NOT given to traitors. this should be just fine
-		guilty(clickedmob, "for their misaligned association with the Syndicate!")
-	if(HAS_TRAIT(clickedmob, TRAIT_CULT_HALO))
-		guilty(clickedmob, "for blasphemous worship!")
+		guilty(attacked_mob, "for their misaligned association with the Syndicate!")
+	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
+		guilty(attacked_mob, "for blasphemous worship!")
 
 /**
  * Called by hooked signals whenever someone attacks the person with this trauma

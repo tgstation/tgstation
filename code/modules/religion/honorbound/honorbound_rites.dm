@@ -1,3 +1,6 @@
+/// how much favor is gained when 
+#define DEACONIZE_FAVOR_GAIN 300
+
 ///Makes the person holy, but they now also have to follow the honorbound code (CBT). Actually earns favor, convincing others to uphold the code (tm) is not easy
 /datum/religion_rites/deaconize
 	name = "Join Crusade"
@@ -64,7 +67,7 @@
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
 	if(joining_now in honor.guilty)
 		honor.guilty -= joining_now
-	GLOB.religious_sect.adjust_favor(300, user)
+	GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
 	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
 	joining_now.mind.holy_role = HOLY_ROLE_DEACON
 	GLOB.religious_sect.on_conversion(joining_now)
