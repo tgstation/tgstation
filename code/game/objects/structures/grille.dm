@@ -280,7 +280,7 @@
 			return
 //window placing end
 
-	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+	else if((W.obj_flags & CONDUCT_1) && shock(user, 70))
 		return
 
 	return ..()

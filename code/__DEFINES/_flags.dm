@@ -17,8 +17,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /// Is this object currently processing in the atmos object list?
 #define ATMOS_IS_PROCESSING_1 (1<<0)
-/// conducts electricity (metal etc.)
-#define CONDUCT_1 (1<<1)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
 #define NODECONSTRUCT_1 (1<<2)
 /// item has priority to check when entering or leaving
