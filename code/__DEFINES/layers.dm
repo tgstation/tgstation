@@ -24,10 +24,9 @@
 #define WALL_PLANE -9
 #define GAME_PLANE -8
 
+#define ABOVE_GAME_PLANE -3
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
-#define SEETHROUGH_PLANE -3
-#warn this one too
-#define ABOVE_GAME_PLANE -2
+#define SEETHROUGH_PLANE -2
 
 #define RENDER_PLANE_GAME_WORLD -1
 
@@ -209,7 +208,6 @@
 
 // Intermediate layer used by both GAME_PLANE and ABOVE_GAME_PLANE
 #define ABOVE_ALL_MOB_LAYER 4.7
-#warn need to account for seethrough here
 
 // ABOVE_GAME_PLANE layers
 #define NAVIGATION_EYE_LAYER 4.9
@@ -223,6 +221,8 @@
  * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
  */
 #define WATER_VISUAL_OVERLAY_LAYER 1000
+
+// SEETHROUGH_PLANE layers here, tho it has no layer values
 
 //---------- LIGHTING -------------
 
