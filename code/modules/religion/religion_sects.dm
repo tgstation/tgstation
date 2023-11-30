@@ -363,13 +363,16 @@
 		transferred = TRUE
 		target.adjustCloneLoss(-clone_damage)
 		chaplain.adjustCloneLoss(clone_damage * burden_modifier, forced = TRUE)
-	if(target.blood_volume < BLOOD_VOLUME_SAFE && !HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
-		var/target_blood_data = target.get_blood_data(target.get_blood_id())
-		var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
-		var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-		if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
-			transferred = TRUE
-			chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
+	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
+		if(target.blood_volume < BLOOD_VOLUME_SAFE)
+			var/target_blood_data = target.get_blood_data(target.get_blood_id())
+			var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
+			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
+			if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
+				transferred = TRUE
+				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
+		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
+			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
 	if(transferred)
