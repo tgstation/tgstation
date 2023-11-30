@@ -1124,6 +1124,7 @@
 #include "code\datums\components\scope.dm"
 #include "code\datums\components\seclight_attachable.dm"
 #include "code\datums\components\sect_nullrod_bonus.dm"
+#include "code\datums\components\security_vision.dm"
 #include "code\datums\components\seethrough.dm"
 #include "code\datums\components\seethrough_mob.dm"
 #include "code\datums\components\shell.dm"

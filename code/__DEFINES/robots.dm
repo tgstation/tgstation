@@ -176,6 +176,11 @@
 #define JUDGE_WEAPONCHECK (1<<2)
 #define JUDGE_RECORDCHECK (1<<3)
 
+/// Above this level of assessed threat, Beepsky will attack you
+#define THREAT_ASSESS_DANGEROUS 4
+/// Above this level of assessed threat, you are extremely threatening
+#define THREAT_ASSESS_MAXIMUM 10
+
 //SecBOT defines on arresting
 ///Whether arrests should be broadcasted over the Security radio
 #define SECBOT_DECLARE_ARRESTS (1<<0)
