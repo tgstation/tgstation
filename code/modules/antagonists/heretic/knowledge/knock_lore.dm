@@ -116,7 +116,7 @@
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
-		/obj/item/toy/crayon/white = 1, //monkestation edit crayon/white ==> crayon (i checked the game code for this and i can't find a consistant spawn for it other than detective pockets)
+		/obj/item/toy/crayon = 1, //monkestation edit crayon/white ==> crayon (i checked the game code for this and i can't find a consistant spawn for it other than detective pockets)
 		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/multitool = 1,
 	)
