@@ -197,9 +197,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Speed of building transit devices
 	var/transit_build_speed = 0.5 SECONDS
 	///Speed of removal of unwrenched devices
-	var/destroy_speed = 0.2 SECONDS
+	var/destroy_speed = 0 SECONDS
 	///Speed of reprogramming connectable directions of smart pipes
-	var/reprogram_speed = 0.2 SECONDS
+	var/reprogram_speed = 0 SECONDS
 	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
 	///Piping layer we are going to spawn the atmos device in
