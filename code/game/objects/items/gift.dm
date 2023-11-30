@@ -18,7 +18,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	inhand_icon_state = "gift"
 	resistance_flags = FLAMMABLE
 
-	var/obj/item/contains_type
+	/// What type of thing are we guaranteed to spawn in with?
+	var/obj/item/contains_type = null
 
 /obj/item/gift/Initialize(mapload)
 	. = ..()
@@ -26,7 +27,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	pixel_y = rand(-10,10)
 	icon_state = "giftdeliverypackage[rand(1,5)]"
 
-	contains_type = get_gift_type()
+	if(isnull(contains_type))
+		contains_type = get_gift_type()
 
 /obj/item/gift/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] peeks inside [src] and cries [user.p_them()]self to death! It looks like [user.p_they()] [user.p_were()] on the naughty list..."))
@@ -54,48 +56,53 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
 
 /obj/item/gift/proc/get_gift_type()
-	var/gift_type_list = list(/obj/item/sord,
-		/obj/item/storage/wallet,
-		/obj/item/storage/photo_album,
-		/obj/item/storage/box/snappops,
-		/obj/item/storage/crayons,
-		/obj/item/storage/backpack/holding,
-		/obj/item/storage/belt/champion,
-		/obj/item/soap/deluxe,
-		/obj/item/pickaxe/diamond,
-		/obj/item/pen/invisible,
-		/obj/item/lipstick/random,
-		/obj/item/grenade/smokebomb,
-		/obj/item/grown/corncob,
-		/obj/item/poster/random_contraband,
-		/obj/item/poster/random_official,
-		/obj/item/book/manual/wiki/barman_recipes,
-		/obj/item/book/manual/chef_recipes,
-		/obj/item/bikehorn,
-		/obj/item/toy/beach_ball,
-		/obj/item/toy/basketball,
-		/obj/item/banhammer,
-		/obj/item/food/grown/ambrosia/deus,
-		/obj/item/food/grown/ambrosia/vulgaris,
-		/obj/item/pai_card,
-		/obj/item/instrument/violin,
-		/obj/item/instrument/guitar,
-		/obj/item/storage/belt/utility/full,
-		/obj/item/clothing/neck/tie/horrible,
-		/obj/item/clothing/suit/jacket/leather,
-		/obj/item/clothing/suit/jacket/leather/biker,
-		/obj/item/clothing/suit/costume/poncho,
-		/obj/item/clothing/suit/costume/poncho/green,
-		/obj/item/clothing/suit/costume/poncho/red,
-		/obj/item/clothing/suit/costume/snowman,
-		/obj/item/clothing/head/costume/snowman,
-		/obj/item/stack/sheet/mineral/coal)
+	var/static/list/gift_type_list = null
 
-	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
-	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo)) //All toys, except for abstract types and syndicate cards.
+	if(isnull(gift_type_list))
+		gift_type_list = list(
+			/obj/item/banhammer,
+			/obj/item/bikehorn,
+			/obj/item/book/manual/chef_recipes,
+			/obj/item/book/manual/wiki/barman_recipes,
+			/obj/item/clothing/head/costume/snowman,
+			/obj/item/clothing/neck/tie/horrible,
+			/obj/item/clothing/suit/costume/poncho,
+			/obj/item/clothing/suit/costume/poncho/green,
+			/obj/item/clothing/suit/costume/poncho/red,
+			/obj/item/clothing/suit/costume/snowman,
+			/obj/item/clothing/suit/jacket/leather,
+			/obj/item/clothing/suit/jacket/leather/biker,
+			/obj/item/food/grown/ambrosia/deus,
+			/obj/item/food/grown/ambrosia/vulgaris,
+			/obj/item/grenade/smokebomb,
+			/obj/item/grown/corncob,
+			/obj/item/instrument/guitar,
+			/obj/item/instrument/violin,
+			/obj/item/lipstick/random,
+			/obj/item/pai_card,
+			/obj/item/pen/invisible,
+			/obj/item/pickaxe/diamond,
+			/obj/item/poster/random_contraband,
+			/obj/item/poster/random_official,
+			/obj/item/soap/deluxe,
+			/obj/item/sord,
+			/obj/item/stack/sheet/mineral/coal,
+			/obj/item/storage/backpack/holding,
+			/obj/item/storage/belt/champion,
+			/obj/item/storage/belt/utility/full,
+			/obj/item/storage/box/snappops,
+			/obj/item/storage/crayons,
+			/obj/item/storage/photo_album,
+			/obj/item/storage/wallet,
+			/obj/item/toy/basketball,
+			/obj/item/toy/beach_ball,
+		)
+
+		gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
+		//Add all toys, except for abstract types and syndicate cards.
+		gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo))
 
 	var/gift_type = pick(gift_type_list)
-
 	return gift_type
 
 
