@@ -48463,17 +48463,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "qXY" = (
-/mob/living/simple_animal/pet/cat/runtime,
-/obj/effect/turf_decal/siding/blue{
-	dir = 1
-	},
-/obj/machinery/airalarm/directional/north,
-/obj/structure/bed/dogbed/runtime,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
