@@ -2,8 +2,8 @@
 /datum/computer_file/program/robocontrol
 	filename = "botkeeper"
 	filedesc = "BotKeeper"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "robot"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "robot"
 	extended_desc = "A remote controller used for giving basic commands to non-sentient robots."
 	requires_ntnet = TRUE
 	size = 6

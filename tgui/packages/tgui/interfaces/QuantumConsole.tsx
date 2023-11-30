@@ -37,6 +37,7 @@ type Domain = {
   desc: string;
   difficulty: number;
   id: string;
+  is_modular: BooleanLike;
   name: string;
   reward: number | string;
 };
@@ -74,8 +75,8 @@ const getColor = (difficulty: number) => {
   }
 };
 
-export const QuantumConsole = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const QuantumConsole = (props) => {
+  const { data } = useBackend<Data>();
 
   return (
     <Window title="Quantum Console" width={500} height={500}>
@@ -87,8 +88,8 @@ export const QuantumConsole = (props, context) => {
   );
 };
 
-const AccessView = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AccessView = (props) => {
+  const { act, data } = useBackend<Data>();
 
   if (!isConnected(data)) {
     return <NoticeBox error>No server connected!</NoticeBox>;
@@ -100,11 +101,19 @@ const AccessView = (props, context) => {
     ready,
     occupants,
     points,
+    randomized,
   } = data;
 
   const sorted = available_domains.sort((a, b) => a.cost - b.cost);
 
-  const selected = sorted.find(({ id }) => id === generated_domain);
+  let selected;
+  if (generated_domain) {
+    selected = randomized
+      ? '???'
+      : sorted.find(({ id }) => id === generated_domain)?.name;
+  } else {
+    selected = 'Nothing loaded';
+  }
 
   return (
     <Stack fill vertical>
@@ -143,9 +152,7 @@ const AccessView = (props, context) => {
         <Section>
           <Stack fill>
             <Stack.Item grow>
-              <NoticeBox info={!!generated_domain}>
-                {selected?.name ?? 'Nothing loaded'}
-              </NoticeBox>
+              <NoticeBox info={!!generated_domain}>{selected}</NoticeBox>
             </Stack.Item>
             <Stack.Item>
               <Button.Confirm
@@ -162,11 +169,11 @@ const AccessView = (props, context) => {
   );
 };
 
-const DomainEntry = (props: DomainEntryProps, context) => {
+const DomainEntry = (props: DomainEntryProps) => {
   const {
-    domain: { cost, desc, difficulty, id, name, reward },
+    domain: { cost, desc, difficulty, id, is_modular, name, reward },
   } = props;
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
     return null;
   }
@@ -203,11 +210,14 @@ const DomainEntry = (props: DomainEntryProps, context) => {
         <>
           {name}
           {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
+          {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
         </>
       }>
       <Stack height={5}>
         <Stack.Item color="label" grow={4}>
           {desc}
+          {!!is_modular && ' (Modular)'}
+          {difficulty === Difficulty.High && ' (Hard)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
@@ -228,8 +238,8 @@ const DomainEntry = (props: DomainEntryProps, context) => {
   );
 };
 
-const AvatarDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AvatarDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
     return null;
   }
@@ -312,11 +322,11 @@ const AvatarDisplay = (props, context) => {
   );
 };
 
-const DisplayDetails = (props: DisplayDetailsProps, context) => {
+const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <TableCell color="label">No bandwidth</TableCell>;
+    return <TableCell color="label">None</TableCell>;
   }
 
   if (typeof amount === 'string') {
@@ -340,8 +350,8 @@ const DisplayDetails = (props: DisplayDetailsProps, context) => {
     <TableCell>
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
-          <Stack.Item>
-            <Icon color={color} key={index} name={icon} />
+          <Stack.Item key={index}>
+            <Icon color={color} name={icon} />
           </Stack.Item>
         ))}
       </Stack>

@@ -151,6 +151,8 @@
 	can_weld_shut = FALSE
 	cutting_tool = null
 	paint_jobs = null
+	elevation = 4 //It's a small mound.
+	elevation_open = 0
 
 	/// will this grave give you nightmares when opened
 	var/lead_tomb = FALSE

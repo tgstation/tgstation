@@ -1,10 +1,10 @@
 #define FREQ_LISTENING (1<<0)
 
 /obj/item/radio
-	icon = 'icons/obj/radio.dmi'
+	icon = 'icons/obj/device.dmi'
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
-	inhand_icon_state = "radio"
+	inhand_icon_state = "walkietalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	worn_icon_state = "radio"
@@ -388,7 +388,8 @@
 				return TRUE
 	return FALSE
 
-/obj/item/radio/proc/on_recieve_message()
+/obj/item/radio/proc/on_recieve_message(list/data)
+	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
 	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)

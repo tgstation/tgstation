@@ -139,7 +139,8 @@
 			return
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
-		log_game("Event Disease Outbreak: Classic attempted to start, but failed.")
+		message_admins("Event Disease Outbreak: Classic attempted to start, but failed to find a candidate target.")
+		log_game("Event Disease Outbreak: Classic attempted to start, but failed to find a candidate target")
 
 /datum/round_event_control/disease_outbreak/advanced
 	name = "Disease Outbreak: Advanced"
@@ -275,7 +276,8 @@
 			return
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
-		log_game("Event Disease Outbreak: Advanced attempted to start, but failed.")
+		message_admins("Event Disease Outbreak: Advanced attempted to start, but failed to find a candidate target.")
+		log_game("Event Disease Outbreak: Advanced attempted to start, but failed to find a candidate target.")
 
 /datum/disease/advance/random/event
 	name = "Event Disease"
