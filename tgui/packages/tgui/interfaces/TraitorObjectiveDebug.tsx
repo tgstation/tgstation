@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
-import { getReputation } from './Uplink/calculateReputationLevel';
+import { getDangerLevel } from './Uplink/calculateDangerLevel';
 
 type Objective = {
   name: string;
@@ -126,8 +126,8 @@ const sortingOptions: SortingOption[] = [
   },
 ];
 
-export const TraitorObjectiveDebug = (props, context) => {
-  const { data, act } = useBackend<ObjectiveData>(context);
+export const TraitorObjectiveDebug = (props) => {
+  const { data, act } = useBackend<ObjectiveData>();
   const { objective_data, player_data, current_progression } = data;
   const lines: JSX.Element[] = [];
   lines.sort();
@@ -165,19 +165,13 @@ export const TraitorObjectiveDebug = (props, context) => {
     );
   }
   let objectivesToRender: Objective[] = [];
-  const [currentTab, setCurrentTab] = useLocalState(
-    context,
-    'currentTab',
-    'All'
-  );
+  const [currentTab, setCurrentTab] = useLocalState('currentTab', 'All');
   const [sortingFunc, setSortingFunc] = useLocalState(
-    context,
     'sortingFunc',
     sortingOptions[0].name
   );
   // true = ascending, false = descending
   const [sortDirection, setSortingDirection] = useLocalState(
-    context,
     'sortDirection',
     true
   );
@@ -271,7 +265,7 @@ export const TraitorObjectiveDebug = (props, context) => {
             ))}
           </Stack>
           {player_data.map((value) => {
-            const rep = getReputation(value.progression_points);
+            const rep = getDangerLevel(value.progression_points);
             return (
               <Tooltip
                 key={value.player}
@@ -349,7 +343,7 @@ type ObjectiveBoxProps = {
   objective: Objective;
 };
 
-const ObjectiveBox = (props: ObjectiveBoxProps, context) => {
+const ObjectiveBox = (props: ObjectiveBoxProps) => {
   const { objective } = props;
   let width = `${
     (objective.progression_maximum / sizeLimit) * window.innerWidth

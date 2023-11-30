@@ -12,8 +12,7 @@
 	id = "mothership_main"
 	},
 /obj/machinery/recycler{
-	dir = 1;
-	eat_dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
@@ -714,7 +713,7 @@
 /area/shuttle/ruin/cyborg_mothership)
 "Oq" = (
 /obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /obj/effect/turf_decal/bot,
 /obj/structure/sink/directional/east,
 /obj/item/toy/figure/borg{

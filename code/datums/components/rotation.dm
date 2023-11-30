@@ -32,7 +32,7 @@
 
 /datum/component/simple_rotation/RegisterWithParent()
 	AddSignals()
-	. = ..()
+	return ..()
 
 /datum/component/simple_rotation/PostTransfer()
 	//Because of the callbacks which we don't track cleanly we can't transfer this
@@ -42,12 +42,12 @@
 
 /datum/component/simple_rotation/UnregisterFromParent()
 	RemoveSignals()
-	. = ..()
+	return ..()
 
 /datum/component/simple_rotation/Destroy()
 	AfterRotation = null
 	//Signals + verbs removed via UnRegister
-	. = ..()
+	return ..()
 
 /datum/component/simple_rotation/ClearFromParent()
 	return ..()

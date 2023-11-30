@@ -5,7 +5,7 @@
 
 	abstract_type = /datum/traitor_objective/target_player/kidnapping
 
-	/// The jobs that this objective is targetting.
+	/// The jobs that this objective is targeting.
 	var/list/target_jobs
 	/// Area that the target needs to be delivered to
 	var/area/dropoff_area
@@ -13,7 +13,7 @@
 	var/pod_called = FALSE
 	/// How much TC do we get from sending the target alive
 	var/alive_bonus = 0
-	/// All stripped targets belongings
+	/// All stripped targets belongings (weakrefs)
 	var/list/target_belongings = list()
 
 	duplicate_type = /datum/traitor_objective/target_player
@@ -157,7 +157,7 @@
 		return FALSE
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 	AddComponent(/datum/component/traitor_objective_register, target, fail_signals = list(COMSIG_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
@@ -172,7 +172,7 @@
 	return TRUE
 
 /datum/traitor_objective/target_player/kidnapping/ungenerate_objective()
-	target = null
+	set_target(null)
 	dropoff_area = null
 
 /datum/traitor_objective/target_player/kidnapping/on_objective_taken(mob/user)
@@ -227,14 +227,14 @@
 	if(sent_mob.mind)
 		ADD_TRAIT(sent_mob.mind, TRAIT_HAS_BEEN_KIDNAPPED, TRAIT_GENERIC)
 
-	for(var/obj/item/belonging in gather_belongings(sent_mob))
+	for(var/obj/item/belonging in sent_mob.gather_belongings())
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
 
 		var/unequipped = sent_mob.transferItemToLoc(belonging)
 		if (!unequipped)
 			continue
-		target_belongings.Add(belonging)
+		target_belongings.Add(WEAKREF(belonging))
 
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 
@@ -298,12 +298,15 @@
 
 	do_sparks(8, FALSE, sent_mob)
 	sent_mob.visible_message(span_notice("[sent_mob] vanishes!"))
-	for(var/obj/item/belonging in gather_belongings(sent_mob))
+	for(var/obj/item/belonging in sent_mob.gather_belongings())
 		if(belonging == sent_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING) || belonging == sent_mob.get_item_by_slot(ITEM_SLOT_FEET))
 			continue
 		sent_mob.dropItemToGround(belonging) // No souvenirs, except shoes and t-shirts
 
-	for(var/obj/item/belonging in target_belongings)
+	for(var/datum/weakref/belonging_ref in target_belongings)
+		var/obj/item/belonging = belonging_ref.resolve()
+		if(!belonging)
+			continue
 		belonging.forceMove(return_pod)
 
 	sent_mob.forceMove(return_pod)
@@ -314,10 +317,3 @@
 	sent_mob.dna.species.give_important_for_life(sent_mob) // so plasmamen do not get left for dead
 
 	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
-
-/// Returns a list of things that the provided mob has which we would rather that they do not have
-/datum/traitor_objective/target_player/kidnapping/proc/gather_belongings(mob/living/carbon/human/kidnapee)
-	var/list/belongings = kidnapee.get_all_gear()
-	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
-		belongings += internal_bag.contents
-	return belongings

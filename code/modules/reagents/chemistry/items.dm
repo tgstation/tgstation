@@ -180,7 +180,7 @@
 				to_chat(user, span_warning("[src] is full."))
 				return
 
-			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transfered_by = user)
+			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transferred_by = user)
 			to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
 	if(I.heat < 1000)
 		return

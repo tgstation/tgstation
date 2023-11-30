@@ -258,10 +258,25 @@
 
 /datum/config_entry/string/hostedby
 
-/datum/config_entry/flag/norespawn
+/// Determines if a player can respawn after dying.
+/// 0 / RESPAWN_FLAG_DISABLED = Cannot respawn (default)
+/// 1 / RESPAWN_FLAG_FREE = Can respawn
+/// 2 / RESPAWN_FLAG_NEW_CHARACTER = Can respawn if choosing a different character
+/datum/config_entry/flag/allow_respawn
+	default = RESPAWN_FLAG_DISABLED
 
+/datum/config_entry/flag/allow_respawn/ValidateAndSet(str_val)
+	if(!VASProcCallGuard(str_val))
+		return FALSE
+	var/val_as_num = text2num(str_val)
+	if(val_as_num in list(RESPAWN_FLAG_DISABLED, RESPAWN_FLAG_FREE, RESPAWN_FLAG_NEW_CHARACTER))
+		config_entry_value = val_as_num
+		return TRUE
+	return FALSE
+
+/// Determines how long (in deciseconds) before a player is allowed to respawn.
 /datum/config_entry/number/respawn_delay
-	default = 0
+	default = 0 SECONDS
 
 /datum/config_entry/flag/usewhitelist
 

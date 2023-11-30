@@ -17,22 +17,22 @@ type Data = {
   message: string;
 };
 
-export const CargoExpress = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const CargoExpress = (props) => {
+  const { data } = useBackend<Data>();
   const { locked } = data;
 
   return (
     <Window width={600} height={700}>
       <Window.Content scrollable>
-        <InterfaceLockNoticeBox accessText="a QM-level ID card" />
+        <InterfaceLockNoticeBox accessText="a Cargo Technician-level ID card" />
         {!locked && <CargoExpressContent />}
       </Window.Content>
     </Window>
   );
 };
 
-const CargoExpressContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CargoExpressContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     hasBeacon,
     message,

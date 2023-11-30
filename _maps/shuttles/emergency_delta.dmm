@@ -309,7 +309,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aL" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
@@ -319,7 +319,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/small/directional/east,

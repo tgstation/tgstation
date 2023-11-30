@@ -16,6 +16,7 @@
 		"has_pai" = ispAI(ai_assistant),
 		"is_ai" = ai_assistant && ai_assistant == user,
 		"link_id" = mod_link.id,
+		"link_freq" = mod_link.frequency,
 		"link_call" = mod_link.get_other()?.id,
 		// Wires
 		"open" = open,

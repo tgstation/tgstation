@@ -4,7 +4,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	set name = "Secrets"
 	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
 	set category = "Admin.Game"
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Secrets Panel")
 	var/datum/secrets_menu/tgui = new(usr)//create the datum
 	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 
@@ -203,24 +203,32 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Virus Outbreak"))
-			switch(tgui_alert(usr,"Do you want this to be a random disease or do you have something in mind?",,list("Make Your Own","Random","Choose")))
+			var/datum/round_event_control/event
+			var/prompt = tgui_alert(usr, "What disease system do you want?", "Disease Setup", list("Advanced", "Simple", "Make Your Own"))
+			switch(prompt)
 				if("Make Your Own")
 					AdminCreateVirus(holder)
-				if("Random")
-					force_event(/datum/round_event_control/disease_outbreak)
-				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sort_list(typesof(/datum/disease), GLOBAL_PROC_REF(cmp_typepaths_asc))
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					var/datum/round_event/disease_outbreak/DO = DC.run_event()
-					DO.virus_type = virus
-					E = DO
+				if("Advanced")
+					event = locate(/datum/round_event_control/disease_outbreak/advanced) in SSevents.control
+				if("Simple")
+					event = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
+			if(isnull(event))
+				return
+			if(length(event.admin_setup))
+				for(var/datum/event_admin_setup/admin_setup_datum as anything in event.admin_setup)
+					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
+						return
+			event.run_event(admin_forced = TRUE)
+			message_admins("[key_name_admin(usr)] has triggered an event. ([event.name])")
+			log_admin("[key_name(usr)] has triggered an event. ([event.name])")
+
 		if("allspecies")
 			if(!is_funmin)
 				return
 			var/result = input(holder, "Please choose a new species","Species") as null|anything in GLOB.species_list
 			if(result)
 				SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Species Change", "[result]"))
-				log_admin("[key_name(holder)] turned all humans into [result]", 1)
+				log_admin("[key_name(holder)] turned all humans into [result]")
 				message_admins("\blue [key_name_admin(holder)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
 				for(var/i in GLOB.human_list)
@@ -230,21 +238,21 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All APCs"))
-			log_admin("[key_name(holder)] made all areas powered", 1)
+			log_admin("[key_name(holder)] made all areas powered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas powered"))
 			power_restore()
 		if("unpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Depower All APCs"))
-			log_admin("[key_name(holder)] made all areas unpowered", 1)
+			log_admin("[key_name(holder)] made all areas unpowered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all areas unpowered"))
 			power_failure()
 		if("quickpower")
 			if(!is_funmin)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Power All SMESs"))
-			log_admin("[key_name(holder)] made all SMESs powered", 1)
+			log_admin("[key_name(holder)] made all SMESs powered")
 			message_admins(span_adminnotice("[key_name_admin(holder)] made all SMESs powered"))
 			power_restore_quick()
 		if("anon_name")
@@ -252,11 +260,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
-		if("tripleAI")
-			if(!is_funmin)
-				return
-			holder.triple_ai()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("onlyone")
 			if(!is_funmin)
 				return
@@ -554,7 +557,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/spawnpoint = pick(GLOB.blobstart)
 			var/list/mob/dead/observer/candidates
 			var/mob/dead/observer/chosen_candidate
-			var/mob/living/simple_animal/drone/nerd
+			var/mob/living/basic/drone/nerd
 			var/teamsize
 
 			teamsize = input(usr, "How many drones?", "N.E.R.D. team size", 2) as num|null
@@ -570,7 +573,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			while(length(candidates) && teamsize)
 				chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
-				nerd = new /mob/living/simple_animal/drone/classic(spawnpoint)
+				nerd = new /mob/living/basic/drone/classic(spawnpoint)
 				nerd.key = chosen_candidate.key
 				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--

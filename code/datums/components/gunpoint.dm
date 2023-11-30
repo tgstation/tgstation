@@ -36,7 +36,16 @@
 	target = targ
 	weapon = wep
 
-	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), PROC_REF(trigger_reaction))
+	RegisterSignals(targ, list(
+		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOB_FIRED_GUN,
+		COMSIG_MOVABLE_SET_GRAB_STATE,
+		COMSIG_LIVING_START_PULL), PROC_REF(trigger_reaction))
+	RegisterSignal(targ, COMSIG_ATOM_EXAMINE, PROC_REF(examine_target))
+	RegisterSignal(targ, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(block_bumps_target))
+	RegisterSignals(targ, list(COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED), PROC_REF(cancel))
 	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), PROC_REF(cancel))
 
 	var/distance = min(get_dist(shooter, target), 1) // treat 0 distance as adjacent
@@ -77,6 +86,9 @@
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, PROC_REF(check_shove))
 	RegisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(check_deescalate))
 	RegisterSignals(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), PROC_REF(check_bump))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(block_bumps_parent))
+	RegisterSignal(parent, COMSIG_HUMAN_DISARM_HIT, PROC_REF(cancel))
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
@@ -84,6 +96,9 @@
 	UnregisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT)
 	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(parent, COMSIG_LIVING_PRE_MOB_BUMP)
+	UnregisterSignal(parent, COMSIG_HUMAN_DISARM_HIT)
 
 ///If the shooter bumps the target, cancel the holdup to avoid cheesing and forcing the charged shot
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)
@@ -172,26 +187,52 @@
 	qdel(src)
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
-/datum/component/gunpoint/proc/flinch(attacker, damage, damagetype, def_zone)
+/datum/component/gunpoint/proc/flinch(mob/living/source, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 
-	var/mob/living/shooter = parent
-	if(attacker == shooter)
-		return // somehow this wasn't checked for months but no one tried punching themselves to initiate the shot, amazing
+	if(!attack_direction) // No fliching from yourself
+		return
 
 	var/flinch_chance = 50
-	var/gun_hand = LEFT_HANDS
+	var/gun_hand = (source.get_held_index_of_item(weapon) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 
-	if(shooter.held_items[RIGHT_HANDS] == weapon)
-		gun_hand = RIGHT_HANDS
+	if(isbodypart(def_zone))
+		var/obj/item/bodypart/hitting = def_zone
+		def_zone = hitting.body_zone
 
-	if((def_zone == BODY_ZONE_L_ARM && gun_hand == LEFT_HANDS) || (def_zone == BODY_ZONE_R_ARM && gun_hand == RIGHT_HANDS))
+	if(def_zone == gun_hand)
 		flinch_chance = 80
 
 	if(prob(flinch_chance))
-		shooter.visible_message(span_danger("[shooter] flinches!"), \
-			span_danger("You flinch!"))
+		source.visible_message(
+			span_danger("[source] flinches!"),
+			span_danger("You flinch!"),
+		)
 		INVOKE_ASYNC(src, PROC_REF(trigger_reaction))
+
+///Shows if the parent is holding someone at gunpoint
+/datum/component/gunpoint/proc/examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	if(user in viewers(target))
+		examine_list += span_boldwarning("[parent] [parent.p_are()] holding [target] at gunpoint with [weapon]!")
+
+///Shows if the examine target is being held at gunpoint
+/datum/component/gunpoint/proc/examine_target(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	if(user in viewers(parent))
+		examine_list += span_boldwarning("[target] [target.p_are()] being held at gunpoint by [parent]!")
+
+///Prevents bumping the shooter to break gunpoint since shove does that
+/datum/component/gunpoint/proc/block_bumps_parent(mob/bumped, mob/living/bumper)
+	SIGNAL_HANDLER
+	to_chat(bumper, span_warning("[bumped] [bumped.p_are()] holding [target] at gunpoint, you cannot push past."))
+	return COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP
+
+///Prevents bumping the target by an ally to cheese and force the charged shot
+/datum/component/gunpoint/proc/block_bumps_target(mob/bumped, mob/living/bumper)
+	SIGNAL_HANDLER
+	to_chat(bumper, span_warning("[bumped] [bumped.p_are()] being held at gunpoint, it's not wise to push [bumped.p_them()]!"))
+	return COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP
 
 #undef GUNPOINT_DELAY_STAGE_2
 #undef GUNPOINT_DELAY_STAGE_3

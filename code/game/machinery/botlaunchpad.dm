@@ -27,7 +27,7 @@
 		return
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 

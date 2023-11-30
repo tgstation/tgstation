@@ -37,8 +37,7 @@
 
 /mob/living/basic/demon/slaughter/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/crawl = new crawl_type(src)
-	crawl.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon)
 	RegisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack))
 	RegisterSignals(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(on_crawl))
 
@@ -99,16 +98,19 @@
 /mob/living/basic/demon/slaughter/proc/on_attack(mob/living/source, atom/attack_target, proximity_flag, list/modifiers)
 	SIGNAL_HANDLER
 
+	if(!proximity_flag)
+		return NONE
+
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		bodyslam(attack_target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!iscarbon(attack_target))
-		return
+		return NONE
 
 	var/mob/living/carbon/target = attack_target
 	if(target.stat == DEAD || isnull(target.mind) || (current_hitstreak > wound_bonus_hitstreak_max))
-		return
+		return NONE
 
 	current_hitstreak++
 	wound_bonus += wound_bonus_per_hit
@@ -147,7 +149,7 @@
 /// We do our own special thing on death, which is to spawn a kitten.
 /mob/living/basic/demon/slaughter/laughter/proc/on_death()
 	SIGNAL_HANDLER
-	var/mob/living/simple_animal/pet/cat/kitten/kitty = new(drop_location())
+	var/mob/living/basic/pet/cat/kitten/kitty = new(drop_location())
 	kitty.name = "Laughter"
 
 /mob/living/basic/demon/slaughter/laughter/ex_act(severity)

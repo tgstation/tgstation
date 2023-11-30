@@ -24,6 +24,7 @@ export type SecurityRecord = {
   rank: string;
   species: string;
   wanted_status: string;
+  voice: string;
 };
 
 export type Crime = {

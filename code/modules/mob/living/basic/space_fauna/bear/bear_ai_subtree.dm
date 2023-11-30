@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/bear
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -8,15 +8,12 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/bear,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/climb_trees,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_hive,
 		/datum/ai_planning_subtree/find_and_hunt_target/find_honeycomb,
 		/datum/ai_planning_subtree/random_speech/bear,
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/bear
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/bear
 
 /datum/ai_planning_subtree/find_and_hunt_target/find_hive
 	target_key = BB_FOUND_HONEY

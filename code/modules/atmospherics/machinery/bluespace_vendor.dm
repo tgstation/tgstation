@@ -69,6 +69,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 /obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
+	find_and_hang_on_wall( FALSE)
 
 /obj/machinery/bluespace_vendor/LateInitialize()
 	. = ..()

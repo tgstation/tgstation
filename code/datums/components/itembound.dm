@@ -11,19 +11,39 @@
 	if(QDELETED(passed_container))
 		return
 	containerref = WEAKREF(passed_container)
+	RegisterSignal(passed_container, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined))
 	move_tracker = new(parent, CALLBACK(src, PROC_REF(verify_containment)))
 
+
+/datum/component/itembound/RegisterWithParent()
+	. = ..()
 	ADD_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
+	if (isliving(parent))
+		var/mob/living/living_parent = parent
+		living_parent.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_ADMIN)
+
+/datum/component/itembound/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
+	if (isliving(parent))
+		var/mob/living/living_parent = parent
+		living_parent.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ADMIN)
+	return ..()
+
+/datum/component/itembound/proc/on_examined(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += span_notice("If you hold it up to your ear, you can hear the screams of the damned.")
 
 /// Ensure that when we move, we still are in the container. If not in the container, remove all the traits.
 /datum/component/itembound/proc/verify_containment()
 	var/atom/movable/container = containerref.resolve()
 	if(!QDELETED(container) && container.contains(parent))
 		return
-	REMOVE_TRAIT(parent, TRAIT_INCAPACITATED, SMITE_TRAIT)
 	qdel(src)
 
 /datum/component/itembound/Destroy(force, silent)
+	var/atom/movable/container = containerref?.resolve()
+	if (!QDELETED(container))
+		UnregisterSignal(container, COMSIG_ATOM_EXAMINE_MORE)
 	containerref = null
 	QDEL_NULL(move_tracker)
 	return ..()

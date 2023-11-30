@@ -1,11 +1,11 @@
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
 	filedesc = "NT IRN"
-	category = PROGRAM_CATEGORY_SUPL
-	program_icon_state = "request"
+	downloader_category = PROGRAM_CATEGORY_SUPPLY
+	program_open_overlay = "request"
 	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
 	requires_ntnet = TRUE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	usage_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 10
 	tgui_id = "NtosCargo"
 	///Are you actually placing orders with it?

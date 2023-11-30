@@ -34,10 +34,12 @@
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
 #define STASIS_MACHINE_EFFECT "stasis_machine"
-
 #define STASIS_CHEMICAL_EFFECT "stasis_chemical"
-
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
+#define STASIS_ADMIN "stasis_admin"
+#define STASIS_LEGION_EATEN "stasis_eaten"
+
+#define STASIS_NETPOD_EFFECT "stasis_netpod"
 
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)
@@ -112,6 +114,11 @@
 #define set_dizzy(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness)
 #define set_dizzy_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness, TRUE)
 
+#define adjust_staggered(duration) adjust_timed_status_effect(duration, /datum/status_effect/staggered)
+#define adjust_staggered_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/staggered, up_to)
+#define set_staggered(duration) set_timed_status_effect(duration, /datum/status_effect/staggered)
+#define set_staggered_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/staggered, TRUE)
+
 #define adjust_jitter(duration) adjust_timed_status_effect(duration, /datum/status_effect/jitter)
 #define adjust_jitter_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/jitter, up_to)
 #define set_jitter(duration) set_timed_status_effect(duration, /datum/status_effect/jitter)
@@ -154,3 +161,8 @@
 #define adjust_temp_blindness_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/temporary_blindness, up_to)
 #define set_temp_blindness(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness)
 #define set_temp_blindness_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/temporary_blindness, TRUE)
+
+#define adjust_static_vision(duration) adjust_timed_status_effect(duration, /datum/status_effect/static_vision)
+#define adjust_static_vision_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/static_vision, up_to)
+#define set_static_vision(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision)
+#define set_static_vision_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision, TRUE)

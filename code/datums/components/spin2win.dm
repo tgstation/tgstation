@@ -4,6 +4,8 @@
  * Component that attaches to items, making their attack_self begin a spin 2 win
  */
 /datum/component/spin2win
+	/// How long you spin for
+	var/spin_duration = 5 SECONDS
 	///the cooldown for spinning to winning
 	COOLDOWN_DECLARE(spin_cooldown)
 	///how long a spin2win takes to recharge.
@@ -76,14 +78,14 @@
 /datum/component/spin2win/proc/start_spinning(mob/living/spinning_user)
 	//user will always exist for the start
 	spinning = TRUE
-	spinning_user.changeNext_move(5 SECONDS)
+	spinning_user.changeNext_move(spin_duration)
 	if(on_spin_callback)
-		on_spin_callback.Invoke(spinning_user)
+		on_spin_callback.Invoke(spinning_user, spin_duration)
 	if(start_spin_message)
 		var/message = replacetext(start_spin_message, "%USER", spinning_user)
 		spinning_user.visible_message(message)
 	playsound(spinning_user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	stop_spinning_timer_id = addtimer(CALLBACK(src, PROC_REF(stop_spinning), spinning_user), 5 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	stop_spinning_timer_id = addtimer(CALLBACK(src, PROC_REF(stop_spinning), spinning_user), spin_duration, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_spin_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_spin_dropped))
 	START_PROCESSING(SSprocessing, src)
@@ -98,7 +100,7 @@
 		var/message = replacetext(end_spin_message, "%USER", user)
 		user.visible_message(message)
 	if(on_unspin_callback)
-		on_unspin_callback.Invoke(user, 5 SECONDS)
+		on_unspin_callback.Invoke(user, spin_duration)
 	COOLDOWN_START(src, spin_cooldown, spin_cooldown_time)
 	spinning = FALSE
 

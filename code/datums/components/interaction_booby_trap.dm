@@ -59,8 +59,8 @@
 /datum/component/interaction_booby_trap/Destroy(force, silent)
 	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_TOOL_ACT(defuse_tool), COMSIG_ATOM_EXAMINE_MORE) + additional_triggers)
 	QDEL_NULL(active_sound_loop)
-	QDEL_NULL(on_triggered_callback)
-	QDEL_NULL(on_defused_callback)
+	on_triggered_callback = null
+	on_defused_callback = null
 	return ..()
 
 /// Called when someone touches the parent atom with their hands, we want to blow up

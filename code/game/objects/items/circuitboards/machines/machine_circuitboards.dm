@@ -56,6 +56,13 @@
 		/datum/stock_part/capacitor = 1,
 		/obj/item/electronics/airlock = 1)
 
+/obj/item/circuitboard/machine/mass_driver
+	name = "Mass Driver"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/mass_driver
+	req_components = list(
+		/datum/stock_part/servo = 1,)
+
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -248,7 +255,8 @@
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/filter = 1)
+		/datum/stock_part/filter = 1,
+	)
 
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator"
@@ -455,7 +463,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/servo = 1,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	name = "Ancient Circuit Imprinter"
@@ -506,7 +514,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/protolathe/offstation
 	name = "Ancient Protolathe"
@@ -543,7 +551,7 @@
 
 /obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
 	build_path = smartfridge.base_build_path
-	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
+	if(!fridges_name_paths.Find(build_path))
 		name = "[initial(smartfridge.name)]" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
@@ -594,7 +602,7 @@
 	req_components = list(
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
-		/obj/item/reagent_containers/cup/beaker = 2)
+		)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -808,7 +816,7 @@
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
-	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	build_path = /obj/machinery/cryo_cell
 	req_components = list(
 		/datum/stock_part/matter_bin = 1,
 		/obj/item/stack/cable_coil = 1,
@@ -953,7 +961,8 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/servo = 1,
-		/datum/stock_part/micro_laser = 1)
+		/datum/stock_part/micro_laser = 1,
+	)
 
 /obj/item/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR"
@@ -1018,7 +1027,12 @@
 	build_path = /obj/machinery/rnd/server
 	req_components = list(
 		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/scanning_module = 1)
+		/datum/stock_part/scanning_module = 1,
+	)
+
+/obj/item/circuitboard/machine/rdserver/oldstation
+	name = "Ancient R&D Server"
+	build_path = /obj/machinery/rnd/server/oldstation
 
 /obj/item/circuitboard/machine/techfab/department/science
 	name = "\improper Departmental Techfab - Science"
@@ -1233,9 +1247,21 @@
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/microwave/engineering
+	name = "Wireless Microwave Oven"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/microwave/engineering
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/capacitor/tier2 = 1,
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor"
@@ -1291,6 +1317,15 @@
 	req_components = list(
 		/datum/stock_part/card_reader = 1)
 
+/obj/item/circuitboard/machine/fishing_portal_generator
+	name = "Fishing Portal Generator"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/fishing_portal_generator
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/capacitor = 1)
+	needs_anchored = FALSE
+
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
 	name = "Ore Redemption"
@@ -1339,16 +1374,29 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
-/obj/item/circuitboard/machine/bepis
-	name = "BEPIS Chamber"
+/obj/item/circuitboard/machine/materials_market
+	name = "Galactic Materials Market"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/rnd/bepis
+	build_path = /obj/machinery/materials_market
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/datum/stock_part/capacitor = 1,
-		/datum/stock_part/servo = 1,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/card_reader = 1)
+
+//Tram
+/obj/item/circuitboard/machine/crossing_signal
+	name = "Crossing Signal"
+	build_path = /obj/machinery/transport/crossing_signal
+	req_components = list(
 		/datum/stock_part/micro_laser = 1,
-		/datum/stock_part/scanning_module = 1)
+	)
+
+/obj/item/circuitboard/machine/guideway_sensor
+	name = "Guideway Sensor"
+	build_path = /obj/machinery/transport/guideway_sensor
+	req_components = list(
+		/obj/item/assembly/prox_sensor = 1,
+	)
 
 //Misc
 /obj/item/circuitboard/machine/sheetifier
@@ -1507,5 +1555,15 @@
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
 		/obj/item/mod/module/rad_protection = 1,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/shieldwallgen
+	name = "Shield Wall Generator"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/power/shieldwallgen
+	req_components = list(
+		/datum/stock_part/capacitor/tier2 = 2,
+		/datum/stock_part/micro_laser/tier2 = 2,
 		/obj/item/stack/sheet/plasteel = 2,
 	)

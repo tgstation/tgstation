@@ -26,9 +26,11 @@
 		GSATCHEL,
 		LSATCHEL,
 		GDUFFELBAG,
+		GMESSENGER,
 		DBACKPACK,
 		DSATCHEL,
 		DDUFFELBAG,
+		DMESSENGER,
 	)
 
 /datum/preference/choiced/backpack/icon_for(value)
@@ -41,6 +43,8 @@
 			return /obj/item/storage/backpack/satchel/leather
 		if (GDUFFELBAG)
 			return /obj/item/storage/backpack/duffelbag
+		if (GMESSENGER)
+			return /obj/item/storage/backpack/messenger
 
 		// In a perfect world, these would be your department's backpack.
 		// However, this doesn't factor in assistants, or no high slot, and would
@@ -52,6 +56,8 @@
 			return /obj/item/storage/backpack/satchel/med
 		if (DDUFFELBAG)
 			return /obj/item/storage/backpack/duffelbag/med
+		if (DMESSENGER)
+			return /obj/item/storage/backpack/messenger/med
 
 /datum/preference/choiced/backpack/apply_to_human(mob/living/carbon/human/target, value)
 	target.backpack = value

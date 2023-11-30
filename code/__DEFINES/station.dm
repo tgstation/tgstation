@@ -14,3 +14,6 @@
 
 /// The data file that future station traits forced by an admin are stored in
 #define FUTURE_STATION_TRAITS_FILE "data/future_station_traits.json"
+
+/// The amount of time until the station charter can no longer be used to rename the station
+#define STATION_RENAME_TIME_LIMIT 5 MINUTES

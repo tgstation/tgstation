@@ -235,3 +235,24 @@
 		/obj/structure/musician/piano,
 		/obj/structure/musician/piano/minimoog,
 	)
+
+/obj/effect/spawner/random/structure/shipping_container
+	name = "shipping container spawner"
+	icon = 'icons/obj/fluff/containers.dmi'
+	icon_state = "random_container"
+	loot = list(
+		/obj/structure/shipping_container/conarex = 3,
+		/obj/structure/shipping_container/deforest = 3,
+		/obj/structure/shipping_container/kahraman = 3,
+		/obj/structure/shipping_container/kahraman/alt = 3,
+		/obj/structure/shipping_container/kosmologistika = 3,
+		/obj/structure/shipping_container/interdyne = 3,
+		/obj/structure/shipping_container/nakamura = 3,
+		/obj/structure/shipping_container/nanotrasen = 3,
+		/obj/structure/shipping_container/nthi = 3,
+		/obj/structure/shipping_container/vitezstvi = 3,
+		/obj/structure/shipping_container/cybersun = 2,
+		/obj/structure/shipping_container/donk_co = 2,
+		/obj/structure/shipping_container/gorlex = 1,
+		/obj/structure/shipping_container/gorlex/red = 1,
+	)

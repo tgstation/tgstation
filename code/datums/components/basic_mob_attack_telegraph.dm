@@ -25,6 +25,13 @@
 	src.telegraph_duration = telegraph_duration
 	src.on_began_forecast = on_began_forecast
 
+/datum/component/basic_mob_attack_telegraph/Destroy(force, silent)
+	if(current_target)
+		forget_target(current_target)
+	target_overlay = null
+	on_began_forecast = null
+	return ..()
+
 /datum/component/basic_mob_attack_telegraph/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
@@ -66,7 +73,7 @@
 		return
 	ADD_TRAIT(source, TRAIT_BASIC_ATTACK_FORECAST, REF(src))
 	forget_target(target)
-	source.melee_attack(target)
+	source.melee_attack(target, ignore_cooldown = TRUE) // We already started the cooldown when we triggered the forecast
 
 /// The guy we're trying to attack moved, is he still in range?
 /datum/component/basic_mob_attack_telegraph/proc/target_moved(atom/target)

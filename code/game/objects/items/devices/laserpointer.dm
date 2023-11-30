@@ -71,7 +71,7 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool)
+/obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	. = ..()
 	if(isnull(crystal_lens) || !(tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_HEMOSTAT))
 		return
@@ -270,20 +270,6 @@
 				target_felinid.visible_message(span_notice("[target_felinid] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
 		else
 			target_felinid.visible_message(span_notice("[target_felinid] stares at the light."), span_warning("You stare at the light..."))
-
-	//cats! - chance for any cat near the target to pounce at the light, stepping to the target
-	for(var/mob/living/simple_animal/pet/cat/target_kitty in view(1, targloc))
-		if(target_kitty.stat == DEAD)
-			continue
-		if(prob(effectchance * diode.rating))
-			if(target_kitty.resting)
-				target_kitty.set_resting(FALSE, instant = TRUE)
-			target_kitty.visible_message(span_notice("[target_kitty] pounces on the light!"), span_warning("LIGHT!"))
-			target_kitty.Move(targloc)
-			target_kitty.Immobilize(1 SECONDS)
-		else
-			target_kitty.visible_message(span_notice("[target_kitty] looks uninterested in your games."), span_warning("You spot [user] shining [src] at you. How insulting!"))
-
 	//The pointer is shining, change its sprite to show
 	icon_state = "pointer_[pointer_icon_state]"
 

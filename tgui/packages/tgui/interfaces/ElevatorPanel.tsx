@@ -28,8 +28,8 @@ type ElevatorPanelData = {
   all_floor_data: FloorData[];
 };
 
-export const ElevatorPanel = (props, context) => {
-  const { data, act } = useBackend<ElevatorPanelData>(context);
+export const ElevatorPanel = (props) => {
+  const { data, act } = useBackend<ElevatorPanelData>();
 
   const {
     current_floor,
@@ -149,8 +149,8 @@ const MovingDimmer = () => {
   );
 };
 
-const FloorPanel = (props, context) => {
-  const { data } = useBackend<ElevatorPanelData>(context);
+const FloorPanel = (props) => {
+  const { data } = useBackend<ElevatorPanelData>();
   const { current_floor, currently_moving, currently_moving_to_floor } = data;
 
   return (

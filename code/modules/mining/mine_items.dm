@@ -30,12 +30,13 @@
 
 /obj/structure/closet/wardrobe/miner
 	name = "mining wardrobe"
-	icon_door = "mixed"
+	icon_door = "mining_wardrobe"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
 	new /obj/item/storage/backpack/duffelbag/explorer(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
+	new /obj/item/storage/backpack/messenger/explorer(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
