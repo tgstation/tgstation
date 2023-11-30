@@ -99,7 +99,7 @@
 
 /datum/uplink_item/dangerous/cat
 	name = "Feral cat grenade"
-	desc = "This grenade is filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders."
+	desc = "This grenade is filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders. WARNING: The cats are not trained to discern friend from foe!"
 	cost = 5
 	item = /obj/item/grenade/spawnergrenade/cat
 	surplus = 30
