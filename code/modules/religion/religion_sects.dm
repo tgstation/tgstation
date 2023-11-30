@@ -286,7 +286,7 @@
 	name = "Punished God"
 	quote = "To feel the freedom, you must first understand captivity."
 	desc = "Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, \
-	even addictions. You will learn the secrets of the universe from your defeated shell."
+		even addictions. You will learn the secrets of the universe from your defeated shell."
 	tgui_icon = "user-injured"
 	altar_icon_state = "convertaltar-burden"
 	alignment = ALIGNMENT_NEUT
@@ -313,27 +313,61 @@
 		return "You are at burden level [burden.burden_level]/9."
 	return "You are not burdened."
 
-/datum/religion_sect/burden/sect_bless(mob/living/target, mob/living/chap)
-	if(!ishuman(target))
+/datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)
+	if(!istype(target) || !istype(chaplain))
 		return FALSE
-	var/mob/living/carbon/human/blessed = target
-	for(var/obj/item/bodypart/bodypart as anything in blessed.bodyparts)
-		if(IS_ROBOTIC_LIMB(bodypart))
-			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return TRUE
-
-	var/heal_amt = 10
-	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-
-	if(hurt_limbs.len)
-		for(var/X in hurt_limbs)
-			var/obj/item/bodypart/affecting = X
-			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		playsound(chap, SFX_PUNCH, 25, TRUE, -1)
-		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	var/datum/brain_trauma/special/burdened/burden = chaplain.has_trauma_type(/datum/brain_trauma/special/burdened)
+	if(!burden)
+		return FALSE
+	var/burden_modifier = max(1 - 0.07 * burden.burden_level, 0.01)
+	var/transferred = FALSE
+	var/list/hurt_limbs = target.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + target.get_wounded_bodyparts(BODYTYPE_ORGANIC)
+	var/list/chaplains_limbs = list()
+	for(var/obj/item/bodypart/possible_limb in chaplain.bodyparts)
+		if(IS_ORGANIC_LIMB(possible_limb))
+			chaplains_limbs += possible_limb
+	if(length(chaplains_limbs))
+		for(var/obj/item/bodypart/affected_limb in hurt_limbs)
+			var/obj/item/bodypart/chaplains_limb = chaplain.get_bodypart(affected_limb.body_zone)
+			if(!chaplains_limb || !IS_ORGANIC_LIMB(chaplains_limb))
+				chaplains_limb = pick(chaplains_limbs)
+			var/brute_damage = affected_limb.brute_dam
+			var/burn_damage = affected_limb.burn_dam
+			if((brute_damage || burn_damage) && affected_limb.heal_damage(brute_damage, burn_damage, required_bodytype = BODYTYPE_ORGANIC))
+				transferred = TRUE
+				chaplains_limb.receive_damage(brute_damage * burden_modifier, burn_damage * burden_modifier, wound_bonus = CANT_WOUND)
+			for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
+				transferred = TRUE
+				iter_wound.remove_wound()
+				iter_wound.apply_wound(chaplains_limb)
+		if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
+			transferred = TRUE
+			target.cure_husk(BURN)
+			chaplain.become_husk(BURN)
+	var/toxin_damage = target.getToxLoss()
+	if(toxin_damage && !HAS_TRAIT(chaplain, TRAIT_TOXIMMUNE))
+		transferred = TRUE
+		target.adjustToxLoss(-toxin_damage)
+		chaplain.adjustToxLoss(toxin_damage * burden_modifier, forced = TRUE)
+	var/suffocation_damage = target.getOxyLoss()
+	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
+		transferred = TRUE
+		target.adjustOxyLoss(-suffocation_damage)
+		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
+	var/clone_damage = target.getCloneLoss()
+	if(clone_damage && !HAS_TRAIT(chaplain, TRAIT_NOCLONELOSS))
+		transferred = TRUE
+		target.adjustCloneLoss(-clone_damage)
+		chaplain.adjustCloneLoss(clone_damage * burden_modifier, forced = TRUE)
+	target.update_damage_overlays()
+	chaplain.update_damage_overlays()
+	if(transferred)
+		target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
+		to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+		playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
+		target.add_mood_event("blessing", /datum/mood_event/blessing)
+	else
+		to_chat(chaplain, span_warning("They hold no burden!"))
 	return TRUE
 
 /datum/religion_sect/honorbound
