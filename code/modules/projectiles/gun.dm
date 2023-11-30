@@ -9,7 +9,7 @@
 	icon_state = "revolver"
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE|KEEP_TOGETHER
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)

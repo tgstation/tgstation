@@ -904,7 +904,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 

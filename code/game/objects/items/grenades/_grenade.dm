@@ -14,7 +14,7 @@
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40

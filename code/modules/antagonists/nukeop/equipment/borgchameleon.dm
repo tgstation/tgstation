@@ -2,7 +2,7 @@
 	name = "cyborg chameleon projector"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

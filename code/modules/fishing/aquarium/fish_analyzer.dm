@@ -7,7 +7,7 @@
 	inhand_icon_state = "fish_analyzer"
 	worn_icon_state = "fish_analyzer"
 	desc = "A fish-shaped scanner used to monitor fish's status and evolutionary traits."
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3

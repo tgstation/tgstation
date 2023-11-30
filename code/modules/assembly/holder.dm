@@ -5,7 +5,7 @@
 	inhand_icon_state = "assembly"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2

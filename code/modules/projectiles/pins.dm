@@ -5,7 +5,7 @@
 	icon_state = "firing_pin"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")

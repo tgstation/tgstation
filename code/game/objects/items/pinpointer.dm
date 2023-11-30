@@ -4,7 +4,7 @@
 	desc = "A handheld tracking device that locks onto certain signals."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer"
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"

@@ -13,7 +13,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter_inhand_right
 
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 6
 	throw_speed = 3

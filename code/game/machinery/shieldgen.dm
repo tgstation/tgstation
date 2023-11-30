@@ -289,7 +289,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	use_power = NO_POWER_USE
 	max_integrity = 300
 	var/active = FALSE

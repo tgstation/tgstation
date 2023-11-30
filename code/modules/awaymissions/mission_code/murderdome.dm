@@ -10,7 +10,7 @@
 
 /obj/structure/grille/indestructible
 	flags_1 = NODECONSTRUCT_1
-	obj_flags = CONDUCTIVE
+	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/grille/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
