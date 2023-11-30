@@ -1,6 +1,5 @@
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
-#include "code\_globalvars\lists\names.dm"
 #include "code\modules\clothing\clothing.dm"
 #include "code\modules\reagents\chemistry\drinks.dm"
 #include "code\modules\reagents\containers\cups.dm"
