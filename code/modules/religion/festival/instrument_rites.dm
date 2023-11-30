@@ -25,7 +25,7 @@
 
 /datum/religion_rites/portable_song_tuning/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/instrument/could_empower in get_turf(religious_tool))
-		instrument_target = could_empower //PLEASE SIGN MY AUTOGRAPH
+		instrument_target = could_empower
 		return ..()
 	to_chat(user, span_warning("You need to place an instrument on [religious_tool] to do this!"))
 	return FALSE
@@ -35,7 +35,7 @@
 	var/obj/item/instrument/empower_target = instrument_target
 	var/turf/tool_turf = get_turf(religious_tool)
 	instrument_target = null
-	if(QDELETED(empower_target) || !(tool_turf == empower_target.loc)) //check if the bible is still there
+	if(QDELETED(empower_target) || !(tool_turf == empower_target.loc)) //check if the instrument is still there
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	empower_target.visible_message(span_notice("[empower_target] glows for a moment."))
@@ -176,15 +176,6 @@
 /datum/religion_rites/song_tuner/pain/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
 	sliced_limb.force_wound_upwards(/datum/wound/slash/flesh/moderate/many_cuts)
-
-/datum/religion_rites/song_tuner/retaliate
-	name = "Heckler's Mistake"
-	desc = "Sing a bright song, lighting up the area around you. At the end of the song, you'll give some illumination to listeners."
-	particles_path = /particles/musical_notes/harm
-	song_invocation_message = "You've prepared a painful song!"
-	song_start_message = span_danger("This music cuts like a knife!")
-	glow_color = "#dda91b"
-	repeats_okay = FALSE
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"
