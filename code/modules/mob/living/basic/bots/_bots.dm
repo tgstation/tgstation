@@ -714,10 +714,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	key = null
 	paicard.forceMove(drop_location())
-	if(user)
-		log_combat(user, paicard.pai, "ejected from [initial(name)],")
-	else
-		log_combat(src, paicard.pai, "ejected")
+	var/to_log = user ? user : src
+	log_combat(to_log, paicard.pai, "ejected [user ? "from [initial(name)]" : ""].")
 	if(announce)
 		to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(name)]."))
 	paicard = null
