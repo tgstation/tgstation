@@ -4,12 +4,6 @@
  * Wrapping Paper
  */
 
-/*
- * Gifts
- */
-
-GLOBAL_LIST_EMPTY(possible_gifts)
-
 /obj/item/gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
@@ -34,26 +28,29 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	user.visible_message(span_suicide("[user] peeks inside [src] and cries [user.p_them()]self to death! It looks like [user.p_they()] [user.p_were()] on the naughty list..."))
 	return BRUTELOSS
 
-/obj/item/gift/examine(mob/M)
+/obj/item/gift/examine(mob/user)
 	. = ..()
-	if(HAS_MIND_TRAIT(M, TRAIT_PRESENT_VISION) || isobserver(M))
+	if(HAS_MIND_TRAIT(user, TRAIT_PRESENT_VISION) || isobserver(user))
 		. += span_notice("It contains \a [initial(contains_type.name)].")
 
-/obj/item/gift/attack_self(mob/M)
-	if(HAS_MIND_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
-		to_chat(M, span_warning("You're supposed to be spreading gifts, not opening them yourself!"))
+/obj/item/gift/attack_self(mob/user)
+	if(HAS_MIND_TRAIT(user, TRAIT_CANNOT_OPEN_PRESENTS))
+		to_chat(user, span_warning("You're supposed to be spreading gifts, not opening them yourself!"))
 		return
 
-	qdel(src)
+	moveToNullspace()
 
-	var/obj/item/I = new contains_type(get_turf(M))
-	if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
-		M.visible_message(span_notice("[M] unwraps \the [src], finding \a [I] inside!"))
-		M.investigate_log("has unwrapped a present containing [I.type].", INVESTIGATE_PRESENTS)
-		M.put_in_hands(I)
-		I.add_fingerprint(M)
+	var/obj/item/thing = new contains_type(get_turf(user))
+
+	if (QDELETED(thing)) //might contain something like metal rods that might merge with a stack on the ground
+		user.visible_message(span_danger("Oh no! The present that [user] opened had nothing inside it!"))
 	else
-		M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
+		user.visible_message(span_notice("[user] unwraps \the [src], finding \a [thing] inside!"))
+		user.investigate_log("has unwrapped a present containing [thing.type].", INVESTIGATE_PRESENTS)
+		user.put_in_hands(thing)
+		thing.add_fingerprint(user)
+
+	qdel(src)
 
 /obj/item/gift/proc/get_gift_type()
 	var/static/list/gift_type_list = null
@@ -111,13 +108,15 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	desc = "It could be anything!"
 
 /obj/item/gift/anything/get_gift_type()
-	if(!GLOB.possible_gifts.len)
-		var/list/gift_types_list = subtypesof(/obj/item)
-		for(var/V in gift_types_list)
-			var/obj/item/I = V
-			if((!initial(I.icon_state)) || (!initial(I.inhand_icon_state)) || (initial(I.item_flags) & ABSTRACT))
-				gift_types_list -= V
-		GLOB.possible_gifts = gift_types_list
-	var/gift_type = pick(GLOB.possible_gifts)
+	var/static/list/obj/item/possible_gifts = null
 
+	if(isnull(possible_gifts))
+		for(var/type in subtypesof(/obj/item))
+			var/obj/item/thing = type
+			if(!initial(thing.icon_state) || !initial(thing.inhand_icon_state) || (initial(thing.item_flags) & ABSTRACT))
+				continue
+
+			possible_gifts += type
+
+	var/gift_type = pick(possible_gifts)
 	return gift_type
