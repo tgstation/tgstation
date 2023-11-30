@@ -201,6 +201,9 @@
 	if(threatlevel >= THREAT_ASSESS_DANGEROUS)
 		target = attacking_human
 		mode = BOT_HUNT
+	if(threatlevel < 0 && prob(5))
+		manual_emote("salutes.")
+		speak("Thank you sir.")
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
 	var/final = FALSE
