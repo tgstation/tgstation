@@ -189,13 +189,10 @@
 /obj/item/clothing/head/soft/propeller_hat/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_HEAD)
-		if(enabled_waddle)
-			user.AddElement(/datum/element/waddling)
 		user.add_mood_event("prophat", /datum/mood_event/prophat)
 
 /obj/item/clothing/head/soft/propeller_hat/dropped(mob/living/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
 	user.clear_mood_event("prophat")
 	active = FALSE
 	update_icon()
