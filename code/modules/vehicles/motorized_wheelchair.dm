@@ -31,6 +31,7 @@
 	component_parts += new /datum/stock_part/servo
 	component_parts += new /datum/stock_part/servo
 	power_cell = new /obj/item/stock_parts/cell(src)
+	refresh_parts()
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
