@@ -5,27 +5,27 @@
  */
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { Component, ReactNode, RefObject, createRef } from 'react';
+import { Component, ReactNode, RefObject, createRef, isValidElement } from 'react';
 import { addScrollableNode, removeScrollableNode } from '../events';
-import { canRender, classes } from 'common/react';
+import { classes } from 'common/react';
 
-export type SectionProps = BoxProps & {
-  className?: string;
-  title?: ReactNode;
-  buttons?: ReactNode;
-  fill?: boolean;
-  fitted?: boolean;
-  scrollable?: boolean;
-  scrollableHorizontal?: boolean;
-  /** @deprecated This property no longer works, please remove it. */
-  level?: never;
-  /** @deprecated Please use `scrollable` property */
-  overflowY?: never;
-  /** @member Allows external control of scrolling. */
-  scrollableRef?: RefObject<HTMLDivElement>;
-  /** @member Callback function for the `scroll` event */
-  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
-};
+export type SectionProps = BoxProps &
+  Partial<{
+    title: ReactNode;
+    buttons: ReactNode;
+    fill: boolean;
+    fitted: boolean;
+    scrollable: boolean;
+    scrollableHorizontal: boolean;
+    /** @deprecated This property no longer works, please remove it. */
+    level: never;
+    /** @deprecated Please use `scrollable` property */
+    overflowY: never;
+    /** @member Allows external control of scrolling. */
+    scrollableRef: RefObject<HTMLDivElement>;
+    /** @member Callback function for the `scroll` event */
+    onScroll: (this: GlobalEventHandlers, ev: Event) => any;
+  }>;
 
 export class Section extends Component<SectionProps> {
   scrollableRef: RefObject<HTMLDivElement>;
@@ -69,7 +69,7 @@ export class Section extends Component<SectionProps> {
       onScroll,
       ...rest
     } = this.props;
-    const hasTitle = canRender(title) || canRender(buttons);
+    const hasTitle = isValidElement(title) || isValidElement(buttons);
     return (
       <div
         className={classes([

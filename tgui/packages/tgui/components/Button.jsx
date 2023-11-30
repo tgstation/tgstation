@@ -5,7 +5,7 @@
  */
 
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
-import { classes, pureComponentHooks } from 'common/react';
+import { classes } from 'common/react';
 import { Component, createRef } from 'react';
 import { createLogger } from '../logging';
 import { Box, computeBoxClassName, computeBoxProps } from './Box';
@@ -133,8 +133,6 @@ export const Button = (props) => {
 
   return buttonContent;
 };
-
-Button.defaultHooks = pureComponentHooks;
 
 export const ButtonCheckbox = (props) => {
   const { checked, ...rest } = props;
@@ -272,8 +270,8 @@ export class ButtonInput extends Component {
           ref={this.inputRef}
           className="NumberInput__input"
           style={{
-            'display': !this.state.inInput ? 'none' : undefined,
-            'text-align': 'left',
+            display: !this.state.inInput ? 'none' : '',
+            textAlign: 'left',
           }}
           onBlur={(e) => {
             if (!this.state.inInput) {

@@ -61,12 +61,12 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
                 ? props.value
                 : `#${props.value}`,
               border: '2px solid white',
-              'box-sizing': 'content-box',
+              boxSizing: 'content-box',
               height: '11px',
               width: '11px',
               ...(props.shrink
                 ? {
-                  'margin': '1px',
+                  margin: '1px',
                 }
                 : {}),
             }}
@@ -250,7 +250,7 @@ export const FeatureIconnedDropdownInput = (
               <Box
                 className={classes(['preferences32x32', icon])}
                 style={{
-                  'transform': 'scale(0.8)',
+                  transform: 'scale(0.8)',
                 }}
               />
             </Stack.Item>
@@ -348,19 +348,15 @@ export const FeatureValueInput = (props: {
   return (
     <ServerPreferencesFetcher
       render={(serverData) => {
-        return createComponentVNode(
-          VNodeFlags.ComponentUnknown,
-          feature.component,
-          {
-            act: props.act,
-            featureId: props.featureId,
-            serverData: serverData && serverData[props.featureId],
-            shrink: props.shrink,
+        return createElement(feature.component, {
+          act: props.act,
+          featureId: props.featureId,
+          serverData: serverData && serverData[props.featureId],
+          shrink: props.shrink,
 
-            handleSetValue: changeValue,
-            value: predictedValue,
-          }
-        );
+          handleSetValue: changeValue,
+          value: predictedValue,
+        });
       }}
     />
   );

@@ -248,11 +248,11 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
 export const Stamp = (props): ReactElement<HTMLDivElement> => {
   const { activeStamp, sprite, x, y, rotation, opacity, yOffset = 0 } = props;
   const stamp_transform = {
-    'left': x + 'px',
-    'top': y + yOffset + 'px',
-    'transform': 'rotate(' + rotation + 'deg)',
-    'opacity': opacity || 1.0,
-    'z-index': activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
+    left: x + 'px',
+    top: y + yOffset + 'px',
+    transform: 'rotate(' + rotation + 'deg)',
+    opacity: opacity || 1.0,
+    zIndex: activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
   };
 
   return (
@@ -476,11 +476,11 @@ export class PreviewView extends Component<PreviewViewProps> {
     // kill any other marked tokens we don't want here
     const walkTokens = (token) => {
       switch (token.type) {
-        case 'url':
-        case 'autolink':
-        case 'reflink':
-        case 'link':
-        case 'image':
+        case url:
+        case autolink:
+        case reflink:
+        case link:
+        case image:
           token.type = 'text';
           // Once asset system is up change to some default image
           // or rewrite for icon images
@@ -678,11 +678,11 @@ export class PreviewView extends Component<PreviewViewProps> {
     // kill any other marked tokens we don't want here
     const walkTokens = (token) => {
       switch (token.type) {
-        case 'url':
-        case 'autolink':
-        case 'reflink':
-        case 'link':
-        case 'image':
+        case url:
+        case autolink:
+        case reflink:
+        case link:
+        case image:
           token.type = 'text';
           // Once asset system is up change to some default image
           // or rewrite for icon images

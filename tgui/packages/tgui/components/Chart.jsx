@@ -5,7 +5,6 @@
  */
 
 import { map, zipWith } from 'common/collections';
-import { pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'react';
 import { Box } from './Box';
 
@@ -116,8 +115,6 @@ class LineChart extends Component {
     );
   }
 }
-
-LineChart.defaultHooks = pureComponentHooks;
 
 const Stub = (props) => null;
 

@@ -192,7 +192,7 @@ export class LuaEditor extends Component {
                     displayedValue={
                       <Box
                         style={{
-                          'pointer-events': 'none',
+                          pointerEvents: 'none',
                         }}
                         dangerouslySetInnerHTML={{
                           __html: hljs.highlight(scriptInput, {

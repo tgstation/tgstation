@@ -23,7 +23,7 @@ export const AntagInfoDemon = (props) => {
   const { fluff, objectives, explain_attack } = data;
   return (
     <Window width={620} height={356} theme="syndicate">
-      <Window.Content style={{ 'background-image': 'none' }}>
+      <Window.Content style={{ backgroundImage: 'none' }}>
         <Stack fill>
           <Stack.Item>
             <DemonRunes />

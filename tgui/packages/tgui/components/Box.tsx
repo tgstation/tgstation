@@ -4,18 +4,38 @@
  * @license MIT
  */
 
-import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { createElement } from 'react';
+import { classes } from 'common/react';
+import { createElement, PropsWithChildren } from 'react';
 import { CSS_COLORS } from '../constants';
 
 type StringMap = keyof typeof styleStringNumberMap;
 type BooleanMap = keyof typeof styleBooleanMap;
 
-export type BoxProps = {
-  [key in StringMap]?: string | number;
+export type BoxProps = Partial<CommonProps & MappedProps & AsType> &
+  PropsWithChildren;
+
+type CommonProps = {
+  align: string;
+  className: string | boolean;
+  color: string;
+  key: string | number;
+  onClick: () => void;
+  style: Partial<HTMLDivElement['style']>;
+};
+
+type MappedProps = {
+  [key in StringMap]: string | number;
 } &
-  { [key in BooleanMap]?: boolean } &
-  Record<string, string | BooleanLike>;
+  { [key in BooleanMap]: boolean };
+
+type AsType =
+  | {
+      as: 'div' | 'span';
+    }
+  | {
+      as: 'img';
+      src: string;
+    };
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
@@ -85,25 +105,25 @@ const mapColorPropTo = (attrName) => (style, value) => {
 
 // String / number props
 const styleStringNumberMap = {
-  position: mapRawPropTo('position'),
+  bottom: mapUnitPropTo('bottom', unit),
+  fontFamily: mapRawPropTo('fontFamily'),
+  fontSize: mapUnitPropTo('fontSize', unit),
+  height: mapUnitPropTo('height', unit),
+  left: mapUnitPropTo('left', unit),
+  maxHeight: mapUnitPropTo('maxHeight', unit),
+  maxWidth: mapUnitPropTo('maxWidth', unit),
+  minHeight: mapUnitPropTo('minHeight', unit),
+  minWidth: mapUnitPropTo('minWidth', unit),
+  opacity: mapRawPropTo('opacity'),
   overflow: mapRawPropTo('overflow'),
   overflowX: mapRawPropTo('overflowX'),
   overflowY: mapRawPropTo('overflowY'),
-  top: mapUnitPropTo('top', unit),
-  bottom: mapUnitPropTo('bottom', unit),
-  left: mapUnitPropTo('left', unit),
+  position: mapRawPropTo('position'),
   right: mapUnitPropTo('right', unit),
-  width: mapUnitPropTo('width', unit),
-  minWidth: mapUnitPropTo('minWidth', unit),
-  maxWidth: mapUnitPropTo('maxWidth', unit),
-  height: mapUnitPropTo('height', unit),
-  minHeight: mapUnitPropTo('minHeight', unit),
-  maxHeight: mapUnitPropTo('maxHeight', unit),
-  fontSize: mapUnitPropTo('fontSize', unit),
-  fontFamily: mapRawPropTo('fontFamily'),
-  opacity: mapRawPropTo('opacity'),
   textAlign: mapRawPropTo('textAlign'),
+  top: mapUnitPropTo('top', unit),
   verticalAlign: mapRawPropTo('verticalAlign'),
+  width: mapUnitPropTo('width', unit),
 
   lineHeight: (style, value) => {
     if (typeof value === 'number') {
@@ -157,8 +177,8 @@ const styleStringNumberMap = {
 
 // Boolean props
 const styleBooleanMap = {
-  inline: mapBooleanPropTo('display', 'inlineBlock'),
   bold: mapBooleanPropTo('fontWeight', 'bold'),
+  inline: mapBooleanPropTo('display', 'inlineBlock'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
   preserveWhitespace: mapBooleanPropTo('whiteSpace', 'preWrap'),
@@ -208,6 +228,8 @@ export const computeBoxClassName = (props: BoxProps) => {
 export const Box = (props: BoxProps) => {
   const { as = 'div', className, children, ...rest } = props;
 
+  <div style={{ color: 'red' }}>Test</div>;
+
   // Compute class name and styles
   const computedClassName = className
     ? `${className} ${computeBoxClassName(rest)}`
@@ -224,5 +246,3 @@ export const Box = (props: BoxProps) => {
     children
   );
 };
-
-Box.defaultHooks = pureComponentHooks;

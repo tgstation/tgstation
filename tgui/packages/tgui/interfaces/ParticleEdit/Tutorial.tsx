@@ -279,8 +279,7 @@ const VarExplanation = {
             <Stack.Item width={11}>num</Stack.Item>
             <Stack.Item width={20}>A random number between A and B.</Stack.Item>
             <Stack.Item>
-              <Box
-                as="img"
+              <img
                 src={resolveAsset('num')}
                 width={15}
                 style={{
@@ -298,8 +297,7 @@ const VarExplanation = {
               A random vector on a line between A and B.
             </Stack.Item>
             <Stack.Item>
-              <Box
-                as="img"
+              <img
                 src={resolveAsset('vector')}
                 width={15}
                 style={{
@@ -317,8 +315,7 @@ const VarExplanation = {
               A random vector within a box whose corners are at A and B.
             </Stack.Item>
             <Stack.Item>
-              <Box
-                as="img"
+              <img
                 src={resolveAsset('box')}
                 width={15}
                 style={{
@@ -371,8 +368,7 @@ const VarExplanation = {
               centered at 0,0,0.
             </Stack.Item>
             <Stack.Item>
-              <Box
-                as="img"
+              <img
                 src={resolveAsset('sphere')}
                 width={15}
                 style={{
@@ -404,8 +400,7 @@ const VarExplanation = {
               cube is between A*2 and B*2, centered at 0,0,0.)
             </Stack.Item>
             <Stack.Item>
-              <Box
-                as="img"
+              <img
                 src={resolveAsset('cube')}
                 width={15}
                 style={{

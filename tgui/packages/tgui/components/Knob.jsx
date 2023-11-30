@@ -88,7 +88,7 @@ export const Knob = (props) => {
             ])}
             {...computeBoxProps({
               style: {
-                'font-size': size + 'em',
+                fontSize: size + 'em',
                 ...style,
               },
               ...rest,
@@ -117,7 +117,7 @@ export const Knob = (props) => {
               <circle
                 className="Knob__ringFill"
                 style={{
-                  'stroke-dashoffset': Math.max(
+                  strokeDashoffset: Math.max(
                     ((bipolar ? 2.75 : 2.0) - scaledFillValue * 1.5) *
                       Math.PI *
                       50,

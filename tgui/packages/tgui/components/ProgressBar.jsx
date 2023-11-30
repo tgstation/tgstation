@@ -5,7 +5,7 @@
  */
 
 import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
-import { classes, pureComponentHooks } from 'common/react';
+import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { CSS_COLORS } from '../constants';
 
@@ -37,16 +37,15 @@ export const ProgressBar = (props) => {
     computeBoxClassName(rest),
   ];
   const fillStyles = {
-    'width': clamp01(scaledValue) * 100 + '%',
+    width: clamp01(scaledValue) * 100 + '%',
   };
   if (CSS_COLORS.includes(effectiveColor) || effectiveColor === 'default') {
     // If the color is a color-<name> class, just use that.
     outerClasses.push('ProgressBar--color--' + effectiveColor);
   } else {
     // Otherwise, set styles directly.
-    // prettier-ignore
-    outerProps.style = (outerProps.style || "")
-      + `border-color: ${effectiveColor};`;
+    outerProps.style =
+      (outerProps.style || '') + `border-color: ${effectiveColor};`;
     fillStyles['background-color'] = effectiveColor;
   }
 
@@ -62,5 +61,3 @@ export const ProgressBar = (props) => {
     </div>
   );
 };
-
-ProgressBar.defaultHooks = pureComponentHooks;

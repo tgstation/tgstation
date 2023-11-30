@@ -170,7 +170,7 @@ const ReactionHandbook = (props) => {
                     <Tooltip content={factor.tooltip} position="top">
                       <Flex>
                         <Flex.Item
-                          style={{ 'border-bottom': 'dotted 2px' }}
+                          style={{ borderBottom: 'dotted 2px' }}
                           shrink>
                           {factor.factor_name + ':'}
                         </Flex.Item>

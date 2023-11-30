@@ -4,12 +4,33 @@
  * @license MIT
  */
 
-import { canRender, classes } from 'common/react';
+import { classes } from 'common/react';
+import { isValidElement, PropsWithChildren, ReactNode } from 'react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 
-export const Tabs = (props) => {
+type Props = Partial<{
+  className: string;
+  vertical: boolean;
+  fill: boolean;
+  fluid: boolean;
+}> &
+  PropsWithChildren;
+
+type TabProps = Partial<{
+  className: string;
+  selected: boolean;
+  color: string;
+  icon: string;
+  leftSlot: ReactNode;
+  rightSlot: ReactNode;
+  onClick: () => void;
+}> &
+  PropsWithChildren;
+
+export const Tabs = (props: Props) => {
   const { className, vertical, fill, fluid, children, ...rest } = props;
+
   return (
     <div
       className={classes([
@@ -26,7 +47,7 @@ export const Tabs = (props) => {
   );
 };
 
-const Tab = (props) => {
+const Tab = (props: TabProps) => {
   const {
     className,
     selected,
@@ -37,6 +58,7 @@ const Tab = (props) => {
     children,
     ...rest
   } = props;
+
   return (
     <div
       className={classes([
@@ -45,17 +67,21 @@ const Tab = (props) => {
         'Tab--color--' + color,
         selected && 'Tab--selected',
         className,
-        ...computeBoxClassName(rest),
+        computeBoxClassName(rest),
       ])}
       {...computeBoxProps(rest)}>
-      {(canRender(leftSlot) && <div className="Tab__left">{leftSlot}</div>) ||
+      {(isValidElement(leftSlot) && (
+        <div className="Tab__left">{leftSlot}</div>
+      )) ||
         (!!icon && (
           <div className="Tab__left">
             <Icon name={icon} />
           </div>
         ))}
       <div className="Tab__text">{children}</div>
-      {canRender(rightSlot) && <div className="Tab__right">{rightSlot}</div>}
+      {isValidElement(rightSlot) && (
+        <div className="Tab__right">{rightSlot}</div>
+      )}
     </div>
   );
 };

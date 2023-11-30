@@ -52,25 +52,6 @@ export const shallowDiffers = (a: object, b: object) => {
 };
 
 /**
- * Default inferno hooks for pure components.
- */
-export const pureComponentHooks = {
-  onComponentShouldUpdate: (lastProps, nextProps) => {
-    return shallowDiffers(lastProps, nextProps);
-  },
-};
-
-/**
- * A helper to determine whether the object is renderable by React.
- */
-export const canRender = (value: unknown) => {
-  // prettier-ignore
-  return value !== undefined
-    && value !== null
-    && typeof value !== 'boolean';
-};
-
-/**
  * A common case in tgui, when you pass a value conditionally, these are
  * the types that can fall through the condition.
  */

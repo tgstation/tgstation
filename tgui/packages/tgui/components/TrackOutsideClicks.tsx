@@ -1,8 +1,8 @@
-import { Component, createRef } from 'react';
+import { Component, createRef, PropsWithChildren } from 'react';
 
 type Props = {
   onOutsideClick: () => void;
-};
+} & PropsWithChildren;
 
 export class TrackOutsideClicks extends Component<Props> {
   ref = createRef<HTMLDivElement>();

@@ -181,8 +181,7 @@ const MaterialRow = (props) => {
             height="18px"
             width="18px"
             style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'vertical-align': 'middle',
+              verticalAlign: 'middle',
             }}
           />
         </Table.Cell>

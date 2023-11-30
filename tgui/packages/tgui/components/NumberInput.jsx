@@ -5,7 +5,7 @@
  */
 
 import { clamp } from 'common/math';
-import { classes, pureComponentHooks } from 'common/react';
+import { classes } from 'common/react';
 import { Component, createRef } from 'react';
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
@@ -194,10 +194,12 @@ export class NumberInput extends Component {
           <div
             className="NumberInput__bar"
             style={{
-              // prettier-ignore
-              height: clamp(
-                (displayValue - minValue) / (maxValue - minValue) * 100,
-                0, 100) + '%',
+              height:
+                clamp(
+                  ((displayValue - minValue) / (maxValue - minValue)) * 100,
+                  0,
+                  100
+                ) + '%',
             }}
           />
         </div>
@@ -208,8 +210,8 @@ export class NumberInput extends Component {
           style={{
             display: !editing ? 'none' : undefined,
             height: height,
-            'line-height': lineHeight,
-            'font-size': fontSize,
+            lineHeight: lineHeight,
+            fontSize: fontSize,
           }}
           onBlur={(e) => {
             if (!editing) {
@@ -274,7 +276,6 @@ export class NumberInput extends Component {
   }
 }
 
-NumberInput.defaultHooks = pureComponentHooks;
 NumberInput.defaultProps = {
   minValue: -Infinity,
   maxValue: +Infinity,

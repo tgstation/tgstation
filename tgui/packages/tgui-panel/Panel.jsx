@@ -113,7 +113,7 @@ const HoboPanel = (props) => {
             position: 'fixed',
             top: '1em',
             right: '2em',
-            'z-index': 1000,
+            zIndex: 1000,
           }}
           selected={settings.visible}
           onClick={() => settings.toggle()}>

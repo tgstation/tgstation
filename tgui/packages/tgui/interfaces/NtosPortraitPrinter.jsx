@@ -57,8 +57,7 @@ export const NtosPortraitPrinter = (props) => {
                         height="128px"
                         width={`${Math.round(128 * current_portrait_ratio)}px`}
                         style={{
-                          'vertical-align': 'middle',
-                          '-ms-interpolation-mode': 'nearest-neighbor',
+                          verticalAlign: 'middle',
                         }}
                       />
                     </Stack.Item>

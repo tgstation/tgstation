@@ -72,14 +72,12 @@ export const DestructiveAnalyzer = (props) => {
               onClick={() => act('eject_item')}
             />
           }>
-          <Box
-            as="img"
+          <img
             src={`data:image/jpeg;base64,${item_icon}`}
             height="64px"
             width="64px"
             style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'vertical-align': 'middle',
+              verticalAlign: 'middle',
             }}
           />
         </Section>

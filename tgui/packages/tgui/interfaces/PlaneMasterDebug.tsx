@@ -395,7 +395,7 @@ export class PlaneMasterDebug extends Component {
       <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
         <Window.Content
           style={{
-            'background-image': 'none',
+            backgroundImage: 'none',
           }}>
           <InfinitePlane
             width="100%"

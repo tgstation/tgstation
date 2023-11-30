@@ -1,6 +1,6 @@
-import { Component, createRef } from 'react';
+import { Component, createRef, PropsWithChildren } from 'react';
 
-export class Autofocus extends Component {
+export class Autofocus extends Component<PropsWithChildren> {
   ref = createRef<HTMLDivElement>();
 
   componentDidMount() {

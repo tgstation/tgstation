@@ -77,9 +77,9 @@ const QuirkList = (props: {
               <Stack.Item
                 align="center"
                 style={{
-                  'min-width': '15%',
-                  'max-width': '15%',
-                  'text-align': 'center',
+                  minWidth: '15%',
+                  maxWidth: '15%',
+                  textAlign: 'center',
                 }}>
                 <Icon color="#333" fontSize={3} name={quirk.icon} />
               </Stack.Item>
@@ -87,30 +87,30 @@ const QuirkList = (props: {
               <Stack.Item
                 align="stretch"
                 style={{
-                  'border-right': '1px solid black',
-                  'margin-left': 0,
+                  borderRight: '1px solid black',
+                  marginLeft: 0,
                 }}
               />
 
               <Stack.Item
                 grow
                 style={{
-                  'margin-left': 0,
+                  marginLeft: 0,
 
                   // Fixes an IE bug for text overflowing in Flex boxes
-                  'min-width': '0%',
+                  minWidth: '0%',
                 }}>
                 <Stack vertical fill>
                   <Stack.Item
                     className={`${className}--${getValueClass(quirk.value)}`}
                     style={{
-                      'border-bottom': '1px solid black',
-                      'padding': '2px',
+                      borderBottom: '1px solid black',
+                      padding: '2px',
                     }}>
                     <Stack
                       fill
                       style={{
-                        'font-size': '1.2em',
+                        fontSize: '1.2em',
                       }}>
                       <Stack.Item grow basis="content">
                         <b>{quirk.name}</b>
@@ -126,8 +126,8 @@ const QuirkList = (props: {
                     grow
                     basis="content"
                     style={{
-                      'margin-top': 0,
-                      'padding': '3px',
+                      marginTop: 0,
+                      padding: '3px',
                     }}>
                     {quirk.description}
                     {!!quirk.customizable && (
@@ -142,7 +142,7 @@ const QuirkList = (props: {
                                 <Box
                                   mt="1px"
                                   style={{
-                                    'box-shadow':
+                                    boxShadow:
                                       '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
                                   }}>
                                   <Stack
@@ -189,7 +189,7 @@ const QuirkList = (props: {
                               setCustomizationExpanded(!customizationExpanded);
                             }}
                             style={{
-                              'float': 'right',
+                              float: 'right',
                             }}
                           />
                         )}

@@ -311,8 +311,8 @@ export const DesignBrowser = <T extends Design = Design>(
             {!!busy && (
               <Dimmer
                 style={{
-                  'font-size': '2em',
-                  'text-align': 'center',
+                  fontSize: '2em',
+                  textAlign: 'center',
                 }}>
                 <Icon name="cog" spin />
                 {' Building items...'}

@@ -1,12 +1,12 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import { Component, ReactNode } from 'react';
+import { Component, PropsWithChildren, ReactNode } from 'react';
 
 type PopperProps = {
   popperContent: ReactNode;
   options?: ArgumentsOf<typeof createPopper>[2];
   additionalStyles?: CSSProperties;
-};
+} & PropsWithChildren;
 
 export class Popper extends Component<PopperProps> {
   static id: number = 0;

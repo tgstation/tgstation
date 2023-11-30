@@ -139,7 +139,7 @@ export const IVDrip = (props) => {
                   color={containerReagentColor}>
                   <span
                     style={{
-                      'text-shadow': '1px 1px 0 black',
+                      textShadow: '1px 1px 0 black',
                     }}>
                     {`${containerCurrentVolume} of ${containerMaxVolume} units`}
                   </span>

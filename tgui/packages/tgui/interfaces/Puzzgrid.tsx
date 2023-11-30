@@ -25,8 +25,8 @@ type PuzzgridData = {
 
 const PuzzgridButton = (props: {
   // In the future, this would be the TypeScript props of the button
-  [key: string]: unknown;}
-) => {
+  [key: string]: unknown;
+}) => {
   return (
     <Button
       verticalAlignContent="middle"
@@ -34,9 +34,9 @@ const PuzzgridButton = (props: {
         'width': '100%',
         'height': '100%',
 
-        'text-align': 'center',
-        'vertical-align': 'middle',
-        'white-space': 'normal',
+        textAlign: 'center',
+        verticalAlign: 'middle',
+        whiteSpace: 'normal',
       }}
       {...props}>
       <FitText maxFontSize={17} maxWidth={CELL_WIDTH}>
@@ -106,8 +106,8 @@ export const Puzzgrid = (props) => {
           <Box
             color="red"
             style={{
-              'text-shadow': '1px 1px 1px #222',
-              'font-size': '30px',
+              textShadow: '1px 1px 1px #222',
+              fontSize: '30px',
               position: 'absolute',
               top: 0,
               left: '10px',
@@ -121,10 +121,10 @@ export const Puzzgrid = (props) => {
         {data.time_left && (
           <Box
             style={{
-              'text-shadow': '1px 1px 1px #222',
-              'text-align': 'right',
-              'font-size': '15px',
-              'pointer-events': 'none',
+              textShadow: '1px 1px 1px #222',
+              textAlign: 'right',
+              fontSize: '15px',
+              pointerEvents: 'none',
               position: 'absolute',
               top: 0,
               right: '10px',

@@ -107,10 +107,10 @@ const PriorityButtons = (props: {
   return (
     <Stack
       style={{
-        'align-items': 'center',
-        'height': '100%',
-        'justify-content': 'flex-end',
-        'padding-left': '0.3em',
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'flex-end',
+        paddingLeft: '0.3em',
       }}>
       {isOverflow ? (
         <>
@@ -222,7 +222,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
       className={className}
       height="100%"
       style={{
-        'margin-top': 0,
+        marginTop: 0,
       }}>
       <Stack fill align="center">
         <Tooltip content={job.description} position="bottom-start">
@@ -230,7 +230,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
             className="job-name"
             width="50%"
             style={{
-              'padding-left': '0.3em',
+              paddingLeft: '0.3em',
             }}>
             {name}
           </Stack.Item>

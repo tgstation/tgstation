@@ -8,10 +8,11 @@ import { classes } from 'common/react';
 import { RefObject } from 'react';
 import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
 
-type StackProps = FlexProps & {
-  vertical?: boolean;
-  fill?: boolean;
-};
+type StackProps = FlexProps &
+  Partial<{
+    vertical: boolean;
+    fill: boolean;
+  }>;
 
 export const Stack = (props: StackProps) => {
   const { className, vertical, fill, ...rest } = props;
@@ -32,9 +33,10 @@ export const Stack = (props: StackProps) => {
   );
 };
 
-type StackItemProps = FlexProps & {
-  innerRef?: RefObject<HTMLDivElement>;
-};
+type StackItemProps = FlexItemProps &
+  Partial<{
+    innerRef: RefObject<HTMLDivElement>;
+  }>;
 
 const StackItem = (props: StackItemProps) => {
   const { className, innerRef, ...rest } = props;
@@ -53,9 +55,10 @@ const StackItem = (props: StackItemProps) => {
 
 Stack.Item = StackItem;
 
-type StackDividerProps = FlexItemProps & {
-  hidden?: boolean;
-};
+type StackDividerProps = FlexItemProps &
+  Partial<{
+    hidden: boolean;
+  }>;
 
 const StackDivider = (props: StackDividerProps) => {
   const { className, hidden, ...rest } = props;

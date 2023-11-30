@@ -35,9 +35,9 @@ export const NowPlayingWidget = (props) => {
           mx={0.5}
           grow={1}
           style={{
-            'white-space': 'nowrap',
-            'overflow': 'hidden',
-            'text-overflow': 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}>
           {
             <Collapsible title={title || 'Unknown Track'} color={'blue'}>
