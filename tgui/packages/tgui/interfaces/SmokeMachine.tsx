@@ -17,8 +17,8 @@ type Reagent = {
   volume: number;
 };
 
-export const SmokeMachine = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const SmokeMachine = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     tankContents,
     tankCurrentVolume,

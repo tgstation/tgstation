@@ -2,8 +2,8 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Input, Button, Table, LabeledList, Flex, Divider, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
-const PacketInfo = (props, context) => {
-  const { act, data } = useBackend(context);
+const PacketInfo = (props) => {
+  const { act, data } = useBackend();
   const { packet } = props;
   return (
     <Stack.Item>
@@ -31,8 +31,8 @@ const PacketInfo = (props, context) => {
   );
 };
 
-const ServerScreen = (props, context) => {
-  const { act, data } = useBackend(context);
+const ServerScreen = (props) => {
+  const { act, data } = useBackend();
   const { network, server } = data;
   return (
     <Stack fill vertical>
@@ -70,14 +70,10 @@ const ServerScreen = (props, context) => {
   );
 };
 
-const MainScreen = (props, context) => {
-  const { act, data } = useBackend(context);
+const MainScreen = (props) => {
+  const { act, data } = useBackend();
   const { servers, network } = data;
-  const [networkId, setNetworkId] = useLocalState(
-    context,
-    'networkId',
-    network
-  );
+  const [networkId, setNetworkId] = useLocalState('networkId', network);
 
   return (
     <Stack fill vertical>
@@ -133,8 +129,8 @@ const MainScreen = (props, context) => {
   );
 };
 
-export const ServerMonitor = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ServerMonitor = (props) => {
+  const { act, data } = useBackend();
   const { screen, error } = data;
   return (
     <Window width={575} height={400}>

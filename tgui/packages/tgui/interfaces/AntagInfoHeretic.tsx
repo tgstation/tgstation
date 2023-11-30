@@ -52,8 +52,8 @@ type Info = {
   can_change_objective: BooleanLike;
 };
 
-const IntroductionSection = (props, context) => {
-  const { data, act } = useBackend<Info>(context);
+const IntroductionSection = (props) => {
+  const { data, act } = useBackend<Info>();
   const { objectives, ascended, can_change_objective } = data;
 
   return (
@@ -176,8 +176,8 @@ const GuideSection = () => {
   );
 };
 
-const InformationSection = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const InformationSection = (props) => {
+  const { data } = useBackend<Info>();
   const { charges, total_sacrifices, ascended } = data;
   return (
     <Stack.Item>
@@ -212,8 +212,8 @@ const InformationSection = (props, context) => {
   );
 };
 
-const ResearchedKnowledge = (props, context) => {
-  const { data } = useBackend<KnowledgeInfo>(context);
+const ResearchedKnowledge = (props) => {
+  const { data } = useBackend<KnowledgeInfo>();
   const { learnedKnowledge } = data;
 
   return (
@@ -237,8 +237,8 @@ const ResearchedKnowledge = (props, context) => {
   );
 };
 
-const KnowledgeShop = (props, context) => {
-  const { data, act } = useBackend<KnowledgeInfo>(context);
+const KnowledgeShop = (props) => {
+  const { data, act } = useBackend<KnowledgeInfo>();
   const { learnableKnowledge } = data;
 
   return (
@@ -272,8 +272,8 @@ const KnowledgeShop = (props, context) => {
   );
 };
 
-const ResearchInfo = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const ResearchInfo = (props) => {
+  const { data } = useBackend<Info>();
   const { charges } = data;
 
   return (
@@ -299,11 +299,11 @@ const ResearchInfo = (props, context) => {
   );
 };
 
-export const AntagInfoHeretic = (props, context) => {
-  const { data } = useBackend<Info>(context);
+export const AntagInfoHeretic = (props) => {
+  const { data } = useBackend<Info>();
   const { ascended } = data;
 
-  const [currentTab, setTab] = useLocalState(context, 'currentTab', 0);
+  const [currentTab, setTab] = useLocalState('currentTab', 0);
 
   return (
     <Window width={675} height={635}>
