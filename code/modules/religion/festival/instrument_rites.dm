@@ -58,6 +58,7 @@
 	desc = "this is a prototype."
 	ritual_length = 10 SECONDS
 	favor_cost = 10
+	auto_delete = FALSE
 	///if repeats count as continuations instead of a song's end, TRUE
 	var/repeats_okay = TRUE
 	///personal message sent to the chaplain as feedback for their chosen song
@@ -129,8 +130,9 @@
 	desc = "Sing a bright song, lighting up the area around you. At the end of the song, you'll give some illumination to listeners."
 	particles_path = /particles/musical_notes/light
 	song_invocation_message = "You've prepared a bright song!"
-	song_start_message = span_danger("This music simply glows!")
+	song_start_message = span_notice("This music simply glows!")
 	glow_color = "#fcff44"
+	repeats_okay = FALSE
 	favor_cost = 0
 	/// lighting object that makes chaplain glow
 	var/obj/effect/dummy/lighting_obj/moblight/performer_light_obj
