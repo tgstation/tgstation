@@ -1,9 +1,9 @@
-/* Gifts and wrapping paper
+/* Gifts
  * Contains:
  * Gifts
- * Wrapping Paper
  */
 
+/// Gifts to give to players, will contain a nice toy or other fun item for them to play with.
 /obj/item/gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
@@ -102,7 +102,7 @@
 	var/gift_type = pick(gift_type_list)
 	return gift_type
 
-
+/// Gifts that typically only very OP stuff or admins or Santa Claus himself should be giving out, as they contain ANY valid subtype of `/obj/item`, including stuff like instagib rifles. Wow!
 /obj/item/gift/anything
 	name = "christmas gift"
 	desc = "It could be anything!"
