@@ -152,6 +152,14 @@
 	var/combo_counter = 0
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	var/static/list/valid_organ_slots = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS
+	)
+
 	if(source == target)
 		return
 	if(combo_timer)
@@ -161,7 +169,7 @@
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	var/need_mob_update = FALSE
 	need_mob_update += target.adjustFireLoss(6, updating_health = FALSE)
-	need_mob_update += target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2, 100)
+	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 10)
 	if(need_mob_update)
 		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
@@ -173,8 +181,8 @@
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
 		need_mob_update = FALSE
-		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
-		need_mob_update += second_target_resolved.adjustOrganLoss(ORGAN_SLOT_BRAIN, 6, 100)
+		need_mob_update += second_target_resolved.adjustFireLoss(15, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 12)
 		if(need_mob_update)
 			target.updatehealth()
 		if(third_target_resolved)
@@ -182,7 +190,7 @@
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 			need_mob_update = FALSE
 			need_mob_update += third_target_resolved.adjustFireLoss(20, updating_health = FALSE)
-			need_mob_update += third_target_resolved.adjustOrganLoss(ORGAN_SLOT_BRAIN, 12, 100)
+			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 20)
 			if(need_mob_update)
 				target.updatehealth()
 			if(combo_counter > 3)
