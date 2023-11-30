@@ -19548,13 +19548,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms)
-"hoT" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/obj/machinery/artifact_zapper{
-	dir = 8
-	},
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance/burnchamber)
 "hoY" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -99667,7 +99660,7 @@ huj
 fhi
 xEU
 iqx
-hoT
+deY
 gil
 deY
 oet
