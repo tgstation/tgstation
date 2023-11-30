@@ -350,7 +350,7 @@
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	force = 0
 	throwforce = 0
 	throw_speed = 2

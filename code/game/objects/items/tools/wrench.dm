@@ -7,7 +7,7 @@
 	worn_icon_state = "wrench"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7

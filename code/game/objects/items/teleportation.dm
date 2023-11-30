@@ -16,7 +16,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/temp = null
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -323,7 +323,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'

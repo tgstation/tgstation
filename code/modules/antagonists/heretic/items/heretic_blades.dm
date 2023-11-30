@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20

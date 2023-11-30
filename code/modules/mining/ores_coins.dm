@@ -410,7 +410,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
 	icon_state = "coin"
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY

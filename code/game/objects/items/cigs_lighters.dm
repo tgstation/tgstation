@@ -719,7 +719,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_state = "zippo"
 	worn_icon_state = "lighter"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	slot_flags = ITEM_SLOT_BELT
 	heat = 1500
 	resistance_flags = FIRE_PROOF

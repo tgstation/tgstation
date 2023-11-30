@@ -9,7 +9,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	max_amount = 60
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/copper = 5)
 	merge_type = /obj/item/stack/light_w

@@ -6,7 +6,7 @@
 	inhand_icon_state = "flamethrower_0"
 	lefthand_file = 'icons/mob/inhands/weapons/flamethrower_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/flamethrower_righthand.dmi'
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	force = 3
 	throwforce = 10
 	throw_speed = 1

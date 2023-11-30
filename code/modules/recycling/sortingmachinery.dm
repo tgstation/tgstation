@@ -267,7 +267,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/dest_tagger/borg

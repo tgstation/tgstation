@@ -8,7 +8,7 @@
 	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	item_flags = NOBLUDGEON
 	force = 0
 	throwforce = 10

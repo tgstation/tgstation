@@ -6,7 +6,7 @@
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags_1 = CONDUCTIVE
+	obj_flags = CONDUCTIVE
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
