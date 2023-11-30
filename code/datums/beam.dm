@@ -179,7 +179,6 @@
 
 /obj/effect/ebeam
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
 	var/emissive = TRUE

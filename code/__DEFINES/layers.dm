@@ -23,7 +23,6 @@
 
 #define WALL_PLANE -9
 #define GAME_PLANE -8
-#define GAME_PLANE_UPPER_FOV_HIDDEN -4
 
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -3
@@ -199,21 +198,18 @@
 #define MOB_ABOVE_PIGGYBACK_LAYER 4.06
 #define MOB_UPPER_LAYER 4.07
 #define HITSCAN_PROJECTILE_LAYER 4.09 //above all mob but still hidden by FoV
-
-// GAME_PLANE_UPPER layers
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define TRAM_SIGNAL_LAYER 4.26
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
-
-// GAME_PLANE_UPPER_FOV_HIDDEN layers
 #define SPACEVINE_LAYER 4.4
 #define LARGE_MOB_LAYER 4.5
 #define SPACEVINE_MOB_LAYER 4.6
 
-// Intermediate layer used by both GAME_PLANE_FOV_HIDDEN and ABOVE_GAME_PLANE
+// Intermediate layer used by both GAME_PLANE and ABOVE_GAME_PLANE
 #define ABOVE_ALL_MOB_LAYER 4.7
+#warn need to account for seethrough here
 
 // ABOVE_GAME_PLANE layers
 #define NAVIGATION_EYE_LAYER 4.9

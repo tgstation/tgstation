@@ -98,14 +98,3 @@
 	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."
 	plane = ABOVE_GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/atom/movable/screen/plane_master/game_world_upper_fov_hidden
-	name = "Upper game world fov hidden"
-	documentation = "Just as we need a place to draw things \"above\" the hidden fov plane, we also need to be able to hide stuff that draws over the upper game plane."
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-/atom/movable/screen/plane_master/game_world_upper_fov_hidden/Initialize(mapload, datum/hud/hud_owner)
-	. = ..()
-	// Dupe of the other hidden plane
-	//add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
