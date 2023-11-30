@@ -190,7 +190,6 @@
 		/obj/item/mod/module/hat_stabilizer,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
-		/obj/item/mod/module/pathfinder,
 	)
 	default_pins = list(
 		/obj/item/mod/module/jetpack/advanced,
