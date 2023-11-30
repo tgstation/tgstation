@@ -168,7 +168,7 @@
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	var/need_mob_update = FALSE
-	need_mob_update += target.adjustFireLoss(6, updating_health = FALSE)
+	need_mob_update += target.adjustFireLoss(4, updating_health = FALSE)
 	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 8)
 	if(need_mob_update)
 		target.updatehealth()
@@ -179,9 +179,9 @@
 		combo_counter += 1
 	if(second_target_resolved)
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
-		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 14, FALSE)
+		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
 		need_mob_update = FALSE
-		need_mob_update += second_target_resolved.adjustFireLoss(15, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
 		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14)
 		if(need_mob_update)
 			target.updatehealth()
