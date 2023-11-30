@@ -9,6 +9,9 @@
 #define ALIGNMENT_NEUT "neutral"
 #define ALIGNMENT_EVIL "evil"
 
+///how many lines multiplied by tempo should at least be higher than this. Makes people have to choose a long enough song to get the final effect.
+#define FESTIVAL_SONG_LONG_ENOUGH 170
+
 //## which weapons should we use?
 
 // unused but for clarity

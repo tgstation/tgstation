@@ -5377,6 +5377,7 @@
 #include "code\modules\religion\rites.dm"
 #include "code\modules\religion\burdened\burdened_trauma.dm"
 #include "code\modules\religion\burdened\psyker.dm"
+#include "code\modules\religion\festival\festival_violin.dm"
 #include "code\modules\religion\festival\instrument_rites.dm"
 #include "code\modules\religion\honorbound\honorbound_rites.dm"
 #include "code\modules\religion\honorbound\honorbound_trauma.dm"
