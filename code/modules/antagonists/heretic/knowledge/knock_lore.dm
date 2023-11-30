@@ -101,7 +101,7 @@
 	gain_text = "Gateways shall open before me, my very will ensnaring reality."
 	adds_sidepath_points = 1
 	required_atoms = list(
-		/obj/item/storage/wallet = 1,
+		/obj/item/storage/box = 1, //monkestation edit wallet ==> box (leather is too hard to get due to botany changes)
 		/obj/item/stack/rods = 1,
 		/obj/item/card/id = 1,
 	)
@@ -116,7 +116,7 @@
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
-		/obj/item/toy/crayon/white = 1,
+		/obj/item/toy/crayon/white = 1, //monkestation edit crayon/white ==> crayon (i checked the game code for this and i can't find a consistant spawn for it other than detective pockets)
 		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/multitool = 1,
 	)

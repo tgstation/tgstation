@@ -62,10 +62,12 @@
  * Plays a little animation that shows the book opening and closing.
  */
 /obj/item/codex_cicatrix/proc/open_animation()
+	book_open = TRUE
 	icon_state = "[base_icon_state]_open"
 	flick("[base_icon_state]_opening", src)
 
 /// Plays a closing animation and resets the icon state.
 /obj/item/codex_cicatrix/proc/close_animation()
+	book_open = FALSE
 	icon_state = base_icon_state
 	flick("[base_icon_state]_closing", src)
