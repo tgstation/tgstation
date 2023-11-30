@@ -42,8 +42,8 @@
 //-------------------- GAME PLANES --------------------
 
 /atom/movable/screen/plane_master/game
-	name = "Lower game world"
-	documentation = "Exists mostly because of FOV shit. Basically, if you've just got a normal not ABOVE fov thing, and you don't want it masked, stick it here yeah?"
+	name = "Game"
+	documentation = "Holds most things that aren't on the floor or walls"
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
@@ -94,7 +94,7 @@
 	hide_plane(source)
 
 /atom/movable/screen/plane_master/game_world_above
-	name = "Above game world"
-	documentation = "We need a place that's unmasked by fov that also draws above the upper game world fov hidden plane. I told you fov was hacky man."
+	name = "Upper Game"
+	documentation = "Draws above the game plane, holds stuff we don't want to interlayer with it"
 	plane = ABOVE_GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
