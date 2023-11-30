@@ -62,7 +62,7 @@
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
 /// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
-/datum/brain_trauma/special/honorbound/proc/check_visible_guilt(var/mob/living/attacked_mob)
+/datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
 	if(ROLE_SYNDICATE in attacked_mob.faction)
 		// as a reminder, ROLE_SYNDICATE is given to obvious and outward syndicates like nuke ops and mobs,
 		// NOT given to traitors. this should be just fine
