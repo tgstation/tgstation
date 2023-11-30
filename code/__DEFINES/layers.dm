@@ -23,12 +23,12 @@
 
 #define WALL_PLANE -9
 #define GAME_PLANE -8
-#define GAME_PLANE_UPPER -6
 #define WALL_PLANE_UPPER -5
 #define GAME_PLANE_UPPER_FOV_HIDDEN -4
 
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -3
+#warn this one too
 #define ABOVE_GAME_PLANE -2
 
 #define RENDER_PLANE_GAME_WORLD -1
@@ -191,8 +191,6 @@
 #define NOT_HIGH_OBJ_LAYER 3.5
 #define HIGH_OBJ_LAYER 3.6
 #define BELOW_MOB_LAYER 3.7
-
-// GAME_PLANE_FOV_HIDDEN layers
 #define LOW_MOB_LAYER 3.75
 #define LYING_MOB_LAYER 3.8
 #define VEHICLE_LAYER 3.9

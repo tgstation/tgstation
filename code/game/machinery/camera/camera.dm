@@ -6,7 +6,6 @@
 	use_power = ACTIVE_POWER_USE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
 	armor_type = /datum/armor/machinery_camera

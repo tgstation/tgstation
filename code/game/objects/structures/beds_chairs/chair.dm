@@ -179,7 +179,6 @@
 /obj/structure/chair/comfy/proc/gen_armrest()
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE_EXPLICIT(armrest, GAME_PLANE_UPPER, src)
 	update_armrest()
 
 /obj/structure/chair/comfy/proc/GetArmrest()

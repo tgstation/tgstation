@@ -86,7 +86,6 @@ LINEN BINS
 
 /obj/item/bedsheet/proc/coverup(mob/living/sleeper)
 	layer = ABOVE_MOB_LAYER
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	pixel_x = 0
 	pixel_y = 0
 	balloon_alert(sleeper, "covered")
