@@ -1,4 +1,4 @@
-/// how much favor is gained when 
+/// how much favor is gained when someone joins the crusade and is deaconized
 #define DEACONIZE_FAVOR_GAIN 300
 
 ///Makes the person holy, but they now also have to follow the honorbound code (CBT). Actually earns favor, convincing others to uphold the code (tm) is not easy
@@ -178,3 +178,5 @@
 	been allowed as it is a school focused on the light and mending of this world.
 	"}
 	return ..()
+
+#undef DEACONIZE_FAVOR_GAIN
