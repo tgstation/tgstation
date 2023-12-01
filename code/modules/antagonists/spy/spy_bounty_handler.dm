@@ -53,11 +53,11 @@
 			continue
 		// This will have some overlap, and that's intentional -
 		// Adds some variety, rare moments where you can get a hard reward for an easier bounty (or visa versa)
-		if(item.cost <= 5)
+		if(item.cost <= SPY_LOWER_COST_THRESHOLD)
 			possible_uplink_items[SPY_DIFFICULTY_EASY] += item
-		if(item.cost >= 5 && item.cost <= 12)
+		if(item.cost >= SPY_LOWER_COST_THRESHOLD && item.cost <= SPY_UPPER_COST_THRESHOLD)
 			possible_uplink_items[SPY_DIFFICULTY_MEDIUM] += item
-		if(item.cost >= 12)
+		if(item.cost >= SPY_UPPER_COST_THRESHOLD)
 			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
 
 	refresh_bounty_list()

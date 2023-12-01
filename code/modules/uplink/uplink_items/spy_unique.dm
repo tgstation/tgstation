@@ -8,17 +8,13 @@
 	cant_discount = TRUE
 	surplus = FALSE
 	purchasable_from = UPLINK_SPY
-	cost = 5 // doesn't matter
-
-/datum/uplink_item/spy_unique/kudzu
-	name = "Kudzu"
-	desc = "A packet of Kudzu - plant and forget, a great distraction."
-	item = /obj/item/seeds/kudzu
+	cost = SPY_LOWER_COST_THRESHOLD // by default, these fall into easy-medium spy bounty loot pool
 
 /datum/uplink_item/spy_unique/combat_gloves
 	name = "Combat Gloves"
 	desc = "A pair of combat gloves. They're insulated!"
 	item = /obj/item/clothing/gloves/combat
+	cost = 1
 
 /datum/uplink_item/spy_unique/krav_maga
 	name = "Combat Gloves Plus"
@@ -32,13 +28,20 @@
 
 /datum/uplink_item/spy_unique/syndie_bowman
 	name = "Syndicate Bowman"
-	desc = "A bowman headset for Syndicates. Not very conspicuous."
+	desc = "A bowman headset for members of the Syndicate. Not very conspicuous."
 	item = /obj/item/radio/headset/syndicate/alt
+	cost = 1
+
+/datum/uplink_item/spy_unique/kudzu
+	name = "Kudzu"
+	desc = "A packet of Kudzu - plant and forget, a great distraction."
+	item = /obj/item/seeds/kudzu
 
 /datum/uplink_item/spy_unique/megaphone
 	name = "Megaphone"
 	desc = "A megaphone. It's loud."
 	item = /obj/item/megaphone
+	cost = 1
 
 /datum/uplink_item/spy_unique/big_knife
 	name = "Combat Knife"

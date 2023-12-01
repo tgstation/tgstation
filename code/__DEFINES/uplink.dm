@@ -26,3 +26,6 @@
 /// Typepath used for uplink items which don't actually produce an item (essentially just a placeholder)
 /// Future todo: Make this not necessary / make uplink items support item-less items natively
 #define DUMMY_UPLINK_ITEM /obj/effect/gibspawner/generic
+
+#define SPY_LOWER_COST_THRESHOLD 5
+#define SPY_UPPER_COST_THRESHOLD 12
