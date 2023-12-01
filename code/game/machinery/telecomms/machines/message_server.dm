@@ -173,7 +173,7 @@ GLOBAL_VAR(preset_station_message_server_key)
 	// Just in case there are multiple preset messageservers somehow once the CE arrives,
 	// we want those on the station to share the same preset default decrypt key shown in his memories.
 	var/is_on_station = is_station_level(z)
-	if(is_station_level(z) && GLOB.preset_station_message_server_key)
+	if(is_on_station && GLOB.preset_station_message_server_key)
 		decryptkey = GLOB.preset_station_message_server_key
 		return
 	decryptkey = pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
