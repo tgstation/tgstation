@@ -125,7 +125,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to people's brains through cosmic radiation. \
+	desc = "Your blade now deals damage to people's organs through cosmic radiation. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
 		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
@@ -184,7 +184,7 @@
 		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
 		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14)
 		if(need_mob_update)
-			target.updatehealth()
+			second_target_resolved.updatehealth()
 		if(third_target_resolved)
 			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
@@ -192,7 +192,7 @@
 			need_mob_update += third_target_resolved.adjustFireLoss(20, updating_health = FALSE)
 			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 20)
 			if(need_mob_update)
-				target.updatehealth()
+				third_target_resolved.updatehealth()
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
 				if(target.mind && target.stat != DEAD)
