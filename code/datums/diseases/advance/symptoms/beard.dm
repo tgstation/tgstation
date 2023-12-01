@@ -1,3 +1,5 @@
+/*
+
 /** Facial Hypertrichosis
  * No change to stealth.
  * Increases resistance.
@@ -35,3 +37,4 @@
 			H.facial_hairstyle = beard_order[index]
 			H.update_body_parts()
 
+*/

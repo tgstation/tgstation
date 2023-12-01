@@ -1,3 +1,5 @@
+/*
+
 /**Coughing
  * Slightly decreases stealth
  * Reduces resistance
@@ -78,3 +80,4 @@
 				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
 				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
 				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 18)
+*/

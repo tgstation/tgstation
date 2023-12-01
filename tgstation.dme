@@ -6508,6 +6508,7 @@
 #include "monkestation\code\modules\virology\fullscreen.dm"
 #include "monkestation\code\modules\virology\disease\_disease.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\_symptom.dm"
+#include "monkestation\code\modules\virology\disease\symtoms\stage1.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\stage2.dm"
 #include "monkestation\code\modules\virology\immune_systems\_immune_system.dm"
 #include "monkestation\code\modules\virology\items\disease_disk.dm"

@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 				else if (istype(T.loc,/area/station/medical/virology))
 					origin = "Virology"
 
-/datum/disease/advanced/proc/new_effect(var/badness = 2, var/stage = 0)
+/datum/disease/advanced/proc/new_effect(badness = 2, stage = 0)
 	var/list/datum/symptom/list = list()
 	var/list/to_choose = subtypesof(/datum/symptom)
 	for(var/e in to_choose)
