@@ -9,6 +9,7 @@
 	return ..()
 
 /datum/status_effect/staggered/on_apply()
+	//you can't stagger the dead.
 	if(owner.stat == DEAD)
 		return FALSE
 
