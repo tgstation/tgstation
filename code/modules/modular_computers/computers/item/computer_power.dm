@@ -7,12 +7,6 @@
 	if(check_power_override())
 		return TRUE
 
-	if(ismachinery(physical))
-		var/obj/machinery/machine_holder = physical
-		if(machine_holder.powered())
-			machine_holder.use_power(amount)
-			return TRUE
-
 	if(!internal_cell)
 		return FALSE
 	if(!internal_cell.charge && (isnull(active_program) || !(active_program.program_flags & PROGRAM_RUNS_WITHOUT_POWER)))
@@ -26,6 +20,13 @@
 		internal_cell.use(min(amount JOULES, internal_cell.charge)) //drain it anyways.
 		return FALSE
 	return TRUE
+
+/obj/item/modular_computer/processor/use_power(amount = 0)
+	var/obj/machinery/machine_holder = physical
+	if(machine_holder.powered())
+		machine_holder.use_power(amount)
+		return TRUE
+	return FALSE
 
 /obj/item/modular_computer/proc/give_power(amount)
 	if(internal_cell)
