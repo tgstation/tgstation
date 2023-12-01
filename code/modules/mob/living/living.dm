@@ -63,7 +63,9 @@
 	if(. & ZIMPACT_CANCEL_DAMAGE)
 		return .
 
-	if(levels <= 1)
+	// If you are incapped, you probably can't brace yourself
+	var/can_help_themselves = !incapacitated(IGNORE_RESTRAINTS)
+	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
 			visible_message(
@@ -74,9 +76,10 @@
 			return . | ZIMPACT_NO_MESSAGE
 
 	var/incoming_damage = (levels * 5) ** 1.5
+	// Smaller mobs with catlike grace can ignore damage (EG: cats)
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
 	var/skip_knockdown = FALSE
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP)
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP && can_help_themselves)
 		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 		skip_knockdown = TRUE
 		if(small_surface_area)
