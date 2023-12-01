@@ -123,10 +123,10 @@
 		if(job?.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL && !is_guilty)
 			to_chat(honorbound_human, span_warning("If you truly think this healer is not <b>innocent</b>, declare them guilty."))
 			return FALSE
-		//THE INNOCENT (human exclusive)
-		if(!is_guilty)
-			to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>innocent</b>."))
-			return FALSE
+	//THE INNOCENT (human and borg exclusive)
+	if(!is_guilty && (is_human || issilicon(target_creature)))
+		to_chat(target_creature, span_warning("There is nothing righteous in attacking the <b>innocent</b>."))
+		return FALSE
 	return TRUE
 
 //spell checking
