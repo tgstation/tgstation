@@ -52,8 +52,8 @@ const selectRemappedStaticData = (data) => {
 
 let remappedStaticData;
 
-const useRemappedBackend = (context) => {
-  const { data, ...rest } = useBackend(context);
+const useRemappedBackend = () => {
+  const { data, ...rest } = useBackend();
   // Only remap the static data once, cache for future use
   if (!remappedStaticData) {
     const id_cache = data.static_data.id_cache;
@@ -80,7 +80,7 @@ const abbreviateName = (name) => abbreviations[name] ?? name;
 
 // Actual Components
 
-export const Techweb = (props, context) => {
+export const Techweb = (props) => {
   return (
     <Window width={640} height={735}>
       <Window.Content scrollable>
@@ -90,8 +90,8 @@ export const Techweb = (props, context) => {
   );
 };
 
-const TechwebStart = (props, context) => {
-  const { act, data } = useBackend(context);
+const TechwebStart = (props) => {
+  const { act, data } = useBackend();
   const { locked, stored_research } = data;
   if (locked) {
     return (
@@ -117,8 +117,8 @@ const TechwebStart = (props, context) => {
   return <TechwebContent />;
 };
 
-export const AppTechweb = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+export const AppTechweb = (props) => {
+  const { act, data } = useRemappedBackend();
   const { locked } = data;
   return (
     <NtosWindow width={640} height={735}>
@@ -129,8 +129,8 @@ export const AppTechweb = (props, context) => {
   );
 };
 
-export const TechwebContent = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+export const TechwebContent = (props) => {
+  const { act, data } = useRemappedBackend();
   const {
     points,
     points_last_tick,
@@ -140,12 +140,8 @@ export const TechwebContent = (props, context) => {
     d_disk,
     locked,
   } = data;
-  const [techwebRoute, setTechwebRoute] = useLocalState(
-    context,
-    'techwebRoute',
-    null
-  );
-  const [lastPoints, setLastPoints] = useLocalState(context, 'lastPoints', {});
+  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
+  const [lastPoints, setLastPoints] = useLocalState('lastPoints', {});
 
   return (
     <Flex direction="column" className="Techweb__Viewport" height="100%">
@@ -210,8 +206,8 @@ export const TechwebContent = (props, context) => {
   );
 };
 
-const TechwebRouter = (props, context) => {
-  const [techwebRoute] = useLocalState(context, 'techwebRoute', null);
+const TechwebRouter = (props) => {
+  const [techwebRoute] = useLocalState('techwebRoute', null);
 
   const route = techwebRoute?.route;
   const RoutedComponent =
@@ -222,11 +218,11 @@ const TechwebRouter = (props, context) => {
   return <RoutedComponent {...techwebRoute} />;
 };
 
-const TechwebOverview = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+const TechwebOverview = (props) => {
+  const { act, data } = useRemappedBackend();
   const { nodes, node_cache, design_cache } = data;
-  const [tabIndex, setTabIndex] = useLocalState(context, 'overviewTabIndex', 1);
-  const [searchText, setSearchText] = useLocalState(context, 'searchText');
+  const [tabIndex, setTabIndex] = useLocalState('overviewTabIndex', 1);
+  const [searchText, setSearchText] = useLocalState('searchText');
 
   // Only search when 3 or more characters have been input
   const searching = searchText && searchText.trim().length > 1;
@@ -301,8 +297,8 @@ const TechwebOverview = (props, context) => {
   );
 };
 
-const TechwebNodeDetail = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+const TechwebNodeDetail = (props) => {
+  const { act, data } = useRemappedBackend();
   const { nodes } = data;
   const { selectedNode } = props;
 
@@ -311,15 +307,11 @@ const TechwebNodeDetail = (props, context) => {
   return <TechNodeDetail node={selectedNodeData} />;
 };
 
-const TechwebDiskMenu = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+const TechwebDiskMenu = (props) => {
+  const { act, data } = useRemappedBackend();
   const { diskType } = props;
   const { t_disk, d_disk } = data;
-  const [techwebRoute, setTechwebRoute] = useLocalState(
-    context,
-    'techwebRoute',
-    null
-  );
+  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
 
   // Check for the disk actually being inserted
   if ((diskType === 'design' && !d_disk) || (diskType === 'tech' && !t_disk)) {
@@ -372,8 +364,8 @@ const TechwebDiskMenu = (props, context) => {
   );
 };
 
-const TechwebDesignDisk = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+const TechwebDesignDisk = (props) => {
+  const { act, data } = useRemappedBackend();
   const { design_cache, d_disk } = data;
   const { blueprints } = d_disk;
 
@@ -395,8 +387,8 @@ const TechwebDesignDisk = (props, context) => {
   );
 };
 
-const TechwebTechDisk = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+const TechwebTechDisk = (props) => {
+  const { act, data } = useRemappedBackend();
   const { t_disk } = data;
   const { stored_research } = t_disk;
 
@@ -405,22 +397,14 @@ const TechwebTechDisk = (props, context) => {
     .map((n) => <TechNode key={n.id} nocontrols node={n} />);
 };
 
-const TechNodeDetail = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+const TechNodeDetail = (props) => {
+  const { act, data } = useRemappedBackend();
   const { nodes, node_cache } = data;
   const { node } = props;
   const { id } = node;
   const { prereq_ids, unlock_ids } = node_cache[id];
-  const [tabIndex, setTabIndex] = useLocalState(
-    context,
-    'nodeDetailTabIndex',
-    0
-  );
-  const [techwebRoute, setTechwebRoute] = useLocalState(
-    context,
-    'techwebRoute',
-    null
-  );
+  const [tabIndex, setTabIndex] = useLocalState('nodeDetailTabIndex', 0);
+  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
 
   const prereqNodes = nodes.filter((x) => prereq_ids.includes(x.id));
   const complPrereq = prereq_ids.filter(
@@ -479,8 +463,8 @@ const TechNodeDetail = (props, context) => {
   );
 };
 
-const TechNode = (props, context) => {
-  const { act, data } = useRemappedBackend(context);
+const TechNode = (props) => {
+  const { act, data } = useRemappedBackend();
   const { node_cache, design_cache, experiments, points, nodes } = data;
   const { node, nodetails, nocontrols } = props;
   const { id, can_unlock, tier } = node;
@@ -493,16 +477,8 @@ const TechNode = (props, context) => {
     required_experiments,
     discount_experiments,
   } = node_cache[id];
-  const [techwebRoute, setTechwebRoute] = useLocalState(
-    context,
-    'techwebRoute',
-    null
-  );
-  const [tabIndex, setTabIndex] = useLocalState(
-    context,
-    'nodeDetailTabIndex',
-    0
-  );
+  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
+  const [tabIndex, setTabIndex] = useLocalState('nodeDetailTabIndex', 0);
 
   const expcompl = required_experiments.filter(
     (x) => experiments[x]?.completed
@@ -622,10 +598,10 @@ const TechNode = (props, context) => {
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
           title="Required Experiments">
-          {required_experiments.map((k) => {
+          {required_experiments.map((k, index) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={index} />;
             }
             return <Experiment key={thisExp} exp={thisExp} />;
           })}
@@ -635,10 +611,10 @@ const TechNode = (props, context) => {
         <Collapsible
           className="TechwebNodeExperimentsRequired"
           title="Discount-Eligible Experiments">
-          {Object.keys(discount_experiments).map((k) => {
+          {Object.keys(discount_experiments).map((k, index) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
-              return <LockedExperiment />;
+              return <LockedExperiment key={index} />;
             }
             return (
               <Experiment key={thisExp} exp={thisExp}>
@@ -655,7 +631,7 @@ const TechNode = (props, context) => {
   );
 };
 
-const LockedExperiment = (props, context) => {
+const LockedExperiment = (props) => {
   return (
     <Box m={1} className="ExperimentConfigure__ExperimentPanel">
       <Button

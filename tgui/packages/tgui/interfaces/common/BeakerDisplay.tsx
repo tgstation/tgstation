@@ -22,8 +22,8 @@ type BeakerProps = {
   showpH?: BooleanLike;
 };
 
-export const BeakerDisplay = (props: BeakerProps, context) => {
-  const { act } = useBackend(context);
+export const BeakerDisplay = (props: BeakerProps) => {
+  const { act } = useBackend();
   const { beaker, replace_contents, title_label, showpH } = props;
   const beakerContents = replace_contents || beaker?.contents || [];
 

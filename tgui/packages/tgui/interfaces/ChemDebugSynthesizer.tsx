@@ -9,8 +9,8 @@ type Data = {
   beaker: Beaker;
 };
 
-export const ChemDebugSynthesizer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ChemDebugSynthesizer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { amount, purity, beaker } = data;
 
   return (

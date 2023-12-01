@@ -101,7 +101,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/bucket_obj)
 	if(!bucket_obj)
-		bucket_obj = new()
+		bucket_obj = new /obj/item/reagent_containers/cup/bucket/consistent
 	bucket_obj.forceMove(src)
 
 	. = ..()

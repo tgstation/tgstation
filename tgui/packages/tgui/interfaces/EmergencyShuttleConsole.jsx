@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Box, Button, Grid, Section } from '../components';
 import { Window } from '../layouts';
 
-export const EmergencyShuttleConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const EmergencyShuttleConsole = (props) => {
+  const { act, data } = useBackend();
   const {
     timer_str,
     enabled,

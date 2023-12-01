@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - server: "Minimum compile version has been bumped to 515. clients still support 514 but we're gonna start using 515 restricted features for serverside now."
