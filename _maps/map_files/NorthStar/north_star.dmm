@@ -27587,6 +27587,7 @@
 "hnb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
@@ -71827,7 +71828,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "sPk" = (

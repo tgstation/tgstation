@@ -271,3 +271,6 @@
 #define CLOWNOP_TRAIT "clownop"
 
 #define ANALYZER_TRAIT "analyzer_trait"
+
+/// Trait when something was labelled by a pen.
+#define PEN_LABEL_TRAIT "pen_label"

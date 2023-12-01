@@ -7,5 +7,3 @@
 	key = "wendigo"
 	map_name = "wendigo"
 	reward_points = BITRUNNER_REWARD_HIGH
-	safehouse_path = /datum/map_template/safehouse/lavaland_boss
-

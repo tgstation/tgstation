@@ -29,8 +29,8 @@ type GasDisplayProps = {
 
 const mappedTopMargin = '2%';
 
-export const BluespaceSender = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BluespaceSender = (props) => {
+  const { act, data } = useBackend<Data>();
   const { gas_transfer_rate, credits, bluespace_network_gases = [], on } = data;
 
   const gases: Gas[] = flow([
@@ -106,8 +106,8 @@ export const BluespaceSender = (props, context) => {
   );
 };
 
-const GasDisplay = (props: GasDisplayProps, context) => {
-  const { act } = useBackend<Data>(context);
+const GasDisplay = (props: GasDisplayProps) => {
+  const { act } = useBackend<Data>();
   const {
     gas: { amount, id, name, price },
     gasMax,

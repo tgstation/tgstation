@@ -75,8 +75,8 @@ const getColor = (difficulty: number) => {
   }
 };
 
-export const QuantumConsole = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const QuantumConsole = (props) => {
+  const { data } = useBackend<Data>();
 
   return (
     <Window title="Quantum Console" width={500} height={500}>
@@ -88,8 +88,8 @@ export const QuantumConsole = (props, context) => {
   );
 };
 
-const AccessView = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AccessView = (props) => {
+  const { act, data } = useBackend<Data>();
 
   if (!isConnected(data)) {
     return <NoticeBox error>No server connected!</NoticeBox>;
@@ -169,11 +169,11 @@ const AccessView = (props, context) => {
   );
 };
 
-const DomainEntry = (props: DomainEntryProps, context) => {
+const DomainEntry = (props: DomainEntryProps) => {
   const {
     domain: { cost, desc, difficulty, id, is_modular, name, reward },
   } = props;
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
     return null;
   }
@@ -238,8 +238,8 @@ const DomainEntry = (props: DomainEntryProps, context) => {
   );
 };
 
-const AvatarDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AvatarDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
     return null;
   }
@@ -322,7 +322,7 @@ const AvatarDisplay = (props, context) => {
   );
 };
 
-const DisplayDetails = (props: DisplayDetailsProps, context) => {
+const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {

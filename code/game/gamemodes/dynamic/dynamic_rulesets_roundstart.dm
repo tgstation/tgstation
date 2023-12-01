@@ -112,45 +112,34 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	required_candidates = 2
-	weight = 2
-	cost = 12
+	weight = 5
+	cost = 8
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
-	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
-	var/list/datum/team/brother_team/pre_brother_teams = list()
-	var/const/min_team_size = 2
-
-/datum/dynamic_ruleset/roundstart/traitorbro/forget_startup()
-	pre_brother_teams = list()
-	return ..()
+	antag_cap = 1
 
 /datum/dynamic_ruleset/roundstart/traitorbro/pre_execute(population)
 	. = ..()
-	var/num_teams = (get_antag_cap(population)/min_team_size) * (scaled_times + 1) // 1 team per scaling
-	for(var/j = 1 to num_teams)
-		if(candidates.len < min_team_size || candidates.len < required_candidates)
+
+	for (var/_ in 1 to get_antag_cap(population) * (scaled_times + 1))
+		var/mob/candidate = pick_n_take(candidates)
+		if (isnull(candidate))
 			break
-		var/datum/team/brother_team/team = new
-		var/team_size = prob(10) ? min(3, candidates.len) : 2
-		for(var/k = 1 to team_size)
-			var/mob/bro = pick_n_take(candidates)
-			assigned += bro.mind
-			team.add_member(bro.mind)
-			bro.mind.special_role = "brother"
-			bro.mind.restricted_roles = restricted_roles
-			GLOB.pre_setup_antags += bro.mind
-		pre_brother_teams += team
+
+		assigned += candidate.mind
+		candidate.mind.restricted_roles = restricted_roles
+		GLOB.pre_setup_antags += candidate.mind
+
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/traitorbro/execute()
-	for(var/datum/team/brother_team/team in pre_brother_teams)
-		team.pick_meeting_area()
+	for (var/datum/mind/mind in assigned)
+		var/datum/team/brother_team/team = new
+		team.add_member(mind)
 		team.forge_brother_objectives()
-		for(var/datum/mind/M in team.members)
-			M.add_antag_datum(/datum/antagonist/brother, team)
-			GLOB.pre_setup_antags -= M
-		team.update_name()
+		mind.add_antag_datum(/datum/antagonist/brother, team)
+		GLOB.pre_setup_antags -= mind
+
 	return TRUE
 
 //////////////////////////////////////////////

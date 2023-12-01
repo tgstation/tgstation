@@ -26189,7 +26189,7 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "juV" = (
@@ -47148,9 +47148,7 @@
 /obj/machinery/computer/quantum_console,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/camera/directional/north{
-	c_tag = "Mining Dock"
-	},
+/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/bitrunning/den)
 "qRV" = (
@@ -53427,11 +53425,11 @@
 /area/station/maintenance/starboard/fore)
 "tbl" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Kitchen"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/door/airlock/public/glass{
+	name = "Bar"
+	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "tbp" = (

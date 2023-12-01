@@ -275,6 +275,7 @@
 					M_job = "Ghost"
 
 			var/M_key = html_encode(M.key)
+			var/M_ip_address = isnull(M.lastKnownIP) ? "+localhost+" : M.lastKnownIP
 			var/M_name = html_encode(M.name)
 			var/M_rname = html_encode(M.real_name)
 			var/M_rname_as_key = html_encode(ckey(M.real_name)) // so you can ignore punctuation
@@ -303,7 +304,7 @@
 						<span hidden id="data[i]_rname_as_key">[M_rname_as_key]</span>
 						<span hidden id="data[i]_prevnames">[previous_names_string]</span>
 						<span hidden id="data[i]_key">[M_key]</span>
-						<span hidden id="data[i]_lastip">[M.lastKnownIP]</span>
+						<span hidden id="data[i]_lastip">[M_ip_address]</span>
 						<span hidden id="data[i]_isantag">[is_antagonist]</span>
 						<span hidden id="data[i]_ref">[REF(M)]</span>
 						</a>

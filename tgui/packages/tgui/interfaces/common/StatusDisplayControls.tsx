@@ -7,8 +7,8 @@ type Data = {
   maxStatusLineLength: number;
 };
 
-export const StatusDisplayControls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const StatusDisplayControls = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     upperText: initialUpper,
     lowerText: initialLower,
@@ -16,12 +16,10 @@ export const StatusDisplayControls = (props, context) => {
   } = data;
 
   const [upperText, setUpperText] = useSharedState(
-    context,
     'statusUpperText',
     initialUpper
   );
   const [lowerText, setLowerText] = useSharedState(
-    context,
     'statusLowerText',
     initialLower
   );

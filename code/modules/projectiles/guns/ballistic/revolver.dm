@@ -295,14 +295,10 @@
 	user.visible_message(span_danger("[user.name]'s soul is captured by \the [src]!"), span_userdanger("You've lost the gamble! Your soul is forfeit!"))
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
+	name = /obj/item/gun/ballistic/revolver/syndicate::name
+	desc = /obj/item/gun/ballistic/revolver/syndicate::desc
 	clumsy_check = FALSE
 	icon_state = "revolversyndie"
-
-/obj/item/gun/ballistic/revolver/reverse/Initialize(mapload)
-	. = ..()
-	var/obj/item/gun/ballistic/revolver/syndicate/syndie_revolver = /obj/item/gun/ballistic/revolver/syndicate
-	name = initial(syndie_revolver.name)
-	desc = initial(syndie_revolver.desc)
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(akimbo_usage)

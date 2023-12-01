@@ -14164,8 +14164,8 @@
 "ekm" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
-	id = "pharmacy_shutters3";
-	name = "Pharmacy Shutters"
+	id = "chemistry_lower_shutters";
+	name = "Chemistry Exterior Shutters"
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -38475,7 +38475,7 @@
 /area/station/maintenance/port/aft)
 "lLE" = (
 /obj/machinery/netpod,
-/obj/machinery/camera/directional/south,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/cargo/bitrunning/den)
 "lLN" = (
@@ -73215,7 +73215,7 @@
 /obj/structure/bed/dogbed/runtime,
 /obj/item/toy/cattoy,
 /obj/machinery/newscaster/directional/north,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "wwn" = (
