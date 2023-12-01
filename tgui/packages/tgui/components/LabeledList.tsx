@@ -29,7 +29,6 @@ type LabeledListItemProps = Partial<{
   children: ReactNode;
   verticalAlign: string;
   tooltip: string;
-  // eslint-disable-next-line react/no-unused-prop-types
 }>;
 
 const LabeledListItem = (props: LabeledListItemProps) => {
@@ -89,7 +88,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         color={color}
         textAlign={textAlign}
         className={classes(['LabeledList__cell', 'LabeledList__content'])}
-        colSpan={buttons ? 0 : 2}
+        colSpan={buttons ? undefined : 2}
         verticalAlign={verticalAlign}>
         {content}
         {children}

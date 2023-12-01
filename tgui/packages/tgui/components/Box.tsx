@@ -4,46 +4,59 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
-import { createElement, PropsWithChildren } from 'react';
+import { BooleanLike, classes } from 'common/react';
+import { createElement, ReactNode } from 'react';
 import { CSS_COLORS } from '../constants';
 
-type StringMap = keyof typeof styleStringNumberMap;
-type BooleanMap = keyof typeof styleBooleanMap;
-
-export type BoxProps = Partial<CommonProps & MappedProps & AsType> &
-  PropsWithChildren;
-
-type CommonProps = {
-  align: string;
-  className: string | boolean;
-  color: string;
-  key: string | number;
-  onClick: (event?) => void;
+export type BoxProps = {
+  [key: string]: any;
+  as?: string;
+  className?: string | BooleanLike;
+  children?: ReactNode;
+  position?: string | BooleanLike;
+  overflow?: string | BooleanLike;
+  overflowX?: string | BooleanLike;
+  overflowY?: string | BooleanLike;
+  top?: string | BooleanLike;
+  bottom?: string | BooleanLike;
+  left?: string | BooleanLike;
+  right?: string | BooleanLike;
+  width?: string | BooleanLike;
+  minWidth?: string | BooleanLike;
+  maxWidth?: string | BooleanLike;
+  height?: string | BooleanLike;
+  minHeight?: string | BooleanLike;
+  maxHeight?: string | BooleanLike;
+  fontSize?: string | BooleanLike;
+  fontFamily?: string;
+  lineHeight?: string | BooleanLike;
+  opacity?: number;
+  textAlign?: string | BooleanLike;
+  verticalAlign?: string | BooleanLike;
+  inline?: BooleanLike;
+  bold?: BooleanLike;
+  italic?: BooleanLike;
+  nowrap?: BooleanLike;
+  preserveWhitespace?: BooleanLike;
+  m?: string | BooleanLike;
+  mx?: string | BooleanLike;
+  my?: string | BooleanLike;
+  mt?: string | BooleanLike;
+  mb?: string | BooleanLike;
+  ml?: string | BooleanLike;
+  mr?: string | BooleanLike;
+  p?: string | BooleanLike;
+  px?: string | BooleanLike;
+  py?: string | BooleanLike;
+  pt?: string | BooleanLike;
+  pb?: string | BooleanLike;
+  pl?: string | BooleanLike;
+  pr?: string | BooleanLike;
+  color?: string | BooleanLike;
+  textColor?: string | BooleanLike;
+  backgroundColor?: string | BooleanLike;
+  fillPositionedParent?: boolean;
 };
-
-type MappedProps = {
-  [key in StringMap]: string | number;
-} &
-  { [key in BooleanMap]: boolean };
-
-type AsType =
-  | {
-      as: 'div';
-      style: Partial<HTMLDivElement['style']>;
-    }
-  | {
-      as: 'img';
-      src: string;
-      style: Partial<HTMLImageElement['style']>;
-    }
-  | {
-      as: 'span';
-      style: Partial<HTMLSpanElement['style']>;
-    }
-  | {
-      as: string;
-    };
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
@@ -112,7 +125,7 @@ const mapColorPropTo = (attrName) => (style, value) => {
 };
 
 // String / number props
-const styleStringNumberMap = {
+const stringStyleMap = {
   bottom: mapUnitPropTo('bottom', unit),
   fontFamily: mapRawPropTo('fontFamily'),
   fontSize: mapUnitPropTo('fontSize', unit),
@@ -184,7 +197,7 @@ const styleStringNumberMap = {
 } as const;
 
 // Boolean props
-const styleBooleanMap = {
+const booleanStyleMap = {
   bold: mapBooleanPropTo('fontWeight', 'bold'),
   inline: mapBooleanPropTo('display', 'inlineBlock'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
@@ -204,12 +217,8 @@ export const computeBoxProps = (props) => {
 
     const propValue = props[propName];
 
-    let mapPropToStyle;
-    if (typeof propValue === 'boolean') {
-      mapPropToStyle = styleBooleanMap[propName];
-    } else {
-      mapPropToStyle = styleStringNumberMap[propName];
-    }
+    const mapPropToStyle =
+      stringStyleMap[propName] || booleanStyleMap[propName];
 
     if (mapPropToStyle) {
       mapPropToStyle(computedStyles, propValue);
