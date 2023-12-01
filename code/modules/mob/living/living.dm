@@ -75,13 +75,16 @@
 
 	var/incoming_damage = (levels * 5) ** 1.5
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
+	var/skip_knockdown = FALSE
 	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP)
 		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
+		skip_knockdown = TRUE
 		if(small_surface_area)
 			visible_message(
 				span_notice("[src] makes a hard landing on [impacted_turf], but lands safely on [p_their()] feet!"),
 				span_notice("You make a hard landing on [impacted_turf], but land safely on your feet!"),
 			)
+			new /obj/effect/temp_visual/mook_dust/small(impacted_turf)
 			return .
 
 		incoming_damage *= 1.66
@@ -91,16 +94,17 @@
 			span_danger("[src] makes a hard landing on [impacted_turf], landing on [p_their()] feet painfully!"),
 			span_userdanger("You make a hard landing on [impacted_turf], and instinctively land on your feet - painfully!"),
 		)
-
-	else
-		Knockdown(levels * 5 SECONDS)
+		new /obj/effect/temp_visual/mook_dust(impacted_turf)
 
 	if(body_position == STANDING_UP)
 		var/damage_for_each_leg = round(incoming_damage / 2)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -5 * levels)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -5 * levels)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -2.5 * levels)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -2.5 * levels)
 	else
 		apply_damage(incoming_damage, BRUTE, spread_damage = TRUE)
+
+	if(!skip_knockdown)
+		Knockdown(levels * 5 SECONDS)
 	return .
 
 /// Modifier for mobs landing on their feet after a fall
