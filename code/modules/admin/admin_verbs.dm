@@ -1194,6 +1194,8 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set desc = "Turns something into an MMI, must be used on humans"
 	if(!check_rights(R_DEBUG))
 		return
+	if(!ishuman(target))
+		return
 
 	var/obj/item/mmi/new_mmi = new(target.loc)
 	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
