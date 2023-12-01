@@ -4597,6 +4597,7 @@
 #include "code\modules\mob\living\basic\pets\cat\bread_cat_ai.dm"
 #include "code\modules\mob\living\basic\pets\cat\cat.dm"
 #include "code\modules\mob\living\basic\pets\cat\cat_ai.dm"
+#include "code\modules\mob\living\basic\pets\cat\feral.dm"
 #include "code\modules\mob\living\basic\pets\cat\keeki.dm"
 #include "code\modules\mob\living\basic\pets\cat\kitten_ai.dm"
 #include "code\modules\mob\living\basic\pets\cat\runtime.dm"
