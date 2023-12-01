@@ -113,7 +113,7 @@
 		data["programs"] += list(list(
 			"name" = program.filename,
 			"desc" = program.filedesc,
-			"header_program" = program.header_program,
+			"header_program" = !!(program.program_flags & PROGRAM_HEADER),
 			"running" = !!(program in idle_threads),
 			"icon" = program.program_icon,
 			"alert" = program.alert_pending,

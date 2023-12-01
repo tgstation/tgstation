@@ -5,7 +5,7 @@
 	ui_header = "smmon_0.gif"
 	program_open_overlay = "smmon_0"
 	extended_desc = "Crystal Integrity Monitoring System, connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	download_access = list(ACCESS_CONSTRUCTION)
 	size = 5
 	tgui_id = "NtosSupermatter"
