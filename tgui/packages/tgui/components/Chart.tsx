@@ -6,7 +6,7 @@
 
 import { map, zipWith } from 'common/collections';
 import { Component, createRef, RefObject } from 'react';
-import { Box } from './Box';
+import { Box, BoxProps } from './Box';
 
 type Props = {
   data: number[][];
@@ -16,7 +16,8 @@ type Props = {
   fillColor: string;
   strokeColor: string;
   strokeWidth: number;
-}>;
+}> &
+  Partial<BoxProps>;
 
 type State = {
   viewBox: [number, number];
@@ -121,10 +122,11 @@ class LineChart extends Component<Props> {
       normalized.push([-strokeWidth, first[1]]);
     }
     const points = dataToPolylinePoints(normalized);
+    const divProps = { ...rest, className: '', ref: this.ref };
 
     return (
       <Box position="relative" {...rest}>
-        <div ref={this.ref} {...this.props}>
+        <Box {...divProps}>
           <svg
             viewBox={`0 0 ${viewBox[0]} ${viewBox[1]}`}
             preserveAspectRatio="none"
@@ -144,7 +146,7 @@ class LineChart extends Component<Props> {
               points={points}
             />
           </svg>
-        </div>
+        </Box>
       </Box>
     );
   }

@@ -49,6 +49,8 @@ export const SolarControl = (props) => {
             height="64px"
             backgroundColor={'black'}>
             <Chart.Line
+              p={1}
+              fillPositionedParent
               data={capacityData}
               rangeX={[0, capacityData.length - 1]}
               rangeY={[0, maxValue]}
@@ -56,6 +58,8 @@ export const SolarControl = (props) => {
               fillColor="rgba(150, 117, 39, 0.5)"
             />
             <Chart.Line
+              p={1}
+              fillPositionedParent
               data={supplyData}
               rangeX={[0, supplyData.length - 1]}
               rangeY={[0, maxValue]}
