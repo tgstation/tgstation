@@ -287,7 +287,7 @@
 	return ..()
 
 /obj/item/shield/energy/IsReflect()
-	if(HAS_TRAIT(src, TRAIT_WIELDED) && prob(block_chance))
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && prob(block_chance)
 		return TRUE
 
 /*
