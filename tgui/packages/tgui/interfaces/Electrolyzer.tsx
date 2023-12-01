@@ -42,7 +42,6 @@ export const Electrolyzer = (props) => {
               {(hasPowercell && (
                 <ProgressBar
                   value={powerLevel / 100}
-                  content={powerLevel + '%'}
                   ranges={{
                     good: [0.6, Infinity],
                     average: [0.3, 0.6],

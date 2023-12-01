@@ -132,7 +132,6 @@ export const IVDrip = (props) => {
                   )
                 }>
                 <ProgressBar
-                  py={0.3}
                   value={containerCurrentVolume}
                   minValue={0}
                   maxValue={containerMaxVolume}

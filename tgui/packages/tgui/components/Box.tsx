@@ -227,10 +227,6 @@ export const computeBoxProps = (props) => {
     }
   }
 
-  if (props.as === 'img') {
-    computedStyles['-ms-interpolation-mode'] = 'nearest-neighbor';
-  }
-
   // Merge computed styles and any directly provided styles
   computedProps.style = { ...computedStyles, ...props.style };
 
@@ -254,6 +250,10 @@ export const Box = (props: BoxProps) => {
     ? `${className} ${computeBoxClassName(rest)}`
     : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
+
+  if (as === 'img') {
+    computedProps.style['-ms-interpolation-mode'] = 'nearest-neighbor';
+  }
 
   // Render the component
   return createElement(

@@ -329,7 +329,7 @@ export const Canvas = (props) => {
                         selected_color: element.color,
                       })
                     }
-                    oncontextmenu={(e) => {
+                    onContextMenu={(e) => {
                       e.preventDefault();
                       act('change_palette', {
                         color_index: index + 1,

@@ -272,7 +272,7 @@ const MassSpectroscopy = (props) => {
                   ((peak.mass + 10) / graphUpperRange) * 500
                 },265 `}
                 opacity="0.6"
-                style={`fill:${peak.color}`}
+                style={{ fill: peak.color }}
               />
             ))}
             <polygon
@@ -282,7 +282,7 @@ const MassSpectroscopy = (props) => {
                 (upperRange / deltaRange) * 500
               },265`}
               opacity="0.2"
-              style={`fill:blue`}
+              style={{ fill: 'blue' }}
             />
             <line
               x1={0}

@@ -93,7 +93,6 @@ const SignalLocator = (props) => {
 
   return (
     <ProgressBar
-      mb={1}
       value={trackingrange - distance}
       minValue={0}
       maxValue={trackingrange}
