@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	. = ..()
 	toner_cartridge = new(src)
 	setup_components()
+	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
 /// Simply adds the necessary components for this to function.
 /obj/machinery/photocopier/proc/setup_components()

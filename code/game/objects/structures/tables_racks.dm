@@ -29,8 +29,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
-	///TRUE if the table can be climbed on and have living mobs placed on it normally, FALSE otherwise
-	var/climbable = TRUE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -46,8 +44,7 @@
 		buildstack = _buildstack
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
-	if (climbable)
-		AddElement(/datum/element/climbable)
+	make_climbable()
 
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
@@ -57,6 +54,11 @@
 	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
+
+///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
+/obj/structure/table/proc/make_climbable()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -730,9 +732,8 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	can_buckle = 1
+	can_buckle = TRUE
 	buckle_lying = 90
-	climbable = FALSE
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
@@ -756,10 +757,25 @@
 	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
 	return ..()
 
+/obj/structure/table/optable/make_climbable()
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
+
+///Align the mob with the table when buckled.
+/obj/structure/bed/post_buckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.base_pixel_y -= 6
+	buckled.pixel_y -= 6
+
+///Disalign the mob with the table when unbuckled.
+/obj/structure/bed/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.base_pixel_y += 6
+	buckled.pixel_y += 6
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -768,7 +784,6 @@
 		return
 	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
-	potential_patient.pixel_y = potential_patient.base_pixel_y
 
 /// Unmark the potential patient.
 /obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -778,7 +793,6 @@
 	if(potential_patient == patient)
 		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
 	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
-	potential_patient.pixel_y = potential_patient.base_pixel_y + potential_patient.body_position_pixel_y_offset
 
 /// Someone on our tile just lied down, got up, moved in, or moved out.
 /// potential_patient is the mob that had one of those four things change.

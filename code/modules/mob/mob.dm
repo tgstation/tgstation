@@ -578,6 +578,7 @@
 				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
 		else
 			result = examinify.examine(src)
+			SEND_SIGNAL(src, COMSIG_MOB_EXAMINING, examinify, result)
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
 			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
 			handle_eye_contact(examinify)
@@ -590,7 +591,6 @@
 
 	to_chat(src, examine_block("<span class='infoplain'>[result.Join()]</span>"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
-
 
 /mob/proc/blind_examine_check(atom/examined_thing)
 	return TRUE //The non-living will always succeed at this check.
@@ -1195,14 +1195,24 @@
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
-	log_played_names(ckey, newname)
+	log_played_names(
+		ckey,
+		list(
+			"[newname]" = tag,
+		),
+	)
 
 	real_name = newname
 	name = newname
 	if(mind)
 		mind.name = newname
 		if(mind.key)
-			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment.
+			log_played_names(
+				ckey(mind.key),
+				list(
+					"[newname]" = tag,
+				),
+			) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
@@ -1405,62 +1415,80 @@
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
+
+	if(!.)
+		return
+
 	if(href_list[VV_HK_REGEN_ICONS])
 		if(!check_rights(NONE))
 			return
 		regenerate_icons()
+
 	if(href_list[VV_HK_PLAYER_PANEL])
 		if(!check_rights(NONE))
 			return
 		usr.client.holder.show_player_panel(src)
+
 	if(href_list[VV_HK_GODMODE])
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.cmd_admin_godmode(src)
+
 	if(href_list[VV_HK_GIVE_MOB_ACTION])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_mob_action(src)
+
 	if(href_list[VV_HK_REMOVE_MOB_ACTION])
 		if(!check_rights(NONE))
 			return
 		usr.client.remove_mob_action(src)
+
 	if(href_list[VV_HK_GIVE_SPELL])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_spell(src)
+
 	if(href_list[VV_HK_REMOVE_SPELL])
 		if(!check_rights(NONE))
 			return
 		usr.client.remove_spell(src)
+
 	if(href_list[VV_HK_GIVE_DISEASE])
 		if(!check_rights(NONE))
 			return
 		usr.client.give_disease(src)
+
 	if(href_list[VV_HK_GIB])
 		if(!check_rights(R_FUN))
 			return
 		usr.client.cmd_admin_gib(src)
+
 	if(href_list[VV_HK_BUILDMODE])
 		if(!check_rights(R_BUILD))
 			return
 		togglebuildmode(src)
+
 	if(href_list[VV_HK_DROP_ALL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_admin_drop_everything(src)
+
 	if(href_list[VV_HK_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_assume_direct_control(src)
+
 	if(href_list[VV_HK_GIVE_DIRECT_CONTROL])
 		if(!check_rights(NONE))
 			return
 		usr.client.cmd_give_direct_control(src)
+
 	if(href_list[VV_HK_OFFER_GHOSTS])
 		if(!check_rights(NONE))
 			return
 		offer_control(src)
+
 	if(href_list[VV_HK_VIEW_PLANES])
 		if(!check_rights(R_DEBUG))
 			return

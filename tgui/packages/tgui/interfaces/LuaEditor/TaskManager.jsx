@@ -1,10 +1,10 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 
-export const TaskManager = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [, setToCall] = useLocalState(context, 'toCallTaskInfo');
-  const [, setModal] = useLocalState(context, 'modal');
+export const TaskManager = (props) => {
+  const { act, data } = useBackend();
+  const [, setToCall] = useLocalState('toCallTaskInfo');
+  const [, setModal] = useLocalState('modal');
   let { tasks } = data;
   tasks?.sort((a, b) => {
     if (a.status < b.status) {

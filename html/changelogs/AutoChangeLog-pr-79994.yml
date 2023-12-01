@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - admin: "The Player Panel should now contain the unique mob tag associated to a certain mob that a player might inhabit at one time, which is stored on their player details datum on their client (which is guaranteed to always exist)."
+  - admin: "The \"Old Names\" details of a player is now visible in their own personal per-player player panel."

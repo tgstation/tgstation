@@ -45,7 +45,6 @@
 	var/atom/movable/moving_from_pull
 	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
 	var/datum/movement_packet/move_packet
-	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 	/**
 	 * an associative lazylist of relevant nested contents by "channel", the list is of the form: list(channel = list(important nested contents of that type))
 	 * each channel has a specific purpose and is meant to replace potentially expensive nested contents iteration.
@@ -1633,7 +1632,6 @@
 	if(href_list[VV_HK_GET_MOVABLE])
 		if(!check_rights(R_ADMIN))
 			return
-
 		if(QDELETED(src))
 			return
 		forceMove(get_turf(usr))
@@ -1645,16 +1643,13 @@
 	if(href_list[VV_HK_DEADCHAT_PLAYS] && check_rights(R_FUN))
 		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) != "Allow")
 			return
-
 		// Alert is async, so quick sanity check to make sure we should still be doing this.
 		if(QDELETED(src))
 			return
-
 		// This should never happen, but if it does it should not be silent.
 		if(deadchat_plays() == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, span_warning("Deadchat control not compatible with [src]."))
 			CRASH("deadchat_control component incompatible with object of type: [type]")
-
 		to_chat(usr, span_notice("Deadchat now control [src]."))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))

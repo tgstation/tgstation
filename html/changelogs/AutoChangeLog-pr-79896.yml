@@ -1,0 +1,5 @@
+author: "Autisem"
+delete-after: True
+changes:
+  - admin: "A new debug verb to turn yourself into an MMI(almost the funniest thing)"
+  - bugfix: "MMI's inside mechs can now properly open doors like there posibrain counterparts"
