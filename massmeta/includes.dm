@@ -34,3 +34,4 @@
 #include "code\modules\ammunition\ballistic\shotgun.dm"
 #include "code\modules\projectiles\projectile\bullets\shotgun.dm"
 #include "code\modules\projectiles\projectile\beams.dm"
+#include "mapping\_basemap.dm"
