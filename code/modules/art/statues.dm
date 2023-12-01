@@ -561,8 +561,9 @@ Moving interrupts
 
 /obj/structure/statue/custom/Initialize(mapload, icon/statue_icon)
 	. = ..()
-	if(mapload && !statue_icon)
-		stack_trace("[src] spawned without a statue icon.")
+	if(!statue_icon)
+		var/obj/replacement_statue = pick(/obj/structure/statue/bronze/marx, /obj/item/statuebust, /obj/item/statuebust/hippocratic)
+		new replacement_statue(mapload)
 		return INITIALIZE_HINT_QDEL
 
 	icon = statue_icon

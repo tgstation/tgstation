@@ -1,4 +1,10 @@
-///Loads all statue engravings, and places a select amount in maintenance and the prison.
+statues fixes:
+- pixel offsets
+- direction
+- animation
+- lighting
+
+/// Loads all statue engravings and places them in the statue spawners
 /datum/controller/subsystem/persistence/proc/load_statues()
 	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
 	if(!fexists(json_file))
@@ -14,30 +20,27 @@
 
 	// /obj/effect/spawner/random/decoration/statue
 
-statues fixes:
-- pixel offsets
-- direction
-- animation
-- lighting
+	var/list/persistent_statues = json["entries"]
+
+	if(persistent_statues.len)
+		var/selected_statue = pick_n_take(persistent_statues)
+
+		if(!islist(selected_statue))
+			stack_trace("something's wrong with the persistent statue data! one of the saved statues wasn't a list!")
+			continue
 
 
-	var/list/engraving_entries = json["entries"]
+statue_engravings
 
-	if(engraving_entries.len)
-		for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
-			var/engraving = pick_n_take(engraving_entries) //engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
-			if(!islist(engraving))
-				stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
-				continue
+		//var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
-			var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
+		//if(HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
+		//	continue
 
-			if(HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
-				continue
+		//engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+		successfully_loaded_statue_engravings++
 
-			engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
-			successfully_loaded_statue_engravings++
-			turfs_to_pick_from -= engraved_wall
+		//turfs_to_pick_from -= engraved_wall
 
 	log_world("Loaded [successfully_loaded_statue_engravings] engraved statues on map [SSmapping.config.map_name]")
 

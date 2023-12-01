@@ -53,6 +53,7 @@
 	name = "statue spawner"
 	icon_state = "statue"
 	loot = list(
+		/obj/structure/statue/custom = 500,
 		/obj/structure/statue/bronze/marx = 50,
 		/obj/item/statuebust = 50,
 		/obj/item/statuebust/hippocratic = 50,
