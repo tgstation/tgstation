@@ -34,7 +34,7 @@
 		if(type_check == REAGENT_STRICT_TYPE)
 			break
 
-	return round(total_amount, CHEMICAL_QUANTISATION_LEVEL)
+	return round(total_amount, CHEMICAL_VOLUME_ROUNDING)
 
 
 //======================PH(clamped between 0->14)========================================
