@@ -1,4 +1,0 @@
-author: "Vermidia"
-delete-after: True
-changes:
-  - rscadd: "Heterochromatic, Signer, Spacer, and Voracious quirks are now properly accounted for in medical records."

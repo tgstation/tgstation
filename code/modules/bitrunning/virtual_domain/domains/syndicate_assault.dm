@@ -12,4 +12,3 @@
 	map_name = "syndicate_assault"
 	mob_modules = list(/datum/modular_mob_segment/syndicate_team)
 	reward_points = BITRUNNER_REWARD_MEDIUM
-	safehouse_path = /datum/map_template/safehouse/shuttle
