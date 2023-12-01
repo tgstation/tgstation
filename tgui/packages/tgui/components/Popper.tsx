@@ -37,12 +37,11 @@ export class Popper extends Component<PopperProps> {
       document.body.appendChild(this.renderedContent);
 
       // HACK: We don't want to create a wrapper, as it could break the layout
-      // of consumers, so we do the inferno equivalent of `findDOMNode(this)`.
+      // of consumers, so we use findDOMNode.
       // This is usually bad as refs are usually better, but refs did
       // not work in this case, as they weren't propagating correctly.
       // A previous attempt was made as a render prop that passed an ID,
       // but this made consuming use too unwieldly.
-      // This code is copied from `findDOMNode` in inferno-extras.
       // Because this component is written in TypeScript, we will know
       // immediately if this internal variable is removed.
       //
