@@ -1195,14 +1195,24 @@
 
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
-	log_played_names(ckey, newname)
+	log_played_names(
+		ckey,
+		list(
+			"[newname]" = tag,
+		),
+	)
 
 	real_name = newname
 	name = newname
 	if(mind)
 		mind.name = newname
 		if(mind.key)
-			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment.
+			log_played_names(
+				ckey(mind.key),
+				list(
+					"[newname]" = tag,
+				),
+			) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
