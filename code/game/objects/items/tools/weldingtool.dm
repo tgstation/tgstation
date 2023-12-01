@@ -145,15 +145,17 @@
 	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
 		return ITEM_INTERACT_BLOCKING
 
-	. = ITEM_INTERACT_SUCCESS
+	if(!use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
+		return ITEM_INTERACT_BLOCKING
 
-	if(use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
-		if(user == attacked_humanoid)
-			user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
-				span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
-			if(!do_after(user, 5 SECONDS, attacked_humanoid))
-				return
-		item_heal_robotic(attacked_humanoid, user, 15, 0)
+	if(user == attacked_humanoid)
+		user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
+			span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+		if(!do_after(user, 5 SECONDS, attacked_humanoid))
+			return ITEM_INTERACT_BLOCKING
+
+	item_heal_robotic(attacked_humanoid, user, 15, 0)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/afterattack(atom/attacked_atom, mob/user, proximity)
 	. = ..()
