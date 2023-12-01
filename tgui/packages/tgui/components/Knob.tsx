@@ -6,7 +6,7 @@
 
 import { keyOfMatchingRange, scale } from 'common/math';
 import { classes } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { DraggableControl } from './DraggableControl';
 
 type Props = Partial<{
@@ -19,8 +19,8 @@ type Props = Partial<{
   format: string;
   maxValue: number;
   minValue: number;
-  onChange: (value: number) => void;
-  onDrag: (value: number) => void;
+  onChange: (event: Event, value: number) => void;
+  onDrag: (event: Event, value: number) => void;
   ranges: Record<string, number[]>;
   size: number;
   step: number;
@@ -30,7 +30,8 @@ type Props = Partial<{
   unclamped: boolean;
   unit: string;
   value: number;
-}>;
+}> &
+  BoxProps;
 
 export const Knob = (props: Props) => {
   const {

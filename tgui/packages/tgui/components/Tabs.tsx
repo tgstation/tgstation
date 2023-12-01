@@ -6,7 +6,7 @@
 
 import { canRender, classes } from 'common/react';
 import { InfernoNode } from 'inferno';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 
 type Props = Partial<{
@@ -15,18 +15,21 @@ type Props = Partial<{
   fill: boolean;
   fluid: boolean;
   vertical: boolean;
-}>;
+}> &
+  BoxProps;
 
 type TabProps = Partial<{
   children: InfernoNode;
   className: string;
   color: string;
+  fluid: boolean;
   icon: string;
   leftSlot: InfernoNode;
   onClick: () => void;
   rightSlot: InfernoNode;
   selected: boolean;
-}>;
+}> &
+  BoxProps;
 
 export const Tabs = (props: Props) => {
   const { className, vertical, fill, fluid, children, ...rest } = props;

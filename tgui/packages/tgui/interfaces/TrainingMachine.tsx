@@ -55,7 +55,7 @@ const TrainingControls = (props) => {
       <Stack.Item>
         <Divider vertical />
       </Stack.Item>
-      <Stack.Item label="Simulation">
+      <Stack.Item>
         <Button
           fluid
           selected={moving}

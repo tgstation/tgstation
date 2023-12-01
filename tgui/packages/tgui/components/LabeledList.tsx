@@ -21,7 +21,7 @@ type LabeledListItemProps = Partial<{
   buttons: InfernoNode;
   children: InfernoNode;
   className: string | BooleanLike;
-  color: string;
+  color: string | BooleanLike;
   key: string | number;
   label: string | InfernoNode | BooleanLike;
   labelColor: string;

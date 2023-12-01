@@ -100,7 +100,7 @@ const CategoryBar = (props: CategoryBarProps) => {
           onChange={(_: any, value: string) => setCategorySearch(value)}
         />
       }>
-      <Stack scrollableHorizontal>
+      <Stack style={{ 'overflow-x': 'auto' }}>
         {/** these are not in stack items to have them directly next to eachother */}
         <Button
           textAlign="left"

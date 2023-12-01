@@ -141,8 +141,8 @@ export const SparringContract = (props) => {
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
-              <Stack grow textAlign="center">
-                <Stack.Item fontSize={left_sign !== 'none' && '14px'} grow>
+              <Stack fill textAlign="center">
+                <Stack.Item fontSize={left_sign !== 'none' ? '14px' : ''} grow>
                   {(left_sign === 'none' && (
                     <Button
                       icon="pen"
@@ -160,7 +160,7 @@ export const SparringContract = (props) => {
                     left_sign}
                 </Stack.Item>
                 <Stack.Item fontSize="16px">VS</Stack.Item>
-                <Stack.Item fontSize={right_sign !== 'none' && '14px'} grow>
+                <Stack.Item fontSize={right_sign !== 'none' ? '14px' : ''} grow>
                   {(right_sign === 'none' && (
                     <Button
                       icon="pen"

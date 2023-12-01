@@ -64,11 +64,14 @@ export const MafiaPanelData = (props) => {
       <Stack fill>
         <Stack.Item grow={1}>
           <Stack fill vertical>
-            <MafiaLobby />
-
-            <Stack grow>
-              <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
-            </Stack>
+            <Stack.Item>
+              <MafiaLobby />
+            </Stack.Item>
+            <Stack.Item grow>
+              <Stack>
+                <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
+              </Stack>
+            </Stack.Item>
           </Stack>
         </Stack.Item>
       </Stack>
@@ -96,16 +99,16 @@ export const MafiaPanelData = (props) => {
               )}
             </>
           )}
-          <Stack grow>
+          <Stack>
             <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
           </Stack>
           {phase !== 'No Game' && (
-            <Stack grow fill>
+            <Stack fill>
               <>
                 <Stack.Item grow>
                   <MafiaPlayers />
                 </Stack.Item>
-                <Stack.Item fluid grow>
+                <Stack.Item grow>
                   <Stack.Item>
                     <Tabs fluid>
                       <Tabs.Tab
@@ -191,8 +194,8 @@ const MafiaChat = (props) => {
             placeholder={'Type to chat'}
             value={message_to_send}
           />
-          <Stack grow>
-            <Stack.Item grow fill>
+          <Stack>
+            <Stack.Item grow>
               <Button
                 color="bad"
                 fluid
@@ -359,7 +362,7 @@ const MafiaNotesTab = (props) => {
   const { user_notes } = data;
   const [note_message, setNotesMessage] = useLocalState('Notes', user_notes);
   return (
-    <Section grow fill>
+    <Section fill>
       <TextArea
         height="80%"
         maxLength={600}
@@ -368,8 +371,8 @@ const MafiaNotesTab = (props) => {
         placeholder={'Insert Notes...'}
         value={note_message}
       />
-      <Stack grow>
-        <Stack.Item grow fill>
+      <Stack fill>
+        <Stack.Item grow>
           <Button
             color="good"
             fluid
@@ -431,9 +434,9 @@ const MafiaPlayers = (props) => {
             <Stack align="center">
               <Stack.Item
                 grow
-                color={!player.alive && 'red'}
+                color={!player.alive ? 'red' : ''}
                 backgroundColor={
-                  player.ref === person_voted_up_ref ? 'yellow' : null
+                  player.ref === person_voted_up_ref ? 'yellow' : ''
                 }>
                 {player.name}
                 {(!!player.is_you && ' (YOU)') ||

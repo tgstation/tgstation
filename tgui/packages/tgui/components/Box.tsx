@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { classes, pureComponentHooks } from 'common/react';
+import { BooleanLike, classes, pureComponentHooks } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
@@ -25,7 +25,7 @@ type CommonProps = {
 type MappedProps = {
   [key in StringMap]: string | number;
 } &
-  { [key in BooleanMap]: boolean };
+  { [key in BooleanMap]: BooleanLike };
 
 type AsType =
   | {
@@ -188,11 +188,12 @@ const stringStyleMap = {
 
 // Boolean props
 const booleanStyleMap = {
-  inline: mapBooleanPropTo('display', 'inline-block'),
   bold: mapBooleanPropTo('font-weight', 'bold'),
+  inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('font-style', 'italic'),
   nowrap: mapBooleanPropTo('white-space', 'nowrap'),
   preserveWhitespace: mapBooleanPropTo('white-space', 'pre-wrap'),
+  wrap: mapBooleanPropTo('white-space', 'normal'),
 } as const;
 
 export const computeBoxProps = (props) => {

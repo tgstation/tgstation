@@ -206,9 +206,9 @@ export const TraitorObjectiveDebug = (props) => {
           <Stack vertical>
             <Stack.Item>
               <Tabs width="100%" fluid textAlign="center">
-                {sortingOptions.map((value) => (
+                {sortingOptions.map((value, index) => (
                   <Tabs.Tab
-                    key={value.sort}
+                    key={index}
                     selected={value.name === sortingFunc}
                     onClick={() => setSortingFunc(value.name)}>
                     {value.name}

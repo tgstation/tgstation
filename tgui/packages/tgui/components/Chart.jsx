@@ -40,7 +40,7 @@ const dataToPolylinePoints = (data) => {
   return points;
 };
 
-class Chart extends Component {
+export class Chart extends Component {
   constructor(props) {
     super(props);
     this.ref = createRef();

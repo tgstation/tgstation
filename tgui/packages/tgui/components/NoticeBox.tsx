@@ -5,7 +5,7 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
-import { Box } from './Box';
+import { Box, BoxProps } from './Box';
 
 type Props = Partial<{
   className: string;
@@ -14,7 +14,8 @@ type Props = Partial<{
   warning: boolean;
   success: boolean;
   danger: boolean;
-}>;
+}> &
+  BoxProps;
 
 export const NoticeBox = (props: Props) => {
   const { className, color, info, warning, success, danger, ...rest } = props;
