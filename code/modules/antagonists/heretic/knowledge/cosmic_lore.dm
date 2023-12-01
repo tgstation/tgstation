@@ -159,7 +159,6 @@
 		ORGAN_SLOT_EYES,
 		ORGAN_SLOT_EARS
 	)
-
 	if(source == target)
 		return
 	if(combo_timer)
