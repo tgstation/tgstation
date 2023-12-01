@@ -10,12 +10,13 @@ import { Box } from './Box';
 
 type Props = {
   data: number[][];
-  rangeX?: [number, number];
-  rangeY?: [number, number];
-  fillColor?: string;
-  strokeColor?: string;
-  strokeWidth?: number;
-};
+} & Partial<{
+  rangeX: [number, number];
+  rangeY: [number, number];
+  fillColor: string;
+  strokeColor: string;
+  strokeWidth: number;
+}>;
 
 type State = {
   viewBox: [number, number];
@@ -120,7 +121,7 @@ class LineChart extends Component<Props> {
       normalized.push([-strokeWidth, first[1]]);
     }
     const points = dataToPolylinePoints(normalized);
-    
+
     return (
       <Box position="relative" {...rest}>
         <div ref={this.ref} {...this.props}>
