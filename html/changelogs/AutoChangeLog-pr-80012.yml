@@ -1,0 +1,5 @@
+author: "TJatPBnJ"
+delete-after: True
+changes:
+  - bugfix: "Changelings will no longer get an objective to impersonate crew without absorbable DNA."
+  - bugfix: "Changelings will no longer start without an escape objective."
