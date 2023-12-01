@@ -46,60 +46,61 @@
 	QDEL_LIST(surgeries)
 	return ..()
 
-/mob/living/onZImpact(turf/T, levels, message = TRUE)
-	if(!isgroundlessturf(T))
-		ZImpactDamage(T, levels)
-		message = FALSE
+/mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
+	if(!isgroundlessturf(impacted_turf))
+		impact_flags |= ZImpactDamage(impacted_turf, levels)
+
 	return ..()
 
 /**
  * Called when this mob is receiving damage from falling
  *
- * * T - the turf we are falling onto
+ * * impacted_turf - the turf we are falling onto
  * * levels - the number of levels we are falling
  */
-/mob/living/proc/ZImpactDamage(turf/T, levels)
-	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
-		return
+/mob/living/proc/ZImpactDamage(turf/impacted_turf, levels)
+	. = SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, impacted_turf)
+	if(. & ZIMPACT_CANCEL_DAMAGE)
+		return .
 
 	if(levels <= 1)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
 			visible_message(
-				span_notice("[src] makes a hard landing on [T] but remains unharmed from the fall."),
-				span_notice("You brace for the fall. You make a hard landing on [T], but remain unharmed."),
+				span_notice("[src] makes a hard landing on [impacted_turf] but remains unharmed from the fall."),
+				span_notice("You brace for the fall. You make a hard landing on [impacted_turf], but remain unharmed."),
 			)
 			Knockdown(levels * 4 SECONDS)
-			return
+			return . | ZIMPACT_NO_MESSAGE
 
 	var/incoming_damage = (levels * 5) ** 1.5
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || num_legs >= 2))
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2))
+		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 		if(small_surface_area)
 			visible_message(
-				span_notice("[src] makes a hard landing on [T], but lands on [p_their()] feet!"),
-				span_notice("You make a hard landing on [T], but land on your feet!"),
+				span_notice("[src] makes a hard landing on [impacted_turf], but lands safely on [p_their()] feet!"),
+				span_notice("You make a hard landing on [impacted_turf], but land safely on your feet!"),
 			)
-			return
+			return .
 
 		incoming_damage *= 1.66
 		add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, remove_movespeed_modifier)), levels * 3 SECONDS)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/landed_on_feet), levels * 2 SECONDS)
 		visible_message(
-			span_danger("[src] makes a hard landing on [T], landing on [p_their()] feet painfully!"),
-			span_userdanger("You make a hard landing on [T], and instinctively land on your feet - painfully!"),
+			span_danger("[src] makes a hard landing on [impacted_turf], landing on [p_their()] feet painfully!"),
+			span_userdanger("You make a hard landing on [impacted_turf], and instinctively land on your feet - painfully!"),
 		)
+
 	else
-		visible_message(
-			span_danger("[src] crashes into [T] with a sickening noise!"),
-			span_userdanger("You crash into [T] with a sickening noise!"),
-		)
+		Knockdown(levels * 5 SECONDS)
 
 	var/damage_for_each_leg = round(incoming_damage / 2)
 	apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = CANT_WOUND) // remove the wound bonus if you want
 	apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = CANT_WOUND) // people to break their legs from falling
-	Knockdown(levels * 5 SECONDS)
+	return .
 
+/// Modifier for mobs landing on their feet after a fall
 /datum/movespeed_modifier/landed_on_feet
 	movetypes = GROUND|UPSIDE_DOWN
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN / 2
