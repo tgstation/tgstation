@@ -259,10 +259,10 @@
 		if(!S.neutered)
 			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
 	if(properties["severity"] > 0)
-		properties["severity"] += round((properties["resistance"] / 10), 1)
-		properties["severity"] += round((properties["stage_rate"] / 10), 1)
-		properties["severity"] += round((properties["transmittable"] / 6), 1)
-		properties["severity"] = round((properties["severity"] / 2), 1)
+		properties["severity"] += round((properties["resistance"] / 12), 1)
+		properties["severity"] += round((properties["stage_rate"] / 11), 1)
+		properties["severity"] += round((properties["transmittable"] / 8), 1)
+		properties["severity"] = round((properties["severity"] / 3), 1)
 		properties["severity"] = clamp(properties["severity"], 1, 7)
 
 // Assign the properties that are in the list.
