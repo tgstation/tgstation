@@ -68,7 +68,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:*, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.3":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.3":
   version: 7.23.3
   resolution: "@babel/core@npm:7.23.3"
   dependencies:
@@ -592,17 +592,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: bf5aea1f3188c9a507e16efe030efb996853ca3cadd6512c51db7233cc58f3ac89ff8c6bdfb01d30843b161cfe7d321e1bf28da82f7ab8d7e6bc5464666f354a
-  languageName: node
-  linkType: hard
-
-"@babel/plugin-syntax-jsx@npm:^7":
-  version: 7.12.13
-  resolution: "@babel/plugin-syntax-jsx@npm:7.12.13"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.12.13
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 30697ad4607a9339b06c2648c2d128ce6865c3d2d14049b422c5ca060d6532978bb1008e086df402d365fda04fbafe9bd4ad9f62d78ef2e7a7063459b59645c0
   languageName: node
   linkType: hard
 
@@ -1583,7 +1572,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7, @babel/types@npm:^7.0.0, @babel/types@npm:^7.14.5, @babel/types@npm:^7.15.0, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4, @babel/types@npm:^7.8.3":
+"@babel/types@npm:^7.0.0, @babel/types@npm:^7.14.5, @babel/types@npm:^7.15.0, @babel/types@npm:^7.3.0, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4, @babel/types@npm:^7.8.3":
   version: 7.15.0
   resolution: "@babel/types@npm:7.15.0"
   dependencies:
@@ -3699,16 +3688,6 @@ __metadata:
     "@babel/core": ^7.0.0
     webpack: ">=2"
   checksum: d48bcf9e030e598656ad3ff5fb85967db2eaaf38af5b4a4b99d25618a2057f9f100e6b231af2a46c1913206db506115ca7a8cbdf52c9c73d767070dae4352ab5
-  languageName: node
-  linkType: hard
-
-"babel-plugin-inferno@npm:^6.7.0":
-  version: 6.7.0
-  resolution: "babel-plugin-inferno@npm:6.7.0"
-  dependencies:
-    "@babel/plugin-syntax-jsx": ^7
-    "@babel/types": ^7
-  checksum: 37b04f04ca326a41e5717a0dbc419d264b05fed57daff8300bd6988608517946f419014b96e546595dbd093e16db136844d7dc95897db0a8b7e2b870d020a00c
   languageName: node
   linkType: hard
 
@@ -11022,7 +11001,6 @@ __metadata:
     "@typescript-eslint/parser": ^5.62.0
     babel-jest: ^29.7.0
     babel-loader: ^8.3.0
-    babel-plugin-inferno: ^6.7.0
     babel-plugin-transform-remove-console: ^6.9.4
     common: "workspace:*"
     css-loader: ^6.8.1

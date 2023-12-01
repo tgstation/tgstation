@@ -35,7 +35,6 @@
     "@typescript-eslint/parser": "^5.62.0",
     "babel-jest": "^29.7.0",
     "babel-loader": "^8.3.0",
-    "babel-plugin-inferno": "^6.7.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "common": "workspace:*",
     "css-loader": "^6.8.1",

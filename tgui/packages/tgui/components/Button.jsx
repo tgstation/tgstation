@@ -44,8 +44,7 @@ export const Button = (props) => {
     logger.warn(
       `Lowercase 'onclick' is not supported on Button and lowercase` +
         ` prop names are discouraged in general. Please use a camelCase` +
-        `'onClick' instead and read: ` +
-        `https://infernojs.org/docs/guides/event-handling`
+        `'onClick' instead.`
     );
   }
   rest.onClick = (e) => {
