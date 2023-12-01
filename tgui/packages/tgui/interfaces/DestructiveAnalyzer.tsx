@@ -67,7 +67,8 @@ export const DestructiveAnalyzer = (props) => {
               onClick={() => act('eject_item')}
             />
           }>
-          <img
+          <Box
+            as="img"
             src={`data:image/jpeg;base64,${item_icon}`}
             height="64px"
             width="64px"
