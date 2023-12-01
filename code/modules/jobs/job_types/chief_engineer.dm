@@ -50,10 +50,7 @@
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
-	for(var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)
-		if(server.decryptkey)
-			spawned.add_mob_memory(/datum/memory/key/message_server_code, decrypt_key = server.decryptkey)
-			break
+	spawned.add_mob_memory(/datum/memory/key/message_server_key, decrypt_key = GLOB.preset_station_message_server_key)
 
 /datum/job/chief_engineer/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
