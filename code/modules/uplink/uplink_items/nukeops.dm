@@ -172,8 +172,8 @@
 
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
-	desc = "A case containing an energy sword and energy shield. The shield is capable of deflecting \
-		energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
+	desc = "A case containing an energy sword and energy shield. Paired together, it provides considerable defensive power without lethal potency. \
+		Perfect for the enterprising nuclear knight. Comes with a medieval helmet for your MODsuit!"
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
 
 /datum/uplink_item/weapon_kits/medium_cost/cqc
@@ -595,10 +595,10 @@
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
-	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
-		within a short duration and will rapidly recharge while not under fire."
+	desc = "An energy shield module for a MODsuit. The shields can stop a single impact \
+		before needing to recharge. Used wisely, this module will keep you alive for a lot longer."
 	item = /obj/item/mod/module/energy_shield
-	cost = 15
+	cost = 8
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/suits/emp_shield
