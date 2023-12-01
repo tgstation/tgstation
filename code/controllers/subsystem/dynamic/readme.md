@@ -12,10 +12,10 @@ This threat is split into two separate budgets--`round_start_budget` and `mid_ro
 
 This split is done with a similar method, known as the ["lorentz distribution"](https://en.wikipedia.org/wiki/Cauchy_distribution), exists to create a bell curve that ensures that while most rounds will have a threat level around ~50, chaotic and tame rounds still exist for variety.
 
-The process of creating these numbers occurs in `/datum/game_mode/dynamic/proc/generate_threat` (for creating the threat level) and `/datum/game_mode/dynamic/proc/generate_budgets` (for splitting the threat level into budgets).
+The process of creating these numbers occurs in `/datum/controller/subsystem/dynamic/proc/generate_threat` (for creating the threat level) and `/datum/controller/subsystem/dynamic/proc/generate_budgets` (for splitting the threat level into budgets).
 
 ## Deciding roundstart threats
-In `/datum/game_mode/dynamic/proc/roundstart()` (called when no admin chooses the rulesets explicitly), Dynamic uses the available roundstart budget to pick threats. This is done through the following system:
+In `/datum/controller/subsystem/dynamic/proc/roundstart()` (called when no admin chooses the rulesets explicitly), Dynamic uses the available roundstart budget to pick threats. This is done through the following system:
 
 - All roundstart rulesets (remember, `/datum/dynamic_ruleset/roundstart`) are put into an associative list with their weight as the values (`drafted_rules`).
 - Until there is either no roundstart budget left, or until there is no ruleset we can choose from with the available threat, a `pickweight` is done based on the drafted_rules. If the same threat is picked twice, it will "scale up". The meaning of this depends on the ruleset itself, using the `scaled_times` variable; traitors for instance will create more the higher they scale.
@@ -24,7 +24,7 @@ In `/datum/game_mode/dynamic/proc/roundstart()` (called when no admin chooses th
 - After all roundstart threats are chosen, `/datum/dynamic_ruleset/proc/picking_roundstart_rule` is called for each, passing in the ruleset and the number of times it is scaled.
 	- In this stage, `pre_execute` is called, which is the function that will determine what players get what antagonists. If this function returns FALSE for whatever reason (in the case of an error), then its threat is refunded.
 
-After this process is done, any leftover roundstart threat will be given to the existing midround budget (done in `/datum/game_mode/dynamic/pre_setup()`).
+After this process is done, any leftover roundstart threat will be given to the existing midround budget (done in `/datum/controller/subsystem/dynamic/pre_setup()`).
 
 ## Deciding midround threats
 
@@ -105,13 +105,13 @@ Midround - Rulesets have additional types
 ## Configuration and variables
 
 ### Configuration
-Configuration can be done through a `config/dynamic.json` file. One is provided as example in the codebase. This config file, loaded in `/datum/game_mode/dynamic/pre_setup()`, directly overrides the values in the codebase, and so is perfect for making some rulesets harder/easier to get, turning them off completely, changing how much they cost, etc.
+Configuration can be done through a `config/dynamic.json` file. One is provided as example in the codebase. This config file, loaded in `/datum/controller/subsystem/dynamic/pre_setup()`, directly overrides the values in the codebase, and so is perfect for making some rulesets harder/easier to get, turning them off completely, changing how much they cost, etc.
 
 The format of this file is:
 ```json
 {
 	"Dynamic": {
-		/* Configuration in here will directly override `/datum/game_mode/dynamic` itself. */
+		/* Configuration in here will directly override `/datum/controller/subsystem/dynamic` itself. */
 		/* Keys are variable names, values are their new values. */
 	},
 
@@ -172,7 +172,7 @@ This is not a complete list--search "configurable" in this README to learn more.
 The "Dynamic" key has the following configurable values:
 - `pop_per_requirement` - The default value of `pop_per_requirement` for any ruleset that does not explicitly set it. Defaults to 6.
 - `latejoin_delay_min`, `latejoin_delay_max` - The time range, in deciseconds (take your seconds, and multiply by 10), for a latejoin to attempt rolling. Once this timer is finished, a new one will be created within the same range.
-	- Suppose you have a `latejoin_delay_min` of 600 (60 seconds, 1 minute) and a `latejoin_delay_max` of 1800 (180 seconds, 3 minutes). Once the round starts, a random number in this range will be picked--let's suppose 1.5 minutes. After 1.5 minutes, Dynamic will decide if a latejoin threat should be created (a probability of `/datum/game_mode/dynamic/proc/get_injection_chance()`). Regardless of its decision, a new timer will be started within the range of 1 to 3 minutes, repeatedly.
+	- Suppose you have a `latejoin_delay_min` of 600 (60 seconds, 1 minute) and a `latejoin_delay_max` of 1800 (180 seconds, 3 minutes). Once the round starts, a random number in this range will be picked--let's suppose 1.5 minutes. After 1.5 minutes, Dynamic will decide if a latejoin threat should be created (a probability of `/datum/controller/subsystem/dynamic/proc/get_injection_chance()`). Regardless of its decision, a new timer will be started within the range of 1 to 3 minutes, repeatedly.
 - `threat_curve_centre` - A number between -5 and +5. A negative value will give a more peaceful round and a positive value will give a round with higher threat.
 - `threat_curve_width` - A number between 0.5 and 4. Higher value will favour extreme rounds and lower value rounds closer to the average.
 - `roundstart_split_curve_centre` - A number between -5 and +5. Equivalent to threat_curve_centre, but for the budget split. A negative value will weigh towards midround rulesets, and a positive value will weight towards roundstart ones.
@@ -187,7 +187,7 @@ Random events have the potential to be hijacked by Dynamic to keep the pace of m
 
 `/datum/round_event_control/dynamic_should_hijack` is a variable to random events to allow Dynamic to hijack them, and defaults to FALSE. This is set to TRUE for random events that spawn antagonists.
 
-In `/datum/game_mode/dynamic/on_pre_random_event` (in `dynamic_hijacking.dm`), Dynamic hooks to random events. If the `dynamic_should_hijack` variable is TRUE, the following sequence of events occurs:
+In `/datum/controller/subsystem/dynamic/on_pre_random_event` (in `dynamic_hijacking.dm`), Dynamic hooks to random events. If the `dynamic_should_hijack` variable is TRUE, the following sequence of events occurs:
 
 ![Flow chart to describe the chain of events for Dynamic 2021 to take](https://github.com/tgstation/documentation-assets/blob/main/dynamic/random_event_hijacking.png)
 
