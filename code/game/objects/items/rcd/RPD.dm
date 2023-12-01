@@ -9,6 +9,8 @@
 #define DESTROY_MODE (1<<2)
 #define REPROGRAM_MODE (1<<3)
 
+#define PIPE_LAYER(num) (1<<(num-1))
+
 ///Sound to make when we use the item to build/destroy something
 #define RPD_USE_SOUND 'sound/items/deconstruct.ogg'
 
@@ -202,8 +204,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/reprogram_speed = 0.2 SECONDS
 	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
-	///Piping layer we are going to spawn the atmos device in
-	var/piping_layer = PIPING_LAYER_DEFAULT
+	///All pipe layers we are going to spawn the atmos devices in
+	var/pipe_layers = PIPE_LAYER(3)
+	///Are we only laying a single layer per click
+	var/single_layer = TRUE
 	///Layer for disposal ducts
 	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///Stores the current device to spawn
@@ -259,6 +263,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
 
+/obj/item/pipe_dispenser/proc/pipe_layer_bits2num(layerbits)
+	var/layernum
+	if(!layerbits)
+		return 0
+	layernum = 1+(log(2, layerbits))
+	return layernum
+
 /obj/item/pipe_dispenser/cyborg_unequip(mob/user)
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
@@ -271,7 +282,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.pipe_color && target.piping_layer)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
-		piping_layer = target.piping_layer
+		pipe_layers = target.piping_layer
 		balloon_alert(user, "color/layer copied")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -308,7 +319,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/ui_data(mob/user)
 	var/list/data = list(
 		"category" = category,
-		"piping_layer" = piping_layer,
+		"pipe_layers" = pipe_layers,
 		"ducting_layer" = ducting_layer,
 		"categories" = list(),
 		"selected_recipe" = recipe.name,
@@ -369,8 +380,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					recipe = first_transit
 			p_dir = NORTH
 			playeffect = FALSE
-		if("piping_layer")
-			piping_layer = text2num(params["piping_layer"])
+		if("pipe_layers")
+			var/selected_layers = text2num(params["pipe_layers"])
+			pipe_layers ^= selected_layers
 			playeffect = FALSE
 		if("ducting_layer")
 			ducting_layer = text2num(params["ducting_layer"])
@@ -514,46 +526,58 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
-				if(!can_make_pipe)
-					return ..()
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-				if (recipe.type == /datum/pipe_info/meter)
-					if(do_after(user, atmos_build_speed, target = attack_target))
-						playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-						var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(attack_target))
-						new_meter.setAttachLayer(piping_layer)
-						if(mode & WRENCH_MODE)
-							new_meter.wrench_act(user, src)
-				else
-					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
-						balloon_alert(user, "can't build on this layer!")
+				single_layer = !(pipe_layers & (pipe_layers - 1))
+				for(var/pipe_layer_num in 1 to 5)
+					var/continued_build = FALSE
+					var/layer_to_build = pipe_layer_bits2num(pipe_layers & PIPE_LAYER(pipe_layer_num))
+					if(!layer_to_build)
+						continue
+					if(!can_make_pipe)
 						return ..()
-					if(do_after(user, atmos_build_speed, target = attack_target))
-						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
+					playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+					if (recipe.type == /datum/pipe_info/meter)
+						if(continued_build || do_after(user, atmos_build_speed, target = attack_target))
+							playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+							var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(attack_target))
+							new_meter.setAttachLayer(layer_to_build)
+							if(mode & WRENCH_MODE)
+								new_meter.wrench_act(user, src)
+							continued_build = TRUE
+					else
+						if(recipe.all_layers == FALSE && (layer_to_build == 1 || layer_to_build == 5))
+							if(!single_layer)
+								continue
 							balloon_alert(user, "can't build on this layer!")
 							return ..()
-						playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-						var/obj/machinery/atmospherics/path = queued_p_type
-						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-						var/obj/item/pipe/pipe_type = new pipe_item_type(
-							get_turf(attack_target),
-							queued_p_type,
-							queued_p_dir,
-							null,
-							GLOB.pipe_paint_colors[paint_color],
-							ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
-						)
-						if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
-							var/obj/item/pipe/trinary/flippable/new_flippable_pipe = pipe_type
-							new_flippable_pipe.flipped = queued_p_flipped
+						if(continued_build || do_after(user, atmos_build_speed, target = attack_target))
+							if(recipe.all_layers == FALSE && (layer_to_build == 1 || layer_to_build == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
+								if(!single_layer)
+									continue
+								balloon_alert(user, "can't build on this layer!")
+								return ..()
+							playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+							var/obj/machinery/atmospherics/path = queued_p_type
+							var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
+							var/obj/item/pipe/pipe_type = new pipe_item_type(
+								get_turf(attack_target),
+								queued_p_type,
+								queued_p_dir,
+								null,
+								GLOB.pipe_paint_colors[paint_color],
+								ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
+							)
+							if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
+								var/obj/item/pipe/trinary/flippable/new_flippable_pipe = pipe_type
+								new_flippable_pipe.flipped = queued_p_flipped
 
-						pipe_type.update()
-						pipe_type.add_fingerprint(usr)
-						pipe_type.set_piping_layer(piping_layer)
-						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
-							pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-						if(mode & WRENCH_MODE)
-							pipe_type.wrench_act(user, src)
+							pipe_type.update()
+							pipe_type.add_fingerprint(usr)
+							pipe_type.set_piping_layer(layer_to_build)
+							if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
+								pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+							if(mode & WRENCH_MODE)
+								pipe_type.wrench_act(user, src)
+							continued_build = TRUE
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
@@ -637,19 +661,24 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 ///Changes the piping layer when the mousewheel is scrolled up or down.
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
+	single_layer = !(pipe_layers & (pipe_layers - 1))
+	if(!single_layer)
+		to_chat(source_mob, span_notice("Set to single layer first."))
+		return
 	if(source_mob.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 	if(source_mob.get_active_held_item() != src)
 		return
 
+	var/pipe_layer_num = pipe_layer_bits2num(pipe_layers)
 	if(delta_y < 0)
-		piping_layer = min(PIPING_LAYER_MAX, piping_layer + 1)
+		pipe_layers = PIPE_LAYER(min(5, pipe_layer_num + 1))
 	else if(delta_y > 0)
-		piping_layer = max(PIPING_LAYER_MIN, piping_layer - 1)
+		pipe_layers = PIPE_LAYER(max(1, pipe_layer_num - 1))
 	else //mice with side-scrolling wheels are apparently a thing and fuck this up
 		return
 	SStgui.update_uis(src)
-	to_chat(source_mob, span_notice("You set the layer to [piping_layer]."))
+	to_chat(source_mob, span_notice("You set the layer to [pipe_layer_bits2num(pipe_layers)]."))
 
 
 /obj/item/rpd_upgrade
@@ -672,5 +701,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef DESTROY_MODE
 #undef WRENCH_MODE
 #undef REPROGRAM_MODE
+
+#undef PIPE_LAYER
 
 #undef RPD_USE_SOUND

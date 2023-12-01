@@ -38,6 +38,29 @@ const TOOLS = [
   },
 ];
 
+const LAYERS = [
+  {
+    name: '1',
+    bitmask: 1,
+  },
+  {
+    name: '2',
+    bitmask: 2,
+  },
+  {
+    name: '3',
+    bitmask: 4,
+  },
+  {
+    name: '4',
+    bitmask: 8,
+  },
+  {
+    name: '5',
+    bitmask: 16,
+  },
+];
+
 type DirectionsAllowed = {
   north: BooleanLike;
   south: BooleanLike;
@@ -82,7 +105,7 @@ type Preview = {
 type Data = {
   // Dynamic
   category: number;
-  piping_layer: number;
+  pipe_layers: number;
   ducting_layer: number;
   categories: Category[];
   selected_recipe: string;
@@ -182,17 +205,17 @@ const SelectionSection = (props) => {
 
 export const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
-  const { piping_layer } = data;
+  const { pipe_layers } = data;
   return (
     <LabeledList.Item label="Layer">
-      {[1, 2, 3, 4, 5].map((layer) => (
+      {LAYERS.map((layer) => (
         <Button.Checkbox
-          key={layer}
-          checked={layer === piping_layer}
-          content={layer}
+          key={layer.bitmask}
+          checked={pipe_layers & layer.bitmask}
+          content={layer.name}
           onClick={() =>
-            act('piping_layer', {
-              piping_layer: layer,
+            act('pipe_layers', {
+              pipe_layers: layer.bitmask,
             })
           }
         />
