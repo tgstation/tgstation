@@ -178,7 +178,7 @@ GLOBAL_VAR(preset_station_message_server_key)
 		return
 	decryptkey = pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
 	decryptkey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
-	decryptkey += rand(0, 9)
+	decryptkey += "[rand(0, 9)]"
 	if(is_on_station)
 		GLOB.preset_station_message_server_key = decryptkey
 
