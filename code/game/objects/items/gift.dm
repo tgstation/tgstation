@@ -116,7 +116,7 @@
 			if(!initial(thing.icon_state) || !initial(thing.inhand_icon_state) || (initial(thing.item_flags) & ABSTRACT))
 				continue
 
-			possible_gifts += type
+			possible_gifts += thing
 
 	var/gift_type = pick(possible_gifts)
 	return gift_type
