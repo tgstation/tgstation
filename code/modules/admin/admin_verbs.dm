@@ -222,6 +222,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/run_empty_query,
 	/client/proc/SDQL2_query,
 	/client/proc/set_dynex_scale,
+	/client/proc/spawn_as_mmi,
 	/client/proc/spawn_debug_full_crew,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/test_movable_UI,
@@ -1188,3 +1189,18 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
+
+/client/proc/spawn_as_mmi(mob/living/carbon/human/target in GLOB.human_list)
+	set category = "Debug"
+	set name = "Turn target into MMI"
+	set desc = "Turns something into an MMI, must be used on humans"
+	if(!check_rights(R_DEBUG))
+		return
+	if(!ishuman(target))
+		return
+
+	var/obj/item/mmi/new_mmi = new(target.loc)
+	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
+	target_brain.Remove(target)
+	new_mmi.attackby(target_brain,target)
+	qdel(target)
