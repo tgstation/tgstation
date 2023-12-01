@@ -9,8 +9,8 @@ type NtosGasAnalyzerData = GasAnalyzerData & {
   clickAtmozphereCompatible: BooleanLike;
 };
 
-export const NtosGasAnalyzer = (props, context) => {
-  const { act, data } = useBackend<NtosGasAnalyzerData>(context);
+export const NtosGasAnalyzer = (props) => {
+  const { act, data } = useBackend<NtosGasAnalyzerData>();
   const { atmozphereMode, clickAtmozphereCompatible } = data;
   return (
     <NtosWindow width={500} height={450}>

@@ -6,6 +6,7 @@
 	sechud_icon_state = SECHUD_CENTCOM
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_CENTCOM_BLUE
+	threat_modifier = -10 // Centcom are legally allowed to do whatever they want
 
 /// Trim for Centcom VIPs
 /datum/id_trim/centcom/vip

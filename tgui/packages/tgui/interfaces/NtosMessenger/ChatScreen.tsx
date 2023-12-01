@@ -72,7 +72,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       return;
     }
 
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
 
     this.tryClearReadTimeout();
 
@@ -106,7 +106,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   }
 
   clearUnreads() {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
 
     act('PDA_clearUnreads', { ref: this.props.chatRef });
   }
@@ -120,7 +120,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   handleSelectPicture() {
     const { isSilicon } = this.props;
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     if (isSilicon) {
       act('PDA_siliconSelectPhoto');
     } else {
@@ -133,7 +133,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       return;
     }
 
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const { chatRef, recipient } = this.props;
 
     let ref = chatRef ? chatRef : recipient.ref;
@@ -152,7 +152,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   }
 
   render() {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const {
       canReply,
       messages,

@@ -2,9 +2,9 @@ import { useBackend, useSharedState } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Icon, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosNetMonitor = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
+export const NtosNetMonitor = (props) => {
+  const { act, data } = useBackend();
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const {
     ntnetrelays,
     idsalarm,
@@ -53,9 +53,9 @@ export const NtosNetMonitor = (props, context) => {
   );
 };
 
-const MainPage = (props, context) => {
+const MainPage = (props) => {
   const { ntnetrelays, idsalarm, idsstatus, ntnetlogs = [] } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   return (
     <Section>
       <NoticeBox>
@@ -132,9 +132,9 @@ const MainPage = (props, context) => {
   );
 };
 
-const TabletPage = (props, context) => {
+const TabletPage = (props) => {
   const { tablets } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   if (!tablets.length) {
     return <NoticeBox>No tablets detected.</NoticeBox>;
   }

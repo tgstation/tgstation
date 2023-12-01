@@ -11,7 +11,7 @@ const CONTRACT_STATUS_EXTRACTING = 4;
 const CONTRACT_STATUS_COMPLETE = 5;
 const CONTRACT_STATUS_ABORTED = 6;
 
-export const SyndicateContractor = (props, context) => {
+export const SyndicateContractor = (props) => {
   return (
     <NtosWindow width={500} height={600}>
       <NtosWindow.Content scrollable>
@@ -48,8 +48,8 @@ type ContractData = {
   payout_bonus: Number;
 };
 
-export const SyndicateContractorContent = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+export const SyndicateContractorContent = (props) => {
+  const { data, act } = useBackend<Data>();
   const { error, logged_in, first_load, info_screen } = data;
 
   const terminalMessages = [
@@ -174,8 +174,8 @@ export const SyndicateContractorContent = (props, context) => {
   );
 };
 
-export const StatusPane = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const StatusPane = (props) => {
+  const { act, data } = useBackend<Data>();
   const { redeemable_tc, earned_tc, contracts_completed } = data;
 
   return (
@@ -222,8 +222,8 @@ export const StatusPane = (props, context) => {
   );
 };
 
-const ContractsTab = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ContractsTab = (props) => {
+  const { act, data } = useBackend<Data>();
   const { contracts, ongoing_contract, extraction_enroute, dropoff_direction } =
     data;
 

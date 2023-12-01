@@ -12,8 +12,8 @@ type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
 };
 
-export const ExosuitFabricator = (props, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+export const ExosuitFabricator = (props) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { materials, SHEET_MATERIAL_AMOUNT } = data;
 
   const availableMaterials: MaterialMap = {};
@@ -83,8 +83,8 @@ type RecipeProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const Recipe = (props: RecipeProps, context) => {
-  const { act } = useBackend<ExosuitFabricatorData>(context);
+const Recipe = (props: RecipeProps) => {
+  const { act } = useBackend<ExosuitFabricatorData>();
   const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -167,8 +167,8 @@ type QueueProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const Queue = (props: QueueProps, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+const Queue = (props: QueueProps) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
   const { designs, processing } = data;
 
@@ -247,8 +247,8 @@ type QueueListProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const QueueList = (props: QueueListProps, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+const QueueList = (props: QueueListProps) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const queue = data.queue || [];

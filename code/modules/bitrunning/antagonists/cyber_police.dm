@@ -10,7 +10,7 @@
 		return
 
 	var/mob/living/player = owner.current
-	convert_agent(player)
+	convert_agent(player, /datum/outfit/cyber_police)
 
 	var/datum/martial_art/the_sleeping_carp/carp = new()
 	carp.teach(player)

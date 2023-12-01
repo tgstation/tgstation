@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - code_imp: "HUDs no longer use their own trait variable"
