@@ -139,19 +139,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/barsign/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(!panel_open)
 		balloon_alert(user, "open the panel first!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 	if(!do_after(user, (10 SECONDS), target = src))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
 
