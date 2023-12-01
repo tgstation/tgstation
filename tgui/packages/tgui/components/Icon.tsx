@@ -12,14 +12,13 @@ import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;
 
-type IconPropsUnique = {
-  name: string;
-  size?: number;
-  spin?: boolean;
-  className?: string;
-  rotation?: number;
-  style?: string | CSSProperties;
-};
+type IconPropsUnique = { name: string } & Partial<{
+  size: number;
+  spin: boolean;
+  className: string;
+  rotation: number;
+  style: Partial<HTMLDivElement['style']>;
+}>;
 
 export type IconProps = IconPropsUnique & BoxProps;
 

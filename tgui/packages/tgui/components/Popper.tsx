@@ -2,13 +2,14 @@ import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
 import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
 
-type PopperProps = {
+type Props = {
   popperContent: InfernoNode;
   options?: ArgumentsOf<typeof createPopper>[2];
   additionalStyles?: CSSProperties;
+  children?: any;
 };
 
-export class Popper extends Component<PopperProps> {
+export class Popper extends Component<Props> {
   static id: number = 0;
 
   renderedContent: HTMLDivElement;

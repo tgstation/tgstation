@@ -9,25 +9,21 @@ import { Component, InfernoNode, RefObject, createRef } from 'inferno';
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
 
-export type SectionProps = BoxProps & {
-  className?: string;
-  title?: InfernoNode;
-  buttons?: InfernoNode;
-  fill?: boolean;
-  fitted?: boolean;
-  scrollable?: boolean;
-  scrollableHorizontal?: boolean;
-  /** @deprecated This property no longer works, please remove it. */
-  level?: never;
-  /** @deprecated Please use `scrollable` property */
-  overflowY?: never;
+type Props = Partial<{
+  buttons: InfernoNode;
+  fill: boolean;
+  fitted: boolean;
+  scrollable: boolean;
+  scrollableHorizontal: boolean;
+  title: InfernoNode;
   /** @member Allows external control of scrolling. */
-  scrollableRef?: RefObject<HTMLDivElement>;
+  scrollableRef: RefObject<HTMLDivElement>;
   /** @member Callback function for the `scroll` event */
-  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
-};
+  onScroll: (this: GlobalEventHandlers, ev: Event) => any;
+}> &
+  BoxProps;
 
-export class Section extends Component<SectionProps> {
+export class Section extends Component<Props> {
   scrollableRef: RefObject<HTMLDivElement>;
   scrollable: boolean;
   onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
@@ -74,7 +70,6 @@ export class Section extends Component<SectionProps> {
       <div
         className={classes([
           'Section',
-          Byond.IS_LTE_IE8 && 'Section--iefix',
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',

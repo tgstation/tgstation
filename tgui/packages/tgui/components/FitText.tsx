@@ -4,6 +4,7 @@ const DEFAULT_ACCEPTABLE_DIFFERENCE = 5;
 
 type Props = {
   acceptableDifference?: number;
+  children?: any;
   maxWidth: number;
   maxFontSize: number;
   native?: HTMLAttributes<HTMLDivElement>;

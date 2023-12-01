@@ -8,14 +8,31 @@ import { keyOfMatchingRange, scale } from 'common/math';
 import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { DraggableControl } from './DraggableControl';
-import { NumberInput } from './NumberInput';
 
-export const Knob = (props) => {
-  // IE8: I don't want to support a yet another component on IE8.
-  // IE8: It also can't handle SVG.
-  if (Byond.IS_LTE_IE8) {
-    return <NumberInput {...props} />;
-  }
+type Props = Partial<{
+  animated: boolean;
+  bipolar: boolean;
+  children: any;
+  className: string;
+  color: string;
+  fillValue: number;
+  format: string;
+  maxValue: number;
+  minValue: number;
+  onChange: (value: number) => void;
+  onDrag: (value: number) => void;
+  ranges: Record<string, number[]>;
+  size: number;
+  step: number;
+  stepPixelSize: number;
+  style: Partial<HTMLDivElement['style']>;
+  suppressFlicker: boolean;
+  unclamped: boolean;
+  unit: string;
+  value: number;
+}>;
+
+export const Knob = (props: Props) => {
   const {
     // Draggable props (passthrough)
     animated,
@@ -41,6 +58,7 @@ export const Knob = (props) => {
     children,
     ...rest
   } = props;
+
   return (
     <DraggableControl
       dragMatrix={[0, -1]}

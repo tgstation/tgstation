@@ -40,7 +40,7 @@ const dataToPolylinePoints = (data) => {
   return points;
 };
 
-class LineChart extends Component {
+class Chart extends Component {
   constructor(props) {
     super(props);
     this.ref = createRef();
@@ -117,11 +117,4 @@ class LineChart extends Component {
   }
 }
 
-LineChart.defaultHooks = pureComponentHooks;
-
-const Stub = (props) => null;
-
-// IE8: No inline svg support
-export const Chart = {
-  Line: Byond.IS_LTE_IE8 ? Stub : LineChart,
-};
+Chart.defaultHooks = pureComponentHooks;

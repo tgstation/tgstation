@@ -10,11 +10,7 @@ import { Box, unit } from './Box';
 import { Divider } from './Divider';
 import { Tooltip } from './Tooltip';
 
-type LabeledListProps = {
-  children?: any;
-};
-
-export const LabeledList = (props: LabeledListProps) => {
+export const LabeledList = (props: { children?: any }) => {
   const { children } = props;
   return <table className="LabeledList">{children}</table>;
 };
@@ -22,33 +18,31 @@ export const LabeledList = (props: LabeledListProps) => {
 LabeledList.defaultHooks = pureComponentHooks;
 
 type LabeledListItemProps = Partial<{
-  className: string | BooleanLike;
-  label: string | InfernoNode | BooleanLike;
-  labelColor: string | BooleanLike;
-  labelWrap: boolean;
-  color: string | BooleanLike;
-  textAlign: string | BooleanLike;
   buttons: InfernoNode;
-  /** @deprecated */
-  content: any;
   children: InfernoNode;
-  verticalAlign: string;
+  className: string | BooleanLike;
+  color: string;
+  key: string | number;
+  label: string | InfernoNode | BooleanLike;
+  labelColor: string;
+  labelWrap: boolean;
+  textAlign: string;
   tooltip: string;
+  verticalAlign: string;
 }>;
 
 const LabeledListItem = (props: LabeledListItemProps) => {
   const {
+    buttons,
+    children,
     className,
+    color,
     label,
     labelColor = 'label',
     labelWrap,
-    color,
     textAlign,
-    buttons,
-    content,
-    children,
-    verticalAlign = 'baseline',
     tooltip,
+    verticalAlign = 'baseline',
   } = props;
 
   let innerLabel;
@@ -95,7 +89,6 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         className={classes(['LabeledList__cell', 'LabeledList__content'])}
         colSpan={buttons ? undefined : 2}
         verticalAlign={verticalAlign}>
-        {content}
         {children}
       </Box>
       {buttons && (

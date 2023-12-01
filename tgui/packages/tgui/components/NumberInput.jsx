@@ -165,14 +165,15 @@ export class NumberInput extends Component {
       displayValue = intermediateValue;
     }
 
-    // prettier-ignore
     const contentElement = (
       <div className="NumberInput__content" unselectable={Byond.IS_LTE_IE8}>
-        {
-          (animated && !dragging && !suppressingFlicker) ?
-            (<AnimatedNumber value={displayValue} format={format} />) :
-            (format ? format(displayValue) : displayValue)
-        }
+        {animated && !dragging && !suppressingFlicker ? (
+          <AnimatedNumber value={displayValue} format={format} />
+        ) : format ? (
+          format(displayValue)
+        ) : (
+          displayValue
+        )}
 
         {unit ? ' ' + unit : ''}
       </div>
@@ -194,10 +195,12 @@ export class NumberInput extends Component {
           <div
             className="NumberInput__bar"
             style={{
-              // prettier-ignore
-              height: clamp(
-                (displayValue - minValue) / (maxValue - minValue) * 100,
-                0, 100) + '%',
+              height:
+                clamp(
+                  ((displayValue - minValue) / (maxValue - minValue)) * 100,
+                  0,
+                  100
+                ) + '%',
             }}
           />
         </div>
@@ -236,7 +239,6 @@ export class NumberInput extends Component {
           }}
           onKeyDown={(e) => {
             if (e.keyCode === 13) {
-              // prettier-ignore
               const value = clamp(
                 parseFloat(e.target.value),
                 minValue,

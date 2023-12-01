@@ -11,25 +11,26 @@ export interface DropdownEntry {
   value: string | number | Enumerator;
 }
 
-type DropdownUniqueProps = {
-  options: string[] | DropdownEntry[];
-  icon?: string;
-  iconRotation?: number;
-  clipSelectedText?: boolean;
-  width?: string;
-  menuWidth?: string;
-  over?: boolean;
-  color?: string;
-  nochevron?: boolean;
-  displayText?: string | number | InfernoNode;
-  onClick?: (event) => void;
+type Props = { options: string[] | DropdownEntry[] } & Partial<{
+  buttons: boolean;
+  clipSelectedText: boolean;
+  color: string;
+  disabled: boolean;
+  displayText: string | number | InfernoNode;
+  dropdownStyle: any;
+  icon: string;
+  iconRotation: number;
+  iconSpin: boolean;
+  menuWidth: string;
+  nochevron: boolean;
+  onClick: (event) => void;
+  onSelected: (selected: any) => void;
+  over: boolean;
   // you freaks really are just doing anything with this shit
-  selected?: any;
-  onSelected?: (selected: any) => void;
-  buttons?: boolean;
-};
-
-export type DropdownProps = BoxProps & DropdownUniqueProps;
+  selected: any;
+  width: string;
+}> &
+  BoxProps;
 
 const DEFAULT_OPTIONS = {
   placement: 'left-start',
@@ -52,7 +53,7 @@ const NULL_RECT: DOMRect = {
   toJSON: () => null,
 } as const;
 
-type DropdownState = {
+type State = {
   selected?: string;
   open: boolean;
 };
@@ -60,7 +61,7 @@ type DropdownState = {
 const DROPDOWN_DEFAULT_CLASSNAMES = 'Layout Dropdown__menu';
 const DROPDOWN_SCROLL_CLASSNAMES = 'Layout Dropdown__menu-scroll';
 
-export class Dropdown extends Component<DropdownProps, DropdownState> {
+export class Dropdown extends Component<Props, State> {
   static renderedMenu: HTMLDivElement | undefined;
   static singletonPopper: ReturnType<typeof createPopper> | undefined;
   static currentOpenMenu: Element | undefined;
@@ -69,7 +70,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       Dropdown.currentOpenMenu?.getBoundingClientRect() ?? NULL_RECT,
   };
   menuContents: any;
-  state: DropdownState = {
+  state: State = {
     open: false,
     selected: this.props.selected,
   };

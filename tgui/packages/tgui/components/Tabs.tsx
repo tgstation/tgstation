@@ -5,11 +5,32 @@
  */
 
 import { canRender, classes } from 'common/react';
+import { InfernoNode } from 'inferno';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 
-export const Tabs = (props) => {
+type Props = Partial<{
+  children: InfernoNode;
+  className: string;
+  fill: boolean;
+  fluid: boolean;
+  vertical: boolean;
+}>;
+
+type TabProps = Partial<{
+  children: InfernoNode;
+  className: string;
+  color: string;
+  icon: string;
+  leftSlot: InfernoNode;
+  onClick: () => void;
+  rightSlot: InfernoNode;
+  selected: boolean;
+}>;
+
+export const Tabs = (props: Props) => {
   const { className, vertical, fill, fluid, children, ...rest } = props;
+
   return (
     <div
       className={classes([
@@ -26,7 +47,7 @@ export const Tabs = (props) => {
   );
 };
 
-const Tab = (props) => {
+const Tab = (props: TabProps) => {
   const {
     className,
     selected,
@@ -37,6 +58,7 @@ const Tab = (props) => {
     children,
     ...rest
   } = props;
+
   return (
     <div
       className={classes([
@@ -45,7 +67,7 @@ const Tab = (props) => {
         'Tab--color--' + color,
         selected && 'Tab--selected',
         className,
-        ...computeBoxClassName(rest),
+        computeBoxClassName(rest),
       ])}
       {...computeBoxProps(rest)}>
       {(canRender(leftSlot) && <div className="Tab__left">{leftSlot}</div>) ||

@@ -8,13 +8,15 @@ import { classes } from 'common/react';
 import { RefObject } from 'inferno';
 import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
 
-type StackProps = FlexProps & {
-  vertical?: boolean;
-  fill?: boolean;
-};
+type StackProps = Partial<{
+  vertical: boolean;
+  fill: boolean;
+}> &
+  FlexProps;
 
 export const Stack = (props: StackProps) => {
   const { className, vertical, fill, ...rest } = props;
+
   return (
     <div
       className={classes([
@@ -32,12 +34,14 @@ export const Stack = (props: StackProps) => {
   );
 };
 
-type StackItemProps = FlexProps & {
+type StackItemProps = Partial<{
   innerRef?: RefObject<HTMLDivElement>;
-};
+}> &
+  FlexItemProps;
 
 const StackItem = (props: StackItemProps) => {
   const { className, innerRef, ...rest } = props;
+
   return (
     <div
       className={classes([
@@ -53,12 +57,14 @@ const StackItem = (props: StackItemProps) => {
 
 Stack.Item = StackItem;
 
-type StackDividerProps = FlexItemProps & {
-  hidden?: boolean;
-};
+type StackDividerProps = Partial<{
+  hidden: boolean;
+}> &
+  FlexItemProps;
 
 const StackDivider = (props: StackDividerProps) => {
   const { className, hidden, ...rest } = props;
+
   return (
     <div
       className={classes([
