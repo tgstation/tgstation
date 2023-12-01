@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Agent IDs once more trick Beepsky into treating you more leniently."
+  - rscadd: "Prisoner IDs make Beepsky treat you somewhat more suspiciously, as do Syndicate IDs. Wearing a Centcomm ID means that Beepsky is aware that you are above the law."
+  - rscadd: "Player-controlled security bots can view someone's assessed threat level by examining them."
