@@ -18,7 +18,9 @@ SUBSYSTEM_DEF(autotransfer)
 	if(length(GLOB.player_list) < 25)
 		return
 	if(world.time > targettime)
-		if(called)
+		if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+			return
+		if(called || SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_DOCKED)
 			return
 		SSvote.initiate_vote(/datum/vote/shuttle_call, "automatic shuttle vote")
 		targettime = targettime + 20 MINUTES
@@ -31,8 +33,9 @@ SUBSYSTEM_DEF(autotransfer)
 	. = ..()
 	if(!.)
 		return FALSE
-		
-	if(!SSticker.HasRoundStarted() || SSautotransfer.called)
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		return FALSE
+	if(!SSticker.HasRoundStarted() || SSautotransfer.called || SSshuttle.emergency.mode == SHUTTLE_CALL)
 		return FALSE
 	if(length(GLOB.player_list) < 25)
 		return FALSE
@@ -43,6 +46,17 @@ SUBSYSTEM_DEF(autotransfer)
 			return FALSE
 
 	message = initial(message)
+
+/datum/vote/shuttle_call/create_vote(mob/vote_creator)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		return FALSE
+	if(!SSticker.HasRoundStarted() || SSautotransfer.called || SSshuttle.emergency.mode == SHUTTLE_CALL)
+		return FALSE
+	if(length(GLOB.player_list) < 25)
+		return FALSE
 
 /datum/vote/shuttle_call/New()
 	. = ..()
