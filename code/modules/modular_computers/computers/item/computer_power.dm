@@ -10,7 +10,7 @@
 	if(!internal_cell)
 		return FALSE
 	if(!internal_cell.charge && (isnull(active_program) || !(active_program.program_flags & PROGRAM_RUNS_WITHOUT_POWER)))
-		power_failure()
+		active_program.event_powerfailure()
 		for(var/datum/computer_file/program/programs as anything in stored_files)
 			if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && open_program(program = programs, open_ui = FALSE))
 				return TRUE
@@ -54,6 +54,7 @@
 
 	if(use_power(power_usage * seconds_per_tick))
 		return TRUE
+	power_failure()
 	return FALSE
 
 ///Returns TRUE if the PC should not be using any power, FALSE otherwise.
