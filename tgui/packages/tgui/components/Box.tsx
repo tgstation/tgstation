@@ -19,7 +19,9 @@ export type BoxProps = Partial<CommonProps & MappedProps & AsType> & {
 type CommonProps = {
   className: string | boolean;
   key: string | number;
+  id: string;
   onClick: (event?) => void;
+  onmouseover: (event?) => void;
 };
 
 type MappedProps = {

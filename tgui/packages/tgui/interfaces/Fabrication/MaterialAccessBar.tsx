@@ -96,7 +96,7 @@ const MaterialCounter = (props: MaterialCounterProps) => {
         hovering && 'MaterialDock--active',
         sheets < 1 && 'MaterialDock--disabled',
       ])}>
-      <Stack vertial direction={'column-reverse'}>
+      <Stack vertical direction={'column-reverse'}>
         <Flex
           direction="column"
           textAlign="center"

@@ -419,7 +419,7 @@ const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
               )}
             </Stack.Item>
             <Stack.Item>
-              <Stack wrap="wrap" width={10}>
+              <Stack wrap width={10}>
                 {cargo.map((cargo_element) => (
                   <EquipmentBox
                     drone={props.drone}

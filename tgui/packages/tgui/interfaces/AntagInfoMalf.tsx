@@ -120,7 +120,7 @@ const CodewordsSection = (props) => {
   const { data } = useBackend<Info>();
   const { has_codewords, phrases, responses } = data;
   return (
-    <Section title="Codewords" mb={!has_codewords && -1}>
+    <Section title="Codewords" mb={!has_codewords ? -1 : 0}>
       <Stack fill>
         {(!has_codewords && (
           <BlockQuote>
