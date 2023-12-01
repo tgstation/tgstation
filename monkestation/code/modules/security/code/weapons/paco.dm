@@ -46,8 +46,8 @@
 		if(do_after(user, 6 SECONDS))
 			playsound(src, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
 			balloon_alert_to_viewers("[user] rips the stripe right off the Paco!") //The implication that the stripe is just a piece of red tape is very funny
-			rack(src)
 			eject_magazine(user) //You don't want to tamper with a loaded gun, do you?
+			rack(src)
 			var/stripeless = new /obj/item/gun/ballistic/automatic/pistol/paco/stripeless
 			remove_item_from_storage(user)
 			qdel(src)
