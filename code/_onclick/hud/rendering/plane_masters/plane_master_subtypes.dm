@@ -8,14 +8,30 @@
 	render_relay_planes = list()
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
 	allows_offsetting = FALSE
-	start_hidden = TRUE
 	// We mark as multiz_scaled FALSE so transforms don't effect us, and we draw to the planes below us as if they were us.
 	// This is safe because we will ALWAYS be on the top z layer, so it DON'T MATTER
 	multiz_scaled = FALSE
 
-/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+/atom/movable/screen/plane_master/field_of_vision_blocker/show_to(mob/mymob)
 	. = ..()
-	mirror_parent_hidden()
+	if(!. || !mymob)
+		return .
+	RegisterSignal(mymob, SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_enabled), override = TRUE)
+	RegisterSignal(mymob, SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_disabled), override = TRUE)
+	if(HAS_TRAIT(mymob, TRAIT_FOV_APPLIED))
+		fov_enabled(mymob)
+	else
+		fov_disabled(mymob)
+
+/atom/movable/screen/plane_master/field_of_vision_blocker/proc/fov_enabled(mob/source)
+	SIGNAL_HANDLER
+	if(force_hidden == FALSE)
+		return
+	unhide_plane(source)
+
+/atom/movable/screen/plane_master/field_of_vision_blocker/proc/fov_disabled(mob/source)
+	SIGNAL_HANDLER
+	hide_plane(source)
 
 /atom/movable/screen/plane_master/clickcatcher
 	name = "Click Catcher"
