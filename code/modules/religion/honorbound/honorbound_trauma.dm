@@ -57,18 +57,32 @@
 		return
 	if(!honorbound.combat_mode && (HAS_TRAIT(clicked_mob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
 		return
-	check_visible_guilt(clicked_mob)
+	if(!(clicked_mob in guilty))
+		check_visible_guilt(clicked_mob)
 	if(!is_honorable(honorbound, clicked_mob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
 /// Checks a mob for any obvious signs of evil, and applies a guilty reason for each.
 /datum/brain_trauma/special/honorbound/proc/check_visible_guilt(mob/living/attacked_mob)
+	//will most likely just hit nuke ops but good catch-all. WON'T hit traitors
 	if(ROLE_SYNDICATE in attacked_mob.faction)
-		// as a reminder, ROLE_SYNDICATE is given to obvious and outward syndicates like nuke ops and mobs,
-		// NOT given to traitors. this should be just fine
 		guilty(attacked_mob, "for their misaligned association with the Syndicate!")
+	//not an antag datum check so it applies to wizard minions as well
+	if(ROLE_WIZARD in attacked_mob.faction)
+		guilty(attacked_mob, "for blasphemous magicks!")
 	if(HAS_TRAIT(attacked_mob, TRAIT_CULT_HALO))
 		guilty(attacked_mob, "for blasphemous worship!")
+	if(attacked_mob.mind)
+		var/datum/mind/guilty_conscience = attacked_mob.mind
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/abductor))
+			guilty(attacked_mob, "for their blatant surgical malice...")
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/nightmare))
+			guilty(attacked_mob, "for being a light-consuming nightmare!")
+		if(guilty_conscience.has_antag_datum(/datum/antagonist/ninja))
+			guilty(attacked_mob, "for their misaligned association with the Spider Clan!")
+		var/datum/antagonist/heretic/heretic_datum = guilty_conscience.has_antag_datum(/datum/antagonist/heretic)
+		if(heretic_datum?.ascended)
+			guilty(attacked_mob, "for blasphemous, heretical, out of control worship!")
 
 /**
  * Called by hooked signals whenever someone attacks the person with this trauma
