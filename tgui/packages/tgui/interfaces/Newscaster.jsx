@@ -17,12 +17,11 @@ const CENSOR_MESSAGE =
   'This channel has been deemed as threatening to \
   the welfare of the station, and marked with a Nanotrasen D-Notice.';
 
-export const Newscaster = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Newscaster = (props) => {
+  const { act, data } = useBackend();
   const NEWSCASTER_SCREEN = 1;
   const BOUNTYBOARD_SCREEN = 2;
   const [screenmode, setScreenmode] = useSharedState(
-    context,
     'tab_main',
     NEWSCASTER_SCREEN
   );
@@ -58,9 +57,9 @@ export const Newscaster = (props, context) => {
 };
 
 /** The modal menu that contains the prompts to making new channels. */
-const NewscasterChannelCreation = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [lockedmode, setLockedmode] = useLocalState(context, 'lockedmode', 1);
+const NewscasterChannelCreation = (props) => {
+  const { act, data } = useBackend();
+  const [lockedmode, setLockedmode] = useLocalState('lockedmode', 1);
   const { creating_channel, name, desc } = data;
   if (!creating_channel) {
     return null;
@@ -149,8 +148,8 @@ const NewscasterChannelCreation = (props, context) => {
 };
 
 /** The modal menu that contains the prompts to making new comments. */
-const NewscasterCommentCreation = (props, context) => {
-  const { act, data } = useBackend(context);
+const NewscasterCommentCreation = (props) => {
+  const { act, data } = useBackend();
   const { creating_comment, viewing_message } = data;
   if (!creating_comment) {
     return null;
@@ -202,8 +201,8 @@ const NewscasterCommentCreation = (props, context) => {
   );
 };
 
-const NewscasterWantedScreen = (props, context) => {
-  const { act, data } = useBackend(context);
+const NewscasterWantedScreen = (props) => {
+  const { act, data } = useBackend();
   const {
     viewing_wanted,
     photo_data,
@@ -305,8 +304,8 @@ const NewscasterWantedScreen = (props, context) => {
   );
 };
 
-const NewscasterContent = (props, context) => {
-  const { act, data } = useBackend(context);
+const NewscasterContent = (props) => {
+  const { act, data } = useBackend();
   const { current_channel = {} } = data;
   return (
     <Stack fill vertical>
@@ -339,8 +338,8 @@ const NewscasterContent = (props, context) => {
 };
 
 /** The Channel Box is the basic channel information where buttons live.*/
-const NewscasterChannelBox = (props, context) => {
-  const { act, data } = useBackend(context);
+const NewscasterChannelBox = (props) => {
+  const { act, data } = useBackend();
   const {
     channelName,
     channelDesc,
@@ -424,8 +423,8 @@ const NewscasterChannelBox = (props, context) => {
 };
 
 /** Channel select is the left-hand menu where all the channels are listed. */
-const NewscasterChannelSelector = (props, context) => {
-  const { act, data } = useBackend(context);
+const NewscasterChannelSelector = (props) => {
+  const { act, data } = useBackend();
   const { channels = [], viewing_channel, wanted = [] } = data;
   return (
     <Section minHeight="100%" width={window.innerWidth - 410 + 'px'}>
@@ -488,8 +487,8 @@ const processedText = (value) => {
 };
 
 /** This is where the channels comments get spangled out (tm) */
-const NewscasterChannelMessages = (props, context) => {
-  const { act, data } = useBackend(context);
+const NewscasterChannelMessages = (props) => {
+  const { act, data } = useBackend();
   const {
     messages = [],
     viewing_channel,

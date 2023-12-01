@@ -15,7 +15,6 @@
 		/datum/modular_mob_segment/hivebots_strong
 	)
 	reward_points = BITRUNNER_REWARD_LOW
-	safehouse_path = /datum/map_template/safehouse/shuttle
 
 // ID Trims
 /datum/id_trim/factory

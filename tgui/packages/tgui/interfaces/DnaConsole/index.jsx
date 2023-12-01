@@ -7,8 +7,8 @@ import { DnaConsoleStorage } from './DnaConsoleStorage';
 import { DnaScanner } from './DnaScanner';
 import { CONSOLE_MODE_ENZYMES, CONSOLE_MODE_FEATURES, CONSOLE_MODE_SEQUENCER, CONSOLE_MODE_STORAGE, STORAGE_MODE_CONSOLE } from './constants';
 
-export const DnaConsole = (props, context) => {
-  const { data } = useBackend(context);
+export const DnaConsole = (props) => {
+  const { data } = useBackend();
   const { isPulsing, timeToPulse, subjectUNI, subjectUF } = data;
   const { consoleMode } = data.view;
 
@@ -54,8 +54,8 @@ export const DnaConsole = (props, context) => {
   );
 };
 
-const DnaConsoleCommands = (props, context) => {
-  const { data, act } = useBackend(context);
+const DnaConsoleCommands = (props) => {
+  const { data, act } = useBackend();
   const { hasDisk, isInjectorReady, injectorSeconds } = data;
   const { consoleMode } = data.view;
 

@@ -71,7 +71,7 @@ export type MaterialIconProps = {
  * A 32x32 material icon. Animates between different stack sizes of the given
  * material.
  */
-export const MaterialIcon = (props: MaterialIconProps, context) => {
+export const MaterialIcon = (props: MaterialIconProps) => {
   const { materialName, sheets = 0 } = props;
   const icons = MATERIAL_ICONS[materialName];
 

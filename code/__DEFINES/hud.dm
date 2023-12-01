@@ -123,7 +123,7 @@
 
 //Drones
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"
-#define ui_drone_pull "CENTER+2:2,SOUTH:5"
+#define ui_drone_pull "CENTER+1.5:2,SOUTH:5"
 #define ui_drone_storage "CENTER-2:14,SOUTH:5"
 #define ui_drone_head "CENTER-3:14,SOUTH:5"
 

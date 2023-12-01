@@ -12,8 +12,8 @@ type ThemeInfo = {
   theme_ref: string;
 };
 
-export const NtosThemeConfigure = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const NtosThemeConfigure = (props) => {
+  const { act, data } = useBackend<Data>();
   const { PC_device_theme, themes } = data;
   return (
     <NtosWindow width={400} height={600}>

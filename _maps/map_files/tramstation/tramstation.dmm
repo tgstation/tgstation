@@ -32242,7 +32242,7 @@
 	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off.";
 	name = "cat bed"
 	},
-/mob/living/simple_animal/pet/cat/jerry,
+/mob/living/basic/pet/cat/jerry,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
 "kxF" = (
@@ -36404,6 +36404,7 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/decal/cleanable/oil/streak,
 /obj/effect/landmark/start/bitrunner,
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/bitrunning/den)
 "lQT" = (
@@ -51712,7 +51713,7 @@
 /obj/structure/bed/dogbed/runtime,
 /obj/structure/sign/clock/directional/north,
 /obj/machinery/light/cold/directional/north,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "rsz" = (

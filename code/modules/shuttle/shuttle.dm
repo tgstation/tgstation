@@ -820,12 +820,10 @@
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	var/list/ripple_turfs = list()
-
-	for(var/i in 1 to L0.len)
+	var/stop = min(L0.len, L1.len)
+	for(var/i in 1 to stop)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
-		if(!T0 || !T1)
-			continue  // out of bounds
 		if(!istype(T0.loc, area_type) || istype(T0.loc, /area/shuttle/transit))
 			continue  // not part of the shuttle
 		ripple_turfs += T1

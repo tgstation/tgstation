@@ -12,15 +12,11 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props, context) => {
-  const [grow, setGrow] = useLocalState(context, 'fs_grow', 1);
-  const [direction, setDirection] = useLocalState(
-    context,
-    'fs_direction',
-    'column'
-  );
-  const [fill, setFill] = useLocalState(context, 'fs_fill', true);
-  const [hasTitle, setHasTitle] = useLocalState(context, 'fs_title', true);
+const Story = (props) => {
+  const [grow, setGrow] = useLocalState('fs_grow', 1);
+  const [direction, setDirection] = useLocalState('fs_direction', 'column');
+  const [fill, setFill] = useLocalState('fs_fill', true);
+  const [hasTitle, setHasTitle] = useLocalState('fs_title', true);
   return (
     <Flex height="100%" direction="column">
       <Flex.Item mb={1}>

@@ -3,9 +3,9 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, Flex, NoticeBox, Section, Input } from '../components';
 import { Window } from '../layouts';
 
-export const PortraitPicker = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
+export const PortraitPicker = (props) => {
+  const { act, data } = useBackend();
+  const [listIndex, setListIndex] = useLocalState('listIndex', 0);
   const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex]['title'];
