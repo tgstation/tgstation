@@ -288,7 +288,6 @@
 
 /obj/item/shield/energy/IsReflect()
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && prob(block_chance)
-		return TRUE
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
