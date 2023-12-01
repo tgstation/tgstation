@@ -42,7 +42,7 @@ export const NtosWindow = (props, context) => {
             </Box>
             <Box inline italic mr={2} opacity={0.33}>
               {(PC_device_theme === 'syndicate' && 'Syndix') || 'NtOS'}
-              {!!PC_lowpower_mode && '- RUNNING ON LOW POWER MODE'}
+              {!!PC_lowpower_mode && ' - RUNNING ON LOW POWER MODE'}
             </Box>
           </div>
           <div className="NtosHeader__right">

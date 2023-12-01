@@ -47,7 +47,7 @@
 	var/max_idle_programs = 2
 
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
-	var/hardware_flag = NONE
+	var/hardware_flag = PROGRAM_ALL
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
 
 	///The theme, used for the main menu and file browser apps.
@@ -582,7 +582,7 @@
 		active_program = program
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
-		if(user && open_ui)
+		if(open_ui)
 			update_tablet_open_uis(user)
 		update_appearance(UPDATE_ICON)
 		return TRUE
@@ -605,7 +605,7 @@
 
 	active_program = program
 	program.alert_pending = FALSE
-	if(open_ui && user)
+	if(open_ui)
 		update_tablet_open_uis(user)
 	update_appearance(UPDATE_ICON)
 	return TRUE
@@ -905,3 +905,14 @@
 	inserted_pai = null
 	update_appearance(UPDATE_ICON)
 	return TRUE
+
+/**
+ * Debug ModPC
+ * Used to spawn all programs for Create and Destroy unit test.
+ */
+/obj/item/modular_computer/debug
+	max_capacity = INFINITY
+
+/obj/item/modular_computer/debug/Initialize(mapload)
+	starting_programs += subtypesof(/datum/computer_file/program)
+	return ..()

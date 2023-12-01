@@ -10,9 +10,9 @@
 	if(!internal_cell)
 		return FALSE
 	if(!internal_cell.charge && (isnull(active_program) || !(active_program.program_flags & PROGRAM_RUNS_WITHOUT_POWER)))
-		active_program.event_powerfailure()
+		close_all_programs()
 		for(var/datum/computer_file/program/programs as anything in stored_files)
-			if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && open_program(program = programs, open_ui = FALSE))
+			if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && open_program(program = programs))
 				return TRUE
 		return FALSE
 
@@ -60,7 +60,7 @@
 ///Returns TRUE if the PC should not be using any power, FALSE otherwise.
 ///Checks to see if the current app allows to be ran without power, if so we'll run with it.
 /obj/item/modular_computer/proc/check_power_override()
-	return (internal_cell && !internal_cell.charge && (active_program.program_flags & PROGRAM_RUNS_WITHOUT_POWER))
+	return (!internal_cell?.charge && (active_program?.program_flags & PROGRAM_RUNS_WITHOUT_POWER))
 
 //Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
 /obj/item/modular_computer/pda/silicon/check_power_override()

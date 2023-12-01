@@ -191,7 +191,7 @@
 	if(src == computer.active_program)
 		computer.active_program = null
 		if(computer.enabled)
-			computer.update_tablet_open_uis(usr)
+			computer.update_tablet_open_uis(user)
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
 
