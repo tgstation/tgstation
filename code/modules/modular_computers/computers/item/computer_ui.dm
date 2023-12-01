@@ -135,13 +135,15 @@
 
 	switch(action)
 		if("PC_exit")
-			active_program.kill_program(usr)
+			//you can't close apps in emergency mode.
+			if(internal_cell.charge)
+				active_program.kill_program(usr)
 			return TRUE
 		if("PC_shutdown")
 			shutdown_computer()
 			return TRUE
 		if("PC_minimize")
-			if(!active_program)
+			if(!active_program || !internal_cell.charge)
 				return
 			active_program.background_program()
 			return TRUE

@@ -524,8 +524,9 @@
 	data["PC_device_theme"] = device_theme
 
 	if(internal_cell)
+		data["PC_lowpower_mode"] = !internal_cell.charge
 		switch(internal_cell.percent())
-			if(80 to 200) // 100 should be maximal but just in case..
+			if(80 to INFINITY)
 				data["PC_batteryicon"] = "batt_100.gif"
 			if(60 to 80)
 				data["PC_batteryicon"] = "batt_80.gif"
@@ -539,6 +540,7 @@
 				data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
 	else
+		data["PC_lowpower_mode"] = FALSE
 		data["PC_batteryicon"] = null
 		data["PC_batterypercent"] = null
 
@@ -571,7 +573,8 @@
 		CRASH("tried to open program that does not belong to this computer")
 
 	if(!program || !istype(program)) // Program not found or it's not executable program.
-		to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+		if(user)
+			to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
 		return FALSE
 
 	// The program is already running. Resume it.
@@ -579,20 +582,22 @@
 		active_program = program
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
-		if(open_ui)
+		if(user && open_ui)
 			update_tablet_open_uis(user)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
-	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
+	if(!program.is_supported_by_hardware(hardware_flag, loud = TRUE, user = user))
 		return FALSE
 
 	if(idle_threads.len > max_idle_programs)
-		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
+		if(user)
+			to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 		return FALSE
 
 	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
-		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+		if(user)
+			to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
 	if(!program.on_start(user))
@@ -600,7 +605,7 @@
 
 	active_program = program
 	program.alert_pending = FALSE
-	if(open_ui)
+	if(open_ui && user)
 		update_tablet_open_uis(user)
 	update_appearance(UPDATE_ICON)
 	return TRUE
@@ -677,7 +682,7 @@
  * It is separated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight(mob/user)
-	if(!has_light)
+	if(!has_light || !internal_cell || !internal_cell.charge)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		balloon_alert(user, "disrupted!")

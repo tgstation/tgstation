@@ -135,15 +135,8 @@
 	data["emagged"] = (computer.obj_flags & EMAGGED)
 
 	var/list/repo = SSmodular_computers.available_antag_software | SSmodular_computers.available_station_software
-	var/static/list/program_categories = list()
-	var/should_build_categories = FALSE
-	if(!length(program_categories))
-		should_build_categories = TRUE
 
 	for(var/datum/computer_file/program/programs as anything in repo)
-		if(should_build_categories)
-			if(!(programs.downloader_category in program_categories))
-				program_categories.Add(programs.downloader_category)
 		data["programs"] += list(list(
 			"icon" = programs.program_icon,
 			"filename" = programs.filename,
@@ -157,7 +150,7 @@
 			"verifiedsource" = !!(programs.program_flags & PROGRAM_ON_NTNET_STORE),
 		))
 
-	data["categories"] = show_categories & program_categories
+	data["categories"] = show_categories
 
 	return data
 

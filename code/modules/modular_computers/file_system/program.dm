@@ -124,11 +124,11 @@
  * access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
  */
 /datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, downloading = FALSE, list/access)
-	if(issilicon(user) && !ispAI(user))
-		return TRUE
-
-	if(isAdminGhostAI(user))
-		return TRUE
+	if(user)
+		if(issilicon(user) && !ispAI(user))
+			return TRUE
+		if(isAdminGhostAI(user))
+			return TRUE
 
 	if(computer && (computer.obj_flags & EMAGGED) && (program_flags & PROGRAM_ON_SYNDINET_STORE || !downloading)) //emagged can run anything on syndinet, and can bypass execution locks, but not download.
 		return TRUE
@@ -147,7 +147,7 @@
 			accesscard = computer.computer_id_slot?.GetID()
 
 		if(!accesscard)
-			if(loud)
+			if(loud && user)
 				to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
 			return FALSE
 		access = accesscard.GetAccess()
@@ -156,7 +156,7 @@
 		if(singular_access in access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
 			return TRUE
 
-	if(loud)
+	if(loud && user)
 		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
 	return FALSE
 

@@ -13,7 +13,8 @@
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
-	program_flags = PROGRAM_HEADER
+	power_cell_use = NONE
+	program_flags = PROGRAM_HEADER | PROGRAM_RUNS_WITHOUT_POWER
 	can_run_on_flags = PROGRAM_PDA
 	ui_header = "ntnrc_idle.gif"
 	tgui_id = "NtosMessenger"
