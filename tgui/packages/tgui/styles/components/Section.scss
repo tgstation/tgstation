@@ -28,21 +28,19 @@ $separator-color: colors.$primary !default;
   position: relative;
   padding: 0.5em;
   border-bottom: base.em(2px) solid $separator-color;
-  display: flex;
-  justify-content: space-between;
 }
 
 .Section__titleText {
   font-size: base.em(14px);
   font-weight: bold;
   color: $title-text-color;
-  flex: 1;
 }
 
 .Section__buttons {
-  display: flex;
-  gap: 0.5em;
-  align-items: center;
+  position: absolute;
+  display: inline-block;
+  right: 0.5em;
+  margin-top: base.em(-1px);
 }
 
 .Section__rest {

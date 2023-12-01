@@ -199,7 +199,7 @@ const stringStyleMap = {
 // Boolean props
 const booleanStyleMap = {
   bold: mapBooleanPropTo('fontWeight', 'bold'),
-  inline: mapBooleanPropTo('display', 'inlineBlock'),
+  inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
   preserveWhitespace: mapBooleanPropTo('whiteSpace', 'preWrap'),
