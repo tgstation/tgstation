@@ -1,29 +1,8 @@
 import { sortBy } from 'common/collections';
-import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, Section, Table, Icon, Stack } from '../components';
+import { Box, Button, Section, Table, Icon } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
-
-type Data = {
-  sensors: CrewSensor[];
-  link_allowed: BooleanLike;
-};
-
-type CrewSensor = {
-  area: string;
-  assignment: string;
-  brutedam: number;
-  burndam: number;
-  can_track: BooleanLike;
-  health: number;
-  ijob: number;
-  life_status: number;
-  name: string;
-  oxydam: number;
-  ref: string;
-  toxdam: number;
-};
 
 const HEALTH_COLOR_BY_LEVEL = [
   '#17d568',
@@ -32,7 +11,7 @@ const HEALTH_COLOR_BY_LEVEL = [
   '#ed5100',
   '#e74c3c',
   '#801308',
-] as const;
+];
 
 const STAT_LIVING = 0;
 const STAT_DEAD = 4;
@@ -64,7 +43,7 @@ const jobToColor = (jobId) => {
   return COLORS.department.other;
 };
 
-const statToIcon = (life_status: number) => {
+const statToIcon = (life_status) => {
   switch (life_status) {
     case STAT_LIVING:
       return 'heart';
@@ -80,12 +59,12 @@ const healthToAttribute = (oxy, tox, burn, brute, attributeList) => {
   return attributeList[level];
 };
 
-const HealthStat = (props: { type: string; value: number }) => {
+const HealthStat = (props) => {
   const { type, value } = props;
   return (
-    <Stack.Item color={COLORS.damageType[type]} textAlign="center" width={2}>
+    <Box inline width={2} color={COLORS.damageType[type]} textAlign="center">
       {value}
-    </Stack.Item>
+    </Box>
   );
 };
 
@@ -102,8 +81,8 @@ export const CrewConsole = () => {
 };
 
 const CrewTable = (props) => {
-  const { act, data } = useBackend<Data>();
-  const sensors = sortBy((s: CrewSensor) => s.ijob)(data.sensors ?? []);
+  const { act, data } = useBackend();
+  const sensors = sortBy((s) => s.ijob)(data.sensors ?? []);
   return (
     <Table>
       <Table.Row>
@@ -129,10 +108,9 @@ const CrewTable = (props) => {
 };
 
 const CrewTableEntry = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useBackend();
   const { link_allowed } = data;
   const { sensor_data } = props;
-
   const {
     name,
     assignment,
@@ -152,7 +130,7 @@ const CrewTableEntry = (props) => {
         {name}
         {assignment !== undefined ? ` (${assignment})` : ''}
       </Table.Cell>
-      <Table.Cell collapsing>
+      <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (
           <Icon
             name={statToIcon(life_status)}
@@ -171,9 +149,9 @@ const CrewTableEntry = (props) => {
           <Icon name="skull" color="#801308" size={1} />
         )}
       </Table.Cell>
-      <Table.Cell collapsing textAlign="center" verticalAlign="top">
+      <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (
-          <Stack>
+          <Box inline>
             <HealthStat type="oxy" value={oxydam} />
             {'/'}
             <HealthStat type="toxin" value={toxdam} />
@@ -181,7 +159,7 @@ const CrewTableEntry = (props) => {
             <HealthStat type="burn" value={burndam} />
             {'/'}
             <HealthStat type="brute" value={brutedam} />
-          </Stack>
+          </Box>
         ) : life_status !== STAT_DEAD ? (
           'Alive'
         ) : (
@@ -189,7 +167,11 @@ const CrewTableEntry = (props) => {
         )}
       </Table.Cell>
       <Table.Cell>
-        {area ?? <Icon name="question" color="#ffffff" size={1} />}
+        {area !== undefined ? (
+          area
+        ) : (
+          <Icon name="question" color="#ffffff" size={1} />
+        )}
       </Table.Cell>
       {!!link_allowed && (
         <Table.Cell collapsing>

@@ -6,7 +6,7 @@
 
 import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
 import { classes } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { CSS_COLORS } from '../constants';
 import { PropsWithChildren } from 'react';
 
@@ -24,6 +24,7 @@ type Props = {
   title: string;
   width: string | number;
 }> &
+  Partial<BoxProps> &
   PropsWithChildren;
 
 export const ProgressBar = (props: Props) => {

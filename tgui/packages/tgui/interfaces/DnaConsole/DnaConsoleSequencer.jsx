@@ -53,7 +53,7 @@ const GeneCycler = (props) => {
 
         return;
       }}
-      onContextMenu={(e) => {
+      oncontextmenu={(e) => {
         e.preventDefault();
 
         act('pulse_gene', {
@@ -106,7 +106,7 @@ const GenomeSequencer = (props) => {
   const pairs = [];
   for (let i = 0; i < buttons.length; i += 2) {
     const pair = (
-      <Stack.Item>
+      <Box key={i} inline m={0.5}>
         {buttons[i]}
         <Box
           mt="-2px"
@@ -116,20 +116,30 @@ const GenomeSequencer = (props) => {
           backgroundColor="label"
         />
         {buttons[i + 1]}
-      </Stack.Item>
+      </Box>
     );
 
     if (i % 8 === 0 && i !== 0) {
-      pairs.push(<Stack.Divider />);
+      pairs.push(
+        <Box
+          key={`${i}_divider`}
+          inline
+          position="relative"
+          top="-17px"
+          left="-1px"
+          width="8px"
+          height="2px"
+          backgroundColor="label"
+        />
+      );
     }
 
     pairs.push(pair);
   }
   return (
     <>
-      <Stack style={{ alignItems: 'center' }}>{pairs}</Stack>
-
-      <Box color="label" mt={2}>
+      <Box m={-0.5}>{pairs}</Box>
+      <Box color="label" mt={1}>
         <b>Tip:</b> Ctrl+Click on the gene to set it to X. Right Click to cycle
         in reverse.
       </Box>

@@ -1,30 +1,12 @@
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section, Stack } from '../components';
+import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
-type Data = {
-  broadcasting: BooleanLike;
-  channels: {
-    [key: string]: number;
-  };
-  command: BooleanLike;
-  freqlock: BooleanLike;
-  frequency: number;
-  headset: BooleanLike;
-  listening: BooleanLike;
-  maxFrequency: number;
-  minFrequency: number;
-  subspace: BooleanLike;
-  subspaceSwitchable: BooleanLike;
-  useCommand: BooleanLike;
-};
-
 export const Radio = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useBackend();
   const {
     freqlock,
     frequency,
@@ -37,17 +19,15 @@ export const Radio = (props) => {
     subspace,
     subspaceSwitchable,
   } = data;
-
   const tunedChannel = RADIO_CHANNELS.find(
     (channel) => channel.freq === frequency
   );
-
-  const channels = map((value: BooleanLike, key: string) => ({
+  const channels = map((value, key) => ({
     name: key,
     status: !!value,
   }))(data.channels);
   // Calculate window height
-  let height = 109;
+  let height = 106;
   if (subspace) {
     if (channels.length > 0) {
       height += channels.length * 21 + 6;
@@ -55,43 +35,38 @@ export const Radio = (props) => {
       height += 24;
     }
   }
-
   return (
     <Window width={360} height={height}>
       <Window.Content>
-        <Section fill>
+        <Section>
           <LabeledList>
             <LabeledList.Item label="Frequency">
-              <Stack align="center">
-                <Stack.Item>
-                  {(freqlock && (
-                    <Box inline color="light-gray">
-                      {toFixed(frequency / 10, 1) + ' kHz'}
-                    </Box>
-                  )) || (
-                    <NumberInput
-                      animate
-                      unit="kHz"
-                      step={0.2}
-                      stepPixelSize={10}
-                      minValue={minFrequency / 10}
-                      maxValue={maxFrequency / 10}
-                      value={frequency / 10}
-                      format={(value) => toFixed(value, 1)}
-                      onDrag={(e, value) =>
-                        act('frequency', {
-                          adjust: value - frequency / 10,
-                        })
-                      }
-                    />
-                  )}
-                </Stack.Item>
-                <Stack.Item>
-                  {tunedChannel && (
-                    <Box color={tunedChannel.color}>[{tunedChannel.name}]</Box>
-                  )}
-                </Stack.Item>
-              </Stack>
+              {(freqlock && (
+                <Box inline color="light-gray">
+                  {toFixed(frequency / 10, 1) + ' kHz'}
+                </Box>
+              )) || (
+                <NumberInput
+                  animate
+                  unit="kHz"
+                  step={0.2}
+                  stepPixelSize={10}
+                  minValue={minFrequency / 10}
+                  maxValue={maxFrequency / 10}
+                  value={frequency / 10}
+                  format={(value) => toFixed(value, 1)}
+                  onDrag={(e, value) =>
+                    act('frequency', {
+                      adjust: value - frequency / 10,
+                    })
+                  }
+                />
+              )}
+              {tunedChannel && (
+                <Box inline color={tunedChannel.color} ml={2}>
+                  [{tunedChannel.name}]
+                </Box>
+              )}
             </LabeledList.Item>
             <LabeledList.Item label="Audio">
               <Button
