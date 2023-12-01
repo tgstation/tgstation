@@ -228,7 +228,7 @@
 	return ..()
 
 /datum/memory/key/message_server_key/get_names()
-	return list("The message monitor key should be [decrypt_key]. Keep it a secret from the clown.")
+	return list("The daily message server key is [decrypt_key]. Keep it a secret from the clown.")
 
 /datum/memory/key/message_server_key/get_starts()
 	return list(
