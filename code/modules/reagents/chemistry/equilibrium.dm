@@ -96,7 +96,7 @@
 
 	//Make sure we have the right multipler for on_reaction()
 	for(var/single_reagent in reaction.required_reagents)
-		multiplier = min(multiplier, round((holder.get_reagent_amount(single_reagent) / reaction.required_reagents[single_reagent]), CHEMICAL_QUANTISATION_LEVEL))
+		multiplier = min(multiplier, holder.get_reagent_amount(single_reagent) / reaction.required_reagents[single_reagent])
 	if(!multiplier)
 		return FALSE
 
