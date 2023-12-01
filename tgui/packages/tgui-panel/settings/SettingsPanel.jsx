@@ -6,7 +6,7 @@
 
 import { toFixed } from 'common/math';
 import { useLocalState } from 'tgui/backend';
-import { useDispatch, useSelector } from 'common/redux';
+import { useDispatch, useSelector } from 'tgui/backend';
 import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, NumberInput, Section, Stack, Tabs, TextArea } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
@@ -15,9 +15,9 @@ import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlight
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
 
-export const SettingsPanel = (props, context) => {
-  const activeTab = useSelector(context, selectActiveTab);
-  const dispatch = useDispatch(context);
+export const SettingsPanel = (props) => {
+  const activeTab = useSelector(selectActiveTab);
+  const dispatch = useDispatch();
   return (
     <Stack fill>
       <Stack.Item>
@@ -49,13 +49,11 @@ export const SettingsPanel = (props, context) => {
   );
 };
 
-export const SettingsGeneral = (props, context) => {
-  const { theme, fontFamily, fontSize, lineHeight } = useSelector(
-    context,
-    selectSettings
-  );
-  const dispatch = useDispatch(context);
-  const [freeFont, setFreeFont] = useLocalState(context, 'freeFont', false);
+export const SettingsGeneral = (props) => {
+  const { theme, fontFamily, fontSize, lineHeight } =
+    useSelector(selectSettings);
+  const dispatch = useDispatch();
+  const [freeFont, setFreeFont] = useLocalState('freeFont', false);
   return (
     <Section>
       <LabeledList>
@@ -159,9 +157,9 @@ export const SettingsGeneral = (props, context) => {
   );
 };
 
-const TextHighlightSettings = (props, context) => {
-  const highlightSettings = useSelector(context, selectHighlightSettings);
-  const dispatch = useDispatch(context);
+const TextHighlightSettings = (props) => {
+  const highlightSettings = useSelector(selectHighlightSettings);
+  const dispatch = useDispatch();
   return (
     <Section fill scrollable height="200px">
       <Section p={0}>
@@ -200,10 +198,10 @@ const TextHighlightSettings = (props, context) => {
   );
 };
 
-const TextHighlightSetting = (props, context) => {
+const TextHighlightSetting = (props) => {
   const { id, ...rest } = props;
-  const highlightSettingById = useSelector(context, selectHighlightSettingById);
-  const dispatch = useDispatch(context);
+  const highlightSettingById = useSelector(selectHighlightSettingById);
+  const dispatch = useDispatch();
   const {
     highlightColor,
     highlightText,
