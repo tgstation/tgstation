@@ -42,6 +42,9 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
+	var/datum/atom_hud/data/hackyhud = GLOB.huds[DATA_HUD_MALF_APC]
+	hackyhud.show_to(owner.current)
+
 	return ..()
 
 /datum/antagonist/malf_ai/on_removal()

@@ -115,27 +115,7 @@
 	for(var/mob/viewer in view(src))
 		if(viewer.client)
 			mobs_to_show += viewer.client
+	if(malfai?.client)
+		mobs_to_show += malfai.client
 	flick_overlay_global(hacker_image, mobs_to_show, 1 SECONDS)
 	hacked_flicker_counter = pick(3, 4, 5) //The counter is decrimented in the process() proc, which runs every two seconds.
-
-// Overlay for malf AIs to see their own hacked APCs. These are always visible, rather than flickering occationally. This is assigned during the AI's malfhacked() proc.
-/obj/effect/client_image_holder/apc_hacked
-	name = "APC Access Override" //If a name for the hacked APC image HAS to show in the AI's context menu, let's give it a fluff name
-	desc = ""
-	image_icon = 'icons/obj/machines/wallmounts.dmi'
-	image_state = "apcemag"
-	image_layer = FLOAT_LAYER
-	///APC that we sit above.
-	var/obj/machinery/power/apc/apc
-
-/obj/effect/client_image_holder/apc_hacked/Initialize(mapload, list/mobs_which_see_us, home_apc)
-	. = ..()
-	apc = home_apc
-	image_pixel_x = apc.pixel_x
-	image_pixel_y = apc.pixel_y
-	dir = apc.dir
-	update_icon()
-
-/obj/effect/client_image_holder/apc_hacked/Destroy()
-	apc = null
-	return ..()

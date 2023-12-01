@@ -1041,7 +1041,7 @@
 	apc.locked = TRUE
 	apc.coverlocked = TRUE
 	apc.flicker_hacked_icon()
-	apc.hacked_overlay = new(get_turf(apc), src, apc)
+	apc.set_hacked_hud()
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
 

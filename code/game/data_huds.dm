@@ -81,6 +81,9 @@
 	for(var/mob/camera/ai_eye/eye as anything in GLOB.aiEyes)
 		eye.update_ai_detect_hud()
 
+/datum/atom_hud/data/malf_apc
+	hud_icons = list(MALF_APC_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
@@ -554,3 +557,13 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_AIRLOCK_HUD]
 	holder.icon_state = "electrified"
 	set_hud_image_active(DIAG_AIRLOCK_HUD)
+
+/*~~~~~~~~~~~~~~~~~
+	Hacked APCs!
+~~~~~~~~~~~~~~~~~~*/
+/obj/machinery/power/apc/proc/set_hacked_hud()
+	var/image/holder = hud_list[MALF_APC_HUD]
+	holder.loc = get_turf(src)
+	holder.plane = HUD_PLANE
+	set_hud_image_active(MALF_APC_HUD)
+

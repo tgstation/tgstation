@@ -73,8 +73,6 @@
 	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
 	///Counter for displaying the hacked overlay to mobs within view
 	var/hacked_flicker_counter = 0
-	///Permanent hacked overlay, for the owning Malf AI to see
-	var/obj/effect/client_image_holder/apc_hacked/hacked_overlay
 	///State of the electronics inside (missing, installed, secured)
 	var/has_electronics = APC_ELECTRONICS_MISSING
 	///used for the Blackout malf module
@@ -158,6 +156,10 @@
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
 
+	hud_list = list(
+		MALF_APC_HUD = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked", pixel_x = src.pixel_x, pixel_y = src.pixel_y)
+	)
+
 	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
 	var/area/our_area = get_area(loc)
 	if(areastring)
@@ -231,8 +233,6 @@
 		QDEL_NULL(cell)
 	if(terminal)
 		disconnect_terminal()
-	if(hacked_overlay)
-		QDEL_NULL(hacked_overlay)
 	return ..()
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
