@@ -10998,6 +10998,7 @@ __metadata:
     "@types/react": ^18.2.39
     common: "workspace:*"
     react: ^18.2.0
+    tgui: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
   linkType: soft
