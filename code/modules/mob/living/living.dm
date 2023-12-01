@@ -75,7 +75,7 @@
 
 	var/incoming_damage = (levels * 5) ** 1.5
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
-	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2))
+	if(HAS_TRAIT(src, TRAIT_CATLIKE_GRACE) && (small_surface_area || usable_legs >= 2) && body_position == STANDING_UP)
 		. |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 		if(small_surface_area)
 			visible_message(
@@ -95,9 +95,12 @@
 	else
 		Knockdown(levels * 5 SECONDS)
 
-	var/damage_for_each_leg = round(incoming_damage / 2)
-	apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = CANT_WOUND) // remove the wound bonus if you want
-	apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = CANT_WOUND) // people to break their legs from falling
+	if(body_position == STANDING_UP)
+		var/damage_for_each_leg = round(incoming_damage / 2)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -5 * levels)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -5 * levels)
+	else
+		apply_damage(incoming_damage, BRUTE, spread_damage = TRUE)
 	return .
 
 /// Modifier for mobs landing on their feet after a fall
