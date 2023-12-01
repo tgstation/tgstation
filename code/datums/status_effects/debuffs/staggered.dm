@@ -6,8 +6,6 @@
 
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
-	if(new_owner.stat == DEAD)
-		return FALSE
 	return ..()
 
 /datum/status_effect/staggered/on_apply()
