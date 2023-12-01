@@ -2,12 +2,12 @@
 /// This is used for impactful events like traitors hacking and creating more threat, or a revolutions victory.
 /// It tries to spawn a heavy midround if possible, otherwise it will trigger a "bad" random event after a short period.
 /// Calling this function will not use up any threat.
-/datum/game_mode/dynamic/proc/unfavorable_situation()
+/datum/controller/subsystem/dynamic/proc/unfavorable_situation()
 	SHOULD_NOT_SLEEP(TRUE)
 
 	INVOKE_ASYNC(src, PROC_REF(_unfavorable_situation))
 
-/datum/game_mode/dynamic/proc/_unfavorable_situation()
+/datum/controller/subsystem/dynamic/proc/_unfavorable_situation()
 	var/static/list/unfavorable_random_events = list()
 	if (!length(unfavorable_random_events))
 		unfavorable_random_events = generate_unfavourable_events()
@@ -24,7 +24,7 @@
 		picking_specific_rule(heavy_ruleset, forced = TRUE, ignore_cost = TRUE)
 
 /// Return a valid heavy dynamic ruleset, or an empty list if there's no time to run any rulesets
-/datum/game_mode/dynamic/proc/generate_unfavourable_heavy_rulesets()
+/datum/controller/subsystem/dynamic/proc/generate_unfavourable_heavy_rulesets()
 	if (EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return list()
 
@@ -58,7 +58,7 @@
 	return possible_heavies
 
 /// Filter the below list by which events can actually run on this map
-/datum/game_mode/dynamic/proc/generate_unfavourable_events()
+/datum/controller/subsystem/dynamic/proc/generate_unfavourable_events()
 	var/static/list/unfavorable_random_events = list(
 		/datum/round_event_control/earthquake,
 		/datum/round_event_control/immovable_rod,

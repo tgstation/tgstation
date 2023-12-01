@@ -1,0 +1,5 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - rscadd: "Added a new hostile variant of cats, \"feral cats\"."
+  - rscadd: "Added a new traitor item, \"feral cat grenades\". For 5 TC, you too can throw a grenade at someone and make five cats maul them to death."

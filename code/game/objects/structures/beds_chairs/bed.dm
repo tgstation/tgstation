@@ -67,16 +67,6 @@
 	deconstruct(disassembled = TRUE)
 	return TRUE
 
-/obj/structure/bed/post_buckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.base_pixel_y -= elevation
-	buckled.pixel_y -= elevation
-
-/obj/structure/bed/post_unbuckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.base_pixel_y += elevation
-	buckled.pixel_y += elevation
-
 /// Medical beds
 /obj/structure/bed/medical
 	name = "medical bed"
@@ -342,13 +332,11 @@
 /obj/structure/bed/double/post_buckle_mob(mob/living/target)
 	. = ..()
 	if(buckled_mobs.len > 1 && !goldilocks) // Push the second buckled mob a bit higher from the normal lying position
-		target.base_pixel_y += 12
-		target.pixel_y += 12
+		target.pixel_y += 6
 		goldilocks = target
 
 /obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
 	. = ..()
 	if(target == goldilocks)
-		target.base_pixel_y -= 12
-		target.pixel_y -= 12
+		target.pixel_y -= 6
 		goldilocks = null
