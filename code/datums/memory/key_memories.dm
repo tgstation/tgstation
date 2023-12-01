@@ -217,7 +217,7 @@
 /datum/memory/key/message_server_key
 	var/decrypt_key
 
-/datum/memory/key/message_server_code/New(
+/datum/memory/key/message_server_key/New(
 	datum/mind/memorizer_mind,
 	atom/protagonist,
 	atom/deuteragonist,
