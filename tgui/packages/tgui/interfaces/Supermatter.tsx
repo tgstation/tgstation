@@ -54,7 +54,7 @@ type SupermatterEntryProps = {
   detail?: InfernoNode;
   alwaysShowChevron?: boolean;
 };
-const SupermatterEntry = (props: SupermatterEntryProps, context) => {
+const SupermatterEntry = (props: SupermatterEntryProps) => {
   const { title, content, detail, alwaysShowChevron } = props;
   if (!alwaysShowChevron && !detail) {
     return (
@@ -68,7 +68,7 @@ const SupermatterEntry = (props: SupermatterEntryProps, context) => {
       </Stack.Item>
     );
   }
-  const [activeDetail, setActiveDetail] = useLocalState(context, title, false);
+  const [activeDetail, setActiveDetail] = useLocalState(title, false);
   return (
     <>
       <Stack.Item>
@@ -89,7 +89,7 @@ const SupermatterEntry = (props: SupermatterEntryProps, context) => {
     </>
   );
 };
-export const SupermatterContent = (props: SupermatterProps, context) => {
+export const SupermatterContent = (props: SupermatterProps) => {
   const {
     sectionButton,
     uid,
@@ -113,11 +113,7 @@ export const SupermatterContent = (props: SupermatterProps, context) => {
     gas_total_moles,
     gas_metadata,
   } = props;
-  const [allGasActive, setAllGasActive] = useLocalState(
-    context,
-    'allGasActive',
-    false
-  );
+  const [allGasActive, setAllGasActive] = useLocalState('allGasActive', false);
   const gas_composition: [gas_path: string, amount: number][] = flow([
     !allGasActive && filter(([gas_path, amount]) => amount !== 0),
     sortBy(([gas_path, amount]) => -amount),
@@ -397,8 +393,8 @@ export type SupermatterData = {
   gas_metadata: SMGasMetadata;
 };
 
-export const Supermatter = (props, context) => {
-  const { act, data } = useBackend<SupermatterData>(context);
+export const Supermatter = (props) => {
+  const { act, data } = useBackend<SupermatterData>();
   const { sm_data, gas_metadata } = data;
   return (
     <Window width={700} height={400} theme="ntos">

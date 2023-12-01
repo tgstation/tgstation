@@ -759,3 +759,11 @@
 	update_speed()
 	qdel(speed_potion)
 	return SPEED_POTION_STOP
+
+/// Disables the mod link frequency attached to this unit.
+/obj/item/mod/control/proc/disable_modlink()
+	if(isnull(mod_link))
+		return
+
+	mod_link.end_call()
+	mod_link.frequency = null

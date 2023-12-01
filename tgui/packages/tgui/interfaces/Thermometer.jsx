@@ -17,7 +17,7 @@ export class Thermometer extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.context);
+    const { act, data } = useBackend();
     return (
       <Window width={70} height={430}>
         <Stack

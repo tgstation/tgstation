@@ -12,8 +12,8 @@ export const Gateway = () => {
   );
 };
 
-const GatewayContent = (props, context) => {
-  const { act, data } = useBackend(context);
+const GatewayContent = (props) => {
+  const { act, data } = useBackend();
   const {
     gateway_present = false,
     gateway_status = false,

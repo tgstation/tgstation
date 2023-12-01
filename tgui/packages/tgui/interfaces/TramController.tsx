@@ -30,8 +30,8 @@ type TramDestination = {
   id: number;
 };
 
-export const TramController = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const TramController = (props) => {
+  const { act, data } = useBackend<Data>();
 
   const {
     transportId,
@@ -54,7 +54,6 @@ export const TramController = (props, context) => {
   } = data;
 
   const [tripDestination, setTripDestination] = useLocalState(
-    context,
     'TramDestination',
     ''
   );

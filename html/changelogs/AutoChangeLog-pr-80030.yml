@@ -1,0 +1,5 @@
+author: "Vekter"
+delete-after: True
+changes:
+  - rscdel: "Replaced the \"monkey cube\" in Birdshot's tool storage with a different \"monkey cube\"."
+  - rscadd: "Added a fun surprise item to Birdshot's tool storage to compensate for the above change."

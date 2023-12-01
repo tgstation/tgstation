@@ -34,8 +34,8 @@ type DeliveryMethod = {
   price: number;
 };
 
-export const BlackMarketUplink = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BlackMarketUplink = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     categories = [],
     markets = [],
@@ -124,8 +124,8 @@ export const BlackMarketUplink = (props, context) => {
   );
 };
 
-const ShipmentSelector = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ShipmentSelector = (props) => {
+  const { act, data } = useBackend<Data>();
   const { buying, ltsrbt_built, money } = data;
   if (!buying) {
     return null;

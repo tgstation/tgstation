@@ -113,6 +113,23 @@
 		"transfusion"
 	],
 
+	"carps": [
+		"aquarium",
+		"carp",
+		"carps",
+		"carpotoxin",
+		"fin",
+		"fins",
+		"fish",
+		"fang",
+		"gnash",
+		"migration",
+		"slash",
+		"shred",
+		"teeth",
+		"tooth"
+	],
+
 	"clowns": [
 		"banana",
 		"clown",

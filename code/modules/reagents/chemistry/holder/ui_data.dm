@@ -15,33 +15,6 @@
 /datum/reagents/ui_state(mob/user)
 	return GLOB.physical_state
 
-/datum/reagents/proc/generate_possible_reactions()
-	var/list/cached_reagents = reagent_list
-	if(!cached_reagents)
-		return null
-	var/list/cached_reactions = list()
-	var/list/possible_reactions = list()
-	if(!length(cached_reagents))
-		return null
-	cached_reactions = GLOB.chemical_reactions_list_reactant_index
-	for(var/_reagent in cached_reagents)
-		var/datum/reagent/reagent = _reagent
-		for(var/_reaction in cached_reactions[reagent.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
-			var/datum/chemical_reaction/reaction = _reaction
-			if(!_reaction)
-				continue
-			if(!reaction.required_reagents)//Don't bring in empty ones
-				continue
-			var/list/cached_required_reagents = reaction.required_reagents
-			var/total_matching_reagents = 0
-			for(var/req_reagent in cached_required_reagents)
-				if(!has_reagent(req_reagent, (cached_required_reagents[req_reagent]*0.01)))
-					continue
-				total_matching_reagents++
-			if(total_matching_reagents >= reagent_list.len)
-				possible_reactions += reaction
-	return possible_reactions
-
 ///Generates a (rough) rate vs temperature graph profile
 /datum/reagents/proc/generate_thermodynamic_profile(datum/chemical_reaction/reaction)
 	var/list/coords = list()
