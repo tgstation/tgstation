@@ -1,7 +1,7 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import { Component, createRef, JSXElementConstructor, PropsWithChildren, ReactElement, RefObject } from 'react';
-import { render } from 'react-dom';
+import { Component, CSSProperties, JSXElementConstructor, PropsWithChildren, ReactElement, RefObject } from 'react';
+import { findDOMNode, render } from 'react-dom';
 
 type PopperProps = {
   popperContent: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -25,8 +25,6 @@ export class Popper extends Component<PopperProps> {
   componentDidMount() {
     const { additionalStyles, options } = this.props;
 
-    this.popperRef = createRef();
-
     this.renderedContent = document.createElement('div');
 
     if (additionalStyles) {
@@ -38,7 +36,18 @@ export class Popper extends Component<PopperProps> {
     this.renderPopperContent(() => {
       document.body.appendChild(this.renderedContent);
 
-      const domNode = this.popperRef.current;
+      // HACK: We don't want to create a wrapper, as it could break the layout
+      // of consumers, so we do the inferno equivalent of `findDOMNode(this)`.
+      // This is usually bad as refs are usually better, but refs did
+      // not work in this case, as they weren't propagating correctly.
+      // A previous attempt was made as a render prop that passed an ID,
+      // but this made consuming use too unwieldly.
+      // This code is copied from `findDOMNode` in inferno-extras.
+      // Because this component is written in TypeScript, we will know
+      // immediately if this internal variable is removed.
+      //
+      // eslint-disable-next-line react/no-find-dom-node
+      const domNode = findDOMNode(this) as Element;
       if (!domNode) {
         return;
       }
@@ -65,7 +74,7 @@ export class Popper extends Component<PopperProps> {
   renderPopperContent(callback: () => void) {
     // `render` errors when given false, so we convert it to `null`,
     // which is supported.
-    render(this.props.popperContent, this.renderedContent, callback);
+    render(this.props.popperContent || null, this.renderedContent, callback);
   }
 
   render() {

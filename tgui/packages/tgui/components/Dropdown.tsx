@@ -1,7 +1,7 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, ReactNode, createRef, RefObject } from 'react';
-import { render } from 'react-dom';
+import { Component, ReactNode } from 'react';
+import { findDOMNode, render } from 'react-dom';
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
@@ -77,7 +77,6 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     open: false,
     selected: this.props.selected,
   };
-  dropdownRef: RefObject<HTMLDivElement>;
 
   handleClick = () => {
     if (this.state.open) {
@@ -86,11 +85,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   };
 
   getDOMNode() {
-    return this.dropdownRef.current;
+    // eslint-disable-next-line react/no-find-dom-node
+    return findDOMNode(this) as Element;
   }
 
   componentDidMount() {
-    this.dropdownRef = createRef();
     const domNode = this.getDOMNode();
 
     if (!domNode) {
