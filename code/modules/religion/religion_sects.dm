@@ -125,6 +125,10 @@
 		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
 
+/// What happens if we bless a corpse? By default just do the default smack behavior
+/datum/religion_sect/proc/sect_dead_bless(mob/living/target, mob/living/chap)
+	return FALSE
+
 /**** Nanotrasen Approved God ****/
 
 /datum/religion_sect/puritanism
@@ -383,6 +387,9 @@
 	else
 		to_chat(chaplain, span_warning("They hold no burden!"))
 	return TRUE
+
+/datum/religion_sect/burden/sect_dead_bless(mob/living/target, mob/living/chaplain)
+	return sect_bless(target, chaplain)
 
 /datum/religion_sect/honorbound
 	name = "Honorbound God"

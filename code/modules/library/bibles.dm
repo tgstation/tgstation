@@ -251,8 +251,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
+			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
+			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
 
 	if(user == target_mob)
