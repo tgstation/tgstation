@@ -259,6 +259,12 @@
 	butcher_sound = 'sound/weapons/circsawhit.ogg', \
 	)
 	//saws are very accurate and fast at butchering
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/chainsaw)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/circular_saw/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
@@ -591,32 +597,30 @@
 		ui.open()
 
 /obj/item/blood_filter/ui_data(mob/user)
-	var/list/data = list()
-	var/list/chem_names = list()
+	. = list()
+
+	.["whitelist"] = list()
 	for(var/key in whitelist)
-		chem_names += whitelist[key]
-	data["whitelist"] = chem_names
-	return data
+		.["whitelist"] += whitelist[key]
 
 /obj/item/blood_filter/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
+
 	. = TRUE
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.name2reagent)
 			if(!selected_reagent)
-				return TRUE
+				return FALSE
 
-			var/chem_id = get_chem_id(selected_reagent)
+			var/datum/reagent/chem_id = GLOB.name2reagent[selected_reagent]
 			if(!chem_id)
-				return TRUE
+				return FALSE
 
 			if(!(chem_id in whitelist))
 				whitelist[chem_id] = selected_reagent
-
-
 
 		if("remove")
 			var/chem_name = params["reagent"]

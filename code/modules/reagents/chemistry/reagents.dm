@@ -1,17 +1,3 @@
-GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
-
-/proc/build_name2reagent()
-	. = list()
-	for (var/t in subtypesof(/datum/reagent))
-		var/datum/reagent/R = t
-		if (length(initial(R.name)))
-			.[ckey(initial(R.name))] = t
-
-
-//Various reagents
-//Toxin & acid reagents
-//Hydroponics stuff
-
 /// A single reagent
 /datum/reagent
 	/// datums don't have names by default
@@ -46,8 +32,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/color = "#000000" // rgb: 0, 0, 0
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
-	/// appears unused
-	var/overrides_metab = 0
 	/// above this overdoses happen
 	var/overdose_threshold = 0
 	/// You fucked up and this is now triggering its overdose effects, purge that shit quick.
@@ -58,8 +42,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/reagent_weight = 1
 	///is it currently metabolizing
 	var/metabolizing = FALSE
-	/// is it bad for you? Currently only used for borghypo. C2s and Toxins have it TRUE by default.
-	var/harmful = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
 	///A list of causes why this chem should skip being removed, if the length is 0 it will be removed from holder naturally, if this is >0 it will not be removed from the holder.
@@ -117,7 +99,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(!mass)
 		mass = rand(10, 800)
 
-/datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
+/// This should only be called by the holder, so it's already handled clearing its references
+/datum/reagent/Destroy()
 	. = ..()
 	holder = null
 
@@ -155,12 +138,40 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/burn(datum/reagents/holder)
 	return
 
-/// Called from [/datum/reagents/proc/metabolize]
-/datum/reagent/proc/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
-	current_cycle++
+/**
+ * Ticks on mob Life() for as long as the reagent remains in the mob's reagents.
+ *
+ * Usage: Parent should be called first using . = ..()
+ *
+ * Exceptions: If the holder var needs to be accessed, call the parent afterward that as it can become null if the reagent is fully removed.
+ *
+ * Returns: UPDATE_MOB_HEALTH only if you need to update the health of a mob (this is only needed when damage is dealt to the mob)
+ *
+ * Arguments
+ * * mob/living/carbon/affected_mob - the mob which the reagent currently is inside of
+ * * seconds_per_tick - the time in server seconds between proc calls (when performing normally it will be 2)
+ * * times_fired - the number of times the owner's Life() tick has been called aka The number of times SSmobs has fired
+ *
+ */
+/datum/reagent/proc/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
+
+///Metabolizes a portion of the reagent after on_mob_life() is called
+/datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency * seconds_per_tick) //By default it slowly disappears.
+	if(isnull(holder))
+		return
+
+	var/metabolizing_out = metabolization_rate * seconds_per_tick
+	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
+		if(chemical_flags & REAGENT_REVERSE_METABOLISM)
+			metabolizing_out /= affected_mob.metabolism_efficiency
+		else
+			metabolizing_out *= affected_mob.metabolism_efficiency
+
+	holder.remove_reagent(type, metabolizing_out)
+
 
 /// Called in burns.dm *if* the reagent has the REAGENT_AFFECTS_WOUNDS process flag
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
@@ -170,7 +181,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.
 Primarily used in reagents/reaction_agents
 */
-/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target)
+/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target, amount)
 	return FALSE
 
 ///Called after a reagent is transferred
@@ -178,35 +189,29 @@ Primarily used in reagents/reaction_agents
 	return
 
 /// Called when this reagent is first added to a mob
-/datum/reagent/proc/on_mob_add(mob/living/L, amount)
+/datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
 	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
 	return
 
 /// Called when this reagent is removed while inside a mob
-/datum/reagent/proc/on_mob_delete(mob/living/L)
-	L.clear_mood_event("[type]_overdose")
+/datum/reagent/proc/on_mob_delete(mob/living/affected_mob)
+	affected_mob.clear_mood_event("[type]_overdose")
 	return
 
 /// Called when this reagent first starts being metabolized by a liver
-/datum/reagent/proc/on_mob_metabolize(mob/living/L)
+/datum/reagent/proc/on_mob_metabolize(mob/living/affected_mob)
 	return
 
 /// Called when this reagent stops being metabolized by a liver
-/datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob)
 	return
 
-/// Called when a reagent is inside of a mob when they are dead
-/datum/reagent/proc/on_mob_dead(mob/living/carbon/C, seconds_per_tick)
-	if(!(chemical_flags & REAGENT_DEAD_PROCESS))
-		return
-	current_cycle++
-	if(length(reagent_removal_skip_list))
-		return
-	holder.remove_reagent(type, metabolization_rate * C.metabolism_efficiency * seconds_per_tick)
-
-/// Called by [/datum/reagents/proc/conditional_update_move]
-/datum/reagent/proc/on_move(mob/M)
-	return
+/**
+ * Called when a reagent is inside of a mob when they are dead if the reagent has the REAGENT_DEAD_PROCESS flag
+ * Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+ */
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
+	SHOULD_CALL_PARENT(TRUE)
 
 /// Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
@@ -217,18 +222,14 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_merge(data, amount)
 	return
 
-/// Called by [/datum/reagents/proc/conditional_update]
-/datum/reagent/proc/on_update(atom/A)
+/// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+/datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	return
 
-/// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
-/datum/reagent/proc/overdose_process(mob/living/M, seconds_per_tick, times_fired)
-	return
-
-/// Called when an overdose starts
-/datum/reagent/proc/overdose_start(mob/living/M)
-	to_chat(M, span_userdanger("You feel like you took too much of [name]!"))
-	M.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
+/// Called when an overdose starts. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
+/datum/reagent/proc/overdose_start(mob/living/affected_mob)
+	to_chat(affected_mob, span_userdanger("You feel like you took too much of [name]!"))
+	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return
 
 /**

@@ -216,6 +216,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/stack/medical/gauze = 1,
 			/obj/item/stack/medical/mesh = 1,
 			/obj/item/stack/medical/suture = 1,
+			/obj/item/stack/medical/bandage = 1,
 			) = 1,
 		list(//medical chems
 			/obj/item/reagent_containers/cup/bottle/multiver = 1,
@@ -333,6 +334,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 			/obj/item/storage/box/hug/medical = 1,
 			/obj/item/storage/medkit/emergency = 1,
 			/obj/item/storage/medkit/regular = 1,
+			/obj/item/storage/box/bandages = 1,
 			) = 1,
 		list(//medical chems
 			/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
@@ -347,7 +349,9 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/book/granter/crafting_recipe/dusting/laser_musket_prime = 1,
 		/obj/item/book/granter/sign_language = 1,
 		/obj/item/disk/nuclear/fake = 1,
+		/obj/item/disk/surgery/advanced_plastic_surgery = 1,
 		/obj/item/skillchip/brainwashing = 1,
+		/obj/item/skillchip/intj = 1,
 		/obj/item/tattoo_kit = 1,
 		/obj/item/folder/ancient_paperwork = 1,
 		) = 1,

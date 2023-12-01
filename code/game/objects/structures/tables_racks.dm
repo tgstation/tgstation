@@ -149,10 +149,12 @@
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
 
-/obj/structure/table/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	. = !density
-	if(caller)
-		. = . || (caller.pass_flags & PASSTABLE)
+/obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(!density)
+		return TRUE
+	if(pass_info.pass_flags & PASSTABLE)
+		return TRUE
+	return FALSE
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
@@ -290,7 +292,7 @@
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
+/obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
 
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -309,17 +311,14 @@
 	qdel(src)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	switch(the_rcd.mode)
-		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 2.4 SECONDS, "cost" = 16)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("delay" = 2.4 SECONDS, "cost" = 16)
 	return FALSE
 
-/obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the table."))
-			qdel(src)
-			return TRUE
+/obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+		qdel(src)
+		return TRUE
 	return FALSE
 
 /obj/structure/table/proc/table_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
@@ -359,34 +358,52 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
-	var/list/attached_items = list()
+	/// Lazylist of the items that we have on our surface.
+	var/list/attached_items = null
 
 /obj/structure/table/rolling/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_our_moved))
 
-/obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
+/obj/structure/table/rolling/Destroy()
+	for(var/item in attached_items)
+		clear_item_reference(item)
+	LAZYNULL(attached_items) // safety
+	return ..()
+
+/obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	. = ..()
-	attached_items += I
-	RegisterSignal(I, COMSIG_MOVABLE_MOVED, PROC_REF(RemoveItemFromTable)) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	LAZYADD(attached_items, thing)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_moved))
 
-/obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
+/// Handles cases where any attached item moves, with or without the table. If we get picked up or anything, unregister the signal so we don't move with the table after removal from the surface.
+/obj/structure/table/rolling/proc/on_item_moved(datum/source, atom/old_loc, dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if(newloc != loc) //Did we not move with the table? because that shit's ok
-		return FALSE
-	attached_items -= source
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-
-/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(!loc)
+	var/atom/thing = source // let it runtime if it doesn't work because that is mad wack
+	if(thing.loc == loc) // if we move with the table, move on
 		return
+
+	clear_item_reference(thing)
+
+/// Handles movement of the table itself, as well as moving along any atoms we have on our surface.
+/obj/structure/table/rolling/proc/on_our_moved(datum/source, atom/old_loc, dir, forced, list/old_locs, momentum_change)
+	SIGNAL_HANDLER
+	if(isnull(loc)) // aw hell naw
+		return
+
 	for(var/mob/living/living_mob in old_loc.contents)//Kidnap everyone on top
 		living_mob.forceMove(loc)
+
 	for(var/atom/movable/attached_movable as anything in attached_items)
-		if(!attached_movable.Move(loc))
-			RemoveItemFromTable(attached_movable, attached_movable.loc)
+		if(!attached_movable.Move(loc)) // weird
+			clear_item_reference(attached_movable) // we check again in on_item_moved() just in case something's wacky tobaccy
+
+/// Removes the signal and the entrance from the list.
+/obj/structure/table/rolling/proc/clear_item_reference(obj/item/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+	LAZYREMOVE(attached_items, thing)
 
 /*
  * Glass tables
@@ -433,7 +450,7 @@
 		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
-	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
+	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		table_shatter(M)
 
 /obj/structure/table/glass/proc/table_shatter(mob/living/victim)

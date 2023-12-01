@@ -145,7 +145,7 @@
 	body += "</body></html>"
 
 	usr << browse(body, "window=adminplayeropts-[REF(M)];size=550x515")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Player Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
 /client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
 	set category = "Admin.Game"
@@ -215,7 +215,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.name
 		new_character.gender = lowertext(record_found.gender)
 		new_character.age = record_found.age
-		var/datum/dna/found_dna = record_found.dna_ref
+		var/datum/dna/found_dna = record_found.locked_dna
 		new_character.hardset_dna(found_dna.unique_identity, found_dna.mutation_index, null, record_found.name, record_found.blood_type, new record_found.species_type, found_dna.features)
 	else
 		new_character.randomize_human_appearance()
@@ -291,7 +291,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	to_chat(new_character, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Respawn Character") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Respawn Character")
 	return new_character
 
 /client/proc/cmd_admin_list_open_jobs()
@@ -301,7 +301,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 	holder.manage_free_slots()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Manage Job Slots") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Manage Job Slots")
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
@@ -420,7 +420,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
 	target_mind.traitor_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
 
 /datum/admins/proc/show_skill_panel(target)
 	set category = "Admin.Game"

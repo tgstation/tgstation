@@ -60,8 +60,8 @@
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(maxnutri, INJECTABLE)
 	if(mapload)
-		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
-		waterlevel = 100
+		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, max(maxnutri / 2, 10)) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
+		waterlevel = maxwater
 	. = ..()
 
 	var/static/list/hovering_item_typechecks = list(
@@ -161,6 +161,7 @@
 	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/plumbing/hydroponics)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/hydro_tray)
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	. = ..()
@@ -247,16 +248,12 @@
 		// So we'll let it leak in, and move the water over.
 		set_recipient_reagents_holder(nutri_reagents)
 		reagents = nutri_reagents
-		process_request(
-			amount = MACHINE_REAGENT_TRANSFER,
-			reagent = null,
-			dir = dir
-		)
+		process_request(dir = dir)
 
 		// Move the leaked water from nutrients to... water
 		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
 		if(leaking_water_amount)
-			nutri_reagents.trans_id_to(water_reagents, /datum/reagent/water, leaking_water_amount)
+			nutri_reagents.trans_to(water_reagents, leaking_water_amount, target_id = /datum/reagent/water)
 
 	// We should only take MACHINE_REAGENT_TRANSFER every tick; this is the remaining amount we can take
 	var/remaining_transfer_amount = max(MACHINE_REAGENT_TRANSFER - (nutri_reagents.total_volume - initial_nutri_amount), 0)
@@ -285,11 +282,11 @@
 /obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
-	if(istype(Proj , /obj/projectile/energy/floramut))
+	if(istype(Proj , /obj/projectile/energy/flora/mut))
 		mutate()
-	else if(istype(Proj , /obj/projectile/energy/florayield))
+	else if(istype(Proj , /obj/projectile/energy/flora/yield))
 		return myseed.bullet_act(Proj)
-	else if(istype(Proj , /obj/projectile/energy/florarevolution))
+	else if(istype(Proj , /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)
@@ -329,9 +326,9 @@
 			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
 			apply_chemicals(lastuser?.resolve())
 			if(self_sustaining)
-				reagents.remove_any(min(0.5, nutridrain))
+				reagents.remove_all(min(0.5, nutridrain))
 			else
-				reagents.remove_any(nutridrain)
+				reagents.remove_all(nutridrain)
 
 			// Lack of nutrients hurts non-weeds
 			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -890,7 +887,7 @@
 					if(istype(not_water_reagent,/datum/reagent/water))
 						continue
 					var/transfer_me_to_tray = reagent_source.reagents.get_reagent_amount(not_water_reagent.type) * transfer_amount / reagent_source.reagents.total_volume
-					reagent_source.reagents.trans_id_to(H.reagents, not_water_reagent.type, transfer_me_to_tray)
+					reagent_source.reagents.trans_to(H.reagents, transfer_me_to_tray, target_id = not_water_reagent.type)
 			else
 				reagent_source.reagents.trans_to(H.reagents, transfer_amount, transferred_by = user)
 			lastuser = WEAKREF(user)

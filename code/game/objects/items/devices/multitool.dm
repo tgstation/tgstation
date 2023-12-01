@@ -125,12 +125,6 @@
 		if(distance < rangewarning) //ai cant see us but is close
 			detect_state = PROXIMITY_NEAR
 
-/mob/camera/ai_eye/remote/ai_detector
-	name = "AI detector eye"
-	ai_detector_visible = FALSE
-	visible_icon = FALSE
-	use_static = FALSE
-
 /datum/action/item_action/toggle_multitool
 	name = "Toggle AI detecting mode"
 	check_flags = NONE

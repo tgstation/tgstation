@@ -86,6 +86,8 @@
 		. += cavity_item
 		cavity_item = null
 
+	return .
+
 ///limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
 /obj/item/bodypart/proc/drop_limb(special, dismembered)
 	if(!owner)
@@ -359,7 +361,7 @@
 		scar.victim = new_limb_owner
 		LAZYADD(new_limb_owner.all_scars, scar)
 
-	if(!special && new_limb_owner.mob_mood.has_mood_of_category("dismembered_[body_zone]"))
+	if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]"))
 		new_limb_owner.clear_mood_event("dismembered_[body_zone]")
 		new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 

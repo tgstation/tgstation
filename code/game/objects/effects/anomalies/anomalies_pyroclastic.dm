@@ -7,6 +7,10 @@
 	var/releasedelay = 10
 	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
+/obj/effect/anomaly/pyro/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/anomaly/pyro/anomalyEffect(seconds_per_tick)
 	..()
 	ticks += seconds_per_tick
@@ -27,7 +31,7 @@
 	if(istype(tile))
 		tile.atmos_spawn_air("[GAS_O2]=500;[GAS_PLASMA]=500;[TURF_TEMPERATURE(1000)]") //Make it hot and burny for the new slime
 
-	var/new_colour = pick("red", "orange")
+	var/new_colour = pick(/datum/slime_type/red, /datum/slime_type/orange)
 	var/mob/living/simple_animal/slime/pyro = new(tile, new_colour)
 	pyro.rabid = TRUE
 	pyro.amount_grown = SLIME_EVOLUTION_THRESHOLD

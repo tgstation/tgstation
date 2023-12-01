@@ -154,7 +154,7 @@
 		if(HDD_OVERLOADED)
 			. += "The front panel is dangling open. The hdd inside is destroyed and the wires are all burned."
 
-/obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, tool_type)
+/obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	// Only antags are given the training and knowledge to disassemble this thing.
 	if(is_special_character(user))
 		return ..()

@@ -40,6 +40,12 @@
 	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
 
+/obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+		slapcraft_recipes = list(/datum/crafting_recipe/molotov)\
+	)
+
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -797,10 +803,10 @@
 			if(istype(contained_reagent, accelerant_type))
 				firestarter = 1
 				break
+	..()
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
-	..()
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.get_temperature() && !active)

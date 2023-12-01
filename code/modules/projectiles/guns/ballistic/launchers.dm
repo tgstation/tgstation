@@ -98,7 +98,7 @@
 		REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 		process_fire(user, user, TRUE)
 		if(!QDELETED(user)) //if they weren't gibbed by the explosion, take care of them for good.
-			user.gib()
+			user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 	else
 		sleep(0.5 SECONDS)

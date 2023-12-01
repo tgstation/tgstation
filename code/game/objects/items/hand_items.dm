@@ -266,6 +266,12 @@
 					span_notice("You slap [slapped] in the face!"),
 					span_hear("You hear a slap."),
 				)
+	else if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM)
+		user.visible_message(
+			span_danger("[user] gives [slapped] a slap on the wrist!"),
+			span_notice("You give [slapped] a slap on the wrist!"),
+			span_hear("You hear a slap."),
+		)
 	else
 		user.visible_message(
 			span_danger("[user] slaps [slapped]!"),
@@ -654,7 +660,7 @@
 		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
 		return
 
-	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	var/amount_nutriment = target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE)
 	if(amount_nutriment <= 0)
 		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
 		return

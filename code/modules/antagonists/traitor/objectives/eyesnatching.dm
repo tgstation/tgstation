@@ -102,7 +102,7 @@
 		return FALSE //MISSION FAILED, WE'LL GET EM NEXT TIME
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 
 	replace_in_name("%TARGET%", target_mind.name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
@@ -208,7 +208,11 @@
 	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))
-	notify_ghosts("[target] has just had their eyes snatched!", source = target, action = NOTIFY_ORBIT, header = "Ouch!")
+	notify_ghosts(
+		"[target] has just had their eyes snatched!",
+		source = target,
+		header = "Ouch!",
+	)
 	target.emote("scream")
 	if(prob(20))
 		target.emote("cry")

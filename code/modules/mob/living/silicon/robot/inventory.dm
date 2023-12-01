@@ -401,6 +401,7 @@
 
 /mob/living/silicon/robot/perform_hand_swap()
 	cycle_modules()
+	return TRUE
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
 	return (I && (I in model.modules)) //Only if it's part of our model.

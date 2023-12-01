@@ -111,6 +111,15 @@
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 
+/obj/item/shield/riot/Initialize(mapload)
+	. = ..()
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/strobeshield)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
 	if(istype(attackby_item, /obj/item/melee/baton))
 		if(!COOLDOWN_FINISHED(src, baton_bash))

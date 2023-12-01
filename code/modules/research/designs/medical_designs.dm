@@ -359,6 +359,28 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/penlight
+	name = "Penlight"
+	id = "penlight"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
+	build_path = /obj/item/flashlight/pen
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/penlight_paramedic
+	name = "Paramedic Penlight"
+	id = "penlight_paramedic"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*1)
+	build_path = /obj/item/flashlight/pen/paramedic
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
@@ -1113,6 +1135,13 @@
 	id = "surgery_wing_reconstruction"
 	surgery = /datum/surgery/advanced/wing_reconstruction
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/advanced_plastic_surgery
+	name = "Advanced Plastic Surgery"
+	desc = "An advanced form of the plastic surgery, allowing oneself to remodel someone's face and voice based off a picture of someones face"
+	surgery = /datum/surgery/plastic_surgery/advanced
+	id = "surgery_advanced_plastic_surgery"
+	research_icon_state = "surgery_head"
 
 /datum/design/surgery/experimental_dissection
 	name = "Experimental Dissection"

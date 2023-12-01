@@ -210,6 +210,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "cT" = (
@@ -317,6 +320,10 @@
 "dI" = (
 /obj/structure/dresser,
 /obj/structure/noticeboard/directional/south,
+/obj/item/dyespray{
+	pixel_x = -3;
+	pixel_y = 13
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -696,6 +703,16 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/centcom/syndicate_mothership/control)
+"hX" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/control)
 "ia" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -839,6 +856,10 @@
 "jq" = (
 /obj/structure/dresser,
 /obj/structure/noticeboard/directional/north,
+/obj/item/dyespray{
+	pixel_x = -2;
+	pixel_y = 15
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -937,6 +958,7 @@
 	dir = 9
 	},
 /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/north,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "kU" = (
@@ -1154,6 +1176,10 @@
 "nD" = (
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/mineral/titanium/yellow,
+/area/centcom/syndicate_mothership/control)
+"nF" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "nH" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -1740,6 +1766,9 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/sign/poster/contraband/gorlex_recruitment/directional/south,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "um" = (
@@ -1777,6 +1806,12 @@
 "uX" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/centcom/syndicate_mothership/control)
+"ve" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "vv" = (
 /obj/structure/table/reinforced,
@@ -2042,6 +2077,9 @@
 /obj/machinery/camera/autoname/directional/south{
 	network = list("nukie")
 	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "zi" = (
@@ -2133,6 +2171,13 @@
 	dir = 1
 	},
 /turf/open/misc/ice/icemoon,
+/area/centcom/syndicate_mothership/control)
+"zZ" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "Ab" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
@@ -2382,6 +2427,9 @@
 	dir = 10
 	},
 /obj/structure/sign/poster/contraband/energy_swords/directional/west,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "CX" = (
@@ -2424,6 +2472,16 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
 /turf/open/floor/plating/snowed/icemoon,
+/area/centcom/syndicate_mothership/control)
+"DM" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "DY" = (
 /obj/structure/table/wood/poker,
@@ -2734,8 +2792,27 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/centcom/syndicate_mothership/control)
+"GU" = (
+/obj/effect/turf_decal/syndicateemblem/top/right{
+	dir = 1
+	},
+/obj/effect/turf_decal/syndicateemblem/top/left{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "Hc" = (
 /turf/open/floor/plating/icemoon,
+/area/centcom/syndicate_mothership/control)
+"Hm" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle{
+	dir = 8
+	},
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "Ho" = (
 /obj/effect/light_emitter{
@@ -2972,6 +3049,9 @@
 "JL" = (
 /obj/machinery/light/cold/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "JR" = (
@@ -2996,6 +3076,11 @@
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
+"JX" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "Ka" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 4
@@ -3408,6 +3493,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "Ox" = (
@@ -3437,6 +3525,16 @@
 	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
+/area/centcom/syndicate_mothership/control)
+"OM" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "OO" = (
 /obj/item/gun/energy/ionrifle,
@@ -3833,6 +3931,14 @@
 "To" = (
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
+"Ts" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/control)
 "Tw" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Gangway"
@@ -3912,6 +4018,15 @@
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
 "TY" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle{
+	dir = 4
+	},
+/obj/effect/turf_decal/syndicateemblem/top/left{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/control)
 "Un" = (
@@ -3944,6 +4059,16 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
+"Va" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/syndicateemblem/middle/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
 "Vm" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -3951,6 +4076,9 @@
 "Vr" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 5
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
@@ -4339,6 +4467,13 @@
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/centcom/syndicate_mothership/control)
+"ZI" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "ZL" = (
 /obj/structure/flora/grass/both/style_random,
@@ -5252,9 +5387,9 @@ yf
 yf
 na
 PD
-zE
-TY
-lt
+OM
+Hm
+DM
 ws
 Wz
 KL
@@ -5354,9 +5489,9 @@ Ge
 Ge
 Ge
 xf
-zE
-TY
-lt
+ZI
+nF
+zZ
 ZO
 JJ
 mb
@@ -5456,8 +5591,8 @@ Jf
 eu
 hN
 PD
-zE
-TY
+ZI
+JX
 yP
 RD
 RD
@@ -5558,8 +5693,8 @@ nQ
 nQ
 nQ
 nQ
-zE
-TY
+ZI
+Va
 JL
 RD
 SD
@@ -5660,9 +5795,9 @@ yK
 Ht
 In
 VK
-zE
-TY
-lt
+ZI
+GU
+zZ
 FM
 wM
 ee
@@ -5762,9 +5897,9 @@ Zg
 pU
 lt
 XQ
-zE
-TY
-lt
+ZI
+ve
+zZ
 Lu
 ae
 ae
@@ -5864,9 +5999,9 @@ rS
 iH
 Bn
 VK
-zE
+Ts
 TY
-lt
+hX
 FM
 iL
 mB

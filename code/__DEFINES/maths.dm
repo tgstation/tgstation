@@ -254,3 +254,6 @@
 
 /// Returns a random decimal between x and y.
 #define RANDOM_DECIMAL(x, y) LERP((x), (y), rand())
+
+#define SI_COEFFICIENT "coefficient"
+#define SI_UNIT "unit"

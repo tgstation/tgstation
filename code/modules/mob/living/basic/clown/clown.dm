@@ -37,7 +37,7 @@
 		BB_EMOTE_SAY = list("HONK", "Honk!", "Welcome to clown planet!"),
 		BB_EMOTE_HEAR = list("honks", "squeaks"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'), //WE LOVE TO PARTY
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 	///do we waddle (honk)
 	var/waddles = TRUE
@@ -150,9 +150,9 @@
 		),
 		BB_EMOTE_HEAR = list("honks", "contemplates its existence"),
 		BB_EMOTE_SEE = list("sweats", "jiggles"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
-	
+
 /mob/living/basic/clown/fleshclown/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -185,7 +185,7 @@
 	emotes = list(
 		BB_EMOTE_SAY = list("YA-HONK!!!"),
 		BB_EMOTE_HEAR = list("honks", "squeaks"),
-		BB_EMOTE_CHANCE = 60,
+		BB_SPEAK_CHANCE = 60,
 	)
 
 /mob/living/basic/clown/clownhulk
@@ -221,7 +221,7 @@
 		BB_EMOTE_SAY = list("HONK", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!"),
 		BB_EMOTE_HEAR = list("honks", "grunts"),
 		BB_EMOTE_SEE = list("sweats"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 
 /mob/living/basic/clown/clownhulk/chlown
@@ -252,7 +252,7 @@
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "Bruh", "cheeaaaahhh?"),
 		BB_EMOTE_SEE = list("asserts his dominance", "emasculates everyone implicitly"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 
 /mob/living/basic/clown/clownhulk/honkmunculus
@@ -318,7 +318,7 @@
 		BB_EMOTE_SAY = list("HONK!!!", "The Honkmother is merciful, so I must act out her wrath.", "parce mihi ad beatus honkmother placet mihi ut peccata committere,", "DIE!!!"),
 		BB_EMOTE_HEAR = list("honks", "grunts"),
 		BB_EMOTE_SEE = list("sweats"),
-		BB_EMOTE_CHANCE = 5,
+		BB_SPEAK_CHANCE = 5,
 	)
 
 /mob/living/basic/clown/mutant
@@ -354,7 +354,7 @@
 	emotes = list(
 		BB_EMOTE_SAY = list("aaaaaahhhhuuhhhuhhhaaaaa", "AAAaaauuuaaAAAaauuhhh", "huuuuuh... hhhhuuuooooonnnnkk", "HuaUAAAnKKKK"),
 		BB_EMOTE_SEE = list("squirms", "writhes", "pulsates", "froths", "oozes"),
-		BB_EMOTE_CHANCE = 10,
+		BB_SPEAK_CHANCE = 10,
 	)
 
 /mob/living/basic/clown/mutant/slow
@@ -370,7 +370,6 @@
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	force_threshold = 10 //lots of fat to cushion blows.
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
@@ -391,12 +390,11 @@
 
 /mob/living/basic/clown/mutant/glutton/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/regurgitate/spit = new(src)
-	spit.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/regurgitate)
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
-
+	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
 
 /mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
 	if(!check_edible(item))
@@ -541,22 +539,15 @@
 		BB_EMOTE_SEE = list("bites into the banana", "plucks a banana off its head", "photosynthesizes"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'),
 	)
-	///Our peel dropping ability
-	var/datum/action/cooldown/rustle/banana_rustle
-	///Our banana bunch spawning ability
-	var/datum/action/cooldown/exquisite_bunch/banana_bunch
 
 /mob/living/basic/clown/banana/Initialize(mapload)
 	. = ..()
-	banana_rustle = new()
-	banana_rustle.Grant(src)
-	banana_bunch = new()
-	banana_bunch.Grant(src)
 
-/mob/living/basic/clown/banana/Destroy()
-	. = ..()
-	QDEL_NULL(banana_rustle)
-	QDEL_NULL(banana_bunch)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/exquisite_bunch,
+		/datum/action/cooldown/rustle,
+	)
+	grant_actions_by_list(innate_actions)
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle

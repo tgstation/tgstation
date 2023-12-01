@@ -28,7 +28,7 @@
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 50
 
-	ai_controller = /datum/ai_controller/basic_controller/migo
+	ai_controller = /datum/ai_controller/basic_controller/simple_hostile_obstacles
 	var/static/list/migo_sounds
 	/// Odds migo will dodge
 	var/dodge_prob = 10
@@ -71,16 +71,3 @@
 	. = Move(get_step(loc,pick(cdir, ccdir)))
 	if(!.)//Can't dodge there so we just carry on
 		. = Move(moving_to, move_direction)
-
-/datum/ai_controller/basic_controller/migo
-	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-	)
-
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)

@@ -1508,6 +1508,13 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/mine/maintenance/public/north)
+"jk" = (
+/obj/structure/table,
+/obj/item/storage/box/bandages{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/white,
+/area/mine/laborcamp/production)
 "jm" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Showers"
@@ -1932,6 +1939,17 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"lA" = (
+/obj/machinery/recycler{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "mining_disposals"
+	},
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/floor/plating/lavaland_atmos,
+/area/mine/maintenance/service/disposals)
 "lC" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
@@ -2170,19 +2188,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"mu" = (
-/obj/structure/table,
-/obj/item/storage/pill_bottle/epinephrine{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 10
-	},
-/turf/open/floor/iron/white/smooth_corner{
-	dir = 8
-	},
-/area/mine/medical)
 "mv" = (
 /obj/structure/stone_tile{
 	dir = 4
@@ -5391,10 +5396,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp/security)
-"HE" = (
-/obj/structure/table,
-/turf/open/floor/iron/white,
-/area/mine/laborcamp/production)
 "HF" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -5809,6 +5810,23 @@
 	dir = 1
 	},
 /area/mine/living_quarters)
+"JQ" = (
+/obj/structure/table,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/item/storage/box/bandages{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/obj/item/storage/pill_bottle/epinephrine{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white/smooth_corner{
+	dir = 8
+	},
+/area/mine/medical)
 "JR" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -6772,17 +6790,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/production)
-"PL" = (
-/obj/machinery/recycler{
-	dir = 8
-	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "mining_disposals"
-	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/mine/maintenance/service/disposals)
 "PR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/executive,
@@ -23744,7 +23751,7 @@ aj
 aj
 eR
 Kw
-HE
+jk
 ff
 mU
 Fv
@@ -36321,7 +36328,7 @@ pU
 mA
 su
 xG
-PL
+lA
 Sd
 pU
 aj
@@ -39439,7 +39446,7 @@ yp
 yp
 Dz
 LG
-mu
+JQ
 It
 Xp
 Ss

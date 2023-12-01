@@ -20,7 +20,7 @@
 #define COMSIG_TURF_EXPOSE "turf_expose"
 ///from /turf/proc/immediate_calculate_adjacent_turfs()
 #define COMSIG_TURF_CALCULATED_ADJACENT_ATMOS "turf_calculated_adjacent_atmos"
-///called when an industrial lift enters this turf
+///called when an elevator enters this turf
 #define COMSIG_TURF_INDUSTRIAL_LIFT_ENTER "turf_industrial_life_enter"
 
 ///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
@@ -31,5 +31,7 @@
 
 ///from /datum/element/footstep/prepare_step(): (list/steps)
 #define COMSIG_TURF_PREPARE_STEP_SOUND "turf_prepare_step_sound"
+	//stops element/footstep/proc/prepare_step() from returning null if the turf itself has no sound
+	#define FOOTSTEP_OVERRIDEN (1<<0)
 ///from base of datum/thrownthing/finalize(): (turf/turf, atom/movable/thrownthing) when something is thrown and lands on us
 #define COMSIG_TURF_MOVABLE_THROW_LANDED "turf_movable_throw_landed"

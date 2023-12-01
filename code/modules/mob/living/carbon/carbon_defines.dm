@@ -47,7 +47,7 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
-	/// Carbon
+	/// Carbon, you should really only be accessing this through has_dna() but it's your life
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
@@ -121,7 +121,5 @@
 
 	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
-
-	var/is_leaning = FALSE
 
 	COOLDOWN_DECLARE(bleeding_message_cd)

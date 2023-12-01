@@ -26,13 +26,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// Whether or not this door is being animated
 	var/is_animating_door = FALSE
 	/// Vertical squish of the door
-	var/door_anim_squish = 0.12
+	var/door_anim_squish = 0.2
 	/// The maximum angle the door will be drawn at
-	var/door_anim_angle = 136
-	/// X position of the closet door hinge
+	var/door_anim_angle = 140
+	/// X position of the closet door hinge, relative to the center of the sprite
 	var/door_hinge_x = -6.5
 	/// Amount of time it takes for the door animation to play
-	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
+	var/door_anim_time = 2 // set to 0 to make the door not animate at all
 	/// Paint jobs for this closet, crates are a subtype of closet so they override these values
 	var/list/paint_jobs = TRUE
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
@@ -65,6 +65,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
+	var/icon_broken = "sparking"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
@@ -198,6 +199,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	if(welded)
 		. += icon_welded
+
+	if(broken && secure)
+		. += mutable_appearance(icon, icon_broken, alpha = alpha)
+		. += emissive_appearance(icon, icon_broken, src, alpha = alpha)
+		return
 
 	if(broken || !secure)
 		return
@@ -804,13 +810,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 					if(!opened)
 						return
 					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."),
-									span_hear("You hear weaponelding."))
+									span_notice("You cut \the [src] apart with \the [weapon]."),
+									span_hear("You hear welding."))
 					deconstruct(TRUE)
 				return
 			else // for example cardboard box is cut with wirecutters
 				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."))
+									span_notice("You cut \the [src] apart with \the [weapon]."))
 				deconstruct(TRUE)
 				return
 		if (user.combat_mode)

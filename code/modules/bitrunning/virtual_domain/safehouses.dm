@@ -6,48 +6,49 @@
 /datum/map_template/safehouse
 	name = "virtual domain: safehouse"
 
-	returns_created_atoms = TRUE
 	/// The map file to load
-	var/filename = "den.dmm"
+	var/filename = "den"
 
 /datum/map_template/safehouse/New()
-	mappath = "_maps/safehouses/" + filename
+	mappath = "_maps/safehouses/[filename].dmm"
 	..(path = mappath)
 
 /datum/map_template/safehouse/test_only
 	filename = "test_only_safehouse.dmm"
 
-
 /// The default safehouse map template.
-/datum/map_template/safehouse/wood
-	filename = "wood.dmm"
-
 /datum/map_template/safehouse/den
-	filename = "den.dmm"
+	filename = "den"
+
+/datum/map_template/safehouse/wood
+	filename = "wood"
 
 /datum/map_template/safehouse/dig
-	filename = "dig.dmm"
+	filename = "dig"
 
 /datum/map_template/safehouse/shuttle
-	filename = "shuttle.dmm"
+	filename = "shuttle"
 
 // Has space tiles on the four corners.
 /datum/map_template/safehouse/shuttle_space
-	filename = "shuttle_space.dmm"
+	filename = "shuttle_space"
 
 /datum/map_template/safehouse/mine
-	filename = "mine.dmm"
+	filename = "mine"
 
 // Comes preloaded with mining combat gear.
 /datum/map_template/safehouse/lavaland_boss
-	filename = "lavaland_boss.dmm"
+	filename = "lavaland_boss"
 
 // Chill out
 /datum/map_template/safehouse/ice
-	filename = "ice.dmm"
+	filename = "ice"
+
+/datum/map_template/safehouse/bathroom
+	filename = "bathroom"
 
 /**
  * Your safehouse here
  * /datum/map_template/safehouse/your_type
- *  filename = "your_map.dmm"
+ *  filename = "your_map"
  */

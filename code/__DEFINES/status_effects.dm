@@ -37,6 +37,7 @@
 #define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
 #define STASIS_ADMIN "stasis_admin"
+#define STASIS_LEGION_EATEN "stasis_eaten"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 
@@ -112,6 +113,11 @@
 #define adjust_dizzy_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/dizziness, up_to)
 #define set_dizzy(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness)
 #define set_dizzy_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/dizziness, TRUE)
+
+#define adjust_staggered(duration) adjust_timed_status_effect(duration, /datum/status_effect/staggered)
+#define adjust_staggered_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/staggered, up_to)
+#define set_staggered(duration) set_timed_status_effect(duration, /datum/status_effect/staggered)
+#define set_staggered_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/staggered, TRUE)
 
 #define adjust_jitter(duration) adjust_timed_status_effect(duration, /datum/status_effect/jitter)
 #define adjust_jitter_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/jitter, up_to)

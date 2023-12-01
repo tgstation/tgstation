@@ -432,7 +432,7 @@
 		balloon_alert(ninja, "tram is already malfunctioning!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(specific_lift_id != MAIN_STATION_TRAM)
+	if(specific_transport_id != TRAMSTATION_LINE_1)
 		balloon_alert(ninja, "cannot hack this tram!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -443,7 +443,11 @@
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
 	malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	malfunction_event.end_when *= 3
+	malfunction_event.end_when *= 2
+	for(var/obj/machinery/transport/guideway_sensor/sensor as anything in SStransport.sensors)
+		// Since faults are now used instead of straight event end_when var, we make a few of them malfunction
+		if(prob(rand(15, 30)))
+			sensor.local_fault()
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

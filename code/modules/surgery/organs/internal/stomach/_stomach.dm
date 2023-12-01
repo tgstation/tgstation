@@ -82,7 +82,7 @@
 		// transfer the reagents over to the body at the rate of the stomach metabolim
 		// this way the body is where all reagents that are processed and react
 		// the stomach manages how fast they are feed in a drip style
-		reagents.trans_id_to(body, bit.type, amount=amount)
+		reagents.trans_to(body, amount, target_id = bit.type)
 
 	//Handle disgust
 	if(body)
@@ -288,6 +288,7 @@
 /obj/item/organ/internal/stomach/cybernetic
 	name = "basic cybernetic stomach"
 	desc = "A basic device designed to mimic the functions of a human stomach"
+	failing_desc = "seems to be broken."
 	icon_state = "stomach-c"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5

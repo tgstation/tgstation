@@ -76,7 +76,7 @@
 
 	if(isliving(what))
 		var/mob/living/themob = what
-		themob.gib(TRUE,TRUE,TRUE)
+		themob.gib()
 	else
 		qdel(what)
 	LAZYREMOVE(processor_contents, what)
@@ -236,9 +236,9 @@
 		return
 	var/core_count = processed_slime.cores
 	for(var/i in 1 to (core_count+rating_amount-1))
-		var/atom/movable/item = new processed_slime.coretype(drop_location())
+		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
-		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.colour)
+		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.slime_type.colour)
 	return ..()
 
 #undef PROCESSOR_SELECT_RECIPE

@@ -42,7 +42,7 @@
 
 /mob/living/basic/bear/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber, climbing_distance = 15)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -130,7 +130,7 @@
 
 	AddComponent(/datum/component/regenerator,\
 		regeneration_delay = 1 SECONDS,\
-		health_per_second = 5,\
+		brute_per_second = 5,\
 		outline_colour = COLOR_YELLOW,\
 	)
 
@@ -167,4 +167,3 @@
 	victim.Knockdown(20)
 	playsound(loc, 'sound/misc/slip.ogg', 15)
 	victim.visible_message(span_danger("[victim] slips on [src]'s butter!"))
-

@@ -24,8 +24,13 @@
 #define COMSIG_FISHING_ROD_CAST "fishing_rod_cast"
 	#define FISHING_ROD_CAST_HANDLED (1 << 0)
 
-/// Sent when fishing line is snapped
-#define COMSIG_FISHING_LINE_SNAPPED "fishing_line_interrupted"
+/// From /datum/fish_source/proc/dispense_reward(), not set if the reward is a dud: (reward, user)
+#define COMSIG_FISHING_ROD_CAUGHT_FISH "fishing_rod_caught_fish"
+/// From /obj/item/fishing_rod/proc/hook_item(): (reward, user)
+#define COMSIG_FISHING_ROD_HOOKED_ITEM "fishing_rod_hooked_item"
 
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"
+
+/// From /obj/item/fish_analyzer/proc/analyze_status: (fish, user)
+#define COMSIG_FISH_ANALYZER_ANALYZE_STATUS "fish_analyzer_analyze_status"

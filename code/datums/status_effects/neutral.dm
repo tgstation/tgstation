@@ -109,11 +109,14 @@
 		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
 			spell.reset_spell_cooldown()
 
-		rewarded.adjustBruteLoss(-25)
-		rewarded.adjustFireLoss(-25)
-		rewarded.adjustToxLoss(-25)
-		rewarded.adjustOxyLoss(-25)
-		rewarded.adjustCloneLoss(-25)
+		var/need_mob_update = FALSE
+		need_mob_update += rewarded.adjustBruteLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustFireLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustToxLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustOxyLoss(-25, updating_health = FALSE)
+		need_mob_update += rewarded.adjustCloneLoss(-25, updating_health = FALSE)
+		if(need_mob_update)
+			rewarded.updatehealth()
 
 // heldup is for the person being aimed at
 /datum/status_effect/grouped/heldup
@@ -146,8 +149,15 @@
 
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
-	desc = "You're currently pointing a gun at someone."
+	desc = "You're currently pointing a gun at someone. Click to cancel."
 	icon_state = "aimed"
+
+/atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	var/datum/component/gunpoint/gunpoint = owner.GetComponent(/datum/component/gunpoint)
+	gunpoint?.cancel()
 
 // this status effect is used to negotiate the high-fiving capabilities of all concerned parties
 /datum/status_effect/offering
@@ -331,6 +341,22 @@
 
 	owner.emote("surrender")
 
+///For when you need to make someone be prompted for surrender, but not forever
+/datum/status_effect/surrender_timed
+	id = "surrender_timed"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+
+/datum/status_effect/surrender_timed/on_apply()
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+/datum/status_effect/surrender_timed/on_remove()
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, REF(src))
+	return ..()
+
+
 /*
  * A status effect used for preventing caltrop message spam
  *
@@ -500,7 +526,7 @@
 				monkey_tail.Insert(human_mob, drop_if_replaced = FALSE)
 			var/datum/species/human_species = human_mob.dna?.species
 			if(human_species)
-				human_species.randomize_features(human_mob)
+				human_species.randomize_active_features(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
 			owner.remove_status_effect(/datum/status_effect/eigenstasium)

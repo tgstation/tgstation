@@ -9,11 +9,3 @@
 	map_name = "bubblegum"
 	reward_points = BITRUNNER_REWARD_HIGH
 	safehouse_path = /datum/map_template/safehouse/lavaland_boss
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual_domain
-	can_be_cybercop = FALSE
-	crusher_loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	health = 1100
-	loot = list(/obj/structure/closet/crate/secure/bitrunning/encrypted)
-	maxHealth = 1100
-	true_spawn = FALSE

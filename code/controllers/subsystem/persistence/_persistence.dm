@@ -56,13 +56,16 @@ SUBSYSTEM_DEF(persistence)
 	save_scars()
 	save_custom_outfits()
 	save_delamination_counter()
-	if(SStramprocess.can_fire)
+	if(SStransport.can_fire)
+		for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
+			save_tram_history(transport.specific_transport_id)
 		save_tram_counter()
 
 ///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()
-	for(var/mob/living/simple_animal/parrot/poly/P in GLOB.alive_mob_list)
-		twitterize(P.speech_buffer, "polytalk")
+	for(var/mob/living/basic/parrot/poly/bird in GLOB.alive_mob_list)
+		var/list/list_to_read = bird.get_static_list_of_phrases()
+		twitterize(list_to_read, "polytalk")
 		break //Who's been duping the bird?!
 
 /// Loads up the amount of times maps appeared to alter their appearance in voting and rotation.

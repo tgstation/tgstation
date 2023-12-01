@@ -56,7 +56,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/protect_owner,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/mouse
+		/datum/pet_command/point_targeting/attack/mouse
 	)
 	/// Commands you can give to glockroaches
 	var/static/list/glockroach_commands = list(
@@ -64,7 +64,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/protect_owner/glockroach,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/glockroach
+		/datum/pet_command/point_targeting/attack/glockroach
 	)
 
 /datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)
@@ -193,7 +193,7 @@
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targetting/attack/mouse
+/datum/pet_command/point_targeting/attack/mouse
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!" // Frogs and roaches can squeak too it's fine
 	pointed_reaction = "and squeaks aggressively"
@@ -201,7 +201,7 @@
 	attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targetting/attack/glockroach
+/datum/pet_command/point_targeting/attack/glockroach
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!"
 	pointed_reaction = "and cocks its gun"
@@ -221,31 +221,31 @@
 	taste_description = "something funny"
 	overdose_threshold = 20
 
-/datum/reagent/rat_spit/on_mob_metabolize(mob/living/L)
-	..()
-	if(HAS_TRAIT(L, TRAIT_AGEUSIA))
+/datum/reagent/rat_spit/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	if(HAS_TRAIT(affected_mob, TRAIT_AGEUSIA))
 		return
-	to_chat(L, span_notice("This food has a funny taste!"))
+	to_chat(affected_mob, span_notice("This food has a funny taste!"))
 
-/datum/reagent/rat_spit/overdose_start(mob/living/M)
-	..()
-	var/mob/living/carbon/victim = M
+/datum/reagent/rat_spit/overdose_start(mob/living/affected_mob)
+	. = ..()
+	var/mob/living/carbon/victim = affected_mob
 	if (istype(victim) && !(FACTION_RAT in victim.faction))
 		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
 		victim.faction |= FACTION_RAT
 		victim.vomit(VOMIT_CATEGORY_DEFAULT)
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 
-/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/C)
+/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/affected_mob)
+	. = ..()
 	if(prob(15))
-		to_chat(C, span_notice("You feel queasy!"))
-		C.adjust_disgust(3)
+		to_chat(affected_mob, span_notice("You feel queasy!"))
+		affected_mob.adjust_disgust(3)
 	else if(prob(10))
-		to_chat(C, span_warning("That food does not sit up well!"))
-		C.adjust_disgust(5)
+		to_chat(affected_mob, span_warning("That food does not sit up well!"))
+		affected_mob.adjust_disgust(5)
 	else if(prob(5))
-		C.vomit(VOMIT_CATEGORY_DEFAULT)
-	return ..()
+		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
 
 /datum/pet_command/protect_owner/glockroach
 	protect_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach

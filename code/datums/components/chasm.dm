@@ -8,28 +8,29 @@
 	/// List of refs to falling objects -> how many levels deep we've fallen
 	var/static/list/falling_atoms = list()
 	var/static/list/forbidden_types = typecacheof(list(
-		/obj/singularity,
-		/obj/energy_ball,
-		/obj/narsie,
 		/obj/docking_port,
-		/obj/structure/lattice,
-		/obj/structure/stone_tile,
-		/obj/projectile,
-		/obj/effect/projectile,
-		/obj/effect/portal,
 		/obj/effect/abstract,
-		/obj/effect/hotspot,
-		/obj/effect/landmark,
-		/obj/effect/temp_visual,
-		/obj/effect/light_emitter/tendril,
 		/obj/effect/collapse,
-		/obj/effect/particle_effect/ion_trails,
+		/obj/effect/constructing_effect,
 		/obj/effect/dummy/phased_mob,
-		/obj/effect/mapping_helpers,
-		/obj/effect/wisp,
 		/obj/effect/ebeam,
 		/obj/effect/fishing_lure,
-		/obj/effect/constructing_effect,
+		/obj/effect/hotspot,
+		/obj/effect/landmark,
+		/obj/effect/light_emitter/tendril,
+		/obj/effect/mapping_helpers,
+		/obj/effect/particle_effect/ion_trails,
+		/obj/effect/portal,
+		/obj/effect/projectile,
+		/obj/effect/spectre_of_resurrection,
+		/obj/effect/temp_visual,
+		/obj/effect/wisp,
+		/obj/energy_ball,
+		/obj/narsie,
+		/obj/projectile,
+		/obj/singularity,
+		/obj/structure/lattice,
+		/obj/structure/stone_tile,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)
@@ -100,7 +101,7 @@
 		return CHASM_NOT_DROPPING
 	if(is_type_in_typecache(dropped_thing, forbidden_types) || (!isliving(dropped_thing) && !isobj(dropped_thing)))
 		return CHASM_NOT_DROPPING
-	if(dropped_thing.throwing || (dropped_thing.movement_type & (FLOATING|FLYING)))
+	if(dropped_thing.throwing || (dropped_thing.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return CHASM_REGISTER_SIGNALS
 
 	//Flies right over the chasm

@@ -60,8 +60,8 @@
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/not_friends(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -106,6 +106,8 @@
 		burst_shots = burst_shots,\
 		cooldown_time = ranged_cooldown,\
 	)
+	if (ranged_cooldown <= 1 SECONDS)
+		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(

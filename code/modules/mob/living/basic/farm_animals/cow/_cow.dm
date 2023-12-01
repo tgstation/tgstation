@@ -45,7 +45,7 @@
 	udder_component()
 	setup_eating()
 	. = ..()
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_types)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/udder_component()
@@ -62,7 +62,7 @@
 	if(!food_types)
 		food_types = src.food_types.Copy()
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
-	AddElement(/datum/element/basic_eating, 10, 0, null, food_types)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
 	buckle_lying = 0

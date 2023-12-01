@@ -23,28 +23,37 @@
 	if(!isliving(parent) || !isliving(old_body) || !server.is_operational || !pod.is_operational)
 		return COMPONENT_INCOMPATIBLE
 
-	old_mind_ref = WEAKREF(old_mind)
-	old_body_ref = WEAKREF(old_body)
-	netpod_ref = WEAKREF(pod)
-	server_ref = WEAKREF(server)
-
 	var/mob/living/avatar = parent
+
+	netpod_ref = WEAKREF(pod)
+	old_body_ref = WEAKREF(old_body)
+	old_mind_ref = WEAKREF(old_mind)
+	pod.avatar_ref = WEAKREF(avatar)
+	server_ref = WEAKREF(server)
+	server.avatar_connection_refs.Add(WEAKREF(src))
+
 	avatar.key = old_body.key
+	ADD_TRAIT(avatar, TRAIT_NO_MINDSWAP, REF(src)) // do not remove this one
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 
-	connect_avatar_signals(avatar)
+	/**
+	 * Things that will disconnect forcefully:
+	 * - Server shutdown / broken
+	 * - Netpod power loss / broken
+	 * - Pilot dies/ is moved / falls unconscious
+	 */
+	RegisterSignals(old_body, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_STATUS_UNCONSCIOUS), PROC_REF(on_sever_connection))
 	RegisterSignal(pod, COMSIG_BITRUNNER_CROWBAR_ALERT, PROC_REF(on_netpod_crowbar))
 	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_INTEGRITY, PROC_REF(on_netpod_damaged))
-	RegisterSignal(pod, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_sever_connection))
+	RegisterSignal(pod, COMSIG_BITRUNNER_NETPOD_SEVER, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE, PROC_REF(on_domain_completed))
-	RegisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR, PROC_REF(on_sever_connection))
+	RegisterSignal(server, COMSIG_BITRUNNER_QSRV_SEVER, PROC_REF(on_sever_connection))
 	RegisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT, PROC_REF(on_shutting_down))
 	RegisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED, PROC_REF(on_threat_created))
+	RegisterSignal(server, COMSIG_BITRUNNER_STATION_SPAWN, PROC_REF(on_station_spawn))
 #ifndef UNIT_TESTS
 	RegisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
 #endif
-
-	server.avatar_connection_refs.Add(WEAKREF(src))
 
 	if(!locate(/datum/action/avatar_domain_info) in avatar.actions)
 		var/datum/avatar_help_text/help_datum = new(help_text)
@@ -60,108 +69,79 @@
 	if(isnull(pod))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/living/avatar = parent
-	if(!isliving(avatar))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/// One hop of avatar connection - needs called any time the pilot swaps avatars
-/datum/component/avatar_connection/proc/connect_avatar_signals(mob/living/target)
-	var/obj/machinery/netpod/pod = netpod_ref?.resolve()
+	pod.avatar_ref = WEAKREF(parent)
 
-	if(parent != target)
-		target.TakeComponent(src)
+/datum/component/avatar_connection/RegisterWithParent()
+	ADD_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
+	/**
+	 * Things that cause safe disconnection:
+	 * - Click the alert
+	 * - Mailed in a cache
+	 * - Click / Stand on the ladder
+	 */
+	RegisterSignals(parent, list(COMSIG_BITRUNNER_ALERT_SEVER, COMSIG_BITRUNNER_CACHE_SEVER, COMSIG_BITRUNNER_LADDER_SEVER), PROC_REF(on_safe_disconnect))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection))
+	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
-	var/mob/living/avatar = parent
-	if(isnull(pod))
-		avatar.dust()
-		return
-
-	pod.avatar_ref = WEAKREF(target)
-	RegisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT, PROC_REF(on_safe_disconnect))
-	RegisterSignal(avatar, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection), override = TRUE)
-	RegisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
-
-/// Disconnects the old body's signals and actions
-/datum/component/avatar_connection/proc/disconnect_avatar_signals()
-	var/mob/living/avatar = parent
-	var/datum/action/avatar_domain_info/action = locate() in avatar.actions
-	if(action)
-		action.Remove(avatar)
-
-	UnregisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT)
-	UnregisterSignal(avatar, COMSIG_LIVING_DEATH)
-	UnregisterSignal(avatar, COMSIG_MOB_APPLY_DAMAGE)
+/datum/component/avatar_connection/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_TEMPORARY_BODY, REF(src))
+	UnregisterSignal(parent, COMSIG_BITRUNNER_ALERT_SEVER)
+	UnregisterSignal(parent, COMSIG_BITRUNNER_CACHE_SEVER)
+	UnregisterSignal(parent, COMSIG_BITRUNNER_LADDER_SEVER)
+	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
+	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 
 /// Disconnects the avatar and returns the mind to the old_body.
-/datum/component/avatar_connection/proc/full_avatar_disconnect(forced = FALSE, obj/machinery/netpod/broken_netpod)
-	var/mob/living/old_body = old_body_ref?.resolve()
-	if(isnull(old_body))
-		return
-
-	var/mob/living/avatar = parent
-
-	disconnect_avatar_signals()
-	UnregisterSignal(avatar, COMSIG_BITRUNNER_SAFE_DISCONNECT)
+/datum/component/avatar_connection/proc/full_avatar_disconnect(cause_damage = FALSE, datum/source)
 #ifndef UNIT_TESTS
-	UnregisterSignal(avatar.mind, COMSIG_MIND_TRANSFERRED)
+	return_to_old_body()
 #endif
-	UnregisterSignal(old_body, COMSIG_LIVING_DEATH)
-	UnregisterSignal(old_body, COMSIG_LIVING_STATUS_UNCONSCIOUS)
-	UnregisterSignal(old_body, COMSIG_MOVABLE_MOVED)
 
-	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve() || broken_netpod
-	if(isnull(hosting_netpod))
-		return
+	var/obj/machinery/netpod/hosting_netpod = netpod_ref?.resolve()
+	if(isnull(hosting_netpod) && istype(source, /obj/machinery/netpod))
+		hosting_netpod = source
 
-	UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_CROWBAR_ALERT)
-	UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_NETPOD_INTEGRITY)
-	UnregisterSignal(hosting_netpod, COMSIG_BITRUNNER_SEVER_AVATAR)
+	hosting_netpod?.disconnect_occupant(cause_damage)
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
-	if(server)
-		server.avatar_connection_refs.Remove(WEAKREF(src))
-		UnregisterSignal(server, COMSIG_BITRUNNER_DOMAIN_COMPLETE)
-		UnregisterSignal(server, COMSIG_BITRUNNER_SEVER_AVATAR)
-		UnregisterSignal(server, COMSIG_BITRUNNER_SHUTDOWN_ALERT)
-		UnregisterSignal(server, COMSIG_BITRUNNER_THREAT_CREATED)
+	server?.avatar_connection_refs.Remove(WEAKREF(src))
 
-	return_to_old_body()
-
-	hosting_netpod.disconnect_occupant(forced)
 	qdel(src)
 
-/// Triggers whenever the server gets a loot crate pushed to send area
+/// Triggers whenever the server gets a loot crate pushed to goal area
 /datum/component/avatar_connection/proc/on_domain_completed(datum/source, atom/entered)
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_success.ogg', 50, TRUE)
+	avatar.playsound_local(avatar, 'sound/machines/terminal_success.ogg', 50, vary = TRUE)
 	avatar.throw_alert(
 		ALERT_BITRUNNER_COMPLETED,
 		/atom/movable/screen/alert/bitrunning/qserver_domain_complete,
-		new_master = entered
+		new_master = entered,
 	)
 
 /// Transfers damage from the avatar to the old_body
-/datum/component/avatar_connection/proc/on_linked_damage(datum/source, damage, damage_type, def_zone, blocked, forced)
+/datum/component/avatar_connection/proc/on_linked_damage(datum/source, damage, damage_type, def_zone, blocked, ...)
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/old_body = old_body_ref?.resolve()
-
 	if(isnull(old_body) || damage_type == STAMINA || damage_type == OXYLOSS)
 		return
 
 	if(damage >= (old_body.health + MAX_LIVING_HEALTH))
-		full_avatar_disconnect(forced = TRUE)
+		full_avatar_disconnect(cause_damage = TRUE)
 		return
 
 	if(damage > 30 && prob(30))
 		INVOKE_ASYNC(old_body, TYPE_PROC_REF(/mob/living, emote), "scream")
 
-	old_body.apply_damage(damage, damage_type, def_zone, blocked, forced, wound_bonus = CANT_WOUND)
+	old_body.apply_damage(damage, damage_type, def_zone, blocked, wound_bonus = CANT_WOUND)
 
 	if(old_body.stat > SOFT_CRIT) // KO!
-		full_avatar_disconnect(forced = TRUE)
+		full_avatar_disconnect(cause_damage = TRUE)
 
 /// Handles minds being swapped around in subsequent avatars
 /datum/component/avatar_connection/proc/on_mind_transfer(datum/mind/source, mob/living/previous_body)
@@ -170,90 +150,104 @@
 	var/datum/action/avatar_domain_info/action = locate() in previous_body.actions
 	if(action)
 		action.Grant(source.current)
-		action.Remove(previous_body)
 
-	disconnect_avatar_signals()
-	connect_avatar_signals(source.current)
+	source.current.TakeComponent(src)
 
 /// Triggers when someone starts prying open our netpod
 /datum/component/avatar_connection/proc/on_netpod_crowbar(datum/source, mob/living/intruder)
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, TRUE)
-	avatar.throw_alert(
+	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_CROWBAR,
-		/atom/movable/screen/alert/bitrunning/netpod_crowbar,
-		new_master = intruder
+		/atom/movable/screen/alert/bitrunning,
+		new_master = intruder,
 	)
+	alert.name = "Netpod Breached"
+	alert.desc = "Someone is prying open the netpod. Find an exit."
 
 /// Triggers when the netpod is taking damage and is under 50%
 /datum/component/avatar_connection/proc/on_netpod_damaged(datum/source)
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.throw_alert(
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_INTEGRITY,
-		/atom/movable/screen/alert/bitrunning/netpod_damaged,
-		new_master = source
+		/atom/movable/screen/alert/bitrunning,
+		new_master = source,
 	)
+	alert.name = "Integrity Compromised"
+	alert.desc = "The netpod is damaged. Find an exit."
 
-/// Safely exits without forced variables, etc
+/// Triggers when a safe disconnect is called
 /datum/component/avatar_connection/proc/on_safe_disconnect(datum/source)
 	SIGNAL_HANDLER
 
 	full_avatar_disconnect()
 
-/// Helper for calling sever with forced variables
-/datum/component/avatar_connection/proc/on_sever_connection(datum/source, obj/machinery/netpod/broken_netpod)
+/// Received message to sever connection
+/datum/component/avatar_connection/proc/on_sever_connection(datum/source)
 	SIGNAL_HANDLER
 
-	full_avatar_disconnect(forced = TRUE, broken_netpod = broken_netpod)
+	full_avatar_disconnect(cause_damage = TRUE, source = source)
 
 /// Triggers when the server is shutting down
 /datum/component/avatar_connection/proc/on_shutting_down(datum/source, mob/living/hackerman)
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, TRUE)
-	avatar.throw_alert(
+	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_SHUTDOWN,
-		/atom/movable/screen/alert/bitrunning/qserver_shutting_down,
+		/atom/movable/screen/alert/bitrunning,
 		new_master = hackerman,
 	)
+	alert.name = "Domain Rebooting"
+	alert.desc = "The domain is rebooting. Find an exit."
+
+/// Triggers whenever an antag steps onto an exit turf and the server is emagged
+/datum/component/avatar_connection/proc/on_station_spawn(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/avatar = parent
+	avatar.playsound_local(avatar, 'sound/machines/terminal_alert.ogg', 50, vary = TRUE)
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
+		ALERT_BITRUNNER_BREACH,
+		/atom/movable/screen/alert/bitrunning,
+		new_master = source,
+	)
+	alert.name = "Security Breach"
+	alert.desc = "A hostile entity is breaching the safehouse. Find an exit."
 
 /// Server has spawned a ghost role threat
 /datum/component/avatar_connection/proc/on_threat_created(datum/source)
 	SIGNAL_HANDLER
 
 	var/mob/living/avatar = parent
-	avatar.throw_alert(
+	var/atom/movable/screen/alert/bitrunning/alert = avatar.throw_alert(
 		ALERT_BITRUNNER_THREAT,
-		/atom/movable/screen/alert/bitrunning/qserver_threat_spawned,
+		/atom/movable/screen/alert/bitrunning,
 		new_master = source,
 	)
+	alert.name = "Threat Detected"
+	alert.desc = "Data stream abnormalities present."
 
 /// Returns the mind to the old body
 /datum/component/avatar_connection/proc/return_to_old_body()
 	var/datum/mind/old_mind = old_mind_ref?.resolve()
 	var/mob/living/old_body = old_body_ref?.resolve()
-
-	if(!old_mind || !old_body)
-		return
-
 	var/mob/living/avatar = parent
 
-#ifdef UNIT_TESTS
-	// no minds during test so let's just yeet
-	return
-#endif
-
 	var/mob/dead/observer/ghost = avatar.ghostize()
-	if(!ghost)
+	if(isnull(ghost))
 		ghost = avatar.get_ghost()
 
-	if(!ghost)
+	if(isnull(ghost))
 		CRASH("[src] belonging to [parent] was completely unable to find a ghost to put back into a body!")
+
+	if(isnull(old_mind) || isnull(old_body))
+		return
 
 	ghost.mind = old_mind
 	if(old_body.stat != DEAD)
@@ -262,6 +256,3 @@
 		old_mind.set_current(old_body)
 
 	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-
-	old_mind = null
-	old_body = null

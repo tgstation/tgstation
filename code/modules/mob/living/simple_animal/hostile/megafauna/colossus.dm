@@ -71,11 +71,11 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //we don't want this guy to float, messes up his animations.
-	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus()
-	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus()
-	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus()
-	dir_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/colossus()
-	colossus_final = new /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final()
+	spiral_shots = new(src)
+	random_shots = new(src)
+	shotgun_blast = new(src)
+	dir_shots = new(src)
+	colossus_final = new(src)
 	spiral_shots.Grant(src)
 	random_shots.Grant(src)
 	shotgun_blast.Grant(src)
@@ -87,10 +87,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	RemoveElement(/datum/element/projectile_shield)
-	QDEL_NULL(spiral_shots)
-	QDEL_NULL(random_shots)
-	QDEL_NULL(shotgun_blast)
-	QDEL_NULL(dir_shots)
+	spiral_shots = null
+	random_shots = null
+	shotgun_blast = null
+	dir_shots = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
@@ -180,7 +180,6 @@
 	damage = 25
 	armour_penetration = 100
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
@@ -191,7 +190,7 @@
 		direct_target = TRUE
 	return ..(target, direct_target, ignore_loc, cross_failed)
 
-/obj/projectile/colossus/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/dust_mob = target
@@ -513,7 +512,13 @@
 	if(..() && !ready_to_deploy)
 		SSpoints_of_interest.make_point_of_interest(src)
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, header = "Anomalous crystal activated")
+		notify_ghosts(
+			"An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.",
+			source = src,
+			header = "Anomalous crystal activated",
+			click_interact = TRUE,
+			ghost_sound = 'sound/effects/ghost2.ogg',
+		)
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()
@@ -524,13 +529,6 @@
 		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
 			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
 			deployable.key = user.key
-
-
-/obj/machinery/anomalous_crystal/helpers/Topic(href, href_list)
-	if(href_list["ghostjoin"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			attack_ghost(ghost)
 
 /obj/machinery/anomalous_crystal/possessor //Allows you to bodyjack small animals, then exit them at your leisure, but you can only do this once per activation. Because they blow up. Also, if the bodyjacked animal dies, SO DO YOU.
 	observer_desc = "When activated, this crystal allows you to take over small animals, and then exit them at the possessors leisure. Exiting the animal kills it, and if you die while possessing the animal, you die as well."
@@ -607,7 +605,7 @@
 			holder_animal.mind.transfer_to(possessor)
 			possessor.mind.grab_ghost(force = TRUE)
 			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			holder_animal.gib()
+			holder_animal.gib(DROP_ALL_REMAINS)
 			return ..()
 	return ..()
 

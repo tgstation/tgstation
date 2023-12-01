@@ -190,7 +190,7 @@ GLOBAL_VAR(restart_counter)
 	data["tick_usage"] = world.tick_usage
 	data["tick_lag"] = world.tick_lag
 	data["time"] = world.time
-	data["timestamp"] = logger.unix_timestamp_string()
+	data["timestamp"] = rustg_unix_timestamp()
 	return data
 
 /world/proc/SetupLogs()
@@ -342,7 +342,7 @@ GLOBAL_VAR(restart_counter)
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		LIBCALL(debug_server, "auxtools_shutdown")()
+		call_ext(debug_server, "auxtools_shutdown")()
 
 /world/Del()
 	auxcleanup()
@@ -361,8 +361,8 @@ GLOBAL_VAR(restart_counter)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			new_status += "<b>[server_name]</b> "
-		if(!CONFIG_GET(flag/norespawn))
-			features += "respawn"
+		if(CONFIG_GET(flag/allow_respawn))
+			features += "respawn" // show "respawn" regardless of "respawn as char" or "free respawn"
 		if(!CONFIG_GET(flag/allow_ai))
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
@@ -468,14 +468,14 @@ GLOBAL_VAR(restart_counter)
 		else
 			CRASH("Unsupported platform: [system_type]")
 
-	var/init_result = LIBCALL(library, "init")("block")
+	var/init_result = call_ext(library, "init")("block")
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
 /world/proc/init_debugger()
 	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (dll)
-		LIBCALL(dll, "auxtools_init")()
+		call_ext(dll, "auxtools_init")()
 		enable_debugging()
 
 /world/Profile(command, type, format)

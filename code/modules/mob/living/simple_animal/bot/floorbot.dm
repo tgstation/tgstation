@@ -249,9 +249,9 @@
 		if(!length(path))
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, max_distance=30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, TL, max_distance=30, access=access_card.GetAccess(), simulated_only = FALSE)
 			else
-				path = get_path_to(src, target, max_distance=30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, target, max_distance=30, access=access_card.GetAccess(), simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -329,15 +329,15 @@
 		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
 			if(autotile) //Build the floor and include a tile.
 				if(replacetiles && tilestack)
-					target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
+					target_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
 					tilestack.place_tile(target_turf, src)
 					if(!tilestack)
 						speak("Requesting refill of custom floor tiles to continue replacing.")
 				else
-					target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
-					target_turf.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
+					target_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
+					target_turf.place_on_top(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 			else //Build a hull plating without a floor tile.
-				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				target_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	else
 		var/turf/open/floor/F = target_turf
@@ -370,10 +370,10 @@
 				F.burnt = FALSE
 				F.update_appearance()
 			else if(istype(is_this_maints, /area/station/maintenance))	//place catwalk if it's plating and we're in maints
-				F.PlaceOnTop(/turf/open/floor/catwalk_floor, flags = CHANGETURF_INHERIT_AIR)
+				F.place_on_top(/turf/open/floor/catwalk_floor, flags = CHANGETURF_INHERIT_AIR)
 			else	//place normal tile if it's plating anywhere else
 				F = F.make_plating(TRUE) || F
-				F.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
+				F.place_on_top(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
 
 	if(!QDELETED(src))
 		go_idle()

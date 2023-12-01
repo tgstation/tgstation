@@ -72,7 +72,6 @@
 		I spoke, and heard my own words echoed back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/summon/fire_shark,
 	)
@@ -160,8 +159,11 @@
 	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), combo_duration, TIMER_STOPPABLE)
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
-	target.adjustFireLoss(4)
-	target.adjustCloneLoss(2)
+	var/need_mob_update = FALSE
+	need_mob_update += target.adjustFireLoss(4, updating_health = FALSE)
+	need_mob_update += target.adjustCloneLoss(2, updating_health = FALSE)
+	if(need_mob_update)
+		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
 		reset_combo(source)
 		return
@@ -170,13 +172,19 @@
 	if(second_target_resolved)
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
-		second_target_resolved.adjustFireLoss(10)
-		second_target_resolved.adjustCloneLoss(6)
+		need_mob_update = FALSE
+		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustCloneLoss(6, updating_health = FALSE)
+		if(need_mob_update)
+			target.updatehealth()
 		if(third_target_resolved)
 			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
-			third_target_resolved.adjustFireLoss(20)
-			third_target_resolved.adjustCloneLoss(12)
+			need_mob_update = FALSE
+			need_mob_update += third_target_resolved.adjustFireLoss(20, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustCloneLoss(12, updating_health = FALSE)
+			if(need_mob_update)
+				target.updatehealth()
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
 				if(target.mind && target.stat != DEAD)
@@ -237,7 +245,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/star_gazer
+		/datum/pet_command/point_targeting/attack/star_gazer
 	)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -249,11 +257,16 @@
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY
-	user.AddElement(/datum/element/death_linked, star_gazer_mob)
+	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands)
 	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(FACTION_HERETIC), current_owner = user)
 	star_gazer_mob.befriend(user)

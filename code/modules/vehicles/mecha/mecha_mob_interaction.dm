@@ -120,7 +120,7 @@
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			if(!AI.linked_core) //if the victim AI has no core
 				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
-				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+				AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
@@ -158,12 +158,16 @@
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
 	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
+	RegisterSignal(M, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
 	. = ..()
 	update_appearance()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, COMSIG_MOB_CLICKON)
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	UnregisterSignal(M, list(
+		COMSIG_MOB_CLICKON,
+		COMSIG_MOB_SAY,
+		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
+	))
 	M.clear_alert(ALERT_CHARGE)
 	M.clear_alert(ALERT_MECH_DAMAGE)
 	if(M.client)

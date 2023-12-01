@@ -84,25 +84,32 @@
 			return
 		attempt_grow()
 
-///Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
+/// Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
 /obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
-	if(!owner || bursting)
+	if(QDELETED(owner) || bursting)
 		return
 
 	bursting = TRUE
 
-	var/list/candidates = poll_ghost_candidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", ROLE_ALIEN, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(on_poll_concluded), gib_on_success)
+	owner.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_ALIEN_LARVA, \
+		job_bans = ROLE_ALIEN, \
+		to_call = to_call, \
+		custom_message = "An alien is bursting out of [owner.real_name]", \
+		title = "alien larva" \
+	)
 
-	if(QDELETED(src) || QDELETED(owner))
+/// Poll has concluded with a suitor
+/obj/item/organ/internal/body_egg/alien_embryo/proc/on_poll_concluded(gib_on_success, mob/dead/observer/ghost)
+	if(QDELETED(owner))
 		return
 
-	if(!candidates.len || !owner)
+	if(isnull(ghost))
 		bursting = FALSE
 		stage = 5 // If no ghosts sign up for the Larva, let's regress our growth by one minute, we will try again!
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time)
 		return
-
-	var/mob/dead/observer/ghost = pick(candidates)
 
 	var/mutable_appearance/overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)
@@ -112,7 +119,7 @@
 	new_xeno.key = ghost.key
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
-	new_xeno.invisibility = INVISIBILITY_MAXIMUM
+	new_xeno.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
 
 	sleep(0.6 SECONDS)
 
@@ -122,12 +129,12 @@
 
 	if(!isnull(new_xeno))
 		new_xeno.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
-		new_xeno.invisibility = 0
+		new_xeno.RemoveInvisibility(type)
 
 	if(gib_on_success)
 		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
 		owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS)
-		owner.gib(TRUE)
+		owner.gib(DROP_ORGANS|DROP_BODYPARTS)
 	else
 		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
 		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)

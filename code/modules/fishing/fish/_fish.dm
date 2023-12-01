@@ -136,6 +136,9 @@
 	var/min_pressure = WARNING_LOW_PRESSURE
 	var/max_pressure = HAZARD_HIGH_PRESSURE
 
+	/// If this fish type counts towards the Fish Species Scanning experiments
+	var/experisci_scannable = TRUE
+
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	AddComponent(/datum/component/aquarium_content, PROC_REF(get_aquarium_animation), list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
@@ -175,7 +178,7 @@
 		balloon_alert(user, "[src] is dead!")
 		return TRUE
 	feed(item.reagents)
-	balloon_alert(user, "you feed [src]")
+	balloon_alert(user, "fed [src]")
 	return TRUE
 
 /obj/item/fish/examine(mob/user)
@@ -185,14 +188,14 @@
 	. += span_notice("It weighs [weight] g.")
 
 ///Randomizes weight and size.
-/obj/item/fish/proc/randomize_size_and_weight(avg_size = average_size, avg_weight = average_weight, deviation = 0.2, first_run = FALSE)
-	var/size_deviation = 0.2 * avg_size
-	var/new_size = round(max(1,gaussian(avg_size, size_deviation)), 1)
+/obj/item/fish/proc/randomize_size_and_weight(base_size = average_size, base_weight = average_weight, deviation = 0.2)
+	var/size_deviation = 0.2 * base_size
+	var/new_size = round(clamp(gaussian(base_size, size_deviation), average_size * 1/MAX_FISH_DEVIATION_COEFF, average_size * MAX_FISH_DEVIATION_COEFF))
 
-	var/weight_deviation = 0.2 * avg_weight
-	var/new_weight = round(max(1,gaussian(avg_weight, weight_deviation)), 1)
+	var/weight_deviation = 0.2 * base_weight
+	var/new_weight = round(clamp(gaussian(base_weight, weight_deviation), average_weight * 1/MAX_FISH_DEVIATION_COEFF, average_weight * MAX_FISH_DEVIATION_COEFF))
 
-	update_size_and_weight(new_size, new_weight, first_run)
+	update_size_and_weight(new_size, new_weight)
 
 ///Updates weight and size, along with weight class, number of fillets you can get and grind results.
 /obj/item/fish/proc/update_size_and_weight(new_size = average_size, new_weight = average_weight)
@@ -311,6 +314,8 @@
 		last_feeding = world.time
 	else
 		var/datum/reagent/wrong_reagent = pick(fed_reagents.reagent_list)
+		if(!wrong_reagent)
+			return
 		fed_reagent_type = wrong_reagent.type
 		fed_reagents.remove_reagent(fed_reagent_type, 0.1)
 	SEND_SIGNAL(src, COMSIG_FISH_FED, fed_reagents, fed_reagent_type)
@@ -414,11 +419,14 @@
 		return FALSE
 	return TRUE
 
+/obj/item/fish/proc/is_hungry()
+	return !HAS_TRAIT(src, TRAIT_FISH_NO_HUNGER) && world.time - last_feeding >= feeding_frequency
+
 /obj/item/fish/proc/process_health(seconds_per_tick)
 	var/health_change_per_second = 0
 	if(!proper_environment())
 		health_change_per_second -= 3 //Dying here
-	if(world.time - last_feeding >= feeding_frequency)
+	if(is_hungry())
 		health_change_per_second -= 0.5 //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
@@ -433,13 +441,13 @@
 //Fish breeding stops if fish count exceeds this.
 #define AQUARIUM_MAX_BREEDING_POPULATION 20
 
-/obj/item/fish/proc/ready_to_reproduce(being_targetted = FALSE)
+/obj/item/fish/proc/ready_to_reproduce(being_targeted = FALSE)
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium))
 		return FALSE
-	if(being_targetted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
+	if(being_targeted && HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		return FALSE
-	if(!being_targetted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
+	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
 	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population > 1 && world.time >= breeding_wait
 
@@ -541,10 +549,11 @@
 #define FLOP_SINGLE_MOVE_TIME 1.5
 #define JUMP_X_DISTANCE 5
 #define JUMP_Y_DISTANCE 6
-/// This animation should be applied to actual parent atom instead of vc_object.
-/proc/flop_animation(atom/movable/animation_target)
+
+/// This flopping animation played while the fish is alive.
+/obj/item/fish/proc/flop_animation()
 	var/pause_between = PAUSE_BETWEEN_PHASES + rand(1, 5) //randomized a bit so fish are not in sync
-	animate(animation_target, time = pause_between, loop = -1)
+	animate(src, time = pause_between, loop = -1)
 	//move nose down and up
 	for(var/_ in 1 to FLOP_COUNT)
 		var/matrix/up_matrix = matrix()
@@ -565,6 +574,7 @@
 		animate(time = up_time, pixel_y = JUMP_Y_DISTANCE , pixel_x=x_step, loop = -1, flags= ANIMATION_RELATIVE, easing = BOUNCE_EASING | EASE_IN)
 		animate(time = up_time, pixel_y = -JUMP_Y_DISTANCE, pixel_x=x_step, loop = -1, flags= ANIMATION_RELATIVE, easing = BOUNCE_EASING | EASE_OUT)
 		animate(time = PAUSE_BETWEEN_FLOPS, loop = -1)
+
 #undef PAUSE_BETWEEN_PHASES
 #undef PAUSE_BETWEEN_FLOPS
 #undef FLOP_COUNT
@@ -578,7 +588,7 @@
 	if(flopping)  //Requires update_transform/animate_wrappers to be less restrictive.
 		return
 	flopping = TRUE
-	flop_animation(src)
+	flop_animation()
 
 /// Stops flopping animation
 /obj/item/fish/proc/stop_flopping()
@@ -593,7 +603,7 @@
 
 /obj/item/fish/proc/refresh_flopping()
 	if(flopping)
-		flop_animation(src)
+		flop_animation()
 
 /// Returns random fish, using random_case_rarity probabilities.
 /proc/random_fish_type(required_fluid)

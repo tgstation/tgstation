@@ -175,6 +175,7 @@
 	tastes = list("fried eggplant" = 4, "garlic" = 2, "olive oil" = 3)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/baba_ghanoush
 	name = "baba ghanoush"
@@ -188,6 +189,7 @@
 	tastes = list("mashed eggplant" = 5, "pita bread" = 4, "garlic" = 3, "olive oil" = 4, "lemon juice" = 2)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/falafel
 	name = "falafel"
@@ -200,3 +202,4 @@
 	tastes = list("fava beans" = 5, "garlic" = 3, "onion" = 2, "fresh herbs" = 4)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_3

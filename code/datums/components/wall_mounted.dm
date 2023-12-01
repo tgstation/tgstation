@@ -17,7 +17,7 @@
 
 /datum/component/wall_mounted/RegisterWithParent()
 	RegisterSignal(hanging_wall_turf, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(hanging_wall_turf, COMSIG_TURF_CHANGE, PROC_REF(drop_wallmount))
+	RegisterSignal(hanging_wall_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(drop_wallmount))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_linked_destroyed))
 
@@ -40,6 +40,14 @@
 /datum/component/wall_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += span_notice("\The [hanging_wall_turf] is currently supporting [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
+
+/**
+ * When the type of turf changes, if it is changing into a floor we should drop our contents
+ */
+/datum/component/wall_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+	SIGNAL_HANDLER
+	if (ispath(path, /turf/open))
+		drop_wallmount()
 
 /**
  * Handles the dropping of the linked object. This is done via deconstruction, as that should be the most sane way to handle it for most objects.

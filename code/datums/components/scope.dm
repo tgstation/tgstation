@@ -3,6 +3,10 @@
 	var/range_modifier = 1
 	/// Fullscreen object we use for tracking the shots.
 	var/atom/movable/screen/fullscreen/cursor_catcher/scope/tracker
+	/// The owner of the tracker's ckey. For comparing with the current owner mob, in case the client has left it (e.g. ghosted).
+	var/tracker_owner_ckey
+	/// Are we zooming currently?
+	var/zooming
 
 /datum/component/scope/Initialize(range_modifier)
 	if(!isgun(parent))
@@ -101,21 +105,35 @@
 	return target_turf
 
 /**
- * We start zooming by hiding the mouse pointer, adding our tracker overlay and starting our processing.
+ * Wrapper for zoom(), so in case we runtime we do not get stuck in a bad state
  *
  * Arguments:
  * * user: The mob we are starting zooming on.
 */
 /datum/component/scope/proc/start_zooming(mob/user)
-	if(!user.client)
+	if(zoom(user))
+		zooming = TRUE
+
+/**
+ * We start zooming by hiding the mouse pointer, adding our tracker overlay and starting our processing.
+ *
+ * Arguments:
+ * * user: The mob we are starting zooming on.
+*/
+/datum/component/scope/proc/zoom(mob/user)
+	if(isnull(user.client))
+		return
+	if(zooming)
 		return
 	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, 0)
 	tracker.assign_to_mob(user, range_modifier)
-	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(stop_zooming))
+	tracker_owner_ckey = user.ckey
+	RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
 	START_PROCESSING(SSprojectiles, src)
+	return TRUE
 
 /**
  * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
@@ -126,15 +144,31 @@
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
+	if(!zooming)
+		return
+
 	STOP_PROCESSING(SSprojectiles, src)
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	UnregisterSignal(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING))
+
+	zooming = FALSE
+
+	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
+	user.clear_fullscreen("scope")
+
+	// if the client has ended up in another mob, find that mob so we can fix their cursor
+	var/mob/true_user
+	if(user.ckey != tracker_owner_ckey)
+		true_user = get_mob_by_ckey(tracker_owner_ckey)
+
+	if(!isnull(true_user))
+		user = true_user
+
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
 		user.client.mouse_override_icon = null
 		user.update_mouse_pointer()
-	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	tracker = null
-	user.clear_fullscreen("scope")
+	tracker_owner_ckey = null
 
 /atom/movable/screen/fullscreen/cursor_catcher/scope
 	icon_state = "scope"
