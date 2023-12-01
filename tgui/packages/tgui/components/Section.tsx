@@ -19,7 +19,7 @@ export type SectionProps = Partial<{
   /** @member Allows external control of scrolling. */
   scrollableRef: RefObject<HTMLDivElement>;
   /** @member Callback function for the `scroll` event */
-  onScroll: (this: GlobalEventHandlers, ev: Event) => any;
+  onScroll: ((this: GlobalEventHandlers, ev: Event) => any) | null;
 }> &
   BoxProps;
 
@@ -73,7 +73,7 @@ export const Section = (props: SectionProps) => {
         </div>
       )}
       <div className="Section__rest">
-        <div onScroll={onScroll} className="Section__content">
+        <div onScroll={onScroll as any} className="Section__content">
           {children}
         </div>
       </div>

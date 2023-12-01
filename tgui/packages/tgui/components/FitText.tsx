@@ -1,4 +1,4 @@
-import { Component, createRef, PropsWithChildren, RefObject } from 'react';
+import { Component, createRef, HTMLAttributes, PropsWithChildren, RefObject } from 'react';
 
 const DEFAULT_ACCEPTABLE_DIFFERENCE = 5;
 

@@ -351,7 +351,7 @@ export const FeatureValueInput = (props: {
         return createElement(feature.component, {
           act: props.act,
           featureId: props.featureId,
-          serverData: serverData && serverData[props.featureId],
+          serverData: serverData?.[props.featureId] as any,
           shrink: props.shrink,
 
           handleSetValue: changeValue,

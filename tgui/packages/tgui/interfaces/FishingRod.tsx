@@ -64,7 +64,7 @@ export const FishingRod = (props) => {
   const { data } = useBackend<FishingRodData>();
 
   return (
-    <Window>
+    <Window height={300} width={300}>
       <Window.Content>
         <Section>
           <FishingRodSlot

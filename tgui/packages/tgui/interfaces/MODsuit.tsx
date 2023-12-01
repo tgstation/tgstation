@@ -105,8 +105,7 @@ export const MODsuit = (props) => {
       width={600}
       height={600}
       theme={ui_theme}
-      title="MOD Interface Panel"
-      resizable>
+      title="MOD Interface Panel">
       <Window.Content scrollable={!interface_break}>
         <MODsuitContent />
       </Window.Content>

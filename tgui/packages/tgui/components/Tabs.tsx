@@ -6,7 +6,7 @@
 
 import { classes } from 'common/react';
 import { isValidElement, PropsWithChildren, ReactNode } from 'react';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 
 type Props = Partial<{
@@ -15,6 +15,7 @@ type Props = Partial<{
   fill: boolean;
   fluid: boolean;
 }> &
+  BoxProps &
   PropsWithChildren;
 
 type TabProps = Partial<{
@@ -24,8 +25,9 @@ type TabProps = Partial<{
   icon: string;
   leftSlot: ReactNode;
   rightSlot: ReactNode;
-  onClick: () => void;
+  onClick: (e?) => void;
 }> &
+  BoxProps &
   PropsWithChildren;
 
 export const Tabs = (props: Props) => {

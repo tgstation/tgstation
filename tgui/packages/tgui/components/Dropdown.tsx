@@ -12,26 +12,25 @@ export interface DropdownEntry {
   value: string | number | Enumerator;
 }
 
-type DropdownUniqueProps = {
-  buttons?: boolean;
-  clipSelectedText?: boolean;
-  color?: string;
-  disabled?: boolean;
-  displayText?: string | number | ReactNode;
-  dropdownStyle?: any;
-  icon?: string;
-  iconRotation?: number;
-  iconSpin?: boolean;
-  menuWidth?: string;
-  nochevron?: boolean;
-  onClick?: (event) => void;
-  onSelected?: (selected: any) => void;
-  options: string[] | DropdownEntry[];
-  over?: boolean;
+type DropdownUniqueProps = { options: string[] | DropdownEntry[] } & Partial<{
+  buttons: boolean;
+  clipSelectedText: boolean;
+  color: string;
+  disabled: boolean;
+  displayText: string | number | ReactNode;
+  dropdownStyle: any;
+  icon: string;
+  iconRotation: number;
+  iconSpin: boolean;
+  menuWidth: string;
+  nochevron: boolean;
+  onClick: (event) => void;
+  onSelected: (selected: any) => void;
+  over: boolean;
   // you freaks really are just doing anything with this shit
-  selected?: any;
-  width?: string;
-};
+  selected: any;
+  width: string;
+}>;
 
 export type DropdownProps = BoxProps & DropdownUniqueProps;
 

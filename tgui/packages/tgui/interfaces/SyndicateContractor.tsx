@@ -204,15 +204,17 @@ export const StatusPane = (props) => {
                   onClick={() => act('PRG_redeem_TC')}
                 />
               }>
-              {redeemable_tc}
+              {String(redeemable_tc)}
             </LabeledList.Item>
-            <LabeledList.Item label="TC Earned">{earned_tc}</LabeledList.Item>
+            <LabeledList.Item label="TC Earned">
+              {String(earned_tc)}
+            </LabeledList.Item>
           </LabeledList>
         </Grid.Column>
         <Grid.Column>
           <LabeledList>
             <LabeledList.Item label="Contracts Completed">
-              {contracts_completed}
+              {String(contracts_completed)}
             </LabeledList.Item>
             <LabeledList.Item label="Current Status">ACTIVE</LabeledList.Item>
           </LabeledList>
@@ -257,7 +259,7 @@ const ContractsTab = (props) => {
               buttons={
                 <>
                   <Box inline bold mr={1}>
-                    {contract.payout} (+{contract.payout_bonus}) TC
+                    {`${contract.payout} (+${contract.payout_bonus}) TC`}
                   </Box>
                   <Button
                     content={active ? 'Abort' : 'Accept'}

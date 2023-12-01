@@ -1,5 +1,6 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
+import { PropsWithChildren } from 'react';
 
 import { useBackend } from '../backend';
 import { Box, Button, FitText, Stack } from '../components';
@@ -23,10 +24,12 @@ type PuzzgridData = {
   wrong_group_select_cooldown: BooleanLike;
 };
 
-const PuzzgridButton = (props: {
-  // In the future, this would be the TypeScript props of the button
-  [key: string]: unknown;
-}) => {
+const PuzzgridButton = (
+  props: {
+    // In the future, this would be the TypeScript props of the button
+    [key: string]: unknown;
+  } & PropsWithChildren
+) => {
   return (
     <Button
       verticalAlignContent="middle"

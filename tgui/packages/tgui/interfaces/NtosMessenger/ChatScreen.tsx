@@ -419,7 +419,7 @@ const ChatMessage = (props: ChatMessageProps) => {
   );
 };
 
-const ChatDivider: SFC<{ mt: number }> = (props) => {
+const ChatDivider = (props: { mt: number }) => {
   return (
     <Box className="UnreadDivider" m={0} mt={props.mt}>
       <div />

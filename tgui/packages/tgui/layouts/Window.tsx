@@ -69,7 +69,7 @@ export const Window = (props: Props) => {
     return () => {
       logger.log('unmounting');
     };
-  }, []);
+  }, [width, height]);
 
   let debugLayout = false;
   if (debug) {
@@ -109,15 +109,15 @@ export const Window = (props: Props) => {
         <>
           <div
             className="Window__resizeHandle__e"
-            onMouseDown={resizeStartHandler(1, 0)}
+            onMouseDown={resizeStartHandler(1, 0) as any}
           />
           <div
             className="Window__resizeHandle__s"
-            onMouseDown={resizeStartHandler(0, 1)}
+            onMouseDown={resizeStartHandler(0, 1) as any}
           />
           <div
             className="Window__resizeHandle__se"
-            onMouseDown={resizeStartHandler(1, 1)}
+            onMouseDown={resizeStartHandler(1, 1) as any}
           />
         </>
       )}

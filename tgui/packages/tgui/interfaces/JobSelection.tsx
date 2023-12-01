@@ -31,12 +31,12 @@ type Data = {
   round_duration: string;
 };
 
-export const JobEntry: SFC<{
+export const JobEntry = (data: {
   jobName: string;
   job: Job;
   department: Department;
   onClick: () => void;
-}> = (data) => {
+}) => {
   const jobName = data.jobName;
   const job = data.job;
   const department = data.department;
@@ -106,11 +106,7 @@ export const JobSelection = (props) => {
   return (
     <Window
       width={1012}
-      height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}
-      onComponentDidMount={() => {
-        // Send a heartbeat back to DM to let it know the window is alive and well
-        act('ui_mounted_with_no_bluescreen');
-      }}>
+      height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}>
       <Window.Content scrollable>
         <StyleableSection
           title={
