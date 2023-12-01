@@ -476,11 +476,11 @@ export class PreviewView extends Component<PreviewViewProps> {
     // kill any other marked tokens we don't want here
     const walkTokens = (token) => {
       switch (token.type) {
-        case url:
-        case autolink:
-        case reflink:
-        case link:
-        case image:
+        case 'url':
+        case 'autolink':
+        case 'reflink':
+        case 'link':
+        case 'image':
           token.type = 'text';
           // Once asset system is up change to some default image
           // or rewrite for icon images
@@ -678,11 +678,11 @@ export class PreviewView extends Component<PreviewViewProps> {
     // kill any other marked tokens we don't want here
     const walkTokens = (token) => {
       switch (token.type) {
-        case url:
-        case autolink:
-        case reflink:
-        case link:
-        case image:
+        case 'url':
+        case 'autolink':
+        case 'reflink':
+        case 'link':
+        case 'image':
           token.type = 'text';
           // Once asset system is up change to some default image
           // or rewrite for icon images

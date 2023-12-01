@@ -1,6 +1,6 @@
 import { createRef, PropsWithChildren, useEffect } from 'react';
 
-export const AutofocusWrapper = (props: PropsWithChildren) => {
+export const Autofocus = (props: PropsWithChildren) => {
   const ref = createRef<HTMLDivElement>();
 
   useEffect(() => {

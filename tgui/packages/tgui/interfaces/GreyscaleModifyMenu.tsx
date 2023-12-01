@@ -201,7 +201,13 @@ const PreviewDisplay = (props) => {
           </Table.Cell>
           {data.sprites?.finished ? (
             <Table.Cell>
-              <img src={data.sprites.finished} width="75%" />
+              <Box
+                as="img"
+                m={0}
+                mx="10%"
+                src={data.sprites.finished}
+                width="75%"
+              />
             </Table.Cell>
           ) : (
             <Table.Cell>

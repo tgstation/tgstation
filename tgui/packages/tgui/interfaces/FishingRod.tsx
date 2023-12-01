@@ -23,7 +23,8 @@ const FishingRodSlot = (props: FishingSlotProps) => {
   const { act } = useBackend();
 
   const icon_wrapper = (icon) => (
-    <img
+    <Box
+      as="img"
       width="64px" // todo come up with some way to scale this sanely
       height="64px"
       src={`data:image/jpeg;base64,${icon}`}
