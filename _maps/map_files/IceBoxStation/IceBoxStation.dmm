@@ -64472,6 +64472,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/storage/emergency/port)
+"uMn" = (
+/obj/structure/closet/l3closet/scientist,
+/turf/open/floor/engine,
+/area/station/science/explab)
 "uMq" = (
 /obj/structure/sign/warning/cold_temp{
 	pixel_x = -29
@@ -256347,7 +256351,7 @@ nsZ
 ajS
 rYl
 pWL
-rDZ
+uMn
 pxu
 gHx
 bgx
