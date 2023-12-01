@@ -2,7 +2,7 @@ import { multiline } from 'common/string';
 import { CheckboxInput, FeatureChoiced, FeatureChoicedServerData, FeatureDropdownInput, FeatureToggle, FeatureValueProps } from '../base';
 import { Box, Dropdown, Flex } from '../../../../../components';
 import { classes } from 'common/react';
-import { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { binaryInsertWith } from 'common/collections';
 import { useBackend } from '../../../../../backend';
 import { PreferencesMenuData } from '../../../data';
@@ -21,7 +21,7 @@ const insertGhostForm = binaryInsertWith<{
 
 const GhostFormInput = (
   props: FeatureValueProps<string, string, FeatureChoicedServerData>
-): ReactElement => {
+) => {
   const { data } = useBackend<PreferencesMenuData>();
 
   const serverData = props.serverData;
