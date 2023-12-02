@@ -28,6 +28,8 @@ SUBSYSTEM_DEF(autotransfer)
 /datum/vote/shuttle_call
 	name = "Call Shuttle"
 	message = "Should we go home?!"
+	default_choices = list("Yes", "No")
+	player_startable = FALSE
 
 /datum/vote/shuttle_call/can_be_initiated(mob/by_who, forced = FALSE)
 	. = ..()
@@ -57,10 +59,6 @@ SUBSYSTEM_DEF(autotransfer)
 		return FALSE
 	if(length(GLOB.player_list) < 25)
 		return FALSE
-
-/datum/vote/shuttle_call/New()
-	. = ..()
-	default_choices = list("Yes", "No")
 
 
 /datum/vote/shuttle_call/finalize_vote(winning_option)
