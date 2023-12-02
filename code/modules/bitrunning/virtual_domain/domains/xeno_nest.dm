@@ -11,4 +11,3 @@
 	map_name = "xeno_nest"
 	mob_modules = list(/datum/modular_mob_segment/xenos)
 	reward_points = BITRUNNER_REWARD_LOW
-	safehouse_path = /datum/map_template/safehouse/shuttle
