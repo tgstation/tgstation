@@ -745,6 +745,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
 	VV_DROPDOWN_OPTION(VV_HK_APPLY_DNA_INFUSION, "Apply DNA Infusion")
+	VV_DROPDOWN_OPTION(VV_HK_TURN_INTO_MMI, "Turn into MMI")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -840,6 +841,31 @@
 		else
 			to_chat(usr, "Failed to apply DNA Infusion to [src].")
 			log_admin("[key_name(usr)] failed to apply a DNA Infusion to [key_name(src)].")
+
+	if(href_list[VV_HK_TURN_INTO_MMI])
+		if(!check_rights(R_DEBUG))
+			return
+
+		var/result = input(usr, "This will delete the mob, are you sure?", "Turn into MMI") in list("Yes", "No")
+		if(result != "Yes")
+			return
+
+		if(!ishuman(target))
+			to_chat(usr, "This can only be done to humanoid mobs.")
+			return
+
+
+		var/obj/item/organ/internal/brain/target_brain = src.get_organ_slot(ORGAN_SLOT_BRAIN)
+
+		if(!target_brain)
+			to_chat(usr, "This mob has no brain to insert into an MMI.")
+
+		var/obj/item/mmi/new_mmi = new(src.loc)
+
+		target_brain.Remove(target)
+		new_mmi.attackby(target_brain, target)
+
+		qdel(target)
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]

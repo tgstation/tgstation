@@ -1189,17 +1189,3 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
 
-/client/proc/spawn_as_mmi(mob/living/carbon/human/target in GLOB.human_list)
-	set category = "Debug"
-	set name = "Turn target into MMI"
-	set desc = "Turns something into an MMI, must be used on humans"
-	if(!check_rights(R_DEBUG))
-		return
-	if(!ishuman(target))
-		return
-
-	var/obj/item/mmi/new_mmi = new(target.loc)
-	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
-	target_brain.Remove(target)
-	new_mmi.attackby(target_brain,target)
-	qdel(target)
