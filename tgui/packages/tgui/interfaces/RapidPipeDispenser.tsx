@@ -59,7 +59,7 @@ const LAYERS = [
     name: '5',
     bitmask: 16,
   },
-];
+] as const;
 
 type DirectionsAllowed = {
   north: BooleanLike;
@@ -106,6 +106,8 @@ type Data = {
   // Dynamic
   category: number;
   pipe_layers: number;
+  multi_layer: BooleanLike;
+  latest_pipe_layer: number;
   ducting_layer: number;
   categories: Category[];
   selected_recipe: string;
@@ -206,20 +208,37 @@ const SelectionSection = (props) => {
 export const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
   const { pipe_layers } = data;
+  const { multi_layer } = data;
+  const { latest_pipe_layer } = data;
   return (
     <LabeledList.Item label="Layer">
       {LAYERS.map((layer) => (
         <Button.Checkbox
           key={layer.bitmask}
-          checked={pipe_layers & layer.bitmask}
+          checked={
+            multi_layer
+              ? pipe_layers & layer.bitmask
+              : layer.bitmask === pipe_layers
+          }
           content={layer.name}
-          onClick={() =>
+          onClick={() => {
             act('pipe_layers', {
               pipe_layers: layer.bitmask,
-            })
-          }
+            });
+            act('set_latest_pipe_layer', {
+              latest_pipe_layer: layer.name,
+            });
+          }}
         />
       ))}
+      <Button.Checkbox
+        key="multilayer"
+        checked={multi_layer}
+        content="Multi"
+        onClick={() => {
+          act('toggle_multi_layer');
+        }}
+      />
     </LabeledList.Item>
   );
 };
