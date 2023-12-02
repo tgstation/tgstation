@@ -63,28 +63,60 @@
 			"color_ids": [ 5 ]
 		}
 	],
-	"open": [
+	"open_bottom": [
 		{
 			"type": "icon_state",
-			"icon_state": "left_door_panel_open",
+			"icon_state": "left_door_panel_open_bottom",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "right_door_panel_open",
+			"icon_state": "right_door_panel_open_bottom",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "top_right_rim_open",
+			"icon_state": "top_right_rim_open_bottom",
 			"blend_mode": "overlay",
 			"color_ids": [ 3 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "top_left_rim_open",
+			"icon_state": "top_left_rim_open_bottom",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fill_open",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		}
+	],
+	"open_top": [
+		{
+			"type": "icon_state",
+			"icon_state": "left_door_panel_open_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "right_door_panel_open_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_right_rim_open_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "top_left_rim_open_top",
 			"blend_mode": "overlay",
 			"color_ids": [ 4 ]
 		},
