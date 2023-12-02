@@ -28,17 +28,16 @@ enum Pages {
   TicketHistory = 2,
 }
 
-export const PlayerTicketHistory = (props: any, context: any) => {
-  const { act, data } = useBackend<PthData>(context);
+export const PlayerTicketHistory = (props: any) => {
+  const { act, data } = useBackend<PthData>();
 
   const [page, setPage] = useLocalState(
-    context,
     'page',
     data.target_ckey ? Pages.TicketHistory : Pages.Cache
   );
 
-  const [cacheInput, setCacheInput] = useLocalState(context, 'cacheInput', '');
-  const [cacheCount, setCacheCount] = useLocalState(context, 'cacheCount', 5);
+  const [cacheInput, setCacheInput] = useLocalState('cacheInput', '');
+  const [cacheCount, setCacheCount] = useLocalState('cacheCount', 5);
 
   if (!data.db_connected) {
     return (
@@ -84,8 +83,8 @@ export const PlayerTicketHistory = (props: any, context: any) => {
   );
 };
 
-const TicketHistory = (props: any, context: any) => {
-  const { act, data } = useBackend<PthData>(context);
+const TicketHistory = (props: any) => {
+  const { act, data } = useBackend<PthData>();
 
   if (data.ticket_cache === undefined) {
     return (
@@ -96,7 +95,6 @@ const TicketHistory = (props: any, context: any) => {
   }
 
   const [activeTicket, setActiveTicket] = useLocalState<TicketData | undefined>(
-    context,
     'ticket',
     undefined
   );
@@ -150,8 +148,8 @@ type CacheProps = {
   setCacheCount: (value: number) => void;
 };
 
-const Cache = (props: CacheProps, context: any) => {
-  const { act, data } = useBackend<PthData>(context);
+const Cache = (props: CacheProps) => {
+  const { act, data } = useBackend<PthData>();
 
   return (
     <Section>
@@ -200,13 +198,9 @@ type TicketViewProps = {
   ticket: TicketData;
 };
 
-const TicketView = (props: TicketViewProps, context: any) => {
-  const { act, data } = useBackend<PthData>(context);
-  const [forceExpand, setForceExpand] = useLocalState(
-    context,
-    'forceExpand',
-    false
-  );
+const TicketView = (props: TicketViewProps) => {
+  const { act, data } = useBackend<PthData>();
+  const [forceExpand, setForceExpand] = useLocalState('forceExpand', false);
 
   // sort by timestamp
   props.ticket.ticket_log.sort((a, b) => {

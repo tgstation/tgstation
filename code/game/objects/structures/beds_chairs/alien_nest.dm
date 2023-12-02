@@ -13,6 +13,7 @@
 	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST
 	build_stack_type = null
 	flags_1 = NODECONSTRUCT_1
+	elevation = 0
 	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/nonhuman-player/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)

@@ -2131,7 +2131,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/medbot,
+/mob/living/basic/bot/medbot,
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
 "NC" = (

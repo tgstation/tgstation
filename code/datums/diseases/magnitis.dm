@@ -25,7 +25,7 @@
 				to_chat(affected_mob, span_danger("Your skin tingles with energy."))
 			if(SPT_PROB(1, seconds_per_tick))
 				for(var/obj/nearby_object in orange(2, affected_mob))
-					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
+					if(nearby_object.anchored || !(nearby_object.obj_flags & CONDUCTS_ELECTRICITY))
 						continue
 					var/move_dir = get_dir(nearby_object, affected_mob)
 					nearby_object.Move(get_step(nearby_object, move_dir), move_dir)
@@ -40,7 +40,7 @@
 			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a light shock course through your body."))
 				for(var/obj/nearby_object in orange(4, affected_mob))
-					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
+					if(nearby_object.anchored || !(nearby_object.obj_flags & CONDUCTS_ELECTRICITY))
 						continue
 					for(var/i in 1 to rand(1, 2))
 						nearby_object.throw_at(affected_mob, 4, 3)
@@ -55,7 +55,7 @@
 			if(SPT_PROB(4, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a powerful shock course through your body."))
 				for(var/obj/nearby_object in orange(6, affected_mob))
-					if(nearby_object.anchored || !(nearby_object.flags_1 & CONDUCT_1))
+					if(nearby_object.anchored || !(nearby_object.obj_flags & CONDUCTS_ELECTRICITY))
 						continue
 					for(var/i in 1 to rand(1, 3))
 						nearby_object.throw_at(affected_mob, 6, 5) // I really wanted to use addtimers to stagger out when everything gets thrown but it would probably cause a lot of lag.

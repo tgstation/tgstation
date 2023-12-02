@@ -10,5 +10,5 @@
 	invocation_type = INVOCATION_SHOUT
 
 	summon_radius = 3
-	summon_type = list(/obj/item/a_gift)
+	summon_type = list(/obj/item/gift)
 	summon_amount = 5

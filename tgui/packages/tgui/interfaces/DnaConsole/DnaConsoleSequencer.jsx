@@ -5,7 +5,7 @@ import { Box, Button, Section, Stack } from '../../components';
 import { MutationInfo } from './MutationInfo';
 import { CLEAR_GENE, GENE_COLORS, MUT_NORMAL, NEXT_GENE, PREV_GENE, SUBJECT_DEAD, SUBJECT_TRANSFORMING } from './constants';
 
-const GenomeImage = (props, context) => {
+const GenomeImage = (props) => {
   const { url, selected, onClick } = props;
   let outline;
   if (selected) {
@@ -26,8 +26,8 @@ const GenomeImage = (props, context) => {
   );
 };
 
-const GeneCycler = (props, context) => {
-  const { act } = useBackend(context);
+const GeneCycler = (props) => {
+  const { act } = useBackend();
   const { alias, gene, index, disabled, ...rest } = props;
   const color = (disabled && GENE_COLORS['X']) || GENE_COLORS[gene];
   return (
@@ -67,7 +67,7 @@ const GeneCycler = (props, context) => {
   );
 };
 
-const GenomeSequencer = (props, context) => {
+const GenomeSequencer = (props) => {
   const { mutation } = props;
   if (!mutation) {
     return <Box color="average">No genome selected for sequencing.</Box>;
@@ -147,8 +147,8 @@ const GenomeSequencer = (props, context) => {
   );
 };
 
-export const DnaConsoleSequencer = (props, context) => {
-  const { data, act } = useBackend(context);
+export const DnaConsoleSequencer = (props) => {
+  const { data, act } = useBackend();
   const mutations = data.storage?.occupant ?? [];
   const { isJokerReady, isMonkey, jokerSeconds, subjectStatus } = data;
   const { sequencerMutation, jokerActive } = data.view;

@@ -3,9 +3,9 @@ import { Button, Modal, Section, Box } from '../../components';
 import { sanitizeText } from '../../sanitize';
 import hljs from 'highlight.js/lib/core';
 
-export const ChunkViewModal = (props, context) => {
-  const [, setModal] = useLocalState(context, 'modal');
-  const [viewedChunk, setViewedChunk] = useLocalState(context, 'viewedChunk');
+export const ChunkViewModal = (props) => {
+  const [, setModal] = useLocalState('modal');
+  const [viewedChunk, setViewedChunk] = useLocalState('viewedChunk');
   return (
     <Modal
       height={`${window.innerHeight * 0.8}px`}

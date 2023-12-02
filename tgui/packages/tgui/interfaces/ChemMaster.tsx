@@ -56,8 +56,8 @@ type Container = {
   volume: number;
 };
 
-export const ChemMaster = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const ChemMaster = (props) => {
+  const { data } = useBackend<Data>();
   const { reagentAnalysisMode } = data;
   return (
     <Window width={400} height={620}>
@@ -68,8 +68,8 @@ export const ChemMaster = (props, context) => {
   );
 };
 
-const ChemMasterContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ChemMasterContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     isPrinting,
     printingProgress,
@@ -89,7 +89,7 @@ const ChemMasterContent = (props, context) => {
     suggestedContainer,
   } = data;
 
-  const [itemCount, setItemCount] = useLocalState(context, 'itemCount', 1);
+  const [itemCount, setItemCount] = useLocalState('itemCount', 1);
 
   return (
     <Box>
@@ -260,8 +260,8 @@ const ChemMasterContent = (props, context) => {
   );
 };
 
-const ReagentEntry = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+const ReagentEntry = (props) => {
+  const { data, act } = useBackend<Data>();
   const { chemical, transferTo } = props;
   const { isPrinting } = data;
   return (
@@ -342,8 +342,8 @@ const ReagentEntry = (props, context) => {
   );
 };
 
-const ContainerButton = ({ container, category }, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ContainerButton = ({ container, category }) => {
+  const { act, data } = useBackend<Data>();
   const { isPrinting, selectedContainerRef } = data;
   const isPillPatch = ['pills', 'patches'].includes(category.name);
   return (
@@ -375,8 +375,8 @@ const ContainerButton = ({ container, category }, context) => {
   ) as any;
 };
 
-const AnalysisResults = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AnalysisResults = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     name,
     state,
