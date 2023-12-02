@@ -163,6 +163,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	update_appearance()
 	balloon_alert(src, "turned on")
 	diag_hud_set_botstat()
+	SEND_SIGNAL(src, COMSIG_BOT_TURNED_ON)
 	return TRUE
 
 /mob/living/basic/bot/proc/turn_off()
@@ -172,6 +173,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	bot_reset() //Resets an AI's call, should it exist.
 	balloon_alert(src, "turned off")
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_BOT_TURNED_OFF)
 
 /mob/living/basic/bot/Destroy()
 	GLOB.bots_list -= src
