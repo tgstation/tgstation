@@ -119,12 +119,6 @@
 	if(calibrating)
 		. += span_warning("It's still calibrating.")
 
-/**
- * Handles generating a key for the message server, returning it. Doesn't assign
- * it in this proc, you have to do so yourself.
- */
-/obj/machinery/telecomms/message_server/proc/generate_key()
-
 /obj/machinery/telecomms/message_server/process()
 	. = ..()
 	if(calibrating && calibrating <= world.time)
@@ -176,6 +170,7 @@ GLOBAL_VAR(preset_station_message_server_key)
 	if(is_on_station && GLOB.preset_station_message_server_key)
 		decryptkey = GLOB.preset_station_message_server_key
 		return
+	//Generate a random password for the message server
 	decryptkey = pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
 	decryptkey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
 	decryptkey += "[rand(0, 9)]"
