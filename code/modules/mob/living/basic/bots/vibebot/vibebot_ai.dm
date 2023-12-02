@@ -1,6 +1,6 @@
 #define LIGHT_COOLDOWN_DURATION (2 SECONDS)
 
-/// Vibebots just do what normal bots do except they flash their lights every so often.
+/// Vibebots aren't really like normal bots with the beacon and all that, they just sorta wander around and flash their lights, sometimes locking onto a target.
 /datum/ai_controller/basic_controller/bot/vibebot
 	blackboard = list(
 		BB_SALUTE_MESSAGES = list(
@@ -13,12 +13,15 @@
 	)
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/salute_beepsky,
 		/datum/ai_planning_subtree/pizzazz,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 		/datum/ai_planning_subtree/manage_unreachable_list,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/travel_to_point/and_vibe,
 	)
+
+	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 /datum/ai_planning_subtree/pizzazz
 
@@ -33,5 +36,10 @@
 		SEND_SIGNAL(controller.pawn, COMSIG_CHANGE_VIBEBOT_COLOR)
 
 	finish_action(controller, TRUE) // any attempt is a success
+
+/// Vibebots will just move towards their target to vibe with them.
+/datum/ai_planning_subtree/travel_to_point/and_vibe
+	location_key = BB_BASIC_MOB_CURRENT_TARGET
+
 
 #undef LIGHT_COOLDOWN_DURATION
