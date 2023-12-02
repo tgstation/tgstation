@@ -164,12 +164,6 @@
 	return attacking_item.attack_atom(src, user, params)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	if(user.combat_mode)
-		return .
-
 	for(var/datum/surgery/operation as anything in surgeries)
 		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
 			continue
@@ -178,7 +172,7 @@
 		if(operation.next_step(user, modifiers))
 			return ITEM_INTERACT_SUCCESS
 
-	return .
+	return ..()
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(..())
