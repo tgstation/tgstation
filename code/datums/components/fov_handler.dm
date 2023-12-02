@@ -21,7 +21,6 @@
 		return
 
 	ADD_TRAIT(mob_parent, TRAIT_FOV_APPLIED, REF(src))
-	log_world("fov applied to [REF(mob_parent)] [REF(src)]")
 
 	blocker_mask = new
 	set_fov_angle(fov_type)
@@ -32,7 +31,6 @@
 /datum/component/fov_handler/Destroy()
 	var/mob/living/mob_parent = parent
 
-	log_world("fov removed from [REF(mob_parent)] [REF(src)]")
 	REMOVE_TRAIT(mob_parent, TRAIT_FOV_APPLIED, REF(src))
 	if(applied_mask)
 		remove_mask()
