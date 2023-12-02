@@ -37,3 +37,8 @@
 	. = ..()
 	user.psykerize()
 
+/datum/outfit/bitductor
+	name = "Bitrunning Abductor"
+	uniform = /obj/item/clothing/under/abductor
+	gloves = /obj/item/clothing/gloves/fingerless
+	shoes = /obj/item/clothing/shoes/jackboots
