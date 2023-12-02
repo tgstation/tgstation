@@ -850,7 +850,7 @@
 		if(result != "Yes")
 			return
 
-		if(!ishuman(target))
+		if(!ishuman(src))
 			to_chat(usr, "This can only be done to humanoid mobs.")
 			return
 
@@ -862,10 +862,10 @@
 
 		var/obj/item/mmi/new_mmi = new(src.loc)
 
-		target_brain.Remove(target)
-		new_mmi.attackby(target_brain, target)
+		target_brain.Remove(src)
+		new_mmi.attackby(target_brain, null)
 
-		qdel(target)
+		qdel(src)
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]

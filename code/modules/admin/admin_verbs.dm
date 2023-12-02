@@ -221,7 +221,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/run_empty_query,
 	/client/proc/SDQL2_query,
 	/client/proc/set_dynex_scale,
-	/client/proc/spawn_as_mmi,
 	/client/proc/spawn_debug_full_crew,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/test_movable_UI,
