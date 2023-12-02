@@ -69,8 +69,6 @@
 #define COMSIG_LIVING_ADJUST_OXY_DAMAGE "living_adjust_oxy_damage"
 /// Send when toxloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_TOX_DAMAGE "living_adjust_tox_damage"
-/// Send when cloneloss is modified (type, amount, forced)
-#define COMSIG_LIVING_ADJUST_CLONE_DAMAGE "living_adjust_clone_damage"
 /// Send when staminaloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_STAMINA_DAMAGE "living_adjust_stamina_damage"
 
@@ -78,7 +76,6 @@
 #define COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES list(\
 	COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_BURN_DAMAGE,\
-	COMSIG_LIVING_ADJUST_CLONE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_OXY_DAMAGE,\
 	COMSIG_LIVING_ADJUST_TOX_DAMAGE,\
 )

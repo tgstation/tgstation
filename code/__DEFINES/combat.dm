@@ -54,7 +54,6 @@
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)
 #define TOXLOSS (1<<2)
-#define CLONELOSS (1<<3)
 #define OXYLOSS (1<<4)
 #define STAMINALOSS (1<<5)
 #define SHAME (1<<6)

@@ -550,7 +550,6 @@
 		owner_physiology.burn_mod *= 0.5
 		owner_physiology.tox_mod *= 0.5
 		owner_physiology.oxy_mod *= 0.5
-		owner_physiology.clone_mod *= 0.5
 		owner_physiology.stamina_mod *= 0.5
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
@@ -568,7 +567,6 @@
 		owner_physiology.burn_mod *= 2
 		owner_physiology.tox_mod *= 2
 		owner_physiology.oxy_mod *= 2
-		owner_physiology.clone_mod *= 2
 		owner_physiology.stamina_mod *= 2
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)

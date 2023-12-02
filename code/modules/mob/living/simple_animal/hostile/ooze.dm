@@ -253,14 +253,14 @@
 	UnregisterSignal(vored_mob, COMSIG_QDELETING)
 	vored_mob = null
 
-///Gain health for the consumption and dump some clone loss on the target.
+///Gain health for the consumption and dump some brute loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
 	vored_mob.adjustBruteLoss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	ooze.adjust_ooze_nutrition(3)
 
-	///Dump em at 200 cloneloss.
+	///Dump em at 200 bruteloss.
 	if(vored_mob.getBruteLoss() >= 200)
 		stop_consuming()
 

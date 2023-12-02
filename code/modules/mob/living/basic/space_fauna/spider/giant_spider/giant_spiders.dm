@@ -253,7 +253,7 @@
 	icon_dead = "tank_dead"
 	maxHealth = 500
 	health = 500
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	obj_damage = 15
