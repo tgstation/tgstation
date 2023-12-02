@@ -230,7 +230,7 @@
 
 /obj/item/bodypart/Destroy()
 	if(owner && !QDELETED(owner))
-		owner.remove_bodypart(src)
+		forced_removal(special = FALSE, dismembered = TRUE, move_to_floor = FALSE)
 		update_owner(null)
 	for(var/wound in wounds)
 		qdel(wound) // wounds is a lazylist, and each wound removes itself from it on deletion.

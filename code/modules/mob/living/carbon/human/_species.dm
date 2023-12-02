@@ -370,9 +370,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
 			if(slot == ORGAN_SLOT_BRAIN)
 				var/obj/item/organ/internal/brain/existing_brain = existing_organ
-				if(!existing_brain.decoy_override)
-					existing_brain.before_organ_replacement(new_organ)
-					existing_brain.Remove(organ_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
+				existing_brain.before_organ_replacement(new_organ)
+				existing_brain.Remove(organ_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
 			else
 				existing_organ.before_organ_replacement(new_organ)
 				existing_organ.Remove(organ_holder, special = TRUE)

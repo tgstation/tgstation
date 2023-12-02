@@ -270,3 +270,6 @@
 #define CLOWNOP_TRAIT "clownop"
 
 #define ANALYZER_TRAIT "analyzer_trait"
+
+/// Trait from an organ being inside a bodypart
+#define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
