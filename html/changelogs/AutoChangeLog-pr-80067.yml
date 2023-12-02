@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes:
+  - bugfix: "Digi legs work with the QM's jumpskirt"

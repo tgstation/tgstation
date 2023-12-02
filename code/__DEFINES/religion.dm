@@ -9,6 +9,9 @@
 #define ALIGNMENT_NEUT "neutral"
 #define ALIGNMENT_EVIL "evil"
 
+/// the probability, when not overridden by sects, for a bible's bless effect to trigger on a smack
+#define DEFAULT_SMACK_CHANCE 60
+
 //## which weapons should we use?
 
 // unused but for clarity

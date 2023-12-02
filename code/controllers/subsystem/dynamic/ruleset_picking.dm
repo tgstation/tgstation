@@ -8,7 +8,7 @@
  *
  * * max_allowed_attempts - Allows you to configure how many times the proc will attempt to pick a ruleset before giving up.
  */
-/datum/game_mode/dynamic/proc/pick_ruleset(list/drafted_rules, max_allowed_attempts = INFINITY)
+/datum/controller/subsystem/dynamic/proc/pick_ruleset(list/drafted_rules, max_allowed_attempts = INFINITY)
 	if (only_ruleset_executed)
 		log_dynamic("FAIL: only_ruleset_executed")
 		return null
@@ -52,7 +52,7 @@
 	return null
 
 /// Executes a random midround ruleset from the list of drafted rules.
-/datum/game_mode/dynamic/proc/pick_midround_rule(list/drafted_rules, description)
+/datum/controller/subsystem/dynamic/proc/pick_midround_rule(list/drafted_rules, description)
 	log_dynamic("Rolling [drafted_rules.len] [description]")
 
 	var/datum/dynamic_ruleset/rule = pick_ruleset(drafted_rules)
@@ -75,7 +75,7 @@
 	return rule
 
 /// Fired after admins do not cancel a midround injection.
-/datum/game_mode/dynamic/proc/execute_midround_rule(datum/dynamic_ruleset/rule)
+/datum/controller/subsystem/dynamic/proc/execute_midround_rule(datum/dynamic_ruleset/rule)
 	current_midround_rulesets = null
 	midround_injection_timer_id = null
 	if (!rule.repeatable)
@@ -83,7 +83,7 @@
 	addtimer(CALLBACK(src, PROC_REF(execute_midround_latejoin_rule), rule), rule.delay)
 
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
-/datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
+/datum/controller/subsystem/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	spend_midround_budget(rule.cost, threat_log, "[worldtime2text()]: [rule.ruletype] [rule.name]")
 	rule.pre_execute(GLOB.alive_player_list.len)
@@ -109,7 +109,7 @@
 	return FALSE
 
 /// Fired when an admin cancels the current midround injection.
-/datum/game_mode/dynamic/proc/admin_cancel_midround(mob/user, timer_id)
+/datum/controller/subsystem/dynamic/proc/admin_cancel_midround(mob/user, timer_id)
 	if (midround_injection_timer_id != timer_id || !deltimer(midround_injection_timer_id))
 		to_chat(user, span_notice("Too late!"))
 		return
@@ -120,7 +120,7 @@
 	current_midround_rulesets = null
 
 /// Fired when an admin requests a different midround injection.
-/datum/game_mode/dynamic/proc/admin_different_midround(mob/user, timer_id)
+/datum/controller/subsystem/dynamic/proc/admin_different_midround(mob/user, timer_id)
 	if (midround_injection_timer_id != timer_id || !deltimer(midround_injection_timer_id))
 		to_chat(user, span_notice("Too late!"))
 		return

@@ -360,7 +360,7 @@
 /*
  * A status effect used for preventing caltrop message spam
  *
- * While a mob has this status effect, they won't recieve any messages about
+ * While a mob has this status effect, they won't receive any messages about
  * stepping on caltrops. But they will be stunned and damaged regardless.
  *
  * The status effect itself has no effect, other than to disappear after
