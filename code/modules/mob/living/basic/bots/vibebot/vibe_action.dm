@@ -15,7 +15,7 @@
 	RegisterSignal(grant_to, COMSIG_BOT_TURNED_OFF, PROC_REF(on_turn_off))
 
 /datum/action/innate/vibe/Remove(mob/removed_from)
-	UnregisterSignal(remove_from, list(COMSIG_BOT_TURNED_ON, COMSIG_BOT_TURNED_OFF))
+	UnregisterSignal(removed_from, list(COMSIG_BOT_TURNED_ON, COMSIG_BOT_TURNED_OFF))
 	return ..()
 
 /datum/action/innate/vibe/IsAvailable(feedback = FALSE)

@@ -18,7 +18,6 @@
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = VIBE_BOT
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	path_image_color = "#2cac12"
 	possessed_message = "You are a vibebot! Maintain the station's vibes to the best of your ability!"
 
 	ai_controller = /datum/ai_controller/basic_controller/bot
