@@ -45,7 +45,7 @@
 	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
 
 	/// If any one of these fail, it reverts the entire process
-	if(!load_domain(map_key) || !load_safehouse() || !load_map_items() || !load_mob_segments())
+	if(!load_domain(map_key) || !load_map_items() || !load_mob_segments())
 		balloon_alert_to_viewers("initialization failed.")
 		scrub_vdom()
 		is_ready = TRUE
@@ -112,21 +112,6 @@
 
 	if(!attempt_spawn_cache(cache_turfs))
 		return FALSE
-
-	return TRUE
-
-/// Loads the safehouse
-/obj/machinery/quantum_server/proc/load_safehouse()
-	var/obj/effect/landmark/bitrunning/safehouse_spawn/landmark = locate() in GLOB.landmarks_list
-	if(isnull(landmark))
-		CRASH("vdom: failed to find safehouse spawn landmark")
-
-	var/turf/spawn_loc = get_turf(landmark)
-	qdel(landmark)
-
-	var/datum/map_template/safehouse/new_safehouse = new generated_domain.safehouse_path()
-	if(!new_safehouse.load(spawn_loc))
-		CRASH("vdom: failed to load safehouse")
 
 	return TRUE
 

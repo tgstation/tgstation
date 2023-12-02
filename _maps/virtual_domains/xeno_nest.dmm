@@ -97,7 +97,9 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "v" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "shuttle"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "x" = (
