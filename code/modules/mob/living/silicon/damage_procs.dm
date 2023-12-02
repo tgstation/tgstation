@@ -4,7 +4,7 @@
 /mob/living/silicon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype) //immune to tox damage
 	return FALSE
 
-/mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
 	return FALSE
 
 /mob/living/silicon/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype) //immune to stamina damage.
