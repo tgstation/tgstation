@@ -362,11 +362,6 @@
 		transferred = TRUE
 		target.adjustOxyLoss(-suffocation_damage)
 		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
-	var/clone_damage = target.getCloneLoss()
-	if(clone_damage && !HAS_TRAIT(chaplain, TRAIT_NOCLONELOSS))
-		transferred = TRUE
-		target.adjustCloneLoss(-clone_damage)
-		chaplain.adjustCloneLoss(clone_damage * burden_modifier, forced = TRUE)
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
 			var/target_blood_data = target.get_blood_data(target.get_blood_id())
