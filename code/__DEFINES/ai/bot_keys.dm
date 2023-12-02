@@ -33,3 +33,7 @@
 #define BB_NEAR_DEATH_SPEECH "near_death_speech"
 ///in crit patient we must alert medbay about
 #define BB_PATIENT_IN_CRIT "patient_in_crit"
+
+// vibebot keys
+/// The probability that we'll flash our lights.
+#define BB_VIBEBOT_LIGHT_CHANGE_PROBABILITY "light_flash_probability"

@@ -20,7 +20,7 @@
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	possessed_message = "You are a vibebot! Maintain the station's vibes to the best of your ability!"
 
-	ai_controller = /datum/ai_controller/basic_controller/bot
+	ai_controller = /datum/ai_controller/basic_controller/bot/vibebot
 
 /mob/living/basic/bot/vibebot/Initialize(mapload)
 	. = ..()
