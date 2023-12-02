@@ -141,7 +141,7 @@
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/knife/butcher{
 	name = "antique cleaver";
-	desc = "A huge knife for chopping up and slicing meat. This includes clowns and clown by-products."
+	desc = "A huge knife for chopping up and slicing meat. Years of service has scarred its metal and worn grooves into the handle, but its blade is well-maintained and very sharp."
 	},
 /mob/living/basic/cockroach,
 /turf/open/floor/plating/dumpsterair,
