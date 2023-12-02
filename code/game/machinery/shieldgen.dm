@@ -290,7 +290,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	use_power = NO_POWER_USE
 	active_power_usage = 150
 	circuit = /obj/item/circuitboard/machine/shieldwallgen

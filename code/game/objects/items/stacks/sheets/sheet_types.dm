@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	inhand_icon_state = "sheet-metal"
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	throwforce = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/iron
 	grind_results = list(/datum/reagent/iron = 20)
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	mats_per_unit = list(/datum/material/alloy/plasteel=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plasteel
 	throwforce = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	armor_type = /datum/armor/sheet_plasteel
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel

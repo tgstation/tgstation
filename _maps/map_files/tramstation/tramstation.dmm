@@ -738,7 +738,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/white/warning,
-/mob/living/simple_animal/bot/medbot/autopatrol{
+/mob/living/basic/bot/medbot/autopatrol{
 	desc = "A Trauma Response Activation Medibot. It seems overwhelmed.";
 	name = "T.R.A.M Unit"
 	},

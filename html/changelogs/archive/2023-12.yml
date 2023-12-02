@@ -39,3 +39,36 @@
   - bugfix: A chain should now show up as you drag in something with the meat hooks.
   - bugfix: Meat hooks should no longer play the "magical gun" suicide if you were
       to use it, but instead do their own unique thing.
+2023-12-02:
+  00-Steven:
+  - bugfix: Sign Language action properly toggles between an active/inactive background
+      again.
+  Autisem:
+  - admin: A new debug verb to turn yourself into an MMI(almost the funniest thing)
+  - bugfix: MMI's inside mechs can now properly open doors like there posibrain counterparts
+  Ben10Omintrix:
+  - bugfix: fix parrots not appearing dead sometimes
+  Fikou:
+  - rscadd: Instead of punished sect healing people like the normal bibble- you take
+      their burdens on instead!
+  Ghommie:
+  - bugfix: Fixed an issue with the offsets of ridden vehicles on tables, and another
+      when buckled to a bed.
+  IsaacExists:
+  - sound: Added human laughter to felinids
+  Vekter:
+  - rscadd: Added a new hostile variant of cats, "feral cats".
+  - rscadd: Added a new traitor item, "feral cat grenades". For 5 TC, you too can
+      throw a grenade at someone and make five cats maul them to death.
+  - rscdel: Replaced the "monkey cube" in Birdshot's tool storage with a different
+      "monkey cube".
+  - rscadd: Added a fun surprise item to Birdshot's tool storage to compensate for
+      the above change.
+  jlsnow301:
+  - bugfix: Mod links are now disabled in the virtual realm.
+  san7890:
+  - admin: The Player Panel should now contain the unique mob tag associated to a
+      certain mob that a player might inhabit at one time, which is stored on their
+      player details datum on their client (which is guaranteed to always exist).
+  - admin: The "Old Names" details of a player is now visible in their own personal
+      per-player player panel.

@@ -150,17 +150,37 @@
 		UnregisterSignal(gone, COMSIG_LIVING_SET_BUCKLED)
 
 /datum/element/elevation_core/proc/elevate_mob(mob/living/target, z_shift = pixel_shift, elevate_time = ELEVATE_TIME)
+	var/buckled_to_vehicle = FALSE
+	if(target.buckled)
+		if(isvehicle(target.buckled))
+			buckled_to_vehicle = TRUE
+		else if(!isliving(target.buckled))
+			return
 	animate(target, pixel_z = z_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-	if(target.buckled && isvehicle(target.buckled))
+	if(buckled_to_vehicle)
 		animate(target.buckled, pixel_z = z_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 
-///Vehicles or other things the mob is buckled too also are shifted.
+/**
+ * If the mob is buckled or unbuckled to/from a vehicle, shift it up/down
+ *.
+ * Null the pixel shift if the mob is buckled to something different that's not a mob or vehicle
+ *
+ * The reason is that it's more important for a mob to look like they're actually buckled to a bed
+ * or something anchored to the floor than atop of whatever else is on the same turf.
+ */
 /datum/element/elevation_core/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
-	if(source.buckled && isvehicle(source.buckled))
-		animate(source.buckled, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-	if(new_buckled && isvehicle(new_buckled))
-		animate(source.buckled, pixel_z = pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	if(source.buckled)
+		if(isvehicle(source.buckled))
+			animate(source.buckled, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+		else if(!isliving(source.buckled))
+			animate(source, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	if(!new_buckled)
+		return
+	if(isvehicle(new_buckled))
+		animate(new_buckled, pixel_z = pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	else if(!isliving(new_buckled))
+		animate(source, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 
 /datum/element/elevation_core/proc/on_reset_elevation(turf/source, list/current_values)
 	SIGNAL_HANDLER

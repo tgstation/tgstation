@@ -1037,7 +1037,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	max_amount = 60
 	turf_type = /turf/open/floor/bluespace
 	merge_type = /obj/item/stack/tile/bluespace
@@ -1054,7 +1054,7 @@
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
 	merge_type = /obj/item/stack/tile/sepia

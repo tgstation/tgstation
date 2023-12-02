@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	singular_name = "iron rod"
 	icon_state = "rods"
 	inhand_icon_state = "rods"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 9
 	throwforce = 10
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	icon_state = "rods"
 	inhand_icon_state = "rods"
 	color = "#5286b9ff"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_NORMAL
 	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma=SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	max_amount = 30

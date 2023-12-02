@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "Some mapped-in gifts that were supposed to guarantee a certain gift weren't spawning that exact gift type, this has been patched to reflect the mapper's intent."

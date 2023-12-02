@@ -10,7 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor_type = /datum/armor/structure_grille
@@ -280,7 +280,7 @@
 			return
 //window placing end
 
-	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+	else if((W.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 70))
 		return
 
 	return ..()
