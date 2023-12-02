@@ -257,6 +257,8 @@ SUBSYSTEM_DEF(gamemode)
 		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
 			continue
 		if(!observers)
+			if(!isliving(candidate))
+				continue
 			if(no_antags && candidate.mind.special_role)
 				continue
 			if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))

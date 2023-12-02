@@ -51,6 +51,10 @@ SUBSYSTEM_DEF(ambience)
 ///Attempts to play an ambient sound to a mob, returning the cooldown in deciseconds
 /area/proc/play_ambience(mob/M, sound/override_sound, volume = 27)
 	var/sound/new_sound = override_sound || pick(ambientsounds)
+	if(M.client?.prefs.channel_volume)
+		volume *= M.client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
+		volume *= M.client.prefs.channel_volume["[CHANNEL_AMBIENCE]"] * 0.01
+
 	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume, channel = CHANNEL_AMBIENCE)
 	SEND_SOUND(M, new_sound)
 

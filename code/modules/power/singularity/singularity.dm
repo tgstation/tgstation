@@ -167,7 +167,7 @@
 	dissipate(seconds_per_tick)
 	radiation_pulse(src, 4, intensity = min(5000, (energy * 4.5) + 1000), should_rad_act = FALSE)
 	for(var/obj/collector in range(5, src))
-		if(!istype(collector, /obj/machinery/power/rad_collector))
+		if(!istype(collector, /obj/machinery/power/rad_collector) && !isartifact(collector))
 			continue
 		collector.rad_act(intensity = min(2500, (energy * 2) + 500))
 	check_energy()

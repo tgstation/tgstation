@@ -211,7 +211,7 @@
 /obj/item/storage/box/stickers/proc/generate_non_contraband_stickers_list()
 	. = list()
 	for(var/obj/item/sticker/sticker_type as anything in subtypesof(/obj/item/sticker))
-		if(!initial(sticker_type.contraband))
+		if(initial(sticker_type.contraband) == STICKER_NORMAL)
 			. += sticker_type
 	return .
 /obj/item/storage/box/stickers/PopulateContents()
