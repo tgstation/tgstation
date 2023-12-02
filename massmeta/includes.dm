@@ -1,3 +1,4 @@
+//master files
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
 #include "code\_globalvars\lists\names.dm"
@@ -34,3 +35,5 @@
 #include "code\modules\ammunition\ballistic\shotgun.dm"
 #include "code\modules\projectiles\projectile\bullets\shotgun.dm"
 #include "code\modules\projectiles\projectile\beams.dm"
+//features
+#include "features\additional_circuit\includes.dm"
