@@ -37,10 +37,13 @@
 	else
 		vibe()
 
-///Gives a random color
-/datum/action/innate/vibe/proc/vibe()
+///Gives a random color. Can feed in an optional color to use instead.
+/datum/action/innate/vibe/proc/vibe(light_color = null)
+	if(isnull(light_color))
+		light_color = random_color()
+
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	owner.add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
+	owner.add_atom_colour("#[light_color]", TEMPORARY_COLOUR_PRIORITY)
 	owner.set_light_color(owner.color)
 
 ///Removes all colors
@@ -50,7 +53,7 @@
 
 /datum/action/innate/vibe/proc/on_turn_on()
 	SIGNAL_HANDLER
-	vibe()
+	vibe(light_color = COLOR_WHITE) // nicety so they don't immediately spawn in with something garish
 
 /datum/action/innate/vibe/proc/on_turn_off()
 	SIGNAL_HANDLER
