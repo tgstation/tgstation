@@ -7,7 +7,7 @@
 	var/ruletype = ""
 	/// If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every time it ticks.
 	var/persistent = FALSE
-	/// If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
+	/// If set to TRUE, dynamic will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
 	var/repeatable = FALSE
 	/// If set higher than 0 decreases weight by itself causing the ruleset to appear less often the more it is repeated.
 	var/repeatable_weight_decrease = 2
@@ -41,7 +41,7 @@
 	var/required_candidates = 0
 	/// 0 -> 9, probability for this rule to be picked against other rules. If zero this will effectively disable the rule.
 	var/weight = 5
-	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
+	/// Threat cost for this rule, this is decreased from the threat level when the rule is executed.
 	var/cost = 0
 	/// Cost per level the rule scales up.
 	var/scaling_cost = 0
@@ -51,13 +51,11 @@
 	var/total_cost = 0
 	/// A flag that determines how the ruleset is handled. Check __DEFINES/dynamic.dm for an explanation of the accepted values.
 	var/flags = NONE
-	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
+	/// Pop range per requirement. If zero defaults to dynamic's pop_per_requirement.
 	var/pop_per_requirement = 0
 	/// Requirements are the threat level requirements per pop range.
 	/// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
-	/// Reference to the mode, use this instead of SSticker.mode.
-	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null
 	/// If set, will check this preference instead of antag_flag.
@@ -91,8 +89,6 @@
 	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
 	// side effects here. Dynamic rulesets should be stateless anyway.
 	SHOULD_NOT_OVERRIDE(TRUE)
-
-	mode = SSticker.mode
 
 	..()
 
@@ -135,7 +131,7 @@
 
 /// Sets the current threat indices and returns true if we're inside of them
 /datum/dynamic_ruleset/proc/is_valid_threat(population, threat_level)
-	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : SSdynamic.pop_per_requirement
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 	return threat_level >= requirements[indice_pop]
 
@@ -148,14 +144,14 @@
 		return 0
 
 	var/antag_fraction = 0
-	for(var/_ruleset in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
+	for(var/_ruleset in (SSdynamic.executed_rules + list(src))) // we care about the antags we *will* assign, too
 		var/datum/dynamic_ruleset/ruleset = _ruleset
-		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.get_antag_cap(population)) / mode.roundstart_pop_ready
+		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.get_antag_cap(population)) / SSdynamic.roundstart_pop_ready
 
 	for(var/i in 1 to max_scale)
 		if(antag_fraction < 0.25)
 			scaled_times += 1
-			antag_fraction += get_antag_cap(population) / mode.roundstart_pop_ready // we added new antags, gotta update the %
+			antag_fraction += get_antag_cap(population) / SSdynamic.roundstart_pop_ready // we added new antags, gotta update the %
 
 	return scaled_times * scaling_cost
 
@@ -170,7 +166,7 @@
 /datum/dynamic_ruleset/proc/rule_process()
 	return
 
-/// Called on game mode pre_setup for roundstart rulesets.
+/// Called on pre_setup for roundstart rulesets.
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE
 /datum/dynamic_ruleset/proc/pre_execute()
@@ -206,15 +202,15 @@
 /// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
 /datum/dynamic_ruleset/proc/clean_up()
-	mode.refund_threat(cost + (scaled_times * scaling_cost))
-	mode.threat_log += "[worldtime2text()]: [ruletype] [name] refunded [cost + (scaled_times * scaling_cost)]. Failed to execute."
+	SSdynamic.refund_threat(cost + (scaled_times * scaling_cost))
+	SSdynamic.threat_log += "[worldtime2text()]: [ruletype] [name] refunded [cost + (scaled_times * scaling_cost)]. Failed to execute."
 
 /// Gets weight of the ruleset
 /// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than 0
 /// Note: If you don't want repeatable rulesets to decrease their weight use the weight variable directly
 /datum/dynamic_ruleset/proc/get_weight()
 	if(repeatable && weight > 1 && repeatable_weight_decrease > 0)
-		for(var/datum/dynamic_ruleset/DR in mode.executed_rules)
+		for(var/datum/dynamic_ruleset/DR in SSdynamic.executed_rules)
 			if(istype(DR, type))
 				weight = max(weight-repeatable_weight_decrease,1)
 	return weight
@@ -233,7 +229,7 @@
 /datum/dynamic_ruleset/proc/trim_candidates()
 	return
 
-/// Set mode result and news report here.
+/// Set mode_result and news report here.
 /// Only called if ruleset is flagged as HIGH_IMPACT_RULESET
 /datum/dynamic_ruleset/proc/round_result()
 

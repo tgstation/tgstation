@@ -69,7 +69,7 @@
 	return serialization
 
 /// Updates the log for the current snapshots.
-/datum/game_mode/dynamic/proc/update_log()
+/datum/controller/subsystem/dynamic/proc/update_log()
 	var/list/serialized = list()
 	serialized["threat_level"] = threat_level
 	serialized["round_start_budget"] = initial_round_start_budget
@@ -84,7 +84,7 @@
 	rustg_file_write(json_encode(serialized), "[GLOB.log_directory]/dynamic.json")
 
 /// Creates a new snapshot with the given rulesets chosen, and writes to the JSON output.
-/datum/game_mode/dynamic/proc/new_snapshot(datum/dynamic_ruleset/ruleset_chosen)
+/datum/controller/subsystem/dynamic/proc/new_snapshot(datum/dynamic_ruleset/ruleset_chosen)
 	var/datum/dynamic_snapshot/new_snapshot = new
 
 	new_snapshot.remaining_threat = mid_round_budget
