@@ -1,5 +1,3 @@
-#define LIGHT_COOLDOWN_DURATION (2 SECONDS)
-
 /// Vibebots aren't really like normal bots with the beacon and all that, they just sorta wander around and flash their lights, sometimes locking onto a target.
 /datum/ai_controller/basic_controller/bot/vibebot
 	blackboard = list(
@@ -41,5 +39,3 @@
 /datum/ai_planning_subtree/travel_to_point/and_vibe
 	location_key = BB_BASIC_MOB_CURRENT_TARGET
 
-
-#undef LIGHT_COOLDOWN_DURATION
