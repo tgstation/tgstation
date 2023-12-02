@@ -2562,7 +2562,7 @@
 /area/station/medical/treatment_center)
 "aHM" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port)
 "aHP" = (
@@ -30839,7 +30839,7 @@
 /area/station/commons/locker)
 "ifx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/engineering/tool,
@@ -36263,7 +36263,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/secondary/entry)
 "jAO" = (
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/pod/light,

@@ -494,7 +494,7 @@
 /area/virtual_domain)
 "po" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "pv" = (
@@ -709,7 +709,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain)
 "vA" = (
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
@@ -1064,7 +1064,7 @@
 /area/virtual_domain)
 "Fa" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/virtual_domain)
