@@ -973,7 +973,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/roast_dinner_lizzy
-	name = "roast dinner"
+	name = "grain-free roast dinner"
 	desc = "A luxuriously roasted chicken, accompanied by cabbage, parsnip, potatoes, peas, korta stuffing and a small boat of korta-blood gravy."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "full_roast_lizzy"
