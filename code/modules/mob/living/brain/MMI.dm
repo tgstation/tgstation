@@ -111,6 +111,48 @@
 	else
 		return ..()
 
+/// Forces target brain into the MMI. Mainly intended for admin purposes, as this allows transfer without a mob or user.
+/obj/item/mmi/proc/force_brain_into(obj/item/organ/internal/brain/new_brain)
+	if(!new_brain)
+		return
+
+	if(!new_brain.brainmob)
+		new_brain.forceMove(src)
+		brain = new_brain
+		brain.organ_flags |= ORGAN_FROZEN
+		name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
+		update_appearance()
+		return
+
+	new_brain.forceMove(src)
+
+	var/mob/living/brain/new_brain_brainmob = new_brain.brainmob
+	if(!new_brain_brainmob.key && !new_brain.decoy_override)
+		new_brain_brainmob.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
+
+	set_brainmob(new_brain_brainmob)
+	new_brain.brainmob = null
+	brainmob.forceMove(src)
+	brainmob.container = src
+
+	var/fubar_brain = new_brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED)
+	if(!fubar_brain && !(new_brain.organ_flags & ORGAN_FAILING))
+		brainmob.set_stat(CONSCIOUS)
+
+	brainmob.reset_perspective()
+	brain = new_brain
+	brain.organ_flags |= ORGAN_FROZEN
+
+	name = "[initial(name)]: [brainmob.real_name]"
+
+	update_appearance()
+	if(istype(brain, /obj/item/organ/internal/brain/alien))
+		braintype = "Xenoborg"
+	else
+		braintype = "Cyborg"
+
+	SSblackbox.record_feedback("amount", "mmis_filled", 1)
+
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
 		radio.set_on(!radio.is_on())

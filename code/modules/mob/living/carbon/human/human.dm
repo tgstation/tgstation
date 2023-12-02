@@ -859,13 +859,19 @@
 
 		if(!target_brain)
 			to_chat(usr, "This mob has no brain to insert into an MMI.")
+			return
 
 		var/obj/item/mmi/new_mmi = new(src.loc)
 
 		target_brain.Remove(src)
-		new_mmi.attackby(target_brain, null)
+		new_mmi.force_brain_into(target_brain)
+
+		to_chat(usr, "Turned [src] into an MMI.")
+		log_admin("[key_name(usr)] turned [key_name(src)] into an MMI.")
 
 		qdel(src)
+
+
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]
