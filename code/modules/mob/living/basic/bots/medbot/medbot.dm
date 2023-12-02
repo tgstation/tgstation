@@ -296,7 +296,7 @@
 	if(DOING_INTERACTION(src, TEND_DAMAGE_INTERACTION))
 		return
 
-	update_bot_mode(new_mode = BOT_HEALING)
+	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
 	if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return

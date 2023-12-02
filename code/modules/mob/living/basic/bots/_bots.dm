@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	layer = MOB_LAYER
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
+	basic_mob_flags = DEL_ON_DEATH
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
@@ -57,7 +58,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	///Standardizes the vars that indicate the bot is busy with its function.
 	var/mode = BOT_IDLE
 	///Links a bot to the AI calling it.
-	var/mob/living/silicon/ai/calling_ai
+	var/datum/weakref/calling_ai_ref
 	///The bot's radio, for speaking to people.
 	var/obj/item/radio/internal_radio
 	///which channels can the bot listen to
@@ -73,14 +74,14 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	/// If true we will allow ghosts to control this mob
 	var/can_be_possessed = FALSE
-	/// If true we will offer this
-	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 	/// Message to display upon possession
 	var/possessed_message = "You're a generic bot. How did one of these even get made?"
 	/// Action we use to say voice lines out loud, also we just pass anything we try to say through here just in case it plays a voice line
 	var/datum/action/cooldown/bot_announcement/pa_system
 	/// Type of bot_announcement ability we want
 	var/announcement_type
+	/// If true we will offer this
+	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
@@ -524,15 +525,19 @@ GLOBAL_LIST_INIT(command_strings, list(
 	dropped_gun.cell.charge = 0
 	dropped_gun.update_appearance()
 
-/mob/living/basic/bot/proc/bot_reset()
-	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
-		to_chat(calling_ai, span_danger("Call command to a bot has been reset."))
-		calling_ai = null
+/mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
+	SEND_SIGNAL(src, COMSIG_BOT_RESET)
 	if(length(initial_access))
 		access_card.set_access(initial_access)
-	SEND_SIGNAL(src, COMSIG_BOT_RESET)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
+	if(bypass_ai_reset || isnull(calling_ai_ref))
+		return
+	var/mob/living/ai_caller = calling_ai_ref.resolve()
+	if(isnull(ai_caller))
+		return
+	to_chat(ai_caller, span_danger("Call command to a bot has been reset."))
+	calling_ai_ref = null
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/basic/bot/proc/bot_control(command, mob/user, list/user_access = list())
@@ -550,12 +555,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 			bot_mode_flags |= BOT_MODE_AUTOPATROL
 
 		if("summon")
-			bot_reset()
-			ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, get_turf(user))
-			if(length(user_access))
-				access_card.set_access(user_access + initial_access) //Adds the user's access, if any.
-			update_bot_mode(new_mode = BOT_SUMMON)
-			speak("Responding.", radio_channel)
+			summon_bot(user, user_access = user_access)
 		if("ejectpai")
 			eject_pai_remote(user)
 
@@ -768,12 +768,26 @@ GLOBAL_LIST_INIT(command_strings, list(
 	initial_access = access_card.access.Copy()
 
 
-/mob/living/basic/bot/proc/call_bot(mob/living/caller, turf/waypoint)
-	calling_ai = caller
-	access_card.set_access(REGION_ACCESS_ALL_STATION)
-	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, caller)
+/mob/living/basic/bot/proc/summon_bot(atom/caller, user_access = list(), grant_all_access = FALSE)
+	if(isAI(caller) && !set_ai_caller(caller))
+		return FALSE
+	bot_reset(bypass_ai_reset = isAI(caller))
+	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, get_turf(caller))
+	var/list/access_to_grant = grant_all_access ? REGION_ACCESS_ALL_STATION : user_access + initial_access
+	access_card.set_access(access_to_grant)
+	speak("Responding.", radio_channel)
 	update_bot_mode(new_mode = BOT_SUMMON)
+	return TRUE
 
-/mob/living/basic/bot/proc/update_bot_mode(new_mode)
+/mob/living/basic/bot/proc/set_ai_caller(mob/living/caller)
+	var/atom/calling_ai = calling_ai_ref?.resolve()
+	if(!isnull(calling_ai) && calling_ai != src)
+		return FALSE
+	calling_ai_ref = WEAKREF(caller)
+	return TRUE
+
+/mob/living/basic/bot/proc/update_bot_mode(new_mode, update_hud = TRUE)
 	mode = new_mode
 	update_appearance()
+	if(update_hud)
+		diag_hud_set_botmode()

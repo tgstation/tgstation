@@ -97,7 +97,9 @@
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
 		return
+
 	if(controller.blackboard_key_exists(BB_BEACON_TARGET))
+		bot_pawn.update_bot_mode(new_mode = BOT_PATROL)
 		controller.queue_behavior(/datum/ai_behavior/travel_towards/beacon, BB_BEACON_TARGET)
 		return
 
@@ -175,8 +177,7 @@
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(controller.blackboard[target_key] == bot_pawn.calling_ai)
-		bot_pawn.calling_ai = null
+	bot_pawn.calling_ai_ref = null
 	bot_pawn.update_bot_mode(new_mode = BOT_IDLE)
 	return ..()
 
