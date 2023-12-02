@@ -174,9 +174,7 @@
 
 //this is sin
 /mob/living/basic/bot/medbot/generate_speak_list()
-	var/static/list/finalized_speak_list = null
-	if(isnull(finalized_speak_list))
-		finalized_speak_list = (idle_lines + wait_announcements + afterheal_announcements + near_death_announcements + emagged_announcements + tipped_announcements + untipped_announcements + worried_announcements + misc_announcements)
+	var/static/list/finalized_speak_list = (idle_lines + wait_announcements + afterheal_announcements + near_death_announcements + emagged_announcements + tipped_announcements + untipped_announcements + worried_announcements + misc_announcements)
 	return finalized_speak_list
 
 
