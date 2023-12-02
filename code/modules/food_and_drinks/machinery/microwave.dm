@@ -417,7 +417,7 @@
 		return ..()
 
 	if(vampire_charging_capable && istype(item, /obj/item/modular_computer) && ingredients.len > 0)
-		balloon_alert(user, "max 1 pda!")
+		balloon_alert(user, "max 1 device!")
 		return FALSE
 
 	if(istype(item, /obj/item/storage))
