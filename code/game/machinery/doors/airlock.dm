@@ -529,7 +529,7 @@
 	. = ..()
 	switch(airlock_state)
 		if(AIRLOCK_OPEN)
-			icon_state = "open"
+			icon_state = "open_top"
 		if(AIRLOCK_CLOSED, AIRLOCK_DENY, AIRLOCK_EMAG)
 			icon_state = "closed"
 		if(AIRLOCK_OPENING)
@@ -559,6 +559,8 @@
 			light_state = AIRLOCK_LIGHT_CLOSING
 		if(AIRLOCK_OPEN)
 			frame_state = AIRLOCK_FRAME_OPEN
+			// If we're open we layer the bit below us "above" any mobs so they can walk through
+			. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 		if(AIRLOCK_OPENING)
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
