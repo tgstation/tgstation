@@ -59,9 +59,9 @@
 		flashed.balloon_alert(source, "unconscious!")
 		return
 
-	// if (isnull(flashed.mind) || !GET_CLIENT(flashed))
-	// 	flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
-	// 	return
+	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
+		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
+		return
 
 	if (flashed.mind.has_antag_datum(/datum/antagonist/brother))
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
