@@ -13,6 +13,8 @@
 #define span_alertwarning(str) ("<span class='alertwarning'>" + str + "</span>")
 #define span_alien(str) ("<span class='alien'>" + str + "</span>")
 #define span_announce(str) ("<span class='announce'>" + str + "</span>")
+#define span_average(str) ("<span class='average'" + str + "</span")
+#define span_bad(str) ("<span class='bad'" + str + "</span")
 #define span_big(str) ("<span class='big'>" + str + "</span>")
 #define span_bigicon(str) ("<span class='bigicon'>" + str + "</span>")
 #define span_binarysay(str) ("<span class='binarysay'>" + str + "</span>")
