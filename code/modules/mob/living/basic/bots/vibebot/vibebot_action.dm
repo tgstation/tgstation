@@ -12,7 +12,7 @@
 /datum/action/innate/vibe/Grant(mob/grant_to)
 	. = ..()
 	RegisterSignal(grant_to, COMSIG_BOT_TURNED_ON, PROC_REF(activate_lights))
-	RegisterSignal(grant_to, COMSIG_CHANGE_VIBEBOT_COLOR, PROC_REF(vibe))
+	RegisterSignal(grant_to, COMSIG_CHANGE_VIBEBOT_COLOR, PROC_REF(change_color))
 	RegisterSignal(grant_to, COMSIG_BOT_TURNED_OFF, PROC_REF(turn_off_lights))
 
 /datum/action/innate/vibe/Remove(mob/removed_from)
@@ -52,10 +52,14 @@
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	owner.set_light_color(null)
 
-/datum/action/innate/vibe/proc/activate_lights()
+/datum/action/innate/vibe/proc/activate_lights(datum/source)
 	SIGNAL_HANDLER
 	vibe(light_color = COLOR_WHITE) // nicety so they don't immediately spawn in with something garish
 
-/datum/action/innate/vibe/proc/turn_off_lights()
+/datum/action/innate/vibe/proc/change_color(datum/source)
+	SIGNAL_HANDLER
+	vibe()
+
+/datum/action/innate/vibe/proc/turn_off_lights(datum/source)
 	SIGNAL_HANDLER
 	remove_colors()
