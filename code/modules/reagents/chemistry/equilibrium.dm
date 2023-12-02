@@ -97,7 +97,7 @@
 	//Make sure we have the right multipler for on_reaction()
 	for(var/single_reagent in reaction.required_reagents)
 		multiplier = min(multiplier, holder.get_reagent_amount(single_reagent) / reaction.required_reagents[single_reagent])
-	multiplier = round(multipler, CHEMICAL_QUANTISATION_LEVEL)
+	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
 	if(!multiplier) //we have no more or very little reagents left
 		return FALSE
 
@@ -153,7 +153,7 @@
 	multiplier = INFINITY
 	for(var/reagent in reaction.required_reagents)
 		multiplier = min(multiplier, holder.get_reagent_amount(reagent) / reaction.required_reagents[reagent])
-	multiplier = round(multipler, CHEMICAL_QUANTISATION_LEVEL)
+	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
 	if(!multiplier) //we have no more or very little reagents left
 		return FALSE
 
