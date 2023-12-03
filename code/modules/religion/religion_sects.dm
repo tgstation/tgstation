@@ -508,7 +508,10 @@
 	alignment = ALIGNMENT_GOOD
 	candle_overlay = FALSE
 	rites_list = list(
+		/datum/religion_rites/holy_violin,
+		/datum/religion_rites/portable_song_tuning,
 		/datum/religion_rites/song_tuner/evangelism,
+		/datum/religion_rites/song_tuner/light,
 		/datum/religion_rites/song_tuner/nullwave,
 		/datum/religion_rites/song_tuner/pain,
 		/datum/religion_rites/song_tuner/lullaby,
