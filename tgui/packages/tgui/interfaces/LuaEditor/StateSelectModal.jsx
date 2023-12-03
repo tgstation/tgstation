@@ -1,10 +1,10 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Modal, Input, Section, Stack } from '../../components';
 
-export const StateSelectModal = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [, setModal] = useLocalState(context, 'modal', 'states');
-  const [input, setInput] = useLocalState(context, 'newStateName', '');
+export const StateSelectModal = (props) => {
+  const { act, data } = useBackend();
+  const [, setModal] = useLocalState('modal', 'states');
+  const [input, setInput] = useLocalState('newStateName', '');
   const { states } = data;
   return (
     <Modal

@@ -37,16 +37,14 @@ type Data = {
   category_ids: CategoryList;
 };
 
-export const LightSpawn = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const LightSpawn = (props) => {
+  const { act, data } = useBackend<Data>();
   const { templates = [], default_id, default_category, category_ids } = data;
   const [currentTemplate, setCurrentTemplate] = useLocalState<string>(
-    context,
     'currentTemplate',
     default_id
   );
   const [currentCategory, setCurrentCategory] = useLocalState<string>(
-    context,
     'currentCategory',
     default_category
   );
@@ -108,12 +106,11 @@ type LightInfoProps = {
   light: LightTemplate;
 };
 
-const LightInfo = (props: LightInfoProps, context) => {
-  const { act } = useBackend(context);
+const LightInfo = (props: LightInfoProps) => {
+  const { act } = useBackend();
   const { light } = props;
   const { light_info } = light;
   const [workingDir, setWorkingDir] = useLocalState<number>(
-    context,
     'workingDir',
     Direction.North
   );
@@ -217,11 +214,10 @@ type DirectedButtonProps = {
   icon: string;
 };
 
-const DirectionButton = (props: DirectedButtonProps, context) => {
-  const { act, data } = useBackend<Data>(context);
+const DirectionButton = (props: DirectedButtonProps) => {
+  const { act, data } = useBackend<Data>();
   const { dir, icon } = props;
   const [workingDir, setWorkingDir] = useLocalState<number>(
-    context,
     'workingDir',
     Direction.North
   );
@@ -234,8 +230,8 @@ const DirectionButton = (props: DirectedButtonProps, context) => {
   );
 };
 
-const AngleSelect = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AngleSelect = (props) => {
+  const { act, data } = useBackend<Data>();
   const { angle } = props;
   return (
     <Knob

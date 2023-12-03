@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if("overclock")
 			if(isnull(vent))
 				return TRUE
-			vent.toggle_overclock()
+			vent.toggle_overclock(source = key_name(user))
 			vent.update_appearance(UPDATE_ICON)
 			return TRUE
 

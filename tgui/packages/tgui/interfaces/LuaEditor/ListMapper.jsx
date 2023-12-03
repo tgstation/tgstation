@@ -7,8 +7,8 @@ const UnconvertibleLuaValueRegex = RegExp(
   '^(table|function|thread): 0x[0-9a-fA-F]+$'
 );
 
-export const ListMapper = (props, context) => {
-  const { act } = useBackend(context);
+export const ListMapper = (props) => {
+  const { act } = useBackend();
 
   const {
     list,
@@ -22,8 +22,8 @@ export const ListMapper = (props, context) => {
     ...rest
   } = props;
 
-  const [, setToCall] = useLocalState(context, 'toCallTaskInfo');
-  const [, setModal] = useLocalState(context, 'modal');
+  const [, setToCall] = useLocalState('toCallTaskInfo');
+  const [, setModal] = useLocalState('modal');
 
   const ThingNode = (thing, path, overrideProps) => {
     if (Array.isArray(thing)) {

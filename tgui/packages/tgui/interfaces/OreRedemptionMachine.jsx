@@ -4,12 +4,12 @@ import { BlockQuote, Box, Button, Table, Tabs, Input, Stack, Icon, Section, Labe
 import { Window } from '../layouts';
 import { formatSiUnit } from '../format';
 
-export const OreRedemptionMachine = (props, context) => {
-  const { act, data } = useBackend(context);
+export const OreRedemptionMachine = (props) => {
+  const { act, data } = useBackend();
   const { disconnected, unclaimedPoints, materials, user } = data;
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
-  const [compact, setCompact] = useSharedState(context, 'compact', false);
+  const [tab, setTab] = useSharedState('tab', 1);
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
+  const [compact, setCompact] = useSharedState('compact', false);
   const search = createSearch(searchItem, (materials) => materials.name);
   const material_filtered =
     searchItem.length > 0
@@ -156,11 +156,11 @@ export const OreRedemptionMachine = (props, context) => {
   );
 };
 
-const MaterialRow = (props, context) => {
-  const { data } = useBackend(context);
+const MaterialRow = (props) => {
+  const { data } = useBackend();
   const { material_icons } = data;
   const { material, onRelease } = props;
-  const [compact, setCompact] = useLocalState(context, 'compact', false);
+  const [compact, setCompact] = useLocalState('compact', false);
 
   const display = material_icons.find(
     (mat_icon) => mat_icon.id === material.id

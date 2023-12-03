@@ -93,7 +93,7 @@
 	description = "Space is long and dark and empty, but it's my home."
 
 /datum/mood_event/spacer/on_planet
-	description = "I'm on a planet. The gravity here makes me uncomfotable."
+	description = "I'm on a planet. The gravity here makes me uncomfortable."
 	mood_change = -2
 
 /datum/mood_event/spacer/on_planet/too_long

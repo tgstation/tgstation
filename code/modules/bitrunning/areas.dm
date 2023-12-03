@@ -1,9 +1,9 @@
 /// Station side
 
-/area/station/bitrunning
+/area/station/cargo/bitrunning
 	name = "Bitrunning"
 
-/area/station/bitrunning/den
+/area/station/cargo/bitrunning/den
 	name = "Bitrunning Den"
 	desc = "Office of bitrunners, houses their equipment."
 	icon_state = "bit_den"

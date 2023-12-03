@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Bar signs ordered from cargo will no longer be access-restricted."

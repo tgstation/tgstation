@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const BorgPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const BorgPanel = (props) => {
+  const { act, data } = useBackend();
   const borg = data.borg || {};
   const cell = data.cell || {};
   const cellPercent = cell.charge / cell.maxcharge;

@@ -7,6 +7,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
+"b" = (
+/obj/modular_map_connector,
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
 "c" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/east,
@@ -172,7 +176,7 @@ C
 C
 G
 G
-C
+b
 "}
 (2,1,1) = {"
 W

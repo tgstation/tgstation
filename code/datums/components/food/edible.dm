@@ -264,6 +264,16 @@ Behavior that's still missing from this component that original food items had t
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
 
+	if(!HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
+		return
+	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+	checkLiked(fraction, user)
+	if (!owner.reagents.get_reagent_amount(/datum/reagent/consumable/salt))
+		examine_list += span_notice("It could use a little more Sodium Chloride...")
+	if (isliving(user))
+		var/mob/living/living_user = user
+		living_user.taste(owner.reagents)
+
 /datum/component/edible/proc/UseFromHand(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER
 

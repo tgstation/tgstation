@@ -17,8 +17,8 @@ type AutolatheData = {
   active: BooleanLike;
 };
 
-export const Autolathe = (props, context) => {
-  const { data } = useBackend<AutolatheData>(context);
+export const Autolathe = (props) => {
+  const { data } = useBackend<AutolatheData>();
   const {
     materialtotal,
     materialsmax,
@@ -121,8 +121,8 @@ type PrintButtonProps = {
   maxmult: number;
 };
 
-const PrintButton = (props: PrintButtonProps, context) => {
-  const { act } = useBackend<AutolatheData>(context);
+const PrintButton = (props: PrintButtonProps) => {
+  const { act } = useBackend<AutolatheData>();
   const {
     design,
     quantity,
@@ -163,8 +163,8 @@ type AutolatheRecipeProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
-  const { act } = useBackend<AutolatheData>(context);
+const AutolatheRecipe = (props: AutolatheRecipeProps) => {
+  const { act } = useBackend<AutolatheData>();
   const { design, availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const maxmult = design.maxmult;

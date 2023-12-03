@@ -37,23 +37,29 @@
 
 /obj/item/pen/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/dart_insert, dart_insert_icon, dart_insert_casing_icon_state, dart_insert_icon, dart_insert_projectile_icon_state)
+	AddComponent(/datum/component/dart_insert, \
+		dart_insert_icon, \
+		dart_insert_casing_icon_state, \
+		dart_insert_icon, \
+		dart_insert_projectile_icon_state, \
+		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
+	)
 	RegisterSignal(src, COMSIG_DART_INSERT_ADDED, PROC_REF(on_inserted_into_dart))
 	RegisterSignal(src, COMSIG_DART_INSERT_REMOVED, PROC_REF(on_removed_from_dart))
-	RegisterSignal(src, COMSIG_DART_INSERT_GET_VAR_MODIFIERS, PROC_REF(get_dart_var_modifiers))
 
 /obj/item/pen/proc/on_inserted_into_dart(datum/source, obj/projectile/dart, mob/user, embedded = FALSE)
 	SIGNAL_HANDLER
 
-/obj/item/pen/proc/get_dart_var_modifiers(datum/source, list/modifiers)
-	SIGNAL_HANDLER
-	modifiers["damage"] = max(5, throwforce)
-	modifiers["speed"] = max(0, throw_speed - 3)
-	modifiers["embedding"] = embedding
-	modifiers["armour_penetration"] = armour_penetration
-	modifiers["wound_bonus"] = wound_bonus
-	modifiers["bare_wound_bonus"] = bare_wound_bonus
-	modifiers["demolition_mod"] = demolition_mod
+/obj/item/pen/proc/get_dart_var_modifiers()
+	return list(
+		"damage" = max(5, throwforce),
+		"speed" = max(0, throw_speed - 3),
+		"embedding" = embedding,
+		"armour_penetration" = armour_penetration,
+		"wound_bonus" = wound_bonus,
+		"bare_wound_bonus" = bare_wound_bonus,
+		"demolition_mod" = demolition_mod,
+	)
 
 /obj/item/pen/proc/on_removed_from_dart(datum/source, obj/projectile/dart, mob/user)
 	SIGNAL_HANDLER
@@ -230,7 +236,7 @@
 					label.remove_label()
 					label.apply_label()
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
-				O.renamedByPlayer = TRUE
+				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Description")
@@ -243,7 +249,7 @@
 			else
 				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, span_notice("You have successfully changed [O]'s description."))
-				O.renamedByPlayer = TRUE
+				ADD_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 				O.update_appearance(UPDATE_ICON)
 
 		if(penchoice == "Reset")
@@ -259,7 +265,7 @@
 				label.apply_label()
 
 			to_chat(user, span_notice("You have successfully reset [O]'s name and description."))
-			O.renamedByPlayer = FALSE
+			REMOVE_TRAIT(O, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 			O.update_appearance(UPDATE_ICON)
 
 /obj/item/pen/get_writing_implement_details()
@@ -366,12 +372,12 @@
 	if(istype(projectile))
 		UnregisterSignal(projectile, list(COMSIG_PROJECTILE_FIRE, COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED))
 
-/obj/item/pen/edagger/get_dart_var_modifiers(datum/source, list/modifiers)
+/obj/item/pen/edagger/get_dart_var_modifiers()
 	. = ..()
 	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
-	modifiers["damage"] = max(5, transform_comp.throwforce_on)
-	modifiers["speed"] = max(0, transform_comp.throw_speed_on - 3)
-	var/list/embed_params = modifiers["embedding"]
+	.["damage"] = max(5, transform_comp.throwforce_on)
+	.["speed"] = max(0, transform_comp.throw_speed_on - 3)
+	var/list/embed_params = .["embedding"]
 	embed_params["embed_chance"] = 100
 
 /obj/item/pen/edagger/proc/on_containing_dart_fired(obj/projectile/source)
