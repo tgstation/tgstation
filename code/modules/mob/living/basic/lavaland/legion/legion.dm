@@ -88,7 +88,7 @@
 
 /mob/living/basic/mining/legion/proc/on_consumed_revive(full_heal_flags)
 	SIGNAL_HANDLER
-	death(TRUE)
+	death()
 
 /mob/living/basic/mining/legion/spawner_made
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred
