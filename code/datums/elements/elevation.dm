@@ -136,6 +136,7 @@
 	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(entered))
 		var/elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0
 		elevate_mob(entered, elevate_time = elevate_time)
+		RegisterSignal(living, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
