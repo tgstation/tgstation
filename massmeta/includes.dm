@@ -1,3 +1,4 @@
+//master files
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
 #include "code\_globalvars\lists\names.dm"
@@ -9,6 +10,7 @@
 #include "code\modules\clothing\suits\chaplainsuits.dm"
 #include "code\modules\admin\verbs\adminhelp.dm"
 #include "code\modules\mob\living\carbon\human\emote.dm"
+#include "code\modules\antags\heretic\items\heretic_armor.dm"
 #include "code\obj\items\clothing\gloves.dm"
 #include "code\obj\items\clothing\masks.dm"
 #include "code\datums\components\crafting\makeshift.dm"
@@ -77,4 +79,9 @@
 #include "code\game\objects\items\maintenance_loot.dm"
 #include "code\modules\reagents\chemistry\reagents\nitrium.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
-
+#include "code\datums\components\crafting\weapon_ammo.dm"
+#include "code\modules\ammunition\ballistic\shotgun.dm"
+#include "code\modules\projectiles\projectile\bullets\shotgun.dm"
+#include "code\modules\projectiles\projectile\beams.dm"
+//features
+#include "features\additional_circuit\includes.dm"

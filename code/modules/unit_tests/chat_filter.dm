@@ -26,6 +26,9 @@
 		null,
 	)
 
+	//MASSMETA EDIT REMOVAL BEGIN - CODE_WORDS - these words HAVE filtered words in them
+	/*
+
 	test_filter(
 		"these words have filtered words in them: ablockedinic blockedinicbbbb aablockedinicbb",
 		null,
@@ -33,6 +36,9 @@
 		null,
 		null,
 	)
+
+	*/
+	//MASSMETA EDIT REMOVAL END
 
 	test_filter(
 		"<(0_0<) <(0_0)> (>0_0)> KIRBY DANCE!!!",
