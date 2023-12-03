@@ -66,18 +66,15 @@
 	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/weeping
 
 /obj/structure/sign/painting/eldritch/weeping/examine_effects(mob/living/carbon/examiner)
-	if(IS_HERETIC(examiner))
-		to_chat(examiner, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
-		// Removes the hallucination debuff if we have it
-		examiner.remove_status_effect(/datum/status_effect/hallucination)
-		// Adds a very good mood event to the heretic
-		examiner.add_mood_event("heretic_eldritch_painting", /datum/mood_event/eldritch_painting/weeping_heretic)
-	else
+	if(!IS_HERETIC(examiner))
 		to_chat(examiner, span_notice("Respite, for now...."))
-		// Remove the mood event associated with the hallucinations
 		examiner.mob_mood.mood_events.Remove("eldritch_weeping")
-		// Add a mood event that causes the hallucinations to not trigger anymore
 		examiner.add_mood_event("weeping_withdrawl", /datum/mood_event/eldritch_painting/weeping_withdrawl)
+		return
+
+	to_chat(examiner, span_notice("Oh, what arts! Just gazing upon it clears your mind."))
+	examiner.remove_status_effect(/datum/status_effect/hallucination)
+	examiner.add_mood_event("heretic_eldritch_painting", /datum/mood_event/eldritch_painting/weeping_heretic)
 
 // The First Desire painting, using a lot of the painting/eldritch framework
 /obj/item/wallframe/painting/eldritch/desire
@@ -94,15 +91,13 @@
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/desire/examine_effects(mob/living/carbon/examiner)
-	if (examiner.has_trauma_type(/datum/brain_trauma/severe/flesh_desire))
+	if(!IS_HERETIC(examiner))
 		// Gives them some nutrition
 		examiner.adjust_nutrition(50)
 		to_chat(examiner, warning("You feel a searing pain in your stomach!"))
 		examiner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 		to_chat(examiner, span_notice("You feel less hungry, but more empty somehow?"))
 		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
-
-	if(!IS_HERETIC(examiner))
 		return
 
 	// A list made of the organs and bodyparts the heretic possess
@@ -125,7 +120,6 @@
 	to_chat(examiner, span_notice("A piece of flesh crawls out of the painting and flops onto the floor."))
 	// Adds a negative mood event to our heretic
 	examiner.add_mood_event("heretic_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_heretic)
-	return ..()
 
 // Great chaparral over rolling hills, this one doesn't have the sensor type
 /obj/item/wallframe/painting/eldritch/vines
@@ -147,7 +141,7 @@
 		/datum/spacevine_mutation/fire_proof,
 		/datum/spacevine_mutation/aggressive_spread,
 		)
-	// Items to pick from to spawn on examine
+	// Poppy and harebell are used in heretic rituals
 	var/list/items_to_spawn = list(
 		/obj/item/food/grown/poppy,
 		/obj/item/food/grown/harebell,
@@ -159,15 +153,16 @@
 
 /obj/structure/sign/painting/eldritch/vines/examine_effects(mob/living/carbon/examiner)
 	. = ..()
-	if(IS_HERETIC(examiner))
-		var/item_to_spawn = pick(items_to_spawn)
-		to_chat(examiner, span_notice("You picture yourself in the thicket picking flowers.."))
-		// Spawns one of two flowers that often are used by heretics
-		new item_to_spawn(examiner.drop_location())
-		examiner.add_mood_event("heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
-	else
+	if(!IS_HERETIC(examiner))
 		new /datum/spacevine_controller(get_turf(examiner), mutations, 0, 10)
 		to_chat(examiner, span_notice("The thicket crawls through the frame, and you suddenly find vines beneath you..."))
+		return
+
+	var/item_to_spawn = pick(items_to_spawn)
+	to_chat(examiner, span_notice("You picture yourself in the thicket picking flowers.."))
+	new item_to_spawn(examiner.drop_location())
+	examiner.add_mood_event("heretic_vines", /datum/mood_event/eldritch_painting/heretic_vines)
+
 
 // Lady out of gates, gives a brain trauma causing the person to scratch themselves
 /obj/item/wallframe/painting/eldritch/beauty
@@ -187,14 +182,18 @@
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/beauty/examine_effects(mob/living/carbon/examiner)
 	. = ..()
-	if(IS_HERETIC(examiner))
-		to_chat(examiner, "Your imperfections shed and you are restored.")
-		examiner.reagents.add_reagent(reagents_to_add, 5)
 	if(!examiner.has_dna())
 		return
-	if(examiner.has_trauma_type(/datum/brain_trauma/severe/eldritch_beauty))
+
+	if(!IS_HERETIC(examiner))
 		to_chat(examiner, "You feel changed, more perfect....")
 		examiner.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
+		return
+
+	to_chat(examiner, "Your imperfections shed and you are restored.")
+	examiner.reagents.add_reagent(reagents_to_add, 5)
+
+
 
 // Climb over the rusted mountain, gives a brain trauma causing the person to randomly rust tiles beneath them
 /obj/item/wallframe/painting/eldritch/rust
@@ -213,10 +212,10 @@
 /obj/structure/sign/painting/eldritch/rust/examine_effects(mob/living/carbon/examiner)
 	. = ..()
 
-	if(IS_HERETIC(examiner))
-		to_chat(examiner, "You see the climber, and are inspired by it!")
-		examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)
-
-	if(examiner.has_trauma_type(/datum/brain_trauma/severe/rusting))
+	if(!IS_HERETIC(examiner))
 		to_chat(examiner, "It can wait...")
 		examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
+		return
+
+	to_chat(examiner, "You see the climber, and are inspired by it!")
+	examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_heretic_examine)
