@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, mob)
-		to_chat(dead_mob, "<b>[mob.real_name]:</b>[message]")
+		to_chat(dead_mob, "<b>[mob.real_name][link]:</b>[message]")
 
 	speech_args[SPEECH_MESSAGE] = "" //yep we dont speak anymore
 
@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	stage = 3
 	badness = EFFECT_DANGER_FLAVOR
 
-/datum/symptom/groan/activate(var/mob/living/carbon/mob)
+/datum/symptom/groan/activate(mob/living/carbon/mob)
 	mob.emote("groan")
 
 
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	stage = 3
 	badness = EFFECT_DANGER_HINDRANCE
 
-/datum/symptom/sweat/activate(var/mob/living/carbon/mob)
+/datum/symptom/sweat/activate(mob/living/carbon/mob)
 	if(prob(30))
 		mob.emote("me",1,"is sweating profusely!")
 
@@ -197,7 +197,6 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	*/
 	mob.dna.remove_mutation(/datum/mutation/human/elvis)
 
-/* I NEED SPRITES FOR PTHROAT
 /datum/symptom/pthroat
 	name = "Pierrot's Throat"
 	desc = "Overinduces a sense of humor in the infected, causing them to be overcome by the spirit of a clown."
@@ -205,40 +204,57 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	max_multiplier = 4
 	badness = EFFECT_DANGER_HINDRANCE
 
-/datum/symptom/pthroat/activate(var/mob/living/carbon/mob)
+/datum/symptom/pthroat/activate(mob/living/carbon/mob)
 	//
 	var/obj/item/clothing/mask/gas/clown_hat/virus/virusclown_hat = new /obj/item/clothing/mask/gas/clown_hat/virus
 	if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/gas/clown_hat/virus))
-		mob.u_equip(mob.wear_mask,1)
-		mob.equip_to_slot(virusclown_hat, slot_wear_mask)
+		mob.dropItemToGround(mob.wear_mask, TRUE)
+		mob.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
 	if(!mob.wear_mask)
-		mob.equip_to_slot(virusclown_hat, slot_wear_mask)
-	mob.reagents.add_reagent(PSILOCYBIN, 20)
+		mob.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
+	mob.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, 20)
 	mob.say(pick("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk..."))
 	if(ishuman(mob))
 		var/mob/living/carbon/human/affected = mob
 		if(multiplier >=2) //clown shoes added
 			if(affected.shoes && !istype(affected.shoes, /obj/item/clothing/shoes/clown_shoes))
 				var/obj/item/clothing/shoes/clown_shoes/virusshoes = new /obj/item/clothing/shoes/clown_shoes
-				virusshoes.canremove = 0
-				affected.u_equip(affected.shoes,1)
-				affected.equip_to_slot(virusshoes, slot_shoes)
+				affected.dropItemToGround(affected.shoes, TRUE)
+				affected.equip_to_slot(virusshoes, ITEM_SLOT_FEET)
 			if(!affected.shoes)
 				var/obj/item/clothing/shoes/clown_shoes/virusshoes = new /obj/item/clothing/shoes/clown_shoes
-				affected.equip_to_slot(virusshoes, slot_shoes)
+				affected.equip_to_slot(virusshoes, ITEM_SLOT_FEET)
 		if(multiplier >=3) //clown suit added
-			var/obj/item/clothing/under/rank/clown/virussuit = new /obj/item/clothing/under/rank/clown
-			virussuit.canremove = 0
-			if(affected.w_uniform && !istype(affected.w_uniform, /obj/item/clothing/under/rank/clown/))
-				affected.u_equip(affected.w_uniform,1)
-				affected.equip_to_slot(virussuit, slot_w_uniform)
+			var/obj/item/clothing/under/rank/civilian/clown/virussuit = new /obj/item/clothing/under/rank/civilian/clown
+			if(affected.w_uniform && !istype(affected.w_uniform, /obj/item/clothing/under/rank/civilian/clown))
+				affected.dropItemToGround(affected.w_uniform, TRUE)
+				affected.equip_to_slot(virussuit, ITEM_SLOT_ICLOTHING)
 			if(!affected.w_uniform)
-				affected.equip_to_slot(virussuit, slot_w_uniform)
-		if(multiplier >=3.5) //makes you clumsy
-			affected.dna.SetSEState(CLUMSYBLOCK,1)
-			genemutcheck(affected,CLUMSYBLOCK,null,MUTCHK_FORCED)
-			affected.update_mutations()
-*/
+				affected.equip_to_slot(virussuit, ITEM_SLOT_ICLOTHING)
+
+/datum/symptom/pthroat/first_activate(mob/living/carbon/mob)
+	RegisterSignal(mob, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/datum/symptom/pthroat/deactivate(mob/living/carbon/mob)
+	UnregisterSignal(mob, COMSIG_MOB_SAY)
+
+/datum/symptom/pthroat/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	var/list/split_message = splittext(message, " ") //List each word in the message
+	var/applied = 0
+	for (var/i in 1 to length(split_message))
+		if(prob(3 * multiplier)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
+			if(findtext(split_message[i], "*") || findtext(split_message[i], ";") || findtext(split_message[i], ":"))
+				continue
+			split_message[i] = "HONK"
+			if (applied++ > stage)
+				break
+	if (applied)
+		speech_args[SPEECH_SPANS] |= SPAN_CLOWN // a little bonus
+	message = jointext(split_message, " ")
+	speech_args[SPEECH_MESSAGE] = message
 
 /datum/symptom/horsethroat
 	name = "Horse Throat"
@@ -303,7 +319,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 					/obj/item/clothing/under/costume/schoolgirl/green, 
 					/obj/item/clothing/under/costume/schoolgirl/orange
 					)
-				var/obj/item/clothing/under/costume/schoolgirl/schoolgirl = new pick(outfits)
+				var/outfit_path = pick(outfits)
+				var/obj/item/clothing/under/costume/schoolgirl/schoolgirl = new outfit_path
 				ADD_TRAIT(schoolgirl, TRAIT_NODROP, "disease")
 				if(affected.w_uniform && !istype(affected.w_uniform, /obj/item/clothing/under/costume/schoolgirl))
 					affected.dropItemToGround(affected.w_uniform,1)
@@ -369,15 +386,15 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	badness = EFFECT_DANGER_HARMFUL
 	var/skip = FALSE
 
-/datum/symptom/butterfly_skin/activate(var/mob/living/carbon/mob)
+/datum/symptom/butterfly_skin/activate(mob/living/carbon/mob)
 	to_chat(mob, "<span class='warning'>Your skin feels a little fragile.</span>")
 
-/datum/symptom/butterfly_skin/deactivate(var/mob/living/carbon/mob)
+/datum/symptom/butterfly_skin/deactivate(mob/living/carbon/mob)
 	if(!skip)
 		to_chat(mob, "<span class='notice'>Your skin feels nice and durable again!</span>")
 	..()
 
-/datum/symptom/butterfly_skin/on_touch(var/mob/living/carbon/mob, toucher, touched, touch_type)
+/datum/symptom/butterfly_skin/on_touch(mob/living/carbon/mob, toucher, touched, touch_type)
 	if(count && !skip)
 		var/obj/item/bodypart/part
 		if(ishuman(mob))
@@ -406,7 +423,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	stage = 3
 	badness = EFFECT_DANGER_HELPFUL
 
-/datum/symptom/thick_blood/activate(var/mob/living/carbon/mob)
+/datum/symptom/thick_blood/activate(mob/living/carbon/mob)
 	var/mob/living/carbon/human/H = mob
 	if (ishuman(H))
 		if(H.is_bleeding())
@@ -419,7 +436,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	stage = 3
 	badness = EFFECT_DANGER_FLAVOR
 
-/datum/symptom/teratoma/activate(var/mob/living/carbon/mob)
+/datum/symptom/teratoma/activate(mob/living/carbon/mob)
 	var/organ_type = pick(typesof(/obj/item/organ/internal))
 	var/obj/item/spawned_organ = new organ_type(get_turf(mob))
 	mob.visible_message("<span class='warning'>\A [spawned_organ.name] is extruded from \the [mob]'s body and falls to the ground!</span>","<span class='warning'>\A [spawned_organ.name] is extruded from your body and falls to the ground!</span>")
@@ -434,7 +451,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	multiplier = 5
 	max_multiplier = 10
 
-/datum/symptom/damage_converter/activate(var/mob/living/carbon/mob)
+/datum/symptom/damage_converter/activate(mob/living/carbon/mob)
 	if(mob.getFireLoss() > 0 || mob.getBruteLoss() > 0)
 		var/get_damage = rand(1, 3)
 		mob.adjustFireLoss(-get_damage)
@@ -503,14 +520,15 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 /datum/symptom/wendigo_hallucination/deactivate(mob/living/carbon/mob)
 	UnregisterSignal(mob, COMSIG_MOB_SAY)
 
-/datum/symptom/wendigo_hallucination/activate(var/mob/living/carbon/mob)
+/datum/symptom/wendigo_hallucination/activate(mob/living/carbon/mob)
 	if(!ishuman(mob))
 		return
 	var/mob/living/carbon/human/H = mob
 	H.adjust_jitter(10 SECONDS)
 
 	//creepy sounds copypasted from hallucination code
-	var/list/possible_sounds = list('monkestation/code/modules/virology/sounds/ghost.ogg', 'monkestation/code/modules/virology/sounds/ghost2.ogg', 'monkestation/code/modules/virology/sounds/heart_beat_single.ogg', 'monkestation/code/modules/virology/sounds/ear_ring_single.ogg', 'monkestation/code/modules/virology/sounds/screech.ogg',\
+	var/list/possible_sounds = list(
+		'monkestation/code/modules/virology/sounds/ghost.ogg', 'monkestation/code/modules/virology/sounds/ghost2.ogg', 'monkestation/code/modules/virology/sounds/heart_beat_single.ogg', 'monkestation/code/modules/virology/sounds/ear_ring_single.ogg', 'monkestation/code/modules/virology/sounds/screech.ogg',\
 		'monkestation/code/modules/virology/sounds/behind_you1.ogg', 'monkestation/code/modules/virology/sounds/behind_you2.ogg', 'monkestation/code/modules/virology/sounds/far_noise.ogg', 'monkestation/code/modules/virology/sounds/growl1.ogg', 'monkestation/code/modules/virology/sounds/growl2.ogg',\
 		'monkestation/code/modules/virology/sounds/growl3.ogg', 'monkestation/code/modules/virology/sounds/im_here1.ogg', 'monkestation/code/modules/virology/sounds/im_here2.ogg', 'monkestation/code/modules/virology/sounds/i_see_you1.ogg', 'monkestation/code/modules/virology/sounds/i_see_you2.ogg',\
 		'monkestation/code/modules/virology/sounds/look_up1.ogg', 'monkestation/code/modules/virology/sounds/look_up2.ogg', 'monkestation/code/modules/virology/sounds/over_here1.ogg', 'monkestation/code/modules/virology/sounds/over_here2.ogg', 'monkestation/code/modules/virology/sounds/over_here3.ogg',\

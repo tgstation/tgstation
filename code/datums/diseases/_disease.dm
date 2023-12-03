@@ -14,7 +14,7 @@
 
 	//Stages
 	var/stage = 1
-	var/max_stages = 0
+	var/max_stages = 4
 	/// The probability of this infection advancing a stage every second the cure is not present.
 	var/stage_prob = 2
 
