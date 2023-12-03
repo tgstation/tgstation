@@ -6,6 +6,7 @@
 	toolspeed = 2
 	max_fuel = 10
 	starting_fuel = FALSE
+	change_icons = FALSE
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7)
 
 /obj/item/weldingtool/makeshift/switched_on(mob/user)

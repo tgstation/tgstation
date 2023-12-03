@@ -1,4 +1,5 @@
 //master files
+#include "code\_globalvars\lists\names.dm"
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
 #include "code\_globalvars\lists\names.dm"
