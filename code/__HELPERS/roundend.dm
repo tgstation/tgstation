@@ -454,8 +454,9 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 						parts += "<span class='marooned'>You managed to survive as [survivor.real_name], but the shuttle was hijacked and sent into deep space.</span>"
 
 				else //None of the above apply to us, so we are marooned
-					parts += "<div class='panel redborder'>"
-					parts += "<span class='marooned'>You survived, but were marroned aboard, [station_name()].</span>"
+						parts += "<div class='panel redborder'>"
+						parts += "<span class='marooned'>You survived, but were marooned aboard, [station_name()].</span>"
+
 			else
 				parts += "<div class='panel greenborder'>"
 				parts += span_greentext("You managed to survive the events on [station_name()] as [survivor.real_name].")
