@@ -46,4 +46,5 @@
 		F.update_brightness()
 
 /obj/item/vending_refill/security
+	name = "SecTech"
 	icon_state = "refill_sec"
