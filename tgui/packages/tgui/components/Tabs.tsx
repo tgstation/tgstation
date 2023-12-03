@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
-import { isValidElement, PropsWithChildren, ReactNode } from 'react';
+import { canRender, classes } from 'common/react';
+import { PropsWithChildren, ReactNode } from 'react';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 
@@ -72,18 +72,14 @@ const Tab = (props: TabProps) => {
         computeBoxClassName(rest),
       ])}
       {...computeBoxProps(rest)}>
-      {(isValidElement(leftSlot) && (
-        <div className="Tab__left">{leftSlot}</div>
-      )) ||
+      {(canRender(leftSlot) && <div className="Tab__left">{leftSlot}</div>) ||
         (!!icon && (
           <div className="Tab__left">
             <Icon name={icon} />
           </div>
         ))}
       <div className="Tab__text">{children}</div>
-      {isValidElement(rightSlot) && (
-        <div className="Tab__right">{rightSlot}</div>
-      )}
+      {canRender(rightSlot) && <div className="Tab__right">{rightSlot}</div>}
     </div>
   );
 };

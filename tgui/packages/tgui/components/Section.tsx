@@ -5,9 +5,9 @@
  */
 
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { ReactNode, RefObject, createRef, isValidElement, useEffect } from 'react';
+import { ReactNode, RefObject, createRef, useEffect } from 'react';
 import { addScrollableNode, removeScrollableNode } from '../events';
-import { classes } from 'common/react';
+import { canRender, classes } from 'common/react';
 
 export type SectionProps = Partial<{
   buttons: ReactNode;
@@ -38,7 +38,7 @@ export const Section = (props: SectionProps) => {
   } = props;
 
   const scrollableRef = props.scrollableRef || createRef();
-  const hasTitle = isValidElement(title) || isValidElement(buttons);
+  const hasTitle = canRender(title) || canRender(buttons);
 
   useEffect(() => {
     if (scrollable || scrollableHorizontal) {

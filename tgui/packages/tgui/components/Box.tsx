@@ -202,7 +202,7 @@ const booleanStyleMap = {
   inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
-  preserveWhitespace: mapBooleanPropTo('whiteSpace', 'preWrap'),
+  preserveWhitespace: mapBooleanPropTo('whiteSpace', 'pre-wrap'),
 } as const;
 
 export const computeBoxProps = (props) => {
