@@ -44,8 +44,13 @@
 	return 0
 
 /datum/symptom/proc/run_effect(mob/living/mob)
+	if(count < 1)
+		first_activate(mob)
 	activate(mob)
 	count += 1
+
+///this runs the first time its activated
+/datum/symptom/proc/first_activate(mob/living/carbon/mob)
 
 // The actual guts of the effect. Has a prob(chance)% to get called per tick.
 /datum/symptom/proc/activate(mob/living/carbon/mob)
@@ -60,3 +65,6 @@
 	// Called when the sufferer of the symptom dies
 /datum/symptom/proc/side_effect(mob/living/mob)
 	// Called on every Life() while the body is alive
+///called before speech goes out, returns FALSE if we stop, otherwise returns Edited Message
+/datum/symptom/proc/on_speech(mob/living/mob)
+

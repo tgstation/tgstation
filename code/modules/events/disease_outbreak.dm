@@ -106,23 +106,25 @@
 	var/datum/round_event_control/disease_outbreak/disease_event = control
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
-	if(!virus_type)
-		var/list/virus_candidates = list()
 
-		//Practically harmless diseases. Mostly just gives medical something to do.
-		virus_candidates += list(/datum/disease/flu, /datum/disease/cold9)
-
-		//The more dangerous ones
-		virus_candidates += list(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
-
-		//The wacky ones
-		virus_candidates += list(/datum/disease/magnitis, /datum/disease/anxiety)
-
-		//The rest of the diseases either aren't conventional "diseases" or are too unique/extreme to be considered for a normal event
-		virus_type = pick(virus_candidates)
-
-	var/datum/disease/new_disease
-	new_disease = new virus_type()
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 2,
+		ANTIGEN_COMMON	= 2,
+		ANTIGEN_RARE	= 1,
+		ANTIGEN_ALIEN	= 0,
+	)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_FLAVOR	= 2,
+		EFFECT_DANGER_ANNOYING	= 2,
+		EFFECT_DANGER_HINDRANCE	= 2,
+		EFFECT_DANGER_HARMFUL	= 2,
+		EFFECT_DANGER_DEADLY	= 0,
+	)
+	
+	var/datum/disease/advanced/new_disease = new virus_choice
+	new_disease.makerandom(list(50,90),list(10,100),anti,bad,src)
 	new_disease.carrier = TRUE
 	illness_type = new_disease.name
 

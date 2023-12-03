@@ -29,3 +29,5 @@
 #define	ANTIGEN_Z	"Z"
 
 
+#define DISEASE_BUMP "bump"
+#define DISEASE_TOUCH "touch"

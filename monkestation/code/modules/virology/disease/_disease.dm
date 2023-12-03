@@ -244,6 +244,14 @@ GLOBAL_LIST_INIT(virusDB, list())
 	infectionchance = min(50,infectionchance + rand(0,10))
 	log += "<br />[ROUND_TIME()] Infection chance now [infectionchance]%"
 
+/datum/disease/advanced/proc/minorstrength(index)
+	var/datum/symptom/e = get_effect(index)
+	e.multiplier_tweak(0.1)
+
+/datum/disease/advanced/proc/minorweak(index)
+	var/datum/symptom/e = get_effect(index)
+	e.multiplier_tweak(-0.1)
+
 /datum/disease/advanced/proc/get_effect(index)
 	if(!index)
 		return pick(symptoms)
