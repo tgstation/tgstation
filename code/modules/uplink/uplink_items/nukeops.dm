@@ -354,8 +354,8 @@
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
 /datum/uplink_item/weapon_kits/high_cost/doublesword
-	name = "Double-Energy Sword Case (Very Hard)"
-	desc = "A case containing a double-energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
+	name = "Double-Bladed Energy Sword Case (Very Hard)"
+	desc = "A case containing a double-bladed energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
 		Some say the most infamous nuclear operatives utilized this combination of equipment to slaughter hundreds \
 		of Nanotrasen employees. However, some also say this is an embellishment from the Tiger Co-operative. \
 		The soap did most of the work. Comes with a prisoner uniform so you fit the part."

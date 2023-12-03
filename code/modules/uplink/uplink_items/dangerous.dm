@@ -65,7 +65,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 
-	cost = 16
+	cost = 13
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //nukies get their own version
 
 /datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
