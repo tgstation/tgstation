@@ -1,4 +1,0 @@
-author: "MrMelbert"
-delete-after: True
-changes:
-  - bugfix: "smartfridges no longer show false overlays"
