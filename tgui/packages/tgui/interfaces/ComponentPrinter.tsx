@@ -15,8 +15,8 @@ type ComponentPrinterData = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-export const ComponentPrinter = (props, context) => {
-  const { act, data } = useBackend<ComponentPrinterData>(context);
+export const ComponentPrinter = (props) => {
+  const { act, data } = useBackend<ComponentPrinterData>();
   const { materials, designs, SHEET_MATERIAL_AMOUNT } = data;
 
   // Reduce the material count array to a map of actually available materials.
@@ -70,8 +70,8 @@ type RecipeProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const Recipe = (props: RecipeProps, context) => {
-  const { act } = useBackend<ComponentPrinterData>(context);
+const Recipe = (props: RecipeProps) => {
+  const { act } = useBackend<ComponentPrinterData>();
   const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(

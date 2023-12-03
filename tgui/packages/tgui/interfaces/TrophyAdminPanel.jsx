@@ -3,8 +3,8 @@ import { useBackend } from '../backend';
 import { Button, Table } from '../components';
 import { Window } from '../layouts';
 
-export const TrophyAdminPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const TrophyAdminPanel = (props) => {
+  const { act, data } = useBackend();
   const { trophies } = data;
   return (
     <Window title="Trophies Admin Panel" width={800} height={600}>

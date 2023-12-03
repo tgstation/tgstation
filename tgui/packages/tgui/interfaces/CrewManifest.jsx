@@ -12,10 +12,10 @@ const commandJobs = [
   'Quartermaster',
 ];
 
-export const CrewManifest = (props, context) => {
+export const CrewManifest = (props) => {
   const {
     data: { manifest, positions },
-  } = useBackend(context);
+  } = useBackend();
 
   return (
     <Window title="Crew Manifest" width={350} height={500}>

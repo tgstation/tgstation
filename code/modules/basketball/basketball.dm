@@ -106,7 +106,7 @@
 		return
 
 	// spinning gives you a lower disarm chance but it drains stamina
-	var/disarm_chance = baller.flags_1 & IS_SPINNING_1 ? 35 : 50
+	var/disarm_chance = HAS_TRAIT(baller, TRAIT_SPINNING) ? 35 : 50
 	// ballers stamina results in lower disarm, stealer stamina results in higher disarm
 	disarm_chance += (baller.getStaminaLoss() - stealer.getStaminaLoss()) / 2
 	// the lowest chance for disarm is 25% and the highest is 75%
@@ -169,7 +169,7 @@
 		return
 
 	// need a free hand and can't be spinning
-	if(!user.put_in_inactive_hand(src) || user.flags_1 & IS_SPINNING_1)
+	if(!user.put_in_inactive_hand(src) || HAS_TRAIT(user, TRAIT_SPINNING))
 		return
 
 	last_use = world.time

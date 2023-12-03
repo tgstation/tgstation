@@ -11,7 +11,7 @@ const CONTRACT_STATUS_EXTRACTING = 4;
 const CONTRACT_STATUS_COMPLETE = 5;
 const CONTRACT_STATUS_ABORTED = 6;
 
-export const SyndicateContractor = (props, context) => {
+export const SyndicateContractor = (props) => {
   return (
     <NtosWindow width={500} height={600}>
       <NtosWindow.Content scrollable>
@@ -48,8 +48,8 @@ type ContractData = {
   payout_bonus: Number;
 };
 
-export const SyndicateContractorContent = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+export const SyndicateContractorContent = (props) => {
+  const { data, act } = useBackend<Data>();
   const { error, logged_in, first_load, info_screen } = data;
 
   const terminalMessages = [
@@ -89,7 +89,7 @@ export const SyndicateContractorContent = (props, context) => {
     'a specialised extraction unit to put the body into.',
     '',
     'We want targets alive - but we will sometimes pay slight',
-    "amounts if they're not, you just won't recieve the shown",
+    "amounts if they're not, you just won't receive the shown",
     'bonus. You can redeem your payment through this uplink in',
     'the form of raw telecrystals, which can be put into your',
     'regular Syndicate uplink to purchase whatever you may need.',
@@ -174,8 +174,8 @@ export const SyndicateContractorContent = (props, context) => {
   );
 };
 
-export const StatusPane = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const StatusPane = (props) => {
+  const { act, data } = useBackend<Data>();
   const { redeemable_tc, earned_tc, contracts_completed } = data;
 
   return (
@@ -222,8 +222,8 @@ export const StatusPane = (props, context) => {
   );
 };
 
-const ContractsTab = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ContractsTab = (props) => {
+  const { act, data } = useBackend<Data>();
   const { contracts, ongoing_contract, extraction_enroute, dropoff_direction } =
     data;
 

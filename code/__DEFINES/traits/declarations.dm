@@ -190,6 +190,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASILY_WOUNDED "easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
+/// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds
+#define TRAIT_EASYBLEED "easybleed"
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get overlays from being in critical.
 #define TRAIT_NOCRITOVERLAY "no_crit_overlay"
@@ -437,6 +439,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait used by fugu glands to avoid double buffing
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
+
+/// Trait that tracks if something has been renamed. Typically holds a REF() to the object itself (AKA src) for wide addition/removal.
+#define TRAIT_WAS_RENAMED "was_renamed"
 
 /// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
 #define TRAIT_DOUBLE_TAP "double_tap"
@@ -711,6 +716,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
 
+/// This mob always lands on their feet when they fall, for better or for worse.
+#define TRAIT_CATLIKE_GRACE "catlike_grace"
+
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
 
@@ -844,6 +852,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_MIRROR_REFLECTION "no_mirror_reflection"
 /// If this movable is currently treading in a turf with the immerse element.
 #define TRAIT_IMMERSED "immersed"
+/// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
+#define TRAIT_ELEVATED_TURF "elevated_turf"
 /**
  * With this, the immerse overlay will give the atom its own submersion visual overlay
  * instead of one that's also shared with other movables, thus making editing its appearance possible.
@@ -885,6 +895,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
 
+/// This atom is currently spinning.
+#define TRAIT_SPINNING "spinning"
 
 /// Denotes that this id card was given via the job outfit, aka the first ID this player got.
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
@@ -983,6 +995,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOB_BREEDER "mob_breeder"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
+///trait given to food that can be baked by /datum/component/bakeable
+#define TRAIT_BAKEABLE "bakeable"
 
 /// Trait given to foam darts that have an insert in them
 #define TRAIT_DART_HAS_INSERT "dart_has_insert"

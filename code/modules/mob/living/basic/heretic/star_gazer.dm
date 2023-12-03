@@ -65,7 +65,7 @@
 		return
 
 	target.apply_status_effect(/datum/status_effect/star_mark)
-	target.apply_damage(damage = 5, damagetype = CLONE)
+	target.apply_damage(damage = 5, damagetype = BURN)
 	var/datum/targeting_strategy/target_confirmer = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
 	for(var/mob/living/nearby_mob in range(1, src))
 		if(target == nearby_mob || !target_confirmer?.can_attack(src, nearby_mob))

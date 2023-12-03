@@ -24,8 +24,8 @@ type Data = {
   CARGO_CRATE_VALUE: number;
 };
 
-export const MatMarket = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const MatMarket = (props) => {
+  const { act, data } = useBackend<Data>();
 
   const {
     orderingPrive,
@@ -227,7 +227,7 @@ export const MatMarket = (props, context) => {
   );
 };
 
-const MarketCrashModal = (props, context) => {
+const MarketCrashModal = (props) => {
   return (
     <Modal textAlign="center" mr={1.5}>
       ATTENTION! THE MARKET HAS CRASHED
