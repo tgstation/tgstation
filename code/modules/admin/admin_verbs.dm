@@ -1197,6 +1197,9 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		return
 	if(!ishuman(target))
 		return
+	var/confirm = tgui_alert(usr, "Are you sure you wish to turn [target.real_name] into a MMI", "Are you sure?", list("No", "Yes"))
+	if(confirm != "Yes")
+		return
 
 	var/obj/item/mmi/new_mmi = new(target.loc)
 	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
