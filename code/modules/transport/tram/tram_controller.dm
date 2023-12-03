@@ -697,7 +697,7 @@
 
 /obj/machinery/transport/tram_controller/hilbert
 	configured_transport_id = HILBERT_LINE_1
-	flags_1 = NO_DECONSTRUCTION
+	obj_flags = NO_DECONSTRUCTION
 
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()

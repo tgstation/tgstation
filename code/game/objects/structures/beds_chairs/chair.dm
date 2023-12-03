@@ -85,7 +85,7 @@
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1&NO_DECONSTRUCTION)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return TRUE
 	..()
 	weapon.play_tool_sound(src)
@@ -490,7 +490,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
-	flags_1 = NO_DECONSTRUCTION
+	obj_flags = NO_DECONSTRUCTION
 	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)

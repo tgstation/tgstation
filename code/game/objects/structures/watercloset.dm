@@ -419,7 +419,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NO_DECONSTRUCTION))
+	if(O.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
 		O.play_tool_sound(src)
 		deconstruct()
 		return

@@ -40,7 +40,7 @@
 	req_access = null
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = NO_DECONSTRUCTION
+	obj_flags = NO_DECONSTRUCTION
 
 /datum/track
 	var/song_name = "generic"
