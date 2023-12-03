@@ -16,9 +16,9 @@ type ModularShieldGenData = {
   initiating_field: BooleanLike;
 };
 
-export const ModularShieldGen = (props, context) => {
+export const ModularShieldGen = (props) => {
   const { topLevel } = props;
-  const { act, data } = useBackend<ModularShieldGenData>(context);
+  const { act, data } = useBackend<ModularShieldGenData>();
   const {
     max_strength,
     max_regeneration,

@@ -22,8 +22,8 @@ enum ToUpdate {
   RightEye,
 }
 
-const LightColorDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const LightColorDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { lightColor } = data;
   return (
     <LabeledList.Item label="Color">
@@ -53,8 +53,8 @@ const LightColorDisplay = (props, context) => {
   );
 };
 
-const RangeDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const RangeDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { range } = data;
   return (
     <LabeledList.Item label="Range">
@@ -86,16 +86,16 @@ const RangeDisplay = (props, context) => {
   );
 };
 
-const EyeColorDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const EyeColorDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { eyeColor } = data;
   return (
     <>
-      <LabeledList.Item label="Match Colors">
+      <LabeledList.Item label="Match Color">
         <Button.Checkbox
           checked={eyeColor.mode}
           onClick={() => act('toggle_eye_color')}
-          tooltip="Toggle the eye color mode."
+          tooltip="Toggles whether eyecolor matches the color of the light."
         />
       </LabeledList.Item>
       {!eyeColor.mode && (
@@ -112,7 +112,7 @@ const EyeColorDisplay = (props, context) => {
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.LeftEye })
               }
-              tooltip="Randomizes the light color."
+              tooltip="Randomizes the eye color."
             />
             <Input
               value={eyeColor.left}
@@ -140,7 +140,7 @@ const EyeColorDisplay = (props, context) => {
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.RightEye })
               }
-              tooltip="Randomizes the light color."
+              tooltip="Randomizes the eye color."
             />
             <Input
               value={eyeColor.right}
@@ -160,8 +160,8 @@ const EyeColorDisplay = (props, context) => {
   );
 };
 
-export const HighLuminosityEyesMenu = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const HighLuminosityEyesMenu = (props) => {
+  const { act, data } = useBackend<Data>();
   const { eyeColor } = data;
   return (
     <Window

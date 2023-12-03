@@ -133,7 +133,7 @@
 /**
  * Handles the production of our mob and adds it to our living_mobs list
  *
- * Used by the vent clog random event to handle the spawning of mobs. The proc recieves the mob that will be spawned,
+ * Used by the vent clog random event to handle the spawning of mobs. The proc receives the mob that will be spawned,
  * and the event's current list of living mobs produced by the event so far. After checking if the vent is welded, the
  * new mob is created on the vent's turf, then added to the living_mobs list.
  */

@@ -303,6 +303,47 @@ world.log << "[apples] apples left, taking one."
 apples--
 ```
 
+### initial() versus ::
+`::` is a compile time scope operator which we use as an alternative to `initial()`.
+It's used within the definition of a datum as opposed to `Initialize` or other procs.
+
+```dm
+// Bad
+/atom/thing/better
+	name = "Thing"
+
+/atom/thing/better/Initialize()
+	var/atom/thing/parent = /atom/thing
+	desc = inital(parent)
+
+// Good
+/atom/thing/better
+	name = "Thing"
+	desc = /atom/thing::desc
+```
+
+Another good use for it easy access of the parent's variables.
+```dm
+/obj/item/fork/dangerous
+	damage = parent_type::damage * 2
+```
+
+```dm
+/obj/item/fork
+	flags_1 = parent_type::flags_1 | FLAG_COOLER
+```
+
+
+It's important to note that `::` does not apply to every application of `initial()`.
+Primarily in cases where the type you're using for the initial value is not static.
+
+For example,
+```dm
+/proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
+	return initial(b.init_order) - initial(a.init_order)
+```
+could not use `::` as the provided types are not static.
+
 ## Procs
 
 ### Getters and setters

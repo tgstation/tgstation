@@ -136,6 +136,7 @@
 #define SPECIES_FLIGHT_TRAIT "species-flight"
 #define FROSTMINER_ENRAGE_TRAIT "frostminer-enrage"
 #define NO_GRAVITY_TRAIT "no-gravity"
+#define NEGATIVE_GRAVITY_TRAIT "negative-gravity"
 
 /// A trait gained from a mob's leap action, like the leaper
 #define LEAPING_TRAIT "leaping"
@@ -273,3 +274,5 @@
 
 /// Trait from an organ being inside a bodypart
 #define ORGAN_INSIDE_BODY_TRAIT "organ_inside_body"
+/// Trait when something was labelled by a pen.
+#define PEN_LABEL_TRAIT "pen_label"

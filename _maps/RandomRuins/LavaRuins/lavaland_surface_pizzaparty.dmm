@@ -377,10 +377,10 @@
 /obj/structure/rack,
 /obj/item/storage/box/lights/bulbs,
 /obj/item/storage/toolbox/mechanical/old,
-/obj/item/a_gift{
+/obj/item/gift{
 	contains_type = /obj/item/gun/ballistic/automatic/toy/unrestricted
 	},
-/obj/item/a_gift{
+/obj/item/gift{
 	contains_type = /obj/item/gun/ballistic/automatic/pistol/toy
 	},
 /obj/item/ammo_box/foambox,
@@ -524,13 +524,13 @@
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/obj/item/a_gift{
+/obj/item/gift{
 	contains_type = /obj/item/toy/plush/goatplushie;
 	pixel_x = 7;
 	pixel_y = 6
 	},
 /obj/structure/sign/clock/directional/south,
-/obj/item/a_gift{
+/obj/item/gift{
 	contains_type = /obj/item/toy/plush/ratplush;
 	pixel_x = -4;
 	pixel_y = 2
@@ -713,7 +713,7 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/yellow/diagonal_edge,
 /obj/effect/turf_decal/tile/neutral/diagonal_centre,
-/obj/item/a_gift{
+/obj/item/gift{
 	contains_type = /obj/item/toy/figure/wizard
 	},
 /turf/open/floor/iron/diagonal/lavaland,

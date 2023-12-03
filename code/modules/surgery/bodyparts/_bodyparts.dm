@@ -77,7 +77,7 @@
 
 	// Damage variables
 	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
-	var/body_damage_coeff = 1
+	var/body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_TOTAL
 	///The current amount of brute damage the limb has
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
@@ -164,6 +164,8 @@
 	var/attack_type = BRUTE
 	/// the verb used for an unarmed attack when using this limb, such as arm.unarmed_attack_verb = punch
 	var/unarmed_attack_verb = "bump"
+	/// if we have a special attack verb for hitting someone who is grappled by us, it goes here.
+	var/grappled_attack_verb
 	/// what visual effect is used when this limb is used to strike someone.
 	var/unarmed_attack_effect = ATTACK_EFFECT_PUNCH
 	/// Sounds when this bodypart is used in an umarmed attack

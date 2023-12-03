@@ -463,8 +463,6 @@ GLOBAL_VAR(station_nuke_source)
 		"A nuclear device has been armed in [get_area_name(src)]!",
 		source = src,
 		header = "Nuke Armed",
-		action = NOTIFY_ORBIT,
-		notify_flags = NOTIFY_CATEGORY_DEFAULT,
 	)
 	update_appearance()
 
@@ -525,7 +523,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
 
-	if(SSticker?.mode)
+	if(SSticker.HasRoundStarted())
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, PROC_REF(actually_explode)), 10 SECONDS)
 	return TRUE

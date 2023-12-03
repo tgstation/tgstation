@@ -1,0 +1,5 @@
+author: "distributivgesetz"
+delete-after: True
+changes:
+  - balance: "Clone damage dealt by the cosmic blade has been replaced with organ damage and increased burn damage. Clone damage dealt by the cosmic beam has been removed. The star gazer now deals burn damage instead of clone damage."
+  - bugfix: "The health of mobs combo'd by a cosmic blade will now update correctly."

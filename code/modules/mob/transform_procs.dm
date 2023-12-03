@@ -380,7 +380,7 @@
 		return FALSE //Verbs do not appear for players.
 
 //Good mobs!
-	if(ispath(MP, /mob/living/simple_animal/pet/cat))
+	if(ispath(MP, /mob/living/basic/pet/cat))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
@@ -398,7 +398,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/bear))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/parrot))
+	if(ispath(MP, /mob/living/basic/parrot))
 		return TRUE //Parrots are no longer unfinished! -Nodrak
 
 	//Not in here? Must be untested!

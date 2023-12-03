@@ -326,9 +326,9 @@
 			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
 			apply_chemicals(lastuser?.resolve())
 			if(self_sustaining)
-				reagents.remove_any(min(0.5, nutridrain))
+				reagents.remove_all(min(0.5, nutridrain))
 			else
-				reagents.remove_any(nutridrain)
+				reagents.remove_all(nutridrain)
 
 			// Lack of nutrients hurts non-weeds
 			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))

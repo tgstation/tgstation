@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - rscdel: "Removes the slime's reagent holder. This will make them not slow down from somehow imbibing morphine or frostoil."

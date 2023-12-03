@@ -2,12 +2,12 @@
 	filename = "ntrecords"
 	filedesc = "Records"
 	extended_desc = "Allows the user to view several basic records from the crew."
-	category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_SECURITY
 	program_icon = "clipboard"
-	program_icon_state = "crew"
+	program_open_overlay = "crew"
 	tgui_id = "NtosRecords"
 	size = 4
-	usage_flags = PROGRAM_TABLET | PROGRAM_LAPTOP
+	usage_flags = PROGRAM_PDA | PROGRAM_LAPTOP
 	available_on_ntnet = FALSE
 	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
