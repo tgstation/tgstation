@@ -455,7 +455,7 @@
  * Arguments:
  * * testing_mob - the mob to check the damage of
  * * amount - the amount of damage to verify that the mob has
- * * expected - the expected return value of the damage procs, if it differs from the default of (amount * 5)
+ * * expected - the expected return value of the damage procs, if it differs from the default of (amount * 4)
  * * included_types - Bitflag of damage types to check.
  */
 /datum/unit_test/mob_damage/basic/verify_damage(mob/living/testing_mob, amount, expected, included_types = ALL)
@@ -464,7 +464,7 @@
 			"[testing_mob] should have [0] toxin damage, instead they have [testing_mob.getToxLoss()]!")
 	if(included_types & BRUTELOSS)
 		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLoss(), 1), expected || amount * 5, \
-			"[testing_mob] should have [expected || amount * 5] brute damage, instead they have [testing_mob.getBruteLoss()]!")
+			"[testing_mob] should have [expected || amount * 4] brute damage, instead they have [testing_mob.getBruteLoss()]!")
 	if(included_types & FIRELOSS)
 		TEST_ASSERT_EQUAL(round(testing_mob.getFireLoss(), 1), 0, \
 			"[testing_mob] should have [0] burn damage, instead they have [testing_mob.getFireLoss()]!")
