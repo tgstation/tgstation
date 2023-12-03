@@ -47,12 +47,12 @@
 
 /datum/uplink_item/weapon_kits/core
 	name = "Core Equipment Box (Essential)"
-	desc = "This box contains an airlock authentification override card, a C-4 explosive charge, a freedom implant and a stimpack injector. \
+	desc = "This box contains an airlock authentification override card, a MODsuit energy shield module, a C-4 explosive charge, a freedom implant and a stimpack injector. \
 		The most important support items for most operatives to succeed in their mission, bundled together. It is highly recommend you buy this kit. \
 		Note: This bundle is not at a discount. You can purchase all of these items separately. You do not NEED these items, but most operatives fail WITHOUT at \
 		least SOME of these items. More experienced operatives can do without."
 	item = /obj/item/storage/box/syndie_kit/core_gear
-	cost = 14 //freedom 5, doormag 3, c-4 1, stimpack 5
+	cost = 22 //freedom 5, doormag 3, c-4 1, stimpack 5, shield modsuit module 8
 	limited_stock = 1
 	cant_discount = TRUE
 	purchasable_from = UPLINK_NUKE_OPS
