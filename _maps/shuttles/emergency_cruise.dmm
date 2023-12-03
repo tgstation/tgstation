@@ -148,10 +148,10 @@
 /area/shuttle/escape)
 "dG" = (
 /obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisene1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisene1"
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "dL" = (
@@ -354,7 +354,7 @@
 "ij" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisene2
+	cycle_id = "cruisene2"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -412,10 +412,10 @@
 /area/shuttle/escape)
 "jF" = (
 /obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw2
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisesw2"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "jL" = (
@@ -547,14 +547,14 @@
 "lP" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisenw1
+	cycle_id = "cruisenw1"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ma" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw2
+	cycle_id = "cruisesw2"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -586,12 +586,12 @@
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
 "mN" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/door/airlock/shuttle,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisene1"
 	},
-/turf/open/floor/wood/parquet,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/noslip,
 /area/shuttle/escape)
 "mR" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/corner{
@@ -876,7 +876,7 @@
 "tC" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisenw2
+	cycle_id = "cruisenw2"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -967,7 +967,7 @@
 "uU" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw1
+	cycle_id = "cruisesw1"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1013,10 +1013,10 @@
 /area/shuttle/escape)
 "vW" = (
 /obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisesw1"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "vX" = (
@@ -1156,7 +1156,7 @@
 "zy" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisese2
+	cycle_id = "cruisese2"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -1212,10 +1212,10 @@
 /area/shuttle/escape)
 "AD" = (
 /obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisesw1"
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "AF" = (
@@ -1266,10 +1266,10 @@
 /area/shuttle/escape)
 "By" = (
 /obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisene1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisene1"
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Bz" = (
@@ -1283,7 +1283,7 @@
 "BF" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisese1
+	cycle_id = "cruisese1"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1428,10 +1428,10 @@
 /area/shuttle/escape)
 "FA" = (
 /obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw2
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisesw2"
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "FD" = (
@@ -1466,7 +1466,7 @@
 "GD" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisene1
+	cycle_id = "cruisene1"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1573,7 +1573,7 @@
 "JS" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisese1
+	cycle_id = "cruisese1"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -1687,7 +1687,7 @@
 "LU" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisenw2
+	cycle_id = "cruisenw2"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1727,7 +1727,7 @@
 "MK" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw1
+	cycle_id = "cruisesw1"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -1793,7 +1793,7 @@
 "OT" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisese2
+	cycle_id = "cruisese2"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1829,7 +1829,7 @@
 "PK" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisesw2
+	cycle_id = "cruisesw2"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1874,7 +1874,7 @@
 "Rz" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisene2
+	cycle_id = "cruisene2"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -1884,7 +1884,7 @@
 	},
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisenw1
+	cycle_id = "cruisenw1"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -1932,7 +1932,7 @@
 "Tj" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisenw1
+	cycle_id = "cruisenw1"
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
@@ -1969,10 +1969,10 @@
 /area/shuttle/escape)
 "Uj" = (
 /obj/machinery/door/airlock/shuttle,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisene2
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cruisene2"
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "Um" = (
@@ -2702,7 +2702,7 @@ WX
 hB
 AF
 uu
-mN
+Tz
 il
 YY
 tG
@@ -3205,7 +3205,7 @@ en
 en
 en
 jt
-dG
+mN
 dG
 jt
 jt
