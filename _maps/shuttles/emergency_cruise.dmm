@@ -591,7 +591,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/fun_balloon/sentience/emergency_shuttle,
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "mR" = (
