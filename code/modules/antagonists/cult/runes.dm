@@ -924,9 +924,9 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			return list()
 		notify_ghosts(
 			"Manifest rune invoked in [get_area(src)].",
-			'sound/effects/ghost2.ogg',
 			source = src,
 			header = "Manifest rune",
+			ghost_sound = 'sound/effects/ghost2.ogg',
 		)
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)

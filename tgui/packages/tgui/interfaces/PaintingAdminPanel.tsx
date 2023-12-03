@@ -25,11 +25,11 @@ type PaintingData = {
   medium: string | null;
 };
 
-export const PaintingAdminPanel = (props, context) => {
-  const { act, data } = useBackend<PaintingAdminPanelData>(context);
+export const PaintingAdminPanel = (props) => {
+  const { act, data } = useBackend<PaintingAdminPanelData>();
   const [chosenPaintingRef, setChosenPaintingRef] = useLocalState<
     string | null
-  >(context, 'chosenPainting', null);
+  >('chosenPainting', null);
   const { paintings } = data;
   const chosenPainting = paintings.find((p) => p.ref === chosenPaintingRef);
   return (

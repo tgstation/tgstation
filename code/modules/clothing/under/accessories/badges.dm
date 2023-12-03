@@ -119,6 +119,7 @@
 	name = "Dogtag"
 	desc = "Can't wear a collar, but this is fine?"
 	icon_state = "allergy"
+	w_class = WEIGHT_CLASS_TINY
 	attachment_slot = NONE // actually NECK but that doesn't make sense
 	/// What message is displayed when our dogtags / its clothes / its wearer is examined
 	var/display = "Nothing!"
@@ -186,8 +187,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
-	obj_flags = UNIQUE_RENAME
-	infinite_reskin = TRUE
+	obj_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
 	. = ..()

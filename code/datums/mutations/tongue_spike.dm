@@ -73,6 +73,7 @@
 		unembedded()
 
 /obj/item/hardened_spike/embedded(atom/target)
+	. = ..()
 	if(isbodypart(target))
 		missed = FALSE
 
@@ -121,6 +122,7 @@
 	var/embedded_once_alread = FALSE
 
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
+	. = ..()
 	if(embedded_once_alread)
 		return
 	embedded_once_alread = TRUE
@@ -173,7 +175,7 @@
 		return FALSE
 
 	to_chat(transferred, span_warning("You feel a tiny prick!"))
-	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, 1, 1, 0, transferred_by = transferer)
+	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
 	var/obj/item/bodypart/spike_location = chem_spike.check_embedded()

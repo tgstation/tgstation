@@ -15,7 +15,7 @@
 	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
 		return
 
-	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+	if(HAS_TRAIT(quirk_holder, TRAIT_MIND_TEMPORARILY_GONE) || HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
 
 	var/nick_spotted = FALSE

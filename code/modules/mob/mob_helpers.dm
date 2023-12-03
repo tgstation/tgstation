@@ -245,27 +245,27 @@
  * The kitchen sink of notification procs
  *
  * Arguments:
- * * message
- * * ghost_sound sound to play
- * * enter_link Href link to enter the ghost role being notified for
- * * source The source of the notification
- * * alert_overlay The alert overlay to show in the alert message
- * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
- * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
- * * header The header of the notifiaction
- * * notify_volume How loud the sound should be to spook the user
+ * * message: The message displayed in chat.
+ * * source: The source of the notification. This is required for an icon
+ * * header: The title text to display on the icon tooltip.
+ * * alert_overlay: Optional. Create a custom overlay if you want, otherwise it will use the source
+ * * click_interact: If true, adds a link + clicking the icon will attack_ghost the source
+ * * custom_link: Optional. If you want to add a custom link to the chat notification
+ * * ghost_sound: sound to play
+ * * ignore_key: Ignore keys if they're in the GLOB.poll_ignore list
+ * * notify_volume: How loud the sound should be to spook the user
  */
 /proc/notify_ghosts(
 	message,
-	ghost_sound,
-	enter_link,
 	atom/source,
+	header = "Something Interesting!",
 	mutable_appearance/alert_overlay,
-	action = NOTIFY_JUMP,
-	notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	click_interact = FALSE,
+	custom_link = "",
+	ghost_sound,
 	ignore_key,
-	header = "",
-	notify_volume = 100
+	notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	notify_volume = 100,
 )
 
 	if(notify_flags & GHOST_NOTIFY_IGNORE_MAPLOAD && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
@@ -295,18 +295,18 @@
 			to_chat(ghost, span_ghostalert(message))
 			continue
 
-		var/custom_link = enter_link ? " [enter_link]" : ""
-		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+		var/interact_link = click_interact ? " <a href='?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
+		var/view_link = " <a href='?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
 
-		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
+		to_chat(ghost, span_ghostalert("[message][custom_link][interact_link][view_link]"))
 
 		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
 			category = "[REF(source)]_notify_action",
 			type = /atom/movable/screen/alert/notify_action,
 		)
-		toast.action = action
 		toast.add_overlay(alert_overlay)
-		toast.desc = "[message] -- Click to [action]."
+		toast.click_interact = click_interact
+		toast.desc = "Click to [click_interact ? "play" : "view"]."
 		toast.name = header
 		toast.target_ref = WEAKREF(source)
 

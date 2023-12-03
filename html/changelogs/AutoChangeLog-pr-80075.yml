@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Blocking a tackler no longer causes things to go haywire and stun the tackler/the tackle victim."

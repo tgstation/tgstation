@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "emped bar signs will now display the correct sprite"
-  - image: "added a more detailed lightmask for the emp bar sign sprite"

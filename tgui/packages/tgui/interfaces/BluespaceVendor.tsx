@@ -32,8 +32,8 @@ type GasDisplayProps = {
   gasMax: number;
 };
 
-export const BluespaceVendor = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BluespaceVendor = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     bluespace_network_gases = [],
     inserted_tank,
@@ -153,8 +153,8 @@ export const BluespaceVendor = (props, context) => {
   );
 };
 
-const GasDisplay = (props: GasDisplayProps, context) => {
-  const { act, data } = useBackend<Data>(context);
+const GasDisplay = (props: GasDisplayProps) => {
+  const { act, data } = useBackend<Data>();
   const { pumping, selected_gas, inserted_tank } = data;
   const {
     gas: { name, amount, price, id },

@@ -5,10 +5,10 @@ import { MessageViewTab } from './MessageViewTab';
 import { MessageWriteTab } from './MessageWriteTab';
 import { AnnouncementTab } from './AnnouncementTab';
 
-export const RequestMainScreen = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
+export const RequestMainScreen = (props) => {
+  const { act, data } = useBackend<RequestsData>();
   const { can_send_announcements } = data;
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   return (
     <Stack.Item grow>
       <Stack vertical fill>
