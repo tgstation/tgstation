@@ -17,7 +17,7 @@ In any query remember to add a prefix to the table names if you use one.
 
 -----------------------------------------------------
 Version 5.26, 30 November 2023, by distributivgesetz
-Set the default value of cloneloss to 0, as it's deprecated and it won't be set by blackbox anymore.
+Set the default value of cloneloss to 0, as it's obsolete and it won't be set by blackbox anymore.
 ```sql
 ALTER TABLE `death` MODIFY COLUMN `cloneloss` SMALLINT(5) UNSIGNED DEFAULT '0';
 ```
