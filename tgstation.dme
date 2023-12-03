@@ -4711,6 +4711,7 @@
 #include "code\modules\mob\living\basic\trader\trader_ai.dm"
 #include "code\modules\mob\living\basic\trader\trader_data.dm"
 #include "code\modules\mob\living\basic\trader\trader_items.dm"
+#include "code\modules\mob\living\basic\trooper\abductor.dm"
 #include "code\modules\mob\living\basic\trooper\nanotrasen.dm"
 #include "code\modules\mob\living\basic\trooper\pirate.dm"
 #include "code\modules\mob\living\basic\trooper\russian.dm"
