@@ -255,7 +255,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Captain's Quarters Privacy Shutters";
 	dir = 8;
-	id = cqpriv
+	id = "cqpriv"
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/paper_bin,
@@ -386,7 +386,7 @@
 /area/shuttle/escape)
 "je" = (
 /obj/machinery/button/door/directional/west{
-	id = cqpriv;
+	id = "cqpriv";
 	name = "Privacy Shutters Control"
 	},
 /obj/effect/turf_decal/siding/wood/end{
@@ -478,7 +478,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Captain's Quarters Privacy Shutters";
 	dir = 8;
-	id = cqpriv
+	id = "cqpriv"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Captain's Desk";
@@ -989,7 +989,7 @@
 	name = "Outdoor Play Area"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisefun
+	cycle_id = "cruisefun"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/barricade/wooden/crude,
@@ -1045,7 +1045,7 @@
 /area/shuttle/escape)
 "wb" = (
 /obj/machinery/button/door/directional/north{
-	id = cruisekitchen;
+	id = "cruisekitchen";
 	name = "Kitchen Shutter Control"
 	},
 /obj/machinery/vending/dinnerware,
@@ -1120,7 +1120,7 @@
 	name = "Outdoor Play Area"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = cruisefun
+	cycle_id = "cruisefun"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/barricade/wooden/crude,
@@ -1146,7 +1146,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = cruisekitchen
+	id = "cruisekitchen"
 	},
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	req_access = list("kitchen")
@@ -1257,7 +1257,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 1;
-	id = cruisekitchen
+	id = "cruisekitchen"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	req_access = list("kitchen")
@@ -1483,7 +1483,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	name = "Captain's Quarters Privacy Shutters";
 	dir = 8;
-	id = cqpriv
+	id = "cqpriv"
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/recharger,
