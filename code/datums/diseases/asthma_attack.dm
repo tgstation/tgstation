@@ -86,16 +86,18 @@
 	if (inflammation)
 		asthma_quirk.adjust_inflammation(inflammation * seconds_per_tick)
 
-	if (world.time >= time_to_start_remission)
-		if (!in_remission)
-			in_remission = TRUE
-			stage_prob = 0
-			name += " (Remission)"
-			desc += " <i>The attack has entered remission. It will slowly decrease in intensity before vanishing.</i>"
-		progress_to_stage_demotion += (progress_to_demotion_per_second * seconds_per_tick)
-		if (progress_to_stage_demotion >= progress_needed_to_demote)
-			progress_to_stage_demotion = 0
-			update_stage(stage - 1)
+	if (!(world.time >= time_to_start_remission))
+		return
+
+	if (!in_remission)
+		in_remission = TRUE
+		stage_prob = 0
+		name += " (Remission)"
+		desc += " <i>The attack has entered remission. It will slowly decrease in intensity before vanishing.</i>"
+	progress_to_stage_demotion += (progress_to_demotion_per_second * seconds_per_tick)
+	if (progress_to_stage_demotion >= progress_needed_to_demote)
+		progress_to_stage_demotion = 0
+		update_stage(stage - 1)
 
 // TYPES OF ASTHMA ATTACK
 

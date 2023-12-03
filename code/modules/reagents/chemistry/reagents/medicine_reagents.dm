@@ -639,23 +639,25 @@
 /datum/reagent/medicine/albuterol/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 
-	if (iscarbon(affected_mob))
-		var/mob/living/carbon/carbon_mob = affected_mob
-		if (SPT_PROB(25, seconds_per_tick))
-			carbon_mob.adjust_jitter_up_to(2 SECONDS, 20 SECONDS)
-		if (SPT_PROB(35, seconds_per_tick))
-			if (prob(60))
-				carbon_mob.losebreath += 1
-				to_chat(affected_mob, span_danger("Your diaphram spasms and you find yourself unable to breathe!"))
-			else
-				carbon_mob.breathe(seconds_per_tick, times_fired)
-				to_chat(affected_mob, span_danger("Your diaphram spasms and you unintentionally take a breath!"))
+	if (!iscarbon(affected_mob))
+		return
 
-		if (current_cycle > secondary_overdose_effect_cycle_threshold)
-			if (SPT_PROB(30, seconds_per_tick))
-				carbon_mob.adjust_eye_blur_up_to(6 SECONDS, 30 SECONDS)
-			if (carbon_mob.getStaminaLoss() < maximum_od_stamina_damage)
-				carbon_mob.adjustStaminaLoss(seconds_per_tick)
+	var/mob/living/carbon/carbon_mob = affected_mob
+	if (SPT_PROB(25, seconds_per_tick))
+		carbon_mob.adjust_jitter_up_to(2 SECONDS, 20 SECONDS)
+	if (SPT_PROB(35, seconds_per_tick))
+		if (prob(60))
+			carbon_mob.losebreath += 1
+			to_chat(affected_mob, span_danger("Your diaphram spasms and you find yourself unable to breathe!"))
+		else
+			carbon_mob.breathe(seconds_per_tick, times_fired)
+			to_chat(affected_mob, span_danger("Your diaphram spasms and you unintentionally take a breath!"))
+
+	if (current_cycle > secondary_overdose_effect_cycle_threshold)
+		if (SPT_PROB(30, seconds_per_tick))
+			carbon_mob.adjust_eye_blur_up_to(6 SECONDS, 30 SECONDS)
+		if (carbon_mob.getStaminaLoss() < maximum_od_stamina_damage)
+			carbon_mob.adjustStaminaLoss(seconds_per_tick)
 
 /datum/reagent/medicine/albuterol/proc/holder_lost_organ(datum/source, obj/item/organ/lost)
 	SIGNAL_HANDLER

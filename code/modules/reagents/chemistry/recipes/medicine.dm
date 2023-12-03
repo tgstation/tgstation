@@ -198,7 +198,7 @@
 	thermic_constant = 25
 	mix_message = "The solution rapidly breaks apart, turning a mix of colors."
 
-/datum/chemical_reaction/medicine/albuterol_outward_conversion/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
+/datum/chemical_reaction/medicine/albuterol_to_inverse_convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
 	var/bonus = impure ? 2 : 1
 	explode_smoke(holder, equilibrium, 7.5 * bonus, TRUE, TRUE)
 
