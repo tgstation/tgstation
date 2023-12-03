@@ -236,9 +236,8 @@
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
-	obj_flags = CAN_BE_HIT | EMAGGED
+	obj_flags = CAN_BE_HIT | EMAGGED | NO_DECONSTRUCTION
 	crush_damage = 120
-	obj_flags = NO_DECONSTRUCTION
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
