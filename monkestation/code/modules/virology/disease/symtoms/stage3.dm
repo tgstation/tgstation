@@ -281,6 +281,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	desc = "Causes the infected to believe they are the center of the universe. Outcome may vary depending on symptom strength."
 	stage = 3
 	max_count = 1
+	max_chance = 20
 	var/given_katana = FALSE
 	max_multiplier = 4
 	badness = EFFECT_DANGER_ANNOYING
@@ -339,8 +340,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 
 			if(multiplier >= 2)
 				//Regular cat ears /obj/item/clothing/head/kitty
-				var/obj/item/clothing/head/kitty/kitty = new /obj/item/clothing/head/kitty
-				if(affected.head && !istype(affected.head, /obj/item/clothing/head/kitty))
+				var /obj/item/clothing/head/costume/kitty/kitty = new  /obj/item/clothing/head/costume/kitty
+				if(affected.head && !istype(affected.head,  /obj/item/clothing/head/costume/kitty))
 					affected.dropItemToGround(affected.head, TRUE)
 					affected.equip_to_slot(kitty, ITEM_SLOT_HEAD)
 				if(!affected.head)
