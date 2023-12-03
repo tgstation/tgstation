@@ -385,7 +385,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/muscle/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
-	UnregisterSignal(implant_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
 	. = ..()

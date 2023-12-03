@@ -812,6 +812,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	item_flags |= ABSTRACT
+	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 
 /// Called on removal of a bodypart.
 /obj/item/bodypart/proc/on_removal(mob/living/carbon/old_owner)
@@ -820,6 +821,7 @@
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 	item_flags &= ~ABSTRACT
+	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 
 	if(!length(bodypart_traits))
 		return
