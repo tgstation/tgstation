@@ -146,10 +146,10 @@
 	if (SPT_PROB(15, seconds_per_tick))
 		to_chat(affected_mob, span_warning(pick("Mucous runs down the back of your throat.", "You swallow excess mucus.")))
 
-	if (stage >= 4)
-		if (SPT_PROB(10, seconds_per_tick))
-			to_chat(affected_mob, span_warning("You briefly choke on the mucus piling in your throat!"))
-			affected_mob.losebreath++
+	if (stage < 4 || !SPT_PROB(10, seconds_per_tick))
+		return
+	to_chat(affected_mob, span_warning("You briefly choke on the mucus piling in your throat!"))
+	affected_mob.losebreath++
 
 
 /datum/disease/asthma_attack/severe
@@ -185,10 +185,10 @@
 	else if (SPT_PROB(20, seconds_per_tick))
 		affected_mob.emote("cough")
 
-	if (stage >= 4)
-		if (SPT_PROB(15, seconds_per_tick))
-			to_chat(affected_mob, span_warning("You briefly choke on the mucus piling in your throat!"))
-			affected_mob.losebreath++
+	if (stage < 4 || !SPT_PROB(15, seconds_per_tick))
+		return
+	to_chat(affected_mob, span_warning("You briefly choke on the mucus piling in your throat!"))
+	affected_mob.losebreath++
 
 /datum/disease/asthma_attack/critical
 	severity = DISEASE_SEVERITY_BIOHAZARD
@@ -254,9 +254,8 @@
 	if (SPT_PROB(wheeze_chance, seconds_per_tick))
 		affected_mob.emote("wheeze")
 
-	if (stage >= 4)
-		if (SPT_PROB(15, seconds_per_tick))
-			to_chat(affected_mob, span_warning("You briefly choke on the mucus piling in your throat!"))
-			affected_mob.losebreath++
-
+	if (stage < 4 || !SPT_PROB(15, seconds_per_tick))
+		return
+	to_chat(affected_mob, span_warning("You briefly choke on the mucus piling in your throat!"))
+	affected_mob.losebreath++
 
