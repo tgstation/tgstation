@@ -170,15 +170,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
-"dV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "ec" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/tile,
@@ -192,16 +183,6 @@
 /area/shuttle/escape)
 "ez" = (
 /turf/open/floor/iron/dark/textured_large,
-/area/shuttle/escape)
-"eL" = (
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
-	dir = 6
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "eM" = (
 /obj/structure/chair/comfy/shuttle{
@@ -249,10 +230,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"gc" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "gm" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -469,6 +446,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"ki" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "kn" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -578,12 +564,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"lS" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "ma" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -597,11 +577,11 @@
 /turf/open/floor/iron/kitchen/herringbone,
 /area/shuttle/escape)
 "mk" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
-/turf/open/floor/iron/dark/small,
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mr" = (
 /obj/structure/table/reinforced,
@@ -764,6 +744,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"qm" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "qp" = (
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 10
@@ -772,16 +759,6 @@
 /area/shuttle/escape)
 "qt" = (
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"qE" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qM" = (
 /obj/effect/turf_decal/trimline/dark_red/filled/corner{
@@ -1110,25 +1087,6 @@
 	},
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
-"wG" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 6
-	},
-/obj/structure/table/reinforced,
-/obj/item/wrench/medical{
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "wJ" = (
 /obj/effect/turf_decal/loading_area/white{
 	dir = 4
@@ -1295,6 +1253,25 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
+"Bb" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 6
+	},
+/obj/structure/table/reinforced,
+/obj/item/wrench/medical{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "Bd" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood/tile,
@@ -1397,6 +1374,10 @@
 	},
 /turf/template_noop,
 /area/shuttle/escape)
+"Cr" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "Cu" = (
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
@@ -1456,6 +1437,13 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/computer/operating,
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"DV" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "En" = (
@@ -1572,6 +1560,18 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"HK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "HR" = (
 /obj/item/paper{
 	default_raw_text = "Due to safety hazards, the outdoor laser tag arena has been closed until further notice.";
@@ -1580,25 +1580,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"HV" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	name = "carbon dioxide exhaust";
-	dir = 8
-	},
-/turf/template_noop,
-/area/shuttle/escape)
 "Ig" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/effect/turf_decal/trimline/white/warning{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"IL" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "IO" = (
 /obj/structure/railing/corner{
@@ -1618,6 +1605,16 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"Jc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Jj" = (
 /obj/structure/sign/directions/supply/directional/south,
@@ -1843,14 +1840,10 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape)
 "NF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "Ok" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1940,10 +1933,6 @@
 /obj/machinery/vending/cigarette/beach,
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
-"PR" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white,
-/area/shuttle/escape)
 "Qa" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/white/line,
@@ -2015,6 +2004,16 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
+"Sm" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "SW" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
@@ -2023,6 +2022,14 @@
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Tb" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "carbon dioxide exhaust";
+	dir = 8
+	},
+/turf/template_noop,
 /area/shuttle/escape)
 "Td" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -2066,15 +2073,6 @@
 	dir = 1
 	},
 /turf/open/floor/wood/parquet,
-/area/shuttle/escape)
-"Ud" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Cryogenics"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/mapping_helpers/airlock/unres,
-/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
-/turf/open/floor/iron/white/textured,
 /area/shuttle/escape)
 "Uj" = (
 /obj/machinery/door/airlock/shuttle,
@@ -2216,6 +2214,15 @@
 	dir = 9
 	},
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"WK" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Cryogenics"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
+/turf/open/floor/iron/white/textured,
 /area/shuttle/escape)
 "WX" = (
 /obj/machinery/status_display/ai,
@@ -3100,9 +3107,9 @@ du
 ab
 dw
 jt
-wG
-IL
-mk
+Bb
+DV
+qm
 jt
 Qa
 qt
@@ -3144,11 +3151,11 @@ jt
 DU
 Mg
 lu
-eL
-Ud
+Sm
+WK
 dp
-PR
-gc
+mk
+Cr
 jt
 Jq
 Mz
@@ -3192,9 +3199,9 @@ Um
 gq
 gm
 jt
-dV
-qE
-NF
+ki
+HK
+Jc
 jt
 BF
 BF
@@ -3236,7 +3243,7 @@ jt
 jt
 jt
 jt
-lS
+NF
 jt
 vw
 jy
@@ -3282,7 +3289,7 @@ jt
 kd
 kd
 kd
-HV
+Tb
 jt
 jt
 jt
