@@ -21,6 +21,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_name = "heretic"
 	hijack_speed = 0.5
+	hijack_location = DEEP_SPACE
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
 	can_assign_self_objectives = TRUE

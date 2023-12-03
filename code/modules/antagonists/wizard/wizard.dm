@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
+	hijack_location = DEEP_SPACE
 	ui_name = "AntagInfoWizard"
 	suicide_cry = "FOR THE FEDERATION!!"
 	preview_outfit = /datum/outfit/wizard

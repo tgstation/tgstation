@@ -7,6 +7,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
+	hijack_location = SYNDICATE_BASE
 	suicide_cry = "FOR THE SYNDICATE!!"
 	/// Which nukie team are we on?
 	var/datum/team/nuclear/nuke_team

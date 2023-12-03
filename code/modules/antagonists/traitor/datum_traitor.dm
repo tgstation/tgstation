@@ -11,6 +11,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_name = "traitor"
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
+	hijack_location = SYNDICATE_BASE
 	ui_name = "AntagInfoTraitor"
 	suicide_cry = "FOR THE SYNDICATE!!"
 	preview_outfit = /datum/outfit/traitor
@@ -201,8 +202,11 @@
 	switch(faction)
 		if(FLAVOR_FACTION_SYNDICATE)
 			possible_employers -= GLOB.nanotrasen_employers
+
 		if(FLAVOR_FACTION_NANOTRASEN)
 			possible_employers -= GLOB.syndicate_employers
+			hijack_location = DEEP_SPACE //We hate the syndicate! Why would we want to go to their base?
+
 	employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 

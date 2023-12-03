@@ -8,6 +8,7 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	hijack_speed = 2 //not like they have much to do
+	hijack_location = SYNDICATE_BASE
 	suicide_cry = "FOR THE ETERNAL REVOLUTION!!"
 
 /datum/antagonist/enemy_of_the_state/forge_objectives()

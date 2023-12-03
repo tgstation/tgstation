@@ -5,6 +5,7 @@
 	var/special_role = ROLE_BROTHER
 	antag_hud_name = "brother"
 	hijack_speed = 0.5
+	hijack_location = SYNDICATE_BASE
 	ui_name = "AntagInfoBrother"
 	suicide_cry = "FOR MY BROTHER!!"
 	antag_moodlet = /datum/mood_event/focused

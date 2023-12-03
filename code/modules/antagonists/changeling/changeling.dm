@@ -9,6 +9,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
+	hijack_location = DEEP_SPACE
 	ui_name = "AntagInfoChangeling"
 	suicide_cry = "FOR THE HIVE!!"
 	can_assign_self_objectives = TRUE
