@@ -487,18 +487,18 @@
 	if(!test_apply_damage(gusgus, amount = -1))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
 
-	// Give 2 damage of every time (translates to 10 brute, 2 staminaloss)
+	// Give 2 damage of every time (translates to 8 brute, 2 staminaloss)
 	if(!test_apply_damage(gusgus, amount = 2))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
 
-	// underhealing: heal 1 damage of every type (translates to 5 brute, 1 staminaloss)
+	// underhealing: heal 1 damage of every type (translates to 4 brute, 1 staminaloss)
 	if(!test_apply_damage(gusgus, amount = -1))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
 
 	// overhealing
 
-	// heal 11 points of toxloss (should take care of all 5 brute damage remaining)
-	if(!apply_damage(gusgus, -11, expected = 5, included_types = TOXLOSS))
+	// heal 11 points of toxloss (should take care of all 4 brute damage remaining)
+	if(!apply_damage(gusgus, -11, expected = 4, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! toxloss was not applied correctly")
 	// heal the remaining point of staminaloss
 	if(!apply_damage(gusgus, -11, expected = 1, included_types = STAMINALOSS))
