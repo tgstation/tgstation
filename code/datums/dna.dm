@@ -86,8 +86,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/Destroy()
 	if(iscarbon(holder))
 		var/mob/living/carbon/cholder = holder
+		remove_all_mutations() // mutations hold a reference to the dna
 		if(cholder.dna == src)
-			remove_all_mutations() // mutations hold a reference to the dna
 			cholder.dna = null
 	holder = null
 
