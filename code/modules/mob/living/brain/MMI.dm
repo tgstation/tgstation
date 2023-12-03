@@ -111,18 +111,30 @@
 	else
 		return ..()
 
-/// Forces target brain into the MMI. Mainly intended for admin purposes, as this allows transfer without a mob or user.
+/**
+ * Forces target brain into the MMI. Mainly intended for admin purposes, as this allows transfer without a mob or user.
+ *
+ * Returns FALSE on failure, TRUE on success.
+ *
+ * Arguments:
+ * * new_brain - Brain to be force-inserted into the MMI. Any calling code should handle proper removal of the brain from the mob, as this proc only forceMoves.
+ */
 /obj/item/mmi/proc/force_brain_into(obj/item/organ/internal/brain/new_brain)
-	if(!new_brain)
-		return
+	if(isnull(new_brain))
+		stack_trace("Proc called with null brain.")
+		return FALSE
 
-	if(!new_brain.brainmob)
+	if(!istype(new_brain))
+		stack_trace("Proc called with invalid type: [new_brain] ([new_brain.type])")
+		return FALSE
+
+	if(isnull(new_brain.brainmob))
 		new_brain.forceMove(src)
 		brain = new_brain
 		brain.organ_flags |= ORGAN_FROZEN
 		name = "[initial(name)]: [copytext(new_brain.name, 1, -8)]"
 		update_appearance()
-		return
+		return TRUE
 
 	new_brain.forceMove(src)
 
@@ -152,6 +164,8 @@
 		braintype = "Cyborg"
 
 	SSblackbox.record_feedback("amount", "mmis_filled", 1)
+
+	return TRUE
 
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
