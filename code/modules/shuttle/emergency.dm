@@ -234,6 +234,8 @@
 		user.log_message("has hijacked [src]. Hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACKED].", LOG_GAME)
 		. = TRUE
 		to_chat(user, span_notice("You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds."))
+		if(SSshuttle.emergency.hijack_status == HIJACKED)
+			SSshuttle.emergency.hijacker = user
 		visible_message(
 			span_warning("[user.name] appears to be tampering with [src]."),
 			blind_message = span_hear("You hear someone tapping computer keys."),
@@ -315,6 +317,7 @@
 	port_direction = WEST
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 	var/hijack_status = NOT_BEGUN
+	var/mob/hijacker //This is reserved for the hijacker who completes the hijacking of the shuttle, so we know where they want to go!
 
 /obj/docking_port/mobile/emergency/Initialize(mapload)
 	. = ..()
@@ -583,11 +586,26 @@
 				// now move the actual emergency shuttle to centcom
 				// unless the shuttle is "hijacked"
 				var/destination_dock = "emergency_away"
-				if(is_hijacked() || elimination_hijack())
+				//if(is_hijacked() || elimination_hijack())
 					// just double check
-					SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
-					destination_dock = "emergency_syndicate"
-					minor_announce("Corruption detected in \
+					//if(hijacker.mind)
+					//	var/destination = hijacker.mind.get_hijack_destination()
+					//	switch(destination)
+					//		if(DEEP_SPACE)
+				var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE)
+				var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE)
+				var/z = SSmapping.empty_space.z_value
+				var/turf/landing_turf = locate(x,y,z)
+				if(!landing_turf)
+					CRASH("Shuttle found no turf to load in")
+				var/obj/docking_port/stationary/landing_marker = new /obj/docking_port/stationary
+				landing_marker.loc = landing_turf
+				landing_marker.shuttle_id = "deep_space_hijack"
+				destination = "deep_space_hijack"
+					////		if(SYNDICATE_BASE)
+						//		SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+						//		destination_dock = "emergency_syndicate"
+				minor_announce("Corruption detected in \
 						shuttle navigation protocols. Please contact your \
 						supervisor.", "SYSTEM ERROR:", sound_override = 'sound/misc/announce_syndi.ogg')
 
