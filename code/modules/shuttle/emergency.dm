@@ -592,8 +592,8 @@
 					//	var/destination = hijacker.mind.get_hijack_destination()
 					//	switch(destination)
 					//		if(DEEP_SPACE)
-				var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE)
-				var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE)
+				var/x = 32
+				var/y = 32
 				var/z = SSmapping.empty_space.z_value
 				var/turf/landing_turf = locate(x,y,z)
 				if(!landing_turf)
@@ -601,7 +601,7 @@
 				var/obj/docking_port/stationary/landing_marker = new /obj/docking_port/stationary
 				landing_marker.loc = landing_turf
 				landing_marker.shuttle_id = "deep_space_hijack"
-				destination = "deep_space_hijack"
+				destination_dock = "deep_space_hijack"
 					////		if(SYNDICATE_BASE)
 						//		SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 						//		destination_dock = "emergency_syndicate"
