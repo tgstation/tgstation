@@ -403,17 +403,20 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/atom_for_attack, mob/the_user, params)
+/obj/item/pipe_dispenser/pre_attack(atom/atom_for_attack, mob/the_user, params, bluespace = FALSE)
 	. = ..()
 	if(.)
 		return
 
-	if(!(upgrade_flags & RPD_UPGRADE_BLUESPACE) && !the_user.Adjacent(atom_for_attack))
-		return
+	if(!the_user.Adjacent(atom_for_attack))
+		if(!(upgrade_flags & RPD_UPGRADE_BLUESPACE))
+			return
+		else
+			bluespace = TRUE
 
-	return rpd_attack_action(atom_for_attack, the_user, params)
+	return rpd_attack_action(atom_for_attack, the_user, params, bluespace)
 
-/obj/item/pipe_dispenser/proc/rpd_attack_action(atom/atom_to_attack, mob/user, params)
+/obj/item/pipe_dispenser/proc/rpd_attack_action(atom/atom_to_attack, mob/user, params, bluespace = FALSE)
 	if(!ISADVANCEDTOOLUSER(user) || istype(atom_to_attack, /turf/open/space/transit))
 		return
 
@@ -432,7 +435,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
 		attack_target = attack_target.wrench_act(user, src)
 		if(!isatom(attack_target)) //can return null, FALSE if do_after() fails see /obj/machinery/atmospherics/wrench_act()
-			return
+			return TRUE
 
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
@@ -442,12 +445,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		attack_target = get_turf(attack_target)
 	var/can_make_pipe = (isturf(attack_target) || is_type_in_typecache(attack_target, make_pipe_whitelist))
 
+	if(bluespace)
+		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/grille))
+		can_make_pipe = (isopenturf(attack_target) || is_type_in_typecache(attack_target, make_pipe_whitelist))
+
 	. = TRUE
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = attack_target))
-			if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+			if(bluespace)
 				user.Beam(attack_target, icon_state = "rped_upgrade", time = 1)
 			playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 			qdel(attack_target)
@@ -471,7 +478,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				return
 
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+			if(bluespace)
 				user.Beam(attack_target, icon_state = "rped_upgrade", time = 1)
 			if(!do_after(user, reprogram_speed, target = target_smart_pipe))
 				return
@@ -521,7 +528,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		// If this is an unplaced smart pipe, try to reprogram it
 		var/obj/item/pipe/quaternary/target_unsecured_pipe = attack_target
 		if(istype(target_unsecured_pipe) && ispath(target_unsecured_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-			if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+			if(bluespace)
 				user.Beam(attack_target, icon_state = "rped_upgrade", time = 1)
 			// An unplaced pipe never has any existing connections, so just directly assign the new configuration
 			target_unsecured_pipe.p_init_dir = p_init_dir
@@ -549,7 +556,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							balloon_alert(user, "can't build on this layer!")
 							return
 						playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-						if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+						if(bluespace)
 							user.Beam(attack_target, icon_state = "rped_upgrade", time = 1)
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
@@ -581,7 +588,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					balloon_alert(user, "target is blocked!")
 					return
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-				if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+				if(bluespace)
 					user.Beam(attack_target, icon_state = "rped_upgrade", time = 1)
 				if(do_after(user, disposal_build_speed, target = attack_target))
 					var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_p_type, queued_p_dir, queued_p_flipped)
@@ -613,7 +620,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return
 
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-				if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+				if(bluespace)
 					user.Beam(attack_target, icon_state = "rped_upgrade", time = 1)
 				if(do_after(user, transit_build_speed, target = attack_target))
 					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
@@ -645,9 +652,20 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return ..()
 
 /obj/item/pipe_dispenser/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
+	if(!range_check(attacked_object, user))
+		return
 	if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
-		rpd_attack_action(attacked_object, user)
+		rpd_attack_action(attacked_object, user, bluespace = !adjacent)
 	return ..()
+
+/obj/item/pipe_dispenser/proc/range_check(atom/target, mob/user)
+	if(target.z != user.z)
+		return
+	if(!(target in dview(7, get_turf(user))))
+		balloon_alert(user, "out of range!")
+		return FALSE
+	else
+		return TRUE
 
 /// Installs an upgrade into the RPD after checking if it is already installed
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_disk, mob/user)
