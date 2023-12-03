@@ -17,17 +17,27 @@
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE
-	var/mob/living/living_target = target
-	ADD_TRAIT(living_target, TRAIT_NO_TELEPORT, IMPLANT_TRAIT)
+	RegisterSignal(target, COMSIG_MOVABLE_TELEPORTING, PROC_REF(on_teleport))
 	return TRUE
 
 /obj/item/implant/teleport_blocker/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
 	if(!. || !isliving(target))
 		return FALSE
-	var/mob/living/living_target = target
-	REMOVE_TRAIT(living_target, TRAIT_NO_TELEPORT, IMPLANT_TRAIT)
+	UnregisterSignal(target, COMSIG_MOVABLE_TELEPORTING)
 	return TRUE
+
+/// Signal for COMSIG_MOVABLE_TELEPORTED that blocks teleports and stuns the would-be-teleportee.
+/obj/item/implant/teleport_blocker/proc/on_teleport(mob/living/teleportee, atom/destination, channel)
+	SIGNAL_HANDLER
+
+	to_chat(teleportee, span_holoparasite("You feel yourself teleporting, but are suddenly flung back to where you just were!"))
+
+	teleportee.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 5 SECONDS)
+	var/datum/effect_system/spark_spread/quantum/spark_system = new()
+	spark_system.set_up(5, TRUE, teleportee)
+	spark_system.start()
+	return COMPONENT_BLOCK_TELEPORT
 
 /obj/item/implantcase/teleport_blocker
 	name = "implant case - 'Bluespace Grounding'"
