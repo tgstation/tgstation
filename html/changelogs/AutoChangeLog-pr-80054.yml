@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Falling down a z-level while standing now damages your legs rather than your entire body. This also means falling down multiple z-s may rarely break your legs."
+  - rscadd: "Felinids now land on their feet if they fall down a z-level while standing. This replaces the knockdown with a short slowdown, and also has the trade-off of causing more leg damage."
+  - rscadd: "Cats can now fall z-levels without sustaining damage."

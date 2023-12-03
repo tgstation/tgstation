@@ -62,24 +62,45 @@
 	if(!length(required_ingredients))
 		return TRUE
 
-	// This is very unoptimized for something ran every handle-reaction for every soup recipe.
-	// Look into ways for improving this, cause bleh
+	//copy of all ingredients to check out
 	var/list/reqs_copy = required_ingredients.Copy()
+	//number of ingredients who's requested amounts has been satisfied
+	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// See if we fulfill all reqs
-		for(var/ingredient_type in required_ingredients)
-			if(!istype(ingredient, ingredient_type))
-				continue
-			if(isstack(ingredient))
-				var/obj/item/stack/stack_ingredient = ingredient
-				reqs_copy[ingredient_type] -= stack_ingredient.amount
-			else
-				reqs_copy[ingredient_type] -= 1
+		var/ingredient_type = ingredient.type
+		do
+		{
+			var/ingredient_count = reqs_copy[ingredient_type]
 
-	for(var/fulfilled in reqs_copy)
-		if(reqs_copy[fulfilled] > 0)
-			return FALSE
-	return TRUE
+			//means we still have left over ingredients
+			if(ingredient_count)
+				//decode ingredient type i.e. stack or not and fulfill request
+				if(ispath(ingredient_type, /obj/item/stack))
+					var/obj/item/stack/stack_ingredient = ingredient
+					ingredient_count -= stack_ingredient.amount
+				else
+					ingredient_count -= 1
+
+				//assign final values
+				if(ingredient_count <= 0)
+					completed_ingredients += 1
+					ingredient_count = 0
+				reqs_copy[ingredient_type] = ingredient_count
+
+				//work complete
+				break
+
+			//means we have to look for subtypes
+			else if(isnull(ingredient_count))
+				ingredient_type = type2parent(ingredient_type)
+
+			//means we have no more remaining ingredients so bail, can happen if multiple ingredients of the same type/subtype are in the pot
+			else
+				break
+		}
+		while(ingredient_type != /obj/item)
+
+	return completed_ingredients == reqs_copy.len
 
 /datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(!length(required_ingredients))
@@ -167,24 +188,31 @@
 			new_ingredient.reagents?.chem_temp = holder.chem_temp
 			cached_ingredients[new_ref] = new_ingredient.reagents?.total_volume || 1
 
+	var/turf/below_pot = get_turf(pot)
 	for(var/datum/weakref/ingredient_ref as anything in cached_ingredients)
 		var/obj/item/ingredient = ingredient_ref.resolve()
+
 		// An ingredient has gone missing, stop the reaction
 		if(QDELETED(ingredient) || ingredient.loc != holder.my_atom)
 			testing("Soup reaction ended due to having an invalid ingredient present.")
 			return END_REACTION
 
-		// Don't add any more reagents if we've boiled over
-		if(reaction.data["boiled_over"])
-			continue
-
-		// Transfer 20% of the initial reagent volume of the ingredient to the soup
-		transfer_ingredient_reagents(ingredient, holder, max(cached_ingredients[ingredient_ref] * 0.2, 2))
+		// Transfer 20% of the initial reagent volume of the ingredient to the soup.
+		if(!transfer_ingredient_reagents(ingredient, holder, max(cached_ingredients[ingredient_ref] * 0.2, 2)))
+			continue //all reagents were transfered
 
 		// Uh oh we reached the top of the pot, the soup's gonna boil over.
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
-			boil_over(holder)
-			reaction.data["boiled_over"] = TRUE
+			below_pot.visible_message(span_warning("[pot] starts to boil over!"))
+			// Create a spread of dirty foam
+			var/datum/effect_system/fluid_spread/foam/dirty/soup_mess = new()
+			soup_mess.reagent_scale = 0.1 // (Just a little)
+			soup_mess.set_up(range = 1, holder = pot, location = below_pot, carry = holder, stop_reactions = TRUE)
+			soup_mess.start()
+			// Loses a bit from the foam
+			for(var/datum/reagent/reagent as anything in holder.reagent_list)
+				reagent.volume *= 0.5
+			holder.update_total()
 
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
@@ -234,45 +262,34 @@
 
 /**
  * Transfers reagents from the passed reagent to the soup pot, as a "result"
+ * Also handles deleting a portion of nutriment reagents present, pseudo-converting
+ * it into soup reagent. Returns TRUE if any reagents were transfered FALSE if there is
+ * nothing to transfer
  *
- * Also handles deleting a portion of nutriment reagents present, pseudo-converting it into soup reagent
- *
- * * ingredient: The ingredient to transfer reagents from
- * * holder: The reagent holder of the soup pot the reaction is taking place in
- * * amount: The amount of reagents to transfer, if null will transfer all reagents
+ * Arguments
+ * * obj/item/ingredient - The ingredient to transfer reagents from
+ * * datum/reagentsholder - The reagent holder of the soup pot the reaction is taking place in
+ * * amount - The amount of reagents to transfer, if null will transfer all reagents
  */
 /datum/chemical_reaction/food/soup/proc/transfer_ingredient_reagents(obj/item/ingredient, datum/reagents/holder, amount)
 	if(ingredient_reagent_multiplier <= 0)
-		return
+		return FALSE
 	var/datum/reagents/ingredient_pool = ingredient.reagents
 	// Some ingredients are purely flavor (no pun intended) and will have reagents
 	if(isnull(ingredient_pool) || ingredient_pool.total_volume <= 0)
-		return
+		return FALSE
 	if(isnull(amount))
 		amount = ingredient_pool.total_volume
 		testing("Soup reaction has made it to the finishing step with ingredients that still contain reagents. [amount] reagents left in [ingredient].")
 
 	// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
 	// Mainly done so that nutriment doesn't overpower the main course
-	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment, amount * percentage_of_nutriment_converted)
-	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment/vitamin, amount * percentage_of_nutriment_converted)
+	var/remove_amount = amount * percentage_of_nutriment_converted
+	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment, remove_amount)
+	ingredient_pool.remove_reagent(/datum/reagent/consumable/nutriment/vitamin, remove_amount)
 	// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
 	ingredient_pool.trans_to(holder, amount, ingredient_reagent_multiplier, no_react = TRUE)
-
-/// Called whenever the soup pot overfills with reagent.
-/datum/chemical_reaction/food/soup/proc/boil_over(datum/reagents/holder)
-	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
-	var/turf/below_pot = get_turf(pot)
-	below_pot.visible_message(span_warning("[pot] starts to boil over!"))
-	// Create a spread of dirty foam
-	var/datum/effect_system/fluid_spread/foam/dirty/soup_mess = new()
-	soup_mess.reagent_scale = 0.1 // (Just a little)
-	soup_mess.set_up(range = 1, holder = pot, location = below_pot, carry = holder, stop_reactions = TRUE)
-	soup_mess.start()
-	// Loses a bit from the foam
-	for(var/datum/reagent/reagent as anything in holder.reagent_list)
-		reagent.volume = round(reagent.volume * 0.9, 0.05)
-	holder.update_total()
+	return TRUE
 
 /// Adds text to the requirements list of the recipe
 /// Return a list of strings, each string will be a new line in the requirements list

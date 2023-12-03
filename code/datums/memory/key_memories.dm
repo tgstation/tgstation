@@ -213,3 +213,26 @@
 		"[protagonist_name] being arrested by security for [crimes].",
 		"[protagonist_name] committing the crimes of [crimes].",
 	)
+
+/datum/memory/key/message_server_key
+	var/decrypt_key
+
+/datum/memory/key/message_server_key/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	decrypt_key,
+)
+	src.decrypt_key = decrypt_key
+	return ..()
+
+/datum/memory/key/message_server_key/get_names()
+	return list("The daily message server key is [decrypt_key]. Keep it a secret from the clown.")
+
+/datum/memory/key/message_server_key/get_starts()
+	return list(
+		"A sticky note attached to a monitor with [decrypt_key] written on it.",
+		"Poly the parrot screaming \"[decrypt_key]!\" over and over again.",
+		"[protagonist_name] spilling coffee over the message monitor while typing [decrypt_key].",
+	)

@@ -72,3 +72,35 @@
       player details datum on their client (which is guaranteed to always exist).
   - admin: The "Old Names" details of a player is now visible in their own personal
       per-player player panel.
+2023-12-03:
+  Ben10Omintrix:
+  - refactor: medbots are now basic bots. please report any bugs
+  - rscadd: medbots can wear hats!
+  Fikou:
+  - qol: psyker echolocation cooldown time has been reduced from 2 to 1.8 seconds
+  - bugfix: psyker heads no longer render an overlay of not having eyes
+  Jackraxxus:
+  - bugfix: Digi legs work with the QM's jumpskirt
+  MrMelbert:
+  - bugfix: smartfridges no longer show false overlays
+  Rhials:
+  - spellcheck: Fixes a typo in the Factory Quartermaster outfit name.
+  SyncIt21:
+  - bugfix: crafting food or any other items that require reagents will not leave
+      behind blank reagents. That and properly updates the holder those reagents are
+      stored in
+  Vekter:
+  - bugfix: Fixed damage ranging on feral cats
+  - bugfix: Fixes hole in Birdshot hallway
+  distributivgesetz:
+  - spellcheck: Occurrences of "recieve" has been changed to "receive".
+  san7890:
+  - bugfix: Some mapped-in gifts that were supposed to guarantee a certain gift weren't
+      spawning that exact gift type, this has been patched to reflect the mapper's
+      intent.
+  tralezab:
+  - balance: Honorbound no longer cares about innocence when it comes to lesser creatures.
+      They can still be considered unready in some cases.
+  - balance: Attacking a cultist with a halo or a nuclear operative first instantly
+      makes THEM guilty, allowing further attacks.
+  - balance: More favor for converting someone to the honorbound rules
