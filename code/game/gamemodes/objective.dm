@@ -88,8 +88,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/turf/current_turf = get_turf(escapee.current)
 	if(!current_turf)
 		return FALSE
-	// Finally, if we made it to centcom (or the syndie base - got hijacked), we're home free
-	return current_turf.onCentCom() || current_turf.onSyndieBase()
+	// Finally, if we made it to centcom (or the the shuttle was hijacked), we're home free
+	return current_turf.onCentCom() || SSshuttle.emergency.is_hijacked()
 
 /datum/objective/proc/check_completion()
 	return completed
@@ -407,7 +407,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	admin_grantable = TRUE
 	var/hijack_speed_override = 1
 
-/datum/objective/hijack/check_completion() // Requires all owners to escape.
+/datum/objective/hijack/check_completion() // Requires all owners to escape. Still completed even if we weren't the ones to do it, or even if the shuttle didn't end up going where we wanted it to.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
 	var/list/datum/mind/owners = get_owners()
