@@ -72,7 +72,7 @@
 		push_over()
 
 /obj/item/cardboard_cutout/deconstruct(disassembled)
-	if(!(flags_1 & (HOLOGRAM_1|NO_DECONSTRUCTION)))
+	if(!(flags_1 & HOLOGRAM_1) || !(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/cardboard(loc, 1)
 	return ..()
 

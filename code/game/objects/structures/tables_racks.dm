@@ -885,7 +885,7 @@
  */
 
 /obj/structure/rack/deconstruct(disassembled = TRUE)
-	if(!(flags_1&NO_DECONSTRUCTION))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		set_density(FALSE)
 		var/obj/item/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
