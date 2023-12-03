@@ -37,7 +37,7 @@
 	return FALSE
 
 /obj/structure/closet/secure_closet/freezer/deconstruct(disassembled)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/assembly/igniter/condenser(drop_location())
 	. = ..()
 

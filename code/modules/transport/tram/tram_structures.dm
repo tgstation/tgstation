@@ -212,7 +212,7 @@
 	return ..()
 
 /obj/structure/tram/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
 			new girder_type(loc)
 		if(mineral_amount)

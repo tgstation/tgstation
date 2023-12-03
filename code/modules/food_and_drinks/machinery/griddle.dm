@@ -37,7 +37,7 @@
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
