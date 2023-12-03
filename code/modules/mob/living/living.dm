@@ -1596,7 +1596,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/set_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks, remove_wet_stacks = TRUE)
 	if(stacks < 0) //Shouldn't happen, ever
-		CRASH("set_fire_stacks recieved negative [stacks] fire stacks")
+		CRASH("set_fire_stacks received negative [stacks] fire stacks")
 
 	if(remove_wet_stacks)
 		remove_status_effect(/datum/status_effect/fire_handler/wet_stacks)
@@ -1609,7 +1609,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/set_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks, remove_fire_stacks = TRUE)
 	if(stacks < 0)
-		CRASH("set_wet_stacks recieved negative [stacks] wet stacks")
+		CRASH("set_wet_stacks received negative [stacks] wet stacks")
 
 	if(remove_fire_stacks)
 		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
