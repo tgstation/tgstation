@@ -87,12 +87,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(iscarbon(holder))
 		var/mob/living/carbon/cholder = holder
 		if(cholder.dna == src)
+			remove_all_mutations() // mutations hold a reference to the dna
 			cholder.dna = null
 	holder = null
 
 	QDEL_NULL(species)
 
-	remove_all_mutations() // mutations hold a reference to the dna
 	mutations.Cut() //This only references mutations, just dereference.
 	temporary_mutations.Cut() //^
 	previous.Cut() //^
