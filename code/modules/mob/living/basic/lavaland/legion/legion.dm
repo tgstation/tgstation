@@ -52,6 +52,7 @@
 	. = ..()
 	if (gone != stored_mob)
 		return
+	UnregisterSignal(stored_mob, COMSIG_LIVING_REVIVE)
 	ai_controller.clear_blackboard_key(BB_LEGION_CORPSE)
 	stored_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	stored_mob.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
