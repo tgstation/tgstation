@@ -614,7 +614,7 @@
 								Backup distress signal status: FAILURE", "SYSTEM ERROR:", sound_override = 'sound/misc/announce_syndi.ogg')
 
 							if(SYNDICATE_BASE) // Our hijacker is taking us to the syndicate base
-								SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE) // Load the base at centcomm if it isn't already
+								SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE) // Load the base at centcom if it isn't already
 								destination_dock = "emergency_syndicate" // Doc at the port already at the syndicate base
 								minor_announce("Target coordatnates corrupted. Manual coordanate input accepted.\
 								Warning, filepath \"death_2_nan0trasen\" was not defined\
