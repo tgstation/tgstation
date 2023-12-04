@@ -31,7 +31,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 3
+	weight = 0 //temp until we fix it, was 3 before
 	max_occurrences = 1
 
 /datum/antagonist/rev/head/event_trigger
