@@ -1,0 +1,4 @@
+author: "Autisem"
+delete-after: True
+changes:
+  - bugfix: "Rebirthing from headslug properly reapplys void adaptation"
