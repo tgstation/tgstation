@@ -1,7 +1,11 @@
+/client/var/lootbox_prompt = FALSE
 /client/proc/try_open_or_buy_lootbox()
 	if(!prefs)
 		return
+	if(lootbox_prompt)
+		return
 	if(!prefs.lootboxes_owned)
+		lootbox_prompt = TRUE
 		buy_lootbox()
 	if(prefs.lootboxes_owned)
 		open_lootbox()
@@ -11,11 +15,14 @@
 		return
 	if(!prefs.has_coins(5000))
 		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox"))
+		lootbox_prompt = FALSE
 		return
 	switch(tgui_alert(src, "Would you like to purchase a lootbox? 5K", "Buy a lootbox!", list("Yes", "No")))
 		if("Yes")
 			attempt_lootbox_buy()
+			lootbox_prompt = FALSE
 		else
+			lootbox_prompt = FALSE
 			return
 
 /client/proc/attempt_lootbox_buy()
