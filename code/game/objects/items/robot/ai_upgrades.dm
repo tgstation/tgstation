@@ -5,7 +5,7 @@
 /obj/item/malf_upgrade
 	name = "combat software upgrade"
 	desc = "A highly illegal, highly dangerous upgrade for artificial intelligence units, granting them a variety of powers as well as the ability to hack APCs.<br>This upgrade does not override any active laws, and must be applied directly to an active AI core."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
 	icon_state = "datadisk3"
 
 
@@ -34,7 +34,7 @@
 /obj/item/surveillance_upgrade
 	name = "surveillance software upgrade"
 	desc = "An illegal software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading and hidden microphones."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
 	icon_state = "datadisk3"
 
 /obj/item/surveillance_upgrade/pre_attack(atom/A, mob/living/user, proximity)

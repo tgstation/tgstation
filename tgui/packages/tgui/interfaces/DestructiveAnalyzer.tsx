@@ -20,8 +20,8 @@ type NodeData = {
   node_hidden: BooleanLike;
 };
 
-export const DestructiveAnalyzer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const DestructiveAnalyzer = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     server_connected,
     indestructible,

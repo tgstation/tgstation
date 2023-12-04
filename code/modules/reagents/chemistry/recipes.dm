@@ -179,10 +179,10 @@
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	for(var/id in results)
-		var/datum/reagent/reagent = holder.get_reagent(id)
+		var/datum/reagent/reagent = holder.has_reagent(id)
 		if(!reagent)
 			return
-		reagent.volume = round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
+		reagent.volume = round((reagent.volume * 0.98), CHEMICAL_QUANTISATION_LEVEL) //Slowly lower yield per tick
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
@@ -199,7 +199,7 @@
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	var/affected_list = results + required_reagents
 	for(var/_reagent in affected_list)
-		var/datum/reagent/reagent = holder.get_reagent(_reagent)
+		var/datum/reagent/reagent = holder.has_reagent(_reagent)
 		if(!reagent)
 			continue
 		reagent.purity = clamp((reagent.purity-0.01), 0, 1) //slowly reduce purity of reagents

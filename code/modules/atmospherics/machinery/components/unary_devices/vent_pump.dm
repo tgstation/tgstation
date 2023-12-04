@@ -222,7 +222,7 @@
 	else // pump_direction == SIPHONING
 		icon_state = "vent_in"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_overclock(from_break = FALSE)
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_overclock(source, from_break = FALSE)
 	fan_overclocked = !fan_overclocked
 
 	if(from_break)
@@ -233,6 +233,8 @@
 		sound_loop.start()
 	else
 		sound_loop.stop()
+
+	investigate_log("had its overlock setting [fan_overclocked ? "enabled" : "disabled"] by [source]", INVESTIGATE_ATMOS)
 
 	update_appearance()
 
@@ -247,13 +249,10 @@
 	if(!istype(us))
 		return
 
-	var/current_integrity = get_integrity()
 	if(fan_overclocked)
 		take_damage(fan_damage_rate, sound_effect=FALSE)
-		if(current_integrity == 0)
-			on = FALSE
-			set_is_operational(FALSE)
-			toggle_overclock(from_break = TRUE)
+		if(get_integrity() == 0)
+			investigate_log("was destroyed as a result of overclocking", INVESTIGATE_ATMOS)
 			return
 
 	var/percent_integrity = get_integrity_percentage()

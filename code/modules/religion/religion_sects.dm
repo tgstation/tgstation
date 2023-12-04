@@ -38,6 +38,8 @@
 	var/altar_icon_state
 	/// Currently Active (non-deleted) rites
 	var/list/active_rites
+	/// Chance that we fail a bible blessing.
+	var/smack_chance = DEFAULT_SMACK_CHANCE
 	/// Whether the structure has CANDLE OVERLAYS!
 	var/candle_overlay = TRUE
 
@@ -122,6 +124,10 @@
 		playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE
+
+/// What happens if we bless a corpse? By default just do the default smack behavior
+/datum/religion_sect/proc/sect_dead_bless(mob/living/target, mob/living/chap)
+	return FALSE
 
 /**** Nanotrasen Approved God ****/
 
@@ -286,11 +292,12 @@
 	name = "Punished God"
 	quote = "To feel the freedom, you must first understand captivity."
 	desc = "Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, \
-	even addictions. You will learn the secrets of the universe from your defeated shell."
+		even addictions. You will learn the secrets of the universe from your defeated shell."
 	tgui_icon = "user-injured"
 	altar_icon_state = "convertaltar-burden"
 	alignment = ALIGNMENT_NEUT
 	candle_overlay = FALSE
+	smack_chance = 0
 	rites_list = list(/datum/religion_rites/nullrod_transformation)
 
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
@@ -298,11 +305,11 @@
 	if(!ishuman(new_convert))
 		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
 		return
-	new_convert.gain_trauma(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_MAGIC)
+	new_convert.gain_trauma(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/religion_sect/burden/on_deconversion(mob/living/carbon/human/new_convert)
 	if (ishuman(new_convert))
-		new_convert.cure_trauma_type(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_MAGIC)
+		new_convert.cure_trauma_type(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_ABSOLUTE)
 	return ..()
 
 /datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
@@ -313,6 +320,76 @@
 		return "You are at burden level [burden.burden_level]/9."
 	return "You are not burdened."
 
+/datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)
+	if(!istype(target) || !istype(chaplain))
+		return FALSE
+	var/datum/brain_trauma/special/burdened/burden = chaplain.has_trauma_type(/datum/brain_trauma/special/burdened)
+	if(!burden)
+		return FALSE
+	var/burden_modifier = max(1 - 0.07 * burden.burden_level, 0.01)
+	var/transferred = FALSE
+	var/list/hurt_limbs = target.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + target.get_wounded_bodyparts(BODYTYPE_ORGANIC)
+	var/list/chaplains_limbs = list()
+	for(var/obj/item/bodypart/possible_limb in chaplain.bodyparts)
+		if(IS_ORGANIC_LIMB(possible_limb))
+			chaplains_limbs += possible_limb
+	if(length(chaplains_limbs))
+		for(var/obj/item/bodypart/affected_limb as anything in hurt_limbs)
+			var/obj/item/bodypart/chaplains_limb = chaplain.get_bodypart(affected_limb.body_zone)
+			if(!chaplains_limb || !IS_ORGANIC_LIMB(chaplains_limb))
+				chaplains_limb = pick(chaplains_limbs)
+			var/brute_damage = affected_limb.brute_dam
+			var/burn_damage = affected_limb.burn_dam
+			if((brute_damage || burn_damage))
+				transferred = TRUE
+				affected_limb.heal_damage(brute_damage, burn_damage, required_bodytype = BODYTYPE_ORGANIC)
+				chaplains_limb.receive_damage(brute_damage * burden_modifier, burn_damage * burden_modifier, forced = TRUE, wound_bonus = CANT_WOUND)
+			for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
+				transferred = TRUE
+				iter_wound.remove_wound()
+				iter_wound.apply_wound(chaplains_limb)
+		if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
+			transferred = TRUE
+			target.cure_husk(BURN)
+			chaplain.become_husk(BURN)
+	var/toxin_damage = target.getToxLoss()
+	if(toxin_damage && !HAS_TRAIT(chaplain, TRAIT_TOXIMMUNE))
+		transferred = TRUE
+		target.adjustToxLoss(-toxin_damage)
+		chaplain.adjustToxLoss(toxin_damage * burden_modifier, forced = TRUE)
+	var/suffocation_damage = target.getOxyLoss()
+	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
+		transferred = TRUE
+		target.adjustOxyLoss(-suffocation_damage)
+		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
+	var/clone_damage = target.getCloneLoss()
+	if(clone_damage && !HAS_TRAIT(chaplain, TRAIT_NOCLONELOSS))
+		transferred = TRUE
+		target.adjustCloneLoss(-clone_damage)
+		chaplain.adjustCloneLoss(clone_damage * burden_modifier, forced = TRUE)
+	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
+		if(target.blood_volume < BLOOD_VOLUME_SAFE)
+			var/target_blood_data = target.get_blood_data(target.get_blood_id())
+			var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
+			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
+			if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
+				transferred = TRUE
+				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
+		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
+			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+	target.update_damage_overlays()
+	chaplain.update_damage_overlays()
+	if(transferred)
+		target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
+		to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+		playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
+		target.add_mood_event("blessing", /datum/mood_event/blessing)
+	else
+		to_chat(chaplain, span_warning("They hold no burden!"))
+	return TRUE
+
+/datum/religion_sect/burden/sect_dead_bless(mob/living/target, mob/living/chaplain)
+	return sect_bless(target, chaplain)
 
 /datum/religion_sect/honorbound
 	name = "Honorbound God"
@@ -431,7 +508,10 @@
 	alignment = ALIGNMENT_GOOD
 	candle_overlay = FALSE
 	rites_list = list(
+		/datum/religion_rites/holy_violin,
+		/datum/religion_rites/portable_song_tuning,
 		/datum/religion_rites/song_tuner/evangelism,
+		/datum/religion_rites/song_tuner/light,
 		/datum/religion_rites/song_tuner/nullwave,
 		/datum/religion_rites/song_tuner/pain,
 		/datum/religion_rites/song_tuner/lullaby,

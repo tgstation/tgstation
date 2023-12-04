@@ -190,7 +190,7 @@
 
 /// Box of 7 grey IDs.
 /datum/supply_pack/service/greyidbox
-	name = "Grey ID Card Multipack Cate"
+	name = "Grey ID Card Multipack Crate"
 	desc = "A convenient crate containing a box of seven cheap ID cards in a handy wallet-sized form factor. \
 		Cards come in every colour you can imagne, as long as it's grey."
 	cost = CARGO_CRATE_VALUE * 3
@@ -287,3 +287,11 @@
 				)
 	crate_name = "aquarium kit crate"
 	crate_type = /obj/structure/closet/crate/wooden
+
+/// Spare bar sign wallmount
+/datum/supply_pack/service/bar_sign
+	name = "Bar Sign Replacement Kit"
+	desc = "A replacement bar sign, perfect for drawing in customers to your bar, tavern, inn, nightclub, or even coffeehouse!"
+	cost = CARGO_CRATE_VALUE * 14
+	contains = list(/obj/item/wallframe/barsign/all_access)
+	crate_name = "bar sign crate"

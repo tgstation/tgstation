@@ -225,10 +225,7 @@
 
 /// Returns the number of items visible in the fridge. Faster than subtracting 2 lists
 /obj/machinery/smartfridge/proc/visible_items()
-	var/component_part_count = 0
-	for(var/datum/stock_part/datum_part in component_parts)
-		component_part_count -= 1
-	return contents.len - component_part_count
+	return contents.len - 1 // Circuitboard
 
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
@@ -592,7 +589,13 @@
 	contents_icon_state = "food"
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/weapon)
-	return (IS_EDIBLE(weapon) || (istype(weapon,/obj/item/reagent_containers/cup/bowl) && length(weapon.reagents?.reagent_list)))
+	if(weapon.w_class >= WEIGHT_CLASS_BULKY)
+		return FALSE
+	if(IS_EDIBLE(weapon))
+		return TRUE
+	if(istype(weapon, /obj/item/reagent_containers/cup/bowl) && weapon.reagents?.total_volume > 0)
+		return TRUE
+	return FALSE
 
 // -------------------------------------
 // Xenobiology Slime-Extract Smartfridge

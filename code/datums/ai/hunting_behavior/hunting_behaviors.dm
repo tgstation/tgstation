@@ -60,10 +60,10 @@
 		if(!valid_dinner(living_mob, possible_dinner, hunt_range))
 			continue
 		controller.set_blackboard_key(hunting_target_key, possible_dinner)
-		finish_action(controller, TRUE)
+		finish_action(controller, TRUE, hunting_target_key)
 		return
 
-	finish_action(controller, FALSE)
+	finish_action(controller, FALSE, hunting_target_key)
 
 /datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius)
 	if(isliving(dinner))

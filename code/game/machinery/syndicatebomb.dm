@@ -254,7 +254,6 @@
 	notify_ghosts(
 		"\A [src] has been activated at [get_area(src)]!",
 		source = src,
-		action = NOTIFY_ORBIT,
 		header = "Bomb Planted",
 	)
 	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
@@ -495,7 +494,7 @@
 		reactants += G.reagents
 
 	for(var/obj/item/slime_extract/S in beakers)
-		if(S.Uses)
+		if(S.extract_uses)
 			for(var/obj/item/reagent_containers/cup/G in beakers)
 				G.reagents.trans_to(S, G.reagents.total_volume)
 

@@ -137,7 +137,7 @@
 	if(!ishuman(blocker) || blocker.stat >= UNCONSCIOUS)
 		return FALSE
 	// No tactical spinning
-	if(blocker.flags_1 & IS_SPINNING_1)
+	if(HAS_TRAIT(blocker, TRAIT_SPINNING))
 		return FALSE
 	if(blocker.body_position == LYING_DOWN || (blocker.dir & attack_direction))
 		return TRUE

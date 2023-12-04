@@ -7,7 +7,7 @@
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "reverse_bear_trap"
 	slot_flags = ITEM_SLOT_HEAD
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
@@ -110,11 +110,10 @@
 	notify_ghosts(
 		"[user] put a reverse bear trap on [target]!",
 		source = src,
-		action = NOTIFY_ORBIT,
+		header = "Reverse bear trap armed",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		ghost_sound = 'sound/machines/beep.ogg',
 		notify_volume = 75,
-		header = "Reverse bear trap armed",
 	)
 
 /obj/item/reverse_bear_trap/proc/snap()
