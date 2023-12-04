@@ -6596,6 +6596,7 @@
 #include "monkestation\code\modules\virology\disease\symtoms\stage1.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\stage2.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\stage3.dm"
+#include "monkestation\code\modules\virology\disease\symtoms\stage4.dm"
 #include "monkestation\code\modules\virology\immune_systems\_immune_system.dm"
 #include "monkestation\code\modules\virology\items\disease_disk.dm"
 #include "monkestation\code\modules\virology\living\infection_procs.dm"
