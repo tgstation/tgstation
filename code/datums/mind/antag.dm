@@ -296,14 +296,14 @@
 
 /// Sets our can_hijack to the fastest speed our antag datums allow.
 /datum/mind/proc/get_hijack_speed()
-	. = 0
+	var/output = 0
 	for(var/datum/antagonist/antag in antag_datums)
-		. = max(., antag.hijack_speed())
+		output = max(., antag.hijack_speed())
 
 /datum/mind/proc/get_hijack_destination()
-	. = DEEP_SPACE
+	var/output = DEEP_SPACE
 	for(var/datum/antagonist/antag in antag_datums)
-		. = max(., antag.hijack_location)
+		output = max(., antag.hijack_location)
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)
