@@ -1969,7 +1969,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "aVY" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/structure/cable,
@@ -2042,7 +2042,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "aXt" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Chief Engineer's Office"
@@ -2250,7 +2250,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "bcD" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/camera/directional/south{
@@ -7485,7 +7485,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "dBV" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/iron/dark/telecomms,
@@ -8410,7 +8410,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "dZk" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/mineral/titanium,
@@ -8639,7 +8639,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "eec" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
@@ -23227,7 +23227,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "kVq" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
@@ -41785,6 +41785,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"tEU" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/iron/dark/textured,
+/area/station/commons/fitness/recreation)
 "tFb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42662,7 +42666,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "tZy" = (
 /obj/structure/cable,
 /obj/structure/toilet{
@@ -46361,7 +46365,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "vFg" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
@@ -65220,7 +65224,7 @@ fRL
 fRL
 xwm
 eim
-xwm
+tEU
 xwm
 eim
 xwm
