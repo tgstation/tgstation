@@ -118,6 +118,25 @@
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
 
+/obj/narsie/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_BEGIN_NARSIE_ROUNDEND, "Begin Nar'Sie Roundender")
+
+/obj/narsie/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(isnull(usr) || !href_list[VV_HK_BEGIN_NARSIE_ROUNDEND] || !check_rights(R_FUN, TRUE))
+		return
+
+	if(tgui_alert(usr, "Invoking this will begin the Nar'Sie roundender. Assume that this WILL end the round in a few minutes. Are you sure?", "Begin Nar'Sie Roundender", list("I'm Sure", "Abort")) != "I'm Sure")
+		return
+
+	start_ending_the_round()
+
 /obj/narsie/attack_ghost(mob/user)
 	makeNewConstruct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
 
