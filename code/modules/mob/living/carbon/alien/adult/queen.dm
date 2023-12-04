@@ -12,6 +12,8 @@
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	move_force = MOVE_FORCE_STRONG
+	move_resist = MOVE_FORCE_STRONG
 
 	var/alt_inhands_file = 'icons/mob/nonhuman-player/alienqueen.dmi'
 

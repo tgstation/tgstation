@@ -35,6 +35,10 @@
 	fire = 80
 	acid = 70
 
+/obj/item/shield/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/disarm_attack)
+
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
@@ -100,9 +104,14 @@
 	armor_type = /datum/armor/none
 	max_integrity = 30
 
+/datum/armor/item_shield/riot
+	melee = 80
+	bullet = 20
+	laser = 20
+
 /obj/item/shield/riot
 	name = "riot shield"
-	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
+	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder, less so bullets and laser beams."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
 	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
@@ -110,6 +119,7 @@
 	max_integrity = 75
 	shield_break_sound = 'sound/effects/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
+	armor_type = /datum/armor/item_shield/riot
 
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()
@@ -177,7 +187,9 @@
 	QDEL_NULL(embedded_flash)
 	return ..()
 
-/obj/item/shield/riot/flash/attack(mob/living/target_mob, mob/user)
+/obj/item/shield/riot/flash/attack(mob/living/target_mob, mob/living/user)
+	if(user.combat_mode)
+		return ..()
 	flash_away(user, target_mob)
 
 /obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
@@ -273,6 +285,7 @@
 		clumsy_check = !can_clumsy_use, \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_ITEM_CAN_DISARM_ATTACK, PROC_REF(can_disarm_attack))
 
 /obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	return FALSE
@@ -290,6 +303,13 @@
 		balloon_alert(user, active ? "activated" : "deactivated")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/shield/energy/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		if(send_message)
+			balloon_alert(user, "activate it first!")
+		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
@@ -319,6 +339,7 @@
 	)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_ITEM_CAN_DISARM_ATTACK, PROC_REF(can_disarm_attack))
 
 /obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
@@ -338,5 +359,12 @@
 		balloon_alert(user, active ? "extended" : "collapsed")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/shield/riot/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		if(send_message)
+			balloon_alert(user, "extend it first!")
+		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
 #undef BATON_BASH_COOLDOWN

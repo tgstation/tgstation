@@ -558,6 +558,7 @@
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/anomaly_locked/kinesis/admin,
+		/obj/item/mod/module/shove_blocker,
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,

@@ -52,14 +52,15 @@ In all, this is a lot like the monkey code. /N
 		return martial_result
 
 	if(user.combat_mode)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return TRUE
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+		user.disarm(src)
 		return TRUE
 	else
 		help_shake_act(user)
 
+/mob/living/carbon/alien/get_shove_flags(mob/living/shover, obj/item/weapon)
+	. = ..()
+	if(!weapon)
+		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING|SHOVE_CAN_STAGGER)
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..())

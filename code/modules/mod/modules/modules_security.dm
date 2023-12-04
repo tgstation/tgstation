@@ -424,7 +424,7 @@
 
 		if(oldgroup == newgroup)
 			return
-			
+
 		sorted_creatures[oldgroup] -= creature
 
 	sorted_creatures[newgroup] += creature
@@ -578,3 +578,15 @@
 #undef SHOOTING_ASSISTANT_OFF
 #undef STORMTROOPER_MODE
 #undef SHARPSHOOTER_MODE
+
+/obj/item/mod/module/shove_blocker
+	name = "MOD bulwark module"
+	desc = "Plates upon joints upon counter-weights, all to stop you from getting shoved around by an angry mob."
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
+
+/obj/item/mod/module/shove_blocker/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, MOD_TRAIT)
+
+/obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, MOD_TRAIT)

@@ -462,6 +462,10 @@
 /// from base of obj/item/failedEmbed()
 #define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
 
+/// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
+#define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
+	#define COMPONENT_BLOCK_ITEM_DISARM_ATTACK (1<<0)
+
 ///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
 
