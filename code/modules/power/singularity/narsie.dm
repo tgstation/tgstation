@@ -45,7 +45,7 @@
 
 /obj/narsie/Destroy()
 	if (GLOB.cult_narsie == src)
-		fall_of_the_harbringer()
+		fall_of_the_harbinger()
 		GLOB.cult_narsie = null
 
 	return ..()
@@ -118,7 +118,7 @@
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
 
 /// Cleans up all of Nar'Sie's abilities, stats, and ends her round-ending capabilities. This should only be called if `start_ending_the_round()` successfully started.
-/obj/narsie/proc/fall_of_the_harbringer()
+/obj/narsie/proc/fall_of_the_harbinger()
 	var/list/all_cults = list()
 
 	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)

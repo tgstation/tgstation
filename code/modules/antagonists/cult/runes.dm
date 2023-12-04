@@ -636,8 +636,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	if(src)
 		color = RUNE_COLOR_RED
 
-	var/obj/narsie/harbringer = new /obj/narsie(rune_turf) //Causes Nar'Sie to spawn even if the rune has been removed
-	harbringer.start_ending_the_round()
+	var/obj/narsie/harbinger = new /obj/narsie(rune_turf) //Causes Nar'Sie to spawn even if the rune has been removed
+	harbinger.start_ending_the_round()
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
 /obj/effect/rune/raise_dead
