@@ -403,7 +403,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
 	return TRUE
 
-/obj/item/pipe_dispenser/pre_attack(atom/atom_for_attack, mob/the_user, params, bluespace = FALSE)
+/obj/item/pipe_dispenser/pre_attack(atom/atom_for_attack, mob/the_user, params)
+	var/bluespace = FALSE
 	. = ..()
 	if(.)
 		return
@@ -440,14 +441,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
-		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille))
+		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille, /obj/machinery/door/airlock))
 	if(istype(attack_target, /obj/machinery/atmospherics) && mode & BUILD_MODE)
 		attack_target = get_turf(attack_target)
 	var/can_make_pipe = (isturf(attack_target) || is_type_in_typecache(attack_target, make_pipe_whitelist))
-
-	if(bluespace)
-		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/grille))
-		can_make_pipe = (isopenturf(attack_target) || is_type_in_typecache(attack_target, make_pipe_whitelist))
 
 	. = TRUE
 
@@ -655,6 +652,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(!range_check(attacked_object, user))
 		return
 	if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+		if(check_obstacles(get_turf(src), get_turf(attacked_object)))
+			balloon_alert(user, "can't reach!")
+			return
 		rpd_attack_action(attacked_object, user, bluespace = !adjacent)
 	return ..()
 
@@ -666,6 +666,20 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return FALSE
 	else
 		return TRUE
+
+/obj/item/pipe_dispenser/proc/check_obstacles(turf/our_turf, turf/target_turf)
+	for(var/turf/checked_turf as anything in get_line(our_turf, target_turf))
+		if(checked_turf == our_turf || checked_turf == target_turf)
+			continue
+		var/block_build = FALSE
+		var/static/list/blocked_objs = typecacheof(list(/obj/structure/window, /obj/machinery/door/airlock))
+		for(var/obj/any_obj in checked_turf.contents)
+			if(is_type_in_typecache(any_obj, blocked_objs) && any_obj.density)
+				block_build = TRUE
+
+		if(isclosedturf(checked_turf) || block_build)
+			return TRUE
+	return FALSE
 
 /// Installs an upgrade into the RPD after checking if it is already installed
 /obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_disk, mob/user)
