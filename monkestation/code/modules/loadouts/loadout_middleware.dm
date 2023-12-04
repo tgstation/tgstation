@@ -151,7 +151,7 @@
 				formatted_list.len--
 				continue
 		if(item.donator_only) //These checks are also performed in the backend.
-			if((!preferences.parent.patreon?.is_donator() || !preferences.parent.twitch?.is_donator())&& !is_admin(preferences.parent))
+			if((!preferences.parent.patreon?.is_donator() && !preferences.parent.twitch?.is_donator()) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
