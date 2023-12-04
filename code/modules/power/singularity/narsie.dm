@@ -36,6 +36,11 @@
 	var/souls = 0
 	var/resolved = FALSE
 
+/obj/narsie/Initialize(mapload)
+	. = ..()
+
+	narsie_spawn_animation()
+
 /obj/narsie/Destroy()
 	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
 	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
@@ -62,6 +67,7 @@
 /// This proc sets up all of Nar'Sie's abilities, stats, and begins her round-ending capabilities. She does not do anything unless this proc is invoked.
 /// This is only meant to be invoked after this instance is initialized in specific pro-sumer procs, as it WILL derail the entire round.
 /obj/narsie/proc/start_ending_the_round()
+	GLOB.cult_narsie = src
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	singularity = WEAKREF(AddComponent(
@@ -89,9 +95,6 @@
 			alert_overlay = alert_overlay,
 		)
 
-	narsie_spawn_animation()
-
-	GLOB.cult_narsie = src
 	var/list/all_cults = list()
 
 	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
