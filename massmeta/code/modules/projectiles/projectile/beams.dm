@@ -7,3 +7,10 @@
 	damage_falloff_tile = -0.45
 	wound_falloff_tile = -2.5
 
+/obj/projectile/beam/laser
+	damage = 20
+	wound_bonus = -30
+
+/obj/projectile/beam/laser/hellfire
+	damage = 25
+
