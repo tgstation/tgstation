@@ -1,5 +1,5 @@
 /datum/storyteller/clown
-	name = "The CLown"
+	name = "The Clown"
 	desc = "The clown creates only(citation needed) harmless events, its all fun and games with this one!"
 	welcome_text = "You feel like the shift will be \"interesting\"."
 	event_repetition_multiplier = 1 //can repeat things freely
