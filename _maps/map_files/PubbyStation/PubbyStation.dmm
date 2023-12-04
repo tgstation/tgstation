@@ -23407,7 +23407,7 @@
 /obj/item/folder/yellow,
 /obj/item/paper/monitorkey,
 /obj/item/pen,
-/mob/living/simple_animal/parrot/poly,
+/mob/living/basic/parrot/poly,
 /obj/machinery/button/door/directional/west{
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
