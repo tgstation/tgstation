@@ -44,24 +44,8 @@
 	narsie_spawn_animation()
 
 /obj/narsie/Destroy()
-	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
-	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
-
-	var/list/all_cults = list()
-
-	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
-		if (!cultist.owner)
-			continue
-		all_cults |= cultist.cult_team
-
-	for(var/_cult_team in all_cults)
-		var/datum/team/cult/cult_team = _cult_team
-		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
-		if (summon_objective)
-			summon_objective.summoned = FALSE
-			summon_objective.killed = TRUE
-
 	if (GLOB.cult_narsie == src)
+		fall_of_the_harbringer()
 		GLOB.cult_narsie = null
 
 	return ..()
@@ -132,6 +116,25 @@
 
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
+
+/// Cleans up all of Nar'Sie's abilities, stats, and ends her round-ending capabilities. This should only be called if `start_ending_the_round()` successfully started.
+/obj/narsie/proc/fall_of_the_harbringer()
+	var/list/all_cults = list()
+
+	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
+		if (!cultist.owner)
+			continue
+		all_cults |= cultist.cult_team
+
+	for(var/_cult_team in all_cults)
+		var/datum/team/cult/cult_team = _cult_team
+		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
+		if (summon_objective)
+			summon_objective.summoned = FALSE
+			summon_objective.killed = TRUE
+
+	send_to_playing_players(span_narsie(span_bold("\"[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"")))
+	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
 
 /obj/narsie/vv_get_dropdown()
 	. = ..()
