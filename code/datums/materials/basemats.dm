@@ -10,6 +10,7 @@
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
+	sculpting_experience_multipler = 0.5
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -33,6 +34,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, ENERGY = 1, BIO = 0.2, FIRE = 1, ACID = 0.2)
+	sculpting_experience_multipler = 0.35
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
@@ -65,6 +67,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	beauty_modifier = 0.075
+	sculpting_experience_multipler = 1.25
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -84,6 +87,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	beauty_modifier = 0.15
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 0.7, ACID = 1.1)
+	sculpting_experience_multipler = 1.5
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -104,6 +108,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	beauty_modifier = 0.3
 	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, FIRE = 1, ACID = 1)
+	sculpting_duration = SCULPT_TIME_VERY_SLOW
+	sculpting_experience_multipler = 2.5
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -122,6 +128,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	beauty_modifier = 0.3 //It shines so beautiful
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, FIRE = 1, ACID = 1)
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 2
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -189,6 +197,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 1.5
 
 /datum/material/bluespace/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/bluespace, rand(5, 8))
@@ -206,6 +216,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
 	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
+	sculpting_duration = SCULPT_TIME_FAST // bananna material is very soft for sculpting
+	sculpting_experience_multipler = 3
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -236,6 +248,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
+	sculpting_duration = SCULPT_TIME_SLOW
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -252,6 +265,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
 	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
+	sculpting_duration = SCULPT_TIME_VERY_SLOW
+	sculpting_experience_multipler = 3
 
 /datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
@@ -269,6 +284,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = -0.01
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, FIRE = 1.1, ACID = 1)
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.25
 
 /datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
 	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
@@ -296,6 +313,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.1
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, ACID = 0.3)
 	texture_layer_icon_state = "woodgrain"
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.35
 
 /datum/material/wood/on_applied_obj(obj/source, amount, material_flags)
 	. = ..()
@@ -328,6 +347,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.4
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, FIRE = 2.5, ACID = 1)
+	sculpting_duration = SCULPT_TIME_VERY_SLOW
+	sculpting_experience_multipler = 2
 
 /datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
@@ -345,6 +366,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.5, ENERGY = 1.5, BOMB = 1.5, BIO = 1.5, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.5
+	sculpting_duration = SCULPT_TIME_VERY_SLOW
+	sculpting_experience_multipler = 5
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
@@ -374,6 +397,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	value_per_unit = 400 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.2
+	sculpting_experience_multipler = 1.5
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -401,6 +425,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.35
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, FIRE = 1.3, ACID = 1)
+	sculpting_duration = SCULPT_TIME_VERY_SLOW
+	sculpting_experience_multipler = 3
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -421,6 +447,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.25
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.25
 
 /datum/material/sand/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.adjust_disgust(17)
@@ -439,6 +467,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.25
 
 /datum/material/snow
 	name = "snow"
@@ -452,6 +482,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.25
 
 /datum/material/snow/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/water, rand(5, 10))
@@ -468,6 +500,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 2
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
@@ -484,6 +518,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.2
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 0.65
 
 /datum/material/paper
 	name = "paper"
@@ -497,6 +533,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "paper"
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.35
 
 /datum/material/paper/on_applied_obj(obj/source, amount, material_flags)
 	. = ..()
@@ -521,6 +559,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 6 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, ACID = 1.5)
 	beauty_modifier = -0.1
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.25
 
 /datum/material/cardboard/on_applied_obj(obj/source, amount, material_flags)
 	. = ..()
@@ -545,6 +585,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = -0.2
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 1.25
 
 /datum/material/bamboo
 	name = "bamboo"
@@ -558,6 +600,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
+	sculpting_duration = SCULPT_TIME_FAST
+	sculpting_experience_multipler = 0.35
 
 /datum/material/zaukerite
 	name = "zaukerite"
@@ -569,6 +613,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 900 / SHEET_MATERIAL_AMOUNT
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
 	beauty_modifier = 0.001
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 2
 
 /datum/material/zaukerite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)

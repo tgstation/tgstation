@@ -33,6 +33,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+	///How long it takes to sculpt a block of material into a statue
+	var/sculpting_duration = SCULPT_TIME_AVERAGE
+	///The amount of experience this material gives after a statue is sculpted, exotic materials grant better xp
+	var/sculpting_experience_multipler = 1
 
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0

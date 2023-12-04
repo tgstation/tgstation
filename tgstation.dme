@@ -1712,6 +1712,7 @@
 #include "code\datums\skills\fitness.dm"
 #include "code\datums\skills\gaming.dm"
 #include "code\datums\skills\mining.dm"
+#include "code\datums\skills\sculpting.dm"
 #include "code\datums\station_traits\_station_trait.dm"
 #include "code\datums\station_traits\admin_panel.dm"
 #include "code\datums\station_traits\negative_traits.dm"

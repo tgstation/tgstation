@@ -14,6 +14,8 @@
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "meat"
+	sculpting_duration = SCULPT_TIME_SLOW // turning meat into a statue is diffcult
+	sculpting_experience_multipler = 1.25
 
 /datum/material/meat/on_removed(atom/source, amount, material_flags)
 	. = ..()

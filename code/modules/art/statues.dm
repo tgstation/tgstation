@@ -351,7 +351,17 @@ Moving interrupts
 	playsound(src, pick(usesound), 75, TRUE)
 	sculpting = TRUE
 	//How long whole process takes
-	var/sculpting_time = 30 SECONDS
+	var/sculpting_time = prepared_block.custom_materials.sculpting_duration
+	var/sculpting_speed_modifier = 1
+
+	if(user.mind)
+		sculpting_speed_modifier = user.mind.get_skill_modifier(/datum/skill/sculpting, SKILL_SPEED_MODIFIER)
+
+	if(has_material_type(/datum/material/bluespace)) // bluespace chisels are faster
+		sculpting_speed_modifier -= 0.20
+
+	sculpting_time *= sculpting_speed_modifier
+
 	//Single interruptible progress period
 	var/sculpting_period = round(sculpting_time / world.icon_size) //this is just so it reveals pixels line by line for each.
 	var/interrupted = FALSE
@@ -370,8 +380,11 @@ Moving interrupts
 			interrupted = TRUE
 	total_progress_bar.end_progress()
 	if(!interrupted && !QDELETED(prepared_block))
-		prepared_block.create_statue()
 		user.balloon_alert(user, "statue finished")
+		var/sculpting_xp = prepared_block.custom_materials.sculpting_experience_multipler * (prepared_block.custom_materials.sculpting_duration/DECISECONDS)
+		user.mind?.adjust_experience(/datum/skill/sculpting, sculpting_xp)
+		prepared_block.create_statue()
+
 	stop_sculpting(silent = !interrupted)
 
 /// To setup the sculpting target for the carving block

@@ -4,6 +4,8 @@
 	name = "alloy"
 	desc = "A material composed of two or more other materials."
 	init_flags = NONE
+	sculpting_duration = SCULPT_TIME_VERY_SLOW // most of our alloys are hard to sculpt
+	sculpting_experience_multipler = 1.25
 	/// The materials this alloy is made from weighted by their ratios.
 	var/list/composition = null
 	/// Breakdown flags required to reduce this alloy to its component materials.
@@ -94,6 +96,8 @@
 	value_per_unit = 0.075
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/plasma=0.5)
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 1
 
 /** Titaniumglass
  *
@@ -114,6 +118,8 @@
 	value_per_unit = 0.04
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
+	sculpting_duration = SCULPT_TIME_SLOW
+	sculpting_experience_multipler = 1
 
 /** Plastitanium Glass
  *
@@ -155,6 +161,7 @@
 	value_per_unit = 0.4
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/iron=2, /datum/material/plasma=2)
+	sculpting_experience_multipler = 2
 
 /datum/material/alloy/alien/on_applied_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
