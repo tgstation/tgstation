@@ -15,11 +15,8 @@
 	to_chat(user, span_danger("You [hitverb] [src]!"))
 
 /mob/living/carbon/alien/adult/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(!..() || !user.combat_mode)
-		return
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(stat < UNCONSCIOUS)
-			user.disarm(src)
+	. = ..()
+	if(.)
 		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))
@@ -40,7 +37,6 @@
 		visible_message(span_danger("[user]'s punch misses [src]!"), \
 						span_danger("You avoid [user]'s punch!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning("Your punch misses [src]!"))
-
 
 /mob/living/carbon/alien/adult/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && !visual_effect_icon)

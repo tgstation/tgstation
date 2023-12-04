@@ -1119,11 +1119,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/return_temperature()
 	return
 
-/obj/structure/closet/proc/locker_living(datum/source, mob/living/shover, mob/living/target, shove_blocked, obj/item/weapon)
+/obj/structure/closet/proc/locker_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if(!opened && (locked || welded)) //Yes this could be less code, no I don't care
 		return
-	if(!opened && !shove_blocked)
+	if(!opened && ((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED)))
 		return
 	var/was_opened = opened
 	if(!toggle())

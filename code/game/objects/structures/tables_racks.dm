@@ -323,9 +323,9 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_blocked, obj/item/weapon)
+/obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
-	if(!shove_blocked)
+	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),

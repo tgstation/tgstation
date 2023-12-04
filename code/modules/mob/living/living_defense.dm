@@ -640,12 +640,12 @@
 /mob/living/proc/disarm(mob/living/target, obj/item/weapon)
 	if(!can_disarm(target))
 		return
-	var/shove_flags = get_shove_flags()
+	var/shove_flags = target.get_shove_flags(src, weapon)
 	if(weapon)
 		do_attack_animation(target, used_item = weapon)
 	else
 		do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, weapon ? 'sound/weapons/block_shield.ogg' : 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target) && isnull(weapon))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)
@@ -657,7 +657,7 @@
 
 	//Are we hitting anything? or
 	if(shove_flags & SHOVE_CAN_MOVE)
-		if(SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_PRESHOVE) & COMSIG_LIVING_ACT_SOLID)
+		if(SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_PRESHOVE, src, target, weapon) & COMSIG_LIVING_ACT_SOLID)
 			shove_flags |= SHOVE_BLOCKED
 		else
 			target.Move(target_shove_turf, shove_dir)
@@ -667,16 +667,8 @@
 	if(!(shove_flags & SHOVE_BLOCKED))
 		target.setGrabState(GRAB_PASSIVE)
 
-	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
-		target.Paralyze(SHOVE_CHAIN_PARALYZE)
-		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
-		log_combat(src, target, "kicks", "onto their side (paralyzing)")
-
 	//Directional checks to make sure that we're not shoving through a windoor or something like that
-	if((shove_flags & SHOVE_BLOCKED) && (shove_flags & SHOVE_CAN_HIT_SOMETHING) && (shove_dir in GLOB.cardinals))
+	if((shove_flags & SHOVE_BLOCKED) && (shove_dir in GLOB.cardinals))
 		var/target_turf = get_turf(target)
 		for(var/obj/obj_content in target_turf)
 			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
@@ -690,15 +682,24 @@
 
 	if(shove_flags & SHOVE_CAN_HIT_SOMETHING)
 		//Don't hit people through windows, ok?
-		if(!(shove_flags && SHOVE_DIRECTIONAL_BLOCKED) && SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, src, target, shove_flags) & COMSIG_LIVING_SHOVE_HANDLED)
+		if(!(shove_flags & SHOVE_DIRECTIONAL_BLOCKED) && (SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_COLLIDE, src, target, shove_flags, weapon) & COMSIG_LIVING_SHOVE_HANDLED))
 			return
-		if(shove_flags & (SHOVE_BLOCKED) && !(shove_flags & SHOVE_KNOCKDOWN_BLOCKED))
+		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
 			log_combat(src, target, "shoved", "knocking them down[weapon ? " with [weapon]" : ""]")
 			return
+
+	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
+		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
+						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
+		log_combat(src, target, "kicks", "onto their side (paralyzing)")
+		return
 
 	target.get_shoving_message(src, weapon, shove_flags)
 
@@ -726,7 +727,7 @@
 	return TRUE
 
 ///Check if there's anything that could stop the knockdown from being shoved into something or someone.
-/mob/living/proc/get_shove_flags(mob/living/shover)
+/mob/living/proc/get_shove_flags(mob/living/shover, obj/item/weapon)
 	if(shover.move_force >= move_resist)
 		. |= SHOVE_CAN_MOVE
 		if(!buckled)

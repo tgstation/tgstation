@@ -381,12 +381,12 @@
 	acid = 100
 	wound = 15
 
-/obj/item/clothing/suit/swat/riot/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/armor/swat/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_OCLOTHING)
 		ADD_TRAIT(user, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, REF(src))
 
-/obj/item/clothing/suit/swat/riot/dropped(mob/living/user)
+/obj/item/clothing/suit/armor/swat/dropped(mob/living/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, REF(src))
 

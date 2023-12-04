@@ -581,12 +581,13 @@
 
 /obj/item/mod/module/shove_blocker
 	name = "MOD bulwark module"
-	desc = "Plates upon joints upon counter-weights, all to stop you from getting shoved around by an angry mob."
-	complexity = 2
+	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob."
+	icon_state = "bulwark"
+	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/shove_blocker)
 
 /obj/item/mod/module/shove_blocker/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_SHOVE_NO_STAGGER), MOD_TRAIT)
 
 /obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_SHOVE_NO_STAGGER), MOD_TRAIT)
