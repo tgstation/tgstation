@@ -55,7 +55,7 @@
  * signals the client mob to revert to the "thinking" icon.
  */
 /datum/tgui_say/proc/start_typing()
-	var/client_mob = client.mob
+	var/mob/client_mob = client.mob
 	client_mob.remove_thinking_indicator()
 	if(!window_open || !client.typing_indicators || !HAS_TRAIT(client_mob, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
@@ -69,7 +69,7 @@
 /datum/tgui_say/proc/stop_typing()
 	if(isnull(client?.mob))
 		return FALSE
-	var/client_mob = client.mob
+	var/mob/client_mob = client.mob
 	client_mob.remove_typing_indicator()
 	if(!window_open || !client.typing_indicators || !HAS_TRAIT(client_mob, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
