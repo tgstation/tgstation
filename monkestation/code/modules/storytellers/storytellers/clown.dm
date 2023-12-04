@@ -1,6 +1,6 @@
 /datum/storyteller/clown
 	name = "The Clown"
-	desc = "The clown creates only(citation needed) harmless events, its all fun and games with this one!"
+	desc = "The clown creates only harmless events(citation needed), its all fun and games with this one!"
 	welcome_text = "You feel like the shift will be \"interesting\"."
 	event_repetition_multiplier = 1 //can repeat things freely
 	point_gains_multipliers = list(
@@ -10,7 +10,7 @@
 		EVENT_TRACK_ROLESET = 0.8,
 		EVENT_TRACK_OBJECTIVES = 1
 		)
-	tag_multipliers = list(TAG_COMMUNAL = 1.1, TAG_SPOOKY = 1.4) //spooky(its just a prank bro(im sorry(no im not)))
+	tag_multipliers = list(TAG_COMMUNAL = 1.1, TAG_SPOOKY = 1.2)
 	guarantees_roundstart_roleset = FALSE
 	roundstart_prob = 75
 	ignores_roundstart = TRUE
