@@ -350,8 +350,10 @@ Moving interrupts
 	user.balloon_alert(user, "sculpting block...")
 	playsound(src, pick(usesound), 75, TRUE)
 	sculpting = TRUE
+
+	var/datum/material/material = prepared_block.get_master_material()
 	//How long whole process takes
-	var/sculpting_time = prepared_block.custom_materials.sculpting_duration
+	var/sculpting_time = material.sculpting_duration
 	var/sculpting_speed_modifier = 1
 
 	if(user.mind)
@@ -368,11 +370,14 @@ Moving interrupts
 	var/remaining_time = sculpting_time - (prepared_block.completion * sculpting_time)
 
 	var/datum/progressbar/total_progress_bar = new(user, sculpting_time, prepared_block)
+	var/sound_delay = 0
 	while(remaining_time > 0 && !interrupted)
 		if(do_after(user, sculpting_period, target = prepared_block, progress = FALSE))
-			var/time_delay = !(remaining_time % SCULPT_SOUND_INCREMENT)
-			if(time_delay)
-				playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
+			sound_delay++
+			if(sound_delay >= SCULPT_SOUND_INCREMENT)
+				var/sculpt_sound = material.item_sound_override || 'sound/effects/break_stone.ogg'
+				playsound(src, sculpt_sound, 50, TRUE)
+				sound_delay = 0
 			remaining_time -= sculpting_period
 			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
 			total_progress_bar.update(sculpting_time - remaining_time)
@@ -381,7 +386,7 @@ Moving interrupts
 	total_progress_bar.end_progress()
 	if(!interrupted && !QDELETED(prepared_block))
 		user.balloon_alert(user, "statue finished")
-		var/sculpting_xp = prepared_block.custom_materials.sculpting_experience_multipler * (prepared_block.custom_materials.sculpting_duration/DECISECONDS)
+		var/sculpting_xp = material.sculpting_experience_multipler * (material.sculpting_duration/10)
 		user.mind?.adjust_experience(/datum/skill/sculpting, sculpting_xp)
 		prepared_block.create_statue()
 

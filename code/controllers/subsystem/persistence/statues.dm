@@ -1,19 +1,22 @@
+
+/**
 statues fixes:
 - pixel offsets
 - direction
 - animation
 - lighting
+**/
 
 /// Loads all statue engravings and places them in the statue spawners
 /datum/controller/subsystem/persistence/proc/load_statues()
-	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
+	var/json_file = file(STATUE_SAVE_FILE)
 	if(!fexists(json_file))
 		return
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
 
-	if(json["version"] < STATUE_ENGRAVING_PERSISTENCE_VERSION)
+	if(json["version"] < STATUE_PERSISTENCE_VERSION)
 		update_statue_engravings(json)
 
 	var/successfully_loaded_statue_engravings = 0
@@ -27,10 +30,10 @@ statues fixes:
 
 		if(!islist(selected_statue))
 			stack_trace("something's wrong with the persistent statue data! one of the saved statues wasn't a list!")
-			continue
+			//continue
 
 
-statue_engravings
+//statue_engravings
 
 		//var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
 
@@ -50,7 +53,7 @@ statue_engravings
 		continue //no versioning yet
 
 	//Save it to the file
-	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
+	var/json_file = file(STATUE_SAVE_FILE)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(json))
 
@@ -58,7 +61,7 @@ statue_engravings
 
 ///Saves our custom statue data to be used for later rounds
 /datum/controller/subsystem/persistence/proc/save_statue(obj/structure/statue/custom/custom_statue)
-	saved_data["entries"] += engraving.save_persistent()
+	//saved_data["entries"] += engraving.save_persistent()
 
 ///Saves statues if they successfully enter the hall of fame shuttle
 /datum/controller/subsystem/persistence/proc/collect_statues()
@@ -67,10 +70,10 @@ statue_engravings
 
 	var/list/saved_data = list()
 
-	saved_data["version"] = STATUE_ENGRAVING_PERSISTENCE_VERSION
+	saved_data["version"] = STATUE_PERSISTENCE_VERSION
 	saved_data["entries"] = list()
 
-	var/json_file = file(STATUE_ENGRAVING_SAVE_FILE)
+	var/json_file = file(STATUE_SAVE_FILE)
 	if(fexists(json_file))
 		var/list/old_json = json_decode(file2text(json_file))
 		if(old_json)
@@ -83,7 +86,7 @@ statue_engravings
 		var/datum/component/engraved/engraving = custom_statue.GetComponent(/datum/component/engraved)
 
 		// the statue needs to be engraved and not a persistent loaded one from a previous round
-		if(engarving && !engraving.persistent_save)
+		if(engraving && !engraving.persistent_save)
 			saved_data["entries"] += save_statue(custom_statue)
 
 	fdel(json_file)

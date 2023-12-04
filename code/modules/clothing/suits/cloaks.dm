@@ -86,3 +86,8 @@
 	icon_state = "playercloak"
 	element_type = /datum/element/skill_reward/veteran
 
+/obj/item/clothing/neck/cloak/skill_reward/sculpting
+	name = "legendary sculpter's cloak"
+	desc = "Worn by the most skilled sculpters, this legendary cloak is only attainable by achieving sculpting enlightenment. This status symbol represents "
+	icon_state = "cleanercloak" // change this to sculpting when we get sprites
+	associated_skill_path = /datum/skill/sculpting
