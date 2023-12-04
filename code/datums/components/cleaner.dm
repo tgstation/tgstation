@@ -22,7 +22,6 @@
 	cleaning_strength = CLEAN_SCRUB,
 	pre_clean_callback = null,
 	on_cleaned_callback = null,
-	post_clean_attempt = null,
 )
 	src.base_cleaning_duration = base_cleaning_duration
 	src.skill_duration_modifier_offset = skill_duration_modifier_offset
