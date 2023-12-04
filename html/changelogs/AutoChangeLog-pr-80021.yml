@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "soups and other reactions where large quantities of reagents are required/present should not have a random chance of reacting forever."
-  - bugfix: "reactions which are overheated should diminish all the way to 0"
-  - code_imp: "cleaned up code in `datam/equilibrium` in general. Slightly optimized soup reaction code"
