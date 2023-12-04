@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed some oopsie whoopsie with elevation, trams and beds causing people to visually ascend or descend to heaven or hell."

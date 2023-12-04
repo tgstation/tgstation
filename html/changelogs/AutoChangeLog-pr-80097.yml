@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - admin: "Removed the \"Turn Target into MMI\" right click context menu verb entirely, and instead added the same command as a VV dropdown on human mobs."
