@@ -186,7 +186,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 	var/list/filtered_paintings = list()
 
-	for(var/painting as anything in paintings)
+	for(var/painting in paintings)
 		if(filter & PAINTINGS_FILTER_AI_PORTRAIT && ((painting["width"] != 24 && painting["width"] != 23) || (painting["height"] != 24 && painting["height"] != 23)))
 			continue
 		if(searching)
