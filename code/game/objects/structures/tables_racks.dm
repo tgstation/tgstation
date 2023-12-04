@@ -329,7 +329,7 @@
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
-		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 	log_combat(shover, target, "shoved", "onto [src] (table)[weapon ? " with [weapon]" : ""]")

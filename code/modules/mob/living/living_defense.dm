@@ -738,7 +738,7 @@
 ///Send the chat feedback message for shoving
 /mob/living/proc/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)
 	visible_message(span_danger("[shover] shoves [name][weapon ? " with [weapon]" : ""]!"),
-		span_userdanger("You're shoved by [shover][weapon ? " with [weapon]" : ""]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
+		span_userdanger("You're shoved by [shover][weapon ? " with [weapon]" : ""]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [name][weapon ? " with [weapon]" : ""]!"))
 
 /mob/living/proc/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)

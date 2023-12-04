@@ -1133,16 +1133,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	if(target == shover)
-		target.visible_message(span_danger("[target.name] shoves [target.p_them()]self into [src]!"),
-			null,
-			span_hear("You hear shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-		to_chat(shover, span_notice("You shove yourself into [src]!"))
-	else
-		target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
-			span_userdanger("You're shoved into [src] by [shover.name]!"),
-			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-		to_chat(src, span_danger("You shove [target.name] into [src]!"))
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
+		span_userdanger("You're shoved into [src] by [shover.name]!"),
+		span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	to_chat(src, span_danger("You shove [target.name] into [src]!"))
 	log_combat(shover, target, "shoved", "into [src] (locker/crate)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
 

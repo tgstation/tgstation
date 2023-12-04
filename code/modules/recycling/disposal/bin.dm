@@ -564,7 +564,7 @@
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	target.forceMove(src)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(shover, target, "shoved", "into [src] (disposal bin)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
