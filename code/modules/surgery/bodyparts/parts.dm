@@ -40,7 +40,10 @@
 	..(special = TRUE) //special because we're self destructing
 
 	//If someones chest is teleported away, they die pretty hard
-	old_owner?.gib(DROP_ALL_REMAINS)
+	if(!old_owner)
+		return
+	message_admins("[ADMIN_LOOKUPFLW(old_owner)] was gibbed after their chest teleport to [ADMIN_VERBOSEJMP(loc)].")
+	old_owner.gib(DROP_ALL_REMAINS)
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
 	if(owner.stat < HARD_CRIT || !contents.len)
