@@ -151,7 +151,7 @@
 		return
 
 	log_admin("[key_name(usr)] has triggered the Nar'Sie roundender.")
-	start_ending_the_round(usr)
+	start_ending_the_round()
 
 /obj/narsie/attack_ghost(mob/user)
 	makeNewConstruct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
