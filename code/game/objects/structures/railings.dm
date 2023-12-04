@@ -15,6 +15,8 @@
 	var/climbable = TRUE
 	///Initial direction of the railing.
 	var/ini_dir
+	///item released when deconstructed
+	var/item_deconstruct = /obj/item/stack/rods
 
 /datum/armor/structure_railing
 	melee = 50
@@ -70,9 +72,11 @@
 		return TRUE
 
 /obj/structure/railing/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 6)
-		transfer_fingerprints_to(rod)
+	if((flags_1 & NODECONSTRUCT_1))
+		return ..()
+	var/rods_to_make = istype(src,/obj/structure/railing/corner) ? 1 : 2
+	var/obj/rod = new item_deconstruct(drop_location(), rods_to_make)
+	transfer_fingerprints_to(rod)
 	return ..()
 
 ///Implements behaviour that makes it possible to unanchor the railing.
@@ -92,7 +96,7 @@
 		return . || mover.throwing || mover.movement_type & (FLYING | FLOATING)
 	return TRUE
 
-/obj/structure/railing/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
+/obj/structure/railing/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!(to_dir & dir))
 		return TRUE
 	return ..()
@@ -124,3 +128,35 @@
 /obj/structure/railing/proc/check_anchored(checked_anchored)
 	if(anchored == checked_anchored)
 		return TRUE
+
+
+/obj/structure/railing/wooden_fence
+	name = "wooden fence"
+	desc = "wooden fence meant to keep animals in."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "wooden_railing"
+	item_deconstruct = /obj/item/stack/sheet/mineral/wood
+	plane = GAME_PLANE_FOV_HIDDEN
+	layer = ABOVE_MOB_LAYER
+
+/obj/structure/railing/wooden_fence/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_change_layer))
+	adjust_dir_layer(dir)
+
+/obj/structure/railing/wooden_fence/proc/on_change_layer(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+	adjust_dir_layer(new_dir)
+
+/obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
+	var/new_layer = (direction & NORTH) ? MOB_LAYER : ABOVE_MOB_LAYER
+	layer = new_layer
+
+
+/obj/structure/railing/corner/end/wooden_fence
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "wooden_railing_corner"
+
+/obj/structure/railing/corner/end/flip/wooden_fence
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "wooden_railing_corner_flipped"

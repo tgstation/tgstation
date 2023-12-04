@@ -6,10 +6,15 @@
 	icon = 'monkestation/icons/obj/machines/hydroponics.dmi'
 	var/obj/item/seeds/seed_1
 	var/obj/item/seeds/seed_2
+	var/obj/item/reagent_containers/cup/beaker/held_beaker
 
 	var/working = FALSE
 
 	var/work_timer = null
+
+	var/potential_damage = 0
+
+	var/list/stats = list()
 
 
 /obj/machinery/splicer/attacked_by(obj/item/I, mob/living/user)
@@ -24,22 +29,40 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			seed_2 = I
+	if(istype(I, /obj/item/reagent_containers/cup/beaker))
+		if(!held_beaker)
+			if(!user.transferItemToLoc(I, src))
+				return
+			held_beaker = I
+			return
 
 /obj/machinery/splicer/ui_data(mob/user)
 	. = ..()
+	if(!stats.len)
+		calculate_stats_for_infusion()
+
 	var/has_seed_one = FALSE
 	var/has_seed_two = FALSE
+	var/has_beaker = FALSE
 	var/list/data = list()
+
 	if(seed_1)
-		data["seed_1"] = list(seed_1.return_all_data())
+		data["seed_1"] = list(seed_1.return_all_data() + stats)
 		has_seed_one = TRUE
+		data["damage_taken"] = seed_1.infusion_damage
+		data["potential_damage"] = potential_damage
+		data["combined_damage"] = (potential_damage + seed_1.infusion_damage)
 	if(seed_2)
 		data["seed_2"] = list(seed_2.return_all_data())
 		has_seed_two = TRUE
+	if(held_beaker)
+		data["held_beaker"] = held_beaker.reagents
+		has_beaker = TRUE
 
 
 	data["seedone"] = has_seed_one
 	data["seedtwo"] = has_seed_two
+	data["held_beaker"] = has_beaker
 
 	data["working"] = working
 
@@ -69,8 +92,14 @@
 			eject_seed(seed_2)
 			seed_2 = null
 			return TRUE
+		if("eject_beaker")
+			eject_beaker(held_beaker)
+			return TRUE
 		if("splice")
 			splice(seed_1, seed_2)
+			return TRUE
+		if("infuse")
+			infuse()
 			return TRUE
 
 /obj/machinery/splicer/proc/eject_seed(obj/item/seeds/ejected_seed)
@@ -80,6 +109,18 @@
 				ejected_seed.forceMove(drop_location())
 		else
 			ejected_seed.forceMove(drop_location())
+		. = TRUE
+
+/obj/machinery/splicer/proc/eject_beaker()
+	if (held_beaker)
+		if(Adjacent(usr) && !issiliconoradminghost(usr))
+			if (!usr.put_in_hands(held_beaker))
+				held_beaker.forceMove(drop_location())
+		else
+			held_beaker.forceMove(drop_location())
+		held_beaker = null
+		stats = list()
+		potential_damage = 0
 		. = TRUE
 
 /obj/machinery/splicer/proc/splice(obj/item/seeds/first_seed, obj/item/seeds/second_seed)
@@ -158,3 +199,46 @@
 
 	qdel(first_seed)
 	qdel(second_seed)
+
+/obj/machinery/splicer/proc/calculate_stats_for_infusion()
+	if(!held_beaker)
+		return
+	var/list/total_stats = list(
+		"potency_change" = 0,
+		"yield_change" = 0,
+		"endurance_change" = 0,
+		"lifespan_change" = 0,
+		"weed_chance_change" = 0,
+		"weed_rate_change" = 0,
+		"production_change" = 0,
+		"maturation_change" = 0,
+		"damage" = 0,
+	)
+	for(var/reagent in held_beaker.reagents.reagent_list)
+		var/datum/reagent/listed_reagent = reagent
+		total_stats += listed_reagent.generate_infusion_values(held_beaker.reagents)
+	stats = total_stats
+	potential_damage = stats["damage"]
+
+/obj/machinery/splicer/proc/infuse()
+	if(!held_beaker)
+		return
+	seed_1.infusion_damage += potential_damage
+	if(seed_1.infusion_damage >= 100)
+		qdel(seed_1)
+		seed_1 = null
+		return
+
+	seed_1.adjust_potency(stats["potency_change"])
+	seed_1.adjust_yield(stats["yield_change"])
+	seed_1.adjust_endurance(stats["endurance_change"])
+	seed_1.adjust_lifespan(stats["lifespan_change"])
+	seed_1.adjust_production(stats["production_change"])
+	seed_1.adjust_weed_chance(stats["weed_chance_change"])
+	seed_1.adjust_weed_rate(stats["weed_rate_change"])
+	seed_1.adjust_maturation(stats["maturation_change"])
+
+	seed_1.check_infusions(held_beaker.reagents.reagent_list)
+	held_beaker.reagents.remove_any(held_beaker.reagents.total_volume)
+	stats = list()
+	potential_damage = 0

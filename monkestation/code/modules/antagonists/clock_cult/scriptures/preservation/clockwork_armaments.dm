@@ -37,4 +37,4 @@
 
 	base_outfit.equip(invoker)
 
-	invoker.put_in_hands(new weapon_path, FALSE, forced = FALSE)
+	invoker.put_in_hands(new weapon_path, FALSE)

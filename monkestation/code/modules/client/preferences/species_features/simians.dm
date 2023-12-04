@@ -1,39 +1,14 @@
-/datum/preference/choiced/fur_color
+/datum/preference/color/fur_color
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "fur"
+	relevant_species_trait = SPECIES_FUR
 
-/datum/preference/choiced/fur_color/init_possible_values()
-	return GLOB.fur_tones
-
-/datum/preference/choiced/fur_color/compile_constant_data()
-	var/list/data = ..()
-
-	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = GLOB.fur_tone_names
-
-	var/list/to_hex = list()
-	for (var/choice in get_choices())
-		var/list/hsl = rgb2num("#[choice]", COLORSPACE_HSL)
-
-		to_hex[choice] = list(
-			"lightness" = hsl[3],
-			"value" = "#[choice]",
-		)
-
-	data["to_hex"] = to_hex
-
-	return data
-
-/datum/preference/choiced/fur_color/apply_to_human(mob/living/carbon/human/target, value)
-	if(target.dna.species.use_fur)
-		target.skin_tone = value
-
-/datum/preference/choiced/fur_color/is_accessible(datum/preferences/preferences)
-	if (!..(preferences))
-		return FALSE
-
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	return initial(species_type.use_fur)
+/datum/preference/color/fur_color/apply_to_human(mob/living/carbon/human/target, value)
+	var/mob/user = usr
+	var/datum/species/species_type = user?.client.prefs.read_preference(/datum/preference/choiced/species)
+	if(initial(species_type.uses_fur))
+		target.dna.features["mcolor"] = value
 
 /datum/preference/choiced/simian_tail
 	savefile_key = "feature_tail_monkey"

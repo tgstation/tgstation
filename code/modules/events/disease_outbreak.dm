@@ -33,7 +33,7 @@
 	///Disease recipient candidates
 	var/list/disease_candidates = list()
 
-/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .
@@ -100,6 +100,7 @@
 
 /datum/round_event/disease_outbreak/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
@@ -141,7 +142,7 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 15
+	weight = 7 //monkestation change 15 ==> 7
 	min_players = 35 // To avoid shafting lowpop
 	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
@@ -255,6 +256,7 @@
 
 /datum/round_event/disease_outbreak/advance/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
+	setup = TRUE //MONKESTATION ADDITION
 
 /**
  * Generate advanced virus

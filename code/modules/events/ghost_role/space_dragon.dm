@@ -5,7 +5,7 @@
 	max_occurrences = 1
 	min_players = 30 //monke edit: 20 to 30
 	earliest_start = 60 MINUTES //monke edit: 20 to 60
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a space dragon, which will try to take over the station."
 	min_wizard_trigger_potency = 6
@@ -32,7 +32,7 @@
 	if(isnull(spawn_location))
 		return MAP_ERROR
 
-	var/mob/living/simple_animal/hostile/space_dragon/dragon = new (spawn_location)
+	var/mob/living/basic/space_dragon/dragon = new (spawn_location)
 	dragon.key = key
 	dragon.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_dragon))
 	dragon.mind.special_role = ROLE_SPACE_DRAGON

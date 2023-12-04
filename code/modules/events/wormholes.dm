@@ -23,6 +23,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 /datum/round_event/wormholes/setup()
 	announce_when = rand(0, 20)
 	end_when = rand(40, 80)
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/wormholes/start()
 	for(var/turf/open/floor/T in world)

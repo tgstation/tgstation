@@ -1,4 +1,5 @@
-import { CheckboxInput, FeatureToggle } from '../base';
+import { multiline } from 'common/string';
+import { CheckboxInput, FeatureChoiced, FeatureDropdownInput, FeatureToggle } from '../base';
 
 export const sound_ambience: FeatureToggle = {
   name: 'Enable ambience',
@@ -58,4 +59,14 @@ export const sound_ship_ambience: FeatureToggle = {
   name: 'Enable ship ambience',
   category: 'SOUND',
   component: CheckboxInput,
+};
+
+export const sound_achievement: FeatureChoiced = {
+  name: 'Achievement unlock sound',
+  category: 'SOUND',
+  description: multiline`
+    The sound that's played when unlocking an achievement.
+    If disabled, no sound will be played.
+  `,
+  component: FeatureDropdownInput,
 };

@@ -1,4 +1,5 @@
 ///Allows an admin to force an event
+/*
 /client/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Admin.Events"
@@ -15,7 +16,7 @@
 
 	var/datum/force_event/ui = new(usr)
 	ui.ui_interact(usr)
-
+*/
 /// Force Event Panel
 /datum/force_event
 

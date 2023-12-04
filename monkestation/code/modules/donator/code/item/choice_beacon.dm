@@ -32,14 +32,7 @@
 /obj/item/choice_beacon/pet/donator/void_mothroach
 	name = "Secret Beacon of the Stars"
 	default_name = "Moffles"
-	company_source = "*UNINTELLIGBLE BUZZING*"
-	company_message = "*LOUD MOFF NOISES*"
-	donator_pet = 	/mob/living/basic/mothroach/void
-
-/obj/item/choice_beacon/pet/donator/void_mothroach
-	name = "Secret Beacon of the Stars"
-	default_name = "Moffles"
-	company_source = "*UNINTELLIGBLE BUZZING*"
+	company_source = "*UNINTELLIGIBLE BUZZING*"
 	company_message = "*LOUD MOFF NOISES*"
 	donator_pet = 	/mob/living/basic/mothroach/void
 
@@ -48,11 +41,28 @@
 	default_name = "Blahaj"
 	company_source = "IKEA"
 	company_message = "Please enjoy your new pet -- some assembly required."
-	donator_pet = 	/mob/living/basic/lizard/blahaj
+	donator_pet = 	/mob/living/basic/pet/blahaj
 
 /obj/item/choice_beacon/pet/donator/cirno
 	name = "Cirno"
 	default_name = "Cirno?"
 	company_source = "Touhou"
 	company_message = "Please handle with care!"
-	donator_pet = 	/mob/living/basic/lizard/cirno
+	donator_pet = 	/mob/living/basic/pet/cirno
+
+/obj/item/choice_beacon/pet/donator/slime
+	name = "Slime"
+	default_name = "Slime"
+	company_source = "*blorbling*"
+	donator_pet = 	/mob/living/basic/pet/slime/talkative
+
+/obj/item/choice_beacon/pet/donator/spider
+	name = "Spider"
+	default_name = "Spider"
+	donator_pet = 	/mob/living/basic/pet/spider/dancing
+
+/obj/item/choice_beacon/pet/donator/germanshepherd
+	name = "German Shepherd"
+	default_name = "German Shepherd"
+	donator_pet = 	/mob/living/basic/pet/dog/germanshepherd
+

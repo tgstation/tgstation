@@ -34,15 +34,6 @@
 /obj/structure/railing/corner,
 /turf/open/cliff/snowrock/virtual_domain,
 /area/icemoon/underground/explored/virtual_domain)
-"hc" = (
-/obj/structure/railing/corner/end{
-	dir = 8
-	},
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/turf/open/misc/asteroid/snow,
-/area/icemoon/underground/explored/virtual_domain)
 "hE" = (
 /turf/open/floor/wood,
 /area/icemoon/underground/explored/virtual_domain)
@@ -155,15 +146,6 @@
 /obj/effect/decal/remains/plasma,
 /turf/open/misc/asteroid/snow,
 /area/icemoon/underground/explored/virtual_domain)
-"Dz" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/turf/open/misc/asteroid/snow,
-/area/icemoon/underground/explored/virtual_domain)
 "DB" = (
 /obj/structure/flora/rock/icy/style_random,
 /obj/structure/flora/rock/pile/icy/style_random,
@@ -213,15 +195,6 @@
 /obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow,
 /area/icemoon/underground/explored/virtual_domain)
-"MP" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/misc/asteroid/snow,
-/area/icemoon/underground/explored/virtual_domain)
 "MT" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -230,15 +203,6 @@
 /area/icemoon/underground/explored/virtual_domain)
 "Nv" = (
 /turf/open/floor/iron/stairs,
-/area/icemoon/underground/explored/virtual_domain)
-"NM" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/obj/structure/railing/corner/end{
-	dir = 8
-	},
-/turf/open/misc/asteroid/snow,
 /area/icemoon/underground/explored/virtual_domain)
 "Pl" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -2465,7 +2429,7 @@ sM
 sM
 sM
 sM
-MP
+dR
 sM
 sM
 sM
@@ -2773,7 +2737,7 @@ dR
 sM
 sM
 sM
-NM
+dR
 sM
 sM
 sM
@@ -4303,7 +4267,7 @@ sM
 sM
 sM
 sw
-Dz
+dR
 sM
 sM
 sM
@@ -4688,7 +4652,7 @@ sM
 sM
 sM
 dR
-hc
+dR
 sM
 sM
 sM

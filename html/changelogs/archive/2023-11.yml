@@ -1,0 +1,222 @@
+2023-11-06:
+  DexeeXI:
+  - rscadd: Dagoth Ur wishes you all to behave yourselves and pray well, lest you
+      invoke his anger.
+  Gboster-0:
+  - rscdel: Deleted wendigo's impossible attack
+  Salted-Zen:
+  - bugfix: Un-fries your boiled spagetti
+  Senri:
+  - bugfix: Fixed patreon monkecoin boost to work properly
+  - balance: rebalanced Throwing Arm quirk
+  lmenvs:
+  - rscadd: New Space Marine helmet, thanks to Odie_boy!
+  - bugfix: Pets that died and had no sprite should now be fixed. Lazarus Injections
+      will work properly too.
+2023-11-07:
+  DexeeXI:
+  - rscdel: Removed buffer bottles from Chemist job starting gear and the Chemist
+      lockers.
+  NicoDeLuna:
+  - rscadd: Added Edgerunner Hairstyle for Roundstart
+2023-11-08:
+  Glyphee:
+  - rscadd: Florans
+  KoboldCommando:
+  - bugfix: cargo, zoomba and kerfus borgs should no longer go invisible when reset
+2023-11-12:
+  Coding-Grape:
+  - rscadd: Maints bar
+  DexeeXI:
+  - rscadd: The Dinosaur Pajamas are now available on the Loadout Shop for 10000 Monke
+      on the SUITS tab.
+  - rscadd: The Headdress of Nemes is now available on the Loadout Shop for 2000 Monke
+      on the HEADS tab.
+  - rscadd: The Pharaoh's Hat is now available on the Loadout Shop for 2000 Monke
+      on the HEADS tab.
+  Gboster-0:
+  - qol: slashers now get told preciselly how long their soul sucking will last
+  - qol: you wont get spam messages whilst clicking walls/floors as slasher with the
+      soul suck ability on
+  - qol: slasher now shows up on the ghost orbit panel
+  - balance: you can no longer screech whilst incorporeal, instead your targets will
+      hear a distant screech
+  - bugfix: abilities once again properly check for all conditions
+  - bugfix: slasher's incorporeal ability is now a proper jaunt, due to this it no
+      longer allows you to destroy glass tables for free
+  - bugfix: due to the slashers new incorporeal ability you also cant now grab, examine
+      or shove them whilst they are incorporeal
+  - rscadd: Added the winter tramstation random bar, how n-ice!
+  - rscadd: Added a cult bar, legends say it has a rune that can summon booze
+  lolc4n:
+  - rscadd: Added a new tramstation bar.
+  wraith-54321:
+  - rscadd: Added a new random bar
+2023-11-13:
+  Glyphee:
+  - rscadd: new bar
+  wraith-54321:
+  - rscadd: map template for contests
+2023-11-14:
+  lmenvs:
+  - rscadd: TTNT's donator item set!
+2023-11-15:
+  Glyphee:
+  - bugfix: changed atmos on the dirt tiles to `"o2=22;n2=82;TEMP=293.15"`
+  wraith-54321:
+  - bugfix: Admins can now actually force events
+  - bugfix: fixed some midrounds spawning without their antag datum
+2023-11-18:
+  Glyphee:
+  - rscadd: Changed how my office looks :p
+  - bugfix: Fixed a typo in the medbay of CC ("all in one medial fabricator" -> "all
+      in one medical fabricator")
+  NicoDeLuna:
+  - rscadd: ' Added Ascots to Loadout and Clothesmate'
+  - rscadd: Add new Guardman's uniform, vest and helmet to the sectech vendor
+  Salted-Zen:
+  - balance: Herald triple shot no longer shotgun fans. Its just three projectiles.
+  kawoppi, gboster:
+  - rscadd: 'kawoppi: added animations to the *jump, *shiver, *sway, *tremble, *twitch
+      and *twitch_s emotes'
+  - rscadd: 'kawoppi: the *jump emote now plays a sound'
+  wraith-54321:
+  - balance: Reverts our change making miner medipens take only half a second to use
+      on station
+2023-11-20:
+  Bidlink1:
+  - rscadd: Lanternfruit to Megaservitor (courtesy of MrMelbert)
+  - rscadd: Adds Sulfur and Liquid Electricity production as a gene in Lantern fruit
+  KittyNoodle:
+  - rscadd: Nuke ops have been authorized for a new experimental combat implant.
+  - qol: Stacking hardlight spears now stores it in only one spell. And it looks really
+      cool.
+  - qol: Hardlight spears no longer delete themselves after 10 seconds.
+  - balance: Hardlight spears now do much more damage.
+  - image: resprited the hardlight spear
+  - refactor: Hardlight spears use projectiles instead of throws now.
+  NicoDeLuna:
+  - bugfix: adjusting sprites of the ascot
+2023-11-21:
+  NicoDeLuna:
+  - rscadd: Added World Champion's Gi and Cape
+  lmenvs:
+  - rscadd: Rickdude's donator rewards
+2023-11-23:
+  wraith-54321:
+  - rscadd: Added teleporters to centcom
+  - rscadd: added a firing range for ghosts on centcom
+2023-11-25:
+  KittyNoodle:
+  - rscadd: The Observer, a more roundstart focused storyteller that prefers to watch
+      idly
+  - rscadd: The Nobleman, a less destructive variant of warrior that lets pacifists
+      enjoy the game too.
+  - qol: No more lowpop kudzu spam
+  - balance: Jester and warrior are now highpop/midpop only.
+  - balance: Changed a lot of storyteller tags to make more sense
+  - code_imp: Modularizes a lot of storyteller code
+  KoboldCommando:
+  - rscadd: You can now sharpen mops!  Check the crafting menu
+2023-11-26:
+  Gboster-0:
+  - bugfix: The fax machine on tram is once again usable without opening QM's locker
+  lmenvs:
+  - rscadd: Clicking the Twitch icon in the menu will now allow you to link your Twitch
+      account to your ckey.  Twitch subs who link their account in this way have access
+      to donator items.
+  moocowswag:
+  - qol: Apc covers can now be repaired with a welder and replaced with an apc frame.
+2023-11-27:
+  KoboldCommando:
+  - bugfix: Some lurid posters have been 1984'd
+  MomoBerri:
+  - qol: more radiation shutter directionals
+  lmenvs:
+  - rscadd: Twitch subs and Patrons at Assistant tier and above can enjoy a 25 monkecoin
+      bonus at round end.  These bonuses do stack if you are both subbed and a patron,
+      AND they both are affected by monkecoin multipliers.
+  - rscadd: Kon Chieko's Donator rewards! Thank you!!
+2023-11-28:
+  DexeeXI:
+  - rscadd: missing floor near investigations. no more weird stuff happening by sec.
+  - rscadd: missing ATMOS stuff for departures. now we have scrubbers and vents! holy
+      shit!
+  - rscdel: removed acidic/basic buffer from chem storage
+  - rscdel: 'removed a redundant navigation marker
+
+      Delta Station:'
+  - qol: 'fixed the firelocks by Engineering
+
+      Icebox'
+  - qol: Adjusted the Secure Art Exhibit so the large paintings don't spawn in a very
+      weird manner, breaking the 4th wall.
+  - rscdel: 'removed acidic/basic buffer from chem storage
+
+      Metastation'
+  - rscdel: 'removed acidic/basic buffer from chem storage
+
+      Oshan'
+  - qol: Stationwide, ATMOS should now be implemented in its entirety, or as close
+      as one can get without extensive testing using dozens of live subjects.
+  - qol: ARTSCI lab rearranged for ease of use.
+  - rscadd: EXP LAB area where ARTSCI is done. Has its own APC and Air Alarm if anything
+      were to wrong
+  - rscadd: Missing wiring going up to various APCs added in. Areas affected by this
+      include the Barkeep's Backroom, Fitness Rooms and the Med/Sci Security Post.
+  - rscdel: removed a NanoChem Plus machine from behind a PHARMACY sign
+  - rscadd: Organ Smartfridge is now available between the OR and Central Medbay
+  - rscadd: Chem Smartfridge is now available in Medbay Central.
+  - qol: Adjusted a large number of objects in Medbay Central.
+  - rscdel: Removed one of the showers and the Scanner Machines in Medbay Central
+      to reduce unnecessary clutter and traffic.
+  - qol: Adjusted the front door of Medbay Central to make it easier to maintain isolation
+      of the primary treatment area and public areas.
+  - qol: Pharmacy had some machines moved around to be in better reach of where the
+      chemists will usually be
+  - qol: 'Bridge broken up into two distinct areas: the Bridge and Conference Room.
+      APCs and Air Alarms split as such as well'
+  - rscdel: Removed OP gamer gear from more spots on the map
+  - rscdel: Paired down the Warden's office to comply with Space Law.
+  - qol: Artsci has taken over the "Science Storage" room.
+  - rscdel: Because of the aformentioned takeover by Artsci, the Ordinance lab is
+      effectively removed. A future actual major edit (substantial structure/flow
+      change) will eventually re-add the Ordinance lab with all of its bells and whistles.
+  - rscadd: Firelocks and Fire Alarms to compartmentalize some parts of the main station
+      loop in the event of the inevitable plasma fire.
+  - rscadd: Signs! You asked, I got some up for some extra visual identification.
+  - qol: Adjusted some of the permissions on some doors across the station to better
+      align with who should be there and who should not be.
+  - qol: Changed the disposal tube transit between main and aux into a Bluespace Pod
+      system instead. Fewer instant broken bones!
+  - bugfix: Medbay shutters should work. Someone forgot to code it!
+  KoboldCommando:
+  - bugfix: cyborgs should no longer go invisible upon changing model
+  - bugfix: the expand module for cyborgs should once again work properly
+2023-11-30:
+  Ghommie, Jacquerel, Melbert, Rhials, Distributivgesetz, Hypernoblium, Gboster:
+  - bugfix: Hypernoblium - Fixes a selection window in the game rock-paper-scissors
+      with death.
+  - rscadd: Distributivgesetz - Add an achievement for saving a cascading engine from
+      the final countdown.
+  - code_imp: Distributivgesetz - Moved some job-related achievements from the misc
+      category to the jobs category.
+  - rscadd: Rhials - The roundend report will now read out any achievements ("cheevos"
+      as you may know them) earned by players over the course of the round.
+  - balance: Melbert - The "Long Shift" achievement is now feasibly obtainable, and
+      admins can no longer trigger it unknowingly
+  - rscadd: Jacquerel - You can now earn an achievement for completing the Grand Ritual.
+  - bugfix: Jacquerel - Summon Magic and Summon Guns work again
+  - rscadd: Ghommie - Added a score award that counts how many achievements you've
+      unlocked so far.
+  - rscadd: Ghommie - Added an Indebted negative quirk to the game, which gives the
+      holder's bank account a debt averaging at 15000 credits (with a variation of
+      1250 cr) and forces 75% of all earnings towards solving it. A little prize awaits
+      those who actually extinguish it.
+  - qol: Ghommie - The Achievements UI now shows how many people have unlocked a given
+      achievement.
+  - bugfix: Ghommie - The "Skills" Category for achievements should no longer be hidden.
+  - bugfix: Ghommie - The "Unlocked Achievements" score will now be properly saved
+      at the end of the round the first time it's loaded.
+  - sound: Ghommie - Unlocking an achievement now plays a sound by default. You can
+      change it in the Sound category of the game preferences.

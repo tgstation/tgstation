@@ -376,9 +376,8 @@
 /area/station/engineering/supermatter/room)
 "AZ" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/camera/directional/north{
-	c_tag = "Engineering - Engine Room North-West";
-	network = list("ss13","engine","engineering")
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Singularity Engine #1"
 	},
 /turf/open/floor/carpet/black,
 /area/station/engineering/supermatter/room)
@@ -611,6 +610,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"Rw" = (
+/obj/structure/grille,
+/obj/machinery/camera/emp_proof/directional/west{
+	c_tag = "Singularity Engine #4"
+	},
+/turf/open/space/basic,
+/area/station/engineering/supermatter/room)
 "Sh" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -634,6 +640,12 @@
 "SS" = (
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"UU" = (
+/obj/machinery/camera/emp_proof/directional/east{
+	c_tag = "Singularity Engine #3"
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/supermatter/room)
 "Vk" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -644,9 +656,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "Vn" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Engineering - Engine Room North-West";
-	network = list("ss13","engine","engineering")
+/obj/machinery/camera/emp_proof/directional/north{
+	c_tag = "Singularity Engine #2"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
@@ -938,7 +949,7 @@ je
 je
 "}
 (10,1,1) = {"
-zC
+UU
 np
 gQ
 HO
@@ -1108,7 +1119,7 @@ An
 An
 ol
 An
-Bc
+Rw
 nM
 KS
 KS

@@ -16,14 +16,16 @@
 
 /// Generates a reward based on the given domain
 /obj/machinery/quantum_server/proc/generate_loot()
-	if(!length(receive_turfs) && !locate_receive_turfs())
+	var/list/obj/machinery/byteforge/nearby_forges = get_nearby_forges()
+	if(isnull(nearby_forges))
+		say(src, "No nearby byteforges detected.")
 		return FALSE
 
 	points += generated_domain.reward_points
 	playsound(src, 'sound/machines/terminal_success.ogg', 30, 2)
 
-	var/turf/dest_turf = pick(receive_turfs)
-	if(isnull(dest_turf))
+	var/obj/machinery/byteforge/chosen_forge = pick(nearby_forges)
+	if(isnull(chosen_forge))
 		stack_trace("Failed to find a turf to spawn loot crate on.")
 		return FALSE
 
@@ -34,11 +36,11 @@
 	certificate.name = "certificate of domain completion"
 	certificate.update_appearance()
 
-	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_crate = new(dest_turf, generated_domain, bonus)
+	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_crate = new(src, generated_domain, bonus)
 	reward_crate.manifest = certificate
 	reward_crate.update_appearance()
 
-	spark_at_location(reward_crate)
+	chosen_forge.start_to_spawn(reward_crate)
 	return TRUE
 
 /// Returns the markdown text containing domain completion information

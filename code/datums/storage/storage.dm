@@ -404,6 +404,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	to_insert.forceMove(resolve_location)
 	item_insertion_feedback(user, to_insert, override)
 	resolve_location.update_appearance()
+	SEND_SIGNAL(to_insert, COMSIG_ITEM_STORED)
 	return TRUE
 
 /**
@@ -983,7 +984,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		resolve_parent.balloon_alert(to_show, "can't reach!")
 		return FALSE
 
-	if(!isliving(to_show) || to_show.incapacitated())
+	if(!isliving(to_show) || to_show.incapacitated(IGNORE_CRIT))
 		return FALSE
 
 	if(locked)

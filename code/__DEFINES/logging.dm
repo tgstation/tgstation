@@ -6,7 +6,6 @@
 #define INVESTIGATE_CRAFTING "crafting"
 #define INVESTIGATE_DEATHS "deaths"
 #define INVESTIGATE_ENGINE "engine"
-#define INVESTIGATE_EXPERIMENTOR "experimentor"
 #define INVESTIGATE_GRAVITY "gravity"
 #define INVESTIGATE_HALLUCINATIONS "hallucinations"
 #define INVESTIGATE_HYPERTORUS "hypertorus"
@@ -17,6 +16,7 @@
 #define INVESTIGATE_RESEARCH "research"
 #define INVESTIGATE_WIRES "wires"
 #define INVESTIGATE_NANITES "nanites"
+#define INVESTIGATE_ARTIFACT "artifact"
 
 // Logging types for log_message()
 #define LOG_ATTACK (1 << 0)

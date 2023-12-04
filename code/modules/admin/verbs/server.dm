@@ -77,8 +77,8 @@
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		SSticker.force_ending = TRUE
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "End Round") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSticker.force_ending = FORCE_END_ROUND
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "End Round") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"

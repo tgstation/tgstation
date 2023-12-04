@@ -80,8 +80,9 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
+#define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
-#define issimian(A) (is_species(A, /datum/species/simian))
+#define issimian(A) (is_species(A, /datum/species/simian)) //Monkestation Addition
 #define ispodperson(A) (is_species(A, /datum/species/pod))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
@@ -97,7 +98,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
 #define isipc(A) (is_species(A, /datum/species/ipc))
-#define isgoblin(A) (is_species(A, /datum/species/goblin))//monkestation addition
+#define isgoblin(A) (is_species(A, /datum/species/goblin)) //Monkestation Addition
+#define isfloran(A) (is_species(A, /datum/species/floran)) //Monkestation Addition
 
 
 //More carbon mobs
@@ -129,7 +131,15 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 // basic mobs
 #define isbasicmob(A) (istype(A, /mob/living/basic))
 
+#define isconstruct(A) (istype(A, /mob/living/basic/construct))
+
 #define iscow(A) (istype(A, /mob/living/basic/cow))
+
+#define isgorilla(A) (istype(A, /mob/living/basic/gorilla))
+
+#define isshade(A) (istype(A, /mob/living/basic/shade))
+
+#define is_simian(A) (isgorilla(A) || ismonkey(A))
 
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
@@ -142,17 +152,15 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
-#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
+#define isrevenant(A) (istype(A, /mob/living/basic/revenant))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
-
-#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
 #define ismouse(A) (istype(A, /mob/living/basic/mouse))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
-#define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
+#define isdrone(A) (istype(A, /mob/living/basic/drone))
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
 
@@ -164,13 +172,11 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isregalrat(A) (istype(A, /mob/living/basic/regal_rat))
 
-#define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
-
-#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
+#define isguardian(A) (istype(A, /mob/living/basic/guardian))
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
-#define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
+#define isclown(A) (istype(A, /mob/living/basic/clown))
 
 #define isspider(A) (istype(A, /mob/living/basic/spider/giant))
 
@@ -214,6 +220,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isaquarium(A) (istype(A, /obj/structure/aquarium))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define isvendor(A) (istype(A, /obj/machinery/vending))
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
 
@@ -266,8 +274,6 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 
 #define isholoeffect(O) (istype(O, /obj/effect/holodeck_effect))
 
-#define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
-
 #define isshuttleturf(T) (!isnull(T.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)))
 
 #define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)
@@ -293,3 +299,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 
 #define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))
 #define is_multi_tile_object(atom) (atom.bound_width > world.icon_size || atom.bound_height > world.icon_size)
+
+#define isartifact(thing) (istype(thing, /obj/structure/artifact) || istype(thing, /obj/item/melee/artifact) || istype(thing, /obj/item/gun/magic/artifact) || istype(thing, /obj/item/stock_parts/cell/artifact))

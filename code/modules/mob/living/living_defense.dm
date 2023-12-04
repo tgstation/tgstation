@@ -86,24 +86,49 @@
 /mob/living/proc/is_pepper_proof(check_flags = ALL)
 	return null
 
-/mob/living/proc/on_hit(obj/projectile/P)
-	return BULLET_ACT_HIT
+/// Checks if the mob's ears (BOTH EARS, BOWMANS NEED NOT APPLY) are covered by something.
+/// Returns the atom covering the mob's ears, or null if their ears are uncovered.
+/mob/living/proc/is_ears_covered()
+	return null
 
-/mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+/mob/living/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()
-	if(P.is_hostile_projectile() && (. != BULLET_ACT_BLOCK))
-		var/attack_direction = get_dir(P.starting, src)
-		// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
-		// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
-		var/armor_check = check_projectile_armor(def_zone, P, is_silent = TRUE)
-		armor_check = min(ARMOR_MAX_BLOCK, armor_check) //cap damage reduction at 90%
-		apply_damage(P.damage, P.damage_type, def_zone, armor_check, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
-		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor_check, P.stamina, P.jitter, P.paralyze, P.immobilize)
-		if(P.paralyze_timer)
-			Disorient(6 SECONDS, 1, paralyze = 5 SECONDS, stack_status = FALSE)
-		if(P.dismemberment)
-			check_projectile_dismemberment(P, def_zone)
-	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
+	if(. != BULLET_ACT_HIT)
+		return .
+	if(!hitting_projectile.is_hostile_projectile())
+		return BULLET_ACT_HIT
+
+	// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
+	// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
+	var/armor_check = check_projectile_armor(def_zone, hitting_projectile, is_silent = TRUE)
+
+	apply_damage(
+		damage = hitting_projectile.damage,
+		damagetype = hitting_projectile.damage_type,
+		def_zone = def_zone,
+		blocked = min(ARMOR_MAX_BLOCK, armor_check),  //cap damage reduction at 90%
+		wound_bonus = hitting_projectile.wound_bonus,
+		bare_wound_bonus = hitting_projectile.bare_wound_bonus,
+		sharpness = hitting_projectile.sharpness,
+		attack_direction = get_dir(hitting_projectile.starting, src),
+	)
+	apply_effects(
+		stun = hitting_projectile.stun,
+		knockdown = hitting_projectile.knockdown,
+		unconscious = hitting_projectile.unconscious,
+		slur = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.slur, // Don't want your cyborgs to slur from being ebow'd
+		stutter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.stutter, // Don't want your cyborgs to stutter from being tazed
+		eyeblur = hitting_projectile.eyeblur,
+		drowsy = hitting_projectile.drowsy,
+		blocked = armor_check,
+		stamina = hitting_projectile.stamina,
+		jitter = (mob_biotypes & MOB_ROBOTIC) ? 0 SECONDS : hitting_projectile.jitter, // Cyborgs can jitter but not from being shot
+		paralyze = hitting_projectile.paralyze,
+		immobilize = hitting_projectile.immobilize,
+	)
+	if(hitting_projectile.dismemberment)
+		check_projectile_dismemberment(hitting_projectile, def_zone)
+	return BULLET_ACT_HIT
 
 /mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return run_armor_check(def_zone, impacting_projectile.armor_flag, "","",impacting_projectile.armour_penetration, "", is_silent, impacting_projectile.weak_against_armour)
@@ -157,6 +182,7 @@
 	return ..()
 
 /mob/living/fire_act()
+	. = ..()
 	adjust_fire_stacks(3)
 	ignite_mob()
 
@@ -289,9 +315,22 @@
 
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
+	if(.)
+		return TRUE
+
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.istate & ISTATE_HARM)
+			break
+		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
+			continue
+		if(operations.next_step(user, modifiers))
+			return TRUE
+
 	var/martial_result = user.apply_martial_art(src, modifiers)
 	if (martial_result != MARTIAL_ATTACK_INVALID)
 		return martial_result
+
+	return FALSE
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/misc/start))
@@ -414,8 +453,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	for(var/obj/O in contents)
-		O.emp_act(severity)
+	for(var/obj/inside in contents)
+		inside.emp_act(severity)
 
 ///Logs, gibs and returns point values of whatever mob is unfortunate enough to get eaten.
 /mob/living/singularity_act()
@@ -437,17 +476,17 @@
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_VICTORY_MASS_CONVERSION), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ending_helper)), 270)
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
+		makeNewConstruct(/mob/living/basic/construct/harvester, src, cultoverride = TRUE)
 	else
 		switch(rand(1, 4))
 			if(1)
-				new /mob/living/simple_animal/hostile/construct/juggernaut/hostile(get_turf(src))
+				new /mob/living/basic/construct/juggernaut/hostile(get_turf(src))
 			if(2)
-				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
+				new /mob/living/basic/construct/wraith/hostile(get_turf(src))
 			if(3)
-				new /mob/living/simple_animal/hostile/construct/artificer/hostile(get_turf(src))
+				new /mob/living/basic/construct/artificer/hostile(get_turf(src))
 			if(4)
-				new /mob/living/simple_animal/hostile/construct/proteon/hostile(get_turf(src))
+				new /mob/living/basic/construct/proteon/hostile(get_turf(src))
 	spawn_dust()
 	investigate_log("has been gibbed by Nar'Sie.", INVESTIGATE_DEATHS)
 	gib()

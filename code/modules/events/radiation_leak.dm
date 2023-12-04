@@ -47,6 +47,7 @@
 			// We found something, we can just return now
 			picked_machine_ref = WEAKREF(sick_device)
 			return
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/radiation_leak/announce(fake)
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()

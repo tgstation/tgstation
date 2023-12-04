@@ -13,9 +13,12 @@
 	/// Name of the choice made
 	var/choice_made
 
+	var/monkeystation_override = FALSE // monkeystation change, override for disks with single powers/items
+
 /obj/item/bitrunning_disk/Initialize(mapload)
 	. = ..()
-
+	if(monkeystation_override) // monkeystation change, override for disks with single powers/items
+		return
 	icon_state = "[base_icon_state][rand(0, 7)]"
 	update_icon()
 	RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
@@ -24,6 +27,9 @@
 	SIGNAL_HANDLER
 
 	examine_text += span_infoplain("This disk must be carried on your person into a netpod to be used.")
+
+	if(monkeystation_override) // monkeystation change, override for disks with single powers/items
+		return
 
 	if(isnull(choice_made))
 		examine_text += span_notice("To make a selection, toggle the disk in hand.")

@@ -187,7 +187,7 @@
 	return FALSE //nonliving mobs don't have hands
 
 /mob/living/put_in_hand_check(obj/item/I)
-	if(istype(I) && ((mobility_flags & MOBILITY_PICKUP) || (I.item_flags & ABSTRACT)) \
+	if(istype(I) && (((mobility_flags & MOBILITY_PICKUP) || ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS)))) || (I.item_flags & ABSTRACT)) \
 		&& !(SEND_SIGNAL(src, COMSIG_LIVING_TRY_PUT_IN_HAND, I) & COMPONENT_LIVING_CANT_PUT_IN_HAND))
 		return TRUE
 	return FALSE
@@ -247,6 +247,10 @@
 	SET_PLANE_EXPLICIT(I, initial(I.plane), location)
 	I.dropped(src)
 	return FALSE
+
+/// Returns true if a mob is holding something
+/mob/proc/is_holding_items()
+	return !!locate(/obj/item) in held_items
 
 /mob/proc/drop_all_held_items()
 	. = FALSE
@@ -444,7 +448,7 @@
 	if(!I)
 		to_chat(src, span_warning("You are not holding anything to equip!"))
 		return
-	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
+	if (temporarilyRemoveItemFromInventory(, idrop = FALSE) && !QDELETED(I))
 		if(I.equip_to_best_slot(src))
 			return
 		if(put_in_active_hand(I))

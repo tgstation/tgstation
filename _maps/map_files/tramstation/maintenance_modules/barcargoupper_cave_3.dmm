@@ -129,10 +129,6 @@
 /obj/item/assembly/signaler,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
-"D" = (
-/obj/item/relic,
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
 "F" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
@@ -1073,7 +1069,7 @@ Y
 Y
 u
 P
-D
+I
 P
 I
 i

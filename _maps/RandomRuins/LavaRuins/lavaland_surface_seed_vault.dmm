@@ -375,8 +375,8 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/splicer,
 /obj/item/food/grown/poppy/lily,
+/obj/machinery/plantgenes,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bb" = (

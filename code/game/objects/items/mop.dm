@@ -25,6 +25,14 @@
 		/obj/structure/mop_bucket,
 	))
 
+/obj/item/mop/apply_fantasy_bonuses(bonus)
+	. = ..()
+	mopspeed = modify_fantasy_variable("mopspeed", mopspeed, -bonus)
+
+/obj/item/mop/remove_fantasy_bonuses(bonus)
+	mopspeed = reset_fantasy_variable("mopspeed", mopspeed)
+	return ..()
+
 /obj/item/mop/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))
@@ -150,3 +158,18 @@
 
 /obj/item/mop/advanced/cyborg
 	insertable = FALSE
+
+/obj/item/mop/sharp //Basically a slightly worse spear.
+	desc = "A mop with a sharpened handle. Careful!"
+	name = "sharpened mop"
+	force = 10
+	throwforce = 18
+	throw_speed = 4
+	demolition_mod = 0.75
+	embedding = list("impact_pain_mult" = 2, "remove_pain_mult" = 4, "jostle_chance" = 2.5)
+	armour_penetration = 10
+	attack_verb_continuous = list("mops", "stabs", "shanks", "jousts")
+	attack_verb_simple = list("mop", "stab", "shank", "joust")
+	sharpness = SHARP_EDGED //spears aren't pointy either.  Just assume it's carved into a naginata-style blade
+	wound_bonus = -15
+	bare_wound_bonus = 15

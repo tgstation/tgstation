@@ -44,7 +44,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/preopen,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "bx" = (
@@ -57,14 +56,6 @@
 "bA" = (
 /obj/structure/chair/plastic,
 /turf/open/floor/plating,
-/area/virtual_domain/powered)
-"bG" = (
-/obj/structure/lattice/catwalk{
-	name = "industrial lift"
-	},
-/obj/structure/closet/crate/preopen,
-/obj/structure/railing,
-/turf/open/chasm,
 /area/virtual_domain/powered)
 "bS" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -181,10 +172,6 @@
 	dir = 8
 	},
 /area/virtual_domain/powered)
-"fj" = (
-/obj/structure/closet/crate/preopen,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "fl" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 1
@@ -276,10 +263,6 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
-"iz" = (
-/obj/structure/broken_flooring/corner,
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "iI" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -400,12 +383,6 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
-"mh" = (
-/obj/structure/broken_flooring/pile{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "mu" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -422,23 +399,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
-"nc" = (
-/obj/effect/turf_decal/trimline/yellow/line{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/safety_internals/directional/south,
-/turf/open/floor/iron,
-/area/virtual_domain/powered)
-"nz" = (
-/obj/structure/broken_flooring/side/directional/north,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "nD" = (
 /obj/structure/disposalpipe/trunk/multiz,
@@ -470,26 +430,11 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
-"oX" = (
-/obj/structure/broken_flooring/corner/directional/north,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "pa" = (
 /obj/machinery/light/small/red/dim{
 	dir = 1
 	},
 /turf/open/floor/carpet/orange,
-/area/virtual_domain/powered)
-"pb" = (
-/obj/structure/broken_flooring/corner{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
-"pf" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/mapping_helpers/damaged_window,
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "pi" = (
 /obj/effect/decal/cleanable/dirt,
@@ -500,24 +445,12 @@
 /obj/structure/closet/crate/maint,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
-"pv" = (
-/obj/structure/broken_flooring/side{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "pI" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/machinery/light/small/red/dim{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
-"pJ" = (
-/obj/structure/broken_flooring/pile{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "qc" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -662,15 +595,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/powered)
-"uv" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/broken_flooring/pile{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "uz" = (
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
@@ -688,10 +612,6 @@
 /turf/open/floor/carpet/royalblue{
 	icon_state = "carpet_royalblue-55"
 	},
-/area/virtual_domain/powered)
-"uU" = (
-/obj/structure/broken_flooring/side,
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "vb" = (
 /obj/effect/turf_decal/trimline/yellow/line,
@@ -734,7 +654,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/preopen,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "wh" = (
@@ -797,13 +716,6 @@
 	dir = 8;
 	id = "factorylockdown"
 	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
-"xj" = (
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "xk" = (
@@ -929,10 +841,6 @@
 /obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
-"Bh" = (
-/obj/structure/broken_flooring/corner/directional/east,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "Bx" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -940,10 +848,6 @@
 	desc = "No longer cooks and boils stuff."
 	},
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
-"BA" = (
-/obj/structure/broken_flooring/corner/directional/south,
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "BI" = (
 /obj/machinery/door/airlock/command/glass{
@@ -997,13 +901,6 @@
 /turf/open/floor/carpet/royalblue{
 	icon_state = "carpet_royalblue-157"
 	},
-/area/virtual_domain/powered)
-"CA" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/broken_flooring/side{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "CQ" = (
 /obj/effect/spawner/random/trash/botanical_waste,
@@ -1086,11 +983,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/powered)
-"Fr" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/preopen,
-/turf/open/floor/iron,
-/area/virtual_domain/powered)
 "Fw" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/rock/pile/style_random,
@@ -1170,10 +1062,6 @@
 "Hn" = (
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/powered)
-"HI" = (
-/obj/structure/broken_flooring/pile/directional/north,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "Ib" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 1
@@ -1213,7 +1101,6 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "Jm" = (
-/obj/structure/broken_flooring/pile/directional/north,
 /obj/machinery/light/dim,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
@@ -1222,16 +1109,10 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
 /obj/structure/sign/warning/doors/directional/east,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "Jq" = (
-/obj/structure/broken_flooring/pile{
-	dir = 1
-	},
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
@@ -1260,11 +1141,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
-"KO" = (
-/obj/structure/broken_flooring/side/directional/north,
-/obj/machinery/light/small/red/dim,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "KX" = (
@@ -1386,9 +1262,6 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "On" = (
-/obj/structure/broken_flooring/side{
-	dir = 4
-	},
 /obj/machinery/light/broken{
 	dir = 4
 	},
@@ -1410,7 +1283,6 @@
 /area/virtual_domain/powered)
 "OQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/ripped/directional/west,
 /turf/open/floor/carpet/orange,
 /area/virtual_domain/powered)
 "OR" = (
@@ -1422,7 +1294,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/broken_flooring/corner,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
@@ -1435,13 +1306,6 @@
 	},
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/iron,
-/area/virtual_domain/powered)
-"PH" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
 /area/virtual_domain/powered)
 "Qd" = (
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -1607,9 +1471,6 @@
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "Tn" = (
-/obj/structure/broken_flooring/corner{
-	dir = 4
-	},
 /mob/living/basic/hivebot,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
@@ -1629,27 +1490,17 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
-"TH" = (
-/obj/structure/broken_flooring/corner/directional/south,
-/obj/item/ammo_casing/shotgun/buckshot/spent,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "Ue" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/small/red/dim{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/cleanliness/directional/west,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
 "Uw" = (
 /obj/machinery/light/dim{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
-"UO" = (
-/obj/structure/broken_flooring/side/directional/north,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "UV" = (
@@ -1696,24 +1547,11 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/powered)
-"Vy" = (
-/obj/structure/broken_flooring/singular{
-	dir = 4
-	},
-/obj/effect/mob_spawn/corpse/human/factory/guard,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "VA" = (
 /obj/machinery/light/small/red/dim{
 	dir = 1
 	},
 /obj/structure/table,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
-"VJ" = (
-/obj/structure/broken_flooring/corner{
-	dir = 1
-	},
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "VL" = (
@@ -1812,13 +1650,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/virtual_domain/powered)
-"XP" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "XQ" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
@@ -1839,10 +1670,6 @@
 /obj/item/gun/ballistic/revolver,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
-"Yl" = (
-/obj/structure/broken_flooring/corner/directional/west,
-/turf/open/floor/plating,
-/area/virtual_domain/powered)
 "Ym" = (
 /mob/living/simple_animal/pet/cat/space,
 /obj/structure/bed/dogbed{
@@ -1852,8 +1679,6 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/machinery/light/small/dim/directional/south,
-/obj/structure/sign/poster/official/moth_hardhat/directional/west,
 /turf/open/floor/plating,
 /area/virtual_domain/powered)
 "Yt" = (
@@ -2282,7 +2107,7 @@ yQ
 yQ
 RJ
 eg
-uU
+kU
 gj
 kU
 Tn
@@ -2292,8 +2117,8 @@ RJ
 eg
 eg
 uk
-pf
-pf
+tr
+tr
 eg
 eg
 qV
@@ -2347,7 +2172,7 @@ nS
 kU
 Qj
 FK
-nc
+Sg
 eY
 aK
 aK
@@ -2442,7 +2267,7 @@ eg
 eg
 VO
 kU
-Fr
+lN
 jw
 qk
 XR
@@ -2479,10 +2304,10 @@ yM
 eg
 GV
 WT
-xj
+pi
 qk
 Qh
-XP
+mu
 lW
 ww
 EI
@@ -2491,9 +2316,9 @@ Qh
 mu
 Yz
 xl
-HI
 kU
-Bh
+kU
+kU
 Kb
 kU
 hi
@@ -2526,14 +2351,14 @@ eg
 kU
 sB
 WT
-mh
 kU
-pv
+kU
+kU
 AP
 IZ
 KX
 Wd
-uv
+gj
 DE
 Mi
 gj
@@ -2582,7 +2407,7 @@ xl
 AP
 KX
 JT
-bG
+Wd
 qk
 DA
 DA
@@ -2626,7 +2451,7 @@ eg
 qT
 Gb
 Uw
-iz
+kU
 jS
 gj
 rJ
@@ -2645,7 +2470,7 @@ mu
 mu
 xl
 kU
-oX
+kU
 hi
 cF
 cw
@@ -2679,13 +2504,13 @@ eg
 eg
 kU
 qk
-PH
+mu
 dA
 Po
 Jn
 aw
 OJ
-CA
+mu
 QN
 kU
 Uw
@@ -2694,7 +2519,7 @@ kU
 Mc
 kU
 kh
-fj
+kU
 kU
 FK
 CX
@@ -2742,7 +2567,7 @@ eg
 eg
 op
 kU
-BA
+kU
 iw
 kU
 kU
@@ -2795,7 +2620,7 @@ Zb
 kU
 Yt
 kU
-UO
+kU
 hi
 CX
 eY
@@ -2825,7 +2650,7 @@ ve
 Tt
 Xo
 DE
-oX
+kU
 eg
 Sl
 gV
@@ -2834,11 +2659,11 @@ eg
 uC
 eg
 qK
-mh
+kU
 kU
 kU
 Qj
-VJ
+kU
 eg
 kU
 kU
@@ -2878,11 +2703,11 @@ kU
 kU
 mE
 Mu
-Yl
-pJ
+kU
+kU
 eg
 kn
-pb
+kU
 kU
 kU
 kU
@@ -2891,7 +2716,7 @@ kU
 YF
 eg
 eg
-pf
+tr
 tr
 XN
 eg
@@ -2945,7 +2770,7 @@ qc
 ax
 bS
 fe
-pf
+tr
 hi
 hi
 af
@@ -2973,7 +2798,7 @@ FO
 eg
 eg
 wg
-uU
+kU
 lN
 uz
 eg
@@ -3027,7 +2852,7 @@ Mj
 Mj
 eY
 eY
-UO
+kU
 jH
 Nu
 eg
@@ -3074,7 +2899,7 @@ Mj
 RJ
 Mj
 Mj
-Vy
+Kb
 hi
 eY
 CX
@@ -3124,13 +2949,13 @@ RJ
 RJ
 eY
 Xm
-TH
+kU
 fw
 eY
 qW
 hi
 dx
-pf
+tr
 UV
 sn
 uP
@@ -3275,7 +3100,7 @@ RJ
 eY
 NW
 UY
-KO
+YF
 eY
 fl
 jH
@@ -3330,7 +3155,7 @@ eY
 CX
 jH
 Nu
-pf
+tr
 Xw
 MI
 ZI
@@ -3478,7 +3303,7 @@ yQ
 RJ
 eg
 Ok
-nz
+gj
 IK
 eg
 RJ

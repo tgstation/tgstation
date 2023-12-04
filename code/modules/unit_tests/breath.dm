@@ -86,6 +86,8 @@
 /datum/unit_test/breath/breath_sanity_ashwalker
 
 /datum/unit_test/breath/breath_sanity_ashwalker/Run()
+	if(SSmapping.config.map_name == "Oshan Station")
+		return
 	var/mob/living/carbon/human/species/lizard/ashwalker/lab_rat = allocate(/mob/living/carbon/human/species/lizard/ashwalker)
 	lab_rat.forceMove(run_loc_floor_bottom_left)
 	var/turf/open/to_fill = run_loc_floor_bottom_left

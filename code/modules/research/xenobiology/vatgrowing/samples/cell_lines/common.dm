@@ -226,7 +226,7 @@
 		/datum/reagent/consumable/corn_syrup = -6,
 		/datum/reagent/sulfur = -3) //sulfur repels snakes according to professor google.
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/snake = 1)
+	resulting_atoms = list(/mob/living/basic/snake = 1)
 
 
 ///////////////////////////////////////////
@@ -265,7 +265,7 @@
 		/datum/reagent/napalm = -4)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobspore/independent = 2) //These are useless so we might as well spawn 2.
+	resulting_atoms = list(/mob/living/basic/blob_minion/spore = 2) //These are useless so we might as well spawn 2.
 
 /datum/micro_organism/cell_line/blobbernaut
 	desc = "Blobular myocytes"
@@ -284,7 +284,7 @@
 	suppressive_reagents = list(/datum/reagent/consumable/tinlux = -6)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobbernaut/independent = 1)
+	resulting_atoms = list(/mob/living/basic/blob_minion/blobbernaut = 1)
 
 /datum/micro_organism/cell_line/gelatinous_cube
 	desc = "Cubic ooze particles"
@@ -482,7 +482,7 @@
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 
-	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))
+	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant/slow, /mob/living/basic/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
 	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
@@ -510,7 +510,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/fuel/oil = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/banana = 1)
+	resulting_atoms = list(/mob/living/basic/clown/banana = 1)
 
 /datum/micro_organism/cell_line/clown/glutton
 	desc = "hyperadipogenic clown stem cells"
@@ -537,7 +537,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/toxin/bad_food = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton = 1)
+	resulting_atoms = list(/mob/living/basic/clown/mutant/glutton = 1)
 
 /datum/micro_organism/cell_line/clown/longclown
 	desc = "long clown bits"
@@ -560,7 +560,7 @@
 		/datum/reagent/consumable/nothing = -2,
 		/datum/reagent/sulfur = -1)
 
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/clown/longface = 1)
+	resulting_atoms = list(/mob/living/basic/clown/longface = 1)
 
 /datum/micro_organism/cell_line/frog
 	desc = "anura amphibian cells"

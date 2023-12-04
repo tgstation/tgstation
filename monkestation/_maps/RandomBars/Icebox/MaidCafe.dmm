@@ -38,7 +38,7 @@
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/pale/style_random,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/station/commons/lounge)
 "gO" = (
@@ -207,17 +207,14 @@
 /area/station/service/bar/backroom)
 "tc" = (
 /obj/machinery/duct,
-/mob/living/basic/carp/pet/cayenne{
-	desc = "It's Paprika! One of the Spider Clan's lovable Space Carp!";
-	faction = list("neutral");
-	name = "Paprika";
-	real_name = "Paprika"
-	},
-/obj/structure/bed/dogbed/cayenne{
-	name = "Paprika's bed"
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/mob/living/basic/carp/pet{
+	name = "Paprika"
+	},
+/obj/structure/bed/dogbed{
+	name = "fish bed"
+	},
 /turf/open/floor/carpet/black,
 /area/station/service/bar)
 "tg" = (
@@ -284,7 +281,7 @@
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/pale/style_random,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/station/service/bar)
 "Ak" = (
@@ -568,9 +565,8 @@
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/reagent_containers/cup/beaker/large,
 /obj/item/vending_refill/cigarette,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/beanbag,
-/obj/structure/table/wood,
+/obj/item/holosign_creator/robot_seat/bar,
+/obj/structure/closet/secure_closet/bar,
 /turf/open/floor/wood/tile,
 /area/station/service/bar/backroom)
 "Ou" = (
@@ -690,13 +686,6 @@
 /area/station/service/bar)
 "TT" = (
 /obj/structure/rack,
-/obj/item/melee/energy/sword/holographic/red,
-/obj/item/melee/energy/sword/holographic/red,
-/obj/item/melee/energy/sword/holographic/green,
-/obj/item/melee/energy/sword/holographic/green,
-/obj/item/melee/energy/sword/holographic,
-/obj/item/melee/energy/sword/holographic,
-/obj/item/melee/energy/sword/bananium,
 /obj/item/toy/katana{
 	desc = "As seen in your favourite Japanese cartoon.";
 	name = "anime katana"
@@ -710,6 +699,9 @@
 	name = "anime katana"
 	},
 /obj/machinery/light/directional/west,
+/obj/item/toy/sword,
+/obj/item/toy/sword,
+/obj/item/toy/sword,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "TY" = (
@@ -729,10 +721,10 @@
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/pale/style_random,
-/obj/structure/window/reinforced/fulltile,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/station/service/bar)
 "UN" = (

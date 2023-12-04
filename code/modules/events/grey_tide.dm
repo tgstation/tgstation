@@ -21,6 +21,7 @@
 	announce_when = rand(50, 60)
 	end_when = rand(20, 30)
 	severity = rand(1,3)
+	setup = TRUE //MONKESTATION ADDITION
 
 	var/list/potential_areas = list(/area/station/command,
 		/area/station/engineering,

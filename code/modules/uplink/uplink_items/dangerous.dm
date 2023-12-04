@@ -12,7 +12,7 @@
 			darts effective at incapacitating a target."
 	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	cost = 2
-	surplus = 10
+	surplus = 50 //monkestation edit: from 10 to 50
 	purchasable_from = ~UPLINK_NUKE_OPS
 
 /datum/uplink_item/dangerous/pistol
@@ -84,9 +84,9 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	progression_minimum = 30 MINUTES
-	item = /obj/item/guardiancreator/tech/choose/traitor
+	item = /obj/item/guardian_creator/tech
 	cost = 18
-	surplus = 0
+	surplus = 40 //monkestation edit: from 0 to 40
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	restricted = TRUE
 
@@ -97,15 +97,4 @@
 	progression_minimum = 30 MINUTES
 	cost = 13
 	surplus = 50
-	purchasable_from = ~UPLINK_CLOWN_OPS
-
-/datum/uplink_item/dangerous/laser_musket
-	name = "Syndicate Laser Musket"
-	desc = "An exprimental 'rifle' designed by Aethrofusion. This laser(probably) uses alien technology to fit 4 high energy capacitors \
-			into a small rifle which can be stored safely(?) in any backpack. To charge, simply press down on the main control panel. \
-			Rumors of this 'siphoning power off your lifeforce' are greatly exaggerated, and Aethrofusion assures safety for up to 2 years of use."
-	item = /obj/item/gun/energy/laser/musket/syndicate
-	progression_minimum = 30 MINUTES
-	cost = 12
-	surplus = 40
 	purchasable_from = ~UPLINK_CLOWN_OPS

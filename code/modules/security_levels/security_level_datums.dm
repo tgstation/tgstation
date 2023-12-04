@@ -41,7 +41,7 @@
  * No threats
  */
 /datum/security_level/green
-	name = "green"
+	name = "chimpcon 1"
 	sound = 'sound/misc/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
 	lowering_to_configuration_key = /datum/config_entry/string/alert_green
@@ -53,7 +53,7 @@
  * Caution advised
  */
 /datum/security_level/blue
-	name = "blue"
+	name = "chimpcon 2"
 	sound = 'sound/misc/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
 	lowering_to_configuration_key = /datum/config_entry/string/alert_blue_downto
@@ -66,7 +66,7 @@
  * Hostile threats
  */
 /datum/security_level/red
-	name = "red"
+	name = "chimpcon 4"
 	sound = 'sound/misc/notice1.ogg' // The same angry alarm
 	number_level = SEC_LEVEL_RED
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
@@ -79,7 +79,7 @@
  * Station destruction is imminent
  */
 /datum/security_level/delta
-	name = "delta"
+	name = "chimpcon 5"
 	sound = 'sound/misc/notice1.ogg' // The same angry alarm, again
 	number_level = SEC_LEVEL_DELTA
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta

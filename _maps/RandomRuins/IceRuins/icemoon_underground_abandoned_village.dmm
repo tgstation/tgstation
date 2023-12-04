@@ -108,7 +108,7 @@
 "la" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/effect/mob_spawn/corpse/human/assistant,
-/mob/living/simple_animal/hostile/skeleton/eskimo{
+/mob/living/basic/skeleton/settler{
 	name = "Village Hunter"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -135,7 +135,7 @@
 /area/icemoon/underground/explored)
 "mi" = (
 /obj/effect/decal/remains/human,
-/mob/living/simple_animal/hostile/construct/juggernaut/hostile{
+/mob/living/basic/construct/juggernaut/hostile{
 	health = 450;
 	maxHealth = 450;
 	name = "Right Hand of the Elder"
@@ -360,7 +360,7 @@
 "EF" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /obj/effect/decal/remains/human,
-/mob/living/simple_animal/hostile/construct/juggernaut/hostile{
+/mob/living/basic/construct/juggernaut/hostile{
 	health = 450;
 	maxHealth = 450;
 	name = "Left Hand of the Elder"

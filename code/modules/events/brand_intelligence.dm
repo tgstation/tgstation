@@ -46,6 +46,7 @@
 		kill()
 		return
 	origin_machine = pick_n_take(vending_machines)
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/brand_intelligence/announce(fake)
 	priority_announce("Rampant brand intelligence has been detected aboard [station_name()]. Please inspect any [origin_machine] brand vendors for aggressive marketing tactics, and reboot them if necessary.", "Machine Learning Alert")

@@ -67,3 +67,18 @@
 /obj/item/clothing/under/rank/civilian/janitor/maid //heckin subtypes
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
+
+/obj/item/clothing/under/wonka
+	name = "wonky suit"
+	desc = "Come with me, and you'll be, in a world of OSHA violations!"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	icon_state = "wonka"
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	worn_icon_state = "wonka"
+
+/obj/item/clothing/under/guardmanuniform
+	name = "guardman's uniform"
+	desc = "The red color is meant to hide either your blood or the xeno's blood, do xenos even have red blood?"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	icon_state = "guardman_uniform"
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'

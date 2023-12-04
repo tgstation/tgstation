@@ -41,6 +41,8 @@
 		if(query_get_rank.NextRow())
 			if(query_get_rank.item[1])
 				owned_rank = query_get_rank.item[1]
+				if(owned_rank == "UNSUBBED2")
+					owned_rank = NO_RANK
 			else
 				owned_rank = NO_RANK
 	qdel(query_get_rank)
@@ -67,6 +69,6 @@
 	return FALSE
 
 /datum/patreon_data/proc/is_donator()
-	if(owned_rank != NO_RANK)
+	if((owned_rank != NO_RANK) && (owned_rank != UNSUBBED))
 		return TRUE
 	return FALSE

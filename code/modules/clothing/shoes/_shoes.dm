@@ -8,6 +8,7 @@
 
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
@@ -198,7 +199,7 @@
 			to_chat(our_guy, span_userdanger("You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "untying"] your shoelaces!"))
 			user.emote("scream")
 			if(istype(L))
-				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(GLOB.arm_zones))
 				if(ouchie)
 					ouchie.receive_damage(brute = 10)
 				L.stamina.adjust(-40)
@@ -278,3 +279,17 @@
 	if(do_after(user, lace_time, target = src,extra_checks = CALLBACK(src, PROC_REF(still_shoed), user)))
 		to_chat(user, span_notice("You [tied ? "untie" : "tie"] the laces on [src]."))
 		adjust_laces(tied ? SHOES_UNTIED : SHOES_TIED, user)
+
+/obj/item/clothing/shoes/apply_fantasy_bonuses(bonus)
+	. = ..()
+	slowdown = modify_fantasy_variable("slowdown", slowdown, -bonus * 0.1, 0)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+
+/obj/item/clothing/shoes/remove_fantasy_bonuses(bonus)
+	slowdown = reset_fantasy_variable("slowdown", slowdown)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
+	return ..()

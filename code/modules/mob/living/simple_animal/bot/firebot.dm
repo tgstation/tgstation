@@ -108,8 +108,9 @@
 	..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
-	if(user)
-		to_chat(user, span_danger("[src] buzzes and beeps."))
+
+	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
+
 	audible_message(span_danger("[src] buzzes oddly!"))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(user)
@@ -229,7 +230,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, id=access_card)
+		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, access=access_card.GetAccess())
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()

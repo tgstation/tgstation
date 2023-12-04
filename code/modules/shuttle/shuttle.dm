@@ -70,7 +70,7 @@
 /obj/docking_port/has_gravity(turf/current_turf)
 	return TRUE
 
-/obj/docking_port/take_damage()
+/obj/docking_port/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	return
 
 /obj/docking_port/singularity_pull()
@@ -797,7 +797,7 @@
 			if(sunset_mobs.mind && !istype(get_area(sunset_mobs), /area/shuttle/escape/brig))
 				sunset_mobs.mind.force_escaped = TRUE
 			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
-			sunset_mobs.notransform = TRUE
+			ADD_TRAIT(sunset_mobs, TRAIT_NO_TRANSFORM, REF(src))
 			sunset_mobs.ghostize(FALSE)
 			sunset_mobs.moveToNullspace()
 

@@ -7,7 +7,7 @@
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 4
 
-/datum/round_event_control/gravity_generator_blackout/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/gravity_generator_blackout/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .

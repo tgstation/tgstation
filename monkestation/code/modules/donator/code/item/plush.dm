@@ -37,3 +37,15 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	squeak_override = list('goon/sounds/babynoise.ogg'=1)
 	icon_state = "spider"
+
+/obj/item/toy/plush/puppycat
+	name = "puppycat plush"
+	desc = "A plush of Puppycat. ~Handcrafted lovingly for Senri."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "puppycat"
+
+/obj/item/toy/plush/hotdog
+	name = "hotdog plush"
+	desc = "A plush of a hotdog. ~Handcrafted lovingly for Spinnermaster."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "hotdog"

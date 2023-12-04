@@ -13,7 +13,7 @@
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)
 "q" = (
-/mob/living/simple_animal/hostile/megafauna/wendigo,
+/mob/living/simple_animal/hostile/megafauna/wendigo/monkestation_override,
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

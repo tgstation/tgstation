@@ -38,7 +38,7 @@
 		else
 			marked_mob.Paralyze(0.5 SECONDS)
 		marked_mob.Knockdown(3 SECONDS)
-		marked_mob.apply_damage_type(30, BURN)
+		marked_mob.apply_damage(30, BURN)
 		marked_mob.visible_message(span_warning("[marked_mob] is hit by a judicial explosion!"),
 								   span_warning("You feel the ground beneath you heat up!"))
 	sleep(0.3 SECONDS)

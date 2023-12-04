@@ -30,6 +30,7 @@
 /datum/round_event/sandstorm/setup()
 	start_when = rand(70, 90)
 	end_when = rand(110, 140)
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/sandstorm/announce(fake)
 	if(!start_side)

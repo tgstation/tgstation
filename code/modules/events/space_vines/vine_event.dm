@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/spacevine
 	weight = 15
 	max_occurrences = 3
-	min_players = 10
+	min_players = 25 //MONKESTATION CHANGE: 10 ==> 25
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Kudzu begins to overtake the station. Might spawn man-traps."
 	min_wizard_trigger_potency = 4
@@ -64,7 +64,7 @@
 
 /datum/event_admin_setup/set_location/spacevine/apply_to_event(datum/round_event/spacevine/event)
 	event.override_turf = chosen_turf
-	
+
 /datum/event_admin_setup/multiple_choice/spacevine
 	input_text = "Select starting mutations."
 	min_choices = 0
@@ -88,7 +88,7 @@
 		type_choices += text2path(choice)
 	event.mutations_overridden = TRUE
 	event.override_mutations = type_choices
-	
+
 /datum/event_admin_setup/input_number/spacevine_potency
 	input_text = "Set vine's potency (effects mutation frequency + max severity)"
 	max_value = 100

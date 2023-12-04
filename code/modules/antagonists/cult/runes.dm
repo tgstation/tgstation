@@ -72,6 +72,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	/// The actual keyword for the rune
 	var/keyword
 
+	/// can non-cultists use this rune? used for the tramstation beer rune. Monkestation - addition
+	var/cult_override = FALSE
+
 /obj/effect/rune/Initialize(mapload, set_keyword)
 	. = ..()
 	if(set_keyword)
@@ -96,7 +99,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	. = ..()
 	if(.)
 		return
-	if(!IS_CULTIST(user))
+//	if(!IS_CULTIST(user)) // monkestation change, original code
+	if(!IS_CULTIST(user) && !cult_override) // monkestation change, cult override added
 		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
 		return
 	var/list/invokers = can_invoke(user)
@@ -108,7 +112,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(isshade(user) || isconstruct(user))
-		if(istype(user, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/artificer/angelic))
+		if(HAS_TRAIT(user, TRAIT_ANGELIC))
 			to_chat(user, span_warning("You purge the rune!"))
 			qdel(src)
 		else if(construct_invoke || !IS_CULTIST(user)) //if you're not a cult construct we want the normal fail message
@@ -718,7 +722,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	barrier.Toggle()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.apply_damage(2, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		C.apply_damage(2, BRUTE, pick(GLOB.arm_zones))
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
