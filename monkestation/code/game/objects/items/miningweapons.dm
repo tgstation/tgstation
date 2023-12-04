@@ -266,7 +266,7 @@
 	icon_state = "kineticpistol"
 	base_icon_state = "kineticpistol"
 	inhand_icon_state = "kineticgun"
-	recharge_time = 1.45 SECONDS
+	recharge_time = 2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/glock)
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
