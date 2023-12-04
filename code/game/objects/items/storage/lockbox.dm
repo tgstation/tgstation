@@ -49,14 +49,16 @@
 	else
 		balloon_alert(user, "locked!")
 
-/obj/item/storage/lockbox/emag_act(mob/user)
+/obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
 		broken = TRUE
 		atom_storage.locked = FALSE
 		icon_state = src.icon_broken
-		if(user)
-			visible_message(span_warning("\The [src] is broken by [user] with an electromagnetic card!"))
-			return
+		balloon_alert(user, "lock destroyed")
+		if (emag_card && user)
+			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
+		return TRUE
+	return FALSE
 
 /obj/item/storage/lockbox/examine(mob/user)
 	. = ..()
