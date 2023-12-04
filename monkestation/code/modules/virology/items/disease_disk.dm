@@ -8,8 +8,8 @@
 	name = "blank GNA disk (stage: [stage])"
 	effect = new /datum/symptom
 
-/obj/item/disk/disease/examine(var/mob/user)
-	..()
-	if(effect)
-		to_chat(user, "<span class='info'>Strength: [effect.multiplier]</span>")
-		to_chat(user, "<span class='info'>Occurrence: [effect.chance]</span>")
+/obj/item/disk/disease/update_desc(updates)
+	. = ..()
+	desc = "[initial(desc)]\n"
+	desc += "Strength: [effect.multiplier]\n"
+	desc += "Occurrence: [effect.chance]"

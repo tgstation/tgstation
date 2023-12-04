@@ -128,7 +128,7 @@
 	desc = "Makes the infected more perceptive of their aches and pains."
 	stage = 1
 	chance = 5
-	max_chance = 60
+	max_chance = 30
 	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/soreness/activate(mob/living/mob)

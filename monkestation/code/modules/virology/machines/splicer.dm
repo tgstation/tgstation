@@ -16,6 +16,8 @@
 	var/scanning = 0 // Time in process ticks until scan is over
 	var/spliced = FALSE // If at least one effect has been spliced into the current dish this is TRUE
 
+	///the stage we are set to grab from
+	var/target_stage = 1
 	idle_power_usage = 100
 	active_power_usage = 600
 
@@ -40,7 +42,7 @@
 		var/obj/item/disk/disease/disk = I
 		visible_message("<span class='notice'>[user] swipes \the [disk] against \the [src].</span>", "<span class='notice'>You swipe \the [disk] against \the [src], copying the data into the machine's buffer.</span>")
 		memorybank = disk.effect
-		flick("splicer_disk", src)
+		flick_overlay("splicer_disk", src)
 		spawn(2)
 			update_icon()
 
@@ -52,7 +54,6 @@
 	if(!ui)
 		ui = new(user, src, "DiseaseSplicer")
 		ui.open()
-		ui.set_autoupdate(FALSE)
 
 
 /obj/machinery/computer/diseasesplicer/ui_data(mob/user)
@@ -60,14 +61,18 @@
 	var/list/data = list(
 		"splicing" = splicing,
 		"scanning" = scanning,
-		"burning" = burning
+		"burning" = burning,
+		"target_stage" = target_stage,
 	)
 
-	if(dish && dish.contained_virus)
-		if (dish.analysed)
-			data["dish_name"] = dish.contained_virus.name()
+	if(dish)
+		if(dish.contained_virus)
+			if (dish.analysed)
+				data["dish_name"] = dish.contained_virus.name()
+			else
+				data["dish_name"] = "Unknown [dish.contained_virus.form]"
 		else
-			data["dish_name"] = "Unknown [dish.contained_virus.form]"
+			data["dish_name"] = "Empty Dish"
 
 	if(memorybank)
 		data["memorybank"] = "[analysed ? memorybank.name : "Unknown DNA strand"] (Stage [memorybank.stage])"
@@ -103,24 +108,25 @@
 		use_power = 1
 
 	if(scanning)
-		scanning -= 1
+		scanning--
 		if(!scanning)
 			update_icon()
 	if(splicing)
-		splicing -= 1
+		splicing--
 		if(!splicing)
 			update_icon()
 	if(burning)
-		burning -= 1
+		burning--
 		if(!burning)
 			update_icon()
-			flick("splicer_print", src)
+			flick_overlay("splicer_print", src)
 			var/obj/item/disk/disease/d = new /obj/item/disk/disease(src)
 			if(analysed)
 				d.name = "\improper [memorybank.name] GNA disk (Stage: [memorybank.stage])"
 			else
 				d.name = "unknown GNA disk (Stage: [memorybank.stage])"
 			d.effect = memorybank
+			d.update_desc()
 			spawn(10)
 				d.forceMove(loc)
 				d.pixel_x = -6
@@ -244,7 +250,6 @@
 			update_appearance()
 			return TRUE
 		if("dish_effect_to_buffer")
-			var/target_stage = params["target_stage"]
 			dish2buffer(target_stage)
 			return TRUE
 		if("splice_buffer_to_dish")
@@ -253,6 +258,8 @@
 		if("burn_buffer_to_disk")
 			burning = DISEASE_SPLICER_BURNING_TICKS
 			return TRUE
+		if("target_stage")
+			target_stage = params["stage"]
 	return FALSE
 
 #undef DISEASE_SPLICER_BURNING_TICKS

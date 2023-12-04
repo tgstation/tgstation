@@ -103,6 +103,17 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	..()
 	if(istype(I,/obj/item/hand_labeler))
 		return
+	if (open)
+		if (istype(I,/obj/item/reagent_containers))
+			var/success = 0
+			var/obj/container = I
+			if (!container.is_open_container() && istype(container, /obj/item/reagent_containers))
+				return
+			if(I.is_open_container())
+				success = I.reagents.trans_to(src, 10, user)
+			if (success > 0)
+				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [src].</span>")
+			return 
 	if((user.istate & ISTATE_HARM) && I.force)
 		visible_message("<span class='danger'>The virus dish is smashed to bits!</span>")
 		shatter(user)
@@ -114,16 +125,17 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	. = ..()
 	if(.)
 		return
-	if (open)
+	if(open)
 		if (istype(target,/obj/item/reagent_containers))
 			var/success = 0
 			var/obj/container = target
 			if (!container.is_open_container() && istype(container, /obj/item/reagent_containers))
 				return
-			if(target.is_open_container())
-				success = reagents.trans_to(src, 10, user)
+			if(is_open_container())
+				success = reagents.trans_to(target, 10, user)
 			if (success > 0)
 				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [target].</span>")
+			return 
 		if (istype(target,/obj/structure/toilet))
 			var/obj/structure/toilet/T = target
 			if (T.open)
@@ -131,7 +143,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		if (istype(target,/obj/structure/urinal)||istype(target,/obj/structure/sink))
 			empty(user,target)
 
-/obj/item/weapon/virusdish/proc/empty(var/mob/user,var/atom/target)
+/obj/item/weapon/virusdish/proc/empty(mob/user, atom/target)
 	if (user && target)
 		to_chat(user,"<span class='notice'>You empty \the [src]'s reagents into \the [target].</span>")
 	reagents.clear_reagents()

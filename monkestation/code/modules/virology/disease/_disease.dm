@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/list/immune_data = GetImmuneData(mob)
 
 	for(var/datum/symptom/e in symptoms)
-		if (e.can_run_effect(immune_data[1]), seconds_per_tick = seconds_per_tick)
+		if (e.can_run_effect(immune_data[1], seconds_per_tick))
 			e.run_effect(mob, seconds_per_tick)
 
 	//fever is a reaction of the body's immune system to the infection. The higher the antibody concentration (and the disease still not cured), the higher the fever
