@@ -427,7 +427,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 					if(survivor.mind.get_hijack_destination() == SYNDICATE_BASE) // We are a syndicate agent so this is a greentext
 						parts += "<div class='panel greenborder'>"
-						parts += "<span class='greentext_alt'>You managed to hijack the emergency shuttle of [station_name()] and bring it to the syndicate base!</span>"
+						parts += "<span class='greentext'>You managed to hijack the emergency shuttle of [station_name()] and bring it to the syndicate base!</span>"
 
 					else // we are not a syndicate agent, so this is a redtext
 						parts += "<div class='panel stationborder'>"
@@ -443,7 +443,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 						if(SSshuttle.emergency.hijacker == survivor) //If we are the hijacker, this is the best outcome.
 							parts += "<div class='panel greenborder'>"
-							parts += "<span class='greentext_alt'>You managed to hijack the emergency shuttle of [station_name()]!</span>"
+							parts += "<span class='greentext'>You managed to hijack the emergency shuttle of [station_name()]!</span>"
 
 						else //We are able to hijack but are not the hijacker. Count this as a survival.
 							parts += "<div class='panel greenborder'>"
