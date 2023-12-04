@@ -571,22 +571,22 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/ui_data(mob/user)
 	var/list/data = list()
-	. = data
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_access_flags & BOT_COVER_EMAGGED
 	data["has_access"] = check_access(user)
 	data["locked"] = !(bot_access_flags & BOT_CONTROL_PANEL_OPEN)
 	data["settings"] = list()
-	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !issilicon(user) && !isAdminGhostAI(user))
-		return
-	data["settings"]["pai_inserted"] = !!paicard
-	data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
-	data["settings"]["possession_enabled"] = can_be_possessed
-	data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
-	data["settings"]["maintenance_lock"] = !(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
-	data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON
-	data["settings"]["patrol_station"] = bot_mode_flags & BOT_MODE_AUTOPATROL
+	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
+		data["settings"]["pai_inserted"] = !isnull(paicard)
+		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
+		data["settings"]["possession_enabled"] = can_be_possessed
+		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
+		data["settings"]["maintenance_lock"] = !(bot_access_flags & BOT_MAINTS_PANEL_OPEN)
+		data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON
+		data["settings"]["patrol_station"] = bot_mode_flags & BOT_MODE_AUTOPATROL
+	return data
+
 // Actions received from TGUI
 /mob/living/basic/bot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

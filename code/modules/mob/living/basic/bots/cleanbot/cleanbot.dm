@@ -118,7 +118,6 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
 		/datum/pet_command/point_targeting/clean,
 	)
 
@@ -255,7 +254,7 @@
 	if(.)
 		return
 	if(!istype(attacking_item, /obj/item/knife) || user.combat_mode)
-		return TRUE
+		return FALSE
 	balloon_alert(user, "attaching knife...")
 	if(!do_after(user, 2.5 SECONDS, target = src))
 		balloon_alert(user, "need to stay still")

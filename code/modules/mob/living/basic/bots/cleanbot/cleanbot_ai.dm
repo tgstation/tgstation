@@ -2,6 +2,7 @@
 
 /datum/ai_controller/basic_controller/bot/cleanbot
 	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_SALUTE_MESSAGES = list(
@@ -31,9 +32,9 @@
 	)
 	///list that ties each flag to its list key
 	var/static/list/clean_flags = list(
-		CLEANBOT_CLEAN_BLOOD = BB_CLEANABLE_BLOOD,
-		CLEANBOT_CLEAN_PESTS = BB_HUNTABLE_PESTS,
-		CLEANBOT_CLEAN_DRAWINGS = BB_CLEANABLE_DRAWINGS,
+		BB_CLEANABLE_BLOOD = CLEANBOT_CLEAN_BLOOD,
+		BB_HUNTABLE_PESTS = CLEANBOT_CLEAN_PESTS,
+		BB_CLEANABLE_DRAWINGS = CLEANBOT_CLEAN_DRAWINGS,
 	)
 
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
@@ -47,20 +48,23 @@
 /datum/ai_planning_subtree/cleaning_subtree
 
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
-	if(controller.reachable_key(BB_PATIENT_TARGET, BOT_CLEAN_PATH_LIMIT))
-		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/interact_once, BB_CLEAN_TARGET)
+	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
+		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
-	var/list/final_hunt_list = controller.blackboard[BB_CLEANABLE_DECALS]
+	var/list/final_hunt_list = list()
 
-	for(var/flag_mode in controller.clean_flags)
-		if(!(bot_pawn.janitor_mode_flags & flag_mode))
+	final_hunt_list += controller.blackboard[BB_CLEANABLE_DECALS]
+	var/list/flag_list = controller.clean_flags
+	for(var/list_key in flag_list)
+		if(!(bot_pawn.janitor_mode_flags & flag_list[list_key]))
 			continue
-		var/list_key = controller.clean_flags[flag_mode]
 		final_hunt_list += controller.blackboard[list_key]
 
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets, BB_CLEAN_TARGET, final_hunt_list)
+
+/datum/ai_behavior/find_and_set/in_list/clean_targets
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
@@ -68,7 +72,8 @@
 	for(var/atom/found_item in found)
 		if(LAZYACCESS(ignore_list, found_item))
 			found -= found_item
-	return (length(found) ? pick(found) : null)
+	if(length(found))
+		return pick(found)
 
 /datum/ai_planning_subtree/acid_spray
 
@@ -77,7 +82,7 @@
 	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	if(controller.reachable_key(BB_ACID_SPRAY_TARGET, BOT_CLEAN_PATH_LIMIT))
-		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/interact_once/spray_target, BB_ACID_SPRAY_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/spray_target, BB_ACID_SPRAY_TARGET, /mob/living/carbon/human, 5)
@@ -96,20 +101,42 @@
 		return human_target
 	return null
 
-/datum/ai_behavior/basic_melee_attack/interact_once/spray_target
+/datum/ai_behavior/execute_clean
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 
-/datum/ai_behavior/basic_melee_attack/interact_once/spray_target/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/ai_behavior/execute_clean/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	if(!succeeded)
+	var/turf/target = controller.blackboard[target_key]
+	if(isnull(target))
+		return FALSE
+	set_movement_target(controller, target)
+
+/datum/ai_behavior/execute_clean/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+	. = ..()
+	var/mob/living/basic/living_pawn = controller.pawn
+	var/atom/target = controller.blackboard[target_key]
+
+	if(QDELETED(target))
+		finish_action(controller, FALSE, target_key)
+		return
+
+	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
+	finish_action(controller, TRUE, target_key)
+
+/datum/ai_behavior/execute_clean/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+	. = ..()
+	if(!iscarbon(controller.blackboard[target_key]))
+		controller.clear_blackboard_key(target_key)
 		return
 	var/list/speech_list = controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]
 	if(!length(speech_list))
 		return
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.say(pick(controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]), forced = "ai controller")
-
+	controller.clear_blackboard_key(target_key)
 /datum/ai_planning_subtree/use_mob_ability/foam_area
 	ability_key = BB_CLEANBOT_FOAM
+	finish_planning = FALSE
 
 /datum/ai_planning_subtree/use_mob_ability/foam_area/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
@@ -119,7 +146,7 @@
 
 /datum/ai_planning_subtree/befriend_janitors
 
-/datum/ai_planning_subtree/befriend_janitor/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+/datum/ai_planning_subtree/befriend_janitors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are now evil. dont befriend the janitors
 	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
@@ -162,9 +189,9 @@
 		return
 	return ..()
 
-/datum/pet_command/point_targeting/breed/execute_action(datum/ai_controller/basic_controller/bot/controller)
+/datum/pet_command/point_targeting/clean/execute_action(datum/ai_controller/basic_controller/bot/controller)
 	if(controller.reachable_key(BB_CURRENT_PET_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/interact_once, BB_CURRENT_PET_TARGET)
+		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CURRENT_PET_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)

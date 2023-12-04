@@ -284,8 +284,8 @@
 			var/obj/structure/mop_bucket/janitorialcart/janicart = custodial_tools
 			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
 
-		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
-			var/mob/living/simple_animal/bot/cleanbot/cleanbots = custodial_tools
+		if(istype(custodial_tools, /mob/living/basic/bot/cleanbot))
+			var/mob/living/basic/bot/cleanbot/cleanbots = custodial_tools
 			tool_name = "[cleanbots.name] - [cleanbots.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]"
 
 		var/list/tool_information = list(

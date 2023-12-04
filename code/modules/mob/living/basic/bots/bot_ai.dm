@@ -186,6 +186,8 @@
 /datum/ai_planning_subtree/salute_beepsky/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are criminals, dont salute the dirty pigs
+	if(QDELETED(bot_pawn))
+		return
 	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_SALUTE_TARGET))
