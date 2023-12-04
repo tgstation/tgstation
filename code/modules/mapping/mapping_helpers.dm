@@ -1342,8 +1342,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/engraving
 	name = "engraving helper"
-	icon = 'icons/turf/wall_overlays.dmi'
-	icon_state = "engraving2"
+	icon = 'icons/effects/engraving.dmi'
+	icon_state = "wall_2"
 	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
 
