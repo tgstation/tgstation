@@ -112,14 +112,14 @@
 
 	find_nearby_disease()//getting diseases from blood/mucus/vomit splatters and open dishes
 
-	activate_diseases()
+	activate_diseases(seconds_per_tick)
 
-/mob/living/carbon/proc/activate_diseases()
+/mob/living/carbon/proc/activate_diseases(seconds_per_tick)
 	if (length(diseases))
 		var/active_disease = pick(diseases)//only one disease will activate its effects at a time.
 		for (var/datum/disease/advanced/V  as anything in diseases)
 			if(istype(V))
-				V.activate(src, active_disease != V)
+				V.activate(src, active_disease != V, seconds_per_tick)
 
 				if(HAS_TRAIT(src, TRAIT_IRRADIATED))
 					if (prob(50))//radiation turns your body into an inefficient pathogenic incubator.

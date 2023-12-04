@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		antigen |= pick(antigen_family(selected_second_antigen))
 
 
-/datum/disease/advanced/proc/activate(mob/living/mob, starved = FALSE)
+/datum/disease/advanced/proc/activate(mob/living/mob, starved = FALSE, seconds_per_tick)
 	if(mob.stat == DEAD)
 		return
 
@@ -334,11 +334,14 @@ GLOBAL_LIST_INIT(virusDB, list())
 		ticks += 10
 	else
 		logged_virusfood=0
-
+	if(prob(strength * 0.1))
+		incubate(mob, 1)
 	//Moving to the next stage
-	if(ticks > stage*100 && prob(stageprob) && stage < max_stages)
-		stage++
-		log += "<br />[ROUND_TIME()] NEXT STAGE ([stage])"
+	if(ticks > stage*100 && prob(stageprob))
+		incubate(mob, 1)
+		if(stage < max_stages)
+			log += "<br />[ROUND_TIME()] NEXT STAGE ([stage])"
+			stage++
 		ticks = 0
 
 	//Pathogen killing each others
@@ -357,8 +360,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/list/immune_data = GetImmuneData(mob)
 
 	for(var/datum/symptom/e in symptoms)
-		if (e.can_run_effect(immune_data[1]))
-			e.run_effect(mob)
+		if (e.can_run_effect(immune_data[1]), seconds_per_tick = seconds_per_tick)
+			e.run_effect(mob, seconds_per_tick)
 
 	//fever is a reaction of the body's immune system to the infection. The higher the antibody concentration (and the disease still not cured), the higher the fever
 	if (mob.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)//but we won't go all the way to burning up just because of a fever, probably

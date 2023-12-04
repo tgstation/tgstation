@@ -21,7 +21,7 @@
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(seconds_per_tick, times_fired)
-		handle_virus_updates()
+		handle_virus_updates(seconds_per_tick)
 
 		. = ..()
 		if(QDELETED(src))

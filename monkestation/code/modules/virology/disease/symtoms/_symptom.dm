@@ -38,8 +38,8 @@
 	multiplier = clamp(multiplier+tweak,1,max_multiplier)
 
 
-/datum/symptom/proc/can_run_effect(active_stage = -1)
-	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1) && prob(chance))
+/datum/symptom/proc/can_run_effect(active_stage = -1, seconds_per_tick)
+	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1) && prob(chance * seconds_per_tick))
 		return 1
 	return 0
 
