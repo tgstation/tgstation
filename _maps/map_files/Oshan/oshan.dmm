@@ -1003,6 +1003,18 @@
 	dir = 8
 	},
 /area/station/service/hydroponics)
+"axa" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "axQ" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/disposalpipe/segment{
@@ -1575,6 +1587,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/aft)
+"aOu" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "aOC" = (
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/noslip{
@@ -8144,7 +8165,7 @@
 	},
 /area/station/maintenance/starboard/aft)
 "dSs" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "dSA" = (
@@ -8698,6 +8719,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig)
+"efe" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/dark/visible,
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "efz" = (
 /obj/structure/table/wood,
 /obj/item/book/granter/action/spell/smoke/lesser{
@@ -18464,6 +18492,9 @@
 	name = "O2 To Pure"
 	},
 /obj/effect/turf_decal/tile/blue/anticorner,
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "iLR" = (
@@ -20498,6 +20529,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/secondary/exit/departure_lounge)
+"jLx" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "jLF" = (
 /obj/structure/statue/goliath{
 	dir = 8
@@ -26272,6 +26314,7 @@
 "mrQ" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible,
 /obj/machinery/camera/directional/east,
+/obj/machinery/atmospherics/pipe/layer_manifold/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "msl" = (
@@ -29982,6 +30025,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -35620,6 +35666,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
+"qDo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "qDy" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass,
@@ -39185,6 +39241,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "som" = (
@@ -39556,6 +39615,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
+"swc" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "swe" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
@@ -40060,6 +40129,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/machinery/atmospherics/components/trinary/mixer/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "sIH" = (
@@ -43435,6 +43507,9 @@
 	name = "Plasma to Pure"
 	},
 /obj/effect/turf_decal/tile/random/anticorner/contrasted,
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "upR" = (
@@ -45921,6 +45996,16 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
+"vsq" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos)
 "vsA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -95003,7 +95088,7 @@ sks
 sks
 oXd
 uBI
-iAR
+efe
 sIh
 iLQ
 dSs
@@ -95261,7 +95346,7 @@ fsb
 oPk
 ooM
 mPQ
-hNi
+jLx
 sBY
 omV
 caj
@@ -95775,7 +95860,7 @@ jqd
 qax
 kkv
 bIa
-hNS
+aOu
 fZH
 gIq
 nLI
@@ -96032,7 +96117,7 @@ cTx
 qus
 kkv
 qus
-sIh
+qDo
 lMo
 dSs
 xXA
@@ -96289,7 +96374,7 @@ qOO
 qus
 kkv
 qus
-wtF
+vsq
 xKx
 lvw
 nLI
@@ -96546,7 +96631,7 @@ kkv
 qus
 kkv
 qus
-vCo
+axa
 deB
 irm
 dkJ
@@ -96803,7 +96888,7 @@ nck
 qax
 ezM
 qax
-fUy
+swc
 mFY
 eHh
 nLI
