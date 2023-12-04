@@ -266,16 +266,17 @@
 				if((obj_flags & EMAGGED) && prob(5))
 					to_chat(usr, span_warning("Chemical system re-route detected, results may not be as expected!"))
 
-/obj/machinery/sleeper/emag_act(mob/user)
+/obj/machinery/sleeper/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
-	to_chat(user, span_warning("You scramble the sleeper's user interface!"))
+	balloon_alert(user, "interface scrambled")
 	obj_flags |= EMAGGED
 
 	var/list/av_chem = available_chems.Copy()
 	for(var/chem in av_chem)
 		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
+	return TRUE
 
 /obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
 	if((chem in available_chems) && chem_allowed(chem))

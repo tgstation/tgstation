@@ -140,13 +140,15 @@ Nothing else in the console has ID requirements.
 	say("Not enough research points...")
 	return FALSE
 
-/obj/machinery/computer/rdconsole/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		obj_flags |= EMAGGED
-		locked = FALSE
-	return ..()
+/obj/machinery/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if (obj_flags & EMAGGED)
+		return
+	balloon_alert(user, "security protocols disabled")
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	obj_flags |= EMAGGED
+	locked = FALSE
+	return TRUE
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
 	. = ..()

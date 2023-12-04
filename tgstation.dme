@@ -5631,6 +5631,7 @@
 #include "monkestation\code\datums\components\throw_bounce.dm"
 #include "monkestation\code\datums\components\turf_healing.dm"
 #include "monkestation\code\datums\diseases\advance\symptoms\clockwork.dm"
+#include "monkestation\code\datums\elements\area_locked.dm"
 #include "monkestation\code\datums\keybinding\carbon.dm"
 #include "monkestation\code\datums\keybinding\living.dm"
 #include "monkestation\code\datums\quirks\negative_quirks.dm"

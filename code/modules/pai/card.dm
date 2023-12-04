@@ -47,7 +47,8 @@
 
 /obj/item/pai_card/emag_act(mob/user)
 	if(pai)
-		pai.handle_emag(user)
+		return pai.handle_emag(user)
+	return FALSE
 
 /obj/item/pai_card/emp_act(severity)
 	. = ..()

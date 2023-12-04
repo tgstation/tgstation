@@ -206,7 +206,9 @@ SUBSYSTEM_DEF(vote)
 		if(vote_initiator)
 			to_chat(vote_initiator, span_warning("Invalid voting choice."))
 		return FALSE
-
+		
+	if(!to_vote.player_startable)
+		return FALSE
 	// Vote can't be initiated in our circumstances? No vote
 	if(!to_vote.can_be_initiated(vote_initiator, unlimited_vote_power))
 		return FALSE
