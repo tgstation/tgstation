@@ -72526,10 +72526,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
-/obj/structure/sign/directions/vault{
-	dir = 1;
-	pixel_y = 30
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wdg" = (
@@ -77836,6 +77832,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/public/glass,
+/obj/structure/sign/directions/vault{
+	dir = 1;
+	pixel_y = 30
+	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/left)
 "xTG" = (
