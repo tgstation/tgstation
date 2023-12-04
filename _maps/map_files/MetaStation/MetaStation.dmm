@@ -20010,13 +20010,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
-"hxq" = (
-/obj/machinery/chem_mass_spec,
-/obj/effect/turf_decal/tile/yellow/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/pharmacy)
 "hxt" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/light/small/directional/north,
@@ -94511,7 +94504,7 @@ oar
 keK
 lXA
 mVE
-hxq
+lXA
 nJn
 nqB
 mtm

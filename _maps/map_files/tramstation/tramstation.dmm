@@ -30343,7 +30343,6 @@
 /turf/open/openspace,
 /area/station/asteroid)
 "iLD" = (
-/obj/machinery/chem_mass_spec,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)

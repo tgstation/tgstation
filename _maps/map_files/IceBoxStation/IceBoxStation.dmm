@@ -57774,7 +57774,6 @@
 /turf/closed/wall,
 /area/station/commons/storage/art)
 "sAT" = (
-/obj/machinery/chem_mass_spec,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},

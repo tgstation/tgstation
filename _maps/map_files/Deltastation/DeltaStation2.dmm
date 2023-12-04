@@ -62429,7 +62429,6 @@
 	name = "Pharmacy Shutters";
 	pixel_y = 40
 	},
-/obj/machinery/chem_mass_spec,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
