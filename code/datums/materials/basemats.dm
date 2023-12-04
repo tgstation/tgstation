@@ -213,6 +213,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#ffff00"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
+	item_sound_override = 'sound/items/bikehorn.ogg'
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
 	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
