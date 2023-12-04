@@ -464,7 +464,6 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	desc = "Causes the infected to experience engineering-related hallucinations."
 	stage = 3
 	badness = EFFECT_DANGER_ANNOYING
-	restricted = 2
 
 /datum/symptom/mommi_hallucination/activate(mob/living/carbon/mob)
 	if(prob(50))
