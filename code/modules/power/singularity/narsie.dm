@@ -5,6 +5,8 @@
 #define NARSIE_MESMERIZE_EFFECT 60
 #define NARSIE_SINGULARITY_SIZE 12
 
+#define ADMIN_WARNING_MESSAGE "Invoking this will begin the Nar'Sie roundender. Assume that this WILL end the round in a few minutes. Are you sure?"
+
 /// Nar'Sie, the God of the blood cultists
 /obj/narsie
 	name = "Nar'Sie"
@@ -66,7 +68,14 @@
 
 /// This proc sets up all of Nar'Sie's abilities, stats, and begins her round-ending capabilities. She does not do anything unless this proc is invoked.
 /// This is only meant to be invoked after this instance is initialized in specific pro-sumer procs, as it WILL derail the entire round.
+/// Pass in the user that invoked this proc ONLY if it was called via View Variables, if this is invoked through normal gameplay please do pass in null.
 /obj/narsie/proc/start_ending_the_round()
+			return
+		potential_user = usr
+
+	if(!isnull(potential_user))
+		log_admin("[key_name(potential_user)] has triggered the Nar'Sie roundender.")
+
 	GLOB.cult_narsie = src
 	SSpoints_of_interest.make_point_of_interest(src)
 
@@ -135,10 +144,11 @@
 	if(isnull(usr) || !href_list[VV_HK_BEGIN_NARSIE_ROUNDEND] || !check_rights(R_FUN, TRUE))
 		return
 
-	if(tgui_alert(usr, "Invoking this will begin the Nar'Sie roundender. Assume that this WILL end the round in a few minutes. Are you sure?", "Begin Nar'Sie Roundender", list("I'm Sure", "Abort")) != "I'm Sure")
+	if(tgui_alert(usr, ADMIN_WARNING_MESSAGE, "Begin Nar'Sie Roundender", list("I'm Sure", "Abort")) != "I'm Sure")
 		return
 
-	start_ending_the_round()
+	log_admin("[key_name(usr)] has triggered the Nar'Sie roundender.")
+	start_ending_the_round(usr)
 
 /obj/narsie/attack_ghost(mob/user)
 	makeNewConstruct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
