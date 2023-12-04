@@ -36,9 +36,32 @@
 	var/souls = 0
 	var/resolved = FALSE
 
-/obj/narsie/Initialize(mapload)
-	. = ..()
+/obj/narsie/Destroy()
+	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
+	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
 
+	var/list/all_cults = list()
+
+	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
+		if (!cultist.owner)
+			continue
+		all_cults |= cultist.cult_team
+
+	for(var/_cult_team in all_cults)
+		var/datum/team/cult/cult_team = _cult_team
+		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
+		if (summon_objective)
+			summon_objective.summoned = FALSE
+			summon_objective.killed = TRUE
+
+	if (GLOB.cult_narsie == src)
+		GLOB.cult_narsie = null
+
+	return ..()
+
+/// This proc sets up all of Nar'Sie's abilities, stats, and begins her round-ending capabilities. She does not do anything unless this proc is invoked.
+/// This is only meant to be invoked after this instance is initialized in specific pro-sumer procs, as it WILL derail the entire round.
+/obj/narsie/proc/start_ending_the_round()
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	singularity = WEAKREF(AddComponent(
@@ -94,29 +117,6 @@
 
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
-
-/obj/narsie/Destroy()
-	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
-	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
-
-	var/list/all_cults = list()
-
-	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
-		if (!cultist.owner)
-			continue
-		all_cults |= cultist.cult_team
-
-	for(var/_cult_team in all_cults)
-		var/datum/team/cult/cult_team = _cult_team
-		var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives
-		if (summon_objective)
-			summon_objective.summoned = FALSE
-			summon_objective.killed = TRUE
-
-	if (GLOB.cult_narsie == src)
-		GLOB.cult_narsie = null
-
-	return ..()
 
 /obj/narsie/attack_ghost(mob/user)
 	makeNewConstruct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
