@@ -542,7 +542,7 @@
 	pixel_x = 6
 	},
 /mob/living/basic/bot/cleanbot/autopatrol{
-	bot_mode_flags = 12;
+	bot_access_flags = 12;
 	name = "Ramboo";
 	pixel_x = -2;
 	pixel_y = 5;
