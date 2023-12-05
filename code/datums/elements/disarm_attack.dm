@@ -9,6 +9,9 @@
 	RegisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY, PROC_REF(secondary_attack))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
+/datum/element/disarm_attack/Detach(datum/source)
+	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
+
 /datum/element/disarm_attack/proc/secondary_attack(obj/item/source, mob/living/victim, mob/living/user, params)
 	SIGNAL_HANDLER
 	if(!user.can_disarm(victim) || !can_disarm_attack(source, victim, user))

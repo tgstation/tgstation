@@ -61,21 +61,17 @@
 		if(0 to 25)
 			. += span_warning("It's falling apart!")
 
-/obj/item/shield/proc/shatter(mob/living/carbon/human/owner)
-	playsound(owner, shield_break_sound, 50)
-	new shield_break_leftover(get_turf(src))
-
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
 		return TRUE
-	if (atom_integrity <= damage)
-		var/turf/owner_turf = get_turf(owner)
-		owner_turf.visible_message(span_warning("[hitby] destroys [src]!"))
-		shatter(owner)
-		qdel(src)
-		return FALSE
-	take_damage(damage)
-	return TRUE
+	take_damage(damage, damage_type, attack_type)
+
+/obj/item/shield/atom_destruction(damage_flag)
+	playsound(src, shield_break_sound, 50)
+	new shield_break_leftover(get_turf(src))
+	if(isliving(loc))
+		loc.balloon_alert(loc, "shield broken!")
+	return ..()
 
 /obj/item/shield/buckler
 	name = "wooden buckler"
@@ -106,8 +102,8 @@
 
 /datum/armor/item_shield/riot
 	melee = 80
-	bullet = 20
-	laser = 20
+	bullet = 15
+	laser = 15
 
 /obj/item/shield/riot
 	name = "riot shield"
