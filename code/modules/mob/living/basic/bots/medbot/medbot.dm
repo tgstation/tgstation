@@ -10,6 +10,7 @@
 	anchored = FALSE
 	health = 20
 	maxHealth = 20
+	speed = 2
 	pass_flags = PASSMOB | PASSFLAPS
 	status_flags = (CANPUSH | CANSTUN)
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
