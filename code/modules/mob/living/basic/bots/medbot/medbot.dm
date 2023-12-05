@@ -298,12 +298,15 @@
 	if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
+	var/modified_heal_amount = heal_amount
+	if(damage_type_healer == BRUTE && medkit_type == /obj/item/storage/medkit/brute) //Re-add specialized brute bonus for brute medkits
+		modified_heal_amount *= 1.1
 	if(bot_access_flags & BOT_COVER_EMAGGED)
 		patient.reagents?.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 	else if(damage_type_healer == HEAL_ALL_DAMAGE)
-		patient.heal_overall_damage(heal_amount)
+		patient.heal_ordered_damage(amount = modified_heal_amount, damagetype = list(BRUTE, BURN, TOX, OXY))
 	else
-		patient.heal_damage_type(heal_amount = heal_amount, damagetype = damage_type_healer)
+		patient.heal_damage_type(heal_amount = modified_heal_amount, damagetype = damage_type_healer)
 	update_bot_mode(new_mode = BOT_IDLE)
 
 /mob/living/basic/bot/medbot/autopatrol
