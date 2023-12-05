@@ -179,6 +179,7 @@
 
 	if(istype(arrived, /obj/item/knife) && isnull(weapon))
 		weapon = arrived
+		update_appearance()
 
 /mob/living/basic/bot/cleanbot/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -188,7 +189,7 @@
 		weapon = null
 	else if(gone == our_mop)
 		our_mop = null
-	update_appearance(UPDATE_ICON)
+	update_appearance()
 
 /mob/living/basic/bot/cleanbot/Destroy()
 	QDEL_NULL(build_bucket)
@@ -220,7 +221,6 @@
 	balloon_alert(user, "attached!")
 	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		weapon.force = weapon.force / 2
-	add_overlay(image(icon = weapon.lefthand_file, icon_state = weapon.inhand_icon_state))
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
@@ -230,11 +230,14 @@
 /mob/living/basic/bot/cleanbot/proc/update_title(new_job_title)
 	if(isnull(job_titles[new_job_title]) || (new_job_title in stolen_valor))
 		return
+
 	stolen_valor += new_job_title
 	if(!comissioned && (new_job_title in officers_titles))
 		comissioned = TRUE
+
 	var/name_to_add = job_titles[new_job_title]
 	name = (new_job_title in suffix_job_titles) ? "[name] " + name_to_add : name_to_add + " [name]"
+
 	if(length(stolen_valor) == length(job_titles))
 		ascended = TRUE
 
@@ -298,6 +301,13 @@
 		weapon.force = initial(weapon.force)
 		weapon.forceMove(drop_loc)
 	return ..()
+
+/mob/living/basic/bot/cleanbot/update_overlays()
+	. = ..()
+	if(isnull(weapon))
+		return
+	var/image/knife_overlay = image(icon = weapon.lefthand_file,icon_state = weapon.inhand_icon_state)
+	. += knife_overlay
 
 // Variables sent to TGUI
 /mob/living/basic/bot/cleanbot/ui_data(mob/user)
