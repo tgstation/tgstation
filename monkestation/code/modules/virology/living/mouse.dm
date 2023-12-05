@@ -1,5 +1,5 @@
 /mob/living/basic/mouse
-	var/disease_chance = 5
+	var/disease_chance = 50
 
 /mob/living/basic/mouse/Initialize(mapload, tame, new_body_color)
 	. = ..()
@@ -24,7 +24,7 @@
 		var/datum/disease/advanced/disease = new virus_choice
 		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
 		diseases = list()
-		diseases |= disease
+		diseases += disease
 		disease.after_add()
 		src.med_hud_set_status()
 

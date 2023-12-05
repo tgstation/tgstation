@@ -206,6 +206,14 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 
 /datum/symptom/pthroat/activate(mob/living/carbon/mob)
 	//
+	if(ismouse(mob))
+		mouse.icon_state = "mouse_clown"
+		mouse.icon_living = "mouse_clown"
+		mouse.icon_dead = "mouse_clown_dead"
+		mouse.held_state = "mouse_clown"
+
+	if(!ishuman)
+		return
 	var/obj/item/clothing/mask/gas/clown_hat/virus/virusclown_hat = new /obj/item/clothing/mask/gas/clown_hat/virus
 	if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/gas/clown_hat/virus))
 		mob.dropItemToGround(mob.wear_mask, TRUE)
@@ -263,6 +271,11 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	badness = EFFECT_DANGER_HINDRANCE
 
 /datum/symptom/horsethroat/activate(mob/living/carbon/mob)
+	if(ismouse(mob))
+		mouse.icon_state = "mouse_horse"
+		mouse.icon_living = "mouse_horse"
+		mouse.icon_dead = "mouse_horse_dead"
+		mouse.held_state = "mouse_horse"
 
 	if(!ishuman(mob))
 		return

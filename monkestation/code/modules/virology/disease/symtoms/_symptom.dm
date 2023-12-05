@@ -43,7 +43,7 @@
 		return 1
 	return 0
 
-/datum/symptom/proc/run_effect(mob/living/mob)
+/datum/symptom/proc/run_effect(mob/living/carbon/mob)
 	if(count < 1)
 		first_activate(mob)
 	activate(mob)
