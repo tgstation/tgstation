@@ -109,6 +109,8 @@
 	var/datum/techweb/linked_techweb
 	///our tipper
 	var/datum/weakref/tipper
+	///original description
+	var/original_desc
 
 /mob/living/basic/bot/medbot/proc/set_speech_keys()
 	if(isnull(ai_controller))
@@ -137,6 +139,7 @@
 	var/static/list/hat_offsets = list(4,-9)
 	AddElement(/datum/element/hat_wearer, offsets = hat_offsets)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	original_desc = desc
 
 
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
@@ -262,7 +265,18 @@
 /mob/living/basic/bot/medbot/proc/after_tip_over(mob/user)
 	medical_mode_flags |= MEDBOT_TIPPED_MODE
 	tipper = WEAKREF(user)
+	var/tipper_name = user.name
+	var/list/panic_state = list(
+		"It appears to be tipped over, and is quietly waiting for someone to set it right.",
+		"It is tipped over and requesting help.",
+		"They are tipped over and appear visibly distressed.",
+		span_warning("They are tipped over and visibly panicking!"),
+		span_warning("<b>They are freaking out from being tipped over!</b>")
+	)
+	desc = "[original_desc] [pick(panic_state)]"
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
+	if(prob(10))
+		speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
 
 /*
  * Proc used in a callback for after this medibot is righted, either by themselves or by a mob, by the tippable component.
@@ -273,6 +287,7 @@
 	var/mob/tipper_mob = isnull(user) ? null : tipper?.resolve()
 	tipper = null
 	medical_mode_flags &= ~MEDBOT_TIPPED_MODE
+	desc = original_desc
 	if(isnull(tipper_mob))
 		return
 	if(tipper_mob == user)
@@ -298,8 +313,9 @@
 		if((damage_type_healer == HEAL_ALL_DAMAGE && patient.get_total_damage() <= heal_threshold) || (!(damage_type_healer == HEAL_ALL_DAMAGE) && patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold))
 			to_chat(src, "[patient] is healthy! Your programming prevents you from tending the wounds of anyone with less than [heal_threshold + 1] [damage_type_healer == HEAL_ALL_DAMAGE ? "total" : damage_type_healer] damage.")
 			return
-	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
 
+	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
+	patient.visible_message("[src] is trying to tend the wounds of [patient]", span_userdanger("[src] is trying to tend your wounds!"))
 	if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
