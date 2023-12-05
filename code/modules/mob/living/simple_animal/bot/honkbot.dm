@@ -2,7 +2,7 @@
 	name = "\improper Honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
 	icon_state = "honkbot"
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	combat_mode = FALSE
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
