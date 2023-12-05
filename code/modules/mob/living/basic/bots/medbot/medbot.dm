@@ -304,7 +304,7 @@
 	if(bot_access_flags & BOT_COVER_EMAGGED)
 		patient.reagents?.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 	else if(damage_type_healer == HEAL_ALL_DAMAGE)
-		patient.heal_ordered_damage(amount = modified_heal_amount, damagetype = list(BRUTE, BURN, TOX, OXY))
+		patient.heal_ordered_damage(amount = modified_heal_amount, damage_types = list(BRUTE, BURN, TOX, OXY))
 	else
 		patient.heal_damage_type(heal_amount = modified_heal_amount, damagetype = damage_type_healer)
 	update_bot_mode(new_mode = BOT_IDLE)
