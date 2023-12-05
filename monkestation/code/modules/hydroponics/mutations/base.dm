@@ -368,38 +368,53 @@
 	mutates_from = list(/obj/item/seeds/greenbean)
 	created_product = /obj/item/food/grown/jumpingbeans
 	created_seed = /obj/item/seeds/greenbean/jump
+	required_potency = list(70, INFINITY)
 
 /datum/hydroponics/plant_mutation/melon_barrel
 	mutates_from = list(/obj/item/seeds/watermelon)
 	created_product = /obj/item/food/grown/barrelmelon
 	created_seed = /obj/item/seeds/watermelon/barrel
+	required_endurance = list(60, INFINITY)
+	required_lifespan = list(40, INFINITY)
 
 /datum/hydroponics/plant_mutation/rose_carbon
 	mutates_from = list(/obj/item/seeds/rose)
 	created_product = /obj/item/food/grown/carbon_rose
 	created_seed = /obj/item/seeds/carbon_rose
+	required_lifespan = list(30, 50)
 
 /datum/hydroponics/plant_mutation/peas_laughin
 	mutates_from = list(/obj/item/seeds/peas)
 	created_product = /obj/item/food/grown/laugh
 	created_seed = /obj/item/seeds/peas/laugh
+	required_endurance = list(-INFINITY, 25)
+	required_potency = list(40, 50)
 
 /datum/hydroponics/plant_mutation/peas_world
 	mutates_from = list(/obj/item/seeds/peas/laugh)
 	created_product = /obj/item/food/grown/peace
 	created_seed = /obj/item/seeds/peas/laugh/peace
+	required_production = list(100, INFINITY)
+	required_yield = list(100, INFINITY)
 
 /datum/hydroponics/plant_mutation/plumb
 	mutates_from = list(/obj/item/seeds/plum)
 	created_product = /obj/item/food/grown/plum/plumb
 	created_seed = /obj/item/seeds/plum/plumb
+	required_endurance = list(60, INFINITY)
 
 /datum/hydroponics/plant_mutation/star_cactus
 	mutates_from = list(/obj/item/seeds/lavaland/cactus)
 	created_product = /obj/item/food/grown/star_cactus
 	created_seed = /obj/item/seeds/star_cactus
+	required_endurance = list(-INFINITY, 20)
+	required_yield = list(-INFINITY, 20)
 
 /datum/hydroponics/plant_mutation/kudzu_vines
 	mutates_from = list(/obj/item/seeds/shrub)
 	created_product = /obj/item/food/grown/kudzupod
 	created_seed = /obj/item/seeds/kudzu
+	required_production = list(90, 100)
+	required_endurance = list(60, 70)
+	required_yield = list(5, 10)
+	required_lifespan = list(-INFINITY, 20)
