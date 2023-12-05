@@ -793,7 +793,9 @@ SUBSYSTEM_DEF(gamemode)
 		else
 			pick_from[storyboy.name] = storyboy.weight
 
-	while(length(pick_from) > DEFAULT_STORYTELLER_VOTE_OPTIONS)
+	var/added_storytellers = 0
+	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
+		added_storytellers++
 		var/picked_storyteller = pick_weight(pick_from)
 		final_choices[picked_storyteller] = 0
 		pick_from -= picked_storyteller
