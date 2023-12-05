@@ -21,6 +21,7 @@
 /datum/immune_system/Destroy(force, ...)
 	. = ..()
 	host = null
+	QDEL_LIST(antibodies)
 
 /datum/immune_system/New(mob/living/carbon/source)
 	..()
