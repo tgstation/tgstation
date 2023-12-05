@@ -207,7 +207,7 @@
 
 /mob/living/basic/bot/cleanbot/update_icon_state()
 	. = ..()
-	icon_state = (mode == BOT_CLEANING) ? "[base_icon]-c" : "[base_icon][bot_mode_flags & BOT_MODE_ON]"
+	icon_state = (mode == BOT_CLEANING) ? "[base_icon]-c" : "[base_icon][!!(bot_mode_flags & BOT_MODE_ON)]"
 
 /mob/living/basic/bot/cleanbot/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -306,7 +306,7 @@
 	. = ..()
 	if(isnull(weapon))
 		return
-	var/image/knife_overlay = image(icon = weapon.lefthand_file,icon_state = weapon.inhand_icon_state)
+	var/image/knife_overlay = image(icon = weapon.lefthand_file, icon_state = weapon.inhand_icon_state)
 	. += knife_overlay
 
 // Variables sent to TGUI

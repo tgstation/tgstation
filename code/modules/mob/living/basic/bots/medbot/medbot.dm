@@ -162,10 +162,11 @@
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		icon_state = "[base_icon_state]a"
 		return
+	var/stationary_mode = !!(medical_mode_flags & MEDBOT_STATIONARY_MODE)
 	if(mode == BOT_HEALING)
-		icon_state = "[base_icon_state]s[medical_mode_flags & MEDBOT_STATIONARY_MODE]"
+		icon_state = "[base_icon_state]s[stationary_mode]"
 		return
-	icon_state = "[base_icon_state][medical_mode_flags & MEDBOT_STATIONARY_MODE ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
+	icon_state = "[base_icon_state][stationary_mode ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
 
 /mob/living/basic/bot/medbot/update_overlays()
 	. = ..()
