@@ -465,8 +465,6 @@ Moving interrupts
 /obj/structure/carving_block/Destroy()
 	current_target = null
 	finished_statue_icon = null
-	//remove_filter("partial_uncover")
-	//target_appearance_with_filters = null
 	return ..()
 
 /obj/structure/carving_block/proc/set_target(atom/movable/target, mob/living/user)
@@ -479,7 +477,6 @@ Moving interrupts
 /obj/structure/carving_block/proc/reset_target()
 	current_target = null
 	current_preset_type = null
-	//target_appearance_with_filters = null
 
 /obj/structure/carving_block/update_overlays()
 	. = ..()
@@ -508,9 +505,6 @@ Moving interrupts
 		var/obj/structure/statue/custom/new_statue = new(get_turf(src), finished_statue_icon)
 		new_statue.dir = dir
 		new_statue.set_custom_materials(custom_materials)
-
-		//fcopy(new_statue.icon, "statue_test_hur_dur2.dmi")
-
 		// so we don't end up with "statue of statue of statue of statue of statue of chair"
 		var/is_statue_original = istype(current_target, /obj/structure/statue/custom)
 		new_statue.name = is_statue_original ? current_target.name : "statue of [current_target.name]"
@@ -539,7 +533,6 @@ Moving interrupts
 		if(0)
 			//delete uncovered and reset filters
 			remove_filter("partial_uncover")
-			//finished_statue_icon = null
 		else
 			var/mask_offset = min(world.icon_size, round(completion * world.icon_size))
 			remove_filter("partial_uncover")
@@ -576,19 +569,6 @@ Moving interrupts
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-
-/obj/structure/statue/custom/Initialize(mapload, icon/statue_icon)
-	. = ..()
-	if(!statue_icon)
-		var/obj/replacement_statue = pick(/obj/structure/statue/bronze/marx, /obj/item/statuebust, /obj/item/statuebust/hippocratic)
-		new replacement_statue(mapload)
-		return INITIALIZE_HINT_QDEL
-
-	icon = statue_icon
-
-/obj/structure/statue/custom/Destroy()
-	//content_ma = null
-	return ..()
 
 // We need this for the silver tongue /datum/action/cooldown/turn_to_statue ability
 // Need to update the icon every time they use the ability

@@ -4,14 +4,10 @@
 #define ENGRAVING_SAVE_FILE "data/engravings/[SSmapping.config.map_name]_engravings.json"
 ///name of the file that has all the prisoner tattoos
 #define PRISONER_TATTOO_SAVE_FILE "data/engravings/prisoner_tattoos.json"
-///name of the file that has all the saved statues
-#define STATUE_SAVE_FILE "data/engravings/statues.json"
 ///Current version of the engraving persistence json
 #define ENGRAVING_PERSISTENCE_VERSION 0
 ///Current version of the tattoo persistence json
 #define TATTOO_PERSISTENCE_VERSION 0
-///Current version of the statue persistence json
-#define STATUE_PERSISTENCE_VERSION 0
 
 ///how many engravings will be loaded max with persistence
 #define MIN_PERSISTENT_ENGRAVINGS 15

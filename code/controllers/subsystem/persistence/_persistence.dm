@@ -8,8 +8,6 @@ SUBSYSTEM_DEF(persistence)
 
 	///instantiated wall engraving components
 	var/list/wall_engravings = list()
-	///statue engravings for custom statues
-	var/list/statue_engravings = list()
 	///all saved persistent engravings loaded from JSON
 	var/list/saved_engravings = list()
 	///tattoo stories that we're saving.
@@ -32,7 +30,6 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
 	load_wall_engravings()
-	load_statues()
 	load_prisoner_tattoos()
 	load_trophies()
 	load_recent_maps()
@@ -48,7 +45,6 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/collect_data()
 	save_wall_engravings()
 	save_prisoner_tattoos()
-	collect_statues()
 	collect_trophies()
 	collect_maps()
 	save_photo_persistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
