@@ -51,7 +51,7 @@
 
 /obj/item/mcobject/flusher/proc/expel(obj/structure/disposalholder/H)
 	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
-
+	flick("comp_flush1", src)
 	pipe_eject(H)
 
 	H.vent_gas(loc)
