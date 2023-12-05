@@ -1,7 +1,6 @@
 GLOBAL_LIST_INIT(infected_items, list())
 
 /obj/item
-	var/image/pathogen
 	var/list/viruses = list()
 
 

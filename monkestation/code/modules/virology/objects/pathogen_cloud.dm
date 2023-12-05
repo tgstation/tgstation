@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	var/list/viruses = list()
 	var/lifetime = 10 SECONDS//how long until we naturally disappear, humans breath about every 8 seconds, so it has to survive at least this long to have a chance to infect
 	var/turf/target = null//when created, we'll slowly move toward this turf
-	var/image/pathogen
 	var/core = TRUE
 	var/modified = FALSE
 	var/moving = TRUE
