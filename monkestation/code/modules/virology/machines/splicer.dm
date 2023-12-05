@@ -169,12 +169,12 @@
 		var/image/splicer_glass = image(icon,"splicer_glass")
 		splicer_glass.plane = LIGHTING_PLANE
 		splicer_glass.blend_mode = BLEND_ADD
-		dd_overlay(splicer_glass)
+		add_overlay(splicer_glass)
 
 	if (memorybank)
 		var/image/buffer_light = image(icon,"splicer_buffer")
 		buffer_light.plane = LIGHTING_PLANE
-		dd_overlay(buffer_light)
+		add_overlay(buffer_light)
 
 /obj/machinery/computer/diseasesplicer/proc/buffer2dish()
 	if(!memorybank || !dish || !dish.contained_virus)
