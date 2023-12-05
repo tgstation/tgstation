@@ -154,3 +154,22 @@
   - rscadd: Added new roast dinners, able to be cut into smaller portions hopefully
       in time for the Christmas season.
   - rscadd: Added sprites for bone spears to match the other bone items.
+2023-12-05:
+  13spacemen:
+  - balance: Deleting and reprogramming pipes/devices with RPD is now INSTANT!
+  Autisem:
+  - bugfix: Rebirthing from headslug properly reapplys void adaptation
+  distributivgesetz:
+  - rscdel: Removed clone damage.
+  - rscdel: Removed the decloner gun.
+  - rscdel: "Removed clonexadone.\n/\U0001F191\n<!-- Both :cl:'s are required for\
+      \ the changelog to work! You can put your name to the right of the first :cl:\
+      \ if you want to overwrite your GitHub username as author ingame. -->\n<!--\
+      \ You can use multiple of the same prefix (they're only used for the icon ingame)\
+      \ and delete the unneeded ones. Despite some of the tags, changelogs should\
+      \ generally represent how a player might be affected by the changes rather than\
+      \ a summary of the PR's contents. -->"
+  san7890:
+  - bugfix: 'Janitors rejoice (or lament): Floors should now be dirty shift-start.
+
+      / \:cl:'

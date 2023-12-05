@@ -1,7 +1,7 @@
 /// Plain, but durable and strong. Can destroy walls.
 /mob/living/basic/guardian/standard
 	guardian_type = GUARDIAN_STANDARD
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, STAMINA = 0, OXY = 0.5)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	melee_attack_cooldown = 0.6 SECONDS

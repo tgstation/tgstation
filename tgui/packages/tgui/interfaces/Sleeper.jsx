@@ -74,11 +74,6 @@ export const Sleeper = (props) => {
                   </LabeledList.Item>
                 ))}
                 <LabeledList.Item
-                  label="Cells"
-                  color={occupant.cloneLoss ? 'bad' : 'good'}>
-                  {occupant.cloneLoss ? 'Damaged' : 'Healthy'}
-                </LabeledList.Item>
-                <LabeledList.Item
                   label="Brain"
                   color={occupant.brainLoss ? 'bad' : 'good'}>
                   {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
