@@ -577,6 +577,14 @@ Moving interrupts
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
+/obj/structure/statue/custom/Initialize(mapload, icon/statue_icon)
+	. = ..()
+	if(mapload && !statue_icon)
+		stack_trace("[src] spawned without a statue icon.")
+		return INITIALIZE_HINT_QDEL
+
+	icon = statue_icon
+
 // We need this for the silver tongue /datum/action/cooldown/turn_to_statue ability
 // Need to update the icon every time they use the ability
 /obj/structure/statue/custom/proc/set_visuals(atom/movable/target, animate_statue=FALSE)
