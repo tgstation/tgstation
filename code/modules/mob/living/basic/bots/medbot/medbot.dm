@@ -324,7 +324,7 @@
 		update_bot_mode(new_mode = BOT_IDLE)
 	//If player-controlled, call them to heal again here for continous player healing
 	else if(!isnull(client))
-		addtimer(CALLBACK(src, PROC_REF(melee_attack), patient), 0.25 SECONDS)
+		melee_attack(patient)
 
 
 /mob/living/basic/bot/medbot/autopatrol
