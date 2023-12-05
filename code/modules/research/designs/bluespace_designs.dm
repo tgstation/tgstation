@@ -87,3 +87,15 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/bluespace_chisel
+	name = "Bluespace Chisel"
+	desc = "A chisel that allows the creation of animated statues."
+	id = "bluespace_chisel"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/bluespace=SMALL_MATERIAL_AMOUNT)
+	build_path = /obj/item/chisel/bluespace
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

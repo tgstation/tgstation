@@ -795,6 +795,7 @@
 		"phasic_scanning",
 		"plumbing_receiver",
 		"roastingstick",
+		"bluespace_chisel",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = 3500)

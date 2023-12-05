@@ -355,11 +355,12 @@ Moving interrupts
 	//How long whole process takes
 	var/sculpting_time = material.sculpting_duration
 	var/sculpting_speed_modifier = 1
+	var/is_bluespace_chisel = has_material_type(/datum/material/bluespace)
 
 	if(user.mind)
 		sculpting_speed_modifier = user.mind.get_skill_modifier(/datum/skill/sculpting, SKILL_SPEED_MODIFIER)
 
-	if(has_material_type(/datum/material/bluespace)) // bluespace chisels are faster
+	if(is_bluespace_chisel) // bluespace chisels are faster
 		sculpting_speed_modifier -= 0.20
 
 	sculpting_time *= sculpting_speed_modifier
@@ -379,7 +380,7 @@ Moving interrupts
 				playsound(src, sculpt_sound, 50, TRUE)
 				sound_delay = 0
 			remaining_time -= sculpting_period
-			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time)
+			prepared_block.set_completion((sculpting_time - remaining_time)/sculpting_time, is_bluespace_chisel)
 			total_progress_bar.update(sculpting_time - remaining_time)
 		else
 			interrupted = TRUE
@@ -437,6 +438,12 @@ Moving interrupts
 		var/image/chosen_looks = choices[choice]
 		prepared_block.current_target = chosen_looks.appearance
 		user.balloon_alert(user, "abstract statue selected")
+
+/obj/item/chisel/bluespace
+	name = "bluespace chisel"
+	desc = "Breaking and making art since 4000 BC. This one uses advanced technology to allow the creation of lifelike moving statues."
+	icon_state = "bluespace_chisel"
+	custom_materials = list(/datum/material/bluespace=SMALL_MATERIAL_AMOUNT*0.75)
 
 /obj/structure/carving_block
 	name = "block"
@@ -511,7 +518,7 @@ Moving interrupts
 		new_statue.desc = is_statue_original ? current_target.desc : "A carved statue depicting [current_target.name]."
 		qdel(src)
 
-/obj/structure/carving_block/proc/set_completion(value)
+/obj/structure/carving_block/proc/set_completion(value, animate_statue=FALSE)
 	if(!current_target)
 		return
 
@@ -519,7 +526,7 @@ Moving interrupts
 		finished_statue_icon = icon('icons/blanks/32x32.dmi', "nothing")
 
 		for(var/direction in GLOB.cardinals)
-			var/icon/flat_icon = getFlatIcon(current_target, defdir=direction, no_anim=TRUE)
+			var/icon/flat_icon = getFlatIcon(current_target, defdir=direction, no_anim=!animate_statue)
 			finished_statue_icon.Insert(flat_icon, dir=direction)
 			finished_statue_icon.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
 
@@ -572,11 +579,11 @@ Moving interrupts
 
 // We need this for the silver tongue /datum/action/cooldown/turn_to_statue ability
 // Need to update the icon every time they use the ability
-/obj/structure/statue/custom/proc/set_visuals(atom/movable/target)
+/obj/structure/statue/custom/proc/set_visuals(atom/movable/target, animate_statue=FALSE)
 	var/icon/statue_icon = icon('icons/blanks/32x32.dmi', "nothing")
 
 	for(var/direction in GLOB.cardinals)
-		var/icon/flat_icon = getFlatIcon(target, defdir=direction, no_anim = TRUE)
+		var/icon/flat_icon = getFlatIcon(target, defdir=direction, no_anim=!animate_statue)
 		statue_icon.Insert(flat_icon, dir=direction)
 		statue_icon.Blend(icon('icons/obj/art/statue.dmi', "base"), ICON_OVERLAY) // add the base statue as an overlay
 
