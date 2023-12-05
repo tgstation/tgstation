@@ -72,8 +72,15 @@
 		return
 
 	flashed.mind.add_antag_datum(/datum/antagonist/brother, team)
+	source.log_message("converted [key_name(flashed)] to blood brother", LOG_ATTACK)
+	flashed.log_message("was converted by [key_name(source)] to blood brother", LOG_ATTACK)
+	log_game("[key_name(flashed)] converted [key_name(source)] to blood brother", list(
+		"flashed" = flashed,
+		"victim" = source,
+	))
 
 	flashed.balloon_alert(source, "converted")
+	to_chat(source, span_notice("[span_bold("[flashed]")] has been converted to aide you as your Brother!"))
 	flash.burn_out()
 	flashed.mind.add_memory( \
 		/datum/memory/recruited_by_blood_brother, \
