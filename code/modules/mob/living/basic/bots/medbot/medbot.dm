@@ -198,11 +198,11 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/basic/bot/medbot/ui_act(action, params)
+/mob/living/basic/bot/medbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !usr.has_unlimited_silicon_privilege)
+	if(. || !isliving(ui.user) || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !(ui.user.has_unlimited_silicon_privilege))
 		return
-
+	var/mob/living/our_user = ui.user
 	switch(action)
 		if("heal_threshold")
 			var/adjust_num = round(text2num(params["threshold"]))
@@ -219,7 +219,7 @@
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 		if("sync_tech")
 			if(!linked_techweb)
-				to_chat(usr, span_notice("No research techweb connected."))
+				to_chat(our_user, span_notice("No research techweb connected."))
 				return
 			var/oldheal_amount = heal_amount
 			var/tech_boosters
@@ -245,6 +245,12 @@
 	flick("medibot_spark", src)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
+
+/mob/living/basic/bot/medbot/explode()
+	var/atom/our_loc = drop_location()
+	drop_part(medkit_type, our_loc)
+	drop_part(health_analyzer, our_loc)
+	return ..()
 
 /*
  * Proc used in a callback for before this medibot is tipped by the tippable component.

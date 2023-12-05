@@ -66,6 +66,12 @@
 		JOB_GENETICIST = "Gene B.S.",
 		JOB_LAWYER = "Esq.",
 	)
+	///which job titles should be placed after the name?
+	var/static/list/suffix_job_titles = list(
+		JOB_SCIENTIST,
+		JOB_ROBOTICIST,
+		JOB_GENETICIST,
+	)
 	///decals we can clean
 	var/static/list/cleanable_decals = typecacheof(list(
 		/obj/effect/decal/cleanable/ants,
@@ -188,9 +194,6 @@
 	QDEL_NULL(build_bucket)
 	QDEL_NULL(our_mop)
 	GLOB.janitor_devices -= src
-	if(weapon)
-		weapon.force = initial(weapon.force)
-		weapon.forceMove(drop_location())
 	return ..()
 
 /mob/living/basic/bot/cleanbot/examine(mob/user)
@@ -230,7 +233,8 @@
 	stolen_valor += new_job_title
 	if(!comissioned && (new_job_title in officers_titles))
 		comissioned = TRUE
-	name = job_titles[new_job_title] + " [name]"
+	var/name_to_add = job_titles[new_job_title]
+	name = (new_job_title in suffix_job_titles) ? "[name] " + name_to_add : name_to_add + " [name]"
 	if(length(stolen_valor) == length(job_titles))
 		ascended = TRUE
 
@@ -290,6 +294,9 @@
 	var/atom/drop_loc = drop_location()
 	build_bucket.forceMove(drop_loc)
 	new /obj/item/assembly/prox_sensor(drop_loc)
+	if(weapon)
+		weapon.force = initial(weapon.force)
+		weapon.forceMove(drop_loc)
 	return ..()
 
 // Variables sent to TGUI
