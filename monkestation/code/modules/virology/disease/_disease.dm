@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		return e
 
 /datum/disease/advanced/proc/randomize_spread()
-	spread = DISEASE_SPREAD_BLOOD	//without blood spread, the disease cannot be extracted or cured, we don't want that for regular diseases
+	spread_flags = DISEASE_SPREAD_BLOOD	//without blood spread, the disease cannot be extracted or cured, we don't want that for regular diseases
 	if (prob(5))			//5% chance of spreading through both contact and the air.
 		spread_flags |= DISEASE_SPREAD_CONTACT_SKIN
 		spread_flags |= DISEASE_SPREAD_AIRBORNE
@@ -520,7 +520,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if (spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
 		dat += "Fluid Contact"
 		check += DISEASE_SPREAD_CONTACT_FLUIDS
-		if(spread > check)
+		if(spread_flags > check)
 			dat += ", "
 	if (spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS)
 		dat += "Non Contagious"

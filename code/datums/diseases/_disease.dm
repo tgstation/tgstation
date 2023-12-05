@@ -108,11 +108,6 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
-	var/spread_range = 2
-
-	if(force_spread)
-		spread_range = force_spread
-
 	affected_mob.spread_airborne_diseases()
 	/*
 	var/turf/T = affected_mob.loc

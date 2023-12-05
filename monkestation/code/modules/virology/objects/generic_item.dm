@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 /obj/item/infect_disease(datum/disease/advanced/disease, forced = FALSE, notes = "", decay = TRUE)
 	if(!istype(disease))
 		return FALSE
-	if(!disease.spread)
+	if(!disease.spread_flags)
 		return FALSE
 	if(prob(disease.infectionchance) || forced)
 		var/datum/disease/advanced/D = disease.Copy()

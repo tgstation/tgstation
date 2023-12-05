@@ -6600,6 +6600,7 @@
 #include "monkestation\code\modules\virology\immune_systems\_immune_system.dm"
 #include "monkestation\code\modules\virology\items\disease_disk.dm"
 #include "monkestation\code\modules\virology\living\infection_procs.dm"
+#include "monkestation\code\modules\virology\living\mouse.dm"
 #include "monkestation\code\modules\virology\living\spread_disease.dm"
 #include "monkestation\code\modules\virology\living\sterile_procs.dm"
 #include "monkestation\code\modules\virology\machines\analyzer.dm"

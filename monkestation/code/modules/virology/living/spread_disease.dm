@@ -20,7 +20,7 @@
 /mob/living/carbon/infect_disease(datum/disease/advanced/disease, forced = FALSE, notes = "", decay = TRUE)
 	if(!istype(disease))
 		return FALSE
-	if(!disease.spread)
+	if(!disease.spread_flags)
 		return FALSE
 	for(var/datum/disease/advanced/D as anything in diseases)
 		if("[disease.uniqueID]-[disease.subID]" == "[D.uniqueID]-[D.subID]") // child ids are for pathogenic mutations and aren't accounted for as thats fucked.
