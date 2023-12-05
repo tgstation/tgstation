@@ -30,12 +30,8 @@ enum SCREENS {
   audit,
 }
 
-export const AccountingConsole = (props, context) => {
-  const [screenmode, setScreenmode] = useLocalState(
-    context,
-    'tab_main',
-    SCREENS.users
-  );
+export const AccountingConsole = (props) => {
+  const [screenmode, setScreenmode] = useLocalState('tab_main', SCREENS.users);
 
   return (
     <Window width={300} height={360}>
@@ -66,8 +62,8 @@ export const AccountingConsole = (props, context) => {
   );
 };
 
-const UsersScreen = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const UsersScreen = (props) => {
+  const { data } = useBackend<Data>();
   const { PlayerAccounts } = data;
 
   return (
@@ -93,8 +89,8 @@ const UsersScreen = (props, context) => {
   );
 };
 
-const AuditScreen = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const AuditScreen = (props) => {
+  const { data } = useBackend<Data>();
   const { AuditLog } = data;
 
   return (
@@ -110,8 +106,8 @@ const AuditScreen = (props, context) => {
 };
 
 /** The modal menu that contains the prompts to making new channels. */
-const MarketCrashing = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const MarketCrashing = (props) => {
+  const { data } = useBackend<Data>();
 
   const { Crashing } = data;
   if (!Crashing) {

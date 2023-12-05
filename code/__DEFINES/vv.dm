@@ -103,6 +103,8 @@
 #define VV_HK_ARMOR_MOD "mod_obj_armor"
 
 // /atom/movable
+#define VV_HK_OBSERVE_FOLLOW "observe_follow"
+#define VV_HK_GET_MOVABLE "get_movable"
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
 
 // /obj
@@ -138,7 +140,6 @@
 #define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
 
 // /mob/living/carbon
-#define VV_HK_MAKE_AI "aiify"
 #define VV_HK_MODIFY_BODYPART "mod_bodypart"
 #define VV_HK_MODIFY_ORGANS "organs_modify"
 #define VV_HK_MARTIAL_ART "give_martial_art"
@@ -152,6 +153,7 @@
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
 #define VV_HK_APPLY_DNA_INFUSION "apply_dna_infusion"
+#define VV_HK_TURN_INTO_MMI "turn_into_mmi"
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"

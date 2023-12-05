@@ -7,7 +7,7 @@
 	if(!isobserver(usr) && SSticker.HasRoundStarted())
 		message_admins("[key_name_admin(usr)] checked AI laws via the Law Panel.")
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Law Panel") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Law Panel")
 	var/datum/law_panel/tgui = new()
 	tgui.ui_interact(usr)
 

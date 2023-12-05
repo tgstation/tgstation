@@ -6,7 +6,7 @@
 	worn_icon_state = null
 	shaded_charge = TRUE
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
@@ -32,23 +32,6 @@
 	. = ..()
 	// We use the same overlay as the parent, so we can just let the component inherit the correct offsets here
 	AddComponent(/datum/component/seclite_attachable, overlay_x = 18, overlay_y = 11)
-
-/obj/item/gun/energy/decloner
-	name = "biological demolecularisor"
-	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
-	icon_state = "decloner"
-	ammo_type = list(/obj/item/ammo_casing/energy/declone)
-	ammo_x_offset = 1
-
-/obj/item/gun/energy/decloner/update_overlays()
-	. = ..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
-		. += "decloner_spin"
-
-/obj/item/gun/energy/decloner/unrestricted
-	pin = /obj/item/firing_pin
-	ammo_type = list(/obj/item/ammo_casing/energy/declone/weak)
 
 /obj/item/gun/energy/floragun
 	name = "floral somatoray"
@@ -100,7 +83,7 @@
 	icon_state = "plasmacutter"
 	inhand_icon_state = "plasmacutter"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	attack_verb_continuous = list("attacks", "slashes", "cuts", "slices")
 	attack_verb_simple = list("attack", "slash", "cut", "slice")
 	force = 12

@@ -589,7 +589,6 @@
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
 		if(RPED)
 			to_chat(user, span_warning("This unit is already equipped with a RPED module!"))
@@ -605,6 +604,38 @@
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R.model
 		if (RPED)
 			R.model.remove_module(RPED, TRUE)
+
+/obj/item/borg/upgrade/inducer
+	name = "engineering integrated power inducer"
+	desc = "An integrated inducer that can charge a device's internal cell from power provided by the cyborg."
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in R
+		if(inter_inducer)
+			return FALSE
+		inter_inducer = new(R.model)
+		R.model.basic_modules += inter_inducer
+		R.model.add_module(inter_inducer, FALSE, TRUE)
+		inter_inducer.cell = R.cell
+
+/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in R.model
+		if (inter_inducer)
+			R.model.remove_module(inter_inducer, TRUE)
+			inter_inducer.cell = null
+
+/obj/item/inducer/cyborg
+	name = "Internal inducer"
+	powertransfer = 1500
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "inducer-engi"
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"

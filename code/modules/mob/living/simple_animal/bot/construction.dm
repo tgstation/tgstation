@@ -287,14 +287,14 @@
 				if(!can_finish_build(W, user))
 					return
 				qdel(W)
-				var/mob/living/simple_animal/bot/medbot/medbot = new(drop_location(), skin)
+				var/mob/living/basic/bot/medbot/medbot = new(drop_location(), skin)
 				to_chat(user, span_notice("You complete the Medbot. Beep boop!"))
 				medbot.name = created_name
 				medbot.medkit_type = medkit_type
 				medbot.robot_arm = robot_arm
-				medbot.healthanalyzer = healthanalyzer
+				medbot.health_analyzer = healthanalyzer
 				var/obj/item/storage/medkit/medkit = medkit_type
-				medbot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+				medbot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 				qdel(src)
 
 

@@ -17,8 +17,8 @@ const textStyles = {
   },
 } as const;
 
-export const AntagInfoGlitch = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const AntagInfoGlitch = (props) => {
+  const { data } = useBackend<Data>();
   const { antag_name, objectives = [] } = data;
 
   return (
@@ -64,8 +64,8 @@ export const AntagInfoGlitch = (props, context) => {
   );
 };
 
-const SpecificInfo = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const SpecificInfo = (props) => {
+  const { data } = useBackend<Data>();
   const { antag_name } = data;
 
   switch (antag_name) {

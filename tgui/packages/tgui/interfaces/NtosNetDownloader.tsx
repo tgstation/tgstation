@@ -33,8 +33,8 @@ type ProgramData = {
   verifiedsource: BooleanLike;
 };
 
-export const NtosNetDownloader = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const NtosNetDownloader = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     disk_size,
     disk_used,
@@ -52,11 +52,10 @@ export const NtosNetDownloader = (props, context) => {
     scale(downloadcompletion, 0, downloadsize) * 100
   );
   const [selectedCategory, setSelectedCategory] = useLocalState(
-    context,
     'category',
     categories[0]
   );
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const search = createSearch<ProgramData>(
     searchItem,
     (program) => program.filedesc
@@ -160,9 +159,9 @@ export const NtosNetDownloader = (props, context) => {
   );
 };
 
-const Program = (props, context) => {
+const Program = (props) => {
   const { program } = props;
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>();
   const {
     disk_size,
     disk_used,
