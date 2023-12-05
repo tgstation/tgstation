@@ -82,7 +82,7 @@
 
 /mob/living/silicon/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
-	if(!weapon)
+	if(!weapon || stat != CONSCIOUS)
 		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING)
 
 /mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag)

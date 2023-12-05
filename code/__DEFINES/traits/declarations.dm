@@ -217,6 +217,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SHOVE_KNOCKDOWN_BLOCKED "shove_knockdown_blocked"
 /// Prevents shovies from staggering the mob (and dropping guns on a second try)
 #define TRAIT_SHOVE_NO_STAGGER "shove_no_stagger"
+/// Getting hit by thrown movables won't push you away
+#define TRAIT_NO_THROW_HITPUSH "no_throw_hitpush"
 ///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
 #define TRAIT_REVEAL_FISH "reveal_fish"
 

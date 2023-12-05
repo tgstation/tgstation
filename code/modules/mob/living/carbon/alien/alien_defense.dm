@@ -58,7 +58,7 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
-	if(!weapon)
+	if(!weapon || stat != CONSCIOUS)
 		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING|SHOVE_CAN_STAGGER)
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
