@@ -1,7 +1,7 @@
 /datum/storyteller/clown
 	name = "The Clown"
 	desc = "The clown creates only harmless events(citation needed), its all fun and games with this one!"
-	welcome_text = "You feel like the shift will be \"interesting\"."
+	welcome_text = "HONKHONKHONKHONKHONK!"
 	event_repetition_multiplier = 1 //can repeat things freely
 	point_gains_multipliers = list(
 		EVENT_TRACK_MUNDANE = 5, //admin only, welcome to hell
