@@ -116,11 +116,11 @@
 			set_light(2,2)
 			var/image/centrifuge_light = image(icon,"centrifuge_light")
 			centrifuge_light.plane = LIGHTING_PLANE
-			overlays += centrifuge_light
+			add_overlay(centrifuge_light)
 			var/image/centrifuge_glow = image(icon,"centrifuge_glow")
 			centrifuge_glow.plane = LIGHTING_PLANE
 			centrifuge_glow.blend_mode = BLEND_ADD
-			overlays += centrifuge_glow
+			add_overlay(centrifuge_glow)
 		else
 			set_light(2,1)
 
@@ -128,23 +128,23 @@
 			if (CENTRIFUGE_LIGHTSPECIAL_BLINKING)
 				var/image/centrifuge_light = image(icon,"centrifuge_special_update")
 				centrifuge_light.plane = LIGHTING_PLANE
-				overlays += centrifuge_light
+				add_overlay(centrifuge_light)
 				special = CENTRIFUGE_LIGHTSPECIAL_ON
 			if (CENTRIFUGE_LIGHTSPECIAL_ON)
 				var/image/centrifuge_light = image(icon,"centrifuge_special")
 				centrifuge_light.plane = LIGHTING_PLANE
-				overlays += centrifuge_light
+				add_overlay(centrifuge_light)
 
 	for (var/i = 1 to vials.len)
 		if(vials[i])
 			add_vial_sprite(vials[i],i)
 
 /obj/machinery/disease2/centrifuge/proc/add_vial_sprite(obj/item/reagent_containers/cup/beaker/vial/vial, 	slot = 1)
-	overlays += "centrifuge_vial[slot][on ? "_moving" : ""]"
+	add_overlay("centrifuge_vial[slot][on ? "_moving" : ""]")
 	if(vial.reagents.total_volume)
 		var/image/filling = image(icon, "centrifuge_vial[slot]_filling[on ? "_moving" : ""]")
 		filling.icon += mix_color_from_reagents(vial.reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/machinery/disease2/centrifuge/proc/add_vial_dat(obj/item/reagent_containers/cup/beaker/vial/vial, list/vial_task = list(0,0,0,0,0), slot = 1)
 	var/dat = ""

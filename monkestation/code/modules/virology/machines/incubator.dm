@@ -312,11 +312,11 @@
 			set_light(2,2)
 			var/image/incubator_light = image(icon,"incubator_light")
 			incubator_light.plane = ABOVE_LIGHTING_PLANE
-			overlays += incubator_light
+			add_overlay(incubator_light)
 			var/image/incubator_glass = image(icon,"incubator_glass")
 			incubator_glass.plane = ABOVE_LIGHTING_PLANE
 			incubator_glass.blend_mode = BLEND_ADD
-			overlays += incubator_glass
+			add_overlay(incubator_glass)
 		else
 			set_light(2,1)
 
@@ -332,14 +332,14 @@
 	var/image/dish_outline = image(icon,"smalldish2-outline")
 	dish_outline.alpha = 128
 	dish_outline.pixel_y = -5 * slot
-	overlays += dish_outline
+	add_overlay(dish_outline)
 	var/image/dish_content = image(icon,"smalldish2-empty")
 	dish_content.alpha = 128
 	dish_content.pixel_y = -5 * slot
 	if (dish.contained_virus)
 		dish_content.icon_state = "smalldish2-color"
 		dish_content.color = dish.contained_virus.color
-	overlays += dish_content
+	add_overlay(dish_content)
 
 	//updating the light indicators
 	if (dish.contained_virus && !(machine_stat & (BROKEN|NOPOWER)))
@@ -359,15 +359,15 @@
 				grown_light.pixel_y = -5 * slot
 				grown_light.plane = ABOVE_LIGHTING_PLANE
 
-				overlays += grown_light
+				add_overlay(grown_light)
 			else
 				var/image/grown_light = image(icon,"incubator_grown")
 				grown_light.pixel_y = -5 * slot
 				grown_light.plane = ABOVE_LIGHTING_PLANE
 
-				overlays += grown_light
+				add_overlay(grown_light)
 
-		overlays += grown_gauge
+		add_overlay(grown_gauge)
 		if (dish.reagents.total_volume < 0.02)
 			var/update = FALSE
 			if (!(dish_datum.updates & INCUBATOR_DISH_REAGENT))
@@ -379,13 +379,13 @@
 				reagents_light.pixel_y = -5 * slot
 				reagents_light.plane = ABOVE_LIGHTING_PLANE
 
-				overlays += reagents_light
+				add_overlay(reagents_light)
 			else
 				var/image/reagents_light = image(icon,"incubator_reagents")
 				reagents_light.pixel_y = -5 * slot
 				reagents_light.plane = ABOVE_LIGHTING_PLANE
 
-				overlays += reagents_light
+				add_overlay(reagents_light)
 
 		if (dish_datum.updates_new & INCUBATOR_DISH_MAJOR)
 			if (!(dish_datum.updates & INCUBATOR_DISH_MAJOR))
@@ -394,13 +394,13 @@
 				effect_light.pixel_y = -5 * slot
 				effect_light.plane = ABOVE_LIGHTING_PLANE
 
-				overlays += effect_light
+				add_overlay(effect_light)
 			else
 				var/image/effect_light = image(icon,"incubator_major")
 				effect_light.plane = ABOVE_LIGHTING_PLANE
 
 				effect_light.pixel_y = -5 * slot
-				overlays += effect_light
+				add_overlay(effect_light)
 
 		if (dish_datum.updates_new & INCUBATOR_DISH_MINOR)
 			if (!(dish_datum.updates & INCUBATOR_DISH_MINOR))
@@ -409,11 +409,11 @@
 				effect_light.pixel_y = -5 * slot
 				effect_light.plane = ABOVE_LIGHTING_PLANE
 
-				overlays += effect_light
+				add_overlay(effect_light)
 			else
 				var/image/effect_light = image(icon,"incubator_minor")
 				effect_light.pixel_y = -5 * slot
-				overlays += effect_light
+				add_overlay(effect_light)
 
 
 /obj/machinery/disease2/incubator/Destroy()

@@ -142,7 +142,7 @@
 		dish_outline.alpha = 128
 		dish_outline.pixel_x = -1
 		dish_outline.pixel_y = -13
-		overlays += dish_outline
+		add_overlay(dish_outline)
 		var/image/dish_content = image(icon,"smalldish2-empty")
 		dish_content.alpha = 128
 		dish_content.pixel_x = -1
@@ -150,7 +150,7 @@
 		if (dish.contained_virus)
 			dish_content.icon_state = "smalldish2-color"
 			dish_content.color = dish.contained_virus.color
-		overlays += dish_content
+		add_overlay(dish_outline)
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
@@ -161,20 +161,20 @@
 			scan_pattern.color = "#00FF00"
 			scan_pattern.pixel_x = -2
 			scan_pattern.pixel_y = 4
-			overlays += scan_pattern
+			add_overlay(scan_pattern)
 		else
-			overlays += image(icon,"splicer_unknown")
+			add_overlay(image(icon,"splicer_unknown"))
 
 	if(scanning || splicing)
 		var/image/splicer_glass = image(icon,"splicer_glass")
 		splicer_glass.plane = LIGHTING_PLANE
 		splicer_glass.blend_mode = BLEND_ADD
-		overlays += splicer_glass
+		dd_overlay(splicer_glass)
 
 	if (memorybank)
 		var/image/buffer_light = image(icon,"splicer_buffer")
 		buffer_light.plane = LIGHTING_PLANE
-		overlays += buffer_light
+		dd_overlay(buffer_light)
 
 /obj/machinery/computer/diseasesplicer/proc/buffer2dish()
 	if(!memorybank || !dish || !dish.contained_virus)

@@ -101,7 +101,7 @@
 	spawn (1)
 		var/image/I = image(icon,"analyser_light")
 		I.plane = ABOVE_LIGHTING_PLANE
-		overlays += I
+		add_overlay(I)
 	use_power(1000)
 	set_light(2,2)
 	playsound(src, 'sound/machines/chime.ogg', 50)
@@ -150,13 +150,13 @@
 		set_light(2,1)
 
 	if (dish)
-		overlays += "smalldish-outline"
+		add_overlay("smalldish-outline")
 		if (dish.contained_virus)
 			var/image/I = image(icon,"smalldish-color")
 			I.color = dish.contained_virus.color
-			overlays += I
+			add_overlay(I)
 		else
-			overlays += "smalldish-empty"
+			add_overlay("smalldish-empty")
 
 /obj/machinery/disease2/diseaseanalyser/verb/PrintPaper()
 	set name = "Print last analysis"
