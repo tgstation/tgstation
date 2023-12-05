@@ -26,5 +26,6 @@
 	return TRUE
 
 /datum/element/disarm_attack/proc/examine(obj/item/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
 	if(can_disarm_attack(source, null, user, FALSE))
 		examine_list += span_notice("You can use it to <b>shove</b> people with <b>right-click</b>.")

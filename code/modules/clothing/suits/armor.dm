@@ -255,15 +255,7 @@
 	armor_type = /datum/armor/armor_riot
 	strip_delay = 80
 	equip_delay_other = 60
-
-/obj/item/clothing/suit/armor/riot/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_OCLOTHING)
-		ADD_TRAIT(user, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, REF(src))
-
-/obj/item/clothing/suit/armor/riot/dropped(mob/living/user)
-	. = ..()
-	REMOVE_TRAIT(user, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, REF(src))
+	clothing_traits = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -367,6 +359,8 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	clothing_traits = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
+
 
 //All of the armor below is mostly unused
 
@@ -380,15 +374,6 @@
 	fire = 100
 	acid = 100
 	wound = 15
-
-/obj/item/clothing/suit/armor/swat/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot & ITEM_SLOT_OCLOTHING)
-		ADD_TRAIT(user, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, REF(src))
-
-/obj/item/clothing/suit/armor/swat/dropped(mob/living/user)
-	. = ..()
-	REMOVE_TRAIT(user, TRAIT_SHOVE_KNOCKDOWN_BLOCKED, REF(src))
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"

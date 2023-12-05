@@ -360,7 +360,7 @@
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/shield/riot/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message)
+/obj/item/shield/riot/tele/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		if(send_message)
