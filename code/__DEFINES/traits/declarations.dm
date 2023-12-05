@@ -1001,4 +1001,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to foam darts that have an insert in them
 #define TRAIT_DART_HAS_INSERT "dart_has_insert"
+
+/// Trait given when a mob is currently in invisimin mode
+#define TRAIT_INVISIMIN "invisimin"
+
 // END TRAIT DEFINES
