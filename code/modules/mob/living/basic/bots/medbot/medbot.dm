@@ -320,7 +320,7 @@
 	if(done_healing)
 		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
 	//Player bots can heal more than their threshold but not automatically
-		to_chat(src, "[patient] is above your healing threshold of [heal_threshold].")
+		to_chat(src, "[patient] is below your healing threshold of [heal_threshold].")
 		update_bot_mode(new_mode = BOT_IDLE)
 	//If player-controlled, call them to heal again here for continous player healing
 	else if(!isnull(client))
