@@ -86,4 +86,4 @@
 #include "mapping\_basemap.dm"
 //features
 #include "features\additional_circuit\includes.dm"
-#include "modules\tableflip\code\flipped_table.dm"
+#include "features\tableflip\code\flipped_table.dm"

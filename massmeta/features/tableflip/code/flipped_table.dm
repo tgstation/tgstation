@@ -1,7 +1,7 @@
 /obj/structure/flippedtable
 	name = "flipped table"
 	desc = "A flipped table."
-	icon = 'massmeta/modules/tableflip/icons/flipped_tables.dmi'
+	icon = 'massmeta/features/tableflip/icons/flipped_tables.dmi'
 	icon_state = "table"
 	anchored = TRUE
 	density = TRUE
