@@ -140,7 +140,7 @@
 
 	var/mob/living/brain/new_brain_brainmob = new_brain.brainmob
 	if(!new_brain_brainmob.key && !new_brain.decoy_override)
-		new_brain_brainmob.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
+		new_brain_brainmob.notify_revival("Someone has put your brain in a MMI!", source = src)
 
 	set_brainmob(new_brain_brainmob)
 	new_brain.brainmob = null
