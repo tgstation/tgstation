@@ -150,21 +150,8 @@
 
 	grant_actions_by_list(innate_actions)
 	RegisterSignal(src, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(pre_attack))
+	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attack_by))
 	update_appearance(UPDATE_ICON)
-
-/mob/living/basic/bot/cleanbot/proc/apply_custom_bucket(obj/item/custom_bucket)
-	if(!isnull(build_bucket))
-		QDEL_NULL(build_bucket)
-	custom_bucket.forceMove(src)
-
-/mob/living/basic/bot/cleanbot/autopatrol
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
-
-/mob/living/basic/bot/cleanbot/medbay
-	name = "Scrubs, MD"
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
-	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
-
 
 /mob/living/basic/bot/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -191,12 +178,6 @@
 		our_mop = null
 	update_appearance()
 
-/mob/living/basic/bot/cleanbot/Destroy()
-	QDEL_NULL(build_bucket)
-	QDEL_NULL(our_mop)
-	GLOB.janitor_devices -= src
-	return ..()
-
 /mob/living/basic/bot/cleanbot/examine(mob/user)
 	. = ..()
 	if(ascended && user.stat == CONSCIOUS && user.client)
@@ -214,60 +195,6 @@
 	if(var_name == NAMEOF(src, base_icon))
 		update_appearance(UPDATE_ICON)
 
-/mob/living/basic/bot/cleanbot/proc/deputize(obj/item/knife, mob/user)
-	if(!in_range(src, user) || !user.transferItemToLoc(knife, src))
-		balloon_alert(user, "couldn't attach!")
-		return FALSE
-	balloon_alert(user, "attached!")
-	if(!(bot_access_flags & BOT_COVER_EMAGGED))
-		weapon.force = weapon.force / 2
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	return TRUE
-
-/mob/living/basic/bot/cleanbot/proc/update_title(new_job_title)
-	if(isnull(job_titles[new_job_title]) || (new_job_title in stolen_valor))
-		return
-
-	stolen_valor += new_job_title
-	if(!comissioned && (new_job_title in officers_titles))
-		comissioned = TRUE
-
-	var/name_to_add = job_titles[new_job_title]
-	name = (new_job_title in suffix_job_titles) ? "[name] " + name_to_add : name_to_add + " [name]"
-
-	if(length(stolen_valor) == length(job_titles))
-		ascended = TRUE
-
-/mob/living/basic/bot/cleanbot/proc/on_entered(datum/source, atom/movable/shanked_victim)
-	SIGNAL_HANDLER
-	if(!weapon || !has_gravity() || !iscarbon(shanked_victim))
-		return
-
-	var/mob/living/carbon/stabbed_carbon = shanked_victim
-	var/assigned_role = stabbed_carbon.mind?.assigned_role.title
-	if(!isnull(assigned_role))
-		update_title(assigned_role)
-
-	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack), stabbed_carbon, src)
-	stabbed_carbon.Knockdown(2 SECONDS)
-
-/mob/living/basic/bot/cleanbot/attackby(obj/item/attacking_item, mob/living/user, params)
-	. = ..()
-	if(.)
-		return
-	if(!istype(attacking_item, /obj/item/knife) || user.combat_mode)
-		return FALSE
-	balloon_alert(user, "attaching knife...")
-	if(!do_after(user, 2.5 SECONDS, target = src))
-		balloon_alert(user, "need to stay still")
-		return TRUE
-	deputize(attacking_item, user)
-	return TRUE
-
 /mob/living/basic/bot/cleanbot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(!(bot_access_flags & BOT_COVER_EMAGGED))
@@ -277,21 +204,6 @@
 	balloon_alert(user, "safeties disabled")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	return TRUE
-
-/mob/living/basic/bot/cleanbot/proc/pre_attack(mob/living/source, atom/target)
-	SIGNAL_HANDLER
-
-	if(is_type_in_typecache(target, huntable_pests) && !isnull(our_mop))
-		INVOKE_ASYNC(our_mop, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(!iscarbon(target))
-		return
-
-	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
-	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
-	target.acid_act(75, 10)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
@@ -336,9 +248,98 @@
 		if("clean_graffiti")
 			janitor_mode_flags ^= CLEANBOT_CLEAN_DRAWINGS
 
+/mob/living/basic/bot/cleanbot/Destroy()
+	QDEL_NULL(build_bucket)
+	QDEL_NULL(our_mop)
+	GLOB.janitor_devices -= src
+	return ..()
+
+/mob/living/basic/bot/cleanbot/proc/apply_custom_bucket(obj/item/custom_bucket)
+	if(!isnull(build_bucket))
+		QDEL_NULL(build_bucket)
+	custom_bucket.forceMove(src)
+
+/mob/living/basic/bot/cleanbot/proc/on_attack_by(datum/source, obj/item/used_item, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(used_item, /obj/item/knife) || user.combat_mode)
+		return
+	INVOKE_ASYNC(src, PROC_REF(attach_knife), user, used_item)
+	return COMPONENT_NO_AFTERATTACK
+
+/mob/living/basic/bot/cleanbot/proc/attach_knife(mob/living/user, obj/item/used_item)
+	balloon_alert(user, "attaching knife...")
+	if(!do_after(user, 2.5 SECONDS, target = src))
+		balloon_alert(user, "need to stay still")
+		return
+	deputize(used_item, user)
+
+/mob/living/basic/bot/cleanbot/proc/deputize(obj/item/knife, mob/user)
+	if(!in_range(src, user) || !user.transferItemToLoc(knife, src))
+		balloon_alert(user, "couldn't attach!")
+		return FALSE
+	balloon_alert(user, "attached!")
+	if(!(bot_access_flags & BOT_COVER_EMAGGED))
+		weapon.force = weapon.force / 2
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	return TRUE
+
+/mob/living/basic/bot/cleanbot/proc/update_title(new_job_title)
+	if(isnull(job_titles[new_job_title]) || (new_job_title in stolen_valor))
+		return
+
+	stolen_valor += new_job_title
+	if(!comissioned && (new_job_title in officers_titles))
+		comissioned = TRUE
+
+	var/name_to_add = job_titles[new_job_title]
+	name = (new_job_title in suffix_job_titles) ? "[name] " + name_to_add : name_to_add + " [name]"
+
+	if(length(stolen_valor) == length(job_titles))
+		ascended = TRUE
+
+/mob/living/basic/bot/cleanbot/proc/on_entered(datum/source, atom/movable/shanked_victim)
+	SIGNAL_HANDLER
+	if(!weapon || !has_gravity() || !iscarbon(shanked_victim))
+		return
+
+	var/mob/living/carbon/stabbed_carbon = shanked_victim
+	var/assigned_role = stabbed_carbon.mind?.assigned_role.title
+	if(!isnull(assigned_role))
+		update_title(assigned_role)
+
+	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack), stabbed_carbon, src)
+	stabbed_carbon.Knockdown(2 SECONDS)
+
+/mob/living/basic/bot/cleanbot/proc/pre_attack(mob/living/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(is_type_in_typecache(target, huntable_pests) && !isnull(our_mop))
+		INVOKE_ASYNC(our_mop, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!iscarbon(target))
+		return
+
+	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
+	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
+	target.acid_act(75, 10)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 /mob/living/basic/bot/cleanbot/proc/generate_ai_keys()
 	ai_controller.set_blackboard_key(BB_CLEANABLE_DECALS, cleanable_decals)
 	ai_controller.set_blackboard_key(BB_CLEANABLE_BLOOD, cleanable_blood)
 	ai_controller.set_blackboard_key(BB_HUNTABLE_PESTS, huntable_pests)
 	ai_controller.set_blackboard_key(BB_CLEANABLE_DRAWINGS, cleanable_drawings)
 	ai_controller.set_blackboard_key(BB_CLEANBOT_EMAGGED_PHRASES, emagged_phrases)
+
+/mob/living/basic/bot/cleanbot/autopatrol
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
+
+/mob/living/basic/bot/cleanbot/medbay
+	name = "Scrubs, MD"
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
+	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
