@@ -341,14 +341,15 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if(mob.bodytemperature < min_bodytemperature)
 		return
 	//Virus food speeds up disease progress
-	if(mob.reagents.has_reagent(/datum/reagent/consumable/virus_food))
-		mob.reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.1)
-		if(!logged_virusfood)
-			log += "<br />[ROUND_TIME()] Virus Fed ([mob.reagents.get_reagent_amount(/datum/reagent/consumable/virus_food)]U)"
-			logged_virusfood=1
-		ticks += 10
-	else
-		logged_virusfood=0
+	if(!ismouse(mob))
+		if(mob.reagents?.has_reagent(/datum/reagent/consumable/virus_food))
+			mob.reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.1)
+			if(!logged_virusfood)
+				log += "<br />[ROUND_TIME()] Virus Fed ([mob.reagents.get_reagent_amount(/datum/reagent/consumable/virus_food)]U)"
+				logged_virusfood=1
+			ticks += 10
+		else
+			logged_virusfood=0
 	if(prob(strength * 0.1))
 		incubate(mob, 1)
 	//Moving to the next stage
@@ -801,6 +802,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	if (istype(infectedMob))
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(infectedMob)]"
+		if(!length(infectedMob.diseases))
+			infectedMob.diseases = list()
 		infectedMob.diseases += D
 		var/nickname = ""
 		if ("[D.uniqueID]-[D.subID]" in GLOB.virusDB)
