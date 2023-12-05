@@ -207,10 +207,11 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 /datum/symptom/pthroat/activate(mob/living/carbon/mob)
 	//
 	if(ismouse(mob))
-		mob.icon_state = "mouse_clown"
-		mob.icon_living = "mouse_clown"
-		mob.icon_dead = "mouse_clown_dead"
-		mob.held_state = "mouse_clown"
+		var/mob/living/basic/mouse/mouse = mob
+		mouse.icon_state = "mouse_clown"
+		mouse.icon_living = "mouse_clown"
+		mouse.icon_dead = "mouse_clown_dead"
+		mouse.held_state = "mouse_clown"
 
 	if(!ishuman(mob))
 		return
@@ -273,10 +274,11 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 
 /datum/symptom/horsethroat/activate(mob/living/carbon/mob)
 	if(ismouse(mob))
-		mob.icon_state = "mouse_horse"
-		mob.icon_living = "mouse_horse"
-		mob.icon_dead = "mouse_horse_dead"
-		mob.held_state = "mouse_horse"
+		var/mob/living/basic/mouse/mouse = mob
+		mouse.icon_state = "mouse_horse"
+		mouse.icon_living = "mouse_horse"
+		mouse.icon_dead = "mouse_horse_dead"
+		mouse.held_state = "mouse_horse"
 
 	if(!ishuman(mob))
 		return
