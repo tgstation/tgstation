@@ -34,8 +34,10 @@
 
 /mob/living/basic/mouse/Destroy()
 	. = ..()
+	if(src in GLOB.infected_contact_mobs)
+		GLOB.infected_contact_mobs -= src
 	qdel(immune_system)
-	
+
 /mob/living/basic/mouse/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/reagent_containers/syringe))
