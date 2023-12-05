@@ -163,6 +163,8 @@
 	. = ..()
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
 
+#define PROPHAT_MOOD "prophat"
+
 /obj/item/clothing/head/soft/propeller_hat
 	name = "propeller hat"
 	desc = "A colorful hat with a spinning propeller sat on top."
@@ -189,10 +191,12 @@
 /obj/item/clothing/head/soft/propeller_hat/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_HEAD)
-		user.add_mood_event("prophat", /datum/mood_event/prophat)
+		user.add_mood_event(PROPHAT_MOOD, /datum/mood_event/prophat)
 
 /obj/item/clothing/head/soft/propeller_hat/dropped(mob/living/user)
 	. = ..()
-	user.clear_mood_event("prophat")
+	user.clear_mood_event(PROPHAT_MOOD)
 	active = FALSE
 	update_icon()
+
+#undef PROPHAT_MOOD
