@@ -1,0 +1,18 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - rscadd: "added holodeck and supporting equipment"
+  - qol: "adjusted cameras everywhere to give ai better vision where it should have it while removing some parts where they shouldn't (like in shitters)"
+  - rscdel: "toilets next to the pharmacy are removed"
+  - rscadd: "there are now 3 ore boxes next to mining office"
+  - rscadd: "mixed wardrobes are scattered about the station"
+  - rscadd: "a few more smoke machines are added in around the station"
+  - rscadd: "landmarks for hangover station trait starts are now added all over the station."
+  - rscadd: "generic_maintenance_event landmarks now actually exist across the station in order to allow for certain antagonists to appear on Oshan."
+  - rscadd: "a few more blob start positions are added."
+  - bugfix: "the crematorium in the chapel now has a start switch."
+  - rscdel: "prison wing on the mining map now has 0 roundstart prisoner locations because it doesn't matter."
+  - rscadd: "prison wing now has weight machines"
+  - rscadd: "prison wing now has ore boxes"
+  - rscadd: "miner elevator to station now has ore boxes."
+  - qol: "ATMOS turbine now has dedicated fuel mix piping as an option. Looks jank but it works!"

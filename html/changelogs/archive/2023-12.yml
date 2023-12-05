@@ -1,0 +1,37 @@
+2023-12-04:
+  san7890:
+  - bugfix: 'The Holy Hand Grenade''s effect on revealing a revenant had its duration
+      accidentally nerfed, it is now back to 10 seconds. fix: Revenant midrounds should
+      now properly run.'
+  - bugfix: Revenant harvesting should now let you actually pass the final do_after
+      so you can harvest that sweet essence.
+2023-12-05:
+  FeudeyTF nikothedude zxaber:
+  - code_imp: Updated the UI of the console for viewing message logs and console for
+      view server communications
+  - rscadd: 'New malf ability: Remote safety overrides. Allows the AI to remotely
+      emag things it has access to.'
+  - code_imp: emag_act() now returns a boolean designating it's success in emagging
+  - code_imp: All instances of emag_act() now have the proper arguments
+  - qol: Most usecases of emagging now have some kind of feedback, and existing feedback
+      has been sanity checked and converted to balloon alerts.
+  - rscadd: 'New malf module: Remote vendor tipping. Allows you to remotely tip a
+      vendor in any of the 8 directions. Goofy and okay for assassinations on unaware
+      enemies!'
+  - rscadd: 'New malf module: Core rolling. Allows you to roll around, crushing anything
+      you fall on with a satisfying splat.'
+  - code_imp: Vendor tipping is now a /atom/movable proc, allowing anything to fall
+      over and crush you.
+  - code_imp: All take_damage() overrides now use the correct arguments
+  - image: turf_analysis.dmi's red_arrow now has orthogonal directions
+  - balance: Vendors now are far less likely to gib your head or make you parapalegic
+  - balance: Vendors now respect armor when they crush you
+  - bugfix: You can no longer break the game by AI rolling in a card or APC
+  - qol: AI Roll now doesnt require you to click the exact turf to move you
+  - qol: AI roll cooldown and roll time is now a variable, making it possible for
+      AIs to become terrifying catamari damacy balls
+  - balance: Malf Ability "Robotics Factory" can now be purchased multiple times.
+  dwasint:
+  - bugfix: bone fracture surgery works again
+  wraith-54321:
+  - bugfix: no more fun for you

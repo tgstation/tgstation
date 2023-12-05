@@ -1,0 +1,12 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - bugfix: "fixed wires to the dj booth on Tram"
+  - bugfix: "changed some of the maints next to science to proper maints so you are protected from radstorms"
+  - rscdel: "removed a zapper that somehow got in the GODDAMN WALLS on Meta"
+  - bugfix: "fixed the area below the tram on right hand side to properly not give rad protection in certain areas"
+  - qol: "moved all nanites related equipment to the redesignated Circuits Lab on Metastation"
+  - qol: "made the Circuits Lab on Metastation look a tad nicer than what it would have been"
+  - qol: "moved all nanites related equipment to the Experiments Lab on Icebox"
+  - rscdel: "removed a maintenance space to make room for nanites equipment on Icebox. associated maints loot was moved to other parts of maints on Icebox"
+  - rscdel: "removed the mass spec machine from all maps as it is unused in our codebase."
