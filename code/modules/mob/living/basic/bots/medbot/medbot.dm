@@ -274,10 +274,9 @@
 /mob/living/basic/bot/medbot/proc/after_tip_over(mob/user)
 	medical_mode_flags |= MEDBOT_TIPPED_MODE
 	tipper = WEAKREF(user)
-	var/tipper_name = user.name
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
 	if(prob(10))
-		speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
+		speak("PSYCH ALERT: Crewmember [user.name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
 
 /*
  * Proc used in a callback for after this medibot is righted, either by themselves or by a mob, by the tippable component.
