@@ -46,7 +46,6 @@
  * Files are kinda susy, and may not actually work. buyer beware
  * Lists support assoc values as expected
  * These constants can be further embedded into lists
- * One var edited list will be shared among all the things it is applied to
  *
  * There can be no padding in front of, or behind a path
  *

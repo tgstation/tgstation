@@ -89,10 +89,10 @@
  * * Returns [NONE] if the name was reset to initial state
  */
 /datum/component/takes_reagent_appearance/proc/update_name(datum/glass_style/style)
-	var/obj/item/item_parent = parent
-	if(item_parent.renamedByPlayer)
+	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
+	var/obj/item/item_parent = parent
 	if(isnull(style))
 		// no style (reset)
 		item_parent.name = initial(item_parent.name)
@@ -111,10 +111,10 @@
  * * Returns [NONE] if the description was reset to initial state
  */
 /datum/component/takes_reagent_appearance/proc/update_desc(datum/glass_style/style)
-	var/obj/item/item_parent = parent
-	if(item_parent.renamedByPlayer)
+	if(HAS_TRAIT(parent, TRAIT_WAS_RENAMED))
 		return NONE
 
+	var/obj/item/item_parent = parent
 	if(isnull(style))
 		// no style (reset)
 		item_parent.desc = initial(item_parent.desc)

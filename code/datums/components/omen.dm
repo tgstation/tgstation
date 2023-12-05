@@ -17,7 +17,7 @@
 	/// Base damage from negative events. Cursed take 25% of this damage.
 	var/damage_mod = 1
 
-/datum/component/omen/Initialize(obj/vessel, incidents_left = 1, luck_mod, damage_mod)
+/datum/component/omen/Initialize(obj/vessel, incidents_left, luck_mod, damage_mod)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 

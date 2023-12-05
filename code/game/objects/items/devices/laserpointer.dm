@@ -5,7 +5,7 @@
 	icon_state = "pointer"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
@@ -270,20 +270,6 @@
 				target_felinid.visible_message(span_notice("[target_felinid] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
 		else
 			target_felinid.visible_message(span_notice("[target_felinid] stares at the light."), span_warning("You stare at the light..."))
-
-	//cats! - chance for any cat near the target to pounce at the light, stepping to the target
-	for(var/mob/living/simple_animal/pet/cat/target_kitty in view(1, targloc))
-		if(target_kitty.stat == DEAD)
-			continue
-		if(prob(effectchance * diode.rating))
-			if(target_kitty.resting)
-				target_kitty.set_resting(FALSE, instant = TRUE)
-			target_kitty.visible_message(span_notice("[target_kitty] pounces on the light!"), span_warning("LIGHT!"))
-			target_kitty.Move(targloc)
-			target_kitty.Immobilize(1 SECONDS)
-		else
-			target_kitty.visible_message(span_notice("[target_kitty] looks uninterested in your games."), span_warning("You spot [user] shining [src] at you. How insulting!"))
-
 	//The pointer is shining, change its sprite to show
 	icon_state = "pointer_[pointer_icon_state]"
 

@@ -8,7 +8,7 @@ import { PaiData } from './types';
  * another section that displays the selected installed
  * software info.
  */
-export const InstalledDisplay = (props, context) => {
+export const InstalledDisplay = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
@@ -22,14 +22,10 @@ export const InstalledDisplay = (props, context) => {
 };
 
 /** Iterates over installed software to render buttons. */
-const InstalledSoftware = (props, context) => {
-  const { data } = useBackend<PaiData>(context);
+const InstalledSoftware = (props) => {
+  const { data } = useBackend<PaiData>();
   const { installed = [] } = data;
-  const [currentSelection, setCurrentSelection] = useLocalState(
-    context,
-    'software',
-    ''
-  );
+  const [currentSelection, setCurrentSelection] = useLocalState('software', '');
 
   return (
     <Section fill scrollable title="Installed Software">
@@ -49,8 +45,8 @@ const InstalledSoftware = (props, context) => {
 };
 
 /** Software info for buttons clicked. */
-const InstalledInfo = (props, context) => {
-  const [currentSelection] = useLocalState(context, 'software', '');
+const InstalledInfo = (props) => {
+  const [currentSelection] = useLocalState('software', '');
   const title = !currentSelection ? 'Select a Program' : currentSelection;
 
   return (
@@ -71,10 +67,10 @@ const InstalledInfo = (props, context) => {
  * Once a software is selected, generates custom buttons or a default
  * power toggle.
  */
-const SoftwareButtons = (props, context) => {
-  const { act, data } = useBackend<PaiData>(context);
+const SoftwareButtons = (props) => {
+  const { act, data } = useBackend<PaiData>();
   const { door_jack, languages, master_name } = data;
-  const [currentSelection] = useLocalState(context, 'software', '');
+  const [currentSelection] = useLocalState('software', '');
 
   switch (currentSelection) {
     case 'Door Jack':
