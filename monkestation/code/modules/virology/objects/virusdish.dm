@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	..()
 	if(isturf(hit_atom))
 		visible_message("<span class='danger'>The virus dish shatters on impact!</span>")
-		shatter(user)
+		shatter(throwingdatum.thrower)
 
 /obj/item/weapon/virusdish/proc/incubate(mutatechance=5, growthrate=3)
 	if (contained_virus)
