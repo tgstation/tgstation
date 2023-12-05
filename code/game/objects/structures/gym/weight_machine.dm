@@ -165,7 +165,7 @@
 	// the amount of workouts you can do before you hit stamcrit
 	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/fitness)]
 	// total stamina drain of 1 workout calculated based on the workout length
-	var/stamina_exhaustion = FLOOR(initial(user.maxHealth) / workout_reps / WORKOUT_LENGTH, 0.1)
+	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
 	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE
