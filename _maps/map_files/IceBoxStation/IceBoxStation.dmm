@@ -8198,12 +8198,9 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "cAM" = (
-/obj/structure/table,
-/obj/item/folder/white{
-	pixel_y = 4
-	},
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/green/full,
+/obj/machinery/disease2/isolator,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
 "cAR" = (
@@ -36304,15 +36301,12 @@
 	},
 /area/station/command/heads_quarters/rd)
 "lGj" = (
-/obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/light/directional/south,
+/obj/machinery/disease2/centrifuge,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "lGp" = (
@@ -36519,6 +36513,9 @@
 	department = "Janitorial";
 	name = "Janitorial Requests Console"
 	},
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "lKZ" = (
@@ -43992,7 +43989,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/machinery/computer/pandemic,
+/obj/machinery/disease2/incubator,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "oeW" = (
@@ -49337,6 +49334,10 @@
 /obj/item/clothing/mask/breath/medical,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "pNB" = (
@@ -54100,6 +54101,7 @@
 	dir = 9
 	},
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "rrf" = (
@@ -57013,6 +57015,9 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/trimline/green/filled/corner,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "soF" = (

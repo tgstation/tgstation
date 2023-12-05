@@ -27900,6 +27900,9 @@
 	pixel_y = -2
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "kbU" = (
@@ -28295,6 +28298,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/device/antibody_scanner,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kkU" = (
@@ -30256,11 +30260,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "kVg" = (
-/obj/machinery/computer/pandemic,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/disease2/incubator,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kVs" = (
@@ -50134,6 +50138,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
+"rTO" = (
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/disease2/centrifuge,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "rTQ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/neutral{
@@ -53851,6 +53862,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
+/obj/item/device/antibody_scanner,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "thc" = (
@@ -58123,6 +58135,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/disease2/isolator,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "uGr" = (
@@ -63722,6 +63735,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wJv" = (
@@ -82214,7 +82228,7 @@ aaa
 aaa
 xjH
 vdJ
-wpi
+rTO
 kVg
 tgD
 kku
