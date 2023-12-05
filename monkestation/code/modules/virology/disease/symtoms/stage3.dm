@@ -280,6 +280,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		mouse.icon_dead = "mouse_horse_dead"
 		mouse.held_state = "mouse_horse"
 
+	mob.say(pick("NEIGH!", "Neigh!", "Neigh.", "Neigh?", "Neigh!!", "Neigh?!", "Neigh..."))
 	if(!ishuman(mob))
 		return
 
