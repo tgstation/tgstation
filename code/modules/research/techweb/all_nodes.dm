@@ -2275,7 +2275,6 @@
 		"advanced_camera",
 		"ai_cam_upgrade",
 		"borg_syndicate_module",
-		"decloner",
 		"donksoft_refill",
 		"donksofttoyvendor",
 		"largecrossbow",

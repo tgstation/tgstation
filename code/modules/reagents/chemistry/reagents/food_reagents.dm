@@ -348,20 +348,12 @@
 			heating = 5
 			if(holder.has_reagent(/datum/reagent/cryostylane))
 				holder.remove_reagent(/datum/reagent/cryostylane, 5 * REM * seconds_per_tick)
-			if(isslime(affected_mob))
-				heating = rand(5, 20)
 		if(15 to 25)
 			heating = 10
-			if(isslime(affected_mob))
-				heating = rand(10, 20)
 		if(25 to 35)
 			heating = 15
-			if(isslime(affected_mob))
-				heating = rand(15, 20)
 		if(35 to INFINITY)
 			heating = 20
-			if(isslime(affected_mob))
-				heating = rand(20, 25)
 	affected_mob.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
 
 /datum/reagent/consumable/frostoil
@@ -383,24 +375,16 @@
 			cooling = -10
 			if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 				holder.remove_reagent(/datum/reagent/consumable/capsaicin, 5 * REM * seconds_per_tick)
-			if(isslime(affected_mob))
-				cooling = -rand(5, 20)
 		if(15 to 25)
 			cooling = -20
-			if(isslime(affected_mob))
-				cooling = -rand(10, 20)
 		if(25 to 35)
 			cooling = -30
 			if(prob(1))
 				affected_mob.emote("shiver")
-			if(isslime(affected_mob))
-				cooling = -rand(15, 20)
 		if(35 to INFINITY)
 			cooling = -40
 			if(prob(5))
 				affected_mob.emote("shiver")
-			if(isslime(affected_mob))
-				cooling = -rand(20, 25)
 	affected_mob.adjust_bodytemperature(cooling * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
 
 /datum/reagent/consumable/frostoil/expose_turf(turf/exposed_turf, reac_volume)

@@ -375,15 +375,21 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
+	/// Should this bucket randomize its colors?
+	var/randomize_colors = TRUE
+
 /datum/armor/cup_bucket
 	melee = 10
 	fire = 75
 	acid = 50
 
 /obj/item/reagent_containers/cup/bucket/Initialize(mapload, vol)
-	if(greyscale_colors == initial(greyscale_colors))
+	if (randomize_colors && greyscale_colors == initial(greyscale_colors))
 		set_greyscale(pick(list("#0085e5", COLOR_OFF_WHITE, COLOR_ORANGE_BROWN, COLOR_SERVICE_LIME, COLOR_MOSTLY_PURE_ORANGE, COLOR_FADED_PINK, COLOR_RED, COLOR_YELLOW, COLOR_VIOLET, COLOR_WEBSAFE_DARK_GRAY)))
 	return ..()
+
+/obj/item/reagent_containers/cup/bucket/consistent
+	randomize_colors = FALSE
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"

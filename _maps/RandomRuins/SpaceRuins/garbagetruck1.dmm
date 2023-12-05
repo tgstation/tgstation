@@ -83,7 +83,7 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "fR" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/kitchen/spoon/soup_ladle{
 	pixel_x = -5;
 	pixel_y = 7
@@ -306,7 +306,7 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "nS" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/vending_refill/dinnerware,
 /obj/item/vending_refill/snack,
 /obj/item/circuitboard/machine/coffeemaker,
@@ -796,7 +796,7 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Hu" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/knife/plastic{
 	pixel_x = 12
 	},
@@ -820,7 +820,7 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "HC" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/kitchen/fork/plastic{
 	pixel_x = -8
 	},
@@ -930,7 +930,7 @@
 /obj/item/trash/energybar,
 /obj/item/food/candy/bronx,
 /obj/item/food/candy/bronx,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /mob/living/basic/mouse/rat,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
@@ -1009,7 +1009,7 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Ox" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/trash/candy{
 	pixel_x = 6;
 	pixel_y = 6
@@ -1032,7 +1032,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "OZ" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/plate/small{
 	pixel_x = -6
 	},
