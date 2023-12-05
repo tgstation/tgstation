@@ -125,7 +125,6 @@ Consuming extracts:
 	need_mob_update += M.adjustFireLoss(-5, updating_health = FALSE)
 	need_mob_update += M.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE) //To heal slimepeople.
 	need_mob_update += M.adjustOxyLoss(-5, updating_health = FALSE)
-	need_mob_update += M.adjustCloneLoss(-5, updating_health = FALSE)
 	need_mob_update += M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
 	if(need_mob_update)
 		M.updatehealth()

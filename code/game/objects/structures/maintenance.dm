@@ -9,7 +9,7 @@ at the cost of risking a vicious bite.**/
 	density = FALSE
 	///This var stores the hidden item that might be able to be retrieved from the trap
 	var/obj/item/hidden_item
-	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
+	///This var determines if there is a chance to receive a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
 	///weighted loot table for what loot you can find inside the moisture trap.
 	///the actual loot isn't that great and should probably be improved and expanded later.
