@@ -43,3 +43,7 @@
 	data["viruses"] |= diseases
 	data["immunity"] = immune_system.GetImmunity()
 	I.reagents.add_reagent(/datum/reagent/blood, I.volume, data)
+
+/mob/living/basic/mouse/Life(seconds_per_tick, times_fired)
+	. = ..()
+	handle_virus_updates()

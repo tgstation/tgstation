@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/find_nearby_disease()//only tries to find Contact and Blood spread diseases. Airborne ones are handled by breath_airborne_diseases()
+/mob/living/proc/find_nearby_disease()//only tries to find Contact and Blood spread diseases. Airborne ones are handled by breath_airborne_diseases()
 	if(buckled)//Riding a vehicle?
 		return
 	if(HAS_TRAIT(src, TRAIT_MOVE_FLYING))//Flying?
@@ -41,18 +41,18 @@
 	return FALSE
 
 //This one is used for one-way infections, such as getting splashed with someone's blood due to clobbering them to death
-/mob/living/carbon/proc/oneway_contact_diseases(var/mob/living/carbon/L,var/block=0,var/bleeding=0)
+/mob/living/proc/oneway_contact_diseases(var/mob/living/carbon/L,var/block=0,var/bleeding=0)
 	assume_contact_diseases(L.diseases,L,block,bleeding)
 
 //This one is used for two-ways infections, such as hand-shakes, hugs, punches, people bumping into each others, etc
-/mob/living/carbon/proc/share_contact_diseases(var/mob/living/carbon/L,var/block=0,var/bleeding=0)
+/mob/living/proc/share_contact_diseases(var/mob/living/carbon/L,var/block=0,var/bleeding=0)
 	L.assume_contact_diseases(diseases ,src,block,bleeding)
 	assume_contact_diseases(L.diseases, L, block, bleeding)
 
 ///////////////////////DISEASE STUFF///////////////////////////////////////////////////////////////////
 
 //Blocked is whether clothing prevented the spread of contact/blood
-/mob/living/carbon/proc/assume_contact_diseases(list/disease_list, atom/source, blocked=0, bleeding=0)
+/mob/living/proc/assume_contact_diseases(list/disease_list, atom/source, blocked=0, bleeding=0)
 	if (istype(disease_list) && disease_list.len > 0)
 		for(var/datum/disease/advanced/V as anything in disease_list)
 			if (!V)
@@ -68,7 +68,7 @@
 				infect_disease(V, notes="(Blood, from [source])")
 
 //Called in Life() by humans (in handle_breath.dm), monkeys and mice
-/mob/living/carbon/proc/breath_airborne_diseases()//only tries to find Airborne spread diseases. Blood and Contact ones are handled by find_nearby_disease()
+/mob/living/proc/breath_airborne_diseases()//only tries to find Airborne spread diseases. Blood and Contact ones are handled by find_nearby_disease()
 	if (!check_airborne_sterility() && isturf(loc))//checking for sterile mouth protections
 		breath_airborne_diseases_from_clouds()
 
@@ -97,7 +97,7 @@
 			//otherwise it can produce exponential amounts of lag if many mobs are in an enclosed space
 			spread_airborne_diseases()
 
-/mob/living/carbon/proc/breath_airborne_diseases_from_clouds()
+/mob/living/proc/breath_airborne_diseases_from_clouds()
 	for(var/turf/T in range(1, src))
 		for(var/obj/effect/pathogen_cloud/cloud in T.contents)
 			if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
@@ -106,7 +106,7 @@
 						//if (V.spread & SPREAD_AIRBORNE)	//Anima Syndrome allows for clouds of non-airborne viruses
 						infect_disease(V, notes="(Airborne, from a pathogenic cloud[cloud.source ? " created by [key_name(cloud.source)]" : ""])")
 
-/mob/living/carbon/proc/handle_virus_updates(seconds_per_tick)
+/mob/living/proc/handle_virus_updates(seconds_per_tick)
 	if(status_flags & GODMODE)
 		return 0
 
@@ -114,7 +114,7 @@
 
 	activate_diseases(seconds_per_tick)
 
-/mob/living/carbon/proc/activate_diseases(seconds_per_tick)
+/mob/living/proc/activate_diseases(seconds_per_tick)
 	if (length(diseases))
 		var/active_disease = pick(diseases)//only one disease will activate its effects at a time.
 		for (var/datum/disease/advanced/V  as anything in diseases)

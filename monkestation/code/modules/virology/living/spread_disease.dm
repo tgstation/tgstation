@@ -4,7 +4,7 @@
 	///image
 	var/image/pathogen
 
-/mob/living/carbon/proc/spread_airborne_diseases()
+/mob/living/proc/spread_airborne_diseases()
 	//spreading our own airborne viruses
 	if (diseases && diseases.len > 0)
 		var/list/airborne_viruses = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_AIRBORNE)
