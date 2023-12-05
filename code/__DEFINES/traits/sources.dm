@@ -250,6 +250,9 @@
 /// Hearing trait that is from the hearing component
 #define CIRCUIT_HEAR_TRAIT "circuit_hear"
 
+/// This trait comes from when a mob is currently typing.
+#define CURRENTLY_TYPING_TRAIT "currently_typing"
+
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
 * granted/removed by [/obj/item/organ/internal/tongue]
@@ -271,3 +274,6 @@
 #define CLOWNOP_TRAIT "clownop"
 
 #define ANALYZER_TRAIT "analyzer_trait"
+
+/// Trait when something was labelled by a pen.
+#define PEN_LABEL_TRAIT "pen_label"

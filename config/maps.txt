@@ -47,6 +47,10 @@ map tramstation
 	votable
 endmap
 
+map pubbystation
+	votable
+endmap
+
 # Debug-only maps.
 
 map gateway_test

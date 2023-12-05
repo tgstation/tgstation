@@ -11,7 +11,7 @@
 	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
@@ -60,7 +60,7 @@
 	inhand_icon_state = "sabre"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10

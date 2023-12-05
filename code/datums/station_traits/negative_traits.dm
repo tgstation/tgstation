@@ -473,7 +473,7 @@
 
 ///Calculate how strong we currently are
 /datum/station_trait/nebula/hostile/proc/calculate_nebula_strength()
-	nebula_intensity = min(STATION_TIME_PASSED() / intensity_increment_time, maximum_nebula_intensity)
+	nebula_intensity = min(STATION_TIME_PASSED(), maximum_nebula_intensity) / intensity_increment_time
 
 ///Check how strong the stations shielding is
 /datum/station_trait/nebula/hostile/proc/get_shielding_level()

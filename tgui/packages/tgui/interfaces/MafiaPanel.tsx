@@ -54,14 +54,10 @@ type MafiaData = {
   player_voted_up: BooleanLike;
 };
 
-export const MafiaPanelData = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+export const MafiaPanelData = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { phase, roleinfo, admin_controls, messages, player_voted_up } = data;
-  const [mafia_tab, setMafiaMode] = useLocalState(
-    context,
-    'mafia_tab',
-    'Role list'
-  );
+  const [mafia_tab, setMafiaMode] = useLocalState('mafia_tab', 'Role list');
 
   if (phase === 'No Game') {
     return (
@@ -156,8 +152,8 @@ export const MafiaPanelData = (props, context) => {
   );
 };
 
-export const MafiaPanel = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+export const MafiaPanel = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { roleinfo } = data;
   return (
     <Window
@@ -172,10 +168,10 @@ export const MafiaPanel = (props, context) => {
   );
 };
 
-const MafiaChat = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaChat = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { messages } = data;
-  const [message_to_send, setMessagingBox] = useLocalState(context, 'Chat', '');
+  const [message_to_send, setMessagingBox] = useLocalState('Chat', '');
   return (
     <Stack vertical fill>
       {!!messages && (
@@ -216,8 +212,8 @@ const MafiaChat = (props, context) => {
   );
 };
 
-const MafiaLobby = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaLobby = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { lobbydata = [], is_observer } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
@@ -283,8 +279,8 @@ const MafiaLobby = (props, context) => {
   );
 };
 
-const MafiaRole = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaRole = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { phase, turn, roleinfo, timeleft } = data;
   return (
     <Section
@@ -329,8 +325,8 @@ const MafiaRole = (props, context) => {
   );
 };
 
-const MafiaListOfRoles = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaListOfRoles = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { all_roles } = data;
   return (
     <Section fill>
@@ -358,14 +354,10 @@ const MafiaListOfRoles = (props, context) => {
   );
 };
 
-const MafiaNotesTab = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaNotesTab = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { user_notes } = data;
-  const [note_message, setNotesMessage] = useLocalState(
-    context,
-    'Notes',
-    user_notes
-  );
+  const [note_message, setNotesMessage] = useLocalState('Notes', user_notes);
   return (
     <Section grow fill>
       <TextArea
@@ -400,8 +392,8 @@ const MafiaNotesTab = (props, context) => {
   );
 };
 
-const MafiaJudgement = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaJudgement = (props) => {
+  const { act, data } = useBackend();
   return (
     <Section title="Judgement">
       <Flex>
@@ -428,8 +420,8 @@ const MafiaJudgement = (props, context) => {
   );
 };
 
-const MafiaPlayers = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaPlayers = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { players = [], person_voted_up_ref } = data;
   return (
     <Section fill scrollable title="Players">
@@ -474,8 +466,8 @@ const MafiaPlayers = (props, context) => {
   );
 };
 
-const MafiaAdmin = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaAdmin = (props) => {
+  const { act, data } = useBackend();
   return (
     <Collapsible title="ADMIN CONTROLS" color="red">
       <Section>

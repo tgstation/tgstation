@@ -10,11 +10,10 @@ type ReactingData = MixingData & {
   reagentAlkaline: number;
 };
 
-export const ChemReactionChamber = (props, context) => {
-  const { act, data } = useBackend<ReactingData>(context);
+export const ChemReactionChamber = (props) => {
+  const { act, data } = useBackend<ReactingData>();
 
   const [reagentQuantity, setReagentQuantity] = useLocalState(
-    context,
     'reagentQuantity',
     1
   );
