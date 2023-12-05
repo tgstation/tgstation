@@ -242,6 +242,7 @@
 	badness = EFFECT_DANGER_ANNOYING
 
 /datum/symptom/vitreous/activate(mob/living/carbon/human/H)
+	H.Shake(3, 3, 3 SECONDS)
 	if(ishuman(H))
 		var/obj/item/reagent_containers/glass_to_shatter = H.get_active_held_item()
 		var/obj/item/bodypart/check_arm = H.get_active_hand()
