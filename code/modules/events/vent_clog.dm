@@ -36,8 +36,9 @@
 	///The list of decals we will choose from to spawn when producing a mob
 	var/list/filth_spawn_types = list()
 
-/datum/round_event/vent_clog/announce()
-	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(vent)].", "Custodial Notification")
+/datum/round_event/vent_clog/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
+	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area].", "Custodial Notification")
 
 /datum/round_event/vent_clog/setup()
 	vent = get_vent()
@@ -227,8 +228,9 @@
 	)
 	return pick(mob_list)
 
-/datum/round_event/vent_clog/major/announce()
-	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(vent)] area.", "Infestation Alert")
+/datum/round_event/vent_clog/major/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
+	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area] area.", "Infestation Alert")
 
 /datum/round_event_control/vent_clog/critical
 	name = "Ventilation Clog: Critical"
@@ -250,8 +252,9 @@
 		/obj/effect/decal/cleanable/blood/splatter,
 	)
 
-/datum/round_event/vent_clog/critical/announce()
-	priority_announce("Potentially hazardous lifesigns detected in the [get_area_name(vent)] ventilation network.", "Security Alert")
+/datum/round_event/vent_clog/critical/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
+	priority_announce("Potentially hazardous lifesigns detected in the [event_area] ventilation network.", "Security Alert")
 
 /datum/round_event/vent_clog/critical/get_mob()
 	var/static/list/mob_list = list(
@@ -282,8 +285,9 @@
 		/obj/effect/decal/cleanable/vomit,
 	)
 
-/datum/round_event/vent_clog/strange/announce()
-	priority_announce("Unusual lifesign readings detected in the [get_area_name(vent)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
+/datum/round_event/vent_clog/strange/announce(fake)
+	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
+	priority_announce("Unusual lifesign readings detected in the [event_area] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/vent_clog/strange/get_mob()
 	var/static/list/mob_list = list(
