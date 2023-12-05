@@ -38,7 +38,7 @@
 /mob/living/proc/check_bodypart_bleeding(zone)
 	return FALSE
 
-/mob/living/carbon/check_bodypart_bleeding(zone)
+/mob/living/carbon/human/check_bodypart_bleeding(zone)
 	var/bleeding = FALSE
 	var/list/clothing_to_check = list(
 		wear_mask,
