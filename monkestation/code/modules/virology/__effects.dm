@@ -24,8 +24,8 @@
 		block = perp.check_contact_sterility(BODY_ZONE_LEGS)
 		bleeding = perp.check_bodypart_bleeding(BODY_ZONE_LEGS)
 
-	if (!block)
-		if (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-			perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a broken virus dish[last_openner ? " broken by [last_openner]" : ""])")
-		else if (bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
-			perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a broken virus dish[last_openner ? " broken by [last_openner]" : ""])")
+		
+	if (!block && contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+		perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a broken virus dish[last_openner ? " broken by [last_openner]" : ""])")
+	else if (bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
+		perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a broken virus dish[last_openner ? " broken by [last_openner]" : ""])")

@@ -34,11 +34,10 @@ GLOBAL_LIST_INIT(infected_items, list())
 	if (bodypart)
 		var/block = perp.check_contact_sterility(bodypart)
 		var/bleeding = perp.check_bodypart_bleeding(bodypart)
-		if (!block)
-			if (D.spread_flags & DISEASE_SPREAD_AIRBORNE)
-				perp.infect_disease(D, notes="(Contact, from picking up \a [src])")
-			else if (bleeding && (D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))//if we're covered with a blood-spreading disease, we may infect people with bleeding hands.
-				perp.infect_disease(D, notes="(Blood, from picking up \a [src])")
+		if (!block && (D.spread_flags & DISEASE_SPREAD_AIRBORNE))
+			perp.infect_disease(D, notes="(Contact, from picking up \a [src])")
+		else if (bleeding && (D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))//if we're covered with a blood-spreading disease, we may infect people with bleeding hands.
+			perp.infect_disease(D, notes="(Blood, from picking up \a [src])")
 
 /obj/item/infect_disease(datum/disease/advanced/disease, forced = FALSE, notes = "", decay = TRUE)
 	if(!istype(disease))

@@ -30,7 +30,7 @@
 	for(var/item in checks)
 		for (var/thing in clothing_to_check)
 			var/obj/item/cloth = thing
-			if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && prob(cloth.get_armor_rating(BIO)))
+			if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
 				block = TRUE
 	return block
 
@@ -40,9 +40,24 @@
 
 /mob/living/carbon/check_bodypart_bleeding(zone)
 	var/bleeding = FALSE
+	var/list/clothing_to_check = list(
+		wear_mask,
+		w_uniform,
+		head,
+		wear_suit,
+		back,
+		gloves,
+		handcuffed,
+		legcuffed,
+		belt,
+		shoes,
+		wear_mask,
+		glasses,
+		ears,
+		wear_id)
 	var/list/checks = list(zone)
 	if(zone == BODY_ZONE_EVERYTHING)
-		checks = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD)
+		checks = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_R_ARM, BODY_ZONE_HEAD)
 	if(zone == BODY_ZONE_LEGS)
 		checks = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	if(zone == BODY_ZONE_ARMS)
@@ -52,8 +67,11 @@
 		var/obj/item/bodypart/bodypart = get_bodypart(item)
 		if(!bodypart)
 			return FALSE
-		if(bodypart.get_modified_bleed_rate())	
-			bleeding = TRUE
+		for (var/thing in clothing_to_check)
+			var/obj/item/cloth = thing
+			if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
+				if(bodypart.get_modified_bleed_rate())	
+					return TRUE
 
 	return bleeding
 

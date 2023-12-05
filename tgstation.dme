@@ -6598,6 +6598,8 @@
 #include "monkestation\code\modules\virology\disease\symtoms\stage3.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\stage4.dm"
 #include "monkestation\code\modules\virology\immune_systems\_immune_system.dm"
+#include "monkestation\code\modules\virology\items\antibodyscanner.dm"
+#include "monkestation\code\modules\virology\items\base_item.dm"
 #include "monkestation\code\modules\virology\items\disease_disk.dm"
 #include "monkestation\code\modules\virology\living\infection_procs.dm"
 #include "monkestation\code\modules\virology\living\mouse.dm"
