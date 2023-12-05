@@ -13,7 +13,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
 	if(IsAdminAdvancedProcCall())
-		PERMISSIONS_ELEVATION_DETECTED_NOTIFICATION(usr)
+		alert_to_permissions_elevation_attempt(usr)
 		if (name == "NoRank") //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
 			QDEL_IN(src, 0)
 			CRASH("Admin proc call creation of admin datum")
@@ -33,7 +33,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /datum/admin_rank/Destroy()
 	if(IsAdminAdvancedProcCall())
-		PERMISSIONS_ELEVATION_DETECTED_NOTIFICATION(usr)
+		alert_to_permissions_elevation_attempt(usr)
 		return QDEL_HINT_LETMELIVE
 	. = ..()
 
@@ -43,7 +43,7 @@ GLOBAL_PROTECT(protected_ranks)
 // Adds/removes rights to this admin_rank
 /datum/admin_rank/proc/process_keyword(group, group_count, datum/admin_rank/previous_rank)
 	if(IsAdminAdvancedProcCall())
-		PERMISSIONS_ELEVATION_DETECTED_NOTIFICATION(usr)
+		alert_to_permissions_elevation_attempt(usr)
 		return
 	var/list/keywords = splittext(group, " ")
 	var/flag = 0
