@@ -423,7 +423,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		L += D.Copy()
 	return L
 
-/datum/disease/advanced/cure(var/mob/living/carbon/mob,var/condition=0)
+/datum/disease/advanced/cure(mob/living/carbon/mob, condition=0)
 	/* TODO
 	switch (condition)
 		if (0)
@@ -474,7 +474,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	return list(lowest_stage,highest_concentration)
 
-/datum/disease/advanced/proc/name(var/override=FALSE)
+/datum/disease/advanced/proc/name(override=FALSE)
 	.= "[form] #["[uniqueID]"][childID ? "-["[childID]"]" : ""]"
 	
 	if (!override && ("[uniqueID]-[subID]" in GLOB.virusDB))
@@ -684,14 +684,13 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	if (chosen_form == "infect with an already existing pathogen")
 		var/list/existing_pathogen = list()
-		for (var/pathogen in GLOB.inspectable_diseases)
-			var/datum/disease/advanced/dis = GLOB.inspectable_diseases[pathogen]
-			existing_pathogen["[dis.real_name()]"] = pathogen
+		for(var/datum/disease/advanced/dis as anything in GLOB.inspectable_diseases)
+			existing_pathogen += dis
 		var/chosen_pathogen = input(C, "Choose a pathogen", "Choose a pathogen") as null | anything in existing_pathogen
 		if (!chosen_pathogen)
 			qdel(D)
 			return
-		var/datum/disease/advanced/dis = GLOB.inspectable_diseases[existing_pathogen[chosen_pathogen]]
+		var/datum/disease/advanced/dis = chosen_pathogen
 		D = dis.Copy()
 		D.origin = "[D.origin] (Badmin)"
 	else

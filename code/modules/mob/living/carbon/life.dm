@@ -510,9 +510,6 @@
 		if(SPT_PROB(D.infectivity, seconds_per_tick))
 			D.spread()
 
-		if(stat != DEAD || D.process_dead)
-			D.stage_act(seconds_per_tick, times_fired)
-
 /mob/living/carbon/handle_wounds(seconds_per_tick, times_fired)
 	for(var/thing in all_wounds)
 		var/datum/wound/W = thing
