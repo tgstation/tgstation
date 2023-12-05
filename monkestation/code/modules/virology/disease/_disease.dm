@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	///pathogenic warfare - If you have a second disease of a form name in the list they will start fighting.
 	var/list/can_kill = list("Bacteria")
 
-	//When an opportunity for the disease to spread to a mob arrives, runs this percentage through prob()
+	//When an opportunity for the disease to spread_flags to a mob arrives, runs this percentage through prob()
 	//Ignored if infected materials are ingested (injected with infected blood, eating infected meat)
 	var/infectionchance = 70
 	var/infectionchance_base = 70
@@ -46,7 +46,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/uniqueID = 0// 0000 to 9999, set when the pathogen gets initially created
 	var/subID = 0// 000 to 9999, set if the pathogen underwent effect or antigen mutation
 	var/childID = 0// 01 to 99, incremented as the pathogen gets analyzed after a mutation
-
+	//bitflag showing which transmission types are allowed for this disease
+	var/allowed_transmission = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_AIRBORNE
 
 /proc/filter_disease_by_spread(list/diseases, required = NONE)
 	if(!length(diseases))
@@ -74,7 +75,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 			if (L.client)
 				L.client.images |= infectedMob.pathogen
 		return
-		
+
 	if (spread_flags & DISEASE_SPREAD_BLOOD)
 		GLOB.infected_contact_mobs |= infectedMob
 		if (!infectedMob.pathogen)
@@ -242,7 +243,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		return e
 
 /datum/disease/advanced/proc/randomize_spread()
-	spread_flags = DISEASE_SPREAD_BLOOD	//without blood spread, the disease cannot be extracted or cured, we don't want that for regular diseases
+	spread_flags = DISEASE_SPREAD_BLOOD	//without blood spread_flags, the disease cannot be extracted or cured, we don't want that for regular diseases
 	if (prob(5))			//5% chance of spreading through both contact and the air.
 		spread_flags |= DISEASE_SPREAD_CONTACT_SKIN
 		spread_flags |= DISEASE_SPREAD_AIRBORNE
@@ -577,7 +578,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	v.fields["description_hidden"] = get_info(TRUE)
 	v.fields["custom_desc"] = "No comments yet."
 	v.fields["antigen"] = get_antigen_string()
-	v.fields["spread type"] = get_spread_string()
+	v.fields["spread_flags type"] = get_spread_string()
 	v.fields["danger"] = "Undetermined"
 	GLOB.virusDB["[uniqueID]-[subID]"] = v
 	return 1
@@ -591,7 +592,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	stage_variance = -1
 	can_kill = list("Bacteria")
 
-/datum/disease/advanced/bacteria//faster spread and progression, but only 3 stages max, and reset to stage 1 on every spread
+/datum/disease/advanced/bacteria//faster spread_flags and progression, but only 3 stages max, and reset to stage 1 on every spread_flags
 	form = "Bacteria"
 	max_stages = 3
 	infectionchance = 90
@@ -600,7 +601,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	stage_variance = -4
 	can_kill = list("Parasite")
 
-/datum/disease/advanced/parasite//slower spread. stage preserved on spread
+/datum/disease/advanced/parasite//slower spread_flags. stage preserved on spread_flags
 	form = "Parasite"
 	infectionchance = 50
 	infectionchance_base = 50
@@ -608,7 +609,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	stage_variance = 0
 	can_kill = list("Virus")
 
-/datum/disease/advanced/prion//very fast progression, but very slow spread and resets to stage 1.
+/datum/disease/advanced/prion//very fast progression, but very slow spread_flags and resets to stage 1.
 	form = "Prion"
 	infectionchance = 10
 	infectionchance_base = 10
@@ -657,3 +658,164 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if(!actual_disease)
 		return
 	actual_disease.create_disease_info_pane(usr)
+
+/proc/make_custom_virus(client/C, mob/living/infectedMob)
+	if(!istype(C) || !C.holder)
+		return 0
+
+	var/datum/disease/advanced/D = new /datum/disease/advanced()
+	D.origin = "Badmin"
+
+	var/list/known_forms = list()
+	for (var/disease_type in subtypesof(/datum/disease/advanced))
+		var/datum/disease/advanced/d_type = disease_type
+		known_forms[initial(d_type.form)] = d_type
+
+	known_forms += "custom"
+
+	if (islist(GLOB.inspectable_diseases) && GLOB.inspectable_diseases.len > 0)
+		known_forms += "infect with an already existing pathogen"
+
+	var/chosen_form = input(C, "Choose a form for your pathogen", "Choose a form") as null | anything in known_forms
+	if (!chosen_form)
+		qdel(D)
+		return
+
+	if (chosen_form == "infect with an already existing pathogen")
+		var/list/existing_pathogen = list()
+		for (var/pathogen in GLOB.inspectable_diseases)
+			var/datum/disease/advanced/dis = GLOB.inspectable_diseases[pathogen]
+			existing_pathogen["[dis.real_name()]"] = pathogen
+		var/chosen_pathogen = input(C, "Choose a pathogen", "Choose a pathogen") as null | anything in existing_pathogen
+		if (!chosen_pathogen)
+			qdel(D)
+			return
+		var/datum/disease/advanced/dis = GLOB.inspectable_diseases[existing_pathogen[chosen_pathogen]]
+		D = dis.Copy()
+		D.origin = "[D.origin] (Badmin)"
+	else
+		if (chosen_form == "custom")
+			var/form_name = copytext(sanitize(input(C, "Give your custom form a name", "Name your form", "Pathogen")  as null | text),1,MAX_NAME_LEN)
+			if (!form_name)
+				qdel(D)
+				return
+			D.form = form_name
+			D.max_stages = input(C, "How many stages will your pathogen have?", "Custom Pathogen", D.max_stages) as num
+			D.max_stages = clamp(D.max_stages,1,99)
+			D.infectionchance = input(C, "What will be your pathogen's infection chance?", "Custom Pathogen", D.infectionchance) as num
+			D.infectionchance = clamp(D.infectionchance,0,100)
+			D.infectionchance_base = D.infectionchance
+			D.stageprob = input(C, "What will be your pathogen's progression speed?", "Custom Pathogen", D.stageprob) as num
+			D.stageprob = clamp(D.stageprob,0,100)
+			D.stage_variance = input(C, "What will be your pathogen's stage variance?", "Custom Pathogen", D.stage_variance) as num
+			D.stageprob = clamp(D.stageprob,-1*D.max_stages,0)
+			//D.can_kill = something something a while loop but probably not worth the effort. If you need it for your bus code it yourself.
+		else
+			var/d_type = known_forms[chosen_form]
+			var/datum/disease/advanced/d_inst = new d_type
+			D.form = chosen_form
+			D.max_stages = d_inst.max_stages
+			D.infectionchance = d_inst.infectionchance
+			D.stageprob = d_inst.stageprob
+			D.stage_variance = d_inst.stage_variance
+			D.can_kill = d_inst.can_kill.Copy()
+			qdel(d_inst)
+
+		D.strength = input(C, "What will be your pathogen's strength? (1-50 is trivial to cure. 50-100 requires a bit more effort)", "Pathogen Strength", D.infectionchance) as num
+		D.strength = clamp(D.strength,0,100)
+
+		D.robustness = input(C, "What will be your pathogen's robustness? (1-100) Lower values mean that infected can carry the pathogen without getting affected by its symptoms.", "Pathogen Robustness", D.infectionchance) as num
+		D.robustness = clamp(D.strength,0,100)
+
+		D.uniqueID = clamp(input(C, "You can specify the 4 number ID for your Pathogen, or just use this randomly generated one.", "Pick a unique ID", rand(0,9999)) as num, 0, 9999)
+
+		D.subID = rand(0,9999)
+		D.childID = 0
+
+		for(var/i = 1; i <= D.max_stages; i++)  // run through this loop until everything is set
+			var/datum/symptom/symptom = input(C, "Choose a symptom for your disease's stage [i] (out of [D.max_stages])", "Choose a Symptom") as null | anything in (subtypesof(/datum/symptom))
+			if (!symptom)
+				return 0
+
+			var/datum/symptom/e = new symptom(D)
+			e.stage = i
+			e.chance = input(C, "Choose the default chance for this effect to activate", "Effect", e.chance) as null | num
+			e.chance = clamp(e.chance,0,100)
+			e.max_chance = input(C, "Choose the maximum chance for this effect to activate", "Effect", e.max_chance) as null | num
+			e.max_chance = clamp(e.max_chance,0,100)
+			e.multiplier = input(C, "Choose the default strength for this effect", "Effect", e.multiplier) as null | num
+			e.multiplier = clamp(e.multiplier,0,100)
+			e.max_multiplier = input(C, "Choose the maximum strength for this effect", "Effect", e.max_multiplier) as null | num
+			e.max_multiplier = clamp(e.max_multiplier,0,100)
+
+			D.log += "Added [e.name] at [e.chance]% chance and [e.multiplier] strength<br>"
+			D.symptoms += e
+
+		if (alert("Do you want to specify which antigen are selected?","Choose your Antigen","Yes","No") == "Yes")
+			D.antigen = list(input(C, "Choose your first antigen", "Choose your Antigen") as null | anything in GLOB.all_antigens)
+			if (!D.antigen)
+				D.antigen = list(input(C, "Choose your second antigen", "Choose your Antigen") as null | anything in GLOB.all_antigens)
+			else
+				D.antigen |= input(C, "Choose your second antigen", "Choose your Antigen") as null | anything in GLOB.all_antigens
+			if (!D.antigen)
+				if (alert("Beware, your disease having no antigen means that it's incurable. We can still roll some random antigen for you. Are you sure you want your pathogen to have no antigen anyway?","Choose your Antigen","Yes","No") == "No")
+					D.roll_antigen()
+				else
+					D.antigen = list()
+		else
+			D.roll_antigen()
+
+		var/list/randomhexes = list("8","9","a","b","c","d","e")
+		D.color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
+		D.pattern = rand(1,6)
+		D.pattern_color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
+		if (alert("Do you want to specify the appearance of your pathogen in a petri dish?","Choose your appearance","Yes","No") == "Yes")
+			D.color = input(C, "Choose the color of the dish", "Cosmetic") as color
+			D.pattern = input(C, "Choose the shape of the pattern inside the dish (1 to 6)", "Cosmetic",rand(1,6)) as num
+			D.pattern = clamp(D.pattern,1,6)
+			D.pattern_color = input(C, "Choose the color of the pattern", "Cosmetic") as color
+
+		D.spread_flags = 0
+		if (alert("Can this virus spread_flags into blood? (warning! if choosing No, this virus will be impossible to sample and analyse!)","Spreading Vectors","Yes","No") == "Yes")
+			D.spread_flags |= DISEASE_SPREAD_BLOOD
+		if(D.allowed_transmission & DISEASE_SPREAD_CONTACT_SKIN)
+			if (alert("Can this virus spread_flags by contact, and on items?","Spreading Vectors","Yes","No") == "Yes")
+				D.spread_flags |= DISEASE_SPREAD_CONTACT_SKIN
+		if(D.allowed_transmission & DISEASE_SPREAD_AIRBORNE)
+			if (alert("Can this virus spread_flags through the air?","Spreading Vectors","Yes","No") == "Yes")
+				D.spread_flags |= DISEASE_SPREAD_AIRBORNE
+		/*
+		if(D.allowed_transmission & SPREAD_COLONY)
+			if (alert("Does this fungus prefer suits? Exclusive with contact/air.","Spreading Vectors","Yes","No") == "Yes")
+				D.spread_flags |= SPREAD_COLONY
+				D.spread_flags &= ~(SPREAD_BLOOD|SPREAD_AIRBORNE)
+		if(D.allowed_transmission & SPREAD_MEMETIC)
+			if (alert("Can this virus spread_flags through words?","Spreading Vectors","Yes","No") == "Yes")
+				D.spread_flags |= SPREAD_MEMETIC
+		*/
+		GLOB.inspectable_diseases -= "[D.uniqueID]-[D.subID]"//little odds of this happening thanks to subID but who knows
+		//D.update_global_log()
+
+		if (alert("Lastly, do you want this pathogen to be added to the station's Database? (allows medical HUDs to locate infected mobs, among other things)","Pathogen Database","Yes","No") == "Yes")
+			D.addToDB()
+
+	if (istype(infectedMob))
+		D.log += "<br />[ROUND_TIME()] Infected [key_name(infectedMob)]"
+		infectedMob.diseases += D
+		var/nickname = ""
+		if ("[D.uniqueID]-[D.subID]" in GLOB.virusDB)
+			var/datum/data/record/v = GLOB.virusDB["[D.uniqueID]-[D.subID]"]
+			nickname = v.fields["nickname"] ? " \"[v.fields["nickname"]]\"" : ""
+		log_admin("[infectedMob] was infected with [D.form] #[D.uniqueID]-[D.subID][nickname] by [C.ckey]")
+		message_admins("[infectedMob] was infected with  [D.form] #["[D.uniqueID]"]-["[D.subID]"][nickname] by [C.ckey]")
+		D.AddToGoggleView(infectedMob)
+	else
+		var/obj/item/weapon/virusdish/dish = new(C.mob.loc)
+		dish.contained_virus = D
+		dish.growth = rand(5, 50)
+		dish.name = "growth dish (Unknown [D.form])"
+		if ("[D.uniqueID]-[D.subID]" in GLOB.virusDB)
+			dish.name = "growth dish ([D.name(TRUE)])"
+		dish.update_icon()
+
+	return 1

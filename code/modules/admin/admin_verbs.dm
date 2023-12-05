@@ -778,13 +778,9 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!istype(T))
 		to_chat(src, span_notice("You can only give a disease to a mob of type /mob/living."), confidential = TRUE)
 		return
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	if(!D)
-		return
-	T.ForceContractDisease(new D, FALSE, TRUE)
+	//T.ForceContractDisease(new D, FALSE, TRUE)
+	make_custom_virus(src, T)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Disease") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave [key_name_admin(T)] the disease [D]."))
 
 /client/proc/object_say(obj/O in world)
 	set category = "Admin.Events"
