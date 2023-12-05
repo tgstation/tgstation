@@ -293,6 +293,11 @@
 /mob/living/basic/bot/medbot/proc/medicate_patient(mob/living/carbon/human/patient)
 	if(DOING_INTERACTION(src, TEND_DAMAGE_INTERACTION))
 		return
+
+	if(!isnull(client))
+		if((damage_type_healer == HEAL_ALL_DAMAGE && patient.get_total_damage() <= heal_threshold) || (!(damage_type_healer == HEAL_ALL_DAMAGE) && patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold))
+			to_chat(src, "[patient] is healthy! Your programming prevents you from tending the wounds of anyone with less than [heal_threshold + 1] [damage_type_healer == HEAL_ALL_DAMAGE ? "total" : damage_type_healer] damage.")
+			return
 	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
 
 	if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
@@ -319,8 +324,7 @@
 	//Go into idle only when we're done
 	if(done_healing)
 		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
-	//Player bots can heal more than their threshold but not automatically
-		to_chat(src, "[patient] is below your healing threshold of [heal_threshold].")
+		to_chat(src, "[patient] is now healthy!")
 		update_bot_mode(new_mode = BOT_IDLE)
 	//If player-controlled, call them to heal again here for continous player healing
 	else if(!isnull(client))
