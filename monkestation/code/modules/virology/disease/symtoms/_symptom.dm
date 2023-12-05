@@ -39,7 +39,7 @@
 
 
 /datum/symptom/proc/can_run_effect(active_stage = -1, seconds_per_tick)
-	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1) && prob(chance * seconds_per_tick))
+	if((count < max_count || max_count == -1) && (stage <= active_stage || active_stage == -1) && prob(min(chance * seconds_per_tick, max_chance)))
 		return 1
 	return 0
 

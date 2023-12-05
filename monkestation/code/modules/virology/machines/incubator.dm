@@ -231,6 +231,7 @@
 		var/inserted = dish_datum != null
 		dish_ui_datum["inserted"] = inserted
 		if (!inserted)
+			dish_ui_datum["name"] = "Empty Slot"
 			continue
 
 		dish_ui_datum["name"] = dish_datum.dish.name
@@ -240,6 +241,7 @@
 		dish_ui_datum["minor_mutations_strength"] = dish_datum.minor_mutation_strength
 		dish_ui_datum["minor_mutations_robustness"] = dish_datum.minor_mutation_robustness
 		dish_ui_datum["minor_mutations_effects"] = dish_datum.minor_mutation_effects
+		dish_ui_datum["dish_slot"] = i
 
 	return data
 
