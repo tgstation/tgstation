@@ -329,13 +329,13 @@ const PageMain = (props, context) => {
 
             <Flex.Item>
               <AlertButton
-                alertLevel="chimpcon 1"
+                alertLevel="green"
                 showAlertLevelConfirm={showAlertLevelConfirm}
                 setShowAlertLevelConfirm={setShowAlertLevelConfirm}
               />
 
               <AlertButton
-                alertLevel="chimpcon 2"
+                alertLevel="blue"
                 showAlertLevelConfirm={showAlertLevelConfirm}
                 setShowAlertLevelConfirm={setShowAlertLevelConfirm}
               />
