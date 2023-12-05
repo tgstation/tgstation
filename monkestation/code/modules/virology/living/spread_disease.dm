@@ -1,6 +1,8 @@
 /mob/living
 	///our immune system
 	var/datum/immune_system/immune_system
+
+/atom
 	///image
 	var/image/pathogen
 

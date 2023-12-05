@@ -6611,6 +6611,7 @@
 #include "monkestation\code\modules\virology\machines\incubator.dm"
 #include "monkestation\code\modules\virology\machines\isolator.dm"
 #include "monkestation\code\modules\virology\machines\splicer.dm"
+#include "monkestation\code\modules\virology\objects\cleanables.dm"
 #include "monkestation\code\modules\virology\objects\generic_item.dm"
 #include "monkestation\code\modules\virology\objects\pathogen_cloud.dm"
 #include "monkestation\code\modules\virology\objects\science_goggles.dm"

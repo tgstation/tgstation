@@ -69,10 +69,12 @@
 			return FALSE
 		for (var/thing in clothing_to_check)
 			var/obj/item/cloth = thing
-			if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
+			if(!cloth)
 				if(bodypart.get_modified_bleed_rate())	
 					return TRUE
-
+			else if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
+				if(bodypart.get_modified_bleed_rate())	
+					return TRUE
 	return bleeding
 
 /mob/living/proc/check_airborne_sterility()

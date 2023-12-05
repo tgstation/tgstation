@@ -23,12 +23,11 @@
 				M.client.images |= L.pathogen
 		for (var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
 			if (C.pathogen)
-				M.client.images |= C.pathogen
-		/*
-		for (var/obj/effect/decal/cleanable/C in infected_cleanables)
+				M.client.images |= C.pathogen	
+		for (var/obj/effect/decal/cleanable/C in GLOB.infected_cleanables)
 			if (C.pathogen)
 				M.client.images |= C.pathogen
-		*/
+		
 
 /obj/item/clothing/glasses/science/proc/disable(mob/M)
 	GLOB.science_goggles_wearers.Remove(M)
@@ -38,10 +37,9 @@
 		M.client.images -= L.pathogen
 	for(var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
 		M.client.images -= C.pathogen
-	/*
-	for (var/obj/effect/decal/cleanable/C in infected_cleanables)
+	for (var/obj/effect/decal/cleanable/C in GLOB.infected_cleanables)
 		M.client.images -= C.pathogen
-	*/
+	
 
 /obj/item/clothing/glasses/science/equipped(mob/M, slot)
 	..()
