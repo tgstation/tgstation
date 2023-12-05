@@ -37,7 +37,6 @@
 	var/obj/item/weapon
 	///our mop item
 	var/obj/item/mop/our_mop
-
 	///list of our officer titles
 	var/static/list/officers_titles = list(
 		JOB_CAPTAIN,
@@ -45,7 +44,6 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_RESEARCH_DIRECTOR,
 	)
-
 	///job titles we can get
 	var/static/list/job_titles = list(
 		JOB_CAPTAIN = "Cpt.",
