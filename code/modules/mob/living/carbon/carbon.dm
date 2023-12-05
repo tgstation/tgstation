@@ -528,10 +528,9 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-// Stamina is determined by the initial maxHealth of the mob
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION && (initial(maxHealth) - stam) <= crit_threshold)
+	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold)
 		if (!stat)
 			enter_stamcrit()
 	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
@@ -768,7 +767,7 @@
 	if(!client || !hud_used?.stamina)
 		return
 
-	var/stam_crit_threshold = initial(maxHealth) - crit_threshold
+	var/stam_crit_threshold = maxHealth - crit_threshold
 
 	if(stat == DEAD)
 		hud_used.stamina.icon_state = "stamina_dead"
@@ -779,13 +778,13 @@
 
 		if(shown_stamina_loss >= stam_crit_threshold)
 			hud_used.stamina.icon_state = "stamina_crit"
-		else if(shown_stamina_loss > initial(maxHealth)*0.8)
+		else if(shown_stamina_loss > maxHealth*0.8)
 			hud_used.stamina.icon_state = "stamina_5"
-		else if(shown_stamina_loss > initial(maxHealth)*0.6)
+		else if(shown_stamina_loss > maxHealth*0.6)
 			hud_used.stamina.icon_state = "stamina_4"
-		else if(shown_stamina_loss > initial(maxHealth)*0.4)
+		else if(shown_stamina_loss > maxHealth*0.4)
 			hud_used.stamina.icon_state = "stamina_3"
-		else if(shown_stamina_loss > initial(maxHealth)*0.2)
+		else if(shown_stamina_loss > maxHealth*0.2)
 			hud_used.stamina.icon_state = "stamina_2"
 		else if(shown_stamina_loss > 0)
 			hud_used.stamina.icon_state = "stamina_1"
