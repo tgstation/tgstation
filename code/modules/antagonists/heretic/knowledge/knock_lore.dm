@@ -94,7 +94,7 @@
 
 /datum/heretic_knowledge/key_ring
 	name = "Key Keeper’s Burden"
-	desc = "Allows you to transmute a wallet, an iron rod, and an ID card to create an Eldritch Card. \
+	desc = "Allows you to transmute a box, an iron rod, and an ID card to create an Eldritch Card. \
 		It functions the same as an ID Card, but attacking it with an ID card fuses it and gains its access. \
 		You can use it in-hand to change its form to a card you fused. \
 		Does not preserve the card used in the ritual."
@@ -112,7 +112,7 @@
 
 /datum/heretic_knowledge/limited_amount/rite_of_passage // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
 	name = "Rite Of Passage"
-	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Consecrated Book. \
+	desc = "Allows you to transmute a crayon, a wooden plank, and a multitool to create a Consecrated Book. \
 		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
 	gain_text = "With this I can repel those that intend me harm."
 	required_atoms = list(
