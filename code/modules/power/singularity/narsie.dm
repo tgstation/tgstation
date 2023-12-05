@@ -123,7 +123,7 @@
 			summon_objective.summoned = FALSE
 			summon_objective.killed = TRUE
 
-	send_to_playing_players(span_narsie(span_bold("\"[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"")))
+	send_to_playing_players(span_narsie(span_bold(pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-"))))
 	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
 
 /obj/narsie/vv_get_dropdown()
