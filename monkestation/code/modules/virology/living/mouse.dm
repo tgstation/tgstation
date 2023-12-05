@@ -23,6 +23,7 @@
 		)
 		var/datum/disease/advanced/disease = new virus_choice
 		disease.makerandom(list(50,90),list(10,100),anti,bad,src)
+		diseases = list()
 		diseases |= disease
 		disease.after_add()
 		src.med_hud_set_status()
