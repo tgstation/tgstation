@@ -41,11 +41,11 @@
 	return FALSE
 
 //This one is used for one-way infections, such as getting splashed with someone's blood due to clobbering them to death
-/mob/living/proc/oneway_contact_diseases(var/mob/living/carbon/L,var/block=0,var/bleeding=0)
+/mob/living/proc/oneway_contact_diseases(mob/living/carbon/L, block=0, bleeding=0)
 	assume_contact_diseases(L.diseases,L,block,bleeding)
 
 //This one is used for two-ways infections, such as hand-shakes, hugs, punches, people bumping into each others, etc
-/mob/living/proc/share_contact_diseases(var/mob/living/carbon/L,var/block=0,var/bleeding=0)
+/mob/living/proc/share_contact_diseases(mob/living/carbon/L, block=0, bleeding=0)
 	L.assume_contact_diseases(diseases ,src,block,bleeding)
 	assume_contact_diseases(L.diseases, L, block, bleeding)
 

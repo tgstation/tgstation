@@ -146,7 +146,7 @@
 		filling.icon += mix_color_from_reagents(vial.reagents.reagent_list)
 		overlays += filling
 
-/obj/machinery/disease2/centrifuge/proc/add_vial_dat(var/obj/item/reagent_containers/cup/beaker/vial/vial, var/list/vial_task = list(0,0,0,0,0), var/slot = 1)
+/obj/machinery/disease2/centrifuge/proc/add_vial_dat(obj/item/reagent_containers/cup/beaker/vial/vial, list/vial_task = list(0,0,0,0,0), slot = 1)
 	var/dat = ""
 	var/valid = vial_valid[slot]
 
@@ -183,7 +183,7 @@
 					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (no pathogen detected)</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 	return dat
 
-/obj/machinery/disease2/centrifuge/attack_hand(var/mob/user)
+/obj/machinery/disease2/centrifuge/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(machine_stat & (BROKEN))
 		to_chat(user, "<span class='notice'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
@@ -265,7 +265,7 @@
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/disease2/centrifuge/proc/centrifuge_act(var/obj/item/reagent_containers/cup/beaker/vial/vial, var/list/vial_task = list(0,0,0,0,0))
+/obj/machinery/disease2/centrifuge/proc/centrifuge_act(obj/item/reagent_containers/cup/beaker/vial/vial, list/vial_task = list(0,0,0,0,0))
 	var/list/result = list(0,0,0,0,0)
 	if (!vial)
 		return result
@@ -367,7 +367,7 @@
 	updateUsrDialog()
 	attack_hand(usr)
 
-/obj/machinery/disease2/centrifuge/proc/isolate(var/obj/item/reagent_containers/cup/beaker/vial/vial,var/mob/user)
+/obj/machinery/disease2/centrifuge/proc/isolate(obj/item/reagent_containers/cup/beaker/vial/vial, mob/user)
 	var/list/result = list(0,0,0,0,0)
 	if (!vial)
 		return result

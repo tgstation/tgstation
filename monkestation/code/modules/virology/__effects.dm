@@ -9,7 +9,7 @@
 	var/last_openner
 	var/datum/disease/advanced/contained_virus
 
-/obj/effect/decal/cleanable/virusdish/Entered(var/mob/living/perp)
+/obj/effect/decal/cleanable/virusdish/Entered(mob/living/perp)
 	..()
 	infection_attempt(perp)
 

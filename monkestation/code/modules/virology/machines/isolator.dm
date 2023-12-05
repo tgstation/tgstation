@@ -66,7 +66,7 @@
 		src.updateUsrDialog()
 		return
 
-/obj/machinery/disease2/isolator/attack_hand(mob/user as mob)
+/obj/machinery/disease2/isolator/attack_hand(mob/user, list/modifiers)
 	if(machine_stat & BROKEN)
 		return
 	user.machine = src

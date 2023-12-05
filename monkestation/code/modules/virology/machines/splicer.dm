@@ -87,7 +87,7 @@
 		data["dish_error"] = "not enough cells"
 	return data
 
-/obj/machinery/computer/diseasesplicer/attack_hand(var/mob/user)
+/obj/machinery/computer/diseasesplicer/attack_hand(mob/user, list/modifiers)
 	. = ..()
 
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -192,7 +192,7 @@
 	spliced = TRUE
 	update_icon()
 
-/obj/machinery/computer/diseasesplicer/proc/dish2buffer(var/target_stage)
+/obj/machinery/computer/diseasesplicer/proc/dish2buffer(target_stage)
 	if(!dish || !dish.contained_virus)
 		return
 	if(dish.growth < 50)

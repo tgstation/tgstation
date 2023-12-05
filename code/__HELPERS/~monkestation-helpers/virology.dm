@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(alien_antigens, list(
 	ANTIGEN_Z,
 ))
 
-/proc/antigen_family(var/id)
+/proc/antigen_family(id)
 	switch(id)
 		if (ANTIGEN_BLOOD)
 			return GLOB.blood_antigens

@@ -71,7 +71,7 @@
 		return FALSE
 
 
-/obj/machinery/disease2/incubator/proc/addDish(var/obj/item/weapon/virusdish/VD, var/mob/user, var/slot)
+/obj/machinery/disease2/incubator/proc/addDish(obj/item/weapon/virusdish/VD, mob/user, slot)
 	if (!VD.open)
 		to_chat(user, "<span class='warning'>You must open the dish's lid before it can be put inside the incubator. Be sure to wear proper protection first (at least a sterile mask and latex gloves).</span>")
 		return
@@ -259,7 +259,7 @@
 	update_icon()
 
 
-/obj/machinery/disease2/incubator/proc/find_dish_datum(var/obj/item/weapon/virusdish/dish)
+/obj/machinery/disease2/incubator/proc/find_dish_datum(obj/item/weapon/virusdish/dish)
 	for (var/dish_incubator_dish/dish_datum in dish_data)
 		if (dish_datum.dish == dish)
 			return dish_datum
@@ -267,7 +267,7 @@
 	return null
 
 
-/obj/machinery/disease2/incubator/proc/update_major(var/obj/item/weapon/virusdish/dish)
+/obj/machinery/disease2/incubator/proc/update_major(obj/item/weapon/virusdish/dish)
 	var/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if (dish_datum == null)
 		return
@@ -277,7 +277,7 @@
 	dish_datum.major_mutations_count++
 
 
-/obj/machinery/disease2/incubator/proc/update_minor(var/obj/item/weapon/virusdish/dish, var/str=0, var/rob=0, var/eff=0)
+/obj/machinery/disease2/incubator/proc/update_minor(obj/item/weapon/virusdish/dish, str=0, rob=0, eff=0)
 	var/dish_incubator_dish/dish_datum = find_dish_datum(dish)
 	if (dish_datum == null)
 		return
@@ -325,7 +325,7 @@
 			add_dish_sprite(dish_data[i], i)
 
 
-/obj/machinery/disease2/incubator/proc/add_dish_sprite(var/dish_incubator_dish/dish_datum, var/slot)
+/obj/machinery/disease2/incubator/proc/add_dish_sprite(dish_incubator_dish/dish_datum, slot)
 	var/obj/item/weapon/virusdish/dish = dish_datum.dish
 
 	slot--

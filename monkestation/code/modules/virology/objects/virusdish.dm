@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	else
 		GLOB.virusdishes.Remove(src)
 
-/obj/item/weapon/virusdish/throw_impact(atom/hit_atom, var/speed, mob/user)
+/obj/item/weapon/virusdish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(isturf(hit_atom))
 		visible_message("<span class='danger'>The virus dish shatters on impact!</span>")
@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			L |= contained_virus
 			blood.data["diseases"] |= filter_disease_by_spread(L, required = DISEASE_SPREAD_BLOOD)
 
-/obj/item/weapon/virusdish/proc/shatter(var/mob/user)
+/obj/item/weapon/virusdish/proc/shatter(mob/user)
 	var/obj/effect/decal/cleanable/virusdish/dish = new(get_turf(src))
 	dish.pixel_x = pixel_x
 	dish.pixel_y = pixel_y
