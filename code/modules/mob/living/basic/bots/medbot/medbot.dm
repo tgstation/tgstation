@@ -299,6 +299,7 @@
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
 	var/modified_heal_amount = heal_amount
+	var/done_healing = FALSE
 	if(damage_type_healer == BRUTE && medkit_type == /obj/item/storage/medkit/brute) //Re-add specialized brute bonus for brute medkits
 		modified_heal_amount *= 1.1
 	if(bot_access_flags & BOT_COVER_EMAGGED)
@@ -307,17 +308,16 @@
 	else if(damage_type_healer == HEAL_ALL_DAMAGE)
 		patient.heal_ordered_damage(amount = modified_heal_amount, damage_types = list(BRUTE, BURN, TOX, OXY))
 		log_combat(src, patient, "tended the wounds of", "internal tools")
+		if(patient.get_total_damage() <= heal_threshold)
+			done_healing = TRUE
 	else
 		patient.heal_damage_type(heal_amount = modified_heal_amount, damagetype = damage_type_healer)
 		log_combat(src, patient, "tended the wounds of", "internal tools")
+		if(patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold)
+			done_healing = TRUE
 	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "<span class='infoplain'>[span_green("[src] tends your wounds!")]</span>")
 	//Go into idle only when we're done
-	if(bot_access_flags & BOT_COVER_EMAGGED)
-		return
-	else if(damage_type_healer == HEAL_ALL_DAMAGE && patient.get_total_damage() <= heal_threshold)
-		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
-		update_bot_mode(new_mode = BOT_IDLE)
-	else if(patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold)
+	if(done_healing)
 		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
 		update_bot_mode(new_mode = BOT_IDLE)
 
