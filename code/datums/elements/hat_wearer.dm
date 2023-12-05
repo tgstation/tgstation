@@ -23,8 +23,7 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attack_by))
 	if(!length(remove_hat_signals))
 		return
-	for(var/on_remove_signal in remove_hat_signals)
-		RegisterSignal(target, on_remove_signal, PROC_REF(remove_hat))
+	RegisterSignals(target, remove_hat_signals, PROC_REF(remove_hat))
 
 /datum/element/hat_wearer/Detach(datum/target)
 	var/obj/item/hat = (locate(/obj/item/clothing/head) in target)
