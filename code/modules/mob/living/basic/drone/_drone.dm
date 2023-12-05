@@ -20,6 +20,7 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
+	dexterous = TRUE
 	health = 45
 	maxHealth = 45
 	unsuitable_atmos_damage = 0
@@ -171,8 +172,8 @@
 /mob/living/basic/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
-	AddElement(/datum/element/dextrous, hud_type = hud_type)
-	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
+	//AddElement(/datum/element/dextrous, hud_type = hud_type)
+	//AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
 
 	if(default_storage)
