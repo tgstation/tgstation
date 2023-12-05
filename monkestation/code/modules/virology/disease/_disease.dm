@@ -61,6 +61,10 @@ GLOBAL_LIST_INIT(virusDB, list())
 		viable += disease
 	return viable
 
+/datum/disease/advanced/New()
+	. = ..()
+	GLOB.inspectable_diseases += src
+
 /datum/disease/advanced/proc/AddToGoggleView(mob/living/infectedMob)
 	if (spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 		GLOB.infected_contact_mobs |= infectedMob
@@ -601,3 +605,45 @@ GLOBAL_LIST_INIT(virusDB, list())
 	stageprob = 80
 	stage_variance = -10
 	can_kill = list()
+
+
+/datum/disease/advanced/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("","------")
+	VV_DROPDOWN_OPTION(VV_HK_VIEW_DISEASE_DATA, "View Disease Data")
+
+/datum/disease/advanced/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_VIEW_DISEASE_DATA])
+		create_disease_info_pane(usr)
+
+/datum/disease/advanced/proc/create_disease_info_pane(mob/user)
+	var/datum/browser/popup = new(user, "\ref[src]", "GNAv3 [form] #[uniqueID]-[subID]", 600, 500, src)
+	var/content = get_info()
+	content += "<BR><b>LOGS</b></BR>"
+	content += log
+	popup.set_content(content)
+	popup.open()
+
+/client/proc/view_disease_data()
+	set category = "Admin.Logging"
+	set name = "View Disease List"
+	set desc = "views disease list and on selection opens the data"
+
+	if(!holder)
+		return
+	var/list/diseases = list()
+	for(var/datum/disease/advanced/disease as anything in GLOB.inspectable_diseases)
+		if(!disease || !istype(disease))
+			continue
+		if(disease.affected_mob)
+			diseases["GNAv3 [disease.form] #[disease.uniqueID]-[disease.subID]-[disease.childID] [disease.affected_mob]"] = disease
+		else
+			diseases["GNAv3 [disease.form] #[disease.uniqueID]-[disease.subID]-[disease.childID]"] = disease
+	var/disease = input("Choose a disease", "Diseases") as null|anything in sort_list(diseases, /proc/cmp_typepaths_asc)
+	if(!disease)
+		return
+	var/datum/disease/advanced/actual_disease = diseases[disease]
+	if(!actual_disease)
+		return
+	actual_disease.create_disease_info_pane(usr)

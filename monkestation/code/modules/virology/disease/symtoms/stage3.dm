@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	if(!ishuman(mob))
 		return
 
-	var/mob/living/carbon/human/human
+	var/mob/living/carbon/human/human = mob
 	var/obj/item/clothing/mask/animal/horsehead/magichead = new /obj/item/clothing/mask/animal/horsehead
 	if(human.wear_mask && !istype(human.wear_mask,/obj/item/clothing/mask/animal/horsehead))
 		human.dropItemToGround(human.wear_mask, TRUE)

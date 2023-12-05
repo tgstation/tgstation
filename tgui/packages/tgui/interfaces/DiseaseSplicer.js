@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Dimmer, Knob, LabeledList, Icon, Section } from '../components';
+import { Button, Dimmer, LabeledList, Icon, Slider, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const DiseaseSplicer = (props, context) => {
@@ -14,7 +14,7 @@ export const DiseaseSplicer = (props, context) => {
     target_stage,
   } = data;
   return (
-    <Window width={350} height={400}>
+    <Window width={475} height={300}>
       <Window.Content>
         {!!splicing && (
           <Dimmer fontSize="32px">
@@ -34,15 +34,27 @@ export const DiseaseSplicer = (props, context) => {
             {' Scanning...'}
           </Dimmer>
         )}
-        <Section title="Disease Splicer">
-          Error: {dish_error}
+        <Section
+          title="Disease Splicer"
+          buttons={
+            <>
+              <Button
+                content="Eject Dish"
+                disabled={!dish_name}
+                onClick={() => act('eject_dish')}
+              />
+              <Button
+                content="Clear Memory Bank"
+                disabled={!memorybank}
+                onClick={() => act('erase_buffer')}
+              />
+            </>
+          }>
+          {!dish_error && <NoticeBox info>No Error Present</NoticeBox>}
+          {dish_error && <NoticeBox warn>ERROR: {dish_error}</NoticeBox>}
           <LabeledList>
             {memorybank && (
               <LabeledList.Item label={memorybank}>
-                <Button
-                  content="Clear Memory Bank"
-                  onClick={() => act('erase_buffer')}
-                />
                 <Button
                   content="Burn Effect to Disk"
                   onClick={() => act('burn_buffer_to_disk')}
@@ -52,27 +64,32 @@ export const DiseaseSplicer = (props, context) => {
             {dish_name && (
               <LabeledList.Item label={dish_name}>
                 <Button
-                  content="Eject Dish"
-                  onClick={() => act('eject_dish')}
-                />
-                <Button
-                  content="Extract Effect"
-                  onClick={() => act('dish_effect_to_buffer')}
-                />
-                <Knob
-                  mr="0.5em"
-                  animated
-                  size={1.25}
-                  inline
-                  step={5}
-                  stepPixelSize={2}
-                  minValue={1}
-                  maxValue={4}
-                  value={target_stage}
-                  onDrag={(e, stage) => act('target_stage', { stage })}
+                  content="Splice Memorybank"
+                  disabled={!memorybank}
+                  onClick={() => act('splice_buffer_to_dish')}
                 />
               </LabeledList.Item>
             )}
+            <LabeledList.Item label={'Targeted Stage'}>
+              <Slider
+                width="70%"
+                minValue={1}
+                maxValue={4}
+                step={1}
+                stepPixelSize={50}
+                value={target_stage}
+                onDrag={(e, stage) => act('target_stage', { stage })}
+                onChange={(e, stage) => act('target_stage', { stage })}>
+                {target_stage}
+              </Slider>
+              <Button
+                color="green"
+                width="30%"
+                disabled={!dish_name}
+                content="Extract Effect"
+                onClick={() => act('dish_effect_to_buffer')}
+              />
+            </LabeledList.Item>
           </LabeledList>
         </Section>
       </Window.Content>

@@ -195,6 +195,8 @@
 /obj/machinery/computer/diseasesplicer/proc/dish2buffer(var/target_stage)
 	if(!dish || !dish.contained_virus)
 		return
+	if(dish.growth < 50)
+		return
 	var/list/effects = dish.contained_virus.symptoms
 	for(var/x = 1 to effects.len)
 		var/datum/symptom/e = effects[x]

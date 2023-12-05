@@ -62,8 +62,8 @@
 
 /mob/living/carbon/human/check_airborne_sterility()
 	var/block = FALSE
-	if (wear_mask && (wear_mask.body_parts_covered & MASKCOVERSMOUTH) && prob(wear_mask.get_armor_rating(BIO)))
+	if (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && prob(wear_mask.get_armor_rating(BIO)))
 		block = TRUE
-	if (head && (head.body_parts_covered & HEADCOVERSMOUTH) && prob(head.get_armor_rating(BIO)))
+	if (head && (head.flags_cover & HEADCOVERSMOUTH) && prob(head.get_armor_rating(BIO)))
 		block = TRUE
 	return block

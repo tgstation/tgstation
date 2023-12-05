@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(inspectable_diseases, list())
+
 /datum/disease
 	//Flags
 	var/visibility_flags = 0
@@ -40,6 +42,7 @@
 
 /datum/disease/Destroy()
 	. = ..()
+	GLOB.inspectable_diseases -= src
 	if(affected_mob)
 		remove_disease()
 	//SSdisease.active_diseases.Remove(src)

@@ -161,3 +161,4 @@
 #define VV_HK_WEAKREF_RESOLVE "weakref_resolve"
 
 #define VV_HK_POSSESS_ITEM "possess_item"
+#define VV_HK_VIEW_DISEASE_DATA "disease_data"

@@ -51,7 +51,7 @@
 	growthrate = initial(growthrate) + lasercount
 
 
-/obj/machinery/disease2/incubator/attackby(var/obj/I, var/mob/user)
+/obj/machinery/disease2/incubator/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 
 	if (machine_stat & (BROKEN))
@@ -109,7 +109,7 @@
 			return TRUE
 
 		if ("ejectdish")
-			var/slot = text2num(params["ejectdish"])
+			var/slot = text2num(params["slot"])
 			if (slot == null || slot < 1 || slot > dish_data.len)
 				return TRUE
 
@@ -127,7 +127,7 @@
 			return TRUE
 
 		if ("insertdish")
-			var/slot = text2num(params["insertdish"])
+			var/slot = text2num(params["slot"])
 			if (slot == null || slot < 1 || slot > dish_data.len)
 				return TRUE
 
@@ -143,7 +143,7 @@
 			return TRUE
 
 		if ("examinedish")
-			var/slot = text2num(params["examinedish"])
+			var/slot = text2num(params["slot"])
 			if (slot == null || slot < 1 || slot > dish_data.len)
 				return TRUE
 
@@ -155,7 +155,7 @@
 			return TRUE
 
 		if ("flushdish")
-			var/slot = text2num(params["flushdish"])
+			var/slot = text2num(params["slot"])
 			if (slot == null || slot < 1 || slot > dish_data.len)
 				return TRUE
 
@@ -166,7 +166,7 @@
 			dish_datum.dish.reagents.clear_reagents()
 			return TRUE
 		if ("changefocus")
-			var/slot = text2num(params["changefocus"])
+			var/slot = text2num(params["slot"])
 			if(slot == null || slot < 1 || slot > dish_data.len)
 				return TRUE
 			var/dish_incubator_dish/dish_datum = dish_data[slot]
@@ -180,7 +180,7 @@
 			effect_focus = stage_to_focus
 			return TRUE
 
-/obj/machinery/disease2/incubator/attack_hand(var/mob/user)
+/obj/machinery/disease2/incubator/attack_hand(mob/user)
 	. = ..()
 	if (machine_stat & (BROKEN))
 		to_chat(user, "<span class='notice'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
