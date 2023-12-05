@@ -243,6 +243,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
 #define TRAIT_SIXTHSENSE "sixth_sense"
+/// Makes you immune to phobias effects
 #define TRAIT_FEARLESS "fearless"
 /// Ignores darkness for hearing
 #define TRAIT_HEAR_THROUGH_DARKNESS "hear_through_darkness"
@@ -985,4 +986,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to foam darts that have an insert in them
 #define TRAIT_DART_HAS_INSERT "dart_has_insert"
+
+/// Trait that determines if a mob is suffering from delusions
+#define TRAIT_DELUSIONAL "delusional"
 // END TRAIT DEFINES

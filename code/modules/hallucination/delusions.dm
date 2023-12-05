@@ -407,7 +407,7 @@
 /datum/hallucination/delusion/preset/ash_whelp
 	delusion_icon_file = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	delusion_icon_state = "ash_whelp"
-	delusion_name = "ash_whelp"
+	delusion_name = "ash whelp"
 
 /datum/hallucination/delusion/preset/brimdemon
 	delusion_icon_file = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'

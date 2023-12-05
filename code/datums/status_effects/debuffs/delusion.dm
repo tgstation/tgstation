@@ -19,12 +19,14 @@
 	if(owner.mob_biotypes & barred_biotypes)
 		return FALSE
 
+	ADD_TRAIT(owner, TRAIT_DELUSIONAL, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN,  PROC_REF(on_health_scan))
 	tick() // start our delusions immediately
 	return TRUE
 
 /datum/status_effect/delusion/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_HEALTHSCAN))
+	REMOVE_TRAIT(owner, TRAIT_DELUSIONAL, TRAIT_STATUS_EFFECT(id))
 
 	if(!QDELETED(owner) && LAZYLEN(delusions))
 		owner.client?.images -= delusions

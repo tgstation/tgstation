@@ -928,11 +928,28 @@
 
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 		active_hud.screentip_text.maptext = ""
-	else if(isliving(src) && user.has_status_effect(/datum/status_effect/delusion))
-		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>???</span>"
 	else
 		//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
 		active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
+
+/mob/living/on_mouse_enter(client/client)
+	var/mob/living/user = client?.mob
+
+	if(!isliving(user) || !HAS_TRAIT(user, TRAIT_DELUSIONAL))
+		return ..()
+
+	// Screentips
+	var/datum/hud/active_hud = user.hud_used
+	if(!active_hud)
+		return
+
+	var/screentips_enabled = active_hud.screentips_enabled
+	if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || flags_1 & NO_SCREENTIPS_1)
+		active_hud.screentip_text.maptext = ""
+		return
+
+	active_hud.screentip_text.maptext_y = 10 // 10px lines us up with the action buttons top left corner
+	active_hud.screentip_text.maptext = "<span class='context' style='text-align: center; color: [active_hud.screentip_color]'>???</span>"
 
 /**
  * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.
