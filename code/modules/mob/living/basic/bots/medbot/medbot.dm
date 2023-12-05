@@ -109,8 +109,6 @@
 	var/datum/techweb/linked_techweb
 	///our tipper
 	var/datum/weakref/tipper
-	///original description
-	var/original_desc
 
 /mob/living/basic/bot/medbot/proc/set_speech_keys()
 	if(isnull(ai_controller))
@@ -139,8 +137,6 @@
 	var/static/list/hat_offsets = list(4,-9)
 	AddElement(/datum/element/hat_wearer, offsets = hat_offsets)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
-	original_desc = desc
-
 
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
 		return
@@ -249,6 +245,17 @@
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
+/mob/living/basic/bot/medbot/examine()
+	. = ..()
+	if(medical_mode_flags & MEDBOT_TIPPED_MODE)
+		var/list/panic_state = list(
+		"It appears to be tipped over, and is quietly waiting for someone to set it right.",
+		"It is tipped over and requesting help.",
+		"They are tipped over and appear visibly distressed.",
+		span_warning("They are tipped over and visibly panicking!"),
+		span_warning("<b>They are freaking out from being tipped over!</b>")
+		)
+		. += pick(panic_state)
 /*
  * Proc used in a callback for before this medibot is tipped by the tippable component.
  *
@@ -266,14 +273,6 @@
 	medical_mode_flags |= MEDBOT_TIPPED_MODE
 	tipper = WEAKREF(user)
 	var/tipper_name = user.name
-	var/list/panic_state = list(
-		"It appears to be tipped over, and is quietly waiting for someone to set it right.",
-		"It is tipped over and requesting help.",
-		"They are tipped over and appear visibly distressed.",
-		span_warning("They are tipped over and visibly panicking!"),
-		span_warning("<b>They are freaking out from being tipped over!</b>")
-	)
-	desc = "[original_desc] [pick(panic_state)]"
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
 	if(prob(10))
 		speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
@@ -287,7 +286,6 @@
 	var/mob/tipper_mob = isnull(user) ? null : tipper?.resolve()
 	tipper = null
 	medical_mode_flags &= ~MEDBOT_TIPPED_MODE
-	desc = original_desc
 	if(isnull(tipper_mob))
 		return
 	if(tipper_mob == user)
@@ -336,10 +334,10 @@
 		log_combat(src, patient, "tended the wounds of", "internal tools")
 		if(patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold)
 			done_healing = TRUE
-	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "<span class='infoplain'>[span_green("[src] tends your wounds!")]</span>")
+	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "[span_infoplain(span_green("[src] tends your wounds!"))]")
 	//Go into idle only when we're done
 	if(done_healing)
-		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
+		visible_message(span_infoplain("[src] places its tools back into itself."))
 		to_chat(src, "[patient] is now healthy!")
 		update_bot_mode(new_mode = BOT_IDLE)
 	//If player-controlled, call them to heal again here for continous player healing
