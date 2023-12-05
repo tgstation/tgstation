@@ -19,3 +19,4 @@
 	tag_multipliers = list(TAG_ALIEN = 0.4, TAG_CREW_ANTAG = 1.1)
 	population_min = 40
 	ignores_roundstart = TRUE
+	weight = 1

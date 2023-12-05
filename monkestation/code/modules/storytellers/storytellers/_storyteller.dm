@@ -56,6 +56,8 @@
 	var/ignores_roundstart = FALSE
 	///is a storyteller always able to be voted for(also does not count for the amount of storytellers to pick from)
 	var/always_votable = FALSE
+	///weight this has of showing up in the vote if not always_votable
+	var/weight = 0
 
 /datum/storyteller/process(delta_time)
 	if(!round_started) // we are differing roundstarted ones until base roundstart so we can get cooler stuff

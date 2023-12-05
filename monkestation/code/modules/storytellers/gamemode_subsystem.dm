@@ -791,12 +791,12 @@ SUBSYSTEM_DEF(gamemode)
 		if(storyboy.always_votable)
 			final_choices[storyboy.name] = 0
 		else
-			pick_from[storyboy.name] = 0
+			pick_from[storyboy.name] = storyboy.weight
 
 	while(length(pick_from) > DEFAULT_STORYTELLER_VOTE_OPTIONS)
-		pick_n_take(pick_from)
-
-	final_choices += pick_from
+		var/picked_storyteller = pick_weight(pick_from)
+		final_choices[picked_storyteller] = 0
+		pick_from -= picked_storyteller
 	return final_choices
 
 /datum/controller/subsystem/gamemode/proc/storyteller_desc(storyteller_name)
