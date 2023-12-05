@@ -15,7 +15,6 @@
 		GLOB.teleportbeacons += src
 	else
 		icon_state = "beacon-off"
-	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
 
 /obj/item/beacon/Destroy()
 	GLOB.teleportbeacons -= src
