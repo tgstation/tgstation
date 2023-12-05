@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed the AI painting manager showing invalid choices."
+  - bugfix: "Fixed the painting manager search function.\n/🆑"
