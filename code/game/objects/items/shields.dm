@@ -64,7 +64,22 @@
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
 		return TRUE
-	take_damage(damage, damage_type, attack_type)
+	var/penetration = 0
+	var/armor_flag = MELEE
+	if(isprojectile(hitby))
+		var/obj/projectile/bang_bang = hitby
+		armor_flag = bang_bang.armor_flag
+		penetration = bang_bang.armour_penetration
+	else if(isitem(hitby))
+		var/obj/item/weapon = hitby
+		penetration = weapon.armour_penetration
+	else if(isanimal(hitby))
+		var/mob/living/simple_animal/critter = hitby
+		penetration = critter.armour_penetration
+	else if(isbasicmob(hitby))
+		var/mob/living/basic/critter = hitby
+		penetration = critter.armour_penetration
+	take_damage(damage, damage_type, armor_flag, armour_penetration = penetration)
 
 /obj/item/shield/atom_destruction(damage_flag)
 	playsound(src, shield_break_sound, 50)
@@ -102,8 +117,8 @@
 
 /datum/armor/item_shield/riot
 	melee = 80
-	bullet = 15
-	laser = 15
+	bullet = 20
+	laser = 20
 
 /obj/item/shield/riot
 	name = "riot shield"

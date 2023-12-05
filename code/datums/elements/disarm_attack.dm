@@ -11,6 +11,7 @@
 
 /datum/element/disarm_attack/Detach(datum/source)
 	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
+	return ..()
 
 /datum/element/disarm_attack/proc/secondary_attack(obj/item/source, mob/living/victim, mob/living/user, params)
 	SIGNAL_HANDLER
