@@ -398,6 +398,7 @@
 		"defibrillator",
 		"genescanner",
 		"healthanalyzer",
+		"antibodyscanner",
 		"med_spray_bottle",
 		"medical_kiosk",
 		"medigel",

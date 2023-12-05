@@ -5,6 +5,8 @@
 
 /obj/item/clothing/glasses/science/attack_self(mob/user, modifiers)
 	. = ..()
+	playsound(user, 'sound/items/weeoo1.ogg', 50, 1)
+	to_chat(user, "You turn [src] [toggled ? "Off" : "On"]")
 	toggled = !toggled
 	if(!ishuman(user))
 		return

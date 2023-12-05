@@ -133,48 +133,43 @@
 				d.pixel_y = 3
 
 
-/obj/machinery/computer/diseasesplicer/update_icon()
+/obj/machinery/computer/diseasesplicer/update_overlays()
 	..()
-	overlays.len = 0
-
 	if (dish)
-		var/image/dish_outline = image(icon,"smalldish2-outline")
+		var/mutable_appearance/dish_outline = mutable_appearance(icon,"smalldish2-outline")
 		dish_outline.alpha = 128
 		dish_outline.pixel_x = -1
 		dish_outline.pixel_y = -13
-		add_overlay(dish_outline)
-		var/image/dish_content = image(icon,"smalldish2-empty")
+		.+= dish_outline
+		var/mutable_appearance/dish_content = mutable_appearance(icon,"smalldish2-empty")
 		dish_content.alpha = 128
 		dish_content.pixel_x = -1
 		dish_content.pixel_y = -13
 		if (dish.contained_virus)
 			dish_content.icon_state = "smalldish2-color"
 			dish_content.color = dish.contained_virus.color
-		add_overlay(dish_outline)
+		.+=dish_outline
 
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 
 	if (dish && dish.contained_virus)
 		if (dish.analysed)
-			var/image/scan_pattern = image(icon,"pattern-[dish.contained_virus.pattern]b")
+			var/mutable_appearance/scan_pattern = mutable_appearance(icon,"pattern-[dish.contained_virus.pattern]b")
 			scan_pattern.color = "#00FF00"
 			scan_pattern.pixel_x = -2
 			scan_pattern.pixel_y = 4
-			add_overlay(scan_pattern)
+			.+= scan_pattern
 		else
-			add_overlay(image(icon,"splicer_unknown"))
+			.+= mutable_appearance(icon,"splicer_unknown")
 
 	if(scanning || splicing)
-		var/image/splicer_glass = image(icon,"splicer_glass")
-		splicer_glass.plane = LIGHTING_PLANE
+		var/mutable_appearance/splicer_glass = emissive_appearance(icon,"splicer_glass")
 		splicer_glass.blend_mode = BLEND_ADD
-		add_overlay(splicer_glass)
+		.+= splicer_glass
 
 	if (memorybank)
-		var/image/buffer_light = image(icon,"splicer_buffer")
-		buffer_light.plane = LIGHTING_PLANE
-		add_overlay(buffer_light)
+		.+= emissive_appearance(icon,"splicer_buffer")
 
 /obj/machinery/computer/diseasesplicer/proc/buffer2dish()
 	if(!memorybank || !dish || !dish.contained_virus)
