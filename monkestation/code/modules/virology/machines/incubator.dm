@@ -30,10 +30,7 @@
 
 /obj/machinery/disease2/incubator/New()
 	. = ..()
-
-
 	RefreshParts()
-
 
 /obj/machinery/disease2/incubator/RefreshParts()
 	. = ..()
@@ -427,7 +424,6 @@
 		dish_data[i] = null
 
 	..()
-
 
 /dish_incubator_dish
 	// The inserted virus dish.
