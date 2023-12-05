@@ -320,7 +320,7 @@
 		return
 	var/modified_heal_amount = heal_amount
 	var/done_healing = FALSE
-	if(damage_type_healer == BRUTE && medkit_type == /obj/item/storage/medkit/brute) //Re-add specialized brute bonus for brute medkits
+	if(damage_type_healer == BRUTE && medkit_type == /obj/item/storage/medkit/brute) 
 		modified_heal_amount *= 1.1
 	if(bot_access_flags & BOT_COVER_EMAGGED)
 		patient.reagents?.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
