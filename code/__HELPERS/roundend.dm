@@ -460,7 +460,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		//If we aren't a hijacker, this sucks
 		if(!survivor.mind.get_hijack_speed())
 			survival_text += "<div class='panel redborder'>"
-			survival_text += "<span class='marooned'>You managed to survive as [survivor.real_name], but the shuttle was hijacked and sent into deep space.</span>"
+			survival_text += "<span class='marooned'>You managed to survive as [survivor.real_name], but your shuttle was hijacked and sent into deep space!</span>"
 			return survival_text
 		//If we are a hijacker, and the person who hijacked the shuttle this is the best outcome.
 		if(SSshuttle.emergency.hijacker == survivor)
