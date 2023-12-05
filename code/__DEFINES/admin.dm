@@ -174,3 +174,10 @@ GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 /// Used in logging uses of admin verbs (and sometimes some non-admin or debug verbs) to the blackbox
 /// Only pass it a string key, the verb being used.
 #define BLACKBOX_LOG_ADMIN_VERB(the_verb) SSblackbox.record_feedback("tally", "admin_verb", 1, the_verb)
+
+/// String used in the message to notify admins if a permissions elevation attempt is detected
+#define PERMISSIONS_ELEVATION_DETECTED_MESSAGE(user_string) "[##user_string] has tried to elevate permissions!"
+/// Macro used to notify admins if someone attempts to elevate permissions by invoking a proc that allows them to do so.
+#define PERMISSIONS_ELEVATION_DETECTED_NOTIFICATION(user) \
+	message_admins(PERMISSIONS_ELEVATION_DETECTED_MESSAGE(key_name_admin(##user))); \
+	log_admin(PERMISSIONS_ELEVATION_DETECTED_MESSAGE(key_name(##user)))
