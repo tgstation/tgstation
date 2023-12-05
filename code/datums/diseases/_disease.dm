@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 	//Flags
 	var/visibility_flags = 0
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
-	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
+	var/spread_flags = 0
 
 	//Fluff
 	var/form = "Virus"
@@ -170,7 +170,6 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		"strain_data",
 		"infectable_biotypes",
 		"process_dead",
-		"spread",
 		"mutation_modifier",
 		"strength",
 		"robustness",

@@ -4,8 +4,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 /datum/disease
 	//the disease's antigens, that the body's immune_system will read to produce corresponding antibodies. Without antigens, a disease cannot be cured.
 	var/list/antigen = list()
-	///can we spread
-	var/spread = TRUE
 	//alters a pathogen's propensity to mutate. Set to FALSE to forbid a pathogen from ever mutating.
 	var/mutation_modifier = TRUE
 	//the antibody concentration at which the disease will fully exit the body
@@ -185,7 +183,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		pattern_color = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
 
 	//spreading vectors - if set beforehand, will not be randomized
-	if (!spread)
+	if (!spread_flags)
 		randomize_spread()
 
 	//logging
@@ -234,12 +232,12 @@ GLOBAL_LIST_INIT(virusDB, list())
 /datum/disease/advanced/proc/randomize_spread()
 	spread = DISEASE_SPREAD_BLOOD	//without blood spread, the disease cannot be extracted or cured, we don't want that for regular diseases
 	if (prob(5))			//5% chance of spreading through both contact and the air.
-		spread |= DISEASE_SPREAD_CONTACT_SKIN
-		spread |= DISEASE_SPREAD_AIRBORNE
+		spread_flags |= DISEASE_SPREAD_CONTACT_SKIN
+		spread_flags |= DISEASE_SPREAD_AIRBORNE
 	else if (prob(40))		//38% chance of spreading through the air only.
-		spread |= DISEASE_SPREAD_AIRBORNE
+		spread_flags |= DISEASE_SPREAD_AIRBORNE
 	else if (prob(60))		//34,2% chance of spreading through contact only.
-		spread |= DISEASE_SPREAD_CONTACT_SKIN
+		spread_flags |= DISEASE_SPREAD_CONTACT_SKIN
 							//22,8% chance of staying in blood
 
 /datum/disease/advanced/proc/minormutate(index)
