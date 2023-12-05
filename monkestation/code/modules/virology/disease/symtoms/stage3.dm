@@ -214,6 +214,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 
 	if(!ishuman)
 		return
+		
 	var/obj/item/clothing/mask/gas/clown_hat/virus/virusclown_hat = new /obj/item/clothing/mask/gas/clown_hat/virus
 	if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/gas/clown_hat/virus))
 		mob.dropItemToGround(mob.wear_mask, TRUE)
