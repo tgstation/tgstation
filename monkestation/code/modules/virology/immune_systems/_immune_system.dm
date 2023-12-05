@@ -18,6 +18,10 @@
 		ANTIGEN_Z	= 0,
 		)
 
+/datum/immune_system/Destroy(force, ...)
+	. = ..()
+	host = null
+
 /datum/immune_system/New(mob/living/carbon/source)
 	..()
 	if (!source)

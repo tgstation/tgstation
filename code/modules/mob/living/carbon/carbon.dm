@@ -22,6 +22,7 @@
 	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
+	qdel(immune_system)
 	for(var/wound in all_wounds) // these LAZYREMOVE themselves when deleted so no need to remove the list here
 		qdel(wound)
 	for(var/scar in all_scars)
