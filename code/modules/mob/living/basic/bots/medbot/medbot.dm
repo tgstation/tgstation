@@ -293,8 +293,8 @@
 /mob/living/basic/bot/medbot/proc/medicate_patient(mob/living/carbon/human/patient)
 	if(DOING_INTERACTION(src, TEND_DAMAGE_INTERACTION))
 		return
-
 	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
+
 	if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
@@ -303,11 +303,23 @@
 		modified_heal_amount *= 1.1
 	if(bot_access_flags & BOT_COVER_EMAGGED)
 		patient.reagents?.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
+		log_combat(src, patient, "pretended to tend wounds on", "internal tools")
 	else if(damage_type_healer == HEAL_ALL_DAMAGE)
 		patient.heal_ordered_damage(amount = modified_heal_amount, damage_types = list(BRUTE, BURN, TOX, OXY))
+		log_combat(src, patient, "tended the wounds of", "internal tools")
 	else
 		patient.heal_damage_type(heal_amount = modified_heal_amount, damagetype = damage_type_healer)
-	update_bot_mode(new_mode = BOT_IDLE)
+		log_combat(src, patient, "tended the wounds of", "internal tools")
+	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "<span class='infoplain'>[span_green("[src] tends your wounds!")]</span>")
+	//Go into idle only when we're done
+	if(bot_access_flags & BOT_COVER_EMAGGED)
+		return
+	else if(damage_type_healer == HEAL_ALL_DAMAGE && patient.get_total_damage() <= heal_threshold)
+		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
+		update_bot_mode(new_mode = BOT_IDLE)
+	else if(patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold)
+		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
+		update_bot_mode(new_mode = BOT_IDLE)
 
 /mob/living/basic/bot/medbot/autopatrol
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
