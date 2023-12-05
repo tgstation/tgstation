@@ -22,6 +22,7 @@
 		/obj/item/storage/bag/ore,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/kinetic_crusher
 		)
 	resistance_flags = FIRE_PROOF
 
