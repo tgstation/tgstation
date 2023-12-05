@@ -81,11 +81,11 @@
 
 /datum/design/inducerengi
 	name = "Inducer"
-	desc = "The NT-90 Electromagnetic Power Inducer charges faster than the NT-75, but is only avaliable to engineers."
+	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."
 	id = "inducerengi"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/inducer
+	build_path = /obj/item/inducer/empty
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING
 	)
