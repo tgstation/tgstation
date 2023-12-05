@@ -420,50 +420,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/list/parts = list()
 	var/mob/survivor = survivor_client.mob
 	if(survivor.mind && !isnewplayer(survivor))
-		if(survivor.stat != DEAD && !isbrain(survivor))
-			if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-
-				if(survivor.onSyndieBase() && SSshuttle.emergency.is_hijacked()) // We are on the synidcate base, and the shuttle was hijacked.
-
-					if(survivor.mind.get_hijack_destination() == SYNDICATE_BASE) // We are a syndicate agent so this is a greentext
-						parts += "<div class='panel greenborder'>"
-						parts += "<span class='greentext'>You managed to hijack the emergency shuttle of [station_name()] and bring it to the syndicate base!</span>"
-
-					else // we are not a syndicate agent, so this is a redtext
-						parts += "<div class='panel stationborder'>"
-						parts += "<span class='redtext'>You managed to survive the events of [station_name()] as [survivor.real_name] , but were captured by the syndicate!</span>"
-
-				else if(survivor.onCentCom()) //We made it home
-					parts += "<div class='panel greenborder'>"
-					parts += span_greentext("You managed to survive the events on [station_name()] as [survivor.real_name].")
-
-				else if(SSshuttle.emergency.is_hijacked() && survivor.on_escaped_shuttle()) //The shuttle got hijacked, but not by a syndicate agent, and we are on the shuttle.
-
-					if(survivor.mind.get_hijack_speed()) //If we are able to hijack, we don't mind this outcome.
-
-						if(SSshuttle.emergency.hijacker == survivor) //If we are the hijacker, this is the best outcome.
-							parts += "<div class='panel greenborder'>"
-							parts += "<span class='greentext'>You managed to hijack the emergency shuttle of [station_name()]!</span>"
-
-						else //We are able to hijack but are not the hijacker. Count this as a survival.
-							parts += "<div class='panel greenborder'>"
-							parts += span_greentext("You managed to survive the events on [station_name()] as [survivor.real_name].")
-
-					else //If we are not able to hijack, we redtext
-						parts += "<div class='panel redborder'>"
-						parts += "<span class='marooned'>You managed to survive as [survivor.real_name], but the shuttle was hijacked and sent into deep space.</span>"
-
-				else //None of the above apply to us, so we are marooned
-					parts += "<div class='panel redborder'>"
-					parts += "<span class='marooned'>You survived, but were marooned aboard, [station_name()].</span>"
-
-			else
-				parts += "<div class='panel greenborder'>"
-				parts += span_greentext("You managed to survive the events on [station_name()] as [survivor.real_name].")
-
-		else
-			parts += "<div class='panel redborder'>"
-			parts += span_redtext("You did not survive the events on [station_name()]...")
+		parts += get_survial_text(survivor)
 	else
 		parts += "<div class='panel stationborder'>"
 	parts += "<br>"
@@ -471,6 +428,55 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	parts += "</div>"
 
 	return parts.Join()
+
+/datum/controller/subsystem/ticker/proc/get_survial_text(mob/survivor)
+	var/list/survival_text = list()
+
+	if(survivor.stat == DEAD || isbrain(survivor))
+		survival_text += "<div class='panel redborder'>"
+		survival_text += span_redtext("You did not survive the events on [station_name()]...")
+		return survival_text
+
+	if(!EMERGENCY_ESCAPED_OR_ENDGAMED)
+		survival_text += "<div class='panel greenborder'>"
+		survival_text += span_greentext("You managed to survive the events on [station_name()] as [survivor.real_name].")
+		return survival_text
+
+	if(survivor.onCentCom()) //We made it home
+		survival_text += "<div class='panel greenborder'>"
+		survival_text += span_greentext("You managed to survive the events on [station_name()] as [survivor.real_name].")
+		return survival_text
+
+	if(survivor.onSyndieBase() && SSshuttle.emergency.is_hijacked()) // We are on the synidcate base, and the shuttle is hijacked.
+		if(survivor.mind.get_desired_hijack_destination() == SYNDICATE_BASE) // We are a syndicate agent so this is a greentext
+			survival_text += "<div class='panel greenborder'>"
+			survival_text += "<span class='greentext'>You managed to hijack the emergency shuttle of [station_name()] and bring aboard the syndicate base!</span>"
+		else // we are not a syndicate agent, so this is a redtext
+			survival_text += "<div class='panel stationborder'>"
+			survival_text += "<span class='redtext'>You managed to survive the events of [station_name()] as [survivor.real_name] , but were captured by the syndicate!</span>"
+		return survival_text
+
+	if(SSshuttle.emergency.is_hijacked() && survivor.on_escaped_shuttle()) //The shuttle got hijacked, but not by a syndicate agent, and we are on the shuttle.
+		//If we aren't a hijacker, this sucks
+		if(!survivor.mind.get_hijack_speed())
+			survival_text += "<div class='panel redborder'>"
+			survival_text += "<span class='marooned'>You managed to survive as [survivor.real_name], but the shuttle was hijacked and sent into deep space.</span>"
+			return survival_text
+		//If we are a hijacker, and the person who hijacked the shuttle this is the best outcome.
+		if(SSshuttle.emergency.hijacker == survivor)
+			survival_text += "<div class='panel greenborder'>"
+			survival_text += "<span class='greentext'>You managed to hijack the emergency shuttle of [station_name()]!</span>"
+			return survival_text
+		//Otherwise we are a hijacker but were not the one to hijack, this is just the normal survival text.
+		survival_text += "<div class='panel greenborder'>"
+		survival_text += span_greentext("You managed to survive the events on [station_name()] as [survivor.real_name].")
+		return survival_text
+
+	//None of the above apply to us, so we are marooned
+	survival_text += "<div class='panel redborder'>"
+	survival_text += "<span class='marooned'>You survived, but were marooned aboard, [station_name()].</span>"
+	return survival_text
+
 
 /datum/controller/subsystem/ticker/proc/display_report(popcount)
 	GLOB.common_report = build_roundend_report()

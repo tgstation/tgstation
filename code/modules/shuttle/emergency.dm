@@ -590,12 +590,12 @@
 					// just double check
 					if(hijacker.mind)
 
-						var/destination = hijacker.mind.get_hijack_destination()
+						var/destination = hijacker.mind.get_desired_hijack_destination()
 
 					// To add another destination, go to the _DEFINES\antagonists to name your desitnation and give it a number to define it.
 					// Remember to add it to your antagonist's hijack_location varible as well.
 					// Then define where you want the shuttle to dock by by choosing or creating a new docking port in switch statement
-					// get_hijack_destination() takes only the destination with the highest number in the case of an mind with multiple antagonist datums
+					// get_desired_hijack_destination() takes only the destination with the highest number in the case of an mind with multiple antagonist datums
 						switch(destination)
 
 							if(DEEP_SPACE) // Our hijacker is sending us deep into space, probably because they are unafiliated with the syndicate.

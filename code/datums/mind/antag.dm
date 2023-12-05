@@ -298,12 +298,21 @@
 /datum/mind/proc/get_hijack_speed()
 	var/output = 0
 	for(var/datum/antagonist/antag in antag_datums)
-		output = max(., antag.hijack_speed())
+		if(!output)
+			output = antag.hijack_speed()
+		else
+			output = max(output, antag.hijack_speed())
+	return output
 
-/datum/mind/proc/get_hijack_destination()
+/datum/mind/proc/get_desired_hijack_destination()
+	if(!get_hijack_speed()) //If this returns false then we aren't a hijacker.
+		return null
+
 	var/output = DEEP_SPACE
 	for(var/datum/antagonist/antag in antag_datums)
-		output = max(., antag.hijack_location)
+		output = max(output, antag.hijack_location)
+
+	return output
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)

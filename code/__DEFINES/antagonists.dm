@@ -268,8 +268,8 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define HIJACK_MIN_PLAYERS 30
 
 /// Hijack locations
-#define DEEP_SPACE 0
-#define SYNDICATE_BASE 1
+#define DEEP_SPACE 1
+#define SYNDICATE_BASE 2
 
 /// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
 #define MARTYR_PROB 20
