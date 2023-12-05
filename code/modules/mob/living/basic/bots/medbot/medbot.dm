@@ -319,7 +319,13 @@
 	//Go into idle only when we're done
 	if(done_healing)
 		visible_message("<span class='infoplain'>[src] places its tools back into itself.</span>")
+	//Player bots can heal more than their threshold but not automatically
+		to_chat(src, "[patient] is above your healing threshold of [heal_threshold].")
 		update_bot_mode(new_mode = BOT_IDLE)
+	//If player-controlled, call them to heal again here for continous player healing
+	else if(!isnull(client))
+		addtimer(CALLBACK(src, PROC_REF(melee_attack), patient), 0.5 SECONDS)
+
 
 /mob/living/basic/bot/medbot/autopatrol
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
