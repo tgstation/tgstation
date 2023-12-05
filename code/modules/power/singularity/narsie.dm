@@ -52,17 +52,7 @@
 
 /// This proc sets up all of Nar'Sie's abilities, stats, and begins her round-ending capabilities. She does not do anything unless this proc is invoked.
 /// This is only meant to be invoked after this instance is initialized in specific pro-sumer procs, as it WILL derail the entire round.
-/// Pass in the user that invoked this proc ONLY if it was called via View Variables, if this is invoked through normal gameplay please do pass in null.
 /obj/narsie/proc/start_ending_the_round()
-	var/mob/potential_user = null
-	if(IsAdminAdvancedProcCall())
-		if(tgui_alert(usr, ADMIN_WARNING_MESSAGE, "Begin Nar'Sie Roundender", list("I'm Sure", "Abort")) != "I'm Sure")
-			return
-		potential_user = usr
-
-	if(!isnull(potential_user))
-		log_admin("[key_name(potential_user)] has triggered the Nar'Sie roundender.")
-
 	GLOB.cult_narsie = src
 	SSpoints_of_interest.make_point_of_interest(src)
 
