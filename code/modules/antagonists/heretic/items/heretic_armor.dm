@@ -91,6 +91,7 @@
 	laser = 30
 	energy = 30
 	bomb = 15
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()
