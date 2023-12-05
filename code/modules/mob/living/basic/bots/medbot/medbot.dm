@@ -248,15 +248,16 @@
 
 /mob/living/basic/bot/medbot/examine()
 	. = ..()
-	if(medical_mode_flags & MEDBOT_TIPPED_MODE)
-		var/list/panic_state = list(
+	if(!(medical_mode_flags & MEDBOT_TIPPED_MODE))
+		return
+	var/static/list/panic_state = list(
 		"It appears to be tipped over, and is quietly waiting for someone to set it right.",
 		"It is tipped over and requesting help.",
 		"They are tipped over and appear visibly distressed.",
 		span_warning("They are tipped over and visibly panicking!"),
 		span_warning("<b>They are freaking out from being tipped over!</b>")
-		)
-		. += pick(panic_state)
+	)
+	. += pick(panic_state)
 /*
  * Proc used in a callback for before this medibot is tipped by the tippable component.
  *
