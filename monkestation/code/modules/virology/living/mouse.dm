@@ -53,4 +53,4 @@
 
 /mob/living/basic/mouse/Life(seconds_per_tick, times_fired)
 	. = ..()
-	handle_virus_updates()
+	handle_virus_updates(seconds_per_tick)
