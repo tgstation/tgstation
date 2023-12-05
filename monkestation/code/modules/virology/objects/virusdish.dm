@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			if (!container.is_open_container() && istype(container, /obj/item/reagent_containers))
 				return
 			if(I.is_open_container())
-				success = I.reagents.trans_to(src, 10, user)
+				success = I.reagents.trans_to(src, 10, transfered_by = user)
 			if (success > 0)
 				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [src].</span>")
 			return 
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			if (!container.is_open_container() && istype(container, /obj/item/reagent_containers))
 				return
 			if(is_open_container())
-				success = reagents.trans_to(target, 10, user)
+				success = reagents.trans_to(target, 10, transfered_by = user)
 			if (success > 0)
 				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [target].</span>")
 			return 
