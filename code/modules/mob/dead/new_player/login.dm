@@ -14,7 +14,7 @@
 		mind.active = TRUE
 		mind.set_current(src)
 
-	if((client.player_age != -1) && client.player_age <= CONFIG_GET(number/minimum_age))
+	if((client.player_age != -1) && client.player_age <= CONFIG_GET(number/minimum_age) && !(client.ckey in GLOB.interviews.approved_ckeys))
 		client.interviewee = TRUE
 
 	// Check if user should be added to interview queue
