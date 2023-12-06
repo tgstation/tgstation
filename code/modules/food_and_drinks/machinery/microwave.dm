@@ -575,7 +575,7 @@
 
 	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		balloon_alert(cooker, "no cell!")
+		balloon_alert(cooker, "no power draw!")
 		return
 
 	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
