@@ -20,9 +20,6 @@
 
 	var/mob/user = parent
 
-	if(HAS_TRAIT(parent, TRAIT_CURRENTLY_CONTROLLING_OBJECT))
-		SEND_SIGNAL(parent, COMSIG_END_OBJECT_POSSESSION_VIA_COMPONENT_CHAIN) // end the previous possession before we start the next one
-
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
 		to_chat(parent, "[target] is too powerful for you to possess.", confidential = TRUE)
 		return COMPONENT_INCOMPATIBLE
