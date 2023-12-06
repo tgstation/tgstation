@@ -33,10 +33,13 @@
 
 	ADD_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(parent))
 
+	stashed_name = user.real_name
+
 	user.forceMove(obj_parent)
 	user.real_name = obj_parent.name
 	user.name = obj_parent.name
 	user.reset_perspective(obj_parent)
+
 	poltergeist = WEAKREF(user)
 
 	obj_parent.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)

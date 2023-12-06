@@ -57,7 +57,7 @@
 		return FALSE
 	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
 		return FALSE //This is sorta the goto stop mobs from moving trait
-	if(HAS_TRAIT(mob, TRAIT_CURRENTLY_CONTROLLING_OBJECT))
+	if(HAS_TRAIT(mob, TRAIT_CURRENTLY_CONTROLLING_OBJECT)) // different signal than COMSIG_MOB_CLIENT_PRE_LIVING_MOVE for distinction when it comes to move code's bone hurting juice
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, new_loc, direct)
 		return FALSE
 	if(!isliving(mob))
