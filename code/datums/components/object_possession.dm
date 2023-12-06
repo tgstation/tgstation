@@ -46,16 +46,17 @@
 	return ..()
 
 /datum/component/object_possession/InheritComponent(datum/component/object_possession/old_component, i_am_original)
-	. = ..()
+	cleanup_ourselves()
 	stashed_name = old_component.stashed_name
 
 /// Cleans up everything when the admin wants out.
 /datum/component/object_possession/proc/cleanup_ourselves()
+	if(HAS_TRAIT_FROM(parent, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(possessed))) // assume we are all cleaned up if the trait is gone in a specific case, prevents clashes
+		return
+
 	var/mob/poltergeist = parent
 
 	possessed.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
-
-	REMOVE_TRAIT(parent, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(possessed))
 
 	if(!isnull(stashed_name))
 		poltergeist.real_name = stashed_name
@@ -68,6 +69,7 @@
 	poltergeist.reset_perspective()
 
 	UnregisterSignal(poltergeist, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE)
+	REMOVE_TRAIT(parent, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(possessed))
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))
