@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 
 /datum/store_item/shoes
 	category = LOADOUT_ITEM_SHOES
-	
+
 /datum/store_item/shoes/winter_boots
 	name = "Winter Boots"
 	item_path = /obj/item/clothing/shoes/winterboots
@@ -112,5 +112,5 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 
 /datum/store_item/shoes/jester
 	name = "Jester Shoes"
-	item_path = /obj/item/clothing/shoes/clown_shoes/jester
+	item_path = /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	item_cost = 4000

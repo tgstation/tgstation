@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 
 /datum/loadout_item/shoes/jester
 	name = "Jester Shoes"
-	item_path = /obj/item/clothing/shoes/clown_shoes/jester
+	item_path = /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	restricted_roles = list(JOB_CLOWN)
 
 /*
