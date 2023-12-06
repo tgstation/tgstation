@@ -4,10 +4,8 @@
 
 	usr.AddComponent(/datum/component/object_possession, target)
 
-	if(!HAS_TRAIT_FROM(usr, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(target))) // something failed badly, trigger a safety
-		to_chat(usr, "Object possession failed!")
-		forceMove(usr, get_turf(usr))
-		stack_trace("Object possession of [target] ([target.type]) failed for [key_name(usr)].")
+	if(!HAS_TRAIT_FROM(usr, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(target))) // trigger a safety movement just in case we yonked unexpectedly
+		usr.forceMove(get_turf(usr))
 		return
 
 	var/turf/target_turf = get_turf(target)
