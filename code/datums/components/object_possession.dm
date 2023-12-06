@@ -35,11 +35,7 @@
 		to_chat(user, "[obj_parent] is too powerful for you to possess.", confidential = TRUE)
 		return COMPONENT_INCOMPATIBLE
 
-	if(HAS_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT))
-		stashed_name = user.name
-
 	ADD_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(parent))
-
 
 	stashed_name = user.real_name
 	poltergeist = WEAKREF(user)
