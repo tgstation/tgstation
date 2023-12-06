@@ -61,7 +61,8 @@
 		user.real_name = stashed_name
 		user.name = stashed_name
 		if(ishuman(user))
-			user.name = user.get_visible_name()
+			var/mob/living/carbon/human/human_user = user
+			human_user.name = human_user.get_visible_name()
 
 	user.forceMove(get_turf(parent))
 	user.reset_perspective()

@@ -8,7 +8,7 @@
 		return
 
 	var/turf/target_turf = get_turf(target)
-	var/message = "[key_name(user)] has possessed [target] ([target.type]) at [AREACOORD(target_turf)]"
+	var/message = "[key_name(usr)] has possessed [target] ([target.type]) at [AREACOORD(target_turf)]"
 	message_admins(message)
 	log_admin(message)
 
@@ -21,7 +21,7 @@
 	SEND_SIGNAL(usr, COMSIG_END_OBJECT_POSSESSION)
 	BLACKBOX_LOG_ADMIN_VERB("Release Object")
 
-/proc/givetestverbs(mob/dude in GLOB.mob_list)
+/proc/give_possession_verbs(mob/dude in GLOB.mob_list)
 	set desc = "Give this guy possess/release verbs"
 	set category = "Debug"
 	set name = "Give Possessing Verbs"
