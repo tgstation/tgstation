@@ -243,9 +243,9 @@
 		dish_ui_datum["growth"] = dish_datum.dish.growth
 		dish_ui_datum["reagents_volume"] = dish_datum.dish.reagents.total_volume
 		dish_ui_datum["major_mutations"] = dish_datum.major_mutations_count
-		dish_ui_datum["minor_mutations_strength"] = dish_datum.minor_mutation_strength
-		dish_ui_datum["minor_mutations_robustness"] = dish_datum.minor_mutation_robustness
-		dish_ui_datum["minor_mutations_effects"] = dish_datum.minor_mutation_effects
+		dish_ui_datum["minor_mutations_strength"] = mutatechance //add support for other reagents
+		dish_ui_datum["minor_mutations_robustness"] = mutatechance //add support for other reagents
+		dish_ui_datum["minor_mutations_effects"] = mutatechance //add support for other reagents
 		dish_ui_datum["dish_slot"] = i
 
 	return data
