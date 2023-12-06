@@ -1,5 +1,3 @@
-#define TRAIT_CURRENTLY_CONTROLLING_OBJECT "currently_controlling_object"
-
 /// Component that allows admins to control any object as if it were a mob.
 /datum/component/object_possession
 	/// Stores a reference to the mob that is currently possessing the object.
