@@ -35,3 +35,41 @@
   - bugfix: bone fracture surgery works again
   wraith-54321:
   - bugfix: no more fun for you
+2023-12-06:
+  DexeeXI:
+  - rscadd: added holodeck and supporting equipment
+  - qol: adjusted cameras everywhere to give ai better vision where it should have
+      it while removing some parts where they shouldn't (like in shitters)
+  - rscdel: toilets next to the pharmacy are removed
+  - rscadd: there are now 3 ore boxes next to mining office
+  - rscadd: mixed wardrobes are scattered about the station
+  - rscadd: a few more smoke machines are added in around the station
+  - rscadd: landmarks for hangover station trait starts are now added all over the
+      station.
+  - rscadd: generic_maintenance_event landmarks now actually exist across the station
+      in order to allow for certain antagonists to appear on Oshan.
+  - rscadd: a few more blob start positions are added.
+  - bugfix: the crematorium in the chapel now has a start switch.
+  - rscdel: prison wing on the mining map now has 0 roundstart prisoner locations
+      because it doesn't matter.
+  - rscadd: prison wing now has weight machines
+  - rscadd: prison wing now has ore boxes
+  - rscadd: miner elevator to station now has ore boxes.
+  - qol: ATMOS turbine now has dedicated fuel mix piping as an option. Looks jank
+      but it works!
+  - balance: Paper Wizard Robes' magic spell on a longer cooldown.
+  - bugfix: fixed wires to the dj booth on Tram
+  - bugfix: changed some of the maints next to science to proper maints so you are
+      protected from radstorms
+  - rscdel: removed a zapper that somehow got in the GODDAMN WALLS on Meta
+  - bugfix: fixed the area below the tram on right hand side to properly not give
+      rad protection in certain areas
+  - qol: moved all nanites related equipment to the redesignated Circuits Lab on Metastation
+  - qol: made the Circuits Lab on Metastation look a tad nicer than what it would
+      have been
+  - qol: moved all nanites related equipment to the Experiments Lab on Icebox
+  - rscdel: removed a maintenance space to make room for nanites equipment on Icebox.
+      associated maints loot was moved to other parts of maints on Icebox
+  - rscdel: removed the mass spec machine from all maps as it is unused in our codebase.
+  Tractor Mann:
+  - rscadd: Cargo may now order jukeboxes!
