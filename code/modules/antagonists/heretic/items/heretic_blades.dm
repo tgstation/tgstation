@@ -14,6 +14,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	throwforce = 10
+	wound_bonus = 5
+	bare_wound_bonus = 15
 	toolspeed = 0.375
 	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
