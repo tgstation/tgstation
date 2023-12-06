@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 				L.client.images |= infectedMob.pathogen
 		return
 
-/datum/disease/advanced/proc/incubate(atom/incubator, mutatechance=1)
+/datum/disease/advanced/proc/incubate(atom/incubator, mutatechance=1, specified_stage=0)
 	mutatechance *= mutation_modifier
 
 	var/mob/living/body = null
@@ -101,31 +101,37 @@ GLOBAL_LIST_INIT(virusDB, list())
 		if (istype(dish.loc,/obj/machinery/disease2/incubator))
 			machine = dish.loc
 
+	if(specified_stage)
+		for(var/datum/symptom/e in symptoms)
+			if(e.stage == specified_stage)
+			e.multiplier_tweak(0.1 * rand*1, 3)
+			e.minormutate()
+
 	if (mutatechance > 0 && (body || dish) && incubator.reagents)
 		if (incubator.reagents.has_reagent(/datum/reagent/toxin/mutagen,  0.5) && incubator.reagents.has_reagent(/datum/reagent/consumable/nutriment/protein,0.5))
-			if(!incubator.reagents.remove_reagent(/datum/reagent/toxin/mutagen, 0.5) && !incubator.reagents.remove_reagent(/datum/reagent/consumable/nutriment/protein,0.5))
+			if(incubator.reagents.remove_reagent(/datum/reagent/toxin/mutagen, 0.5) && incubator.reagents.remove_reagent(/datum/reagent/consumable/nutriment/protein,0.5))
 				log += "<br />[ROUND_TIME()] Robustness Strengthening (Mutagen and Protein in [incubator])"
 				var/change = rand(1,5)
 				robustness = min(100,robustness + change)
 				for(var/datum/symptom/e in symptoms)
 					e.multiplier_tweak(0.1)
-					minormutate()
+					e.minormutate()
 				if (dish)
 					if (machine)
 						machine.update_minor(dish,0,change,0.1)
 		else if (incubator.reagents.has_reagent(/datum/reagent/toxin/mutagen, 0.5) && incubator.reagents.has_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin,0.5))
-			if(!incubator.reagents.remove_reagent(/datum/reagent/toxin/mutagen, 0.5) && !incubator.reagents.remove_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin,0.5))
+			if(incubator.reagents.remove_reagent(/datum/reagent/toxin/mutagen, 0.5) && incubator.reagents.remove_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin,0.5))
 				log += "<br />[ROUND_TIME()] Robustness Weakening (Mutagen and spaceacillin in [incubator])"
 				var/change = rand(1,5)
 				robustness = max(0,robustness - change)
 				for(var/datum/symptom/e in symptoms)
 					e.multiplier_tweak(-0.1)
-					minormutate()
+					e.minormutate()
 				if (dish)
 					if (machine)
 						machine.update_minor(dish,0,-change,-0.1)
 		else
-			if(!incubator.reagents.remove_reagent(/datum/reagent/toxin/mutagen, 0.05) && prob(mutatechance))
+			if(incubator.reagents.remove_reagent(/datum/reagent/toxin/mutagen, 0.05) && prob(mutatechance))
 				log += "<br />[ROUND_TIME()] Effect Mutation (Mutagen in [incubator])"
 				effectmutate(body != null)
 				if (dish)
@@ -135,21 +141,21 @@ GLOBAL_LIST_INIT(virusDB, list())
 					dish.update_icon()
 					if (machine)
 						machine.update_major(dish)
-			if(!incubator.reagents.remove_reagent(/datum/reagent/consumable/nutriment/protein,0.05) && prob(mutatechance))
+			if(incubator.reagents.remove_reagent(/datum/reagent/consumable/nutriment/protein,0.05) && prob(mutatechance))
 				log += "<br />[ROUND_TIME()] Strengthening (/datum/reagent/consumable/nutriment/protein in [incubator])"
 				var/change = rand(1,5)
 				strength = min(100,strength + change)
 				if (dish)
 					if (machine)
 						machine.update_minor(dish,change)
-			if(!incubator.reagents.remove_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin,0.05) && prob(mutatechance))
+			if(incubator.reagents.remove_reagent(/datum/reagent/medicine/antipathogenic/spaceacillin,0.05) && prob(mutatechance))
 				log += "<br />[ROUND_TIME()] Weakening (/datum/reagent/medicine/antipathogenic/spaceacillin in [incubator])"
 				var/change = rand(1,5)
 				strength = max(0,strength - change)
 				if (dish)
 					if (machine)
 						machine.update_minor(dish,-change)
-		if(!incubator.reagents.remove_reagent(/datum/reagent/uranium/radium,0.02) && prob(mutatechance/8))
+		if(incubator.reagents.remove_reagent(/datum/reagent/uranium/radium,0.02) && prob(mutatechance/8))
 			log += "<br />[ROUND_TIME()] Antigen Mutation (Radium in [incubator])"
 			antigenmutate()
 			if (dish)
