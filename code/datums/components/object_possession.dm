@@ -92,12 +92,15 @@
  * force move the parent object instead of the source mob.
  *
  * Has no sanity other than checking the possed obj's density. this means it effectively has incorporeal movement, making it only good for badminnery.
+ *
+ * We always want to return `COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE` here regardless
  */
 /datum/component/object_possession/proc/on_move(datum/source, new_loc, direct)
 	SIGNAL_HANDLER
+	. = COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
+
 	if(QDELETED(possessed))
-		qdel(src)
-		return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
+		return .
 
 	if(!possessed.density)
 		possessed.forceMove(get_step(possessed, direct))
@@ -105,11 +108,10 @@
 		step(possessed, direct)
 
 	if(QDELETED(possessed))
-		qdel(src)
-		return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
+		return .
 
 	possessed.setDir(direct)
-	return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
+	return .
 
 /// Just the overall "get me outta here" proc.
 /datum/component/object_possession/proc/end_possession(datum/source)
