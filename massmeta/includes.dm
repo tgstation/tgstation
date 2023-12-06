@@ -90,6 +90,7 @@
 #include "code\modules\clothing\head\jobs.dm"
 #include "code\modules\clothing\suits\armor.dm"
 #include "code\modules\clothing\suits\jobs.dm"
+#include "code\modules\clothing\gloves\special.dm"
 #include "code\modules\clothing\suits\labcoat.dm"
 #include "code\modules\clothing\suits\wintercoats.dm"
 #include "code\modules\clothing\under\jobs\cargo.dm"
@@ -108,6 +109,7 @@
 #include "code\modules\jobs\job_types\head_of_personnel.dm"
 #include "code\modules\jobs\job_types\head_of_security.dm"
 #include "code\modules\jobs\job_types\warden.dm"
+#include "game\objects\items\storage\garment.dm"
 
 //features
 #include "features\additional_circuit\includes.dm"
