@@ -270,7 +270,7 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	..()
-	. = fire_gun(target, user, flag, params) | AFTERATTACK_PROCESSED_ITEM
+	fire_gun(target, user, flag, params)
 	return AFTERATTACK_PROCESSED_ITEM
 
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
