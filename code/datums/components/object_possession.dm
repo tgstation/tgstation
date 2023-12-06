@@ -57,6 +57,8 @@
 
 	target.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(end_possession))
+
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 	return TRUE
 
@@ -65,6 +67,7 @@
 	var/mob/poltergeist = parent
 
 	possessed.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	UnregisterSignal(possessed, COMSIG_QDELETING)
 
 	if(!isnull(stashed_name))
 		poltergeist.real_name = stashed_name
@@ -106,6 +109,7 @@
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
 
 /// Qdels the component in the event the source mob triggers ghostizes (useful for when the user is not a ghost) or triggers the aghost keybind (useful for when the user is a ghost)
+/// Also gets triggered if the object we are possessing gets deleted. Just the overall "get me outta here" proc.
 /datum/component/object_possession/proc/end_possession(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
