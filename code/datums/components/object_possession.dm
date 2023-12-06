@@ -2,6 +2,8 @@
 /datum/component/object_possession
 	/// Stores a reference to the mob that is currently possessing the object.
 	var/datum/weakref/poltergeist = null
+	/// Ref to the screen object that is currently being displayed.
+	var/datum/weakref/screen_alert_ref = null
 	/**
 	  * back up of the real name during admin possession
 	  *
@@ -47,6 +49,8 @@
 	RegisterSignal(user, COMSIG_END_OBJECT_POSSESSION, PROC_REF(end_possession))
 	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, PROC_REF(on_move))
 
+	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
+
 /datum/component/object_possession/Destroy()
 	cleanup_ourselves()
 	return ..()
@@ -72,6 +76,12 @@
 	user.reset_perspective()
 
 	UnregisterSignal(user, list(COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, COMSIG_END_OBJECT_POSSESSION))
+
+	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
+	if(isnull(alert_to_clear))
+		return
+
+	user.clear_alert(ALERT_UNPOSSESS_OBJECT)
 
 /**
  * force move the parent object instead of the source mob.
