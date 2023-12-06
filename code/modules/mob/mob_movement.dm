@@ -8,25 +8,6 @@
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
-
-/**
- * force move the control_object of your client mob
- *
- * Used in admin possession and called from the client Move proc
- * ensures the possessed object moves and not the admin mob
- *
- * Has no sanity other than checking density
- */
-/client/proc/Move_object(direct)
-	if(mob?.control_object)
-		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			if(!mob.control_object)
-				return
-			mob.control_object.setDir(direct)
-		else
-			mob.control_object.forceMove(get_step(mob.control_object,direct))
-
 /**
  * Move a client in a direction
  *
@@ -76,8 +57,9 @@
 		return FALSE
 	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
 		return FALSE //This is sorta the goto stop mobs from moving trait
-	if(mob.control_object)
-		return Move_object(direct)
+	if(HAS_TRAIT(mob, TRAIT_CURRENTLY_CONTROLLING_OBJECT))
+		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, new_loc, direct)
+		return FALSE
 	if(!isliving(mob))
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)

@@ -42,6 +42,7 @@
 	obj_parent.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
 	RegisterSignal(user, COMSIG_END_OBJECT_POSSESSION, PROC_REF(end_possession))
+	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, PROC_REF(on_move))
 
 /datum/component/object_possession/Destroy()
 	cleanup_ourselves()
@@ -66,6 +67,31 @@
 
 	user.forceMove(get_turf(parent))
 	user.reset_perspective()
+
+	UnregisterSignal(user, list(COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, COMSIG_END_OBJECT_POSSESSION))
+
+/**
+ * force move the parent object instead of the source mob.
+ *
+ * Has no sanity other than checking density
+ */
+/datum/component/object_possession/proc/on_move(datum/source, new_loc, direct)
+	var/obj/obj_parent = parent
+	if(QDELETED(obj_parent))
+		qdel(src)
+		return
+
+	if(!obj_parent.density)
+		obj_parent.forceMove(get_step(obj_parent, direct))
+	else
+		step(obj_parent, direct)
+
+	if(QDELETED(obj_parent))
+		qdel(src)
+		return
+
+	obj_parent.setDir(direct)
+
 
 /datum/component/object_possession/proc/end_possession(datum/source)
 	SIGNAL_HANDLER

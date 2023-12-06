@@ -150,9 +150,6 @@
 	/// Can they interact with station electronics
 	var/has_unlimited_silicon_privilege = FALSE
 
-	///Used by admins to possess objects. All mobs should have this var
-	var/obj/control_object
-
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control
 
