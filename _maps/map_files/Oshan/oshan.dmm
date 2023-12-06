@@ -12017,6 +12017,12 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
 /obj/item/book/manual/wiki/infections,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "fHr" = (
@@ -45241,7 +45247,7 @@
 /turf/open/floor/plastic,
 /area/station/hallway/primary/central)
 "vdb" = (
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
+/obj/machinery/computer/diseasesplicer,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "vde" = (

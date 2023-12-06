@@ -199,13 +199,13 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		visible_message("<span class='danger'>The virus dish shatters on impact!</span>")
 		shatter(throwingdatum.thrower)
 
-/obj/item/weapon/virusdish/proc/incubate(mutatechance=5, growthrate=3)
+/obj/item/weapon/virusdish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
 	if (contained_virus)
 		if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
 			growth = min(growth + growthrate, 100)
 		if(reagents.remove_reagent(/datum/reagent/water, 0.2))
 			growth = max(growth - growthrate, 0)
-		contained_virus.incubate(src,mutatechance)
+		contained_virus.incubate(src,mutatechance,effect_focus)
 
 /obj/item/weapon/virusdish/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER

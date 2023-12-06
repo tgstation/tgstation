@@ -39,7 +39,7 @@
 /obj/machinery/disease2/incubator/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	
+
 /obj/machinery/disease2/incubator/RefreshParts()
 	. = ..()
 	var/scancount = 0
@@ -257,7 +257,7 @@
 	if (on)
 		use_power = ACTIVE_POWER_USE
 		for (var/dish_incubator_dish/dish_datum in dish_data)
-			dish_datum.dish.incubate(mutatechance, growthrate)
+			dish_datum.dish.incubate(mutatechance, growthrate, effect_focus)
 	else
 		use_power = IDLE_POWER_USE
 
