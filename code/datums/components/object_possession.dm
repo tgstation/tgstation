@@ -19,13 +19,11 @@
 	if(!isobj(target) || !ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	var/mob/user = parent
-
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(user, "[target] is too powerful for you to possess.", confidential = TRUE)
+		to_chat(target, "[target] is too powerful for you to possess.", confidential = TRUE)
 		return COMPONENT_INCOMPATIBLE
 
-	bind_to_new_object()
+	bind_to_new_object(target)
 
 /datum/component/object_possession/Destroy()
 	cleanup_object_binding()
