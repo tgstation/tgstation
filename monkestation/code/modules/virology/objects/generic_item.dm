@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 		GLOB.infected_items |= src
 
 		LAZYADD(viruses, D)
-		SSdisease.active_diseases += D
+		//SSdisease.active_diseases += D
 		D.after_add()
 
 		if (!pathogen)

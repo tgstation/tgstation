@@ -60,9 +60,38 @@ GLOBAL_LIST_INIT(virusDB, list())
 		viable += disease
 	return viable
 
-/datum/disease/advanced/New()
-	. = ..()
-	GLOB.inspectable_diseases += src
+/datum/disease/advanced/proc/update_global_log()
+	if ("[uniqueID]-[subID]" in GLOB.inspectable_diseases)
+		return
+	GLOB.inspectable_diseases["[uniqueID]-[subID]"] = Copy()
+
+/datum/disease/advanced/proc/clean_global_log()
+	var/ID = "[uniqueID]-[subID]"
+	if (ID in GLOB.virusDB)
+		return
+
+	for (var/mob/living/L in GLOB.mob_list)
+		if(!length(L.diseases))
+			continue
+		for(var/datum/disease/advanced/D as anything in L.diseases)
+			if (ID == "[D.uniqueID]-[D.subID]")	
+				return
+
+	for (var/obj/item/I in GLOB.infected_items)
+		for(var/datum/disease/advanced/D as anything in I.viruses)
+			if (ID == "[D.uniqueID]-[D.subID]")	
+				return
+
+	var/dishes = 0
+	for (var/obj/item/weapon/virusdish/dish in GLOB.virusdishes)
+		if (dish.contained_virus)
+			if (ID == "[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]")
+				dishes++
+				if (dishes > 1)//counting the dish we're in currently
+					return
+	//If a pathogen that isn't in the database mutates, we check whether it infected anything, and remove it from the disease list if it didn't
+	//so we don't clog up the Diseases Panel with irrelevant mutations
+	GLOB.inspectable_diseases -= ID
 
 /datum/disease/advanced/proc/AddToGoggleView(mob/living/infectedMob)
 	if (spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
@@ -106,6 +135,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 			if(e.stage == specified_stage)
 				e.multiplier_tweak(0.1 * rand(1, 3))
 				e.minormutate()
+				if(e.chance == e.max_chance && prob(strength) && e.max_chance <= initial(e.max_chance) * 3)
+					e.max_chance++
 
 	if (mutatechance > 0 && (body || dish) && incubator.reagents)
 		if (incubator.reagents.has_reagent(/datum/reagent/toxin/mutagen,  0.5) && incubator.reagents.has_reagent(/datum/reagent/consumable/nutriment/protein,0.5))
@@ -216,7 +247,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 				if (istype(T.loc,/area/centcom))
 					origin = "Centcom"
 				else if (istype(T.loc,/area/station/medical/virology))
-					origin = "Virology"
+					origin = "Pathology"
+	update_global_log()
 
 /datum/disease/advanced/proc/new_effect(badness = 2, stage = 0)
 	var/list/datum/symptom/list = list()
@@ -280,6 +312,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 //Major Mutations
 /datum/disease/advanced/proc/effectmutate(var/inBody=FALSE)
+	clean_global_log()
 	subID = rand(0,9999)
 	var/list/randomhexes = list("7","8","9","a","b","c","d","e")
 	var/colormix = "#[pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)][pick(randomhexes)]"
@@ -293,13 +326,16 @@ GLOBAL_LIST_INIT(virusDB, list())
 		f = new_random_effect(min(5,text2num(e.badness)+2), max(0,text2num(e.badness)-3), e.stage, e.type)//badness is slightly more likely to go down than up.
 	symptoms[i] = f
 	log += "<br />[ROUND_TIME()] Mutated effect [e.name] [e.chance]% into [f.name] [f.chance]%."
+	update_global_log()
 
 /datum/disease/advanced/proc/antigenmutate()
+	clean_global_log()
 	subID = rand(0,9999)
 	var/old_dat = get_antigen_string()
 	roll_antigen()
 	log += "<br />[ROUND_TIME()] Mutated antigen [old_dat] into [get_antigen_string()]."
-
+	update_global_log()
+	
 /datum/disease/advanced/proc/get_antigen_string()
 	var/dat = ""
 	for (var/A in antigen)
@@ -643,6 +679,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	popup.set_content(content)
 	popup.open()
 
+/*
 /client/proc/view_disease_data()
 	set category = "Admin.Logging"
 	set name = "View Disease List"
@@ -665,6 +702,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if(!actual_disease)
 		return
 	actual_disease.create_disease_info_pane(usr)
+*/
 
 /proc/make_custom_virus(client/C, mob/living/infectedMob)
 	if(!istype(C) || !C.holder)
@@ -680,8 +718,10 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	known_forms += "custom"
 
+	/*
 	if (islist(GLOB.inspectable_diseases) && GLOB.inspectable_diseases.len > 0)
 		known_forms += "infect with an already existing pathogen"
+	*/
 
 	var/chosen_form = input(C, "Choose a form for your pathogen", "Choose a form") as null | anything in known_forms
 	if (!chosen_form)
@@ -800,7 +840,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 				D.spread_flags |= SPREAD_MEMETIC
 		*/
 		GLOB.inspectable_diseases -= "[D.uniqueID]-[D.subID]"//little odds of this happening thanks to subID but who knows
-		//D.update_global_log()
+		D.update_global_log()
 
 		if (alert("Lastly, do you want this pathogen to be added to the station's Database? (allows medical HUDs to locate infected mobs, among other things)","Pathogen Database","Yes","No") == "Yes")
 			D.addToDB()
@@ -843,3 +883,115 @@ GLOBAL_LIST_INIT(virusDB, list())
 	else
 		mob.virusView()
 	mob.disease_view = !mob.disease_view
+
+/client/proc/diseases_panel()
+	set category = "Admin.Logging"
+	set name = "Disease Panel"
+	set desc = "See diseases and disease information"
+
+	if(!holder)
+		return
+	holder.diseases_panel()
+
+/datum/admins/var/viewingID
+
+/datum/admins/proc/diseases_panel()
+	if (!GLOB.inspectable_diseases || !length(GLOB.inspectable_diseases))
+		alert("There are no pathogen in the round currently!")
+		return
+	var/list/logs = list()
+	var/dat = {"<html>
+		<head>
+		<style>
+		table,h2 {
+		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		}
+		td, th {
+		border: 1px solid #dddddd;
+		padding: 8px;
+		}
+		tr:nth-child(even) {
+		background-color: #dddddd;
+		}
+		</style>
+		</head>
+		<body>
+		<h2 style="text-align:center">Disease Panel</h2>
+		<table>
+		<tr>
+		<th style="width:2%">Disease ID</th>
+		<th style="width:1%">Origin</th>
+		<th style="width:1%">in Database?</th>
+		<th style="width:1%">Infected People</th>
+		<th style="width:1%">Infected Items</th>
+		<th style="width:1%">in Growth Dishes</th>
+		</tr>
+		"}
+
+	for (var/ID in GLOB.inspectable_diseases)
+		var/infctd_mobs = 0
+		var/infctd_mobs_dead = 0
+		var/infctd_items = 0
+		var/dishes = 0
+		for (var/mob/living/L in GLOB.mob_list)
+			for(var/datum/disease/advanced/D as anything in L.diseases)
+				if (ID == "[D.uniqueID]-[D.subID]")	
+					infctd_mobs++
+					if (L.stat == DEAD)
+						infctd_mobs_dead++
+					if(!length(logs["[ID]"]))
+						logs["[ID]"]= list()
+					logs["[ID]"] += "[L]"
+					logs["[ID]"]["[L]"] = D.log
+					
+		for (var/obj/item/I in GLOB.infected_items)
+			for(var/datum/disease/advanced/D as anything in I.viruses)
+				if (ID == "[D.uniqueID]-[D.subID]")	
+					infctd_items++
+					if(!length(logs["[ID]"]))
+						logs["[ID]"] = list()
+					logs["[ID]"] += "[I]"
+					logs["[ID]"]["[I]"] = D.log
+		for (var/obj/item/weapon/virusdish/dish in GLOB.virusdishes)
+			if (dish.contained_virus)
+				if (ID == "[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]")
+					dishes++
+					if(!length(logs["[ID]"]))
+						logs["[ID]"] = list()
+					logs["[ID]"] += "[dish]"
+					logs["[ID]"]["[dish]"] = dish.contained_virus.log
+		
+		var/datum/disease/advanced/D = GLOB.inspectable_diseases[ID]
+		dat += {"<tr>
+			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_examine=["[D.uniqueID]"]-["[D.subID]"]'>[D.form] #["[D.uniqueID]"]-["[D.subID]"]</a></td>
+			<td>[D.origin]</td>
+			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_toggledb=\ref[D]'>[(ID in GLOB.virusDB) ? "Yes" : "No"]</a></td>
+			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infectedmobs=\ref[D]'>[infctd_mobs][infctd_mobs_dead ? " (including [infctd_mobs_dead] dead)" : "" ]</a></td>
+			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_infecteditems=\ref[D]'>[infctd_items]</a></td>
+			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_dishes=\ref[D]'>[dishes]</a></td>
+			</tr>
+			"}
+
+	dat += {"</table>
+		"}
+	dat += {"<table>
+		<tr>
+		<th style="width:2%">Disease Logs</th>
+		</tr>"}
+	for(var/item in logs[viewingID])
+		dat += {"<tr>
+		<td><b>[item] - [viewingID]</b><br>[logs[viewingID][item]]
+		</tr>
+		"}
+	dat += {"</table>
+		</body>
+		</html>
+	"}
+	usr << browse(dat, "window=diseasespanel;size=705x450")
+
+/datum/admins/Topic(href, href_list)
+	. = ..()
+	if(href_list["diseasepanel_examine"])
+		viewingID = href_list["diseasepanel_examine"]
+		diseases_panel()

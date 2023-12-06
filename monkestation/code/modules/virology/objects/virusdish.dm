@@ -190,6 +190,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		growth = rand(5, 50)
 		name = "growth dish (Unknown [contained_virus.form])"
 		update_icon()
+		contained_virus.origin = "Random Dish"
 	else
 		GLOB.virusdishes.Remove(src)
 

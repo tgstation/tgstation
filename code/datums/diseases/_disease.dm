@@ -42,7 +42,6 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 
 /datum/disease/Destroy()
 	. = ..()
-	GLOB.inspectable_diseases -= src
 	if(affected_mob)
 		remove_disease()
 	//SSdisease.active_diseases.Remove(src)
