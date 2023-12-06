@@ -133,6 +133,11 @@
 		brute_per_second = 5,\
 		outline_colour = COLOR_YELLOW,\
 	)
+	var/static/list/on_consume = list(
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.1,
+	)
+	AddElement(/datum/element/consumable_mob, reagents_list = on_consume)
 
 /mob/living/basic/bear/butter/attack_hand(mob/living/user, list/modifiers) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	. = ..()

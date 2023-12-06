@@ -1,0 +1,6 @@
+author: "Vermidia"
+delete-after: True
+changes:
+  - bugfix: "Medibots made from advanced medkits works again"
+  - bugfix: "Medibots made from brute medkits have their bonus healing again"
+  - bugfix: "Medibots can use robotic emotes again"

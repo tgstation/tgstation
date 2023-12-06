@@ -1012,3 +1012,140 @@
   jjpark-kb:
   - bugfix: gutlunches now produce miner salve instead of milk, as well as the other
       reagents if fed the correct ore
+2023-11-25:
+  MTandi:
+  - image: SM shard sprite updated
+  Rhials:
+  - qol: Gives Cargo areas its own wire layout, instead of having it use the same
+      wires as Service areas.
+  Time-Green:
+  - rscadd: Adds an arctangent2 component to circuitry!
+2023-11-26:
+  DaydreamIQ:
+  - qol: Mothuchi's pizzeria has been improved slightly! Order yourself a fresh mothic
+      pizza today!
+  Majkl-J:
+  - code_imp: HUDs no longer use their own trait variable
+  Momo8289:
+  - bugfix: MOD quick carry modules now give the correct carry speed bonus
+  Profakos:
+  - refactor: Slimes's colour, core type and mutation list is now held in a slime
+      type datum
+  - code_imp: Slime's variables have been documented, and renamed a bit to add clarity.
+      Please report bugs that might stem from renaming.
+  - bugfix: Slimes are not longer prevented from attacking pacifist humans.
+  - qol: Slime scans now display the actual amount of genetic instability, instead
+      of hiding it if a slime doesn't mutate further, or tweaking it if it might mutate
+      back into itself. This will make it easier to parse which slime to breed further
+      to get a rainbow slime.
+  Rhials:
+  - code_imp: Bitrunning/Bitrunning Den areas are now cargo area subtypes, rather
+      than station area subtypes.
+  - qol: The area preceding Metastation Cargo's front door is now denoted as being
+      the "cargo lobby".
+  SuperNovaa41:
+  - bugfix: Fixes cyborged heretics seeing influences.
+  Time-Green:
+  - bugfix: Fixes nebula killing everyone when forced by an admin on icebox
+  Y0SH1M4S73R:
+  - bugfix: Rebar crossbow bolts are now reuseable again, without risking crashing
+      clients when fired at point-blank range.
+  - qol: Bitrunning glitches will not show up in the roundend report unless they escape
+      the virtual domain.
+  vinylspiders:
+  - bugfix: fixes a runtime in footstep code that would prevent the fov effect from
+      playing to nearby mobs
+2023-11-27:
+  DaCoolBoss:
+  - qol: Oculine now tastes bitter, and not like toxin.
+  LemonInTheDark:
+  - server: Minimum compile version has been bumped to 515. clients still support
+      514 but we're gonna start using 515 restricted features for serverside now.
+  Profakos:
+  - bugfix: You can once again repaint robotic limbs to use alternate skins
+  SyncIt21:
+  - code_imp: removes unused proc `generate_possible_reactions()` from reagent holder
+  san7890:
+  - bugfix: Poly should now remember phrases between shifts.
+  wesoda25:
+  - bugfix: the dismemberment moodlet will now properly clear for ethereals who regrew
+      a limb in their resurrection crystals
+2023-11-28:
+  FeudeyTF:
+  - code_imp: Removed currency value for free products
+  Kylerace:
+  - code_imp: verb callbacks will no longer execute if the original client disconnected
+  Rhials:
+  - qol: Bar signs can now be purchased from cargo. Neat!
+  - qol: Bar signs can now be deconstructed with a screwdriver and wrench.
+  - qol: Bar signs can now be smashed to pieces, rather than just disabled.
+  Y0SH1M4S73R:
+  - bugfix: People exposed to romerol while alive will once again revive as zombies
+      on death.
+  san7890:
+  - bugfix: Ranged Guardians (Holoparasites/Power Miners/etc.) can no longer use ranged
+      attacks in scouting (incorporeal) mode.
+  vinylspiders:
+  - bugfix: fixes an overlay lighting hard del
+  - bugfix: flashlights placed inside of backpacks and other storage items that were
+      on the floor will no longer allow light to shine through
+  - bugfix: fixed a null client runtime in advanced camera console
+  - bugfix: fixed a runtime in handle_dead_metabolism()
+2023-11-29:
+  Ghommie:
+  - rscadd: Standing on structures such as crates, tables and bed will now look like
+      it.
+  Higgin:
+  - code_imp: Made ARDS death check respect maxHealth.
+  Iajret:
+  - bugfix: You can now destructively analyze syndicate and abductor items. It works
+      this time, I promise!
+  LT3:
+  - bugfix: Getting beheaded by the tram increments the scoreboard
+  - bugfix: 'Disease outbreak: classic spawned from the admin secrets panel no longer
+      fails to start'
+  - bugfix: Disease outbreak provides a message about why it fails to start
+  MGO:
+  - rscadd: Introduces new inverse reagents for Salicylic Acid, Oxandrolone, Salbutamol,
+      Pentetic Acid, Atropine, Ammoniated Mercury and Rezadone!
+  MTandi:
+  - bugfix: fixed chemical closet door not rendering when open
+  Momo8289:
+  - bugfix: The quick carry module should now correctly apply the appropriate traits
+  Mothblocks:
+  - image: Premade cleanbots are now always blue.
+  Rhials:
+  - bugfix: Renames a bar door from "Kitchen" to "Bar" on Metastation.
+  SyncIt21:
+  - bugfix: you no longer get an empty crate when ordering bluespace crystals from
+      the galactic material market.
+  Thlumyn:
+  - bugfix: bitrunning den shows up on the camera console now.
+  WarlockD:
+  - bugfix: All drones now can craft again
+  - rscadd: Non-Shy drones can now strip people of their things
+  - bugfix: Centered the "pull" button properly over the drop button
+  itseasytosee:
+  - bugfix: staggered targets now have the correct chance for escaping grapples.
+  - spellcheck: changed attack verb for punching a grappled target
+  san7890:
+  - bugfix: During the "Cursed Items" wizard event, you should only have smoke spawn
+      on you if you actually had a cursed item equipped to you.
+  vinylspiders:
+  - bugfix: fixed remaining footstep runtimes
+2023-11-30:
+  Ben10Omintrix:
+  - refactor: cats are now basic pets. please report any bugs.
+  - rscadd: the cake cat and bread cat can now help the chef around in the kitchen
+  GoldenAlpharex:
+  - bugfix: The Radioactive Nebula station trait will now respect its upper intensity
+      cap set at one hour and forty minutes, no longer scaling past that, as was initially
+      intended.
+  Mothblocks:
+  - rscadd: Instead of teaming up random people together, blood brothers will now
+      start out with one player and let them convert a single other person over to
+      blood brother using a flash.
+  SuperNovaa41:
+  - bugfix: Cyber cops are now equipped with the correct outfit.
+  timothymtorres:
+  - bugfix: Fix bitrunning triggering claustrophobia

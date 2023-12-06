@@ -17,8 +17,8 @@ type TurbineInfo = {
   regulator: number;
 };
 
-export const TurbineComputer = (props, context) => {
-  const { act, data } = useBackend<TurbineInfo>(context);
+export const TurbineComputer = (props) => {
+  const { act, data } = useBackend<TurbineInfo>();
   const parts_not_connected = !data.parts_linked && (
     <Modal>
       <Box

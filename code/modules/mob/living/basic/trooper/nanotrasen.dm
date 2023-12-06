@@ -9,6 +9,9 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 
+/mob/living/basic/trooper/nanotrasen/assess_threat(judgement_criteria, lasercolor, datum/callback/weaponcheck)
+	return -10 // Respect our troops
+
 /// A variant that calls for reinforcements on spotting a target
 /mob/living/basic/trooper/nanotrasen/screaming
 	ai_controller = /datum/ai_controller/basic_controller/trooper/calls_reinforcements

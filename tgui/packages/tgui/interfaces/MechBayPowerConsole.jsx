@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
-export const MechBayPowerConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MechBayPowerConsole = (props) => {
+  const { act, data } = useBackend();
   const { recharge_port } = data;
   const mech = recharge_port && recharge_port.mech;
   const cell = mech && mech.cell;
