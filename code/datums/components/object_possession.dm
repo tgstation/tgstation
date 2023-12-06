@@ -22,6 +22,7 @@
 	if(!bind_to_new_object(target))
 		return COMPONENT_INCOMPATIBLE
 
+	var/mob/user = parent
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, PROC_REF(on_move))
