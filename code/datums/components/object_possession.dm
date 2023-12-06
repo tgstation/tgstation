@@ -20,7 +20,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(target, "[target] is too powerful for you to possess.", confidential = TRUE)
+		to_chat(parent, "[target] is too powerful for you to possess.", confidential = TRUE)
 		return COMPONENT_INCOMPATIBLE
 
 	bind_to_new_object(target)
