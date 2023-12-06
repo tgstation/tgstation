@@ -2,9 +2,9 @@
 	set name = "Possess Obj"
 	set category = "Object"
 
-	usr.AddComponent(/datum/component/object_possession, target)
+	var/result = usr.AddComponent(/datum/component/object_possession, target)
 
-	if(!HAS_TRAIT_FROM(usr, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(target))) // trigger a safety movement just in case we yonked unexpectedly
+	if(isnull(result)) // trigger a safety movement just in case we yonk
 		usr.forceMove(get_turf(usr))
 		return
 

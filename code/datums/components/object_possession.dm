@@ -38,7 +38,6 @@
 /// Binds the mob to the object and sets up the naming and everything
 /datum/component/object_possession/proc/bind_to_new_object(obj/target)
 	var/mob/user = parent
-	ADD_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(target))
 
 	stashed_name = user.real_name
 	possessed = target
@@ -72,7 +71,6 @@
 	poltergeist.reset_perspective()
 
 	UnregisterSignal(poltergeist, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED))
-	REMOVE_TRAIT(poltergeist, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(possessed))
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))

@@ -1005,7 +1005,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given when a mob is currently in invisimin mode
 #define TRAIT_INVISIMIN "invisimin"
 
-/// Trait given to a mob currently possessing (i.e. poltergeisting via the "possess" verb) an /obj object
-#define TRAIT_CURRENTLY_CONTROLLING_OBJECT "currently_controlling_object"
-
 // END TRAIT DEFINES
