@@ -358,7 +358,7 @@
 			//This is done so we don't delete the children when the parent is consumed
 			//We only do this on the 1st iteration so we don't re-iterate through its children again
 			if(target_item.contents.len && i == 1)
-				if(target_item.atom_storage?.locked) //can't access contents of lockedd storage(like duffle bags)
+				if(target_item.atom_storage?.locked) //can't access contents of locked storage(like duffle bags)
 					continue
 				//process children
 				child_items += target_item.contents
