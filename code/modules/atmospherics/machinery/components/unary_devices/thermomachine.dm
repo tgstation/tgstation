@@ -63,7 +63,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/unary/thermomachine/is_connectable()
-	if(!anchored || panel_open)
+	if(!anchored)
 		return FALSE
 	. = ..()
 
@@ -78,7 +78,6 @@
 	if(check_pipe_on_turf())
 		set_anchored(FALSE)
 		set_panel_open(TRUE)
-		change_pipe_connection(TRUE)
 		icon_state = "thermo-open"
 		balloon_alert(user, "the port is already in use!")
 
@@ -211,11 +210,8 @@
 		change_pipe_connection(panel_open)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
-	return default_change_direction_wrench(user, tool)
-
 /obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
@@ -251,6 +247,10 @@
 		if(device.piping_layer == piping_layer)
 			return TRUE
 	return FALSE
+
+/obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
+	if(anchored)
+		return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open || check_pipe_on_turf())

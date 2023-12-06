@@ -42,46 +42,8 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/user, obj/item/tool)
-	if(!panel_open)
-		balloon_alert(user, "open panel!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
-	var/unsafe_wrenching = FALSE
-	var/filled_pipe = FALSE
-	var/datum/gas_mixture/env_air = loc.return_air()
-	var/datum/gas_mixture/ins_air = airs[1]
-	var/internal_pressure = 0
-	if(istype(src, /obj/machinery/atmospherics/components/unary/hypertorus/core))
-		var/obj/machinery/atmospherics/components/unary/hypertorus/core/core_part = src
-		internal_pressure = max(core_part.internal_fusion.return_pressure(), core_part.moderator_internal.return_pressure())
-		if(internal_pressure)
-			filled_pipe = TRUE
-
-	if(!nodes[1])
-		internal_pressure = max(internal_pressure, ins_air.return_pressure())	
-	
-	internal_pressure -= env_air.return_pressure()
-
-	if(ins_air.total_moles() > 0)
-		filled_pipe = TRUE
-
-	default_deconstruction_crowbar(tool, custom_deconstruct = filled_pipe)
-		
-	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
-	
-	if(internal_pressure > 2 * ONE_ATMOSPHERE)
-		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
-		unsafe_wrenching = TRUE
-	
-	if(!do_after(user, 2 SECONDS, src))
-		return
-	if(unsafe_wrenching)
-		unsafe_pressure_release(user, internal_pressure)
-	
-	tool.play_tool_sound(src, 50)
-	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+/obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/living/user, obj/item/tool)
+	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
 	if(!cracked)
@@ -93,23 +55,6 @@
 		balloon_alert(user, "repaired")
 		cracked = FALSE
 		update_appearance()
-
-/obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(.)
-		set_init_directions()
-		var/obj/machinery/atmospherics/node = nodes[1]
-		if(node)
-			node.disconnect(src)
-			nodes[1] = null
-			if(parents[1])
-				nullify_pipenet(parents[1])
-		atmos_init()
-		node = nodes[1]
-		if(node)
-			node.atmos_init()
-			node.add_member(src)
-		SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
 	if(panel_open)
