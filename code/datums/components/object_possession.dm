@@ -22,12 +22,19 @@
 	if(!bind_to_new_object(target))
 		return COMPONENT_INCOMPATIBLE
 
+	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
+
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, PROC_REF(on_move))
 	RegisterSignals(parent, list(COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN), PROC_REF(end_possession))
 
 /datum/component/object_possession/Destroy()
 	cleanup_object_binding()
 	UnregisterSignal(parent, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN))
+
+	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
+	if(!isnull(alert_to_clear))
+		poltergeist.clear_alert(ALERT_UNPOSSESS_OBJECT)
+
 	return ..()
 
 /datum/component/object_possession/InheritComponent(datum/component/object_possession/old_component, i_am_original, obj/target)
@@ -57,8 +64,6 @@
 	target.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(end_possession))
-
-	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 	return TRUE
 
 /// Cleans up everything pertinent to the current possessed object.
@@ -82,12 +87,6 @@
 	poltergeist.reset_perspective()
 
 	possessed = null
-
-	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
-	if(isnull(alert_to_clear))
-		return
-
-	poltergeist.clear_alert(ALERT_UNPOSSESS_OBJECT)
 
 /**
  * force move the parent object instead of the source mob.
