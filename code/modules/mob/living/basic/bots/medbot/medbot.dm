@@ -255,7 +255,7 @@
 		"It is tipped over and requesting help.",
 		"They are tipped over and appear visibly distressed.",
 		span_warning("They are tipped over and visibly panicking!"),
-		span_warning("<b>They are freaking out from being tipped over!</b>")
+		span_warning(span_bold("They are freaking out from being tipped over!"))
 	)
 	. += pick(panic_state)
 /*
