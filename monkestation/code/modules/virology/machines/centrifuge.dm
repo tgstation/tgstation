@@ -119,9 +119,9 @@
 		if (on)
 			icon_state = "centrifuge_moving"
 			set_light(2,2)
-			var/mutable_appearance/centrifuge_light = emissive_appearance(icon,"centrifuge_light")
+			var/mutable_appearance/centrifuge_light = emissive_appearance(icon,"centrifuge_light",src)
 			.+= centrifuge_light
-			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon,"centrifuge_glow")
+			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon,"centrifuge_glow",src)
 			centrifuge_glow.blend_mode = BLEND_ADD
 			.+= centrifuge_glow
 		else
@@ -129,10 +129,10 @@
 
 		switch (special)
 			if (CENTRIFUGE_LIGHTSPECIAL_BLINKING)
-				.+= emissive_appearance(icon,"centrifuge_special_update")
+				.+= emissive_appearance(icon,"centrifuge_special_update",src)
 				special = CENTRIFUGE_LIGHTSPECIAL_ON
 			if (CENTRIFUGE_LIGHTSPECIAL_ON)
-				.+= emissive_appearance(icon,"centrifuge_special")
+				.+= emissive_appearance(icon,"centrifuge_special",src)
 
 /obj/machinery/disease2/centrifuge/proc/add_vial_sprite(obj/item/reagent_containers/cup/beaker/vial/vial, 	slot = 1)
 	add_overlay("centrifuge_vial[slot][on ? "_moving" : ""]")

@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(infected_cleanables, list())
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	spawn(1)//cleanables can get infected in many different ways when they spawn so it's much easier to handle the pathogen overlay here after a delay
-		if (diseases && diseases.len > 0)
+		if (src.diseases && length(src.diseases))
 			GLOB.infected_cleanables += src
 			if (!pathogen)
 				pathogen = image('monkestation/code/modules/virology/icons/effects.dmi',src,"pathogen_blood")
