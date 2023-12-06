@@ -201,9 +201,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 
 /obj/item/weapon/virusdish/proc/incubate(mutatechance=5, growthrate=3)
 	if (contained_virus)
-		if(!reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
+		if(reagents.remove_reagent(/datum/reagent/consumable/virus_food, 0.2))
 			growth = min(growth + growthrate, 100)
-		if(!reagents.remove_reagent(/datum/reagent/water, 0.2))
+		if(reagents.remove_reagent(/datum/reagent/water, 0.2))
 			growth = max(growth - growthrate, 0)
 		contained_virus.incubate(src,mutatechance)
 
