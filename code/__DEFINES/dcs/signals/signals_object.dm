@@ -505,4 +505,8 @@
 #define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"
 
 /// Fired when the user wants to exit their current object possession. From /proc/release().
-#define COMSIG_END_OBJECT_POSSESSION "end_object_possession"
+#define COMSIG_END_OBJECT_POSSESSION_VIA_VERB "end_object_possession_via_verb"
+/// Fired when the user exits their current object possession via possessing a new object. From the Initialize() of /datum/component/object_possession
+#define COMSIG_END_OBJECT_POSSESSION_VIA_COMPONENT_CHAIN "end_object_possession_via_chaining"
+/// Fired when the user exits their current object possession via clicking the screen alert. From the Click() of /atom/movable/screen/alert/unpossess_object
+#define COMSIG_END_OBJECT_POSSESSION_VIA_SCREEN_ALERT "end_object_possession_via_screen_alert"

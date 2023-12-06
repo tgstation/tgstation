@@ -879,7 +879,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!.)
 		return
 
-	SEND_SIGNAL(owner, COMSIG_END_OBJECT_POSSESSION)
+	SEND_SIGNAL(owner, COMSIG_END_OBJECT_POSSESSION_VIA_SCREEN_ALERT)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 

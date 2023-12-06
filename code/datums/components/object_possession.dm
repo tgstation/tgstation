@@ -12,6 +12,12 @@
 	  * is reset to this value
 	  */
 	var/stashed_name = null
+	/// List of signals we register to in order to know when to end possession.
+	var/static/list/signals_to_delete_on = list(
+		COMSIG_END_OBJECT_POSSESSION_VIA_COMPONENT_CHAIN,
+		COMSIG_END_OBJECT_POSSESSION_VIA_SCREEN_ALERT,
+		COMSIG_END_OBJECT_POSSESSION_VIA_VERB,
+	)
 
 
 /datum/component/object_possession/Initialize(mob/user)
@@ -20,7 +26,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(HAS_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT))
-		SEND_SIGNAL(user, COMSIG_END_OBJECT_POSSESSION) // end the previous possession before we start the next one
+		SEND_SIGNAL(user, COMSIG_END_OBJECT_POSSESSION_VIA_COMPONENT_CHAIN) // end the previous possession before we start the next one
 
 	var/obj/obj_parent = parent
 
@@ -44,7 +50,7 @@
 
 	obj_parent.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
-	RegisterSignal(user, COMSIG_END_OBJECT_POSSESSION, PROC_REF(end_possession))
+	RegisterSignals(user, signals_to_delete_on, PROC_REF(end_possession))
 	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, PROC_REF(on_move))
 
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
@@ -73,7 +79,7 @@
 	user.forceMove(get_turf(parent))
 	user.reset_perspective()
 
-	UnregisterSignal(user, list(COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, COMSIG_END_OBJECT_POSSESSION))
+	UnregisterSignal(user, list(COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT) + signals_to_delete_on)
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))

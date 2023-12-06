@@ -18,7 +18,7 @@
 	set name = "Release Obj"
 	set category = "Object"
 
-	SEND_SIGNAL(usr, COMSIG_END_OBJECT_POSSESSION)
+	SEND_SIGNAL(usr, COMSIG_END_OBJECT_POSSESSION_VIA_VERB)
 	BLACKBOX_LOG_ADMIN_VERB("Release Object")
 
 /proc/give_possession_verbs(mob/dude in GLOB.mob_list)
