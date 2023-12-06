@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - rscdel: "Stagger animation no longer fires longer than it should on dead bodies or on dead bodies period."

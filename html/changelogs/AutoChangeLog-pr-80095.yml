@@ -1,5 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - qol: "Converting someone will now give a chat message."
-  - bugfix: "Blood brothers can no longer get other antagonists, I hope."
