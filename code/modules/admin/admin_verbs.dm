@@ -116,6 +116,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/cmd_select_equipment,
 	/client/proc/command_report_footnote,
 	/client/proc/view_disease_data,
+	/client/proc/disease_view,
 	/client/proc/delay_command_report,
 	/client/proc/drop_bomb,
 	/client/proc/drop_dynex_bomb,
