@@ -1,4 +1,4 @@
-/// Component that allows admins to control any object as if it were a mob.
+/// Component that allows a user to control any object as if it were a mob. Does give the user incorporeal movement.
 /datum/component/object_possession
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Stores a reference to the obj that we are currently possessing.
@@ -6,7 +6,7 @@
 	/// Ref to the screen object that is currently being displayed.
 	var/datum/weakref/screen_alert_ref = null
 	/**
-	  * back up of the real name during admin possession
+	  * back up of the real name during user possession
 	  *
 	  * When a user possesses an object it's real name is set to the user name and this
 	  * stores whatever the real name was previously. When possession ends, the real name
@@ -61,7 +61,7 @@
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 	return TRUE
 
-/// Cleans up everything when the admin wants out.
+/// Cleans up everything pertinent to the current possessed object.
 /datum/component/object_possession/proc/cleanup_object_binding()
 	if(QDELETED(possessed))
 		return
@@ -92,7 +92,7 @@
 /**
  * force move the parent object instead of the source mob.
  *
- * Has no sanity other than checking density
+ * Has no sanity other than checking the possed obj's density. this means it effectively has incorporeal movement, making it only good for badminnery.
  */
 /datum/component/object_possession/proc/on_move(datum/source, new_loc, direct)
 	SIGNAL_HANDLER
@@ -112,8 +112,7 @@
 	possessed.setDir(direct)
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
 
-/// Qdels the component in the event the source mob triggers ghostizes (useful for when the user is not a ghost) or triggers the aghost keybind (useful for when the user is a ghost)
-/// Also gets triggered if the object we are possessing gets deleted. Just the overall "get me outta here" proc.
+/// Just the overall "get me outta here" proc.
 /datum/component/object_possession/proc/end_possession(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
