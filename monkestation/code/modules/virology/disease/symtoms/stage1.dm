@@ -105,8 +105,9 @@
 	max_multiplier = 10
 
 /datum/symptom/bee_vomit/activate(mob/living/mob)
-	if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/honey) < 10+multiplier*2)
-		mob.reagents.add_reagent(/datum/reagent/consumable/honey, multiplier)
+	if(!ismouse(mob))
+		if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/honey) < 10+multiplier*2)
+			mob.reagents.add_reagent(/datum/reagent/consumable/honey, multiplier)
 
 	if(prob(4*multiplier))
 		to_chat(mob, "<span class='warning'>You feel a buzzing in your throat</span>")

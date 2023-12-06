@@ -183,6 +183,8 @@
 	max_multiplier = 7
 
 /datum/symptom/drunk/activate(mob/living/mob)
+	if(ismouse(mob))
+		return
 	to_chat(mob, "<span class='notice'>You feel like you had one hell of a party!</span>")
 	if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/vermouth) < multiplier*5)
 		mob.reagents.add_reagent(/datum/reagent/consumable/ethanol/vermouth, multiplier*5)
@@ -219,6 +221,9 @@
 	var/color = rgb(255, 255, 255)
 
 /datum/symptom/lantern/activate(mob/living/mob)
+	if(ismouse(mob))
+		mob.set_light(multiplier, multiplier/3, l_color = color)
+		return
 	if(mob.reagents.has_reagent(/datum/reagent/space_cleaner))
 		uncolored = 1	//Having spacecleaner in your system when the effect activates will permanently make the color white.
 	if(mob.reagents.reagent_list.len == 0 || uncolored == TRUE)

@@ -455,9 +455,20 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/teratoma/activate(mob/living/carbon/mob)
-	var/organ_type = pick(typesof(/obj/item/organ/internal))
-	var/obj/item/spawned_organ = new organ_type(get_turf(mob))
-	mob.visible_message("<span class='warning'>\A [spawned_organ.name] is extruded from \the [mob]'s body and falls to the ground!</span>","<span class='warning'>\A [spawned_organ.name] is extruded from your body and falls to the ground!</span>")
+	var/fail_counter = 0
+	var/not_passed = TRUE
+	var/obj/item/organ/spawned_organ
+	while(not_passed && fail_counter <= 10)
+		var/organ_type = pick(typesof(/obj/item/organ/internal))
+		spawned_organ = new organ_type(get_turf(mob))
+		if(spawned_organ.status != ORGAN_ORGANIC)
+			qdel(spawned_organ)
+			fail_counter++
+			continue
+		not_passed = FALSE
+
+	if(!not_passed)
+		mob.visible_message("<span class='warning'>\A [spawned_organ.name] is extruded from \the [mob]'s body and falls to the ground!</span>","<span class='warning'>\A [spawned_organ.name] is extruded from your body and falls to the ground!</span>")
 
 /datum/symptom/damage_converter
 	name = "Toxic Compensation"
