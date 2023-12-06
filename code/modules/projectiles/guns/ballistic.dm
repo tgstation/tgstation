@@ -484,7 +484,7 @@
 		if (empty_alarm && last_shot_succeeded)
 			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
 			update_appearance()
-		if (last_shot_succeeded && bolt_type == BOLT_TYPE_LOCKING && semi_auto == TRUE)
+		if (last_shot_succeeded && bolt_type == BOLT_TYPE_LOCKING && semi_auto)
 			bolt_locked = TRUE
 			update_appearance()
 
