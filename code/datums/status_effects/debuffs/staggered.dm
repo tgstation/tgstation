@@ -10,7 +10,7 @@
 
 /datum/status_effect/staggered/on_apply()
 	//you can't stagger the dead.
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKEDEATH))
+	if(owner.stat == DEAD)
 		return FALSE
 
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_staggered))
