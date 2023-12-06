@@ -838,8 +838,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 		return
 	if(!mob)
 		return
-	if(disease_view)
+	if(mob.disease_view)
 		mob.stopvirusView()
 	else
 		mob.virusView()
-	disease_view = !disease_view
+	mob.disease_view = !mob.disease_view
