@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	var/cloud_delay = 8 SECONDS//similar to a mob's breathing
 	var/last_cloud_time = 0
 	var/mob/last_openner
+	var/takes_left = 2
 
 /obj/item/weapon/virusdish/New(loc)
 	..()
@@ -103,6 +104,13 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	..()
 	if(istype(I,/obj/item/hand_labeler))
 		return
+	if(istype(I, /obj/item/reagent_containers/syringe) && takes_left)
+		takes_left--
+		var/obj/item/reagent_containers/syringe/B = I
+		var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=list())
+		data["viruses"] |= list(contained_virus)
+		B.reagents.add_reagent(/datum/reagent/blood, B.volume, data)
+		to_chat(user, span_notice("You take some blood from the [src]"))
 	if (open)
 		if (istype(I,/obj/item/reagent_containers))
 			var/success = 0

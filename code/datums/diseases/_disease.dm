@@ -55,6 +55,8 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 //add the disease with no checks
 /datum/disease/proc/infect(mob/living/infectee, make_copy = TRUE)
 	var/datum/disease/D = make_copy ? Copy() : src
+	if(!istype(D))
+		return
 	LAZYADD(infectee.diseases, D)
 	D.affected_mob = infectee
 	//SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.

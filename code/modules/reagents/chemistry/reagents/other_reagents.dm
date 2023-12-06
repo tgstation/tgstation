@@ -51,7 +51,7 @@
 			if(istype(strain, /datum/disease/advanced))
 				var/datum/disease/advanced/advanced = strain
 				if(methods & (INJECT|INGEST|PATCH))
-					exposed_mob.infect_disease(advanced, notes="(Contact, splashed with infected blood)")
+					exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
 				if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
 					if(exposed_mob.check_bodypart_bleeding(BODY_ZONE_EVERYTHING))
 						exposed_mob.infect_disease(advanced, notes="(Blood, splashed with infected blood)")

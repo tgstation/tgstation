@@ -3,6 +3,9 @@ GLOBAL_LIST_INIT(infected_items, list())
 /obj/item
 	var/list/viruses = list()
 
+/obj/item/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	disease_contact(user)
 
 //Called by attack_hand(), transfers diseases between the mob and the item
 /obj/item/proc/disease_contact(mob/living/carbon/M, bodypart = null)

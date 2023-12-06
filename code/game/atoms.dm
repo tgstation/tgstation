@@ -1017,7 +1017,7 @@
 	var/list/blood_dna = injected_mob.get_blood_dna_list()
 	if(iscarbon(injected_mob))
 		var/mob/living/carbon/mob = injected_mob
-		try_infect_with_mobs_diseases(mob.diseases)
+		try_infect_with_mobs_diseases(mob)
 	if(!blood_dna)
 		return FALSE
 	return add_blood_DNA(blood_dna)

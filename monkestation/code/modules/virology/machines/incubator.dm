@@ -32,6 +32,14 @@
 	. = ..()
 	RefreshParts()
 
+/obj/machinery/disease2/incubator/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/machinery/disease2/incubator/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+	
 /obj/machinery/disease2/incubator/RefreshParts()
 	. = ..()
 	var/scancount = 0

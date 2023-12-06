@@ -163,6 +163,9 @@
 
 /datum/symptom/stimulant/activate(mob/living/mob)
 	to_chat(mob, "<span class='notice'>You feel a rush of energy inside you!</span>")
+	if(ismouse(mob))
+		mob.Shake(3,3, 10 SECONDS)
+		return
 	if (mob.reagents.get_reagent_amount(/datum/reagent/adrenaline) < 10)
 		if(prob(5 * multiplier) && multiplier >= 8)
 			mob.reagents.add_reagent(/datum/reagent/adrenaline, 11) //you are gonna probably die

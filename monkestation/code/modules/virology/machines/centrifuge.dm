@@ -218,6 +218,7 @@
 	dat += "<hr>"
 
 	popup = new(user, "\ref[src]", "Isolation Centrifuge", 666, 189, src)
+	popup.set_window_options("can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;")
 	popup.set_content(dat)
 	popup.open()
 
@@ -291,13 +292,6 @@
 
 	if(..())
 		return 1
-
-	if(href_list["close"])
-		usr << browse(null, "\ref[src]")
-		usr.unset_machine()
-		return 1
-
-	usr.set_machine(src)
 
 	special = CENTRIFUGE_LIGHTSPECIAL_OFF
 
