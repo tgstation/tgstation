@@ -93,6 +93,7 @@
  * Has no sanity other than checking density
  */
 /datum/component/object_possession/proc/on_move(datum/source, new_loc, direct)
+	SIGNAL_HANDLER
 	var/obj/obj_parent = parent
 	if(QDELETED(obj_parent))
 		qdel(src)
