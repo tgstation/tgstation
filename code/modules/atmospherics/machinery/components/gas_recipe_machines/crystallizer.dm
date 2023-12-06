@@ -57,76 +57,12 @@
 	if(!on)
 		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
 			return
-	if(default_change_direction_wrench(user, I))
-		return
+		if(default_change_direction_wrench(user, I))
+			return
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
-	if(!panel_open)
-		balloon_alert(user, "open panel!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	
-	var/unsafe_wrenching = FALSE
-	var/filled_pipe = FALSE
-	var/datum/gas_mixture/env_air = loc.return_air()
-	var/internal_pressure = 0
-	for(var/i in 1 to device_type)
-		var/datum/gas_mixture/ins_air = airs[i]
-		if(ins_air.total_moles() > 0)
-			filled_pipe = TRUE
-		if(!nodes[i])
-			var/pressure_delta = airs[i].return_pressure() - env_air.return_pressure()
-			internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
-
-	default_deconstruction_crowbar(tool, custom_deconstruct = filled_pipe)
-	
-	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
-
-	if(internal_pressure > 2 * ONE_ATMOSPHERE)
-		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
-		unsafe_wrenching = TRUE
-		
-	if(!do_after(user, 2 SECONDS, src))
-		return
-	if(unsafe_wrenching)
-		unsafe_pressure_release(user, internal_pressure)
-	
-	tool.play_tool_sound(src, 50)
-	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/machinery/atmospherics/components/binary/crystallizer/default_change_direction_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(!.)
-		return FALSE
-	set_init_directions()
-	var/obj/machinery/atmospherics/node1 = nodes[1]
-	var/obj/machinery/atmospherics/node2 = nodes[2]
-	if(node1)
-		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node1.disconnect(src)
-		nodes[1] = null
-	if(node2)
-		if(src in node2.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-			node2.disconnect(src)
-		nodes[2] = null
-
-	if(parents[1])
-		nullify_pipenet(parents[1])
-	if(parents[2])
-		nullify_pipenet(parents[2])
-
-	atmos_init()
-	node1 = nodes[1]
-	if(node1)
-		node1.atmos_init()
-		node1.add_member(src)
-	node2 = nodes[2]
-	if(node2)
-		node2.atmos_init()
-		node2.add_member(src)
-	SSair.add_to_rebuild_queue(src)
-	return TRUE
+	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
