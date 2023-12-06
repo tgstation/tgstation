@@ -912,7 +912,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/check_ip_intel()
 	///we cant sleep here as it voids the ability for us to be added to the interview que
 	if (CONFIG_GET(string/ipintel_email))
-		if()
 		var/failed = FALSE
 		var/datum/ipintel/res = get_ip_intel(address)
 		if (res.intel >= CONFIG_GET(number/ipintel_rating_bad))
