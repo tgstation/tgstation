@@ -28,7 +28,6 @@
 /datum/component/object_possession/Destroy()
 	cleanup_object_binding()
 	UnregisterSignal(parent, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN))
-	possessed = null
 	return ..()
 
 /datum/component/object_possession/InheritComponent(datum/component/object_possession/old_component, i_am_original, obj/target)
@@ -38,7 +37,7 @@
 
 	stashed_name = old_component.stashed_name
 
-/// Binds the mob to the object and sets up the naming and everything.area
+/// Binds the mob to the object and sets up the naming and everything.
 /// Returns FALSE if we don't bind, TRUE if we succeed.
 /datum/component/object_possession/proc/bind_to_new_object(obj/target)
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
@@ -64,6 +63,9 @@
 
 /// Cleans up everything when the admin wants out.
 /datum/component/object_possession/proc/cleanup_object_binding()
+	if(QDELETED(possessed))
+		return
+
 	var/mob/poltergeist = parent
 
 	possessed.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
@@ -78,6 +80,8 @@
 
 	poltergeist.forceMove(get_turf(possessed))
 	poltergeist.reset_perspective()
+
+	possessed = null
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))
