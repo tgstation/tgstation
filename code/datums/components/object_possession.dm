@@ -19,11 +19,8 @@
 	if(!isobj(target) || !ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(parent, "[target] is too powerful for you to possess.", confidential = TRUE)
+	if(!bind_to_new_object(target))
 		return COMPONENT_INCOMPATIBLE
-
-	bind_to_new_object(target)
 
 /datum/component/object_possession/Destroy()
 	cleanup_object_binding()
@@ -32,11 +29,18 @@
 
 /datum/component/object_possession/InheritComponent(datum/component/object_possession/old_component, i_am_original, obj/target)
 	cleanup_object_binding()
-	bind_to_new_object(target)
+	if(!bind_to_new_object(target))
+		qdel(src)
+
 	stashed_name = old_component.stashed_name
 
-/// Binds the mob to the object and sets up the naming and everything
+/// Binds the mob to the object and sets up the naming and everything.area
+/// Returns FALSE if we don't bind, TRUE if we succeed.
 /datum/component/object_possession/proc/bind_to_new_object(obj/target)
+	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
+		to_chat(parent, "[target] is too powerful for you to possess.", confidential = TRUE)
+		return FALSE
+
 	var/mob/user = parent
 
 	stashed_name = user.real_name
@@ -53,6 +57,7 @@
 	RegisterSignal(user, COMSIG_MOB_GHOSTIZED, PROC_REF(end_possession)) // aghost compatibility
 
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
+	return TRUE
 
 /// Cleans up everything when the admin wants out.
 /datum/component/object_possession/proc/cleanup_object_binding()
