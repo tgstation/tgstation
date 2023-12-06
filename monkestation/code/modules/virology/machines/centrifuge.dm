@@ -217,7 +217,7 @@
 			dat += "<BR>"
 	dat += "<hr>"
 
-	popup = new(user, "\ref[src]", "Isolation Centrifuge", 666, 189, src)
+	popup = new(user, "centrifuge", "Isolation Centrifuge", 666, 189)
 	popup.set_window_options("can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;")
 	popup.set_content(dat)
 	popup.open()
