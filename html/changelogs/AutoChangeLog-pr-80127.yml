@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - admin: "Spawning in Nar'Sie will no longer automatically trigger the round-ender, you need to specifically start this chain of events through the new VV Dropdown Option \"Begin Nar'Sie Roundender\"."
