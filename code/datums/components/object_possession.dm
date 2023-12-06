@@ -1,5 +1,6 @@
 /// Component that allows admins to control any object as if it were a mob.
 /datum/component/object_possession
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Stores a reference to the obj that we are currently possessing.
 	var/obj/possessed = null
 	/// Ref to the screen object that is currently being displayed.
@@ -21,9 +22,24 @@
 	var/mob/user = parent
 
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(parent, "[target] is too powerful for you to possess.", confidential = TRUE)
+		to_chat(user, "[target] is too powerful for you to possess.", confidential = TRUE)
 		return COMPONENT_INCOMPATIBLE
 
+	bind_to_new_object()
+
+/datum/component/object_possession/Destroy()
+	cleanup_object_binding()
+	possessed = null
+	return ..()
+
+/datum/component/object_possession/InheritComponent(datum/component/object_possession/old_component, i_am_original, obj/target)
+	cleanup_object_binding()
+	bind_to_new_object(target)
+	stashed_name = old_component.stashed_name
+
+/// Binds the mob to the object and sets up the naming and everything
+/datum/component/object_possession/proc/bind_to_new_object(obj/target)
+	var/mob/user = parent
 	ADD_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(target))
 
 	stashed_name = user.real_name
@@ -37,23 +53,12 @@
 	target.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
 	RegisterSignal(user, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, PROC_REF(on_move))
+	RegisterSignal(user, COMSIG_MOB_GHOSTIZED, PROC_REF(end_possession)) // aghost compatibility
 
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 
-/datum/component/object_possession/Destroy()
-	cleanup_ourselves()
-	possessed = null
-	return ..()
-
-/datum/component/object_possession/InheritComponent(datum/component/object_possession/old_component, i_am_original)
-	cleanup_ourselves()
-	stashed_name = old_component.stashed_name
-
 /// Cleans up everything when the admin wants out.
-/datum/component/object_possession/proc/cleanup_ourselves()
-	if(HAS_TRAIT_FROM(parent, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(possessed))) // assume we are all cleaned up if the trait is gone in a specific case, prevents clashes
-		return
-
+/datum/component/object_possession/proc/cleanup_object_binding()
 	var/mob/poltergeist = parent
 
 	possessed.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
@@ -65,11 +70,11 @@
 			var/mob/living/carbon/human/human_user = poltergeist
 			human_user.name = human_user.get_visible_name()
 
-	poltergeist.forceMove(get_turf(parent))
+	poltergeist.forceMove(get_turf(possessed))
 	poltergeist.reset_perspective()
 
-	UnregisterSignal(poltergeist, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE)
-	REMOVE_TRAIT(parent, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(possessed))
+	UnregisterSignal(poltergeist, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED))
+	REMOVE_TRAIT(poltergeist, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(possessed))
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))
