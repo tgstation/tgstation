@@ -173,3 +173,16 @@
   - bugfix: 'Janitors rejoice (or lament): Floors should now be dirty shift-start.
 
       / \:cl:'
+2023-12-06:
+  Ghommie:
+  - bugfix: Fixed the AI painting manager showing invalid choices.
+  - bugfix: "Fixed the painting manager search function.\n/\U0001F191"
+  Mothblocks:
+  - qol: Converting someone will now give a chat message.
+  - bugfix: Blood brothers can no longer get other antagonists, I hope.
+  dieamond13:
+  - rscadd: adds propeller hats, rainbow bowties, and swirl lollipops
+  norsvenska:
+  - rscadd: The NTSS Independence (Cruise Evac Shuttle) has received a makeover! Engineering
+      crews are still working on it, but it is operable and available for those who
+      have the money to rent it.
