@@ -31,9 +31,10 @@
 	cleanup_object_binding()
 	UnregisterSignal(parent, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN))
 
+	var/mob/user = parent
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(!QDELETED(alert_to_clear))
-		poltergeist.clear_alert(ALERT_UNPOSSESS_OBJECT)
+		user.clear_alert(ALERT_UNPOSSESS_OBJECT)
 
 	return ..()
 
