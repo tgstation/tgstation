@@ -20,9 +20,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(HAS_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT))
-		if(tgui_alert(user, "You are already possessing an object. Would you like to relinquish control?", "Possession Error", list("Cancel", "Yes")) != "Yes")
-			SEND_SIGNAL(user, COMSIG_END_OBJECT_POSSESSION)
-		return COMPONENT_INCOMPATIBLE
+		SEND_SIGNAL(user, COMSIG_END_OBJECT_POSSESSION) // end the previous possession before we start the next one
 
 	var/obj/obj_parent = parent
 
@@ -35,14 +33,14 @@
 
 	ADD_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(parent))
 
+
 	stashed_name = user.real_name
+	poltergeist = WEAKREF(user)
 
 	user.forceMove(obj_parent)
 	user.real_name = obj_parent.name
 	user.name = obj_parent.name
 	user.reset_perspective(obj_parent)
-
-	poltergeist = WEAKREF(user)
 
 	obj_parent.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
