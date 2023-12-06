@@ -89,14 +89,6 @@
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
-	/**
-	  * back up of the real name during admin possession
-	  *
-	  * If an admin possesses an object it's real name is set to the admin name and this
-	  * stores whatever the real name was previously. When possession ends, the real name
-	  * is reset to this value
-	  */
-	var/name_archive //For admin things like possession
 
 	/// Default body temperature
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F

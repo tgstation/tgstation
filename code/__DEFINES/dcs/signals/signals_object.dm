@@ -503,3 +503,6 @@
 
 /// from /datum/component/dart_insert/on_reskin()
 #define COMSIG_DART_INSERT_PARENT_RESKINNED "dart_insert_parent_reskinned"
+
+/// Fired when the user wants to exit their current object possession. From /proc/release().
+#define COMSIG_END_OBJECT_POSSESSION "end_object_possession"
