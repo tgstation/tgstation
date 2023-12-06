@@ -169,7 +169,7 @@
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		icon_state = "[base_icon_state]a"
 		return
-	var/stationary_mode = !!(medical_mode_flags & MEDBOT_STATIOANRY_MODE)
+	var/stationary_mode = !!(medical_mode_flags & MEDBOT_STATIONARY_MODE)
 	if(mode == BOT_HEALING)
 		icon_state = "[base_icon_state]s[stationary_mode]"
 		return
