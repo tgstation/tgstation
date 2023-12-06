@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	if(specified_stage)
 		for(var/datum/symptom/e in symptoms)
 			if(e.stage == specified_stage)
-			e.multiplier_tweak(0.1 * rand*1, 3)
+			e.multiplier_tweak(0.1 * rand(1, 3))
 			e.minormutate()
 
 	if (mutatechance > 0 && (body || dish) && incubator.reagents)
@@ -827,3 +827,19 @@ GLOBAL_LIST_INIT(virusDB, list())
 		dish.update_icon()
 
 	return 1
+
+/mob/var/disease_view = FALSE
+/client/proc/disease_view()
+	set category = "Admin.Debug"
+	set name = "Disease View"
+	set desc = "See viro Overlay"
+
+	if(!holder)
+		return
+	if(!mob)
+		return
+	if(disease_view)
+		mob.stopvirusView()
+	else
+		mob.virusView()
+	disease_view = !disease_view

@@ -16,31 +16,11 @@
 
 /obj/item/clothing/glasses/science/proc/enable(mob/M)
 	if (toggled)
-		GLOB.science_goggles_wearers.Add(M)
-		for (var/obj/item/I in GLOB.infected_items)
-			if (I.pathogen)
-				M.client.images |= I.pathogen
-		for (var/mob/living/L in GLOB.infected_contact_mobs)
-			if (L.pathogen)
-				M.client.images |= L.pathogen
-		for (var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
-			if (C.pathogen)
-				M.client.images |= C.pathogen	
-		for (var/obj/effect/decal/cleanable/C in GLOB.infected_cleanables)
-			if (C.pathogen)
-				M.client.images |= C.pathogen
+		M.virusView()
 		
 
 /obj/item/clothing/glasses/science/proc/disable(mob/M)
-	GLOB.science_goggles_wearers.Remove(M)
-	for (var/obj/item/I in GLOB.infected_items)
-		M.client.images -= I.pathogen
-	for (var/mob/living/L in GLOB.infected_contact_mobs)
-		M.client.images -= L.pathogen
-	for(var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
-		M.client.images -= C.pathogen
-	for (var/obj/effect/decal/cleanable/C in GLOB.infected_cleanables)
-		M.client.images -= C.pathogen
+	M.stopvirusView()
 	
 
 /obj/item/clothing/glasses/science/equipped(mob/M, slot)
@@ -61,3 +41,34 @@
 		return
 	disable(source)
 	UnregisterSignal(source, list(COMSIG_MOB_UNEQUIPPED_ITEM))
+
+
+/mob/proc/virusView()
+	if(!client)
+		return
+	GLOB.science_goggles_wearers.Add(src)
+	for (var/obj/item/I in GLOB.infected_items)
+		if (I.pathogen)
+			client.images |= I.pathogen
+	for (var/mob/living/L in GLOB.infected_contact_mobs)
+		if (L.pathogen)
+			client.images |= L.pathogen
+	for (var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
+		if (C.pathogen)
+			client.images |= C.pathogen	
+	for (var/obj/effect/decal/cleanable/C in GLOB.infected_cleanables)
+		if (C.pathogen)
+			client.images |= C.pathogen
+
+/mob/proc/stopvirusView()
+	if(!client)
+		return
+	GLOB.science_goggles_wearers.Remove(src)
+	for (var/obj/item/I in GLOB.infected_items)
+		client.images -= I.pathogen
+	for (var/mob/living/L in GLOB.infected_contact_mobs)
+		client.images -= L.pathogen
+	for(var/obj/effect/pathogen_cloud/C as anything in GLOB.pathogen_clouds)
+		client.images -= C.pathogen
+	for (var/obj/effect/decal/cleanable/C in GLOB.infected_cleanables)
+		client.images -= C.pathogen
