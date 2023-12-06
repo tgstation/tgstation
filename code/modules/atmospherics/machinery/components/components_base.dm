@@ -32,24 +32,6 @@
 		component_mixture.volume = 200
 		airs[i] = component_mixture
 
-/obj/machinery/atmospherics/components/Destroy(mob/user)
-	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/to_release
-	for(var/i in 1 to device_type)
-		var/datum/gas_mixture/air = airs[i]
-		if(nodes[i])
-			var/datum/gas_mixture/parents_air = parents[i].air
-			if(parents_air.volume > 0)
-				parents_air.merge(air)
-				continue
-		if(!to_release)
-			to_release = air
-			continue
-		to_release.merge(air)
-	if(to_release)
-		T.assume_air(to_release)
-	return ..()
-
 /obj/machinery/atmospherics/components/Initialize(mapload)
 	. = ..()
 
@@ -122,6 +104,10 @@
 /obj/machinery/atmospherics/components/on_construction(mob/user)
 	. = ..()
 	update_parents()
+
+/obj/machinery/atmospherics/components/on_deconstruction()
+	relocate_airs()
+	return ..()
 
 /obj/machinery/atmospherics/components/rebuild_pipes()
 	. = ..()
@@ -239,6 +225,71 @@
 	return airs
 
 /**
+ * Handles machinery deconstruction and unsafe pressure release
+ */
+/obj/machinery/atmospherics/components/proc/crowbar_deconstruction_act(mob/living/user, obj/item/tool, internal_pressure = 0)
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	var/unsafe_wrenching = FALSE
+	var/filled_pipe = FALSE
+	var/datum/gas_mixture/environment_air = loc.return_air()
+	for(var/i in 1 to device_type)
+		var/datum/gas_mixture/inside_air = airs[i]
+		if(inside_air.total_moles() > 0 || internal_pressure)
+			filled_pipe = TRUE
+		if(!nodes[i])
+			internal_pressure = internal_pressure > airs[i].return_pressure() ? internal_pressure : airs[i].return_pressure()	
+			continue
+		if(istype(nodes[i], /obj/machinery/atmospherics/components/unary/portables_connector))
+			if(!portable_device_connected(i))
+				internal_pressure = internal_pressure > airs[i].return_pressure() ? internal_pressure : airs[i].return_pressure()
+
+	if(!filled_pipe)
+		default_deconstruction_crowbar(tool)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	
+	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+				
+	internal_pressure -= environment_air.return_pressure()
+
+	if(internal_pressure > 2 * ONE_ATMOSPHERE)
+		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		unsafe_wrenching = TRUE
+
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	if(unsafe_wrenching)
+		unsafe_pressure_release(user, internal_pressure)
+	tool.play_tool_sound(src, 50)
+	deconstruct(TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/default_change_direction_wrench(mob/user, obj/item/I)
+	. = ..()
+	if(!. || !anchored)
+		return FALSE
+	set_init_directions()
+	for(var/i in 1 to device_type)
+		var/obj/machinery/atmospherics/node = nodes[i]
+		if(node)
+			if(src in node.nodes)
+				node.disconnect(src)
+			nodes[i] = null
+		if(parents[i])
+			nullify_pipenet(parents[i])
+	for(var/i in 1 to device_type)
+		var/obj/machinery/atmospherics/node = nodes[i]
+		atmos_init()
+		node = nodes[i]
+		if(node)
+			node.atmos_init()
+			node.add_member(src)
+		SSair.add_to_rebuild_queue(src)
+	return TRUE
+
+/**
  * Disconnects all nodes from ourselves, remove us from the node's nodes.
  * Nullify our parent pipenet
  */
@@ -279,3 +330,21 @@
 
 /obj/machinery/atmospherics/components/update_layer()
 	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)
+
+/**
+ * Handles air relocation to the pipe network/environment
+ */
+/obj/machinery/atmospherics/components/proc/relocate_airs(datum/gas_mixture/to_release)
+	var/turf/T = get_turf(src)
+	for(var/i in 1 to device_type)
+		var/datum/gas_mixture/air = airs[i]
+		if(!nodes[i] || (istype(nodes[i], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(i)))
+			if(!to_release)
+				to_release = air
+				continue
+			to_release.merge(air)
+			continue
+		var/datum/gas_mixture/parents_air = parents[i].air
+		parents_air.merge(air)
+	if(to_release)
+		T.assume_air(to_release)
