@@ -51,7 +51,7 @@
 	obj_parent.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
 	RegisterSignals(user, signals_to_delete_on, PROC_REF(end_possession))
-	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, PROC_REF(on_move))
+	RegisterSignal(user, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, PROC_REF(on_move))
 
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 
@@ -97,7 +97,7 @@
 	var/obj/obj_parent = parent
 	if(QDELETED(obj_parent))
 		qdel(src)
-		return
+		return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
 
 	if(!obj_parent.density)
 		obj_parent.forceMove(get_step(obj_parent, direct))
@@ -106,10 +106,10 @@
 
 	if(QDELETED(obj_parent))
 		qdel(src)
-		return
+		return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
 
 	obj_parent.setDir(direct)
-
+	return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
 
 /datum/component/object_possession/proc/end_possession(datum/source)
 	SIGNAL_HANDLER

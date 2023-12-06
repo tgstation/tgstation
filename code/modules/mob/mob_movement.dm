@@ -61,6 +61,8 @@
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT, new_loc, direct)
 		return FALSE
 	if(!isliving(mob))
+		if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE)
+			return FALSE
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
