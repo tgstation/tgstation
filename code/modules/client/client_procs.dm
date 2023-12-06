@@ -521,6 +521,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if((player_age != -1) && player_age < 2)
 		interviewee = TRUE
+		register_for_interview()
 
 	if (!interviewee)
 		initialize_menus()
