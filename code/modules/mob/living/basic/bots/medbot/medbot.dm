@@ -286,6 +286,12 @@
 	if(prob(10))
 		speak("PSYCH ALERT: Crewmember [user.name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
 
+/mob/living/basic/bot/medbot/explode()
+	var/atom/our_loc = drop_location()
+	drop_part(medkit_type, our_loc)
+	drop_part(health_analyzer, our_loc)
+	return ..()
+
 /*
  * Proc used in a callback for after this medibot is righted, either by themselves or by a mob, by the tippable component.
  *
