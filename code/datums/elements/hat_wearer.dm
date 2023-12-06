@@ -71,12 +71,14 @@
 /datum/element/hat_wearer/proc/on_attack_by(atom/movable/source, obj/item/item, mob/living/attacker)
 	SIGNAL_HANDLER
 
-	for(var/trait_check in traits_prevent_checks)
-		if(HAS_TRAIT(source, trait_check))
-			return
-
 	if(!istype(item, /obj/item/clothing/head))
 		return
+
+	for(var/trait_check in traits_prevent_checks)
+		if(HAS_TRAIT(source, trait_check))
+			source.balloon_alert(attacker, "not possible right now!")
+			return COMPONENT_NO_AFTERATTACK
+
 	INVOKE_ASYNC(src, PROC_REF(place_hat), source, item, attacker)
 	return COMPONENT_NO_AFTERATTACK
 
