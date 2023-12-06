@@ -1,7 +1,7 @@
 /// Component that allows admins to control any object as if it were a mob.
 /datum/component/object_possession
 	/// Stores a reference to the mob that is currently possessing the object.
-	var/datum/weakref/poltergeist = null
+	var/mob/poltergeist = null
 	/// Ref to the screen object that is currently being displayed.
 	var/datum/weakref/screen_alert_ref = null
 	/**
@@ -20,7 +20,6 @@
 		COMSIG_QDELETING,
 	)
 
-
 /datum/component/object_possession/Initialize(mob/user)
 	. = ..()
 	if(!isobj(parent) || !ismob(user))
@@ -38,7 +37,7 @@
 	ADD_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(parent))
 
 	stashed_name = user.real_name
-	poltergeist = WEAKREF(user)
+	poltergeist = user
 
 	user.forceMove(obj_parent)
 	user.real_name = obj_parent.name
@@ -54,35 +53,32 @@
 
 /datum/component/object_possession/Destroy()
 	cleanup_ourselves()
+	poltergeist = null
 	return ..()
 
 /// Cleans up everything when the admin wants out.
 /datum/component/object_possession/proc/cleanup_ourselves()
 	parent.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
-	var/mob/user = poltergeist?.resolve()
-	if(isnull(user))
-		return
-
-	REMOVE_TRAIT(user, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(parent))
+	REMOVE_TRAIT(poltergeist, TRAIT_CURRENTLY_CONTROLLING_OBJECT, REF(parent))
 
 	if(!isnull(stashed_name))
-		user.real_name = stashed_name
-		user.name = stashed_name
-		if(ishuman(user))
-			var/mob/living/carbon/human/human_user = user
+		poltergeist.real_name = stashed_name
+		poltergeist.name = stashed_name
+		if(ishuman(poltergeist))
+			var/mob/living/carbon/human/human_user = poltergeist
 			human_user.name = human_user.get_visible_name()
 
-	user.forceMove(get_turf(parent))
-	user.reset_perspective()
+	poltergeist.forceMove(get_turf(parent))
+	poltergeist.reset_perspective()
 
-	UnregisterSignal(user, list(COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT) + signals_to_delete_on)
+	UnregisterSignal(poltergeist, list(COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT) + signals_to_delete_on)
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))
 		return
 
-	user.clear_alert(ALERT_UNPOSSESS_OBJECT)
+	poltergeist.clear_alert(ALERT_UNPOSSESS_OBJECT)
 
 /**
  * force move the parent object instead of the source mob.
