@@ -367,3 +367,23 @@
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
+
+/client/proc/register_for_interview()
+	// First we detain them by removing all the verbs they have on client
+	for (var/v in verbs)
+		var/procpath/verb_path = v
+		remove_verb(client, verb_path)
+
+	// Then remove those on their mob as well
+	for (var/v in mob.verbs)
+		var/procpath/verb_path = v
+		remove_verb(mob, verb_path)
+
+	// Then we create the interview form and show it to the client
+	var/datum/interview/I = GLOB.interviews.interview_for_client(src)
+	if (I)
+		I.ui_interact(src)
+
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
+	add_verb(mob, /mob/dead/new_player/proc/open_interview)
+	add_verb(src, /client/verb/fix_tgui_panel)
