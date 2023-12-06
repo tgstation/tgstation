@@ -135,6 +135,7 @@
 		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
 		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
 		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
+
 	var/static/list/hat_offsets = list(4,-9)
 	var/static/list/remove_hat = list(SIGNAL_ADDTRAIT(TRAIT_MOB_TIPPED))
 	var/static/list/prevent_checks = list(TRAIT_MOB_TIPPED)
@@ -143,8 +144,8 @@
 		remove_hat_signals = remove_hat,\
 		traits_prevent_checks = prevent_checks,\
 	)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
 		return
 	skin = "advanced"
@@ -168,10 +169,11 @@
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		icon_state = "[base_icon_state]a"
 		return
+	var/stationary_mode = !!(medical_mode_flags & MEDBOT_STATIOANRY_MODE)
 	if(mode == BOT_HEALING)
-		icon_state = "[base_icon_state]s[medical_mode_flags & MEDBOT_STATIONARY_MODE]"
+		icon_state = "[base_icon_state]s[stationary_mode]"
 		return
-	icon_state = "[base_icon_state][medical_mode_flags & MEDBOT_STATIONARY_MODE ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
+	icon_state = "[base_icon_state][stationary_mode ? 2 : 1]" //Bot has yellow light to indicate stationary mode.
 
 /mob/living/basic/bot/medbot/update_overlays()
 	. = ..()
@@ -326,7 +328,7 @@
 		return
 	var/modified_heal_amount = heal_amount
 	var/done_healing = FALSE
-	if(damage_type_healer == BRUTE && medkit_type == /obj/item/storage/medkit/brute) 
+	if(damage_type_healer == BRUTE && medkit_type == /obj/item/storage/medkit/brute)
 		modified_heal_amount *= 1.1
 	if(bot_access_flags & BOT_COVER_EMAGGED)
 		patient.reagents?.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
@@ -341,12 +343,12 @@
 		log_combat(src, patient, "tended the wounds of", "internal tools")
 		if(patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold)
 			done_healing = TRUE
+
 	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "[span_infoplain(span_green("[src] tends your wounds!"))]")
-	//Go into idle only when we're done
+	update_bot_mode(new_mode = BOT_IDLE)
 	if(done_healing)
 		visible_message(span_infoplain("[src] places its tools back into itself."))
 		to_chat(src, "[patient] is now healthy!")
-		update_bot_mode(new_mode = BOT_IDLE)
 	//If player-controlled, call them to heal again here for continous player healing
 	else if(!isnull(client))
 		melee_attack(patient)
