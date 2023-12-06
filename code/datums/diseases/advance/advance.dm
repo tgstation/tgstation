@@ -155,7 +155,7 @@
 		for(var/s in symptoms)
 			var/datum/symptom/symptom_datum = s
 			if(symptom_datum.Start(src)) //this will return FALSE if the symptom is neutered
-				symptom_datum.next_activation = world.time + rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS)
+				symptom_datum.next_activation = world.time + (rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER)
 			symptom_datum.on_stage_change(src)
 
 	for(var/s in symptoms)
@@ -263,6 +263,7 @@
 		properties["severity"] += round((properties["stage_rate"] / 11), 1)
 		properties["severity"] += round((properties["transmittable"] / 8), 1)
 		properties["severity"] = round((properties["severity"] / 2), 1)
+		properties["severity"] *= (symptoms.len / VIRUS_SYMPTOM_LIMIT) //fewer symptoms, less severity
 		properties["severity"] = clamp(properties["severity"], 1, 7)
 
 // Assign the properties that are in the list.
@@ -284,7 +285,7 @@
 			set_spread(DISEASE_SPREAD_BLOOD)
 
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // can be between 5 and 10
+		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 1, 10) // can be between 1 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
 		set_severity(round(properties["severity"]), 1)
 		generate_cure(properties)
