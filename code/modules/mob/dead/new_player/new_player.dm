@@ -372,7 +372,7 @@
 	// First we detain them by removing all the verbs they have on client
 	for (var/v in verbs)
 		var/procpath/verb_path = v
-		remove_verb(client, verb_path)
+		remove_verb(src, verb_path)
 
 	// Then remove those on their mob as well
 	for (var/v in mob.verbs)
