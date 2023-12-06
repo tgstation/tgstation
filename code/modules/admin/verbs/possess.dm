@@ -2,7 +2,7 @@
 	set name = "Possess Obj"
 	set category = "Object"
 
-	target.AddComponent(/datum/component/object_possession, usr)
+	usr.AddComponent(/datum/component/object_possession, target)
 
 	if(!HAS_TRAIT(usr, TRAIT_CURRENTLY_CONTROLLING_OBJECT)) // something failed, component will handle feedback and potential dupes
 		return
@@ -18,7 +18,7 @@
 	set name = "Release Obj"
 	set category = "Object"
 
-	SEND_SIGNAL(usr, COMSIG_END_OBJECT_POSSESSION_VIA_VERB)
+	qdel(usr.GetComponent(/datum/component/object_possession))
 	BLACKBOX_LOG_ADMIN_VERB("Release Object")
 
 /proc/give_possession_verbs(mob/dude in GLOB.mob_list)
