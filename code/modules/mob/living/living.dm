@@ -84,10 +84,6 @@
 		var/atom/movable/AM = A
 		if(PushAM(AM, move_force))
 			return
-	if(length(diseases))
-		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
-		if(length(contact))
-
 
 /mob/living/Bumped(atom/movable/AM)
 	..()
