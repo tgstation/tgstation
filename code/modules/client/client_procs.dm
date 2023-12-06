@@ -519,9 +519,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if((client.player_age != -1) && client.player_age < 2)
-		client.interviewee = TRUE
-		
+	if((player_age != -1) && player_age < 2)
+		interviewee = TRUE
+
 	if (!interviewee)
 		initialize_menus()
 
