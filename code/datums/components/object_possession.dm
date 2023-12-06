@@ -22,8 +22,12 @@
 	if(!bind_to_new_object(target))
 		return COMPONENT_INCOMPATIBLE
 
+	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, PROC_REF(on_move))
+	RegisterSignals(parent, list(COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN), PROC_REF(end_possession))
+
 /datum/component/object_possession/Destroy()
 	cleanup_object_binding()
+	UnregisterSignal(parent, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN))
 	possessed = null
 	return ..()
 
@@ -53,9 +57,6 @@
 
 	target.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 
-	RegisterSignal(user, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, PROC_REF(on_move))
-	RegisterSignal(user, COMSIG_MOB_GHOSTIZED, PROC_REF(end_possession)) // aghost compatibility
-
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 	return TRUE
 
@@ -74,8 +75,6 @@
 
 	poltergeist.forceMove(get_turf(possessed))
 	poltergeist.reset_perspective()
-
-	UnregisterSignal(poltergeist, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED))
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))
@@ -106,6 +105,7 @@
 	possessed.setDir(direct)
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
 
+/// Qdels the component in the event the source mob triggers ghostizes (useful for when the user is not a ghost) or triggers the aghost keybind (useful for when the user is a ghost)
 /datum/component/object_possession/proc/end_possession(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
