@@ -72,7 +72,7 @@
 	poltergeist.forceMove(get_turf(parent))
 	poltergeist.reset_perspective()
 
-	UnregisterSignal(poltergeist, list(COMSIG_MOB_CLIENT_MOVE_POSSESSED_OBJECT) + signals_to_delete_on)
+	UnregisterSignal(poltergeist, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE) + signals_to_delete_on)
 
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
 	if(isnull(alert_to_clear))
