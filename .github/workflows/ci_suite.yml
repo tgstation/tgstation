@@ -58,7 +58,6 @@ jobs:
           key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
           restore-keys: |
             ${{ runner.os }}-rust-
-          key: ${{ runner.os }}-rust
       - name: Restore Cutter cache
         uses: actions/cache@v3
         with:
