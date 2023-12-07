@@ -1005,4 +1005,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given when a mob is currently in invisimin mode
 #define TRAIT_INVISIMIN "invisimin"
 
+///Trait given when a mob has been tipped
+#define TRAIT_MOB_TIPPED "mob_tipped"
+
 // END TRAIT DEFINES
