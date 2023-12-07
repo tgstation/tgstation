@@ -110,7 +110,7 @@
 	if(!cmo_suits)
 		cmo_suits = list()
 		var/list/possible_cmo_suits = list(
-			/obj/item/clothing/suit/space/hardsuit/medical,
+			/obj/item/clothing/suit/space/hardsuit/cmo,
 			/obj/item/mod/control/pre_equipped/rescue,
 		)
 		for(var/obj/item/suit as anything in possible_cmo_suits)

@@ -8,7 +8,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
-	armor_type = /datum/armor/hardsuit
+	armor_type = /datum/armor/hardsuit_wizard_shielded
 	slowdown = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -23,19 +23,6 @@
 	inhand_icon_state = "battlemage"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	armor_type = /datum/armor/hardsuit
+	armor_type = /datum/armor/hardsuit_wizard_shielded
 	actions_types = null //No inbuilt light
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-
-/datum/armor/hardsuit
-	melee = 30
-	bullet = 20
-	laser = 20
-	energy = 30
-	bomb = 20
-	bio = 20
-	fire = 100
-	acid = 100
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
-	return
