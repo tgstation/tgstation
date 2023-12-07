@@ -55,7 +55,7 @@
 		if (istype(obj_item) && !obj_item.atom_storage && !(obj_item.item_flags & IN_STORAGE))
 			return NONE
 	if (!isitem(target) && (hand_haver.istate & ISTATE_HARM))
-		return NONE
+		return
 	if (hand_haver.istate & ISTATE_SECONDARY)
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attack_hand_secondary), hand_haver, modifiers)
 	else
