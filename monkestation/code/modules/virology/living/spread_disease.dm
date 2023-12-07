@@ -51,7 +51,7 @@
 /mob/dead/new_player/proc/DiseaseCarrierCheck(mob/living/carbon/human/H)
 	// 10% of players are joining the station with some minor disease if latejoined
 	if(prob(10))
-		var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+		var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 		var/datum/disease/advanced/D = new virus_choice
 
 		var/list/anti = list(

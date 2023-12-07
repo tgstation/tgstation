@@ -28,8 +28,4 @@
 
 /datum/reagent/gondola_mutation_toxin/virtual_domain
 	name = "Advanced Tranquility"
-	gondola_disease = /datum/disease/transformation/gondola/virtual_domain
-
-/datum/disease/transformation/gondola/virtual_domain
-	stage_prob = 9
-	new_form = /mob/living/simple_animal/pet/gondola/virtual_domain
+	disease_cat = DISEASE_GONDOLA_DIGITAL

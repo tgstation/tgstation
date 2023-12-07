@@ -6,7 +6,7 @@
 	immune_system = new(src)
 
 	if(prob(disease_chance))
-		var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+		var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 		var/list/anti = list(
 			ANTIGEN_BLOOD	= 2,
 			ANTIGEN_COMMON	= 2,

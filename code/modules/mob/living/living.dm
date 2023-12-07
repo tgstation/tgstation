@@ -316,7 +316,7 @@
 		AM.setDir(current_dir)
 	now_pushing = FALSE
 
-/mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
+/mob/living/start_pulling(atom/movable/AM, 	state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
 	if(isturf(AM))

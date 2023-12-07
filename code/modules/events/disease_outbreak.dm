@@ -107,7 +107,7 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut() //Clean the list after use
 
-	var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,
@@ -216,7 +216,7 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut()
 
-	var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 	var/list/anti = list(
 		ANTIGEN_BLOOD	= 1,
 		ANTIGEN_COMMON	= 1,

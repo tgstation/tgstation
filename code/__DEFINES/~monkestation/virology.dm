@@ -31,3 +31,8 @@
 
 #define DISEASE_BUMP "bump"
 #define DISEASE_TOUCH "touch"
+
+#define DISEASE_NORMAL "normal"
+#define DISEASE_TRANSFORMATION "transformation"
+#define DISEASE_GONDOLA "gondola"
+#define DISEASE_GONDOLA_DIGITAL "digital_gondola"

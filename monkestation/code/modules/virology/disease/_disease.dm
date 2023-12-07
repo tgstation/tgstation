@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(virusDB, list())
 	var/max_bodytemperature = 1000
 	//very low temperatures will stop the disease from activating/progressing
 	var/min_bodytemperature = 120
+	///split category used for predefined diseases atm
+	var/category = DISEASE_NORMAL
 
 	//logging
 	var/log = ""

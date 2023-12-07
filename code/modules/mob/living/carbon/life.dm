@@ -352,7 +352,7 @@
 	else
 		// Miasma sickness
 		if(prob(1 * miasma_pp))
-			var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+			var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
 			var/list/anti = list(
 				ANTIGEN_BLOOD	= 1,
 				ANTIGEN_COMMON	= 1,

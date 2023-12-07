@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(disease)
 
 /datum/controller/subsystem/disease/Initialize()
 	var/list/all_common_diseases = diseases - typesof(/datum/disease/advance)
+	create_global_diseases()
 	for(var/common_disease_type in all_common_diseases)
 		var/datum/disease/prototype = new common_disease_type()
 		archive_diseases[prototype.GetDiseaseID()] = prototype
