@@ -558,12 +558,9 @@ Diagnostic HUDs!
 	holder.icon_state = "electrified"
 	set_hud_image_active(DIAG_AIRLOCK_HUD)
 
-/*~~~~~~~~~~~~~~~~~
-	Hacked APCs!
-~~~~~~~~~~~~~~~~~~*/
+/// Applies hacked overlay for malf AIs
 /obj/machinery/power/apc/proc/set_hacked_hud()
 	var/image/holder = hud_list[MALF_APC_HUD]
 	holder.loc = get_turf(src)
-	holder.plane = HUD_PLANE
+	SET_PLANE(holder,ABOVE_LIGHTING_PLANE,src)
 	set_hud_image_active(MALF_APC_HUD)
-
