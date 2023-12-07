@@ -20,7 +20,7 @@
 		/datum/ai_planning_subtree/befriend_janitors,
 		/datum/ai_planning_subtree/acid_spray,
 		/datum/ai_planning_subtree/use_mob_ability/foam_area,
-		/datum/ai_planning_subtree/salute_beepsky,
+		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 	)
 	reset_keys = list(

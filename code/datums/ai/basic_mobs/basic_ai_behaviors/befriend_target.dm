@@ -12,7 +12,7 @@
 	living_pawn.befriend(living_target)
 	var/befriend_text = controller.blackboard[befriend_message]
 	if(befriend_text)
-		to_chat(living_target, span_nicegreen("[befriend_text]"))
+		to_chat(living_target, span_nicegreen("[living_pawn] [befriend_text]"))
 
 	finish_action(controller, TRUE, target_key)
 

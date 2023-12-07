@@ -47,27 +47,32 @@
 	///job titles we can get
 	var/static/list/job_titles = list(
 		JOB_CAPTAIN = "Cpt.",
+
 		JOB_HEAD_OF_PERSONNEL = "Lt.",
+		JOB_LAWYER = "Esq.",
+
 		JOB_HEAD_OF_SECURITY = "Maj.",
 		JOB_WARDEN = "Sgt.",
 		JOB_DETECTIVE = "Det.",
 		JOB_SECURITY_OFFICER = "Officer",
+
 		JOB_CHIEF_ENGINEER = "Chief Engineer",
 		JOB_STATION_ENGINEER = "Engineer",
 		JOB_ATMOSPHERIC_TECHNICIAN = "Technician",
+
 		JOB_CHIEF_MEDICAL_OFFICER = "C.M.O.",
 		JOB_MEDICAL_DOCTOR = "M.D.",
 		JOB_CHEMIST = "Pharm.D.",
+
 		JOB_RESEARCH_DIRECTOR = "Ph.D.",
 		JOB_ROBOTICIST = "M.S.",
 		JOB_SCIENTIST = "B.S.",
 		JOB_GENETICIST = "Gene B.S.",
-		JOB_LAWYER = "Esq.",
 	)
 	///which job titles should be placed after the name?
 	var/static/list/suffix_job_titles = list(
-		JOB_ROBOTICIST,
 		JOB_GENETICIST,
+		JOB_ROBOTICIST,
 		JOB_SCIENTIST,
 	)
 	///decals we can clean
@@ -188,7 +193,7 @@
 		user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
 	if(isnull(weapon))
 		return
-	. += "[span_warning("Is that \a [weapon] taped to it...?")]"
+	. += span_warning("Is that \a [weapon] taped to it...?")
 
 /mob/living/basic/bot/cleanbot/update_icon_state()
 	. = ..()
@@ -280,9 +285,9 @@
 	if(!in_range(src, user) || !user.transferItemToLoc(knife, src))
 		balloon_alert(user, "couldn't attach!")
 		return FALSE
-	balloon_alert(user, "attached!")
+	balloon_alert(user, "attached")
 	if(!(bot_access_flags & BOT_COVER_EMAGGED))
-		weapon.force = weapon.force / 2
+		weapon.force *= 0.5
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
