@@ -40,6 +40,9 @@
 	icon_state = "coffincookie"
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/obj/item/food/cookie/sugar/spookycoffin/Initialize(mapload, seasonal_changes = FALSE)
+	return ..()
+
 //spooky items
 
 /obj/item/storage/spooky
