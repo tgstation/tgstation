@@ -137,6 +137,6 @@
 		if (istype(I,/obj/item/weapon/virusdish))
 			var/obj/item/weapon/virusdish/dish = I
 			if (dish.open && dish.contained_virus)
-				to_chat(user,"<span class='danger'>However, since its lid has been openned, unprotected contact with the dish can result in infection.</span>")
+				to_chat(user,"<span class='danger'>However, since its lid has been opened, unprotected contact with the dish can result in infection.</span>")
 
 	. = ..()

@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	viruses = list()
 	lifetime = 3
 	target = null
-	..()
+	. = ..()
 
 /obj/effect/pathogen_cloud/core/New(turf/loc, mob/sourcemob, list/virus)
 	..()

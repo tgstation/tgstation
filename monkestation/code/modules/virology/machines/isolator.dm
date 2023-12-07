@@ -101,6 +101,7 @@
 		if(isolating == 0)
 			var/obj/item/weapon/virusdish/d = new /obj/item/weapon/virusdish(src.loc)
 			d.contained_virus = isolated_disease.Copy()
+			d.contained_virus.log += "[ROUND_TIME()] <br />Transferred to Virus dish"
 			d.update_icon()
 			isolated_disease = null
 			icon_state = "isolator_in"

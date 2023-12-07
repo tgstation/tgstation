@@ -7,6 +7,9 @@
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "splicer"
 
+	icon_keyboard = null
+	icon_screen = null
+	
 	var/datum/symptom/memorybank = null
 	var/analysed = FALSE // If the buffered effect came from a dish that had been analyzed this is TRUE
 	var/obj/item/weapon/virusdish/dish = null
@@ -220,7 +223,7 @@
 		dish.name = "growth dish ([dish.contained_virus.name()])"
 		spliced = FALSE
 		dish.contained_virus.update_global_log()
-		
+
 	dish.forceMove(loc)
 	if (Adjacent(usr))
 		dish.forceMove(usr.loc)

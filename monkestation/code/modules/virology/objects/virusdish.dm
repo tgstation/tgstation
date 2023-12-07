@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	contained_virus = null
 	STOP_PROCESSING(SSobj, src)
 	GLOB.virusdishes.Remove(src)
-	..()
+	. = ..()
 
 /*
 /obj/item/weapon/virusdish/clean_blood()
@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 	if (open)
 		last_openner = user
 		if (contained_virus)
-			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish openned by [key_name(user)]."
+			contained_virus.log += "<br />[ROUND_TIME()] Containment Dish opened by [key_name(user)]."
 		START_PROCESSING(SSobj, src)
 	else
 		if (contained_virus)
@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 				block = perp.check_contact_sterility(BODY_ZONE_LEGS)
 				bleeding = perp.check_bodypart_bleeding(BODY_ZONE_LEGS)
 			if (!block && (contained_virus.spread_flags & DISEASE_SPREAD_CONTACT_SKIN))
-				perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " openned by [key_name(last_openner)]" : ""])")
+				perp.infect_disease(contained_virus, notes="(Contact, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
 			else if (bleeding && (contained_virus.spread_flags & DISEASE_SPREAD_BLOOD))
-				perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " openned by [key_name(last_openner)]" : ""])")
+				perp.infect_disease(contained_virus, notes="(Blood, from [(perp.body_position & LYING_DOWN)?"lying":"standing"] over a virus dish[last_openner ? " opened by [key_name(last_openner)]" : ""])")
 	..(perp,D)

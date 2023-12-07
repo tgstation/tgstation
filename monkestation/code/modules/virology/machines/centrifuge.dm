@@ -75,7 +75,7 @@
 				playsound(loc, 'sound/machines/click.ogg', 50, 1)
 				user.transferItemToLoc(vial, loc)
 				vial.forceMove(src)
-				update_icon()
+				update_appearance()
 				updateUsrDialog()
 				return TRUE
 
@@ -107,25 +107,24 @@
 	if (machine_stat & (BROKEN))
 		icon_state = "centrifugeb"
 
-	for (var/i = 1 to vials.len)
-		if(vials[i])
-			add_vial_sprite(vials[i],i)
-
-/obj/machinery/disease2/centrifuge/update_overlays()
-	. = ..()
 	if(machine_stat & (BROKEN|NOPOWER))
 		set_light(0)
 	else
 		if (on)
 			icon_state = "centrifuge_moving"
 			set_light(2,2)
+		else
+			set_light(2,1)
+
+/obj/machinery/disease2/centrifuge/update_overlays()
+	. = ..()
+	if(!(machine_stat & (BROKEN|NOPOWER)))
+		if(on)
 			var/mutable_appearance/centrifuge_light = emissive_appearance(icon,"centrifuge_light",src)
 			.+= centrifuge_light
 			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon,"centrifuge_glow",src)
 			centrifuge_glow.blend_mode = BLEND_ADD
 			.+= centrifuge_glow
-		else
-			set_light(2,1)
 
 		switch (special)
 			if (CENTRIFUGE_LIGHTSPECIAL_BLINKING)
@@ -134,12 +133,14 @@
 			if (CENTRIFUGE_LIGHTSPECIAL_ON)
 				.+= emissive_appearance(icon,"centrifuge_special",src)
 
-/obj/machinery/disease2/centrifuge/proc/add_vial_sprite(obj/item/reagent_containers/cup/beaker/vial/vial, 	slot = 1)
-	add_overlay("centrifuge_vial[slot][on ? "_moving" : ""]")
-	if(vial.reagents.total_volume)
-		var/image/filling = image(icon, "centrifuge_vial[slot]_filling[on ? "_moving" : ""]")
-		filling.icon += mix_color_from_reagents(vial.reagents.reagent_list)
-		add_overlay(filling)
+	for (var/i = 1 to vials.len)
+		if(vials[i])
+			var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
+			.+= mutable_appearance("centrifuge_vial[i][on ? "_moving" : ""]",src)
+			if(vial.reagents.total_volume)
+				var/mutable_appearance/filling = mutable_appearance(icon, "centrifuge_vial[i]_filling[on ? "_moving" : ""]",src)
+				filling.icon += mix_color_from_reagents(vial.reagents.reagent_list)
+				.+= filling
 
 /obj/machinery/disease2/centrifuge/proc/add_vial_dat(obj/item/reagent_containers/cup/beaker/vial/vial, list/vial_task = list(0,0,0,0,0), slot = 1)
 	var/dat = ""
@@ -194,7 +195,7 @@
 				vials[i] = null
 				vial_valid[i] = 0
 				vial_task[i] = list(0,0,0,0,0)
-				update_icon()
+				update_appearance()
 				sleep(1)
 		return
 
@@ -258,7 +259,7 @@
 	else
 		use_power = 1
 
-	update_icon()
+	update_appearance()
 	updateUsrDialog()
 
 /obj/machinery/disease2/centrifuge/proc/centrifuge_act(obj/item/reagent_containers/cup/beaker/vial/vial, list/vial_task = list(0,0,0,0,0))
@@ -297,7 +298,7 @@
 
 	if (href_list["power"])
 		on = !on
-		update_icon()
+		update_appearance()
 
 	else if (href_list["insertvial"])
 		var/mob/living/user
@@ -351,7 +352,7 @@
 		var/i = text2num(href_list["synthvaccine"])
 		vial_task[i] = cure(vials[i],usr)
 
-	update_icon()
+	update_appearance()
 	add_fingerprint(usr)
 	updateUsrDialog()
 	attack_hand(usr)
@@ -443,7 +444,7 @@
 		var/obj/item/weapon/virusdish/dish = new/obj/item/weapon/virusdish(src.loc)
 		dish.contained_virus = D.Copy()
 		dish.contained_virus.infectionchance = dish.contained_virus.infectionchance_base
-		dish.update_icon()
+		dish.update_appearance()
 		dish.name = "growth dish (Unknown [dish.contained_virus.form])"
 
 
@@ -461,7 +462,7 @@
 		list(0,0,0,0,0,),
 		)
 	special = CENTRIFUGE_LIGHTSPECIAL_OFF
-	..()
+	. = ..()
 
 #undef CENTRIFUGE_LIGHTSPECIAL_OFF
 #undef CENTRIFUGE_LIGHTSPECIAL_BLINKING
