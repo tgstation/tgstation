@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
       - name: Restore Yarn cache
         uses: actions/cache@v3
         with:
@@ -53,7 +53,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cargo
-          key: ${{ runner.os }}-rust
+          key: ${{ runner.os }}-rust-${{ hashFiles('~/.cargo')}}
       - name: Install Tools
         run: |
           pip3 install setuptools
