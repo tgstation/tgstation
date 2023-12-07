@@ -264,34 +264,23 @@
 			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
 			if(ispath(path_key, /datum/reagent))
-				var/datum/reagent/RG = new path_key
-				var/datum/reagent/RGNT
 				while(amt > 0)
 					var/obj/item/reagent_containers/RC = locate() in surroundings
-					RG = RC.reagents.has_reagent(path_key)
+					if(QDELETED(RC)) //being deleted or null(i.e. not found)
+						break
+					var/datum/reagent/RG = RC.reagents.has_reagent(path_key)
 					if(RG)
-						if(!locate(RG.type) in Deletion)
-							Deletion += new RG.type()
-						if(RG.volume > amt)
-							RG.volume -= amt
-							data = RG.data
-							RC.update_appearance(UPDATE_ICON)
-							RG = locate(RG.type) in Deletion
-							RG.volume = amt
-							RG.data += data
+						if(RG.volume >= amt)
+							RC.reagents.remove_reagent(path_key, amt)
 							continue main_loop
 						else
 							surroundings -= RC
 							amt -= RG.volume
-							RC.reagents.reagent_list -= RG
-							RC.update_appearance(UPDATE_ICON)
-							RGNT = locate(RG.type) in Deletion
-							RGNT.volume += RG.volume
-							RGNT.data += RG.data
-							qdel(RG)
+							RC.reagents.remove_reagent(path_key, RG.volume)
 						SEND_SIGNAL(RC.reagents, COMSIG_REAGENTS_CRAFTING_PING) // - [] TODO: Make this entire thing less spaghetti
 					else
 						surroundings -= RC
+					RC.update_appearance(UPDATE_ICON)
 			else if(ispath(path_key, /obj/item/stack))
 				var/obj/item/stack/S
 				var/obj/item/stack/SD

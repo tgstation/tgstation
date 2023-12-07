@@ -94,8 +94,8 @@
 		/mob/living/basic/pet/dog/pug,
 	)
 	mobtype += pick(
-		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/cat/kitten,
+		/mob/living/basic/pet/cat,
+		/mob/living/basic/pet/cat/kitten,
 	)
 
 /obj/effect/holodeck_effect/mobspawner/bee

@@ -3,8 +3,8 @@ import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ExosuitControlConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ExosuitControlConsole = (props) => {
+  const { act, data } = useBackend();
   const { mechs = [] } = data;
   return (
     <Window width={500} height={500}>

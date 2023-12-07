@@ -444,3 +444,7 @@
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
 	mood_change = -200
 	special_screen_obj = "mood_despair"
+
+/datum/mood_event/all_nighter
+	description = "I didn't sleep at all last night. I'm exhausted."
+	mood_change = -5

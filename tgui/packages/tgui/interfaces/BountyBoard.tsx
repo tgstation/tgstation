@@ -31,7 +31,7 @@ type User = {
   name: string;
 };
 
-export const BountyBoard = (props, context) => {
+export const BountyBoard = (props) => {
   return (
     <Window width={550} height={600}>
       <Window.Content scrollable>
@@ -41,8 +41,8 @@ export const BountyBoard = (props, context) => {
   );
 };
 
-export const BountyBoardContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BountyBoardContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     accountName,
     requests = [],

@@ -19,8 +19,8 @@ type CTFPanelData =
       voted: BooleanLike;
     };
 
-export const CTFPanel = (props, context) => {
-  const { act, data } = useBackend<CTFPanelData>(context);
+export const CTFPanel = (props) => {
+  const { act, data } = useBackend<CTFPanelData>();
 
   return (
     <Window title="CTF Panel" width={700} height={600}>

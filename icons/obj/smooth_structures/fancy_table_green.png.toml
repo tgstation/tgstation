@@ -1,0 +1,14 @@
+output_name = "fancy_table_green"
+template = "bitmask/diagonal_32x32.toml"
+
+[icon_size]
+x = 32
+y = 34
+
+[output_icon_size]
+x = 32
+y = 34
+
+[cut_pos]
+x = 16
+y = 17

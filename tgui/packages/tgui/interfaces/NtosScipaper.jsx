@@ -3,7 +3,7 @@ import { BlockQuote, Button, Collapsible, Dropdown, Input, LabeledList, Section,
 import { TableCell, TableRow } from '../components/Table';
 import { NtosWindow } from '../layouts';
 
-export const NtosScipaper = (props, context) => {
+export const NtosScipaper = (props) => {
   return (
     <NtosWindow width={650} height={500}>
       <NtosWindow.Content scrollable>
@@ -13,8 +13,8 @@ export const NtosScipaper = (props, context) => {
   );
 };
 
-const PaperPublishing = (props, context) => {
-  const { act, data } = useBackend(context);
+const PaperPublishing = (props) => {
+  const { act, data } = useBackend();
   const {
     title,
     author,
@@ -200,8 +200,8 @@ const PaperPublishing = (props, context) => {
   );
 };
 
-const PaperBrowser = (props, context) => {
-  const { act, data } = useBackend(context);
+const PaperBrowser = (props) => {
+  const { act, data } = useBackend();
   const { publishedPapers, coopIndex, fundingIndex } = data;
   if (publishedPapers.length === 0) {
     return <NoticeBox> No Published Papers! </NoticeBox>;
@@ -240,8 +240,8 @@ const PaperBrowser = (props, context) => {
     ));
   }
 };
-const ExperimentBrowser = (props, context) => {
-  const { act, data } = useBackend(context);
+const ExperimentBrowser = (props) => {
+  const { act, data } = useBackend();
   const { experimentInformation = [] } = data;
   return experimentInformation.map((experiment) => (
     <Section title={experiment.name} key={experiment.name}>
@@ -265,8 +265,8 @@ const ExperimentBrowser = (props, context) => {
   ));
 };
 
-const PartnersBrowser = (props, context) => {
-  const { act, data } = useBackend(context);
+const PartnersBrowser = (props) => {
+  const { act, data } = useBackend();
   const {
     partnersInformation,
     coopIndex,
@@ -333,8 +333,8 @@ const PartnersBrowser = (props, context) => {
   ));
 };
 
-export const NtosScipaperContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosScipaperContent = (props) => {
+  const { act, data } = useBackend();
   const { currentTab, has_techweb } = data;
   return (
     <>

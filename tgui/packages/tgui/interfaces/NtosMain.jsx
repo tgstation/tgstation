@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, ColorBox, Stack, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosMain = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosMain = (props) => {
+  const { act, data } = useBackend();
   const {
     PC_device_theme,
     show_imprint,
@@ -161,8 +161,8 @@ export const NtosMain = (props, context) => {
   );
 };
 
-const ProgramsTable = (props, context) => {
-  const { act, data } = useBackend(context);
+const ProgramsTable = (props) => {
+  const { act, data } = useBackend();
   const { programs = [] } = data;
   // add the program filename to this list to have it excluded from the main menu program list table
   const filtered_programs = programs.filter(

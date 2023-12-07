@@ -18,8 +18,8 @@ export const InternalDamageToNormalDesc = {
   'MECHA_INT_SHORT_CIRCUIT': 'Circuits operational',
 };
 
-export const AlertPane = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+export const AlertPane = (props) => {
+  const { act, data } = useBackend<MainData>();
   const {
     internal_damage,
     internal_damage_keys,

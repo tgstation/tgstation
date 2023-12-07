@@ -39,6 +39,7 @@
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
+		update_icon()
 		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
@@ -161,3 +162,41 @@
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+
+#define PROPHAT_MOOD "prophat"
+
+/obj/item/clothing/head/soft/propeller_hat
+	name = "propeller hat"
+	desc = "A colorful hat with a spinning propeller sat on top."
+	icon_state = "propeller_hat"
+	soft_type = "propeller_hat"
+	inhand_icon_state = "rainbow_softcap"
+	worn_y_offset = 1
+	soft_suffix = null
+	actions_types = list(/datum/action/item_action/toggle)
+	var/enabled_waddle = TRUE
+	var/active = FALSE
+
+/obj/item/clothing/head/soft/propeller_hat/update_icon_state()
+	. = ..()
+	worn_icon_state = "[soft_type][flipped ? "_flipped" : null][active ? "_on" : null]"
+
+/obj/item/clothing/head/soft/propeller_hat/attack_self(mob/user)
+	active = !active
+	balloon_alert(user, (active ? "started propeller" : "stopped propeller"))
+	update_icon()
+	user.update_worn_head()
+	add_fingerprint(user)
+
+/obj/item/clothing/head/soft/propeller_hat/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_HEAD)
+		user.add_mood_event(PROPHAT_MOOD, /datum/mood_event/prophat)
+
+/obj/item/clothing/head/soft/propeller_hat/dropped(mob/living/user)
+	. = ..()
+	user.clear_mood_event(PROPHAT_MOOD)
+	active = FALSE
+	update_icon()
+
+#undef PROPHAT_MOOD

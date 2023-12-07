@@ -3,7 +3,7 @@ import { Box, Button, Dropdown, Input, NumberInput, Section, Stack } from '../co
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
-export const NtosCard = (props, context) => {
+export const NtosCard = (props) => {
   return (
     <NtosWindow width={500} height={670}>
       <NtosWindow.Content scrollable>
@@ -13,8 +13,8 @@ export const NtosCard = (props, context) => {
   );
 };
 
-export const NtosCardContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NtosCardContent = (props) => {
+  const { act, data } = useBackend();
   const {
     authenticatedUser,
     regions = [],
@@ -89,8 +89,8 @@ export const NtosCardContent = (props, context) => {
   );
 };
 
-const IdCardPage = (props, context) => {
-  const { act, data } = useBackend(context);
+const IdCardPage = (props) => {
+  const { act, data } = useBackend();
   const {
     authenticatedUser,
     id_rank,
@@ -186,8 +186,8 @@ const IdCardPage = (props, context) => {
   );
 };
 
-const TemplateDropdown = (props, context) => {
-  const { act } = useBackend(context);
+const TemplateDropdown = (props) => {
+  const { act } = useBackend();
   const { templates } = props;
 
   const templateKeys = Object.keys(templates);

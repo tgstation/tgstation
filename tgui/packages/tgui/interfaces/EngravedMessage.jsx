@@ -3,8 +3,8 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const EngravedMessage = (props, context) => {
-  const { act, data } = useBackend(context);
+export const EngravedMessage = (props) => {
+  const { act, data } = useBackend();
   const {
     admin_mode,
     creator_key,
