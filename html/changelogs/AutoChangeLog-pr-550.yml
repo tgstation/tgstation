@@ -1,0 +1,7 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - balance: "the gift is the gift is the gift is the gift is the gift..."
+  - balance: "autorifles now cost 4200cr"
+  - balance: "birthday crates now cost 1000cr"
+  - bugfix: "cargo can no longer buy freon to summon infinite money"
