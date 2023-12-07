@@ -517,7 +517,6 @@
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	holder.set_temperature(20) // also cools the fuck down
-	return
 
 /datum/chemical_reaction/teslium
 	results = list(/datum/reagent/teslium = 3)
