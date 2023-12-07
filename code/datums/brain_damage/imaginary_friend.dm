@@ -408,13 +408,13 @@
 	add_image_to_clients(active_typing_indicator, group_clients())
 
 /mob/camera/imaginary_friend/remove_typing_indicator()
-	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	if(!active_typing_indicator)
 		return FALSE
 	remove_image_from_clients(active_typing_indicator, group_clients())
 	active_typing_indicator = null
 
 /mob/camera/imaginary_friend/remove_all_indicators()
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 

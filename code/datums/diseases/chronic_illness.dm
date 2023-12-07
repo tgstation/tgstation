@@ -14,6 +14,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "A disease discovered in an Interdyne laboratory caused by subjection to timesteam correction technology."
 	severity = DISEASE_SEVERITY_UNCURABLE
+	bypasses_immunity = TRUE
 
 /datum/disease/chronic_illness/stage_act(seconds_per_tick, times_fired)
 	. = ..()
