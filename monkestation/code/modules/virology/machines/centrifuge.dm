@@ -136,7 +136,7 @@
 	for (var/i = 1 to vials.len)
 		if(vials[i])
 			var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
-			.+= mutable_appearance("centrifuge_vial[i][on ? "_moving" : ""]",src)
+			.+= mutable_appearance(icon, "centrifuge_vial[i][on ? "_moving" : ""]",src)
 			if(vial.reagents.total_volume)
 				var/mutable_appearance/filling = mutable_appearance(icon, "centrifuge_vial[i]_filling[on ? "_moving" : ""]",src)
 				filling.icon += mix_color_from_reagents(vial.reagents.reagent_list)
