@@ -60,19 +60,16 @@ const CharacterControls = (props: {
   );
 };
 
-const ChoicedSelection = (
-  props: {
-    name: string;
-    catalog: FeatureChoicedServerData;
-    selected: string;
-    supplementalFeature?: string;
-    supplementalValue?: unknown;
-    onClose: () => void;
-    onSelect: (value: string) => void;
-  },
-  context
-) => {
-  const { act } = useBackend<PreferencesMenuData>(context);
+const ChoicedSelection = (props: {
+  name: string;
+  catalog: FeatureChoicedServerData;
+  selected: string;
+  supplementalFeature?: string;
+  supplementalValue?: unknown;
+  onClose: () => void;
+  onSelect: (value: string) => void;
+}) => {
+  const { act } = useBackend<PreferencesMenuData>();
 
   const { catalog, supplementalFeature, supplementalValue } = props;
 
@@ -167,15 +164,11 @@ const ChoicedSelection = (
   );
 };
 
-const GenderButton = (
-  props: {
-    handleSetGender: (gender: Gender) => void;
-    gender: Gender;
-  },
-  context
-) => {
+const GenderButton = (props: {
+  handleSetGender: (gender: Gender) => void;
+  gender: Gender;
+}) => {
   const [genderMenuOpen, setGenderMenuOpen] = useLocalState(
-    context,
     'genderMenuOpen',
     false
   );
@@ -223,23 +216,20 @@ const GenderButton = (
   );
 };
 
-const MainFeature = (
-  props: {
-    catalog: FeatureChoicedServerData & {
-      name: string;
-      supplemental_feature?: string;
-    };
-    currentValue: string;
-    isOpen: boolean;
-    handleClose: () => void;
-    handleOpen: () => void;
-    handleSelect: (newClothing: string) => void;
-    randomization?: RandomSetting;
-    setRandomization: (newSetting: RandomSetting) => void;
-  },
-  context
-) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+const MainFeature = (props: {
+  catalog: FeatureChoicedServerData & {
+    name: string;
+    supplemental_feature?: string;
+  };
+  currentValue: string;
+  isOpen: boolean;
+  handleClose: () => void;
+  handleOpen: () => void;
+  handleSelect: (newClothing: string) => void;
+  randomization?: RandomSetting;
+  setRandomization: (newSetting: RandomSetting) => void;
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
   const {
     catalog,
@@ -413,14 +403,13 @@ export const PreferenceList = (props: {
 export const getRandomization = (
   preferences: Record<string, unknown>,
   serverData: ServerData | undefined,
-  randomBodyEnabled: boolean,
-  context
+  randomBodyEnabled: boolean
 ): Record<string, RandomSetting> => {
   if (!serverData) {
     return {};
   }
 
-  const { data } = useBackend<PreferencesMenuData>(context);
+  const { data } = useBackend<PreferencesMenuData>();
 
   return Object.fromEntries(
     filterMap(Object.keys(preferences), (preferenceKey) => {
@@ -441,22 +430,16 @@ export const getRandomization = (
   );
 };
 
-export const MainPage = (
-  props: {
-    openSpecies: () => void;
-  },
-  context
-) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const MainPage = (props: { openSpecies: () => void }) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState<
     string | null
-  >(context, 'currentClothingMenu', null);
+  >('currentClothingMenu', null);
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
-    context,
     'multiNameInputOpen',
     false
   );
-  const [randomToggleEnabled] = useRandomToggleState(context);
+  const [randomToggleEnabled] = useRandomToggleState();
 
   return (
     <ServerPreferencesFetcher
@@ -490,8 +473,7 @@ export const MainPage = (
         const randomizationOfMainFeatures = getRandomization(
           Object.fromEntries(mainFeatures),
           serverData,
-          randomBodyEnabled,
-          context
+          randomBodyEnabled
         );
 
         const nonContextualPreferences = {
@@ -611,8 +593,7 @@ export const MainPage = (
                     randomizations={getRandomization(
                       contextualPreferences,
                       serverData,
-                      randomBodyEnabled,
-                      context
+                      randomBodyEnabled
                     )}
                     preferences={contextualPreferences}
                     maxHeight="auto"
@@ -623,8 +604,7 @@ export const MainPage = (
                     randomizations={getRandomization(
                       nonContextualPreferences,
                       serverData,
-                      randomBodyEnabled,
-                      context
+                      randomBodyEnabled
                     )}
                     preferences={nonContextualPreferences}
                     maxHeight="auto"

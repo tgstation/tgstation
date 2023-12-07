@@ -49,7 +49,7 @@
  * Creates a list of people who are elligible to become disease carriers for the event
  *
  * Searches through the player list, adding anyone who is elligible to be a disease carrier for the event. This checks for
- * whether or not the candidate is alive, a crewmember, is able to recieve a disease, and whether or not a disease is already present in them.
+ * whether or not the candidate is alive, a crewmember, is able to receive a disease, and whether or not a disease is already present in them.
  * This proc needs to be run at some point to ensure the event has candidates to infect.
  */
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
@@ -65,7 +65,7 @@
 
 ///Handles checking and alerting admins about the number of valid candidates
 /datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak
-	output_text = "There are no candidates eligible to recieve a disease!"
+	output_text = "There are no candidates eligible to receive a disease!"
 
 /datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak/count_candidates()
 	var/datum/round_event_control/disease_outbreak/disease_control = event_control

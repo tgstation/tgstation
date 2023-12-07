@@ -83,4 +83,4 @@
 	TEST_ASSERT(post_hit_health < pre_integrity, "[checking] was [hit_by_phrase], but didn't take any damage.")
 
 	var/damage_taken = round(pre_integrity - post_hit_health, DAMAGE_PRECISION)
-	TEST_ASSERT_EQUAL(damage_taken, expected_damage, "[checking] didn't take the expected amount of damage when [hit_by_phrase]. (Expected damage: [expected_damage], recieved damage: [damage_taken])")
+	TEST_ASSERT_EQUAL(damage_taken, expected_damage, "[checking] didn't take the expected amount of damage when [hit_by_phrase]. (Expected damage: [expected_damage], received damage: [damage_taken])")

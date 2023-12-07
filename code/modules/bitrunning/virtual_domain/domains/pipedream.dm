@@ -15,7 +15,6 @@
 		/datum/modular_mob_segment/hivebots_strong
 	)
 	reward_points = BITRUNNER_REWARD_LOW
-	safehouse_path = /datum/map_template/safehouse/shuttle
 
 // ID Trims
 /datum/id_trim/factory
@@ -76,7 +75,7 @@
 	r_pocket = /obj/item/assembly/flash/handheld
 
 /datum/outfit/factory/qm
-	name = "Factory Quatermaster"
+	name = "Factory Quartermaster"
 
 	id_trim = /datum/id_trim/factory/qm
 	id = /obj/item/card/id/advanced/silver

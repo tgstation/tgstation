@@ -15,8 +15,8 @@ type Data = {
   drying: BooleanLike;
 };
 
-export const SmartVend = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const SmartVend = (props) => {
+  const { act, data } = useBackend<Data>();
   const { contents = [] } = data;
   return (
     <Window width={440} height={550}>

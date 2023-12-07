@@ -53,7 +53,6 @@
 		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
 		need_mob_update += vampire.adjustToxLoss(-2 * seconds_per_tick, updating_health = FALSE,)
 		need_mob_update += vampire.adjustOxyLoss(-2 * seconds_per_tick, updating_health = FALSE,)
-		need_mob_update += vampire.adjustCloneLoss(-2 * seconds_per_tick, updating_health = FALSE,)
 		if(need_mob_update)
 			vampire.updatehealth()
 		return

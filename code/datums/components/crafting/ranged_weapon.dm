@@ -19,8 +19,8 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/reciever
-	name = "Modular Rifle Reciever"
+/datum/crafting_recipe/receiver
+	name = "Modular Rifle Receiver"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SAW)
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(
@@ -137,22 +137,6 @@
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/ioncarbine/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/laser)
-
-/datum/crafting_recipe/decloner
-	name = "Biological Demolecularisor"
-	result = /obj/item/gun/energy/decloner
-	reqs = list(
-		/obj/item/gun/energy/laser = 1,
-		/obj/item/weaponcrafting/gunkit/decloner = 1,
-		/datum/reagent/baldium = 30,
-		/datum/reagent/toxin/mutagen = 4,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/decloner/New()
 	..()
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
 

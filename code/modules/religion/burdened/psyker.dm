@@ -36,7 +36,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
-	head_flags = HEAD_LIPS|HEAD_EYEHOLES|HEAD_DEBRAIN
+	head_flags = HEAD_DEBRAIN
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()

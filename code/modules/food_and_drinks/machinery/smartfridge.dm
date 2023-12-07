@@ -225,10 +225,7 @@
 
 /// Returns the number of items visible in the fridge. Faster than subtracting 2 lists
 /obj/machinery/smartfridge/proc/visible_items()
-	var/component_part_count = 0
-	for(var/datum/stock_part/datum_part in component_parts)
-		component_part_count -= 1
-	return contents.len - component_part_count
+	return contents.len - 1 // Circuitboard
 
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()

@@ -21,8 +21,8 @@ type History = {
   capacity: number[];
 };
 
-export const SolarControl = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const SolarControl = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     supply,
     capacity,

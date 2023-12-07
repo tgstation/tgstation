@@ -8,8 +8,8 @@ type Data = {
   tguitheme: string;
 };
 
-export const Terminal = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const Terminal = (props) => {
+  const { data } = useBackend<Data>();
   const { messages = [], uppertext } = data;
 
   return (
