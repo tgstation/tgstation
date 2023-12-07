@@ -516,7 +516,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.set_temperature(20) // also cools the fuck down
+	holder.expose_temperature(20, 1) // also cools the fuck down
 
 /datum/chemical_reaction/teslium
 	results = list(/datum/reagent/teslium = 3)
