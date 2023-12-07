@@ -37,50 +37,43 @@
 	var/their_z = their_turf?.z
 	var/our_z = our_turf?.z
 
-	// One of us is in somewhere we shouldn't be
 	if(!our_z || !their_z)
 		balloon_message = "on another plane!"
+		return balloon_message
 
-	// They're not on the same z-level as us
-	else if(our_z != their_z)
-		// They're on the station
+	var/dist = get_dist(our_turf, their_turf)
+	var/dir = get_dir(our_turf, their_turf)
+
+	switch(dist)
+		if(0 to 15)
+			balloon_message = "very near, [dir2text(dir)]!"
+		if(16 to 31)
+			balloon_message = "near, [dir2text(dir)]!"
+		if(32 to 127)
+			balloon_message = "far, [dir2text(dir)]!"
+		else
+			balloon_message = "very far!"
+
+
+
+	if(our_z != their_z)
 		if(is_station_level(their_z))
-			// We're on a multi-z station
 			if(is_station_level(our_z))
 				if(our_z > their_z)
 					balloon_message = "below you!"
 				else
 					balloon_message = "above you!"
-			// We're off station, they're not
 			else
 				balloon_message = "on station!"
 
-		// Mining
 		else if(is_mining_level(their_z))
 			balloon_message = "on lavaland!"
 
-		// In the gateway
 		else if(is_away_level(their_z) || is_secret_level(their_z))
 			balloon_message = "beyond the gateway!"
 
-		// They're somewhere we probably can't get too - sacrifice z-level, centcom, etc
 		else
 			balloon_message = "on another plane!"
-
-	// They're on the same z-level as us!
-	else
-		var/dist = get_dist(our_turf, their_turf)
-		var/dir = get_dir(our_turf, their_turf)
-
-		switch(dist)
-			if(0 to 15)
-				balloon_message = "very near, [dir2text(dir)]!"
-			if(16 to 31)
-				balloon_message = "near, [dir2text(dir)]!"
-			if(32 to 127)
-				balloon_message = "far, [dir2text(dir)]!"
-			else
-				balloon_message = "very far!"
 
 	if(tracked_mob.stat == DEAD)
 		balloon_message = "they're dead, " + balloon_message

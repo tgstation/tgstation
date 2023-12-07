@@ -385,8 +385,17 @@
 		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
+	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
+	// In case they switch tongues or their food type is changed for whatever reason
+	if(tongue.liked_foodtypes == GORE | MEAT)
+		return
+	tongue.liked_foodtypes = GORE | MEAT
+
 /datum/brain_trauma/severe/flesh_desire/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
+	var/obj/item/organ/internal/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.liked_foodtypes = initial(tongue.liked_foodtypes)
 	return ..()
 
 // This one is for "Lady out of gates" or /obj/item/wallframe/painting/eldritch/beauty
