@@ -321,11 +321,10 @@
 	. = ..()
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		if (on)
-			var/mutable_appearance/incubator_light = emissive_appearance(icon,"incubator_light",src)
-			. += incubator_light
-			var/mutable_appearance/incubator_glass = emissive_appearance(icon,"incubator_glass",src)
-			incubator_glass.blend_mode = BLEND_ADD
-			. += incubator_glass
+			. += mutable_appearance(icon,"incubator_light",src)
+			. += mutable_appearance(icon,"incubator_glass",src)
+			. += emissive_appearance(icon,"incubator_light",src)
+			. += emissive_appearance(icon,"incubator_glass",src)
 
 	for (var/i = 1 to dish_data.len)
 		if (dish_data[i] != null)
@@ -364,12 +363,18 @@
 			if (update)
 				var/mutable_appearance/grown_light = emissive_appearance(icon,"incubator_grown_update",src)
 				grown_light.pixel_y = -5 * slot
+				var/mutable_appearance/grown_light_n = mutable_appearance(icon,"incubator_grown_update",src)
+				grown_light_n.pixel_y = -5 * slot
 
 				overlays += grown_light
+				overlays += grown_light_n
 			else
 				var/mutable_appearance/grown_light = emissive_appearance(icon,"incubator_grown",src)
 				grown_light.pixel_y = -5 * slot
+				var/mutable_appearance/grown_light_n = mutable_appearance(icon,"incubator_grown",src)
+				grown_light_n.pixel_y = -5 * slot
 
+				overlays += grown_light_n
 				overlays += grown_light
 
 		overlays += grown_gauge
@@ -382,12 +387,18 @@
 			if (update)
 				var/mutable_appearance/reagents_light = emissive_appearance(icon,"incubator_reagents_update",src)
 				reagents_light.pixel_y = -5 * slot
+				var/mutable_appearance/reagents_light_n = mutable_appearance(icon,"incubator_reagents_update",src)
+				reagents_light_n.pixel_y = -5 * slot
 
+				overlays += reagents_light_n
 				overlays += reagents_light
 			else
 				var/mutable_appearance/reagents_light = emissive_appearance(icon,"incubator_reagents",src)
 				reagents_light.pixel_y = -5 * slot
+				var/mutable_appearance/reagents_light_n = mutable_appearance(icon,"incubator_reagents",src)
+				reagents_light_n.pixel_y = -5 * slot
 
+				overlays += reagents_light_n
 				overlays += reagents_light
 
 		if (dish_datum.updates_new & INCUBATOR_DISH_MAJOR)
@@ -395,12 +406,18 @@
 				dish_datum.updates += INCUBATOR_DISH_MAJOR
 				var/mutable_appearance/effect_light = emissive_appearance(icon,"incubator_major_update",src)
 				effect_light.pixel_y = -5 * slot
+				var/mutable_appearance/effect_light_n = mutable_appearance(icon,"incubator_major_update",src)
+				effect_light_n.pixel_y = -5 * slot
 
+				overlays += effect_light_n
 				overlays += effect_light
 			else
 				var/mutable_appearance/effect_light = emissive_appearance(icon,"incubator_major",src)
-
 				effect_light.pixel_y = -5 * slot
+				var/mutable_appearance/effect_light_n = mutable_appearance(icon,"incubator_major",src)
+				effect_light_n.pixel_y = -5 * slot
+
+				overlays += effect_light_n
 				overlays += effect_light
 
 		if (dish_datum.updates_new & INCUBATOR_DISH_MINOR)
@@ -408,11 +425,19 @@
 				dish_datum.updates += INCUBATOR_DISH_MINOR
 				var/mutable_appearance/effect_light = emissive_appearance(icon,"incubator_minor_update",src)
 				effect_light.pixel_y = -5 * slot
+				var/mutable_appearance/effect_light_n = mutable_appearance(icon,"incubator_minor_update",src)
+				effect_light_n.pixel_y = -5 * slot
+
+				overlays += effect_light_n
 
 				overlays += effect_light
 			else
 				var/mutable_appearance/effect_light = mutable_appearance(icon,"incubator_minor",src)
 				effect_light.pixel_y = -5 * slot
+				var/mutable_appearance/effect_light_n = mutable_appearance(icon,"incubator_minor",src)
+				effect_light_n.pixel_y = -5 * slot
+
+				overlays += effect_light_n
 				overlays += effect_light
 
 	return overlays

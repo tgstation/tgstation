@@ -125,13 +125,20 @@
 			var/mutable_appearance/centrifuge_glow = emissive_appearance(icon,"centrifuge_glow",src)
 			centrifuge_glow.blend_mode = BLEND_ADD
 			.+= centrifuge_glow
+			var/mutable_appearance/centrifuge_light_n = mutable_appearance(icon,"centrifuge_light",src)
+			.+= centrifuge_light_n
+			var/mutable_appearance/centrifuge_glow_n = mutable_appearance(icon,"centrifuge_glow",src)
+			centrifuge_glow.blend_mode = BLEND_ADD
+			.+= centrifuge_glow_n
 
 		switch (special)
 			if (CENTRIFUGE_LIGHTSPECIAL_BLINKING)
 				.+= emissive_appearance(icon,"centrifuge_special_update",src)
+				.+= mutable_appearance(icon,"centrifuge_special_update",src)
 				special = CENTRIFUGE_LIGHTSPECIAL_ON
 			if (CENTRIFUGE_LIGHTSPECIAL_ON)
 				.+= emissive_appearance(icon,"centrifuge_special",src)
+				.+= mutable_appearance(icon,"centrifuge_special_update",src)
 
 	for (var/i = 1 to vials.len)
 		if(vials[i])
