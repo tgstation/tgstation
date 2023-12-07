@@ -1,0 +1,12 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - balance: "most diseases can now be slowed, mitigated, and eventually cured through being well-fed, resting, and using spaceacillin. Curing diseases through this way will give you immunity if you experience them at their peak/maximum and aren't starving/malnourished when they cure."
+  - balance: "disease symptoms can be forestalled for up to 100 cycles with a declining chance of avoiding them over time using rest or spaceacillin."
+  - balance: "This does not apply to things like fungal TB; it does apply to healing viruses if you don't take care of yourself by staying fed and avoiding spaceacillin."
+  - balance: "disease can be cured through direct injection or ingestion of cured blood. However, curing disease in this way does not provide lasting immunity. You need to naturally beat the virus or get a vaccine for that."
+  - balance: "Wearing internals or using protective equipment while infected can limit the spread of respiratory illnesses from yourself to others. Contact transmission is still possible however."
+  - balance: "Medical Doctors now have roundstart virology access. Paramedics and coroners now get virology access on skeleton shift access. Virologists now have roundstart pharmacy access."
+  - balance: "Sentient Diseases now resist being overridden by other advanced diseases and can always override other advanced diseases; they also have an extra bonus on their stealth stat to help make up for early outing without a bit more testing."
+  - balance: "biohazard lockers now also contain a syringe of spaceacillin (in line with the orderable kit from cargo.)"
+  - balance: "Virus severity is now also a function of the number of symptoms out of max your virus has. Experiment with different combinations using less than six symptoms to make viruses that are deceptively less-obvious and less quick to self-cure at the tradeoff of stats."
