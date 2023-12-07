@@ -503,7 +503,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.chem_temp += 10*created_volume
+	holder.expose_temperature(holder.chem_temp + (10 * created_volume), 1)
 
 /datum/chemical_reaction/pyrosium
 	results = list(/datum/reagent/pyrosium = 3)
@@ -516,7 +516,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.chem_temp = 20 // also cools the fuck down
+	holder.set_temperature(20) // also cools the fuck down
 	return
 
 /datum/chemical_reaction/teslium
