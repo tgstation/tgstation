@@ -84,5 +84,6 @@
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\mining\lavaland\megafauna_loot.dm"
 #include "mapping\_basemap.dm"
+#include "code\modules\hooch.dm"
 //features
 #include "features\additional_circuit\includes.dm"
