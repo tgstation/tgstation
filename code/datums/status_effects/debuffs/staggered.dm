@@ -9,10 +9,8 @@
 	return ..()
 
 /datum/status_effect/staggered/on_apply()
-
-	//a very mild animation, but you can't stagger the dead.
+	//you can't stagger the dead.
 	if(owner.stat == DEAD)
-		owner.do_stagger_animation(duration / 10)
 		return FALSE
 
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_staggered))
@@ -32,7 +30,11 @@
 	qdel(src)
 
 /datum/status_effect/staggered/tick(seconds_between_ticks)
-	owner.do_stagger_animation()
+	//you can't stagger the dead - in case somehow you die mid-stagger
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKEDEATH))
+		return
+	else
+		owner.do_stagger_animation()
 
 /// Helper proc that causes the mob to do a stagger animation.
 /// Doesn't change significantly, just meant to represent swaying back and forth
