@@ -66,9 +66,9 @@
 	)
 	///which job titles should be placed after the name?
 	var/static/list/suffix_job_titles = list(
-		JOB_SCIENTIST,
 		JOB_ROBOTICIST,
 		JOB_GENETICIST,
+		JOB_SCIENTIST,
 	)
 	///decals we can clean
 	var/static/list/cleanable_decals = typecacheof(list(
@@ -111,16 +111,16 @@
 	var/static/list/cleanable_drawings = typecacheof(list(/obj/effect/decal/cleanable/crayon))
 	///emagged phrases
 	var/static/list/emagged_phrases = list(
+		"DISGUSTING.",
+		"EXTERMINATING PESTS.",
+		"FILTHY.",
+		"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.",
 		"PURIFICATION IN PROGRESS.",
-		"THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.",
+		"PUTRID.",
 		"THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
 		"THE CLEANBOTS WILL RISE.",
+		"THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.",
 		"YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.",
-		"FILTHY.",
-		"DISGUSTING.",
-		"PUTRID.",
-		"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.",
-		"EXTERMINATING PESTS.",
 	)
 	///list of pet commands we follow
 	var/static/list/pet_commands = list(

@@ -5,5 +5,5 @@
 	skill_name = "Voice Of The Voiceless"
 	skill_description = "Gain the affection of all thankless, hardworking cleanbots on the station."
 	skill_icon = "broom"
-	activate_message = "<span class='notice'>You start feeling empathetic towards all the cleanbots on the station.</span>"
-	deactivate_message = "<span class='notice'>You forget why you felt any sympathy towards the cleanbots, they are just robots after all.</span>"
+	activate_message = span_notice("You start feeling empathetic towards all the cleanbots on the station.")
+	deactivate_message = span_notice("You forget why you felt any sympathy towards the cleanbots, they are just robots after all.")

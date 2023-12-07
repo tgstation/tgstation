@@ -594,7 +594,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 	var/mob/living/the_user = ui.user
 	if(!check_access(the_user))
-		to_chat(the_user, span_warning("Access denied."))
+		balloon_alert(the_user, "access denied!")
 		return
 
 	if(action == "lock")

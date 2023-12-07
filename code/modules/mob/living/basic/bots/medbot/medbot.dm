@@ -334,7 +334,7 @@
 
 	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
 	patient.visible_message("[src] is trying to tend the wounds of [patient]", span_userdanger("[src] is trying to tend your wounds!"))
-	if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
+	if(!do_after(src, delay = 2 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
 	var/modified_heal_amount = heal_amount
@@ -364,7 +364,7 @@
 		return
 
 	if(CanReach(patient))
-		medicate_patient(patient)
+		melee_attack(patient)
 
 
 /mob/living/basic/bot/medbot/autopatrol
