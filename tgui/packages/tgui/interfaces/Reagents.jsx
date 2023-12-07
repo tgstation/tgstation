@@ -22,7 +22,6 @@ export const Reagents = (props) => {
     { flag: bitflags.BURN, icon: 'burn' },
     { flag: bitflags.TOXIN, icon: 'biohazard' },
     { flag: bitflags.OXY, icon: 'wind' },
-    { flag: bitflags.CLONE, icon: 'male' },
     { flag: bitflags.HEALING, icon: 'medkit' },
     { flag: bitflags.DAMAGING, icon: 'skull-crossbones' },
     { flag: bitflags.EXPLOSIVE, icon: 'bomb' },
@@ -175,15 +174,6 @@ const TagBox = (props) => {
             setPage(1);
           }}>
           Suffocation
-        </Button>
-        <Button
-          color={selectedBitflags & bitflags.CLONE ? 'green' : 'red'}
-          icon="male"
-          onClick={() => {
-            act('toggle_tag_clone');
-            setPage(1);
-          }}>
-          Clone
         </Button>
         <Button
           color={selectedBitflags & bitflags.ORGAN ? 'green' : 'red'}

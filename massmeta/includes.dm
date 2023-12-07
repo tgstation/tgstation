@@ -110,6 +110,6 @@
 #include "code\modules\jobs\job_types\head_of_security.dm"
 #include "code\modules\jobs\job_types\warden.dm"
 #include "game\objects\items\storage\garment.dm"
-
+#include "code\modules\hooch.dm"
 //features
 #include "features\additional_circuit\includes.dm"
