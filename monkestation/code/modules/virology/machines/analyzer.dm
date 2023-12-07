@@ -109,6 +109,8 @@
 	if(do_after(user, 5 SECONDS, src))
 		if(machine_stat & (BROKEN|NOPOWER))
 			return
+		if(!istype(dish.contained_virus, /datum/disease/advanced))
+			QDEL_NULL(dish)
 		if (dish.contained_virus.addToDB())
 			say("Added new pathogen to database.")
 		var/datum/data/record/v = GLOB.virusDB["[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]"]
