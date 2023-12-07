@@ -3,3 +3,4 @@
 #include "antagonists.dm"
 #include "span.dm"
 #include "say.dm"
+#include "inventory.dm"
