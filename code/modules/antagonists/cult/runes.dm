@@ -635,7 +635,9 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	sleep(4 SECONDS)
 	if(src)
 		color = RUNE_COLOR_RED
-	new /obj/narsie(rune_turf) //Causes Nar'Sie to spawn even if the rune has been removed
+
+	var/obj/narsie/harbinger = new /obj/narsie(rune_turf) //Causes Nar'Sie to spawn even if the rune has been removed
+	harbinger.start_ending_the_round()
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
 /obj/effect/rune/raise_dead
@@ -924,9 +926,9 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			return list()
 		notify_ghosts(
 			"Manifest rune invoked in [get_area(src)].",
-			'sound/effects/ghost2.ogg',
 			source = src,
 			header = "Manifest rune",
+			ghost_sound = 'sound/effects/ghost2.ogg',
 		)
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)

@@ -50,16 +50,15 @@ const findAmount = (item_amts, name) => {
   return amount.amt;
 };
 
-const ShoppingTab = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+const ShoppingTab = (props) => {
+  const { data, act } = useBackend<Data>();
   const { credit_type, order_categories, order_datums, item_amts } = data;
   const [shopCategory, setShopCategory] = useLocalState(
-    context,
     'shopCategory',
     order_categories[0]
   );
-  const [condensed] = useLocalState(context, 'condensed', false);
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const [condensed] = useLocalState('condensed', false);
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const search = createSearch<OrderDatum>(
     searchItem,
     (order_datums) => order_datums.name
@@ -184,8 +183,8 @@ const ShoppingTab = (props, context) => {
   );
 };
 
-const CheckoutTab = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+const CheckoutTab = (props) => {
+  const { data, act } = useBackend<Data>();
   const {
     credit_type,
     purchase_tooltip,
@@ -303,7 +302,7 @@ const CheckoutTab = (props, context) => {
   );
 };
 
-const OrderSent = (props, context) => {
+const OrderSent = (props) => {
   return (
     <Dimmer>
       <Stack vertical>
@@ -318,11 +317,11 @@ const OrderSent = (props, context) => {
   );
 };
 
-export const ProduceConsole = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const ProduceConsole = (props) => {
+  const { data } = useBackend<Data>();
   const { credit_type, points, off_cooldown, order_categories } = data;
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
-  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [condensed, setCondensed] = useLocalState('condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>

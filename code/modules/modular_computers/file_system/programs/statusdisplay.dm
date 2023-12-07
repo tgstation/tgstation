@@ -2,7 +2,7 @@
 	filename = "statusdisplay"
 	filedesc = "Status Display"
 	program_icon = "signal"
-	program_icon_state = "generic"
+	program_open_overlay = "generic"
 	requires_ntnet = TRUE
 	size = 1
 

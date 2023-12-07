@@ -80,7 +80,7 @@
 			if(do_after(user, 50, target=src))
 				W.use(5)
 				var/turf/T = get_turf(src)
-				T.PlaceOnTop(/turf/closed/wall/mineral/wood/nonmetal)
+				T.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
 				qdel(src)
 				return
 	return ..()
@@ -129,6 +129,7 @@
 /obj/structure/barricade/sandbags/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/barricade/security
 	name = "security barrier"

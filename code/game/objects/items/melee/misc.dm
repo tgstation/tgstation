@@ -1,13 +1,6 @@
+// Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
 	item_flags = NEEDS_PERMIT
-
-/obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(target.check_block())
-		target.visible_message(span_danger("[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!"),
-					span_userdanger("You block the attack!"))
-		user.Stun(40)
-		return TRUE
-
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
@@ -18,7 +11,7 @@
 	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
@@ -67,7 +60,7 @@
 	inhand_icon_state = "sabre"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10

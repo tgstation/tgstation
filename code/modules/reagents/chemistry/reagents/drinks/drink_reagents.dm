@@ -251,10 +251,9 @@
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(affected_mob.getBruteLoss() && SPT_PROB(10, seconds_per_tick))
-		affected_mob.heal_bodypart_damage(1, 0)
-		. = TRUE
-	..()
+	. = ..()
+	if(SPT_PROB(10, seconds_per_tick) && affected_mob.heal_bodypart_damage(1, 0))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/coffee
 	name = "Coffee"
@@ -272,6 +271,7 @@
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	affected_mob.adjust_dizzy(-10 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
@@ -279,7 +279,6 @@
 	affected_mob.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	if(holder.has_reagent(/datum/reagent/consumable/frostoil))
 		holder.remove_reagent(/datum/reagent/consumable/frostoil, 5 * REM * seconds_per_tick)
-	return ..() || .
 
 /datum/reagent/consumable/tea
 	name = "Tea"

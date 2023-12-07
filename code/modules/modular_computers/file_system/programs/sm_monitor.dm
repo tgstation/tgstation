@@ -1,9 +1,9 @@
 /datum/computer_file/program/supermatter_monitor
 	filename = "ntcims"
 	filedesc = "NT CIMS"
-	category = PROGRAM_CATEGORY_ENGI
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
 	ui_header = "smmon_0.gif"
-	program_icon_state = "smmon_0"
+	program_open_overlay = "smmon_0"
 	extended_desc = "Crystal Integrity Monitoring System, connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
 	requires_ntnet = TRUE
 	download_access = list(ACCESS_CONSTRUCTION)
@@ -109,6 +109,6 @@
 	if(last_status != new_status)
 		last_status = new_status
 		ui_header = "smmon_[last_status].gif"
-		program_icon_state = "smmon_[last_status]"
+		program_open_overlay = "smmon_[last_status]"
 		if(istype(computer))
 			computer.update_appearance()

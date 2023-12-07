@@ -147,6 +147,10 @@
 	else
 		radio.talk_into(src, "CRITICAL ALERT: Unregistered mechanical entity deployed.")
 
+	var/datum/antagonist/antag_datum = antag.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)
+	if(istype(antag_datum))
+		antag_datum.show_in_roundend = TRUE
+
 	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/magic/ethereal_enter.ogg', asoundout = 'sound/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
 
 /// Removes any invalid candidates from the list

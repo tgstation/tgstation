@@ -30,7 +30,7 @@
 	///List of stored files on this drive. Use `store_file` and `remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
-	///Non-static list of programs the computer should recieve on Initialize.
+	///Non-static list of programs the computer should receive on Initialize.
 	var/list/datum/computer_file/starting_programs = list()
 	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
 	var/static/list/datum/computer_file/default_programs = list(
@@ -48,7 +48,7 @@
 
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = NONE
-//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
+//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
 
 	///The theme, used for the main menu and file browser apps.
 	var/device_theme = PDA_THEME_NTOS
@@ -402,7 +402,7 @@
 		return
 
 	if(enabled)
-		. += active_program ? mutable_appearance(init_icon, active_program.program_icon_state) : mutable_appearance(init_icon, icon_state_menu)
+		. += active_program ? mutable_appearance(init_icon, active_program.program_open_overlay) : mutable_appearance(init_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
 		. += mutable_appearance(init_icon, "bsod")
 		. += mutable_appearance(init_icon, "broken")

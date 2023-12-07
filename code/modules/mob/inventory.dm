@@ -544,14 +544,21 @@
 	..() //Don't redraw hands until we have organs for them
 
 //GetAllContents that is reasonable and not stupid
-/mob/living/carbon/proc/get_all_gear()
+/mob/living/proc/get_all_gear()
 	var/list/processing_list = get_equipped_items(include_pockets = TRUE, include_accessories = TRUE) + held_items
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
-	while(i < length(processing_list) )
+	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
 		if(A.atom_storage)
 			var/list/item_stuff = list()
 			A.atom_storage.return_inv(item_stuff)
 			processing_list += item_stuff
 	return processing_list
+
+/// Returns a list of things that the provided mob has, including any storage-capable implants.
+/mob/living/proc/gather_belongings()
+	var/list/belongings = get_all_gear()
+	for (var/obj/item/implant/storage/internal_bag in implants)
+		belongings += internal_bag.contents
+	return belongings

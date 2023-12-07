@@ -1,8 +1,8 @@
 /datum/computer_file/program/ai_restorer
 	filename = "ai_restore"
 	filedesc = "AI Manager & Restorer"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = FALSE
@@ -106,7 +106,7 @@
 			var/mob/living/silicon/ai/A = stored_card.AI
 			if(A && A.health < 100)
 				restoring = TRUE
-				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
+				A.notify_revival("Your core files are being restored!", source = computer)
 			return TRUE
 		if("PRG_eject")
 			if(stored_card)

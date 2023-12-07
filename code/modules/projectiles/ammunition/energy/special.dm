@@ -8,13 +8,13 @@
 	projectile_type = /obj/projectile/ion/weak
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE * 1.2)
 
-/obj/item/ammo_casing/energy/declone
-	projectile_type = /obj/projectile/energy/declone
+/obj/item/ammo_casing/energy/radiation
+	projectile_type = /obj/projectile/energy/radiation
 	select_name = "declone"
 	fire_sound = 'sound/weapons/pulse3.ogg'
 
-/obj/item/ammo_casing/energy/declone/weak
-	projectile_type = /obj/projectile/energy/declone/weak
+/obj/item/ammo_casing/energy/radiation/weak
+	projectile_type = /obj/projectile/energy/radiation/weak
 
 /obj/item/ammo_casing/energy/flora
 	fire_sound = 'sound/effects/stealthoff.ogg'
@@ -81,6 +81,7 @@
 
 /obj/item/ammo_casing/energy/fisher
 	projectile_type = /obj/projectile/energy/fisher
-	select_name = "light-buster"
+	select_name = "light disruptor"
+	harmful = FALSE
 	e_cost = LASER_SHOTS(2, STANDARD_CELL_CHARGE * 0.5)
 	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg' // fwip fwip fwip fwip

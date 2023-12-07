@@ -330,7 +330,7 @@
 /turf/open/floor/catwalk_floor,
 /area/shuttle/escape/engine)
 "oK" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	name = "Doctor Patches"
 	},
 /turf/open/floor/iron/dark/smooth_large,

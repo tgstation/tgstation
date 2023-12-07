@@ -4,6 +4,7 @@
 	icon = FA_ICON_HANDS
 	value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	medical_record_text = "Patient can communicate with sign language."
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
 
 /datum/quirk/item_quirk/signer/add_unique(client/client_source)
