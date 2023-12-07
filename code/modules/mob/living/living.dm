@@ -319,6 +319,8 @@
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
+	if(isturf(AM))
+		return FALSE
 	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
 	if(throwing || !(mobility_flags & MOBILITY_PULL))
