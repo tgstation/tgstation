@@ -659,7 +659,7 @@
 
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
-	icon_state = "rock_Gibtonite_inactive"
+	MAP_SWITCH(, icon_state = "rock_Gibtonite_inactive")
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
@@ -684,7 +684,7 @@
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage == GIBTONITE_UNSTRUCK)
-		activated_overlay = mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_inactive", ON_EDGED_TURF_LAYER) //shows in gaps between pulses if there are any
+		activated_overlay = mutable_appearance('icons/turf/smoothrocks_overlays.dmi', "rock_Gibtonite_inactive", ON_EDGED_TURF_LAYER) //shows in gaps between pulses if there are any
 		SET_PLANE(activated_overlay, WALL_PLANE_UPPER, src)
 		add_overlay(activated_overlay)
 		name = "gibtonite deposit"
@@ -704,7 +704,7 @@
 /turf/closed/mineral/gibtonite/proc/countdown(notify_admins = FALSE)
 	set waitfor = FALSE
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
-		flick_overlay_view(mutable_appearance('icons/turf/smoothrocks.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER + 0.1), 0.5 SECONDS) //makes the animation pulse one time per tick
+		flick_overlay_view(mutable_appearance('icons/turf/smoothrocks_overlays.dmi', "rock_Gibtonite_active", ON_EDGED_TURF_LAYER + 0.1), 0.5 SECONDS) //makes the animation pulse one time per tick
 		det_time--
 		sleep(0.5 SECONDS)
 	if(istype(src, /turf/closed/mineral/gibtonite))
@@ -764,7 +764,7 @@
 	defer_change = TRUE
 
 /turf/closed/mineral/gibtonite/ice
-	icon_state = "icerock_Gibtonite_inactive"
+	MAP_SWITCH(, icon_state = "icerock_Gibtonite_inactive")
 	icon = MAP_SWITCH('icons/turf/walls/icerock_wall.dmi', 'icons/turf/mining.dmi')
 	base_icon_state = "icerock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
