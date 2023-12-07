@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	var/core = TRUE
 	var/modified = FALSE
 	var/moving = TRUE
+	var/list/id_list = list()
 
 /obj/effect/pathogen_cloud/New(turf/loc, mob/sourcemob, list/virus, isCarrier = TRUE)
 	..()
@@ -39,6 +40,10 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 
 	source = sourcemob
 	viruses = virus
+
+	for(var/datum/disease/advanced/D as anything in viruses)
+		id_list += "[D.uniqueID]-[D.subID]"
+
 	addtimer(CALLBACK(src, PROC_REF(delete_self)), lifetime)
 
 /obj/effect/pathogen_cloud/proc/delete_self()
@@ -79,12 +84,11 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 				//This should prevent mobs breathing in hundreds of clouds at once
 				for (var/obj/effect/pathogen_cloud/other_C in src.loc)
 					if (!other_C.core)
-						for (var/datum/disease/advanced/B as anything in viruses)
-							for(var/datum/disease/advanced/V as anything in other_C.viruses)
-								if("[B.uniqueID]-[B.subID]" == "[V.uniqueID]-[V.subID]")
-									continue
-								viruses |= V.Copy()
-								modified = TRUE
+						for(var/datum/disease/advanced/V as anything in other_C.viruses)
+							if("[V.uniqueID]-[V.subID]" in id_list)
+								continue
+							viruses |= V.Copy()
+							modified = TRUE
 						qdel(other_C)
 
 				var/obj/effect/pathogen_cloud/C = new /obj/effect/pathogen_cloud(src.loc, source, viruses, sourceIsCarrier)
@@ -100,11 +104,10 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 			else
 				for (var/obj/effect/pathogen_cloud/core/other_C in src.loc)
 					if (!other_C.moving)
-						for (var/datum/disease/advanced/B as anything in viruses)
-							for(var/datum/disease/advanced/V as anything in other_C.viruses)
-								if("[B.uniqueID]-[B.subID]" == "[V.uniqueID]-[V.subID]")
-									continue
-								viruses |= V.Copy()
-								modified = TRUE
+						for(var/datum/disease/advanced/V as anything in other_C.viruses)
+							if("[V.uniqueID]-[V.subID]" in id_list)
+								continue
+							viruses |= V.Copy()
+							modified = TRUE
 						qdel(other_C)
 				moving = FALSE

@@ -105,10 +105,12 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	desc = "Attacks the infected's ability to differentiate left and right."
 	stage = 3
 	badness = EFFECT_DANGER_HINDRANCE
+	max_multiplier = 5
+	max_chance = 15
 
 /datum/symptom/confusion/activate(mob/living/carbon/mob)
 	to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
-	mob.adjust_confusion(1 SECONDS)
+	mob.adjust_confusion(1 SECONDS * multiplier)
 
 /datum/symptom/mutation
 	name = "DNA Degradation"
@@ -195,6 +197,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 				H.update_body()
 
 /datum/symptom/elvis/deactivate(mob/living/carbon/mob)
+	if(ismouse(mob))
+		return
 	/*
 	if(ishuman(mob))
 		var/mob/living/carbon/human/dude = mob
@@ -579,3 +583,21 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	message = replacetext(message,"I","we")
 	message = replacetext(message,"me","us")
 	speech_args[SPEECH_MESSAGE] = message
+
+
+/datum/symptom/asphyxiation
+	name = "Acute respiratory distress syndrome"
+	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to brain damage in critical patients."
+	badness = EFFECT_DANGER_DEADLY
+	max_chance = 10
+	multiplier = 5
+	stage = 3
+
+/datum/symptom/asphyxiation/activate(mob/living/carbon/mob)
+	mob.emote("gasp")
+	if(prob(20) && multiplier >= 4 && iscarbon(mob))
+		mob.reagents.add_reagent_list(list(/datum/reagent/toxin/pancuronium = 3, /datum/reagent/toxin/sodium_thiopental = 3))
+	mob.adjustOxyLoss(rand(5,15) * multiplier)
+	if(mob.getOxyLoss() >= 120 && multiplier == 5)
+		mob.adjustOxyLoss(rand(5,7) * multiplier)
+		mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, multiplier)

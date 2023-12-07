@@ -18,10 +18,8 @@ new /datum/disease_ability/symptom/medium/confusion,
 new /datum/disease_ability/symptom/medium/vomit,
 new /datum/disease_ability/symptom/medium/voice_change,
 new /datum/disease_ability/symptom/medium/visionloss,
-new /datum/disease_ability/symptom/medium/deafness,
 new /datum/disease_ability/symptom/powerful/narcolepsy,
 new /datum/disease_ability/symptom/medium/fever,
-new /datum/disease_ability/symptom/medium/chills,
 new /datum/disease_ability/symptom/medium/headache,
 new /datum/disease_ability/symptom/medium/nano_boost,
 new /datum/disease_ability/symptom/medium/nano_destroy,
@@ -366,14 +364,8 @@ new /datum/disease_ability/symptom/powerful/youth
 	short_desc = "Damage the eyes of victims, eventually causing blindness."
 	long_desc = "Damage the eyes of victims, eventually causing blindness. Decreases all stats."
 
-/datum/disease_ability/symptom/medium/deafness
-	symptoms = list(/datum/symptom/deafness)
-
 /datum/disease_ability/symptom/medium/fever
 	symptoms = list(/datum/symptom/fever)
-
-/datum/disease_ability/symptom/medium/chills
-	symptoms = list(/datum/symptom/chills)
 
 /datum/disease_ability/symptom/medium/headache
 	symptoms = list(/datum/symptom/headache)

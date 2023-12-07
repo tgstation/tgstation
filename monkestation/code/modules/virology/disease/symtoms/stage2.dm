@@ -125,12 +125,27 @@
 	desc = "Causes the infected to shiver at random."
 	encyclopedia = "No matter whether the room is cold or hot. This has no effect on their body temperature."
 	stage = 2
+	max_multiplier = 4
+	multiplier = 1
 	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/fridge/activate(mob/living/mob)
+	to_chat(mob, span_warning("[pick("You feel cold.", "You shiver.")]"))
 	mob.emote("shiver")
+	set_body_temp(mob)
 
+/datum/symptom/fridge/proc/set_body_temp(mob/living/M)
+	if(multiplier >= 3) // when unsafe the shivers can cause cold damage
+		M.add_body_temperature_change("chills", -6 * power * multiplier)
+	else
+		// Get the max amount of change allowed before going under cold damage limit, then cap the maximum allowed temperature change from safe chills to 5 over the cold damage limit
+		var/change_limit = min(M.get_body_temp_cold_damage_limit() + 5 - M.get_body_temp_normal(apply_change=FALSE), 0)
+		M.add_body_temperature_change("chills", max(-6 * power * multiplier, change_limit))
 
+/datum/symptom/fridge/deactivate(mob/living/carbon/mob)
+	if(mob)
+		mob.remove_body_temperature_change("chills")
+	
 /datum/symptom/hair
 	name = "Hair Loss"
 	desc = "Causes rapid hairloss in the infected."
@@ -524,3 +539,18 @@
 	mob.Stun(5)
 	mob.blood_volume -= 8
 	active = 0
+
+/datum/symptom/choking
+	name = "Choking"
+	desc = "The virus causes inflammation of the host's air conduits, leading to intermittent choking."
+	max_multiplier = 10
+	multiplier = 1
+	badness = EFFECT_DANGER_HINDRANCE
+	max_chance = 20
+	stage = 2
+
+/datum/symptom/choking/activate(mob/living/carbon/mob)
+	mob.emote("gasp")
+	if(prob(25))
+		to_chat(mob, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
+	mob.adjustOxyLoss(rand(2, 3) * multiplier)
