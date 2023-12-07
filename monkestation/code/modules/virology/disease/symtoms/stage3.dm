@@ -150,6 +150,14 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	badness = EFFECT_DANGER_HINDRANCE
 
 /datum/symptom/elvis/first_activate(mob/living/carbon/mob)
+	if(ismouse(mob))
+		var/mob/living/basic/mouse/mouse = mob
+		mouse.icon_state = "mouse_elvis"
+		mouse.base_icon_state = "mouse_elvis"
+		mouse.icon_living = "mouse_elvis"
+		mouse.icon_dead = "mouse_brown_dead"
+		mouse.
+		return
 	mob.dna.add_mutation(/datum/mutation/human/elvis, MUT_EXTRA)
 
 /datum/symptom/elvis/activate(mob/living/carbon/mob)
