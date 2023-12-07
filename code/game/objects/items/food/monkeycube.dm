@@ -12,7 +12,11 @@
 
 /obj/item/food/monkeycube/proc/Expand()
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
+	var/mob/living/bananas 
+	if(spawned_mob == /mob/living/carbon/human/species/monkey)
+		bananas = new spawned_mob(drop_location(), TRUE, spammer)
+	else 
+		bananas = new spawned_mob(drop_location())
 	if(faction)
 		bananas.faction = faction
 	if (!QDELETED(bananas))
