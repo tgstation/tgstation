@@ -131,11 +131,6 @@
 	layer = CURSE_LAYER
 	plane = FULLSCREEN_PLANE
 
-/atom/movable/screen/fullscreen/moon_music
-	icon = 'icons/hud/screen_moon_song.dmi'
-	icon_state = "songofstars0"
-	plane = FULLSCREEN_PLANE
-
 /atom/movable/screen/fullscreen/ivanov_display
 	icon_state = "ivanov"
 	alpha = 180
