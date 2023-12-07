@@ -73,14 +73,14 @@
 
 /obj/structure/falsewall/update_icon_state()
 	if(opening)
-		icon = fake_icon
+		icon = initial(icon)
 		icon_state = "[base_icon_state]-[density ? "opening" : "closing"]"
 		return ..()
 	if(density)
-		icon = initial(icon)
+		icon = fake_icon
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	else
-		icon = fake_icon
+		icon = initial(icon)
 		icon_state = "[base_icon_state]-open"
 	return ..()
 
