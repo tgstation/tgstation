@@ -352,9 +352,26 @@
 	else
 		// Miasma sickness
 		if(prob(1 * miasma_pp))
-			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = 2, max_level = 3)
-			miasma_disease.name = "Unknown"
-			ForceContractDisease(miasma_disease, make_copy = TRUE, del_on_fail = TRUE)
+			var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+			var/list/anti = list(
+				ANTIGEN_BLOOD	= 1,
+				ANTIGEN_COMMON	= 1,
+				ANTIGEN_RARE	= 2,
+				ANTIGEN_ALIEN	= 0,
+				)
+			var/list/bad = list(
+				EFFECT_DANGER_HELPFUL	= 0,
+				EFFECT_DANGER_FLAVOR	= 1,
+				EFFECT_DANGER_ANNOYING	= 2,
+				EFFECT_DANGER_HINDRANCE	= 3,
+				EFFECT_DANGER_HARMFUL	= 1,
+				EFFECT_DANGER_DEADLY	= 0,
+				)
+			var/datum/disease/advanced/new_disease = new virus_choice
+			new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
+			new_disease.carrier = TRUE
+			new_disease = new_disease.name
+			infect_disease(new_disease, TRUE, "Miasma Disease Infection [key_name(src)]")
 		// Miasma side-effects.
 		switch(miasma_pp)
 			if(0.25 to 5)

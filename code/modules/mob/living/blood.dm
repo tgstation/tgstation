@@ -221,10 +221,10 @@
 			if(blood_id == /datum/reagent/blood) //normal blood
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
-						var/datum/disease/D = thing
+						var/datum/disease/advanced/D = thing
 						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 							continue
-						C.ForceContractDisease(D)
+						C.infect_disease(D, TRUE, "Infected [key_name(C)] (Infected Blood 100% Infection)")
 				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE

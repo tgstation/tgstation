@@ -74,8 +74,8 @@
 		message_admins("[winner] has just survived a random heart attack!") //time to spawn them a trophy :)
 		victims -= winner
 	else
-		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
-		winner.ForceContractDisease(heart_disease, FALSE, TRUE)
+		//var/datum/disease/heart_disease = new /datum/disease/heart_failure() //TODO VIROLOGY HEART ATTACK VIRUS
+		//winner.ForceContractDisease(heart_disease, FALSE, TRUE)
 		announce_to_ghosts(winner)
 		victims -= winner
 		return TRUE

@@ -130,7 +130,7 @@
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.ForceContractDisease(new_disease, FALSE))
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
 			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
 			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)
@@ -216,35 +216,32 @@
 	afflicted += disease_event.disease_candidates
 	disease_event.disease_candidates.Cut()
 
-	if(!max_symptoms)
-		max_symptoms = rand(ADV_MIN_SYMPTOMS, ADV_MAX_SYMPTOMS)
-
-	if(!requested_severity)
-		var/rng_severity = rand(1, 100)
-		if(rng_severity < ADV_RNG_LOW)
-			requested_severity = ADV_DISEASE_MEDIUM
-
-		else if(rng_severity < ADV_RNG_MID)
-			requested_severity = ADV_DISEASE_HARMFUL
-
-		else
-			requested_severity = ADV_DISEASE_DANGEROUS
-
-	var/datum/disease/advance/advanced_disease = new /datum/disease/advance/random/event(max_symptoms, requested_severity)
-
-	var/list/name_symptoms = list()
-	for(var/datum/symptom/new_symptom as anything in advanced_disease.symptoms)
-		name_symptoms += new_symptom.name
-
-	illness_type = advanced_disease.name
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced))
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 1,
+		ANTIGEN_COMMON	= 1,
+		ANTIGEN_RARE	= 2,
+		ANTIGEN_ALIEN	= 0,
+		)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 0,
+		EFFECT_DANGER_FLAVOR	= 0,
+		EFFECT_DANGER_ANNOYING	= 2,
+		EFFECT_DANGER_HINDRANCE	= 3,
+		EFFECT_DANGER_HARMFUL	= 3,
+		EFFECT_DANGER_DEADLY	= 1,
+		)
+	var/datum/disease/advanced/new_disease = new virus_choice
+	new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
+	new_disease.carrier = TRUE
+	illness_type = new_disease.name
 
 	var/mob/living/carbon/human/victim
 	while(length(afflicted))
 		victim = pick_n_take(afflicted)
-		if(victim.ForceContractDisease(advanced_disease, FALSE))
-			message_admins("Event triggered: Disease Outbreak: Advanced - starting with patient zero [ADMIN_LOOKUPFLW(victim)]! Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
-			log_game("Event triggered: Disease Outbreak: Advanced - starting with patient zero [key_name(victim)]. Details: [advanced_disease.admin_details()] sp:[advanced_disease.spread_flags] ([advanced_disease.spread_text])")
-			log_virus("Disease Outbreak: Advanced has triggered a custom virus outbreak of [advanced_disease.admin_details()] in [victim]!")
+		if(victim.infect_disease(new_disease, TRUE, notes = "Infected via Outbreak [key_name(victim)]"))
+			message_admins("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(victim)]!")
+			log_game("Event triggered: Disease Outbreak - [new_disease.name] starting with patient zero [key_name(victim)].")
 			announce_to_ghosts(victim)
 			return
 		CHECK_TICK //don't lag the server to death
