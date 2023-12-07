@@ -156,7 +156,6 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		mouse.base_icon_state = "mouse_elvis"
 		mouse.icon_living = "mouse_elvis"
 		mouse.icon_dead = "mouse_brown_dead"
-		mouse.
 		return
 	mob.dna.add_mutation(/datum/mutation/human/elvis, MUT_EXTRA)
 

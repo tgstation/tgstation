@@ -251,11 +251,6 @@
 	desc = "A small bottle. Contains an untested viral culture in synthblood medium."
 	spawned_disease = /datum/disease/advance/random
 
-/obj/item/reagent_containers/cup/bottle/pierrot_throat
-	name = "Pierrot's Throat culture bottle"
-	desc = "A small bottle. Contains H0NI<42 virion culture in synthblood medium."
-	spawned_disease = /datum/disease/pierrot_throat
-
 /obj/item/reagent_containers/cup/bottle/cold
 	name = "Rhinovirus culture bottle"
 	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
@@ -303,10 +298,6 @@
 	desc = "A small bottle. Contains a sample of Lepidopticides."
 	spawned_disease = /datum/disease/anxiety
 
-/obj/item/reagent_containers/cup/bottle/beesease
-	name = "Beesease culture bottle"
-	desc = "A small bottle. Contains a sample of invasive Apidae."
-	spawned_disease = /datum/disease/beesease
 
 /obj/item/reagent_containers/cup/bottle/fluspanish
 	name = "Spanish flu culture bottle"
