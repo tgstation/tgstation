@@ -1,0 +1,5 @@
+author: "Autisem"
+delete-after: True
+changes:
+  - bugfix: "Being revived inside a legion now sets you free"
+  - bugfix: "in some rare cases gib() did infact not spawn gib\n/🆑"
