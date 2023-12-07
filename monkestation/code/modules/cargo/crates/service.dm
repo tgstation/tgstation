@@ -20,13 +20,13 @@
 /datum/supply_pack/service/birthday
 	name = "Birthday Bash Pack"
 	desc = "This is for that corgi, isn't it..."
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/toy/balloon = 5,
 					/obj/item/reagent_containers/spray/chemsprayer/party = 3,
 					/obj/item/clothing/head/costume/party = 5,
 					/obj/item/food/cake/birthday,
 					/obj/item/plate/small = 5,
-					/obj/item/a_gift/anything)
+					/obj/item/a_gift/recursive)
 	crate_name = "Birthday Crate"
 
 /datum/supply_pack/service/jukebox

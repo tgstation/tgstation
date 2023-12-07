@@ -206,7 +206,7 @@
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5
 	rarity = 10
-	base_value = 5
+	base_value = 1.5 //MONKESTATION EDIT 5 ==> 1.5
 	desc = "A coolant gas. Mainly used for it's endothermic reaction with oxygen."
 
 /datum/gas/hydrogen

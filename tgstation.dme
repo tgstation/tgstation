@@ -5667,6 +5667,7 @@
 #include "monkestation\code\game\objects\items\miningweapons.dm"
 #include "monkestation\code\game\objects\items\mothlet_grenade.dm"
 #include "monkestation\code\game\objects\items\plushies.dm"
+#include "monkestation\code\game\objects\items\recursive_gift.dm"
 #include "monkestation\code\game\objects\items\stickers.dm"
 #include "monkestation\code\game\objects\items\superglue.dm"
 #include "monkestation\code\game\objects\items\AI_modules\monke_lawsets.dm"
