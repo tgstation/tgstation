@@ -41,6 +41,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/cookie/sugar/spookycoffin/Initialize(mapload, seasonal_changes = FALSE)
+	// Changes default parameter of seasonal_changes to FALSE, pass to parent
 	return ..()
 
 //spooky items
