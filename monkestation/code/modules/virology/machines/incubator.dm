@@ -94,7 +94,7 @@
 
 	visible_message("<span class='notice'>\The [user] adds \the [VD] to \the [src].</span>","<span class='notice'>You add \the [VD] to \the [src].</span>")
 	playsound(loc, 'sound/machines/click.ogg', 50, 1)
-	update_icon()
+	update_appearance()
 
 
 /obj/machinery/disease2/incubator/ui_act(action, params)
@@ -110,7 +110,7 @@
 					if (dish_datum.dish.contained_virus)
 						dish_datum.dish.contained_virus.log += "<br />[ROUND_TIME()] Incubation started by [key_name(usr)]"
 
-			update_icon()
+			update_appearance()
 			return TRUE
 
 		if ("ejectdish")
@@ -126,9 +126,9 @@
 			if (Adjacent(usr))
 				usr.put_in_hands(dish_datum.dish)
 
-			dish_datum.dish.update_icon()
+			dish_datum.dish.update_appearance()
 			dish_data[slot] = null
-			update_icon()
+			update_appearance()
 			return TRUE
 
 		if ("insertdish")
@@ -144,7 +144,7 @@
 			if (istype(VD))
 				addDish(VD, user, slot)
 
-			update_icon()
+			update_appearance()
 			return TRUE
 
 		if ("examinedish")
@@ -199,7 +199,7 @@
 
 			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			dish_datum.dish.forceMove(loc)
-			update_icon()
+			update_appearance()
 			dish_data[i] = null
 			sleep(1)
 
@@ -261,7 +261,7 @@
 	else
 		use_power = IDLE_POWER_USE
 
-	update_icon()
+	update_appearance()
 
 
 /obj/machinery/disease2/incubator/proc/find_dish_datum(obj/item/weapon/virusdish/dish)
@@ -296,7 +296,6 @@
 
 /obj/machinery/disease2/incubator/update_icon()
 	. = ..()
-	overlays.len = 0
 	icon_state = "incubator"
 
 	if (machine_stat & (NOPOWER))
@@ -315,40 +314,43 @@
 	else
 		if (on)
 			set_light(2,2)
-			var/image/incubator_light = image(icon,"incubator_light")
-			incubator_light.plane = ABOVE_LIGHTING_PLANE
-			add_overlay(incubator_light)
-			var/image/incubator_glass = image(icon,"incubator_glass")
-			incubator_glass.plane = ABOVE_LIGHTING_PLANE
-			incubator_glass.blend_mode = BLEND_ADD
-			add_overlay(incubator_glass)
 		else
 			set_light(2,1)
 
+/obj/machinery/disease2/incubator/update_overlays()
+	. = ..()
+	if(!(machine_stat & (BROKEN|NOPOWER)))
+		if (on)
+			var/mutable_appearance/incubator_light = emissive_appearance(icon,"incubator_light",src)
+			. += incubator_light
+			var/mutable_appearance/incubator_glass = emissive_appearance(icon,"incubator_glass",src)
+			incubator_glass.blend_mode = BLEND_ADD
+			. += incubator_glass
+
 	for (var/i = 1 to dish_data.len)
 		if (dish_data[i] != null)
-			add_dish_sprite(dish_data[i], i)
-
+			. += add_dish_sprite(dish_data[i], i)
 
 /obj/machinery/disease2/incubator/proc/add_dish_sprite(dish_incubator_dish/dish_datum, slot)
 	var/obj/item/weapon/virusdish/dish = dish_datum.dish
+	var/list/overlays = list()
 
 	slot--
-	var/image/dish_outline = image(icon,"smalldish2-outline")
+	var/mutable_appearance/dish_outline = mutable_appearance(icon,"smalldish2-outline",src)
 	dish_outline.alpha = 128
 	dish_outline.pixel_y = -5 * slot
-	add_overlay(dish_outline)
-	var/image/dish_content = image(icon,"smalldish2-empty")
+	overlays += dish_outline
+	var/mutable_appearance/dish_content = mutable_appearance(icon,"smalldish2-empty",src)
 	dish_content.alpha = 128
 	dish_content.pixel_y = -5 * slot
 	if (dish.contained_virus)
 		dish_content.icon_state = "smalldish2-color"
 		dish_content.color = dish.contained_virus.color
-	add_overlay(dish_content)
+	overlays += dish_content
 
 	//updating the light indicators
 	if (dish.contained_virus && !(machine_stat & (BROKEN|NOPOWER)))
-		var/image/grown_gauge = image(icon,"incubator_growth7")
+		var/mutable_appearance/grown_gauge = mutable_appearance(icon,"incubator_growth7",src)
 		grown_gauge.plane = ABOVE_LIGHTING_PLANE
 		grown_gauge.pixel_y = -5 * slot
 		if (dish.growth < 100)
@@ -360,19 +362,17 @@
 				update = TRUE
 
 			if (update)
-				var/image/grown_light = image(icon,"incubator_grown_update")
+				var/mutable_appearance/grown_light = emissive_appearance(icon,"incubator_grown_update",src)
 				grown_light.pixel_y = -5 * slot
-				grown_light.plane = ABOVE_LIGHTING_PLANE
 
-				add_overlay(grown_light)
+				overlays += grown_light
 			else
-				var/image/grown_light = image(icon,"incubator_grown")
+				var/mutable_appearance/grown_light = emissive_appearance(icon,"incubator_grown",src)
 				grown_light.pixel_y = -5 * slot
-				grown_light.plane = ABOVE_LIGHTING_PLANE
 
-				add_overlay(grown_light)
+				overlays += grown_light
 
-		add_overlay(grown_gauge)
+		overlays += grown_gauge
 		if (dish.reagents.total_volume < 0.02)
 			var/update = FALSE
 			if (!(dish_datum.updates & INCUBATOR_DISH_REAGENT))
@@ -380,46 +380,42 @@
 				update = TRUE
 
 			if (update)
-				var/image/reagents_light = image(icon,"incubator_reagents_update")
+				var/mutable_appearance/reagents_light = emissive_appearance(icon,"incubator_reagents_update",src)
 				reagents_light.pixel_y = -5 * slot
-				reagents_light.plane = ABOVE_LIGHTING_PLANE
 
-				add_overlay(reagents_light)
+				overlays += reagents_light
 			else
-				var/image/reagents_light = image(icon,"incubator_reagents")
+				var/mutable_appearance/reagents_light = emissive_appearance(icon,"incubator_reagents",src)
 				reagents_light.pixel_y = -5 * slot
-				reagents_light.plane = ABOVE_LIGHTING_PLANE
 
-				add_overlay(reagents_light)
+				overlays += reagents_light
 
 		if (dish_datum.updates_new & INCUBATOR_DISH_MAJOR)
 			if (!(dish_datum.updates & INCUBATOR_DISH_MAJOR))
 				dish_datum.updates += INCUBATOR_DISH_MAJOR
-				var/image/effect_light = image(icon,"incubator_major_update")
+				var/mutable_appearance/effect_light = emissive_appearance(icon,"incubator_major_update",src)
 				effect_light.pixel_y = -5 * slot
-				effect_light.plane = ABOVE_LIGHTING_PLANE
 
-				add_overlay(effect_light)
+				overlays += effect_light
 			else
-				var/image/effect_light = image(icon,"incubator_major")
-				effect_light.plane = ABOVE_LIGHTING_PLANE
+				var/mutable_appearance/effect_light = emissive_appearance(icon,"incubator_major",src)
 
 				effect_light.pixel_y = -5 * slot
-				add_overlay(effect_light)
+				overlays += effect_light
 
 		if (dish_datum.updates_new & INCUBATOR_DISH_MINOR)
 			if (!(dish_datum.updates & INCUBATOR_DISH_MINOR))
 				dish_datum.updates += INCUBATOR_DISH_MINOR
-				var/image/effect_light = image(icon,"incubator_minor_update")
+				var/mutable_appearance/effect_light = emissive_appearance(icon,"incubator_minor_update",src)
 				effect_light.pixel_y = -5 * slot
-				effect_light.plane = ABOVE_LIGHTING_PLANE
 
-				add_overlay(effect_light)
+				overlays += effect_light
 			else
-				var/image/effect_light = image(icon,"incubator_minor")
+				var/mutable_appearance/effect_light = mutable_appearance(icon,"incubator_minor",src)
 				effect_light.pixel_y = -5 * slot
-				add_overlay(effect_light)
+				overlays += effect_light
 
+	return overlays
 
 /obj/machinery/disease2/incubator/Destroy()
 	. = ..()

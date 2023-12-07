@@ -55,7 +55,7 @@
 				user.dropItemToGround(I, TRUE)
 				I.forceMove(src)
 				dish = I
-				update_icon()
+				update_appearance()
 			else
 				to_chat(user, "<span class='warning'>You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves).</span>")
 
@@ -70,7 +70,7 @@
 			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			dish.forceMove(loc)
 			dish = null
-			update_icon()
+			update_appearance()
 		return
 
 	if(.)
@@ -91,7 +91,7 @@
 			to_chat(user,"<span class='notice'>Replacing the machine's scanning modules with better parts will lower the growth requirement.</span>")
 		dish.forceMove(loc)
 		dish = null
-		update_icon()
+		update_appearance()
 		return
 
 	scanner = user
@@ -99,7 +99,7 @@
 	flick("analyser_turnon",src)
 
 	spawn (1)
-		var/image/I = image(icon,"analyser_light")
+		var/mutable_appearance/I = mutable_appearance(icon,"analyser_light",src)
 		I.plane = ABOVE_LIGHTING_PLANE
 		add_overlay(I)
 	use_power(1000)
@@ -126,19 +126,18 @@
 		popup.set_content(dish.info)
 		popup.open()
 		dish.analysed = TRUE
-		dish.update_icon()
+		dish.update_appearance()
 		dish.forceMove(loc)
 		dish = null
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 
-	update_icon()
+	update_appearance()
 	flick("analyser_turnoff",src)
 	scanner = null
 
 /obj/machinery/disease2/diseaseanalyser/update_icon()
 	. = ..()
-	overlays.len = 0
 	icon_state = "analyser"
 
 	if (machine_stat & (NOPOWER))
@@ -152,14 +151,17 @@
 	else
 		set_light(2,1)
 
+
+/obj/machinery/disease2/diseaseanalyser/update_overlays()
+	. = ..()
 	if (dish)
-		add_overlay("smalldish-outline")
+		.+= mutable_appearance(icon, "smalldish-outline",src)
 		if (dish.contained_virus)
-			var/image/I = image(icon,"smalldish-color")
+			var/mutable_appearance/I = mutable_appearance(icon,"smalldish-color",src)
 			I.color = dish.contained_virus.color
-			add_overlay(I)
+			.+= I
 		else
-			add_overlay("smalldish-empty")
+			.+= mutable_appearance(icon, "smalldish-empty",src)
 
 /obj/machinery/disease2/diseaseanalyser/verb/PrintPaper()
 	set name = "Print last analysis"
@@ -186,7 +188,7 @@
 		P.add_raw_text(last_scan_info)
 		P.pixel_x = 8
 		P.pixel_y = -8
-		P.update_icon()
+		P.update_appearance()
 
 /obj/machinery/disease2/diseaseanalyser/process()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -194,7 +196,7 @@
 		return
 
 	if (scanner && !(scanner in range(src,1)))
-		update_icon()
+		update_appearance()
 		flick("analyser_turnoff",src)
 		scanner = null
 
@@ -207,4 +209,4 @@
 		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		dish.forceMove(loc)
 		dish = null
-		update_icon()
+		update_appearance()
