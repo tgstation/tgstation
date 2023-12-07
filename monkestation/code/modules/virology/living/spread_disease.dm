@@ -72,6 +72,8 @@
 		D.makerandom(list(30,55),list(0,50),anti,bad,null)
 
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(H)]"
+		if(!length(H.diseases))
+			H.diseases = list()
 		H.diseases += D
 
 		D.AddToGoggleView(H)
