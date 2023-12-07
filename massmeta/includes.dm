@@ -84,6 +84,7 @@
 #include "code\modules\projectiles\projectile\beams.dm"
 #include "code\modules\mining\lavaland\megafauna_loot.dm"
 #include "mapping\_basemap.dm"
+#include "code\modules\hooch.dm"
 #include "code\_DEFINES\inventory.dm"
 #include "code\game\machinery\computer\orders\order_items\mining\order_mining.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\engineering.dm"
