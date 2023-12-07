@@ -43,6 +43,7 @@
 	unique_name = TRUE
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
 	hud_type = /datum/hud/dextrous/drone
+	dexterous = TRUE
 	// Going for a sort of pale green here
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 35
