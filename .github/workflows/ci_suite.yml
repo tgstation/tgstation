@@ -28,6 +28,8 @@ jobs:
         with:
           path: ~/SpacemanDMM
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-spacemandmm-
       - name: Restore Yarn cache
         uses: actions/cache@v3
         with:
@@ -53,13 +55,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cargo
-          key: ${{ runner.os }}-rust-${{ hashFiles('~/.cargo')}}
+          key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/install_ripgrep.sh')}}
+          restore-keys: |
+            ${{ runner.os }}-rust-
       - name: Install Tools
         run: |
           pip3 install setuptools
           bash tools/ci/install_node.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
-          cargo install ripgrep --features pcre2
+          bash tools/ci/install_ripgrep.sh
           tools/bootstrap/python -c ''
       - name: Give Linters A Go
         id: linter-setup
