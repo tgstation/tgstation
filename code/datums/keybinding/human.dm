@@ -58,7 +58,7 @@
 	keybind_signal = COMSIG_KB_HUMAN_SUITEQUIP_DOWN
 
 /datum/keybinding/human/quick_equip_belt/quick_equip_lpocket
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("Ctrl1")
 	name = "quick_equip_lpocket"
 	full_name = "Quick equip left pocket"
 	description = "Put in or take out an item in left pocket"
@@ -67,7 +67,7 @@
 	keybind_signal = COMSIG_KB_HUMAN_LPOCKETEQUIP_DOWN
 
 /datum/keybinding/human/quick_equip_belt/quick_equip_rpocket
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("Ctrl2")
 	name = "quick_equip_rpocket"
 	full_name = "Quick equip right pocket"
 	description = "Put in or take out an item in right pocket"
