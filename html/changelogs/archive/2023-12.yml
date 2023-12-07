@@ -73,3 +73,9 @@
   - rscdel: removed the mass spec machine from all maps as it is unused in our codebase.
   Tractor Mann:
   - rscadd: Cargo may now order jukeboxes!
+2023-12-07:
+  KittyNoodle:
+  - balance: the gift is the gift is the gift is the gift is the gift...
+  - balance: autorifles now cost 4200cr
+  - balance: birthday crates now cost 1000cr
+  - bugfix: cargo can no longer buy freon to summon infinite money
