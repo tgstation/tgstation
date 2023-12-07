@@ -13,7 +13,7 @@
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
-	radio_channel = RADIO_CHANNEL_SERVICE //Service //true
+	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = CLEAN_BOT
 	hackables = "cleaning software"
 	additional_access = /datum/id_trim/job/janitor
@@ -23,8 +23,8 @@
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
+	///Options: CLEANBOT_CLEAN_BLOOD | CLEANBOT_CLEAN_TRASH | CLEANBOT_CLEAN_PESTS | CLEANBOT_CLEAN_DRAWINGS
 	var/janitor_mode_flags = CLEANBOT_CLEAN_BLOOD
-	//Selections: CLEANBOT_CLEAN_BLOOD | CLEANBOT_CLEAN_TRASH | CLEANBOT_CLEAN_PESTS | CLEANBOT_CLEAN_DRAWINGS
 	///should other bots salute us?
 	var/comissioned = FALSE
 	///the base icon state, used in updating icons.
@@ -129,7 +129,8 @@
 
 	generate_ai_keys()
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	AddComponent(/datum/component/cleaner, 1 SECONDS, \
+	AddComponent(/datum/component/cleaner, \
+		base_cleaning_duration = 1 SECONDS, \
 		pre_clean_callback = CALLBACK(src, PROC_REF(update_bot_mode), BOT_CLEANING), \
 		on_cleaned_callback = CALLBACK(src, PROC_REF(update_bot_mode), BOT_IDLE), \
 	)
@@ -267,7 +268,6 @@
 /mob/living/basic/bot/cleanbot/proc/attach_knife(mob/living/user, obj/item/used_item)
 	balloon_alert(user, "attaching knife...")
 	if(!do_after(user, 2.5 SECONDS, target = src))
-		balloon_alert(user, "need to stay still")
 		return
 	deputize(used_item, user)
 

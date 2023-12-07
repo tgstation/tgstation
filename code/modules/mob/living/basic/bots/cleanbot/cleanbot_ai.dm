@@ -48,11 +48,15 @@
 /datum/ai_planning_subtree/cleaning_subtree
 
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
+	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
+
+	if(LAZYLEN(bot_pawn.do_afters))
+		return SUBTREE_RETURN_FINISH_PLANNING
+
 	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
 	var/list/final_hunt_list = list()
 
 	final_hunt_list += controller.blackboard[BB_CLEANABLE_DECALS]
@@ -65,6 +69,7 @@
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets, BB_CLEAN_TARGET, final_hunt_list)
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets
+	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
@@ -134,6 +139,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.say(pick(controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
+
 /datum/ai_planning_subtree/use_mob_ability/foam_area
 	ability_key = BB_CLEANBOT_FOAM
 	finish_planning = FALSE

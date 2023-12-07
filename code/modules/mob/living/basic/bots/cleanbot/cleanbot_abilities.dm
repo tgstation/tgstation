@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/bot
-	background_icon_state = "bg_revenant"
-	overlay_icon_state = "bg_revenant_border"
+	background_icon_state = "bg_tech_blue"
+	overlay_icon_state = "bg_tech_blue_border"
 	shared_cooldown = NONE
 	melee_cooldown_time = 0 SECONDS
 
