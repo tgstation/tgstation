@@ -5,10 +5,8 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/internal/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
+/obj/item/organ/internal/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(!. || !owner)
-		return
 
 	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
 	// Otherwise life processing breaks down
@@ -19,11 +17,10 @@
 /obj/item/organ/internal/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
 	. = ..()
 
-	if(organ_owner)
-		if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
-			if(organ_owner.stat != DEAD)
-				organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
-			organ_owner.death()
+	if((organ_flags & ORGAN_VITAL) && !special && !(organ_owner.status_flags & GODMODE))
+		if(organ_owner.stat != DEAD)
+			organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
+		organ_owner.death()
 
 	START_PROCESSING(SSobj, src)
 
