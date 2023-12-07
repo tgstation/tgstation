@@ -53,3 +53,5 @@
 #define BB_FRIENDLY_JANITOR "friendly_janitor"
 ///key that holds the victim we will spray
 #define BB_ACID_SPRAY_TARGET "acid_spray_target"
+///key that holds trash we will burn
+#define BB_HUNTABLE_TRASH "huntable_trash"

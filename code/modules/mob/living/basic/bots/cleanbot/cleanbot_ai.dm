@@ -35,6 +35,7 @@
 		BB_CLEANABLE_BLOOD = CLEANBOT_CLEAN_BLOOD,
 		BB_HUNTABLE_PESTS = CLEANBOT_CLEAN_PESTS,
 		BB_CLEANABLE_DRAWINGS = CLEANBOT_CLEAN_DRAWINGS,
+		BB_HUNTABLE_TRASH = CLEANBOT_CLEAN_TRASH,
 	)
 
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
@@ -130,7 +131,10 @@
 
 /datum/ai_behavior/execute_clean/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
-	if(!iscarbon(controller.blackboard[target_key]))
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target) || is_type_in_typecache(target, controller.blackboard[BB_HUNTABLE_TRASH]))
+		return
+	if(!iscarbon(target))
 		controller.clear_blackboard_key(target_key)
 		return
 	var/list/speech_list = controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]

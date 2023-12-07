@@ -102,6 +102,11 @@
 		/mob/living/basic/cockroach,
 		/mob/living/basic/mouse,
 	))
+	///trash we will burn
+	var/static/list/huntable_trash = typecacheof(list(
+		/obj/item/trash,
+		/obj/item/food/deadmouse,
+	))
 	///drawings we hunt
 	var/static/list/cleanable_drawings = typecacheof(list(/obj/effect/decal/cleanable/crayon))
 	///emagged phrases
@@ -319,7 +324,7 @@
 		INVOKE_ASYNC(our_mop, TYPE_PROC_REF(/obj/item, melee_attack_chain), src, target)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!iscarbon(target))
+	if(!iscarbon(target) && !is_type_in_typecache(target, huntable_trash))
 		return
 
 	visible_message(span_danger("[src] sprays hydrofluoric acid at [target]!"))
@@ -331,6 +336,7 @@
 	ai_controller.set_blackboard_key(BB_CLEANABLE_DECALS, cleanable_decals)
 	ai_controller.set_blackboard_key(BB_CLEANABLE_BLOOD, cleanable_blood)
 	ai_controller.set_blackboard_key(BB_HUNTABLE_PESTS, huntable_pests)
+	ai_controller.set_blackboard_key(BB_HUNTABLE_TRASH, huntable_trash)
 	ai_controller.set_blackboard_key(BB_CLEANABLE_DRAWINGS, cleanable_drawings)
 	ai_controller.set_blackboard_key(BB_CLEANBOT_EMAGGED_PHRASES, emagged_phrases)
 
