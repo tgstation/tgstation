@@ -30,7 +30,7 @@
 	for(var/item in checks)
 		for (var/thing in clothing_to_check)
 			var/obj/item/cloth = thing
-			if(istype(cloth) && (cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
+			if((cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
 				block = TRUE
 	return block
 
