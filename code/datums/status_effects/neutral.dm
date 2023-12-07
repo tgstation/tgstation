@@ -114,7 +114,6 @@
 		need_mob_update += rewarded.adjustFireLoss(-25, updating_health = FALSE)
 		need_mob_update += rewarded.adjustToxLoss(-25, updating_health = FALSE)
 		need_mob_update += rewarded.adjustOxyLoss(-25, updating_health = FALSE)
-		need_mob_update += rewarded.adjustCloneLoss(-25, updating_health = FALSE)
 		if(need_mob_update)
 			rewarded.updatehealth()
 

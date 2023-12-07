@@ -20,6 +20,7 @@
 		/obj/effect/light_emitter/tendril,
 		/obj/effect/mapping_helpers,
 		/obj/effect/particle_effect/ion_trails,
+		/obj/effect/particle_effect/sparks,
 		/obj/effect/portal,
 		/obj/effect/projectile,
 		/obj/effect/spectre_of_resurrection,
@@ -42,6 +43,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
+	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORTING, PROC_REF(block_teleport))
 	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff when the turf is changed.
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
@@ -62,6 +64,9 @@
 /datum/component/chasm/proc/initialized_on(datum/source, atom/movable/movable, mapload)
 	SIGNAL_HANDLER
 	drop_stuff(movable)
+
+/datum/component/chasm/proc/block_teleport()
+	return COMPONENT_BLOCK_TELEPORT
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER

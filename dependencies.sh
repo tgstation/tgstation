@@ -25,3 +25,9 @@ export AUXLUA_REPO=tgstation/auxlua
 
 #auxlua git tag
 export AUXLUA_VERSION=1.4.1
+
+#hypnagogic repo
+export CUTTER_REPO=actioninja/hypnagogic
+
+#hypnagogic git tag
+export CUTTER_VERSION=v3.0.1
