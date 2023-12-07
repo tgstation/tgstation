@@ -31,15 +31,19 @@
 
 /// Gets the balloon message for the heretic we are tracking.
 /datum/action/cooldown/lunatic_track/proc/get_balloon_message(mob/living/carbon/human/tracked_mob)
+	var/balloon_message = generate_balloon_message(tracked_mob)
+	if(tracked_mob.stat == DEAD)
+		balloon_message = "they're dead, " + balloon_message
+
+	return balloon_message
+
+/// Create the text for the balloon message
+/datum/action/cooldown/lunatic_track/proc/generate_balloon_message(mob/living/carbon/human/tracked_mob)
 	var/balloon_message = "error text!"
 	var/turf/their_turf = get_turf(tracked_mob)
 	var/turf/our_turf = get_turf(owner)
 	var/their_z = their_turf?.z
 	var/our_z = our_turf?.z
-
-	if(!our_z || !their_z)
-		balloon_message = "on another plane!"
-		return balloon_message
 
 	var/dist = get_dist(our_turf, their_turf)
 	var/dir = get_dir(our_turf, their_turf)
@@ -54,28 +58,34 @@
 		else
 			balloon_message = "very far!"
 
+	// Early returns here if we don't need to tell them the z-levels
+	if(our_z == their_z)
+		return balloon_message
 
+	if(is_mining_level(their_z))
+		balloon_message = "on lavaland!"
+		return balloon_message
 
-	if(our_z != their_z)
-		if(is_station_level(their_z))
-			if(is_station_level(our_z))
-				if(our_z > their_z)
-					balloon_message = "below you!"
-				else
-					balloon_message = "above you!"
-			else
-				balloon_message = "on station!"
+	if(is_away_level(their_z) || is_secret_level(their_z))
+		balloon_message = "beyond the gateway!"
+		return balloon_message
 
-		else if(is_mining_level(their_z))
-			balloon_message = "on lavaland!"
+	// We already checked if they are on lavaland or gateway, so if they arent there or on the station we can early return
+	if(!is_station_level(their_z))
+		balloon_message = "on another plane!"
+		return balloon_message
 
-		else if(is_away_level(their_z) || is_secret_level(their_z))
-			balloon_message = "beyond the gateway!"
+	// They must be on station because we have checked every other z-level, and since we arent on station we should go there
+	if(!is_station_level(our_z))
+		balloon_message = "on station!"
+		return balloon_message
 
-		else
-			balloon_message = "on another plane!"
+	if(our_z > their_z)
+		balloon_message = "below you!"
+		return balloon_message
 
-	if(tracked_mob.stat == DEAD)
-		balloon_message = "they're dead, " + balloon_message
+	if(our_z < their_z)
+		balloon_message = "above you!"
+		return balloon_message
 
 	return balloon_message
