@@ -51631,6 +51631,9 @@
 /obj/item/reagent_containers/cup/beaker/vial,
 /obj/item/reagent_containers/cup/beaker/vial,
 /obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "mzu" = (

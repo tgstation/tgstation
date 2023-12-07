@@ -45538,6 +45538,9 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/tile/green/full,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
 "oCv" = (
