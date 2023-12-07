@@ -735,11 +735,16 @@ GLOBAL_LIST_INIT(command_strings, list(
 	. = ..()
 	if(!. || isnull(client))
 		return FALSE
+	REMOVE_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+	speed = 2
+
 	diag_hud_set_botmode()
 
 /mob/living/basic/bot/Logout()
 	. = ..()
 	bot_reset()
+	speed = initial(speed)
+	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 
 /mob/living/basic/bot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
