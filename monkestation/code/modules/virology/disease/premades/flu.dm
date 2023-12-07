@@ -4,9 +4,9 @@
 	category = DISEASE_COLD
 
 	symptoms = list(
-		new /datum/symptom/cough
-		new /datum/symptom/sneeze
-		new /datum/symptom/fridge
+		new /datum/symptom/cough,
+		new /datum/symptom/sneeze,
+		new /datum/symptom/fridge,
 	)
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	robustness = 45
