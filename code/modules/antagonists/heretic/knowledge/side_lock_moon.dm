@@ -50,44 +50,51 @@
 		/datum/heretic_knowledge/spell/burglar_finesse,
 		/datum/heretic_knowledge/spell/moon_parade,
 	)
-	required_atoms = list(
-		/obj/item/canvas = 1,
-	)
+	required_atoms = list(/obj/item/canvas = 1)
 	result_atoms = list(/obj/item/canvas)
-	optional_atoms = list(
-		/obj/item/organ/internal/eyes = 1,
-		/obj/item/bodypart = 1,
-		/obj/item/trash = 1,
-		/obj/item/food/grown = 1,
-		/obj/item/clothing/gloves = 1,
-	)
-	optional_result_atoms = list(/obj/item/canvas)
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/painting/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc, list/optional_selected_atoms)
-	if(!length(result_atoms))
-		return FALSE
-
-	if(length(optional_selected_atoms))
-		for(var/optional_type in optional_selected_atoms)
-			if(istype(optional_type, /obj/item/organ/internal/eyes))
-				new /obj/item/wallframe/painting/eldritch/weeping(loc)
-				continue
-			if(istype(optional_type, /obj/item/bodypart))
-				new /obj/item/wallframe/painting/eldritch/desire(loc)
-				continue
-			if(istype(optional_type, /obj/item/food/grown))
-				new /obj/item/wallframe/painting/eldritch/vines(loc)
-				continue
-			if(istype(optional_type, /obj/item/clothing/gloves))
-				new /obj/item/wallframe/painting/eldritch/beauty(loc)
-				continue
-			if(istype(optional_type, /obj/item/trash))
-				new /obj/item/wallframe/painting/eldritch/rust(loc)
-				continue
-		return TRUE
-	else
-		for(var/result in result_atoms)
-			new result(loc)
+/datum/heretic_knowledge/painting/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	for(var/atom/nearby_atom as anything in atoms)
+		if(istype(nearby_atom, /obj/item/organ/internal/eyes))
+			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/weeping)
+			src.required_atoms = list(
+				/obj/item/canvas = 1,
+				/obj/item/organ/internal/eyes = 1,
+			)
+			selected_atoms |= nearby_atom
+			continue
+		if(istype(nearby_atom, /obj/item/bodypart))
+			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/desire)
+			src.required_atoms = list(
+				/obj/item/canvas = 1,
+				/obj/item/bodypart = 1,
+			)
+			selected_atoms |= nearby_atom
+			continue
+		if(istype(nearby_atom, /obj/item/food/grown))
+			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/vines)
+			src.required_atoms = list(
+				/obj/item/canvas = 1,
+				/obj/item/food/grown = 1,
+			)
+			selected_atoms |= nearby_atom
+			continue
+		if(istype(nearby_atom, /obj/item/clothing/gloves))
+			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/beauty)
+			src.required_atoms = list(
+				/obj/item/canvas = 1,
+				/obj/item/clothing/gloves = 1,
+			)
+			selected_atoms |= nearby_atom
+			continue
+		if(istype(nearby_atom, /obj/item/trash))
+			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/rust)
+			src.required_atoms = list(
+				/obj/item/canvas = 1,
+				/obj/item/trash = 1,
+			)
+			selected_atoms |= nearby_atom
+			continue
 	return TRUE
