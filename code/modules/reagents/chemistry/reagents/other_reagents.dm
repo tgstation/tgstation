@@ -842,8 +842,7 @@
 /datum/reagent/aslimetoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	if(methods & ~TOUCH)
-		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE) //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_SLIME, TRUE, "[ROUND_TIME()] Advanced Mutation Toxin Infections [key_name(exposed_mob)]")
 
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
@@ -855,8 +854,7 @@
 /datum/reagent/gluttonytoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
-		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE) //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_MORPH, TRUE, "[ROUND_TIME()] Gluttony Toxin Infections [key_name(exposed_mob)]")
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -1410,8 +1408,7 @@
 /datum/reagent/cyborg_mutation_nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_ROBOT, TRUE, "[ROUND_TIME()] Nanomachine Infections [key_name(exposed_mob)]")
 
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
@@ -1423,8 +1420,7 @@
 /datum/reagent/xenomicrobes/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		return
-		//exposed_mob.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
+		exposed_mob.infect_disease_predefined(DISEASE_XENO, TRUE, "[ROUND_TIME()] Xenomicrobes Infections [key_name(exposed_mob)]")
 
 /datum/reagent/fungalspores
 	name = "Tubercle Bacillus Cosmosis Microbes"
