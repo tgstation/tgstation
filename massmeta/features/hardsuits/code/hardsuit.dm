@@ -191,18 +191,15 @@
 	var/mob/living/carbon/human/active_user = null
 	var/obj/item/clothing/suit/space/hardsuit/active_hardsuit = null
 
-
 /obj/item/tank/jetpack/suit/Initialize(mapload)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	tempair_contents = air_contents
 
-
 /obj/item/tank/jetpack/suit/Destroy()
 	if(on)
 		turn_off()
 	return ..()
-
 
 /obj/item/tank/jetpack/suit/attack_self()
 	return
@@ -218,11 +215,12 @@
 		return
 	return ..()
 
-
 /obj/item/tank/jetpack/suit/turn_on(mob/user)
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc) || loc.loc != user)
 		return FALSE
-
+	active_user = user
+	tank = active_user.s_store
+	air_contents = tank.return_air()
 	. = ..()
 	if(!.)
 		active_user = null
@@ -231,13 +229,13 @@
 		return
 	active_hardsuit = loc
 	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_hardsuit_moved))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(active_user, COMSIG_QDELETING, PROC_REF(on_user_del))
-
 	START_PROCESSING(SSobj, src)
-
 
 /obj/item/tank/jetpack/suit/turn_off(mob/user)
 	STOP_PROCESSING(SSobj, src)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	if(active_hardsuit)
 		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
 		active_hardsuit = null
@@ -247,7 +245,6 @@
 	tank = null
 	air_contents = tempair_contents
 	return ..()
-
 
 /// Called when the jetpack moves, presumably away from the hardsuit.
 /obj/item/tank/jetpack/suit/proc/on_moved(atom/movable/source, atom/old_loc, movement_dir, forced, list/atom/old_locs)
@@ -259,12 +256,10 @@
 		return
 	turn_off(active_user)
 
-
 /// Called when the hardsuit loc moves, presumably away from the human user.
 /obj/item/tank/jetpack/suit/proc/on_hardsuit_moved(atom/movable/source, atom/old_loc, movement_dir, forced, list/atom/old_locs)
 	SIGNAL_HANDLER
 	turn_off(active_user)
-
 
 /// Called when the human wearing the suit that contains this jetpack is deleted.
 /obj/item/tank/jetpack/suit/proc/on_user_del(mob/living/carbon/human/source, force)
@@ -315,6 +310,7 @@
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
 	inhand_icon_state = "ce_helm"
 	hardsuit_type = "white"
+	icon_state = "hardsuit0-white"
 	armor_type = /datum/armor/hardsuit_engine_elite
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT

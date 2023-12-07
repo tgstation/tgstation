@@ -65,11 +65,6 @@
 	/// should we prevent further access change
 	var/access_locked = FALSE
 
-	// hardsuits
-	var/obj/item/choice_beacon/space_suit = null
-	var/space_suit_type = null
-	/// What type of additional item the unit starts with when spawned.
-
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
 	helmet_type = /obj/item/clothing/head/helmet/space/eva
@@ -84,7 +79,7 @@
 /obj/machinery/suit_storage_unit/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
 	storage_type = /obj/item/tank/jetpack/oxygen/captain
-	space_suit_type = /obj/item/choice_beacon/space_suit/captain
+	mod_type = /obj/item/mod/control/pre_equipped/magnate
 
 /obj/machinery/suit_storage_unit/centcom
 	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
@@ -93,26 +88,26 @@
 
 /obj/machinery/suit_storage_unit/engine
 	mask_type = /obj/item/clothing/mask/breath
-	space_suit_type = /obj/item/choice_beacon/space_suit/engineering
+	mod_type = /obj/item/mod/control/pre_equipped/engineering
 
 /obj/machinery/suit_storage_unit/atmos
 	mask_type = /obj/item/clothing/mask/gas/atmos
 	storage_type = /obj/item/watertank/atmos
-	space_suit_type = /obj/item/choice_beacon/space_suit/engineering
+	mod_type = /obj/item/mod/control/pre_equipped/atmospheric
 
 /obj/machinery/suit_storage_unit/ce
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/clothing/shoes/magboots/advance
-	space_suit_type = /obj/item/choice_beacon/space_suit/ce
+	mod_type = /obj/item/mod/control/pre_equipped/advanced
 
 /obj/machinery/suit_storage_unit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	space_suit_type = /obj/item/choice_beacon/space_suit/security
+	mod_type = /obj/item/mod/control/pre_equipped/security
 
 /obj/machinery/suit_storage_unit/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/tank/internals/oxygen
-	space_suit_type = /obj/item/choice_beacon/space_suit/hos
+	mod_type = /obj/item/mod/control/pre_equipped/safeguard
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
@@ -121,7 +116,7 @@
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = null
 	mask_type = /obj/item/clothing/mask/breath
-	space_suit_type = /obj/item/choice_beacon/space_suit/mining
+	mod_type = /obj/item/mod/control/pre_equipped/mining
 
 /obj/machinery/suit_storage_unit/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
@@ -131,17 +126,17 @@
 /obj/machinery/suit_storage_unit/cmo
 	mask_type = /obj/item/clothing/mask/breath/medical
 	storage_type = /obj/item/tank/internals/oxygen
-	space_suit_type = /obj/item/choice_beacon/space_suit/cmo
+	mod_type = /obj/item/mod/control/pre_equipped/rescue
 
 /obj/machinery/suit_storage_unit/rd
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/oxygen
-	space_suit_type = /obj/item/choice_beacon/space_suit/rd
+	mod_type = /obj/item/mod/control/pre_equipped/research
 
 /obj/machinery/suit_storage_unit/syndicate
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	storage_type = /obj/item/tank/jetpack/oxygen/harness
-	space_suit_type = /obj/item/choice_beacon/space_suit/syndi
+	mod_type = /obj/item/mod/control/pre_equipped/nuclear
 
 /obj/machinery/suit_storage_unit/syndicate/lavaland
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear/no_jetpack
@@ -196,8 +191,8 @@
 		mod = new mod_type(src)
 	if(storage_type)
 		storage = new storage_type(src)
-	if(space_suit_type)
-		space_suit = new space_suit_type(src)
+	if(space_suit_type)								// MASSMETA EDIT
+		space_suit = new space_suit_type(src)		//
 	update_appearance()
 
 	register_context()
@@ -208,7 +203,7 @@
 	QDEL_NULL(mask)
 	QDEL_NULL(mod)
 	QDEL_NULL(storage)
-	QDEL_NULL(space_suit)
+	QDEL_NULL(space_suit)	// MASSMETA EDIT
 	id_card = null
 	return ..()
 
@@ -241,14 +236,14 @@
 		. += "[base_icon_state]_panel"
 	if(state_open)
 		. += "[base_icon_state]_open"
-		if(suit || mod || space_suit)
+		if(suit || mod || space_suit)		// MASSMETA EDIT
 			. += "[base_icon_state]_suit"
 		if(helmet)
 			. += "[base_icon_state]_helm"
 		if(storage)
 			. += "[base_icon_state]_storage"
-		if(space_suit)
-			. += "[base_icon_state]_space_suit"
+		if(space_suit)								// MASSMETA EDIT
+			. += "[base_icon_state]_space_suit"		//
 	if(!(machine_stat & BROKEN || machine_stat & NOPOWER))
 		if(state_open)
 			. += "[base_icon_state]_lights_open"
@@ -315,7 +310,7 @@
 	mask = null
 	mod = null
 	storage = null
-	space_suit = null
+	space_suit = null		// MASSMETA EDIT
 	set_occupant(null)
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
@@ -357,7 +352,7 @@
 			"mask" = create_silhouette_of(/obj/item/clothing/mask/breath),
 			"mod" = create_silhouette_of(/obj/item/mod/control),
 			"storage" = create_silhouette_of(/obj/item/tank/internals/oxygen),
-			"space_suit" = create_silhouette_of(/obj/item/choice_beacon/space_suit),
+			"space_suit" = create_silhouette_of(/obj/item/choice_beacon/space_suit),	// MASSMETA EDIT
 		)
 
 	. = ..()
@@ -415,7 +410,7 @@
 			if (occupant && safeties)
 				say("Alert: safeties triggered, occupant detected!")
 				return
-			else if (!helmet && !mask && !suit && !storage && !occupant && !space_suit)
+			else if (!helmet && !mask && !suit && !storage && !occupant && !space_suit)		// MASSMETA EDIT
 				to_chat(user, "There's nothing inside [src] to disinfect!")
 				return
 			else
@@ -533,7 +528,7 @@
 			QDEL_NULL(mask)
 			QDEL_NULL(mod)
 			QDEL_NULL(storage)
-			QDEL_NULL(space_suit)
+			QDEL_NULL(space_suit)		// MASSMETA EDIT
 			// The wires get damaged too.
 			wires.cut_all()
 		else
@@ -559,9 +554,9 @@
 			if(storage)
 				things_to_clear += storage
 				things_to_clear += storage.get_all_contents()
-			if(space_suit)
-				things_to_clear += space_suit
-				things_to_clear += space_suit.get_all_contents()
+			if(space_suit)											//
+				things_to_clear += space_suit						// MASSMETA EDIT
+				things_to_clear += space_suit.get_all_contents()	//
 			if(mob_occupant)
 				things_to_clear += mob_occupant
 				things_to_clear += mob_occupant.get_all_contents()

@@ -118,6 +118,7 @@
 #include "code\modules\jobs\job_types\clown.dm"
 #include "code\modules\uplink\uplink_items\suits.dm"
 #include "code\modules\uplink\uplink_items\nukeops.dm"
+#include "code\game\machinery\suit_storage_unit.dm"
 //features
 #include "features\additional_circuit\includes.dm"
 #include "features\hardsuits\code\armor.dm"
