@@ -28,8 +28,9 @@
 			/turf = "T",
 			/mob/living/carbon = "CARBON",
 			/mob/living/simple_animal = "SIMPLE",
+			/mob/living/basic = "BASIC",
 			/mob/living = "LIVING",
-			/mob = "M"
+			/mob = "M",
 		)
 		for (var/tn in TYPES_SHORTCUTS)
 			if(copytext(typename, 1, length("[tn]/") + 1) == "[tn]/" /*findtextEx(typename,"[tn]/",1,2)*/ )
