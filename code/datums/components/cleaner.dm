@@ -127,8 +127,8 @@
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
 		if(isitem(target))
 			var/obj/item/item= target
-			if(length(item.diseases))
-				for(var/datum/disease/advanced/D as anything in item.diseases)
+			if(length(item.viruses))
+				for(var/datum/disease/advanced/D as anything in item.viruses)
 					item.remove_disease(D)
 				
 		on_cleaned_callback?.Invoke(source, target, user)
