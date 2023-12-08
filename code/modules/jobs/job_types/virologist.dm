@@ -40,7 +40,7 @@
 
 
 /datum/outfit/job/virologist
-	name = "Virologist"
+	name = "Pathologist"
 	jobtype = /datum/job/virologist
 
 	id_trim = /datum/id_trim/job/virologist

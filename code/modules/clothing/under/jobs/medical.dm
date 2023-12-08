@@ -65,12 +65,12 @@
 
 /obj/item/clothing/under/rank/medical/virologist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
-	name = "virologist's jumpsuit"
+	name = "pathologist's jumpsuit"
 	icon_state = "virology"
 	inhand_icon_state = "w_suit"
 
 /obj/item/clothing/under/rank/medical/virologist/skirt
-	name = "virologist's jumpskirt"
+	name = "pathologist's jumpskirt"
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
 	icon_state = "virologywhite_skirt"
 	inhand_icon_state = "w_suit"

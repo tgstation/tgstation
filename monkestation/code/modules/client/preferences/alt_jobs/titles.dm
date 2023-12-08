@@ -333,8 +333,8 @@
 
 /datum/job/virologist
 	alt_titles = list(
-		"Virologist",
 		"Pathologist",
+		"Fish Doctor",
 		"Junior Pathologist",
 	)
 
