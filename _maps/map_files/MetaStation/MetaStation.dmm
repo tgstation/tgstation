@@ -28261,6 +28261,10 @@
 	pixel_x = -8
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/healthanalyzer,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kjZ" = (
@@ -28302,6 +28306,19 @@
 	dir = 8
 	},
 /obj/item/device/antibody_scanner,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kkU" = (
@@ -53857,21 +53874,12 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "tgD" = (
-/obj/structure/table/glass,
-/obj/item/clothing/gloves/latex,
-/obj/item/healthanalyzer,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/item/device/antibody_scanner,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
+/obj/machinery/computer/records/pathology{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "thc" = (
@@ -54257,6 +54265,9 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
+	},
+/obj/machinery/computer/records/pathology{
+	dir = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)

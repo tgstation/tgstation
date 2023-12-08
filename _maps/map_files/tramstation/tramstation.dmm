@@ -40597,6 +40597,9 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/computer/records/pathology{
+	dir = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "lXH" = (
@@ -43227,6 +43230,9 @@
 "mPr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
+	},
+/obj/machinery/computer/records/pathology{
+	dir = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)

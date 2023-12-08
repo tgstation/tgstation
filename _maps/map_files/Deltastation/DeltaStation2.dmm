@@ -33182,7 +33182,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/l3closet/virology,
+/obj/machinery/computer/records/pathology{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "ibk" = (
@@ -39213,7 +39215,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/siding/green,
 /obj/structure/cable,
-/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/computer/records/pathology,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "jyV" = (

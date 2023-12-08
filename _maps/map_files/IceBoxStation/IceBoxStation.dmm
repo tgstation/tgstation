@@ -2814,7 +2814,7 @@
 /obj/effect/turf_decal/trimline/green/filled/end{
 	dir = 1
 	},
-/obj/structure/tank_holder/extinguisher,
+/obj/machinery/computer/records/pathology,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "aWg" = (
@@ -54104,7 +54104,6 @@
 	dir = 9
 	},
 /obj/machinery/light_switch/directional/west,
-/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "rrf" = (
@@ -55163,6 +55162,7 @@
 "rHz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "rHH" = (
@@ -59359,6 +59359,9 @@
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/machinery/computer/records/pathology{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "tcO" = (
@@ -66187,6 +66190,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/machinery/requests_console/auto_name/directional/south,
+/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "vqg" = (

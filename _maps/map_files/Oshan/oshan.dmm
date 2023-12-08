@@ -10957,6 +10957,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"ffB" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/machinery/computer/records/pathology{
+	dir = 2
+	},
+/turf/open/floor/iron/white/textured,
+/area/station/medical/office)
 "ffD" = (
 /obj/structure/fans/tiny/forcefield{
 	dir = 8
@@ -18062,6 +18071,9 @@
 "iyC" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/computer/records/pathology{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "iyR" = (
@@ -80210,7 +80222,7 @@ iNI
 nhC
 sQl
 nvL
-kJN
+ffB
 kJN
 rhg
 boX
