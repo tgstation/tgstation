@@ -15,16 +15,19 @@ import { createLogger } from '../logging';
 import { Layout } from './Layout';
 import { globalStore } from '../backend';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
+import { BoxProps } from '../components/Box';
 
 const logger = createLogger('Window');
 
 const DEFAULT_SIZE: [number, number] = [400, 600];
 
-type Props = { width: number; height: number } & Partial<{
+type Props = Partial<{
+  buttons: ReactNode;
   canClose: boolean;
+  height: number;
   theme: string;
   title: string;
-  buttons: ReactNode;
+  width: number;
 }> &
   PropsWithChildren;
 
@@ -78,8 +81,8 @@ export const Window = (props: Props) => {
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
-  // Determine when to show dimmer
 
+  // Determine when to show dimmer
   const showDimmer =
     config.user &&
     (config.user.observer
@@ -125,7 +128,16 @@ export const Window = (props: Props) => {
   );
 };
 
-const WindowContent = (props) => {
+type ContentProps = Partial<{
+  className: string;
+  fitted: boolean;
+  scrollable: boolean;
+  vertical: boolean;
+}> &
+  BoxProps &
+  PropsWithChildren;
+
+const WindowContent = (props: ContentProps) => {
   const { className, fitted, children, ...rest } = props;
 
   return (
@@ -153,7 +165,18 @@ const statusToColor = (status) => {
   }
 };
 
-const TitleBar = (props) => {
+type TitleBarProps = Partial<{
+  canClose: boolean;
+  className: string;
+  fancy: boolean;
+  onClose: (e) => void;
+  onDragStart: (e) => void;
+  status: number;
+  title: string;
+}> &
+  PropsWithChildren;
+
+const TitleBar = (props: TitleBarProps) => {
   const {
     className,
     title,
@@ -185,7 +208,7 @@ const TitleBar = (props) => {
       )}
       <div
         className="TitleBar__dragZone"
-        onMouseDown={(e) => fancy && onDragStart(e)}
+        onMouseDown={(e) => fancy && onDragStart && onDragStart(e)}
       />
       <div className="TitleBar__title">
         {finalTitle}

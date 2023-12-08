@@ -11,21 +11,21 @@ import { Icon } from './Icon';
 
 type Props = Partial<{
   className: string;
-  vertical: boolean;
   fill: boolean;
   fluid: boolean;
+  vertical: boolean;
 }> &
   BoxProps &
   PropsWithChildren;
 
 type TabProps = Partial<{
   className: string;
-  selected: boolean;
   color: string;
   icon: string;
   leftSlot: ReactNode;
-  rightSlot: ReactNode;
   onClick: (e?) => void;
+  rightSlot: ReactNode;
+  selected: boolean;
 }> &
   BoxProps &
   PropsWithChildren;

@@ -13,7 +13,7 @@ const requireInterface = require.context('./interfaces');
 const routingError =
   (type: 'notFound' | 'missingExport', name: string) => () => {
     return (
-      <Window width={200} height={200}>
+      <Window>
         <Window.Content scrollable>
           {type === 'notFound' && (
             <div>
@@ -33,7 +33,7 @@ const routingError =
 // Displays an empty Window with scrollable content
 const SuspendedWindow = () => {
   return (
-    <Window width={200} height={200}>
+    <Window>
       <Window.Content scrollable />
     </Window>
   );
@@ -42,7 +42,7 @@ const SuspendedWindow = () => {
 // Displays a loading screen with a spinning icon
 const RefreshingWindow = () => {
   return (
-    <Window width={200} height={200} title="Loading">
+    <Window title="Loading">
       <Window.Content>
         <LoadingScreen />
       </Window.Content>

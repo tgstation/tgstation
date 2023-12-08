@@ -7,16 +7,16 @@
 import { classes } from 'common/react';
 import { BoxProps, computeBoxClassName, computeBoxProps, unit } from './Box';
 
-export type FlexProps = BoxProps &
-  Partial<{
-    direction: string | boolean;
-    wrap: string | boolean;
-    align: string | boolean;
-    justify: string | boolean;
-    inline: boolean;
-    scrollable: boolean;
-    style: Partial<HTMLDivElement['style']>;
-  }>;
+export type FlexProps = Partial<{
+  align: string | boolean;
+  direction: string;
+  inline: boolean;
+  justify: string;
+  scrollable: boolean;
+  style: Partial<HTMLDivElement['style']>;
+  wrap: string | boolean;
+}> &
+  BoxProps;
 
 export const computeFlexClassName = (props: FlexProps) => {
   return classes([

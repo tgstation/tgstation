@@ -8,14 +8,14 @@ import { classes } from 'common/react';
 import { RefObject } from 'react';
 import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
 
-type StackProps = FlexProps &
-  Partial<{
-    vertical: boolean;
-    fill: boolean;
-    zebra: boolean;
-  }>;
+type Props = Partial<{
+  vertical: boolean;
+  fill: boolean;
+  zebra: boolean;
+}> &
+  FlexProps;
 
-export const Stack = (props: StackProps) => {
+export const Stack = (props: Props) => {
   const { className, vertical, fill, zebra, ...rest } = props;
   return (
     <div

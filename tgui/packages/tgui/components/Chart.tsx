@@ -11,13 +11,13 @@ import { Box, BoxProps } from './Box';
 type Props = {
   data: number[][];
 } & Partial<{
+  fillColor: string;
   rangeX: [number, number];
   rangeY: [number, number];
-  fillColor: string;
   strokeColor: string;
   strokeWidth: number;
 }> &
-  Partial<BoxProps>;
+  BoxProps;
 
 type State = {
   viewBox: [number, number];
