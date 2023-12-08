@@ -75,39 +75,44 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	for (var/turf/T in range(max(0,(strength/20)-1),loc))//stronger viruses can reach turfs further away.
 		possible_turfs += T
 	target = pick(possible_turfs)
-	spawn()
+	START_PROCESSING(SSactualfastprocess, src)
+
+/obj/effect/pathogen_cloud/core/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSactualfastprocess, src)
+
+/obj/effect/pathogen_cloud/core/process(seconds_per_tick)
+	if (src.loc != target)
+		//If we come across other pathogenic clouds, we absorb their diseases that we don't have, then delete those clouds
+		//This should prevent mobs breathing in hundreds of clouds at once
+		for (var/obj/effect/pathogen_cloud/other_C in src.loc)
+			if (!other_C.core)
+				for(var/datum/disease/advanced/V as anything in other_C.viruses)
+					if("[V.uniqueID]-[V.subID]" in id_list)
+						continue
+					viruses |= V.Copy()
+					modified = TRUE
+				qdel(other_C)
+				CHECK_TICK
+
+		var/obj/effect/pathogen_cloud/C = new /obj/effect/pathogen_cloud(src.loc, source, viruses, sourceIsCarrier)
+		C.core = FALSE
+		C.modified = modified
+		C.moving = FALSE
+
+		if (prob(75))
+			step_towards(src,target)
+		else
+			step_rand(src)
 		sleep (1 SECONDS)
-		while (src && src.loc)
-			if (src.loc != target)
-
-				//If we come across other pathogenic clouds, we absorb their diseases that we don't have, then delete those clouds
-				//This should prevent mobs breathing in hundreds of clouds at once
-				for (var/obj/effect/pathogen_cloud/other_C in src.loc)
-					if (!other_C.core)
-						for(var/datum/disease/advanced/V as anything in other_C.viruses)
-							if("[V.uniqueID]-[V.subID]" in id_list)
-								continue
-							viruses |= V.Copy()
-							modified = TRUE
-						qdel(other_C)
-
-				var/obj/effect/pathogen_cloud/C = new /obj/effect/pathogen_cloud(src.loc, source, viruses, sourceIsCarrier)
-				C.core = FALSE
-				C.modified = modified
-				C.moving = FALSE
-
-				if (prob(75))
-					step_towards(src,target)
-				else
-					step_rand(src)
-				sleep (1 SECONDS)
-			else
-				for (var/obj/effect/pathogen_cloud/core/other_C in src.loc)
-					if (!other_C.moving)
-						for(var/datum/disease/advanced/V as anything in other_C.viruses)
-							if("[V.uniqueID]-[V.subID]" in id_list)
-								continue
-							viruses |= V.Copy()
-							modified = TRUE
-						qdel(other_C)
-				moving = FALSE
+	else
+		for (var/obj/effect/pathogen_cloud/core/other_C in src.loc)
+			if (!other_C.moving)
+				for(var/datum/disease/advanced/V as anything in other_C.viruses)
+					if("[V.uniqueID]-[V.subID]" in id_list)
+						continue
+					viruses |= V.Copy()
+					modified = TRUE
+				qdel(other_C)
+				CHECK_TICK
+		moving = FALSE
