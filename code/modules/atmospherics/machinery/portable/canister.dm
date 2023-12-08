@@ -666,18 +666,15 @@
 			. = TRUE
 
 		if("recolor")
-			var/atom/fake_atom = src
-			var/list/allowed_configs = list()
-			var/config = initial(fake_atom.greyscale_config)
-			if(!config)
-				return
-			allowed_configs += "[config]"
+			var/initial_config = initial(greyscale_config)
+			if(isnull(initial_config))
+				return FALSE
 
 			var/datum/greyscale_modify_menu/menu = new(
-				src, usr, allowed_configs, CALLBACK(src, PROC_REF(recolor)),
-				starting_icon_state = initial(fake_atom.icon_state),
-				starting_config = initial(fake_atom.greyscale_config),
-				starting_colors = initial(fake_atom.greyscale_colors)
+				src, usr, list("[initial_config]"), CALLBACK(src, PROC_REF(recolor)),
+				starting_icon_state = initial(icon_state),
+				starting_config = initial_config,
+				starting_colors = initial(greyscale_colors)
 			)
 			menu.ui_interact(usr)
 			. = TRUE
