@@ -193,7 +193,7 @@
 	if(src == computer.active_program)
 		computer.active_program = null
 		if(!QDELETED(computer) && computer.enabled)
-			computer.update_tablet_open_uis(usr)
+			INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), usr)
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
 
