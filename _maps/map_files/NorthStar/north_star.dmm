@@ -16590,7 +16590,7 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
 	pixel_y = -24;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -46151,7 +46151,7 @@
 	name = "Virology Access Button";
 	pixel_x = -26;
 	pixel_y = 26;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -50857,7 +50857,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Virology Desk";
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Virology Desk"
@@ -79913,7 +79913,7 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
 	pixel_y = 24;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/trimline/green/filled/arrow_cw{
 	dir = 9
@@ -87835,7 +87835,7 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Console";
 	pixel_x = 24;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /turf/open/floor/iron/white,

@@ -21,6 +21,8 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	var/modified = FALSE
 	var/moving = TRUE
 	var/list/id_list = list()
+	var/death = 0
+	var/next_process = 0
 
 /obj/effect/pathogen_cloud/New(turf/loc, mob/sourcemob, list/virus, isCarrier = TRUE)
 	..()
@@ -44,12 +46,20 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	for(var/datum/disease/advanced/D as anything in viruses)
 		id_list += "[D.uniqueID]-[D.subID]"
 
-	addtimer(CALLBACK(src, PROC_REF(delete_self)), lifetime)
+	death = world.time + lifetime
 
-/obj/effect/pathogen_cloud/proc/delete_self()
-	qdel(src)
+	START_PROCESSING(SSactualfastprocess, src)
 
-/obj/effect/pathogen_cloud/Destroy()
+/obj/effect/pathogen_cloud/process(seconds_per_tick)
+	if(death <= world.time)
+		qdel(src)
+		return PROCESS_KILL
+	if(next_process > world.time)
+		return
+		
+/obj/effect/pathogen_cloud/core/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSactualfastprocess, src)
 	if (pathogen)
 		for (var/mob/living/L in GLOB.science_goggles_wearers)
 			if (L.client)
@@ -75,13 +85,10 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 	for (var/turf/T in range(max(0,(strength/20)-1),loc))//stronger viruses can reach turfs further away.
 		possible_turfs += T
 	target = pick(possible_turfs)
-	START_PROCESSING(SSactualfastprocess, src)
 
-/obj/effect/pathogen_cloud/core/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSactualfastprocess, src)
 
 /obj/effect/pathogen_cloud/core/process(seconds_per_tick)
+	. = ..()
 	if (src.loc != target)
 		//If we come across other pathogenic clouds, we absorb their diseases that we don't have, then delete those clouds
 		//This should prevent mobs breathing in hundreds of clouds at once
@@ -104,7 +111,7 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 			step_towards(src,target)
 		else
 			step_rand(src)
-		sleep (1 SECONDS)
+		next_process = world.time + 1 SECONDS
 	else
 		for (var/obj/effect/pathogen_cloud/core/other_C in src.loc)
 			if(other_C == src)

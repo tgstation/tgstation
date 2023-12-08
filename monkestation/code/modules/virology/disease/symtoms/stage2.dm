@@ -246,13 +246,13 @@
 	else
 		color = mix_color_from_reagents(mob.reagents.reagent_list)
 	if(!flavortext)
-		to_chat(mob, "<span class = 'notice'>You are glowing!</span>")
+		to_chat(mob, span_notice("You are glowing!"))
 		flavortext = 1
-	mob.set_light(multiplier, multiplier/3, l_color = color)
+	mob.set_light(multiplier, multiplier, multiplier/3, l_color = color)
 
 /datum/symptom/lantern/deactivate(mob/living/mob)
-	mob.set_light(0, 0, rgb(0,0,0))
-	to_chat(mob, "<span class = 'notice'>You don't feel as bright.</span>")
+	mob.set_light(0, 0, 0, l_color = rgb(0,0,0))
+	to_chat(mob, span_notice("You don't feel as bright."))
 	flavortext = 0
 
 /datum/symptom/vitreous
@@ -267,26 +267,29 @@
 /datum/symptom/vitreous/activate(mob/living/carbon/human/H)
 	H.Shake(3, 3, 3 SECONDS)
 	if(ishuman(H))
-		var/obj/item/reagent_containers/glass_to_shatter = H.get_active_held_item()
-		var/obj/item/bodypart/check_arm = H.get_active_hand()
-		if(!glass_to_shatter)
-			return
-		if (is_type_in_list(glass_to_shatter, list(/obj/item/reagent_containers/cup/glass, /obj/item/reagent_containers/syringe)))
-			to_chat(H, span_warning("Your [check_arm] resonates with the glass in \the [glass_to_shatter], shattering it to bits!"))
-			glass_to_shatter.reagents.expose(H, TOUCH)
-			new/obj/effect/decal/cleanable/generic(get_turf(H))
-			playsound(H, 'sound/effects/glassbr1.ogg', 25, 1)
-			spawn(1 SECONDS)
-				if (H && check_arm)
-					if (prob(50 * multiplier))
-						to_chat(H, span_notice("Your [check_arm] deresonates, healing completely!"))
-						check_arm.heal_damage(1000) // full heal
-					else
-						to_chat(H, span_warning("Your [check_arm] deresonates, sustaining burns!"))
-						check_arm.take_damage(15 * multiplier, BRUTE)
-			qdel(glass_to_shatter)
-		else if (prob(1))
-			to_chat(H, "Your [check_arm] aches for the cold, smooth feel of container-grade glass...")
+		addtimer(CALLBACK(src, PROC_REF(shatter)), 0.5 SECONDS)
+
+/datum/symptom/vitreous/proc/shatter()
+	var/obj/item/reagent_containers/glass_to_shatter = H.get_active_held_item()
+	var/obj/item/bodypart/check_arm = H.get_active_hand()
+	if(!glass_to_shatter)
+		return
+	if (is_type_in_list(glass_to_shatter, list(/obj/item/reagent_containers/cup/glass)))
+		to_chat(H, span_warning("Your [check_arm] resonates with the glass in \the [glass_to_shatter], shattering it to bits!"))
+		glass_to_shatter.reagents.expose(H, TOUCH)
+		new/obj/effect/decal/cleanable/generic(get_turf(H))
+		playsound(H, 'sound/effects/glassbr1.ogg', 25, 1)
+		spawn(1 SECONDS)
+			if (H && check_arm)
+				if (prob(50 * multiplier))
+					to_chat(H, span_notice("Your [check_arm] deresonates, healing completely!"))
+					check_arm.heal_damage(1000) // full heal
+				else
+					to_chat(H, span_warning("Your [check_arm] deresonates, sustaining burns!"))
+					check_arm.take_damage(15 * multiplier, BRUTE)
+		qdel(glass_to_shatter)
+	else if (prob(1))
+		to_chat(H, span_notice("Your [check_arm] aches for the cold, smooth feel of container-grade glass..."))
 
 /datum/symptom/spiky_skin
 	name = "Porokeratosis Acanthus"
