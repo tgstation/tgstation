@@ -699,3 +699,6 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste
 /area/ruin/space/has_grav/garbagetruck/squat
 /area/ruin/space/has_grav/garbagetruck/toystore
+
+/area/ruin/space/unpowered/old_infiltrator
+	name = "\improper ruined Syndicate Infiltrator"
