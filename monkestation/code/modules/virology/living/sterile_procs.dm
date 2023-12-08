@@ -32,8 +32,8 @@
 			var/obj/item/cloth = thing
 			if(isnull(cloth))
 				continue
-				
-			if((cloth.body_parts_covered & body_zone2cover_flags(item)) && !prob(cloth.get_armor_rating(BIO)))
+			var/list/coverage = cover_flags2body_zones(cloth.body_parts_covered)
+			if((item in coverage) && !prob(cloth.get_armor_rating(BIO)))
 				block = TRUE
 	return block
 
