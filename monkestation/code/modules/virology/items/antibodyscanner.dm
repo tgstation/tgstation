@@ -18,11 +18,11 @@
 
 /obj/item/device/antibody_scanner/attack(mob/living/carbon/L, mob/living/carbon/human/user)
 	if(!istype(L))
-		//to_chat(user, "<span class='notice'>Incompatible object, scan aborted.</span>")
+		//to_chat(user, span_notice("Incompatible object, scan aborted."))
 		return
 
 	if (issilicon(L))
-		to_chat(user, "<span class='warning'>Incompatible with silicon lifeforms, scan aborted.</span>")
+		to_chat(user, span_warning("Incompatible with silicon lifeforms, scan aborted."))
 		return
 
 	playsound(user, 'sound/items/weeoo1.ogg', 50, 1)
@@ -137,6 +137,6 @@
 		if (istype(I,/obj/item/weapon/virusdish))
 			var/obj/item/weapon/virusdish/dish = I
 			if (dish.open && dish.contained_virus)
-				to_chat(user,"<span class='danger'>However, since its lid has been opened, unprotected contact with the dish can result in infection.</span>")
+				to_chat(user,span_danger("However, since its lid has been opened, unprotected contact with the dish can result in infection."))
 
 	. = ..()

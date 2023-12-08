@@ -32,10 +32,10 @@
 
 	if(istype(I, /obj/item/weapon/virusdish))
 		if(dish)
-			to_chat(user, "<span class='warning'>A virus containment dish is already inside \the [src].</span>")
+			to_chat(user, span_warning("A virus containment dish is already inside \the [src]."))
 			return
 		if(!user.transferItemToLoc(I, src))
-			to_chat(user, "<span class='warning'>You can't let go of \the [I]!</span>")
+			to_chat(user, span_warning("You can't let go of \the [I]!"))
 			return
 		dish = I
 		playsound(loc, 'sound/machines/click.ogg', 50, 1)
@@ -43,7 +43,7 @@
 
 	if(istype(I, /obj/item/disk/disease))
 		var/obj/item/disk/disease/disk = I
-		visible_message("<span class='notice'>[user] swipes \the [disk] against \the [src].</span>", "<span class='notice'>You swipe \the [disk] against \the [src], copying the data into the machine's buffer.</span>")
+		visible_message(span_notice("[user] swipes \the [disk] against \the [src]."), span_notice("You swipe \the [disk] against \the [src], copying the data into the machine's buffer."))
 		memorybank = disk.effect
 		flick_overlay("splicer_disk", src)
 		spawn(2)

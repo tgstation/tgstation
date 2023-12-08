@@ -23,7 +23,7 @@
 
 /datum/symptom/minttoxin/activate(mob/living/carbon/mob)
 	if(istype(mob) && mob.reagents.get_reagent_amount(/datum/reagent/consumable/mintextract) < 5)
-		to_chat(mob, "<span class='notice'>You feel a minty freshness</span>")
+		to_chat(mob, span_notice("You feel a minty freshness"))
 		mob.reagents.add_reagent(/datum/reagent/consumable/mintextract, 5)
 
 /datum/symptom/deaf
@@ -210,7 +210,7 @@
 
 	var/intensity = 1 + (count > 10) + (count > 20)
 	if (prob(20))
-		to_chat(mob, "<span class='warning'>You feel a [intensity < 3 ? "slight" : "powerful"] shock course through your body.</span>")
+		to_chat(mob, span_warning("You feel a [intensity < 3 ? "slight" : "powerful"] shock course through your body."))
 	for(var/obj/M in orange(3 * intensity,mob))
 		if(!M.anchored)
 			var/iter = rand(1,intensity)
@@ -234,7 +234,7 @@
 
 /datum/symptom/dnaspread/activate(mob/living/carbon/mob)
 	if(!activated)
-		to_chat(mob, "<span class='warning'>You don't feel like yourself..</span>")
+		to_chat(mob, span_warning("You don't feel like yourself.."))
 	if(!iscarbon(mob))
 		return
 	var/mob/living/carbon/C = mob

@@ -74,7 +74,7 @@
 	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/drained/activate(mob/living/mob)
-	to_chat(mob, "<span class='warning'>You feel drained.</span>")
+	to_chat(mob, span_warning("You feel drained."))
 
 
 /datum/symptom/eyewater
@@ -84,7 +84,7 @@
 	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/eyewater/activate(mob/living/mob)
-	to_chat(mob, "<SPAN CLASS='warning'>Your eyes sting and water!</SPAN>")
+	to_chat(mob, span_warning("Your eyes sting and water!"))
 
 
 /datum/symptom/wheeze
@@ -110,12 +110,12 @@
 			mob.reagents.add_reagent(/datum/reagent/consumable/honey, multiplier)
 
 	if(prob(4*multiplier))
-		to_chat(mob, "<span class='warning'>You feel a buzzing in your throat</span>")
+		to_chat(mob, span_warning("You feel a buzzing in your throat"))
 
 		spawn(5 SECONDS)
 			var/turf/open/T = get_turf(mob)
 			if(prob(50))
-				mob.visible_message("<span class='warning'>[mob] coughs out a bee!</span>","<span class='danger'>You cough up a bee!</span>")
+				mob.visible_message(span_warning("[mob] coughs out a bee!"),span_danger("You cough up a bee!"))
 			for(var/i = 0 to multiplier)
 				var/bee_type = pick(
 					100;/mob/living/basic/bee/friendly,
@@ -133,7 +133,7 @@
 	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/soreness/activate(mob/living/mob)
-	to_chat(mob, "<span class='notice'>You feel a little sore.</span>")
+	to_chat(mob, span_notice("You feel a little sore."))
 	if(iscarbon(mob))
 		var/mob/living/carbon/host = mob
 		host.stamina.adjust(-10)

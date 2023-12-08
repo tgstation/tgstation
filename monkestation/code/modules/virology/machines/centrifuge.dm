@@ -57,7 +57,7 @@
 	. = ..()
 
 	if(machine_stat & (BROKEN))
-		to_chat(user, "<span class='warning'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
+		to_chat(user, span_warning("\The [src] is broken. Some components will have to be replaced before it can work again.") )
 		return FALSE
 
 	if(.)
@@ -66,7 +66,7 @@
 	if (istype(I, /obj/item/reagent_containers/cup/beaker/vial))
 		special = CENTRIFUGE_LIGHTSPECIAL_OFF
 		if (on)
-			to_chat(user,"<span class='warning'>You cannot add or remove vials while the centrifuge is active. Turn it Off first.</span>")
+			to_chat(user,span_warning("You cannot add or remove vials while the centrifuge is active. Turn it Off first.") )
 			return
 		var/obj/item/reagent_containers/cup/beaker/vial/vial = I
 		for (var/i = 1 to vials.len)
@@ -81,7 +81,7 @@
 				updateUsrDialog()
 				return TRUE
 
-		to_chat(user,"<span class='warning'>There is no room for more vials.</span>")
+		to_chat(user,span_warning("There is no room for more vials.") )
 		return FALSE
 
 
@@ -191,11 +191,11 @@
 /obj/machinery/disease2/centrifuge/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(machine_stat & (BROKEN))
-		to_chat(user, "<span class='notice'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
+		to_chat(user, span_notice("\The [src] is broken. Some components will have to be replaced before it can work again.") )
 		return
 
 	if(machine_stat & (NOPOWER))
-		to_chat(user, "<span class='notice'>Deprived of power, \the [src] is unresponsive.</span>")
+		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive.") )
 		for (var/i = 1 to vials.len)
 			if(vials[i])
 				var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
@@ -318,7 +318,7 @@
 		var/obj/item/reagent_containers/cup/beaker/vial/vial = user.get_active_hand()
 		if (istype(vial))
 			if (on)
-				to_chat(user,"<span class='warning'>You cannot add or remove vials while the centrifuge is active. Turn it Off first.</span>")
+				to_chat(user,span_warning("You cannot add or remove vials while the centrifuge is active. Turn it Off first."))
 				return
 			else
 				var/i = text2num(href_list["insertvial"])
@@ -330,12 +330,12 @@
 					user.transferItemToLoc(vial, loc)
 					vial.forceMove(src)
 				else
-					to_chat(user,"<span class='warning'>There is already a vial in that slot.</span>")
+					to_chat(user,span_warning("There is already a vial in that slot."))
 					return
 
 	else if (href_list["ejectvial"])
 		if (on)
-			to_chat(usr,"<span class='warning'>You cannot add or remove vials while the centrifuge is active. Turn it Off first.</span>")
+			to_chat(usr,span_warning("You cannot add or remove vials while the centrifuge is active. Turn it Off first."))
 			return
 		else
 			var/i = text2num(href_list["ejectvial"])
@@ -406,7 +406,7 @@
 		var/list/immune_system = blood.data["immunity"]
 		if (istype(immune_system) && immune_system.len > 0)
 			if (immune_system[1] < 1)
-				to_chat(user,"<span class='warning'>Impossible to acquire antibodies from this blood sample. It seems that it came from a donor with a poor immune system, either due to recent cloning or a radium overload.</span>")
+				to_chat(user,span_warning("Impossible to acquire antibodies from this blood sample. It seems that it came from a donor with a poor immune system, either due to recent cloning or a radium overload.") )
 				return result
 
 			var/list/antibodies = immune_system[2]
@@ -423,7 +423,7 @@
 						antibody_choices["[antibody] (Expected Duration: one minute)"] = antibody
 
 			if (antibody_choices.len <= 0)
-				to_chat(user,"<span class='warning'>Impossible to create a vaccine from this blood sample. Antibody levels too low. Minimal level = 30%. The higher the concentration, the faster the vaccine is synthesized.</span>")
+				to_chat(user,span_warning("Impossible to create a vaccine from this blood sample. Antibody levels too low. Minimal level = 30%. The higher the concentration, the faster the vaccine is synthesized.") )
 				return result
 
 			popup.close()

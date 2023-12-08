@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	max_chance = 15
 
 /datum/symptom/confusion/activate(mob/living/carbon/mob)
-	to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
+	to_chat(mob, span_notice("You have trouble telling right and left apart all of a sudden."))
 	mob.adjust_confusion(1 SECONDS * multiplier)
 
 /datum/symptom/mutation
@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		human.equip_to_slot(magichead, ITEM_SLOT_MASK)
 	if(!human.wear_mask)
 		human.equip_to_slot(magichead, ITEM_SLOT_MASK)
-	to_chat(human, "<span class='warning'>You feel a little horse!</span>")
+	to_chat(human, span_warning("You feel a little horse!"))
 
 /datum/symptom/anime_hair
 	name = "Pro-tagonista Syndrome"
@@ -416,11 +416,11 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	var/skip = FALSE
 
 /datum/symptom/butterfly_skin/activate(mob/living/carbon/mob)
-	to_chat(mob, "<span class='warning'>Your skin feels a little fragile.</span>")
+	to_chat(mob, span_warning("Your skin feels a little fragile."))
 
 /datum/symptom/butterfly_skin/deactivate(mob/living/carbon/mob)
 	if(!skip)
-		to_chat(mob, "<span class='notice'>Your skin feels nice and durable again!</span>")
+		to_chat(mob, span_notice("Your skin feels nice and durable again!"))
 	..()
 
 /datum/symptom/butterfly_skin/on_touch(mob/living/carbon/mob, toucher, touched, touch_type)
@@ -431,19 +431,19 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 			part = H.get_bodypart(H.get_random_valid_zone())
 		if(toucher == mob)
 			if(part)
-				to_chat(mob, "<span class='warning'>As you bump into \the [touched], some of the skin on your [part] shears off!</span>")
+				to_chat(mob, span_warning("As you bump into \the [touched], some of the skin on your [part] shears off!"))
 				part.take_damage(10)
 			else
-				to_chat(mob, "<span class='warning'>As you bump into \the [touched], some of your skin shears off!</span>")
+				to_chat(mob, span_warning("As you bump into \the [touched], some of your skin shears off!"))
 				mob.adjustBruteLoss(10)
 		else
 			if(part)
-				to_chat(mob, "<span class='warning'>As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, some of the skin on your [part] shears off!</span>")
-				to_chat(toucher, "<span class='danger'>As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], some of the skin on \his [part] shears off!</span>")
+				to_chat(mob, span_warning("As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, some of the skin on your [part] shears off!"))
+				to_chat(toucher, span_danger("As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], some of the skin on \his [part] shears off!"))
 				part.take_damage(10)
 			else
-				to_chat(mob, "<span class='warning'>As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, some of your skin shears off!</span>")
-				to_chat(toucher, "<span class='danger'>As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], some of \his skin shears off!</span>")
+				to_chat(mob, span_warning("As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, some of your skin shears off!"))
+				to_chat(toucher, span_danger("As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], some of \his skin shears off!"))
 				mob.adjustBruteLoss(10)
 
 /datum/symptom/thick_blood
@@ -479,7 +479,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		not_passed = FALSE
 
 	if(!not_passed)
-		mob.visible_message("<span class='warning'>\A [spawned_organ.name] is extruded from \the [mob]'s body and falls to the ground!</span>","<span class='warning'>\A [spawned_organ.name] is extruded from your body and falls to the ground!</span>")
+		mob.visible_message(span_warning("\A [spawned_organ.name] is extruded from \the [mob]'s body and falls to the ground!"),span_warning("\A [spawned_organ.name] is extruded from your body and falls to the ground!"))
 
 /datum/symptom/damage_converter
 	name = "Toxic Compensation"

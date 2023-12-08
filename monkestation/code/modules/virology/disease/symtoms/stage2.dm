@@ -159,12 +159,12 @@
 		var/mob/living/carbon/human/H = mob
 		if(H.hairstyle != "Bald")
 			if (H.hairstyle != "Balding Hair")
-				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+				to_chat(H, span_danger("Your hair starts to fall out in clumps..."))
 				if (prob(multiplier*20))
 					H.hairstyle = "Balding Hair"
 					H.update_body_parts()
 			else
-				to_chat(H, "<span class='danger'>You have almost no hair left...</span>")
+				to_chat(H, span_danger("You have almost no hair left..."))
 				if (prob(multiplier*20))
 					H.hairstyle = "Bald"
 					H.update_body_parts()
@@ -177,7 +177,7 @@
 	max_multiplier = 20
 
 /datum/symptom/stimulant/activate(mob/living/mob)
-	to_chat(mob, "<span class='notice'>You feel a rush of energy inside you!</span>")
+	to_chat(mob, span_notice("You feel a rush of energy inside you!"))
 	if(ismouse(mob))
 		mob.Shake(3,3, 10 SECONDS)
 		return
@@ -200,7 +200,7 @@
 /datum/symptom/drunk/activate(mob/living/mob)
 	if(ismouse(mob))
 		return
-	to_chat(mob, "<span class='notice'>You feel like you had one hell of a party!</span>")
+	to_chat(mob, span_notice("You feel like you had one hell of a party!"))
 	if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/vermouth) < multiplier*5)
 		mob.reagents.add_reagent(/datum/reagent/consumable/ethanol/vermouth, multiplier*5)
 
@@ -272,17 +272,17 @@
 		if(!glass_to_shatter)
 			return
 		if (is_type_in_list(glass_to_shatter, list(/obj/item/reagent_containers/cup/glass, /obj/item/reagent_containers/syringe)))
-			to_chat(H, "<span class='warning'>Your [check_arm] resonates with the glass in \the [glass_to_shatter], shattering it to bits!</span>")
+			to_chat(H, span_warning("Your [check_arm] resonates with the glass in \the [glass_to_shatter], shattering it to bits!"))
 			glass_to_shatter.reagents.expose(H, TOUCH)
 			new/obj/effect/decal/cleanable/generic(get_turf(H))
 			playsound(H, 'sound/effects/glassbr1.ogg', 25, 1)
 			spawn(1 SECONDS)
 				if (H && check_arm)
 					if (prob(50 * multiplier))
-						to_chat(H, "<span class='notice'>Your [check_arm] deresonates, healing completely!</span>")
+						to_chat(H, span_notice("Your [check_arm] deresonates, healing completely!"))
 						check_arm.heal_damage(1000) // full heal
 					else
-						to_chat(H, "<span class='warning'>Your [check_arm] deresonates, sustaining burns!</span>")
+						to_chat(H, span_warning("Your [check_arm] deresonates, sustaining burns!"))
 						check_arm.take_damage(15 * multiplier, BRUTE)
 			qdel(glass_to_shatter)
 		else if (prob(1))
@@ -299,11 +299,11 @@
 	max_multiplier = 8
 
 /datum/symptom/spiky_skin/activate(mob/living/mob, multiplier)
-	to_chat(mob, "<span class='warning'>Your skin feels a little prickly.</span>")
+	to_chat(mob, span_warning("Your skin feels a little prickly."))
 
 /datum/symptom/spiky_skin/deactivate(mob/living/mob)
 	if(!skip)
-		to_chat(mob, "<span class='notice'>Your skin feels nice and smooth again!</span>")
+		to_chat(mob, span_notice("Your skin feels nice and smooth again!"))
 	..()
 
 /datum/symptom/spiky_skin/on_touch(mob/living/mob, mob/living/toucher, mob/living/touched, touch_type)
@@ -324,10 +324,10 @@
 
 	if(toucher == mob)
 		if(E)
-			to_chat(mob, "<span class='warning'>As you bump into \the [touched], your spines dig into \his [E]!</span>")
+			to_chat(mob, span_warning("As you bump into \the [touched], your spines dig into \his [E]!"))
 			E.take_damage(multiplier, BRUTE)
 		else
-			to_chat(mob, "<span class='warning'>As you bump into \the [touched], your spines dig into \him!</span>")
+			to_chat(mob, span_warning("As you bump into \the [touched], your spines dig into \him!"))
 			var/mob/living/L = touched
 			if(istype(L) && !istype(L, /mob/living/silicon))
 				L.apply_damage(multiplier, BRUTE, E)
@@ -335,12 +335,12 @@
 		log_attack("[M] damaged [H] with keratin spikes")
 	else
 		if(E)
-			to_chat(mob, "<span class='warning'>As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, your spines dig into \his [E]!</span>")
-			to_chat(toucher, "<span class='danger'>As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], \his spines dig into your [E]!</span>")
+			to_chat(mob, span_warning("As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, your spines dig into \his [E]!"))
+			to_chat(toucher, span_danger("As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], \his spines dig into your [E]!"))
 			E.take_damage(multiplier)
 		else
-			to_chat(mob, "<span class='warning'>As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, your spines dig into \him!</span>")
-			to_chat(toucher, "<span class='danger'>As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], \his spines dig into you!</span>")
+			to_chat(mob, span_warning("As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, your spines dig into \him!"))
+			to_chat(toucher, span_danger("As you [touch_type == DISEASE_BUMP ? "bump into" : "touch"] \the [mob], \his spines dig into you!"))
 			var/mob/living/L = toucher
 			if(istype(L) && !istype(L, /mob/living/silicon))
 				L.apply_damage(multiplier)
@@ -434,13 +434,13 @@
 
 /datum/symptom/cyborg_vomit/activate(mob/living/mob)
 	if(prob(90))		//90% chance for just oil
-		mob.visible_message("<span class='danger'>[mob.name] vomits up some oil!</span>")
+		mob.visible_message(span_danger("[mob.name] vomits up some oil!"))
 		mob.adjustToxLoss(-3)
 		var/obj/effect/decal/cleanable/oil/O = new /obj/effect/decal/cleanable/oil(get_turf(mob))
 		playsound(O, 'sound/effects/splat.ogg', 50, 1)
 		mob.Stun(0.5 SECONDS)
 	else				//10% chance for a random bot!
-		to_chat(mob, "<span class='danger'>You feel like something's about to burst out of you!</span>")
+		to_chat(mob, span_danger("You feel like something's about to burst out of you!"))
 		sleep(100)
 		var/list/possible_bots = list(
 			/mob/living/simple_animal/bot/cleanbot,
@@ -528,11 +528,11 @@
 
 	var/mob/living/carbon/human/mob = M
 	active = 1
-	to_chat(mob, "<span class='warning'>You feel a burning sensation in your throat.</span>")
+	to_chat(mob, span_warning("You feel a burning sensation in your throat."))
 	sleep(10 SECONDS)
-	to_chat(mob, "<span class='danger'>You feel an agonizing pain in your throat!</span>")
+	to_chat(mob, span_danger("You feel an agonizing pain in your throat!"))
 	sleep(10 SECONDS)
-	mob.visible_message("<span class='danger'>[mob] vomits up blood!</span>", "<span class='danger'>You vomit up blood!</span>")
+	mob.visible_message(span_danger("[mob] vomits up blood!"), span_danger("You vomit up blood!"))
 	var/obj/effect/decal/cleanable/blood/S = new(loc = get_turf(mob))
 	S.count = 1
 	playsound(mob, 'sound/effects/splat.ogg', 50, 1)

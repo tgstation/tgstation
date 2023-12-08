@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	//Freezing body temperatures halt diseases completely
 	if(mob.bodytemperature < min_bodytemperature)
 		return
-		
+
 	//Virus food speeds up disease progress
 	if(!ismouse(mob))
 		if(mob.reagents?.has_reagent(/datum/reagent/consumable/virus_food))
@@ -443,19 +443,19 @@ GLOBAL_LIST_INIT(virusDB, list())
 		if (fever > 0  && prob(3))
 			switch (fever_warning)
 				if (0)
-					to_chat(mob, "<span class='warning'>You feel a fever coming on, your body warms up and your head hurts a bit.</span>")
+					to_chat(mob, span_warning("You feel a fever coming on, your body warms up and your head hurts a bit."))
 					fever_warning++
 				if (1)
 					if (mob.bodytemperature > 320)
-						to_chat(mob, "<span class='warning'>Your palms are sweaty.</span>")
+						to_chat(mob, span_warning("Your palms are sweaty."))
 						fever_warning++
 				if (2)
 					if (mob.bodytemperature > 335)
-						to_chat(mob, "<span class='warning'>Your knees are weak.</span>")
+						to_chat(mob, span_warning("Your knees are weak."))
 						fever_warning++
 				if (3)
 					if (mob.bodytemperature > 350)
-						to_chat(mob, "<span class='warning'>Your arms are heavy.</span>")
+						to_chat(mob, span_warning("Your arms are heavy."))
 						fever_warning++
 
 

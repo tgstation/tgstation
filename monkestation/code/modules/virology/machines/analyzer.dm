@@ -33,11 +33,11 @@
 	. = ..()
 
 	if(machine_stat & (BROKEN))
-		to_chat(user, "<span class='warning'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
+		to_chat(user, span_warning("\The [src] is broken. Some components will have to be replaced before it can work again."))
 		return
 
 	if (scanner)
-		to_chat(user, "<span class='warning'>\The [scanner] is currently busy using this analyzer.</span>")
+		to_chat(user, span_warning("\The [scanner] is currently busy using this analyzer."))
 		return
 
 	if(.)
@@ -45,29 +45,29 @@
 
 	if (dish)
 		if (istype(I,/obj/item/weapon/virusdish))
-			to_chat(user, "<span class='warning'>There is already a dish in there. Alt+Click or perform the analysis to retrieve it first.</span>")
+			to_chat(user, span_warning("There is already a dish in there. Alt+Click or perform the analysis to retrieve it first."))
 		else if (istype(I,/obj/item/reagent_containers))
 			dish.attackby(I,user)
 	else
 		if (istype(I,/obj/item/weapon/virusdish))
 			var/obj/item/weapon/virusdish/D = I
 			if (D.open)
-				visible_message("<span class='notice'>\The [user] inserts \the [I] in \the [src].</span>","<span class='notice'>You insert \the [I] in \the [src].</span>")
+				visible_message(span_notice("\The [user] inserts \the [I] in \the [src]."),span_notice("You insert \the [I] in \the [src]."))
 				playsound(loc, 'sound/machines/click.ogg', 50, 1)
 				user.dropItemToGround(I, TRUE)
 				I.forceMove(src)
 				dish = I
 				update_appearance()
 			else
-				to_chat(user, "<span class='warning'>You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves).</span>")
+				to_chat(user, span_warning("You must open the dish's lid before it can be analysed. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
 
 /obj/machinery/disease2/diseaseanalyser/attack_hand(mob/user)
 	. = ..()
 	if(machine_stat & (BROKEN))
-		to_chat(user, "<span class='notice'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
+		to_chat(user, span_notice("\The [src] is broken. Some components will have to be replaced before it can work again."))
 		return
 	if(machine_stat & (NOPOWER))
-		to_chat(user, "<span class='notice'>Deprived of power, \the [src] is unresponsive.</span>")
+		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive."))
 		if (dish)
 			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			dish.forceMove(loc)
@@ -79,18 +79,18 @@
 		return
 
 	if (scanner)
-		to_chat(user, "<span class='warning'>\The [scanner] is currently busy using this analyzer.</span>")
+		to_chat(user, span_warning("\The [scanner] is currently busy using this analyzer."))
 		return
 
 	if (!dish)
-		to_chat(user, "<span class='notice'>Place an open growth dish first to analyse its pathogen.</span>")
+		to_chat(user, span_notice("Place an open growth dish first to analyse its pathogen."))
 		return
 
 	if (dish.growth < minimum_growth)
 		say("Pathogen growth insufficient. Minimal required growth: [minimum_growth]%.")
-		to_chat(user,"<span class='notice'>Add some virus food to the dish and incubate.</span>")
+		to_chat(user,span_notice("Add some virus food to the dish and incubate."))
 		if (minimum_growth == 100)
-			to_chat(user,"<span class='notice'>Replacing the machine's scanning modules with better parts will lower the growth requirement.</span>")
+			to_chat(user,span_notice("Replacing the machine's scanning modules with better parts will lower the growth requirement."))
 		dish.forceMove(loc)
 		dish = null
 		update_appearance()
@@ -174,10 +174,10 @@
 		return
 
 	if(machine_stat & (BROKEN))
-		to_chat(usr, "<span class='notice'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
+		to_chat(usr, span_notice("\The [src] is broken. Some components will have to be replaced before it can work again."))
 		return
 	if(machine_stat & (NOPOWER))
-		to_chat(usr, "<span class='notice'>Deprived of power, \the [src] is unresponsive.</span>")
+		to_chat(usr, span_notice("Deprived of power, \the [src] is unresponsive."))
 		return
 
 	var/turf/T = get_turf(src)

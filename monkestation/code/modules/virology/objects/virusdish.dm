@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 /obj/item/weapon/virusdish/attack_self(mob/living/user, list/modifiers)
 	open = !open
 	update_icon()
-	to_chat(user,"<span class='notice'>You [open?"open":"close"] dish's lid.</span>")
+	to_chat(user,span_notice("You [open?"open":"close"] dish's lid."))
 	if (open)
 		last_openner = user
 		if (contained_virus)
@@ -120,10 +120,10 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			if(I.is_open_container())
 				success = I.reagents.trans_to(src, 10, transfered_by = user)
 			if (success > 0)
-				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [src].</span>")
+				to_chat(user, span_notice("You transfer [success] units of the solution to \the [src]."))
 			return 
 	if((user.istate & ISTATE_HARM) && I.force)
-		visible_message("<span class='danger'>The virus dish is smashed to bits!</span>")
+		visible_message(span_danger("The virus dish is smashed to bits!"))
 		shatter(user)
 
 /obj/item/weapon/virusdish/is_open_container()
@@ -142,13 +142,13 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			if(is_open_container())
 				success = reagents.trans_to(target, 10, transfered_by = user)
 			if (success > 0)
-				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [target].</span>")
+				to_chat(user, span_notice("You transfer [success] units of the solution to \the [target]."))
 			return 
 		if(istype(target, /obj/structure/reagent_dispensers))
 			var/obj/structure/reagent_dispensers/obj = target
 			var/success = obj.reagents.trans_to(src, 10, transfered_by = user)
 			if (success > 0)
-				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [src].</span>")
+				to_chat(user, span_notice("You transfer [success] units of the solution to \the [src]."))
 
 		if (istype(target,/obj/structure/toilet))
 			var/obj/structure/toilet/T = target
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 
 /obj/item/weapon/virusdish/proc/empty(mob/user, atom/target)
 	if (user && target)
-		to_chat(user,"<span class='notice'>You empty \the [src]'s reagents into \the [target].</span>")
+		to_chat(user,span_notice("You empty \the [src]'s reagents into \the [target]."))
 	reagents.clear_reagents()
 
 /obj/item/weapon/virusdish/process()
@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		var/list/L = list()
 		L += contained_virus
 		new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
-		
+
 /obj/item/weapon/virusdish/random
 	name = "growth dish"
 /obj/item/weapon/virusdish/random/New(loc)
@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 /obj/item/weapon/virusdish/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(isturf(hit_atom))
-		visible_message("<span class='danger'>The virus dish shatters on impact!</span>")
+		visible_message(span_danger("The virus dish shatters on impact!"))
 		shatter(throwingdatum.thrower)
 
 /obj/item/weapon/virusdish/proc/incubate(mutatechance=5, growthrate=3, effect_focus = 0)
@@ -259,11 +259,11 @@ GLOBAL_LIST_INIT(virusdishes, list())
 /obj/item/weapon/virusdish/examine(var/mob/user)
 	..()
 	if(open)
-		to_chat(user, "<span class='notice'>Its lid is open!</span>")
+		to_chat(user, span_notice("Its lid is open!"))
 	else
-		to_chat(user, "<span class='notice'>Its lid is closed!</span>")
+		to_chat(user, span_notice("Its lid is closed!"))
 	if(info)
-		to_chat(user, "<span class='info'>There is a sticker with some printed information on it. <a href ='?src=\ref[src];examine=1'>(Read it)</a></span>")
+		to_chat(user, span_info("There is a sticker with some printed information on it. <a href ='?src=\ref[src];examine=1'>(Read it)</a>"))
 
 /obj/item/weapon/virusdish/Topic(href, href_list)
 	if(..())

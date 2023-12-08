@@ -44,7 +44,7 @@
 				break
 		// /vg/: Try to fix isolators
 		if(!Blood)
-			to_chat(usr, "<span class='warning'>ERROR: Unable to locate blood within the beaker.  Bug?</span>")
+			to_chat(usr, span_warning("ERROR: Unable to locate blood within the beaker.  Bug?"))
 //			testing("Unable to locate blood in [beaker]!")
 			return
 		var/list/virus = virus_copylist(Blood.data["viruses"])

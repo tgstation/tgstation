@@ -62,7 +62,7 @@
 	. = ..()
 
 	if (machine_stat & (BROKEN))
-		to_chat(user, "<span class='warning'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
+		to_chat(user, span_warning("\The [src] is broken. Some components will have to be replaced before it can work again."))
 		return FALSE
 
 	if (.)
@@ -74,17 +74,17 @@
 				addDish(I, user, i)
 				return TRUE
 
-		to_chat(user, "<span class='warning'>There is no more room inside \the [src]. Remove a dish first.</span>")
+		to_chat(user, span_warning("There is no more room inside \the [src]. Remove a dish first."))
 		return FALSE
 
 
 /obj/machinery/disease2/incubator/proc/addDish(obj/item/weapon/virusdish/VD, mob/user, slot)
 	if (!VD.open)
-		to_chat(user, "<span class='warning'>You must open the dish's lid before it can be put inside the incubator. Be sure to wear proper protection first (at least a sterile mask and latex gloves).</span>")
+		to_chat(user, span_warning("You must open the dish's lid before it can be put inside the incubator. Be sure to wear proper protection first (at least a sterile mask and latex gloves)."))
 		return
 
 	if (dish_data[slot] != null)
-		to_chat(user,"<span class='warning'>This slot is already occupied. Remove the dish first.</span>")
+		to_chat(user,span_warning("This slot is already occupied. Remove the dish first."))
 		return
 
 	if (!user.transferItemToLoc(VD, src))
@@ -94,7 +94,7 @@
 	dish_datum.dish = VD
 	dish_data[slot] = dish_datum
 
-	visible_message("<span class='notice'>\The [user] adds \the [VD] to \the [src].</span>","<span class='notice'>You add \the [VD] to \the [src].</span>")
+	visible_message(span_notice("\The [user] adds \the [VD] to \the [src]."),span_notice("You add \the [VD] to \the [src]."))
 	playsound(loc, 'sound/machines/click.ogg', 50, 1)
 	update_appearance()
 
@@ -181,7 +181,7 @@
 				return TRUE
 			var/stage_to_focus = input(usr, "Choose a stage to focus on. This will block symptoms from other stages from being mutated. Input 0 to disable effect focusing.", "Choose a stage.") as num
 			if(!stage_to_focus)
-				to_chat(usr, "<span class='notice'>The effect focusing is now turned off.</span>")
+				to_chat(usr, span_notice("The effect focusing is now turned off."))
 			else
 				to_chat(usr, "span class='notice'>\The [src] will now focus on stage [stage_to_focus].</span>")
 			effect_focus = stage_to_focus
@@ -190,10 +190,10 @@
 /obj/machinery/disease2/incubator/attack_hand(mob/user)
 	. = ..()
 	if (machine_stat & (BROKEN))
-		to_chat(user, "<span class='notice'>\The [src] is broken. Some components will have to be replaced before it can work again.</span>")
+		to_chat(user, span_notice("\The [src] is broken. Some components will have to be replaced before it can work again."))
 		return
 	if (machine_stat & (NOPOWER))
-		to_chat(user, "<span class='notice'>Deprived of power, \the [src] is unresponsive.</span>")
+		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive."))
 		for (var/i in 1 to dish_data.len)
 			var/dish_incubator_dish/dish_datum = dish_data[i]
 			if (dish_datum == null)
