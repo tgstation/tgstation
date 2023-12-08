@@ -6604,6 +6604,7 @@
 #include "monkestation\code\modules\virology\machines\analyzer.dm"
 #include "monkestation\code\modules\virology\machines\centrifuge.dm"
 #include "monkestation\code\modules\virology\machines\curer.dm"
+#include "monkestation\code\modules\virology\machines\disease_records.dm"
 #include "monkestation\code\modules\virology\machines\incubator.dm"
 #include "monkestation\code\modules\virology\machines\isolator.dm"
 #include "monkestation\code\modules\virology\machines\splicer.dm"

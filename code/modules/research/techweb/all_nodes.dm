@@ -410,6 +410,7 @@
 		"incubator",
 		"diseaseanalyzer",
 		"centrifuge",
+		"path_data",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	discount_experiments = list(/datum/experiment/dissection/human = 1000)

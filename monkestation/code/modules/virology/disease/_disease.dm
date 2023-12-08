@@ -625,7 +625,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	v.fields["description_hidden"] = get_info(TRUE)
 	v.fields["custom_desc"] = "No comments yet."
 	v.fields["antigen"] = get_antigen_string()
-	v.fields["spread_flags type"] = get_spread_string()
+	v.fields["spread_flags_type"] = get_spread_string()
 	v.fields["danger"] = "Undetermined"
 	GLOB.virusDB["[uniqueID]-[subID]"] = v
 	return 1

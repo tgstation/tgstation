@@ -30,3 +30,8 @@
 	name = "Disease Splicer"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/computer/diseasesplicer
+
+/obj/item/circuitboard/computer/pathology_data
+	name = "Pathology Data"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/computer/records/pathology
