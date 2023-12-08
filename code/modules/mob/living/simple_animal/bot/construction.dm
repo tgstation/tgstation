@@ -44,8 +44,7 @@
 /obj/item/bot_assembly/cleanbot
 	desc = "It's a bucket with a sensor attached."
 	name = "incomplete cleanbot assembly"
-	icon_state = "bucket_proxy"
-	greyscale_config = /datum/greyscale_config/buckets_cleanbot
+	icon_state = "cleanbot_assembly"
 	throwforce = 5
 	created_name = "Cleanbot"
 	var/obj/item/reagent_containers/cup/bucket/bucket_obj
@@ -61,7 +60,6 @@
 		if(bucket_obj && bucket_obj != arrived)
 			qdel(bucket_obj)
 		bucket_obj = arrived
-		set_greyscale(bucket_obj.greyscale_colors)
 	return ..()
 
 /obj/item/bot_assembly/cleanbot/Exited(atom/movable/gone, direction)

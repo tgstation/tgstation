@@ -350,11 +350,8 @@
 	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
-	greyscale_config = /datum/greyscale_config/buckets
-	greyscale_config_worn = /datum/greyscale_config/buckets_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/buckets_inhands_left
-	greyscale_config_inhand_right = /datum/greyscale_config/buckets_inhands_right
+	fill_icon_state = "bucket"
+	fill_icon_thresholds = list(50, 90)
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
@@ -395,11 +392,6 @@
 	name = "wooden bucket"
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/bucket_wooden

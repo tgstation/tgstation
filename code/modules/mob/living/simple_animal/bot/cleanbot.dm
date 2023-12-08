@@ -11,14 +11,12 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service //true
 	bot_type = CLEAN_BOT
 	hackables = "cleaning software"
 	path_image_color = "#993299"
-	greyscale_config = /datum/greyscale_config/buckets_cleanbot
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
@@ -155,11 +153,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/update_icon_state()
 	. = ..()
-	switch(mode)
-		if(BOT_CLEANING)
-			icon_state = "[base_icon]-c"
-		else
-			icon_state = "[base_icon][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
+	icon_state = "[base_icon][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/cleanbot/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -359,7 +353,7 @@
 		return
 	if(ismopable(attack_target))
 		mode = BOT_CLEANING
-		update_icon_state()
+		flick("[base_icon]-c", src)
 		. = ..()
 		target = null
 		mode = BOT_IDLE
