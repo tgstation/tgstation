@@ -150,15 +150,21 @@
 	name = "Arachnogenesis Effect"
 	desc = "Converts the infected's stomach to begin producing creatures of the arachnid variety."
 	stage = 4
+	max_multiplier = 7
 	badness = EFFECT_DANGER_HARMFUL
 	var/spawn_type= /mob/living/basic/spider/growing/spiderling/guard
 	var/spawn_name="spiderling"
 
 /datum/symptom/spawn/activate(mob/living/carbon/mob)
 	playsound(mob.loc, 'sound/effects/splat.ogg', 50, 1)
-
-	new spawn_type(get_turf(mob))
+	var/mob/living/spawned_mob = new spawn_type(get_turf(mob))
 	mob.emote("me",1,"vomits up a live [spawn_name]!")
+	if(multiplier < 4)
+		addtimer(CALLBACK(src, PROC_REF(kill_mob), spawned_mob), 1 MINUTES)
+
+/datum/symptom/spawn/proc/kill_mob(mob/living/basic/mob)
+	visible_message(span_warning("The [mob] falls apart!"), span_warning("You fall apart"))
+	mob.death()
 
 /datum/symptom/spawn/roach
 	name = "Blattogenesis Effect"

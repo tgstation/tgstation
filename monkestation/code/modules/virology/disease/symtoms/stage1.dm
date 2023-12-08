@@ -122,7 +122,13 @@
 					10;/mob/living/basic/bee,
 					5;/mob/living/basic/bee/toxin,
 					)
-				new bee_type(T)
+				var/mob/living/basic/bee/bee = new bee_type(T)
+				if(mulitplier < 8)
+					addtimer(CALLBACK(src, PROC_REF(kill_bee), bee), 15 SECONDS * multiplier)
+
+/datum/symptom/bee_vomit/proc/kill_bee(mob/living/basic/bee/bee)
+	visible_message(span_warning("The bee falls apart!"), span_warning("You fall apart"))
+	bee.death()
 
 /datum/symptom/soreness
 	name = "Myalgia Syndrome"
