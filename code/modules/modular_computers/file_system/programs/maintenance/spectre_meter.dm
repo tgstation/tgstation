@@ -73,26 +73,19 @@
 /datum/computer_file/program/maintenance/spectre_meter/proc/scan_surroundings()
 	var/spook_value = 0
 	var/turf/turf = get_turf(computer)
-	var/list/range_contents = range(5, turf)
 
-	for(var/mob/mob in range_contents)
-		range_contents -= mob
-		///ghastly mobs count toward spookiness more than observers.
-		var/spook_value_mult = 1
-		if(isliving(mob))
-			var/mob/living/living = mob
-			if(!(living.mob_biotypes & MOB_SPIRIT))
-				continue
-			spook_value_mult *= SPOOK_VALUE_LIVING_MULT
-		else if(!isobserver(mob))
-			continue
-		if(mob.loc == turf)
-			spook_value_mult *= SPOOK_VALUE_SAME_TURF_MULT
-		spook_value += SPOOK_VALUE_DEF_MOB/max(get_dist(turf, mob), 1) * spook_value_mult
-
-	for(var/atom/atom as anything in range_contents)
-		CHECK_TICK
+	for(var/atom/atom as anything in range(5, turf))
 		var/spook_amount = 0
+		if(ismob(atom))
+			///ghastly mobs count toward spookiness more than observers.
+			var/spook_value_mult = 0
+			if(isliving(atom))
+				var/mob/living/living = atom
+				if(living.mob_biotypes & MOB_SPIRIT)
+					spook_value_mult = SPOOK_VALUE_LIVING_MULT
+			else if(isobserver(atom))
+				spook_value_mult = 1
+			spook_amount += SPOOK_VALUE_DEF_MOB * spook_value_mult
 		var/list/materials = atom.has_material_type(/datum/material/hauntium)
 		if(materials)
 			spook_amount += materials[/datum/material/hauntium]/SHEET_MATERIAL_AMOUNT
@@ -102,6 +95,7 @@
 		if(atom.loc == turf)
 			spook_amount *= SPOOK_VALUE_SAME_TURF_MULT
 		spook_value += spook_amount/max(get_dist(turf, atom), 1)
+		CHECK_TICK
 
 	soundloop.last_spook_value = last_spook_value = round(spook_value)
 	var/old_open_overlay = program_open_overlay
