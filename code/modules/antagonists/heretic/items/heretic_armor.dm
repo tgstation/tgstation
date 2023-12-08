@@ -34,6 +34,7 @@
 	bio = 20
 	fire = 20
 	acid = 20
+	wound = 20
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
 	. = ..()
@@ -64,6 +65,7 @@
 	laser = 30
 	energy = 30
 	bomb = 15
+	wound = 10
 
 /obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
 	. = ..()
@@ -89,6 +91,7 @@
 	laser = 30
 	energy = 30
 	bomb = 15
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()

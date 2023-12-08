@@ -30,6 +30,14 @@
 	greyscale_colors = "#151516ff"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/neck/bowtie/rainbow
+	name = "rainbow bow tie"
+	desc = "An extremely large neosilk rainbow-colored bowtie."
+	icon_state = "bowtie_rainbow"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+
 /obj/item/clothing/neck/tie
 	name = "slick tie"
 	desc = "A neosilk tie."

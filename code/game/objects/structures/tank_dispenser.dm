@@ -104,7 +104,7 @@
 
 
 /obj/structure/tank_dispenser/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		for(var/X in src)
 			var/obj/item/I = X
 			I.forceMove(loc)

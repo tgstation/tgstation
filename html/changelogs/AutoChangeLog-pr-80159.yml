@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes:
+  - bugfix: "Spacemen can no longer use curses to cheat at Russian roulette by selectively blocking attempts to shoot themselves."
+  - rscadd: "A Russian revolver has been added to the contraband section of each Good Clean Fun vendor."

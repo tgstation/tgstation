@@ -114,6 +114,9 @@
 // /obj/item
 #define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
 
+// /obj/narsie
+#define VV_HK_BEGIN_NARSIE_ROUNDEND "begin_narsie_roundend"
+
 // /mob
 #define VV_HK_GIB "gib"
 #define VV_HK_GIVE_MOB_ACTION "give_mob_action"
@@ -153,6 +156,7 @@
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
 #define VV_HK_APPLY_DNA_INFUSION "apply_dna_infusion"
+#define VV_HK_TURN_INTO_MMI "turn_into_mmi"
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"

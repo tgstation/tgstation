@@ -33,23 +33,6 @@
 	// We use the same overlay as the parent, so we can just let the component inherit the correct offsets here
 	AddComponent(/datum/component/seclite_attachable, overlay_x = 18, overlay_y = 11)
 
-/obj/item/gun/energy/decloner
-	name = "biological demolecularisor"
-	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
-	icon_state = "decloner"
-	ammo_type = list(/obj/item/ammo_casing/energy/declone)
-	ammo_x_offset = 1
-
-/obj/item/gun/energy/decloner/update_overlays()
-	. = ..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
-		. += "decloner_spin"
-
-/obj/item/gun/energy/decloner/unrestricted
-	pin = /obj/item/firing_pin
-	ammo_type = list(/obj/item/ammo_casing/energy/declone/weak)
-
 /obj/item/gun/energy/floragun
 	name = "floral somatoray"
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."

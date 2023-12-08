@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 	maximum_survivable_temperature = INFINITY
@@ -735,11 +735,16 @@ GLOBAL_LIST_INIT(command_strings, list(
 	. = ..()
 	if(!. || isnull(client))
 		return FALSE
+	REMOVE_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
+	speed = 2
+
 	diag_hud_set_botmode()
 
 /mob/living/basic/bot/Logout()
 	. = ..()
 	bot_reset()
+	speed = initial(speed)
+	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 
 /mob/living/basic/bot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
