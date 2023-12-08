@@ -52,7 +52,7 @@
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	if(anchored)
@@ -200,7 +200,7 @@
 	add_fingerprint(user)
 	if(shock(user, 100))
 		return
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
 	tool.play_tool_sound(src, 100)
 	deconstruct()
@@ -212,7 +212,7 @@
 	add_fingerprint(user)
 	if(shock(user, 90))
 		return FALSE
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE
@@ -299,7 +299,7 @@
 /obj/structure/grille/deconstruct(disassembled = TRUE)
 	if(!loc) //if already qdel'd somehow, we do nothing
 		return
-	if(!(flags_1&NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/obj/R = new rods_type(drop_location(), rods_amount)
 		transfer_fingerprints_to(R)
 		qdel(src)
@@ -307,7 +307,7 @@
 
 /obj/structure/grille/atom_break()
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		icon_state = "brokengrille"
 		set_density(FALSE)
 		atom_integrity = 20

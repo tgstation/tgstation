@@ -464,7 +464,7 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = NO_DECONSTRUCTION
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1

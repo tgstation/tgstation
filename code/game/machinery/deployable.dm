@@ -18,7 +18,7 @@
 	var/bar_material = METAL
 
 /obj/structure/barricade/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		make_debris()
 	qdel(src)
 

@@ -35,7 +35,7 @@ Example:
 
 ```dm
 /obj/structure/table/Initialize(mapload)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		var/static/list/tool_behaviors = list(
 			TOOL_SCREWDRIVER = list(
 				SCREENTIP_CONTEXT_RMB = "Disassemble",
