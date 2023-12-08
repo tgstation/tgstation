@@ -385,7 +385,7 @@
 	return FALSE
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
 		new remains(loc)
 	qdel(src)
@@ -463,7 +463,7 @@
 	return
 
 /obj/structure/girder/cult/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 	qdel(src)
 

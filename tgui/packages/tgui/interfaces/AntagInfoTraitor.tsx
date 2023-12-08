@@ -68,10 +68,12 @@ const EmployerSection = (props) => {
             This is a gameplay suggestion for bored traitors.
             You don't have to follow it, unless you want some
             ideas for how to spend the round.`}
-          tooltipPosition="bottom-start">
+          tooltipPosition="bottom-start"
+        >
           Policy
         </Button>
-      }>
+      }
+    >
       <Stack vertical fill>
         <Stack.Item grow>
           <Stack vertical>

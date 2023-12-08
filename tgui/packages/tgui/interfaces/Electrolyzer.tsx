@@ -36,13 +36,13 @@ export const Electrolyzer = (props) => {
                 onClick={() => act('power')}
               />
             </>
-          }>
+          }
+        >
           <LabeledList>
-            <LabeledList.Item label="Cell" color={!hasPowercell && 'bad'}>
+            <LabeledList.Item label="Cell" color={!hasPowercell ? 'bad' : ''}>
               {(hasPowercell && (
                 <ProgressBar
                   value={powerLevel / 100}
-                  content={powerLevel + '%'}
                   ranges={{
                     good: [0.6, Infinity],
                     average: [0.3, 0.6],
