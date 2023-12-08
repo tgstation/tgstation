@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// Hijack is unavailable as a random objective below this player count.
 #define HIJACK_MIN_PLAYERS 30
 
-/// Hijack locations
+/// Hijack locations, used in hijack_location varible in datmum/antagonist. Larger number locations take priority in the case of multiple antag datums.
 #define DEEP_SPACE 1
 #define SYNDICATE_BASE 2
 

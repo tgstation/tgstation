@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/can_elimination_hijack = ELIMINATION_NEUTRAL
 	///If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
 	var/hijack_speed = 0
-	/// This is the place we take the shuttle if we hijack it. See defines for what
+	/// This is the place we take the shuttle if we hijack it. See _DEFINES/antagonists for a full list.
 	var/hijack_location = DEEP_SPACE
 	///The antag hud's icon file
 	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'

@@ -297,20 +297,23 @@
 /// Sets our can_hijack to the fastest speed our antag datums allow.
 /datum/mind/proc/get_hijack_speed()
 	var/output = 0
-	for(var/datum/antagonist/antag in antag_datums)
+	for(var/datum/antagonist/antagonist as anything in antag_datums)
 		if(!output)
-			output = antag.hijack_speed()
+			output = antagonist.hijack_speed()
 		else
-			output = max(output, antag.hijack_speed())
+			output = max(output, antagonist.hijack_speed())
 	return output
-
+/*
+* This returns the correct hijack location for a mind. It checks all antag datums and returns the location with the highest priority.
+* Returns null for non antagonists and antagonists who can't hijack.
+*/
 /datum/mind/proc/get_desired_hijack_destination()
-	if(!get_hijack_speed()) //If this returns false then we aren't a hijacker.
+	if(!get_hijack_speed())
 		return null
 
 	var/output = DEEP_SPACE
-	for(var/datum/antagonist/antag in antag_datums)
-		output = max(output, antag.hijack_location)
+	for(var/datum/antagonist/antagonist as anything in antag_datums)
+		output = max(output, antagonist.hijack_location)
 
 	return output
 

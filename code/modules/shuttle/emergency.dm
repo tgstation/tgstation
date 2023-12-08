@@ -592,33 +592,35 @@
 
 						var/destination = hijacker.mind.get_desired_hijack_destination()
 
-					// To add another destination, go to the _DEFINES\antagonists to name your desitnation and give it a number to define it.
-					// Remember to add it to your antagonist's hijack_location varible as well.
-					// Then define where you want the shuttle to dock by by choosing or creating a new docking port in switch statement
-					// get_desired_hijack_destination() takes only the destination with the highest number in the case of an mind with multiple antagonist datums
+						// To add another destination, go to the _DEFINES\antagonists to name your desitnation and give it a number to define it.
+						// Remember to add it to your antagonist's hijack_location varible as well.
+						// Then define where you want the shuttle to dock by by choosing or creating a new docking port in switch statement
+						// get_desired_hijack_destination() takes only the destination with the highest number in the case of an mind with multiple antagonist datums
 						switch(destination)
-
-							if(DEEP_SPACE) // Our hijacker is sending us deep into space, probably because they are unafiliated with the syndicate.
+							if(DEEP_SPACE)
 								var/x = 32 // In the middle so we don't have to worry about clipping the edge of the z-level.
 								var/y = 32
-								var/z = SSmapping.empty_space.z_value // We are created a brand new isolated Z-level
-								var/turf/landing_turf = locate(x,y,z) // We need a turf on the level to desinate where we want to land.
+								var/z = SSmapping.empty_space.z_value
+								var/turf/landing_turf = locate(x,y,z)
 								if(!landing_turf)
 									CRASH("Shuttle found no turf to load in") // Something went really wrong.
-								var/obj/docking_port/stationary/landing_marker = new /obj/docking_port/stationary // We make a new port
-								landing_marker.loc = landing_turf // place the port at our desired turf
-								landing_marker.shuttle_id = "deep_space_hijack" // give our port a name
+								var/obj/docking_port/stationary/landing_marker = new /obj/docking_port/stationary
+								landing_marker.loc = landing_turf
+								landing_marker.shuttle_id = "deep_space_hijack"
 								landing_marker.dir = SOUTH // Facing downwards for distinction.
-								destination_dock = "deep_space_hijack" //designate that terf as the desired terf.
+								destination_dock = "deep_space_hijack"
 								minor_announce("Warning, postioning data set to uncharted region of space.\
 								Backup distress signal status: FAILURE", "SYSTEM ERROR:", sound_override = 'sound/misc/announce_syndi.ogg')
 
-							if(SYNDICATE_BASE) // Our hijacker is taking us to the syndicate base
-								SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE) // Load the base at centcom if it isn't already
-								destination_dock = "emergency_syndicate" // Doc at the port already at the syndicate base
+							if(SYNDICATE_BASE)
+								SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
+								destination_dock = "emergency_syndicate"
 								minor_announce("Target coordatnates corrupted. Manual coordanate input accepted.\
 								Warning, filepath \"death_2_nan0trasen\" was not defined\
 								Contact shuttle supervisor for further assistance", "SYSTEM ERROR:", sound_override = 'sound/misc/announce_syndi.ogg')
+							else
+								stack_trace("get_desired_hijack_destination() returned a location that was unexpected.\
+								Check [mind.antag_datums] for hijack_location that are mistakenly inputted or unimplemeneted")
 
 				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
