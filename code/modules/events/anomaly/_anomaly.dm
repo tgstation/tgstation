@@ -26,7 +26,7 @@
 		impact_area = placer.findValidArea()
 
 /datum/round_event/anomaly/announce(fake)
-	if(!impact_area)
+	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
 	priority_announce("Energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")
 

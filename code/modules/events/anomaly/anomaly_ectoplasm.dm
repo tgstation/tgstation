@@ -39,7 +39,7 @@
 		announce_to_ghosts(newAnomaly)
 
 /datum/round_event/anomaly/anomaly_ectoplasm/announce(fake)
-	if(!impact_area)
+	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
 	priority_announce("Paranormal ectoplasmic outburst detected on [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.name].", "Anomaly Alert")
 

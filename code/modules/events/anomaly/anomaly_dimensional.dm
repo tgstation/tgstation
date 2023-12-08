@@ -23,7 +23,7 @@
 	new_anomaly.prepare_area(new_theme_path = anomaly_theme)
 
 /datum/round_event/anomaly/anomaly_dimensional/announce(fake)
-	if(!impact_area)
+	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
 	priority_announce("Dimensional instability detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")
 
