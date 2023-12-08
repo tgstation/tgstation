@@ -49,6 +49,8 @@
 		D.AddToGoggleView(src)
 
 /mob/dead/new_player/proc/DiseaseCarrierCheck(mob/living/carbon/human/H)
+	if(world.time < SSautotransfer.starttime + 30 MINUTES)
+		return
 	// 10% of players are joining the station with some minor disease if latejoined
 	if(prob(10))
 		var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
