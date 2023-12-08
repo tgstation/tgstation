@@ -20,6 +20,9 @@
 	/// Whether or not this log should not be publically visible
 	var/secret = FALSE
 
+	/// The list of header information for this category. Used for log file re-initialization
+	var/list/category_header
+
 	/// Whether the readable version of the log message is formatted internally instead of by rustg
 	/// IF YOU CHANGE THIS VERIFY LOGS ARE STILL PARSED CORRECTLY
 	var/internal_formatting = FALSE
