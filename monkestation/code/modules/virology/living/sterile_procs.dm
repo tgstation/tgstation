@@ -2,7 +2,6 @@
 	return 0
 
 /mob/living/carbon/human/check_contact_sterility(body_part)
-	var/block = FALSE
 	var/list/clothing_to_check = list(
 		wear_mask,
 		w_uniform,
@@ -33,9 +32,9 @@
 			if(isnull(cloth))
 				continue
 			var/list/coverage = cover_flags2body_zones(cloth.body_parts_covered)
-			if((item in coverage) && !prob(cloth.get_armor_rating(BIO)))
-				block = TRUE
-	return block
+			if((item in coverage) && prob(cloth.get_armor_rating(BIO)))
+				return TRUE
+	return FALSE
 
 
 /mob/living/proc/check_bodypart_bleeding(zone)

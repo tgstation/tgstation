@@ -385,6 +385,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	//Freezing body temperatures halt diseases completely
 	if(mob.bodytemperature < min_bodytemperature)
 		return
+		
 	//Virus food speeds up disease progress
 	if(!ismouse(mob))
 		if(mob.reagents?.has_reagent(/datum/reagent/consumable/virus_food))
