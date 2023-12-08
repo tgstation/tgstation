@@ -22,10 +22,10 @@ export const NowPlayingWidget = (props) => {
     duration = audio.meta?.duration,
     date = !isNaN(upload_date)
       ? upload_date?.substring(0, 4) +
-      '-' +
-      upload_date?.substring(4, 6) +
-      '-' +
-      upload_date?.substring(6, 8)
+        '-' +
+        upload_date?.substring(4, 6) +
+        '-' +
+        upload_date?.substring(6, 8)
       : upload_date;
 
   return (
@@ -38,7 +38,8 @@ export const NowPlayingWidget = (props) => {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-          }}>
+          }}
+        >
           {
             <Collapsible title={title || 'Unknown Track'} color={'blue'}>
               <Section>

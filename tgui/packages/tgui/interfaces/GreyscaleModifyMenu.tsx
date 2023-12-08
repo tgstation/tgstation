@@ -1,5 +1,17 @@
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Flex, Stack, Icon, Input, LabeledList, Section, Table, Divider } from '../components';
+import {
+  Box,
+  Button,
+  ColorBox,
+  Flex,
+  Stack,
+  Icon,
+  Input,
+  LabeledList,
+  Section,
+  Table,
+  Divider,
+} from '../components';
 import { Window } from '../layouts';
 
 type ColorEntry = {
@@ -96,7 +108,8 @@ const ColorDisplay = (props) => {
           <LabeledList.Item
             key={`colorgroup${item.index}${item.value}`}
             label={`Color Group ${item.index}`}
-            color={item.value}>
+            color={item.value}
+          >
             <ColorBox color={item.value} />{' '}
             <Button
               icon="palette"

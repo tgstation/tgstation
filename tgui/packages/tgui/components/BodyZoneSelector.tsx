@@ -84,7 +84,8 @@ export class BodyZoneSelector extends Component<
           width: `${32 * scale}px`,
           height: `${32 * scale}px`,
           position: 'relative',
-        }}>
+        }}
+      >
         <Box
           as="img"
           src={resolveAsset(`body_zones.base_${theme}.png`)}

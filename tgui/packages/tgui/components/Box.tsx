@@ -262,6 +262,6 @@ export const Box = (props: BoxProps) => {
       ...computedProps,
       className: computedClassName,
     },
-    children
+    children,
   );
 };

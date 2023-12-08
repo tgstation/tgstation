@@ -206,7 +206,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
         onMouseMove={this.handleDrawing as any}
         onMouseUp={this.handleEndDrawing as any}
         onMouseOut={this.handleEndDrawing as any}
-        onContextMenu={this.handleDropper as any}>
+        onContextMenu={this.handleDropper as any}
+      >
         Canvas failed to render.
       </canvas>
     );
@@ -256,7 +257,8 @@ export const Canvas = (props) => {
         75 +
         (data.show_plaque ? average_plaque_height : 0) +
         (data.editable && data.paint_tool_palette ? palette_height : 0)
-      }>
+      }
+    >
       <Window.Content>
         <Flex align="start" direction="row">
           {!!data.paint_tool_palette && (
@@ -274,7 +276,8 @@ export const Canvas = (props) => {
                   or input a new one with Right-Click.
                 `
                     : '')
-                }>
+                }
+              >
                 <Icon name="question-circle" color="blue" size={1.5} m={0.5} />
               </Tooltip>
             </Flex.Item>
@@ -356,7 +359,8 @@ export const Canvas = (props) => {
                 textColor="black"
                 textAlign="left"
                 backgroundColor="white"
-                style={{ borderStyle: 'inset' }}>
+                style={{ borderStyle: 'inset' }}
+              >
                 <Box mb={1} fontSize="18px" bold>
                   {decodeHtmlEntities(data.name)}
                 </Box>

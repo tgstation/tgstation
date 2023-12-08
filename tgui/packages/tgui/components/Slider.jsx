@@ -47,7 +47,8 @@ export const Slider = (props) => {
         suppressFlicker,
         unit,
         value,
-      }}>
+      }}
+    >
       {(control) => {
         const {
           dragging,
@@ -63,7 +64,7 @@ export const Slider = (props) => {
         const scaledFillValue = scale(
           fillValue ?? displayValue,
           minValue,
-          maxValue
+          maxValue,
         );
         const scaledDisplayValue = scale(displayValue, minValue, maxValue);
         // prettier-ignore
@@ -79,7 +80,8 @@ export const Slider = (props) => {
               computeBoxClassName(rest),
             ])}
             {...computeBoxProps(rest)}
-            onMouseDown={handleDragStart}>
+            onMouseDown={handleDragStart}
+          >
             <div
               className={classes([
                 'ProgressBar__fill',
@@ -102,7 +104,8 @@ export const Slider = (props) => {
               className="Slider__cursorOffset"
               style={{
                 width: clamp01(scaledDisplayValue) * 100 + '%',
-              }}>
+              }}
+            >
               <div className="Slider__cursor" />
               <div className="Slider__pointer" />
               {dragging && (

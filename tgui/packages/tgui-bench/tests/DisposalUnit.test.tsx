@@ -12,7 +12,7 @@ const renderUi = createRenderer((dataJson: string) => {
   store.dispatch(
     backendUpdate({
       data: Byond.parseJson(dataJson),
-    })
+    }),
   );
   return <DisposalUnit />;
 });

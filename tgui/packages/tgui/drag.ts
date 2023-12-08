@@ -76,7 +76,7 @@ const getScreenSize = (): [number, number] => [
 export const touchRecents = (
   recents: string[],
   touchedItem: string,
-  limit = 50
+  limit = 50,
 ): [string[], string | undefined] => {
   const nextRecents: string[] = [touchedItem];
   let trimmedItem: string | undefined;
@@ -105,7 +105,7 @@ const storeWindowGeometry = async () => {
   // Update the list of stored geometries
   const [geometries, trimmedKey] = touchRecents(
     (await storage.get('geometries')) || [],
-    windowKey
+    windowKey,
   );
   if (trimmedKey) {
     storage.remove(trimmedKey);
@@ -120,7 +120,7 @@ export const recallWindowGeometry = async (
     pos?: [number, number];
     size?: [number, number];
     locked?: boolean;
-  } = {}
+  } = {},
 ) => {
   const geometry = options.fancy && (await storage.get(windowKey));
   if (geometry) {
@@ -157,7 +157,7 @@ export const recallWindowGeometry = async (
     pos = vecAdd(
       vecScale(areaAvailable, 0.5),
       vecScale(size, -0.5),
-      vecScale(screenOffset, -1.0)
+      vecScale(screenOffset, -1.0),
     );
     setWindowPosition(pos);
   }
@@ -182,7 +182,7 @@ export const setupDrag = async () => {
  */
 const constraintPosition = (
   pos: [number, number],
-  size: [number, number]
+  size: [number, number],
 ): [boolean, [number, number]] => {
   const screenPos = getScreenPosition();
   const screenSize = getScreenSize();
@@ -208,7 +208,7 @@ export const dragStartHandler = (event) => {
   dragging = true;
   dragPointOffset = vecSubtract(
     [event.screenX, event.screenY],
-    getWindowPosition()
+    getWindowPosition(),
   );
   // Focus click target
   (event.target as HTMLElement)?.focus();
@@ -234,7 +234,7 @@ const dragMoveHandler = (event: MouseEvent) => {
   }
   event.preventDefault();
   setWindowPosition(
-    vecSubtract([event.screenX, event.screenY], dragPointOffset)
+    vecSubtract([event.screenX, event.screenY], dragPointOffset),
   );
 };
 
@@ -246,7 +246,7 @@ export const resizeStartHandler =
     resizing = true;
     dragPointOffset = vecSubtract(
       [event.screenX, event.screenY],
-      getWindowPosition()
+      getWindowPosition(),
     );
     initialSize = getWindowSize();
     // Focus click target
@@ -274,7 +274,7 @@ const resizeMoveHandler = (event: MouseEvent) => {
   event.preventDefault();
   const currentOffset = vecSubtract(
     [event.screenX, event.screenY],
-    getWindowPosition()
+    getWindowPosition(),
   );
   const delta = vecSubtract(currentOffset, dragPointOffset);
   // Extra 1x1 area is added to ensure the browser can see the cursor

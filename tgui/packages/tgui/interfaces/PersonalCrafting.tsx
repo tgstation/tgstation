@@ -3,7 +3,18 @@ import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Divider, Button, Section, Tabs, Stack, Box, Input, Icon, Tooltip, NoticeBox } from '../components';
+import {
+  Divider,
+  Button,
+  Section,
+  Tabs,
+  Stack,
+  Box,
+  Input,
+  Icon,
+  Tooltip,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
 
@@ -37,45 +48,45 @@ const CATEGORY_ICONS_CRAFTING = {
   'Weapons Melee': 'hand-fist',
   'Weapons Ranged': 'gun',
   'Weapon Ammo': 'box',
-  'Robotics': 'robot',
-  'Misc': 'shapes',
-  'Tribal': 'campground',
-  'Clothing': 'shirt',
-  'Drinks': 'wine-bottle',
-  'Chemistry': 'microscope',
-  'Atmospherics': 'fan',
-  'Structures': 'cube',
-  'Tiles': 'border-all',
-  'Windows': 'person-through-window',
-  'Doors': 'door-open',
-  'Furniture': 'chair',
-  'Equipment': 'calculator',
-  'Containers': 'briefcase',
-  'Tools': 'screwdriver-wrench',
-  'Entertainment': 'masks-theater',
+  Robotics: 'robot',
+  Misc: 'shapes',
+  Tribal: 'campground',
+  Clothing: 'shirt',
+  Drinks: 'wine-bottle',
+  Chemistry: 'microscope',
+  Atmospherics: 'fan',
+  Structures: 'cube',
+  Tiles: 'border-all',
+  Windows: 'person-through-window',
+  Doors: 'door-open',
+  Furniture: 'chair',
+  Equipment: 'calculator',
+  Containers: 'briefcase',
+  Tools: 'screwdriver-wrench',
+  Entertainment: 'masks-theater',
   'Blood Cult': 'users',
 } as const;
 
 const CATEGORY_ICONS_COOKING = {
   'Can Make': 'utensils',
-  'Breads': 'bread-slice',
-  'Burgers': 'burger',
-  'Cakes': 'cake-candles',
+  Breads: 'bread-slice',
+  Burgers: 'burger',
+  Cakes: 'cake-candles',
   'Egg-Based Food': 'egg',
-  'Frozen': 'ice-cream',
+  Frozen: 'ice-cream',
   'Lizard Food': 'dragon',
-  'Meats': 'bacon',
+  Meats: 'bacon',
   'Mexican Food': 'pepper-hot',
   'Misc. Food': 'shapes',
   'Mothic Food': 'shirt',
-  'Pastries': 'cookie',
-  'Pies': 'chart-pie',
-  'Pizzas': 'pizza-slice',
-  'Salads': 'leaf',
-  'Sandwiches': 'hotdog',
-  'Seafood': 'fish',
-  'Soups': 'mug-hot',
-  'Spaghettis': 'wheat-awn',
+  Pastries: 'cookie',
+  Pies: 'chart-pie',
+  Pizzas: 'pizza-slice',
+  Salads: 'leaf',
+  Sandwiches: 'hotdog',
+  Seafood: 'fish',
+  Soups: 'mug-hot',
+  Spaghettis: 'wheat-awn',
 } as const;
 
 enum MODE {
@@ -166,18 +177,18 @@ export const PersonalCrafting = (props) => {
       ? 'Can Make'
       : mode === MODE.cooking
         ? DEFAULT_CAT_COOKING
-        : DEFAULT_CAT_CRAFTING
+        : DEFAULT_CAT_CRAFTING,
   );
   const [activeType, setFoodType] = useLocalState(
     'foodtype',
-    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0]
+    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
   const material_occurences = flow([
     sortBy<Material>((material) => -material.occurences),
   ])(data.material_occurences);
   const [activeMaterial, setMaterial] = useLocalState(
     'material',
-    material_occurences[0].atom_id
+    material_occurences[0].atom_id,
   );
   const [tabMode, setTabMode] = useLocalState('tabMode', 0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
@@ -200,7 +211,7 @@ export const PersonalCrafting = (props) => {
           (tabMode === TABS.category &&
             ((activeCategory === 'Can Make' &&
               Boolean(craftability[recipe.ref])) ||
-              recipe.category === activeCategory)))
+              recipe.category === activeCategory))),
     ),
     sortBy<Recipe>((recipe) => [
       activeCategory === 'Can Make'
@@ -265,9 +276,10 @@ export const PersonalCrafting = (props) => {
                         setCategory(
                           Object.keys(craftability).length
                             ? 'Can Make'
-                            : data.categories[0]
+                            : data.categories[0],
                         );
-                      }}>
+                      }}
+                    >
                       Category
                     </Tabs.Tab>
                     {mode === MODE.cooking && (
@@ -282,9 +294,10 @@ export const PersonalCrafting = (props) => {
                           setFoodType(
                             Object.keys(craftability).length
                               ? 'Can Make'
-                              : data.foodtypes[0]
+                              : data.foodtypes[0],
                           );
-                        }}>
+                        }}
+                      >
                         Type
                       </Tabs.Tab>
                     )}
@@ -297,7 +310,8 @@ export const PersonalCrafting = (props) => {
                         setTabMode(TABS.material);
                         setPages(1);
                         setMaterial(material_occurences[0].atom_id);
-                      }}>
+                      }}
+                    >
                       {mode === MODE.cooking ? 'Ingredient' : 'Material'}
                     </Tabs.Tab>
                   </Tabs>
@@ -322,7 +336,8 @@ export const PersonalCrafting = (props) => {
                               if (searchText.length > 0) {
                                 setSearchText('');
                               }
-                            }}>
+                            }}
+                          >
                             <FoodtypeContent
                               type={foodtype}
                               diet={diet}
@@ -347,7 +362,8 @@ export const PersonalCrafting = (props) => {
                               if (searchText.length > 0) {
                                 setSearchText('');
                               }
-                            }}>
+                            }}
+                          >
                             <MaterialContent
                               atom_id={material.atom_id}
                               occurences={material.occurences}
@@ -371,7 +387,8 @@ export const PersonalCrafting = (props) => {
                               if (searchText.length > 0) {
                                 setSearchText('');
                               }
-                            }}>
+                            }}
+                          >
                             <Stack>
                               <Stack.Item width="14px" textAlign="center">
                                 <Icon
@@ -387,7 +404,8 @@ export const PersonalCrafting = (props) => {
                                 grow
                                 color={
                                   category === 'Blood Cult' ? 'red' : 'default'
-                                }>
+                                }
+                              >
                                 {category}
                               </Stack.Item>
                               {category === 'Can Make' && (
@@ -429,7 +447,7 @@ export const PersonalCrafting = (props) => {
                           checked={mode === MODE.crafting}
                           icon="hammer"
                           style={{
-                            'border':
+                            border:
                               '2px solid ' +
                               (mode === MODE.crafting ? '#20b142' : '#333'),
                           }}
@@ -451,7 +469,7 @@ export const PersonalCrafting = (props) => {
                           checked={mode === MODE.cooking}
                           icon="utensils"
                           style={{
-                            'border':
+                            border:
                               '2px solid ' +
                               (mode === MODE.cooking ? '#20b142' : '#333'),
                           }}
@@ -478,7 +496,8 @@ export const PersonalCrafting = (props) => {
               pr={1}
               pt={1}
               mr={-1}
-              style={{ overflowY: 'auto' }}>
+              style={{ overflowY: 'auto' }}
+            >
               {recipes.length > 0 ? (
                 recipes
                   .slice(0, displayLimit)
@@ -504,7 +523,7 @@ export const PersonalCrafting = (props) => {
                         mode={mode}
                         diet={diet}
                       />
-                    )
+                    ),
                   )
               ) : (
                 <NoticeBox m={1} p={1}>
@@ -515,8 +534,9 @@ export const PersonalCrafting = (props) => {
                 <Section
                   mb={2}
                   textAlign="center"
-                  style={{ 'cursor': 'pointer' }}
-                  onClick={() => setPages(pages + 1)}>
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setPages(pages + 1)}
+                >
                   Load {Math.min(pageSize, recipes.length - displayLimit)}{' '}
                   more...
                 </Section>
@@ -554,10 +574,11 @@ const MaterialContent = (props) => {
         grow
         style={{
           textTransform: 'capitalize',
-          'overflow': 'hidden',
+          overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
-        }}>
+        }}
+      >
         {name}
       </Stack.Item>
       <Stack.Item height="32px" lineHeight="32px">
@@ -629,7 +650,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                       : amount > 1
                         ? `${name}\xa0${amount}x`
                         : name;
-                  })
+                  }),
                 ).join(', ')}
 
                 {item.chem_catalysts &&
@@ -670,7 +691,8 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                 <Box>
                   {!!item.tool_behaviors && (
                     <Tooltip
-                      content={'Tools: ' + item.tool_behaviors.join(', ')}>
+                      content={'Tools: ' + item.tool_behaviors.join(', ')}
+                    >
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>
                   )}
@@ -700,7 +722,8 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                   <Tooltip
                     content={item.steps.map((step) => (
                       <Box key={step}>{step}</Box>
-                    ))}>
+                    ))}
+                  >
                     <Box fontSize={1.5} p={1}>
                       <Icon name="circle-question-o" />
                     </Box>
@@ -724,7 +747,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
           <Box width={'64px'} height={'64px'} mr={1}>
             <Box
               style={{
-                'transform': 'scale(1.5)',
+                transform: 'scale(1.5)',
               }}
               m={'16px'}
               className={item.icon}
