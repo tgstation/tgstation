@@ -30,6 +30,7 @@
 	name = "Bomb Storage";
 	req_access = list("syndicate")
 	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
