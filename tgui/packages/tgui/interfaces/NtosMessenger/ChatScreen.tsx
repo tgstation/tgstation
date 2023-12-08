@@ -1,5 +1,5 @@
 import { Stack, Section, Button, Box, Input, Modal, Tooltip, Icon } from '../../components';
-import { Component, RefObject, createRef, SFC } from 'inferno';
+import { Component, RefObject, createRef } from 'react';
 import { NtMessage, NtMessenger, NtPicture } from './types';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../../backend';
@@ -419,7 +419,7 @@ const ChatMessage = (props: ChatMessageProps) => {
   );
 };
 
-const ChatDivider: SFC<{ mt: number }> = (props) => {
+const ChatDivider = (props: { mt: number }) => {
   return (
     <Box className="UnreadDivider" m={0} mt={props.mt}>
       <div />

@@ -81,6 +81,7 @@
 		/obj/item/dice/fudge = 9,
 		/obj/item/clothing/shoes/wheelys/skishoes = 4,
 		/obj/item/instrument/musicalmoth = 1,
+		/obj/item/gun/ballistic/revolver/russian = 1, //the most dangerous game
 	)
 	premium = list(
 		/obj/item/disk/holodisk = 5,

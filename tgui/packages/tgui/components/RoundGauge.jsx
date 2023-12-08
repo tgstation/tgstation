@@ -10,11 +10,6 @@ import { AnimatedNumber } from './AnimatedNumber';
 import { Box, computeBoxClassName, computeBoxProps } from './Box';
 
 export const RoundGauge = (props) => {
-  // Support for IE8 is for losers sorry B)
-  if (Byond.IS_LTE_IE8) {
-    return <AnimatedNumber {...props} />;
-  }
-
   const {
     value,
     minValue = 1,
@@ -31,7 +26,7 @@ export const RoundGauge = (props) => {
 
   const scaledValue = scale(value, minValue, maxValue);
   const clampedValue = clamp01(scaledValue);
-  const scaledRanges = ranges ? {} : { 'primary': [0, 1] };
+  const scaledRanges = ranges ? {} : { primary: [0, 1] };
   if (ranges) {
     Object.keys(ranges).forEach((x) => {
       const range = ranges[x];
@@ -73,7 +68,7 @@ export const RoundGauge = (props) => {
         ])}
         {...computeBoxProps({
           style: {
-            'font-size': size + 'em',
+            fontSize: size + 'em',
             ...style,
           },
           ...rest,
@@ -99,7 +94,7 @@ export const RoundGauge = (props) => {
                   className={`RoundGauge__ringFill RoundGauge--color--${x}`}
                   key={i}
                   style={{
-                    'stroke-dashoffset': Math.max(
+                    strokeDashoffset: Math.max(
                       (2.0 - (col_ranges[1] - col_ranges[0])) * Math.PI * 50,
                       0
                     ),

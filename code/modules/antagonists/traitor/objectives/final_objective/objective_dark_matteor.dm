@@ -1,11 +1,11 @@
 /datum/traitor_objective/ultimate/dark_matteor
 	name = "Summon a dark matter singularity to consume the station."
-	description = "Go to %AREA%, and recieve the smuggled satellites + emag. Set up and emag the satellites, \
+	description = "Go to %AREA%, and receive the smuggled satellites + emag. Set up and emag the satellites, \
 	after enough have been recalibrated by the emag, IT COMES. Warning: The dark matter singularity will hunt all creatures, you included."
 
 	//this is a prototype so this progression is for all basic level kill objectives
 
-	///area type the objective owner must be in to recieve the satellites
+	///area type the objective owner must be in to receive the satellites
 	var/area/satellites_spawnarea_type
 	///checker on whether we have sent the satellites yet.
 	var/sent_satellites = FALSE
@@ -43,7 +43,7 @@
 				return
 			var/area/delivery_area = get_area(user)
 			if(delivery_area.type != satellites_spawnarea_type)
-				to_chat(user, span_warning("You must be in [initial(satellites_spawnarea_type.name)] to recieve the smuggled satellites."))
+				to_chat(user, span_warning("You must be in [initial(satellites_spawnarea_type.name)] to receive the smuggled satellites."))
 				return
 			sent_satellites = TRUE
 			podspawn(list(

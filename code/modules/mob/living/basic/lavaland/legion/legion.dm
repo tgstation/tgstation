@@ -52,6 +52,7 @@
 	. = ..()
 	if (gone != stored_mob)
 		return
+	UnregisterSignal(stored_mob, COMSIG_LIVING_REVIVE)
 	ai_controller.clear_blackboard_key(BB_LEGION_CORPSE)
 	stored_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	stored_mob.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
@@ -72,6 +73,7 @@
 	consumed.extinguish_mob()
 	consumed.fully_heal(HEAL_DAMAGE)
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
+	RegisterSignal(consumed, COMSIG_LIVING_REVIVE, PROC_REF(on_consumed_revive))
 	consumed.forceMove(src)
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
@@ -84,6 +86,11 @@
 	cancer.Insert(consumed, special = TRUE, drop_if_replaced = FALSE)
 
 /// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
+
+/mob/living/basic/mining/legion/proc/on_consumed_revive(full_heal_flags)
+	SIGNAL_HANDLER
+	gib()
+
 /mob/living/basic/mining/legion/spawner_made
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred
 

@@ -45,8 +45,8 @@ export const MultiNameInput = (props: {
         return (
           <Modal
             style={{
-              'margin': '0 auto',
-              'width': '40%',
+              margin: '0 auto',
+              width: '40%',
             }}>
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
               <Section
@@ -165,8 +165,8 @@ export const NameInput = (props: {
         <Stack.Item>
           <Icon
             style={{
-              'color': 'rgba(255, 255, 255, 0.5)',
-              'font-size': '17px',
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontSize: '17px',
             }}
             name="edit"
           />
@@ -191,7 +191,7 @@ export const NameInput = (props: {
 
           <Box
             style={{
-              'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
+              borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
               right: '50%',
               transform: 'translateX(50%)',
               position: 'absolute',
@@ -229,9 +229,9 @@ export const NameInput = (props: {
                   <Icon
                     name="ellipsis-v"
                     style={{
-                      'position': 'relative',
-                      'left': '1px',
-                      'min-width': '0px',
+                      position: 'relative',
+                      left: '1px',
+                      minWidth: '0px',
                     }}
                   />
                 </Button>

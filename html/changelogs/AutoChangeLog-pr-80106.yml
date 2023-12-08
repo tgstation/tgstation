@@ -1,0 +1,5 @@
+author: "IsaacExists"
+delete-after: True
+changes:
+  - rscadd: "Added new modular Assault-Type domain \"Abductor Ship\""
+  - rscadd: "Added new simple mob abductor agents team"

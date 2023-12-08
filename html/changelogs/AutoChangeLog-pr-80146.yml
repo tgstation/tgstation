@@ -1,0 +1,5 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - balance: "heretic robes now have wound armor"
+  - balance: "heretic blades now have knife-level wound bonuses"

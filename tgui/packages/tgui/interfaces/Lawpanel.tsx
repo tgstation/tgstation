@@ -290,7 +290,7 @@ export const Lawpanel = (props) => {
   const { all_silicons } = data;
 
   return (
-    <Window title="Law Panel" theme="admin" width="800" height="600">
+    <Window title="Law Panel" theme="admin" width={800} height={600}>
       <Window.Content>
         <Section
           fill

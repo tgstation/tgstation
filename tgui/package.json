@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "tgui-workspace",
-  "version": "4.4.0",
+  "version": "5.0.0",
   "packageManager": "yarn@3.3.1",
   "workspaces": [
     "packages/*"
@@ -25,6 +25,7 @@
     "@babel/plugin-transform-class-properties": "^7.23.3",
     "@babel/plugin-transform-jscript": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
+    "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@types/jest": "^29.5.10",
     "@types/jsdom": "^21.1.6",
@@ -34,7 +35,6 @@
     "@typescript-eslint/parser": "^5.62.0",
     "babel-jest": "^29.7.0",
     "babel-loader": "^8.3.0",
-    "babel-plugin-inferno": "^6.7.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "common": "workspace:*",
     "css-loader": "^6.8.1",

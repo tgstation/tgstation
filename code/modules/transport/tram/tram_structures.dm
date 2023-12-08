@@ -212,7 +212,7 @@
 	return ..()
 
 /obj/structure/tram/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
 			new girder_type(loc)
 		if(mineral_amount)
@@ -422,7 +422,7 @@
 	name = "bamboo tram"
 	desc = "A tram with a bamboo framing."
 	icon = 'icons/turf/walls/bamboo_wall.dmi'
-	icon_state = "wall-0"
+	icon_state = "bamboo_wall-0"
 	base_icon_state = "wall"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS

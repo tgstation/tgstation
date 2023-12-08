@@ -2,7 +2,6 @@ import { useBackend } from '../backend';
 import { Box, Button, StyleableSection, Icon, Stack, NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
-import { SFC } from 'inferno';
 import { JOB2ICON } from './common/JobToIcon';
 import { deepMerge } from 'common/collections';
 import { BooleanLike } from 'common/react';
@@ -32,12 +31,12 @@ type Data = {
   round_duration: string;
 };
 
-export const JobEntry: SFC<{
+export const JobEntry = (data: {
   jobName: string;
   job: Job;
   department: Department;
   onClick: () => void;
-}> = (data) => {
+}) => {
   const jobName = data.jobName;
   const job = data.job;
   const department = data.department;
@@ -47,26 +46,26 @@ export const JobEntry: SFC<{
       fluid
       style={{
         // Try not to think too hard about this one.
-        'background-color': job.unavailable_reason
+        backgroundColor: job.unavailable_reason
           ? '#949494' // Grey background
           : job.prioritized
             ? '#16fc0f' // Bright green background
             : Color.fromHex(department.color)
               .darken(10)
               .toString(),
-        'color': job.unavailable_reason
+        color: job.unavailable_reason
           ? '#616161' // Dark grey font
           : Color.fromHex(department.color)
             .darken(90)
             .toString(),
-        'font-size': '1.1rem',
-        'cursor': job.unavailable_reason ? 'initial' : 'pointer',
+        fontSize: '1.1rem',
+        cursor: job.unavailable_reason ? 'initial' : 'pointer',
       }}
       tooltip={
         job.unavailable_reason ||
         (job.prioritized ? (
           <>
-            <p style={{ 'margin-top': '0px' }}>
+            <p style={{ marginTop: '0px' }}>
               <b>The HoP wants more people in this job!</b>
             </p>
             {job.description}
@@ -83,9 +82,9 @@ export const JobEntry: SFC<{
         {job.command ? <b>{jobName}</b> : jobName}
         <span
           style={{
-            'white-space': 'nowrap',
-            'position': 'absolute',
-            'right': '0.5em',
+            whiteSpace: 'nowrap',
+            position: 'absolute',
+            right: '0.5em',
           }}>
           {job.used_slots} / {job.open_slots}
         </span>
@@ -107,11 +106,7 @@ export const JobSelection = (props) => {
   return (
     <Window
       width={1012}
-      height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}
-      onComponentDidMount={() => {
-        // Send a heartbeat back to DM to let it know the window is alive and well
-        act('ui_mounted_with_no_bluescreen');
-      }}>
+      height={data.shuttle_status ? 690 : 666 /* Hahahahahaha */}>
       <Window.Content scrollable>
         <StyleableSection
           title={
@@ -119,19 +114,19 @@ export const JobSelection = (props) => {
               {data.shuttle_status && (
                 <NoticeBox info>{data.shuttle_status}</NoticeBox>
               )}
-              <span style={{ 'color': 'grey' }}>
+              <span style={{ color: 'grey' }}>
                 It is currently {data.round_duration} into the shift.
               </span>
               <Button
-                style={{ 'position': 'absolute', 'right': '1em' }}
-                onClick={() => act('select_job', { 'job': 'Random' })}
+                style={{ position: 'absolute', right: '1em' }}
+                onClick={() => act('select_job', { job: 'Random' })}
                 content="Random Job!"
                 tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
               />
             </>
           }
-          titleStyle={{ 'min-height': '3.4em' }}>
-          <Box wrap="wrap" style={{ 'columns': '20em' }}>
+          titleStyle={{ minHeight: '3.4em' }}>
+          <Box wrap="wrap" style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
               const departmentName = departmentEntry[0];
               const entry = departmentEntry[1];
@@ -143,11 +138,11 @@ export const JobSelection = (props) => {
                         {departmentName}
                         <span
                           style={{
-                            'font-size': '1rem',
-                            'white-space': 'nowrap',
-                            'position': 'absolute',
-                            'right': '1em',
-                            'color': Color.fromHex(entry.color)
+                            fontSize: '1rem',
+                            whiteSpace: 'nowrap',
+                            position: 'absolute',
+                            right: '1em',
+                            color: Color.fromHex(entry.color)
                               .darken(60)
                               .toString(),
                           }}>
@@ -158,9 +153,9 @@ export const JobSelection = (props) => {
                       </>
                     }
                     style={{
-                      'background-color': entry.color,
-                      'margin-bottom': '1em',
-                      'break-inside': 'avoid-column',
+                      backgroundColor: entry.color,
+                      marginBottom: '1em',
+                      breakInside: 'avoid-column',
                     }}
                     titleStyle={{
                       'border-bottom-color': Color.fromHex(entry.color)
@@ -168,7 +163,7 @@ export const JobSelection = (props) => {
                         .toString(),
                     }}
                     textStyle={{
-                      'color': Color.fromHex(entry.color)
+                      color: Color.fromHex(entry.color)
                         .darken(80)
                         .toString(),
                     }}>

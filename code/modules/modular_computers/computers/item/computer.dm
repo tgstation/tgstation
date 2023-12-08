@@ -30,7 +30,7 @@
 	///List of stored files on this drive. Use `store_file` and `remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
-	///Non-static list of programs the computer should recieve on Initialize.
+	///Non-static list of programs the computer should receive on Initialize.
 	var/list/datum/computer_file/starting_programs = list()
 	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
 	var/static/list/datum/computer_file/default_programs = list(
@@ -839,7 +839,7 @@
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	remove_pai()
 	eject_aicard()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if (disassembled)
 			internal_cell?.forceMove(drop_location())
 			computer_id_slot?.forceMove(drop_location())

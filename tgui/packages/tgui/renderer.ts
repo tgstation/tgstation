@@ -1,5 +1,5 @@
 import { perf } from 'common/perf';
-import { render } from 'inferno';
+import { render } from 'react-dom';
 import { createLogger } from './logging';
 
 const logger = createLogger('renderer');

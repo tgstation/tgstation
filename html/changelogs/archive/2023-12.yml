@@ -39,3 +39,216 @@
   - bugfix: A chain should now show up as you drag in something with the meat hooks.
   - bugfix: Meat hooks should no longer play the "magical gun" suicide if you were
       to use it, but instead do their own unique thing.
+2023-12-02:
+  00-Steven:
+  - bugfix: Sign Language action properly toggles between an active/inactive background
+      again.
+  Autisem:
+  - admin: A new debug verb to turn yourself into an MMI(almost the funniest thing)
+  - bugfix: MMI's inside mechs can now properly open doors like there posibrain counterparts
+  Ben10Omintrix:
+  - bugfix: fix parrots not appearing dead sometimes
+  Fikou:
+  - rscadd: Instead of punished sect healing people like the normal bibble- you take
+      their burdens on instead!
+  Ghommie:
+  - bugfix: Fixed an issue with the offsets of ridden vehicles on tables, and another
+      when buckled to a bed.
+  IsaacExists:
+  - sound: Added human laughter to felinids
+  Vekter:
+  - rscadd: Added a new hostile variant of cats, "feral cats".
+  - rscadd: Added a new traitor item, "feral cat grenades". For 5 TC, you too can
+      throw a grenade at someone and make five cats maul them to death.
+  - rscdel: Replaced the "monkey cube" in Birdshot's tool storage with a different
+      "monkey cube".
+  - rscadd: Added a fun surprise item to Birdshot's tool storage to compensate for
+      the above change.
+  jlsnow301:
+  - bugfix: Mod links are now disabled in the virtual realm.
+  san7890:
+  - admin: The Player Panel should now contain the unique mob tag associated to a
+      certain mob that a player might inhabit at one time, which is stored on their
+      player details datum on their client (which is guaranteed to always exist).
+  - admin: The "Old Names" details of a player is now visible in their own personal
+      per-player player panel.
+2023-12-03:
+  Ben10Omintrix:
+  - refactor: medbots are now basic bots. please report any bugs
+  - rscadd: medbots can wear hats!
+  Fikou:
+  - qol: psyker echolocation cooldown time has been reduced from 2 to 1.8 seconds
+  - bugfix: psyker heads no longer render an overlay of not having eyes
+  Jackraxxus:
+  - bugfix: Digi legs work with the QM's jumpskirt
+  MrMelbert:
+  - bugfix: smartfridges no longer show false overlays
+  Rhials:
+  - spellcheck: Fixes a typo in the Factory Quartermaster outfit name.
+  SyncIt21:
+  - bugfix: crafting food or any other items that require reagents will not leave
+      behind blank reagents. That and properly updates the holder those reagents are
+      stored in
+  Vekter:
+  - bugfix: Fixed damage ranging on feral cats
+  - bugfix: Fixes hole in Birdshot hallway
+  distributivgesetz:
+  - spellcheck: Occurrences of "recieve" has been changed to "receive".
+  san7890:
+  - bugfix: Some mapped-in gifts that were supposed to guarantee a certain gift weren't
+      spawning that exact gift type, this has been patched to reflect the mapper's
+      intent.
+  tralezab:
+  - balance: Honorbound no longer cares about innocence when it comes to lesser creatures.
+      They can still be considered unready in some cases.
+  - balance: Attacking a cultist with a halo or a nuclear operative first instantly
+      makes THEM guilty, allowing further attacks.
+  - balance: More favor for converting someone to the honorbound rules
+2023-12-04:
+  Ghommie:
+  - rscadd: Added the daily (roundstart) message server key to the Chief Engineer's
+      memories.
+  - bugfix: Fixed some oopsie whoopsie with elevation, trams and beds causing people
+      to visually ascend or descend to heaven or hell.
+  Hatterhat:
+  - bugfix: SecTech restocking units are now actually named SecTech restocking units,
+      and not Generic restocking units.
+  KittyNoodle:
+  - bugfix: Heretics can no longer cast all of their spells while in jaunt
+  Melbert:
+  - rscadd: Falling down a z-level while standing now damages your legs rather than
+      your entire body. This also means falling down multiple z-s may rarely break
+      your legs.
+  - rscadd: Felinids now land on their feet if they fall down a z-level while standing.
+      This replaces the knockdown with a short slowdown, and also has the trade-off
+      of causing more leg damage.
+  - rscadd: Cats can now fall z-levels without sustaining damage.
+  Profakos:
+  - rscdel: Removes the slime's reagent holder. This will make them not slow down
+      from somehow imbibing morphine or frostoil.
+  Rhials:
+  - qol: Bar signs ordered from cargo will no longer be access-restricted.
+  SyncIt21:
+  - bugfix: soups and other reactions where large quantities of reagents are required/present
+      should not have a random chance of reacting forever.
+  - bugfix: reactions which are overheated should diminish all the way to 0
+  - code_imp: cleaned up code in `datam/equilibrium` in general. Slightly optimized
+      soup reaction code
+  Timberpoes:
+  - admin: Removed the "Turn Target into MMI" right click context menu verb entirely,
+      and instead added the same command as a VV dropdown on human mobs.
+  distributivgesetz:
+  - balance: Clone damage dealt by the cosmic blade has been replaced with organ damage
+      and increased burn damage. Clone damage dealt by the cosmic beam has been removed.
+      The star gazer now deals burn damage instead of clone damage.
+  - bugfix: The health of mobs combo'd by a cosmic blade will now update correctly.
+  necromanceranne:
+  - bugfix: Blocking a tackler no longer causes things to go haywire and stun the
+      tackler/the tackle victim.
+  tralezab:
+  - rscadd: 'Festival Sect has 3 new rites: Cogitandi Fidis, Portable Song Tuning,
+      and Illuminating Solo.'
+  - balance: lowers threshold for triggering a final effect. Consult your Cogitandi
+      Fidis for more information
+  xXPawnStarrXx:
+  - rscadd: Added new roast dinners, able to be cut into smaller portions hopefully
+      in time for the Christmas season.
+  - rscadd: Added sprites for bone spears to match the other bone items.
+2023-12-05:
+  13spacemen:
+  - balance: Deleting and reprogramming pipes/devices with RPD is now INSTANT!
+  Autisem:
+  - bugfix: Rebirthing from headslug properly reapplys void adaptation
+  distributivgesetz:
+  - rscdel: Removed clone damage.
+  - rscdel: Removed the decloner gun.
+  - rscdel: "Removed clonexadone.\n/\U0001F191\n<!-- Both :cl:'s are required for\
+      \ the changelog to work! You can put your name to the right of the first :cl:\
+      \ if you want to overwrite your GitHub username as author ingame. -->\n<!--\
+      \ You can use multiple of the same prefix (they're only used for the icon ingame)\
+      \ and delete the unneeded ones. Despite some of the tags, changelogs should\
+      \ generally represent how a player might be affected by the changes rather than\
+      \ a summary of the PR's contents. -->"
+  san7890:
+  - bugfix: 'Janitors rejoice (or lament): Floors should now be dirty shift-start.
+
+      / \:cl:'
+2023-12-06:
+  Ghommie:
+  - bugfix: Fixed the AI painting manager showing invalid choices.
+  - bugfix: "Fixed the painting manager search function.\n/\U0001F191"
+  Mothblocks:
+  - qol: Converting someone will now give a chat message.
+  - bugfix: Blood brothers can no longer get other antagonists, I hope.
+  dieamond13:
+  - rscadd: adds propeller hats, rainbow bowties, and swirl lollipops
+  norsvenska:
+  - rscadd: The NTSS Independence (Cruise Evac Shuttle) has received a makeover! Engineering
+      crews are still working on it, but it is operable and available for those who
+      have the money to rent it.
+2023-12-07:
+  Chimpston, atlasle and aBlimpfox:
+  - image: "added Cult Cove, Neon Flamingo and Slowdive bar signs\n/\U0001F191"
+  Higgin:
+  - rscdel: Stagger animation no longer fires longer than it should on dead bodies
+      or on dead bodies period.
+  Tattle:
+  - balance: you can no longer teleport into chasms
+  Vermidia:
+  - bugfix: Medibots made from advanced medkits works again
+  - bugfix: Medibots made from brute medkits have their bonus healing again
+  - bugfix: Medibots can use robotic emotes again
+  san7890:
+  - admin: Spawning in Nar'Sie will no longer automatically trigger the round-ender,
+      you need to specifically start this chain of events through the new VV Dropdown
+      Option "Begin Nar'Sie Roundender".
+2023-12-08:
+  Autisem:
+  - bugfix: Being revived inside a legion now sets you free
+  - bugfix: "in some rare cases gib() did infact not spawn gib\n/\U0001F191"
+  Ben10Omintrix:
+  - bugfix: medbots now drop hats when tipped and drop their items when they explode
+  GoldenAlpharex:
+  - bugfix: The typing indicator has overcome its shyness and is now back to its usual
+      form.
+  Higgin:
+  - balance: most diseases can now be slowed, mitigated, and eventually cured through
+      being well-fed, resting, and using spaceacillin. Curing diseases through this
+      way will give you immunity if you experience them at their peak/maximum and
+      aren't starving/malnourished when they cure.
+  - balance: disease symptoms can be forestalled for up to 100 cycles with a declining
+      chance of avoiding them over time using rest or spaceacillin.
+  - balance: This does not apply to things like fungal TB; it does apply to healing
+      viruses if you don't take care of yourself by staying fed and avoiding spaceacillin.
+  - balance: disease can be cured through direct injection or ingestion of cured blood.
+      However, curing disease in this way does not provide lasting immunity. You need
+      to naturally beat the virus or get a vaccine for that.
+  - balance: Wearing internals or using protective equipment while infected can limit
+      the spread of respiratory illnesses from yourself to others. Contact transmission
+      is still possible however.
+  - balance: Medical Doctors now have roundstart virology access. Paramedics and coroners
+      now get virology access on skeleton shift access. Virologists now have roundstart
+      pharmacy access.
+  - balance: Sentient Diseases now resist being overridden by other advanced diseases
+      and can always override other advanced diseases; they also have an extra bonus
+      on their stealth stat to help make up for early outing without a bit more testing.
+  - balance: biohazard lockers now also contain a syringe of spaceacillin (in line
+      with the orderable kit from cargo.)
+  - balance: Virus severity is now also a function of the number of symptoms out of
+      max your virus has. Experiment with different combinations using less than six
+      symptoms to make viruses that are deceptively less-obvious and less quick to
+      self-cure at the tradeoff of stats.
+  LemonInTheDark:
+  - refactor: (Almost) all smoothed icons can now be edited in their pre cut forms
+  Melbert:
+  - qol: Replaces unused xeno weed extract item in abandoned crates with a random
+      assortment of cannabis.
+  OrionTheFox:
+  - image: resprited CTF ID Cards
+  ZeWaka:
+  - rscadd: TGUI Stack elements can now be zebra-styled (alternating colors for contrast)
+  timothymtorres:
+  - bugfix: Fix cult halo and eyes affecting deconverted cultists
+  vinylspiders:
+  - bugfix: fixed mutations holding onto refs after removal
+  - bugfix: fixes timed dna injectors

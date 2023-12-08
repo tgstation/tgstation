@@ -28,9 +28,6 @@
 	// Testing whether or not TRAIT_TOXINLOVER and TRAIT_TOXIMMUNE are working as intended
 	test_toxintraits(dummy)
 
-	// Testing whether or not TRAIT_NOCLONELOSS is working as intended
-	test_nocloneloss(dummy)
-
 	// Testing the proc ordered_healing()
 	test_ordered_healing(dummy)
 
@@ -100,9 +97,6 @@
 	if(included_types & TOXLOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), amount, \
 			"[testing_mob] should have [amount] toxin damage, instead they have [testing_mob.getToxLoss()]!")
-	if(included_types & CLONELOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getCloneLoss(), amount, \
-			"[testing_mob] should have [amount] clone damage, instead they have [testing_mob.getCloneLoss()]!")
 	if(included_types & BRUTELOSS)
 		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLoss(), 1), amount, \
 			"[testing_mob] should have [amount] brute damage, instead they have [testing_mob.getBruteLoss()]!")
@@ -136,10 +130,6 @@
 		damage_returned = testing_mob.adjustToxLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"adjustToxLoss() should have returned [expected], but returned [damage_returned] instead!")
-	if(included_types & CLONELOSS)
-		damage_returned = testing_mob.adjustCloneLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
-		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"adjustCloneLoss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & BRUTELOSS)
 		damage_returned = round(testing_mob.adjustBruteLoss(amount, updating_health = FALSE, forced = forced, required_bodytype = bodytypes), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
@@ -177,10 +167,6 @@
 		damage_returned = testing_mob.setToxLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
 			"setToxLoss() should have returned [expected], but returned [damage_returned] instead!")
-	if(included_types & CLONELOSS)
-		damage_returned = testing_mob.setCloneLoss(amount, updating_health = FALSE, forced = forced, required_biotype = biotypes)
-		TEST_ASSERT_EQUAL(damage_returned, expected, \
-			"setCloneLoss() should have returned [expected], but returned [damage_returned] instead!")
 	if(included_types & BRUTELOSS)
 		damage_returned = round(testing_mob.setBruteLoss(amount, updating_health = FALSE, forced = forced), 1)
 		TEST_ASSERT_EQUAL(damage_returned, expected, \
@@ -331,15 +317,15 @@
 	dummy.set_species(/datum/species/plasmaman)
 
 	// argumentless default: should default to required_biotype = ALL. The damage should be applied in that case.
-	if(!test_apply_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS))
+	if(!test_apply_damage(dummy, 1, included_types = TOXLOSS|STAMINALOSS))
 		TEST_FAIL("ABOVE FAILURE: plasmaman did not take damage with biotypes = ALL")
 
 	// If we specify MOB_ORGANIC, the damage should not get applied because plasmamen lack that biotype.
-	if(!test_apply_damage(dummy, 1, expected = 0, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_ORGANIC))
+	if(!test_apply_damage(dummy, 1, expected = 0, included_types = TOXLOSS|STAMINALOSS, biotypes = MOB_ORGANIC))
 		TEST_FAIL("ABOVE FAILURE: plasmaman took damage with biotypes = MOB_ORGANIC")
 
 	// Now if we specify MOB_MINERAL the damage should get applied.
-	if(!test_apply_damage(dummy, 1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL))
+	if(!test_apply_damage(dummy, 1, included_types = TOXLOSS|STAMINALOSS, biotypes = MOB_MINERAL))
 		TEST_FAIL("ABOVE FAILURE: plasmaman did not take damage with biotypes = MOB_MINERAL")
 
 	// Transform back to human
@@ -347,15 +333,15 @@
 
 	// We have 2 damage presently.
 	// Try to heal it; let's specify MOB_MINERAL, which should no longer work because we have changed back to a human.
-	if(!test_apply_damage(dummy, -2, expected = 0, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL))
+	if(!test_apply_damage(dummy, -2, expected = 0, included_types = TOXLOSS|STAMINALOSS, biotypes = MOB_MINERAL))
 		TEST_FAIL("ABOVE FAILURE: human took damage with biotypes = MOB_MINERAL")
 
 	// Force heal some of the damage. When forced = TRUE the damage/healing gets applied no matter what.
-	if(!test_apply_damage(dummy, -1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_MINERAL, forced = TRUE))
+	if(!test_apply_damage(dummy, -1, included_types = TOXLOSS|STAMINALOSS, biotypes = MOB_MINERAL, forced = TRUE))
 		TEST_FAIL("ABOVE FAILURE: human did not get healed when biotypes = MOB_MINERAL and forced = TRUE")
 
 	// Now heal the rest of it with the correct biotype. Make sure that this works. We should have 0 damage afterwards.
-	if(!test_apply_damage(dummy, -1, included_types = TOXLOSS|CLONELOSS|STAMINALOSS, biotypes = MOB_ORGANIC))
+	if(!test_apply_damage(dummy, -1, included_types = TOXLOSS|STAMINALOSS, biotypes = MOB_ORGANIC))
 		TEST_FAIL("ABOVE FAILURE: human did not get healed with biotypes = MOB_ORGANIC")
 
 /// Testing oxyloss with the TRAIT_NOBREATH
@@ -413,29 +399,6 @@
 	REMOVE_TRAIT(dummy, TRAIT_TOXINLOVER, TRAIT_SOURCE_UNIT_TESTS)
 	REMOVE_TRAIT(dummy, TRAIT_TOXIMMUNE, TRAIT_SOURCE_UNIT_TESTS)
 
-/// Testing cloneloss with TRAIT_NOCLONELOSS
-/datum/unit_test/mob_damage/proc/test_nocloneloss(mob/living/carbon/human/consistent/dummy)
-	// Heal up, so that errors from the previous tests we won't cause this one to fail
-	dummy.fully_heal(HEAL_DAMAGE)
-
-	// TRAIT_TRAIT_NOCLONELOSS is supposed to prevent cloneloss damage and healing. Let's make sure that's the case.
-	ADD_TRAIT(dummy, TRAIT_NOCLONELOSS, TRAIT_SOURCE_UNIT_TESTS)
-	// force some cloneloss here
-	dummy.setCloneLoss(2, updating_health = FALSE, forced = TRUE)
-
-	// Try to take more cloneloss damage with TRAIT_NOCLONELOSS. It should not work.
-	if(!test_apply_damage(dummy, 2, expected = 0, amount_after = dummy.getCloneLoss(), included_types = CLONELOSS))
-		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob took cloneloss damage with TRAIT_NOCLONELOSS")
-
-	// Healing the cloneloss should not work either, unless we force it
-	if(!test_apply_damage(dummy, -2, expected = 0, amount_after = dummy.getCloneLoss(), included_types = CLONELOSS))
-		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob healed cloneloss damage with TRAIT_NOCLONELOSS")
-	// so let's force it
-	if(!test_apply_damage(dummy, -2, expected = 2, amount_after = dummy.getCloneLoss()-2, included_types = CLONELOSS, forced = TRUE))
-		TEST_FAIL("ABOVE FAILURE: failed test_nocloneloss! mob could not heal cloneloss damage with forced = TRUE and TRAIT_NOCLONELOSS")
-
-	REMOVE_TRAIT(dummy, TRAIT_NOCLONELOSS, TRAIT_SOURCE_UNIT_TESTS)
-
 /// Testing heal_ordered_damage()
 /datum/unit_test/mob_damage/proc/test_ordered_healing(mob/living/carbon/human/consistent/dummy)
 	// Heal up, so that errors from the previous tests we won't cause this one to fail
@@ -478,7 +441,7 @@
 	SSmobs.pause()
 	var/mob/living/basic/mouse/gray/gusgus = allocate(/mob/living/basic/mouse/gray)
 	// give gusgus a damage_coeff of 1 for this test
-	gusgus.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	gusgus.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	// tank mouse
 	gusgus.maxHealth = 200
 
@@ -492,19 +455,16 @@
  * Arguments:
  * * testing_mob - the mob to check the damage of
  * * amount - the amount of damage to verify that the mob has
- * * expected - the expected return value of the damage procs, if it differs from the default of (amount * 5)
+ * * expected - the expected return value of the damage procs, if it differs from the default of (amount * 4)
  * * included_types - Bitflag of damage types to check.
  */
 /datum/unit_test/mob_damage/basic/verify_damage(mob/living/testing_mob, amount, expected, included_types = ALL)
 	if(included_types & TOXLOSS)
 		TEST_ASSERT_EQUAL(testing_mob.getToxLoss(), 0, \
 			"[testing_mob] should have [0] toxin damage, instead they have [testing_mob.getToxLoss()]!")
-	if(included_types & CLONELOSS)
-		TEST_ASSERT_EQUAL(testing_mob.getCloneLoss(), 0, \
-			"[testing_mob] should have [0] clone damage, instead they have [testing_mob.getCloneLoss()]!")
 	if(included_types & BRUTELOSS)
-		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLoss(), 1), expected || amount * 5, \
-			"[testing_mob] should have [expected || amount * 5] brute damage, instead they have [testing_mob.getBruteLoss()]!")
+		TEST_ASSERT_EQUAL(round(testing_mob.getBruteLoss(), 1), expected || amount * 4, \
+			"[testing_mob] should have [expected || amount * 4] brute damage, instead they have [testing_mob.getBruteLoss()]!")
 	if(included_types & FIRELOSS)
 		TEST_ASSERT_EQUAL(round(testing_mob.getFireLoss(), 1), 0, \
 			"[testing_mob] should have [0] burn damage, instead they have [testing_mob.getFireLoss()]!")
@@ -527,18 +487,18 @@
 	if(!test_apply_damage(gusgus, amount = -1))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
 
-	// Give 2 damage of every time (translates to 10 brute, 2 staminaloss)
+	// Give 2 damage of every time (translates to 8 brute, 2 staminaloss)
 	if(!test_apply_damage(gusgus, amount = 2))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! damage was not applied correctly")
 
-	// underhealing: heal 1 damage of every type (translates to 5 brute, 1 staminaloss)
+	// underhealing: heal 1 damage of every type (translates to 4 brute, 1 staminaloss)
 	if(!test_apply_damage(gusgus, amount = -1))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! healing was not applied correctly")
 
 	// overhealing
 
-	// heal 11 points of toxloss (should take care of all 5 brute damage remaining)
-	if(!apply_damage(gusgus, -11, expected = 5, included_types = TOXLOSS))
+	// heal 11 points of toxloss (should take care of all 4 brute damage remaining)
+	if(!apply_damage(gusgus, -11, expected = 4, included_types = TOXLOSS))
 		TEST_FAIL("ABOVE FAILURE: failed test_sanity_simple! toxloss was not applied correctly")
 	// heal the remaining point of staminaloss
 	if(!apply_damage(gusgus, -11, expected = 1, included_types = STAMINALOSS))

@@ -49,7 +49,7 @@ const Thresholds = (props) => {
           {convertedThresholds.map(([label, descr], index) => {
             return (
               <LabeledList.Item key={index} label={label}>
-                {descr}
+                {String(descr)}
               </LabeledList.Item>
             );
           })}

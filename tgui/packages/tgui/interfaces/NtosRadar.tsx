@@ -43,11 +43,11 @@ export const NtosRadarContent = (props) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          'background-image':
+          backgroundImage:
             'url("' + resolveAsset('ntosradarbackground.png') + '")',
-          'background-position': 'center',
-          'background-repeat': 'no-repeat',
-          'top': '20px',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          top: '20px',
         }}
         position="relative"
         m={1.5}
@@ -129,7 +129,7 @@ const TargetDisplay = (props) => {
       top="20px"
       left="243px"
       style={{
-        'transform': `rotate(${target.rot}deg)`,
+        transform: `rotate(${target.rot}deg)`,
       }}
     />
   ) : (

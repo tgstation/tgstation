@@ -42,7 +42,6 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/e_gun/dragnet,
 	/obj/item/gun/energy/e_gun/turret,
 	/obj/item/gun/energy/pulse/carbine,
-	/obj/item/gun/energy/decloner,
 	/obj/item/gun/energy/mindflayer,
 	/obj/item/gun/energy/recharge/kinetic_accelerator,
 	/obj/item/gun/energy/plasmacutter/adv,

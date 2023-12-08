@@ -194,6 +194,3 @@ export const createAction = <TAction extends string>(
 
   return actionCreator;
 };
-
-// Implementation specific
-// --------------------------------------------------------

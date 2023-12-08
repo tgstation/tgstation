@@ -30,7 +30,7 @@ const PlaytimeSection = (props) => {
               collapsing
               p={0.5}
               style={{
-                'vertical-align': 'middle',
+                verticalAlign: 'middle',
               }}>
               <Box align="right">{jobName}</Box>
             </Table.Cell>

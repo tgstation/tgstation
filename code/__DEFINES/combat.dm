@@ -11,8 +11,6 @@
 #define TOX "toxin"
 /// Suffocation.
 #define OXY "oxygen"
-/// Cellular degredation. Rare and difficult to treat.
-#define CLONE "clone"
 /// Exhaustion and nonlethal damage.
 #define STAMINA "stamina"
 /// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
@@ -56,12 +54,11 @@
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)
 #define TOXLOSS (1<<2)
-#define CLONELOSS (1<<3)
-#define OXYLOSS (1<<4)
-#define STAMINALOSS (1<<5)
-#define SHAME (1<<6)
-#define MANUAL_SUICIDE (1<<7) //suicide_act will do the actual killing.
-#define MANUAL_SUICIDE_NONLETHAL (1<<8) //when the suicide is conditionally lethal
+#define OXYLOSS (1<<3)
+#define STAMINALOSS (1<<4)
+#define SHAME (1<<5)
+#define MANUAL_SUICIDE (1<<6) //suicide_act will do the actual killing.
+#define MANUAL_SUICIDE_NONLETHAL (1<<7) //when the suicide is conditionally lethal
 
 #define EFFECT_STUN "stun"
 #define EFFECT_KNOCKDOWN "knockdown"

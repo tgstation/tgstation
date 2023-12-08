@@ -97,7 +97,7 @@ export const NavBeaconControlSection = (props: DisabledProps) => {
         </LabeledList.Item>
         <LabeledList.Item label="Delivery Direction">
           <Dropdown
-            disabled={props.disabled}
+            disabled={!!props.disabled}
             options={static_controls.direction_options}
             displayText={controls.delivery_direction || 'none'}
             onSelected={(value) =>

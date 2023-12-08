@@ -12,6 +12,8 @@
 	var/datum/barsign/chosen_sign
 	/// Do we attempt to rename the area we occupy when the chosen sign is changed?
 	var/change_area_name = FALSE
+	/// What kind of sign do we drop upon being disassembled?
+	var/disassemble_result = /obj/item/wallframe/barsign
 
 /datum/armor/sign_barsign
 	melee = 20
@@ -86,13 +88,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/atom_break(damage_flag)
 	. = ..()
-	if((machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if((machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
-			new /obj/item/wallframe/barsign(loc)
+			new disassemble_result(drop_location())
 		else
 			new /obj/item/stack/sheet/iron(drop_location(), 2)
 			new /obj/item/stack/cable_coil(drop_location(), 2)
@@ -460,6 +462,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	desc = "The warehouse yearns for a higher calling... so Supply has declared BARGONIA!"
 	neon_color = COLOR_WHITE
 
+/datum/barsign/cult_cove
+	name = "Cult Cove"
+	icon_state = "cult-cove"
+	desc = "Nar'Sie's favourite retreat"
+	neon_color = COLOR_RED
+
+/datum/barsign/neon_flamingo
+	name = "Neon Flamingo"
+	icon_state = "neon-flamingo"
+	desc = "A bus for all but the flamboyantly challenged."
+	neon_color = COLOR_PINK
+
+/datum/barsign/slowdive
+	name = "Slowdive"
+	icon_state = "slowdive"
+	desc = "First stop out of hell, last stop before heaven."
+	neon_color = COLOR_RED
+
 // Hidden signs list below this point
 
 /datum/barsign/hiddensigns
@@ -487,6 +507,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 // For other locations that aren't in the main bar
 /obj/machinery/barsign/all_access
 	req_access = null
+	disassemble_result = /obj/item/wallframe/barsign/all_access
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 
@@ -513,3 +534,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
 	if(isopenturf(get_step(on_wall, EAST))) //This takes up 2 tiles so we want to make sure we have two tiles to hang it from.
 		balloon_alert(user, "needs more support!")
 		return FALSE
+
+/obj/item/wallframe/barsign/all_access
+	desc = "Used to help draw the rabble into your bar. Some assembly required. This one doesn't have an access lock."
+	result_path = /obj/machinery/barsign/all_access

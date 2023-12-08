@@ -291,10 +291,10 @@ const MafiaRole = (props) => {
       buttons={
         <Box
           style={{
-            'font-family': 'Consolas, monospace',
-            'font-size': '14px',
-            'line-height': 1.5,
-            'font-weight': 'bold',
+            fontFamily: 'Consolas, monospace',
+            fontSize: '14px',
+            lineHeight: 1.5,
+            fontWeight: 'bold',
           }}>
           {formatTime(timeleft)}
         </Box>
@@ -309,14 +309,14 @@ const MafiaRole = (props) => {
             className={classes(['mafia32x32', roleinfo.revealed_icon])}
             style={{
               'transform': 'scale(2) translate(0px, 10%)',
-              'vertical-align': 'middle',
+              verticalAlign: 'middle',
             }}
           />
           <Box
             className={classes(['mafia32x32', roleinfo.hud_icon])}
             style={{
               'transform': 'scale(2) translate(-5px, -5px)',
-              'vertical-align': 'middle',
+              verticalAlign: 'middle',
             }}
           />
         </Stack.Item>

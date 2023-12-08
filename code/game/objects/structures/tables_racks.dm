@@ -73,7 +73,7 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			. = CONTEXTUAL_SCREENTIP_SET
 
-	if(!(flags_1 & NODECONSTRUCT_1) && deconstruction_ready)
+	if(!(obj_flags & NO_DECONSTRUCTION) && deconstruction_ready)
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 			. = CONTEXTUAL_SCREENTIP_SET
@@ -207,7 +207,7 @@
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
+	if(obj_flags & NO_DECONSTRUCTION || !deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
@@ -215,7 +215,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
+	if(obj_flags & NO_DECONSTRUCTION || !deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
@@ -298,7 +298,7 @@
 	return
 
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/turf/T = get_turf(src)
 		if(buildstack)
 			new buildstack(T, buildstackamount)
@@ -437,7 +437,7 @@
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(!isliving(AM))
 		return
@@ -470,7 +470,7 @@
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
 			..()
 			return
@@ -766,16 +766,14 @@
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
 
 ///Align the mob with the table when buckled.
-/obj/structure/bed/post_buckle_mob(mob/living/buckled)
+/obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
 	. = ..()
-	buckled.base_pixel_y -= 6
-	buckled.pixel_y -= 6
+	buckled.pixel_y += 6
 
 ///Disalign the mob with the table when unbuckled.
-/obj/structure/bed/post_unbuckle_mob(mob/living/buckled)
+/obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
 	. = ..()
-	buckled.base_pixel_y += 6
-	buckled.pixel_y += 6
+	buckled.pixel_y -= 6
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -849,7 +847,7 @@
 
 /obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && LAZYACCESS(modifiers, RIGHT_CLICK))
+	if (W.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
@@ -887,7 +885,7 @@
  */
 
 /obj/structure/rack/deconstruct(disassembled = TRUE)
-	if(!(flags_1&NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		set_density(FALSE)
 		var/obj/item/rack_parts/newparts = new(loc)
 		transfer_fingerprints_to(newparts)
@@ -904,7 +902,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 

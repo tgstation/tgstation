@@ -45,8 +45,8 @@ export const Connections = (props: {
       height="100%"
       style={{
         'position': 'absolute',
-        'pointer-events': 'none',
-        'z-index': zLayer,
+        pointerEvents: 'none',
+        zIndex: zLayer,
       }}>
       {connections.map((val, index) => {
         const from = val.from;

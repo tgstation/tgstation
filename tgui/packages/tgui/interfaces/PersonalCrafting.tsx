@@ -303,7 +303,7 @@ export const PersonalCrafting = (props) => {
                   </Tabs>
                 </Stack.Item>
                 <Stack.Item grow m={-1}>
-                  <Box height={'100%'} p={1} style={{ 'overflow-y': 'auto' }}>
+                  <Box height={'100%'} p={1} style={{ overflowY: 'auto' }}>
                     <Tabs vertical>
                       {tabMode === TABS.foodtype &&
                         mode === MODE.cooking &&
@@ -478,7 +478,7 @@ export const PersonalCrafting = (props) => {
               pr={1}
               pt={1}
               mr={-1}
-              style={{ 'overflow-y': 'auto' }}>
+              style={{ overflowY: 'auto' }}>
               {recipes.length > 0 ? (
                 recipes
                   .slice(0, displayLimit)
@@ -553,10 +553,10 @@ const MaterialContent = (props) => {
         lineHeight="32px"
         grow
         style={{
-          'text-transform': 'capitalize',
+          textTransform: 'capitalize',
           'overflow': 'hidden',
-          'text-overflow': 'ellipsis',
-          'white-space': 'nowrap',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         }}>
         {name}
       </Stack.Item>
@@ -591,7 +591,7 @@ const FoodtypeContent = (props) => {
       <Stack.Item width="14px" textAlign="center">
         <Icon name={TYPE_ICONS[type] || 'circle'} />
       </Stack.Item>
-      <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
+      <Stack.Item grow style={{ textTransform: 'capitalize' }}>
         {type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
@@ -614,10 +614,10 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
+              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
-              <Box style={{ 'text-transform': 'capitalize' }} color={'gray'}>
+              <Box style={{ textTransform: 'capitalize' }} color={'gray'}>
                 {Array.from(
                   Object.keys(item.reqs).map((atom_id) => {
                     const name = data.atom_data[(atom_id as any) - 1]?.name;
@@ -734,11 +734,11 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
+              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
               {item.desc && <Box color={'gray'}>{item.desc}</Box>}
-              <Box style={{ 'text-transform': 'capitalize' }}>
+              <Box style={{ textTransform: 'capitalize' }}>
                 {item.reqs && (
                   <Box>
                     <GroupTitle
@@ -800,7 +800,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
               {!!item.steps?.length && (
                 <Box>
                   <GroupTitle title="Steps" />
-                  <ul style={{ 'padding-left': '20px' }}>
+                  <ul style={{ paddingLeft: '20px' }}>
                     {item.steps.map((step) => (
                       <li key={step}>{step}</li>
                     ))}

@@ -1,11 +1,11 @@
 import { Button, Stack, Box } from '../../components';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { Port } from './Port';
 import { noop } from './constants';
 
 export class DisplayComponent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.ref = createRef();
   }
 

@@ -309,8 +309,8 @@ export const AntagInfoHeretic = (props) => {
     <Window width={675} height={635}>
       <Window.Content
         style={{
-          'background-image': 'none',
-          'background': ascended
+          backgroundImage: 'none',
+          background: ascended
             ? 'radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);'
             : 'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
         }}>
