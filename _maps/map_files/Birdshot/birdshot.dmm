@@ -3084,7 +3084,7 @@
 /area/station/hallway/secondary/construction)
 "bmB" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/mob/living/simple_animal/bot/medbot/autopatrol,
+/mob/living/basic/bot/medbot/autopatrol,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "bmM" = (
@@ -13852,6 +13852,15 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/security/office)
+"fhs" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/hallway/primary/fore)
 "fhw" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -15069,7 +15078,7 @@
 /obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/circuitboard/machine/thermomachine,
 /obj/item/stack/rods/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -29297,7 +29306,7 @@
 /area/station/hallway/primary/central/fore)
 "kzI" = (
 /obj/effect/turf_decal/bot_white,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "kzP" = (
@@ -54263,7 +54272,7 @@
 /area/station/maintenance/central/greater)
 "sQv" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/stack/ore/iron{
 	amount = 25
 	},
@@ -55352,7 +55361,7 @@
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "tiN" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/stack/ore/glass{
 	amount = 20
 	},
@@ -91461,7 +91470,7 @@ wbi
 hrY
 wbi
 wbi
-dDB
+fhs
 wbi
 wbi
 wbi

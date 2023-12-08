@@ -210,16 +210,10 @@ const MedicalKioskScanResults2 = (props) => {
 
 const MedicalKioskScanResults3 = (props) => {
   const { data } = useBackend();
-  const { clone_health, brain_damage, brain_health, trauma_status } = data;
+  const { brain_damage, brain_health, trauma_status } = data;
   return (
-    <Section title="Patient Neurological and Radiological Health">
+    <Section title="Patient Neurological Health">
       <LabeledList>
-        <LabeledList.Item label="Cellular Damage">
-          <ProgressBar value={clone_health / 100} color="good">
-            <AnimatedNumber value={clone_health} />
-          </ProgressBar>
-        </LabeledList.Item>
-        <LabeledList.Divider />
         <LabeledList.Item label="Brain Damage">
           <ProgressBar value={brain_damage / 100} color="good">
             <AnimatedNumber value={brain_damage} />
