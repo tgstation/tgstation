@@ -145,7 +145,7 @@
 
 /obj/item/modular_computer/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	close_all_programs()
+	INVOKE_ASYNC(src, PROC_REF(close_all_programs))
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	looping_sound = FALSE // Necessary to stop a possible runtime trying to call soundloop.stop() when soundloop has been qdel'd
