@@ -375,6 +375,9 @@ GLOBAL_LIST_INIT(virusDB, list())
 		cure(mob,1)
 		return
 
+	if(!(infectable_biotypes & mob.mob_biotypes))
+		return
+
 	if(!mob.immune_system.CanInfect(src))
 		cure(mob)
 		return
