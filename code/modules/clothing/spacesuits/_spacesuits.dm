@@ -226,7 +226,7 @@
  * Toggle the space suit's thermal regulator status...
  * Can't do it if it has no charge.
  * Arguments:
- * * toggler - User mob who recieves the to_chat messages.
+ * * toggler - User mob who receives the to_chat messages.
  * * manual_toggle - If false get a differently-flavored message about it being disabled by itself
  */
 /obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/toggler, manual_toggle = TRUE)

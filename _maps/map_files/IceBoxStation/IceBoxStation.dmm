@@ -25849,7 +25849,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "hWI" = (
 /obj/effect/turf_decal/box,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/spawner/random/maintenance/six,
 /obj/structure/sign/poster/official/wtf_is_co2/directional/north,
 /turf/open/floor/iron/dark,

@@ -40,7 +40,7 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
 
@@ -75,7 +75,7 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot
@@ -109,7 +109,7 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot/emp_act(severity)
@@ -156,7 +156,7 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/right/robot/emp_act(severity)
@@ -200,7 +200,7 @@
 
 	biological_state = (BIO_ROBOTIC)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
 	robotic_emp_paralyze_damage_percent_threshold = 0.6
@@ -374,7 +374,7 @@
 
 	biological_state = (BIO_ROBOTIC)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 
 	head_flags = HEAD_EYESPRITES
 	bodypart_flags = BODYPART_UNHUSKABLE

@@ -15078,7 +15078,7 @@
 /obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/circuitboard/machine/thermomachine,
 /obj/item/stack/rods/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -29306,7 +29306,7 @@
 /area/station/hallway/primary/central/fore)
 "kzI" = (
 /obj/effect/turf_decal/bot_white,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "kzP" = (
@@ -54272,7 +54272,7 @@
 /area/station/maintenance/central/greater)
 "sQv" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/stack/ore/iron{
 	amount = 25
 	},
@@ -55361,7 +55361,7 @@
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "tiN" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/stack/ore/glass{
 	amount = 20
 	},

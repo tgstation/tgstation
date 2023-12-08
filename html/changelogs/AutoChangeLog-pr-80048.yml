@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - balance: "Honorbound no longer cares about innocence when it comes to lesser creatures. They can still be considered unready in some cases."
-  - balance: "Attacking a cultist with a halo or a nuclear operative first instantly makes THEM guilty, allowing further attacks."
-  - balance: "More favor for converting someone to the honorbound rules"

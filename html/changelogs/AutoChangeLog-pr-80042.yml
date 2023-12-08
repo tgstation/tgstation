@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - qol: "psyker echolocation cooldown time has been reduced from 2 to 1.8 seconds"
-  - bugfix: "psyker heads no longer render an overlay of not having eyes"
