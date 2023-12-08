@@ -2646,6 +2646,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react@npm:^18.2.42":
+  version: 18.2.42
+  resolution: "@types/react@npm:18.2.42"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: d2019afdf48303a3a598a97cc9dd2284e3c04b369e791f6ba3c33232b7f8645daff97b093a19f8b3ce75ac8a261b47552cb4513226ab16d843eb9443b0f91844
+  languageName: node
+  linkType: hard
+
 "@types/scheduler@npm:*":
   version: 0.16.8
   resolution: "@types/scheduler@npm:0.16.8"
@@ -10956,7 +10967,7 @@ __metadata:
   resolution: "tgui-panel@workspace:packages/tgui-panel"
   dependencies:
     "@types/node": ^14.x
-    "@types/react": ^18.2.39
+    "@types/react": ^18.2.42
     common: "workspace:*"
     dompurify: ^2.4.4
     react: ^18.2.0
