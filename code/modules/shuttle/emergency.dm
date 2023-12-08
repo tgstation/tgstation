@@ -620,7 +620,7 @@
 								Contact shuttle supervisor for further assistance", "SYSTEM ERROR:", sound_override = 'sound/misc/announce_syndi.ogg')
 							else
 								stack_trace("get_desired_hijack_destination() returned a location that was unexpected.\
-								Check [mind.antag_datums] for hijack_location that are mistakenly inputted or unimplemeneted")
+								Check [survivor.mind.antag_datums] for hijack_location that are mistakenly inputted or unimplemeneted")
 
 				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
