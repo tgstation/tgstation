@@ -1,0 +1,6 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - refactor: "cleanbots are refactored into basic bots. please report all bugs"
+  - bugfix: "fixes cleanbots getting stuck sometimes while patrolling"
+  - rscadd: "janitors get a new skillchip which allow them to communicate with cleanbots"
