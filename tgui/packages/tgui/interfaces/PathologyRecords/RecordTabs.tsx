@@ -1,7 +1,7 @@
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Stack, Input, Section, Tabs, NoticeBox, Box, Icon } from 'tgui/components';
+import { Stack, Section, Tabs, NoticeBox, Box, Icon } from 'tgui/components';
 import { MedicalRecord, MedicalRecordData } from './types';
 
 /** Displays all found records. */
@@ -21,13 +21,6 @@ export const MedicalRecordTabs = (props, context) => {
 
   return (
     <Stack fill vertical>
-      <Stack.Item>
-        <Input
-          fluid
-          onInput={(_, value) => setSearch(value)}
-          placeholder="Name/Job/DNA"
-        />
-      </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable>
           <Tabs vertical>
