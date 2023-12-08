@@ -22,6 +22,7 @@ export type MedicalRecord = {
   spread_flags: string;
   danger: string;
   antigen: string;
+  form: string;
 };
 
 export type MedicalNote = {
