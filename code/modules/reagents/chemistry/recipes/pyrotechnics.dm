@@ -488,7 +488,7 @@
 	determin_ph_range = 0
 	temp_exponent_factor = 1
 	ph_exponent_factor = 1
-	thermic_constant = -50 //This is the part that cools things down now
+	thermic_constant = -5 //This is the part that cools things down now
 	H_ion_release = 0
 	rate_up_lim = 4
 	purity_min = 0.15

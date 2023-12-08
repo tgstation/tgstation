@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Janitors rejoice (or lament): Floors should now be dirty shift-start.\n/ \\:cl:"

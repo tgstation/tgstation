@@ -40,7 +40,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/atom/location = get_turf(src)
 		if(user)
 			location = user.loc

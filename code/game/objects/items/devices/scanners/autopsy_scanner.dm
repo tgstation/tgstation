@@ -50,7 +50,6 @@
 
 	autopsy_information += "Toxin damage: [CEILING(scanned.getToxLoss(), 1)]"
 	autopsy_information += "Oxygen damage: [CEILING(scanned.getOxyLoss(), 1)]"
-	autopsy_information += "Cloning damage: [CEILING(scanned.getCloneLoss(), 1)]"
 
 	autopsy_information += "<center>Bodypart Data</center><br>"
 	for(var/obj/item/bodypart/bodyparts as anything in scanned.bodyparts)
