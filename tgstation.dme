@@ -380,7 +380,7 @@
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_spawner.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\research_categories.dm"
-#include "code\__DEFINES\~monkestation\_uplink.dm" //_ is to avoid conflicts, remove once no longer needed
+#include "code\__DEFINES\~monkestation\_uplink.dm" //_ is to avoid conflicts, remove once no longer needed//
 #include "code\__DEFINES\~monkestation\access.dm"
 #include "code\__DEFINES\~monkestation\ai.dm"
 #include "code\__DEFINES\~monkestation\antagonists.dm"
