@@ -9,8 +9,8 @@ type Data = {
   pad_closed: BooleanLike;
 };
 
-export const LaunchpadRemote = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const LaunchpadRemote = (props) => {
+  const { data } = useBackend<Data>();
   const { has_pad, pad_closed } = data;
 
   return (

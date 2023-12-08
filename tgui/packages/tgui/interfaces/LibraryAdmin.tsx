@@ -6,12 +6,8 @@ import { Box, Button, Dropdown, Input, NoticeBox, Section, Stack, Table, TextAre
 import { Window } from '../layouts';
 import { PageSelect } from './LibraryConsole';
 
-export const LibraryAdmin = (props, context) => {
-  const [modifyMethod, setModifyMethod] = useLocalState(
-    context,
-    'ModifyMethod',
-    null
-  );
+export const LibraryAdmin = (props) => {
+  const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', null);
   return (
     <Window
       title="Admin Library Console"
@@ -30,8 +26,8 @@ type ListingData = {
   page_count: number;
 };
 
-const BookListing = (props, context) => {
-  const { act, data } = useBackend<ListingData>(context);
+const BookListing = (props) => {
+  const { act, data } = useBackend<ListingData>();
   const { can_connect, can_db_request, our_page, page_count } = data;
   if (!can_connect) {
     return (
@@ -94,18 +90,10 @@ type DisplayData = {
   pages: Book[];
 };
 
-const SearchAndDisplay = (props, context) => {
-  const { act, data } = useBackend<DisplayData>(context);
-  const [modifyMethod, setModifyMethod] = useLocalState(
-    context,
-    'ModifyMethod',
-    ''
-  );
-  const [modifyTarget, setModifyTarget] = useLocalState(
-    context,
-    'ModifyTarget',
-    0
-  );
+const SearchAndDisplay = (props) => {
+  const { act, data } = useBackend<DisplayData>();
+  const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', '');
+  const [modifyTarget, setModifyTarget] = useLocalState('ModifyTarget', 0);
   const {
     can_db_request,
     search_categories = [],
@@ -326,21 +314,13 @@ type ModalData = {
   history: HistoryArray;
 };
 
-const ModifyPage = (props, context) => {
-  const { act, data } = useBackend<ModalData>(context);
+const ModifyPage = (props) => {
+  const { act, data } = useBackend<ModalData>();
 
   const { can_db_request, view_raw, history } = data;
-  const [modifyMethod, setModifyMethod] = useLocalState(
-    context,
-    'ModifyMethod',
-    ''
-  );
-  const [modifyTarget, setModifyTarget] = useLocalState(
-    context,
-    'ModifyTarget',
-    0
-  );
-  const [reason, setReason] = useLocalState(context, 'Reason', 'null');
+  const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', '');
+  const [modifyTarget, setModifyTarget] = useLocalState('ModifyTarget', 0);
+  const [reason, setReason] = useLocalState('Reason', 'null');
 
   const entries = history[modifyTarget.toString()]
     ? history[modifyTarget.toString()].sort((a, b) => b.id - a.id)

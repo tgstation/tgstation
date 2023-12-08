@@ -5,17 +5,16 @@
  */
 
 import { classes } from 'common/react';
-import { useDispatch } from 'common/redux';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component } from 'inferno';
 import { backendSuspendStart, useBackend } from '../backend';
 import { Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
-import { useDebug } from '../debug';
 import { toggleKitchenSink } from '../debug/actions';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
+import { globalStore } from '../backend';
 
 const logger = createLogger('Window');
 
@@ -23,7 +22,7 @@ const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
   componentDidMount() {
-    const { suspended } = useBackend(this.context);
+    const { suspended } = useBackend();
     const { canClose = true } = this.props;
     if (suspended) {
       return;
@@ -47,7 +46,7 @@ export class Window extends Component {
   }
 
   updateGeometry() {
-    const { config } = useBackend(this.context);
+    const { config } = useBackend();
     const options = {
       size: DEFAULT_SIZE,
       ...config.window,
@@ -63,9 +62,14 @@ export class Window extends Component {
 
   render() {
     const { canClose = true, theme, title, children, buttons } = this.props;
-    const { config, suspended } = useBackend(this.context);
-    const { debugLayout } = useDebug(this.context);
-    const dispatch = useDispatch(this.context);
+    const { config, suspended, debug } = useBackend();
+
+    let debugLayout = false;
+    if (debug) {
+      debugLayout = debug.debugLayout;
+    }
+
+    const dispatch = globalStore.dispatch;
     const fancy = config.window?.fancy;
     // Determine when to show dimmer
     // prettier-ignore
@@ -142,7 +146,7 @@ const statusToColor = (status) => {
   }
 };
 
-const TitleBar = (props, context) => {
+const TitleBar = (props) => {
   const {
     className,
     title,
@@ -153,7 +157,7 @@ const TitleBar = (props, context) => {
     onClose,
     children,
   } = props;
-  const dispatch = useDispatch(context);
+  const dispatch = globalStore.dispatch;
   // prettier-ignore
   const finalTitle = (
     typeof title === 'string'

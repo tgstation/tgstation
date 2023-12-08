@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ProbingConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ProbingConsole = (props) => {
+  const { act, data } = useBackend();
   const { open, feedback, occupant, occupant_name, occupant_status } = data;
   return (
     <Window width={330} height={207} theme="abductor">

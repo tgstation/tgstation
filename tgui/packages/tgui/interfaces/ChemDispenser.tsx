@@ -25,11 +25,11 @@ type Data = {
   beaker: Beaker;
 };
 
-export const ChemDispenser = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ChemDispenser = (props) => {
+  const { act, data } = useBackend<Data>();
   const recording = !!data.recordingRecipe;
   const { recipeReagents = [], recipes = [], beaker } = data;
-  const [hasCol, setHasCol] = useLocalState(context, 'has_col', false);
+  const [hasCol, setHasCol] = useLocalState('has_col', false);
 
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const recordedContents =

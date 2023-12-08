@@ -232,7 +232,8 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /// Exact subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
-	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST | NO_RUINS
+	flags_1 = CAN_BE_DIRTY_1
+	turf_flags = IS_SOLID | NO_RUST | NO_RUINS
 
 /turf/open/misc/asteroid/snow/icemoon/do_not_scrape
 	flags_1 = CAN_BE_DIRTY_1

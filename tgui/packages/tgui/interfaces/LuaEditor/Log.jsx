@@ -3,11 +3,11 @@ import { logger } from '../../logging';
 import { Box, Button, Divider } from '../../components';
 import { ListMapper } from './ListMapper';
 
-export const Log = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Log = (props) => {
+  const { act, data } = useBackend();
   const { stateLog } = data;
-  const [, setViewedChunk] = useLocalState(context, 'viewedChunk');
-  const [, setModal] = useLocalState(context, 'modal');
+  const [, setViewedChunk] = useLocalState('viewedChunk');
+  const [, setModal] = useLocalState('modal');
   // We only kvpify logs so that the return values are kvpified.
   const mappedLog = stateLog.map(({ value }) =>
     Object.fromEntries(value.map(({ key, value }) => [key, value]))

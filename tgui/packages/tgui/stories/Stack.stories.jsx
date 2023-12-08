@@ -29,13 +29,13 @@ const SmallStackItems = () => (
   </>
 );
 
-const Story = (props, context) => {
+const Story = (props) => {
   return (
     <Section fill>
       <Stack fill className="debug-layout">
         <SmallStackItems />
         <Stack.Item grow={1}>
-          <Stack fill vertical>
+          <Stack fill vertical zebra>
             <SmallStackItems />
             <Stack.Item>
               <Stack fill>

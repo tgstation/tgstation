@@ -3,9 +3,9 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Icon, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosRecords = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [searchTerm, setSearchTerm] = useLocalState(context, 'search', '');
+export const NtosRecords = (props) => {
+  const { act, data } = useBackend();
+  const [searchTerm, setSearchTerm] = useLocalState('search', '');
   const { mode, records } = data;
 
   const isMatchingSearchTerms = createSearch(searchTerm);

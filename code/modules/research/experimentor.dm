@@ -90,7 +90,7 @@
 	. = ..()
 
 	tracked_ian_ref = WEAKREF(locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_living_list)
-	tracked_runtime_ref = WEAKREF(locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list)
+	tracked_runtime_ref = WEAKREF(locate(/mob/living/basic/pet/cat/runtime) in GLOB.mob_living_list)
 
 	critical_items_typecache = typecacheof(list(
 		/obj/item/construction/rcd,
@@ -511,7 +511,7 @@
 				tracked_runtime.forceMove(drop_location())
 				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
-				new /mob/living/simple_animal/pet/cat(loc)
+				new /mob/living/basic/pet/cat(loc)
 				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 76 && globalMalf < 98)
@@ -642,10 +642,10 @@
 		/mob/living/basic/lizard,
 		/mob/living/basic/mouse,
 		/mob/living/basic/parrot,
+		/mob/living/basic/pet/cat,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/basic/pet/fox,
-		/mob/living/simple_animal/pet/cat,
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)
