@@ -34,7 +34,7 @@
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
-		wag(FALSE)
+		wag(organ_owner, start = FALSE)
 
 	return ..()
 
@@ -47,30 +47,42 @@
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
-
-/obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
+/obj/item/organ/external/tail/proc/wag(mob/living/carbon/organ_owner, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
 		return
 
 	if(start)
-		start_wag()
-		if(stop_after)
-			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
+		if(start_wag(organ_owner) && stop_after)
+			addtimer(CALLBACK(src, PROC_REF(wag), organ_owner, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
-		stop_wag()
-	owner.update_body_parts()
+		stop_wag(organ_owner)
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
-/obj/item/organ/external/tail/proc/start_wag()
+/obj/item/organ/external/tail/proc/start_wag(mob/living/carbon/organ_owner)
+	if(wag_flags & WAG_WAGGING) // we are already wagging
+		return FALSE
+	if(organ_owner.stat == DEAD || organ_owner != owner) // no wagging when owner is dead or tail has been disembodied
+		return FALSE
+
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags |= WAG_WAGGING
 	accessory.wagging = TRUE
+	organ_owner.update_body_parts()
+	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(stop_wag))
+	return TRUE
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
-/obj/item/organ/external/tail/proc/stop_wag()
+/obj/item/organ/external/tail/proc/stop_wag(mob/living/carbon/organ_owner)
+	SIGNAL_HANDLER
+
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
+	if(isnull(organ_owner))
+		return
+
+	organ_owner.update_body_parts()
+	UnregisterSignal(organ_owner, COMSIG_LIVING_DEATH)
 
 ///Tail parent type, with wagging functionality
 /datum/bodypart_overlay/mutant/tail
@@ -137,18 +149,16 @@
 		paired_spines = null
 
 /obj/item/organ/external/tail/lizard/start_wag()
-	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = TRUE
+	return ..()
 
 /obj/item/organ/external/tail/lizard/stop_wag()
-	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = FALSE
+	return ..()
 
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard

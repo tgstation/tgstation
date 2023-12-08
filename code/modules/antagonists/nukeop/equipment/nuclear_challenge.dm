@@ -1,6 +1,5 @@
 #define CHALLENGE_TELECRYSTALS 280
 #define CHALLENGE_TIME_LIMIT (5 MINUTES)
-#define CHALLENGE_MIN_PLAYERS 50
 #define CHALLENGE_SHUTTLE_DELAY (25 MINUTES) // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
@@ -8,8 +7,8 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 /obj/item/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
 	icon = 'icons/obj/device.dmi'
-	icon_state = "gangtool-red"
-	inhand_icon_state = "radio"
+	icon_state = "nukietalkie"
+	inhand_icon_state = "nukietalkie"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "Use to send a declaration of hostilities to the target, delaying your shuttle departure for 20 minutes while they prepare for your assault.  \
@@ -54,7 +53,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 ///Admin only proc to bypass checks and force a war declaration. Button on antag panel.
 /obj/item/nuclear_challenge/proc/force_war()
-	var/are_you_sure = tgui_alert(usr, "Are you sure you wish to force a war declaration?", "Declare war?", list("Yes", "No"))
+	var/are_you_sure = tgui_alert(usr, "Are you sure you wish to force a war declaration?[GLOB.player_list.len < CHALLENGE_MIN_PLAYERS ? " Note, the player count is under the required limit." : ""]", "Declare war?", list("Yes", "No"))
 
 	if(are_you_sure != "Yes")
 		return
@@ -67,13 +66,25 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		war_declaration = tgui_input_text(usr, "Insert your custom declaration", "Declaration", multiline = TRUE, encode = FALSE)
 
 	if(!war_declaration)
-		to_chat(usr, span_warning("Invalid war declaration."))
+		tgui_alert(usr, "Invalid war declaration.", "Poor Choice of Words")
 		return
+
+	for(var/obj/item/circuitboard/computer/syndicate_shuttle/board as anything in GLOB.syndicate_shuttle_boards)
+		if(board.challenge)
+			tgui_alert(usr, "War has already been declared!", "War Was Declared")
+			return
 
 	war_was_declared(memo = war_declaration)
 
 /obj/item/nuclear_challenge/proc/war_was_declared(mob/living/user, memo)
-	priority_announce(memo, title = "Declaration of War", sound = 'sound/machines/alarm.ogg', has_important_message = TRUE, sender_override = "Nuclear Operative Outpost", color_override = "red")
+	priority_announce(
+		text = memo,
+		title = "Declaration of War",
+		sound = 'sound/machines/alarm.ogg',
+		has_important_message = TRUE,
+		sender_override = "Nuclear Operative Outpost",
+		color_override = "red",
+	)
 	if(user)
 		to_chat(user, "You've attracted the attention of powerful forces within the syndicate. \
 			A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
@@ -141,6 +152,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		if(board.moved)
 			to_chat(user, span_boldwarning("The shuttle has already been moved! You have forfeit the right to declare war."))
 			return FALSE
+		if(board.challenge)
+			to_chat(user, span_boldwarning("War has already been declared!"))
+			return FALSE
 	return TRUE
 
 /obj/item/nuclear_challenge/clownops
@@ -168,12 +182,18 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		return
 #endif
 
-	priority_announce(memo, title = "Declaration of War", sound = 'sound/machines/alarm.ogg', has_important_message = TRUE, sender_override = "Nuclear Operative Outpost", color_override = "red")
+	priority_announce(
+		text = memo,
+		title = "Declaration of War",
+		sound = 'sound/machines/alarm.ogg',
+		has_important_message = TRUE,
+		sender_override = "Nuclear Operative Outpost",
+		color_override = "red",
+	)
 
 /obj/item/nuclear_challenge/literally_just_does_the_message/distribute_tc()
 	return
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
-#undef CHALLENGE_MIN_PLAYERS
 #undef CHALLENGE_SHUTTLE_DELAY

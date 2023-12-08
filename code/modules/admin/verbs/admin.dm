@@ -24,7 +24,7 @@
 
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Tip")
+	BLACKBOX_LOG_ADMIN_VERB("Show Tip")
 
 /datum/admins/proc/announce()
 	set category = "Admin"
@@ -39,7 +39,7 @@
 			message = adminscrub(message,500)
 		to_chat(world, "[span_adminnotice("<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>")]\n \t [message]", confidential = TRUE)
 		log_admin("Announce: [key_name(usr)] : [message]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -50,7 +50,7 @@
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
 		tgui_alert(usr,"[M.name] is not prisoned.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unprison") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Unprison")
 
 /client/proc/cmd_admin_check_player_exp() //Allows admins to determine who the newer players are.
 	set category = "Admin"
@@ -128,14 +128,14 @@
 
 	switch(add_or_remove)
 		if("Add")
-			for(var/key in GLOB.traits_by_type)
+			for(var/key in GLOB.admin_visible_traits)
 				if(istype(D,key))
-					available_traits += GLOB.traits_by_type[key]
+					available_traits += GLOB.admin_visible_traits[key]
 		if("Remove")
-			if(!GLOB.trait_name_map)
-				GLOB.trait_name_map = generate_trait_name_map()
+			if(!GLOB.admin_trait_name_map)
+				GLOB.admin_trait_name_map = generate_admin_trait_name_map()
 			for(var/trait in D._status_traits)
-				var/name = GLOB.trait_name_map[trait] || trait
+				var/name = GLOB.admin_trait_name_map[trait] || trait
 				available_traits[name] = trait
 
 	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sort_list(available_traits)
@@ -183,7 +183,7 @@
 	var/msg = "[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!"
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Everything") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Drop Everything")
 
 /proc/cmd_admin_mute(whom, mute_type, automute = 0)
 	if(!whom)

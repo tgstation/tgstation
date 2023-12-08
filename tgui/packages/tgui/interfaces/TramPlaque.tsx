@@ -14,8 +14,8 @@ type Tram = {
   tramCollisions: number;
 };
 
-export const TramPlaque = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const TramPlaque = (props) => {
+  const { data } = useBackend<Data>();
   const { currentTram = [], previousTrams = [] } = data;
 
   return (

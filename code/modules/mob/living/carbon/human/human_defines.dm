@@ -67,7 +67,11 @@
 	var/list/datum/bioware/biowares
 
 	/// What types of mobs are allowed to ride/buckle to this mob
-	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
+	var/static/list/can_ride_typecache = typecacheof(list(
+		/mob/living/basic/parrot,
+		/mob/living/carbon/human,
+		/mob/living/simple_animal/slime,
+	))
 	var/lastpuke = 0
 	var/account_id
 

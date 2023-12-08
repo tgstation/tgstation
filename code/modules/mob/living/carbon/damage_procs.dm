@@ -28,6 +28,12 @@
 
 	return .
 
+/mob/living/carbon/human/get_damage_mod(damage_type)
+	if (!dna?.species?.damage_modifier)
+		return ..()
+	var/species_mod = (100 - dna.species.damage_modifier) / 100
+	return ..() * species_mod
+
 /mob/living/carbon/human/apply_damage(
 	damage = 0,
 	damagetype = BRUTE,
@@ -66,8 +72,6 @@
 			final_mod *= physiology.tox_mod
 		if(OXY)
 			final_mod *= physiology.oxy_mod
-		if(CLONE)
-			final_mod *= physiology.clone_mod
 		if(STAMINA)
 			final_mod *= physiology.stamina_mod
 		if(BRAIN)
@@ -223,7 +227,7 @@
 
 
 ///Returns a list of bodyparts with wounds (in case someone has a wound on an otherwise fully healed limb)
-/mob/living/carbon/proc/get_wounded_bodyparts(brute = FALSE, burn = FALSE, required_bodytype)
+/mob/living/carbon/proc/get_wounded_bodyparts(required_bodytype)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X

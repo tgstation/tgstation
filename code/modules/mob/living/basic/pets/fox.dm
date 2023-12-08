@@ -39,8 +39,8 @@
 /datum/ai_controller/basic_controller/fox
 	blackboard = list(
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

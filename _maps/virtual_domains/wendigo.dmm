@@ -58,7 +58,7 @@
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored/virtual_domain)
 "H" = (
-/mob/living/simple_animal/hostile/megafauna/wendigo/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/wendigo,
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -80,7 +80,9 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "Z" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "lavaland_boss"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 

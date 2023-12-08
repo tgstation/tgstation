@@ -32,7 +32,7 @@
 	response_harm_continuous = "punches through"
 	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
@@ -97,9 +97,7 @@
 	AddElement(/datum/element/simple_flying)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SIXTHSENSE, TRAIT_FREE_HYPERSPACE_MOVEMENT), INNATE_TRAIT)
 
-	for(var/ability in abilities)
-		var/datum/action/spell = new ability(src)
-		spell.Grant(src)
+	grant_actions_by_list(abilities)
 
 	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))

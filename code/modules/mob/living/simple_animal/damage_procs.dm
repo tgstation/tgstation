@@ -18,6 +18,12 @@
 	if(AIStatus == AI_IDLE)
 		toggle_ai(AI_ON)
 
+/mob/living/simple_animal/get_damage_mod(damage_type)
+	var/modifier = ..()
+	if (damage_type in damage_coeff)
+		return modifier * damage_coeff[damage_type]
+	return modifier
+
 /mob/living/simple_animal/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
@@ -49,14 +55,6 @@
 		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[TOX])
 		. = adjustHealth(amount * damage_coeff[TOX] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
-
-/mob/living/simple_animal/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype)
-	if(!can_adjust_clone_loss(amount, forced, required_biotype))
-		return 0
-	if(forced)
-		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
-	else if(damage_coeff[CLONE])
-		. = adjustHealth(amount * damage_coeff[CLONE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
 /mob/living/simple_animal/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	if(!can_adjust_stamina_loss(amount, forced, required_biotype))

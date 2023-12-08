@@ -24,7 +24,7 @@
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	unsuitable_atmos_damage = 0
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.5, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0.5, OXY = 1)
 	combat_mode = TRUE
 	speed = 0
 	movement_type = FLYING
@@ -63,7 +63,7 @@
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_NO_FLOATING_ANIM, TRAIT_HEALS_FROM_CARP_RIFTS), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/content_barfer)
-	AddElement(/datum/element/wall_tearer, do_after_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
+	AddElement(/datum/element/wall_tearer, tear_time = 4 SECONDS, reinforced_multiplier = 3, do_after_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
 	AddElement(/datum/element/door_pryer, pry_time = 4 SECONDS, interaction_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
 	AddComponent(/datum/component/seethrough_mob)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
@@ -75,11 +75,6 @@
 
 	buffet = new(src)
 	buffet.Grant(src)
-
-/mob/living/basic/space_dragon/Destroy()
-	QDEL_NULL(fire_breath)
-	QDEL_NULL(buffet)
-	return ..()
 
 /mob/living/basic/space_dragon/Login()
 	. = ..()

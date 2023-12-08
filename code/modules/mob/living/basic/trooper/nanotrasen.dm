@@ -9,6 +9,9 @@
 	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 
+/mob/living/basic/trooper/nanotrasen/assess_threat(judgement_criteria, lasercolor, datum/callback/weaponcheck)
+	return -10 // Respect our troops
+
 /// A variant that calls for reinforcements on spotting a target
 /mob/living/basic/trooper/nanotrasen/screaming
 	ai_controller = /datum/ai_controller/basic_controller/trooper/calls_reinforcements
@@ -34,6 +37,8 @@
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\
 	)
+	if (ranged_cooldown <= 1 SECONDS)
+		AddComponent(/datum/component/ranged_mob_full_auto)
 
 /mob/living/basic/trooper/nanotrasen/ranged/smg
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst

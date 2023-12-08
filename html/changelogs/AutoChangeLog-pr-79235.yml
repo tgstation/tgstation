@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - refactor: "Wraith constructs have been converted to the basic mob framework. NPC wraiths are now extra cruel and will attack the lowest-health mob they can see at any given time. Make sure this isn't you! Please report any bugs."
-  - bugfix: "Artificers and juggernauts no longer attack significantly more slowly than intended."

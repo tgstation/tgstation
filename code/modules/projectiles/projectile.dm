@@ -146,7 +146,7 @@
 	var/homing_offset_y = 0
 
 	var/damage = 10
-	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
+	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY are the only things that should be in here
 
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
 	var/armor_flag = BULLET
@@ -278,8 +278,8 @@
 		var/mob/living/L = target
 		hit_limb_zone = L.check_hit_limb_zone_name(def_zone)
 	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK

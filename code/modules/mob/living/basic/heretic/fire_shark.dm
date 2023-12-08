@@ -16,7 +16,7 @@
 	obj_damage = 0
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	damage_coeff = list(BRUTE = 1, BURN = 0.25, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.25, TOX = 0, STAMINA = 0, OXY = 0)
 	faction = list(FACTION_HERETIC)
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")

@@ -1,3 +1,20 @@
+/// Attempts to spawn a crate twice based on the list of available locations
+/obj/machinery/quantum_server/proc/attempt_spawn_cache(list/possible_turfs)
+	if(!length(possible_turfs))
+		return TRUE
+
+	shuffle_inplace(possible_turfs)
+	var/turf/chosen_turf = validate_turf(pick(possible_turfs))
+
+	if(isnull(chosen_turf))
+		possible_turfs.Remove(chosen_turf)
+		chosen_turf = validate_turf(pick(possible_turfs))
+		if(isnull(chosen_turf))
+			CRASH("vdom: after two attempts, could not find a valid turf for cache")
+
+	new /obj/structure/closet/crate/secure/bitrunning/encrypted(chosen_turf)
+	return TRUE
+
 /// Generates a new avatar for the bitrunner.
 /obj/machinery/quantum_server/proc/generate_avatar(obj/structure/hololadder/wayout, datum/outfit/netsuit)
 	var/mob/living/carbon/human/avatar = new(wayout.loc)
@@ -8,21 +25,22 @@
 	to_wear.belt = /obj/item/bitrunning_host_monitor
 	to_wear.glasses = null
 	to_wear.gloves = null
-	to_wear.l_hand = null
 	to_wear.l_pocket = null
-	to_wear.r_hand = null
 	to_wear.r_pocket = null
 	to_wear.suit = null
 	to_wear.suit_store = null
 
 	avatar.equipOutfit(to_wear, visualsOnly = TRUE)
 
-	var/thing = avatar.get_active_held_item()
-	if(!isnull(thing))
-		qdel(thing)
+	var/obj/item/clothing/under/jumpsuit = avatar.w_uniform
+	if(istype(jumpsuit))
+		jumpsuit.set_armor(/datum/armor/clothing_under)
 
-	thing = avatar.get_inactive_held_item()
-	if(!isnull(thing))
+	var/obj/item/clothing/head/hat = locate() in avatar.get_equipped_items()
+	if(istype(hat))
+		hat.set_armor(/datum/armor/none)
+
+	for(var/obj/thing in avatar.held_items)
 		qdel(thing)
 
 	var/obj/item/storage/backpack/bag = avatar.back
@@ -72,6 +90,33 @@
 
 	return wayout
 
+/// Loads in any mob segments of the map
+/obj/machinery/quantum_server/proc/load_mob_segments()
+	if(!length(generated_domain.mob_modules))
+		return TRUE
+
+	var/current_index = 1
+	shuffle_inplace(generated_domain.mob_modules)
+
+	for(var/obj/effect/landmark/bitrunning/mob_segment/landmark in GLOB.landmarks_list)
+		if(current_index > length(generated_domain.mob_modules))
+			stack_trace("vdom: mobs segments are set to unique, but there are more landmarks than available segments")
+			return FALSE
+
+		var/path
+		if(generated_domain.modular_unique_mobs)
+			path = generated_domain.mob_modules[current_index]
+			current_index += 1
+		else
+			path = pick(generated_domain.mob_modules)
+
+		var/datum/modular_mob_segment/segment = new path()
+		segment.spawn_mobs(get_turf(landmark))
+		mutation_candidate_refs += segment.spawned_mob_refs
+		qdel(landmark)
+
+	return TRUE
+
 /// Scans over neo's contents for bitrunning tech disks. Loads the items or abilities onto the avatar.
 /obj/machinery/quantum_server/proc/stock_gear(mob/living/carbon/human/avatar, mob/living/carbon/human/neo, datum/lazy_template/virtual_domain/generated_domain)
 	var/domain_forbids_items = generated_domain.forbids_disk_items
@@ -103,6 +148,11 @@
 				continue
 
 			var/datum/action/our_action = new ability_disk.granted_action()
+
+			if(locate(our_action.type) in avatar.actions)
+				failed = TRUE
+				continue
+
 			our_action.Grant(avatar)
 			continue
 
@@ -116,4 +166,4 @@
 			avatar.put_in_hands(new item_disk.granted_item())
 
 	if(failed)
-		to_chat(neo, span_warning("One of your disks failed to load. You must activate them to make a selection."))
+		to_chat(neo, span_warning("One of your disks failed to load. Check for duplicate or inactive disks."))

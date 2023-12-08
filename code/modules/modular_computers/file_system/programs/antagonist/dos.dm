@@ -1,8 +1,8 @@
 /datum/computer_file/program/ntnet_dos
 	filename = "ntn_dos"
 	filedesc = "DoS Traffic Generator"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "hostile"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "hostile"
 	extended_desc = "This advanced script can perform denial of service attacks against NTNet quantum relays. The system administrator will probably notice this. Multiple devices can run this program together against same relay for increased effect"
 	size = 20
 	requires_ntnet = TRUE
@@ -42,7 +42,7 @@
 /datum/computer_file/program/ntnet_dos/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("PRG_target_relay")
-			for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+			for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))
 				if(relays.uid == params["targid"])
 					target = relays
 					break
@@ -76,7 +76,7 @@
 	else
 		data["target"] = FALSE
 		data["relays"] = list()
-		for(var/obj/machinery/ntnet_relay/relays as anything in GLOB.ntnet_relays)
+		for(var/obj/machinery/ntnet_relay/relays as anything in SSmachines.get_machines_by_type(/obj/machinery/ntnet_relay))
 			data["relays"] += list(list("id" = relays.uid))
 		data["focus"] = target ? target.uid : null
 

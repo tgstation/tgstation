@@ -16,7 +16,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner capable of distinguishing vital signs of the subject. Has a side button to scan for chemicals, and can be toggled to scan wounds."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
@@ -169,11 +169,6 @@
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.getStaminaLoss()]%.</span>\n"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span>\n"
-	if (target.getCloneLoss())
-		if(advanced)
-			render_list += "<span class='alert ml-1'>Cellular damage level: [target.getCloneLoss()].</span>\n"
-		else
-			render_list += "<span class='alert ml-1'>Subject appears to have [target.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>\n"
 	if (!target.get_organ_slot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span>\n"
 
@@ -314,19 +309,9 @@
 		if(advanced && humantarget.has_dna())
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span>\n"
 
-		// Species and body temperature
+		// Hulk and body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk) \
-			|| targetspecies.mutantlungs != initial(targetspecies.mutantlungs) \
-			|| targetspecies.mutantbrain != initial(targetspecies.mutantbrain) \
-			|| targetspecies.mutantheart != initial(targetspecies.mutantheart) \
-			|| targetspecies.mutanteyes != initial(targetspecies.mutanteyes) \
-			|| targetspecies.mutantears != initial(targetspecies.mutantears) \
-			|| targetspecies.mutanttongue != initial(targetspecies.mutanttongue) \
-			|| targetspecies.mutantliver != initial(targetspecies.mutantliver) \
-			|| targetspecies.mutantstomach != initial(targetspecies.mutantstomach) \
-			|| targetspecies.mutantappendix != initial(targetspecies.mutantappendix) \
-			|| istype(humantarget.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
+		var/mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
 		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"

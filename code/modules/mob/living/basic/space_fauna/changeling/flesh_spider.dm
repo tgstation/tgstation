@@ -16,7 +16,7 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	speed = -0.1
@@ -63,13 +63,12 @@
 		outline_colour = COLOR_PINK,\
 	)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/webbing = new(src)
-	webbing.webbing_time *= 0.7
-	webbing.Grant(src)
-	ai_controller?.set_blackboard_key(BB_SPIDER_WEB_ACTION, webbing)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/lay_web = BB_SPIDER_WEB_ACTION,
+		/datum/action/cooldown/mob_cooldown/lay_web/sticky_web = null,
+		/datum/action/cooldown/mob_cooldown/lay_web/web_spikes = null,
+	)
+	grant_actions_by_list(innate_actions)
 
-	var/datum/action/cooldown/mob_cooldown/lay_web/web_spikes/spikes_web = new(src)
-	spikes_web.Grant(src)
-
-	var/datum/action/cooldown/mob_cooldown/lay_web/sticky_web/web_sticky = new(src)
-	web_sticky.Grant(src)
+/datum/action/cooldown/mob_cooldown/lay_web/flesh
+	webbing_time = 3 SECONDS

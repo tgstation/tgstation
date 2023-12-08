@@ -30,12 +30,12 @@
 	var/time_to_freeze_for = (rand(5, 10) SECONDS)
 	ai_controller.set_blackboard_key(BB_STATIONARY_SECONDS, time_to_freeze_for)
 	ai_controller.set_blackboard_key(BB_STATIONARY_COOLDOWN, (time_to_freeze_for * (rand(3, 5))))
-	ai_controller.set_blackboard_key(BB_STATIONARY_TARGETS, stationary_scary_things)
+	ai_controller.set_blackboard_key(BB_STATIONARY_TARGETS, typecacheof(stationary_scary_things))
 
 /datum/ai_controller/basic_controller/deer
 	blackboard = list(
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance

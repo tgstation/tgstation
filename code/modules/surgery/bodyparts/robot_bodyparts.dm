@@ -19,7 +19,7 @@
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_static = 'icons/mob/augmentation/augments.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -40,8 +40,9 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/arm/right/robot
 	name = "cyborg right arm"
@@ -51,7 +52,7 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_r_arm"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -74,7 +75,8 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot
 	name = "cyborg left leg"
@@ -84,7 +86,7 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_l_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -107,7 +109,8 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/left/robot/emp_act(severity)
 	. = ..()
@@ -130,7 +133,7 @@
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_r_leg"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -153,7 +156,8 @@
 
 	biological_state = (BIO_ROBOTIC|BIO_JOINTED)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 /obj/item/bodypart/leg/right/robot/emp_act(severity)
 	. = ..()
@@ -175,7 +179,7 @@
 	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_chest"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -196,12 +200,15 @@
 
 	biological_state = (BIO_ROBOTIC)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
+	bodypart_flags = BODYPART_UNHUSKABLE
+
+	robotic_emp_paralyze_damage_percent_threshold = 0.6
+
+	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
-
-	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
 /obj/item/bodypart/chest/robot/emp_act(severity)
 	. = ..()
@@ -346,7 +353,7 @@
 	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = BODYPART_ID_ROBOTIC
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
@@ -367,9 +374,10 @@
 
 	biological_state = (BIO_ROBOTIC)
 
-	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
+	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 
 	head_flags = HEAD_EYESPRITES
+	bodypart_flags = BODYPART_UNHUSKABLE
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
@@ -457,10 +465,8 @@
 	return ..()
 
 // Prosthetics - Cheap, mediocre, and worse than organic limbs
-// The fact they dont have a internal biotype means theyre a lot weaker defensively,
-// since they skip slash and go right to blunt
-// They are VERY easy to delimb as a result
-// HP is also reduced just in case this isnt enough
+// Actively make you less healthy by being on your body, contributing a whopping 250% to overall health at only 20 max health
+// They also suck to punch with.
 
 /obj/item/bodypart/arm/left/robot/surplus
 	name = "surplus prosthetic left arm"
@@ -469,7 +475,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0 //Bro, you look huge.
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -480,7 +490,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	burn_modifier = 1
 	brute_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 1
+	unarmed_damage_high = 5
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -491,7 +505,11 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
 
@@ -502,9 +520,59 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_modifier = 1
 	burn_modifier = 1
-	max_damage = PROSTHESIS_MAX_HP
+	unarmed_damage_low = 2
+	unarmed_damage_high = 10
+	unarmed_effectiveness = 0
+	max_damage = LIMB_MAX_HP_PROSTHESIS
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS
 
 	biological_state = (BIO_METAL|BIO_JOINTED)
+
+// Advanced Limbs: More durable, high punching force
+
+/obj/item/bodypart/arm/left/robot/advanced
+	name = "advanced robotic left arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+
+/obj/item/bodypart/arm/right/robot/advanced
+	name = "advanced robotic right arm"
+	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 5
+	unarmed_damage_high = 13
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+
+/obj/item/bodypart/leg/left/robot/advanced
+	name = "advanced robotic left leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+
+/obj/item/bodypart/leg/right/robot/advanced
+	name = "heavy robotic right leg"
+	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	unarmed_damage_low = 7
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 20
+	max_damage = LIMB_MAX_HP_ADVANCED
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

@@ -5,14 +5,12 @@
 	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_NOBLOOD,
 		TRAIT_NOBREATH,
-		TRAIT_NOCLONELOSS,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_PIERCEIMMUNE,
@@ -22,6 +20,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
+		TRAIT_UNHUSKABLE,
 		TRAIT_XENO_IMMUNE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
@@ -31,7 +30,6 @@
 	mutantheart = null
 	mutantliver = /obj/item/organ/internal/liver/bone
 	mutantlungs = null
-	wing_types = list(/obj/item/organ/external/wings/functional/skeleton)
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk

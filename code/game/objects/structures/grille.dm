@@ -10,7 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor_type = /datum/armor/structure_grille
@@ -68,7 +68,13 @@
 			var/cost = 0
 			var/delay = 0
 
-			if(the_rcd.rcd_design_path  == /obj/structure/window/fulltile)
+			if(the_rcd.rcd_design_path  == /obj/structure/window)
+				cost = 4
+				delay = 2 SECONDS
+			else if(the_rcd.rcd_design_path  == /obj/structure/window/reinforced)
+				cost = 6
+				delay = 2.5 SECONDS
+			else if(the_rcd.rcd_design_path  == /obj/structure/window/fulltile)
 				cost = 8
 				delay = 3 SECONDS
 			else if(the_rcd.rcd_design_path  == /obj/structure/window/reinforced/fulltile)
@@ -101,8 +107,13 @@
 			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
-			if(!initial(window_path.fulltile)) //only fulltile windows can be built here
-				return FALSE
+
+			//checks if its a valid build direction
+			if(!initial(window_path.fulltile))
+				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))
+					balloon_alert(user, "window already here!")
+					return FALSE
+
 			var/obj/structure/window/WD = new window_path(T, user.dir)
 			WD.set_anchored(TRUE)
 			return TRUE
@@ -269,7 +280,7 @@
 			return
 //window placing end
 
-	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+	else if((W.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 70))
 		return
 
 	return ..()
@@ -359,8 +370,8 @@
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-					tesla_zap(src, 3, C.newavail() * 0.01, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
-					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
+					tesla_zap(source = src, zap_range = 3, power = C.newavail() * 0.01, cutoff = 1e3, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock. // What do you mean by this?
 	return ..()
 
 /obj/structure/grille/get_dumping_location()

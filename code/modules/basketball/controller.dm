@@ -119,7 +119,6 @@ GLOBAL_VAR(basketball_game)
 		header = "Basketball Minigame",
 		ghost_sound = 'sound/effects/ghost2.ogg',
 		notify_volume = 75,
-		action = NOTIFY_ORBIT,
 	)
 
 	create_bodies(ready_players)

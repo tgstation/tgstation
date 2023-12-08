@@ -473,7 +473,7 @@
 
 ///Calculate how strong we currently are
 /datum/station_trait/nebula/hostile/proc/calculate_nebula_strength()
-	nebula_intensity = min(STATION_TIME_PASSED() / intensity_increment_time, maximum_nebula_intensity)
+	nebula_intensity = min(STATION_TIME_PASSED(), maximum_nebula_intensity) / intensity_increment_time
 
 ///Check how strong the stations shielding is
 /datum/station_trait/nebula/hostile/proc/get_shielding_level()
@@ -594,7 +594,7 @@
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
-	if(effect_strength > 0)
+	if(effect_strength > 0 && !SSmapping.is_planetary()) //admins can force this
 		if(!SSweather.get_weather_by_type(/datum/weather/rad_storm/nebula))
 			COOLDOWN_START(src, send_care_package_at, send_care_package_time)
 			SSweather.run_weather(/datum/weather/rad_storm/nebula)

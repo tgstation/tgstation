@@ -1,6 +1,3 @@
-///how many lines multiplied by tempo should at least be higher than this.
-#define LONG_ENOUGH_SONG 220
-
 ///Smooth tunes component! Applied to musicians to give the songs they play special effects, according to a rite!
 ///Comes with BARTICLES!!!
 /datum/component/smooth_tunes
@@ -47,7 +44,7 @@
 	if(istype(starting_song.parent, /obj/structure/musician))
 		return //TODO: make stationary instruments work with no hiccups
 
-	if(starting_song.lines.len * starting_song.tempo > LONG_ENOUGH_SONG)
+	if(starting_song.lines.len * starting_song.tempo > FESTIVAL_SONG_LONG_ENOUGH)
 		viable_for_final_effect = TRUE
 	else
 		to_chat(parent, span_warning("This song is too short, so it won't include the song finishing effect."))
@@ -55,6 +52,8 @@
 	START_PROCESSING(SSobj, src) //even though WE aren't an object, our parent is!
 	if(linked_songtuner_rite.song_start_message)
 		starting_song.parent.visible_message(linked_songtuner_rite.song_start_message)
+
+	linked_songtuner_rite.performer_start_effect(parent, starting_song)
 
 	///prevent more songs from being blessed concurrently, mob signal
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
@@ -112,5 +111,3 @@
 			linked_songtuner_rite.song_effect(listener, parent)
 	else
 		stop_singing()
-
-#undef LONG_ENOUGH_SONG

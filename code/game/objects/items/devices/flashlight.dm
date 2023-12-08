@@ -15,7 +15,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
@@ -292,27 +292,35 @@
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	light_range = 2
-	var/holo_cooldown = 0
+	COOLDOWN_DECLARE(holosign_cooldown)
 
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!proximity_flag)
-		if(holo_cooldown > world.time)
-			to_chat(user, span_warning("[src] is not ready yet!"))
-			return
-		var/T = get_turf(target)
-		if(locate(/mob/living) in T)
-			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
-			holo_cooldown = world.time + 10 SECONDS
-			return
+	if(proximity_flag)
+		return
+
+	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
+		balloon_alert(user, "not ready!")
+		return
+
+	var/target_turf = get_turf(target)
+	var/mob/living/living_target = locate(/mob/living) in target_turf
+
+	if(!living_target || (living_target == user))
+		return
+
+	to_chat(living_target, span_boldnotice("[user] is offering medical assistance; please halt your actions."))
+	new /obj/effect/temp_visual/medical_holosign(target_turf, user) //produce a holographic glow
+	COOLDOWN_START(src, holosign_cooldown, 10 SECONDS)
 
 // see: [/datum/wound/burn/flesh/proc/uv()]
 /obj/item/flashlight/pen/paramedic
 	name = "paramedic penlight"
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
 	icon_state = "penlight_surgical"
+	light_color = LIGHT_COLOR_PURPLE
 	/// Our current UV cooldown
 	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
@@ -358,7 +366,7 @@
 	light_system = STATIC_LIGHT
 	light_color = LIGHT_COLOR_FAINT_BLUE
 	w_class = WEIGHT_CLASS_BULKY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = null
 	start_on = TRUE
 
@@ -898,7 +906,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 15
 	light_power = 1
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
 

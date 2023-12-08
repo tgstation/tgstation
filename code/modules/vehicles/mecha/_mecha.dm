@@ -10,7 +10,7 @@
  * AI also has special checks becaus it gets in and out of the mech differently
  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
  *
- * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * For multi-crew, you need to set how the occupants receive ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
  *
  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
@@ -521,7 +521,8 @@
 	if(!overclock_mode && overclock_temp > 0)
 		overclock_temp -= seconds_per_tick
 		return
-	overclock_temp = min(overclock_temp + seconds_per_tick, overclock_temp_danger * 2)
+	var/temp_gain = seconds_per_tick * (1 + 1 / movedelay)
+	overclock_temp = min(overclock_temp + temp_gain, overclock_temp_danger * 2)
 	if(overclock_temp < overclock_temp_danger)
 		return
 	if(overclock_temp >= overclock_temp_danger && overclock_safety)
@@ -682,7 +683,7 @@
 	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
 		to_chat(livinguser, span_warning("You're in the wrong seat to interact with your hands."))
 		return
-	var/on_cooldown = TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK)
+	var/on_cooldown = TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_MELEE_ATTACK)
 	var/adjacent = Adjacent(target)
 	if(SEND_SIGNAL(src, COMSIG_MECHA_MELEE_CLICK, livinguser, target, on_cooldown, adjacent) & COMPONENT_CANCEL_MELEE_CLICK)
 		return
@@ -749,7 +750,7 @@
 		balloon_alert(user, "cabin can't be sealed!")
 		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
 		return
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_CABIN_SEAL))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_CABIN_SEAL))
 		balloon_alert(user, "on cooldown!")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_CABIN_SEAL, 1 SECONDS)

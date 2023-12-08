@@ -124,7 +124,7 @@
 			return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You transfer [round(trans, 0.01)] unit\s of the solution to [target]."))
+		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!target.reagents.total_volume)
@@ -136,7 +136,7 @@
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You fill [src] with [round(trans, 0.01)] unit\s of the contents of [target]."))
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
 	target.update_appearance()
 
@@ -157,7 +157,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You fill [src] with [round(trans, 0.01)] unit\s of the contents of [target]."))
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
 	target.update_appearance()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
@@ -375,15 +375,21 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
+	/// Should this bucket randomize its colors?
+	var/randomize_colors = TRUE
+
 /datum/armor/cup_bucket
 	melee = 10
 	fire = 75
 	acid = 50
 
 /obj/item/reagent_containers/cup/bucket/Initialize(mapload, vol)
-	if(greyscale_colors == initial(greyscale_colors))
+	if (randomize_colors && greyscale_colors == initial(greyscale_colors))
 		set_greyscale(pick(list("#0085e5", COLOR_OFF_WHITE, COLOR_ORANGE_BROWN, COLOR_SERVICE_LIME, COLOR_MOSTLY_PURE_ORANGE, COLOR_FADED_PINK, COLOR_RED, COLOR_YELLOW, COLOR_VIOLET, COLOR_WEBSAFE_DARK_GRAY)))
 	return ..()
+
+/obj/item/reagent_containers/cup/bucket/consistent
+	randomize_colors = FALSE
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
@@ -508,6 +514,11 @@
 	to_chat(user, span_warning("You can't grind this!"))
 
 /obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
+	if(item.flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to grind [item], but it fades away!"))
+		qdel(item)
+		return
+
 	if(!item.grind(reagents, user))
 		if(isstack(item))
 			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
@@ -519,6 +530,11 @@
 	QDEL_NULL(item)
 
 /obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
+	if(item.flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to juice [item], but it fades away!"))
+		qdel(item)
+		return
+
 	if(!item.juice(reagents, user))
 		to_chat(user, span_notice("You fail to juice [item]."))
 		return

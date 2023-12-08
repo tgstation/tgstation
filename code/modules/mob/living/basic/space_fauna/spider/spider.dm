@@ -14,7 +14,7 @@
 	response_disarm_simple = "gently push aside"
 	initial_language_holder = /datum/language_holder/spider
 	melee_attack_cooldown = CLICK_CD_MELEE
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	unsuitable_cold_damage = 4
@@ -54,6 +54,7 @@
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	AddElement(/datum/element/cliff_walking)
+	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 1.5)
 
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite)

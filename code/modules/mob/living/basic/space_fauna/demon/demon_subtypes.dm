@@ -37,8 +37,7 @@
 
 /mob/living/basic/demon/slaughter/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/crawl = new crawl_type(src)
-	crawl.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon)
 	RegisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack))
 	RegisterSignals(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(on_crawl))
 
@@ -150,7 +149,7 @@
 /// We do our own special thing on death, which is to spawn a kitten.
 /mob/living/basic/demon/slaughter/laughter/proc/on_death()
 	SIGNAL_HANDLER
-	var/mob/living/simple_animal/pet/cat/kitten/kitty = new(drop_location())
+	var/mob/living/basic/pet/cat/kitten/kitty = new(drop_location())
 	kitty.name = "Laughter"
 
 /mob/living/basic/demon/slaughter/laughter/ex_act(severity)

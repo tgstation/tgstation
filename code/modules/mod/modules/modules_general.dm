@@ -476,12 +476,16 @@
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
-	if(!drain_power(use_power_cost*levels))
-		return
+	SIGNAL_HANDLER
+	if(!drain_power(use_power_cost * levels))
+		return NONE
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
-	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
-	return NO_Z_IMPACT_DAMAGE
+	mod.wearer.visible_message(
+		span_notice("[mod.wearer] lands on [fell_on] safely."),
+		span_notice("[src] protects you from the damage!"),
+	)
+	return ZIMPACT_CANCEL_DAMAGE|ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 
 ///Thermal Regulator - Regulates the wearer's core temperature.
 /obj/item/mod/module/thermal_regulator
@@ -750,6 +754,15 @@
 	if(forced || wearer.throwing || wearer.body_position == LYING_DOWN || wearer.buckled || CHECK_MOVE_LOOP_FLAGS(wearer, MOVEMENT_LOOP_OUTSIDE_CONTROL))
 		return
 	mod.core.add_charge(power_per_step)
+
+/obj/item/mod/module/hat_stabilizer/syndicate
+	name = "MOD elite hat stabilizer module"
+	desc = "A simple set of deployable stands, directly atop one's head; \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
+		You still need to take the hat off your head while the helmet deploys, though. This is a must-have for \
+		Syndicate Operatives and Agents alike, enabling them to continue to style on the opposition even while in their MODsuit."
+	complexity = 0
+	removable = FALSE
 
 /// Module that shoves garbage inside its material container when the user crosses it, and eject the recycled material with MMB.
 /obj/item/mod/module/recycler

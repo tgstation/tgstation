@@ -52,7 +52,7 @@
 "al" = (
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/fakebasalt,
 /area/centcom/mafia)
 "am" = (
@@ -72,7 +72,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "ap" = (
@@ -82,7 +82,8 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/fakeglass,
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/space/basic,
 /area/centcom/mafia)
 "aq" = (
 /turf/open/floor/fakebasalt,
@@ -93,7 +94,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "as" = (
@@ -134,7 +135,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aB" = (
@@ -183,7 +184,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aI" = (
@@ -192,7 +193,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aJ" = (
@@ -210,7 +211,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aM" = (
@@ -282,12 +283,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
+"qp" = (
+/turf/template_noop,
+/area/template_noop)
 "GL" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 
 (1,1,1) = {"
+qp
 aa
 aa
 aa
@@ -309,10 +314,10 @@ aa
 aa
 aa
 aa
-aa
-aa
+qp
 "}
 (2,1,1) = {"
+qp
 aa
 aY
 aY
@@ -333,14 +338,13 @@ aY
 aY
 aY
 aY
-aY
-aY
 aa
+qp
 "}
 (3,1,1) = {"
+qp
 aa
 aY
-aY
 ac
 ac
 ac
@@ -358,13 +362,13 @@ ac
 ac
 ac
 ac
-aY
 aY
 aa
+qp
 "}
 (4,1,1) = {"
+qp
 aa
-aY
 aY
 ac
 ag
@@ -384,12 +388,12 @@ ah
 ak
 ac
 aY
-aY
 aa
+qp
 "}
 (5,1,1) = {"
 aa
-aY
+aa
 aY
 ac
 ah
@@ -409,7 +413,7 @@ ai
 ah
 ac
 aY
-aY
+aa
 aa
 "}
 (6,1,1) = {"
@@ -739,7 +743,7 @@ aa
 "}
 (19,1,1) = {"
 aa
-aY
+aa
 aY
 ac
 ah
@@ -759,12 +763,12 @@ ad
 ah
 ac
 aY
-aY
+aa
 aa
 "}
 (20,1,1) = {"
+qp
 aa
-aY
 aY
 ac
 ak
@@ -784,13 +788,13 @@ ah
 av
 ac
 aY
-aY
 aa
+qp
 "}
 (21,1,1) = {"
+qp
 aa
 aY
-aY
 ac
 ac
 ac
@@ -808,11 +812,12 @@ ac
 ac
 ac
 ac
-aY
 aY
 aa
+qp
 "}
 (22,1,1) = {"
+qp
 aa
 aY
 aY
@@ -833,11 +838,11 @@ aY
 aY
 aY
 aY
-aY
-aY
 aa
+qp
 "}
 (23,1,1) = {"
+qp
 aa
 aa
 aa
@@ -859,6 +864,5 @@ aa
 aa
 aa
 aa
-aa
-aa
+qp
 "}

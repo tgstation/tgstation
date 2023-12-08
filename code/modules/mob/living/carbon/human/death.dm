@@ -21,9 +21,8 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	if(stat == DEAD)
 		return
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	var/obj/item/organ/internal/heart/H = get_organ_slot(ORGAN_SLOT_HEART)
-	if(H)
-		H.beat = BEAT_NONE
+	var/obj/item/organ/internal/heart/human_heart = get_organ_slot(ORGAN_SLOT_HEART)
+	human_heart?.beat = BEAT_NONE
 
 	. = ..()
 
@@ -32,10 +31,10 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
-		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])", LOG_ATTACK)
+		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()]", LOG_ATTACK)
 		if(key) // Prevents log spamming of keyless mob deaths (like xenobio monkeys)
 			investigate_log("has died at [loc_name(src)].<br>\
-				BRUTE: [src.getBruteLoss()] BURN: [src.getFireLoss()] TOX: [src.getToxLoss()] OXY: [src.getOxyLoss()] CLONE: [src.getCloneLoss()] STAM: [src.getStaminaLoss()]<br>\
+				BRUTE: [src.getBruteLoss()] BURN: [src.getFireLoss()] TOX: [src.getToxLoss()] OXY: [src.getOxyLoss()] STAM: [src.getStaminaLoss()]<br>\
 				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
 				<b>Blood volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)

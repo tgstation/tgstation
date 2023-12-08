@@ -14,7 +14,7 @@
 	// Only actual lasguns can be converted
 	if(type != /obj/item/gun/energy/laser)
 		return
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine, /datum/crafting_recipe/decloner)
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine)
 
 	AddComponent(
 		/datum/component/slapcrafting,\
@@ -40,11 +40,10 @@
 	desc = "A modified laser gun which can shoot far faster, but each shot is far less damaging."
 	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
-	var/allow_akimbo = FALSE
 
 /obj/item/gun/energy/laser/carbine/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = allow_akimbo)
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
 
 /obj/item/gun/energy/laser/carbine/practice
 	name = "practice laser carbine"
@@ -53,7 +52,6 @@
 	clumsy_check = FALSE
 	item_flags = NONE
 	gun_flags = NOT_A_REAL_GUN
-	allow_akimbo = TRUE
 
 /obj/item/gun/energy/laser/retro/old
 	name ="laser gun"
@@ -124,7 +122,7 @@
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null

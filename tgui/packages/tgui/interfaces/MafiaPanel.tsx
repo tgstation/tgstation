@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
@@ -16,6 +16,8 @@ type RoleInfo = {
 
 type PlayerInfo = {
   name: string;
+  role_revealed: string;
+  is_you: BooleanLike;
   ref: string;
   alive: string;
   possible_actions: ActionInfo[];
@@ -48,16 +50,14 @@ type MafiaData = {
   is_observer: boolean;
   all_roles: string[];
   admin_controls: boolean;
+  person_voted_up_ref: string;
+  player_voted_up: BooleanLike;
 };
 
-export const MafiaPanelData = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
-  const { phase, roleinfo, admin_controls, messages } = data;
-  const [mafia_tab, setMafiaMode] = useLocalState(
-    context,
-    'mafia_tab',
-    'Role list'
-  );
+export const MafiaPanelData = (props) => {
+  const { act, data } = useBackend<MafiaData>();
+  const { phase, roleinfo, admin_controls, messages, player_voted_up } = data;
+  const [mafia_tab, setMafiaMode] = useLocalState('mafia_tab', 'Role list');
 
   if (phase === 'No Game') {
     return (
@@ -89,7 +89,7 @@ export const MafiaPanelData = (props, context) => {
               <Stack.Item>
                 <MafiaRole />
               </Stack.Item>
-              {phase === 'Judgment' && (
+              {phase === 'Judgment' && !player_voted_up && (
                 <Stack.Item>
                   <MafiaJudgement />
                 </Stack.Item>
@@ -152,8 +152,8 @@ export const MafiaPanelData = (props, context) => {
   );
 };
 
-export const MafiaPanel = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+export const MafiaPanel = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { roleinfo } = data;
   return (
     <Window
@@ -168,10 +168,10 @@ export const MafiaPanel = (props, context) => {
   );
 };
 
-const MafiaChat = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaChat = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { messages } = data;
-  const [message_to_send, setMessagingBox] = useLocalState(context, 'Chat', '');
+  const [message_to_send, setMessagingBox] = useLocalState('Chat', '');
   return (
     <Stack vertical fill>
       {!!messages && (
@@ -212,8 +212,8 @@ const MafiaChat = (props, context) => {
   );
 };
 
-const MafiaLobby = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaLobby = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { lobbydata = [], is_observer } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
@@ -279,8 +279,8 @@ const MafiaLobby = (props, context) => {
   );
 };
 
-const MafiaRole = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaRole = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { phase, turn, roleinfo, timeleft } = data;
   return (
     <Section
@@ -325,8 +325,8 @@ const MafiaRole = (props, context) => {
   );
 };
 
-const MafiaListOfRoles = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaListOfRoles = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { all_roles } = data;
   return (
     <Section fill>
@@ -354,14 +354,10 @@ const MafiaListOfRoles = (props, context) => {
   );
 };
 
-const MafiaNotesTab = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaNotesTab = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { user_notes } = data;
-  const [note_message, setNotesMessage] = useLocalState(
-    context,
-    'Notes',
-    user_notes
-  );
+  const [note_message, setNotesMessage] = useLocalState('Notes', user_notes);
   return (
     <Section grow fill>
       <TextArea
@@ -396,21 +392,24 @@ const MafiaNotesTab = (props, context) => {
   );
 };
 
-const MafiaJudgement = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaJudgement = (props) => {
+  const { act, data } = useBackend();
   return (
     <Section title="Judgement">
-      <Flex justify="space-around">
+      <Flex>
         <Button
           icon="smile-beam"
-          content="INNOCENT!"
+          content="Innocent"
           color="good"
           onClick={() => act('vote_innocent')}
         />
         <Box>It is now time to vote, vote the accused innocent or guilty!</Box>
-        <Button icon="angry" color="bad" onClick={() => act('vote_guilty')}>
-          GUILTY!
-        </Button>
+        <Button
+          icon="angry"
+          content="Guilty"
+          color="bad"
+          onClick={() => act('vote_guilty')}
+        />
       </Flex>
       <Flex justify="center">
         <Button icon="meh" color="white" onClick={() => act('vote_abstain')}>
@@ -421,17 +420,24 @@ const MafiaJudgement = (props, context) => {
   );
 };
 
-const MafiaPlayers = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
-  const { players } = data;
+const MafiaPlayers = (props) => {
+  const { act, data } = useBackend<MafiaData>();
+  const { players = [], person_voted_up_ref } = data;
   return (
     <Section fill scrollable title="Players">
       <Flex direction="column" fill justify="space-around">
         {players?.map((player) => (
           <Flex.Item className="Section__title candystripe" key={player.ref}>
             <Stack align="center">
-              <Stack.Item grow color={!player.alive && 'red'}>
-                {player.name} {!player.alive && '(DEAD)'}
+              <Stack.Item
+                grow
+                color={!player.alive && 'red'}
+                backgroundColor={
+                  player.ref === person_voted_up_ref ? 'yellow' : null
+                }>
+                {player.name}
+                {(!!player.is_you && ' (YOU)') ||
+                  (!!player.role_revealed && ' - ' + player.role_revealed)}
               </Stack.Item>
               <Stack.Item>
                 {player.votes !== undefined &&
@@ -460,8 +466,8 @@ const MafiaPlayers = (props, context) => {
   );
 };
 
-const MafiaAdmin = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaAdmin = (props) => {
+  const { act, data } = useBackend();
   return (
     <Collapsible title="ADMIN CONTROLS" color="red">
       <Section>

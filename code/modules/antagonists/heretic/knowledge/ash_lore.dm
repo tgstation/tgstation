@@ -72,7 +72,6 @@
 	name = "Ashen Passage"
 	desc = "Grants you Ashen Passage, a silent but short range jaunt."
 	gain_text = "He knew how to walk between the planes."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/ash_mark,
 		/datum/heretic_knowledge/summon/fire_shark,
@@ -127,7 +126,6 @@
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
@@ -166,7 +164,6 @@
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
@@ -212,7 +209,12 @@
 
 /datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 
 	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
 	circle_spell.Grant(user)

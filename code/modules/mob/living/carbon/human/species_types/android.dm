@@ -3,17 +3,18 @@
 	id = SPECIES_ANDROID
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
-		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBLOOD,
 		TRAIT_NOBREATH,
-		TRAIT_NOCLONELOSS,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOFIRE,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_PLASMA_TRANSFORM,
 		TRAIT_NO_UNDERWEAR,
+		TRAIT_OVERDOSEIMMUNE,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
@@ -21,11 +22,11 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
-		TRAIT_NOCRITDAMAGE,
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
+	mutantbrain = /obj/item/organ/internal/brain/cybernetic
 	mutanttongue = /obj/item/organ/internal/tongue/robot
 	mutantstomach = null
 	mutantappendix = null
@@ -35,7 +36,6 @@
 	mutanteyes = /obj/item/organ/internal/eyes/robotic
 	mutantears = /obj/item/organ/internal/ears/cybernetic
 	species_language_holder = /datum/language_holder/synthetic
-	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	bodypart_overrides = list(

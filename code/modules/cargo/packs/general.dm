@@ -72,7 +72,7 @@
 	access = ACCESS_COMMAND
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/encryptionkey/headset_com = 3)
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/centcom
 	crate_name = "command encryption key crate"
 
 /datum/supply_pack/misc/exploration_drone

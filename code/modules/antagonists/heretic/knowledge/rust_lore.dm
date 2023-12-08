@@ -83,7 +83,6 @@
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
 		/datum/heretic_knowledge/armor,
@@ -175,7 +174,6 @@
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/rust,
 		/datum/heretic_knowledge/reroll_targets,
@@ -205,7 +203,6 @@
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
@@ -264,7 +261,12 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	new /datum/rust_spread(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))

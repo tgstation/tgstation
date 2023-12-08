@@ -245,43 +245,47 @@
  * The kitchen sink of notification procs
  *
  * Arguments:
- * * message
- * * ghost_sound sound to play
- * * enter_link Href link to enter the ghost role being notified for
- * * source The source of the notification
- * * alert_overlay The alert overlay to show in the alert message
- * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
- * * flashwindow Flash the byond client window
- * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
- * * header The header of the notifiaction
- * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
- * * notify_volume How loud the sound should be to spook the user
+ * * message: The message displayed in chat.
+ * * source: The source of the notification. This is required for an icon
+ * * header: The title text to display on the icon tooltip.
+ * * alert_overlay: Optional. Create a custom overlay if you want, otherwise it will use the source
+ * * click_interact: If true, adds a link + clicking the icon will attack_ghost the source
+ * * custom_link: Optional. If you want to add a custom link to the chat notification
+ * * ghost_sound: sound to play
+ * * ignore_key: Ignore keys if they're in the GLOB.poll_ignore list
+ * * notify_volume: How loud the sound should be to spook the user
  */
 /proc/notify_ghosts(
 	message,
-	ghost_sound,
-	enter_link,
 	atom/source,
+	header = "Something Interesting!",
 	mutable_appearance/alert_overlay,
-	action = NOTIFY_JUMP,
-	flashwindow = TRUE,
-	ignore_mapload = TRUE,
+	click_interact = FALSE,
+	custom_link = "",
+	ghost_sound,
 	ignore_key,
-	header = "",
-	notify_suiciders = TRUE,
-	notify_volume = 100
+	notify_flags = NOTIFY_CATEGORY_DEFAULT,
+	notify_volume = 100,
 )
 
-	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
+	if(notify_flags & GHOST_NOTIFY_IGNORE_MAPLOAD && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR) //don't notify for objects created during a map load
 		return
 
+	if(source)
+		if(isnull(alert_overlay))
+			alert_overlay = get_small_overlay(source)
+
+		alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.layer = FLOAT_LAYER
+		alert_overlay.plane = FLOAT_PLANE
+
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!notify_suiciders && HAS_TRAIT(ghost, TRAIT_SUICIDED))
+		if(!(notify_flags & GHOST_NOTIFY_NOTIFY_SUICIDERS) && HAS_TRAIT(ghost, TRAIT_SUICIDED))
 			continue
 		if(ignore_key && (ghost.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 
-		if(flashwindow)
+		if(notify_flags & GHOST_NOTIFY_FLASH_WINDOW)
 			window_flash(ghost.client)
 
 		if(ghost_sound)
@@ -291,20 +295,20 @@
 			to_chat(ghost, span_ghostalert(message))
 			continue
 
-		var/custom_link = enter_link ? " [enter_link]" : ""
-		var/link = " <a href='?src=[REF(ghost)];[action]=[REF(source)]'>([capitalize(action)])</a>"
+		var/interact_link = click_interact ? " <a href='?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
+		var/view_link = " <a href='?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
 
-		to_chat(ghost, span_ghostalert("[message][custom_link][link]"))
+		to_chat(ghost, span_ghostalert("[message][custom_link][interact_link][view_link]"))
 
 		var/atom/movable/screen/alert/notify_action/toast = ghost.throw_alert(
 			category = "[REF(source)]_notify_action",
 			type = /atom/movable/screen/alert/notify_action,
-			new_master = source,
 		)
-		toast.action = action
-		toast.desc = "Click to [action]."
+		toast.add_overlay(alert_overlay)
+		toast.click_interact = click_interact
+		toast.desc = "Click to [click_interact ? "play" : "view"]."
 		toast.name = header
-		toast.target = source
+		toast.target_ref = WEAKREF(source)
 
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
@@ -560,3 +564,21 @@
 		raw_lines += recent_speech[key]
 
 	return raw_lines
+
+/// Takes in an associated list (key `/datum/action` typepaths, value is the AI blackboard key) and handles granting the action and adding it to the mob's AI controller blackboard.
+/// This is only useful in instances where you don't want to store the reference to the action on a variable on the mob.
+/// You can set the value to null if you don't want to add it to the blackboard (like in player controlled instances). Is also safe with null AI controllers.
+/// Assumes that the action will be initialized and held in the mob itself, which is typically standard.
+/mob/proc/grant_actions_by_list(list/input)
+	if(length(input) <= 0)
+		return
+
+	for(var/action in input)
+		var/datum/action/ability = new action(src)
+		ability.Grant(src)
+
+		var/blackboard_key = input[action]
+		if(isnull(blackboard_key))
+			continue
+
+		ai_controller?.set_blackboard_key(blackboard_key, ability)
