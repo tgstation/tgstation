@@ -28,6 +28,8 @@
 	light_outer_range = 2
 	light_power = 1
 
+	circuit = /obj/item/circuitboard/machine/centrifuge
+
 	idle_power_usage = 100
 	active_power_usage = 300
 

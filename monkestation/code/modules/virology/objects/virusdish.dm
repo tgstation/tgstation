@@ -144,6 +144,12 @@ GLOBAL_LIST_INIT(virusdishes, list())
 			if (success > 0)
 				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [target].</span>")
 			return 
+		if(istype(target, /obj/structure/reagent_dispensers))
+			var/obj/structure/reagent_dispensers/obj = target
+			var/success = obj.reagents.trans_to(src, 10, transfered_by = user)
+			if (success > 0)
+				to_chat(user, "<span class='notice'>You transfer [success] units of the solution to \the [src].</span>")
+
 		if (istype(target,/obj/structure/toilet))
 			var/obj/structure/toilet/T = target
 			if (T.open)
@@ -165,6 +171,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		var/list/L = list()
 		L += contained_virus
 		new /obj/effect/pathogen_cloud/core(get_turf(src), last_openner, virus_copylist(L), FALSE)
+		
 /obj/item/weapon/virusdish/random
 	name = "growth dish"
 /obj/item/weapon/virusdish/random/New(loc)

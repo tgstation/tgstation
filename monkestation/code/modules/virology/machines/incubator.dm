@@ -11,6 +11,8 @@
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "incubator"
 
+	circuit = /obj/item/circuitboard/machine/incubator
+
 	light_color = "#6496FA"
 	light_outer_range = 2
 	light_power = 1

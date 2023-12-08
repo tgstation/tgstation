@@ -9,7 +9,7 @@
 
 	icon_keyboard = null
 	icon_screen = null
-	
+	circuit = /obj/item/circuitboard/computer/diseasesplicer
 	var/datum/symptom/memorybank = null
 	var/analysed = FALSE // If the buffered effect came from a dish that had been analyzed this is TRUE
 	var/obj/item/weapon/virusdish/dish = null

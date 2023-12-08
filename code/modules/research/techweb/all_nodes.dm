@@ -403,9 +403,12 @@
 		"medical_kiosk",
 		"medigel",
 		"medipen_refiller",
-		"pandemic",
 		"soda_dispenser",
 		"extrapolator",
+		"diseasesplicer",
+		"incubator",
+		"diseaseanalyzer",
+		"centrifuge",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	discount_experiments = list(/datum/experiment/dissection/human = 1000)

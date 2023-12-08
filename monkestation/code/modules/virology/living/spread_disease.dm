@@ -79,4 +79,3 @@
 		H.diseases += D
 
 		D.AddToGoggleView(H)
-

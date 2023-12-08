@@ -6616,6 +6616,8 @@
 #include "monkestation\code\modules\virology\reagents\antipathenogenics.dm"
 #include "monkestation\code\modules\virology\reagents\symptom_reagents.dm"
 #include "monkestation\code\modules\virology\reagents\vaccine.dm"
+#include "monkestation\code\modules\virology\research\circuitboards.dm"
+#include "monkestation\code\modules\virology\research\research.dm"
 #include "monkestation\code\modules\wiki_templater\templates.dm"
 #include "monkestation\code\modules\wiki_templater\test_generate.dm"
 #include "monkestation\code\random_rooms\room_base.dm"
