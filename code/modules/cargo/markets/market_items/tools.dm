@@ -96,3 +96,12 @@
 	price_max = CARGO_CRATE_VALUE * 1.615
 	stock_max = 2
 	availability_prob = 50
+
+/datum/market_item/tool/program_disk
+	name = "Bootleg Data Disk"
+	desc = "A data disk containing EXCLUSIVE and LIMITED modular programs. Legally, we're not allowed to tell you how we aquired them."
+	item = /obj/item/computer_disk/black_market
+	price_min = CARGO_CRATE_VALUE * 0.75
+	price_max = CARGO_CRATE_VALUE * 2
+	stock_max = 3
+	availability_prob = 40

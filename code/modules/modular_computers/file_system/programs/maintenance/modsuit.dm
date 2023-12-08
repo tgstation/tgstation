@@ -28,6 +28,7 @@
 	return TRUE
 
 /datum/computer_file/program/maintenance/modsuit_control/proc/unsync_modsuit(atom/source)
+	SIGNAL_HANDLER
 	UnregisterSignal(controlled_suit, COMSIG_QDELETING)
 	controlled_suit = null
 
